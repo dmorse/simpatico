@@ -278,59 +278,59 @@
 <a name="l00227"></a>00227    }
 <a name="l00228"></a>00228 
 <a name="l00229"></a>00229    <span class="comment">/*</span>
-<a name="l00230"></a>00230 <span class="comment">   * Clear all statistics.</span>
+<a name="l00230"></a>00230 <span class="comment">   * Compute memory usage statistics (call on all processors).</span>
 <a name="l00231"></a>00231 <span class="comment">   */</span>
-<a name="l00232"></a>00232    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#af5b606249c3c4ff509650aabfd03c029" title="Clear statistical accumulators (call on all processors).">PairList::clearStatistics</a>()
-<a name="l00233"></a><a class="code" href="classDdMd_1_1PairList.html#af5b606249c3c4ff509650aabfd03c029">00233</a>    {
-<a name="l00234"></a>00234       maxNAtomLocal_ = 0;
-<a name="l00235"></a>00235       maxNPairLocal_ = 0;
-<a name="l00236"></a>00236       maxNAtom_ = -1;
-<a name="l00237"></a>00237       maxNPair_ = -1;
-<a name="l00238"></a>00238       buildCounter_ = 0;
-<a name="l00239"></a>00239    }
-<a name="l00240"></a>00240 
-<a name="l00241"></a>00241    <span class="comment">/*</span>
-<a name="l00242"></a>00242 <span class="comment">   * Compute memory usage statistics (call on all processors).</span>
-<a name="l00243"></a>00243 <span class="comment">   */</span>
-<a name="l00244"></a>00244 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00245"></a>00245 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a1ca7d08a1def05fae60c6551595ab53a" title="Compute statistics (reduce from all processors).">PairList::computeStatistics</a>(MPI::Intracomm&amp; communicator)
-<a name="l00246"></a><a class="code" href="classDdMd_1_1PairList.html#a1ca7d08a1def05fae60c6551595ab53a">00246</a>    <span class="preprocessor">#else</span>
-<a name="l00247"></a>00247 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a1ca7d08a1def05fae60c6551595ab53a" title="Compute statistics (reduce from all processors).">PairList::computeStatistics</a>()
-<a name="l00248"></a>00248    <span class="preprocessor">#endif</span>
-<a name="l00249"></a>00249 <span class="preprocessor"></span>   { 
-<a name="l00250"></a>00250 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00251"></a>00251 <span class="preprocessor"></span>      communicator.Reduce(&amp;maxNAtomLocal_, &amp;maxNAtom_, 1, 
-<a name="l00252"></a>00252                           MPI::INT, MPI::MAX, 0);
-<a name="l00253"></a>00253       communicator.Reduce(&amp;maxNPairLocal_, &amp;maxNPair_, 1, 
-<a name="l00254"></a>00254                           MPI::INT, MPI::MAX, 0);
-<a name="l00255"></a>00255 <span class="preprocessor">      #else</span>
-<a name="l00256"></a>00256 <span class="preprocessor"></span>      maxNAtom_ = maxNAtomLocal_;
-<a name="l00257"></a>00257       maxNPair_ = maxNPairLocal_;
-<a name="l00258"></a>00258 <span class="preprocessor">      #endif</span>
-<a name="l00259"></a>00259 <span class="preprocessor"></span>   }
-<a name="l00260"></a>00260 
-<a name="l00261"></a>00261    <span class="comment">/*</span>
-<a name="l00262"></a>00262 <span class="comment">   * Output statistics.</span>
-<a name="l00263"></a>00263 <span class="comment">   */</span>
-<a name="l00264"></a>00264    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#aa2890c1afd070d872661748fc5e18afb" title="Output statistics.">PairList::outputStatistics</a>(std::ostream&amp; out, <span class="keywordtype">int</span> nStep)
-<a name="l00265"></a><a class="code" href="classDdMd_1_1PairList.html#aa2890c1afd070d872661748fc5e18afb">00265</a>    {
+<a name="l00232"></a>00232 <span class="preprocessor">   #ifdef UTIL_MPI</span>
+<a name="l00233"></a>00233 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a1ca7d08a1def05fae60c6551595ab53a" title="Compute statistics (reduce from all processors).">PairList::computeStatistics</a>(MPI::Intracomm&amp; communicator)
+<a name="l00234"></a><a class="code" href="classDdMd_1_1PairList.html#a1ca7d08a1def05fae60c6551595ab53a">00234</a>    <span class="preprocessor">#else</span>
+<a name="l00235"></a>00235 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a1ca7d08a1def05fae60c6551595ab53a" title="Compute statistics (reduce from all processors).">PairList::computeStatistics</a>()
+<a name="l00236"></a>00236    <span class="preprocessor">#endif</span>
+<a name="l00237"></a>00237 <span class="preprocessor"></span>   { 
+<a name="l00238"></a>00238 <span class="preprocessor">      #ifdef UTIL_MPI</span>
+<a name="l00239"></a>00239 <span class="preprocessor"></span>      <span class="keywordtype">int</span> maxNAtomGlobal;
+<a name="l00240"></a>00240       <span class="keywordtype">int</span> maxNPairGlobal;
+<a name="l00241"></a>00241       communicator.Allreduce(&amp;maxNAtomLocal_, &amp;maxNAtomGlobal, 1, 
+<a name="l00242"></a>00242                              MPI::INT, MPI::MAX);
+<a name="l00243"></a>00243       communicator.Allreduce(&amp;maxNPairLocal_, &amp;maxNPairGlobal, 1, 
+<a name="l00244"></a>00244                              MPI::INT, MPI::MAX);
+<a name="l00245"></a>00245       maxNAtom_.set(maxNAtomGlobal);
+<a name="l00246"></a>00246       maxNPair_.set(maxNPairGlobal);
+<a name="l00247"></a>00247       maxNAtomLocal_ = maxNAtomGlobal;
+<a name="l00248"></a>00248       maxNPairLocal_ = maxNPairGlobal;
+<a name="l00249"></a>00249 <span class="preprocessor">      #else</span>
+<a name="l00250"></a>00250 <span class="preprocessor"></span>      maxNAtom_.set(maxNAtomLocal_);
+<a name="l00251"></a>00251       maxNPair_.set(maxNPairLocal_);
+<a name="l00252"></a>00252 <span class="preprocessor">      #endif</span>
+<a name="l00253"></a>00253 <span class="preprocessor"></span>   }
+<a name="l00254"></a>00254 
+<a name="l00255"></a>00255    <span class="comment">/*</span>
+<a name="l00256"></a>00256 <span class="comment">   * Clear all statistics.</span>
+<a name="l00257"></a>00257 <span class="comment">   */</span>
+<a name="l00258"></a>00258    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#af5b606249c3c4ff509650aabfd03c029" title="Clear statistical accumulators (call on all processors).">PairList::clearStatistics</a>() 
+<a name="l00259"></a><a class="code" href="classDdMd_1_1PairList.html#af5b606249c3c4ff509650aabfd03c029">00259</a>    {
+<a name="l00260"></a>00260       maxNAtomLocal_ = 0;
+<a name="l00261"></a>00261       maxNPairLocal_ = 0;
+<a name="l00262"></a>00262       maxNAtom_.unset();
+<a name="l00263"></a>00263       maxNPair_.unset();
+<a name="l00264"></a>00264       buildCounter_ = 0;
+<a name="l00265"></a>00265    }
 <a name="l00266"></a>00266 
-<a name="l00267"></a>00267       out &lt;&lt; std::endl;
-<a name="l00268"></a>00268       out &lt;&lt; <span class="stringliteral">&quot;maxNPair, capacity &quot;</span> 
-<a name="l00269"></a>00269                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(maxNPair_, 10)
-<a name="l00270"></a>00270                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(pairCapacity_, 10)
-<a name="l00271"></a>00271                   &lt;&lt; std::endl;
-<a name="l00272"></a>00272       out &lt;&lt; <span class="stringliteral">&quot;maxNAtom, capacity &quot;</span> 
-<a name="l00273"></a>00273                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(maxNAtom_, 10)
-<a name="l00274"></a>00274                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(atomCapacity_, 10)
-<a name="l00275"></a>00275                   &lt;&lt; std::endl;
-<a name="l00276"></a>00276       out &lt;&lt; <span class="stringliteral">&quot;buildCounter       &quot;</span> 
-<a name="l00277"></a>00277                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(buildCounter_, 10)
+<a name="l00267"></a>00267    <span class="comment">/*</span>
+<a name="l00268"></a>00268 <span class="comment">   * Output statistics.</span>
+<a name="l00269"></a>00269 <span class="comment">   */</span>
+<a name="l00270"></a>00270    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a6cf94e9c84005f984dd748b99bb2fc66" title="Output statistics.">PairList::outputStatistics</a>(std::ostream&amp; out)
+<a name="l00271"></a><a class="code" href="classDdMd_1_1PairList.html#a6cf94e9c84005f984dd748b99bb2fc66">00271</a>    {
+<a name="l00272"></a>00272 
+<a name="l00273"></a>00273       out &lt;&lt; std::endl;
+<a name="l00274"></a>00274       out &lt;&lt; <span class="stringliteral">&quot;PairList&quot;</span> &lt;&lt; std::endl;
+<a name="l00275"></a>00275       out &lt;&lt; <span class="stringliteral">&quot;NPair: max, capacity     &quot;</span> 
+<a name="l00276"></a>00276                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(maxNPair_.value(), 10)
+<a name="l00277"></a>00277                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(pairCapacity_, 10)
 <a name="l00278"></a>00278                   &lt;&lt; std::endl;
-<a name="l00279"></a>00279       out &lt;&lt; <span class="stringliteral">&quot;steps / build      &quot;</span>
-<a name="l00280"></a>00280                   &lt;&lt; double(nStep)/double(buildCounter_)
-<a name="l00281"></a>00281                   &lt;&lt; std::endl;
-<a name="l00282"></a>00282       out &lt;&lt; std::endl;
+<a name="l00279"></a>00279       out &lt;&lt; <span class="stringliteral">&quot;NAtom: max, capacity     &quot;</span> 
+<a name="l00280"></a>00280                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(maxNAtom_.value(), 10)
+<a name="l00281"></a>00281                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(atomCapacity_, 10)
+<a name="l00282"></a>00282                   &lt;&lt; std::endl;
 <a name="l00283"></a>00283    }
 <a name="l00284"></a>00284 
 <a name="l00285"></a>00285 <span class="preprocessor">   #if 0</span>
@@ -363,7 +363,7 @@
 <a name="l00312"></a>00312 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:57 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:37 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

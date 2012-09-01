@@ -152,114 +152,141 @@
 <a name="l00101"></a>00101    }
 <a name="l00102"></a>00102 
 <a name="l00103"></a>00103    <span class="comment">/*</span>
-<a name="l00104"></a>00104 <span class="comment">   * Return time per processor for last run.</span>
+<a name="l00104"></a>00104 <span class="comment">   * Compute forces for all local atoms and virial, with timing.</span>
 <a name="l00105"></a>00105 <span class="comment">   */</span>
-<a name="l00106"></a>00106    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1Integrator.html#a6eba2a50b2bf852e607e9fe96c7f53ce" title="Get time per processor of previous run.">Integrator::time</a>()<span class="keyword"> const</span>
-<a name="l00107"></a><a class="code" href="classDdMd_1_1Integrator.html#a6eba2a50b2bf852e607e9fe96c7f53ce">00107</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> timer_.<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(); }
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109    <span class="comment">/*</span>
-<a name="l00110"></a>00110 <span class="comment">   * Return number of time steps in last run.</span>
-<a name="l00111"></a>00111 <span class="comment">   */</span>
-<a name="l00112"></a>00112    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Integrator.html#a4e3755ec6034a02a7e7137ad602fe838" title="Get number of steps in last run.">Integrator::nStep</a>()<span class="keyword"> const</span>
-<a name="l00113"></a><a class="code" href="classDdMd_1_1Integrator.html#a4e3755ec6034a02a7e7137ad602fe838">00113</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> <a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a>; }
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115    <span class="comment">/*</span>
-<a name="l00116"></a>00116 <span class="comment">   * Output statistics.</span>
-<a name="l00117"></a>00117 <span class="comment">   */</span>
-<a name="l00118"></a>00118    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Integrator.html#ada6b32ffe23deb03c4d1a6af73e3f374" title="Output statistics immediately after a run.">Integrator::outputStatistics</a>(std::ostream&amp; out)
-<a name="l00119"></a><a class="code" href="classDdMd_1_1Integrator.html#ada6b32ffe23deb03c4d1a6af73e3f374">00119</a>    {
-<a name="l00120"></a>00120       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().isMaster()) {
-<a name="l00121"></a>00121 
-<a name="l00122"></a>00122          <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1Integrator.html#a6eba2a50b2bf852e607e9fe96c7f53ce" title="Get time per processor of previous run.">time</a> = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>();
-<a name="l00123"></a>00123          <span class="keywordtype">int</span> nAtomTot = <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#ae48dda2908e1df9a572e291076bb41db" title="Get total number of atoms on all processors.">nAtomTotal</a>();
-<a name="l00124"></a>00124          <span class="keywordtype">int</span> nProc = 1;
-<a name="l00125"></a>00125 <span class="preprocessor">         #ifdef UTIL_MPI</span>
-<a name="l00126"></a>00126 <span class="preprocessor"></span>         nProc = <a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>().Get_size();
-<a name="l00127"></a>00127 <span class="preprocessor">         #endif</span>
-<a name="l00128"></a>00128 <span class="preprocessor"></span>
-<a name="l00129"></a>00129          <span class="comment">// Output total time for the run</span>
-<a name="l00130"></a>00130          out &lt;&lt; std::endl;
-<a name="l00131"></a>00131          out &lt;&lt; <span class="stringliteral">&quot;Time Statistics&quot;</span> &lt;&lt; std::endl;
-<a name="l00132"></a>00132          out &lt;&lt; <span class="stringliteral">&quot;nStep                &quot;</span> &lt;&lt; <a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a> &lt;&lt; std::endl;
-<a name="l00133"></a>00133          out &lt;&lt; <span class="stringliteral">&quot;run time             &quot;</span> &lt;&lt; time &lt;&lt; <span class="stringliteral">&quot; sec&quot;</span> &lt;&lt; std::endl;
-<a name="l00134"></a>00134          out &lt;&lt; <span class="stringliteral">&quot;time / nStep         &quot;</span> &lt;&lt; time/double(<a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a>) 
-<a name="l00135"></a>00135              &lt;&lt; <span class="stringliteral">&quot; sec&quot;</span> &lt;&lt; std::endl;
-<a name="l00136"></a>00136 
-<a name="l00137"></a>00137          <span class="keywordtype">double</span> ratio = double(nProc)/double(<a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a>*nAtomTot);
-<a name="l00138"></a>00138 
-<a name="l00139"></a>00139          <span class="keywordtype">double</span> diagnosticT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(DIAGNOSTIC);
-<a name="l00140"></a>00140          <span class="keywordtype">double</span> integrate1T = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(INTEGRATE1);
-<a name="l00141"></a>00141          <span class="keywordtype">double</span> checkT =  <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(CHECK);
-<a name="l00142"></a>00142          <span class="keywordtype">double</span> transformFT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(TRANSFORM_F);
-<a name="l00143"></a>00143          <span class="keywordtype">double</span> exchangeT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(EXCHANGE);
-<a name="l00144"></a>00144          <span class="keywordtype">double</span> cellListT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(CELLLIST);
-<a name="l00145"></a>00145          <span class="keywordtype">double</span> transformRT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(TRANSFORM_R);
-<a name="l00146"></a>00146          <span class="keywordtype">double</span> pairListT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(PAIRLIST);
-<a name="l00147"></a>00147          <span class="keywordtype">double</span> updateT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(UPDATE);
-<a name="l00148"></a>00148          <span class="keywordtype">double</span> pairForceT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(PAIR_FORCE);
-<a name="l00149"></a>00149          <span class="keywordtype">double</span> bondForceT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(BOND_FORCE);
-<a name="l00150"></a>00150          <span class="keywordtype">double</span> integrate2T = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(INTEGRATE2);
+<a name="l00106"></a>00106    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Integrator.html#a52440b9a3e5698d1f202dec94ebe44c7" title="Compute forces for all local atoms and virial, with timing.">Integrator::computeForcesAndVirial</a>()
+<a name="l00107"></a><a class="code" href="classDdMd_1_1Integrator.html#a52440b9a3e5698d1f202dec94ebe44c7">00107</a>    {
+<a name="l00108"></a>00108       <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#ad29214d7595ff51e6fc0172e681f606a" title="Set forces for all local atoms to zero.">zeroForces</a>();
+<a name="l00109"></a>00109       <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().<a class="code" href="classDdMd_1_1Potential.html#a9dffbbb623977295ba0f532dbce80625" title="Compute forces and stress for all processors.">computeForcesAndStress</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().communicator());
+<a name="l00110"></a>00110       timer_.<a class="code" href="classDdMd_1_1DdTimer.html#abe973c8562b8261c1cdb330ec0c1d6b9" title="Mark end of interval id.">stamp</a>(PAIR_FORCE);
+<a name="l00111"></a>00111       <a class="code" href="classDdMd_1_1SimulationAccess.html#a5d74aec518766698f2de2c06c92840b4" title="Get the PairPotential.">bondPotential</a>().<a class="code" href="classDdMd_1_1Potential.html#a9dffbbb623977295ba0f532dbce80625" title="Compute forces and stress for all processors.">computeForcesAndStress</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().communicator());
+<a name="l00112"></a>00112       timer_.<a class="code" href="classDdMd_1_1DdTimer.html#abe973c8562b8261c1cdb330ec0c1d6b9" title="Mark end of interval id.">stamp</a>(BOND_FORCE);
+<a name="l00113"></a>00113 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
+<a name="l00114"></a>00114 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (nAngleType()) {
+<a name="l00115"></a>00115          anglePotential().computeForcesAndStress(<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().communicator());
+<a name="l00116"></a>00116          timer_.<a class="code" href="classDdMd_1_1DdTimer.html#abe973c8562b8261c1cdb330ec0c1d6b9" title="Mark end of interval id.">stamp</a>(ANGLE_FORCE);
+<a name="l00117"></a>00117       }
+<a name="l00118"></a>00118 <span class="preprocessor">      #endif</span>
+<a name="l00119"></a>00119 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
+<a name="l00120"></a>00120 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (nDihedralType()) {
+<a name="l00121"></a>00121          dihedralPotential().computeForcesAndStress(<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().communicator());
+<a name="l00122"></a>00122          timer_.<a class="code" href="classDdMd_1_1DdTimer.html#abe973c8562b8261c1cdb330ec0c1d6b9" title="Mark end of interval id.">stamp</a>(DIHEDRAL_FORCE);
+<a name="l00123"></a>00123       }
+<a name="l00124"></a>00124 <span class="preprocessor">      #endif</span>
+<a name="l00125"></a>00125 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
+<a name="l00126"></a>00126 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1SimulationAccess.html#aaa9e5958b8fd7d03ce7cc9ff4c2bcbf5" title="Does this simulation have an external potential?">hasExternal</a>()) {
+<a name="l00127"></a>00127          <a class="code" href="classDdMd_1_1SimulationAccess.html#a610aa9dc0ef143e0f70463ae3ca2353a" title="Get the ExternalPotential.">externalPotential</a>().<a class="code" href="classDdMd_1_1ExternalPotential.html#a7392df559ecf817bb7ebcf377e89b977" title="Add external forces all local atoms.">computeForces</a>();
+<a name="l00128"></a>00128       }
+<a name="l00129"></a>00129 <span class="preprocessor">      #endif</span>
+<a name="l00130"></a>00130 <span class="preprocessor"></span>
+<a name="l00131"></a>00131       <span class="comment">// Reverse communication (if any)</span>
+<a name="l00132"></a>00132       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1SimulationAccess.html#acfc6bd24e02c36a9ef6782d544d20e36" title="Are forces evaluated by reverse communication (true) or not (false)?">reverseUpdateFlag</a>()) {
+<a name="l00133"></a>00133          <a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d" title="Get the Exchanger.">exchanger</a>().<a class="code" href="classDdMd_1_1Exchanger.html#a1780e9ad95d937625ad874b12ecea1e7" title="Update ghost atom forces.">reverseUpdate</a>();
+<a name="l00134"></a>00134       }
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136       <span class="comment">// Send signal indicating change in atomic forces</span>
+<a name="l00137"></a>00137       <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#ad12ce945c34d63eeb19f4d5bc393bf5c" title="Signal to indicate change in atomic forces.">forceSignal</a>().<a class="code" href="classUtil_1_1Signal.html#ae4c8adf7cb5ed88454aa2a2ca19d330b" title="Notify all observers.">notify</a>();
+<a name="l00138"></a>00138    }
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140    <span class="comment">/*</span>
+<a name="l00141"></a>00141 <span class="comment">   * Return time per processor for last run.</span>
+<a name="l00142"></a>00142 <span class="comment">   */</span>
+<a name="l00143"></a>00143    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1Integrator.html#a6eba2a50b2bf852e607e9fe96c7f53ce" title="Get time per processor of previous run.">Integrator::time</a>()<span class="keyword"> const</span>
+<a name="l00144"></a><a class="code" href="classDdMd_1_1Integrator.html#a6eba2a50b2bf852e607e9fe96c7f53ce">00144</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> timer_.<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(); }
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146    <span class="comment">/*</span>
+<a name="l00147"></a>00147 <span class="comment">   * Return number of time steps in last run.</span>
+<a name="l00148"></a>00148 <span class="comment">   */</span>
+<a name="l00149"></a>00149    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Integrator.html#a4e3755ec6034a02a7e7137ad602fe838" title="Get number of steps in last run.">Integrator::nStep</a>()<span class="keyword"> const</span>
+<a name="l00150"></a><a class="code" href="classDdMd_1_1Integrator.html#a4e3755ec6034a02a7e7137ad602fe838">00150</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> <a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a>; }
 <a name="l00151"></a>00151 
-<a name="l00152"></a>00152          out &lt;&lt; std::endl;
-<a name="l00153"></a>00153          out &lt;&lt; <span class="stringliteral">&quot;time * nproc / (nStep*nAtom):&quot;</span> &lt;&lt; std::endl;
-<a name="l00154"></a>00154          out &lt;&lt; <span class="stringliteral">&quot;Total                &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(time*ratio, 12, 6)
-<a name="l00155"></a>00155              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; std::endl;
-<a name="l00156"></a>00156          out &lt;&lt; <span class="stringliteral">&quot;Diagnostics          &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(diagnosticT*ratio, 12, 6)
-<a name="l00157"></a>00157              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(diagnosticT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00158"></a>00158          out &lt;&lt; <span class="stringliteral">&quot;Integrate1           &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(integrate1T*ratio, 12, 6) 
-<a name="l00159"></a>00159              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(integrate1T/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00160"></a>00160          out &lt;&lt; <span class="stringliteral">&quot;Check                &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(checkT*ratio, 12, 6)
-<a name="l00161"></a>00161              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(checkT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00162"></a>00162          <span class="keywordflow">if</span> (!UTIL_ORTHOGONAL) 
-<a name="l00163"></a>00163          out &lt;&lt; <span class="stringliteral">&quot;Transform (forward)  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(transformFT*ratio, 12, 6)
-<a name="l00164"></a>00164              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(transformFT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00165"></a>00165          out &lt;&lt; <span class="stringliteral">&quot;Exchange             &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(exchangeT*ratio, 12, 6)
-<a name="l00166"></a>00166              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(exchangeT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00167"></a>00167          out &lt;&lt; <span class="stringliteral">&quot;CellList             &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(cellListT*ratio, 12, 6)
-<a name="l00168"></a>00168              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(cellListT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00169"></a>00169          <span class="keywordflow">if</span> (!UTIL_ORTHOGONAL) 
-<a name="l00170"></a>00170          out &lt;&lt; <span class="stringliteral">&quot;Transform (reverse)  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(transformRT*ratio, 12, 6)
-<a name="l00171"></a>00171              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(transformRT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00172"></a>00172          out &lt;&lt; <span class="stringliteral">&quot;PairList             &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(pairListT*ratio, 12, 6)
-<a name="l00173"></a>00173              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(pairListT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00174"></a>00174          out &lt;&lt; <span class="stringliteral">&quot;Update               &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(updateT*ratio, 12, 6)
-<a name="l00175"></a>00175              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(updateT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00176"></a>00176          out &lt;&lt; <span class="stringliteral">&quot;Pair Forces          &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(pairForceT*ratio, 12, 6)
-<a name="l00177"></a>00177              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(pairForceT/time, 12 , 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00178"></a>00178          out &lt;&lt; <span class="stringliteral">&quot;Bond Forces          &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(bondForceT*ratio, 12, 6)
-<a name="l00179"></a>00179              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(bondForceT/time, 12 , 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00180"></a>00180          out &lt;&lt; <span class="stringliteral">&quot;Integrate2           &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(integrate2T*ratio, 12, 6) 
-<a name="l00181"></a>00181              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(integrate2T/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
-<a name="l00182"></a>00182          out &lt;&lt; std::endl;
-<a name="l00183"></a>00183 
-<a name="l00184"></a>00184 <span class="preprocessor">         #if 0</span>
-<a name="l00185"></a>00185 <span class="preprocessor"></span>         out &lt;&lt; <span class="stringliteral">&quot;PairList Statistics&quot;</span> &lt;&lt; std::endl;
-<a name="l00186"></a>00186          out &lt;&lt; <span class="stringliteral">&quot;maxNPair, capacity &quot;</span> 
-<a name="l00187"></a>00187                      &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().pairList().maxNPair(), 10)
-<a name="l00188"></a>00188                      &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().pairList().pairCapacity(), 10)
-<a name="l00189"></a>00189                      &lt;&lt; std::endl;
-<a name="l00190"></a>00190          out &lt;&lt; <span class="stringliteral">&quot;maxNAtom, capacity &quot;</span> 
-<a name="l00191"></a>00191                      &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().pairList().maxNAtom(), 10)
-<a name="l00192"></a>00192                      &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().pairList().atomCapacity(), 10)
-<a name="l00193"></a>00193                      &lt;&lt; std::endl;
-<a name="l00194"></a>00194          out &lt;&lt; <span class="stringliteral">&quot;buildCounter       &quot;</span> 
-<a name="l00195"></a>00195                      &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().pairList().buildCounter(), 10)
-<a name="l00196"></a>00196                      &lt;&lt; std::endl;
-<a name="l00197"></a>00197          out &lt;&lt; <span class="stringliteral">&quot;steps / build      &quot;</span>
-<a name="l00198"></a>00198                      &lt;&lt; double(<a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a>)/double(<a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().pairList().buildCounter())
-<a name="l00199"></a>00199                      &lt;&lt; std::endl;
-<a name="l00200"></a>00200 <span class="preprocessor">         #endif</span>
-<a name="l00201"></a>00201 <span class="preprocessor"></span>
-<a name="l00202"></a>00202          out &lt;&lt; std::endl;
-<a name="l00203"></a>00203       }
-<a name="l00204"></a>00204 
-<a name="l00205"></a>00205    }
-<a name="l00206"></a>00206 
-<a name="l00207"></a>00207 }
-<a name="l00208"></a>00208 <span class="preprocessor">#endif</span>
+<a name="l00152"></a>00152    <span class="comment">/*</span>
+<a name="l00153"></a>00153 <span class="comment">   * Output statistics.</span>
+<a name="l00154"></a>00154 <span class="comment">   */</span>
+<a name="l00155"></a>00155    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Integrator.html#ada6b32ffe23deb03c4d1a6af73e3f374" title="Output statistics immediately after a run.">Integrator::outputStatistics</a>(std::ostream&amp; out)
+<a name="l00156"></a><a class="code" href="classDdMd_1_1Integrator.html#ada6b32ffe23deb03c4d1a6af73e3f374">00156</a>    {
+<a name="l00157"></a>00157       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().isMaster()) {
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159          <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1Integrator.html#a6eba2a50b2bf852e607e9fe96c7f53ce" title="Get time per processor of previous run.">time</a> = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>();
+<a name="l00160"></a>00160          <span class="keywordtype">int</span> nAtomTot = <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#ae48dda2908e1df9a572e291076bb41db" title="Get total number of atoms on all processors.">nAtomTotal</a>();
+<a name="l00161"></a>00161          <span class="keywordtype">int</span> nProc = 1;
+<a name="l00162"></a>00162 <span class="preprocessor">         #ifdef UTIL_MPI</span>
+<a name="l00163"></a>00163 <span class="preprocessor"></span>         nProc = <a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>().Get_size();
+<a name="l00164"></a>00164 <span class="preprocessor">         #endif</span>
+<a name="l00165"></a>00165 <span class="preprocessor"></span>
+<a name="l00166"></a>00166          <span class="comment">// Output total time for the run</span>
+<a name="l00167"></a>00167          out &lt;&lt; std::endl;
+<a name="l00168"></a>00168          out &lt;&lt; <span class="stringliteral">&quot;Time Statistics&quot;</span> &lt;&lt; std::endl;
+<a name="l00169"></a>00169          out &lt;&lt; <span class="stringliteral">&quot;nStep                &quot;</span> &lt;&lt; <a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a> &lt;&lt; std::endl;
+<a name="l00170"></a>00170          out &lt;&lt; <span class="stringliteral">&quot;run time             &quot;</span> &lt;&lt; time &lt;&lt; <span class="stringliteral">&quot; sec&quot;</span> &lt;&lt; std::endl;
+<a name="l00171"></a>00171          out &lt;&lt; <span class="stringliteral">&quot;time / nStep         &quot;</span> &lt;&lt; time/double(<a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a>) 
+<a name="l00172"></a>00172              &lt;&lt; <span class="stringliteral">&quot; sec&quot;</span> &lt;&lt; std::endl;
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174          <span class="keywordtype">double</span> ratio = double(nProc)/double(<a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a>*nAtomTot);
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176          <span class="keywordtype">double</span> diagnosticT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(DIAGNOSTIC);
+<a name="l00177"></a>00177          <span class="keywordtype">double</span> integrate1T = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(INTEGRATE1);
+<a name="l00178"></a>00178          <span class="keywordtype">double</span> checkT =  <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(CHECK);
+<a name="l00179"></a>00179          <span class="keywordtype">double</span> transformFT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(TRANSFORM_F);
+<a name="l00180"></a>00180          <span class="keywordtype">double</span> exchangeT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(EXCHANGE);
+<a name="l00181"></a>00181          <span class="keywordtype">double</span> cellListT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(CELLLIST);
+<a name="l00182"></a>00182          <span class="keywordtype">double</span> transformRT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(TRANSFORM_R);
+<a name="l00183"></a>00183          <span class="keywordtype">double</span> pairListT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(PAIRLIST);
+<a name="l00184"></a>00184          <span class="keywordtype">double</span> updateT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(UPDATE);
+<a name="l00185"></a>00185          <span class="keywordtype">double</span> pairForceT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(PAIR_FORCE);
+<a name="l00186"></a>00186          <span class="keywordtype">double</span> bondForceT = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(BOND_FORCE);
+<a name="l00187"></a>00187          <span class="keywordtype">double</span> integrate2T = <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().<a class="code" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2" title="Get accumulated time for interval i.">time</a>(INTEGRATE2);
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189          out &lt;&lt; std::endl;
+<a name="l00190"></a>00190          out &lt;&lt; <span class="stringliteral">&quot;time * nproc / (nStep*nAtom):&quot;</span> &lt;&lt; std::endl;
+<a name="l00191"></a>00191          out &lt;&lt; <span class="stringliteral">&quot;Total                &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(time*ratio, 12, 6)
+<a name="l00192"></a>00192              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; std::endl;
+<a name="l00193"></a>00193          out &lt;&lt; <span class="stringliteral">&quot;Diagnostics          &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(diagnosticT*ratio, 12, 6)
+<a name="l00194"></a>00194              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(diagnosticT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00195"></a>00195          out &lt;&lt; <span class="stringliteral">&quot;Integrate1           &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(integrate1T*ratio, 12, 6) 
+<a name="l00196"></a>00196              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(integrate1T/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00197"></a>00197          out &lt;&lt; <span class="stringliteral">&quot;Check                &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(checkT*ratio, 12, 6)
+<a name="l00198"></a>00198              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(checkT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00199"></a>00199          <span class="keywordflow">if</span> (!UTIL_ORTHOGONAL) 
+<a name="l00200"></a>00200          out &lt;&lt; <span class="stringliteral">&quot;Transform (forward)  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(transformFT*ratio, 12, 6)
+<a name="l00201"></a>00201              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(transformFT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00202"></a>00202          out &lt;&lt; <span class="stringliteral">&quot;Exchange             &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(exchangeT*ratio, 12, 6)
+<a name="l00203"></a>00203              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(exchangeT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00204"></a>00204          out &lt;&lt; <span class="stringliteral">&quot;CellList             &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(cellListT*ratio, 12, 6)
+<a name="l00205"></a>00205              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(cellListT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00206"></a>00206          <span class="keywordflow">if</span> (!UTIL_ORTHOGONAL) 
+<a name="l00207"></a>00207          out &lt;&lt; <span class="stringliteral">&quot;Transform (reverse)  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(transformRT*ratio, 12, 6)
+<a name="l00208"></a>00208              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(transformRT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00209"></a>00209          out &lt;&lt; <span class="stringliteral">&quot;PairList             &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(pairListT*ratio, 12, 6)
+<a name="l00210"></a>00210              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(pairListT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00211"></a>00211          out &lt;&lt; <span class="stringliteral">&quot;Update               &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(updateT*ratio, 12, 6)
+<a name="l00212"></a>00212              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(updateT/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00213"></a>00213          out &lt;&lt; <span class="stringliteral">&quot;Pair Forces          &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(pairForceT*ratio, 12, 6)
+<a name="l00214"></a>00214              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(pairForceT/time, 12 , 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00215"></a>00215          out &lt;&lt; <span class="stringliteral">&quot;Bond Forces          &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(bondForceT*ratio, 12, 6)
+<a name="l00216"></a>00216              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(bondForceT/time, 12 , 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00217"></a>00217          out &lt;&lt; <span class="stringliteral">&quot;Integrate2           &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(integrate2T*ratio, 12, 6) 
+<a name="l00218"></a>00218              &lt;&lt; <span class="stringliteral">&quot; sec   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(integrate2T/time, 12, 6, <span class="keyword">true</span>) &lt;&lt; std::endl;
+<a name="l00219"></a>00219          out &lt;&lt; std::endl;
+<a name="l00220"></a>00220 
+<a name="l00221"></a>00221          <span class="keywordtype">int</span> buildCounter = <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().<a class="code" href="classDdMd_1_1PairPotential.html#a496389960031558f2d848ff0df1721dd" title="Get the PairList by reference.">pairList</a>().<a class="code" href="classDdMd_1_1PairList.html#afa98ce42e83384bf8cca4ec7edd55600" title="Return number of times the PairList has been built thus far.">buildCounter</a>(); 
+<a name="l00222"></a>00222          out &lt;&lt; <span class="stringliteral">&quot;buildCounter             &quot;</span> 
+<a name="l00223"></a>00223                      &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(buildCounter, 10)
+<a name="l00224"></a>00224                      &lt;&lt; std::endl;
+<a name="l00225"></a>00225          out &lt;&lt; <span class="stringliteral">&quot;steps / build            &quot;</span>
+<a name="l00226"></a>00226                      &lt;&lt; double(<a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a>)/double(buildCounter)
+<a name="l00227"></a>00227                      &lt;&lt; std::endl;
+<a name="l00228"></a>00228          out &lt;&lt; std::endl;
+<a name="l00229"></a>00229 
+<a name="l00230"></a>00230       }
+<a name="l00231"></a>00231 
+<a name="l00232"></a>00232    }
+<a name="l00233"></a>00233 
+<a name="l00234"></a>00234 }
+<a name="l00235"></a>00235 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:56 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:36 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

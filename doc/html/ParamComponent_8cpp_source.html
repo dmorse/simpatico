@@ -110,52 +110,44 @@
 <a name="l00059"></a>00059 
 <a name="l00060"></a>00060 <span class="preprocessor">   #ifdef UTIL_MPI</span>
 <a name="l00061"></a>00061 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37" title="Set an MPI communicator for parameter IO.">ParamComponent::setParamCommunicator</a>(MPI::Intracomm&amp; communicator)
-<a name="l00062"></a><a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37">00062</a>    {
-<a name="l00063"></a>00063       <span class="comment">// Precondition</span>
-<a name="l00064"></a>00064       <span class="keywordflow">if</span> (io_.<a class="code" href="classUtil_1_1MpiFileIo.html#ab308bde6f007cb3f8687072597359f88" title="Does this object have a communicator?">hasCommunicator</a>()) {
-<a name="l00065"></a>00065          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Resetting param communicator in a ParamComponent&quot;</span>
-<a name="l00066"></a>00066                      &lt;&lt; std::endl;
-<a name="l00067"></a>00067          <span class="comment">//UTIL_THROW(&quot;Attempt to reset param communicator in a ParamComponent&quot;);</span>
-<a name="l00068"></a>00068       }
-<a name="l00069"></a>00069       io_.<a class="code" href="classUtil_1_1MpiFileIo.html#a5074e0e6891950e93b2dc14840df0f0b" title="Set the communicator.">setCommunicator</a>(communicator); 
-<a name="l00070"></a>00070    }
-<a name="l00071"></a>00071 <span class="preprocessor">   #endif</span>
-<a name="l00072"></a>00072 <span class="preprocessor"></span>
-<a name="l00073"></a>00073    <span class="comment">// Static functions</span>
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075    <span class="comment">/*</span>
-<a name="l00076"></a>00076 <span class="comment">   * Set echo to true (default) or false.</span>
-<a name="l00077"></a>00077 <span class="comment">   */</span>
-<a name="l00078"></a>00078    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#add72ad7add98e0b90979ee2638c7468d" title="Set echo parameter to true enable echoing, or false to disable.">ParamComponent::setEcho</a>(<span class="keywordtype">bool</span> echo)
-<a name="l00079"></a><a class="code" href="classUtil_1_1ParamComponent.html#add72ad7add98e0b90979ee2638c7468d">00079</a>    {  echo_ = <a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2" title="Get echo parameter.">echo</a>; }
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081    <span class="comment">/*</span>
-<a name="l00082"></a>00082 <span class="comment">   * Get value of echo. true = echoing is on, false = off.</span>
-<a name="l00083"></a>00083 <span class="comment">   */</span>
-<a name="l00084"></a>00084    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2" title="Get echo parameter.">ParamComponent::echo</a>()
-<a name="l00085"></a><a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2">00085</a>    {  <span class="keywordflow">return</span> echo_; }
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087    <span class="comment">/*</span>
-<a name="l00088"></a>00088 <span class="comment">   * This static method exists to guarantee initialization of a static </span>
-<a name="l00089"></a>00089 <span class="comment">   * constant echo_ that is defined in the same file.  Call it somewhere </span>
-<a name="l00090"></a>00090 <span class="comment">   * in the program to guarantee that the contents of this file will </span>
-<a name="l00091"></a>00091 <span class="comment">   * be linked, rather than optimized away. It may only be called once.</span>
-<a name="l00092"></a>00092 <span class="comment">   */</span>
-<a name="l00093"></a>00093    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a5350c0432130f7feba8392f5b3a75cb4" title="Initialize static echo member to false.">ParamComponent::initStatic</a>()
-<a name="l00094"></a><a class="code" href="classUtil_1_1ParamComponent.html#a5350c0432130f7feba8392f5b3a75cb4">00094</a>    {  
-<a name="l00095"></a>00095       <span class="comment">// This function can only be called once.</span>
-<a name="l00096"></a>00096       <span class="keyword">static</span> <span class="keywordtype">int</span> nCall = 0;
-<a name="l00097"></a>00097       <span class="keywordflow">if</span> (nCall == 0) {
-<a name="l00098"></a>00098          echo_ = <span class="keyword">false</span>; 
-<a name="l00099"></a>00099       }
-<a name="l00100"></a>00100       ++nCall;
-<a name="l00101"></a>00101    }
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103 } 
-<a name="l00104"></a>00104 <span class="preprocessor">#endif</span>
+<a name="l00062"></a><a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37">00062</a>    {  io_.<a class="code" href="classUtil_1_1MpiFileIo.html#a5074e0e6891950e93b2dc14840df0f0b" title="Set the communicator.">setCommunicator</a>(communicator); }
+<a name="l00063"></a>00063 <span class="preprocessor">   #endif</span>
+<a name="l00064"></a>00064 <span class="preprocessor"></span>
+<a name="l00065"></a>00065    <span class="comment">// Static functions</span>
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067    <span class="comment">/*</span>
+<a name="l00068"></a>00068 <span class="comment">   * Set echo to true (default) or false.</span>
+<a name="l00069"></a>00069 <span class="comment">   */</span>
+<a name="l00070"></a>00070    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#add72ad7add98e0b90979ee2638c7468d" title="Set echo parameter to true enable echoing, or false to disable.">ParamComponent::setEcho</a>(<span class="keywordtype">bool</span> echo)
+<a name="l00071"></a><a class="code" href="classUtil_1_1ParamComponent.html#add72ad7add98e0b90979ee2638c7468d">00071</a>    {  echo_ = <a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2" title="Get echo parameter.">echo</a>; }
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073    <span class="comment">/*</span>
+<a name="l00074"></a>00074 <span class="comment">   * Get value of echo. true = echoing is on, false = off.</span>
+<a name="l00075"></a>00075 <span class="comment">   */</span>
+<a name="l00076"></a>00076    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2" title="Get echo parameter.">ParamComponent::echo</a>()
+<a name="l00077"></a><a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2">00077</a>    {  <span class="keywordflow">return</span> echo_; }
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079    <span class="comment">/*</span>
+<a name="l00080"></a>00080 <span class="comment">   * This static method exists to guarantee initialization of a static </span>
+<a name="l00081"></a>00081 <span class="comment">   * constant echo_ that is defined in the same file.  Call it somewhere </span>
+<a name="l00082"></a>00082 <span class="comment">   * in the program to guarantee that the contents of this file will </span>
+<a name="l00083"></a>00083 <span class="comment">   * be linked, rather than optimized away. It may only be called once.</span>
+<a name="l00084"></a>00084 <span class="comment">   */</span>
+<a name="l00085"></a>00085    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a5350c0432130f7feba8392f5b3a75cb4" title="Initialize static echo member to false.">ParamComponent::initStatic</a>()
+<a name="l00086"></a><a class="code" href="classUtil_1_1ParamComponent.html#a5350c0432130f7feba8392f5b3a75cb4">00086</a>    {  
+<a name="l00087"></a>00087       <span class="comment">// This function can only be called once.</span>
+<a name="l00088"></a>00088       <span class="keyword">static</span> <span class="keywordtype">int</span> nCall = 0;
+<a name="l00089"></a>00089       <span class="keywordflow">if</span> (nCall == 0) {
+<a name="l00090"></a>00090          echo_ = <span class="keyword">false</span>; 
+<a name="l00091"></a>00091       }
+<a name="l00092"></a>00092       ++nCall;
+<a name="l00093"></a>00093    }
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095 } 
+<a name="l00096"></a>00096 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:57 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:37 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

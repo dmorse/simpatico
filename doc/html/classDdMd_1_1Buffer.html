@@ -55,7 +55,7 @@
 <!-- doxytag: class="DdMd::Buffer" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a> for sending atoms and groups between processors. </p>
 
-<p>Definition at line <a class="el" href="Buffer_8h_source.html#l00027">27</a> of file <a class="el" href="Buffer_8h_source.html">Buffer.h</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8h_source.html#l00028">28</a> of file <a class="el" href="Buffer_8h_source.html">Buffer.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="Buffer_8h_source.html">Buffer.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -79,6 +79,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read capacities and allocate buffers.  <a href="#a5f1d36aee618277b5bb30f22aea57c93"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a41a950b2b25f947f80470304ee33252b">allocate</a> (int atomCapacity, int ghostCapacity)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate send and recv buffers.  <a href="#a41a950b2b25f947f80470304ee33252b"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Data Block Management</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a3e9c53dd43d416f2980ee1eb396316e1">clearSendBuffer</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the send buffer and sendType.  <a href="#a3e9c53dd43d416f2980ee1eb396316e1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#ab39ec5feb70943acda311aa9c52913db">beginSendBlock</a> (BlockDataType sendType, int sendGroupSize=0)</td></tr>
@@ -87,6 +88,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize a block in the send buffer.  <a href="#ac625a812aee3b7fe37d17f9cdb8c86f1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a084adf34691be655ad90392f4749b667">beginRecvBlock</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Begin to receive a block from the recv buffer.  <a href="#a084adf34691be655ad90392f4749b667"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Interprocessor Communication</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#af1f502cd5965c10b8dc047283e16ea47">sendRecv</a> (MPI::Intracomm &amp;comm, int source, int dest)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive from processor send and send to processor recv.  <a href="#af1f502cd5965c10b8dc047283e16ea47"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a0976d94ef4aa36d8dc8d42da2d0dea0f">send</a> (MPI::Intracomm &amp;comm, int dest)</td></tr>
@@ -95,6 +97,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a buffer.  <a href="#a1b0d1eb5202afbd87af64511e8ec1469"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a784e3e1eb81dfce56ad921844d5be563">bcast</a> (MPI::Intracomm &amp;comm, int source)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcast a buffer.  <a href="#a784e3e1eb81dfce56ad921844d5be563"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Pack and Unpack Methods</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a625076cad43f862d88fe681d0e275466">packAtom</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> for exchange of ownership.  <a href="#a625076cad43f862d88fe681d0e275466"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a7fed89d8782ba831b498072a5f130b25">unpackAtom</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
@@ -117,6 +120,14 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;int N&gt; </td></tr>
 <tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a4a1d4e153ace9946c297181018bb5d38">unpackGroup</a> (<a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; &amp;group)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive the next <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> in the recv buffer.  <a href="#a4a1d4e153ace9946c297181018bb5d38"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Statistics</div></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#ae5a3c0279fd81a78ba122c50e6739bdf">computeStatistics</a> (MPI::Intracomm &amp;comm)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute statistics (reduce from all processors).  <a href="#ae5a3c0279fd81a78ba122c50e6739bdf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a8c9c083b24e7298545aeb9c3392df029">clearStatistics</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear any accumulated usage statistics.  <a href="#a8c9c083b24e7298545aeb9c3392df029"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#ad595d1cbccd6dc518d41cf9708b3c9c4">outputStatistics</a> (std::ostream &amp;out)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output statistics.  <a href="#ad595d1cbccd6dc518d41cf9708b3c9c4"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#ace96a3940dda7a0d2f2ad74d3303a21c">sendSize</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of items written to current send block.  <a href="#ace96a3940dda7a0d2f2ad74d3303a21c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19">recvSize</a> () const </td></tr>
@@ -149,7 +160,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00024">24</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00025">25</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 </div>
 </div>
@@ -174,9 +185,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00078">78</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00080">80</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>References <a class="el" href="Buffer_8cpp_source.html#l00054">allocate()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00148">Util::ParamComposite::readBegin()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00177">Util::ParamComposite::readEnd()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Buffer_8cpp_source.html#l00056">allocate()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00149">Util::ParamComposite::readBegin()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00179">Util::ParamComposite::readEnd()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -215,11 +226,11 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00054">54</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00056">56</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>References <a class="el" href="Buffer_8cpp_source.html#l00054">allocate()</a>, <a class="el" href="Buffer_8cpp_source.html#l00106">atomCapacity()</a>, <a class="el" href="Buffer_8cpp_source.html#l00112">ghostCapacity()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Buffer_8cpp_source.html#l00056">allocate()</a>, <a class="el" href="Buffer_8cpp_source.html#l00108">atomCapacity()</a>, <a class="el" href="Buffer_8cpp_source.html#l00114">ghostCapacity()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Buffer_8cpp_source.html#l00054">allocate()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00078">readParam()</a>.</p>
+<p>Referenced by <a class="el" href="Buffer_8cpp_source.html#l00056">allocate()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00080">readParam()</a>.</p>
 
 </div>
 </div>
@@ -239,7 +250,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear the send buffer and sendType. </p>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00178">178</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00180">180</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>, <a class="el" href="Exchanger_8cpp_source.html#l01225">DdMd::Exchanger::reverseUpdate()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01148">DdMd::Exchanger::update()</a>.</p>
 
@@ -273,7 +284,7 @@ Public Member Functions</h2></td></tr>
 <p>Clear the send buffer prior to packing and set atomtype. </p>
 <p>Sets <a class="el" href="classDdMd_1_1Buffer.html#ace96a3940dda7a0d2f2ad74d3303a21c" title="Number of items written to current send block.">sendSize()</a> to zero, the send pointer to the beginning of the send buffer, and sendType to the type of data to be sent. If sendType = <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>, also set sendGroupSize. </p>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00189">189</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00191">191</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -304,7 +315,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00215">215</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00217">217</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>, <a class="el" href="Exchanger_8cpp_source.html#l01225">DdMd::Exchanger::reverseUpdate()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01148">DdMd::Exchanger::update()</a>.</p>
 
@@ -327,7 +338,7 @@ Public Member Functions</h2></td></tr>
 <p>Begin to receive a block from the recv buffer. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>false if an incomplete block was received, true otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00239">239</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00241">241</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -378,7 +389,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00503">503</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00505">505</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -421,7 +432,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00545">545</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00551">551</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -461,7 +472,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00568">568</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00579">579</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -501,7 +512,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00593">593</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00604">604</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -532,7 +543,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00263">263</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00265">265</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00205">DdMd::Atom::id()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">DdMd::Atom::mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">DdMd::Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00099">DdMd::Mask::size()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00209">DdMd::Atom::typeId()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00225">DdMd::Atom::velocity()</a>.</p>
 
@@ -564,7 +575,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00293">293</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00295">295</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00045">DdMd::Mask::append()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00034">DdMd::Mask::clear()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">DdMd::Atom::mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">DdMd::Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00193">DdMd::Atom::setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00197">DdMd::Atom::setTypeId()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00099">DdMd::Mask::size()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00225">DdMd::Atom::velocity()</a>.</p>
 
@@ -596,7 +607,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00351">351</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00353">353</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00205">DdMd::Atom::id()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">DdMd::Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00209">DdMd::Atom::typeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -626,7 +637,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00375">375</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00377">377</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">DdMd::Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00193">DdMd::Atom::setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00197">DdMd::Atom::setTypeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -655,7 +666,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00431">431</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00433">433</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -687,7 +698,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00449">449</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00451">451</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -718,7 +729,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00466">466</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00468">468</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00229">DdMd::Atom::force()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -750,7 +761,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00484">484</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00486">486</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00229">DdMd::Atom::force()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -783,7 +794,7 @@ template&lt;int N&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8h_source.html#l00383">383</a> of file <a class="el" href="Buffer_8h_source.html">Buffer.h</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8h_source.html#l00438">438</a> of file <a class="el" href="Buffer_8h_source.html">Buffer.h</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00158">DdMd::Group&lt; N &gt;::atomId()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00144">DdMd::Group&lt; N &gt;::id()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00136">DdMd::Group&lt; N &gt;::plan()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00150">DdMd::Group&lt; N &gt;::typeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -814,9 +825,89 @@ template&lt;int N&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Buffer_8h_source.html#l00407">407</a> of file <a class="el" href="Buffer_8h_source.html">Buffer.h</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8h_source.html#l00462">462</a> of file <a class="el" href="Buffer_8h_source.html">Buffer.h</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00125">DdMd::Group&lt; N &gt;::clearAtomPtr()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00136">DdMd::Group&lt; N &gt;::plan()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00100">DdMd::Group&lt; N &gt;::setAtomId()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00083">DdMd::Group&lt; N &gt;::setId()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00091">DdMd::Group&lt; N &gt;::setTypeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae5a3c0279fd81a78ba122c50e6739bdf"></a><!-- doxytag: member="DdMd::Buffer::computeStatistics" ref="ae5a3c0279fd81a78ba122c50e6739bdf" args="(MPI::Intracomm &amp;comm)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::Buffer::computeStatistics </td>
+          <td>(</td>
+          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
+          <td class="paramname"><em>comm</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Compute statistics (reduce from all processors). </p>
+<p>Call on all processors.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">comm</td><td>MPI communicator </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00635">635</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8c9c083b24e7298545aeb9c3392df029"></a><!-- doxytag: member="DdMd::Buffer::clearStatistics" ref="a8c9c083b24e7298545aeb9c3392df029" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::Buffer::clearStatistics </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Clear any accumulated usage statistics. </p>
+
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00653">653</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+
+<p>References <a class="el" href="Setable_8h_source.html#l00089">Util::Setable&lt; T &gt;::unset()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad595d1cbccd6dc518d41cf9708b3c9c4"></a><!-- doxytag: member="DdMd::Buffer::outputStatistics" ref="ad595d1cbccd6dc518d41cf9708b3c9c4" args="(std::ostream &amp;out)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::Buffer::outputStatistics </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>out</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Output statistics. </p>
+<p>Call on master, after calling computeStatistics on all procs.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>output stream </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00662">662</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+
+<p>References <a class="el" href="Setable_8h_source.html#l00103">Util::Setable&lt; T &gt;::value()</a>.</p>
 
 </div>
 </div>
@@ -836,7 +927,7 @@ template&lt;int N&gt; </div>
 
 <p>Number of items written to current send block. </p>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00620">620</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00676">676</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 </div>
 </div>
@@ -856,7 +947,7 @@ template&lt;int N&gt; </div>
 
 <p>Number of unread items in current recv block. </p>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00626">626</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00682">682</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>.</p>
 
@@ -878,7 +969,7 @@ template&lt;int N&gt; </div>
 
 <p>Has memory been allocated for this <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a>? </p>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00632">632</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00688">688</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 </div>
 </div>
@@ -898,7 +989,7 @@ template&lt;int N&gt; </div>
 
 <p>Has this <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a> been initialized? </p>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00118">118</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00120">120</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00103">DdMd::Exchanger::allocate()</a>.</p>
 
@@ -920,9 +1011,9 @@ template&lt;int N&gt; </div>
 
 <p>Maximum number of atoms for which space is available. </p>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00106">106</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00108">108</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Buffer_8cpp_source.html#l00054">allocate()</a>.</p>
+<p>Referenced by <a class="el" href="Buffer_8cpp_source.html#l00056">allocate()</a>.</p>
 
 </div>
 </div>
@@ -942,9 +1033,9 @@ template&lt;int N&gt; </div>
 
 <p>Maximum number of ghost atoms for which space is available. </p>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00112">112</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00114">114</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00103">DdMd::Exchanger::allocate()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00054">allocate()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00103">DdMd::Exchanger::allocate()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00056">allocate()</a>.</p>
 
 </div>
 </div>
@@ -965,7 +1056,7 @@ template&lt;int N&gt; </div>
 
 <p>Maximum number of group&lt;N&gt; objects for which space is available. </p>
 
-<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00420">420</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00422">422</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -976,7 +1067,7 @@ template&lt;int N&gt; </div>
 <li><a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:38 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

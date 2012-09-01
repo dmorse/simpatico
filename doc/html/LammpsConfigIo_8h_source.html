@@ -61,35 +61,36 @@
 <a name="l00010"></a>00010 
 <a name="l00011"></a>00011 <span class="preprocessor">#include &lt;mcMd/configIos/ConfigIo.h&gt;</span> <span class="comment">// base class</span>
 <a name="l00012"></a>00012 <span class="preprocessor">#include &lt;util/boundary/Boundary.h&gt;</span>   <span class="comment">// base class</span>
-<a name="l00013"></a>00013 
-<a name="l00014"></a>00014 <span class="keyword">namespace </span>McMd
-<a name="l00015"></a>00015 {
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017    <span class="keyword">using namespace </span>Util;
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019    <span class="keyword">class </span>Simulation;
-<a name="l00020"></a>00020    <span class="keyword">class </span>System;
-<a name="l00021"></a>00021    
-<a name="l00048"></a><a class="code" href="classMcMd_1_1LammpsConfigIo.html">00048</a>    <span class="keyword">class </span><a class="code" href="classMcMd_1_1LammpsConfigIo.html" title="ConfigIo for Lammps data files.">LammpsConfigIo</a> : <span class="keyword">public</span> <a class="code" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>
-<a name="l00049"></a>00049    {
-<a name="l00050"></a>00050    
-<a name="l00051"></a>00051    <span class="keyword">public</span>:
-<a name="l00052"></a>00052 
-<a name="l00054"></a>00054       <a class="code" href="classMcMd_1_1LammpsConfigIo.html" title="ConfigIo for Lammps data files.">LammpsConfigIo</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system);
-<a name="l00055"></a>00055  
-<a name="l00057"></a>00057       <span class="keyword">virtual</span> ~<a class="code" href="classMcMd_1_1LammpsConfigIo.html" title="ConfigIo for Lammps data files.">LammpsConfigIo</a>();
-<a name="l00058"></a>00058  
-<a name="l00064"></a>00064       <span class="keywordtype">void</span> read(std::istream &amp;in);
-<a name="l00065"></a>00065  
-<a name="l00071"></a>00071       <span class="keywordtype">void</span> <a class="code" href="group__Format__Module.html#gaabeeaafc2872bcd5428befc5da1b532b" title="Function template for output in a standard format.">write</a>(std::ostream &amp;out);
-<a name="l00072"></a>00072  
-<a name="l00073"></a>00073    }; 
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075 } 
-<a name="l00076"></a>00076 <span class="preprocessor">#endif</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;util/space/Vector.h&gt;</span>   
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="keyword">namespace </span>McMd
+<a name="l00016"></a>00016 {
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018    <span class="keyword">using namespace </span>Util;
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020    <span class="keyword">class </span>Simulation;
+<a name="l00021"></a>00021    <span class="keyword">class </span>System;
+<a name="l00022"></a>00022    
+<a name="l00049"></a><a class="code" href="classMcMd_1_1LammpsConfigIo.html">00049</a>    <span class="keyword">class </span><a class="code" href="classMcMd_1_1LammpsConfigIo.html" title="ConfigIo for Lammps data files.">LammpsConfigIo</a> : <span class="keyword">public</span> <a class="code" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>
+<a name="l00050"></a>00050    {
+<a name="l00051"></a>00051    
+<a name="l00052"></a>00052    <span class="keyword">public</span>:
+<a name="l00053"></a>00053 
+<a name="l00055"></a>00055       <a class="code" href="classMcMd_1_1LammpsConfigIo.html" title="ConfigIo for Lammps data files.">LammpsConfigIo</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system);
+<a name="l00056"></a>00056  
+<a name="l00058"></a>00058       <span class="keyword">virtual</span> ~<a class="code" href="classMcMd_1_1LammpsConfigIo.html" title="ConfigIo for Lammps data files.">LammpsConfigIo</a>();
+<a name="l00059"></a>00059  
+<a name="l00065"></a>00065       <span class="keywordtype">void</span> read(std::istream &amp;in);
+<a name="l00066"></a>00066      
+<a name="l00072"></a>00072       <span class="keywordtype">void</span> <a class="code" href="group__Format__Module.html#gaabeeaafc2872bcd5428befc5da1b532b" title="Function template for output in a standard format.">write</a>(std::ostream &amp;out);
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074    }; 
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 } 
+<a name="l00077"></a>00077 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:56 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:36 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

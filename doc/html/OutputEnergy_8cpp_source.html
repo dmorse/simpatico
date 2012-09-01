@@ -114,7 +114,7 @@
 <a name="l00063"></a>00063          <span class="keywordflow">if</span> (sys.<a class="code" href="classDdMd_1_1Simulation.html#a4bcb8e6e1482b6e825e54d71e93b9e6c" title="Get the Domain by reference.">domain</a>().<a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">isMaster</a>()) {
 <a name="l00064"></a>00064             <span class="keywordtype">double</span> kinetic = sys.<a class="code" href="classDdMd_1_1Simulation.html#a10c17ef9707e9c64b0295b19089ad6e4" title="Return precomputed total kinetic energy.">kineticEnergy</a>();
 <a name="l00065"></a>00065             <span class="keywordtype">double</span> potential = sys.<a class="code" href="classDdMd_1_1Simulation.html#af5343ea084c10df1bdec06fdb67e6c83" title="Return precomputed total potential energy.">potentialEnergy</a>();
-<a name="l00066"></a>00066             std::cout &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(iStep, 10)
+<a name="l00066"></a>00066             <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(iStep, 10)
 <a name="l00067"></a>00067                       &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(kinetic, 20)
 <a name="l00068"></a>00068                       &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(potential, 20)
 <a name="l00069"></a>00069                       &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(kinetic + potential, 20)
@@ -129,7 +129,7 @@
 <a name="l00078"></a>00078 <span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:57 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:37 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

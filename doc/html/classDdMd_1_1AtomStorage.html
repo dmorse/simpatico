@@ -157,6 +157,15 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the container is valid, or throw an Exception.  <a href="#a648f8dc58ab38a365bdd82d67180df00"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a5f884ba9d64af5f6bd406015c1bf4b25">isValid</a> (MPI::Intracomm &amp;communicator) const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the container is valid, or throw an Exception.  <a href="#a5f884ba9d64af5f6bd406015c1bf4b25"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Statistics</div></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a370a6cc16d9adc5673efd9280dc78502">computeStatistics</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute statistics (reduce from all processors).  <a href="#a370a6cc16d9adc5673efd9280dc78502"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a9cc24138f617b8339610d3bc0616cd90">clearStatistics</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear statistical accumulators (call on all processors).  <a href="#a9cc24138f617b8339610d3bc0616cd90"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#ad903e5941711a533aaee19f7d03dd042">outputStatistics</a> (std::ostream &amp;out)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output statistics.  <a href="#ad903e5941711a533aaee19f7d03dd042"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#ad8921e1278a6be9b983cfa5dc645ee1d">maxNAtom</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of primary atoms encountered thus far.  <a href="#ad8921e1278a6be9b983cfa5dc645ee1d"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a2bba2162e62cc9262a7c13d90cfc6764"></a><!-- doxytag: member="DdMd::AtomStorage::AtomStorage" ref="a2bba2162e62cc9262a7c13d90cfc6764" args="()" -->
@@ -175,7 +184,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00031">31</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00032">32</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -195,7 +204,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00059">59</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00062">62</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -231,7 +240,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00065">65</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00068">68</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -276,7 +285,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00078">78</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00081">81</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -306,7 +315,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
  storage.addNewAtom();
 </pre></div><dl class="return"><dt><b>Returns:</b></dt><dd>address for new atom. </dd></dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00127">127</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00130">130</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>.</p>
 
@@ -329,7 +338,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 <p>Finalize addition of the most recent new atom. </p>
 <p>This method adds the atom that was returned by the most recent call to newAtomPtr to the atom set. The global atom id must be set before calling this function, by calling <a class="el" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae" title="Set unique id for this Atom.">Atom::setId(int)</a>, because the algorithm uses the global id returned by <a class="el" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">Atom::id()</a>. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00145">145</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00148">148</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>.</p>
 
@@ -363,7 +372,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>address for new atom. </dd></dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00171">171</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00179">179</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -396,7 +405,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00182">182</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00190">190</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -429,7 +438,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
  storage.addNewGhost();
 </pre></div><dl class="return"><dt><b>Returns:</b></dt><dd>address for new ghost atom. </dd></dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00202">202</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00210">210</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -450,7 +459,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 <p>Register the most recent new ghost atom. </p>
 <p>This method adds the atom that was returned by the most recent call to newGhostPtr to the ghost atom set. The global atom id must be set before calling this function, by calling <a class="el" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae" title="Set unique id for this Atom.">Atom::setId(int)</a>, because an data structure uses the global id returned by <a class="el" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">Atom::id()</a>. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00217">217</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00225">225</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -482,7 +491,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>address for new ghost atom. </dd></dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00237">237</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00245">245</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -515,7 +524,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00248">248</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00256">256</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -535,7 +544,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 
 <p>Clear all ghost atoms. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00266">266</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00274">274</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>.</p>
 
@@ -565,9 +574,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00425">425</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00433">433</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>.</p>
 
 </div>
 </div>
@@ -595,9 +604,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00451">451</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00459">459</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -618,9 +627,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 <p>Record current positions of all local atoms and lock storage. </p>
 <p>This method stores positions of local atoms and locks the storage, prohibiting addition or removal of atoms or ghosts until clearSnapshot is called. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00295">295</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00303">303</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -641,11 +650,11 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 <p>Clear previous snapshot. </p>
 <p>This method removes the lock imposed by a previous call to <a class="el" href="classDdMd_1_1AtomStorage.html#a8bdb321770232e6f4bb1ba7413aa9509" title="Record current positions of all local atoms and lock storage.">makeSnapshot()</a>, allowing changes to atom and ghost sets. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00314">314</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00322">322</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -668,7 +677,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 <p>Note: This is a local operation, and returns only the maximum on this processor.</p>
 <p>Throws exception if no valid snapshot is available. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00322">322</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00330">330</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -708,9 +717,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if exchange / reneighboring is needed, false otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00351">351</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00359">359</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>.</p>
 
 </div>
 </div>
@@ -737,9 +746,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00401">401</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00409">409</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00120">DdMd::NvtIntegrator::integrateStep1()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00083">DdMd::NveIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00145">DdMd::NvtIntegrator::integrateStep2()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00103">DdMd::NveIntegrator::integrateStep2()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00120">DdMd::NvtIntegrator::integrateStep1()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00083">DdMd::NveIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00145">DdMd::NvtIntegrator::integrateStep2()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00103">DdMd::NveIntegrator::integrateStep2()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, and <a class="el" href="ddMd_2diagnostics_2StructureFactor_8cpp_source.html#l00100">DdMd::StructureFactor::sample()</a>.</p>
 
 </div>
 </div>
@@ -766,7 +775,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00407">407</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00415">415</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -793,7 +802,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00413">413</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00421">421</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -820,7 +829,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00419">419</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00427">427</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -844,9 +853,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCartesian</b> () co
 <p>Return pointer to <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> with specified id. </p>
 <p>This method returns a pointer to an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> or ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> with the specified id if it is exists on this processor, or returns a null pointer if the atom does not exist on this processor. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00395">395</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00403">403</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="GroupStorage_8h_source.html#l00554">DdMd::GroupStorage&lt; N &gt;::isValid()</a>.</p>
+<p>Referenced by <a class="el" href="GroupStorage_8h_source.html#l00648">DdMd::GroupStorage&lt; N &gt;::isValid()</a>.</p>
 
 </div>
 </div>
@@ -876,7 +885,7 @@ template&lt;int N&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00554">554</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00596">596</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00158">DdMd::Group&lt; N &gt;::atomId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -910,7 +919,7 @@ template&lt;int N&gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>number of atoms found on this processor. </dd></dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00574">574</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00616">616</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00158">DdMd::Group&lt; N &gt;::atomId()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00125">DdMd::Group&lt; N &gt;::clearAtomPtr()</a>, and <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00109">DdMd::Group&lt; N &gt;::setAtomPtr()</a>.</p>
 
@@ -932,7 +941,7 @@ template&lt;int N&gt; </div>
 
 <p>Return current number of atoms (excluding ghosts) </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00518">518</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00560">560</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
 
 <p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
 
@@ -954,7 +963,7 @@ template&lt;int N&gt; </div>
 
 <p>Return current number of ghost atoms. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00521">521</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00563">563</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
 
 </div>
 </div>
@@ -974,7 +983,7 @@ template&lt;int N&gt; </div>
 
 <p>Return capacity for atoms (excluding ghosts). </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00524">524</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00566">566</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
 
 </div>
 </div>
@@ -994,7 +1003,7 @@ template&lt;int N&gt; </div>
 
 <p>Return capacity for ghost atoms. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00527">527</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00569">569</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
 
 </div>
 </div>
@@ -1015,9 +1024,9 @@ template&lt;int N&gt; </div>
 <p>Return maximum number of atoms on all processors. </p>
 <p><a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> ids are labelled from 0, ..., totalAtomCapacity-1 </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00530">530</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00572">572</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
 
-<p>Referenced by <a class="el" href="GroupStorage_8h_source.html#l00554">DdMd::GroupStorage&lt; N &gt;::isValid()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="GroupStorage_8h_source.html#l00648">DdMd::GroupStorage&lt; N &gt;::isValid()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
 
 </div>
 </div>
@@ -1046,9 +1055,9 @@ template&lt;int N&gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>on master node, return total number of atoms. </dd></dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00478">478</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00486">486</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00253">DdMd::DdMdConfigIo::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00253">DdMd::DdMdConfigIo::writeConfig()</a>.</p>
 
 </div>
 </div>
@@ -1069,9 +1078,9 @@ template&lt;int N&gt; </div>
 <p>Unset value of NAtomTotal (mark as unknown). </p>
 <p>Must be called simultaneously on all processors. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00493">493</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00501">501</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>.</p>
 
 </div>
 </div>
@@ -1092,9 +1101,9 @@ template&lt;int N&gt; </div>
 <p>Get total number of atoms on all processors. </p>
 <p>This method should only be called on the master node (rank = 0). The return value is computed by a previous call of computeNAtomTotal. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00539">539</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8h_source.html#l00581">581</a> of file <a class="el" href="AtomStorage_8h_source.html">AtomStorage.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>, <a class="el" href="Integrator_8cpp_source.html#l00119">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="Exchanger_8cpp_source.html#l01287">DdMd::Exchanger::outputStatistics()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00479">DdMd::Exchanger::exchangeAtoms()</a>, <a class="el" href="Integrator_8cpp_source.html#l00156">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="Exchanger_8cpp_source.html#l01287">DdMd::Exchanger::outputStatistics()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>.</p>
 
 </div>
 </div>
@@ -1133,7 +1142,7 @@ template&lt;int N&gt; </div>
 
 <p>Return true if the container is valid, or throw an Exception. </p>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00502">502</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00553">553</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00205">DdMd::Atom::id()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -1165,7 +1174,96 @@ template&lt;int N&gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00573">573</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00624">624</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a370a6cc16d9adc5673efd9280dc78502"></a><!-- doxytag: member="DdMd::AtomStorage::computeStatistics" ref="a370a6cc16d9adc5673efd9280dc78502" args="(MPI::Intracomm &amp;communicator)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::AtomStorage::computeStatistics </td>
+          <td>(</td>
+          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
+          <td class="paramname"><em>communicator</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Compute statistics (reduce from all processors). </p>
+<p>Call on all processors. </p>
+
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00509">509</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9cc24138f617b8339610d3bc0616cd90"></a><!-- doxytag: member="DdMd::AtomStorage::clearStatistics" ref="a9cc24138f617b8339610d3bc0616cd90" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::AtomStorage::clearStatistics </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Clear statistical accumulators (call on all processors). </p>
+
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00528">528</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad903e5941711a533aaee19f7d03dd042"></a><!-- doxytag: member="DdMd::AtomStorage::outputStatistics" ref="ad903e5941711a533aaee19f7d03dd042" args="(std::ostream &amp;out)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::AtomStorage::outputStatistics </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>out</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Output statistics. </p>
+<p>Call on master, after calling computeStatistics on all procs.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>output stream </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="AtomStorage_8cpp_source.html#l00537">537</a> of file <a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad8921e1278a6be9b983cfa5dc645ee1d"></a><!-- doxytag: member="DdMd::AtomStorage::maxNAtom" ref="ad8921e1278a6be9b983cfa5dc645ee1d" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int DdMd::AtomStorage::maxNAtom </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the maximum number of primary atoms encountered thus far. </p>
+<p>Call only on master. </p>
 
 </div>
 </div>
@@ -1174,7 +1272,7 @@ template&lt;int N&gt; </div>
 <li><a class="el" href="AtomStorage_8cpp_source.html">AtomStorage.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:59 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:39 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

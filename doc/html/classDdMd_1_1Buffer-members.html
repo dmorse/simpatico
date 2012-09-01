@@ -68,6 +68,8 @@ This is the complete list of members for <a class="el" href="classDdMd_1_1Buffer
   <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#ab39ec5feb70943acda311aa9c52913db">beginSendBlock</a>(BlockDataType sendType, int sendGroupSize=0)</td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#a693328635801b32550c8469ae9a7b55a">Buffer</a>()</td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#a3e9c53dd43d416f2980ee1eb396316e1">clearSendBuffer</a>()</td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#a8c9c083b24e7298545aeb9c3392df029">clearStatistics</a>()</td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#ae5a3c0279fd81a78ba122c50e6739bdf">computeStatistics</a>(MPI::Intracomm &amp;comm)</td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2">echo</a>()</td><td><a class="el" href="classUtil_1_1ParamComponent.html">Util::ParamComponent</a></td><td><code> [static]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#ac625a812aee3b7fe37d17f9cdb8c86f1">endSendBlock</a>(bool isComplete=true)</td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#aa09f2ab0c92f88343ecab5340037dc11">ghostCapacity</a>() const </td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
@@ -78,6 +80,7 @@ This is the complete list of members for <a class="el" href="classDdMd_1_1Buffer
   <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#a104a3a2f795db7106dbdcd2876afbc42">isAllocated</a>() const </td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#a54d044f2ef58334549017b7070a36d22">isInitialized</a>() const </td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classUtil_1_1ParamComponent.html#ae5dd13aea6c6576782ac6391e17c141b">isParamIoProcessor</a>() const </td><td><a class="el" href="classUtil_1_1ParamComponent.html">Util::ParamComponent</a></td><td><code> [inline, protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#ad595d1cbccd6dc518d41cf9708b3c9c4">outputStatistics</a>(std::ostream &amp;out)</td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#a625076cad43f862d88fe681d0e275466">packAtom</a>(Atom &amp;atom)</td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#a8b4110509aa24c85210d07140c309701">packForce</a>(Atom &amp;atom)</td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classDdMd_1_1Buffer.html#adee88b198e2830d5ccb9cbef01d04f86">packGhost</a>(Atom &amp;atom)</td><td><a class="el" href="classDdMd_1_1Buffer.html">DdMd::Buffer</a></td><td></td></tr>
@@ -119,7 +122,7 @@ This is the complete list of members for <a class="el" href="classDdMd_1_1Buffer
   <tr class="memlist"><td><a class="el" href="classUtil_1_1ParamComponent.html#a4714eb00e44cdca1f1efc019bea99492">~ParamComponent</a>()</td><td><a class="el" href="classUtil_1_1ParamComponent.html">Util::ParamComponent</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classUtil_1_1ParamComposite.html#a3aca9fd9a600e308a42573d243910fc0">~ParamComposite</a>()</td><td><a class="el" href="classUtil_1_1ParamComposite.html">Util::ParamComposite</a></td><td><code> [virtual]</code></td></tr>
 </table></div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:38 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -70,13 +70,16 @@ Inheritance diagram for DdMd::Diagnostic:</div>
  <div class="center">
   <img src="classDdMd_1_1Diagnostic.png" usemap="#DdMd::Diagnostic_map" alt=""/>
   <map id="DdMd::Diagnostic_map" name="DdMd::Diagnostic_map">
-<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="340,56,500,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="340,0,500,24"/>
-<area href="classDdMd_1_1OutputBoxdim.html" alt="DdMd::OutputBoxdim" shape="rect" coords="0,168,160,192"/>
-<area href="classDdMd_1_1OutputEnergy.html" alt="DdMd::OutputEnergy" shape="rect" coords="170,168,330,192"/>
-<area href="classDdMd_1_1OutputPressure.html" alt="DdMd::OutputPressure" shape="rect" coords="340,168,500,192"/>
-<area href="classDdMd_1_1OutputTemperature.html" alt="DdMd::OutputTemperature" shape="rect" coords="510,168,670,192"/>
-<area href="classDdMd_1_1WriteConfig.html" alt="DdMd::WriteConfig" shape="rect" coords="680,168,840,192"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="525,56,690,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="525,0,690,24"/>
+<area href="classDdMd_1_1OutputBoxdim.html" alt="DdMd::OutputBoxdim" shape="rect" coords="0,168,165,192"/>
+<area href="classDdMd_1_1OutputEnergy.html" alt="DdMd::OutputEnergy" shape="rect" coords="175,168,340,192"/>
+<area href="classDdMd_1_1OutputPairEnergies.html" alt="DdMd::OutputPairEnergies" shape="rect" coords="350,168,515,192"/>
+<area href="classDdMd_1_1OutputPressure.html" alt="DdMd::OutputPressure" shape="rect" coords="525,168,690,192"/>
+<area href="classDdMd_1_1OutputTemperature.html" alt="DdMd::OutputTemperature" shape="rect" coords="700,168,865,192"/>
+<area href="classDdMd_1_1StructureFactor.html" alt="DdMd::StructureFactor" shape="rect" coords="875,168,1040,192"/>
+<area href="classDdMd_1_1WriteConfig.html" alt="DdMd::WriteConfig" shape="rect" coords="1050,168,1215,192"/>
+<area href="classDdMd_1_1StructureFactorGrid.html" alt="DdMd::StructureFactorGrid" shape="rect" coords="875,224,1040,248"/>
 </map>
  </div></div>
 
@@ -180,7 +183,7 @@ Protected Member Functions</h2></td></tr>
 <p>This method must be called just before the beginning of the main simulation loop, after an initial configuration is known. It may be used to complete any initialization that cannot be completed in the readParam method, because knowledge of the configuration is needed.</p>
 <p>The default implementation is an empty function. </p>
 
-<p>Reimplemented in <a class="el" href="classDdMd_1_1OutputBoxdim.html#a959c1edfe72e265c746f654dec7ef2fd">DdMd::OutputBoxdim</a>, <a class="el" href="classDdMd_1_1OutputEnergy.html#a5ec9f90a2d26c02a7df67397769bb6a5">DdMd::OutputEnergy</a>, <a class="el" href="classDdMd_1_1OutputPressure.html#a1f046d5d1cca9a846470c8815fbfa160">DdMd::OutputPressure</a>, <a class="el" href="classDdMd_1_1OutputTemperature.html#ae5ab597fc81d8f3ebcfa122f8b1a52a8">DdMd::OutputTemperature</a>, and <a class="el" href="classDdMd_1_1WriteConfig.html#a64ba2fdf68821fd4014d7078db6755fc">DdMd::WriteConfig</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1OutputBoxdim.html#a959c1edfe72e265c746f654dec7ef2fd">DdMd::OutputBoxdim</a>, <a class="el" href="classDdMd_1_1OutputEnergy.html#a5ec9f90a2d26c02a7df67397769bb6a5">DdMd::OutputEnergy</a>, <a class="el" href="classDdMd_1_1OutputPairEnergies.html#a1c975f9134f9582ad6a888281f937192">DdMd::OutputPairEnergies</a>, <a class="el" href="classDdMd_1_1OutputPressure.html#a1f046d5d1cca9a846470c8815fbfa160">DdMd::OutputPressure</a>, <a class="el" href="classDdMd_1_1OutputTemperature.html#ae5ab597fc81d8f3ebcfa122f8b1a52a8">DdMd::OutputTemperature</a>, <a class="el" href="classDdMd_1_1StructureFactor.html#a04e9c01abe72073b69df2e89f72ff9cd">DdMd::StructureFactor</a>, <a class="el" href="classDdMd_1_1StructureFactorGrid.html#a3f8e99850dea7848a9a3886ea393104f">DdMd::StructureFactorGrid</a>, and <a class="el" href="classDdMd_1_1WriteConfig.html#a64ba2fdf68821fd4014d7078db6755fc">DdMd::WriteConfig</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00071">71</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 
@@ -210,7 +213,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1OutputBoxdim.html#a1b2d0de17e4117a28f15898fa62660c6">DdMd::OutputBoxdim</a>, <a class="el" href="classDdMd_1_1OutputEnergy.html#a43c1381a67594ea0f6a370fb1ab99631">DdMd::OutputEnergy</a>, <a class="el" href="classDdMd_1_1OutputPressure.html#a1d3f9c4a902b25eef963cd3bca638885">DdMd::OutputPressure</a>, <a class="el" href="classDdMd_1_1OutputTemperature.html#a39edb2e3527cb9dfde9b8e5eb7c3fdcb">DdMd::OutputTemperature</a>, and <a class="el" href="classDdMd_1_1WriteConfig.html#a5f7f5f1bb387e76ba9c6b5b1f857d38d">DdMd::WriteConfig</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1OutputBoxdim.html#a1b2d0de17e4117a28f15898fa62660c6">DdMd::OutputBoxdim</a>, <a class="el" href="classDdMd_1_1OutputEnergy.html#a43c1381a67594ea0f6a370fb1ab99631">DdMd::OutputEnergy</a>, <a class="el" href="classDdMd_1_1OutputPairEnergies.html#af8d33c278dbd2f6d22a847765d961dbf">DdMd::OutputPairEnergies</a>, <a class="el" href="classDdMd_1_1OutputPressure.html#a1d3f9c4a902b25eef963cd3bca638885">DdMd::OutputPressure</a>, <a class="el" href="classDdMd_1_1OutputTemperature.html#a39edb2e3527cb9dfde9b8e5eb7c3fdcb">DdMd::OutputTemperature</a>, <a class="el" href="classDdMd_1_1StructureFactor.html#abb4cf2922b8b439de82684ba7b6d089d">DdMd::StructureFactor</a>, and <a class="el" href="classDdMd_1_1WriteConfig.html#a5f7f5f1bb387e76ba9c6b5b1f857d38d">DdMd::WriteConfig</a>.</p>
 
 </div>
 </div>
@@ -230,6 +233,8 @@ Protected Member Functions</h2></td></tr>
 
 <p>Output any results at the end of the simulation. </p>
 <p>The default implementation is an empty function. </p>
+
+<p>Reimplemented in <a class="el" href="classDdMd_1_1StructureFactor.html#acec4891a61e1d0d17fdbcd973e04116f">DdMd::StructureFactor</a>, and <a class="el" href="classDdMd_1_1StructureFactorGrid.html#ac34a7c837e55077c82d8fc0051486592">DdMd::StructureFactorGrid</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00090">90</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 
@@ -280,7 +285,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00176">176</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 
-<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">DdMd::WriteConfig::sample()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00057">DdMd::OutputPressure::sample()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00057">DdMd::OutputBoxdim::sample()</a>.</p>
+<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">DdMd::WriteConfig::sample()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactor_8cpp_source.html#l00100">DdMd::StructureFactor::sample()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00057">DdMd::OutputPressure::sample()</a>, <a class="el" href="OutputPairEnergies_8cpp_source.html#l00057">DdMd::OutputPairEnergies::sample()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00057">DdMd::OutputBoxdim::sample()</a>.</p>
 
 </div>
 </div>
@@ -336,7 +341,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00034">DdMd::WriteConfig::readParam()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00037">DdMd::OutputTemperature::readParam()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00036">DdMd::OutputPressure::readParam()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00036">DdMd::OutputEnergy::readParam()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00036">DdMd::OutputBoxdim::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00034">DdMd::WriteConfig::readParam()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactorGrid_8cpp_source.html#l00036">DdMd::StructureFactorGrid::readParam()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactor_8cpp_source.html#l00039">DdMd::StructureFactor::readParam()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00037">DdMd::OutputTemperature::readParam()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00036">DdMd::OutputPressure::readParam()</a>, <a class="el" href="OutputPairEnergies_8cpp_source.html#l00036">DdMd::OutputPairEnergies::readParam()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00036">DdMd::OutputEnergy::readParam()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00036">DdMd::OutputBoxdim::readParam()</a>.</p>
 
 </div>
 </div>
@@ -365,7 +370,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html#l00078">78</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html">ddMd/diagnostics/Diagnostic.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00034">DdMd::WriteConfig::readParam()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00037">DdMd::OutputTemperature::readParam()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00036">DdMd::OutputPressure::readParam()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00036">DdMd::OutputEnergy::readParam()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00036">DdMd::OutputBoxdim::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00034">DdMd::WriteConfig::readParam()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactorGrid_8cpp_source.html#l00036">DdMd::StructureFactorGrid::readParam()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactor_8cpp_source.html#l00039">DdMd::StructureFactor::readParam()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00037">DdMd::OutputTemperature::readParam()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00036">DdMd::OutputPressure::readParam()</a>, <a class="el" href="OutputPairEnergies_8cpp_source.html#l00036">DdMd::OutputPairEnergies::readParam()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00036">DdMd::OutputEnergy::readParam()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00036">DdMd::OutputBoxdim::readParam()</a>.</p>
 
 </div>
 </div>
@@ -387,7 +392,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00188">188</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 
-<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">DdMd::WriteConfig::sample()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00057">DdMd::OutputPressure::sample()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>, <a class="el" href="OutputBoxdim_8cpp_source.html#l00057">DdMd::OutputBoxdim::sample()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00047">DdMd::OutputTemperature::setup()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00046">DdMd::OutputPressure::setup()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00046">DdMd::OutputBoxdim::setup()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2diagnostics_2StructureFactor_8cpp_source.html#l00188">DdMd::StructureFactor::makeWaveVectors()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactorGrid_8cpp_source.html#l00191">DdMd::StructureFactorGrid::output()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactor_8cpp_source.html#l00209">DdMd::StructureFactor::output()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactorGrid_8cpp_source.html#l00036">DdMd::StructureFactorGrid::readParam()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactor_8cpp_source.html#l00039">DdMd::StructureFactor::readParam()</a>, <a class="el" href="WriteConfig_8cpp_source.html#l00050">DdMd::WriteConfig::sample()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactor_8cpp_source.html#l00100">DdMd::StructureFactor::sample()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00057">DdMd::OutputPressure::sample()</a>, <a class="el" href="OutputPairEnergies_8cpp_source.html#l00057">DdMd::OutputPairEnergies::sample()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>, <a class="el" href="OutputBoxdim_8cpp_source.html#l00057">DdMd::OutputBoxdim::sample()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactor_8cpp_source.html#l00073">DdMd::StructureFactor::setup()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00047">DdMd::OutputTemperature::setup()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00046">DdMd::OutputPressure::setup()</a>, <a class="el" href="OutputPairEnergies_8cpp_source.html#l00046">DdMd::OutputPairEnergies::setup()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00046">DdMd::OutputBoxdim::setup()</a>.</p>
 
 </div>
 </div>
@@ -409,7 +414,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00182">182</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 
-<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">DdMd::WriteConfig::sample()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00047">DdMd::OutputTemperature::setup()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00046">DdMd::OutputPressure::setup()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00046">DdMd::OutputBoxdim::setup()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2diagnostics_2StructureFactorGrid_8cpp_source.html#l00191">DdMd::StructureFactorGrid::output()</a>, <a class="el" href="ddMd_2diagnostics_2StructureFactor_8cpp_source.html#l00209">DdMd::StructureFactor::output()</a>, <a class="el" href="WriteConfig_8cpp_source.html#l00050">DdMd::WriteConfig::sample()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00047">DdMd::OutputTemperature::setup()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00046">DdMd::OutputPressure::setup()</a>, <a class="el" href="OutputPairEnergies_8cpp_source.html#l00046">DdMd::OutputPairEnergies::setup()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00046">DdMd::OutputBoxdim::setup()</a>.</p>
 
 </div>
 </div>
@@ -450,7 +455,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00110">110</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html#l00024">initStatic()</a>, <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00039">DdMd::DiagnosticManager::readParam()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00059">DdMd::DiagnosticManager::sample()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html#l00024">initStatic()</a>, <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00039">DdMd::DiagnosticManager::readParam()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00059">DdMd::DiagnosticManager::sample()</a>.</p>
 
 </div>
 </div>
@@ -459,7 +464,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html">ddMd/diagnostics/Diagnostic.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:38 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

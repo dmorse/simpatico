@@ -109,6 +109,8 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup state of atoms just before integration.  <a href="#a97317b34223ec99c2f60917a53faf4a0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#ada283abe173c6e11791bc6570858a418">computeForces</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute forces for all local atoms, with timing.  <a href="#ada283abe173c6e11791bc6570858a418"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#a52440b9a3e5698d1f202dec94ebe44c7">computeForcesAndVirial</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute forces for all local atoms and virial, with timing.  <a href="#a52440b9a3e5698d1f202dec94ebe44c7"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077">nStep_</a></td></tr>
@@ -235,9 +237,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Output statistics immediately after a run. </p>
 
-<p>Definition at line <a class="el" href="Integrator_8cpp_source.html#l00119">119</a> of file <a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Integrator_8cpp_source.html#l00156">156</a> of file <a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a>.</p>
 
-<p>References <a class="el" href="SimulationAccess_8h_source.html#l00287">DdMd::SimulationAccess::atomStorage()</a>, <a class="el" href="Domain_8h_source.html#l00235">DdMd::Domain::communicator()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00333">DdMd::SimulationAccess::domain()</a>, <a class="el" href="AtomStorage_8h_source.html#l00539">DdMd::AtomStorage::nAtomTotal()</a>, <a class="el" href="Integrator_8h_source.html#l00099">nStep_</a>, <a class="el" href="SimulationAccess_8h_source.html#l00303">DdMd::SimulationAccess::pairPotential()</a>, <a class="el" href="DdTimer_8cpp_source.html#l00067">DdMd::DdTimer::time()</a>, <a class="el" href="Integrator_8cpp_source.html#l00107">time()</a>, and <a class="el" href="Integrator_8h_source.html#l00078">timer()</a>.</p>
+<p>References <a class="el" href="SimulationAccess_8h_source.html#l00287">DdMd::SimulationAccess::atomStorage()</a>, <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00305">DdMd::PairList::buildCounter()</a>, <a class="el" href="Domain_8h_source.html#l00235">DdMd::Domain::communicator()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00333">DdMd::SimulationAccess::domain()</a>, <a class="el" href="AtomStorage_8h_source.html#l00581">DdMd::AtomStorage::nAtomTotal()</a>, <a class="el" href="Integrator_8h_source.html#l00109">nStep_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00316">DdMd::PairPotential::pairList()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00303">DdMd::SimulationAccess::pairPotential()</a>, <a class="el" href="DdTimer_8cpp_source.html#l00067">DdMd::DdTimer::time()</a>, <a class="el" href="Integrator_8cpp_source.html#l00144">time()</a>, and <a class="el" href="Integrator_8h_source.html#l00078">timer()</a>.</p>
 
 </div>
 </div>
@@ -257,11 +259,11 @@ Protected Attributes</h2></td></tr>
 
 <p>Get time per processor of previous run. </p>
 
-<p>Definition at line <a class="el" href="Integrator_8cpp_source.html#l00107">107</a> of file <a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Integrator_8cpp_source.html#l00144">144</a> of file <a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a>.</p>
 
 <p>References <a class="el" href="DdTimer_8cpp_source.html#l00067">DdMd::DdTimer::time()</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00119">outputStatistics()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00156">outputStatistics()</a>.</p>
 
 </div>
 </div>
@@ -281,11 +283,11 @@ Protected Attributes</h2></td></tr>
 
 <p>Get number of steps in last run. </p>
 
-<p>Definition at line <a class="el" href="Integrator_8cpp_source.html#l00113">113</a> of file <a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Integrator_8cpp_source.html#l00150">150</a> of file <a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a>.</p>
 
-<p>References <a class="el" href="Integrator_8h_source.html#l00099">nStep_</a>.</p>
+<p>References <a class="el" href="Integrator_8h_source.html#l00109">nStep_</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>.</p>
 
 </div>
 </div>
@@ -307,7 +309,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Integrator_8h_source.html#l00078">78</a> of file <a class="el" href="Integrator_8h_source.html">Integrator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00119">outputStatistics()</a>, and <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00156">outputStatistics()</a>, and <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>.</p>
 
 </div>
 </div>
@@ -330,7 +332,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Integrator_8cpp_source.html#l00054">54</a> of file <a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a>.</p>
 
-<p>References <a class="el" href="SimulationAccess_8h_source.html#l00287">DdMd::SimulationAccess::atomStorage()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00284">DdMd::SimulationAccess::boundary()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00151">DdMd::PairPotential::buildCellList()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00209">DdMd::PairPotential::buildPairList()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00314">DdMd::AtomStorage::clearSnapshot()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00630">DdMd::Simulation::computeForces()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00142">DdMd::Exchanger::exchange()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00336">DdMd::SimulationAccess::exchanger()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00295">DdMd::AtomStorage::makeSnapshot()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00303">DdMd::SimulationAccess::pairPotential()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00281">DdMd::SimulationAccess::simulation()</a>, and <a class="el" href="AtomStorage_8cpp_source.html#l00451">DdMd::AtomStorage::transformGenToCart()</a>.</p>
+<p>References <a class="el" href="SimulationAccess_8h_source.html#l00287">DdMd::SimulationAccess::atomStorage()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00284">DdMd::SimulationAccess::boundary()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00154">DdMd::PairPotential::buildCellList()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00212">DdMd::PairPotential::buildPairList()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00322">DdMd::AtomStorage::clearSnapshot()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00685">DdMd::Simulation::computeForces()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00142">DdMd::Exchanger::exchange()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00336">DdMd::SimulationAccess::exchanger()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00303">DdMd::AtomStorage::makeSnapshot()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00303">DdMd::SimulationAccess::pairPotential()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00281">DdMd::SimulationAccess::simulation()</a>, and <a class="el" href="AtomStorage_8cpp_source.html#l00459">DdMd::AtomStorage::transformGenToCart()</a>.</p>
 
 <p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>.</p>
 
@@ -355,9 +357,34 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Integrator_8cpp_source.html#l00070">70</a> of file <a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a>.</p>
 
-<p>References <a class="el" href="SimulationAccess_8h_source.html#l00306">DdMd::SimulationAccess::bondPotential()</a>, <a class="el" href="classDdMd_1_1ExternalPotential.html#a7392df559ecf817bb7ebcf377e89b977">DdMd::ExternalPotential::computeForces()</a>, <a class="el" href="classDdMd_1_1Potential.html#ac7aa9e76573ba14b7fa8a1924543a053">DdMd::Potential::computeForces()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00336">DdMd::SimulationAccess::exchanger()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00320">DdMd::SimulationAccess::externalPotential()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00967">DdMd::Simulation::forceSignal()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00359">DdMd::SimulationAccess::hasExternal()</a>, <a class="el" href="Signal_8h_source.html#l00118">Util::Signal&lt; T &gt;::notify()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00303">DdMd::SimulationAccess::pairPotential()</a>, <a class="el" href="Exchanger_8cpp_source.html#l01225">DdMd::Exchanger::reverseUpdate()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00369">DdMd::SimulationAccess::reverseUpdateFlag()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00281">DdMd::SimulationAccess::simulation()</a>, <a class="el" href="DdTimer_8cpp_source.html#l00041">DdMd::DdTimer::stamp()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00608">DdMd::Simulation::zeroForces()</a>.</p>
+<p>References <a class="el" href="SimulationAccess_8h_source.html#l00306">DdMd::SimulationAccess::bondPotential()</a>, <a class="el" href="classDdMd_1_1ExternalPotential.html#a7392df559ecf817bb7ebcf377e89b977">DdMd::ExternalPotential::computeForces()</a>, <a class="el" href="classDdMd_1_1Potential.html#ac7aa9e76573ba14b7fa8a1924543a053">DdMd::Potential::computeForces()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00336">DdMd::SimulationAccess::exchanger()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00320">DdMd::SimulationAccess::externalPotential()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01014">DdMd::Simulation::forceSignal()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00359">DdMd::SimulationAccess::hasExternal()</a>, <a class="el" href="Signal_8h_source.html#l00118">Util::Signal&lt; T &gt;::notify()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00303">DdMd::SimulationAccess::pairPotential()</a>, <a class="el" href="Exchanger_8cpp_source.html#l01225">DdMd::Exchanger::reverseUpdate()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00369">DdMd::SimulationAccess::reverseUpdateFlag()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00281">DdMd::SimulationAccess::simulation()</a>, <a class="el" href="DdTimer_8cpp_source.html#l00041">DdMd::DdTimer::stamp()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00663">DdMd::Simulation::zeroForces()</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a52440b9a3e5698d1f202dec94ebe44c7"></a><!-- doxytag: member="DdMd::Integrator::computeForcesAndVirial" ref="a52440b9a3e5698d1f202dec94ebe44c7" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::Integrator::computeForcesAndVirial </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Compute forces for all local atoms and virial, with timing. </p>
+<p>Identical to Simulation::computeForceAndVirial(), with timing. Upon return, forces are correct for all local atoms. Values of the forces on ghost atoms are undefined. Executes reverse communication if needed, and emits <a class="el" href="classDdMd_1_1Simulation.html#ad12ce945c34d63eeb19f4d5bc393bf5c" title="Signal to indicate change in atomic forces.">Simulation::forceSignal()</a>. </p>
+
+<p>Definition at line <a class="el" href="Integrator_8cpp_source.html#l00107">107</a> of file <a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a>.</p>
+
+<p>References <a class="el" href="SimulationAccess_8h_source.html#l00306">DdMd::SimulationAccess::bondPotential()</a>, <a class="el" href="classDdMd_1_1ExternalPotential.html#a7392df559ecf817bb7ebcf377e89b977">DdMd::ExternalPotential::computeForces()</a>, <a class="el" href="Potential_8cpp_source.html#l00107">DdMd::Potential::computeForcesAndStress()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00333">DdMd::SimulationAccess::domain()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00336">DdMd::SimulationAccess::exchanger()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00320">DdMd::SimulationAccess::externalPotential()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01014">DdMd::Simulation::forceSignal()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00359">DdMd::SimulationAccess::hasExternal()</a>, <a class="el" href="Signal_8h_source.html#l00118">Util::Signal&lt; T &gt;::notify()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00303">DdMd::SimulationAccess::pairPotential()</a>, <a class="el" href="Exchanger_8cpp_source.html#l01225">DdMd::Exchanger::reverseUpdate()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00369">DdMd::SimulationAccess::reverseUpdateFlag()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00281">DdMd::SimulationAccess::simulation()</a>, <a class="el" href="DdTimer_8cpp_source.html#l00041">DdMd::DdTimer::stamp()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00663">DdMd::Simulation::zeroForces()</a>.</p>
+
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>.</p>
 
 </div>
 </div>
@@ -375,9 +402,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Total number of steps. </p>
 
-<p>Definition at line <a class="el" href="Integrator_8h_source.html#l00099">99</a> of file <a class="el" href="Integrator_8h_source.html">Integrator.h</a>.</p>
+<p>Definition at line <a class="el" href="Integrator_8h_source.html#l00109">109</a> of file <a class="el" href="Integrator_8h_source.html">Integrator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00113">nStep()</a>, <a class="el" href="Integrator_8cpp_source.html#l00119">outputStatistics()</a>, and <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00150">nStep()</a>, <a class="el" href="Integrator_8cpp_source.html#l00156">outputStatistics()</a>, and <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>.</p>
 
 </div>
 </div>
@@ -394,9 +421,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Current step number. </p>
 
-<p>Definition at line <a class="el" href="Integrator_8h_source.html#l00102">102</a> of file <a class="el" href="Integrator_8h_source.html">Integrator.h</a>.</p>
+<p>Definition at line <a class="el" href="Integrator_8h_source.html#l00112">112</a> of file <a class="el" href="Integrator_8h_source.html">Integrator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>.</p>
 
 </div>
 </div>
@@ -405,7 +432,7 @@ Protected Attributes</h2></td></tr>
 <li><a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:39 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -317,216 +317,132 @@
 <a name="l00337"></a>00337          }
 <a name="l00338"></a>00338       }
 <a name="l00339"></a>00339 
-<a name="l00340"></a>00340 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00341"></a>00341 <span class="preprocessor"></span>      <span class="comment">// Reduce bond energies from all processors.</span>
-<a name="l00342"></a>00342       <span class="keywordtype">double</span> totalEnergy = 0.0; 
-<a name="l00343"></a>00343       communicator.Reduce(&amp;localEnergy, &amp;totalEnergy, 1, 
-<a name="l00344"></a>00344                           MPI::DOUBLE, MPI::SUM, 0);
-<a name="l00345"></a>00345       <span class="keywordflow">if</span> (communicator.Get_rank() != 0) {
-<a name="l00346"></a>00346          totalEnergy = 0.0;
-<a name="l00347"></a>00347       }
-<a name="l00348"></a>00348       setEnergy(totalEnergy);
-<a name="l00349"></a>00349 <span class="preprocessor">      #else</span>
-<a name="l00350"></a>00350 <span class="preprocessor"></span>      setEnergy(localEnergy);
-<a name="l00351"></a>00351 <span class="preprocessor">      #endif</span>
-<a name="l00352"></a>00352 <span class="preprocessor"></span>   }
-<a name="l00353"></a>00353 
-<a name="l00354"></a>00354    <span class="comment">/*</span>
-<a name="l00355"></a>00355 <span class="comment">   * Compute total pair stress (Call on all processors).</span>
-<a name="l00356"></a>00356 <span class="comment">   */</span>
-<a name="l00357"></a>00357    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00358"></a>00358 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00359"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a912b3fd6889af281911ef83c1b88f1d0">00359</a> <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a912b3fd6889af281911ef83c1b88f1d0" title="Compute the covalent bond stress.">BondPotentialImpl&lt;Interaction&gt;::computeStress</a>(MPI::Intracomm&amp; communicator)
-<a name="l00360"></a>00360    <span class="preprocessor">#else</span>
-<a name="l00361"></a>00361 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a912b3fd6889af281911ef83c1b88f1d0" title="Compute the covalent bond stress.">BondPotentialImpl&lt;Interaction&gt;::computeStress</a>()
-<a name="l00362"></a>00362    <span class="preprocessor">#endif</span>
-<a name="l00363"></a>00363 <span class="preprocessor"></span>   {
-<a name="l00364"></a>00364       <span class="comment">// Do nothing and return if stress is already set.</span>
-<a name="l00365"></a>00365       <span class="keywordflow">if</span> (isStressSet()) <span class="keywordflow">return</span>;
-<a name="l00366"></a>00366  
-<a name="l00367"></a>00367       <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> localStress;
-<a name="l00368"></a>00368       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr;
-<a name="l00369"></a>00369       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> f;
-<a name="l00370"></a>00370       <span class="keywordtype">double</span> rsq, forceOverR;
-<a name="l00371"></a>00371       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group &amp;lt; N &amp;gt; objects owned by a GroupStorage&amp;lt; N &amp;gt;.">GroupIterator&lt;2&gt;</a> iter;
-<a name="l00372"></a>00372       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>*  atom0Ptr;
-<a name="l00373"></a>00373       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>*  atom1Ptr;
-<a name="l00374"></a>00374       <span class="keywordtype">int</span>    type;
-<a name="l00375"></a>00375       <span class="keywordtype">int</span>    isLocal0, isLocal1;
-<a name="l00376"></a>00376 
-<a name="l00377"></a>00377       localStress.<a class="code" href="classUtil_1_1Tensor.html#aac0c50df8b2fddfa0a2264e9b0866441" title="Set all elements of this tensor to zero.">zero</a>();
-<a name="l00378"></a>00378 
-<a name="l00379"></a>00379       <span class="comment">// Iterate over bonds</span>
-<a name="l00380"></a>00380       storage().begin(iter);
-<a name="l00381"></a>00381       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
-<a name="l00382"></a>00382          type = iter-&gt;typeId();
-<a name="l00383"></a>00383          atom0Ptr = iter-&gt;atomPtr(0);
-<a name="l00384"></a>00384          atom1Ptr = iter-&gt;atomPtr(1);
-<a name="l00385"></a>00385          isLocal0 = !(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
-<a name="l00386"></a>00386          isLocal1 = !(atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
-<a name="l00387"></a>00387          rsq = boundary().distanceSq(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), 
-<a name="l00388"></a>00388                                         atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), dr);
-<a name="l00389"></a>00389          f = dr;
-<a name="l00390"></a>00390          assert(isLocal0 || isLocal1);
-<a name="l00391"></a>00391          <span class="keywordflow">if</span> (isLocal0 &amp;&amp; isLocal1) {
-<a name="l00392"></a>00392             forceOverR = interactionPtr_-&gt;forceOverR(rsq, type);
-<a name="l00393"></a>00393          } <span class="keywordflow">else</span> {
-<a name="l00394"></a>00394             forceOverR = 0.5*interactionPtr_-&gt;forceOverR(rsq, type);
-<a name="l00395"></a>00395          }
-<a name="l00396"></a>00396          f *= forceOverR;
-<a name="l00397"></a>00397          incrementPairStress(f, dr, localStress);
-<a name="l00398"></a>00398       }
-<a name="l00399"></a>00399 
-<a name="l00400"></a>00400       <span class="comment">// if (reverseUpdateFlag()) { } else { } </span>
-<a name="l00401"></a>00401 
-<a name="l00402"></a>00402       <span class="comment">// Normalize by volume </span>
-<a name="l00403"></a>00403       localStress /= boundary().volume();
-<a name="l00404"></a>00404 
-<a name="l00405"></a>00405 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00406"></a>00406 <span class="preprocessor"></span>      <span class="comment">// Reduce results from all processors</span>
-<a name="l00407"></a>00407       <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> totalStress;
-<a name="l00408"></a>00408       communicator.Reduce(&amp;localStress(0, 0), &amp;totalStress(0, 0), 
-<a name="l00409"></a>00409                           <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>*<a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>, MPI::DOUBLE, MPI::SUM, 0);
-<a name="l00410"></a>00410       <span class="keywordflow">if</span> (communicator.Get_rank() != 0) {
-<a name="l00411"></a>00411          totalStress.<a class="code" href="classUtil_1_1Tensor.html#aac0c50df8b2fddfa0a2264e9b0866441" title="Set all elements of this tensor to zero.">zero</a>();
-<a name="l00412"></a>00412       }
-<a name="l00413"></a>00413       setStress(totalStress);
-<a name="l00414"></a>00414 <span class="preprocessor">      #else</span>
-<a name="l00415"></a>00415 <span class="preprocessor"></span>      setStress(localStress);
-<a name="l00416"></a>00416 <span class="preprocessor">      #endif</span>
-<a name="l00417"></a>00417 <span class="preprocessor"></span>
-<a name="l00418"></a>00418    }
-<a name="l00419"></a>00419 
-<a name="l00420"></a>00420    <span class="comment">/*</span>
-<a name="l00421"></a>00421 <span class="comment">   * Compute total pair stress (Call on all processors).</span>
-<a name="l00422"></a>00422 <span class="comment">   */</span>
-<a name="l00423"></a>00423    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00424"></a>00424 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00425"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a3006f1b2ea5e94b156a8cd26b1cac101">00425</a> <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a3006f1b2ea5e94b156a8cd26b1cac101" title="Compute bond forces and stress.">BondPotentialImpl&lt;Interaction&gt;::computeForcesAndStress</a>(MPI::Intracomm&amp; communicator)
-<a name="l00426"></a>00426    <span class="preprocessor">#else</span>
-<a name="l00427"></a>00427 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a3006f1b2ea5e94b156a8cd26b1cac101" title="Compute bond forces and stress.">BondPotentialImpl&lt;Interaction&gt;::computeForcesAndStress</a>()
-<a name="l00428"></a>00428    <span class="preprocessor">#endif</span>
-<a name="l00429"></a>00429 <span class="preprocessor"></span>   {
-<a name="l00430"></a>00430       <span class="comment">// Do nothing and return if stress is already set.</span>
-<a name="l00431"></a>00431       <span class="keywordflow">if</span> (isStressSet()) <span class="keywordflow">return</span>;
-<a name="l00432"></a>00432  
-<a name="l00433"></a>00433       <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> localStress;
-<a name="l00434"></a>00434       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr;
-<a name="l00435"></a>00435       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> f;
-<a name="l00436"></a>00436       <span class="keywordtype">double</span> rsq;
-<a name="l00437"></a>00437       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group &amp;lt; N &amp;gt; objects owned by a GroupStorage&amp;lt; N &amp;gt;.">GroupIterator&lt;2&gt;</a> iter;
-<a name="l00438"></a>00438       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>*  atom0Ptr;
-<a name="l00439"></a>00439       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>*  atom1Ptr;
-<a name="l00440"></a>00440       <span class="keywordtype">int</span>    type;
-<a name="l00441"></a>00441       <span class="keywordtype">int</span>    isLocal0, isLocal1;
-<a name="l00442"></a>00442 
-<a name="l00443"></a>00443       localStress.<a class="code" href="classUtil_1_1Tensor.html#aac0c50df8b2fddfa0a2264e9b0866441" title="Set all elements of this tensor to zero.">zero</a>();
-<a name="l00444"></a>00444 
-<a name="l00445"></a>00445       <span class="comment">// Iterate over bonds</span>
-<a name="l00446"></a>00446       storage().begin(iter);
-<a name="l00447"></a>00447       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
-<a name="l00448"></a>00448          type = iter-&gt;typeId();
-<a name="l00449"></a>00449          atom0Ptr = iter-&gt;atomPtr(0);
-<a name="l00450"></a>00450          atom1Ptr = iter-&gt;atomPtr(1);
-<a name="l00451"></a>00451          rsq = boundary().distanceSq(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), 
-<a name="l00452"></a>00452                                         atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), dr);
-<a name="l00453"></a>00453          f  = dr;
-<a name="l00454"></a>00454          f *= interactionPtr_-&gt;forceOverR(rsq, type);
-<a name="l00455"></a>00455          isLocal0 = !(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
-<a name="l00456"></a>00456          isLocal1 = !(atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
-<a name="l00457"></a>00457          assert(isLocal0 || isLocal1);
-<a name="l00458"></a>00458          <span class="keywordflow">if</span> (isLocal0) {
-<a name="l00459"></a>00459             atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() += f;
-<a name="l00460"></a>00460          }
-<a name="l00461"></a>00461          <span class="keywordflow">if</span> (isLocal1) {
-<a name="l00462"></a>00462             atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() -= f;
-<a name="l00463"></a>00463          }
-<a name="l00464"></a>00464          <span class="keywordflow">if</span> (!(isLocal0 &amp;&amp; isLocal1)) {
-<a name="l00465"></a>00465             f *= 0.5;
-<a name="l00466"></a>00466          }
-<a name="l00467"></a>00467          incrementPairStress(f, dr, localStress);
-<a name="l00468"></a>00468       }
-<a name="l00469"></a>00469 
-<a name="l00470"></a>00470       <span class="comment">// if (reverseUpdateFlag()) { } else { } </span>
-<a name="l00471"></a>00471 
-<a name="l00472"></a>00472       <span class="comment">// Normalize by volume </span>
-<a name="l00473"></a>00473       localStress /= boundary().volume();
-<a name="l00474"></a>00474 
-<a name="l00475"></a>00475 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00476"></a>00476 <span class="preprocessor"></span>      <span class="comment">// Reduce results from all processors</span>
-<a name="l00477"></a>00477       <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> totalStress;
-<a name="l00478"></a>00478       communicator.Reduce(&amp;localStress(0, 0), &amp;totalStress(0, 0), 
-<a name="l00479"></a>00479                           <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>*<a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>, MPI::DOUBLE, MPI::SUM, 0);
-<a name="l00480"></a>00480       <span class="keywordflow">if</span> (communicator.Get_rank() != 0) {
-<a name="l00481"></a>00481          totalStress.<a class="code" href="classUtil_1_1Tensor.html#aac0c50df8b2fddfa0a2264e9b0866441" title="Set all elements of this tensor to zero.">zero</a>();
-<a name="l00482"></a>00482       }
-<a name="l00483"></a>00483       setStress(totalStress);
-<a name="l00484"></a>00484 <span class="preprocessor">      #else</span>
-<a name="l00485"></a>00485 <span class="preprocessor"></span>      setStress(localStress);
-<a name="l00486"></a>00486 <span class="preprocessor">      #endif</span>
-<a name="l00487"></a>00487 <span class="preprocessor"></span>
-<a name="l00488"></a>00488    }
-<a name="l00489"></a>00489 
-<a name="l00490"></a>00490 <span class="preprocessor">   #if 0</span>
-<a name="l00491"></a>00491 <span class="preprocessor"></span>   <span class="comment">/*</span>
-<a name="l00492"></a>00492 <span class="comment">   * Increment atomic forces and/or pair energy (private).</span>
-<a name="l00493"></a>00493 <span class="comment">   */</span>
-<a name="l00494"></a>00494    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt; <span class="keywordtype">double</span> 
-<a name="l00495"></a>00495    <a class="code" href="classDdMd_1_1BondPotentialImpl.html#ac470eae04cf4fd80733e84604eb937c0" title="Add the bond forces for all atoms.">BondPotentialImpl&lt;Interaction&gt;::computeForces</a>(<span class="keywordtype">bool</span> needForce, <span class="keywordtype">bool</span> needEnergy)
-<a name="l00496"></a>00496    {
-<a name="l00497"></a>00497       <span class="comment">// Preconditions</span>
-<a name="l00498"></a>00498       <span class="comment">//if (!storage().isInitialized()) {</span>
-<a name="l00499"></a>00499       <span class="comment">//   UTIL_THROW(&quot;BondStorage must be initialized&quot;);</span>
-<a name="l00500"></a>00500       <span class="comment">//}</span>
-<a name="l00501"></a>00501 
-<a name="l00502"></a>00502       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> f;
-<a name="l00503"></a>00503       <span class="keywordtype">double</span> rsq;
-<a name="l00504"></a>00504       <span class="keywordtype">double</span> bondEnergy;
-<a name="l00505"></a>00505       <span class="keywordtype">double</span> energy = 0.0;
-<a name="l00506"></a>00506       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group &amp;lt; N &amp;gt; objects owned by a GroupStorage&amp;lt; N &amp;gt;.">GroupIterator&lt;2&gt;</a> iter;
-<a name="l00507"></a>00507       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atom0Ptr;
-<a name="l00508"></a>00508       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atom1Ptr;
-<a name="l00509"></a>00509       <span class="keywordtype">int</span> type;
-<a name="l00510"></a>00510       <span class="keywordtype">int</span> isLocal0, isLocal1;
-<a name="l00511"></a>00511 
-<a name="l00512"></a>00512       storage().begin(iter);
-<a name="l00513"></a>00513       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
-<a name="l00514"></a>00514          type = iter-&gt;typeId();
-<a name="l00515"></a>00515          atom0Ptr = iter-&gt;atomPtr(0);
-<a name="l00516"></a>00516          atom1Ptr = iter-&gt;atomPtr(1);
-<a name="l00517"></a>00517          isLocal0 = !(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
-<a name="l00518"></a>00518          isLocal1 = !(atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
-<a name="l00519"></a>00519          <span class="comment">// Set f = r0 - r1, minimum image separation between atoms</span>
-<a name="l00520"></a>00520          rsq = boundary().distanceSq(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), 
-<a name="l00521"></a>00521                                         atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), f);
-<a name="l00522"></a>00522          <span class="keywordflow">if</span> (needEnergy) {
-<a name="l00523"></a>00523             bondEnergy = interactionPtr_-&gt;energy(rsq, type);
-<a name="l00524"></a>00524             <span class="keywordflow">if</span> (isLocal0 &amp;&amp; isLocal1) {
-<a name="l00525"></a>00525                energy += bondEnergy;
-<a name="l00526"></a>00526             } <span class="keywordflow">else</span> {
-<a name="l00527"></a>00527                energy += 0.5*bondEnergy;
-<a name="l00528"></a>00528             }
-<a name="l00529"></a>00529          }
-<a name="l00530"></a>00530          <span class="keywordflow">if</span> (needForce) {
-<a name="l00531"></a>00531             <span class="comment">// Set force = (r0-r1)*(forceOverR)</span>
-<a name="l00532"></a>00532             f *= interactionPtr_-&gt;forceOverR(rsq, type);
-<a name="l00533"></a>00533             <span class="keywordflow">if</span> (isLocal0) {
-<a name="l00534"></a>00534                atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() += f;
-<a name="l00535"></a>00535             }
-<a name="l00536"></a>00536             <span class="keywordflow">if</span> (isLocal1) {
-<a name="l00537"></a>00537                atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() -= f;
-<a name="l00538"></a>00538             }
-<a name="l00539"></a>00539          }
-<a name="l00540"></a>00540       }
-<a name="l00541"></a>00541       <span class="keywordflow">return</span> energy;
-<a name="l00542"></a>00542    }
-<a name="l00543"></a>00543 <span class="preprocessor">   #endif</span>
-<a name="l00544"></a>00544 <span class="preprocessor"></span>
-<a name="l00545"></a>00545 }
-<a name="l00546"></a>00546 <span class="preprocessor">#endif</span>
+<a name="l00340"></a>00340       <span class="comment">// Add localEnergy from all processors, set energy to sum on master.</span>
+<a name="l00341"></a>00341       reduceEnergy(localEnergy, communicator);
+<a name="l00342"></a>00342    }
+<a name="l00343"></a>00343 
+<a name="l00344"></a>00344    <span class="comment">/*</span>
+<a name="l00345"></a>00345 <span class="comment">   * Compute total pair stress (Call on all processors).</span>
+<a name="l00346"></a>00346 <span class="comment">   */</span>
+<a name="l00347"></a>00347    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00348"></a>00348 <span class="preprocessor">   #ifdef UTIL_MPI</span>
+<a name="l00349"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a912b3fd6889af281911ef83c1b88f1d0">00349</a> <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a912b3fd6889af281911ef83c1b88f1d0" title="Compute the covalent bond stress.">BondPotentialImpl&lt;Interaction&gt;::computeStress</a>(MPI::Intracomm&amp; communicator)
+<a name="l00350"></a>00350    <span class="preprocessor">#else</span>
+<a name="l00351"></a>00351 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a912b3fd6889af281911ef83c1b88f1d0" title="Compute the covalent bond stress.">BondPotentialImpl&lt;Interaction&gt;::computeStress</a>()
+<a name="l00352"></a>00352    <span class="preprocessor">#endif</span>
+<a name="l00353"></a>00353 <span class="preprocessor"></span>   {
+<a name="l00354"></a>00354       <span class="comment">// Do nothing and return if stress is already set.</span>
+<a name="l00355"></a>00355       <span class="keywordflow">if</span> (isStressSet()) <span class="keywordflow">return</span>;
+<a name="l00356"></a>00356  
+<a name="l00357"></a>00357       <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> localStress;
+<a name="l00358"></a>00358       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr;
+<a name="l00359"></a>00359       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> f;
+<a name="l00360"></a>00360       <span class="keywordtype">double</span> rsq, forceOverR;
+<a name="l00361"></a>00361       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group &amp;lt; N &amp;gt; objects owned by a GroupStorage&amp;lt; N &amp;gt;.">GroupIterator&lt;2&gt;</a> iter;
+<a name="l00362"></a>00362       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>*  atom0Ptr;
+<a name="l00363"></a>00363       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>*  atom1Ptr;
+<a name="l00364"></a>00364       <span class="keywordtype">int</span>    type;
+<a name="l00365"></a>00365       <span class="keywordtype">int</span>    isLocal0, isLocal1;
+<a name="l00366"></a>00366 
+<a name="l00367"></a>00367       localStress.<a class="code" href="classUtil_1_1Tensor.html#aac0c50df8b2fddfa0a2264e9b0866441" title="Set all elements of this tensor to zero.">zero</a>();
+<a name="l00368"></a>00368 
+<a name="l00369"></a>00369       <span class="comment">// Iterate over bonds</span>
+<a name="l00370"></a>00370       storage().begin(iter);
+<a name="l00371"></a>00371       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
+<a name="l00372"></a>00372          type = iter-&gt;typeId();
+<a name="l00373"></a>00373          atom0Ptr = iter-&gt;atomPtr(0);
+<a name="l00374"></a>00374          atom1Ptr = iter-&gt;atomPtr(1);
+<a name="l00375"></a>00375          isLocal0 = !(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
+<a name="l00376"></a>00376          isLocal1 = !(atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
+<a name="l00377"></a>00377          rsq = boundary().distanceSq(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), 
+<a name="l00378"></a>00378                                         atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), dr);
+<a name="l00379"></a>00379          f = dr;
+<a name="l00380"></a>00380          assert(isLocal0 || isLocal1);
+<a name="l00381"></a>00381          <span class="keywordflow">if</span> (isLocal0 &amp;&amp; isLocal1) {
+<a name="l00382"></a>00382             forceOverR = interactionPtr_-&gt;forceOverR(rsq, type);
+<a name="l00383"></a>00383          } <span class="keywordflow">else</span> {
+<a name="l00384"></a>00384             forceOverR = 0.5*interactionPtr_-&gt;forceOverR(rsq, type);
+<a name="l00385"></a>00385          }
+<a name="l00386"></a>00386          f *= forceOverR;
+<a name="l00387"></a>00387          incrementPairStress(f, dr, localStress);
+<a name="l00388"></a>00388       }
+<a name="l00389"></a>00389 
+<a name="l00390"></a>00390       <span class="comment">// if (reverseUpdateFlag()) { } else { } </span>
+<a name="l00391"></a>00391 
+<a name="l00392"></a>00392       <span class="comment">// Normalize by volume </span>
+<a name="l00393"></a>00393       localStress /= boundary().volume();
+<a name="l00394"></a>00394 
+<a name="l00395"></a>00395       <span class="comment">// Add localStress from all processors, set stress to sum on master</span>
+<a name="l00396"></a>00396       reduceStress(localStress, communicator);
+<a name="l00397"></a>00397    }
+<a name="l00398"></a>00398 
+<a name="l00399"></a>00399    <span class="comment">/*</span>
+<a name="l00400"></a>00400 <span class="comment">   * Compute total pair stress (Call on all processors).</span>
+<a name="l00401"></a>00401 <span class="comment">   */</span>
+<a name="l00402"></a>00402    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00403"></a>00403 <span class="preprocessor">   #ifdef UTIL_MPI</span>
+<a name="l00404"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a3006f1b2ea5e94b156a8cd26b1cac101">00404</a> <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a3006f1b2ea5e94b156a8cd26b1cac101" title="Compute bond forces and stress.">BondPotentialImpl&lt;Interaction&gt;::computeForcesAndStress</a>(MPI::Intracomm&amp; communicator)
+<a name="l00405"></a>00405    <span class="preprocessor">#else</span>
+<a name="l00406"></a>00406 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a3006f1b2ea5e94b156a8cd26b1cac101" title="Compute bond forces and stress.">BondPotentialImpl&lt;Interaction&gt;::computeForcesAndStress</a>()
+<a name="l00407"></a>00407    <span class="preprocessor">#endif</span>
+<a name="l00408"></a>00408 <span class="preprocessor"></span>   {
+<a name="l00409"></a>00409       <span class="comment">// Do nothing and return if stress is already set.</span>
+<a name="l00410"></a>00410       <span class="keywordflow">if</span> (isStressSet()) {
+<a name="l00411"></a>00411          computeForces();
+<a name="l00412"></a>00412          <span class="keywordflow">return</span>;
+<a name="l00413"></a>00413       }
+<a name="l00414"></a>00414  
+<a name="l00415"></a>00415       <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> localStress;
+<a name="l00416"></a>00416       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr;
+<a name="l00417"></a>00417       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> f;
+<a name="l00418"></a>00418       <span class="keywordtype">double</span> rsq;
+<a name="l00419"></a>00419       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group &amp;lt; N &amp;gt; objects owned by a GroupStorage&amp;lt; N &amp;gt;.">GroupIterator&lt;2&gt;</a> iter;
+<a name="l00420"></a>00420       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>*  atom0Ptr;
+<a name="l00421"></a>00421       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>*  atom1Ptr;
+<a name="l00422"></a>00422       <span class="keywordtype">int</span>    type;
+<a name="l00423"></a>00423       <span class="keywordtype">int</span>    isLocal0, isLocal1;
+<a name="l00424"></a>00424 
+<a name="l00425"></a>00425       localStress.<a class="code" href="classUtil_1_1Tensor.html#aac0c50df8b2fddfa0a2264e9b0866441" title="Set all elements of this tensor to zero.">zero</a>();
+<a name="l00426"></a>00426 
+<a name="l00427"></a>00427       <span class="comment">// Iterate over bonds</span>
+<a name="l00428"></a>00428       storage().begin(iter);
+<a name="l00429"></a>00429       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
+<a name="l00430"></a>00430          type = iter-&gt;typeId();
+<a name="l00431"></a>00431          atom0Ptr = iter-&gt;atomPtr(0);
+<a name="l00432"></a>00432          atom1Ptr = iter-&gt;atomPtr(1);
+<a name="l00433"></a>00433          rsq = boundary().distanceSq(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), 
+<a name="l00434"></a>00434                                         atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), dr);
+<a name="l00435"></a>00435          f  = dr;
+<a name="l00436"></a>00436          f *= interactionPtr_-&gt;forceOverR(rsq, type);
+<a name="l00437"></a>00437          isLocal0 = !(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
+<a name="l00438"></a>00438          isLocal1 = !(atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
+<a name="l00439"></a>00439          assert(isLocal0 || isLocal1);
+<a name="l00440"></a>00440          <span class="keywordflow">if</span> (isLocal0) {
+<a name="l00441"></a>00441             atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() += f;
+<a name="l00442"></a>00442          }
+<a name="l00443"></a>00443          <span class="keywordflow">if</span> (isLocal1) {
+<a name="l00444"></a>00444             atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() -= f;
+<a name="l00445"></a>00445          }
+<a name="l00446"></a>00446          <span class="keywordflow">if</span> (!(isLocal0 &amp;&amp; isLocal1)) {
+<a name="l00447"></a>00447             f *= 0.5;
+<a name="l00448"></a>00448          }
+<a name="l00449"></a>00449          incrementPairStress(f, dr, localStress);
+<a name="l00450"></a>00450       }
+<a name="l00451"></a>00451 
+<a name="l00452"></a>00452       <span class="comment">// if (reverseUpdateFlag()) { } else { } </span>
+<a name="l00453"></a>00453 
+<a name="l00454"></a>00454       <span class="comment">// Normalize by volume </span>
+<a name="l00455"></a>00455       localStress /= boundary().volume();
+<a name="l00456"></a>00456 
+<a name="l00457"></a>00457       <span class="comment">// Add localStress from all processors, set stress to sum on master</span>
+<a name="l00458"></a>00458       reduceStress(localStress, communicator);
+<a name="l00459"></a>00459    }
+<a name="l00460"></a>00460 
+<a name="l00461"></a>00461 }
+<a name="l00462"></a>00462 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:55 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:35 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

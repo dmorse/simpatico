@@ -111,6 +111,12 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a cell list.  <a href="#aaad166a41227c8766ef25189581f8add"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a34b7920abb87afe8e8dd40524ec15565">buildPairList</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the Verlet Pair list.  <a href="#a34b7920abb87afe8e8dd40524ec15565"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#af394f480c6c9046cc4672e980154b395">computePairEnergies</a> (MPI::Intracomm &amp;communicator)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute pair energies on all processors.  <a href="#af394f480c6c9046cc4672e980154b395"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrix.html">Util::DMatrix</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a6d80501b6742693d7cd87bae774d9039">pairEnergies</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total pair energies, from all processors.  <a href="#a6d80501b6742693d7cd87bae774d9039"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a350db818de13c40c0067e98e632bce09">unsetPairEnergies</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark pair energy as unknown (nullify).  <a href="#a350db818de13c40c0067e98e632bce09"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#aaeb6a47eac583bd9a55c16e8a97804af">computeNPair</a> (MPI::Intracomm &amp;communicator)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute twice the number of pairs within the force cutoff.  <a href="#aaeb6a47eac583bd9a55c16e8a97804af"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#aff7cb1e7b03a0e66766193ee5f713e41">nPair</a> () const </td></tr>
@@ -129,6 +135,8 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> by const reference.  <a href="#aa0f5c4632d3db1f9fa0aab12abba34d7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#afba961c8ddf4699908e0c23d883204a9">storage</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> by reference.  <a href="#afba961c8ddf4699908e0c23d883204a9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a86ccfa770cc19e5073d0f6c6ec9d05bd">setPairEnergies</a> (<a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; double &gt; pairEnergies)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set values for pair energies.  <a href="#a86ccfa770cc19e5073d0f6c6ec9d05bd"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="adca5dc6393736b237ce926c52c9acff8"></a><!-- doxytag: member="DdMd::PairPotential::PairPotential" ref="adca5dc6393736b237ce926c52c9acff8" args="()" -->
@@ -168,7 +176,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00046">46</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00048">48</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 </div>
 </div>
@@ -188,7 +196,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00072">72</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00075">75</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 </div>
 </div>
@@ -235,7 +243,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00061">61</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00064">64</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 </div>
 </div>
@@ -281,7 +289,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00121">121</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00124">124</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
@@ -310,7 +318,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00300">300</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00334">334</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 </div>
 </div>
@@ -484,11 +492,11 @@ Protected Member Functions</h2></td></tr>
 <p>Build a cell list. </p>
 <p>This method adds all local and ghost atoms to a cell list that is used in <a class="el" href="classDdMd_1_1PairPotential.html#a34b7920abb87afe8e8dd40524ec15565" title="Build the Verlet Pair list.">buildPairList()</a> to build a Verlet pair list. On entry to this method, atomic positions must Cartesian if UTIL_ORTHOGONAL is true and generalized coordinates if UTIL_ORTHOGONAL is false. If UTIL_ORTHOGONAL is false, this method should be followed by a call to AtomStorage::transformGenToCart(Boundary&amp; ) to transform all positions back to Cartesian coordinates. </p>
 
-<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00151">151</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00154">154</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -513,11 +521,74 @@ Protected Member Functions</h2></td></tr>
 <li>Atomic positions must be expressed in Cartesian coordinates. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00209">209</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00212">212</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00043">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af394f480c6c9046cc4672e980154b395"></a><!-- doxytag: member="DdMd::PairPotential::computePairEnergies" ref="af394f480c6c9046cc4672e980154b395" args="(MPI::Intracomm &amp;communicator)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void DdMd::PairPotential::computePairEnergies </td>
+          <td>(</td>
+          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
+          <td class="paramname"><em>communicator</em></td><td>)</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Compute pair energies on all processors. </p>
+<p>This method must be called on all processors. The result is stored on the master processor, and may be retrieved by calling <a class="el" href="classDdMd_1_1PairPotential.html#a6d80501b6742693d7cd87bae774d9039" title="Return total pair energies, from all processors.">pairEnergies()</a> on this processor. </p>
+
+<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a443bd8d75654411415a16ed7b4c826a0">DdMd::PairPotentialImpl&lt; Interaction &gt;</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6d80501b6742693d7cd87bae774d9039"></a><!-- doxytag: member="DdMd::PairPotential::pairEnergies" ref="a6d80501b6742693d7cd87bae774d9039" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; double &gt; DdMd::PairPotential::pairEnergies </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return total pair energies, from all processors. </p>
+<p>This method should only be called on the master (rank 0) processor, after a previous call to computePairEnergies. </p>
+
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00292">292</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a350db818de13c40c0067e98e632bce09"></a><!-- doxytag: member="DdMd::PairPotential::unsetPairEnergies" ref="a350db818de13c40c0067e98e632bce09" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::PairPotential::unsetPairEnergies </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Mark pair energy as unknown (nullify). </p>
+
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00304">304</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 </div>
 </div>
@@ -540,7 +611,7 @@ Protected Member Functions</h2></td></tr>
 <p>This method must be called on all processors.</p>
 <p>The method for distributing pairs among processors is the same as is used to distribute the energy, and depends on the value of <a class="el" href="classDdMd_1_1Potential.html#abba581369bfbb6ebc8dcc76193fab26b" title="Get flag to identify if reverse communication is enabled.">reverseUpdateFlag()</a>. </p>
 
-<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00290">290</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00311">311</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 </div>
 </div>
@@ -562,7 +633,7 @@ Protected Member Functions</h2></td></tr>
 <p>Return twice the number of pairs within the specified cutoff.</p>
 <p>This method should only be called on the rank 0 processor. The return value is computed by a previous call to computeNPair. </p>
 
-<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00320">320</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00341">341</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 </div>
 </div>
@@ -582,7 +653,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00279">279</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00313">313</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 </div>
 </div>
@@ -602,7 +673,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00282">282</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00316">316</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00156">DdMd::Integrator::outputStatistics()</a>.</p>
 
 </div>
 </div>
@@ -622,7 +695,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get value of the pair list skin. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00285">285</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00319">319</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 </div>
 </div>
@@ -642,7 +715,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get value of the pair list cutoff (maxPairCutoff + skin). </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00288">288</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00322">322</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 </div>
 </div>
@@ -662,7 +735,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return integer id for algorithm (0=PAIR, 1=CELL, 2=NSQ) </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00303">303</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00337">337</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 </div>
 </div>
@@ -690,7 +763,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00083">83</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00086">86</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
@@ -712,7 +785,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> by const reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00291">291</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00325">325</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 </div>
 </div>
@@ -732,7 +805,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> by const reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00294">294</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00328">328</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
 </div>
 </div>
@@ -752,7 +825,28 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00297">297</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00331">331</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a86ccfa770cc19e5073d0f6c6ec9d05bd"></a><!-- doxytag: member="DdMd::PairPotential::setPairEnergies" ref="a86ccfa770cc19e5073d0f6c6ec9d05bd" args="(DMatrix&lt; double &gt; pairEnergies)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::PairPotential::setPairEnergies </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>pairEnergies</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set values for pair energies. </p>
+
+<p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00298">298</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 </div>
 </div>
@@ -761,7 +855,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:59 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Aug 31 2012 22:26:39 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>
