@@ -64,7 +64,7 @@ namespace DdMd
       /**	
       * Constructor.
       *
-      * \param system reference to parent System object
+      * \param simulation reference to parent DdMd::Simulation object
       */
       StructureFactorGrid(Simulation &simulation);
 
