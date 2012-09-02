@@ -26,7 +26,7 @@ namespace Util
    /**
    * Factory template.
    *
-   * \ingroup Factory_Module
+   * \ingroup Manager_Module
    */
    template <typename Data>
    class Factory
