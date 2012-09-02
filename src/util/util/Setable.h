@@ -16,7 +16,7 @@ namespace Util
    /**
    * Template for a value that can be declared null.
    *
-   * \ingroup Param_Module
+   * \ingroup Util_Module
    */
    template <class T>
    class Setable

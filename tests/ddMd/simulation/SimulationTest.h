@@ -31,7 +31,9 @@ private:
 public:
 
    virtual void setUp()
-   {}
+   {
+      simulation_.fileMaster().setRootPrefix(filePrefix());
+   }
 
    void displaceAtoms(AtomStorage& atomStorage, const Boundary& boundary, 
                       Random& random, double range);

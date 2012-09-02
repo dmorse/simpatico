@@ -57,6 +57,11 @@ namespace DdMd
       virtual void outputStatistics(std::ostream& out);
 
       /**
+      * Clear all statistics accumulated during a run.
+      */
+      virtual void clearStatistics();
+
+      /**
       * Get time per processor of previous run.  
       */
       double time() const;

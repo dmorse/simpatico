@@ -231,5 +231,20 @@ namespace DdMd
 
    }
 
+   void Integrator::clearStatistics()
+   { 
+      timer().clear(); 
+      pairPotential().pairList().clearStatistics();
+      simulation().buffer().clearStatistics();
+      atomStorage().clearStatistics();
+      bondStorage().clearStatistics();
+      #ifdef INTER_ANGLE
+      angleStorage().clearStatistics();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage().clearStatistics();
+      #endif
+   }
+
 }
 #endif
