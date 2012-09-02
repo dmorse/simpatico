@@ -1,3 +1,12 @@
+
+Main Loop
+---------
+
+- Add ability to continue a simulation with reinitialization.
+
+- Add method to Integrator and/or Simulation to clear all run statistics.
+  This should be called during initialization of a run.
+
 Flexible Unit Cells:
 --------------------
 
@@ -6,6 +15,8 @@ Flexible Unit Cells:
 
 Testing
 -------
+
+- Make composite test for DdMd, for use with mpi with 6 processors.
 
 - Fix CellTest 
 
@@ -21,9 +32,9 @@ Testing
 Hybrid MD
 ----------
 
-- Finish and test transactions in AtomStorage (in branch).
+- Finish and test transactions in AtomStorage (in transactions branch).
 
-- Add transactions to GroupStorage (in branch).
+- Add transactions to GroupStorage (in transactions branch).
 
 Dynamic Resizing
 ----------------
