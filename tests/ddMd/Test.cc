@@ -26,7 +26,7 @@ addChild(new TEST_RUNNER(BondStorageTest), "storage/");
 addChild(new TEST_RUNNER(ConfigIoTest), "configIos/");
 addChild(new CommunicateTestComposite, "communicate/");
 addChild(new NeighborTestComposite, "neighbor/");
-//addChild(new TEST_RUNNER(SimulationTest), "simulation/");
+addChild(new TEST_RUNNER(SimulationTest), "simulation/");
 TEST_COMPOSITE_END
 
 int main() {

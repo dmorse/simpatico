@@ -2,10 +2,7 @@
 Main Loop
 ---------
 
-- Add ability to continue a simulation with reinitialization.
-
-- Add method to Integrator and/or Simulation to clear all run statistics.
-  This should be called during initialization of a run.
+- Add ability to continue a simulation without reinitialization.
 
 Flexible Unit Cells:
 --------------------
@@ -16,18 +13,14 @@ Flexible Unit Cells:
 Testing
 -------
 
-- Make composite test for DdMd, for use with mpi with 6 processors.
-
 - Fix CellTest 
-
-- Figure out how to use SimulationTest in composite (problem with file prefix).
 
 - Fix obsolete PairPotentialTest (change interface for PairPotential)
 
 - Improve testing of PairList - check that number of inner pairs doesn't
   change upon reneighboring, in unit tests and as optional test in integrator.
 
-- Test conservation of energy and stress methods for angles and dihedrals.
+- Test conservation of energy and stress in DdMd for angles and dihedrals.
 
 Hybrid MD
 ----------
@@ -101,9 +94,9 @@ Buffer:
 Single Processor Operation
 --------------------------
 
-- Modify Distributor, Collector, ConfigIo, and Exchanger classes to work 
-  ifndef UTIL_MPI, continue with other classes, to enable single processor 
-  operation with no MPI.
+- Modify Distributor, Collector, ConfigIo, and Exchanger classes 
+  to work ifndef UTIL_MPI, continue with other classes, to enable 
+  single processor operation with no MPI.
 
 Atom Class Implementation
 --------------------------

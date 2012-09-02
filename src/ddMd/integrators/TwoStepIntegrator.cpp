@@ -45,9 +45,6 @@ namespace DdMd
       bool needExchange;
       nStep_ = nStep;
 
-      #ifdef DDMD_INTEGRATOR_DEBUG
-      simulation().isValid();
-      #endif
 
       // Compute nAtomTotal.
       atomStorage().unsetNAtomTotal();
@@ -55,10 +52,7 @@ namespace DdMd
 
       // Clear all stored computations, compute nAtomTotal.
       simulation().modifySignal().notify();
-
-      #ifdef DDMD_INTEGRATOR_DEBUG
-      simulation().isValid();
-      #endif
+      clearStatistics();
 
       // Main MD loop
       timer().start();
