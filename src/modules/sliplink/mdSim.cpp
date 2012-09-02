@@ -1,37 +1,28 @@
-#include <mcMd/mdSimulation/MdSimulation.h>
-#include <util/param/ParamComponent.h>
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
 
-// Custom Factories
+#include <mcMd/mdSimulation/MdSimulation.h>
 #include "diagnostics/SliplinkMdDiagnosticFactory.h"
 
-#include <unistd.h>
-#include <memory>
-
-using namespace McMd;
-using namespace Util;
-
 /**
-* Main program for Molecular Dynamics Simulation.
+* Program for molecular dynamics simulation.
 *
-* Options:
+* Command line options:
 *
-*   -e  Enable echoing of the parameter file to the log file while
-*       the parameter file is read. This can be helpful if an error
-*       is encountered while the parameter file is being read, to
-*       help locate the syntax error in the parameter file.
+*   -e  
+*    Enable echoing of the parameter file as it is read.
 *
-*   -p  Enable use of a thermodynamic perturbation. A perturbation
-*       defines how a Hamiltonian or (more generally) a Boltzmann
-*       weight depends on a parameter. If used with a program that
-*       is compiled for parallel operation (ifdef UTIL_MPI), this
-*       option causes a master processor to read a single parameter
-*       file, broadcast a set of default parameters to all of the 
-*       processors, and then assign each processor a different value 
-*       of a perturbation parameter that is used to modify the state 
-*       on each processor. The simplest case is when the perturbation 
-*       parameter may be the inverse temperature (beta = 1/kT), in
-*       which case different processors simulate similar system at 
-*       different temperatures.
+*   -p  
+*    Enable use of a free energy perturbation. 
+*
+*   -r filename. 
+*    Restart a simulation. The parameter "filename" is the base
+*    name for the 3 restart files, named filename.prm, 
+*    filename.rst, and filename.cmd.
 *
 * Files:
 *
@@ -39,70 +30,32 @@ using namespace Util;
 * stream read by readParam() is std::cin and the default log file 
 * Log::file() is std::cout.
 *
-* If compiled in parallel mode (ifdef UTIL_MPI), the paths for all output
-* files produced by the processor with rank n are prefixed by "n/". This
-* put all the outputs from processor 6, for example, in a directory named 
-* "6/".  The default log file for processor n is "n/log". If compiled in 
-* parallel mode and invoked with the "-p" option, to enable a perturbation,
-* the default parameter stream is std::cin. In this case, this file is 
-* read by the master processor and broadcast to other processors. If 
-* compiled in parallel mode and invoked without the -p option, each 
-* processor reads from a different parameter file, which is named 
-* "n/param" for processor n.
+* If compiled in parallel mode (ifdef UTIL_MPI) and invoked with the 
+* "-p" option, a single parameter file is read from std::cin, as in a 
+* serial job.  If compiled in parallel mode and invoked without the -p 
+* option, each processor reads from a different parameter file, which 
+* is named "n/param" for processor n.
+*
+* If compiled in parallel mode (ifdef UTIL_MPI), paths for all output
+* files produced by the processor with rank n are prefixed by "n/". All
+* output files produced by processor 6, for example, are thus put in a 
+* directory named "6/".  The default log file for processor n is "n/log". 
 */
 int main(int argc, char **argv)
 {
-
-   // Read program arguments
-   bool eflag = false;
-   #ifdef MCMD_PERTURB
-   bool pflag = false;
+   #ifdef UTIL_MPI
+   MPI::Init();
+   McMd::MdSimulation simulation(MPI::COMM_WORLD);
+   #else
+   McMd::MdSimulation simulation;
    #endif
 
-   int   c;
-   opterr = 0;
-   while ((c = getopt(argc, argv, "pe")) != -1) {
-      switch (c) {
-      case 'e':
-        eflag = true;
-        break;
-      #ifdef MCMD_PERTURB
-      case 'p':
-        pflag = true;
-        break;
-      #endif
-      case '?':
-        std::cout << "Unknown option -" << optopt << std::endl;
-        return 1;
-      }
-   }
-
-   MdSimulation simulation;
-
-   // Set flag to echo parameters as they are read.
-   if (eflag) {
-      ParamComponent::setEcho(true);
-   }
-
-   #ifdef MCMD_PERTURB
-
-   // Set to use a Perturbation.
-   if (pflag) {
-
-      // Set to expect a Perturbation in the param file
-      simulation.system().setExpectPerturbation();
-
-      #ifdef UTIL_MPI
-      Log::file() << "Set to read parameters from a single file" << std::endl;
-      simulation.setParamCommunicator();
-      #endif
-
-   }
-
-   #endif
+   // Process command line options
+   simulation.setOptions(argc, argv);
 
    // Instantiate and set custom MdDiagnosticFactory
-   SliplinkMdDiagnosticFactory diagnosticFactory(simulation, simulation.system());
+   McMd::SliplinkMdDiagnosticFactory diagnosticFactory(simulation, 
+                                                       simulation.system());
    simulation.diagnosticFactory().addSubfactory(diagnosticFactory);
 
    // Read parameters from default parameter file
@@ -111,7 +64,11 @@ int main(int argc, char **argv)
    // Read command script to run simulation
    simulation.readCommands();
 
-   // Normal completion
-   return 0;
+   #if UTIL_MPI
+   if (MPI::Is_initialized()) {
+      MPI::Finalize();
+   }
+   #endif
 
+   return 0;
 }
