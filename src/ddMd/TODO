@@ -1,7 +1,15 @@
+Flexible Unit Cells:
+--------------------
+
+- Generalize makeSnapShot and needsExchange methods in AtomStorage to allow
+  for deforming boundaries (requires further changes to Boundary).
+
 Testing
 -------
 
 - Fix CellTest 
+
+- Figure out how to use SimulationTest in composite (problem with file prefix).
 
 - Fix obsolete PairPotentialTest (change interface for PairPotential)
 
@@ -9,19 +17,6 @@ Testing
   change upon reneighboring, in unit tests and as optional test in integrator.
 
 - Test conservation of energy and stress methods for angles and dihedrals.
-
-Flexible Unit Cells:
---------------------
-
-- Generalize makeSnapShot and needsExchange methods in AtomStorage to allow
-  for deforming boundaries (requires further changes to Boundary).
-
-Constant Pressure:
-------------------
-
-- Add requiresStress_ member, setter and accessor to Integrator.
-
-- In TwoStepIntegrator, if (requiresStress), call computeForceAndStress().
 
 Hybrid MD
 ----------
@@ -36,6 +31,7 @@ Dynamic Resizing
 - Allow for dynamic resizing of Storage classes.
 
 - Allow for dynamic resizing of Buffer class.
+
 Cell List and Pair List:
 ------------------------
 

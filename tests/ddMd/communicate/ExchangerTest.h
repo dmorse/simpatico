@@ -119,7 +119,9 @@ public:
       exchanger.allocate();
 
       MaskPolicy policy = MaskBonded;
-      std::ifstream configFile("in/config");
+      std::ifstream configFile;
+      //std::ifstream configFile("in/config");
+      openInputFile("in/config", configFile);
       configIo.readConfig(configFile, policy);
 
       int  nAtom = 0;     // Number received on this processor.
@@ -575,11 +577,14 @@ public:
          #endif
 
       }
+
+      #if 0
       if (domain.gridRank() == 0) {
          std::cout << std::endl;
          std::cout << "nExchange = " << nExchange << std::endl;
          std::cout << "nUpdate   = " << nUpdate << std::endl;
       }
+      #endif
 
    }
 

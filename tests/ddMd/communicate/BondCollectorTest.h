@@ -90,7 +90,8 @@ public:
       // If I am the master processor.
       std::ifstream configFile;
       if (myRank == 0) {
-         configFile.open("in/config");
+         //configFile.open("in/config");
+         openInputFile("in/config",configFile);
          configFile >> Label("BOUNDARY");
          configFile >> boundary;
       }

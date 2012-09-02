@@ -23,6 +23,12 @@ public:
    {}
 
    /**
+   * Destructor.
+   */
+   ~ParamFileTest()
+   { closeFile(); }
+
+   /**
    * Close the input file.
    */
    virtual void tearDown()
@@ -42,10 +48,7 @@ public:
    * Close the input file.
    */
    void closeFile()
-   {
-      if (file_.is_open())
-         file_.close(); 
-   }
+   {  if (file_.is_open()) file_.close(); }
 
    /**
    * Returns input file by reference.

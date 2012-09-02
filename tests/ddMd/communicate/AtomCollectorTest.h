@@ -86,7 +86,8 @@ public:
          Vector  pos;
          Atom*   ptr;
 
-         atomposfile.open("in/Atompositions");
+         //atomposfile.open("in/Atompositions");
+         openInputFile("in/Atompositions",atomposfile);
          atomposfile >> atomCount;
 
          #if UTIL_MPI

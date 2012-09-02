@@ -1,3 +1,4 @@
+#if 0
 #include "DomainTest.h"
 #include "BufferTest.h"
 #include "AtomDistributorTest.h"
@@ -6,6 +7,9 @@
 #include "ExchangerForceTest.h"
 #include "AtomCollectorTest.h"
 #include "BondCollectorTest.h"
+#endif
+
+#include "CommunicateTestComposite.h"
 
 int main()
 {
@@ -14,6 +18,10 @@ int main()
    IntVector::commitMpiType();
    Vector::commitMpiType();
 
+   CommunicateTestComposite runner;
+   runner.run();
+
+   #if 0
    TEST_RUNNER(DomainTest) runner1;
    runner1.run();
 
@@ -37,6 +45,7 @@ int main()
 
    TEST_RUNNER(BondCollectorTest) runner8;
    runner8.run();
+   #endif
 
    MPI::Finalize();
    #endif

@@ -21,4 +21,9 @@ clean:
 	cd configIos; make clean
 	cd simulation; make clean
 
+Test: $(ddMd_LIB) $(inter_LIB) $(util_LIB) $(TESTS_DIR)/ddMd/Test.o
+	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test $(TESTS_DIR)/ddMd/Test.o \
+	       $(ddMd_LIB) $(inter_LIB) $(util_LIB)
+
+-include Test.d
 

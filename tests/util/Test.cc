@@ -5,8 +5,6 @@
 * This program runs all unit tests in the util directory.
 */ 
 
-#include <test/CompositeTestRunner.h>
-
 #include "containers/ContainersTestComposite.h"
 #include "archives/ArchiveTestComposite.h"
 #include "param/serial/ParamTestComposite.h"
@@ -14,6 +12,8 @@
 #include "crystal/CrystalTestComposite.h"
 #include "format/FormatTest.h"
 #include "random/RandomTest.h"
+
+#include <test/CompositeTestRunner.h>
 
 TEST_COMPOSITE_BEGIN(UtilNsTestComposite)
 addChild(new ContainersTestComposite, "containers/");

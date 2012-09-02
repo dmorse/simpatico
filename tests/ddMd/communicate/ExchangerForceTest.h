@@ -160,7 +160,9 @@ public:
       forces.allocate(atomStorage.totalAtomCapacity());
 
       MaskPolicy policy = MaskBonded;
-      std::ifstream configFile("in/config");
+      //std::ifstream configFile("in/config");
+      std::ifstream configFile;
+      openInputFile("in/config", configFile);
       configIo.readConfig(configFile, policy);
 
       int  nAtom = 0;     // Number received on this processor.

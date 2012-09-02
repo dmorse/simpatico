@@ -23,8 +23,10 @@ using namespace Util;
 
 #include "../ParamTestClasses.h"
 
-class ParamCompositeTest : public ParamFileTest<ParamComposite>
+class ParamCompositeTest : public ParamFileTest
 {
+
+  ParamComposite paramComposite_;
 
 public:
 
@@ -66,19 +68,19 @@ public:
       value7[2] = 15.3;
       value7[3] = 15.2;
 
-      object().addBegin("ClassName");
-      object().add<int>("value0", value0);
-      object().add<long>("value1", value1);
-      object().add<double>("value2", value2);
-      object().addCArray<int>("value3", value3, 3);
-      object().addCArray<double>("value4", value4, 3);
-      object().addCArray2D<double>("value5", &value5[0][0], 2, 2);
-      object().addDArray<double>("value6", value6, 4);
-      object().addFArray<double, 4>("value7", value7);
-      object().addEnd();
+      paramComposite_.addBegin("ClassName");
+      paramComposite_.add<int>("value0", value0);
+      paramComposite_.add<long>("value1", value1);
+      paramComposite_.add<double>("value2", value2);
+      paramComposite_.addCArray<int>("value3", value3, 3);
+      paramComposite_.addCArray<double>("value4", value4, 3);
+      paramComposite_.addCArray2D<double>("value5", &value5[0][0], 2, 2);
+      paramComposite_.addDArray<double>("value6", value6, 4);
+      paramComposite_.addFArray<double, 4>("value7", value7);
+      paramComposite_.addEnd();
 
       printEndl();
-      object().writeParam(std::cout);
+      paramComposite_.writeParam(std::cout);
    }
 
    void testReadWrite() 
@@ -100,24 +102,24 @@ public:
 
       openFile("in/ParamComposite");
 
-      //object().setEcho();
-      object().readBegin(file(), "ClassName");
-      object().read<int>(file(), "value0", value0);
-      object().read<long>(file(), "value1", value1);
-      object().read<double>(file(), "value2", value2);
-      object().readBlank(file());
-      object().readCArray<int>(file(), "value3", value3, 3);
-      object().readCArray<double>(file(), "value4", value4, 3);
-      object().readCArray2D<double>(file(), "value5", &value5[0][0], 2, 2);
-      object().readDArray<double>(file(), "value6", value6, 4);
-      object().read<Vector>(file(), "value7", value7);
-      object().read<IntVector>(file(), "value8", value8);
-      object().readDMatrix<double>(file(), "value9", value9, 2, 2);
-      object().readParamComposite(file(), manager);
-      object().readEnd(file());
+      //paramComposite_.setEcho();
+      paramComposite_.readBegin(file(), "ClassName");
+      paramComposite_.read<int>(file(), "value0", value0);
+      paramComposite_.read<long>(file(), "value1", value1);
+      paramComposite_.read<double>(file(), "value2", value2);
+      paramComposite_.readBlank(file());
+      paramComposite_.readCArray<int>(file(), "value3", value3, 3);
+      paramComposite_.readCArray<double>(file(), "value4", value4, 3);
+      paramComposite_.readCArray2D<double>(file(), "value5", &value5[0][0], 2, 2);
+      paramComposite_.readDArray<double>(file(), "value6", value6, 4);
+      paramComposite_.read<Vector>(file(), "value7", value7);
+      paramComposite_.read<IntVector>(file(), "value8", value8);
+      paramComposite_.readDMatrix<double>(file(), "value9", value9, 2, 2);
+      paramComposite_.readParamComposite(file(), manager);
+      paramComposite_.readEnd(file());
 
       printEndl();
-      object().writeParam(std::cout);
+      paramComposite_.writeParam(std::cout);
    }
 
    void testSerialize() 

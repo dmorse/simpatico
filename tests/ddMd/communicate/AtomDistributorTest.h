@@ -99,7 +99,8 @@ public:
          Vector  pos;
          Atom*   ptr;
 
-         atomposfile.open("in/Atompositions");
+         openInputFile("in/Atompositions", atomposfile);
+         //atomposfile.open("in/Atompositions");
          // Read Max number of atoms to be distributed by the master processor
          atomposfile >> atomCount;
 
@@ -151,6 +152,7 @@ public:
          TEST_ASSERT(domain.isInDomain(iter->position()));
       }
 
+      #if 0
       #ifdef UTIL_MPI
       MpiLogger logger;
       logger.begin();
@@ -158,6 +160,7 @@ public:
       //          << ", recvCount = " << recvCount << std::endl;
       logger.end();
       #endif 
+      #endif
 
       // Check that all atoms are accounted for after distribution.
       #ifdef UTIL_MPI
