@@ -14,20 +14,17 @@ namespace Util
    * serialization library,
    * http://www.boost.org/doc/libs/1_48_0/libs/serialization/doc/index.html
    * but is much simpler (and less powerful) than the Boost library. 
-   */
-
-   /**
-   * \defgroup Archive_Module Archives
-   * \ingroup  Serialize_Module
    *
-   * An archive stores serialized data, either in a file or in RAM.
+   * \section Archives
    *
-   * The definition of an archive used here is very similar 
-   * to that used in the Boost serialization library. An archive class may 
-   * model either a saving / output archive, to which data is saved, or a 
-   * loading / input archive, from which data is loaded.  By convention, the 
-   * names of saving/output archive classes end with the string OArchive and 
-   * the names of loading/input archive classes end with the string IArchive. 
+   * An archive stores serialized data, either in a file or in RAM. The 
+   * definition of an archive used here is very similar to that used in the 
+   * Boost serialization library. An archive class may model either a 
+   * saving / output archive, to which data is saved, or a loading / input 
+   * archive, from which data is loaded.  By convention, the names of 
+   * saving/output archive classes end with the string OArchive and the 
+   * names of loading/input archive classes end with the string IArchive. 
+   *
    * Different archive classes store serialized objects in different forms. 
    * For example, TextFileOArchive and TextFileIArchive are saving and loading 
    * archive classes, respectively, that are wrappers for ofstream or ifstream 
@@ -36,6 +33,8 @@ namespace Util
    * loading / input archives that store data in a binary format. 
    * MemoryOArchive and MemoryIArchive are saving and loading archives that 
    * stored data in binary form in a block of random-access memory. 
+   *
+   * \section Operators Overloaded IO operators
    *
    * Objects may be saved to a saving archive or loaded from a loading 
    * archive using overloaded operators, using the same syntax as that of the
@@ -60,6 +59,8 @@ namespace Util
    * \endcode
    * are equivalent, and both load the state of variable data from archive 
    * ar.
+   *
+   * \section Serialize Serialize Functions
    *
    * Objects of type T can be saved to or loaded from an instance of a
    * class Archive if and only if the compiler can find a function named 
@@ -188,15 +189,13 @@ namespace Util
    * class, discussed below, partially solves this problem, by replacing 
    * the serialize method template by a pair of virtual save() and load() 
    * methods.
-   */
-
-   /**
-   * \defgroup Serializable_Module Serializable
    *
-   * Serializable is an abstract base class that provides an interface for
-   * serializing objects that uses virtual functions rather than templates.  
-   * Each subclass of Serializable must define virtual save() and load() 
-   * methods with the following signatures:
+   * \section Serializable Serializable Classes
+   *
+   * Serializable is an abstract base class that provides an alternate 
+   * interface for serializing objects, using virtual functions rather than 
+   * method templates.  Each subclass of Serializable must define virtual 
+   * save() and load() methods with the following signatures:
    * \code
    * virtual void save(Serializable::OArchiveType& ar);
    * virtual void load(Serializable::IArchiveType& ar);
@@ -216,10 +215,8 @@ namespace Util
    *
    * In practice, a serialize method or function template should be defined 
    * for relatively simple, non-polymorphic classes, but polymorhpic classes
-   * that are normally accessed via base class pointers should be derived 
+   * that are normally accessed via base class pointers need to be derived 
    * from Serializable, and must implement save and load methods.
-   *
-   * \ingroup Serialize_Module
    */
 
 }
