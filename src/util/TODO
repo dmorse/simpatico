@@ -8,3 +8,38 @@ Boundary classes
 - Add bool isOrthorhombic() method to Boundary classes.
   Use to test other classes that call Boundary::lengths().
 
+ParamComponent Classes
+----------------------
+
+- Add ability to have optional Parameters and ParamComposite.
+  To do this:
+
+  * Add buffer to Label class, and method to read label for optional element
+  * Make sure ParamComposite and Parameter labels are read by Label class.
+  * Add new methods to ParamComposite to attempt to read optional elements.
+
+  -> Work in branch
+
+Serialization
+-------------
+
+- Create ability to do true binary serialization, without single restart 
+  file for each processor. Required changes in Util namespace:
+
+  * Create serialize methods for pointer containers that allocate data, but 
+    that do not copy pointers. 
+
+  - Create serialize methods for Managers that save the names, and that
+    use the factory to reconstruct associated objects during loading.
+
+  - Create binary serialize methods for all objects created by factories.
+    Base class methods should just throw exceptions.
+
+  Further changes to McMd namespace are discussed there.
+
+  - Create serialization method (serialize or save and load) for Simulation
+    that initialize all pointers after allocating all arrays. 
+
+  - Make sure that loading methods explicitly create required associations 
+    between child objects.
+
