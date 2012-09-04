@@ -70,6 +70,18 @@ namespace Util
       }
    }
   
+   /*
+   * Read parameter block, including begin and end.
+   */
+   void ParamComposite::readParam(std::istream &in)
+   {
+      std::string label = className();
+      label += "{";
+      readBegin(in, label.c_str());
+      readParameters(in);
+      readEnd(in);
+   }
+   
    /* 
    * Default writeParam implementation.
    */

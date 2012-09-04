@@ -136,13 +136,23 @@ namespace Util
       /** 
       * Read all parameters from an input stream.
       *
-      * Empty default implementation.
+      * This method reads the entire parameter block, including the
+      * opening line "ClassName{" and the closing bracket "}". The
+      * implementation calls virtual readParameters method to read
+      * the body of the block.
       *
       * \param in input stream for reading
       */
-      virtual void readParam(std::istream &in) 
-      {}
+      virtual void readParam(std::istream &in);
    
+      /** 
+      * Read body of parameter block excluding opening and closing lines.
+      *
+      * \param in input stream for reading
+      */
+      virtual void readParameters(std::istream &in)
+      {};
+
       /** 
       * Write all parameters to an output stream.
       *
