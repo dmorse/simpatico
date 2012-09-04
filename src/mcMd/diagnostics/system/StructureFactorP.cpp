@@ -29,7 +29,7 @@ namespace McMd
    /// Constructor.
    StructureFactorP::StructureFactorP(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("StructureFactorP"); }
 
    StructureFactorP::~StructureFactorP() 
    {}

@@ -27,7 +27,7 @@ namespace McMd
     : SystemDiagnostic<System>(system),
       nSample_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("DumpConfig"); }
 
    /*
    * Read interval and outputFileName. 

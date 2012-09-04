@@ -379,6 +379,20 @@ namespace Util
       Blank& addBlank();
    
       //@}
+  
+      /**
+      * Get class name string.
+      */
+      std::string className() const;
+      
+   protected:
+
+      /**
+      * Set class name string.
+      *
+      * Should be set in subclass constructor. 
+      */
+      void setClassName(const char * className);
       
    private:
    
@@ -390,6 +404,9 @@ namespace Util
 
       /// Number of ParamComponent objects in list
       int size_;     
+
+      /// Name of subclass.
+      std::string className_;
 
    };
 
@@ -595,5 +612,11 @@ namespace Util
       return *ptr;
    }
  
+   /**
+   * Get class name string.
+   */
+   std::string ParamComposite::className() const
+   {   return className_; }
+      
 } 
 #endif

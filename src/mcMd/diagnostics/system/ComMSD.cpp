@@ -39,7 +39,7 @@ namespace McMd
       nAtom_(-1),
       capacity_(-1),
       isInitialized_(false)
-   {}
+   { setClassName("ComMSD"); }
 
    /*
    * Read parameters from file, and allocate data array.

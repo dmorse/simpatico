@@ -29,7 +29,7 @@ namespace McMd
       accumulator_(),
       capacity_(-1),
       isInitialized_(false)
-   {}
+   {  setClassName("McStressAutoCorr"); }
 
    /*
    * Read parameters from file, and allocate data array.

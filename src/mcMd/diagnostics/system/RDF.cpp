@@ -28,7 +28,7 @@ namespace McMd
    RDF::RDF(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("RDF"); }
 
    /// Read parameters from file, and allocate data array.
    void RDF::readParam(std::istream& in) 

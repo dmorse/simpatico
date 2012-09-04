@@ -21,7 +21,7 @@ namespace McMd
    // Constructor
    McEnergyOutput::McEnergyOutput(McSystem& system) :
       SystemDiagnostic<McSystem>(system)
-   {}
+   {  setClassName("McEnergyOutput"); }
 
    void McEnergyOutput::readParam(std::istream& in)
    {

@@ -34,7 +34,7 @@ namespace McMd
       accumulator_(),
       nSamplePerBlock_(1),
       isInitialized_(false)
-   {}
+   {  setClassName("McExternalEnergyAverage"); }
 
    /*
    * Read parameters and initialize.

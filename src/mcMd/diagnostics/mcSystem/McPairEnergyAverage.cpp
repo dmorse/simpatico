@@ -35,6 +35,7 @@ namespace McMd
       nSamplePerBlock_(1),
       isInitialized_(false)
    {
+      setClassName("McPairEnergyAverage"); 
       selector_.setAvoidDoubleCounting(true); 
    }
 

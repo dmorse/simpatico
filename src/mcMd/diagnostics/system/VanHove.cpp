@@ -31,7 +31,7 @@ namespace McMd
    VanHove::VanHove(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("VanHove"); }
 
    VanHove::~VanHove() 
    {}

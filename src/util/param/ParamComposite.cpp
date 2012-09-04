@@ -211,6 +211,12 @@ namespace Util
       return *ptr;
    }
 
+   /*
+   * Set class name string.
+   */
+   void ParamComposite::setClassName(const char * className)
+   {  className_ = className; }
+      
 
 } 
 #endif

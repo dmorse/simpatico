@@ -183,7 +183,7 @@ namespace Util
       bufferCapacity_(0),
       nEnsemble_(0),
       nSample_(0)
-   {}
+   {  setClassName("MeanSqDispArray"); }
 
    /*
    * Default destructor.

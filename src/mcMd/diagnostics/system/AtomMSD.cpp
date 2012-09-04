@@ -39,7 +39,7 @@ namespace McMd
       nMolecule_(-1),
       capacity_(-1),
       isInitialized_(false)
-   {}
+   {  setClassName("AtomMSD"); }
 
    /*
    * Read parameters from file, and allocate data array.

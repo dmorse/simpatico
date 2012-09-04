@@ -28,7 +28,7 @@ namespace McMd
       nStar_(0),
       lattice_(Triclinic),
       isInitialized_(false)
-   {}
+   {  setClassName("StructureFactorPGrid"); }
 
    /// Read parameters from file, and allocate data array.
    void StructureFactorPGrid::readParam(std::istream& in) 

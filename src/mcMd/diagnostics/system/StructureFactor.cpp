@@ -31,7 +31,7 @@ namespace McMd
    StructureFactor::StructureFactor(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("StructureFactor"); }
 
    StructureFactor::~StructureFactor() 
    {}

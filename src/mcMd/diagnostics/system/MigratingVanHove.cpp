@@ -45,6 +45,7 @@ namespace McMd
       replicaMovePtr_(&system.replicaMove()),
       isInitialized_(false)
    {  
+      setClassName("MigratingVanHove"); }
       communicatorPtr_ = &(system.simulation().communicator());
    }
   

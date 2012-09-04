@@ -28,7 +28,7 @@ namespace McMd
    CompositionProfile::CompositionProfile(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("CompositionProfile"); }
 
    CompositionProfile::~CompositionProfile() 
    {}

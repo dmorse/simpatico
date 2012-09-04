@@ -37,7 +37,7 @@ namespace McMd
       atom2Id_(-1),
       capacity_(-1),
       isInitialized_(false)
-   {}
+   {  setClassName("IntraPairAutoCorr"); }
 
    /*
    * Read parameters from file, and allocate data array.

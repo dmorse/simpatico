@@ -26,7 +26,7 @@ namespace McMd
    RadiusGyration::RadiusGyration(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("RadiusGyration"); }
 
    /// Read parameters from file, and allocate data array.
    void RadiusGyration::readParam(std::istream& in) 

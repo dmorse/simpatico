@@ -32,7 +32,7 @@ namespace McMd
       accumulators_(),
       nSamplePerBlock_(-1),
       isInitialized_(false)
-   {}
+   {  setClassName("BoundaryAverage"); }
 
    /*
    * Read parameters from file, and allocate accumulators array.
