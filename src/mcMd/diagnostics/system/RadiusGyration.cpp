@@ -29,7 +29,7 @@ namespace McMd
    {  setClassName("RadiusGyration"); }
 
    /// Read parameters from file, and allocate data array.
-   void RadiusGyration::readParam(std::istream& in) 
+   void RadiusGyration::readParameters(std::istream& in) 
    {
 
       readInterval(in);

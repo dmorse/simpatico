@@ -43,7 +43,7 @@ namespace McMd
    * also read hasAutoCorr, which may be either 0 or 1
    * if 1, also read autoCorrCapacity and autoCorrName
    */
-   void CfbReptationMove::readParam(std::istream& in) 
+   void CfbReptationMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);

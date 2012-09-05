@@ -66,7 +66,7 @@ namespace McMd
       *
       * \param in input stream (file or std in).
       */ 
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
  
       /**
       * Set pair interaction parameter epsilon(0,1) and external parameter 
@@ -134,7 +134,7 @@ namespace McMd
    * Read epsilon(0,1) and external parameter from file
    */
    template < class PairInteraction, class ExternalInteraction >
-   void McPairExternalPerturbation<PairInteraction, ExternalInteraction>::readParam(std::istream& in)
+   void McPairExternalPerturbation<PairInteraction, ExternalInteraction>::readParameters(std::istream& in)
    { 
       Perturbation::readParameters(in);
       nParameters_ = Perturbation::getNParameters();

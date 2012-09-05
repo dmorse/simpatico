@@ -60,10 +60,10 @@ namespace McMd
       * Read potential energy.
       * 
       * This method reads the bond potential Interaction parameter
-      * block. Before calling Interaction::readParam(), it passes
+      * block. Before calling Interaction::readParameters(), it passes
       * simulation().nBondType() to Interaction::setNBondType().
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Bond interaction interface.
       //@{
@@ -238,15 +238,15 @@ namespace McMd
    * Read parameters from file.
    */
    template <class Interaction>
-   void LinkPotentialImpl<Interaction>::readParam(std::istream &in) 
+   void LinkPotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
       // Read only if not a copy.  Do not indent interaction block.
       if (!isCopy_) {
-         readBegin(in, "LinkPotential");
+         //readBegin(in, "LinkPotential");
          interaction().setNBondType(simulation().nLinkType());
          bool nextIndent = false;
          readParamComposite(in, interaction(), nextIndent);
-         readEnd(in);
+         //readEnd(in);
       }
    }
   

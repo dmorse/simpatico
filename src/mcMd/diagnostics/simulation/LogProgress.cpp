@@ -25,7 +25,7 @@ namespace McMd
    /*
    * Read interval.
    */
-   void LogProgress::readParam(std::istream& in) 
+   void LogProgress::readParameters(std::istream& in) 
    {  readInterval(in); }
 
    /*

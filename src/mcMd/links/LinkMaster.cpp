@@ -29,12 +29,12 @@ namespace McMd
    /**
    * Read linkCapacity and allocate.
    */
-   void LinkMaster::readParam(std::istream& in)
+   void LinkMaster::readParameters(std::istream& in)
    {
-      readBegin(in, "LinkMaster");
+      //readBegin(in, "LinkMaster");
       read<int>(in, "linkCapacity", linkCapacity_); 
       read<int>(in, "atomCapacity", atomCapacity_); 
-      readEnd(in);
+      //readEnd(in);
 
       allocate();
    }

@@ -37,7 +37,7 @@ namespace McMd
    /*
    * Read parameters from file, and allocate accumulators array.
    */
-   void BoundaryAverage::readParam(std::istream& in) 
+   void BoundaryAverage::readParameters(std::istream& in) 
    {
 
       readInterval(in);

@@ -29,7 +29,7 @@ namespace McMd
      commandFilePtr_(0),
      hasDirectoryId_(false),
      isSetParamFileStdIn_(false)
-   {}
+   { setClassName("FileMaster"); }
 
    /* 
    * Copy constructor.   
@@ -103,13 +103,13 @@ namespace McMd
    /* 
    * Read parameters from file.
    */
-   void FileMaster::readParam(std::istream &in) 
+   void FileMaster::readParameters(std::istream &in) 
    {
-      readBegin(in, "FileMaster");
+      //readBegin(in, "FileMaster");
       read<std::string>(in, "commandFileName",  commandFileName_);
       read<std::string>(in, "inputPrefix",  inputPrefix_);
       read<std::string>(in, "outputPrefix", outputPrefix_);
-      readEnd(in);
+      //readEnd(in);
    }
 
    /*

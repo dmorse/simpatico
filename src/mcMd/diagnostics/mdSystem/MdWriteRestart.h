@@ -46,7 +46,7 @@ namespace McMd
       *
       * \param in input parameter file
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
    
       /**
       * Write restart file.

@@ -50,13 +50,13 @@ namespace McMd
    /*
    * Read atomCapacity and pairCapacity from file.
    */
-   void PairList::readParam(std::istream& in) 
+   void PairList::readParameters(std::istream& in) 
    {
-      readBegin(in, "PairList");
+      //readBegin(in, "PairList");
       read<int>(in, "atomCapacity", atomCapacity_);
       read<int>(in, "pairCapacity", pairCapacity_);
       read<double>(in, "skin",      skin_);
-      readEnd(in);
+      //readEnd(in);
    }
 
    /*

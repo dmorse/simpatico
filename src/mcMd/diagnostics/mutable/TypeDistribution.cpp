@@ -34,7 +34,7 @@ namespace McMd
       mutatorPtr_(0)
    {  setClassName("TypeDistribution"); }
 
-   void TypeDistribution::readParam(std::istream& in)
+   void TypeDistribution::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

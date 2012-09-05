@@ -37,7 +37,7 @@ namespace McMd
    {}
 
    /// Read parameters from file, and allocate data array.
-   void VanHove::readParam(std::istream& in) 
+   void VanHove::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

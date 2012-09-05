@@ -32,7 +32,7 @@ namespace McMd
    {  setClassName("StructureFactorGrid"); }
 
    /// Read parameters from file, and allocate data array.
-   void StructureFactorGrid::readParam(std::istream& in) 
+   void StructureFactorGrid::readParameters(std::istream& in) 
    {
 
       nAtomType_ = system().simulation().nAtomType();

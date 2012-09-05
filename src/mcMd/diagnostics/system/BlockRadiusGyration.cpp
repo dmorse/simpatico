@@ -42,7 +42,7 @@ namespace McMd
    {  setClassName("BlockRadiusGyration"); }
 
    /// Read parameters from file, and allocate data array.
-   void BlockRadiusGyration::readParam(std::istream& in) 
+   void BlockRadiusGyration::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

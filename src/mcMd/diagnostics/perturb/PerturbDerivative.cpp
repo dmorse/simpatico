@@ -31,7 +31,7 @@ namespace McMd
    /*
    * Read parameters and initialize.
    */
-   void PerturbDerivative::readParam(std::istream& in)
+   void PerturbDerivative::readParameters(std::istream& in)
    {
 
       readInterval(in);

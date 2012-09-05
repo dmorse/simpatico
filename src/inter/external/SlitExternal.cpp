@@ -92,7 +92,7 @@ namespace Inter
    /* 
    * Read potential parameters from file.
    */
-   void SlitExternal::readParam(std::istream &in) 
+   void SlitExternal::readParameters(std::istream &in) 
    {
       if (nAtomType_ == 0) {
          UTIL_THROW("nAtomType must be set before readParam");
@@ -102,11 +102,11 @@ namespace Inter
       }
    
       // Read parameters
-      // readBegin(in,  "SlitExternal");
+      // //readBegin(in,  "SlitExternal");
       read<double>(in, "epsilon", epsilon_);
       read<double>(in, "sigma", sigma_);
       read<double>(in, "cutoff", cutoff_);
-      // readEnd(in);
+      // //readEnd(in);
 
       // Initialize dependent variables (particle number density = 0.7)
       sigmaCb_ = sigma_ * sigma_ * sigma_;

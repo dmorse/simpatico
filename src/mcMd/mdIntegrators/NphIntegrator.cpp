@@ -47,7 +47,7 @@ namespace McMd
    /* 
    * Read parameter and configuration files, initialize system.
    */
-   void NphIntegrator::readParam(std::istream &in) 
+   void NphIntegrator::readParameters(std::istream &in) 
    {
       read<double>(in, "dt", dt_);
       read<double>(in, "W", W_);

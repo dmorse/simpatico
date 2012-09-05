@@ -39,7 +39,7 @@ namespace McMd
    /* 
    * Read parameters speciesId, nRegrow, and nTrial
    */
-   void CfbHomoReptationMove::readParam(std::istream& in) 
+   void CfbHomoReptationMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);

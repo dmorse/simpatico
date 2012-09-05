@@ -26,7 +26,8 @@ namespace Util
     : ParamComponent(),
       list_(),
       isLeaf_(),
-      size_(0)
+      size_(0),
+      className_("ParamComposite")
    {}
 
    /*
@@ -36,7 +37,8 @@ namespace Util
     : ParamComponent(),
       list_(),
       isLeaf_(),
-      size_(0)
+      size_(0),
+      className_("ParamComposite")
    {
       if (capacity <= 0 ) {
          UTIL_THROW("Attempt to reserve capacity <= 0");

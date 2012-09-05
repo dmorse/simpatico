@@ -53,15 +53,15 @@ namespace McMd
    /* 
    * Read bond interaction parameters from file
    */
-   void HarmonicTether::readParam(std::istream &in) 
+   void HarmonicTether::readParameters(std::istream &in) 
    {
-      readBegin(in, "HarmonicTether");
+      //readBegin(in, "HarmonicTether");
       read<int>(in, "nTetherType", nTetherType_);
       if (nTetherType_ > MaxNTetherType) {
          UTIL_THROW("nTetherType_ > MaxNTetherType");
       }
       readCArray<double>(in, "kappa",  kappa_,  nTetherType_);
-      readEnd(in);
+      //readEnd(in);
    }
 
 } 

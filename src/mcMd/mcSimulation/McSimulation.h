@@ -75,7 +75,7 @@ namespace McMd
       *
       * \param in parameter file input stream.
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /**
       * Read parameters from the default parameter stream.
@@ -204,7 +204,7 @@ namespace McMd
       /// Pointer to Manager for diagnostics.
       McDiagnosticManager* mcDiagnosticManagerPtr_;
 
-      /// Pointer to parameter file passed to readParam(istream&)
+      /// Pointer to parameter file passed to readParameters(istream&)
       std::istream*   paramFilePtr_;
 
       /// Has readParam been called?

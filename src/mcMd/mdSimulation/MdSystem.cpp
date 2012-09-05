@@ -198,10 +198,10 @@ namespace McMd
    /* 
    * Read parameter and configuration files, initialize system.
    */
-   void MdSystem::readParam(std::istream &in) 
+   void MdSystem::readParameters(std::istream &in) 
    {
 
-      readBegin(in, "MdSystem");
+      //readBegin(in, "MdSystem");
 
       if (!isCopy()) {
          allocateMoleculeSets();
@@ -317,7 +317,7 @@ namespace McMd
       readPerturbation(in);
       #endif
 
-      readEnd(in);
+      //readEnd(in);
    }
   
    /*

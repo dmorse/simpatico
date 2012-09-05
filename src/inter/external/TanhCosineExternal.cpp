@@ -101,7 +101,7 @@ namespace Inter
    /* 
    * Read potential parameters from file.
    */
-   void TanhCosineExternal::readParam(std::istream &in) 
+   void TanhCosineExternal::readParameters(std::istream &in) 
    {
       if (nAtomType_ == 0) {
          UTIL_THROW("nAtomType must be set before readParam");

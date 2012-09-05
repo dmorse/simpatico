@@ -32,7 +32,7 @@ namespace McMd
    * also provides access to a separate parameter file.
    *
    * The base input and output prefix strings are read from file by 
-   * the readParam() method. To use input files that are all in one 
+   * the readParameters() method. To use input files that are all in one 
    * directory and create output files in another, these prefix
    * strings should be set to the desired directory names, followed
    * by a trailing "/" directory separator. For example, to put all
@@ -139,7 +139,7 @@ namespace McMd
       *
       * \param in pararameter file input stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Get a default parameter stream by reference.

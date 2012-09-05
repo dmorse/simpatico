@@ -45,7 +45,7 @@ namespace McMd
       *
       * \param in parameter file input stream
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /**
       * Initialize at beginning of simulation run.

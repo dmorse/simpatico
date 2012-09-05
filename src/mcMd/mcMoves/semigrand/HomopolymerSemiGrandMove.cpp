@@ -33,7 +33,7 @@ namespace McMd
    /* 
    * Read parameter speciesId.
    */
-   void HomopolymerSemiGrandMove::readParam(std::istream& in) 
+   void HomopolymerSemiGrandMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);

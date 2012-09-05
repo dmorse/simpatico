@@ -32,7 +32,7 @@ namespace McMd
    /*
    * Read interval and outputFileName. 
    */
-   void McWriteRestart::readParam(std::istream& in) 
+   void McWriteRestart::readParameters(std::istream& in) 
    {
       readInterval(in);
       read<std::string>(in, "fileName", filename_);

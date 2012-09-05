@@ -49,7 +49,7 @@ namespace McMd
    /*
    * Read parameters from file.
    */
-   void LinearRouseAutoCorr::readParam(std::istream& in) 
+   void LinearRouseAutoCorr::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

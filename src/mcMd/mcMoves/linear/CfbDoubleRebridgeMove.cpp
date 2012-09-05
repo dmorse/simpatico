@@ -39,7 +39,7 @@ namespace McMd
    /* 
    * Read parameters speciesId, nRegrow, and nTrial
    */
-   void CfbDoubleRebridgeMove::readParam(std::istream& in) 
+   void CfbDoubleRebridgeMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);
@@ -48,7 +48,7 @@ namespace McMd
       read<double>(in, "bridgeLength", bridgeLength_);
 
       // Read parameters hold by RebridgeBase
-      CfbRebridgeBase::readParam(in);
+      CfbRebridgeBase::readParameters(in);
 
       // Initialize tables for spring constants and normalizations.
       setup();

@@ -34,7 +34,7 @@ namespace McMd
    {}
 
    /// Read parameters from file, and allocate direction vectors.
-   void CompositionProfile::readParam(std::istream& in) 
+   void CompositionProfile::readParameters(std::istream& in) 
    {
 
       // Read interval and output file 

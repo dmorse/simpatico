@@ -61,7 +61,7 @@ namespace McMd
    /* 
    * Read parameter and configuration files, initialize system.
    */
-   void NvtNhIntegrator::readParam(std::istream &in) 
+   void NvtNhIntegrator::readParameters(std::istream &in) 
    {
       read<double>(in, "dt",   dt_);
       read<double>(in, "tauT", tauT_);

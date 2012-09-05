@@ -24,20 +24,10 @@ namespace McMd
    {  setClassName("SpeciesManager"); }
    
    /*
-   * Read parameter file. 
-   */
-   void SpeciesManager::readParam(std::istream &in)
-   {
-      readBegin(in, "SpeciesManager");
-      Manager<Species>::readParam(in);
-   } 
-
-   /*
    * Return a pointer to a new SpeciesFactory object.
    */
    Factory<Species>* SpeciesManager::newDefaultFactory() const
    { return new SpeciesFactory(); }
 
 }
-
 #endif

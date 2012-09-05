@@ -42,7 +42,7 @@ namespace McMd
    /* 
    * Read parameter nTrial.
    */
-   void CfbEndBase::readParam(std::istream& in) 
+   void CfbEndBase::readParameters(std::istream& in) 
    {
       read<int>(in, "nTrial", nTrial_);
       if (nTrial_ <=0 || nTrial_ > MaxTrial_) {

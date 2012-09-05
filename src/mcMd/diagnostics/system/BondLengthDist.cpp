@@ -31,7 +31,7 @@ namespace McMd
    {  setClassName("BondLengthDist"); }
 
    /// Read parameters from file, and allocate data array.
-   void BondLengthDist::readParam(std::istream& in) 
+   void BondLengthDist::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

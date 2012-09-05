@@ -34,7 +34,7 @@ namespace McMd
    /*
    * Read parameters from file, and allocate data array.
    */
-   void McStressAutoCorr::readParam(std::istream& in) 
+   void McStressAutoCorr::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

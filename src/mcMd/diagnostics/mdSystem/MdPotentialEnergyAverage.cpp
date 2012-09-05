@@ -32,7 +32,7 @@ namespace McMd
    /*
    * Read parameters and initialize.
    */
-   void MdPotentialEnergyAverage::readParam(std::istream& in)
+   void MdPotentialEnergyAverage::readParameters(std::istream& in)
    {
 
       readInterval(in);

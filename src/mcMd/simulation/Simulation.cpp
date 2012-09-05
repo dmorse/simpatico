@@ -173,7 +173,7 @@ namespace McMd
    /*
    * Read parameter file.
    */
-   void Simulation::readParam(std::istream& in)
+   void Simulation::readParameters(std::istream& in)
    {
 
       // Preconditions

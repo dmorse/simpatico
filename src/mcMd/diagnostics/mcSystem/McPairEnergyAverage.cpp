@@ -43,7 +43,7 @@ namespace McMd
    /*
    * Read parameters and initialize.
    */
-   void McPairEnergyAverage::readParam(std::istream& in)
+   void McPairEnergyAverage::readParameters(std::istream& in)
    {
 
       readInterval(in);

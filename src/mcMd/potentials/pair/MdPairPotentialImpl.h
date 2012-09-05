@@ -57,12 +57,12 @@ namespace McMd
       * 
       * This method reads the maxBoundary, PairList and pair potential 
       * Interaction parameter blocks, in  that order, and initializes an
-      * internal PairList. Before calling the Interaction::readParam method,
+      * internal PairList. Before calling the Interaction::readParameters method,
       * it passes simulation().nAtomType() to Interaction::setNAtomType().
       *
       * \param in input parameter stream.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Return pair energy for a single pair.
@@ -225,16 +225,17 @@ namespace McMd
    }
 
    template <class Interaction>
-   void MdPairPotentialImpl<Interaction>::readParam(std::istream& in)
+   void MdPairPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
-      readBegin(in, "MdPairPotential");
+      //readBegin(in, "MdPairPotential");
 
       // Read pair potential parameters only if not a copy.
       // This block is not indented or surrounded by brackets.
       if (!isCopy_) {
          interaction().setNAtomType(simulation().nAtomType());
          bool nextIndent = false;
-         readParamComposite(in, interaction(), nextIndent);
+         addParamComposite(interaction(), nextIndent);
+         interaction().readParameters(in);
       }
 
       read<Boundary>(in, "maxBoundary", maxBoundary_);
@@ -245,7 +246,7 @@ namespace McMd
       pairList_.allocate(simulation().atomCapacity(), 
                          maxBoundary_, cutoff);
 
-      readEnd(in);
+      //readEnd(in);
    }
 
    /*

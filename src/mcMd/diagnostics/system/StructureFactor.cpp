@@ -37,11 +37,11 @@ namespace McMd
    {}
 
    /// Read parameters from file, and allocate data array.
-   void StructureFactor::readParam(std::istream& in) 
+   void StructureFactor::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray
-      //SystemDiagnostic<System>::readParam(in);
+      //SystemDiagnostic<System>::readParameters(in);
       readInterval(in);
       readOutputFileName(in);
 

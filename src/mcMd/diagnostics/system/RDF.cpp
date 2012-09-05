@@ -31,7 +31,7 @@ namespace McMd
    {  setClassName("RDF"); }
 
    /// Read parameters from file, and allocate data array.
-   void RDF::readParam(std::istream& in) 
+   void RDF::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

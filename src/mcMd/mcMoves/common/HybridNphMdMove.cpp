@@ -54,7 +54,7 @@ namespace McMd
    /*
    * Read parameter maxDisp
    */
-   void HybridNphMdMove::readParam(std::istream& in)
+   void HybridNphMdMove::readParameters(std::istream& in)
    {
       readProbability(in);
       read<int>(in, "nStep", nStep_);

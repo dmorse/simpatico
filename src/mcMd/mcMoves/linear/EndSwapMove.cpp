@@ -35,7 +35,7 @@ namespace McMd
    /* 
    * Read parameter speciesId.
    */
-   void EndSwapMove::readParam(std::istream& in) 
+   void EndSwapMove::readParameters(std::istream& in) 
    {
       readProbability(in);
       read<int>(in, "speciesId", speciesId_);

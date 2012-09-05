@@ -26,7 +26,7 @@ namespace McMd
      simulationPtr_(&simulation),
      systemPtr_(&simulation.system()),
      randomPtr_(&simulation.random())
-   {}
+   {  setClassName("McMoveManager"); }
 
    // Destructor
    McMoveManager::~McMoveManager()
@@ -41,9 +41,11 @@ namespace McMd
    /* 
    * Read instructions for creating objects from file.
    */
-   void McMoveManager::readParam(std::istream &in)
+   void McMoveManager::readParameters(std::istream &in)
    {
-      readBegin(in, "McMoveManager");
+
+      #if 0
+      beginReadManager(in);
 
       initFactory();
  
@@ -74,6 +76,9 @@ namespace McMd
       if (ParamComponent::echo() && isParamIoProcessor()) { 
          endPtr->writeParam(Log::file());
       }
+      #endif
+
+      Manager<McMove>::readParameters(in);
 
       probabilities_.allocate(size());
 

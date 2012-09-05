@@ -48,7 +48,7 @@ namespace McMd
       *
       * \param in input file stream.
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /**
       * Setup auxiliary parameters of integrator, just before main loop.

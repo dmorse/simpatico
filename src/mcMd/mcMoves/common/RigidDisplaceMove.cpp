@@ -36,7 +36,7 @@ namespace McMd
    /* 
    * Read speciesId and delta.
    */
-   void RigidDisplaceMove::readParam(std::istream& in) 
+   void RigidDisplaceMove::readParameters(std::istream& in) 
    {
       readProbability(in);
       read<int>(in, "speciesId", speciesId_);

@@ -42,7 +42,7 @@ namespace McMd
    * Read external parameter from file
    */
    template < class Interaction >
-   void McExternalPerturbation<Interaction>::readParam(std::istream& in)
+   void McExternalPerturbation<Interaction>::readParameters(std::istream& in)
    {  
       Perturbation::readParameters(in); 
       nParameters_ = Perturbation::getNParameters();

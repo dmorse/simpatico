@@ -54,7 +54,7 @@ namespace McMd
       *
       * \param in input stream (file or std in).
       */ 
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
  
       /**
       * Set external parameter for this System.
@@ -114,7 +114,7 @@ namespace McMd
    * Read external parameter from file
    */
    template < class Interaction >
-   void McExternalPerturbation<Interaction>::readParam(std::istream& in)
+   void McExternalPerturbation<Interaction>::readParameters(std::istream& in)
    {
       Perturbation::readParameters(in);
       nParameters_ = Perturbation::getNParameters();

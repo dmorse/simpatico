@@ -32,7 +32,7 @@ namespace McMd
    /*
    * Read interval and outputFileName. 
    */
-   void DumpConfig::readParam(std::istream& in) 
+   void DumpConfig::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

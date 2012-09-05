@@ -39,7 +39,7 @@ namespace McMd
    /* 
    * Read parameters speciesId, and nTrial
    */
-   void RingOctaRebridgeMove::readParam(std::istream& in) 
+   void RingOctaRebridgeMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);

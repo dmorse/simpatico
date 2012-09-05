@@ -91,9 +91,9 @@ namespace McMd
    /*
    * Read attempting interval.
    */
-   void ReplicaMove::readParam(std::istream& in)
+   void ReplicaMove::readParameters(std::istream& in)
    {
-      readBegin(in,"ReplicaMove");
+      //readBegin(in,"ReplicaMove");
       read<long>(in, "interval", interval_);
       if (interval_ <= 0) {
          UTIL_THROW("Invalid value input for interval_");
@@ -108,7 +108,7 @@ namespace McMd
       ptPositionPtr_ = new Vector[nAtom];
       myPositionPtr_ = new Vector[nAtom];
 
-      readEnd(in);
+      //readEnd(in);
    }
 
    /*

@@ -402,7 +402,7 @@ namespace Util
       *
       * Should be set in subclass constructor. 
       */
-      void setClassName(const char * className);
+      void setClassName(const char* className);
       
    private:
    

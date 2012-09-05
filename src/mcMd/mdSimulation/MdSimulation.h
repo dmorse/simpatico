@@ -70,7 +70,7 @@ namespace McMd
       *
       * \param in input stream
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /**
       * Read parameters from the default parameter istream.

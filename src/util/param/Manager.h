@@ -139,6 +139,21 @@ namespace Util
    protected:
 
       /**
+      * Read opening line: "ManagerName{"
+      */
+      void beginReadManager(std::istream& in);
+
+      /**
+      * Read child blocks, return when closing bracket encountered.
+      */ 
+      void readChildren(std::istream &in);
+
+      /**
+      * Add closing bracket to output format.
+      */
+      void endReadManager();
+
+      /**
       * Create factory if necessary.
       */
       void initFactory();
@@ -259,9 +274,27 @@ namespace Util
    template <typename Data>
    void Manager<Data>::readParam(std::istream &in)
    {
+      beginReadManager(in);
+      readChildren(in);
+      addEnd();
+   }
+
+   /*
+   * Read instructions for creating objects from file.
+   */
+   template <typename Data>
+   void Manager<Data>::beginReadManager(std::istream &in)
+   {
       std::string managerName = ParamComposite::className();
       readBegin(in, managerName.c_str());
+   }
 
+   /*
+   * Read instructions for creating objects from file.
+   */
+   template <typename Data>
+   void Manager<Data>::readChildren(std::istream &in)
+   {
       // Check if a Factory exists, create one if necessary.
       initFactory();
 
@@ -288,13 +321,19 @@ namespace Util
          }
 
       }
+   }
 
-      // Add closing bracket
+   
+   /*
+   * Add closing bracket.
+   */
+   template <typename Data>
+   void Manager<Data>::endReadManager()
+   {
       End* endPtr = &addEnd();
       if (ParamComponent::echo() && isParamIoProcessor()) {
          endPtr->writeParam(Log::file());
       }
-
    }
 
    /*

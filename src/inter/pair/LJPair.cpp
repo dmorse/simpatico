@@ -25,7 +25,7 @@ namespace Inter
     : maxPairCutoff_(0.0),
       nAtomType_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("LJPair"); }
    
    /* 
    * Copy constructor.
@@ -152,14 +152,14 @@ namespace Inter
    /* 
    * Read potential parameters from file.
    */
-   void LJPair::readParam(std::istream &in) 
+   void LJPair::readParameters(std::istream &in) 
    {
       if (nAtomType_ == 0) {
          UTIL_THROW( "nAtomType must be set before readParam");
       }
    
       // Read parameters
-      // readBegin(in,  "LJPair");
+      // //readBegin(in,  "LJPair");
       readCArray2D<double> (
                   in, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
       readCArray2D<double>(
@@ -196,12 +196,6 @@ namespace Inter
    double LJPair::maxPairCutoff() const
    { return maxPairCutoff_; }
 
-   /**
-   * Return name string "LJPair" for this evaluator class.
-   */
-   std::string LJPair::className() const
-   {  return std::string("LJPair"); }
- 
    /* 
    * Get pair interaction strength.
    */

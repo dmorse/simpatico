@@ -83,7 +83,7 @@ namespace McMd
    /*
    * Read parameters and initialize.
    */
-   void BennettsMethod::readParam(std::istream& in)
+   void BennettsMethod::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

@@ -23,7 +23,7 @@ namespace McMd
       SystemDiagnostic<McSystem>(system)
    {  setClassName("McEnergyOutput"); }
 
-   void McEnergyOutput::readParam(std::istream& in)
+   void McEnergyOutput::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

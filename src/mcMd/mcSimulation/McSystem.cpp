@@ -114,9 +114,9 @@ namespace McMd
    /*
    * Read parameters from file.
    */
-   void McSystem::readParam(std::istream &in)
+   void McSystem::readParameters(std::istream &in)
    {
-      readBegin(in, "McSystem");
+      //readBegin(in, "McSystem");
 
       allocateMoleculeSets();
       readFileMaster(in);
@@ -206,7 +206,7 @@ namespace McMd
       #endif
       #endif
 
-      readEnd(in);
+      //readEnd(in);
    }
 
    /*

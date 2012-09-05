@@ -33,13 +33,6 @@ namespace McMd
       */
       SpeciesManager();
 
-      /**
-      * Read parameter file. 
-      *
-      * \param in input parameter file stream.
-      */
-      virtual void readParam(std::istream &in);
-
    protected:
 
       virtual Factory<Species>* newDefaultFactory() const;

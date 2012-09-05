@@ -58,7 +58,7 @@ namespace McMd
    }
 
    // Read input parameters
-   void MdPairEnergyCoefficients::readParam(std::istream& in)
+   void MdPairEnergyCoefficients::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);
