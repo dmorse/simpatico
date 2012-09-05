@@ -54,6 +54,8 @@ namespace McMd
          UTIL_THROW("System energy ensemble is not isothermal");
       }
       temperature_  = energyEnsemblePtr_->temperature();
+
+      setClassName("NvtDpdVvIntegrator"); 
    }
 
    /* 

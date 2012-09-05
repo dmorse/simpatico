@@ -24,7 +24,7 @@ namespace McMd
    LinkMaster::LinkMaster()
     : linkCapacity_(0),
       atomCapacity_(0)
-   {}
+   { setClassName("LinkMaster"); }
 
    /**
    * Read linkCapacity and allocate.

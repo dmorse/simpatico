@@ -27,7 +27,7 @@ namespace McMd
       outputFile_(),
       accumulator_(),
       nSamplePerBlock_(1)
-   {}
+   { setClassName("MdKineticEnergyAverage"); }
 
    /*
    * Read parameters and initialize.

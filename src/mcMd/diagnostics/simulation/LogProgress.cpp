@@ -17,6 +17,12 @@ namespace McMd
    using namespace Util;
 
    /*
+   * Constructor.
+   */
+   LogProgress::LogProgress() 
+   {  setClassName("LogProgress"); }
+
+   /*
    * Read interval.
    */
    void LogProgress::readParam(std::istream& in) 

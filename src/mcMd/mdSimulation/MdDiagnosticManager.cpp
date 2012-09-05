@@ -21,14 +21,14 @@ namespace McMd
    MdDiagnosticManager::MdDiagnosticManager(MdSimulation& simulation)
     : simulationPtr_(&simulation),
       systemPtr_(&simulation.system())
-   {}
+   {  setClassName("MdDiagnosticManager"); }
 
    // Constructor.
    MdDiagnosticManager::MdDiagnosticManager(MdSimulation& simulation, 
 		                            MdSystem& system)
     : simulationPtr_(&simulation),
       systemPtr_(&system)
-   {}
+   {  setClassName("MdDiagnosticManager"); }
 
    // Destructor.
    MdDiagnosticManager::~MdDiagnosticManager()

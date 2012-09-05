@@ -35,7 +35,7 @@ namespace McMd
     pairPotentialPtr_(&system.pairPotential()),
     boundaryPtr_(&system.boundary()),
     maxMoleculeNeighbors_(0)
-   {}
+   {  setClassName("MdPairEnergyCoefficients"); }
 
    // Destructor
    MdPairEnergyCoefficients::~MdPairEnergyCoefficients()

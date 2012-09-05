@@ -32,9 +32,10 @@ namespace McMd
    NphIntegrator::NphIntegrator(MdSystem& system)
    : MdIntegrator(system), W_(0.0)
    {
-      // start with zero barostat momentum
-      eta_.zero();
+      setClassName("NphIntegrator"); 
 
+      // Start with zero barostat momentum
+      eta_.zero();
    }
 
    /* 

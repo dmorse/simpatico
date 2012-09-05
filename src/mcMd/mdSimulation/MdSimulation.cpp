@@ -51,6 +51,7 @@ namespace McMd
       isInitialized_(false),
       isRestarting_(false)
    {
+      setClassName("MdSimulation"); }
       system_.setId(0);
       system_.setSimulation(*this);
       system_.setFileMaster(fileMaster());

@@ -27,7 +27,7 @@ namespace McMd
     : Diagnostic(),
       filename_(),
       simulationPtr_(&simulation)
-   {}
+   {  setClassName("MdWriteRestart"); }
 
    /*
    * Read interval and outputFileName. 

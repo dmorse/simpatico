@@ -68,6 +68,8 @@ namespace McMd
       isInitialized_(false),
       isRestarting_(false)
    {
+      setClassName("McSimulation"); 
+
       // Set connections between this McSimulation and child McSystem
       system().setId(0);
       system().setSimulation(*this);
@@ -94,6 +96,8 @@ namespace McMd
       isInitialized_(false),
       isRestarting_(false)
    {
+      setClassName("McSimulation"); 
+
       // Set connections between this McSimulation and child McSystem
       system().setId(0);
       system().setSimulation(*this);

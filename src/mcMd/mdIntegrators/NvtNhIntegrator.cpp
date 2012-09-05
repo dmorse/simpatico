@@ -49,6 +49,7 @@ namespace McMd
       T_target_          = energyEnsemblePtr_->temperature();
       T_kinetic_         = T_target_;
 
+      setClassName("NvtNhIntegrator"); 
    }
 
    /* 

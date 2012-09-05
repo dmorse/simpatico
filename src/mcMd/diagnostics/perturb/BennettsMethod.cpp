@@ -60,6 +60,7 @@ namespace McMd
       outputFile_(),
       isInitialized_(false)
    {  
+      setClassName("BennettsMethod");
       communicatorPtr_ = &(system.simulation().communicator());
       myId_   = communicatorPtr_->Get_rank();
       nProcs_ = communicatorPtr_->Get_size();   

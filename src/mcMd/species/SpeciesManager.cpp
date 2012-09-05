@@ -17,6 +17,13 @@ namespace McMd
    using namespace Util;
 
    /*
+   * Constructor.
+   */
+   SpeciesManager::SpeciesManager()
+    : Manager<Species>()
+   {  setClassName("SpeciesManager"); }
+   
+   /*
    * Read parameter file. 
    */
    void SpeciesManager::readParam(std::istream &in)

@@ -26,7 +26,7 @@ namespace McMd
    PerturbDerivative::PerturbDerivative(System& system)
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   { setClassName("PerturbDerivative"); }
 
    /*
    * Read parameters and initialize.

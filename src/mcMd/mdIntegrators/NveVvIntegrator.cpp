@@ -29,7 +29,7 @@ namespace McMd
    */
    NveVvIntegrator::NveVvIntegrator(MdSystem& system)
    : MdIntegrator(system)
-   {}
+   {  setClassName("NveVvIntegrator"); }
 
    /* 
    * Destructor.   

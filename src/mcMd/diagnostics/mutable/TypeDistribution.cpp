@@ -32,7 +32,7 @@ namespace McMd
       nState_(-1),
       speciesPtr_(0),
       mutatorPtr_(0)
-   {}
+   {  setClassName("TypeDistribution"); }
 
    void TypeDistribution::readParam(std::istream& in)
    {

@@ -28,10 +28,10 @@ namespace McMd
 
    public:
 
-      /// Constructor.
-      SpeciesManager()
-       : Manager<Species>()
-      {}
+      /**
+      * Constructor.
+      */
+      SpeciesManager();
 
       /**
       * Read parameter file. 

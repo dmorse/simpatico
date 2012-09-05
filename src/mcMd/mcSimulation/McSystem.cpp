@@ -83,7 +83,7 @@ namespace McMd
       #ifdef INTER_TETHER
       , tetherPotentialPtr_(0)
       #endif
-   {}
+   { setClassName("McSystem"); }
 
    /*
    * Destructor.

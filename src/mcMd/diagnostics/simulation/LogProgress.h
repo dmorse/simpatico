@@ -24,7 +24,12 @@ namespace McMd
    {
    
    public:
-   
+  
+      /**
+      * Constructor.
+      */
+      LogProgress();
+
       /**
       * Read interval.
       *

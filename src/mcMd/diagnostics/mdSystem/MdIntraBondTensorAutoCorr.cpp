@@ -22,7 +22,7 @@ namespace McMd
    */
    MdIntraBondTensorAutoCorr::MdIntraBondTensorAutoCorr(MdSystem &system)
     : IntraBondTensorAutoCorr<MdSystem>(system)
-   {}
+   { setClassName("MdIntraBondTensorAutoCorr"); }
 
    /*
    * Destructor.

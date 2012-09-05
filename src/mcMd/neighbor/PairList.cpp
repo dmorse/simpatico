@@ -39,7 +39,7 @@ namespace McMd
       maxNAtom_(0),
       maxNAtom2_(0),
       buildCounter_(0)
-   {}
+   {  setClassName("PairList"); }
    
    /*
    * Destructor.
