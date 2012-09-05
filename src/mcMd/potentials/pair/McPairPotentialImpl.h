@@ -205,8 +205,6 @@ namespace McMd
    template <class Interaction>
    void McPairPotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
-      //readBegin(in, "McPairPotential");
-     
       // Must setNAtomTypes in interaction before calling readParam.
       interaction().setNAtomType(simulation().nAtomType());
 
@@ -221,8 +219,6 @@ namespace McMd
       // Allocate memory for the CellList.
       cellList_.allocate(simulation().atomCapacity(), maxBoundary_, 
                          maxPairCutoff());
-
-      //readEnd(in);
    }
   
    /*
