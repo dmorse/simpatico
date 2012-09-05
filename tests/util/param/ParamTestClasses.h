@@ -10,7 +10,8 @@
    {
    public:
 
-      virtual std::string className() = 0;
+      A()
+      { setClassName("A"); }
 
    };
 
@@ -21,15 +22,16 @@
 
    public:
 
+      B()
+      { setClassName("B"); }
+
       virtual ~B()
       { } // std::cout << "B destructor" << std::endl; 
 
-      virtual void readParam(std::istream& in) {
+      virtual void readParameters(std::istream& in) {
          read<double>(in, "x", x_);
          read<int>(in,    "m", m_);
       }
-
-      virtual std::string className(){ return std::string("B"); }
 
    private:
 
@@ -45,14 +47,15 @@
 
    public:
 
+      C()
+      { setClassName("C"); }
+
       virtual ~C()
       { } // std::cout << "C destructor" << std::endl; 
 
-      virtual void readParam(std::istream& in) {
+      virtual void readParameters(std::istream& in) {
          read<int>(in, "m", m_);
       }
-
-      virtual std::string className(){ return std::string("C"); }
 
    private:
 
@@ -66,14 +69,15 @@
 
    public:
 
+      D()
+      { setClassName("D"); }
+
       virtual ~D()
       { } // std::cout << "D destructor" << std::endl; 
 
-      virtual void readParam(std::istream& in) {
+      virtual void readParameters(std::istream& in) {
          read<double>(in, "d", d_);
       }
-
-      virtual std::string className(){ return std::string("D"); }
 
    private:
 
@@ -81,6 +85,31 @@
 
    };
 
+
+   // Another class
+   class E  : public ParamComposite
+   {
+
+   public:
+
+      E()
+      { setClassName("E"); }
+
+      virtual ~E()
+      { } // std::cout << "D destructor" << std::endl; 
+
+      virtual void readParameters(std::istream& in) {
+         read<double>(in, "e", e_);
+      }
+
+      double e()
+      { return e_; }
+
+   private:
+
+      double  e_;
+
+   };
 
    class AFactory : public Factory<A>
    {
@@ -138,17 +167,20 @@
 
    public:
 
+      AManager()
+      { setClassName("AManager"); }
+
       ~AManager()
-      { } 
+      {} 
 
       Factory<A>* newDefaultFactory() const
       { return new AFactory(); }
 
-      void readParam(std::istream& in) 
-      {
-         readBegin(in, "AManager");
-         Manager<A>::readParam(in);
-      } 
+      //void readParameters(std::istream& in) 
+      //{
+      //   readBegin(in, "AManager");
+      //   Manager<A>::readParameters(in);
+      //} 
 
    };
 
@@ -160,13 +192,14 @@
    
       AComposite()
       {  
+         setClassName("ClassName");
          value6_.allocate(4); 
          value9_.allocate(2, 2); 
       }
    
-      virtual void readParam(std::istream& in)
+      virtual void readParameters(std::istream& in)
       {
-         readBegin(in, "ClassName");
+         //readBegin(in, "ClassName");
          read<int>(in, "value0", value0_);
          read<long>(in, "value1", value1_);
          read<double>(in, "value2", value2_);
@@ -178,8 +211,9 @@
          read<Vector>(in, "value7", value7_);
          read<IntVector>(in, "value8", value8_);
          readDMatrix<double>(in, "value9", value9_, 2, 2);
+         readParamComposite(in, e_);
          readParamComposite(in, manager_);
-         readEnd(in);
+         //readEnd(in);
       }
    
    private:
@@ -194,7 +228,8 @@
       Vector    value7_;
       IntVector value8_;
       DMatrix<double> value9_;
-   
+  
+      E         e_; 
       AManager  manager_;
    
    };

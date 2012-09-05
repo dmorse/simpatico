@@ -622,11 +622,11 @@ namespace Util
       return *ptr;
    }
  
-   /**
+   /*
    * Get class name string.
    */
-   std::string ParamComposite::className() const
-   {   return className_; }
+   inline std::string ParamComposite::className() const
+   {  return className_; }
       
 } 
 #endif

@@ -89,19 +89,6 @@ namespace Util
       * each.  The loop over blocks terminates when it encounters a closing
       * bracket '}' surrounded by white space.
       *
-      * This implementation does not read a line containing the name of
-      * the Manager and an opening bracket. This should thus be read by
-      * a subclass implementation that invokes this default implementation.
-      * A minimal implementation of readParam for a subclass named
-      * ThingManager of Manager<Thing> would look like this:
-      * \code
-      *
-      * void ThingManager::readParam(std::istream& in)
-      * {
-      *    readBegin(in, "ThingManager");
-      *    Manager<Thing>::readParam(in);
-      * }
-      *
       * \endcode
       *
       * \param in input stream
@@ -272,6 +259,9 @@ namespace Util
    template <typename Data>
    void Manager<Data>::readParam(std::istream &in)
    {
+      std::string managerName = ParamComposite::className();
+      readBegin(in, managerName.c_str());
+
       // Check if a Factory exists, create one if necessary.
       initFactory();
 

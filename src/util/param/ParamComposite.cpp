@@ -75,9 +75,7 @@ namespace Util
    */
    void ParamComposite::readParam(std::istream &in)
    {
-      std::string label = className();
-      label += "{";
-      readBegin(in, label.c_str());
+      readBegin(in, className().c_str());
       readParameters(in);
       readEnd(in);
    }
