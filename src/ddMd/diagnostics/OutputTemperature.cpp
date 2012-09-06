@@ -34,7 +34,7 @@ namespace DdMd
    /*
    * Read interval and outputFileName.
    */
-   void OutputTemperature::readParam(std::istream& in)
+   void OutputTemperature::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

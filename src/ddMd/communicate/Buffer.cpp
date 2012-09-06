@@ -77,14 +77,12 @@ namespace DdMd
    /*
    * Read capacities, and allocate buffers.
    */
-   void Buffer::readParam(std::istream& in)
+   void Buffer::readParameters(std::istream& in)
    {
 
       // Read parameters
-      readBegin(in, "Buffer");
       read<int>(in, "atomCapacity",  atomCapacity_);
       read<int>(in, "ghostCapacity", ghostCapacity_);
-      readEnd(in);
 
       //Preconditions
       if (atomCapacity_ < 0) {
@@ -126,7 +124,7 @@ namespace DdMd
    *
    * This method uses values of atomCapacity_ and ghostCapacity_ that 
    * must have been set previously. It is called by allocate(int, int) 
-   * and readParam() to do the actual allocation. 
+   * and readParameters() to do the actual allocation. 
    */
    void Buffer::allocate()
    {

@@ -176,7 +176,7 @@ namespace DdMd
       *
       * \param in pararameter file input stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Get a default parameter stream by reference.
@@ -292,7 +292,7 @@ namespace DdMd
       * Return the command file name.
       *
       * The base name of the param file is read from the parameter file
-      * by the readParam() method. 
+      * by the readParameters() method. 
       */
       std::string commandFileName() const;
 

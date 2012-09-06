@@ -28,7 +28,7 @@ namespace DdMd
    */
    NveIntegrator::NveIntegrator(Simulation& simulation)
     : TwoStepIntegrator(simulation)
-   {}
+   {  setClassName("NveIntegrator"); }
 
    /*
    * Destructor.
@@ -39,11 +39,9 @@ namespace DdMd
    /*
    * Read time step dt.
    */
-   void NveIntegrator::readParam(std::istream& in)
+   void NveIntegrator::readParameters(std::istream& in)
    {
-      //readBegin(in, "NveIntegrator");
       read<double>(in, "dt", dt_);
-      //readEnd(in);
 
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {

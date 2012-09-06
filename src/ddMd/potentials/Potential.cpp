@@ -22,7 +22,7 @@ namespace DdMd
     : stress_(),
       energy_(),
       reverseUpdateFlag_(false)
-   {}
+   { setClassName("Potential"); }
 
    /*
    * Destructor.

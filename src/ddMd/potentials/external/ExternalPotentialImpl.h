@@ -65,7 +65,7 @@ namespace DdMd
       * 
       * \param in input parameter stream.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Interaction interface
       //@{
@@ -265,12 +265,12 @@ namespace DdMd
    * Read parameters from file.
    */
    template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::readParam(std::istream &in) 
+   void ExternalPotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
-      readBegin(in, "ExternalPotential");
+      //readBegin(in, "ExternalPotential");
       bool nextIndent = false; // Do not indent interaction block. 
       readParamComposite(in, interaction(), nextIndent);
-      readEnd(in);
+      //readEnd(in);
    }
   
    /**

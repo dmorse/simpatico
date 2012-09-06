@@ -74,12 +74,10 @@ namespace DdMd
    /*
    * Read cacheCapacity and allocate all required memory.
    */
-   void AtomDistributor::readParam(std::istream& in)
+   void AtomDistributor::readParameters(std::istream& in)
    {
       // Read parameter file block
-      readBegin(in, "AtomDistributor");
       read<int>(in, "cacheCapacity", cacheCapacity_);
-      readEnd(in);
  
       // Do actual allocation
       allocate();

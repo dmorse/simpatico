@@ -55,10 +55,10 @@ namespace DdMd
       * Read potential energy parameters.
       * 
       * This method reads the dihedral potential Interaction parameter
-      * block. Before calling Interaction::readParam(), it passes
+      * block. Before calling Interaction::readParameters(), it passes
       * simulation().nDihedralType() to Interaction::setNAtomType().
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Interaction interface
       //@{
@@ -231,12 +231,12 @@ namespace DdMd
    * Read dihedral interaction parameters.
    */
    template <class Interaction>
-   void DihedralPotentialImpl<Interaction>::readParam(std::istream& in)
+   void DihedralPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
-      readBegin(in,"DihedralPotential");
+      //readBegin(in,"DihedralPotential");
       bool nextIndent = false;
       readParamComposite(in, interaction(), nextIndent);
-      readEnd(in);
+      //readEnd(in);
    }
 
    /*

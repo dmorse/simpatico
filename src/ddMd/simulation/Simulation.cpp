@@ -43,7 +43,7 @@
 #endif
 
 // namespace McMd
-#include <mcMd/mcSimulation/McSimulation.h>
+//#include <mcMd/mcSimulation/McSimulation.h>
 
 // namespace Util
 #include <util/ensembles/EnergyEnsemble.h>
@@ -158,6 +158,7 @@ namespace DdMd
       #endif
    {
       Util::initStatic();
+      setClassName("Simulation");
 
       #ifdef UTIL_MPI
       if (!MPI::Is_initialized()) {
@@ -341,12 +342,18 @@ namespace DdMd
    *  Read parameters from default parameter file. 
    */
    void Simulation::readParam()
-   {   readParam(fileMaster().paramFile()); }
+   {   ParamComposite::readParam(fileMaster().paramFile()); }
+
+   /*
+   *  Read parameters from specific parameter file. 
+   */
+   void Simulation::readParam(std::istream& in)
+   {   ParamComposite::readParam(in); }
 
    /**
    * Read parameters, allocate memory and initialize.
    */
-   void Simulation::readParam(std::istream& in)
+   void Simulation::readParameters(std::istream& in)
    {
       // Preconditions
       assert(pairPotentialPtr_ == 0);
@@ -354,7 +361,7 @@ namespace DdMd
       assert(integratorPtr_ == 0);
       assert(configIoPtr_ == 0);
 
-      readBegin(in, "Simulation");
+      //readBegin(in, "Simulation");
 
       readParamComposite(in, domain_);
 
@@ -465,7 +472,7 @@ namespace DdMd
       positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
       positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
 
-      readEnd(in);
+      //readEnd(in);
    }
 
    /**

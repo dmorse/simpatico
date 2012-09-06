@@ -81,22 +81,11 @@ namespace DdMd
       * \param communicator MPI communicator for MD processors.
       */
       Simulation(MPI::Intracomm& communicator = MPI::COMM_WORLD);
-
-      /**
-      * Constructor.
-      *
-      * \param mcSimulation parent McSimulation object.
-      * \param communicator MPI communicator for MD processors.
-      */
-      Simulation(McMd::McSimulation& mcSimulation,
-             MPI::Intracomm& communicator = MPI::COMM_WORLD);
       #else
-
       /**
       * Default constructor.
       */
       Simulation();
-
       #endif
 
       /**
@@ -118,14 +107,20 @@ namespace DdMd
       void setOptions(int argc, char **argv);
 
       /**
-      * Read parameters, allocate memory and initialize.
+      * Read parameters from default parameter file.
+      */
+      virtual void readParam();
+
+      /**
+      * Read parameters from specific input file.
       */
       virtual void readParam(std::istream& in);
 
       /**
-      * Read parameters from default parameter file.
+      * Read parameters, allocate memory and initialize.
       */
-      virtual void readParam();
+      virtual void readParameters(std::istream& in);
+
 
       /*
       * Read and execute commands from a command file.

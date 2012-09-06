@@ -59,7 +59,7 @@ namespace DdMd
       *
       * \param in input parameter stream.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Interaction interface
       //@{
@@ -273,13 +273,12 @@ namespace DdMd
    }
 
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::readParam(std::istream& in)
+   void PairPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
-      readBegin(in,"PairPotential");
       bool nextIndent = false;
-      readParamComposite(in, interaction(), nextIndent);
+      addParamComposite(interaction(), nextIndent);
+      interaction().readParameters(in);
       readPairListParam(in);
-      readEnd(in);
    }
 
    /**

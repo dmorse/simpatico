@@ -145,9 +145,9 @@ namespace DdMd
    /*
    * Read cache size and allocate memory.
    */
-   void ConfigIo::readParam(std::istream& in)
+   void ConfigIo::readParameters(std::istream& in)
    {
-      readBegin(in, "ConfigIo");
+      //readBegin(in, "ConfigIo");
       read<int>(in, "atomCacheCapacity", atomCacheCapacity_);
       atomDistributor_.initialize(atomCacheCapacity_);
       atomCollector_.allocate(atomCacheCapacity_);
@@ -164,7 +164,7 @@ namespace DdMd
       dihedralDistributor_.initialize(dihedralCacheCapacity_);
       dihedralCollector_.allocate(dihedralCacheCapacity_);
       #endif
-      readEnd(in);
+      //readEnd(in);
    }
 
    /*

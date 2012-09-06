@@ -77,12 +77,12 @@ namespace DdMd
    * Read cacheCapacity and allocate all required memory.
    */
    template <int N>
-   void GroupDistributor<N>::readParam(std::istream& in)
+   void GroupDistributor<N>::readParameters(std::istream& in)
    {
       // Read parameter file block
-      readBegin(in, "GroupDistributor");
+      //readBegin(in, "GroupDistributor");
       read<int>(in, "cacheCapacity", cacheCapacity_);
-      readEnd(in);
+      //readEnd(in);
  
       // Do actual allocation
       allocate();

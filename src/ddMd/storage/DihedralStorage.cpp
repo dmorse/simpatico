@@ -17,11 +17,9 @@ namespace DdMd
    /*
    * Read parameters and allocate memory.
    */
-   void DihedralStorage::readParam(std::istream& in)
+   void DihedralStorage::readParameters(std::istream& in)
    {
-      readBegin(in, "DihedralStorage");
-      GroupStorage<4>::readParam(in);
-      readEnd(in);
+      GroupStorage<4>::readParameters(in);
    }
 
 }
