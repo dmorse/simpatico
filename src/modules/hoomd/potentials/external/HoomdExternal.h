@@ -23,7 +23,6 @@
 #include <hoomd/ForceCompute.h>
 #include <hoomd/System.h>
 #include <hoomd/SystemDefinition.h>
-#include <hoomd/PotentialExternalGPU.cuh>
 #include <hoomd/PotentialExternalGPU.h>
 #include <hoomd/HOOMDMath.h>
 

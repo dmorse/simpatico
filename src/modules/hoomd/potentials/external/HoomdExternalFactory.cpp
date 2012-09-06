@@ -1,4 +1,6 @@
 #ifdef INTER_EXTERNAL
+#ifndef EXTERNAL_FACTORY_CPP
+#define EXTERNAL_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -20,9 +22,8 @@
 
 #include <modules/hoomd/potentials/external/HoomdLamellarExternal.h>
 
-
 #include <hoomd/HOOMDMath.h>
-#include <hoomd/EvaluatorExternalPeriodic.h>
+#include <hoomd/EvaluatorExternalLamellar.h>
 #include <hoomd/AllDriverPotentialExternalGPU.cuh>
 
 #include "HoomdExternalFactory.h"
@@ -83,7 +84,7 @@ namespace McMd
       boost::shared_ptr<ForceCompute> externalSPtr;
 
       if (className == classNameHoomdLamellar) {
-         externalSPtr = hoomdFactoryImpl<EvaluatorExternalPeriodic, gpu_compute_periodic_forces, 
+         externalSPtr = hoomdFactoryImpl<EvaluatorExternalLamellar, gpu_compute_lamellar_forces, 
                                          classNameHoomdLamellar >(ptr, system, systemDefinitionSPtr );
       } else 
          UTIL_THROW("Unsupported Hoomd potential." );
@@ -93,4 +94,5 @@ namespace McMd
 
 
 }
+#endif
 #endif
