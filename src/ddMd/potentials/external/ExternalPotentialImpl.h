@@ -76,23 +76,23 @@ namespace DdMd
       virtual void setNAtomType(int nAtomType);
 
       /**
-      * Returns external potential energy of a single particle. 
+      * Returns external potential energy of a single atom.
       *
       * \param position atomic position Vector
       * \param typeId   atom type index
       * \return external potential energy
       */
-      virtual double energy(const Vector& position, int typeId) const;
+      virtual double externalEnergy(const Vector& position, int typeId) const;
 
       /**
-      * Returns force caused by the external potential.
+      * Computes external force on one atom.
       *
-      * \param position  atom position
-      * \param typeId    atom type index
-      * \param force     force on the atom (on output)
+      * \param position  atom position (input)
+      * \param typeId    atom type index (input)
+      * \param force     force on the atom (output)
       */
-      virtual void getForce(const Vector& position, int typeId, 
-                            Vector& force) const; 
+      virtual void getExternalForce(const Vector& position, int typeId, 
+                                    Vector& force) const; 
 
       #if 0
       /**
@@ -112,20 +112,13 @@ namespace DdMd
       const Interaction& interaction() const;
 
       //@}
-      /// \name Total Energy, Forces and Stress 
+      /// \name Total Energy and Forces 
       //@{
 
       /**
       * Calculate external forces for all atoms in this Simulation.
       */
       virtual void computeForces();
-
-      /**
-      * Add external forces to atom forces, and compute energy.
-      *
-      * \param energy on output, contains energy for this processor.
-      */
-      virtual void computeForces(double& energy);
 
       /**
       * Compute the total external energy for all processors
@@ -138,45 +131,10 @@ namespace DdMd
       virtual void computeEnergy();
       #endif
 
-      /**
-      * Get the total energy calculated previously by computeEnergy().
-      *
-      * Call only on master. 
-      */
-      virtual double energy();
-
-      #if 0 
-      /**
-      * Compute total nonbonded pressure
-      *
-      * \param stress (output) pressure.
-      */
-      virtual void computeStress(double& stress) const;
-
-      /**
-      * Compute x, y, z nonbonded pressures.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const;
-
-      /**
-      * Compute nonbonded stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const;
-      #endif
-
       //@}
 
    private:
 
-      /**
-      * Total external energy on all processors (value valid only on master).
-      */
-      double energy_;
- 
       /**
       * Pointer to external interaction object.
       */ 
@@ -187,24 +145,16 @@ namespace DdMd
       */
       double computeForces(bool needForce, bool needEnergy);
 
-      #if 0 
-      template <typename T>
-      void computeStressImpl(T& stress) const;
-      #endif
-
    };
 
 }
 
 #include <ddMd/simulation/Simulation.h>
-//#include <ddMd/simulation/stress.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
-//#include <util/space/Tensor.h>
-//#include <util/accumulators/setToZero.h>
 #include <util/global.h>
 
 #include <fstream>
@@ -284,16 +234,17 @@ namespace DdMd
    */
    template <class Interaction>
    double 
-   ExternalPotentialImpl<Interaction>::energy(const Vector& position, int typeId) 
-      const
+   ExternalPotentialImpl<Interaction>::externalEnergy(const Vector& position, 
+                                                      int typeId) const
    {  return interaction().energy(position, typeId); }
 
    /*
    * Return external force on an atom.
    */
    template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::getForce(const Vector& position, 
-                                               int typeId, Vector& force) const
+   void 
+    ExternalPotentialImpl<Interaction>::getExternalForce(const Vector& position, 
+                                                int typeId, Vector& force) const
    { interaction().getForce(position, typeId, force); }
 
    #if 0
@@ -329,15 +280,6 @@ namespace DdMd
    }
 
    /*
-   * Increment atomic forces, and compute total external energy.
-   */
-   template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::computeForces(double& energy)
-   {  
-      energy = computeForces(true, true); 
-   }
-
-   /*
    * Compute total external energy on all processors.
    */
    template <class Interaction>
@@ -352,27 +294,18 @@ namespace DdMd
       localEnergy = computeForces(false, true); 
 
       #ifdef UTIL_MPI
-      communicator.Reduce(&localEnergy, &energy_, 1, 
-                          MPI::DOUBLE, MPI::SUM, 0);
+      reduceEnergy(localEnergy, communicator);
       #else
-      energy_ = localEnergy;
+      setEnergy(localEnergy);
       #endif
    }
-
-   /*
-   * Return total external energy from all processors.
-   */
-   template <class Interaction>
-   double ExternalPotentialImpl<Interaction>::energy()
-   {  return energy_; } 
 
    /*
    * Increment atomic forces and/or external energy (private).
    */
    template <class Interaction>
    double 
-   ExternalPotentialImpl<Interaction>::computeForces(bool needForce, 
-                                                 bool needEnergy)
+   ExternalPotentialImpl<Interaction>::computeForces(bool needForce, bool needEnergy)
    {
       // Preconditions
       //if (!storage().isInitialized()) {

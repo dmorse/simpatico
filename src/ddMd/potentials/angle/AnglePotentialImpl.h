@@ -410,7 +410,7 @@ namespace DdMd
       localStress /= boundary().volume();
 
       // Add localEnergy from all nodes, set sum on master.
-      reduceEnergy(localEnergy, communicator);
+      reduceStress(localStress, communicator);
    }
 
    #if 0

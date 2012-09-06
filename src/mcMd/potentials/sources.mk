@@ -25,10 +25,5 @@ include $(SRC_DIR)/mcMd/potentials/external/sources.mk
 mcMd_potentials_SRCS+=$(mcMd_potentials_external_SRCS) 
 endif
 
-ifdef INTER_TETHER
-include $(SRC_DIR)/mcMd/potentials/tether/sources.mk
-mcMd_potentials_SRCS+=$(mcMd_potentials_tether_SRCS) 
-endif
-
 mcMd_potentials_OBJS=$(mcMd_potentials_SRCS:.cpp=.o)
 
