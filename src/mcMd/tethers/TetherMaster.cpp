@@ -28,11 +28,8 @@ namespace McMd
    */
    void TetherMaster::readParameters(std::istream& in)
    {
-      //readBegin(in, "TetherMaster");
       read<int>(in, "tetherCapacity", tetherCapacity_); 
       read<int>(in, "atomCapacity", atomCapacity_); 
-      //readEnd(in);
-
       allocate();
    }
 

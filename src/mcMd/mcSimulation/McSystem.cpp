@@ -116,8 +116,6 @@ namespace McMd
    */
    void McSystem::readParameters(std::istream &in)
    {
-      //readBegin(in, "McSystem");
-
       allocateMoleculeSets();
       readFileMaster(in);
       readPotentialStyles(in);
@@ -205,8 +203,6 @@ namespace McMd
       readReplicaMove(in);
       #endif
       #endif
-
-      //readEnd(in);
    }
 
    /*

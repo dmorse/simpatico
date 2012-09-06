@@ -33,7 +33,7 @@ namespace DdMd
       #endif
       boundaryPtr_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("Domain"); }
 
    /*
    * Destructor.

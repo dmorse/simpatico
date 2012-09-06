@@ -176,11 +176,10 @@ namespace McMd
    {
       // Read only if not a copy.  Do not indent evaluator block.
       if (!isCopy_) {
-         //readBegin(in, "MdTetherPotential");
          evaluator().setNAtomType(simulation().nAtomType());
          bool nextIndent = false;
-         readParamComposite(in, evaluator(), nextIndent);
-         //readEnd(in);
+         addParamComposite(evaluator(), nextIndent);
+         evaluator().readParameters(in);
       }
    }
   

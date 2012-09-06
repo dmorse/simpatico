@@ -105,11 +105,9 @@ namespace McMd
    */
    void FileMaster::readParameters(std::istream &in) 
    {
-      //readBegin(in, "FileMaster");
       read<std::string>(in, "commandFileName",  commandFileName_);
       read<std::string>(in, "inputPrefix",  inputPrefix_);
       read<std::string>(in, "outputPrefix", outputPrefix_);
-      //readEnd(in);
    }
 
    /*

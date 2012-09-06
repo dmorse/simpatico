@@ -41,7 +41,7 @@ namespace McMd
    /* 
    * Read instructions for creating objects from file.
    */
-   void McMoveManager::readParameters(std::istream &in)
+   void McMoveManager::readParam(std::istream &in)
    {
 
       #if 0
@@ -71,6 +71,7 @@ namespace McMd
 
       }
 
+
       // Add closing bracket to param output format
       End* endPtr = &addEnd();
       if (ParamComponent::echo() && isParamIoProcessor()) { 
@@ -78,7 +79,7 @@ namespace McMd
       }
       #endif
 
-      Manager<McMove>::readParameters(in);
+      Manager<McMove>::readParam(in);
 
       probabilities_.allocate(size());
 

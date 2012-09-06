@@ -52,11 +52,9 @@ namespace McMd
    */
    void PairList::readParameters(std::istream& in) 
    {
-      //readBegin(in, "PairList");
       read<int>(in, "atomCapacity", atomCapacity_);
       read<int>(in, "pairCapacity", pairCapacity_);
       read<double>(in, "skin",      skin_);
-      //readEnd(in);
    }
 
    /*

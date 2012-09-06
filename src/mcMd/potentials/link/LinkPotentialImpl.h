@@ -242,11 +242,10 @@ namespace McMd
    {
       // Read only if not a copy.  Do not indent interaction block.
       if (!isCopy_) {
-         //readBegin(in, "LinkPotential");
          interaction().setNBondType(simulation().nLinkType());
          bool nextIndent = false;
-         readParamComposite(in, interaction(), nextIndent);
-         //readEnd(in);
+         addParamComposite(interaction(), nextIndent);
+         interaction().readParameters(in);
       }
    }
   

@@ -227,8 +227,6 @@ namespace McMd
    template <class Interaction>
    void MdPairPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
-      //readBegin(in, "MdPairPotential");
-
       // Read pair potential parameters only if not a copy.
       // This block is not indented or surrounded by brackets.
       if (!isCopy_) {
@@ -245,8 +243,6 @@ namespace McMd
       double cutoff = interaction().maxPairCutoff();
       pairList_.allocate(simulation().atomCapacity(), 
                          maxBoundary_, cutoff);
-
-      //readEnd(in);
    }
 
    /*

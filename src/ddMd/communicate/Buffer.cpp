@@ -42,7 +42,7 @@ namespace DdMd
       atomCapacity_(-1),
       ghostCapacity_(-1),
       isInitialized_(false)
-   {}
+   { setClassName("Buffer"); }
 
    /*
    * Destructor.

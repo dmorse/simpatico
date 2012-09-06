@@ -201,8 +201,6 @@ namespace McMd
    void MdSystem::readParameters(std::istream &in) 
    {
 
-      //readBegin(in, "MdSystem");
-
       if (!isCopy()) {
          allocateMoleculeSets();
          readFileMaster(in);
@@ -316,8 +314,6 @@ namespace McMd
       // Read Perturbation object for free energy perturbation.
       readPerturbation(in);
       #endif
-
-      //readEnd(in);
    }
   
    /*
