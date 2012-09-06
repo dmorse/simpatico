@@ -32,7 +32,7 @@ public:
       // Read parameters from file
       std::ifstream in;
       openInputFile("bond/in/HarmonicBond", in);
-      bondPotential.readParam(in);
+      bondPotential.readParameters(in);
       in.close();
    }
 

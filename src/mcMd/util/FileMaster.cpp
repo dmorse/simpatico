@@ -41,7 +41,7 @@ namespace McMd
      paramFilePtr_(0),
      hasDirectoryId_(other.hasDirectoryId_),
      isSetParamFileStdIn_(other.isSetParamFileStdIn_)
-   {}
+   { setClassName("FileMaster"); }
 
    /* 
    * Destructor.   

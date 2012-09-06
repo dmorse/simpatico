@@ -32,7 +32,7 @@ public:
 
       // Read parameters from file
       std::ifstream in("dihedral/in/CosineDihedral");
-      dihedralPotential.readParam(in);
+      dihedralPotential.readParameters(in);
       in >> r[0];
       in >> r[1];
       in >> r[2];

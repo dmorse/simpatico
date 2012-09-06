@@ -67,6 +67,7 @@ namespace McMd
       #endif
       maskedPairPolicy_(MaskBonded)
    {
+      setClassName("Simulation");
       Util::initStatic();
       Atom::initStatic();
       Diagnostic::initStatic();
@@ -125,6 +126,7 @@ namespace McMd
       #endif
       maskedPairPolicy_(MaskBonded)
    {
+      setClassName("Simulation");
       Util::initStatic();
       Atom::initStatic();
       Diagnostic::initStatic();
@@ -175,7 +177,6 @@ namespace McMd
    */
    void Simulation::readParameters(std::istream& in)
    {
-
       // Preconditions
       assert(speciesManagerPtr_);
 

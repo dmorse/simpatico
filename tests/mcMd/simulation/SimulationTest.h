@@ -35,7 +35,7 @@ public:
       openFile("in/Simulation"); 
       #endif
       #endif
-      simulation_.readParam(file());
+      simulation_.readParameters(file());
    }
 
    void testReadParam();
