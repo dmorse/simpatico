@@ -79,12 +79,7 @@ namespace DdMd
    template <int N>
    void GroupDistributor<N>::readParameters(std::istream& in)
    {
-      // Read parameter file block
-      //readBegin(in, "GroupDistributor");
       read<int>(in, "cacheCapacity", cacheCapacity_);
-      //readEnd(in);
- 
-      // Do actual allocation
       allocate();
    }
 

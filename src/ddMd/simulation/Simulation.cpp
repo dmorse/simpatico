@@ -361,10 +361,7 @@ namespace DdMd
       assert(integratorPtr_ == 0);
       assert(configIoPtr_ == 0);
 
-      //readBegin(in, "Simulation");
-
       readParamComposite(in, domain_);
-
       readFileMaster(in);
 
       // Read types
@@ -471,8 +468,6 @@ namespace DdMd
 
       positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
       positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
-
-      //readEnd(in);
    }
 
    /**

@@ -212,10 +212,9 @@ namespace DdMd
    template <class Interaction>
    void AnglePotentialImpl<Interaction>::readParameters(std::istream& in)
    {
-      //readBegin(in,"AnglePotential");
       bool nextIndent = false;
-      readParamComposite(in, interaction(), nextIndent);
-      //readEnd(in);
+      addParamComposite(interaction(), nextIndent);
+      interaction().readParameters(in);
    }
 
    /*

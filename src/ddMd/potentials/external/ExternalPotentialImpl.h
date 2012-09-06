@@ -267,10 +267,9 @@ namespace DdMd
    template <class Interaction>
    void ExternalPotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
-      //readBegin(in, "ExternalPotential");
       bool nextIndent = false; // Do not indent interaction block. 
-      readParamComposite(in, interaction(), nextIndent);
-      //readEnd(in);
+      addParamComposite(interaction(), nextIndent);
+      interaction().readParameters(in);
    }
   
    /**
