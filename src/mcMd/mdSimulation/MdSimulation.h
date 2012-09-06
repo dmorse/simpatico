@@ -81,6 +81,8 @@ namespace McMd
       */
       void readParam();
 
+      using ParamComposite::readParam;
+
       /**
       * Read and execute commands from an input stream.
       * 

@@ -70,12 +70,7 @@ namespace McMd
       */
       void setOptions(int argc, char **argv);
 
-      /**
-      * Read parameters from a specific stream.
-      *
-      * \param in parameter file input stream.
-      */
-      virtual void readParameters(std::istream &in);
+      using ParamComposite::readParam;
 
       /**
       * Read parameters from the default parameter stream.
@@ -85,6 +80,13 @@ namespace McMd
       * processor n in parallel mode (ifdef UTIL_MPI).
       */
       void readParam();
+
+      /**
+      * Read parameters from a specific stream.
+      *
+      * \param in parameter file input stream.
+      */
+      virtual void readParameters(std::istream &in);
 
       /**
       * Read and execute commands from a specific input stream.
