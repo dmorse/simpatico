@@ -345,12 +345,6 @@ namespace DdMd
    {   ParamComposite::readParam(fileMaster().paramFile()); }
 
    /*
-   *  Read parameters from specific parameter file. 
-   */
-   void Simulation::readParam(std::istream& in)
-   {   ParamComposite::readParam(in); }
-
-   /**
    * Read parameters, allocate memory and initialize.
    */
    void Simulation::readParameters(std::istream& in)
@@ -470,7 +464,7 @@ namespace DdMd
       positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
    }
 
-   /**
+   /*
    * If no FileMaster exists, create and initialize one. 
    */
    void Simulation::readFileMaster(std::istream &in)
@@ -478,7 +472,7 @@ namespace DdMd
       readParamComposite(in, *fileMasterPtr_);
    }
 
-   /**
+   /*
    * Read potential style strings and maskedPairPolicy.
    */
    void Simulation::readPotentialStyles(std::istream &in)
@@ -1347,7 +1341,7 @@ namespace DdMd
 
    // Validation ------------------------------------------------------
    
-   /**
+   /*
    * Return true if this Simulation is valid, or throw an Exception.
    */
    bool Simulation::isValid()

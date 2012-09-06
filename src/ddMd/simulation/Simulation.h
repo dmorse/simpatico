@@ -106,15 +106,12 @@ namespace DdMd
       */
       void setOptions(int argc, char **argv);
 
+      using ParamComposite::readParam;
+
       /**
       * Read parameters from default parameter file.
       */
       virtual void readParam();
-
-      /**
-      * Read parameters from specific input file.
-      */
-      virtual void readParam(std::istream& in);
 
       /**
       * Read parameters, allocate memory and initialize.
