@@ -65,6 +65,9 @@ namespace McMd
          GPUId_ = -1;
       }
 
+      toImposeConstrain_ = true;
+      setConstrain_ = false;
+
       //read<int>(in, "GPUId", GPUId_);
       // create HOOMD execution configuration
       executionConfigurationSPtr_ = 
@@ -122,6 +125,12 @@ namespace McMd
       if ((!HoomdIsInitialized_) || moleculeSetHasChanged_) {
          initSimulation();
          moleculeSetHasChanged_ = false;
+      }
+
+      if ( !setConstrain_ && toImposeConstrain_) {
+         Boundary initBoundary = system().boundary();
+         constrainLengths_ = initBoundary.lengths();
+         setConstrain_ = true;
       }
 
       // We need to create the Integrator every time since we are starting
@@ -255,8 +264,44 @@ namespace McMd
 //      std::cout << "Ebaro_2 = " << integratorSPtr_->getLogValue("nph_barostat_energy",nStep_) << " ";
 //      std::cout << "H_2 = " << newH << std::endl;
 
+      bool accept;
+
       // Decide whether to accept or reject
-      bool accept = random.metropolis( boltzmann(newH-oldH) );
+      if (integrationMode_ == TwoStepNPHGPU::tetragonal) {
+         if (!setConstrain_) {
+            double  newAspectRatio, aspectRatioParam;
+            newAspectRatio = double(newLengths[0]/newLengths[1]);
+            if ( newAspectRatio >= 1.0 ) {
+               aspectRatioParam = newAspectRatio - 1.0;
+            } else {
+               aspectRatioParam = -newAspectRatio + 1.0;
+            }
+            if ( aspectRatioParam > 0.75 ) {
+               accept = false;
+            } else {
+               accept = random.metropolis( boltzmann(newH-oldH) );
+            }
+         } else
+         if (setConstrain_) {
+            double diffLx, diffLy;
+            if ( newLengths[0] >= constrainLengths_[0] ) {
+               diffLx = newLengths[0] - constrainLengths_[0];
+            } else {
+               diffLx = -(newLengths[0] - constrainLengths_[0]);
+            }
+            if ( newLengths[1] >= constrainLengths_[1] ) {
+               diffLy = newLengths[1] - constrainLengths_[1];
+            } else {
+               diffLy = -(newLengths[1] - constrainLengths_[1]);
+            }
+            if ( diffLx > 0.5 || diffLy > 0.5 ) {
+               accept = false;
+            } else {
+               accept = random.metropolis( boltzmann(newH-oldH) );
+            }
+         }
+      }
+      accept = random.metropolis( boltzmann(newH-oldH) );
 
       if (accept) {
          // read back new boundary
