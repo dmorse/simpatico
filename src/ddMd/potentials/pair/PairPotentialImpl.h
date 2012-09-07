@@ -921,12 +921,8 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
-      for (int i = 0; i < nAtomType_; ++i) {
-         for (int j = 0; j < nAtomType_; ++j) {
-            communicator.Reduce(&localPairEnergies(i,j), &totalPairEnergies(i,j), 1,
-                                 MPI::DOUBLE, MPI::SUM, 0);
-         }
-      }
+      communicator.Reduce(&localPairEnergies(0,0), &totalPairEnergies(0,0), nAtomType_*nAtomType_,
+                           MPI::DOUBLE, MPI::SUM, 0);
       if (communicator.Get_rank() == 0) {
          setPairEnergies(totalPairEnergies);
       } else {
