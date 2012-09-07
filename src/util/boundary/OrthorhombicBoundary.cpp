@@ -157,7 +157,7 @@ namespace Util
          double ab, c;
          in >> ab >> c;
          boundary.maxima_[0] = ab;
-         boundary.maxima_[1] = ab;
+         boundary.maxima_[1] = c;
          boundary.maxima_[2] = c;
       } else 
       if (lattice == Cubic) {
