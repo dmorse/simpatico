@@ -35,7 +35,7 @@ namespace McMd
       nAtom_(0),
       upperBridge_(0),
       lowerBridge_(0)
-   {} 
+   {  setClassName("RingTetraRebridgeMove"); } 
    
    /* 
    * Read parameters speciesId, and bridgeLength_

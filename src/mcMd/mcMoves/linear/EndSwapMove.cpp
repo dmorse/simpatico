@@ -30,7 +30,7 @@ namespace McMd
    EndSwapMove::EndSwapMove(McSystem& system) : 
       SystemMove(system),
       speciesId_(-1)
-   {} 
+   {  setClassName("EndSwapMove"); } 
    
    /* 
    * Read parameter speciesId.

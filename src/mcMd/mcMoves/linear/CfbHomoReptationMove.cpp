@@ -34,7 +34,7 @@ namespace McMd
    CfbHomoReptationMove::CfbHomoReptationMove(McSystem& system) : 
       CfbEndBase(system),
       speciesId_(-1)
-   {} 
+   {  setClassName("CfbHomoReptationMove"); } 
    
    /* 
    * Read parameters speciesId, nRegrow, and nTrial

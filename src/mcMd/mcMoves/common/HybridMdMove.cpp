@@ -32,6 +32,7 @@ namespace McMd
       mdSystemPtr_(0),
       nStep_(0)
    {
+      setClassName("HybridMdMove");
       mdSystemPtr_ = new MdSystem(system);
       oldPositions_.allocate(simulation().atomCapacity());
    }

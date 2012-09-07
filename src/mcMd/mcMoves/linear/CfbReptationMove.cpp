@@ -36,7 +36,7 @@ namespace McMd
       maskPolicy_(MaskBonded),
       hasAutoCorr_(0),
       autoCorrCapacity_(0)
-   {} 
+   { setClassName("CfbReptationMove"); } 
    
    /* 
    * Read parameters speciesId, nRegrow, and nTrial

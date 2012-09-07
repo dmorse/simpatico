@@ -28,7 +28,7 @@ namespace McMd
    HomopolymerSemiGrandMove::HomopolymerSemiGrandMove(McSystem& system) : 
       SystemMove(system),
       speciesId_(-1)
-   {} 
+   {  setClassName("HomopolymerSemiGrandMove"); } 
    
    /* 
    * Read parameter speciesId.

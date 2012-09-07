@@ -34,7 +34,7 @@ namespace McMd
       speciesId_(-1),
       nRegrow_(-1),
       bridgeLength_(0)
-   {} 
+   { setClassName("CfbDoubleRebridgeMove"); } 
    
    /* 
    * Read parameters speciesId, nRegrow, and nTrial

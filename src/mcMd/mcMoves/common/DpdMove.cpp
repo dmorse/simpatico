@@ -30,6 +30,7 @@ namespace McMd
       mdSystemPtr_(0),
       nStep_(0)
    {
+      setClassName("DpdMove");
       mdSystemPtr_ = new MdSystem(system);
    }
 

@@ -31,7 +31,7 @@ namespace McMd
     : SystemMove(system),
       delta_(0.0),
       speciesId_(-1)
-   {}
+   {  setClassName("RigidDisplaceMove"); }
    
    /* 
    * Read speciesId and delta.

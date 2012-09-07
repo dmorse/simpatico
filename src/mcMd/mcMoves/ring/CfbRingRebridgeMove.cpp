@@ -33,7 +33,7 @@ namespace McMd
       CfbRebridgeBase(system),
       speciesId_(-1),
       nRegrow_(-1)
-   {} 
+   {  setClassName("CfbRingRebridgeMove"); } 
    
    /* 
    * Read parameters speciesId, nRegrow, and nTrial

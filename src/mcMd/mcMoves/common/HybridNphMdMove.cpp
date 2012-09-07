@@ -37,6 +37,7 @@ namespace McMd
       barostatMass_(0.0),
       mode_()
    {
+      setClassName("HybridNphMdMove");
       mdSystemPtr_ = new MdSystem(system);
       oldPositions_.allocate(simulation().atomCapacity());
    }
