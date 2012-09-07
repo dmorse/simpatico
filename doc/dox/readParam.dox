@@ -5,24 +5,36 @@ namespace McMd
 
 The format of the parameter file (discussed in \ref param_page) 
 consists of a set of nested blocks, in which each block contains 
-the data required to initialize an instance of a particular 
-class. Each class that reads data from the parameter file is
-derived from the Util::ParamComposite base class, and must provide
-an implementation of the virtual Util::ParamComposite::readParam() 
-method, which has a signature
+the data required to initialize an instance of a particular class. 
+Each class that reads data from the parameter file is derived 
+from the Util::ParamComposite base class, and must provide an
+implementation of one (but not both) of the following two 
+virtual functions:
 \code
+   void readParameters(std::istream& in);
    void readParam(std::istream& in);
 \endcode
-The format of the associated parameter file block is defined by 
-the implementation of the readParam method.  The source code for 
-the readParam() method of the associated class is thus the most 
-reliable documentation of the file format for a parameter file 
-block. It is thus useful for users (as well as developers) to be
-able to read the implementation of a readParam() method, so that 
-they can check the source code to resolve any questions about the 
-file format. 
+The readParam() method defines the file format for the parameter
+file block. The readParameters() method to defines the file 
+formt for the body of the block, without the lines containing
+opening and closing brackets. The default implementation of
+ParamComposite::readParam() calls readParameters() and adds
+opening and closing lines. Most subclasses of ParamComposite 
+re-implement the readParameters() method and rely on the 
+default implementation of readParam() to provide the opening
+and closing lines. The only exceptions are the Manager classes,
+which need to handle the closing brackets explicitly because
+of the way the associate parameter file blocks are parsed.
 
-The implementation of a readParam() method typically uses a several 
+The source code for the readParameters() or readParam() method of 
+a class is thus the most reliable documentation of the file format 
+for the associated parameter file block. It is thus useful for 
+users (as well as developers) to be able to read the implementation 
+of these method, so that they can check the source code to resolve 
+any questions about the file format. In the examples below, 
+we discuss the implementation of a readParameters() method.
+
+The implementation of readParameters() typically uses a several 
 protected methods that are inherited from the parent Util::ParamComposite 
 class. These are:
 <ul>
@@ -56,7 +68,7 @@ of another class B:
    
       // other methods
    
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
    
       // other methods
    
@@ -87,13 +99,11 @@ The minimum implementation of A::readParam() required to parse this
 file format is show below:
 \code
 
-   void A::readParam(std::istream& in)
+   void A::readParameters(std::istream& in)
    {
-      readBegin(in,"A");
       read<int>(in, "var1", var1_);
       read<double>(in, "var2", var2_);
       readParamComposite(in, thingy_);
-      readEnd(in);
    }
 
 \endcode
@@ -101,7 +111,7 @@ For a real class, the implementation of readParam() might also
 contain code to validate input, allocate any required memory, and 
 do whatever else is required to initialize an instance of A. 
 
-The expected label strings "A", "var1", and "var2" are all passed 
+The expected label strings "var1", and "var2" are all passed 
 as string literals to the relevant read* methods. Each of these 
 methods throws an Exception, and thereby abort program execution, 
 if the expected label is not found. 
