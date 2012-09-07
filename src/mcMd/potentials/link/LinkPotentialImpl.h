@@ -212,7 +212,10 @@ namespace McMd
       interactionPtr_(0),
       linkMasterPtr_(&system.linkMaster()),
       isCopy_(false)
-   { interactionPtr_ = new Interaction(); }
+   {
+      setClassName("LinkPotential"); 
+      interactionPtr_ = new Interaction(); 
+   }
  
    /* 
    * Constructor, copy from LinkPotentialImpl<Interaction>.
@@ -225,7 +228,7 @@ namespace McMd
       interactionPtr_(&other.interaction()),
       linkMasterPtr_(&other.system().linkMaster()),
       isCopy_(true)
-   {}
+   { setClassName("LinkPotential"); }
  
    /* 
    * Destructor. 

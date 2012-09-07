@@ -52,12 +52,12 @@ namespace McMd
       swapAttempt_(0),
       swapAccept_(0)
    {
-
       // Precondition
       if (!system.hasPerturbation()) {
          UTIL_THROW("Parent System has no Perturbation");
       }
 
+      setClassName("ReplicaMove");
       communicatorPtr_ = &(system.simulation().communicator());
       myId_   = communicatorPtr_->Get_rank();
       nProcs_ = communicatorPtr_->Get_size();

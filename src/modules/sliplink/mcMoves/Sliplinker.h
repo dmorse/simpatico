@@ -32,7 +32,7 @@ namespace McMd
       Sliplinker(McSystem& system);
 
       /// Read cutoff and probability.
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
  
       /// Create or destroy slip-springs.
       virtual bool move();

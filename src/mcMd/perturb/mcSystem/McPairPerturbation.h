@@ -110,7 +110,7 @@ namespace McMd
    McPairPerturbation<Interaction>::McPairPerturbation(McSystem& system)
     : LinearPerturbation<McSystem>(system),
       interactionPtr_(0)
-   {}
+   {  setClassName("McPairPerturbation"); }
 
    /*
    * Destructor.

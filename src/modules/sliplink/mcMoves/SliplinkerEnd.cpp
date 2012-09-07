@@ -34,9 +34,9 @@ namespace McMd
       cutoff_(0),
       mu_(0),
       speciesId_(0)
-   {}
+   { setClassName("SliplinkerEnd"); }
 
-   void SliplinkerEnd::readParam(std::istream& in)
+   void SliplinkerEnd::readParameters(std::istream& in)
    {
       readProbability(in);
       read<double>(in, "cutoff", cutoff_);

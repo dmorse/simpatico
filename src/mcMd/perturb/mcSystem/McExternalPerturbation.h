@@ -87,10 +87,8 @@ namespace McMd
       /// Pointer to interaction
       mutable Interaction* interactionPtr_;
 
-      /*
-      Number of perturbation parameters associated with a System.
-      nParameters = 1 for McExternalPerturbation.
-      */
+      // Number of perturbation parameters associated with a System.
+      // nParameters = 1 for McExternalPerturbation.
       int nParameters_;
    };
    
@@ -101,14 +99,14 @@ namespace McMd
    McExternalPerturbation<Interaction>::McExternalPerturbation(McSystem& system)
     : LinearPerturbation<McSystem>(system),
       interactionPtr_(0)
-   { }
+   {  setClassName("McExternalPerturbation"); }
 
    /*
    * Destructor.
    */
    template < class Interaction >
    McExternalPerturbation<Interaction>::~McExternalPerturbation<Interaction>()
-   { }
+   {}
 
    /*
    * Read external parameter from file
@@ -121,6 +119,7 @@ namespace McMd
    }
 
    /*
+   * Return underlying interaction object.
    */
    template < class Interaction >
    Interaction& McExternalPerturbation<Interaction>::interaction() const
@@ -143,7 +142,7 @@ namespace McMd
    template < class Interaction >
    void McExternalPerturbation<Interaction>::setParameter()
    {
-     interaction().setExternalParameter(parameter_[0]);
+      interaction().setExternalParameter(parameter_[0]);
    }
 
    /* 

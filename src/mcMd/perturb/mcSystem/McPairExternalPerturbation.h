@@ -121,7 +121,7 @@ namespace McMd
     : LinearPerturbation<McSystem>(system),
       pairInteractionPtr_(0),
       externalInteractionPtr_(0)
-   {}
+   {  setClassName("McPairExternalPerturbation"); }
 
    /*
    * Destructor.
