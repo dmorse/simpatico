@@ -27,10 +27,10 @@ namespace McMd
    /// Constructor.
    LinkLifeTime::LinkLifeTime(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("LinkLifeTime"); }
 
    /// Read parameters from file.
-   void LinkLifeTime::readParam(std::istream& in) 
+   void LinkLifeTime::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

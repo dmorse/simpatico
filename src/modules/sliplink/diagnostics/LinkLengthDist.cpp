@@ -27,10 +27,10 @@ namespace McMd
    /// Constructor.
    LinkLengthDist::LinkLengthDist(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("LinkLengthDist"); }
 
    /// Read parameters from file, and allocate data array.
-   void LinkLengthDist::readParam(std::istream& in) 
+   void LinkLengthDist::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

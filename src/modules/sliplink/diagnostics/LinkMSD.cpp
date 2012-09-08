@@ -25,10 +25,10 @@ namespace McMd
    /// Constructor.
    LinkMSD::LinkMSD(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("LinkMSD"); }
 
    /// Read parameters from file, and allocate data arrays.
-   void LinkMSD::readParam(std::istream& in) 
+   void LinkMSD::readParameters(std::istream& in) 
    {
 
       readInterval(in);

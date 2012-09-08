@@ -24,10 +24,10 @@ namespace McMd
    /// Constructor.
    InterIntraLink::InterIntraLink(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("InterIntraLink"); }
 
    /// Read parameters from file, and allocate data array.
-   void InterIntraLink::readParam(std::istream& in) 
+   void InterIntraLink::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

@@ -36,12 +36,12 @@ namespace McMd
       nMolecule_(-1),
       capacity_(-1),
       nAtom_(0)
-   {}
+   {  setClassName("G1MSD"); }
 
    /*
    * Read parameters from file, and allocate data array.
    */
-   void G1MSD::readParam(std::istream& in) 
+   void G1MSD::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray
