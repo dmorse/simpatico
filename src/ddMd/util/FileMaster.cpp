@@ -9,7 +9,6 @@
 */
 
 #include "FileMaster.h"
-#include <mcMd/util/FileMaster.h>
 #include <util/global.h>
 
 #include <sstream>
@@ -31,21 +30,6 @@ namespace DdMd
      hasDirectoryId_(false),
      isSetParamFileStdIn_(false)
    { setClassName("FileMaster"); }
-
-   /* 
-   * Copy constructor.   
-   */
-   FileMaster::FileMaster(const McMd::FileMaster& other) 
-   : commandFileName_(other.commandFileName_),
-     inputPrefix_(other.inputPrefix_),
-     outputPrefix_(other.outputPrefix_),
-     directoryIdPrefix_(other.directoryIdPrefix_),
-     rootPrefix_(other.rootPrefix_),
-     paramFilePtr_(other.paramFilePtr_),
-     commandFilePtr_(other.commandFilePtr_),
-     hasDirectoryId_(other.hasDirectoryId_),
-     isSetParamFileStdIn_(other.isSetParamFileStdIn_)
-   {}
 
    /* 
    * Copy constructor.   

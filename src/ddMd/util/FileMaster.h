@@ -13,8 +13,6 @@
 #include <fstream>
 #include <string>
 
-namespace McMd{ class FileMaster; }
-
 namespace DdMd
 {
 
@@ -105,11 +103,6 @@ namespace DdMd
       * Constructor.
       */
       FileMaster();
- 
-      /**
-      * Constructor.
-      */
-      FileMaster(const McMd::FileMaster& other);
  
       /**
       * Copy constructor.
