@@ -11,7 +11,7 @@
 
 #include "McExternalEnergyAverage.h"        // class header
 
-#include <mcMd/util/FileMaster.h>  
+#include <mcMd/misc/FileMaster.h>  
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/potentials/external/ExternalPotential.h>

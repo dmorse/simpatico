@@ -9,8 +9,8 @@
 */
 
 #include "WriteConfig.h"
-//#include <ddMd/util/FileMaster.h>
-#include <util/util/ioUtil.h>
+//#include <ddMd/misc/FileMaster.h>
+#include <util/misc/ioUtil.h>
 
 #include <sstream>
 

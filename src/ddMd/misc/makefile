@@ -7,13 +7,13 @@ include $(SRC_DIR_REL)/ddMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
 
-all: $(ddMd_util_OBJS)
+all: $(ddMd_misc_OBJS)
 
 clean:
-	rm -f $(ddMd_util_OBJS) $(ddMd_util_OBJS:.o=.d)
+	rm -f $(ddMd_misc_OBJS) $(ddMd_misc_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(ddMd_util_OBJS:.o=.d)
+	rm -f $(ddMd_misc_OBJS:.o=.d)
 
--include $(ddMd_util_OBJS:.o=.d)
+-include $(ddMd_misc_OBJS:.o=.d)
 

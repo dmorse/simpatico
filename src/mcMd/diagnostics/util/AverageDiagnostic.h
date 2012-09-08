@@ -10,7 +10,7 @@
 
 #include <mcMd/diagnostics/SystemDiagnostic.h>  // base class template
 #include <util/accumulators/Average.h>          // member
-#include <mcMd/util/FileMaster.h>  
+#include <mcMd/misc/FileMaster.h>  
 
 namespace McMd
 {

@@ -11,7 +11,7 @@
 #include "NLinkAverage.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/links/LinkMaster.h>        
-#include <mcMd/util/FileMaster.h>        
+#include <mcMd/misc/FileMaster.h>        
 
 
 namespace McMd

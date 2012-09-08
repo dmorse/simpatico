@@ -3,7 +3,7 @@
 
 #include <util/param/ParamComposite.h>          // base class
 #include <ddMd/simulation/SimulationAccess.h>   // base class
-#include <ddMd/util/DdTimer.h>                  // member
+#include <ddMd/misc/DdTimer.h>                  // member
 
 #include <iostream>
 

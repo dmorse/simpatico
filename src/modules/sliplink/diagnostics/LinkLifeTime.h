@@ -14,7 +14,7 @@
 #include <util/containers/DArray.h>
 #include <mcMd/links/LinkMaster.h>
 #include <mcMd/links/LinkEvents.h>
-#include <util/util/Observer.h>
+#include <util/misc/Observer.h>
 #include <util/global.h>
 
 namespace McMd

@@ -9,7 +9,7 @@
 */
 #include <util/param/ParamComposite.h>  // base class
 #include <ddMd/chemistry/Bond.h>        // typedef
-#include <util/util/Setable.h>
+#include <util/misc/Setable.h>
 #include <util/global.h>
 
 namespace DdMd

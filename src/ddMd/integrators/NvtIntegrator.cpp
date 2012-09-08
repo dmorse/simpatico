@@ -16,7 +16,7 @@
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/space/Vector.h>
-#include <util/util/Timer.h>
+#include <util/misc/Timer.h>
 #include <util/global.h>
 
 #include <iostream>

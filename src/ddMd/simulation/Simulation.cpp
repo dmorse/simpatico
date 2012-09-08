@@ -15,7 +15,7 @@
 #include <ddMd/configIos/ConfigIo.h>
 #include <ddMd/configIos/ConfigIoFactory.h>
 #include <ddMd/configIos/DdMdConfigIo.h>
-#include <ddMd/util/FileMaster.h>
+#include <ddMd/misc/FileMaster.h>
 #include <ddMd/diagnostics/DiagnosticManager.h>
 
 #ifndef DDMD_NOPAIR
@@ -52,15 +52,15 @@
 #include <util/space/IntVector.h>
 #include <util/space/Tensor.h>
 #include <util/param/Factory.h>
-#include <util/util/Log.h>
+#include <util/misc/Log.h>
 #include <util/mpi/MpiSendRecv.h>
-#include <util/util/Timer.h>
+#include <util/misc/Timer.h>
 
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/format/Str.h>
-#include <util/util/ioUtil.h>
-#include <util/util/initStatic.h>
+#include <util/misc/ioUtil.h>
+#include <util/misc/initStatic.h>
 
 #include <fstream>
 #include <unistd.h>

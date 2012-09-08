@@ -10,7 +10,7 @@
 
 #include "CellList.h"
 #include <util/containers/DArray.h>
-#include <util/util/Setable.h>
+#include <util/misc/Setable.h>
 #include <util/global.h>
 
 namespace DdMd

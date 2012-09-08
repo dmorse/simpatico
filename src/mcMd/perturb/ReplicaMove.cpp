@@ -23,7 +23,7 @@
 #include <util/archives/MemoryIArchive.h>
 #include <util/archives/MemoryCounter.h>
 #include <util/random/Random.h>
-#include <util/util/Observer.h>
+#include <util/misc/Observer.h>
 
 #include <sstream>
 #include <cmath>

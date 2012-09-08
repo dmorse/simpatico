@@ -1,4 +1,4 @@
-include $(SRC_DIR)/util/util/sources.mk
+include $(SRC_DIR)/util/misc/sources.mk
 include $(SRC_DIR)/util/format/sources.mk
 include $(SRC_DIR)/util/memory/sources.mk
 include $(SRC_DIR)/util/containers/sources.mk
@@ -14,7 +14,7 @@ include $(SRC_DIR)/util/ensembles/sources.mk
 include $(SRC_DIR)/util/accumulators/sources.mk
 include $(SRC_DIR)/util/archives/sources.mk
 
-util_SRCS=$(util_util_SRCS) $(util_format_SRCS) \
+util_SRCS=$(util_misc_SRCS) $(util_format_SRCS) \
     $(util_memory_SRCS) $(util_containers_SRCS) $(util_mpi_SRCS) \
     $(util_signal_SRCS) $(util_param_SRCS) $(util_math_SRCS) \
     $(util_space_SRCS) $(util_random_SRCS) $(util_boundary_SRCS) \

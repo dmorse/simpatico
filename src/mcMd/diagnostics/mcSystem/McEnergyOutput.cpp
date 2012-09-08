@@ -10,7 +10,7 @@
 
 #include "McEnergyOutput.h"                  
 #include <mcMd/mcSimulation/mc_potentials.h> // include all MC potentials
-#include <mcMd/util/FileMaster.h>
+#include <mcMd/misc/FileMaster.h>
 #include <util/format/Dbl.h>
 
 namespace McMd

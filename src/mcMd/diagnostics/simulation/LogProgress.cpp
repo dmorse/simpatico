@@ -9,7 +9,7 @@
 */
 
 #include "LogProgress.h"
-#include <util/util/Log.h>
+#include <util/misc/Log.h>
 
 namespace McMd
 {

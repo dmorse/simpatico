@@ -103,17 +103,6 @@ Interface changes
 - If possible, remove moleculeId() and molecule(speciesId, moleculeId)
   methods of System.
 
-File organization:
-------------------
-
-- Move directory util/util to util/misc
-
-- Move directory mcMd/util to mcMd/misc
-
-- Move directory ddMd/util to ddMd/misc
-
-- Separate directory for observer.
-
 SystemAccess base classes
 --------------------------
 

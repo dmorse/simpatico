@@ -52,7 +52,7 @@
 #endif
 
 // namespace Util
-#include <mcMd/util/FileMaster.h>
+#include <mcMd/misc/FileMaster.h>
 #include <util/param/Factory.h>
 #include <util/archives/Serializable_includes.h>
 

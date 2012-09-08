@@ -19,7 +19,7 @@
 #include <util/containers/SSet.h> 
 #include <util/containers/PArrayIterator.h> 
 #include <util/containers/ConstPArrayIterator.h> 
-#include <util/util/Notifier.h> 
+#include <util/misc/Notifier.h> 
 
 
 namespace Util

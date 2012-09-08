@@ -9,7 +9,7 @@
 */
 
 #include "Diagnostic.h"
-#include <mcMd/util/FileMaster.h>
+#include <mcMd/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/global.h>
 

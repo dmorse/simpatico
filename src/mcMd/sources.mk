@@ -10,7 +10,7 @@ include $(SRC_DIR)/mcMd/trajectoryIos/sources.mk
 include $(SRC_DIR)/mcMd/mdIntegrators/sources.mk
 include $(SRC_DIR)/mcMd/mcMoves/sources.mk
 include $(SRC_DIR)/mcMd/diagnostics/sources.mk
-include $(SRC_DIR)/mcMd/util/sources.mk
+include $(SRC_DIR)/mcMd/misc/sources.mk
 
 mcMd_SRCS=\
     $(mcMd_potentials_SRCS) $(mcMd_chemistry_SRCS) \
@@ -19,7 +19,7 @@ mcMd_SRCS=\
     $(mcMd_mdSimulation_SRCS) $(mcMd_configIos_SRCS) \
     $(mcMd_trajectoryIos_SRCS) $(mcMd_mdIntegrators_SRCS) \
     $(mcMd_mcMoves_SRCS) $(mcMd_diagnostics_SRCS) \
-    $(mcMd_util_SRCS)
+    $(mcMd_misc_SRCS)
 
 ifdef MCMD_PERTURB
 include $(SRC_DIR)/mcMd/perturb/sources.mk

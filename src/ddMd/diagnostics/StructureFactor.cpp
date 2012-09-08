@@ -17,7 +17,7 @@
 #include <util/boundary/Boundary.h>
 #include <util/math/Constants.h>
 #include <util/space/Dimension.h>
-#include <util/util/ioUtil.h>
+#include <util/misc/ioUtil.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 

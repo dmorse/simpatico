@@ -14,7 +14,7 @@
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/ensembles/BoundaryEnsemble.h>
-#include <util/util/Log.h>
+#include <util/misc/Log.h>
 #include <util/global.h>
 
 // Uncomment to enable paranoid validity checks.

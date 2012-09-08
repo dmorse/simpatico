@@ -15,7 +15,7 @@
 
 #include <util/param/ParamComposite.h> // base class 
 #include <util/space/Vector.h>          // Util namespace
-#include <util/util/Notifier.h>          // Util namespace
+#include <util/misc/Notifier.h>          // Util namespace
 #include <util/containers/DArray.h>
 #include <util/containers/Pair.h>
 #include <util/global.h>

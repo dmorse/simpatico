@@ -15,7 +15,7 @@
 #include <mcMd/species/SpeciesMutator.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
-#include <mcMd/util/FileMaster.h>
+#include <mcMd/misc/FileMaster.h>
 
 namespace McMd
 {

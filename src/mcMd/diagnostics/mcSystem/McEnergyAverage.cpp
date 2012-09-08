@@ -9,7 +9,7 @@
 */
 
 #include "McEnergyAverage.h"                        // class header
-#include <mcMd/util/FileMaster.h>  
+#include <mcMd/misc/FileMaster.h>  
 #include <util/archives/Serializable_includes.h>
 
 

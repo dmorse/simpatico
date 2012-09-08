@@ -8,13 +8,13 @@ include $(SRC_DIR_REL)/mcMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/mcMd/sources.mk
 
-all: $(mcMd_util_OBJS)
+all: $(mcMd_misc_OBJS)
 
 clean:
-	rm -f $(mcMd_util_OBJS) $(mcMd_util_OBJS:.o=.d)
+	rm -f $(mcMd_misc_OBJS) $(mcMd_misc_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(mcMd_util_OBJS:.o=.d)
+	rm -f $(mcMd_misc_OBJS:.o=.d)
 
--include $(mcMd_util_OBJS:.o=.d)
+-include $(mcMd_misc_OBJS:.o=.d)
 

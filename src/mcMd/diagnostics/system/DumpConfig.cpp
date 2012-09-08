@@ -9,9 +9,9 @@
 */
 
 #include "DumpConfig.h"
-#include <mcMd/util/FileMaster.h>
+#include <mcMd/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
-#include <util/util/ioUtil.h>
+#include <util/misc/ioUtil.h>
 
 #include <sstream>
 

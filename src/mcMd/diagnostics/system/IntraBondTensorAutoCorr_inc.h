@@ -15,7 +15,7 @@
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
-#include <mcMd/util/FileMaster.h>
+#include <mcMd/misc/FileMaster.h>
 
 #include <util/global.h>
 

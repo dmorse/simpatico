@@ -19,7 +19,7 @@
 #include <mcMd/simulation/System.h>
 #include <util/boundary/OrthorhombicBoundary.h>
 #include <util/mpi/MpiSendRecv.h>
-#include <util/util/Observer.h>
+#include <util/misc/Observer.h>
 
 #include <sstream>
 #include <cmath>

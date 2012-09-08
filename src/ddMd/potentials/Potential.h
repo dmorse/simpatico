@@ -2,7 +2,7 @@
 #define DDMD_POTENTIAL_H
 
 #include <util/param/ParamComposite.h>  // base class
-#include <util/util/Setable.h>          // template for members
+#include <util/misc/Setable.h>          // template for members
 #include <util/space/Tensor.h>          // parameter for member
 
 /*

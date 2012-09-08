@@ -9,7 +9,7 @@
 */
 
 #include "TextComposite.h"   // header
-#include <util/util/ioUtil.h>    
+#include <util/misc/ioUtil.h>    
 
 #include <vector>
 

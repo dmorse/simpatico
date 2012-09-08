@@ -25,11 +25,11 @@
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/format/Str.h>
-#include <util/util/Log.h>
+#include <util/misc/Log.h>
 #include <util/random/serialize.h>
 #include <util/archives/Serializable_includes.h>
-#include <util/util/ioUtil.h>
-#include <util/util/Timer.h>
+#include <util/misc/ioUtil.h>
+#include <util/misc/Timer.h>
 
 #include <sstream>
 #include <iostream>

@@ -14,7 +14,7 @@
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
-#include <util/util/Setable.h>           // member template
+#include <util/misc/Setable.h>           // member template
 #include <util/boundary/Boundary.h>      // typedef
 #include <util/global.h>
 

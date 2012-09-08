@@ -10,8 +10,8 @@
 
 #include "McWriteRestart.h"
 #include <mcMd/mcSimulation/McSimulation.h>
-//#include <mcMd/util/FileMaster.h>
-#include <util/util/ioUtil.h>
+//#include <mcMd/misc/FileMaster.h>
+#include <util/misc/ioUtil.h>
 
 #include <sstream>
 

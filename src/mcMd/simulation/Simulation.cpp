@@ -20,7 +20,7 @@
 #include <util/containers/ArraySet.h>
 #include <util/param/Factory.h>
 #include <util/space/Vector.h>
-#include <util/util/initStatic.h>
+#include <util/misc/initStatic.h>
 
 #ifdef UTIL_MPI
 #include "McMd_mpi.h"

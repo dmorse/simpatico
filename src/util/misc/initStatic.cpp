@@ -9,7 +9,7 @@
 */
 
 #include "initStatic.h"
-#include <util/util/Log.h>
+#include <util/misc/Log.h>
 #include <util/format/Format.h>
 #include <util/memory/Memory.h>
 #include <util/param/ParamComponent.h>

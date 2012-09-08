@@ -19,7 +19,7 @@
 /**
 * Include access to a Log file.
 */
-#include <util/util/Log.h>
+#include <util/misc/Log.h>
 
 //-----------------------------------------------------------------------------
 // Errors: Assertions and and Exception macros
@@ -34,7 +34,7 @@
 #endif
 
 #include "assert.h"
-#include "util/Exception.h"
+#include "misc/Exception.h"
 
 /**
 * Macro for the name of the current function (compiler dependent).

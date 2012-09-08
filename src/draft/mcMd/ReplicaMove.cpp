@@ -17,7 +17,7 @@
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
 #include <util/mpi/MpiSendRecv.h>
-#include <util/util/Observer.h>
+#include <util/misc/Observer.h>
 
 #include <sstream>
 #include <cmath>

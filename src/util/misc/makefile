@@ -5,13 +5,13 @@ include $(SRC_DIR_REL)/util/defines.mk
 include $(SRC_DIR_REL)/util/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 
-all: $(util_util_OBJS)
+all: $(util_misc_OBJS)
 
 clean:
-	rm -f $(util_util_OBJS) $(util_util_OBJS:.o=.d)
+	rm -f $(util_misc_OBJS) $(util_misc_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(util_util_OBJS:.o=.d)
+	rm -f $(util_misc_OBJS:.o=.d)
 
--include $(util_util_OBJS:.o=.d)
+-include $(util_misc_OBJS:.o=.d)
 

@@ -16,7 +16,7 @@
 #if defined(HOOMD_DEVEL) && defined(MCMD_LINK)
 #include <mcMd/links/LinkMaster.h>
 #include <mcMd/links/LinkEvents.h>
-#include <util/util/Observer.h>
+#include <util/misc/Observer.h>
 #include <boost/unordered_map.hpp>
 #endif
 

@@ -24,7 +24,7 @@
 #include <util/space/Tensor.h>                   // member (template param)
 #include <util/containers/DArray.h>              // member (template)
 #include <util/containers/DMatrix.h>              // member (template)
-#include <util/util/Setable.h>                   // member (template)
+#include <util/misc/Setable.h>                   // member (template)
 #include <util/signal/Signal.h>                  // members
 
 #include <fstream>
