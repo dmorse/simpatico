@@ -74,7 +74,7 @@ namespace Inter
       *
       * \param in input stream
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
 
       /**
       * Modify a parameter, identified by a string.
@@ -127,11 +127,6 @@ namespace Inter
       */
       double get(std::string name, int type) const;
 
-      /**
-      * Return name string "FeneBond" for this evaluator class.
-      */
-      std::string className() const;
- 
    private:
    
       /// Maximum possible number of bond types

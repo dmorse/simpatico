@@ -1,6 +1,6 @@
-#ifdef  INTER_TETHER
-#ifndef MCMD_HARMONIC_TETHER_H
-#define MCMD_HARMONIC_TETHER_H
+#ifdef  MCMD_TETHER
+#ifndef HARMONIC_TETHER_H
+#define HARMONIC_TETHER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -13,7 +13,7 @@
 
 #include <cmath>
 
-namespace McMd
+namespace Inter
 {
 
    using namespace Util;
@@ -23,7 +23,7 @@ namespace McMd
    *
    * This class implements a harmonic potential with a zero rest length.
    *
-   * \ingroup McMd_Tether_Module
+   * \ingroup Inter_Tether_Module
    */
    class HarmonicTether : public ParamComposite 
    {
@@ -52,7 +52,7 @@ namespace McMd
       *
       * \param in input stream
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
 
       /**
       * Returns potential energy for one tether.

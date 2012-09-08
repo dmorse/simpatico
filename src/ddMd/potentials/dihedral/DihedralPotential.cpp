@@ -21,7 +21,7 @@ namespace DdMd
    DihedralPotential::DihedralPotential(Simulation& simulation)
     : boundaryPtr_(&simulation.boundary()),
       storagePtr_(&simulation.dihedralStorage())
-   {}
+   { setClassName("DihedralPotential"); }
 
    /*
    * Default constructor (for unit testing).

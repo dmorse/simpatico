@@ -1,4 +1,3 @@
-
 Main Loop
 ---------
 
@@ -21,6 +20,13 @@ Testing
   change upon reneighboring, in unit tests and as optional test in integrator.
 
 - Test conservation of energy and stress in DdMd for angles and dihedrals.
+
+Housekeeping
+------------
+
+- Try to move FileMaster file to Util directory, use for McMd and DdMd
+
+- Rename ddMd/util -> ddMd/misc
 
 Hybrid MD
 ----------

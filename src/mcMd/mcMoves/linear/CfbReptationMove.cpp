@@ -36,14 +36,14 @@ namespace McMd
       maskPolicy_(MaskBonded),
       hasAutoCorr_(0),
       autoCorrCapacity_(0)
-   {} 
+   { setClassName("CfbReptationMove"); } 
    
    /* 
    * Read parameters speciesId, nRegrow, and nTrial
    * also read hasAutoCorr, which may be either 0 or 1
    * if 1, also read autoCorrCapacity and autoCorrName
    */
-   void CfbReptationMove::readParam(std::istream& in) 
+   void CfbReptationMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);

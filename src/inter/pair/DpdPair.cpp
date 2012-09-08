@@ -23,7 +23,7 @@ namespace Inter
     : maxPairCutoff_(0.0),
       nAtomType_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("DpdPair"); }
    
    /* 
    * Copy constructor.
@@ -69,7 +69,7 @@ namespace Inter
    /* 
    * Read potential parameters from file.
    */
-   void DpdPair::readParam(std::istream &in) 
+   void DpdPair::readParameters(std::istream &in) 
    {
       // Preconditions
       if (nAtomType_ == 0) {
@@ -77,12 +77,10 @@ namespace Inter
       }
    
       // Read parameters
-      //readBegin(in, "DpdPair");
       readCArray2D<double> (
                   in, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
       readCArray2D<double>(
                   in, "sigma", sigma_[0], nAtomType_, nAtomType_);
-      //readEnd(in);
    
       // Calculate sigmaSq_, ce_, cf_, and maxPairCutoff_
       int i, j;
@@ -201,12 +199,6 @@ namespace Inter
    double DpdPair::maxPairCutoff() const
    { return maxPairCutoff_; }
 
-   /*
-   * Return name string "DpdPair" for this evaluator class.
-   */
-   std::string DpdPair::className() const
-   {  return std::string("DpdPair"); }
- 
    /*
    * Set a potential energy parameter, identified by a string.
    */

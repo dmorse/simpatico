@@ -29,17 +29,17 @@ namespace McMd
    /// Constructor.
    StructureFactorP::StructureFactorP(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("StructureFactorP"); }
 
    StructureFactorP::~StructureFactorP() 
    {}
 
    /// Read parameters from file, and allocate data array.
-   void StructureFactorP::readParam(std::istream& in) 
+   void StructureFactorP::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray
-      //SystemDiagnostic<System>::readParam(in);
+      //SystemDiagnostic<System>::readParameters(in);
       readInterval(in);
       readOutputFileName(in);
 

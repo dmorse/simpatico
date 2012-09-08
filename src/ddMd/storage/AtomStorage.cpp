@@ -50,7 +50,7 @@ namespace DdMd
       #else
       isCartesian_(false)
       #endif
-   {}
+   { setClassName("AtomStorage"); }
  
    /*
    * Destructor.
@@ -61,14 +61,12 @@ namespace DdMd
    /*
    * Read parameters and allocate memory.
    */
-   void AtomStorage::readParam(std::istream& in)
+   void AtomStorage::readParameters(std::istream& in)
    {
-      readBegin(in, "AtomStorage");
       read<int>(in, "atomCapacity", atomCapacity_);
       read<int>(in, "ghostCapacity", ghostCapacity_);
       read<int>(in, "totalAtomCapacity", totalAtomCapacity_);
       allocate();
-      readEnd(in);
    }
 
    /*

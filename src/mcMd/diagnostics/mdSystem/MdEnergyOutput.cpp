@@ -22,9 +22,9 @@ namespace McMd
    // Constructor
    MdEnergyOutput::MdEnergyOutput(MdSystem& system) :
       SystemDiagnostic<MdSystem>(system)
-   {}
+   {  setClassName("MdEnergyOutput"); }
 
-   void MdEnergyOutput::readParam(std::istream& in)
+   void MdEnergyOutput::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

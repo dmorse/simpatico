@@ -17,14 +17,12 @@ namespace McMd
    using namespace Util;
 
    /*
-   * Read parameter file. 
+   * Constructor.
    */
-   void SpeciesManager::readParam(std::istream &in)
-   {
-      readBegin(in, "SpeciesManager");
-      Manager<Species>::readParam(in);
-   } 
-
+   SpeciesManager::SpeciesManager()
+    : Manager<Species>()
+   {  setClassName("SpeciesManager"); }
+   
    /*
    * Return a pointer to a new SpeciesFactory object.
    */
@@ -32,5 +30,4 @@ namespace McMd
    { return new SpeciesFactory(); }
 
 }
-
 #endif

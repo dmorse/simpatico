@@ -55,7 +55,7 @@ namespace McMd
       *
       * \param in input parameter stream
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
 
       /**
       * Add a tether to a specific Atom.

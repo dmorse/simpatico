@@ -35,7 +35,7 @@ namespace McMd
     pairPotentialPtr_(&system.pairPotential()),
     boundaryPtr_(&system.boundary()),
     maxMoleculeNeighbors_(0)
-   {}
+   {  setClassName("MdPairEnergyCoefficients"); }
 
    // Destructor
    MdPairEnergyCoefficients::~MdPairEnergyCoefficients()
@@ -58,7 +58,7 @@ namespace McMd
    }
 
    // Read input parameters
-   void MdPairEnergyCoefficients::readParam(std::istream& in)
+   void MdPairEnergyCoefficients::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

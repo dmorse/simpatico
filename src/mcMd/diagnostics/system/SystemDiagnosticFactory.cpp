@@ -21,7 +21,9 @@
 #include "IntraStructureFactor.h"
 #include "VanHove.h"
 #ifdef UTIL_MPI
+#ifdef MCMD_PERTURB
 #include "MigratingVanHove.h"
+#endif
 #endif
 #include "RadiusGyration.h"
 #include "BlockRadiusGyration.h"

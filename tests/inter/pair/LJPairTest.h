@@ -35,7 +35,7 @@ public:
       // Read parameters from file
       std::ifstream in;
       openInputFile("pair/in/LJPair", in);
-      pairPotential.readParam(in);
+      pairPotential.readParameters(in);
       in.close();
    }
 

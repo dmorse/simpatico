@@ -18,8 +18,8 @@ mcMd_diagnostics_system_SRCS=$(SRC_DIR)/mcMd/diagnostics/system/AtomMSD.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/VanHove.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/BoundaryAverage.cpp 
 
-ifdef MCMD_PERTURB
 ifdef UTIL_MPI
+ifdef MCMD_PERTURB
 mcMd_diagnostics_system_SRCS+=\
     $(SRC_DIR)/mcMd/diagnostics/system/MigratingVanHove.cpp
 endif

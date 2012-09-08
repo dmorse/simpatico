@@ -15,13 +15,17 @@ namespace DdMd
 {
 
    /*
+   * Constructor  
+   */
+   AngleStorage::AngleStorage()
+   { setClassName("AngleStorage"); }
+
+   /*
    * Read parameters and allocate memory.
    */
-   void AngleStorage::readParam(std::istream& in)
+   void AngleStorage::readParameters(std::istream& in)
    {
-      readBegin(in, "AngleStorage");
-      GroupStorage<3>::readParam(in);
-      readEnd(in);
+      GroupStorage<3>::readParameters(in);
    }
 
 }

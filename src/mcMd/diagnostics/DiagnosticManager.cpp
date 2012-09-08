@@ -22,7 +22,7 @@ namespace McMd
    */
    DiagnosticManager::DiagnosticManager()
    : Manager<Diagnostic>()
-   {}
+   {  setClassName("DiagnosticManager"); }
 
    /*
    * Destructor.
@@ -37,9 +37,10 @@ namespace McMd
    */
    void DiagnosticManager::readParam(std::istream &in)
    {
-      readBegin(in, "DiagnosticManager");
+      beginReadManager(in);
       read<long>(in,"baseInterval", Diagnostic::baseInterval);
-      Manager<Diagnostic>::readParam(in);
+      readChildren(in);
+      endReadManager();
    }
 
    /*

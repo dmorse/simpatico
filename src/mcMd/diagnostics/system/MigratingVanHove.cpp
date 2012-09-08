@@ -45,6 +45,7 @@ namespace McMd
       replicaMovePtr_(&system.replicaMove()),
       isInitialized_(false)
    {  
+      setClassName("MigratingVanHove"); 
       communicatorPtr_ = &(system.simulation().communicator());
    }
   
@@ -53,7 +54,7 @@ namespace McMd
    {}
 
    /// Read parameters from file, and allocate data array.
-   void MigratingVanHove::readParam(std::istream& in) 
+   void MigratingVanHove::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

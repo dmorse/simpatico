@@ -22,7 +22,7 @@ namespace DdMd
    DiagnosticManager::DiagnosticManager(Simulation& simulation)
    : Manager<Diagnostic>(),
      simulationPtr_(&simulation)
-   {}
+   {  setClassName("DiagnosticManager"); }
 
    /*
    * Destructor.
@@ -37,9 +37,10 @@ namespace DdMd
    */
    void DiagnosticManager::readParam(std::istream &in)
    {
-      readBegin(in, "DiagnosticManager");
+      beginReadManager(in);
       read<long>(in,"baseInterval", Diagnostic::baseInterval);
-      Manager<Diagnostic>::readParam(in);
+      readChildren(in);
+      endReadManager();
    }
 
    /*

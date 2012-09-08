@@ -32,7 +32,7 @@ namespace McMd
       SliplinkMove(McSystem& system);
 
       /// Read cutoff and speciesId.
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// Move slip-springs.
       virtual bool move();

@@ -28,7 +28,7 @@ namespace McMd
    /*
    * Read beta = 1/kT from file
    */
-   void McEnergyPerturbation::readParam(std::istream& in)
+   void McEnergyPerturbation::readParameters(std::istream& in)
    {  
       Perturbation::readParameters(in);
       nParameters_ = Perturbation::getNParameters(); 

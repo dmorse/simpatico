@@ -39,7 +39,7 @@ namespace McMd
       p_(-1),
       capacity_(-1),
       isInitialized_(false)
-   {}
+   {  setClassName("RingRouseAutoCorr"); }
 
    /*
    * Destructor.
@@ -50,7 +50,7 @@ namespace McMd
    /*
    * Read parameters from file, and allocate data array.
    */
-   void RingRouseAutoCorr::readParam(std::istream& in) 
+   void RingRouseAutoCorr::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

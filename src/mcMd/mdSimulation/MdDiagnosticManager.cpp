@@ -22,6 +22,7 @@ namespace McMd
     : simulationPtr_(&simulation),
       systemPtr_(&simulation.system())
    {}
+   //{setClassName("MdDiagnosticManager"); }
 
    // Constructor.
    MdDiagnosticManager::MdDiagnosticManager(MdSimulation& simulation, 

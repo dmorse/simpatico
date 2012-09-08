@@ -39,12 +39,12 @@ namespace McMd
       nAtom_(-1),
       capacity_(-1),
       isInitialized_(false)
-   {}
+   { setClassName("ComMSD"); }
 
    /*
    * Read parameters from file, and allocate data array.
    */
-   void ComMSD::readParam(std::istream& in) 
+   void ComMSD::readParameters(std::istream& in) 
    {
       // Read interval and parameters for AutoCorrArray
       readInterval(in);

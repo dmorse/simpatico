@@ -22,10 +22,10 @@ namespace McMd
    /// Constructor.
    NLinkAverage::NLinkAverage(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("NLinkAverage"); }
 
    /// Read parameters from file, and allocate data array.
-   void NLinkAverage::readParam(std::istream& in) 
+   void NLinkAverage::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

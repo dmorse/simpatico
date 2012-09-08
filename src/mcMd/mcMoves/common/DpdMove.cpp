@@ -30,6 +30,7 @@ namespace McMd
       mdSystemPtr_(0),
       nStep_(0)
    {
+      setClassName("DpdMove");
       mdSystemPtr_ = new MdSystem(system);
    }
 
@@ -46,7 +47,7 @@ namespace McMd
    /*
    * Read parameter maxDisp
    */
-   void DpdMove::readParam(std::istream& in)
+   void DpdMove::readParameters(std::istream& in)
    {
       readProbability(in);
       read<int>(in, "nStep", nStep_);

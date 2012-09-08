@@ -56,7 +56,7 @@ namespace DdMd
       *
       * \param in input stream from which to read parameters.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Set parameters, allocate memory and initialize.
@@ -358,7 +358,7 @@ namespace DdMd
    * Read parameters and allocate memory.
    */
    template <int N>
-   void GroupStorage<N>::readParam(std::istream& in)
+   void GroupStorage<N>::readParameters(std::istream& in)
    {
       read<int>(in, "capacity", capacity_);
       read<int>(in, "totalCapacity", totalCapacity_);

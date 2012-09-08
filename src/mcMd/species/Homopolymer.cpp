@@ -28,7 +28,7 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       , dihedralType_(NullIndex)
       #endif
-   {} 
+   { setClassName("Homopolymer"); } 
    
    /* 
    * Read nAtom and type.

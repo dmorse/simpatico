@@ -28,17 +28,10 @@ namespace McMd
 
    public:
 
-      /// Constructor.
-      SpeciesManager()
-       : Manager<Species>()
-      {}
-
       /**
-      * Read parameter file. 
-      *
-      * \param in input parameter file stream.
+      * Constructor.
       */
-      virtual void readParam(std::istream &in);
+      SpeciesManager();
 
    protected:
 

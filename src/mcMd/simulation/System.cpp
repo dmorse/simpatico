@@ -311,7 +311,7 @@ namespace McMd
    /*
    * Read parameters from file.
    */
-   void System::readParam(std::istream &in)
+   void System::readParameters(std::istream &in)
    {
 
       // Only read parameters if this is not a copy.

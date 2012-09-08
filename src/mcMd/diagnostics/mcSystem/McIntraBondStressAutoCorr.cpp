@@ -22,7 +22,7 @@ namespace McMd
    */
    McIntraBondStressAutoCorr::McIntraBondStressAutoCorr(McSystem &system)
     : IntraBondStressAutoCorr<McSystem>(system)
-   {}
+   {  setClassName("McIntraBondStressAutoCorr"); }
 
    /*
    * Destructor.

@@ -23,7 +23,6 @@
 #include <hoomd/ForceCompute.h>
 #include <hoomd/System.h>
 #include <hoomd/SystemDefinition.h>
-#include <hoomd/PotentialExternalGPU.cuh>
 #include <hoomd/PotentialExternalGPU.h>
 #include <hoomd/HOOMDMath.h>
 
@@ -66,7 +65,7 @@ namespace McMd
       /**
       * read parameters from file
       */
-      virtual void readParam(std::istream &in) = 0;
+      virtual void readParameters(std::istream &in) = 0;
 
       /**
       * Set pointer to Boundary.

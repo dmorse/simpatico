@@ -25,10 +25,10 @@ namespace McMd
    /// Constructor.
    EndtoEndXYZ::EndtoEndXYZ(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("EndtoEndXYZ"); }
 
    /// Read parameters from file, and allocate data array.
-   void EndtoEndXYZ::readParam(std::istream& in) 
+   void EndtoEndXYZ::readParameters(std::istream& in) 
    {
 
       readInterval(in);

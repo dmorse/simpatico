@@ -196,7 +196,10 @@ namespace Util
       bufferCapacity_(0),
       nEnsemble_(0),
       nSample_(0)
-   { setToZero(sum_); }
+   {
+      setClassName("AutoCorrArray"); 
+      setToZero(sum_); 
+   }
 
    /*
    * Default destructor.

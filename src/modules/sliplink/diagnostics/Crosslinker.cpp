@@ -28,9 +28,9 @@ namespace McMd
       nSample_(0),
       cutoff_(0),
       probability_(0)
-   {}
+   {  setClassName("CrossLinker"); }
 
-   void Crosslinker::readParam(std::istream& in)
+   void Crosslinker::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

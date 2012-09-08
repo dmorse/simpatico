@@ -31,7 +31,7 @@ namespace McMd
       MdEnergyOutput(MdSystem& system);
 
       /// Read output file and nStepPerSample.
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
  
       /// Evaluate energy and print.
       virtual void sample(long iStep);

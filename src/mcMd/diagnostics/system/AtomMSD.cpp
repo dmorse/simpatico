@@ -39,12 +39,12 @@ namespace McMd
       nMolecule_(-1),
       capacity_(-1),
       isInitialized_(false)
-   {}
+   {  setClassName("AtomMSD"); }
 
    /*
    * Read parameters from file, and allocate data array.
    */
-   void AtomMSD::readParam(std::istream& in) 
+   void AtomMSD::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

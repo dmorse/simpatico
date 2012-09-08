@@ -41,9 +41,9 @@ namespace McMd
       mu_(0.0),
       nTrial_(0),
       speciesId_(0)
-   {}
+   {  setClassName("GcSliplinkMove"); }
 
-   void GcSliplinkMove::readParam(std::istream& in)
+   void GcSliplinkMove::readParameters(std::istream& in)
    {
       readProbability(in);
       read<int>(in, "nTrial", nTrial_);

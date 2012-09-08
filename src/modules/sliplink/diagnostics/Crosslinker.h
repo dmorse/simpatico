@@ -31,7 +31,7 @@ namespace McMd
       Crosslinker(System& system);
 
       /// Read output file and nStepPerSample.
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       void setup();
  

@@ -53,7 +53,7 @@ namespace McMd
       /**
       * Read nStep, dt, skin, maxNPair from file.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Initialize before a run.

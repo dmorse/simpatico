@@ -28,10 +28,10 @@ namespace McMd
    BondLengthDist::BondLengthDist(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("BondLengthDist"); }
 
    /// Read parameters from file, and allocate data array.
-   void BondLengthDist::readParam(std::istream& in) 
+   void BondLengthDist::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

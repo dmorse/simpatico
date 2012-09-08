@@ -26,12 +26,12 @@ namespace McMd
    PerturbDerivative::PerturbDerivative(System& system)
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   { setClassName("PerturbDerivative"); }
 
    /*
    * Read parameters and initialize.
    */
-   void PerturbDerivative::readParam(std::istream& in)
+   void PerturbDerivative::readParameters(std::istream& in)
    {
 
       readInterval(in);

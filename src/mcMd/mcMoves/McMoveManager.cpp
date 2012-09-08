@@ -26,7 +26,7 @@ namespace McMd
      simulationPtr_(&simulation),
      systemPtr_(&simulation.system()),
      randomPtr_(&simulation.random())
-   {}
+   {  setClassName("McMoveManager"); }
 
    // Destructor
    McMoveManager::~McMoveManager()
@@ -43,7 +43,9 @@ namespace McMd
    */
    void McMoveManager::readParam(std::istream &in)
    {
-      readBegin(in, "McMoveManager");
+
+      #if 0
+      beginReadManager(in);
 
       initFactory();
  
@@ -69,11 +71,15 @@ namespace McMd
 
       }
 
+
       // Add closing bracket to param output format
       End* endPtr = &addEnd();
       if (ParamComponent::echo() && isParamIoProcessor()) { 
          endPtr->writeParam(Log::file());
       }
+      #endif
+
+      Manager<McMove>::readParam(in);
 
       probabilities_.allocate(size());
 

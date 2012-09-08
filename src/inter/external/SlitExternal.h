@@ -89,7 +89,7 @@ namespace Inter
       *
       * \param in  input stream 
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
 
       //@}
 

@@ -190,7 +190,10 @@ namespace Util
       nCorr_(),
       bufferCapacity_(0),
       nSample_(0)
-   { setToZero(sum_); }
+   {
+      setClassName("AutoCorr");
+      setToZero(sum_);
+   }
    
    /*
    * Read buffer capacity and allocate all required memory.

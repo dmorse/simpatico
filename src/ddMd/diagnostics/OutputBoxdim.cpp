@@ -33,7 +33,7 @@ namespace DdMd
    /*
    * Read interval and outputFileName.
    */
-   void OutputBoxdim::readParam(std::istream& in)
+   void OutputBoxdim::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);
