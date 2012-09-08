@@ -37,7 +37,7 @@ namespace McMd
    /**
    * read parameters from file
    */
-   void HoomdLamellarExternal::readParam(std::istream &in)
+   void HoomdLamellarExternal::readParameters(std::istream &in)
    {
       // Read parameters
       read<int>(in, "perpDirection", perpDirection_);

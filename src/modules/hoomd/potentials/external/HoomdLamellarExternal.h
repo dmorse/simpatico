@@ -45,7 +45,7 @@ namespace McMd
       *
       * \param in input stream
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
 
       /**
       * Set external potential parameter
