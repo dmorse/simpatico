@@ -1,7 +1,7 @@
 #ifndef IO_UTIL_TEST_H
 #define IO_UTIL_TEST_H
 
-#include <util/util/ioUtil.h>
+#include <util/misc/ioUtil.h>
 #include <util/global.h>
 
 #ifdef UTIL_MPI

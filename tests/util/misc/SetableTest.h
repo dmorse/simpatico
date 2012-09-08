@@ -1,7 +1,7 @@
 #ifndef SETABLE_TEST_H
 #define SETABLE_TEST_H
 
-#include <util/util/Setable.h>
+#include <util/misc/Setable.h>
 #include <util/global.h>
 
 #ifdef UTIL_MPI

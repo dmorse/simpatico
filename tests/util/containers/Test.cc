@@ -1,5 +1,5 @@
 #include "ContainersTestComposite.h"
-#include <util/util/initStatic.h>
+#include <util/misc/initStatic.h>
 
 int main() 
 {

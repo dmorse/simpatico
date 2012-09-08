@@ -1,8 +1,10 @@
 SRC_DIR_REL =../../src
 include $(SRC_DIR_REL)/compiler.mk
+TESTS_DIR=$(ROOT_DIR)/tests
+
 include $(SRC_DIR)/util/defines.mk
-include $(TESTS_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
+include $(TESTS_DIR)/util/patterns.mk
 
 all:  Test
 
@@ -17,7 +19,7 @@ clean:
 	cd param; make clean
 	cd random; make clean
 	cd space; make clean
-	cd util; make clean
+	cd misc; make clean
 	rm -f */*.o */*/*.o 
 	rm -f */*.d */*/*.d
 

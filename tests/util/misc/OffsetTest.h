@@ -4,7 +4,7 @@
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 
-#include <util/util/Offset.h>
+#include <util/misc/Offset.h>
 #include <util/global.h>
 
 using namespace Util;

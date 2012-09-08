@@ -1,7 +1,7 @@
 #ifndef EXCEPTION_TEST_H
 #define EXCEPTION_TEST_H
 
-#include <util/util/Exception.h>
+#include <util/misc/Exception.h>
 #include <util/global.h>
 
 #ifdef UTIL_MPI
