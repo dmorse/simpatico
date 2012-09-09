@@ -122,7 +122,7 @@ namespace DdMd
       *
       * \param in input stream from which parameter is read.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       #ifdef UTIL_MPI
       /**

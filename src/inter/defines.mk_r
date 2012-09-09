@@ -28,9 +28,6 @@
 # Define INTER_EXTERNAL, enable external potentials
 #INTER_EXTERNAL=1
 
-# Define INTER_TETHER, enable tethers
-#INTER_TETHER=1
-
 #-----------------------------------------------------------------------
 # The following code defines the variables INTER_DEFS and INTER_SUFFIX.
 #
@@ -90,12 +87,6 @@ endif
 ifdef INTER_EXTERNAL
 INTER_DEFS+= -DINTER_EXTERNAL
 INTER_SUFFIX:=$(INTER_SUFFIX)_e
-endif
-
-# Enable one-atom Tether potentials 
-ifdef INTER_TETHER
-INTER_DEFS+= -DINTER_TETHER
-INTER_SUFFIX:=$(INTER_SUFFIX)_t
 endif
 
 #-----------------------------------------------------------------------

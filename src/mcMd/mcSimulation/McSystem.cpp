@@ -83,7 +83,7 @@ namespace McMd
       #ifdef INTER_TETHER
       , tetherPotentialPtr_(0)
       #endif
-   {}
+   { setClassName("McSystem"); }
 
    /*
    * Destructor.
@@ -114,10 +114,8 @@ namespace McMd
    /*
    * Read parameters from file.
    */
-   void McSystem::readParam(std::istream &in)
+   void McSystem::readParameters(std::istream &in)
    {
-      readBegin(in, "McSystem");
-
       allocateMoleculeSets();
       readFileMaster(in);
       readPotentialStyles(in);
@@ -205,8 +203,6 @@ namespace McMd
       readReplicaMove(in);
       #endif
       #endif
-
-      readEnd(in);
    }
 
    /*

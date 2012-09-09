@@ -37,9 +37,8 @@ namespace DdMd
       methodId_(0),
       nPair_(0),
       pairEnergies_()
-
       //reverseUpdateFlag_(false)
-   {} 
+   {  setClassName("PairPotential"); } 
 
    /*
    * Constructor.
@@ -55,7 +54,7 @@ namespace DdMd
       nPair_(0),
       pairEnergies_()
       //reverseUpdateFlag_(false)
-   {}
+   {  setClassName("PairPotential"); } 
 
    /*
    * Associate with related objects. (for unit testing).

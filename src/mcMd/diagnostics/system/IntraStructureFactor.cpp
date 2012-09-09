@@ -31,10 +31,10 @@ namespace McMd
    IntraStructureFactor::IntraStructureFactor(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("IntraStructureFactor"); }
 
    /// Read parameters from file, and allocate data array.
-   void IntraStructureFactor::readParam(std::istream& in) 
+   void IntraStructureFactor::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

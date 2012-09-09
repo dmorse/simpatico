@@ -32,12 +32,12 @@ namespace McMd
     : SystemMove(system),
       delta_(0.0),
       speciesId_(-1)
-   {}
+   { setClassName("AtomDisplaceMove"); }
    
    /* 
    * Read speciesId and delta.
    */
-   void AtomDisplaceMove::readParam(std::istream& in) 
+   void AtomDisplaceMove::readParameters(std::istream& in) 
    {
       readProbability(in);
       read<int>(in, "speciesId", speciesId_);

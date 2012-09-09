@@ -11,7 +11,8 @@
 
 #include "HoomdExternal.h"
 
-#include <hoomd/EvaluatorExternalPeriodic.h>
+#include <hoomd/PotentialExternal.h>
+#include <hoomd/EvaluatorExternalLamellar.h>
 #include <hoomd/AllDriverPotentialExternalGPU.cuh>
 
 namespace McMd
@@ -23,8 +24,8 @@ namespace McMd
    *
    * \ingroup External_Module
    */
-   class HoomdLamellarExternal : public HoomdExternal< EvaluatorExternalPeriodic,
-      gpu_compute_periodic_forces, classNameHoomdLamellar >
+   class HoomdLamellarExternal : public HoomdExternal< EvaluatorExternalLamellar,
+      gpu_compute_lamellar_forces, classNameHoomdLamellar >
    {
    
    public:

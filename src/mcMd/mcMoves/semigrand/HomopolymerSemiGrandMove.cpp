@@ -28,12 +28,12 @@ namespace McMd
    HomopolymerSemiGrandMove::HomopolymerSemiGrandMove(McSystem& system) : 
       SystemMove(system),
       speciesId_(-1)
-   {} 
+   {  setClassName("HomopolymerSemiGrandMove"); } 
    
    /* 
    * Read parameter speciesId.
    */
-   void HomopolymerSemiGrandMove::readParam(std::istream& in) 
+   void HomopolymerSemiGrandMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);

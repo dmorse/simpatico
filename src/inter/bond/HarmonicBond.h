@@ -69,7 +69,7 @@ namespace Inter
       *
       * \param in input stream
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
 
       /**
       * Returns potential energy for one bond.
@@ -132,11 +132,6 @@ namespace Inter
       */
       double get(std::string name, int type) const;
 
-      /**
-      * Return name string "HarmonicBond" for this evaluator class.
-      */
-      std::string className() const;
- 
    private:
    
       /// Maximum possible number of bond types

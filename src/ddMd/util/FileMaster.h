@@ -13,8 +13,6 @@
 #include <fstream>
 #include <string>
 
-namespace McMd{ class FileMaster; }
-
 namespace DdMd
 {
 
@@ -107,11 +105,6 @@ namespace DdMd
       FileMaster();
  
       /**
-      * Constructor.
-      */
-      FileMaster(const McMd::FileMaster& other);
- 
-      /**
       * Copy constructor.
       *
       * \param copy FileMaster object to be copied
@@ -176,7 +169,7 @@ namespace DdMd
       *
       * \param in pararameter file input stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Get a default parameter stream by reference.
@@ -292,7 +285,7 @@ namespace DdMd
       * Return the command file name.
       *
       * The base name of the param file is read from the parameter file
-      * by the readParam() method. 
+      * by the readParameters() method. 
       */
       std::string commandFileName() const;
 

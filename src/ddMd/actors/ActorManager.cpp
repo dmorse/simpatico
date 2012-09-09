@@ -37,8 +37,7 @@ namespace DdMd
    */
    void ActorManager::readParam(std::istream &in)
    {
-      readBegin(in, "ActorManager");
-      Manager<Actor>::readParam(in);
+      Manager<Actor>::readParameters(in);
 
       Actor* ptr;
       for  (int i = 0; i < size(); ++i) {

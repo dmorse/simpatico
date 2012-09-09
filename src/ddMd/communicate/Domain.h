@@ -71,7 +71,7 @@ namespace DdMd
       *
       * \param in parameter input stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       // Accessors
 

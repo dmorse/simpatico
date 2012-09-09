@@ -49,6 +49,7 @@ namespace McMd
       T_target_          = energyEnsemblePtr_->temperature();
       T_kinetic_         = T_target_;
 
+      setClassName("NvtNhIntegrator"); 
    }
 
    /* 
@@ -60,7 +61,7 @@ namespace McMd
    /* 
    * Read parameter and configuration files, initialize system.
    */
-   void NvtNhIntegrator::readParam(std::istream &in) 
+   void NvtNhIntegrator::readParameters(std::istream &in) 
    {
       read<double>(in, "dt",   dt_);
       read<double>(in, "tauT", tauT_);

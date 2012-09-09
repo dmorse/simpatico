@@ -28,6 +28,7 @@ namespace Util
       iBlock_(0),
       nSamplePerBlock_(0)
    {
+      setClassName("Average");
       // Register self as first "descendant" AverageStage.
       descendants_.push_back(this);
    }

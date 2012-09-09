@@ -45,7 +45,7 @@ namespace McMd
 
       /// Read output file, pair selector and maximum number of neighbors
       /// per molecule
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
  
       /// Evaluate energy and print.
       virtual void sample(long iStep);

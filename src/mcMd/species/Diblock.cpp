@@ -28,6 +28,7 @@ namespace McMd
     , dihedralType_(NullIndex)
     #endif
    { 
+      setClassName("Diblock"); 
       for (int i=0; i < 2; ++i) {
          atomTypes_[i] = NullIndex;  
          blockLengths_[i] = 0; 

@@ -39,7 +39,7 @@ namespace McMd
       *
       * \param in input stream (file or std in).
       */ 
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
  
       /**
       * Set inverse temperature of the parent system.

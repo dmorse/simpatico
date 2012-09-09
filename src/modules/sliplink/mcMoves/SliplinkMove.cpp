@@ -34,9 +34,9 @@ namespace McMd
       SystemMove(system),
       cutoff_(0),
       speciesId_(0)
-   {}
+   { setClassName("SliplinkMove"); }
 
-   void SliplinkMove::readParam(std::istream& in)
+   void SliplinkMove::readParameters(std::istream& in)
    {
       readProbability(in);
       read<double>(in, "cutoff", cutoff_);

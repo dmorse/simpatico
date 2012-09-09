@@ -31,7 +31,7 @@ namespace DdMd
    /*
    * Read interval and outputFileName. 
    */
-   void WriteConfig::readParam(std::istream& in) 
+   void WriteConfig::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

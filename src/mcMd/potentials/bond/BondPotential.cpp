@@ -18,7 +18,7 @@ namespace McMd
    */
    BondPotential::BondPotential()
     : ParamComposite()
-   {}
+   {  setClassName("BondPotential"); }
 
    /**
    * Destructor (does nothing)

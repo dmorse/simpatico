@@ -43,7 +43,7 @@
 #endif
 
 // namespace McMd
-#include <mcMd/mcSimulation/McSimulation.h>
+//#include <mcMd/mcSimulation/McSimulation.h>
 
 // namespace Util
 #include <util/ensembles/EnergyEnsemble.h>
@@ -158,6 +158,7 @@ namespace DdMd
       #endif
    {
       Util::initStatic();
+      setClassName("Simulation");
 
       #ifdef UTIL_MPI
       if (!MPI::Is_initialized()) {
@@ -341,12 +342,12 @@ namespace DdMd
    *  Read parameters from default parameter file. 
    */
    void Simulation::readParam()
-   {   readParam(fileMaster().paramFile()); }
+   {   ParamComposite::readParam(fileMaster().paramFile()); }
 
-   /**
+   /*
    * Read parameters, allocate memory and initialize.
    */
-   void Simulation::readParam(std::istream& in)
+   void Simulation::readParameters(std::istream& in)
    {
       // Preconditions
       assert(pairPotentialPtr_ == 0);
@@ -354,10 +355,7 @@ namespace DdMd
       assert(integratorPtr_ == 0);
       assert(configIoPtr_ == 0);
 
-      readBegin(in, "Simulation");
-
       readParamComposite(in, domain_);
-
       readFileMaster(in);
 
       // Read types
@@ -464,11 +462,9 @@ namespace DdMd
 
       positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
       positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
-
-      readEnd(in);
    }
 
-   /**
+   /*
    * If no FileMaster exists, create and initialize one. 
    */
    void Simulation::readFileMaster(std::istream &in)
@@ -476,7 +472,7 @@ namespace DdMd
       readParamComposite(in, *fileMasterPtr_);
    }
 
-   /**
+   /*
    * Read potential style strings and maskedPairPolicy.
    */
    void Simulation::readPotentialStyles(std::istream &in)
@@ -1345,7 +1341,7 @@ namespace DdMd
 
    // Validation ------------------------------------------------------
    
-   /**
+   /*
    * Return true if this Simulation is valid, or throw an Exception.
    */
    bool Simulation::isValid()

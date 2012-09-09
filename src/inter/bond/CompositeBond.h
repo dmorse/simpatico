@@ -61,7 +61,7 @@ namespace Inter
       *
       * \param in  input stream 
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
       
       /**
       * Modify a parameter, identified by a string.
@@ -115,11 +115,6 @@ namespace Inter
       */
       double get(std::string name, int type) const;
 
-      /**
-      * Return name of instantiated class, with no spaces.
-      */ 
-      std::string className() const;
-  
    private:
 
       // Bare bond potential object.
@@ -128,9 +123,6 @@ namespace Inter
       // Bare pair potential object.
       BarePair pair_;
       
-      // Class name string      
-      std::string className_;
-            
       /**
       * Copy constructor.
       */
@@ -145,14 +137,15 @@ namespace Inter
    template <class BareBond, class BarePair>
    CompositeBond<BareBond, BarePair>::CompositeBond() 
     : bond_(),
-      pair_(),
-      className_("CompositeBond")
+      pair_()
    {
-      className_ += "<";
-      className_ += bond_.className();
-      className_ += ",";
-      className_ += pair_.className();
-      className_ += ">";
+      std::string name("CompositeBond");
+      name += "<";
+      name += bond_.className();
+      name += ",";
+      name += pair_.className();
+      name += ">";
+      setClassName(name.c_str());
    }
    
    
@@ -169,29 +162,34 @@ namespace Inter
    * Read potential parameters from file.
    */  
    template <class BareBond, class BarePair>
-   void CompositeBond<BareBond, BarePair>::readParam(std::istream &in)
+   void CompositeBond<BareBond, BarePair>::readParameters(std::istream &in)
    {
+
+      readParamComposite(in, bond_);
+      readParamComposite(in, pair_);
+
+      #if 0
       std::string label;
       Begin* beginPtr = 0;
       End*   endPtr = 0;
-
       // Read bare bond potential
       beginPtr = &addBegin(bond_.className().c_str());
       beginPtr->setIndent(*this);
-      beginPtr->readParam(in);
+      beginPtr->readParameters(in);
       readParamComposite(in, bond_);
       endPtr = &addEnd();
       endPtr->setIndent(*this);
-      endPtr->readParam(in);
+      endPtr->readParameters(in);
 
       // Read bare pair potential
       beginPtr = &addBegin(pair_.className().c_str());
       beginPtr->setIndent(*this);
-      beginPtr->readParam(in);
+      beginPtr->readParameters(in);
       readParamComposite(in, pair_);
       endPtr = &addEnd();
       endPtr->setIndent(*this);
-      endPtr->readParam(in);
+      endPtr->readParameters(in);
+      #endif
 
    }
    
@@ -251,14 +249,6 @@ namespace Inter
       UTIL_THROW("Unrecognized parameter name");
       return 0.0;
    }
-
-   /*
-   * Return name of instantiated class, with no spaces in template.
-   */
-   template <class BareBond, class BarePair>
-   std::string CompositeBond<BareBond, BarePair>::className() const
-   {  return className_; }
-  
 
    /*
    * Throws exception if called.

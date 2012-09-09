@@ -38,7 +38,7 @@ namespace McMd
       p_(-1),
       capacity_(-1),
       isInitialized_(false)
-   {}
+   {  setClassName("LinearRouseAutoCorr"); }
 
    /*
    * Destructor.
@@ -49,7 +49,7 @@ namespace McMd
    /*
    * Read parameters from file.
    */
-   void LinearRouseAutoCorr::readParam(std::istream& in) 
+   void LinearRouseAutoCorr::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

@@ -26,7 +26,7 @@ namespace DdMd
     : simulationPtr_(&simulation),
       boundaryPtr_(&simulation.boundary()),
       storagePtr_(&simulation.atomStorage())
-   {}
+   {  setClassName("ExternalPotential"); }
 
    /*
    * Default constructor (for unit testing).

@@ -30,7 +30,7 @@ namespace DdMd
       *  - capacity      [int]  max number of groups owned by processor.
       *  - totalcapacity [int]  max number of groups on all processors.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
    };
 

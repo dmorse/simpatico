@@ -28,13 +28,13 @@ namespace McMd
    CompositionProfile::CompositionProfile(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("CompositionProfile"); }
 
    CompositionProfile::~CompositionProfile() 
    {}
 
    /// Read parameters from file, and allocate direction vectors.
-   void CompositionProfile::readParam(std::istream& in) 
+   void CompositionProfile::readParameters(std::istream& in) 
    {
 
       // Read interval and output file 

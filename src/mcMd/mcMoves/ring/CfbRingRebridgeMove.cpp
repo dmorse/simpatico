@@ -33,12 +33,12 @@ namespace McMd
       CfbRebridgeBase(system),
       speciesId_(-1),
       nRegrow_(-1)
-   {} 
+   {  setClassName("CfbRingRebridgeMove"); } 
    
    /* 
    * Read parameters speciesId, nRegrow, and nTrial
    */
-   void CfbRingRebridgeMove::readParam(std::istream& in) 
+   void CfbRingRebridgeMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);
@@ -46,7 +46,7 @@ namespace McMd
       read<int>(in, "nRegrow", nRegrow_);
 
       // Read parameters hold by RebridgeBase
-      CfbRebridgeBase::readParam(in);
+      CfbRebridgeBase::readParameters(in);
 
       // Initialize tables for spring constants and normalizations.
       setup();

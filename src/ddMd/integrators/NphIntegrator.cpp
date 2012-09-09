@@ -31,7 +31,7 @@ namespace DdMd
    */
    NphIntegrator::NphIntegrator(Simulation& simulation)
     : TwoStepIntegrator(simulation)
-   {}
+   { setClassName("NphIntegrator"); }
 
    /*
    * Destructor.
@@ -42,7 +42,7 @@ namespace DdMd
    /*
    * Read time step dt.
    */
-   void NphIntegrator::readParam(std::istream& in)
+   void NphIntegrator::readParameters(std::istream& in)
    {
       read<double>(in, "dt", dt_);
       read<double>(in, "W", W_);

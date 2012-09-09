@@ -63,7 +63,7 @@ namespace Inter
       *
       * \param in  input stream 
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
 
       /**
       * Set LJ interaction energy for a specific pair of Atom types.
@@ -126,11 +126,6 @@ namespace Inter
       */
       double maxPairCutoff() const;
 
-      /**
-      * Return name string "LJPair" for this evaluator class.
-      */
-      std::string className() const;
- 
       /**
       * Get LJ interaction energy for a specific pair of Atom types.
       *

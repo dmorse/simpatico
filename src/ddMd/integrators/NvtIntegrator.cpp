@@ -38,6 +38,8 @@ namespace DdMd
       tauT_(1.0),
       nuT_(1.0)
    {
+      setClassName("NvtIntegrator");
+
       // Note: Within the constructor, the method parameter "simulation" hides 
       // the simulation() method name.
 
@@ -56,12 +58,10 @@ namespace DdMd
    /* 
    * Read parameter and configuration files, initialize simulation.
    */
-   void NvtIntegrator::readParam(std::istream &in) 
+   void NvtIntegrator::readParameters(std::istream &in) 
    {
-      //readBegin(in, "NvtIntegrator");
       read<double>(in, "dt",   dt_);
       read<double>(in, "tauT", tauT_);
-      //readEnd(in);
 
       nuT_ = 1.0/tauT_;
       int nAtomType = simulation().nAtomType();

@@ -51,7 +51,7 @@ namespace McMd
    * Read parameters from file.
    */
    template <class SystemType>
-   void IntraBondStressAutoCorr<SystemType>::readParam(std::istream& in) 
+   void IntraBondStressAutoCorr<SystemType>::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

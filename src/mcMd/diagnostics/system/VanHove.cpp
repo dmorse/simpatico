@@ -31,13 +31,13 @@ namespace McMd
    VanHove::VanHove(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("VanHove"); }
 
    VanHove::~VanHove() 
    {}
 
    /// Read parameters from file, and allocate data array.
-   void VanHove::readParam(std::istream& in) 
+   void VanHove::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

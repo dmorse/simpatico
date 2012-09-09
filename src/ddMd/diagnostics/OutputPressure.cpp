@@ -33,7 +33,7 @@ namespace DdMd
    /*
    * Read interval and outputFileName. 
    */
-   void OutputPressure::readParam(std::istream& in) 
+   void OutputPressure::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

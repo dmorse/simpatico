@@ -53,7 +53,7 @@ namespace Inter
    /* 
    * Read bend interaction parameters kappa from file.
    */
-   void CosineDihedral::readParam(std::istream &in) 
+   void CosineDihedral::readParameters(std::istream &in) 
    {
       // Preconditions
       if (nDihedralType_ <= 0) {
@@ -61,9 +61,9 @@ namespace Inter
       }
 
       // Read parameters
-      readBegin(in, "CosineDihedral");
+      //readBegin(in, "CosineDihedral");
       readCArray<double>(in, "kappa",  kappa_,  nDihedralType_);
-      readEnd(in);
+      //readEnd(in);
    }
 
    /*

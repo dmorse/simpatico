@@ -24,13 +24,18 @@ namespace McMd
    {
    
    public:
-   
+  
+      /**
+      * Constructor.
+      */
+      LogProgress();
+
       /**
       * Read interval.
       *
       * \param in input parameter file
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
    
       /**
       * Write iStep to Log file. 

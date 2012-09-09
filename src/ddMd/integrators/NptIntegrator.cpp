@@ -31,7 +31,7 @@ namespace DdMd
    */
    NptIntegrator::NptIntegrator(Simulation& simulation)
     : TwoStepIntegrator(simulation)
-   {}
+   {  setClassName("NptIntegrator"); }
 
    /*
    * Destructor.
@@ -42,7 +42,7 @@ namespace DdMd
    /*
    * Read time step dt.
    */
-   void NptIntegrator::readParam(std::istream& in)
+   void NptIntegrator::readParameters(std::istream& in)
    {
       read<double>(in, "dt", dt_);
       read<double>(in, "tauT", tauT_);

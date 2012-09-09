@@ -21,7 +21,7 @@ namespace DdMd
    BondPotential::BondPotential(Simulation& simulation)
     : boundaryPtr_(&simulation.boundary()),
       storagePtr_(&simulation.bondStorage())
-   {}
+   {  setClassName("BondPotential"); }
 
    /*
    * Default constructor (for unit testing).
@@ -29,7 +29,7 @@ namespace DdMd
    BondPotential::BondPotential()
     : boundaryPtr_(0),
       storagePtr_(0)
-   {} 
+   {  setClassName("BondPotential"); }
 
    /*
    * Associate with related objects. (for unit testing).

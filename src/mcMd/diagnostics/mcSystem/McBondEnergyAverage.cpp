@@ -21,7 +21,7 @@ namespace McMd
    */
    McBondEnergyAverage::McBondEnergyAverage(McSystem& system)
     : AverageDiagnostic<McSystem>(system)
-   {}
+   {  setClassName("McBondEnergyAverage"); }
 
    /*
    * Evaluate total bond energy.
