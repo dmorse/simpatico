@@ -27,7 +27,7 @@ diagnostics    classes for data analysis (derived from Diagnostic)
 configIos      classes for configuration file IO in non-default formats
 trajectoryIos  classes for MD trajectory (multi-configuration) file IO.
 perturb        class for free energy perturbation theory
-util           miscellaneous utilities
+misc           miscellaneous utilities
 
 Makefile targets 
 ----------------

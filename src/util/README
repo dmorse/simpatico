@@ -4,7 +4,7 @@ scientific programming in C++.
 Subdirectories:
 ----------------------
 
-util           Exception, Log, FileMaster and other general utility classes
+misc           Exception, Log, FileMaster and other miscellaneous utilities.
 format         classes for formatted output of primitive types in ostreams
 memory         class for managing dynamically allocated memory.
 containers     container template classes and associated iterators

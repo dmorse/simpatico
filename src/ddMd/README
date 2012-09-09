@@ -22,6 +22,6 @@ neighbor/     - cell list and pair list data structures
 potentials/   - potential energy classes
 simulation/   - main Simulation class
 storage/      - containers that manage Atom and Group objects
-util/         - miscellaneous utility classes
+misc/         - miscellaneous utility classes
 
 
