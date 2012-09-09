@@ -53,9 +53,9 @@ namespace McMd
       * This method reads the maxBoundary and Interaction parameter blocks,
       * and then allocates memory for an internal CellList. It passes
       * simulation().nAtomType() as an argument Interaction::setNAtomType() 
-      * before calling Interaction::readParam().
+      * before calling Interaction::readParameters().
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Energy, Force, Stress Interactions
       //@{
@@ -203,16 +203,15 @@ namespace McMd
    * Read parameters from file.
    */
    template <class Interaction>
-   void McPairPotentialImpl<Interaction>::readParam(std::istream &in) 
+   void McPairPotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
-      readBegin(in, "McPairPotential");
-     
       // Must setNAtomTypes in interaction before calling readParam.
       interaction().setNAtomType(simulation().nAtomType());
 
       // Read potential energy parameters with no indent or brackets.
       bool nextIndent = false;
-      readParamComposite(in, interaction(), nextIndent);
+      addParamComposite(interaction(), nextIndent);
+      interaction().readParameters(in);
 
       // Read maxBoundary (needed to allocate memory for cell list).
       read<Boundary>(in, "maxBoundary", maxBoundary_);
@@ -220,8 +219,6 @@ namespace McMd
       // Allocate memory for the CellList.
       cellList_.allocate(simulation().atomCapacity(), maxBoundary_, 
                          maxPairCutoff());
-
-      readEnd(in);
    }
   
    /*

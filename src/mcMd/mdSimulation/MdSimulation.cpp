@@ -51,6 +51,7 @@ namespace McMd
       isInitialized_(false),
       isRestarting_(false)
    {
+      setClassName("MdSimulation"); 
       system_.setId(0);
       system_.setSimulation(*this);
       system_.setFileMaster(fileMaster());
@@ -70,6 +71,7 @@ namespace McMd
       isInitialized_(false),
       isRestarting_(false)
    {
+      setClassName("MdSimulation"); 
       system_.setId(0);
       system_.setSimulation(*this);
       system_.setFileMaster(fileMaster());
@@ -155,7 +157,7 @@ namespace McMd
    /* 
    * Read parameters from file.
    */
-   void MdSimulation::readParam(std::istream &in)
+   void MdSimulation::readParameters(std::istream &in)
    { 
       if (isRestarting_) {
          if (isInitialized_) {
@@ -166,23 +168,20 @@ namespace McMd
          UTIL_THROW("Error: Called readParam when already initialized");
       }
 
-      readBegin(in, "MdSimulation");
-
-      Simulation::readParam(in); 
+      Simulation::readParameters(in); 
 
       readParamComposite(in, system_); 
       readParamComposite(in, diagnosticManager());
 
       isValid();
       isInitialized_ = true;
-      readEnd(in);
    }
  
    /*
    * Read default parameter file.
    */
    void MdSimulation::readParam()
-   {  readParam(fileMaster().paramFile()); }
+   {  ParamComposite::readParam(fileMaster().paramFile()); }
 
 
    /*
@@ -697,7 +696,7 @@ namespace McMd
       // Open and read parameter (*.prm) file
       std::ifstream in;
       fileMaster().openParamIFile(filename, ".prm", in);
-      readParam(in);
+      readParameters(in);
       in.close();
 
       // Open restart *.rst file and associate with an archive

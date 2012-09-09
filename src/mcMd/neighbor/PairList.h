@@ -30,7 +30,7 @@ namespace McMd
    * A PairList (or Verlet list) is a list of neighboring pairs of Atoms that 
    * are separated by a distance less than a specified cutoff. The cutoff for
    * the Verlet list is the sum of a potential cutoff, which is passed as a 
-   * parameter to allocate(), and a "skin", which is read by readParam().
+   * parameter to allocate(), and a "skin", which is read by readParameters().
    *
    * After a PairList is constructed, the allocate() method must be called to
    * allocate memory for both the data structures required to store the PairList
@@ -82,7 +82,7 @@ namespace McMd
       *
       * \param in input stream
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
    
       /// \name Mutators
       //@{
@@ -93,7 +93,7 @@ namespace McMd
       * Allocate all memory required by the PairList and the CellList,
       * and initialize the grid of Cell objects. 
       *
-      * Precondition: readParam() must be invoked before allocate(),
+      * Precondition: readParameters() must be invoked before allocate(),
       * so that values of atomCapacity, pairCapacity, skin are known.
       * The allocate() method can only be called once.
       *

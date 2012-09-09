@@ -36,7 +36,7 @@ namespace McMd
       /**
       * Read parameters and initialize.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Clear accumulators.
@@ -76,7 +76,7 @@ namespace McMd
    * Read parameters and initialize.
    */
    template <class SystemType>
-   void AverageDiagnostic<SystemType>::readParam(std::istream& in)
+   void AverageDiagnostic<SystemType>::readParameters(std::istream& in)
    {
 
       Diagnostic::readInterval(in);

@@ -31,9 +31,9 @@ namespace McMd
       moleculeCapacity_(-1),
       speciesPtr_(0),
       mutatorPtr_(0)
-   {}
+   { setClassName("SemiGrandDistribution"); }
 
-   void SemiGrandDistribution::readParam(std::istream& in)
+   void SemiGrandDistribution::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

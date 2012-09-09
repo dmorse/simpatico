@@ -34,12 +34,12 @@ namespace McMd
       speciesId_(-1),
       upperBridge_(0),
       lowerBridge_(0)
-   {} 
+   {  setClassName("RingOctaRebridgeMove"); } 
    
    /* 
    * Read parameters speciesId, and nTrial
    */
-   void RingOctaRebridgeMove::readParam(std::istream& in) 
+   void RingOctaRebridgeMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);

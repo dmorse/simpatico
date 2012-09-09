@@ -29,7 +29,7 @@ namespace McMd
    */
    NveVvIntegrator::NveVvIntegrator(MdSystem& system)
    : MdIntegrator(system)
-   {}
+   {  setClassName("NveVvIntegrator"); }
 
    /* 
    * Destructor.   
@@ -40,7 +40,7 @@ namespace McMd
    /* 
    * Read parameter and configuration files, initialize system.
    */
-   void NveVvIntegrator::readParam(std::istream &in) 
+   void NveVvIntegrator::readParameters(std::istream &in) 
    {
       read<double>(in, "dt", dt_);
 

@@ -41,7 +41,7 @@ namespace McMd
       * Constructor .
       */
       ExternalPotential()
-      {}
+      {  setClassName("ExternalPotential"); }
 
       /**
       * Destructor (does nothing)

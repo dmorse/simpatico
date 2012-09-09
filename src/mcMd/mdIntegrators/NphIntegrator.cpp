@@ -32,9 +32,10 @@ namespace McMd
    NphIntegrator::NphIntegrator(MdSystem& system)
    : MdIntegrator(system), W_(0.0)
    {
-      // start with zero barostat momentum
-      eta_.zero();
+      setClassName("NphIntegrator"); 
 
+      // Start with zero barostat momentum
+      eta_.zero();
    }
 
    /* 
@@ -46,7 +47,7 @@ namespace McMd
    /* 
    * Read parameter and configuration files, initialize system.
    */
-   void NphIntegrator::readParam(std::istream &in) 
+   void NphIntegrator::readParameters(std::istream &in) 
    {
       read<double>(in, "dt", dt_);
       read<double>(in, "W", W_);

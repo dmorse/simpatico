@@ -98,6 +98,7 @@ public:
       IntVector value8;
       DMatrix<double>  value9;
       value9.allocate(2, 2);
+      E e;
       AManager  manager;
 
       openFile("in/ParamComposite");
@@ -115,6 +116,7 @@ public:
       paramComposite_.read<Vector>(file(), "value7", value7);
       paramComposite_.read<IntVector>(file(), "value8", value8);
       paramComposite_.readDMatrix<double>(file(), "value9", value9, 2, 2);
+      paramComposite_.readParamComposite(file(), e);
       paramComposite_.readParamComposite(file(), manager);
       paramComposite_.readEnd(file());
 

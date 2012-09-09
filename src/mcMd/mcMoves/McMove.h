@@ -53,7 +53,7 @@ namespace McMd
       *
       * Empty default implementation.
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /**
       * Set the probability for this McMove.

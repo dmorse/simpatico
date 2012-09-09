@@ -76,7 +76,7 @@ namespace DdMd
       /**
       * Read cache size and allocate memory.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Set cache sizes and allocate memory.

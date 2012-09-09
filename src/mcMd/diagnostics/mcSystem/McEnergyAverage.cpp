@@ -29,12 +29,12 @@ namespace McMd
       accumulator_(),
       nSamplePerBlock_(1),
       isInitialized_(false)
-   {}
+   {  setClassName("McEnergyAverage"); }
 
    /*
    * Read parameters and initialize.
    */
-   void McEnergyAverage::readParam(std::istream& in)
+   void McEnergyAverage::readParameters(std::istream& in)
    {
 
       readInterval(in);

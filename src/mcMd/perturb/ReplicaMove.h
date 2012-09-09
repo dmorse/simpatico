@@ -90,7 +90,7 @@ namespace McMd
       *
       * \param in input stream from which to read parameters.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Attempt, and accept or reject a replica exchange move.

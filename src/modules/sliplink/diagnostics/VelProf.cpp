@@ -31,10 +31,10 @@ namespace McMd
       velx_(),
       nSpec_(0),
       slabWidth_(0.0)
-   {}
+   {  setClassName("VelProf"); }
 
    /// Read parameters from file, and allocate data arrays.
-   void VelProf::readParam(std::istream& in) 
+   void VelProf::readParameters(std::istream& in) 
    {
 
       readInterval(in);

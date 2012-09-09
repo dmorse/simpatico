@@ -22,6 +22,7 @@ namespace Inter
    HarmonicBond::HarmonicBond()
     : nBondType_(0)
    {
+      setClassName("HarmonicBond"); 
       for (int i = 0; i < MaxNBondType; ++i) {
          kappa_[i]  =  0.0;
          length_[i] =  0.0;
@@ -67,7 +68,7 @@ namespace Inter
    /* 
    * Read bond interaction parameters kappa and length from file
    */
-   void HarmonicBond::readParam(std::istream &in) 
+   void HarmonicBond::readParameters(std::istream &in) 
    {
 
       // Preconditions
@@ -156,12 +157,6 @@ namespace Inter
       }
       return value;
    }
-
-   /*
-   * Return name string "HarmonicBond" for this evaluator class.
-   */
-   std::string HarmonicBond::className() const
-   {  return std::string("HarmonicBond"); }
 
 } 
 #endif

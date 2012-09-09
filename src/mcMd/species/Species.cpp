@@ -52,7 +52,7 @@ namespace McMd
    /*
    * Read parameters for species.
    */
-   void Species::readParam(std::istream &in)
+   void Species::readParameters(std::istream &in)
    {
 
       read<int>(in, "moleculeCapacity", moleculeCapacity_);

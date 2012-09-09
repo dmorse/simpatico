@@ -54,6 +54,8 @@ namespace McMd
          UTIL_THROW("System energy ensemble is not isothermal");
       }
       temperature_  = energyEnsemblePtr_->temperature();
+
+      setClassName("NvtDpdVvIntegrator"); 
    }
 
    /* 
@@ -65,7 +67,7 @@ namespace McMd
    /* 
    * Read parameter and configuration files, initialize system.
    */
-   void NvtDpdVvIntegrator::readParam(std::istream &in) 
+   void NvtDpdVvIntegrator::readParameters(std::istream &in) 
    {
       read<double>(in, "dt", dt_);
       read<double>(in, "cutoff", cutoff_);

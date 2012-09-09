@@ -54,7 +54,7 @@ namespace DdMd
       *
       * \param in input parameter file
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
    
       /**
       * Clear nSample counter.

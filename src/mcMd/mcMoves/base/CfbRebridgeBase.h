@@ -47,7 +47,7 @@ namespace McMd
       * Read species type, nTrial, and parameters needed to evaluate the
       * orientation bias.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Initialize the arrays for preferential angle, effective spring constant

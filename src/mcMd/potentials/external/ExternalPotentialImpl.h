@@ -55,10 +55,10 @@ namespace McMd
       * Read param for external potential.
       * 
       * This method reads the external potential Interaction parameter
-      * block. Before calling Interaction::readParam(), it passes
+      * block. Before calling Interaction::readParameters(), it passes
       * simulation().nExternalType() to Interaction::setNAtomType().
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Energy, Force, Stress Interactions
       //@{
@@ -175,32 +175,17 @@ namespace McMd
    * Read parameters from file.
    */
    template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::readParam(std::istream &in) 
+   void ExternalPotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
       // Read only if not a copy.  Do not indent interaction block.
       if (!isCopy_) {
-         readBegin(in, "ExternalPotential");
          interaction().setNAtomType(simulation().nAtomType());
          interaction().setBoundary(system().boundary());
          bool nextIndent = false;
-         readParamComposite(in, interaction(), nextIndent);
-         readEnd(in);
+         addParamComposite(interaction(), nextIndent);
+         interaction().readParameters(in);
       }
    }
-  
-   /* 
-   * Set external parameter.
-   */
-   //template <class Interaction>
-   //void ExternalPotentialImpl<Interaction>::setExternalParameter(double externalParameter) 
-   //{ interaction().setExternalParameter(externalParameter); }
- 
-   /* 
-   * Returns external parameter.
-   */
-   //template <class Interaction>
-   //double ExternalPotentialImpl<Interaction>::externalParameter() const 
-   //{ return interaction().externalParameter(); }
   
    /*
    * Return external energy of an atom.

@@ -70,7 +70,7 @@ namespace Inter
    /* 
    * Read bend interaction parameters kappa from file.
    */
-   void CosineSqAngle::readParam(std::istream &in) 
+   void CosineSqAngle::readParameters(std::istream &in) 
    {
       // Preconditions
       if (nAngleType_ <= 0) {

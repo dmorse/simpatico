@@ -41,7 +41,7 @@ namespace McMd
       /**
       * Read species to which displacement is applied.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
    
       /**
       * CFB algorithm for deleting an end atom from a flexible chain.

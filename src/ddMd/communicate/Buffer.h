@@ -45,7 +45,7 @@ namespace DdMd
       * Read parameters atomCapacity and ghostCapacity (see allocate)
       * and allocate buffers.
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
 
       /**
       * Allocate send and recv buffers.

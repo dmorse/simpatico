@@ -21,7 +21,7 @@ namespace McMd
     : ParamComposite(),
       nParameters_(0),
       mode_(0)
-   {}
+   {  setClassName("Perturbation"); }
 
    /*
    * Destructor.
@@ -57,7 +57,8 @@ namespace McMd
               parameters_(0,i) = initialParameter_[i];
               parameters_(size-1,i) = finalParameter_[i];
               for (j= 1; j < size-1; ++j) {
-                 parameters_(j, i) = parameters_(0, i) + j*((parameters_(size-1, i) - parameters_(0, i))/(size-1));
+                 parameters_(j, i) = parameters_(0, i) 
+                                   + j*((parameters_(size-1, i) - parameters_(0, i))/(size-1));
               }
            }
            for (i  = 0; i < nParameters_; ++i) {

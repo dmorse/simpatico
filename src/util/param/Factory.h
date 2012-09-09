@@ -256,7 +256,8 @@ namespace Util
 
          // Read parameters for the new child object, if any
          if (hasData) {
-            parent.readParamComposite(in, *typePtr);
+            parent.addParamComposite(*typePtr);
+            typePtr->readParameters(in);
          }
 
          // Read closing bracket, set indentation as for child.

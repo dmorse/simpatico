@@ -37,9 +37,9 @@ namespace McMd
    /*
    * Read a pair of monomer types and exchange chemical potential.
    */
-   void HomopolymerSG::readParam(std::istream& in)
+   void HomopolymerSG::readParameters(std::istream& in)
    {
-      Species::readParam(in);
+      Species::readParameters(in);
    }
 
    /* 

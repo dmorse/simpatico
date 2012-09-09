@@ -30,7 +30,7 @@ namespace McMd
    McPairPotential::McPairPotential(System& system)
     : ParamComposite(),
       SubSystem(system)
-   {}
+   {  setClassName("McPairPotential"); }
  
    /* 
    * Destructor. 

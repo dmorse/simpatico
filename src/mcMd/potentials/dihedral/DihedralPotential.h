@@ -34,7 +34,11 @@ namespace McMd
 
    public:
 
-      // Default C++ constructor
+      /**
+      * Constructor.
+      */
+      DihedralPotential()
+      {  setClassName("DihedralPotential"); }
 
       /**
       * Destructor (does nothing)

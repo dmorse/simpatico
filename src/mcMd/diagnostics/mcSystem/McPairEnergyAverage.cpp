@@ -35,6 +35,7 @@ namespace McMd
       nSamplePerBlock_(1),
       isInitialized_(false)
    {
+      setClassName("McPairEnergyAverage"); 
       selector_.setAvoidDoubleCounting(true); 
    }
 
@@ -42,7 +43,7 @@ namespace McMd
    /*
    * Read parameters and initialize.
    */
-   void McPairEnergyAverage::readParam(std::istream& in)
+   void McPairEnergyAverage::readParameters(std::istream& in)
    {
 
       readInterval(in);

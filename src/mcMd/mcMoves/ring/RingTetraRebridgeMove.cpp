@@ -35,12 +35,12 @@ namespace McMd
       nAtom_(0),
       upperBridge_(0),
       lowerBridge_(0)
-   {} 
+   {  setClassName("RingTetraRebridgeMove"); } 
    
    /* 
    * Read parameters speciesId, and bridgeLength_
    */
-   void RingTetraRebridgeMove::readParam(std::istream& in) 
+   void RingTetraRebridgeMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);

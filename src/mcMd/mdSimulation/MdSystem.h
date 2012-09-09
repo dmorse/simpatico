@@ -83,12 +83,12 @@ namespace McMd
       /**
       * Read parameters from input file.
       *
-      * This method calls System::readParam(in), reads potentials, and 
+      * This method calls System::readParameters(in), reads potentials, and 
       * allocates the pairList.
       *
       * \param in file stream.
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /**
       * Read system configuration from file.

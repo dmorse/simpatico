@@ -37,7 +37,7 @@ namespace McMd
       /**
       * Read parameters and initialize.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /** 
       * Clear accumulator.

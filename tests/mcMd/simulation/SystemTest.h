@@ -58,7 +58,7 @@ void SystemTest::setUp()
    #endif
    #endif
 
-   simulation_.readParam(file());
+   simulation_.readParameters(file());
    system_.setId(0);
    nAtomType_ = 2;
    system_.setSimulation(simulation_);

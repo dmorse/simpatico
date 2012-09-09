@@ -56,10 +56,10 @@ namespace McMd
       * Read potential energy.
       * 
       * This method reads the tether potential Evaluator parameter
-      * block. Before calling Evaluator::readParam(), it passes
+      * block. Before calling Evaluator::readParameters(), it passes
       * simulation().nTetherType() to Evaluator::setNAtomType().
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Energy, Force, Stress Evaluators
       //@{
@@ -172,15 +172,14 @@ namespace McMd
    * Read parameters from file.
    */
    template <class Evaluator>
-   void MdTetherPotentialImpl<Evaluator>::readParam(std::istream &in) 
+   void MdTetherPotentialImpl<Evaluator>::readParameters(std::istream &in) 
    {
       // Read only if not a copy.  Do not indent evaluator block.
       if (!isCopy_) {
-         readBegin(in, "MdTetherPotential");
          evaluator().setNAtomType(simulation().nAtomType());
          bool nextIndent = false;
-         readParamComposite(in, evaluator(), nextIndent);
-         readEnd(in);
+         addParamComposite(evaluator(), nextIndent);
+         evaluator().readParameters(in);
       }
    }
   

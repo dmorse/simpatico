@@ -27,10 +27,10 @@ namespace McMd
    /// Constructor.
    LinkLTPos::LinkLTPos(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("LinkLTPos"); }
 
    /// Read parameters from file.
-   void LinkLTPos::readParam(std::istream& in) 
+   void LinkLTPos::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

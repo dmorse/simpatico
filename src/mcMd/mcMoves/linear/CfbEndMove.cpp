@@ -33,12 +33,12 @@ namespace McMd
       CfbEndBase(system),
       speciesId_(-1),
       nRegrow_(-1)
-   {} 
+   {  setClassName("CfbEndMove"); } 
    
    /* 
    * Read parameters speciesId, nRegrow, and nTrial
    */
-   void CfbEndMove::readParam(std::istream& in) 
+   void CfbEndMove::readParameters(std::istream& in) 
    {
       // Read parameters
       readProbability(in);
