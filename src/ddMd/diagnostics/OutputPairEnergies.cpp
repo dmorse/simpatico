@@ -61,12 +61,6 @@ namespace DdMd
          sys.computePairEnergies();
          if (sys.domain().isMaster()) {
             DMatrix<double> pair = sys.pairEnergies();
-            for (int i = 0; i < simulation().nAtomType(); ++i){
-               for (int j = 0; j < simulation().nAtomType(); ++j){
-                  pair(i,j) = 0.5*( pair(i,j)+pair(j,i) );
-                  pair(j,i) = pair(i,j);
-               }
-            }
             outputFile_ << Int(iStep, 10);
             for (int i = 0; i < simulation().nAtomType(); ++i){
                for (int j = 0; j < simulation().nAtomType(); ++j){

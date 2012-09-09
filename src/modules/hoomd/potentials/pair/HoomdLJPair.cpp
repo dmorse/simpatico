@@ -43,7 +43,7 @@ namespace McMd
    /**
    * read parameters from file
    */
-   void HoomdLJPair::readParameters(std::istream &in)
+   void HoomdLJPair::readParam(std::istream &in)
    {
       // Read parameters
       readCArray2D<double> (

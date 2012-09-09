@@ -43,7 +43,7 @@ namespace McMd
    /**
    * read parameters from file
    */
-   void HoomdLJShiftedForcePair::readParameters(std::istream &in)
+   void HoomdLJShiftedForcePair::readParam(std::istream &in)
    {
       // Read parameters
       readCArray2D<double> (

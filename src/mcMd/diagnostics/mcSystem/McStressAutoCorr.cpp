@@ -49,8 +49,6 @@ namespace McMd
       // Allocate memory for the AutoCorrArray accumulator object
       accumulator_.setParam(capacity_);
 
-      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
-
       isInitialized_ = true;
    }
 
@@ -78,7 +76,6 @@ namespace McMd
          stress.symmetrize();
          double volume = system().boundary().volume();
          stress *= sqrt(volume);
-         outputFile_ << stress << std::endl;
          accumulator_.sample(stress);
       } 
    }
@@ -88,8 +85,6 @@ namespace McMd
    */
    void McStressAutoCorr::output() 
    {  
-      outputFile_.close();
-
       // Echo parameters to log file
       fileMaster().openOutputFile(outputFileName(), outputFile_);
       writeParam(outputFile_); 
@@ -106,7 +101,7 @@ namespace McMd
       outputFile_.close();
 
       // Write autocorrelation function to data file
-      fileMaster().openOutputFile(outputFileName("_corr.dat"), outputFile_);
+      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       accumulator_.output(outputFile_); 
       outputFile_.close();
    }

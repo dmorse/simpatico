@@ -20,7 +20,7 @@ namespace McMd
    * Default constructor.
    */
    HoomdLamellarExternal::HoomdLamellarExternal()   
-    : HoomdExternal< EvaluatorExternalLamellar, gpu_compute_lamellar_forces, classNameHoomdLamellar >()
+    : HoomdExternal< EvaluatorExternalPeriodic, gpu_compute_periodic_forces, classNameHoomdLamellar >()
    {
    }
 
@@ -28,7 +28,7 @@ namespace McMd
    * Copy constructor
    */
    HoomdLamellarExternal::HoomdLamellarExternal(const HoomdLamellarExternal& other)
-    : HoomdExternal< EvaluatorExternalLamellar, gpu_compute_lamellar_forces, 
+    : HoomdExternal< EvaluatorExternalPeriodic, gpu_compute_periodic_forces, 
           classNameHoomdLamellar >(other)
    {
       externalParameter_ = other.externalParameter_;
@@ -37,7 +37,7 @@ namespace McMd
    /**
    * read parameters from file
    */
-   void HoomdLamellarExternal::readParameters(std::istream &in)
+   void HoomdLamellarExternal::readParam(std::istream &in)
    {
       // Read parameters
       read<int>(in, "perpDirection", perpDirection_);

@@ -65,7 +65,7 @@ namespace McMd
       /**
       * read parameters from file
       */
-      void readParameters(std::istream &in);
+      void readParam(std::istream &in);
   
       /* Calculate force divided by distance 
       *
@@ -296,10 +296,10 @@ namespace McMd
       cudaError_t gpu_cgpf(const pair_args_t& pair_args,
       const typename hoomd_evaluator::param_type *d_params),
       const char *name>
-   void HoomdPair< hoomd_evaluator, gpu_cgpf, name >::readParameters(
+   void HoomdPair< hoomd_evaluator, gpu_cgpf, name >::readParam(
       std::istream &in)
    {
-      UTIL_THROW("readParameters() not implemented.");
+      UTIL_THROW("readParam() not implemented.");
    }
 
    /**

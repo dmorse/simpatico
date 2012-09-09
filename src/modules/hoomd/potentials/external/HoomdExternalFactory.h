@@ -12,8 +12,7 @@
 #include <iostream>
 
 #include <mcMd/potentials/external/ExternalFactory.h>
-
-#include <hoomd/PotentialExternalGPU.h>
+#include <mcMd/potentials/external/ExternalPotentialImpl.h>
 
 #include <modules/hoomd/potentials/external/HoomdExternal.h>
 
@@ -21,7 +20,6 @@ namespace McMd
 {
 
    class System;
-   class ExternalPotential;
 
    class HoomdExternalPotential;
 

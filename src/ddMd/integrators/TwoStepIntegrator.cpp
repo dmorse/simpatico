@@ -130,9 +130,6 @@ namespace DdMd
       exchanger().timer().stop();
       timer().stop();
 
-      // Final diagnostic output
-      simulation().diagnosticManager().output();
-             
       // Reduce statistics for run
       #ifdef UTIL_MPI
       timer().reduce(domain().communicator());

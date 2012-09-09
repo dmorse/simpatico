@@ -46,7 +46,7 @@ namespace McMd
       *
       * \param in input stream
       */
-      void readParameters(std::istream &in);
+      void readParam(std::istream &in);
 
       /**
       * Set DPD interaction energy for a specific pair of Atom types.
