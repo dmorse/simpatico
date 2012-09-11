@@ -36,7 +36,7 @@ namespace McMd
    /**
    * A potential encapsulating a HOOMD evaluator.
    * Actual implementations have to provide a readParam() method.
-   * See HoomdLamellarExternal for an example.
+   * See HoomdPeriodicExternal for an example.
    *
    * \ingroup External_Module
    */
