@@ -10,6 +10,9 @@
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/bond/BondPotential.h>
+#ifdef INTER_ANGLE
+#include <mcMd/potentials/angle/AnglePotential.h>
+#endif
 
 #include <util/archives/MemoryCounter.h>
 #include <util/archives/MemoryOArchive.h>
@@ -178,7 +181,7 @@ void McSimulationTest::testAngleEnergy()
    for (int is=0; is < simulation_.nSpecies(); ++is) {
       for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-            de = system_.atomAngleEnergy(*atomIter);
+            de = system_.anglePotential().atomEnergy(*atomIter);
             std::cout.width(5);
             std::cout << atomIter->id() << "     " << de << std::endl;
             energy += de;
@@ -186,7 +189,8 @@ void McSimulationTest::testAngleEnergy()
       }
    }
    std::cout << "Total atomAngleEnergy = " << energy/3.0 << std::endl;
-   std::cout << "TotalAngleEnergy      = " << system_.angleEnergy() << std::endl;
+   std::cout << "TotalAngleEnergy      = " 
+             << system_.anglePotential().energy() << std::endl;
 }
 #endif
 
