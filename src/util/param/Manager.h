@@ -89,8 +89,6 @@ namespace Util
       * each.  The loop over blocks terminates when it encounters a closing
       * bracket '}' surrounded by white space.
       *
-      * \endcode
-      *
       * \param in input stream
       */
       virtual void readParam(std::istream &in);
