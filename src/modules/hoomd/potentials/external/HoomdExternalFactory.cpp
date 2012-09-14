@@ -84,7 +84,7 @@ namespace McMd
       boost::shared_ptr<ForceCompute> externalSPtr;
 
       if (className == classNameHoomdPeriodic) {
-         externalSPtr = hoomdFactoryImpl<EvaluatorExternalPeriodic, gpu_compute_lamellar_forces, 
+         externalSPtr = hoomdFactoryImpl<EvaluatorExternalPeriodic, gpu_compute_periodic_forces, 
                                          classNameHoomdPeriodic >(ptr, system, systemDefinitionSPtr );
       } else 
          UTIL_THROW("Unsupported Hoomd potential." );
