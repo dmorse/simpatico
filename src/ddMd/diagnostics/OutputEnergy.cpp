@@ -9,7 +9,7 @@
 */
 
 #include "OutputEnergy.h"
-//#include <ddMd/misc/FileMaster.h>
+//#include <util/misc/FileMaster.h>
 #include <util/misc/ioUtil.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>

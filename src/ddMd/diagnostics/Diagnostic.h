@@ -9,7 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>      // base class
-#include <ddMd/misc/FileMaster.h>           // member variable
+#include <util/misc/FileMaster.h>           // member variable
 
 #include <string>
 #include <iostream>

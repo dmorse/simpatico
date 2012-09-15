@@ -25,7 +25,7 @@
 #include <mcMd/chemistry/AtomType.h>   // member container template parameter
 #endif
 
-#include <mcMd/misc/FileMaster.h>      // member
+#include <util/misc/FileMaster.h>      // member
 #include <util/random/Random.h>        // member
 #include <util/containers/RArray.h>    // member container for Atoms
 #include <util/containers/DArray.h>    // member containers (Molecules, Bonds, ...)

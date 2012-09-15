@@ -14,7 +14,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
-#include <mcMd/misc/FileMaster.h>        
+#include <util/misc/FileMaster.h>        
 
 
 namespace McMd

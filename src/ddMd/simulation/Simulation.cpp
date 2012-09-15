@@ -15,7 +15,7 @@
 #include <ddMd/configIos/ConfigIo.h>
 #include <ddMd/configIos/ConfigIoFactory.h>
 #include <ddMd/configIos/DdMdConfigIo.h>
-#include <ddMd/misc/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <ddMd/diagnostics/DiagnosticManager.h>
 
 #ifndef DDMD_NOPAIR
