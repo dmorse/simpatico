@@ -12,21 +12,11 @@ Main Loop and Command Script
 
 - Add commands to clear state of integrator, all statistics, and diagnostics.
 
+Extensibility, Ease-of-Use
+----------------------------
+
 - Make factories modifiable, by defining *Factory.cpp_r files.
   Modify documentation accordingly.
-
-Flexible Unit Cells:
---------------------
-
-- Generalize makeSnapShot and needsExchange methods in AtomStorage to 
-  allow for deforming boundaries (requires further changes to Boundary).
-
-Housekeeping
-------------
-
-- Try to move FileMaster file to Util directory, use for McMd and DdMd
-
-- Move ddMd/actor to drafts unit ready for use. 
 
 Testing
 -------
@@ -51,15 +41,11 @@ Dynamic Resizing
 
 - Allow for dynamic resizing of Buffer class.
 
-Cell List and Pair List:
-------------------------
+Flexible Unit Cells:
+--------------------
 
-- Make AtomTag struct a public class, add an IntVector of micro-cell 
-  indices to CellTag, to allow fast rejection of most pairs.
-
-- Modify Cell::getNeighbors method to pass back a list of AtomTag objects, 
-  rather than an array of pointers. Provide a CellList method to decide if 
-  a particular pair is within the cutoff.
+- Generalize makeSnapShot and needsExchange methods in AtomStorage to 
+  allow for deforming boundaries (requires further changes to Boundary).
 
 Distributor and Collector
 -------------------------
@@ -98,6 +84,16 @@ Buffer:
 - Move pack/unpack methods to methods of Atom and Group classes.
 
 - Add values INT, DOUBLE, VECTOR to enumeration of types.
+
+Cell List and Pair List:
+------------------------
+
+- Make AtomTag struct a public class, add an IntVector of micro-cell 
+  indices to CellTag, to allow fast rejection of most pairs.
+
+- Modify Cell::getNeighbors method to pass back a list of AtomTag objects, 
+  rather than an array of pointers. Provide a CellList method to decide if 
+  a particular pair is within the cutoff.
 
 Single Processor Operation
 --------------------------
