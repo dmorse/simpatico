@@ -40,7 +40,7 @@ namespace DdMd
       rankMaxSendSize_(0),
       nCachedTotal_(0),
       nSentTotal_(0)
-   {}
+   {  setClassName("AtomDistributor"); }
 
    /*
    * Destructor.

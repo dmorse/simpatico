@@ -19,7 +19,7 @@
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
 #include <util/archives/Serializable_includes.h>
-#include <mcMd/misc/FileMaster.h>
+#include <util/misc/FileMaster.h>
 
 namespace McMd
 {

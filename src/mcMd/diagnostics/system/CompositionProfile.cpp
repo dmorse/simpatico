@@ -15,7 +15,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/space/Dimension.h>
-#include <mcMd/misc/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/misc/ioUtil.h>
 #include <util/format/Dbl.h>
 

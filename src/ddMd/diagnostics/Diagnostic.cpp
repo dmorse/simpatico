@@ -9,7 +9,7 @@
 */
 
 #include "Diagnostic.h"
-#include <ddMd/misc/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/global.h>
 
 namespace DdMd

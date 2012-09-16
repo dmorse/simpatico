@@ -11,7 +11,7 @@
 #include "InterIntraLink.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/links/LinkMaster.h>        
-#include <mcMd/misc/FileMaster.h>  
+#include <util/misc/FileMaster.h>  
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 

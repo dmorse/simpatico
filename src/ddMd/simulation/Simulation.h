@@ -30,6 +30,7 @@
 #include <fstream>
 
 namespace Util { 
+   class FileMaster;
    template <typename T> class Factory; 
    class EnergyEnsemble;
    class BoundaryEnsemble;
@@ -43,7 +44,6 @@ namespace DdMd
 {
 
    class ConfigIo;
-   class FileMaster;
    class DiagnosticManager;
    class Integrator;
    class PairPotential;

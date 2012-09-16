@@ -44,14 +44,14 @@ namespace DdMd
    */
    DdMdOrderedConfigIo::DdMdOrderedConfigIo()
     : ConfigIo()
-   {}
+   {  setClassName("DdMdOrderedConfigIo"); }
 
    /*
    * Constructor.
    */
    DdMdOrderedConfigIo::DdMdOrderedConfigIo(Simulation& simulation)
     : ConfigIo(simulation)
-   {}
+   {  setClassName("DdMdOrderedConfigIo"); }
 
    /*
    * Private method to read Group<N> objects.
