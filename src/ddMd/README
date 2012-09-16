@@ -24,4 +24,3 @@ simulation/   - main Simulation class
 storage/      - containers that manage Atom and Group objects
 misc/         - miscellaneous utility classes
 
-

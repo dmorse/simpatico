@@ -1,13 +1,32 @@
-Main Loop
----------
+Documentation
+-------------
 
-- Add ability to continue a simulation without reinitialization.
+- Add example of ddSim default configuration file format to user
+  documentation. Make clearer distinction between McMd and DdMd files.
+
+Main Loop and Command Script
+----------------------------
+
+- Modify setup of integrator, add ability to continue a simulation without 
+  reinitialization.
+
+- Add commands to clear state of integrator, all statistics, and diagnostics.
+
+- Make factories modifiable, by defining *Factory.cpp_r files.
+  Modify documentation accordingly.
 
 Flexible Unit Cells:
 --------------------
 
-- Generalize makeSnapShot and needsExchange methods in AtomStorage to allow
-  for deforming boundaries (requires further changes to Boundary).
+- Generalize makeSnapShot and needsExchange methods in AtomStorage to 
+  allow for deforming boundaries (requires further changes to Boundary).
+
+Housekeeping
+------------
+
+- Try to move FileMaster file to Util directory, use for McMd and DdMd
+
+- Move ddMd/actor to drafts unit ready for use. 
 
 Testing
 -------
@@ -16,17 +35,7 @@ Testing
 
 - Fix obsolete PairPotentialTest (change interface for PairPotential)
 
-- Improve testing of PairList - check that number of inner pairs doesn't
-  change upon reneighboring, in unit tests and as optional test in integrator.
-
 - Test conservation of energy and stress in DdMd for angles and dihedrals.
-
-Housekeeping
-------------
-
-- Try to move FileMaster file to Util directory, use for McMd and DdMd
-
-- Rename ddMd/util -> ddMd/misc
 
 Hybrid MD
 ----------
@@ -51,13 +60,6 @@ Cell List and Pair List:
 - Modify Cell::getNeighbors method to pass back a list of AtomTag objects, 
   rather than an array of pointers. Provide a CellList method to decide if 
   a particular pair is within the cutoff.
-
-Configuration File IO
----------------------
-
-- Add option for ordered output of atoms.
-
-- Add LammpsConfigIo class
 
 Distributor and Collector
 -------------------------
