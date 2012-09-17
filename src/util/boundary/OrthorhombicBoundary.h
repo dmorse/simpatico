@@ -22,7 +22,7 @@
 class OrthorhombicBoundaryTest;
 
 #ifndef UTIL_ORTHOGONAL
-#define UTIL_ORTHOGONAL 1
+#define UTIL_ORTHOGONAL 0
 #endif
 
 namespace Util
