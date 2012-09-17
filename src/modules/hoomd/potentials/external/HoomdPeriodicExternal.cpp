@@ -1,6 +1,6 @@
 #ifdef INTER_EXTERNAL
-#ifndef HOOMD_LAMELLAR_EXTERNAL_CPP
-#define HOOMD_LAMELLAR_EXTERNAL_CPP
+#ifndef HOOMD_PERIODIC_EXTERNAL_CPP
+#define HOOMD_PERIODIC_EXTERNAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,27 +9,27 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "HoomdLamellarExternal.h"
+#include "HoomdPeriodicExternal.h"
 
 
 namespace McMd
 {
-   char classNameHoomdLamellar[] = "HoomdLamellarExternal";
+   char classNameHoomdPeriodic[] = "HoomdPeriodicExternal";
 
    /**
    * Default constructor.
    */
-   HoomdLamellarExternal::HoomdLamellarExternal()   
-    : HoomdExternal< EvaluatorExternalLamellar, gpu_compute_lamellar_forces, classNameHoomdLamellar >()
+   HoomdPeriodicExternal::HoomdPeriodicExternal()   
+    : HoomdExternal< EvaluatorExternalPeriodic, gpu_compute_periodic_forces, classNameHoomdPeriodic >()
    {
    }
 
    /**
    * Copy constructor
    */
-   HoomdLamellarExternal::HoomdLamellarExternal(const HoomdLamellarExternal& other)
-    : HoomdExternal< EvaluatorExternalLamellar, gpu_compute_lamellar_forces, 
-          classNameHoomdLamellar >(other)
+   HoomdPeriodicExternal::HoomdPeriodicExternal(const HoomdPeriodicExternal& other)
+    : HoomdExternal< EvaluatorExternalPeriodic, gpu_compute_periodic_forces, 
+          classNameHoomdPeriodic >(other)
    {
       externalParameter_ = other.externalParameter_;
    }
@@ -37,7 +37,7 @@ namespace McMd
    /**
    * read parameters from file
    */
-   void HoomdLamellarExternal::readParam(std::istream &in)
+   void HoomdPeriodicExternal::readParam(std::istream &in)
    {
       // Read parameters
       read<int>(in, "perpDirection", perpDirection_);
@@ -61,7 +61,7 @@ namespace McMd
    /*
    * set external potential parameter
    */
-   void HoomdLamellarExternal::setExternalParameter(double externalParameter)
+   void HoomdPeriodicExternal::setExternalParameter(double externalParameter)
    {
       externalParameter_ = externalParameter;
       for (int i = 0; i < nAtomType_; ++i) {
@@ -72,7 +72,7 @@ namespace McMd
    /* 
    * Get external potential interaction strength.
    */
-   double HoomdLamellarExternal::externalParameter() const
+   double HoomdPeriodicExternal::externalParameter() const
    {
       return externalParameter_;
    }
@@ -80,9 +80,9 @@ namespace McMd
    /*
    * return the class name
    */
-   std::string HoomdLamellarExternal::className() const
+   std::string HoomdPeriodicExternal::className() const
    {
-      return "HoomdLamellarExternal";
+      return "HoomdPeriodicExternal";
    }
 
 }

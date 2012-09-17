@@ -25,7 +25,7 @@
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/external/ExternalPotential.h>
 
-#include <modules/hoomd/potentials/external/HoomdLamellarExternal.h>
+#include <modules/hoomd/potentials/external/HoomdPeriodicExternal.h>
 #endif
 
 #ifndef INTER_NOPAIR
@@ -66,8 +66,8 @@ namespace McMd
       if (className == "McExternalPerturbation") {
          const std::string& interactionClassName = systemPtr_->externalPotential().
             interactionClassName();
-         if (interactionClassName == "HoomdLamellarExternal") {
-            ptr = new McExternalPerturbation<HoomdLamellarExternal> (*systemPtr_);
+         if (interactionClassName == "HoomdPeriodicExternal") {
+            ptr = new McExternalPerturbation<HoomdPeriodicExternal> (*systemPtr_);
          }
       }
       #endif
@@ -79,14 +79,14 @@ namespace McMd
          const std::string& externalInteractionClassName = systemPtr_->externalPotential().
             interactionClassName();
          if (pairInteractionClassName == "HoomdLJPair") {
-            if (externalInteractionClassName == "HoomdLamellarExternal") {
-               ptr = new McPairExternalPerturbation<HoomdLJPair,HoomdLamellarExternal> (*systemPtr_);
+            if (externalInteractionClassName == "HoomdPeriodicExternal") {
+               ptr = new McPairExternalPerturbation<HoomdLJPair,HoomdPeriodicExternal> (*systemPtr_);
             } else {
                UTIL_THROW("Unsupported external potential.");
             }
          } else if (pairInteractionClassName == "HoomdDpdPair") {
-            if (externalInteractionClassName == "HoomdLamellarExternal") {
-               ptr = new McPairExternalPerturbation<HoomdDpdPair,HoomdLamellarExternal> (*systemPtr_);
+            if (externalInteractionClassName == "HoomdPeriodicExternal") {
+               ptr = new McPairExternalPerturbation<HoomdDpdPair,HoomdPeriodicExternal> (*systemPtr_);
             } else {
                UTIL_THROW("Unsupported external potential.");
             }

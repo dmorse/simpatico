@@ -1,6 +1,6 @@
 #ifdef INTER_EXTERNAL
-#ifndef HOOMD_LAMELLAR_EXTERNAL_H
-#define HOOMD_LAMELLAR_EXTERNAL_H
+#ifndef HOOMD_PERIODIC_EXTERNAL_H
+#define HOOMD_PERIODIC_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -12,20 +12,20 @@
 #include "HoomdExternal.h"
 
 #include <hoomd/PotentialExternal.h>
-#include <hoomd/EvaluatorExternalLamellar.h>
+#include <hoomd/EvaluatorExternalPeriodic.h>
 #include <hoomd/AllDriverPotentialExternalGPU.cuh>
 
 namespace McMd
 {
-   extern char classNameHoomdLamellar[];
+   extern char classNameHoomdPeriodic[];
 
    /**
-   * A potential encapsulating the HOOMD Lamellar evaluator
+   * A potential encapsulating the HOOMD Periodic evaluator
    *
    * \ingroup External_Module
    */
-   class HoomdLamellarExternal : public HoomdExternal< EvaluatorExternalLamellar,
-      gpu_compute_lamellar_forces, classNameHoomdLamellar >
+   class HoomdPeriodicExternal : public HoomdExternal< EvaluatorExternalPeriodic,
+      gpu_compute_periodic_forces, classNameHoomdPeriodic >
    {
    
    public:
@@ -33,12 +33,12 @@ namespace McMd
       /**
       * Default constructor.
       */
-      HoomdLamellarExternal();
+      HoomdPeriodicExternal();
 
       /**
       * Copy constructor
       */
-      HoomdLamellarExternal(const HoomdLamellarExternal& other);
+      HoomdPeriodicExternal(const HoomdPeriodicExternal& other);
 
       /**
       * read parameters from file
@@ -68,7 +68,7 @@ namespace McMd
       /// Index representing the direction perpendicular to the lamellae.
       int perpDirection_;
 
-      /// Interfacial width in lamellar phase.
+      /// Interfacial width in periodic phase.
       double width_;
 
       /// per-type prefactor of potential
