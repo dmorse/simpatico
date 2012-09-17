@@ -46,7 +46,7 @@ namespace McMd
    {
       ExternalPotential* ptr = 0;
       if (name == classNameHoomdPeriodic) {
-         ptr = new ExternalPotentialImpl< HoomdPeriodicExternal> (*systemPtr_);
+         ptr = new ExternalPotentialImpl<HoomdPeriodicExternal> (*systemPtr_);
       }
       return ptr;
    }

@@ -37,7 +37,7 @@ namespace McMd
    /**
    * read parameters from file
    */
-   void HoomdPeriodicExternal::readParam(std::istream &in)
+   void HoomdPeriodicExternal::readParameters(std::istream &in)
    {
       // Read parameters
       read<int>(in, "perpDirection", perpDirection_);
