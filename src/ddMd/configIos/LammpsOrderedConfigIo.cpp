@@ -111,24 +111,89 @@ namespace DdMd
          }
       }
 
-      // Read and broadcast boundary
+      int nAtom;
+      int nBond;
+      int nAngle;
+      int nDihedral;
+      int nImproper;
+      int nAtomType;
+      int nBondType;
+      int nAngleType;
+      int nDihedralType;
+      int nImproperType;
+
       if (domain().isMaster()) {  
-         file >> Label("BOUNDARY");
-         file >> boundary();
+      
+         // Read and discard title line
+         std::string       line;
+         std::getline(file, line);
+
+         // Read numbers of atoms, bonds, etc.
+         file >> nAtom >> Label("atoms");
+         file >> nBond >> Label("bonds");
+         file >> nAngle >> Label("angles");
+         file >> nDihedral >> Label("dihedrals");
+         file >> nImproper >> Label("impropers");
+
+         /*
+         * Validate nAtom and nBond
+         * Lammps files can be read only if the number of atoms and bonds
+         * in the lammps file exactly matches the corresponding capacities.
+         */
+         if (nAtom != atomStorage().totalAtomCapacity()) {
+            UTIL_THROW("nAtom != atomCapacity");
+         }
+         
+         if (nBond != bondStorage().totalCapacity()) {
+            UTIL_THROW("nBond != bondCapacity");
+         }
+         
+
+         // Read numbers of atom types, bond types, etc.
+
+         file >> nAtomType >> Label("atom") >> Label("types");
+         file >> nBondType >> Label("bond") >> Label("types");
+         file >> nAngleType >> Label("angle") >> Label("types");
+         file >> nDihedralType >> Label("dihedral") >> Label("types");
+         file >> nImproperType >> Label("improper") >> Label("types");
+
+         if (nAtomType > nAtomType_) {
+            UTIL_THROW("nAtomType > simulation().nAtomType()");
+         }
+      }
+
+      // Read and broadcast boundary
+      Vector lengths;
+      Vector min;
+      Vector max;
+      if (domain().isMaster()) {  
+         file >> min[0] >> max[0] >> Label("xlo") >> Label("xhi");
+         file >> min[1] >> max[1] >> Label("ylo") >> Label("yhi");
+         file >> min[2] >> max[2] >> Label("zlo") >> Label("zhi");
+         lengths.subtract(max, min);
+         boundary().setOrthorhombic(lengths);
       }
       #if UTIL_MPI
       bcast(domain().communicator(), boundary(), 0);
       #endif
 
-      // Atoms 
-      int nAtom;  // Total number of atoms in file
+      // Read particle masses (discard values)
+      double mass;
+      int    atomTypeId;
       if (domain().isMaster()) {  
+         file >> Label("Masses");
+         for (int i = 0; i < nAtomType; ++i) {
+            file >> atomTypeId >> mass;
+         }
+      }
 
-         // Read and distribute atoms
-         file >> Label("ATOMS");
-
-         // Read number of atoms
-         file >> Label("nAtom") >> nAtom;
+      /*
+      * Read atomic positions
+      *
+      * Atom tags must appear in order, numbered from 1
+      */
+      if (domain().isMaster()) {  
+         file >> Label("Atoms");
 
          int totalAtomCapacity = atomStorage().totalAtomCapacity();
 
@@ -136,31 +201,34 @@ namespace DdMd
          //Initialize the send buffer.
          atomDistributor().setup();
          #endif
-
+         
          // Read atoms
          Vector r;
          Atom*  atomPtr;
          int id;
          int typeId;
          int rank;
+         IntVector shift;
+
          for(int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
 
             file >> id >> typeId;
-            if (id < 0 || id >= totalAtomCapacity) {
+            if (id <= 0 || id > totalAtomCapacity) {
                UTIL_THROW("Invalid atom id");
             }
-            atomPtr->setId(id);
-            atomPtr->setTypeId(typeId);
+            atomPtr->setId(id-1);
+            atomPtr->setTypeId(typeId-1);
             file >> r;
+            atomPtr->position() += min;
             if (UTIL_ORTHOGONAL) {
                atomPtr->position() = r;
             } else {
                boundary().transformCartToGen(r, atomPtr->position());
             }
-            file >> atomPtr->velocity();
+            file >> shift;
 
             // Add atom to list for sending.
             rank = atomDistributor().addAtom();
@@ -175,49 +243,23 @@ namespace DdMd
       }
 
       // Check that all atoms are accounted for after distribution.
-      {
-         int nAtomLocal = atomStorage().nAtom();
-         int nAtomAll;
-         #ifdef UTIL_MPI
-         domain().communicator().Reduce(&nAtomLocal, &nAtomAll, 1, 
+      { 
+      int nAtomLocal = atomStorage().nAtom();
+      int nAtomAll;
+      #ifdef UTIL_MPI
+      domain().communicator().Reduce(&nAtomLocal, &nAtomAll, 1, 
                                         MPI::INT, MPI::SUM, 0);
-         #else
-         nAtomAll = nAtomLocal;
-         #endif
-         if (domain().isMaster()) {
-            if (nAtomAll != nAtom) {
-               UTIL_THROW("nAtomAll != nAtom after distribution");
-            }
+      #else
+      nAtomAll = nAtomLocal;
+      #endif
+      if (domain().isMaster()) {
+         if (nAtomAll != nAtom) {
+            UTIL_THROW("nAtomAll != nAtom after distribution");
          }
       }
-
-      bool hasGhosts = false;
-
-      if (bondStorage().capacity()) {
-         readGroups<2>(file, "BONDS", "nBond", bondDistributor());
-         bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
-         // Set atom "mask" values
-         if (maskPolicy == MaskBonded) {
-            setAtomMasks();
-         }
       }
 
-      #ifdef INTER_ANGLE
-      if (angleStorage().capacity()) {
-         readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
-         angleStorage().isValid(atomStorage(), domain().communicator(), 
-                                hasGhosts);
-      }
-      #endif
-
-      #ifdef INTER_DIHEDRAL
-      if (dihedralStorage().capacity()) {
-         readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
-         dihedralStorage().isValid(atomStorage(), domain().communicator(), 
-                                   hasGhosts);
-      }
-      #endif
-
+       
    }
 
    /*
@@ -257,10 +299,6 @@ namespace DdMd
    {
       using std::endl;
 
-      // Write first line (skipped) and a blank line.
-      file << "LAMMPS data file" << endl;
-      file << endl;
-
       // Atoms
       atomStorage().computeNAtomTotal(domain().communicator());
 
@@ -270,56 +308,83 @@ namespace DdMd
       }
 
       if (domain().isMaster()) {
+      
+         // Write first line (skipped) and a blank line.
+         file << "LAMMPS data file" << endl;
+         file << endl;
+      
+         int nAtom = atomStorage().nAtomTotal();
 
-      // Write numbers of atoms, bonds, etc.
-      file << Int(atomStorage().nAtomTotal(), 10) << " atoms    " << endl;
-      file << Int(bondStorage().nTotal(), 10) << " bonds    " << endl;
-      file << Int(0)     << " angles   " << endl;
-      file << Int(0)     << " dihedrals" << endl;
-      file << Int(0)     << " impropers" << endl;
-      file << endl;
+         // Write numbers of atoms, bonds, etc.
+         file << Int(nAtom, 10) << " atoms    " << endl;
+         file << Int(bondStorage().nTotal(), 10) << " bonds    " << endl;
+         file << Int(0)     << " angles   " << endl;
+         file << Int(0)     << " dihedrals" << endl;
+         file << Int(0)     << " impropers" << endl;
+         file << endl;
 
-      // Write numbers of atom types, bond types, etc.
-      file << Int(nAtomType_) << " atom types" << endl;
-      file << Int(nBondType_) << " bond types" << endl;
-      file << Int(0) << " angle types" << endl;
-      file << Int(0) << " dihedral types" << endl;
-      file << Int(0) << " improper types" << endl;
-      file << endl;
+         // Write numbers of atom types, bond types, etc.
+         file << Int(nAtomType_) << " atom types" << endl;
+         file << Int(nBondType_) << " bond types" << endl;
+         file << Int(0) << " angle types" << endl;
+         file << Int(0) << " dihedral types" << endl;
+         file << Int(0) << " improper types" << endl;
+         file << endl;
 
-      // Write Boundary dimensions
-      Vector lengths = boundary().lengths();
-      file << Dbl(0.0) << Dbl(lengths[0]) << "  xlo xhi" << endl;
-      file << Dbl(0.0) << Dbl(lengths[1]) << "  ylo yhi" << endl;
-      file << Dbl(0.0) << Dbl(lengths[2]) << "  zlo zhi" << endl;
-      file << endl;
+         // Write Boundary dimensions
+         Vector lengths = boundary().lengths();
+         file << Dbl(0.0) << Dbl(lengths[0]) << "  xlo xhi" << endl;
+         file << Dbl(0.0) << Dbl(lengths[1]) << "  ylo yhi" << endl;
+         file << Dbl(0.0) << Dbl(lengths[2]) << "  zlo zhi" << endl;
+         file << endl;
 
-      // Write masses (all set to 1.0 for now)
-      // lammps atom type = Simpatico atom type + 1
-      file << "Masses" << endl;
-      file << endl;
-      for (int iType = 0; iType < nAtomType_; ++iType) {
-          file << Int(iType+1, 5) << Dbl(1.0) << endl;
-      }
-      file << endl;
-
-      // Write atomic positions
-      // lammps atom     tag = Simpatico atom id + 1
-      // lammps molecule id  = Simpatico molecule id + 1
-      file << "Atoms" << endl;
-       atomCollector().setup();
-         Atom* atomPtr = atomCollector().nextPtr();
-         int       shift;
-         while (atomPtr) {
-            file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6);
-             file     << atomPtr->position();
-               for (int i = 0; i < Dimension; ++i) {
-                  file << Int(shift, 4);
-               }
-            file << std::endl;
-            atomPtr = atomCollector().nextPtr();
+         // Write masses (all set to 1.0 for now)
+         // lammps atom type = Simpatico atom type + 1
+         file << "Masses" << endl;
+         file << endl;
+         for (int iType = 0; iType < nAtomType_; ++iType) {
+            file << Int(iType+1, 5) << Dbl(1.0) << endl;
          }
-     } else {
+         file << endl;
+
+         // Write atomic positions
+         // lammps atom     tag = Simpatico atom id + 1
+         // lammps molecule id  = Simpatico molecule id + 1
+         file << "Atoms" << endl;
+
+         IoAtom atom;
+         atoms_.reserve(nAtom);
+         atoms_.clear();
+         atoms_.insert(atoms_.end(), nAtom, atom);
+
+         atomCollector().setup();
+         Atom* atomPtr = atomCollector().nextPtr();
+         int id;
+         int n = 0;
+         int shift;
+         while (atomPtr) {
+            id = atomPtr->id();
+            atoms_[id].position = atomPtr->position();
+            atoms_[id].typeId = atomPtr->typeId();
+            atoms_[id].id = id;
+            atomPtr = atomCollector().nextPtr();
+            ++n;
+         }
+         if (n != nAtom) {
+            UTIL_THROW("Something is rotten in Denmark");
+         }
+         for (id = 0; id < nAtom; ++id) {
+            if (id != atoms_[id].id) {
+               UTIL_THROW("Something is rotten in Denmark");
+            }
+            file << Int(id+1, 10) << Int(atoms_[id].typeId + 1, 6)
+                 << atoms_[id].position;
+            for (int i = 0; i < Dimension; ++i) {
+               file << Int(shift, 4);
+            }
+            file << std::endl;
+         }
+      } else {
          atomCollector().send();
       }
 
