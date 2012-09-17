@@ -267,10 +267,17 @@ namespace DdMd
          file << "nAtom" << Int(atomStorage().nAtomTotal(), 10) << std::endl;
          atomCollector().setup();
          Atom* atomPtr = atomCollector().nextPtr();
+         Vector r;
          while (atomPtr) {
-            file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6)
-                 << atomPtr->position() << std::endl
-                 << "                " << atomPtr->velocity();
+            file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6);
+            if (UTIL_ORTHOGONAL) {
+               file << atomPtr->position() << std::endl
+                    << "                " << atomPtr->velocity();
+            } else {
+               boundary().transformGenToCart(atomPtr->position(), r);
+               file << r << std::endl
+                    << "                " << atomPtr->velocity();
+            }
             #if 0
             for (int j=0; j < atomPtr->mask().size(); ++j) {
                file << Int(atomPtr->mask()[j], 8);

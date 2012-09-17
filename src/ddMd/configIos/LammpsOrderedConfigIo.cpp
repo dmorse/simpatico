@@ -364,7 +364,11 @@ namespace DdMd
          int shift;
          while (atomPtr) {
             id = atomPtr->id();
-            atoms_[id].position = atomPtr->position();
+            if (UTIL_ORTHOGONAL) {
+               atoms_[id].position = atomPtr->position();
+            } else {
+               boundary().transformGenToCart(atomPtr->position(), atoms_[id].position);
+            }
             atoms_[id].typeId = atomPtr->typeId();
             atoms_[id].id = id;
             atomPtr = atomCollector().nextPtr();
