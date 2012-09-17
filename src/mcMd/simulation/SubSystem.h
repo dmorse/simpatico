@@ -8,14 +8,13 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/global.h>
-
 #include <mcMd/simulation/System.h>               // parent (provides typedefs)
 #include <util/boundary/Boundary.h>               // member
 #include <mcMd/chemistry/Molecule.h>              // member template parameter
 
 #include <util/containers/DArray.h>               // member template
 #include <util/containers/PArrayIterator.h>       // inline function begin()
+#include <util/global.h>
 
 #include <iostream>
 #include <string>
@@ -23,9 +22,9 @@
 namespace McMd
 {
 
-   using namespace Util;
-
    class Simulation;
+
+   using namespace Util;
 
    /**
    * A SubSystem is a partial copy of a System that has:

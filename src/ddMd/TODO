@@ -1,13 +1,22 @@
-Main Loop
----------
+Documentation
+-------------
 
-- Add ability to continue a simulation without reinitialization.
+- Add example of ddSim default configuration file format to user
+  documentation. Make clearer distinction between McMd and DdMd files.
 
-Flexible Unit Cells:
---------------------
+Main Loop and Command Script
+----------------------------
 
-- Generalize makeSnapShot and needsExchange methods in AtomStorage to allow
-  for deforming boundaries (requires further changes to Boundary).
+- Modify setup of integrator, add ability to continue a simulation without 
+  reinitialization.
+
+- Add commands to clear state of integrator, all statistics, and diagnostics.
+
+Extensibility, Ease-of-Use
+----------------------------
+
+- Make factories modifiable, by defining *Factory.cpp_r files.
+  Modify documentation accordingly.
 
 Testing
 -------
@@ -16,17 +25,7 @@ Testing
 
 - Fix obsolete PairPotentialTest (change interface for PairPotential)
 
-- Improve testing of PairList - check that number of inner pairs doesn't
-  change upon reneighboring, in unit tests and as optional test in integrator.
-
 - Test conservation of energy and stress in DdMd for angles and dihedrals.
-
-Housekeeping
-------------
-
-- Try to move FileMaster file to Util directory, use for McMd and DdMd
-
-- Rename ddMd/util -> ddMd/misc
 
 Hybrid MD
 ----------
@@ -42,22 +41,11 @@ Dynamic Resizing
 
 - Allow for dynamic resizing of Buffer class.
 
-Cell List and Pair List:
-------------------------
+Flexible Unit Cells:
+--------------------
 
-- Make AtomTag struct a public class, add an IntVector of micro-cell 
-  indices to CellTag, to allow fast rejection of most pairs.
-
-- Modify Cell::getNeighbors method to pass back a list of AtomTag objects, 
-  rather than an array of pointers. Provide a CellList method to decide if 
-  a particular pair is within the cutoff.
-
-Configuration File IO
----------------------
-
-- Add option for ordered output of atoms.
-
-- Add LammpsConfigIo class
+- Generalize makeSnapShot and needsExchange methods in AtomStorage to 
+  allow for deforming boundaries (requires further changes to Boundary).
 
 Distributor and Collector
 -------------------------
@@ -96,6 +84,16 @@ Buffer:
 - Move pack/unpack methods to methods of Atom and Group classes.
 
 - Add values INT, DOUBLE, VECTOR to enumeration of types.
+
+Cell List and Pair List:
+------------------------
+
+- Make AtomTag struct a public class, add an IntVector of micro-cell 
+  indices to CellTag, to allow fast rejection of most pairs.
+
+- Modify Cell::getNeighbors method to pass back a list of AtomTag objects, 
+  rather than an array of pointers. Provide a CellList method to decide if 
+  a particular pair is within the cutoff.
 
 Single Processor Operation
 --------------------------

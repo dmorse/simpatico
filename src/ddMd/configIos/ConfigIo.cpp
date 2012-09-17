@@ -61,7 +61,7 @@ namespace DdMd
       #ifdef INTER_DIHEDRAL
       , dihedralCacheCapacity_(0)
       #endif
-   {}
+   {  setClassName("ConfigIo"); }
 
    /*
    * Constructor.
@@ -86,6 +86,7 @@ namespace DdMd
       , dihedralCacheCapacity_(0)
       #endif
    {
+      setClassName("ConfigIo"); 
       associate(simulation.domain(),
                 simulation.boundary(),
                 simulation.atomStorage(),

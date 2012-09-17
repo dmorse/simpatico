@@ -39,7 +39,7 @@ namespace DdMd
       nSentTotal_(0),
       cacheSize_(0),
       cacheCapacity_(0)
-   {}
+   {  setClassName("GroupDistributor"); }
 
    /*
    * Destructor.

@@ -14,7 +14,7 @@ Buffer{
   atomCapacity    100
   ghostCapacity   100
 }
-ConfigIo{
+DdMdConfigIo{
   atomCacheCapacity      100
   bondCacheCapacity      100
 }

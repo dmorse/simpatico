@@ -11,7 +11,7 @@
 
 #include "McPairEnergyAverage.h"        // class header
 
-#include <mcMd/misc/FileMaster.h>  
+#include <util/misc/FileMaster.h>  
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/potentials/pair/McPairPotential.h>

@@ -12,6 +12,8 @@ include $(SRC_DIR)/ddMd/sources.mk
 #-----------------------------------------------------------------------
 
 
+all:  Test
+
 clean:
 	cd chemistry; make clean
 	cd storage; make clean
@@ -20,6 +22,7 @@ clean:
 	cd potentials; make clean
 	cd configIos; make clean
 	cd simulation; make clean
+	-rm Test.o Test.d Test
 
 Test: $(ddMd_LIB) $(inter_LIB) $(util_LIB) $(TESTS_DIR)/ddMd/Test.o
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test $(TESTS_DIR)/ddMd/Test.o \

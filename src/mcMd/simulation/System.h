@@ -31,6 +31,7 @@ namespace Util
    template <typename T> class Factory;
    class EnergyEnsemble;
    class BoundaryEnsemble;
+   class FileMaster;
 }
 
 namespace McMd
@@ -53,7 +54,6 @@ namespace McMd
    };
 
    class Simulation;
-   class FileMaster;
    class ConfigIo;
    class TrajectoryIo;
    class PairFactory;

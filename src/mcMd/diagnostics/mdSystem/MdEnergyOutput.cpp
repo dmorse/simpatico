@@ -10,7 +10,7 @@
 
 #include "MdEnergyOutput.h"
 #include <mcMd/mdSimulation/md_potentials.h>
-#include <mcMd/misc/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
 
