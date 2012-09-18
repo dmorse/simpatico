@@ -36,7 +36,7 @@ namespace McMd
 
    /**
    * A potential encapsulating a HOOMD evaluator.
-   * Actual implementations have to provide a readParam() method.
+   * Actual implementations have to provide a readParameters() method.
    * See HoomdLJPair for an example.
    *
    * \ingroup Pair_Module
