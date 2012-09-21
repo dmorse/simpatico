@@ -185,7 +185,7 @@ The following table shows a list of available commands for all three programs.  
     <td> <b>-</b> </td>
   </tr>
 </table>
-The SET_ANGLE and SET_DIHEDRAL commands are only available when in mcSim or mdSim in which angle and dihedral potentials are enabled at compile time. 
+The SET_ANGLE and SET_DIHEDRAL commands are only available in versions of mcSim or mdSim in which angle and dihedral potentials were enabled at compile time. 
 
 <ul>
  <li> \ref param_page        (Prev) </li>
