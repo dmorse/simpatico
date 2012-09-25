@@ -279,6 +279,7 @@ namespace DdMd
          Atom* atomPtr = atomCollector().nextPtr();
          int id;
          int n = 0;
+         Vector r;
          while (atomPtr) {
             id = atomPtr->id();
             if (UTIL_ORTHOGONAL) {
