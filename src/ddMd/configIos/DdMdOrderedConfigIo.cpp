@@ -69,12 +69,9 @@ namespace DdMd
 
          Group<N>* groupPtr;
          int i, j, k;
-         int id;
          distributor.setup();
          for (i = 0; i < nGroup; ++i) {
             groupPtr = distributor.newPtr();
-            file >> id;
-            groupPtr->setId(id);
             file >> *groupPtr;
             for (j = 0; j < 2; ++j) {
                k = groupPtr->atomId(j);
@@ -249,13 +246,11 @@ namespace DdMd
          collector.setup();
          groupPtr = collector.nextPtr();
          int id;
-         int n = 0;
          while (groupPtr) {
             id = groupPtr->id();
             groups[id].id = id;
             groups[id].group = *groupPtr;
             groupPtr = collector.nextPtr();
-            ++n;
          }
          if (n != nGroup) {
             UTIL_THROW("Something is rotten in Denmark");
@@ -304,7 +299,6 @@ namespace DdMd
          atomCollector().setup();
          Atom* atomPtr = atomCollector().nextPtr();
          int id;
-         int n = 0;
          while (atomPtr) {
             id = atomPtr->id();
             if (UTIL_ORTHOGONAL) {
@@ -316,7 +310,6 @@ namespace DdMd
             atoms_[id].typeId = atomPtr->typeId();
             atoms_[id].id = id;
             atomPtr = atomCollector().nextPtr();
-            ++n;
          } 
          if (n != nAtom) {
             UTIL_THROW("Something is rotten in Denmark");
