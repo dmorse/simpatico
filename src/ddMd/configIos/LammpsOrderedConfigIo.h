@@ -9,6 +9,7 @@
 */
 
 #include <ddMd/configIos/ConfigIo.h>
+#include <ddMd/chemistry/Group.h>
 #include <util/space/Vector.h>
 
 #include <vector>
@@ -83,6 +84,18 @@ namespace DdMd
       * Array of atoms, ordered by global index.
       */
       std::vector<IoAtom> atoms_;
+
+      template <int N>
+      struct IoGroup {
+         int    id;
+         Group<N> group;
+      };
+  
+      /**
+      * Array of atoms, ordered by global index.
+      */
+      //int N;
+      //std::vector<IoGroup <N> > groups_;
 
       /**
       * Read Group<N> objects from file. 
