@@ -1,0 +1,64 @@
+A Simulation has:
+
+   
+   Configuration: atomStorage, GroupStorage containers
+                  boundary
+
+   Properties:    kinetic energy, stress, etc.
+             
+   Types:         
+      nAtomType_, nBondType_, ....
+      AtomTypes
+
+   Potential / Force Field:
+
+      Potential styles:   .....
+      Potential classes:  pair, bond, angle, ...
+      MaskedPairPolicy 
+
+   RNG
+
+   Communication Utilities:
+      Buffer
+      Exchanger
+      Domain
+
+
+Proposed Smaller Classes:
+
+    1) Configuration -> storage classes and boundary
+
+       -> Only requires nType values for validity checking. 
+       -> Configuraiton needs parameters only for allocation.
+       -> Add Configuration::isEmpty member to check if initialized.
+       -> Add associated ConfigIo.
+
+    2) Force Field:
+
+       nAtomType              
+       AtomTypes              (note, includes charge)
+       nBondType, nAngleType  
+       Potential classes      
+       Potential factory classes
+
+       Could ALSO have GroupPrototypes, but not necessary.
+
+       Kinetic energy and stress must be calculated, also make members.
+      
+Comments:
+
+    1) Configuration and Force Field can be initialized separately.
+
+    2) Force field members don't change during simulation. 
+
+    3) Force field does all force / energy calculations using an 
+       association with a Configuration. 
+
+       -> Add "hasConfiguration" member to check association.
+       -> Only allow association after both initialized.
+
+Other categories:
+
+    1) Communication classes: Buffer, Exchanger, Domain 
+    2) RNG
+
