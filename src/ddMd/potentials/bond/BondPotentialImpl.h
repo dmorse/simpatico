@@ -54,10 +54,10 @@ namespace DdMd
       * Read potential energy parameters.
       * 
       * This method reads the bond potential Interaction parameter
-      * block. Before calling Interaction::readParam(), it passes
+      * block. Before calling Interaction::readParameters(), it passes
       * simulation().nBondType() to Interaction::setNAtomType().
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Interaction interface
       //@{
@@ -210,12 +210,11 @@ namespace DdMd
    * Read bond interaction parameters.
    */
    template <class Interaction>
-   void BondPotentialImpl<Interaction>::readParam(std::istream& in)
+   void BondPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
-      readBegin(in,"BondPotential");
       bool nextIndent = false;
-      readParamComposite(in, interaction(), nextIndent);
-      readEnd(in);
+      addParamComposite(interaction(), nextIndent);
+      interaction().readParameters(in);
    }
 
    /*

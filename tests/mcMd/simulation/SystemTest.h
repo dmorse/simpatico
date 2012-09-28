@@ -12,7 +12,7 @@
 using namespace Util;
 using namespace McMd;
 
-class SystemTest : public ParamFileTest<Simulation>
+class SystemTest : public ParamFileTest
 {
 
 public:
@@ -30,7 +30,7 @@ public:
 
 private:
 
-   // Accessor Simulation& object() inherited from ParamFileTest<Simulation>
+   Simulation simulation_;
 
    System system_;
 
@@ -58,10 +58,10 @@ void SystemTest::setUp()
    #endif
    #endif
 
-   object().readParam(file());
+   simulation_.readParameters(file());
    system_.setId(0);
    nAtomType_ = 2;
-   system_.setSimulation(object());
+   system_.setSimulation(simulation_);
    system_.allocateMoleculeSets();
 }
 
@@ -69,8 +69,8 @@ void SystemTest::addMolecules()
 {
    Species *speciesPtr;
    int      i, j;
-   for (i = 0; i < object().nSpecies() ; ++i ) {
-      speciesPtr = &object().species(i);
+   for (i = 0; i < simulation_.nSpecies() ; ++i ) {
+      speciesPtr = &simulation_.species(i);
       for (j = 0; j < speciesPtr->capacity(); ++j) {
          system_.addMolecule(speciesPtr->reservoir().pop());
       }
@@ -86,8 +86,8 @@ void SystemTest::dump()
    int   iSpecies, iMolecule, nMolecule, iAtom, nAtom;
 
    std::cout << std::endl; 
-   for (iSpecies=0; iSpecies < object().nSpecies() ; ++iSpecies ) {
-      speciesPtr     = &object().species(iSpecies);
+   for (iSpecies=0; iSpecies < simulation_.nSpecies() ; ++iSpecies ) {
+      speciesPtr     = &simulation_.species(iSpecies);
       nAtom          = speciesPtr->nAtom(); 
       //moleculeSetPtr = &(system_.moleculeSet(iSpecies));
       //nMolecule      = moleculeSetPtr->size(); 
@@ -116,8 +116,8 @@ void SystemTest::testAddMolecules()
   
    Species *speciesPtr;
    int      iSpecies;
-   for (iSpecies=0; iSpecies < object().nSpecies() ; ++iSpecies ) {
-      speciesPtr = &object().species(iSpecies);
+   for (iSpecies=0; iSpecies < simulation_.nSpecies() ; ++iSpecies ) {
+      speciesPtr = &simulation_.species(iSpecies);
       try {
          speciesPtr->isValid();
       } catch (Exception e) {
@@ -161,7 +161,7 @@ void SystemTest::testInitMoleculeIterator()
    int    iMolecule;
 
    // Count molecules of each Species
-   for (int i=0; i < object().nSpecies() ; ++i ) {
+   for (int i=0; i < simulation_.nSpecies() ; ++i ) {
       iMolecule = 0; 
       for (system_.begin(i, molIter); molIter.notEnd(); ++molIter) {
          ++iMolecule;
@@ -172,7 +172,7 @@ void SystemTest::testInitMoleculeIterator()
    // Output atomic positions
    if (verbose() > 1) {
       std::cout << std::endl;
-      for (int i=0; i < object().nSpecies() ; ++i ) {
+      for (int i=0; i < simulation_.nSpecies() ; ++i ) {
          std::cout << "species Id    = " << i << std::endl;
          for (system_.begin(i, molIter); molIter.notEnd(); ++molIter) {
             std::cout << "Molecule Id    = " << molIter->id() << std::endl;

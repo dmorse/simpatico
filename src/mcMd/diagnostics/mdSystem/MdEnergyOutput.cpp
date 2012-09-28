@@ -10,7 +10,7 @@
 
 #include "MdEnergyOutput.h"
 #include <mcMd/mdSimulation/md_potentials.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
 
@@ -22,9 +22,9 @@ namespace McMd
    // Constructor
    MdEnergyOutput::MdEnergyOutput(MdSystem& system) :
       SystemDiagnostic<MdSystem>(system)
-   {}
+   {  setClassName("MdEnergyOutput"); }
 
-   void MdEnergyOutput::readParam(std::istream& in)
+   void MdEnergyOutput::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

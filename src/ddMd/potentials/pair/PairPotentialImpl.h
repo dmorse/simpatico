@@ -59,7 +59,7 @@ namespace DdMd
       *
       * \param in input parameter stream.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Interaction interface
       //@{
@@ -273,13 +273,12 @@ namespace DdMd
    }
 
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::readParam(std::istream& in)
+   void PairPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
-      readBegin(in,"PairPotential");
       bool nextIndent = false;
-      readParamComposite(in, interaction(), nextIndent);
+      addParamComposite(interaction(), nextIndent);
+      interaction().readParameters(in);
       readPairListParam(in);
-      readEnd(in);
    }
 
    /**
@@ -921,12 +920,8 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
-      for (int i = 0; i < nAtomType_; ++i) {
-         for (int j = 0; j < nAtomType_; ++j) {
-            communicator.Reduce(&localPairEnergies(i,j), &totalPairEnergies(i,j), 1,
-                                 MPI::DOUBLE, MPI::SUM, 0);
-         }
-      }
+      communicator.Reduce(&localPairEnergies(0,0), &totalPairEnergies(0,0), nAtomType_*nAtomType_,
+                           MPI::DOUBLE, MPI::SUM, 0);
       if (communicator.Get_rank() == 0) {
          setPairEnergies(totalPairEnergies);
       } else {

@@ -20,8 +20,8 @@ Simulation{
     totalCapacity     20000
   }
   Buffer{
-    atomCapacity      10000
-    ghostCapacity     10000
+    atomCapacity       2000
+    ghostCapacity      2000
   }
   pairStyle           LJPair
   bondStyle           HarmonicBond

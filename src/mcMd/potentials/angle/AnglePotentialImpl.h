@@ -55,12 +55,12 @@ namespace McMd
       * Read angle potential parameters.
       * 
       * This method reads the angle potential Interaction parameter 
-      * block.  Before calling Evalutor::readParam(), it passes 
+      * block.  Before calling Evalutor::readParameters(), it passes 
       * simulation().nBondType() to Interaction::setNAtomType().
       *
       * \param in input parameter stream.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Interactions Interface
       //@{
@@ -236,14 +236,13 @@ namespace McMd
    * Read parameters from file.
    */
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::readParam(std::istream &in) 
+   void AnglePotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
       if (!isCopy_) {
-         readBegin(in, "AnglePotential");
          interaction().setNAngleType(simulation().nAngleType());
          bool nextIndent = false;
-         readParamComposite(in, interaction(), nextIndent);
-         readEnd(in);
+         addParamComposite(interaction(), nextIndent);
+         interaction().readParameters(in);
       }
    }
 

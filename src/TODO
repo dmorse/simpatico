@@ -4,26 +4,19 @@ This file contains only items that are not localized to a namespace.
 Makefiles
 ---------
 
-- Add separate macros COMPILER_MPI and COMPILER_NO_MPI, and set COMPILER to an
-  appropriate value depending on if UTIL_MPI is defined.
+- Add separate macros COMPILER_MPI and COMPILER_SERIAL, and set COMPILER to 
+  an appropriate value depending on if UTIL_MPI is defined.
 
-- Add "all" target to src/makefile that compiles ddMd code iff UTIL_MPI is defined
-
-- Figure out how to invoke make with options
-
-- Add python script setOptions to modify common options by editing compiler.mk and
-  defines.mk files.
+- Add python script setOptions to modify common options by editing compiler.mk 
+  and defines.mk files.
 
 Tests
 -----
 
-- Figure out how to configure tests so that appropriate tests are run depending on 
-  value of UTIL_MPI or TEST_MPI. Have serial tests run in either mode, parallel 
-  tests only in parallel mode.
+- Configure tests so that appropriate tests are run depending on value of 
+  UTIL_MPI or TEST_MPI. Have serial tests run in either mode, parallel tests 
+  only in parallel mode.
 
-- Figure out how to automate regression tests for stream outputs, to remove
-  remaining need for human inspection. Output to stringStream and compare to 
-  older result in a file?
-
-- Add a single command to master makefile that runs all tests.
+- Automate regression tests for stream and string outputs, to remove remaining 
+  need for human inspection. 
 

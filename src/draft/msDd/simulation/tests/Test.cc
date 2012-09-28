@@ -2,7 +2,7 @@
 //#include <util/space/Vector.h>
 //#include <util/space/IntVector.h>
 
-#include <util/util/initStatic.h>
+#include <util/misc/initStatic.h>
 #include <util/global.h>
 #define TEST_MPI
 #include "SimulationTest.h"

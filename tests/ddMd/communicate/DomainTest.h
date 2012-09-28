@@ -23,16 +23,20 @@
 using namespace Util;
 using namespace DdMd;
 
-class DomainTest : public ParamFileTest<Domain>
+class DomainTest : public ParamFileTest
 {
+
+private:
+
+    Domain domain_;
 
 public:
 
    virtual void setUp()
    {
       #ifdef UTIL_MPI  
-      object().setGridCommunicator(communicator()); 
-      object().setParamCommunicator(communicator()); 
+      domain_.setGridCommunicator(communicator()); 
+      domain_.setParamCommunicator(communicator()); 
       #endif
    }
 
@@ -64,32 +68,32 @@ public:
       #endif
       #else
       int rank = 0;
-      object().setRank(rank);
+      domain_.setRank(rank);
       #endif
 
-      object().setBoundary(boundary);
-      object().readParam(file()); 
+      domain_.setBoundary(boundary);
+      domain_.readParam(file()); 
 
       #if 0
       #ifdef UTIL_MPI
       logger.begin();
       #endif
 
-      std::cout << "Rank = " << object().gridRank() << std::endl;
+      std::cout << "Rank = " << domain_.gridRank() << std::endl;
 
       int i, j, k, m;
       std::cout << "Dimensions  = ";
       for (int i = 0; i < Dimension; ++i) {
-         dimensions[i] = object().grid().dimension(i);
+         dimensions[i] = domain_.grid().dimension(i);
          std::cout << dimensions[i] << "   ";
       } 
       std::cout << std::endl;
       grid.setDimensions(dimensions);
 
-      std::cout << "Rank        = " << object().gridRank() << std::endl;
+      std::cout << "Rank        = " << domain_.gridRank() << std::endl;
       std::cout << "Coordinates = ";
       for (int i = 0; i < Dimension; ++i) {
-         std::cout << object().gridCoordinate(i) << "   ";
+         std::cout << domain_.gridCoordinate(i) << "   ";
       } 
       std::cout << std::endl;
 
@@ -98,21 +102,21 @@ public:
             std::cout << "   Direction   ";
             std::cout << i << "   " << j << "   ";
 
-            m = object().destRank(i, j);
+            m = domain_.destRank(i, j);
             partner = grid.position(m);
             std::cout << "   dest   ";
             for (k = 0; k < Dimension; ++k) {
                std::cout << partner[k] << "   ";
             }
 
-            m = object().sourceRank(i, j);
+            m = domain_.sourceRank(i, j);
             partner = grid.position(m);
             std::cout << "   source   ";
             for (k = 0; k < Dimension; ++k) {
                std::cout << partner[k] << "   ";
             }
 
-            std::cout << "shift   =  " << object().shift(i, j);
+            std::cout << "shift   =  " << domain_.shift(i, j);
             std::cout << std::endl;
          }
       }
@@ -135,22 +139,22 @@ public:
       MPI::Request request[2]; 
       MpiLogger logger;
 
-      object().setBoundary(boundary);
+      domain_.setBoundary(boundary);
 
       openFile("in/Domain"); 
-      object().readParam(file()); 
+      domain_.readParam(file()); 
 
       //std::cout << std::endl;
       
       int i, j, d, s, myRank, rr;
-      myRank = object().gridRank();
+      myRank = domain_.gridRank();
       for (i = 0; i < Dimension; ++i) {
          for (j = 0; j < 2; ++j) {
-            s = object().sourceRank(i, j);
-            d = object().destRank(i, j);
+            s = domain_.sourceRank(i, j);
+            d = domain_.destRank(i, j);
 
             #if 0
-            int size = object().communicator().Get_size();
+            int size = domain_.communicator().Get_size();
             logger.begin();
             std::cout << Int(i) << Int(j);
             std::cout << Int(myRank) << Int(d) << Int(s) << std::endl;
@@ -159,10 +163,10 @@ public:
             #endif
 
             if (s != myRank) {
-               request[0] = object().communicator().Irecv(&rr, 1, MPI::INT, s, 34);
+               request[0] = domain_.communicator().Irecv(&rr, 1, MPI::INT, s, 34);
             }
             if (d != myRank) {
-               request[1] = object().communicator().Isend(&myRank, 1, MPI::INT, d, 34);
+               request[1] = domain_.communicator().Isend(&myRank, 1, MPI::INT, d, 34);
             }
             if (s != myRank) {
                request[0].Wait();

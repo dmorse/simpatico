@@ -11,7 +11,7 @@
 
 #include "PerturbDerivative.h"           // class header
 #include <mcMd/perturb/Perturbation.h>  
-#include <mcMd/util/FileMaster.h>  
+#include <util/misc/FileMaster.h>  
 
 #include <cstdio> 
 
@@ -26,12 +26,12 @@ namespace McMd
    PerturbDerivative::PerturbDerivative(System& system)
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   { setClassName("PerturbDerivative"); }
 
    /*
    * Read parameters and initialize.
    */
-   void PerturbDerivative::readParam(std::istream& in)
+   void PerturbDerivative::readParameters(std::istream& in)
    {
 
       readInterval(in);

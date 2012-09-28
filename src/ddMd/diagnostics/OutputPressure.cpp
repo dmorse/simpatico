@@ -9,8 +9,8 @@
 */
 
 #include "OutputPressure.h"
-//#include <ddMd/util/FileMaster.h>
-#include <util/util/ioUtil.h>
+//#include <util/misc/FileMaster.h>
+#include <util/misc/ioUtil.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 
@@ -33,7 +33,7 @@ namespace DdMd
    /*
    * Read interval and outputFileName. 
    */
-   void OutputPressure::readParam(std::istream& in) 
+   void OutputPressure::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

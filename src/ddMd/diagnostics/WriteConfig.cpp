@@ -9,8 +9,8 @@
 */
 
 #include "WriteConfig.h"
-//#include <ddMd/util/FileMaster.h>
-#include <util/util/ioUtil.h>
+//#include <util/misc/FileMaster.h>
+#include <util/misc/ioUtil.h>
 
 #include <sstream>
 
@@ -31,7 +31,7 @@ namespace DdMd
    /*
    * Read interval and outputFileName. 
    */
-   void WriteConfig::readParam(std::istream& in) 
+   void WriteConfig::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

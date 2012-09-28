@@ -29,7 +29,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class GroupDistributorTest: public ParamFileTest< GroupDistributor<2> >
+class GroupDistributorTest: public ParamFileTest
 {
 public:
 
@@ -126,7 +126,8 @@ public:
       // If I am the master processor.
       int myRank = domain.gridRank();
       if (myRank == 0) {
-         configFile.open("in/config");
+         //configFile.open("in/config");
+         openInputFile("in/config", configFile);
          configFile >> Label("BOUNDARY");
          configFile >> boundary;
       }
@@ -261,6 +262,10 @@ public:
       // Note: Validation is done inside send and receive methods
       #endif
 
+      if (myRank == 0) {
+         if (configFile.is_open()) configFile.close(); 
+      }
+
    }
 
    void testDistribute2()
@@ -353,7 +358,8 @@ public:
       // If I am the master processor.
       int myRank = domain.gridRank();
       if (myRank == 0) {
-         configFile.open("in2/config");
+         //configFile.open("in2/config");
+         openInputFile("in2/config", configFile);
          configFile >> Label("BOUNDARY");
          configFile >> boundary;
       }
@@ -488,6 +494,10 @@ public:
       }
       // Note: Validation is done inside send and receive methods
       #endif
+
+      if (myRank == 0) {
+         if (configFile.is_open()) configFile.close(); 
+      }
 
    }
 };

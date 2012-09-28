@@ -124,7 +124,7 @@ namespace DdMd
       *
       * \param in input stream from which parameter is read.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Returns pointer an address available for a new Group<N>.

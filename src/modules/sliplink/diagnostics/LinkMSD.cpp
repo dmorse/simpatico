@@ -14,7 +14,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
-#include <mcMd/util/FileMaster.h>        
+#include <util/misc/FileMaster.h>        
 
 
 namespace McMd
@@ -25,10 +25,10 @@ namespace McMd
    /// Constructor.
    LinkMSD::LinkMSD(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("LinkMSD"); }
 
    /// Read parameters from file, and allocate data arrays.
-   void LinkMSD::readParam(std::istream& in) 
+   void LinkMSD::readParameters(std::istream& in) 
    {
 
       readInterval(in);

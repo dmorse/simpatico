@@ -7,7 +7,9 @@
 #include <iostream>
 #include <fstream>
 
-template <class T>
+/**
+* A UnitTest with a built-in parameter file.
+ **/
 class ParamFileTest : public UnitTest 
 {
 
@@ -19,6 +21,12 @@ public:
    ParamFileTest()
     : UnitTest()
    {}
+
+   /**
+   * Destructor.
+   */
+   ~ParamFileTest()
+   { closeFile(); }
 
    /**
    * Close the input file.
@@ -40,16 +48,7 @@ public:
    * Close the input file.
    */
    void closeFile()
-   {
-      if (file_.is_open())
-         file_.close(); 
-   }
-
-   /**
-   * Returns associated object by reference.
-   */
-   T& object()
-   {  return object_; }
+   {  if (file_.is_open()) file_.close(); }
 
    /**
    * Returns input file by reference.
@@ -59,7 +58,6 @@ public:
 
 private:
 
-   T              object_;
    std::ifstream  file_;
 
 };

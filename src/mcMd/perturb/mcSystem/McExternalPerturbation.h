@@ -54,7 +54,7 @@ namespace McMd
       *
       * \param in input stream (file or std in).
       */ 
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
  
       /**
       * Set external parameter for this System.
@@ -87,10 +87,8 @@ namespace McMd
       /// Pointer to interaction
       mutable Interaction* interactionPtr_;
 
-      /*
-      Number of perturbation parameters associated with a System.
-      nParameters = 1 for McExternalPerturbation.
-      */
+      // Number of perturbation parameters associated with a System.
+      // nParameters = 1 for McExternalPerturbation.
       int nParameters_;
    };
    
@@ -101,26 +99,27 @@ namespace McMd
    McExternalPerturbation<Interaction>::McExternalPerturbation(McSystem& system)
     : LinearPerturbation<McSystem>(system),
       interactionPtr_(0)
-   { }
+   {  setClassName("McExternalPerturbation"); }
 
    /*
    * Destructor.
    */
    template < class Interaction >
    McExternalPerturbation<Interaction>::~McExternalPerturbation<Interaction>()
-   { }
+   {}
 
    /*
    * Read external parameter from file
    */
    template < class Interaction >
-   void McExternalPerturbation<Interaction>::readParam(std::istream& in)
+   void McExternalPerturbation<Interaction>::readParameters(std::istream& in)
    {
       Perturbation::readParameters(in);
       nParameters_ = Perturbation::getNParameters();
    }
 
    /*
+   * Return underlying interaction object.
    */
    template < class Interaction >
    Interaction& McExternalPerturbation<Interaction>::interaction() const
@@ -143,7 +142,7 @@ namespace McMd
    template < class Interaction >
    void McExternalPerturbation<Interaction>::setParameter()
    {
-     interaction().setExternalParameter(parameter_[0]);
+      interaction().setExternalParameter(parameter_[0]);
    }
 
    /* 

@@ -8,7 +8,7 @@
 #include <mcMd/links/LinkEvents.h>
 #include <util/containers/RArray.h>
 #include <mcMd/chemistry/Atom.h>
-#include <util/util/Observer.h>
+#include <util/misc/Observer.h>
 
 #include <iostream>
 #include <fstream>

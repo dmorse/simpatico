@@ -11,7 +11,7 @@
 #include "Crosslinker.h"
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/links/LinkMaster.h>
 
@@ -28,9 +28,9 @@ namespace McMd
       nSample_(0),
       cutoff_(0),
       probability_(0)
-   {}
+   {  setClassName("CrossLinker"); }
 
-   void Crosslinker::readParam(std::istream& in)
+   void Crosslinker::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

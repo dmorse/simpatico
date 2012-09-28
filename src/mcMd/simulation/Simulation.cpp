@@ -20,7 +20,7 @@
 #include <util/containers/ArraySet.h>
 #include <util/param/Factory.h>
 #include <util/space/Vector.h>
-#include <util/util/initStatic.h>
+#include <util/misc/initStatic.h>
 
 #ifdef UTIL_MPI
 #include "McMd_mpi.h"
@@ -67,6 +67,7 @@ namespace McMd
       #endif
       maskedPairPolicy_(MaskBonded)
    {
+      setClassName("Simulation");
       Util::initStatic();
       Atom::initStatic();
       Diagnostic::initStatic();
@@ -125,6 +126,7 @@ namespace McMd
       #endif
       maskedPairPolicy_(MaskBonded)
    {
+      setClassName("Simulation");
       Util::initStatic();
       Atom::initStatic();
       Diagnostic::initStatic();
@@ -173,9 +175,8 @@ namespace McMd
    /*
    * Read parameter file.
    */
-   void Simulation::readParam(std::istream& in)
+   void Simulation::readParameters(std::istream& in)
    {
-
       // Preconditions
       assert(speciesManagerPtr_);
 

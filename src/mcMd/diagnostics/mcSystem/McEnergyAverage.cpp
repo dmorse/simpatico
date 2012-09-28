@@ -9,7 +9,7 @@
 */
 
 #include "McEnergyAverage.h"                        // class header
-#include <mcMd/util/FileMaster.h>  
+#include <util/misc/FileMaster.h>  
 #include <util/archives/Serializable_includes.h>
 
 
@@ -29,12 +29,12 @@ namespace McMd
       accumulator_(),
       nSamplePerBlock_(1),
       isInitialized_(false)
-   {}
+   {  setClassName("McEnergyAverage"); }
 
    /*
    * Read parameters and initialize.
    */
-   void McEnergyAverage::readParam(std::istream& in)
+   void McEnergyAverage::readParameters(std::istream& in)
    {
 
       readInterval(in);

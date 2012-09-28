@@ -42,7 +42,7 @@ namespace McMd
    /* 
    * 
    */
-   void CfbRebridgeBase::readParam(std::istream& in) 
+   void CfbRebridgeBase::readParameters(std::istream& in) 
    {
       // Number of trial configuration bias attempts.
       read<int>(in, "nTrial", nTrial_);

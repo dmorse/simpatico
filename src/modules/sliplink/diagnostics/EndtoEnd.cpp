@@ -14,7 +14,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
-#include <mcMd/util/FileMaster.h>        
+#include <util/misc/FileMaster.h>        
 
 
 namespace McMd
@@ -25,10 +25,10 @@ namespace McMd
    /// Constructor.
    EndtoEnd::EndtoEnd(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("EndtoEnd"); }
 
    /// Read parameters from file, and allocate data array.
-   void EndtoEnd::readParam(std::istream& in) 
+   void EndtoEnd::readParameters(std::istream& in) 
    {
 
       readInterval(in);

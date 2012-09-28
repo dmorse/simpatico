@@ -9,7 +9,7 @@
 */
 
 #include "LogProgress.h"
-#include <util/util/Log.h>
+#include <util/misc/Log.h>
 
 namespace McMd
 {
@@ -17,9 +17,15 @@ namespace McMd
    using namespace Util;
 
    /*
+   * Constructor.
+   */
+   LogProgress::LogProgress() 
+   {  setClassName("LogProgress"); }
+
+   /*
    * Read interval.
    */
-   void LogProgress::readParam(std::istream& in) 
+   void LogProgress::readParameters(std::istream& in) 
    {  readInterval(in); }
 
    /*

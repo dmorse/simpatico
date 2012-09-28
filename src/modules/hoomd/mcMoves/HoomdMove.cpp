@@ -81,7 +81,7 @@ namespace McMd
    /*
    * Read parameters
    */
-   void HoomdMove::readParam(std::istream& in)
+   void HoomdMove::readParameters(std::istream& in)
    {
       if ((! energyEnsemble().isIsothermal()) || (!system().boundaryEnsemble().isRigid()))
          UTIL_THROW("Must be in isothermal-rigid ensemble.");

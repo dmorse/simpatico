@@ -48,7 +48,7 @@ namespace Inter
       *
       * \param in  input stream 
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
       
       /**  
       * Set nAtomType value.
@@ -127,11 +127,6 @@ namespace Inter
       */
       double get(std::string name, int i, int j) const;
  
-      /** 
-      * Return name of instantiated class.
-      */
-      std::string className() const;
-
    private:
       
       /// Maximum allowed link length.
@@ -154,8 +149,6 @@ namespace Inter
       double          activity_;
       double          beta_;
 
-      std::string     className_;
-            
       /**
       * Copy constructor.
       */
@@ -178,14 +171,15 @@ namespace Inter
       temp_(0.0),
       mu_(0.0),
       activity_(0.0),
-      beta_(0.0),
-      className_("CompensatedPair")
+      beta_(0.0)
    {
-      className_ += "<";
-      className_ += pair_.className();
-      className_ += ",";
-      className_ += link_.className();
-      className_ += ">";
+      std::string name("CompensatedPair");
+      name += "<";
+      name += pair_.className();
+      name += ",";
+      name += link_.className();
+      name += ">";
+      setClassName(name.c_str());
    }
    
    /* 
@@ -205,10 +199,9 @@ namespace Inter
    * Read potential parameters from file.
    */  
    template <class BarePair, class LinkPotential>
-   void CompensatedPair<BarePair, LinkPotential>::readParam(std::istream &in)
+   void CompensatedPair<BarePair, LinkPotential>::readParameters(std::istream &in)
    {
-      //readBegin(in, "CompensatedPair");
-
+      #if 0
       std::string label;
       Begin* beginPtr = 0;
       End*   endPtr = 0;
@@ -218,22 +211,26 @@ namespace Inter
       //label += "{";
       beginPtr = &addBegin(pair_.className().c_str());
       beginPtr->setIndent(*this);
-      beginPtr->readParam(in);
+      beginPtr->readParameters(in);
       readParamComposite(in, pair_);
       endPtr = &addEnd();
       endPtr->setIndent(*this);
-      endPtr->readParam(in);
+      endPtr->readParameters(in);
 
       // Read bare link potential
       //label = link_.className();
       //label += "{";
       beginPtr = &addBegin(link_.className().c_str());
       beginPtr->setIndent(*this);
-      beginPtr->readParam(in);
+      beginPtr->readParameters(in);
       readParamComposite(in, link_);
       endPtr = &addEnd();
       endPtr->setIndent(*this);
-      endPtr->readParam(in);
+      endPtr->readParameters(in);
+      #endif
+
+      readParamComposite(in, pair_);
+      readParamComposite(in, link_);
 
       read<double>(in, "maxLinkLength", maxLinkLength_);	
       read<double>(in, "temperature", temp_);
@@ -247,8 +244,6 @@ namespace Inter
       if (pair_.maxPairCutoff() > maxLinkLength_) {
          maxPairCutoff_ = pair_.maxPairCutoff();
       }
-
-      //readEnd(in);
    }
    
    /* 
@@ -334,13 +329,6 @@ namespace Inter
       }
       return value;
    }
-
-   /* 
-   * Return the class name.
-   */
-   template <class BarePair, class LinkPotential>
-   std::string CompensatedPair<BarePair, LinkPotential>::className() const
-   {  return className_; }
 
 }
 #endif

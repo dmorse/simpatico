@@ -55,12 +55,12 @@ namespace McMd
       * Read dihedral potential parameters.
       * 
       * This method reads the dihedral potential Interaction parameter 
-      * block.  Before calling Evalutor::readParam(), it passes 
+      * block.  Before calling Evalutor::readParameters(), it passes 
       * simulation().nBondType() to Interaction::setNAtomType().
       *
       * \param in input parameter stream.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Interaction Interface.
       //@{
@@ -244,14 +244,13 @@ namespace McMd
    * Read parameters from file.
    */
    template <class Interaction>
-   void DihedralPotentialImpl<Interaction>::readParam(std::istream &in) 
+   void DihedralPotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
       if (!isCopy_) {
-         readBegin(in, "DihedralPotential");
          interaction().setNDihedralType(simulation().nDihedralType());
          bool nextIndent = false;
-         readParamComposite(in, interaction(), nextIndent);
-         readEnd(in);
+         addParamComposite(interaction(), nextIndent);
+         interaction().readParameters(in);
       }
    }
 

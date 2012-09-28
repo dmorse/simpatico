@@ -19,7 +19,7 @@ namespace McMd
    */
    McPressureAverage::McPressureAverage(McSystem& system)
     : PressureAverage<McSystem>(system)
-   {}
+   {  setClassName("McPressureAverage"); }
 
 }
 #endif

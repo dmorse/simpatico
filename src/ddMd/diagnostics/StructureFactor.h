@@ -74,7 +74,7 @@ namespace DdMd
    * magnitude of the wavevector, and a list of structure factor
    * values for the wavevector, one for each mode.
    * 
-   * \ingroup McMd_Diagnostic_Module
+   * \ingroup DdMd_Diagnostic_Module
    */
    class StructureFactor : public Diagnostic
    {
@@ -87,7 +87,7 @@ namespace DdMd
       /**	
       * Constructor.
       *
-      * \param system reference to parent System object
+      * \param simulation reference to parent Simulation object
       */
       StructureFactor(Simulation& simulation);
 
@@ -101,7 +101,7 @@ namespace DdMd
       *
       * \param in input parameter stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /** 
       * Clear accumulators.

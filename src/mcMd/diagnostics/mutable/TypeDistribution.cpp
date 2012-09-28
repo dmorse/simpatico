@@ -15,7 +15,7 @@
 #include <mcMd/species/SpeciesMutator.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 
 namespace McMd
 {
@@ -32,9 +32,9 @@ namespace McMd
       nState_(-1),
       speciesPtr_(0),
       mutatorPtr_(0)
-   {}
+   {  setClassName("TypeDistribution"); }
 
-   void TypeDistribution::readParam(std::istream& in)
+   void TypeDistribution::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

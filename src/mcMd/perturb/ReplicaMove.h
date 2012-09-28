@@ -15,7 +15,7 @@
 
 #include <util/param/ParamComposite.h> // base class 
 #include <util/space/Vector.h>          // Util namespace
-#include <util/util/Notifier.h>          // Util namespace
+#include <util/misc/Notifier.h>          // Util namespace
 #include <util/containers/DArray.h>
 #include <util/containers/Pair.h>
 #include <util/global.h>
@@ -90,7 +90,7 @@ namespace McMd
       *
       * \param in input stream from which to read parameters.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Attempt, and accept or reject a replica exchange move.

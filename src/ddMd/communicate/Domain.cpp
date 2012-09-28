@@ -33,7 +33,7 @@ namespace DdMd
       #endif
       boundaryPtr_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("Domain"); }
 
    /*
    * Destructor.
@@ -64,7 +64,7 @@ namespace DdMd
    /*
    * Read parameters and initialize.
    */
-   void Domain::readParam(std::istream& in)
+   void Domain::readParameters(std::istream& in)
    {
 
       #ifdef UTIL_MPI
@@ -83,9 +83,7 @@ namespace DdMd
       }
 
       // Read parameter file 
-      readBegin(in, "Domain");
       read<IntVector>(in, "gridDimensions", gridDimensions_);
-      readEnd(in);
 
       // Validate gridDimensions
       int nproc = 1;

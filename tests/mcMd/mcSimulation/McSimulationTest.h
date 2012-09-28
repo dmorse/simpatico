@@ -10,6 +10,9 @@
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/bond/BondPotential.h>
+#ifdef INTER_ANGLE
+#include <mcMd/potentials/angle/AnglePotential.h>
+#endif
 
 #include <util/archives/MemoryCounter.h>
 #include <util/archives/MemoryOArchive.h>
@@ -29,21 +32,21 @@
 using namespace Util;
 using namespace McMd;
 
-class McSimulationTest : public ParamFileTest<McSimulation>
+class McSimulationTest : public ParamFileTest
 {
 
 public:
 
    McSimulationTest()
-    : ParamFileTest<McSimulation>(),
-      system_(object().system())
+    : ParamFileTest(),
+      system_(simulation_.system())
    { 
       // setVerbose(2); 
    }
 
    virtual void setUp()
    {
-      object().fileMaster().setRootPrefix(filePrefix());
+      simulation_.fileMaster().setRootPrefix(filePrefix());
    } 
 
    virtual void readParam(McSimulation& sim)
@@ -74,18 +77,19 @@ public:
 
 private:
 
-   McSystem& system_;
+   McSimulation simulation_;
+   McSystem&    system_;
 
 };
 
 void McSimulationTest::testReadParam()
 {
    printMethod(TEST_FUNC);
-   readParam(object());
-   object().readCommands();
+   readParam(simulation_);
+   simulation_.readCommands();
 
    try {
-      object().isValid();
+      simulation_.isValid();
    } catch (Exception e) {
       std::cout << e.message();
       TEST_ASSERT(0);
@@ -93,7 +97,7 @@ void McSimulationTest::testReadParam()
 
    if (verbose() > 1) {
       std::cout << std::endl;
-      object().writeParam(std::cout);
+      simulation_.writeParam(std::cout);
    }
 
 }
@@ -104,17 +108,17 @@ void McSimulationTest::testPairEnergy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   readParam(object());
-   object().readCommands();
+   readParam(simulation_);
+   simulation_.readCommands();
 
-   object().simulate(10);
+   simulation_.simulate(10);
 
    System::MoleculeIterator molIter;
    Molecule::AtomIterator   atomIter;
    double energy, de;
 
    energy = 0.0;
-   for (int is=0; is < object().nSpecies(); ++is) {
+   for (int is=0; is < simulation_.nSpecies(); ++is) {
       for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             de = system_.pairPotential().atomEnergy(*atomIter);
@@ -134,17 +138,17 @@ void McSimulationTest::testBondEnergy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   readParam(object());
-   object().readCommands();
+   readParam(simulation_);
+   simulation_.readCommands();
 
-   object().simulate(10);
+   simulation_.simulate(10);
 
    System::MoleculeIterator molIter;
    Molecule::AtomIterator   atomIter;
    double                   energy, de;
 
    energy = 0.0;
-   for (int is=0; is < object().nSpecies(); ++is) {
+   for (int is=0; is < simulation_.nSpecies(); ++is) {
       for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             de = system_.bondPotential().atomEnergy(*atomIter);
@@ -164,20 +168,20 @@ void McSimulationTest::testAngleEnergy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   readParam(object());
-   object().readCommands();
+   readParam(simulation_);
+   simulation_.readCommands();
 
-   object().simulate(10);
+   simulation_.simulate(10);
 
    System::MoleculeIterator molIter;
    Molecule::AtomIterator   atomIter;
    double                   energy, de;
 
    energy = 0.0;
-   for (int is=0; is < object().nSpecies(); ++is) {
+   for (int is=0; is < simulation_.nSpecies(); ++is) {
       for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-            de = system_.atomAngleEnergy(*atomIter);
+            de = system_.anglePotential().atomEnergy(*atomIter);
             std::cout.width(5);
             std::cout << atomIter->id() << "     " << de << std::endl;
             energy += de;
@@ -185,7 +189,8 @@ void McSimulationTest::testAngleEnergy()
       }
    }
    std::cout << "Total atomAngleEnergy = " << energy/3.0 << std::endl;
-   std::cout << "TotalAngleEnergy      = " << system_.angleEnergy() << std::endl;
+   std::cout << "TotalAngleEnergy      = " 
+             << system_.anglePotential().energy() << std::endl;
 }
 #endif
 
@@ -194,10 +199,10 @@ void McSimulationTest::testMdSystemCopy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   readParam(object());
-   object().readCommands();
+   readParam(simulation_);
+   simulation_.readCommands();
 
-   object().simulate(10);
+   simulation_.simulate(10);
 
    MdSystem mdSystem(system_);
 
@@ -221,18 +226,18 @@ void McSimulationTest::testMemorySerialize()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   readParam(object());
-   object().readCommands();
+   readParam(simulation_);
+   simulation_.readCommands();
 
-   //object().simulate(10);
+   //simulation_.simulate(10);
 
    MemoryCounter car;
-   car << object();
+   car << simulation_;
    int size = car.size();
 
    MemoryOArchive oar;
    oar.allocate(size);
-   oar << object();
+   oar << simulation_;
 
    MemoryIArchive iar;
    iar = oar;
@@ -250,15 +255,15 @@ void McSimulationTest::testTextFileSerialize()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   readParam(object());
-   object().readCommands();
+   readParam(simulation_);
+   simulation_.readCommands();
 
    TextFileOArchive oar;
    std::ofstream out;
    openOutputFile("text", out);
    oar.setStream(out);
 
-   oar << object();
+   oar << simulation_;
    out.close();
 
 }
@@ -273,10 +278,10 @@ void McSimulationTest::testTextFileUnSerialize()
    openInputFile("text", in); 
    iar.setStream(in);
 
-   iar >> object();
+   iar >> simulation_;
 
-   object().writeParam(std::cout);
-   object().simulate(100);
+   simulation_.writeParam(std::cout);
+   simulation_.simulate(100);
 }
 #endif
 
@@ -286,18 +291,18 @@ void McSimulationTest::testSimulate()
    std::cout << std::endl;
 
    openFile("in/McSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
 
    std::string baseFileName("simulate.0");
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 
-   object().simulate(20);
+   simulation_.simulate(20);
 
    baseFileName = "simulate.20";
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 
 }
 
@@ -307,22 +312,22 @@ void McSimulationTest::testWriteRestart()
    std::cout << std::endl;
 
    openFile("in/McSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
 
    std::string baseFileName("writeRestart.0");
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 
-   object().simulate(10);
+   simulation_.simulate(10);
    baseFileName = "writeRestart.10";
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 
    bool isContinuation = true;
-   object().simulate(20, isContinuation);
+   simulation_.simulate(20, isContinuation);
    baseFileName = "writeRestart.20";
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 }
 
 void McSimulationTest::testReadRestart()
@@ -331,10 +336,10 @@ void McSimulationTest::testReadRestart()
    std::cout << std::endl;
 
    std::string baseFileName("writeRestart.10");
-   object().readRestart(baseFileName);
+   simulation_.readRestart(baseFileName);
 
    baseFileName = "readRestart";
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 }
 
 TEST_BEGIN(McSimulationTest)

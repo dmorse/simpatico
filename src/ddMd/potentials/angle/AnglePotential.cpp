@@ -21,7 +21,7 @@ namespace DdMd
    AnglePotential::AnglePotential(Simulation& simulation)
     : boundaryPtr_(&simulation.boundary()),
       storagePtr_(&simulation.angleStorage())
-   {}
+   { setClassName("AnglePotential"); }
 
    /*
    * Default constructor (for unit testing).

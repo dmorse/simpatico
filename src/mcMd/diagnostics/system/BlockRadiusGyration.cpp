@@ -14,7 +14,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
-#include <mcMd/util/FileMaster.h>        
+#include <util/misc/FileMaster.h>        
 #include <util/archives/Serializable_includes.h>
 
 #include <util/format/Dbl.h>
@@ -39,10 +39,10 @@ namespace McMd
       speciesId_(-1),
       nAtom_(-1),
       isInitialized_(false)
-   {}
+   {  setClassName("BlockRadiusGyration"); }
 
    /// Read parameters from file, and allocate data array.
-   void BlockRadiusGyration::readParam(std::istream& in) 
+   void BlockRadiusGyration::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

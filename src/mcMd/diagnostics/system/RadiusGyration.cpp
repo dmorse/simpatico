@@ -14,7 +14,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
-#include <mcMd/util/FileMaster.h>        
+#include <util/misc/FileMaster.h>        
 #include <util/archives/Serializable_includes.h>
 
 namespace McMd
@@ -26,10 +26,10 @@ namespace McMd
    RadiusGyration::RadiusGyration(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("RadiusGyration"); }
 
    /// Read parameters from file, and allocate data array.
-   void RadiusGyration::readParam(std::istream& in) 
+   void RadiusGyration::readParameters(std::istream& in) 
    {
 
       readInterval(in);

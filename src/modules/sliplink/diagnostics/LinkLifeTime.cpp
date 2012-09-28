@@ -15,7 +15,7 @@
 #include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 
 #include <util/global.h>
 
@@ -27,10 +27,10 @@ namespace McMd
    /// Constructor.
    LinkLifeTime::LinkLifeTime(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("LinkLifeTime"); }
 
    /// Read parameters from file.
-   void LinkLifeTime::readParam(std::istream& in) 
+   void LinkLifeTime::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

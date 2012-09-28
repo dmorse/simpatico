@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/bin/python
 # vtf_data.py
 
 # read data from input = conf

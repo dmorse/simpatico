@@ -22,6 +22,7 @@ namespace Inter
    FeneBond::FeneBond()
     : nBondType_(0)
    {
+      setClassName("FeneBond"); 
       for (int i = 0; i < MaxNBondType; ++i) {
          kappa_[i]   =  0.0;
          r0_[i]      =  0.0;
@@ -89,7 +90,7 @@ namespace Inter
    /*
    * Read bond interaction parameters kappa and r0 from file
    */
-   void FeneBond::readParam(std::istream &in)
+   void FeneBond::readParameters(std::istream &in)
    {
 
       // Preconditions
@@ -204,12 +205,6 @@ namespace Inter
       }
       return value;
    }
-
-   /*
-   * Return name string "FeneBond" for this evaluator class.
-   */
-   std::string FeneBond::className() const
-   {  return std::string("FeneBond"); }
 
 }
 #endif

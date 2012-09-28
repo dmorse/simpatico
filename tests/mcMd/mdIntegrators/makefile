@@ -13,6 +13,7 @@ all:    Test
 clean:	 
 	rm -f Test 
 
-Test: Test.cpp MdIntegratorTest.h
-	$(CXX) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.cpp  $(util_OBJS) $(mcMd_OBJS)
+Test: Test.cc MdIntegratorTest.h
+	$(CXX) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.cc  \
+               $(util_LIB) $(inter_LIB) $(mcMd_LIB)
 

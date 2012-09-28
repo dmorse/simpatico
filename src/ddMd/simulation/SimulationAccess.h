@@ -14,6 +14,7 @@
 #include <ddMd/chemistry/MaskPolicy.h>       // enumeration
 
 namespace Util { 
+   class FileMaster;
    class EnergyEnsemble;
    class BoundaryEnsemble;
    class Random;
@@ -38,7 +39,6 @@ namespace DdMd
    #endif
    class Domain;
    class Exchanger;
-   class FileMaster;
    class AtomType;
 
    using namespace Util;

@@ -10,7 +10,7 @@
 
 #include <util/param/ParamComposite.h>      // base class
 #include <util/archives/Serializable.h>     // base class
-#include <mcMd/util/FileMaster.h>           // member variable
+#include <util/misc/FileMaster.h>           // member variable
 
 #include <string>
 #include <iostream>

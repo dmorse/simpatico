@@ -52,7 +52,7 @@
 #endif
 
 // namespace Util
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/param/Factory.h>
 #include <util/archives/Serializable_includes.h>
 
@@ -311,7 +311,7 @@ namespace McMd
    /*
    * Read parameters from file.
    */
-   void System::readParam(std::istream &in)
+   void System::readParameters(std::istream &in)
    {
 
       // Only read parameters if this is not a copy.

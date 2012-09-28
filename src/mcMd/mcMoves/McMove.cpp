@@ -36,7 +36,7 @@ namespace McMd
    /*
    * readParam, empty default implementation.
    */
-   void McMove::readParam(std::istream &in)
+   void McMove::readParameters(std::istream &in)
    {}
    
    /*

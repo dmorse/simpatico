@@ -54,7 +54,7 @@ namespace DdMd
    * structure factor values for the wavevector, one for each 
    * atomTypeId pair.
    * 
-   * \ingroup McMd_Diagnostic_Module
+   * \ingroup DdMd_Diagnostic_Module
    */
    class StructureFactorGrid : public StructureFactor
    {
@@ -64,7 +64,7 @@ namespace DdMd
       /**	
       * Constructor.
       *
-      * \param system reference to parent System object
+      * \param simulation reference to parent DdMd::Simulation object
       */
       StructureFactorGrid(Simulation &simulation);
 
@@ -81,7 +81,7 @@ namespace DdMd
       *
       * \param in input parameter stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Set up before a simulation.

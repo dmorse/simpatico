@@ -11,7 +11,7 @@
 #include <util/param/ParamComposite.h>           // base class
 #include <ddMd/communicate/AtomDistributor.h>    // member 
 #include <ddMd/communicate/AtomCollector.h>      // member 
-#include <ddMd/communicate/GroupDistributor.h>    // member 
+#include <ddMd/communicate/GroupDistributor.h>   // member 
 #include <ddMd/communicate/GroupCollector.h>     // member 
 #include <util/boundary/Boundary.h>              // typedef
 
@@ -76,10 +76,10 @@ namespace DdMd
       /**
       * Read cache size and allocate memory.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
-      * Read cache size and allocate memory.
+      * Set cache sizes and allocate memory.
       *
       * \param atomCacheCapacity size of internal atom cache. 
       * \param bondCacheCapacity size of internal bond cache. 
@@ -99,7 +99,9 @@ namespace DdMd
       *
       * This reads a configuration file from the master processor, and 
       * distributes atoms and groups among the processors. Upon entry,
-      * the file must be open for reading. Upon return:
+      * the file must be open for reading. 
+      *
+      * Upon return (postconditions):
       *
       *   - Each processor owns all atoms in its domain, and no others.
       *     Each atom is owned by one and only one processor.
@@ -108,7 +110,8 @@ namespace DdMd
       *     of the atoms that it owns, and no others. Each group may
       *     be owned by more than one processor.
       *
-      *   - All Atom positions are expressed in generalized coordinates.
+      *   - If UTIL_ORTHOGONAL is true (see Boundary class), all Atom 
+      *     positions are expressed in generalized coordinates.
       *
       *   - All Atom Mask data is set correctly for specified maskPolicy.
       *

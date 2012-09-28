@@ -55,7 +55,7 @@ McSimulation{
     baseInterval                        10000
 
     LogProgress{
-      interval                         100000000
+      interval                         200000
     }
 
     McEnergyOutput{
@@ -123,14 +123,4 @@ McSimulation{
 
   }
 }
-WRITE_PARAM      param
-READ_CONFIG      config
-SIMULATE         2000000000
-WRITE_CONFIG     config
-FINISH
 
-
-    HarmonicTether{
-      nTetherType                            1
-      kappa                 1.000000000000e+00
-    }

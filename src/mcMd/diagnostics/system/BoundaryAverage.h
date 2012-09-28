@@ -11,7 +11,7 @@
 #include <mcMd/diagnostics/SystemDiagnostic.h>  // base class template
 #include <mcMd/simulation/System.h>             // base class template parameter
 #include <util/accumulators/Average.h>         // member template 
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
 
 namespace McMd
@@ -41,7 +41,7 @@ namespace McMd
       *
       * \param in input parameter stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
   
       /** 
       * Clear accumulator.

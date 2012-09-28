@@ -16,7 +16,7 @@
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 
 #include <util/global.h>
 
@@ -51,7 +51,7 @@ namespace McMd
    * Read parameters from file.
    */
    template <class SystemType>
-   void IntraBondStressAutoCorr<SystemType>::readParam(std::istream& in) 
+   void IntraBondStressAutoCorr<SystemType>::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

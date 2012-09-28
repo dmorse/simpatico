@@ -13,7 +13,7 @@
 #include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
 
 
@@ -28,10 +28,10 @@ namespace McMd
    RDF::RDF(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("RDF"); }
 
    /// Read parameters from file, and allocate data array.
-   void RDF::readParam(std::istream& in) 
+   void RDF::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

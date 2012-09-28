@@ -11,7 +11,7 @@
 #include "InterIntraLink.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/links/LinkMaster.h>        
-#include <mcMd/util/FileMaster.h>  
+#include <util/misc/FileMaster.h>  
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 
@@ -24,10 +24,10 @@ namespace McMd
    /// Constructor.
    InterIntraLink::InterIntraLink(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("InterIntraLink"); }
 
    /// Read parameters from file, and allocate data array.
-   void InterIntraLink::readParam(std::istream& in) 
+   void InterIntraLink::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

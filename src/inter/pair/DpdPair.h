@@ -56,7 +56,7 @@ namespace Inter
       *
       * \param in  input stream 
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
 
       /**  
       * Set nAtomType value.
@@ -156,11 +156,6 @@ namespace Inter
       * Get maximum of pair cutoff distance, for all atom type pairs.
       */
       double maxPairCutoff() const;
- 
-      /**
-      * Return name string "DpdPair" for this evaluator class.
-      */
-      std::string className() const;
  
       //@}
 

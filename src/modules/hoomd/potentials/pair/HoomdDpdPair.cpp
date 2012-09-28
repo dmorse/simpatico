@@ -43,7 +43,7 @@ namespace McMd
    /**
    * read parameters from file
    */
-   void HoomdDpdPair::readParam(std::istream &in)
+   void HoomdDpdPair::readParameters(std::istream &in)
    {
 
       // Read parameters

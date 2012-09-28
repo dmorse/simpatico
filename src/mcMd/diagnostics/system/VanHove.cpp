@@ -16,9 +16,9 @@
 #include <mcMd/chemistry/Atom.h>
 #include <util/math/Constants.h>
 #include <util/space/Dimension.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
-#include <util/util/ioUtil.h>
+#include <util/misc/ioUtil.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 
@@ -31,13 +31,13 @@ namespace McMd
    VanHove::VanHove(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("VanHove"); }
 
    VanHove::~VanHove() 
    {}
 
    /// Read parameters from file, and allocate data array.
-   void VanHove::readParam(std::istream& in) 
+   void VanHove::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

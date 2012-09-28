@@ -9,7 +9,7 @@
 */
 
 #include "Sliplinker.h"
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/links/LinkMaster.h>
 #include <mcMd/mcSimulation/McSystem.h>
@@ -32,15 +32,13 @@ namespace McMd
       cutoff_(0),
       mu_(0),
       speciesId_(0)
-   {}
+   {  setClassName("Sliplinker"); }
 
-   void Sliplinker::readParam(std::istream& in)
+   void Sliplinker::readParameters(std::istream& in)
    {
       read<double>(in, "cutoff", cutoff_);
       read<double>(in, "mu", mu_);
       read<int>(in, "speciesId", speciesId_);
-      
-
    }
 
 

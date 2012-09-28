@@ -10,7 +10,7 @@
 
 #include <mcMd/diagnostics/SystemDiagnostic.h>  // base class template
 #include <util/accumulators/Average.h>          // member
-#include <mcMd/util/FileMaster.h>  
+#include <util/misc/FileMaster.h>  
 #include <util/archives/Serializable_includes.h>
 
 #include <cstdio> 
@@ -42,7 +42,7 @@ namespace McMd
       /**
       * Read parameters and initialize.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /** 
       * Set up before simulation.
@@ -122,7 +122,7 @@ namespace McMd
    * Read parameters and initialize.
    */
    template <class SystemType>
-   void PressureAverage<SystemType>::readParam(std::istream& in)
+   void PressureAverage<SystemType>::readParameters(std::istream& in)
    {
 
       readInterval(in);

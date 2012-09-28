@@ -218,27 +218,32 @@ namespace DdMd
              << " sec   " << Dbl(integrate2T/time, 12, 6, true) << std::endl;
          out << std::endl;
 
-         #if 0
-         out << "PairList Statistics" << std::endl;
-         out << "maxNPair, capacity " 
-                     << Int(pairPotential().pairList().maxNPair(), 10)
-                     << Int(pairPotential().pairList().pairCapacity(), 10)
+         int buildCounter = pairPotential().pairList().buildCounter(); 
+         out << "buildCounter             " 
+                     << Int(buildCounter, 10)
                      << std::endl;
-         out << "maxNAtom, capacity " 
-                     << Int(pairPotential().pairList().maxNAtom(), 10)
-                     << Int(pairPotential().pairList().atomCapacity(), 10)
+         out << "steps / build            "
+                     << double(nStep_)/double(buildCounter)
                      << std::endl;
-         out << "buildCounter       " 
-                     << Int(pairPotential().pairList().buildCounter(), 10)
-                     << std::endl;
-         out << "steps / build      "
-                     << double(nStep_)/double(pairPotential().pairList().buildCounter())
-                     << std::endl;
-         #endif
-
          out << std::endl;
+
       }
 
+   }
+
+   void Integrator::clearStatistics()
+   { 
+      timer().clear(); 
+      pairPotential().pairList().clearStatistics();
+      simulation().buffer().clearStatistics();
+      atomStorage().clearStatistics();
+      bondStorage().clearStatistics();
+      #ifdef INTER_ANGLE
+      angleStorage().clearStatistics();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage().clearStatistics();
+      #endif
    }
 
 }

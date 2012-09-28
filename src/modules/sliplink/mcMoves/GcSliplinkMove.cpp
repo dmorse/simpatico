@@ -9,7 +9,7 @@
 */
 
 #include "GcSliplinkMove.h"
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/links/LinkMaster.h>
 #include <mcMd/mcSimulation/McSystem.h>
@@ -41,9 +41,9 @@ namespace McMd
       mu_(0.0),
       nTrial_(0),
       speciesId_(0)
-   {}
+   {  setClassName("GcSliplinkMove"); }
 
-   void GcSliplinkMove::readParam(std::istream& in)
+   void GcSliplinkMove::readParameters(std::istream& in)
    {
       readProbability(in);
       read<int>(in, "nTrial", nTrial_);

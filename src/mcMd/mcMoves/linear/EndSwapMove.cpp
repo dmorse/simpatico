@@ -30,12 +30,12 @@ namespace McMd
    EndSwapMove::EndSwapMove(McSystem& system) : 
       SystemMove(system),
       speciesId_(-1)
-   {} 
+   {  setClassName("EndSwapMove"); } 
    
    /* 
    * Read parameter speciesId.
    */
-   void EndSwapMove::readParam(std::istream& in) 
+   void EndSwapMove::readParameters(std::istream& in) 
    {
       readProbability(in);
       read<int>(in, "speciesId", speciesId_);

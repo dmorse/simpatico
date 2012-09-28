@@ -31,6 +31,7 @@ namespace Util
    template <typename T> class Factory;
    class EnergyEnsemble;
    class BoundaryEnsemble;
+   class FileMaster;
 }
 
 namespace McMd
@@ -53,7 +54,6 @@ namespace McMd
    };
 
    class Simulation;
-   class FileMaster;
    class ConfigIo;
    class TrajectoryIo;
    class PairFactory;
@@ -165,7 +165,7 @@ namespace McMd
       *
       * \param in pararameter file input stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
  
       //@}
       /// \name Config File IO
@@ -610,14 +610,14 @@ namespace McMd
       *
       * Preconditions: This System must be associated with a parent
       * Simulation, and all of the Species objects must have been
-      * initialized by calling SpeciesManager::readParam().
+      * initialized by calling SpeciesManager::readParameters().
       */
       void allocateMoleculeSets();
 
       /**
       * If no FileMaster exists, create and initialize one. 
       *
-      * Invoked in implementation of readParam().
+      * Invoked in implementation of readParameters().
       *
       * \param in input parameter stream
       */
@@ -626,7 +626,7 @@ namespace McMd
       /**
       * Read potential styles, initialize LinkMaster or TetherMaster if needed.
       *
-      * Invoked in implementation of readParam().
+      * Invoked in implementation of readParameters().
       *
       * \param in input parameter stream
       */
@@ -635,7 +635,7 @@ namespace McMd
       /**
       * Read energy and boundary ensembles.
       *
-      * Invoked in implementation of readParam().
+      * Invoked in implementation of readParameters().
       *
       * \param in input parameter stream
       */
@@ -645,7 +645,7 @@ namespace McMd
       /**
       * Read the LinkMaster.
       *
-      * Invoked in implementation of readParam().
+      * Invoked in implementation of readParameters().
       *
       * \param in input parameter stream
       */
@@ -656,7 +656,7 @@ namespace McMd
       /**
       * Read the TetherMaster.
       *
-      * Invoked in implementation of readParam().
+      * Invoked in implementation of readParameters().
       *
       * \param in input parameter stream
       */

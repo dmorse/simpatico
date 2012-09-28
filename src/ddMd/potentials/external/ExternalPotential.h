@@ -1,7 +1,7 @@
 #ifndef DDMD_EXTERNAL_POTENTIAL_H
 #define DDMD_EXTERNAL_POTENTIAL_H
 
-#include <util/param/ParamComposite.h>  // base class
+#include <ddMd/potentials/Potential.h>  // base class
 #include <util/boundary/Boundary.h>     // member (typedef)
 #include <util/global.h>
 
@@ -27,7 +27,7 @@ namespace DdMd
    *
    * \ingroup DdMd_External_Module
    */
-   class ExternalPotential : public ParamComposite
+   class ExternalPotential : public Potential
    {
 
    public:
@@ -72,7 +72,7 @@ namespace DdMd
       * \param i        atom type.
       * \return external potential energy
       */
-      virtual double energy(const Vector& position, int i) const = 0;
+      virtual double externalEnergy(const Vector& position, int i) const = 0;
 
       /**
       * Returns force caused by the external potential.
@@ -81,8 +81,8 @@ namespace DdMd
       * \param type      atom type id
       * \param force     force on the atom (on output)
       */
-      virtual void getForce(const Vector& position, int type, 
-                            Vector& force) const = 0;
+      virtual void getExternalForce(const Vector& position, int type, 
+                                    Vector& force) const = 0;
 
       #if 0
       /**
@@ -92,32 +92,6 @@ namespace DdMd
       #endif
    
       //@}
-      /// \name Total Energy, Force and Stress 
-      //@{
-
-      /**
-      * Add external forces all local atoms.
-      */
-      virtual void computeForces() = 0;
-
-      /**
-      * Add pair forces to atom forces, and compute energy.
-      */
-      virtual void computeForces(double& energy) = 0;
-
-      /**
-      * Calculate total pair potential on this processor
-      */
-      #ifdef UTIL_MPI
-      virtual void computeEnergy(MPI::Intracomm& communicator) = 0;
-      #else
-      virtual void computeEnergy();
-      #endif
-
-      /**
-      * Return total pair potential on all processors.
-      */
-      virtual double energy() = 0;
 
    protected:
 

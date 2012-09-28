@@ -84,7 +84,7 @@ namespace McMd
       mdIntegratorPtr_(0),
       mdIntegratorFactoryPtr_(0),
       createdMdIntegratorFactory_(false)
-   {}
+   {  setClassName("MdSystem"); }
  
    /* 
    * Constructor, copy of a System.
@@ -114,6 +114,8 @@ namespace McMd
       mdIntegratorFactoryPtr_(0),
       createdMdIntegratorFactory_(false)
    {  
+      setClassName("MdSystem");
+
       #ifndef INTER_NOPAIR
       pairPotentialPtr_ = pairFactory().mdFactory(system.pairPotential());
       if (pairPotentialPtr_ == 0) {
@@ -196,10 +198,8 @@ namespace McMd
    /* 
    * Read parameter and configuration files, initialize system.
    */
-   void MdSystem::readParam(std::istream &in) 
+   void MdSystem::readParameters(std::istream &in) 
    {
-
-      readBegin(in, "MdSystem");
 
       if (!isCopy()) {
          allocateMoleculeSets();
@@ -314,8 +314,6 @@ namespace McMd
       // Read Perturbation object for free energy perturbation.
       readPerturbation(in);
       #endif
-
-      readEnd(in);
    }
   
    /*

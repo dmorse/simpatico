@@ -23,7 +23,7 @@ namespace Util
       norm_(0.0),
       nSnapshot_(0),
       outputIntegral_(false)
-   {}
+   {  setClassName("RadialDistribution"); }
    
    /* 
    * Copy constructor.

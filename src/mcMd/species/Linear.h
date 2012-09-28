@@ -83,7 +83,7 @@ namespace McMd
       *
       * Implementations of this function should return a type Id for
       * a specified atom that this is calculated from the information 
-      * read by readParam().  It is used in Linear::buildLinear() to 
+      * read by readParameters().  It is used in Linear::buildLinear() to 
       * build a chain.
       * 
       * \param index local atom index, in the range 0, ... , nAtom_-1

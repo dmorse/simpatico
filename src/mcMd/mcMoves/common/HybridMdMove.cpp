@@ -32,6 +32,7 @@ namespace McMd
       mdSystemPtr_(0),
       nStep_(0)
    {
+      setClassName("HybridMdMove");
       mdSystemPtr_ = new MdSystem(system);
       oldPositions_.allocate(simulation().atomCapacity());
    }
@@ -49,7 +50,7 @@ namespace McMd
    /*
    * Read parameter maxDisp
    */
-   void HybridMdMove::readParam(std::istream& in)
+   void HybridMdMove::readParameters(std::istream& in)
    {
       readProbability(in);
       read<int>(in, "nStep", nStep_);

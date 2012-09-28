@@ -10,7 +10,7 @@
 
 #include "McEnergyOutput.h"                  
 #include <mcMd/mcSimulation/mc_potentials.h> // include all MC potentials
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/format/Dbl.h>
 
 namespace McMd
@@ -21,9 +21,9 @@ namespace McMd
    // Constructor
    McEnergyOutput::McEnergyOutput(McSystem& system) :
       SystemDiagnostic<McSystem>(system)
-   {}
+   {  setClassName("McEnergyOutput"); }
 
-   void McEnergyOutput::readParam(std::istream& in)
+   void McEnergyOutput::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

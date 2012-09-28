@@ -35,7 +35,11 @@ namespace McMd
    public:
 
 
-      // Default compiler constructor
+      /**
+      * Constructor.
+      */
+      AnglePotential()
+      {  setClassName("AnglePotential"); }
 
       /**
       * Destructor (does nothing)

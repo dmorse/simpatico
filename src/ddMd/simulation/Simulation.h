@@ -24,12 +24,13 @@
 #include <util/space/Tensor.h>                   // member (template param)
 #include <util/containers/DArray.h>              // member (template)
 #include <util/containers/DMatrix.h>              // member (template)
-#include <util/util/Setable.h>                   // member (template)
+#include <util/misc/Setable.h>                   // member (template)
 #include <util/signal/Signal.h>                  // members
 
 #include <fstream>
 
 namespace Util { 
+   class FileMaster;
    template <typename T> class Factory; 
    class EnergyEnsemble;
    class BoundaryEnsemble;
@@ -43,7 +44,6 @@ namespace DdMd
 {
 
    class ConfigIo;
-   class FileMaster;
    class DiagnosticManager;
    class Integrator;
    class PairPotential;
@@ -81,22 +81,11 @@ namespace DdMd
       * \param communicator MPI communicator for MD processors.
       */
       Simulation(MPI::Intracomm& communicator = MPI::COMM_WORLD);
-
-      /**
-      * Constructor.
-      *
-      * \param mcSimulation parent McSimulation object.
-      * \param communicator MPI communicator for MD processors.
-      */
-      Simulation(McMd::McSimulation& mcSimulation,
-             MPI::Intracomm& communicator = MPI::COMM_WORLD);
       #else
-
       /**
       * Default constructor.
       */
       Simulation();
-
       #endif
 
       /**
@@ -117,15 +106,18 @@ namespace DdMd
       */
       void setOptions(int argc, char **argv);
 
-      /**
-      * Read parameters, allocate memory and initialize.
-      */
-      virtual void readParam(std::istream& in);
+      using ParamComposite::readParam;
 
       /**
       * Read parameters from default parameter file.
       */
       virtual void readParam();
+
+      /**
+      * Read parameters, allocate memory and initialize.
+      */
+      virtual void readParameters(std::istream& in);
+
 
       /*
       * Read and execute commands from a command file.

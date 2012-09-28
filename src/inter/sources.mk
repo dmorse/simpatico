@@ -20,11 +20,6 @@ include $(SRC_DIR)/inter/external/sources.mk
 inter_SRCS+=$(inter_external_SRCS)
 endif
 
-ifdef INTER_TETHER
-include $(SRC_DIR)/inter/tether/sources.mk
-inter_SRCS+=$(inter_tether_SRCS)
-endif
-
 inter_OBJS=$(inter_SRCS:.cpp=.o)
 
 $(inter_LIB): $(inter_OBJS)

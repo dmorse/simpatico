@@ -26,7 +26,7 @@ namespace Util
    /**
    * Factory template.
    *
-   * \ingroup Factory_Module
+   * \ingroup Manager_Module
    */
    template <typename Data>
    class Factory
@@ -256,7 +256,8 @@ namespace Util
 
          // Read parameters for the new child object, if any
          if (hasData) {
-            parent.readParamComposite(in, *typePtr);
+            parent.addParamComposite(*typePtr);
+            typePtr->readParameters(in);
          }
 
          // Read closing bracket, set indentation as for child.

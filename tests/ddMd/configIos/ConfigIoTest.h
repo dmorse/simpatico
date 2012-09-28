@@ -24,7 +24,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class ConfigIoTest: public ParamFileTest<DdMdConfigIo>
+class ConfigIoTest: public ParamFileTest
 {
 public:
 

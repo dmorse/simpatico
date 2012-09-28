@@ -44,7 +44,7 @@ namespace McMd
       /**
       * Read parameters and initialize.
       */ 
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
       * Set the type of all atoms in the molecule.

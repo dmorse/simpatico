@@ -37,7 +37,7 @@ namespace McMd
    /*
    * Read parameters
    */
-   void HoomdNPHMove::readParam(std::istream& in)
+   void HoomdNPHMove::readParameters(std::istream& in)
    {
       if ((! system().boundaryEnsemble().isIsobaric()) || (!energyEnsemble().isIsothermal()))
          UTIL_THROW("Must be in isothermal-isobaric ensemble.");

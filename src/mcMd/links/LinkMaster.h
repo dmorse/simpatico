@@ -19,7 +19,7 @@
 #include <util/containers/SSet.h> 
 #include <util/containers/PArrayIterator.h> 
 #include <util/containers/ConstPArrayIterator.h> 
-#include <util/util/Notifier.h> 
+#include <util/misc/Notifier.h> 
 
 
 namespace Util
@@ -68,7 +68,7 @@ namespace McMd
       *
       * \param in input parameter stream
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
 
       /**
       * Add a link betwen two specific Atoms.

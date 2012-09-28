@@ -23,7 +23,7 @@
 #include <util/archives/MemoryIArchive.h>
 #include <util/archives/MemoryCounter.h>
 #include <util/random/Random.h>
-#include <util/util/Observer.h>
+#include <util/misc/Observer.h>
 
 #include <sstream>
 #include <cmath>
@@ -52,12 +52,12 @@ namespace McMd
       swapAttempt_(0),
       swapAccept_(0)
    {
-
       // Precondition
       if (!system.hasPerturbation()) {
          UTIL_THROW("Parent System has no Perturbation");
       }
 
+      setClassName("ReplicaMove");
       communicatorPtr_ = &(system.simulation().communicator());
       myId_   = communicatorPtr_->Get_rank();
       nProcs_ = communicatorPtr_->Get_size();
@@ -91,9 +91,8 @@ namespace McMd
    /*
    * Read attempting interval.
    */
-   void ReplicaMove::readParam(std::istream& in)
+   void ReplicaMove::readParameters(std::istream& in)
    {
-      readBegin(in,"ReplicaMove");
       read<long>(in, "interval", interval_);
       if (interval_ <= 0) {
          UTIL_THROW("Invalid value input for interval_");
@@ -107,8 +106,6 @@ namespace McMd
       int nAtom = system().simulation().atomCapacity();
       ptPositionPtr_ = new Vector[nAtom];
       myPositionPtr_ = new Vector[nAtom];
-
-      readEnd(in);
    }
 
    /*

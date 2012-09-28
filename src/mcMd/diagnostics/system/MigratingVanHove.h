@@ -16,8 +16,8 @@
 #include <util/containers/DArray.h>             // member template
 #include <util/accumulators/AutoCorr.h>         // member template parameter
 #include <util/space/Vector.h>                  // member template parameter
-#include <util/util/Observer.h>                   
-#include <util/util/Notifier.h>                  
+#include <util/misc/Observer.h>                   
+#include <util/misc/Notifier.h>                  
 #include <util/mpi/MpiSendRecv.h>
 #include <util/mpi/MpiLogger.h>
 
@@ -80,7 +80,7 @@ namespace McMd
       *
       * \param in input parameter stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /** 
       * Clear accumulators.

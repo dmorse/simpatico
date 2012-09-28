@@ -43,7 +43,7 @@ namespace DdMd
       *
       * For velocity-verlet algorithm, reads the time step dt.
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
 
       /**
       * Setup state just before integration.

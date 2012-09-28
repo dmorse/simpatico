@@ -40,9 +40,9 @@
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
 #include <util/format/Str.h>
-#include <util/util/Log.h>
-#include <util/util/Timer.h>
-#include <util/util/ioUtil.h>
+#include <util/misc/Log.h>
+#include <util/misc/Timer.h>
+#include <util/misc/ioUtil.h>
 
 #include <ctime>
 #include <iomanip>
@@ -68,6 +68,8 @@ namespace McMd
       isInitialized_(false),
       isRestarting_(false)
    {
+      setClassName("McSimulation"); 
+
       // Set connections between this McSimulation and child McSystem
       system().setId(0);
       system().setSimulation(*this);
@@ -94,6 +96,8 @@ namespace McMd
       isInitialized_(false),
       isRestarting_(false)
    {
+      setClassName("McSimulation"); 
+
       // Set connections between this McSimulation and child McSystem
       system().setId(0);
       system().setSimulation(*this);
@@ -181,7 +185,7 @@ namespace McMd
    /*
    * Read parameters from file.
    */
-   void McSimulation::readParam(std::istream &in)
+   void McSimulation::readParameters(std::istream &in)
    {
       if (isRestarting_) {
          if (isInitialized_) {
@@ -195,10 +199,8 @@ namespace McMd
       // Record identity of parameter file
       paramFilePtr_ = &in;
 
-      readBegin(in,"McSimulation");
-
       // Read all species, diagnostics, random number seed
-      Simulation::readParam(in);
+      Simulation::readParameters(in);
 
       // Read the McSystem parameters: potential parameters, temperature etc.
       readParamComposite(in, system());
@@ -212,14 +214,13 @@ namespace McMd
 
       isValid();
       isInitialized_ = true;
-      readEnd(in);
    }
 
    /*
    * Read default parameter file.
    */
    void McSimulation::readParam()
-   {  readParam(fileMaster().paramFile()); }
+   {  ParamComposite::readParam(fileMaster().paramFile()); }
 
    /*
    * Read and execute commands from a specified command file.
@@ -714,7 +715,7 @@ namespace McMd
       // Open and read parameter (*.prm) file
       std::ifstream in;
       fileMaster().openParamIFile(filename, ".prm", in);
-      readParam(in);
+      readParameters(in);
       in.close();
 
       // Open restart (*.rst) file and associate with an archive

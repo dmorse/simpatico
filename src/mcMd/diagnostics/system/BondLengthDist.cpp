@@ -14,7 +14,7 @@
 #include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
 
 #include <util/global.h>
@@ -28,10 +28,10 @@ namespace McMd
    BondLengthDist::BondLengthDist(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("BondLengthDist"); }
 
    /// Read parameters from file, and allocate data array.
-   void BondLengthDist::readParam(std::istream& in) 
+   void BondLengthDist::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

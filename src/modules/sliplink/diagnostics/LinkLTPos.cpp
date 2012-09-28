@@ -15,7 +15,7 @@
 #include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 
 #include <util/global.h>
 
@@ -27,10 +27,10 @@ namespace McMd
    /// Constructor.
    LinkLTPos::LinkLTPos(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("LinkLTPos"); }
 
    /// Read parameters from file.
-   void LinkLTPos::readParam(std::istream& in) 
+   void LinkLTPos::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

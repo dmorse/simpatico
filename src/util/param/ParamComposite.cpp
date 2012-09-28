@@ -26,7 +26,8 @@ namespace Util
     : ParamComponent(),
       list_(),
       isLeaf_(),
-      size_(0)
+      size_(0),
+      className_("ParamComposite")
    {}
 
    /*
@@ -36,7 +37,8 @@ namespace Util
     : ParamComponent(),
       list_(),
       isLeaf_(),
-      size_(0)
+      size_(0),
+      className_("ParamComposite")
    {
       if (capacity <= 0 ) {
          UTIL_THROW("Attempt to reserve capacity <= 0");
@@ -70,6 +72,16 @@ namespace Util
       }
    }
   
+   /*
+   * Read parameter block, including begin and end.
+   */
+   void ParamComposite::readParam(std::istream &in)
+   {
+      readBegin(in, className().c_str());
+      readParameters(in);
+      readEnd(in);
+   }
+   
    /* 
    * Default writeParam implementation.
    */
@@ -211,6 +223,12 @@ namespace Util
       return *ptr;
    }
 
+   /*
+   * Set class name string.
+   */
+   void ParamComposite::setClassName(const char * className)
+   {  className_ = className; }
+      
 
 } 
 #endif

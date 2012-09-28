@@ -95,7 +95,7 @@ namespace Inter
    /* 
    * Read potential parameters from file.
    */
-   void OrthoBoxExternal::readParam(std::istream &in) 
+   void OrthoBoxExternal::readParameters(std::istream &in) 
    {
       if (nAtomType_ == 0) {
          UTIL_THROW("nAtomType must be set before readParam");

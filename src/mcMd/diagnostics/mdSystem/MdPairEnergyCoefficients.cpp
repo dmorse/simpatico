@@ -19,7 +19,7 @@
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
 #include <util/archives/Serializable_includes.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 
 namespace McMd
 {
@@ -35,7 +35,7 @@ namespace McMd
     pairPotentialPtr_(&system.pairPotential()),
     boundaryPtr_(&system.boundary()),
     maxMoleculeNeighbors_(0)
-   {}
+   {  setClassName("MdPairEnergyCoefficients"); }
 
    // Destructor
    MdPairEnergyCoefficients::~MdPairEnergyCoefficients()
@@ -58,7 +58,7 @@ namespace McMd
    }
 
    // Read input parameters
-   void MdPairEnergyCoefficients::readParam(std::istream& in)
+   void MdPairEnergyCoefficients::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

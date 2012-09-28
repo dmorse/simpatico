@@ -9,7 +9,7 @@
 */
 
 #include "MdPotentialEnergyAverage.h"        
-#include <mcMd/util/FileMaster.h>  
+#include <util/misc/FileMaster.h>  
 #include <util/archives/Serializable_includes.h>
 
 #include <cstdio> 
@@ -27,12 +27,12 @@ namespace McMd
       outputFile_(),
       accumulator_(),
       nSamplePerBlock_(1)
-   {}
+   { setClassName("MdPotentialEnergyAverage"); }
 
    /*
    * Read parameters and initialize.
    */
-   void MdPotentialEnergyAverage::readParam(std::istream& in)
+   void MdPotentialEnergyAverage::readParameters(std::istream& in)
    {
 
       readInterval(in);

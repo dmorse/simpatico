@@ -14,7 +14,7 @@
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/ensembles/BoundaryEnsemble.h>
-#include <util/util/Log.h>
+#include <util/misc/Log.h>
 #include <util/global.h>
 
 // Uncomment to enable paranoid validity checks.
@@ -45,9 +45,6 @@ namespace DdMd
       bool needExchange;
       nStep_ = nStep;
 
-      #ifdef DDMD_INTEGRATOR_DEBUG
-      simulation().isValid();
-      #endif
 
       // Compute nAtomTotal.
       atomStorage().unsetNAtomTotal();
@@ -55,10 +52,7 @@ namespace DdMd
 
       // Clear all stored computations, compute nAtomTotal.
       simulation().modifySignal().notify();
-
-      #ifdef DDMD_INTEGRATOR_DEBUG
-      simulation().isValid();
-      #endif
+      clearStatistics();
 
       // Main MD loop
       timer().start();
@@ -136,6 +130,9 @@ namespace DdMd
       exchanger().timer().stop();
       timer().stop();
 
+      // Final diagnostic output
+      simulation().diagnosticManager().output();
+             
       // Reduce statistics for run
       #ifdef UTIL_MPI
       timer().reduce(domain().communicator());

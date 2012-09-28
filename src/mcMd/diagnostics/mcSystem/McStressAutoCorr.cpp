@@ -11,7 +11,7 @@
 #include "McStressAutoCorr.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/mcSimulation/McSystem.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/global.h>
 
@@ -29,12 +29,12 @@ namespace McMd
       accumulator_(),
       capacity_(-1),
       isInitialized_(false)
-   {}
+   {  setClassName("McStressAutoCorr"); }
 
    /*
    * Read parameters from file, and allocate data array.
    */
-   void McStressAutoCorr::readParam(std::istream& in) 
+   void McStressAutoCorr::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray
@@ -48,6 +48,8 @@ namespace McMd
 
       // Allocate memory for the AutoCorrArray accumulator object
       accumulator_.setParam(capacity_);
+
+      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
 
       isInitialized_ = true;
    }
@@ -76,6 +78,7 @@ namespace McMd
          stress.symmetrize();
          double volume = system().boundary().volume();
          stress *= sqrt(volume);
+         outputFile_ << stress << std::endl;
          accumulator_.sample(stress);
       } 
    }
@@ -85,6 +88,8 @@ namespace McMd
    */
    void McStressAutoCorr::output() 
    {  
+      outputFile_.close();
+
       // Echo parameters to log file
       fileMaster().openOutputFile(outputFileName(), outputFile_);
       writeParam(outputFile_); 
@@ -101,7 +106,7 @@ namespace McMd
       outputFile_.close();
 
       // Write autocorrelation function to data file
-      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      fileMaster().openOutputFile(outputFileName("_corr.dat"), outputFile_);
       accumulator_.output(outputFile_); 
       outputFile_.close();
    }

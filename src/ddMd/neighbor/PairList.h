@@ -10,6 +10,7 @@
 
 #include "CellList.h"
 #include <util/containers/DArray.h>
+#include <util/misc/Setable.h>
 #include <util/global.h>
 
 namespace DdMd
@@ -128,9 +129,29 @@ namespace DdMd
       //@{
  
       /**
+      * Compute statistics (reduce from all processors).
+      * 
+      * Call on all processors.
+      */
+      #ifdef UTIL_MPI
+      virtual void computeStatistics(MPI::Intracomm& communicator);
+      #else
+      virtual void computeStatistics();
+      #endif
+
+      /**
       * Clear statistical accumulators (call on all processors).
       */
       void clearStatistics();
+
+      /**
+      * Output statistics.
+      *
+      * Call on master, after calling computeStatistics on all procs.
+      *
+      * \param out   output stream
+      */
+      void outputStatistics(std::ostream& out);
 
       /**
       * Get the maximum number of primary atoms encountered thus far.
@@ -150,27 +171,6 @@ namespace DdMd
       * Return number of times the PairList has been built thus far.
       */
       int buildCounter() const;
-
-      /**
-      * Compute statistics (reduce from all processors).
-      * 
-      * Call on all processors.
-      */
-      #ifdef UTIL_MPI
-      virtual void computeStatistics(MPI::Intracomm& communicator);
-      #else
-      virtual void computeStatistics();
-      #endif
-
-      /**
-      * Output statistics.
-      *
-      * Call on master, after calling computeStatistics on all procs.
-      *
-      * \param out   output stream
-      * \param nStep number of time steps in previous run
-      */
-      void outputStatistics(std::ostream& out, int nStep);
 
       //@}
 
@@ -206,15 +206,15 @@ namespace DdMd
       /// Maximum of nAtom2_ (# of pairs) on this proc since stats cleared.
       int    maxNPairLocal_;     
    
-      /// Maximum of nAtom1_ on all procs (defined only on master).
-      int    maxNAtom_;     
-   
-      /// Maximum of nAtom2_ on all procs (defined only on master).
-      int    maxNPair_;     
-   
       /// The number of times this list has been built since stats cleared.
       int    buildCounter_;
 
+      /// Maximum of nAtom1_ on all procs (defined only on master).
+      Setable<int>  maxNAtom_;     
+   
+      /// Maximum of nAtom2_ on all procs (defined only on master).
+      Setable<int>  maxNPair_;     
+   
       /// Has memory been allocated?
       bool   isAllocated_;
   
@@ -291,13 +291,13 @@ namespace DdMd
    * Get the maximum value of aAtom() since instantiation.
    */ 
    inline int PairList::maxNAtom() const
-   { return maxNAtom_; }
+   { return maxNAtom_.value(); }
 
    /*
    * Get the maximum value of nPair() since instantiation.
    */ 
    inline int PairList::maxNPair() const
-   { return maxNPair_; }
+   { return maxNPair_.value(); }
 
    /*
    * Get the number of times this PairList has been built.

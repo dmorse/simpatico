@@ -15,7 +15,7 @@
 #include <ddMd/configIos/ConfigIo.h>
 #include <ddMd/configIos/ConfigIoFactory.h>
 #include <ddMd/configIos/DdMdConfigIo.h>
-#include <ddMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <ddMd/diagnostics/DiagnosticManager.h>
 
 #ifndef DDMD_NOPAIR
@@ -43,7 +43,7 @@
 #endif
 
 // namespace McMd
-#include <mcMd/mcSimulation/McSimulation.h>
+//#include <mcMd/mcSimulation/McSimulation.h>
 
 // namespace Util
 #include <util/ensembles/EnergyEnsemble.h>
@@ -52,15 +52,15 @@
 #include <util/space/IntVector.h>
 #include <util/space/Tensor.h>
 #include <util/param/Factory.h>
-#include <util/util/Log.h>
+#include <util/misc/Log.h>
 #include <util/mpi/MpiSendRecv.h>
-#include <util/util/Timer.h>
+#include <util/misc/Timer.h>
 
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/format/Str.h>
-#include <util/util/ioUtil.h>
-#include <util/util/initStatic.h>
+#include <util/misc/ioUtil.h>
+#include <util/misc/initStatic.h>
 
 #include <fstream>
 #include <unistd.h>
@@ -158,6 +158,7 @@ namespace DdMd
       #endif
    {
       Util::initStatic();
+      setClassName("Simulation");
 
       #ifdef UTIL_MPI
       if (!MPI::Is_initialized()) {
@@ -341,12 +342,12 @@ namespace DdMd
    *  Read parameters from default parameter file. 
    */
    void Simulation::readParam()
-   {   readParam(fileMaster().paramFile()); }
+   {   ParamComposite::readParam(fileMaster().paramFile()); }
 
-   /**
+   /*
    * Read parameters, allocate memory and initialize.
    */
-   void Simulation::readParam(std::istream& in)
+   void Simulation::readParameters(std::istream& in)
    {
       // Preconditions
       assert(pairPotentialPtr_ == 0);
@@ -354,10 +355,7 @@ namespace DdMd
       assert(integratorPtr_ == 0);
       assert(configIoPtr_ == 0);
 
-      readBegin(in, "Simulation");
-
       readParamComposite(in, domain_);
-
       readFileMaster(in);
 
       // Read types
@@ -464,11 +462,9 @@ namespace DdMd
 
       positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
       positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
-
-      readEnd(in);
    }
 
-   /**
+   /*
    * If no FileMaster exists, create and initialize one. 
    */
    void Simulation::readFileMaster(std::istream &in)
@@ -476,7 +472,7 @@ namespace DdMd
       readParamComposite(in, *fileMasterPtr_);
    }
 
-   /**
+   /*
    * Read potential style strings and maskedPairPolicy.
    */
    void Simulation::readPotentialStyles(std::istream &in)
@@ -582,11 +578,17 @@ namespace DdMd
             double time  = integratorPtr_->time();
             exchanger_.outputStatistics(Log::file(), time, nStep);
          } else
-         if (command == "OUTPUT_PAIRLIST_STATS") {
+         if (command == "OUTPUT_MEMORY_STATS") {
+            atomStorage().computeStatistics(domain_.communicator());
+            bondStorage().computeStatistics(domain_.communicator());
+            buffer().computeStatistics(domain_.communicator());
             pairPotential().pairList().computeStatistics(domain_.communicator());
             if (domain_.isMaster()) {
-               int nStep = integratorPtr_->nStep();
-               pairPotential().pairList().outputStatistics(Log::file(), nStep);
+               atomStorage().outputStatistics(Log::file());
+               bondStorage().outputStatistics(Log::file());
+               buffer().outputStatistics(Log::file());
+               pairPotential().pairList().outputStatistics(Log::file());
+               Log::file() << std::endl;
             }
          } else
          if (command == "WRITE_CONFIG") {
@@ -1339,7 +1341,7 @@ namespace DdMd
 
    // Validation ------------------------------------------------------
    
-   /**
+   /*
    * Return true if this Simulation is valid, or throw an Exception.
    */
    bool Simulation::isValid()

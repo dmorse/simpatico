@@ -15,7 +15,7 @@
 #include <mcMd/species/SpeciesMutator.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 
 namespace McMd
 {
@@ -31,9 +31,9 @@ namespace McMd
       moleculeCapacity_(-1),
       speciesPtr_(0),
       mutatorPtr_(0)
-   {}
+   { setClassName("SemiGrandDistribution"); }
 
-   void SemiGrandDistribution::readParam(std::istream& in)
+   void SemiGrandDistribution::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);

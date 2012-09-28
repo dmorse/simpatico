@@ -15,8 +15,8 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/space/Dimension.h>
-#include <mcMd/util/FileMaster.h>
-#include <util/util/ioUtil.h>
+#include <util/misc/FileMaster.h>
+#include <util/misc/ioUtil.h>
 #include <util/format/Dbl.h>
 
 namespace McMd
@@ -28,13 +28,13 @@ namespace McMd
    CompositionProfile::CompositionProfile(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
-   {}
+   {  setClassName("CompositionProfile"); }
 
    CompositionProfile::~CompositionProfile() 
    {}
 
    /// Read parameters from file, and allocate direction vectors.
-   void CompositionProfile::readParam(std::istream& in) 
+   void CompositionProfile::readParameters(std::istream& in) 
    {
 
       // Read interval and output file 

@@ -2,7 +2,7 @@
 #define DDMD_POTENTIAL_H
 
 #include <util/param/ParamComposite.h>  // base class
-#include <util/util/Setable.h>          // template for members
+#include <util/misc/Setable.h>          // template for members
 #include <util/space/Tensor.h>          // parameter for member
 
 /*
@@ -101,10 +101,11 @@ namespace DdMd
       * by calling stress() on this processor.
       */
       #ifdef UTIL_MPI
-      virtual void computeStress(MPI::Intracomm& communicator) = 0;
+      virtual void computeStress(MPI::Intracomm& communicator)
       #else
-      virtual void computeStress() = 0;
+      virtual void computeStress()
       #endif
+      {}
 
       /**
       * Compute forces and stress for all processors.

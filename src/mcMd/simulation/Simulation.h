@@ -25,7 +25,7 @@
 #include <mcMd/chemistry/AtomType.h>   // member container template parameter
 #endif
 
-#include <mcMd/util/FileMaster.h>      // member
+#include <util/misc/FileMaster.h>      // member
 #include <util/random/Random.h>        // member
 #include <util/containers/RArray.h>    // member container for Atoms
 #include <util/containers/DArray.h>    // member containers (Molecules, Bonds, ...)
@@ -117,7 +117,7 @@ namespace McMd
       *
       * \param in parameter input stream
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /// \name Initialization 
       //@{
@@ -126,7 +126,7 @@ namespace McMd
       /**
       * Set MPI job to read a single parameter file.
       *
-      * A communicator must be set before calling readParam() to use
+      * A communicator must be set before calling readParameters() to use
       * allow a single parameter file to be used in a multi-processor
       * free energy perturbation simulation. This method sets an 
       * MPI communicator to be used to read parameters from a single

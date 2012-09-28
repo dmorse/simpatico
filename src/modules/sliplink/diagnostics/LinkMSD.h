@@ -15,7 +15,7 @@
 #include <util/space/Vector.h>                   // member template parameter
 #include <mcMd/links/LinkMaster.h>
 #include <mcMd/links/LinkEvents.h>
-#include <util/util/Observer.h>
+#include <util/misc/Observer.h>
 #include <util/global.h>
 
 #include <cstdio> 
@@ -53,7 +53,7 @@ namespace McMd
       *
       * \param in parameter input stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
    
       /** 
       * Empty.

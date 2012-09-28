@@ -8,7 +8,7 @@
 #include <mcMd/mdSimulation/MdSimulation.h>
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
-#include <mcMd/mdIntegrators/NVEIntegrator.h>
+#include <mcMd/mdIntegrators/NveVvIntegrator.h>
 
 #include <iostream>
 #include <fstream>
@@ -16,21 +16,21 @@
 using namespace Util;
 using namespace McMd;
 
-class MdIntegratorTest : public ParamFileTest<MdSimulation>
+class MdIntegratorTest : public ParamFileTest
 {
 
 public:
 
    MdIntegratorTest()
-    : ParamFileTest<MdSimulation>(),
+    : ParamFileTest(),
       systemPtr_(0)
    {}
 
    virtual void setUp()
    {
       openFile("in/MdIntegrator");
-      object().readParam(file());
-      systemPtr_ = &object().system();
+      simulation_.readParam(file());
+      systemPtr_ = &simulation_.system();
    }
 
    void testReadParam();
@@ -38,10 +38,10 @@ public:
 
 private:
 
+   MdSimulation  simulation_;
    MdSystem*     systemPtr_;
 
 };
-
 
 
 void MdIntegratorTest::testReadParam()
@@ -50,14 +50,14 @@ void MdIntegratorTest::testReadParam()
    using std::cout;
 
    try {
-      object().isValid();
+      simulation_.isValid();
    } catch (Exception e) {
       std::cout << e.message();
       TEST_ASSERT(0);
    }
 
    if (verbose() > 1) {
-      object().writeParam(std::cout);
+      simulation_.writeParam(std::cout);
    }
 
 }

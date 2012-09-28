@@ -9,8 +9,8 @@
 */
 
 #include "OutputPairEnergies.h"
-#include <ddMd/util/FileMaster.h>
-#include <util/util/ioUtil.h>
+#include <util/misc/FileMaster.h>
+#include <util/misc/ioUtil.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 
@@ -33,7 +33,7 @@ namespace DdMd
    /*
    * Read interval and outputFileName. 
    */
-   void OutputPairEnergies::readParam(std::istream& in) 
+   void OutputPairEnergies::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);
@@ -61,6 +61,12 @@ namespace DdMd
          sys.computePairEnergies();
          if (sys.domain().isMaster()) {
             DMatrix<double> pair = sys.pairEnergies();
+            for (int i = 0; i < simulation().nAtomType(); ++i){
+               for (int j = 0; j < simulation().nAtomType(); ++j){
+                  pair(i,j) = 0.5*( pair(i,j)+pair(j,i) );
+                  pair(j,i) = pair(i,j);
+               }
+            }
             outputFile_ << Int(iStep, 10);
             for (int i = 0; i < simulation().nAtomType(); ++i){
                for (int j = 0; j < simulation().nAtomType(); ++j){

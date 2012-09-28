@@ -19,7 +19,11 @@ using namespace Util;
 * Command line options:
 *
 *   -e  
-*    Enable echoing of parameter file to log file as it is read.
+*    Enable echoing of parameter file to log file as it is read. 
+*    This is sometimes useful for debugging the parameter file.
+*
+*  -s nSystem 
+*   Split communicator nSystem processor groups, each for a different system.
 */
 int main(int argc, char **argv)
 {
@@ -34,7 +38,7 @@ int main(int argc, char **argv)
    DdMd::Simulation simulation();
    #endif
 
-   // Read command line options.
+   // Read and apply command line options.
    simulation.setOptions(argc, argv); 
 
    // Read parameter file from default param stream (read on master).

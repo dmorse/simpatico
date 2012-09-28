@@ -149,7 +149,7 @@ namespace McMd
       *
       * \param in input stream.
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /**
       * Set integer id for this Species.

@@ -14,7 +14,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/global.h>
 
@@ -37,12 +37,12 @@ namespace McMd
       atom2Id_(-1),
       capacity_(-1),
       isInitialized_(false)
-   {}
+   {  setClassName("IntraPairAutoCorr"); }
 
    /*
    * Read parameters from file, and allocate data array.
    */
-   void IntraPairAutoCorr::readParam(std::istream& in) 
+   void IntraPairAutoCorr::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

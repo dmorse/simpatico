@@ -25,7 +25,7 @@ namespace Util
       nBin_(0),
       nSample_(0),
       nReject_(0)
-   {}
+   {  setClassName("IntDistribution"); }
    
    /* 
    * Copy constructor.

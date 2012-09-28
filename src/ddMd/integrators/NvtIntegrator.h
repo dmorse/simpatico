@@ -39,7 +39,7 @@ namespace DdMd
       /**
       * Read required parameters.
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
 
       /**
       * Setup state just before integration.

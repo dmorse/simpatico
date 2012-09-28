@@ -24,12 +24,12 @@
 #include <mcMd/perturb/ReplicaMove.h>
 #include <util/math/Constants.h>
 #include <util/space/Dimension.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/archives/MemoryOArchive.h>
 #include <util/archives/MemoryIArchive.h>
 #include <util/archives/MemoryCounter.h>
-#include <util/util/ioUtil.h>
+#include <util/misc/ioUtil.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 
@@ -45,6 +45,7 @@ namespace McMd
       replicaMovePtr_(&system.replicaMove()),
       isInitialized_(false)
    {  
+      setClassName("MigratingVanHove"); 
       communicatorPtr_ = &(system.simulation().communicator());
    }
   
@@ -53,7 +54,7 @@ namespace McMd
    {}
 
    /// Read parameters from file, and allocate data array.
-   void MigratingVanHove::readParam(std::istream& in) 
+   void MigratingVanHove::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

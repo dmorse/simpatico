@@ -11,7 +11,7 @@
 
 #include "McExternalEnergyAverage.h"        // class header
 
-#include <mcMd/util/FileMaster.h>  
+#include <util/misc/FileMaster.h>  
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/potentials/external/ExternalPotential.h>
@@ -34,12 +34,12 @@ namespace McMd
       accumulator_(),
       nSamplePerBlock_(1),
       isInitialized_(false)
-   {}
+   {  setClassName("McExternalEnergyAverage"); }
 
    /*
    * Read parameters and initialize.
    */
-   void McExternalEnergyAverage::readParam(std::istream& in)
+   void McExternalEnergyAverage::readParameters(std::istream& in)
    {
 
       readInterval(in);

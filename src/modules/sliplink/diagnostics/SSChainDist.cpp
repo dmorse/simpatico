@@ -15,7 +15,7 @@
 #include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 
 #include <util/global.h>
 
@@ -27,7 +27,7 @@ namespace McMd
    /// Constructor.
    SSChainDist::SSChainDist(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("SSChainDist"); }
 
    /// Read parameters from file.
    /// Suggested values for the histogram:
@@ -35,7 +35,7 @@ namespace McMd
    /// max    chainlength                        
    /// nBin   chainlength+1
    
-   void SSChainDist::readParam(std::istream& in) 
+   void SSChainDist::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

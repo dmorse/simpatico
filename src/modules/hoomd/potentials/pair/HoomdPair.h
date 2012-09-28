@@ -36,7 +36,7 @@ namespace McMd
 
    /**
    * A potential encapsulating a HOOMD evaluator.
-   * Actual implementations have to provide a readParam() method.
+   * Actual implementations have to provide a readParameters() method.
    * See HoomdLJPair for an example.
    *
    * \ingroup Pair_Module
@@ -65,7 +65,7 @@ namespace McMd
       /**
       * read parameters from file
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
   
       /* Calculate force divided by distance 
       *
@@ -296,10 +296,10 @@ namespace McMd
       cudaError_t gpu_cgpf(const pair_args_t& pair_args,
       const typename hoomd_evaluator::param_type *d_params),
       const char *name>
-   void HoomdPair< hoomd_evaluator, gpu_cgpf, name >::readParam(
+   void HoomdPair< hoomd_evaluator, gpu_cgpf, name >::readParameters(
       std::istream &in)
    {
-      UTIL_THROW("readParam() not implemented.");
+      UTIL_THROW("readParameters() not implemented.");
    }
 
    /**

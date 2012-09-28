@@ -170,6 +170,8 @@ protected:
       //if (isIoProcessor()) {
          std::string filename = filePrefix_;
          filename += name;
+         //std::cout << std::endl;
+         //std::cout << "Opening file  " << filename << std::endl;
          in.open(filename.c_str());
          if (in.fail()) {
             std::cout << std::endl;

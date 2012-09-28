@@ -35,8 +35,8 @@ namespace McMd
 
    /**
    * A potential encapsulating a HOOMD evaluator.
-   * Actual implementations have to provide a readParam() method.
-   * See HoomdLamellarExternal for an example.
+   * Actual implementations have to provide a readParameters() method.
+   * See HoomdPeriodicExternal for an example.
    *
    * \ingroup External_Module
    */
@@ -65,7 +65,7 @@ namespace McMd
       /**
       * read parameters from file
       */
-      virtual void readParam(std::istream &in) = 0;
+      virtual void readParameters(std::istream &in) = 0;
 
       /**
       * Set pointer to Boundary.

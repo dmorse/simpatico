@@ -53,7 +53,7 @@ namespace McMd
       *
       * \param in input file stream.
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /**
       * Setup private variables before main loop.

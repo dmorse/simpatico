@@ -15,7 +15,7 @@
 #include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 
 #include <util/global.h>
 
@@ -27,10 +27,10 @@ namespace McMd
    /// Constructor.
    LinkLengthDist::LinkLengthDist(System& system) 
     : SystemDiagnostic<System>(system)
-   {}
+   {  setClassName("LinkLengthDist"); }
 
    /// Read parameters from file, and allocate data array.
-   void LinkLengthDist::readParam(std::istream& in) 
+   void LinkLengthDist::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);

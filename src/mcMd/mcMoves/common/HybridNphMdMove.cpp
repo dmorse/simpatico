@@ -37,6 +37,7 @@ namespace McMd
       barostatMass_(0.0),
       mode_()
    {
+      setClassName("HybridNphMdMove");
       mdSystemPtr_ = new MdSystem(system);
       oldPositions_.allocate(simulation().atomCapacity());
    }
@@ -54,7 +55,7 @@ namespace McMd
    /*
    * Read parameter maxDisp
    */
-   void HybridNphMdMove::readParam(std::istream& in)
+   void HybridNphMdMove::readParameters(std::istream& in)
    {
       readProbability(in);
       read<int>(in, "nStep", nStep_);

@@ -47,7 +47,7 @@ namespace McMd
       /**
       * Read nStep, dt, skin, maxNPair from file.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
    
       /**
       * Generate, attempt and accept or reject a move.

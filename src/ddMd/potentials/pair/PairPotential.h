@@ -4,7 +4,7 @@
 #include <ddMd/potentials/Potential.h>  // base class
 #include <ddMd/neighbor/CellList.h>     // member
 #include <ddMd/neighbor/PairList.h>     // member
-#include <ddMd/util/DdTimer.h>          // member
+#include <ddMd/misc/DdTimer.h>          // member
 #include <util/boundary/Boundary.h>     // member (typedef)
 #include <util/global.h>
 

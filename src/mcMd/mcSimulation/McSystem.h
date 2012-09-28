@@ -58,7 +58,7 @@ namespace McMd
       /**
       * Read parameters from input file.
       *
-      * This method first calls System::readParam(in).
+      * This method first calls System::readParameters(in).
       *
       * Finally, it allocates a CellList, and builds the new CellList if an
       * initial configuration has been read previously by System::readParam.
@@ -67,7 +67,7 @@ namespace McMd
       *
       * \param in file stream.
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /**
       * Read system configuration from file.

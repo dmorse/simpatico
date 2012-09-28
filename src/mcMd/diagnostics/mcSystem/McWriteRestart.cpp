@@ -10,8 +10,8 @@
 
 #include "McWriteRestart.h"
 #include <mcMd/mcSimulation/McSimulation.h>
-//#include <mcMd/util/FileMaster.h>
-#include <util/util/ioUtil.h>
+//#include <util/misc/FileMaster.h>
+#include <util/misc/ioUtil.h>
 
 #include <sstream>
 
@@ -27,12 +27,12 @@ namespace McMd
     : Diagnostic(),
       filename_(),
       simulationPtr_(&simulation)
-   {}
+   {  setClassName("McWriteRestart"); }
 
    /*
    * Read interval and outputFileName. 
    */
-   void McWriteRestart::readParam(std::istream& in) 
+   void McWriteRestart::readParameters(std::istream& in) 
    {
       readInterval(in);
       read<std::string>(in, "fileName", filename_);

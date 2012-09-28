@@ -5,6 +5,46 @@ Boundary classes
 
 - Add minimumDeformRatio method to Boundary classes.
 
-- Add bool isOrthorhombic() method to Boundary classes.
-  Use to test other classes that call Boundary::lengths().
+- Add bool isOrthogonal() method to Boundary classes. Use to 
+  test other classes that call Boundary::lengths().
+
+ParamComponent Classes
+----------------------
+
+- Add ability to have optional Parameters and ParamComposite.
+  To do this:
+
+  * Add buffer to Label class, and method to read label for optional element
+  * Make sure ParamComposite and Parameter labels are all read by Label class.
+  * Add new methods to ParamComposite to attempt to read optional elements, or
+    add a bool flag object to indicate that the element is optional.
+
+-> Work in branch
+
+Serialization
+-------------
+
+Create ability to do true binary serialization, with single restart file for 
+each system. Required changes in Util namespace:
+
+  - Create serialize methods for pointer containers. These should allocate data, 
+    but not copy pointers. 
+
+  - Create serialize methods for Manager template that save the class names, and 
+    that uses the factory to reconstruct associated objects during loading. After
+    instantiation, the serialize method should be called for each such object.
+
+  - Create serialize methods for all base classes defined in Util (e.g., ParamComposite). 
+    These must be called explicitly in subclass serialize methods.
+
+  Further changes to McMd namespace are discussed there. These include:
+
+  - Create serialize methods for all objects created by factories. Base class 
+    methods should just throw exceptions.
+
+  - Make sure that loading methods explicitly allocate all required memory, and 
+    create required associations between child objects.
+
+  - Create serialization method (serialize or save and load) for Simulation that 
+    initialize all pointers after allocating all arrays.
 

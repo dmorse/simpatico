@@ -21,19 +21,23 @@
 using namespace Util;
 using namespace DdMd;
 
-class AtomStorageTest : public ParamFileTest<AtomStorage>
+class AtomStorageTest : public ParamFileTest
 {
+
+private:
+
+   AtomStorage storage_;
 
 public:
 
    virtual void setUp()
    { 
       #ifdef UTIL_MPI 
-      object().setParamCommunicator(communicator());
+      storage_.setParamCommunicator(communicator());
       #endif
 
       openFile("in/AtomStorage"); 
-      object().readParam(file()); 
+      storage_.readParam(file()); 
    }
 
    void testReadParam();
@@ -56,7 +60,7 @@ inline void AtomStorageTest::testReadParam()
 {  
    printMethod(TEST_FUNC); 
    if (verbose() > 0) {
-      object().writeParam(std::cout);
+      storage_.writeParam(std::cout);
    }
 }
 
@@ -64,32 +68,32 @@ inline void AtomStorageTest::testAddAtoms()
 {
    printMethod(TEST_FUNC);
 
-   Atom* ptr53 = object().addAtom(53);
-   TEST_ASSERT(object().find(53) == ptr53);
+   Atom* ptr53 = storage_.addAtom(53);
+   TEST_ASSERT(storage_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(object().nAtom() == 1);
-   TEST_ASSERT(object().nGhost() == 0);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(storage_.nAtom() == 1);
+   TEST_ASSERT(storage_.nGhost() == 0);
+   TEST_ASSERT(storage_.isValid());
 
-   Atom* ptr18 = object().addAtom(18);
-   TEST_ASSERT(object().find(18) == ptr18);
+   Atom* ptr18 = storage_.addAtom(18);
+   TEST_ASSERT(storage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().find(53) == ptr53);
+   TEST_ASSERT(storage_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(object().nAtom() == 2);
-   TEST_ASSERT(object().nGhost() == 0);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(storage_.nAtom() == 2);
+   TEST_ASSERT(storage_.nGhost() == 0);
+   TEST_ASSERT(storage_.isValid());
 
-   Atom* ptr35 = object().addGhost(35);
-   TEST_ASSERT(object().find(53) == ptr53);
+   Atom* ptr35 = storage_.addGhost(35);
+   TEST_ASSERT(storage_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(object().find(35) == ptr35);
+   TEST_ASSERT(storage_.find(35) == ptr35);
    TEST_ASSERT(ptr35->id() == 35);
-   TEST_ASSERT(object().find(18) == ptr18);
+   TEST_ASSERT(storage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().nAtom() == 2);
-   TEST_ASSERT(object().nGhost() == 1);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(storage_.nAtom() == 2);
+   TEST_ASSERT(storage_.nGhost() == 1);
+   TEST_ASSERT(storage_.isValid());
 
 }
 
@@ -98,68 +102,68 @@ void AtomStorageTest::testAddRemoveAtoms()
    printMethod(TEST_FUNC);
 
    // Add two atoms
-   Atom* ptr53 = object().addAtom(53);
-   Atom* ptr18 = object().addAtom(18);
+   Atom* ptr53 = storage_.addAtom(53);
+   Atom* ptr18 = storage_.addAtom(18);
 
-   TEST_ASSERT(object().find(53) == ptr53);
+   TEST_ASSERT(storage_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(object().find(18) == ptr18);
+   TEST_ASSERT(storage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().nAtom() == 2);
-   TEST_ASSERT(object().nGhost() == 0);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(storage_.nAtom() == 2);
+   TEST_ASSERT(storage_.nGhost() == 0);
+   TEST_ASSERT(storage_.isValid());
 
    // Remove one atom
-   object().removeAtom(ptr53);
-   TEST_ASSERT(object().find(53) == 0);
+   storage_.removeAtom(ptr53);
+   TEST_ASSERT(storage_.find(53) == 0);
    TEST_ASSERT(ptr53->id() < 0);
-   TEST_ASSERT(object().find(18) == ptr18);
+   TEST_ASSERT(storage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().nAtom() == 1);
-   TEST_ASSERT(object().nGhost() == 0);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(storage_.nAtom() == 1);
+   TEST_ASSERT(storage_.nGhost() == 0);
+   TEST_ASSERT(storage_.isValid());
 
    // Add two atoms
-   Atom* ptr67 = object().addAtom(67);
-   Atom* ptr44 = object().addAtom(44);
-   TEST_ASSERT(object().find(53) == 0);
-   TEST_ASSERT(object().find(18) == ptr18);
+   Atom* ptr67 = storage_.addAtom(67);
+   Atom* ptr44 = storage_.addAtom(44);
+   TEST_ASSERT(storage_.find(53) == 0);
+   TEST_ASSERT(storage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().find(67) == ptr67);
+   TEST_ASSERT(storage_.find(67) == ptr67);
    TEST_ASSERT(ptr67->id() == 67);
-   TEST_ASSERT(object().find(44) == ptr44);
+   TEST_ASSERT(storage_.find(44) == ptr44);
    TEST_ASSERT(ptr44->id() == 44);
-   TEST_ASSERT(object().nAtom() == 3);
-   TEST_ASSERT(object().nGhost() == 0);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(storage_.nAtom() == 3);
+   TEST_ASSERT(storage_.nGhost() == 0);
+   TEST_ASSERT(storage_.isValid());
 
-   Atom* ptr35 = object().addGhost(35);
-   TEST_ASSERT(object().find(35) == ptr35);
+   Atom* ptr35 = storage_.addGhost(35);
+   TEST_ASSERT(storage_.find(35) == ptr35);
    TEST_ASSERT(ptr35->id() == 35);
-   TEST_ASSERT(object().nGhost() == 1);
-   Atom* ptr82 = object().addGhost(82);
-   TEST_ASSERT(object().find(82) == ptr82);
+   TEST_ASSERT(storage_.nGhost() == 1);
+   Atom* ptr82 = storage_.addGhost(82);
+   TEST_ASSERT(storage_.find(82) == ptr82);
    TEST_ASSERT(ptr82->id() == 82);
-   TEST_ASSERT(object().find(35) == ptr35);
+   TEST_ASSERT(storage_.find(35) == ptr35);
    TEST_ASSERT(ptr35->id() == 35);
-   TEST_ASSERT(object().nAtom() == 3);
-   TEST_ASSERT(object().nGhost() == 2);
+   TEST_ASSERT(storage_.nAtom() == 3);
+   TEST_ASSERT(storage_.nGhost() == 2);
 
-   object().removeGhost(ptr35);
-   TEST_ASSERT(object().find(53) == 0);
-   TEST_ASSERT(object().find(35) == 0);
+   storage_.removeGhost(ptr35);
+   TEST_ASSERT(storage_.find(53) == 0);
+   TEST_ASSERT(storage_.find(35) == 0);
    TEST_ASSERT(ptr35->id() < 0);
-   TEST_ASSERT(object().find(18) == ptr18);
+   TEST_ASSERT(storage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().find(67) == ptr67);
+   TEST_ASSERT(storage_.find(67) == ptr67);
    TEST_ASSERT(ptr67->id() == 67);
-   TEST_ASSERT(object().find(82) == ptr82);
+   TEST_ASSERT(storage_.find(82) == ptr82);
    TEST_ASSERT(ptr82->id() == 82);
-   TEST_ASSERT(object().find(44) == ptr44);
+   TEST_ASSERT(storage_.find(44) == ptr44);
    TEST_ASSERT(ptr44->id() == 44);
-   TEST_ASSERT(object().nAtom() == 3);
-   TEST_ASSERT(object().nGhost() == 1);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(storage_.nAtom() == 3);
+   TEST_ASSERT(storage_.nGhost() == 1);
+   TEST_ASSERT(storage_.isValid());
 
 }
 
@@ -170,30 +174,30 @@ void AtomStorageTest::testClearGhosts()
    DPArray<Atom> localAtoms;
    DPArray<Atom> ghostAtoms;
 
-   localAtoms.allocate(object().atomCapacity());
-   ghostAtoms.allocate(object().ghostCapacity());
+   localAtoms.allocate(storage_.atomCapacity());
+   ghostAtoms.allocate(storage_.ghostCapacity());
 
    // Add atoms
-   localAtoms.append(*object().addAtom(53));
-   localAtoms.append(*object().addAtom(18));
-   localAtoms.append(*object().addAtom(39));
-   localAtoms.append(*object().addAtom(44));
-   localAtoms.append(*object().addAtom(82));
+   localAtoms.append(*storage_.addAtom(53));
+   localAtoms.append(*storage_.addAtom(18));
+   localAtoms.append(*storage_.addAtom(39));
+   localAtoms.append(*storage_.addAtom(44));
+   localAtoms.append(*storage_.addAtom(82));
 
    // Add ghosts
-   ghostAtoms.append(*object().addGhost(35));
-   ghostAtoms.append(*object().addGhost(84));
-   ghostAtoms.append(*object().addGhost(17));
-   ghostAtoms.append(*object().addGhost(94));
+   ghostAtoms.append(*storage_.addGhost(35));
+   ghostAtoms.append(*storage_.addGhost(84));
+   ghostAtoms.append(*storage_.addGhost(17));
+   ghostAtoms.append(*storage_.addGhost(94));
 
-   TEST_ASSERT(object().nAtom() == 5);
-   TEST_ASSERT(object().nGhost() == 4);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(storage_.nAtom() == 5);
+   TEST_ASSERT(storage_.nGhost() == 4);
+   TEST_ASSERT(storage_.isValid());
 
-   object().clearGhosts();
-   TEST_ASSERT(object().nAtom() == 5);
-   TEST_ASSERT(object().nGhost() == 0);
-   TEST_ASSERT(object().isValid());
+   storage_.clearGhosts();
+   TEST_ASSERT(storage_.nAtom() == 5);
+   TEST_ASSERT(storage_.nGhost() == 0);
+   TEST_ASSERT(storage_.isValid());
 }
  
 void AtomStorageTest::testIterators()
@@ -203,49 +207,49 @@ void AtomStorageTest::testIterators()
    DPArray<Atom> localAtoms;
    DPArray<Atom> ghostAtoms;
 
-   localAtoms.allocate(object().atomCapacity());
-   ghostAtoms.allocate(object().ghostCapacity());
+   localAtoms.allocate(storage_.atomCapacity());
+   ghostAtoms.allocate(storage_.ghostCapacity());
 
    // Add local atoms
-   localAtoms.append(*object().addAtom(53));
-   localAtoms.append(*object().addAtom(18));
-   localAtoms.append(*object().addAtom(44));
-   localAtoms.append(*object().addAtom(82));
-   localAtoms.append(*object().addAtom(39));
+   localAtoms.append(*storage_.addAtom(53));
+   localAtoms.append(*storage_.addAtom(18));
+   localAtoms.append(*storage_.addAtom(44));
+   localAtoms.append(*storage_.addAtom(82));
+   localAtoms.append(*storage_.addAtom(39));
 
    // Add ghosts
-   ghostAtoms.append(*object().addGhost(35));
-   ghostAtoms.append(*object().addGhost(17));
-   TEST_ASSERT(object().isValid());
+   ghostAtoms.append(*storage_.addGhost(35));
+   ghostAtoms.append(*storage_.addGhost(17));
+   TEST_ASSERT(storage_.isValid());
  
    AtomIterator localIter;
    int nLocal = 0; 
-   for (object().begin(localIter); localIter.notEnd(); ++localIter) {
+   for (storage_.begin(localIter); localIter.notEnd(); ++localIter) {
       ++nLocal;
       //std::cout << localIter->id() << std::endl;
    }
-   TEST_ASSERT(nLocal == object().nAtom());
+   TEST_ASSERT(nLocal == storage_.nAtom());
    TEST_ASSERT(nLocal == 5);
 
    GhostIterator ghostIter;
    int nGhost = 0; 
-   for (object().begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
+   for (storage_.begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
       ++nGhost;
       //std::cout << ghostIter->id() << std::endl;
    }
-   TEST_ASSERT(nGhost == object().nGhost());
+   TEST_ASSERT(nGhost == storage_.nGhost());
    TEST_ASSERT(nGhost == 2);
 
-   object().removeAtom(&localAtoms[1]);
+   storage_.removeAtom(&localAtoms[1]);
    --nLocal;
-   TEST_ASSERT(object().isValid());
-   TEST_ASSERT(nLocal == object().nAtom());
+   TEST_ASSERT(storage_.isValid());
+   TEST_ASSERT(nLocal == storage_.nAtom());
    TEST_ASSERT(nLocal == 4);
 
-   object().removeGhost(&ghostAtoms[1]);
+   storage_.removeGhost(&ghostAtoms[1]);
    --nGhost;
-   TEST_ASSERT(object().isValid());
-   TEST_ASSERT(nGhost == object().nGhost());
+   TEST_ASSERT(storage_.isValid());
+   TEST_ASSERT(nGhost == storage_.nGhost());
    TEST_ASSERT(nGhost == 1);
 
 }
@@ -255,43 +259,43 @@ void AtomStorageTest::testSnapshot()
    printMethod(TEST_FUNC);
 
    DPArray<Atom> atoms;
-   atoms.allocate(object().atomCapacity());
+   atoms.allocate(storage_.atomCapacity());
 
    // Add atoms
-   atoms.append(*object().addAtom(53));
-   atoms.append(*object().addAtom(35));
-   atoms.append(*object().addAtom(18));
-   atoms.append(*object().addAtom(44));
-   atoms.append(*object().addAtom(17));
-   TEST_ASSERT(object().isValid());
+   atoms.append(*storage_.addAtom(53));
+   atoms.append(*storage_.addAtom(35));
+   atoms.append(*storage_.addAtom(18));
+   atoms.append(*storage_.addAtom(44));
+   atoms.append(*storage_.addAtom(17));
+   TEST_ASSERT(storage_.isValid());
 
    Atom* ptr;
 
-   ptr = object().find(53);
+   ptr = storage_.find(53);
    TEST_ASSERT(ptr !=0 );
    ptr->position()[0] = 0.1;
    ptr->position()[1] = 1.1;
    ptr->position()[2] = 2.1;
 
-   ptr = object().find(35);
+   ptr = storage_.find(35);
    TEST_ASSERT(ptr !=0 );
    ptr->position()[0] = 0.2;
    ptr->position()[1] = 3.1;
    ptr->position()[2] = 2.8;
 
-   ptr = object().find(18);
+   ptr = storage_.find(18);
    TEST_ASSERT(ptr !=0 );
    ptr->position()[0] = 5.2;
    ptr->position()[1] = 2.1;
    ptr->position()[2] = 2.7;
 
-   ptr = object().find(44);
+   ptr = storage_.find(44);
    TEST_ASSERT(ptr !=0 );
    ptr->position()[0] = 5.2;
    ptr->position()[1] = 2.1;
    ptr->position()[2] = 2.7;
 
-   ptr = object().find(17);
+   ptr = storage_.find(17);
    TEST_ASSERT(ptr !=0 );
    ptr->position()[0] = 2.4;
    ptr->position()[1] = 8.8;
@@ -306,38 +310,38 @@ void AtomStorageTest::testSnapshot()
    // This simply marks the coordinate system as Cartesian.
    AtomIterator iter;
    Vector Rg;
-   for (object().begin(iter); iter.notEnd(); ++iter) {
+   for (storage_.begin(iter); iter.notEnd(); ++iter) {
       boundary.transformCartToGen(iter->position(), Rg);
       iter->position() = Rg; 
    }
-   object().transformGenToCart(boundary);
+   storage_.transformGenToCart(boundary);
 
-   object().makeSnapshot();
-   TEST_ASSERT( eq(object().maxSqDisplacement(), 0.0));
-   object().clearSnapshot();
+   storage_.makeSnapshot();
+   TEST_ASSERT( eq(storage_.maxSqDisplacement(), 0.0));
+   storage_.clearSnapshot();
 
-   object().makeSnapshot();
-   ptr = object().find(44);
+   storage_.makeSnapshot();
+   ptr = storage_.find(44);
    ptr->position()[0] += -0.25;
    ptr->position()[1] +=  0.15;
-   ptr = object().find(18);
+   ptr = storage_.find(18);
    ptr->position()[0] +=  0.05;
    ptr->position()[1] +=  0.10;
    ptr->position()[2] +=  0.15;
-   ptr = object().find(35);
+   ptr = storage_.find(35);
    ptr->position()[0] +=  0.01;
    ptr->position()[1] +=  0.15;
    ptr->position()[2] +=  0.25;
-   ptr = object().find(17); // maximum displacement
+   ptr = storage_.find(17); // maximum displacement
    ptr->position()[0] +=  0.20;
    ptr->position()[1] +=  0.05;
    ptr->position()[2] += -0.30;
 
    //std::cout << std::endl;
-   //std::cout << object().maxSqDisplacement();
+   //std::cout << storage_.maxSqDisplacement();
 
-   TEST_ASSERT(eq(object().maxSqDisplacement(), 0.1325));
-   object().clearSnapshot();
+   TEST_ASSERT(eq(storage_.maxSqDisplacement(), 0.1325));
+   storage_.clearSnapshot();
 
 }
  
@@ -351,36 +355,36 @@ void AtomStorageTest::testTransforms()
    DArray<Vector> cPositions;
    Random        random;
 
-   localAtoms.allocate(object().atomCapacity());
-   ghostAtoms.allocate(object().ghostCapacity());
-   int totalCapacity = object().atomCapacity() + object().ghostCapacity();
+   localAtoms.allocate(storage_.atomCapacity());
+   ghostAtoms.allocate(storage_.ghostCapacity());
+   int totalCapacity = storage_.atomCapacity() + storage_.ghostCapacity();
    gPositions.allocate(totalCapacity); 
    cPositions.allocate(totalCapacity);
    random.setSeed(274454136);
 
    // Add local atoms
-   localAtoms.append(*object().addAtom(53));
-   localAtoms.append(*object().addAtom(18));
-   localAtoms.append(*object().addAtom(44));
-   localAtoms.append(*object().addAtom(82));
-   localAtoms.append(*object().addAtom(39));
-   localAtoms.append(*object().addAtom(21));
-   localAtoms.append(*object().addAtom(76));
+   localAtoms.append(*storage_.addAtom(53));
+   localAtoms.append(*storage_.addAtom(18));
+   localAtoms.append(*storage_.addAtom(44));
+   localAtoms.append(*storage_.addAtom(82));
+   localAtoms.append(*storage_.addAtom(39));
+   localAtoms.append(*storage_.addAtom(21));
+   localAtoms.append(*storage_.addAtom(76));
 
    // Add ghosts
-   ghostAtoms.append(*object().addGhost(35));
-   ghostAtoms.append(*object().addGhost(17));
-   ghostAtoms.append(*object().addGhost(92));
-   ghostAtoms.append(*object().addGhost(28));
-   ghostAtoms.append(*object().addGhost(73));
+   ghostAtoms.append(*storage_.addGhost(35));
+   ghostAtoms.append(*storage_.addGhost(17));
+   ghostAtoms.append(*storage_.addGhost(92));
+   ghostAtoms.append(*storage_.addGhost(28));
+   ghostAtoms.append(*storage_.addGhost(73));
 
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(storage_.isValid());
  
    AtomIterator localIter;
    int nLocal = 0; 
    int i = 0;
    int j;
-   for (object().begin(localIter); localIter.notEnd(); ++localIter) {
+   for (storage_.begin(localIter); localIter.notEnd(); ++localIter) {
       for (j = 0; j < Dimension; ++j) {
          localIter->position()[j] = random.uniform(-0.5, 1.5);
       }
@@ -388,12 +392,12 @@ void AtomStorageTest::testTransforms()
       ++nLocal;
       ++i;
    }
-   TEST_ASSERT(nLocal == object().nAtom());
+   TEST_ASSERT(nLocal == storage_.nAtom());
    TEST_ASSERT(nLocal == 7);
 
    GhostIterator ghostIter;
    int nGhost = 0; 
-   for (object().begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
+   for (storage_.begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
       for (j = 0; j < Dimension; ++j) {
          ghostIter->position()[j] = random.uniform(-0.5, 1.5);
       }
@@ -401,28 +405,28 @@ void AtomStorageTest::testTransforms()
       ++nGhost;
       ++i;
    }
-   TEST_ASSERT(nGhost == object().nGhost());
+   TEST_ASSERT(nGhost == storage_.nGhost());
    TEST_ASSERT(nGhost == 5);
 
    OrthorhombicBoundary boundary;
    Vector L(2.0, 3.0, 4.0);
    boundary.setOrthorhombic(L);
 
-   TEST_ASSERT(!object().isCartesian());
-   object().transformGenToCart(boundary);
-   TEST_ASSERT(object().isCartesian());
-   object().transformCartToGen(boundary);
-   TEST_ASSERT(!object().isCartesian());
+   TEST_ASSERT(!storage_.isCartesian());
+   storage_.transformGenToCart(boundary);
+   TEST_ASSERT(storage_.isCartesian());
+   storage_.transformCartToGen(boundary);
+   TEST_ASSERT(!storage_.isCartesian());
 
    // Check against stored positions
    i = 0;
-   for (object().begin(localIter); localIter.notEnd(); ++localIter) {
+   for (storage_.begin(localIter); localIter.notEnd(); ++localIter) {
       for (j = 0; j < Dimension; ++j) {
          TEST_ASSERT(eq(localIter->position()[j], gPositions[i][j]));
       }
       ++i;
    }
-   for (object().begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
+   for (storage_.begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
       for (j = 0; j < Dimension; ++j) {
          TEST_ASSERT(eq(ghostIter->position()[j], gPositions[i][j]));
       }

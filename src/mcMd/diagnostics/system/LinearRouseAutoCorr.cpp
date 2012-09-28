@@ -14,7 +14,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
-#include <mcMd/util/FileMaster.h>
+#include <util/misc/FileMaster.h>
 
 #include <util/global.h>
 
@@ -38,7 +38,7 @@ namespace McMd
       p_(-1),
       capacity_(-1),
       isInitialized_(false)
-   {}
+   {  setClassName("LinearRouseAutoCorr"); }
 
    /*
    * Destructor.
@@ -49,7 +49,7 @@ namespace McMd
    /*
    * Read parameters from file.
    */
-   void LinearRouseAutoCorr::readParam(std::istream& in) 
+   void LinearRouseAutoCorr::readParameters(std::istream& in) 
    {
 
       // Read interval and parameters for AutoCorrArray

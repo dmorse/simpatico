@@ -17,11 +17,15 @@ namespace DdMd
    /*
    * Read parameters and allocate memory.
    */
-   void BondStorage::readParam(std::istream& in)
+   BondStorage::BondStorage()
+   { setClassName("BondStorage"); }
+
+   /*
+   * Read parameters and allocate memory.
+   */
+   void BondStorage::readParameters(std::istream& in)
    {
-      readBegin(in, "BondStorage");
-      GroupStorage<2>::readParam(in);
-      readEnd(in);
+      GroupStorage<2>::readParameters(in);
    }
 
 }

@@ -31,7 +31,7 @@ namespace DdMd
       recvArraySize_(-1),
       recvArrayId_(-1),
       isComplete_(false)
-   {}
+   {  setClassName("GroupCollector"); }
 
    /*
    * Destructor.

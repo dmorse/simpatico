@@ -14,7 +14,7 @@
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
-#include <mcMd/util/FileMaster.h>        
+#include <util/misc/FileMaster.h>        
 
 
 namespace McMd
@@ -31,10 +31,10 @@ namespace McMd
       velx_(),
       nSpec_(0),
       slabWidth_(0.0)
-   {}
+   {  setClassName("VelProf"); }
 
    /// Read parameters from file, and allocate data arrays.
-   void VelProf::readParam(std::istream& in) 
+   void VelProf::readParameters(std::istream& in) 
    {
 
       readInterval(in);

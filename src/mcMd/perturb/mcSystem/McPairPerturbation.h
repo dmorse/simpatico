@@ -57,7 +57,7 @@ namespace McMd
       *
       * \param in input stream (file or std in).
       */ 
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
  
       /**
       * Set pair interaction parameter epsilon(0,1) for this System.
@@ -110,7 +110,7 @@ namespace McMd
    McPairPerturbation<Interaction>::McPairPerturbation(McSystem& system)
     : LinearPerturbation<McSystem>(system),
       interactionPtr_(0)
-   {}
+   {  setClassName("McPairPerturbation"); }
 
    /*
    * Destructor.
@@ -123,7 +123,7 @@ namespace McMd
    * Read epsilon(0,1) from file
    */
    template < class Interaction >
-   void McPairPerturbation<Interaction>::readParam(std::istream& in)
+   void McPairPerturbation<Interaction>::readParameters(std::istream& in)
    {  
       Perturbation::readParameters(in); 
       nParameters_ = Perturbation::getNParameters();

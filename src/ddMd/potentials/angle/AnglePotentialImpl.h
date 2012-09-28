@@ -59,10 +59,10 @@ namespace DdMd
       * Read potential energy parameters.
       * 
       * This method reads the angle potential Interaction parameter
-      * block. Before calling Interaction::readParam(), it passes
+      * block. Before calling Interaction::readParameters(), it passes
       * simulation().nAngleType() to Interaction::setNAtomType().
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /// \name Interaction interface
       //@{
@@ -210,12 +210,11 @@ namespace DdMd
    * Read angle interaction parameters.
    */
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::readParam(std::istream& in)
+   void AnglePotentialImpl<Interaction>::readParameters(std::istream& in)
    {
-      readBegin(in,"AnglePotential");
       bool nextIndent = false;
-      readParamComposite(in, interaction(), nextIndent);
-      readEnd(in);
+      addParamComposite(interaction(), nextIndent);
+      interaction().readParameters(in);
    }
 
    /*
@@ -411,7 +410,7 @@ namespace DdMd
       localStress /= boundary().volume();
 
       // Add localEnergy from all nodes, set sum on master.
-      reduceEnergy(localEnergy, communicator);
+      reduceStress(localStress, communicator);
    }
 
    #if 0

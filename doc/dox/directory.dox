@@ -24,6 +24,8 @@ subdirectories at the next level.
      dox/    - ascii source files for main web pages
 \endcode
 
+Navigation:
+
 <ul>
  <li> \ref overview_page (Up)    </li>
  <li> \ref design_page   (Next)  </li>

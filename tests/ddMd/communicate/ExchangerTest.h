@@ -33,13 +33,14 @@
 using namespace Util;
 using namespace DdMd;
 
-class ExchangerTest: public ParamFileTest<Exchanger>
+class ExchangerTest: public ParamFileTest
 {
 private:
 
    Boundary boundary;
    Domain domain;
    Buffer buffer;
+   Exchanger exchanger;
    AtomStorage atomStorage;
    BondStorage bondStorage;
    #ifdef INTER_ANGLE
@@ -67,7 +68,7 @@ public:
                          dihedralStorage,
                          #endif
                          buffer);
-      object().associate(domain, boundary, atomStorage, bondStorage, 
+      exchanger.associate(domain, boundary, atomStorage, bondStorage, 
                          #ifdef INTER_ANGLE
                          angleStorage,
                          #endif
@@ -114,11 +115,13 @@ public:
       // Finish reading parameter file
       closeFile();
 
-      object().setPairCutoff(0.5);
-      object().allocate();
+      exchanger.setPairCutoff(0.5);
+      exchanger.allocate();
 
       MaskPolicy policy = MaskBonded;
-      std::ifstream configFile("in/config");
+      std::ifstream configFile;
+      //std::ifstream configFile("in/config");
+      openInputFile("in/config", configFile);
       configIo.readConfig(configFile, policy);
 
       int  nAtom = 0;     // Number received on this processor.
@@ -189,7 +192,7 @@ public:
       double range = 0.4;
       displaceAtoms(range);
 
-      object().exchangeAtoms();
+      exchanger.exchangeAtoms();
 
       // Check that all atoms are accounted for after exchange.
       nAtom = atomStorage.nAtom();
@@ -224,7 +227,7 @@ public:
       double range = 0.4;
       displaceAtoms(range);
       
-      object().exchange();
+      exchanger.exchange();
 
       // Check that all atoms are accounted for after ghost exchange.
       nAtom = atomStorage.nAtom();
@@ -279,7 +282,7 @@ public:
       displaceAtoms(range);
 
       atomStorage.clearSnapshot();
-      object().exchange();
+      exchanger.exchange();
 
       // Record number of atoms and ghosts after exchange
       nAtom = atomStorage.nAtom();
@@ -294,7 +297,7 @@ public:
       //displaceAtoms(range);
 
       // Update ghost positions
-      object().update();
+      exchanger.update();
 
       // Check number of atoms and ghosts on each processor is unchanged.
       TEST_ASSERT(nAtom == atomStorage.nAtom());
@@ -353,7 +356,7 @@ public:
       double range = 0.4;
       displaceAtoms(range);
 
-      object().exchange();
+      exchanger.exchange();
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
 
@@ -384,7 +387,7 @@ public:
          displaceAtoms(range);
 
          for (int j=0; j < 3; ++j) {
-            object().update();
+            exchanger.update();
             TEST_ASSERT(nGhost == atomStorage.nGhost());
             TEST_ASSERT(nAtom == atomStorage.nAtom());
             displaceAtoms(range);
@@ -395,7 +398,7 @@ public:
             atomStorage.transformCartToGen(boundary);
          }
 
-         object().exchange();
+         exchanger.exchange();
          nAtom  = atomStorage.nAtom();
          nGhost = atomStorage.nGhost();
 
@@ -450,7 +453,7 @@ public:
       #endif
 
       atomStorage.clearSnapshot();
-      object().exchange();
+      exchanger.exchange();
 
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
@@ -520,7 +523,7 @@ public:
             if (!UTIL_ORTHOGONAL) {
                atomStorage.transformCartToGen(boundary);
             }
-            object().exchange();
+            exchanger.exchange();
 
             nAtom  = atomStorage.nAtom();
             nGhost = atomStorage.nGhost();
@@ -546,7 +549,7 @@ public:
 
          } else {
 
-            object().update();
+            exchanger.update();
 
             TEST_ASSERT(nGhost == atomStorage.nGhost());
             TEST_ASSERT(nAtom == atomStorage.nAtom());
@@ -574,11 +577,14 @@ public:
          #endif
 
       }
+
+      #if 0
       if (domain.gridRank() == 0) {
          std::cout << std::endl;
          std::cout << "nExchange = " << nExchange << std::endl;
          std::cout << "nUpdate   = " << nUpdate << std::endl;
       }
+      #endif
 
    }
 
