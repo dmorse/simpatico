@@ -138,6 +138,7 @@ namespace DdMd
       * First index is wavevector, second is atom type.
       */
       DMatrix< std::complex<double> >  fourierModes_;
+      DMatrix< std::complex<double> >  totalFourierModes_;
 
       /**
       * Array of Miller index IntVectors for wavevectors.

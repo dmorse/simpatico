@@ -56,6 +56,7 @@ namespace DdMd
 
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
+      totalFourierModes_.allocate(nWave_, nMode_);
       structureFactors_.allocate(nWave_, nMode_);
       
       if (simulation().domain().isMaster()) {
@@ -86,12 +87,6 @@ namespace DdMd
          }
       }
 
-      if (simulation().domain().isMaster()) {
-         for (i=0; i < Samples; ++i) {
-            maximumValue_[i] = 0.0;
-         }
-      }
-
       nSample_ = 0;
 
    }
@@ -100,6 +95,14 @@ namespace DdMd
    void StructureFactor::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
+
+         if (nSample_ >= Samples) {
+            UTIL_THROW("maximumValue array capacity is full");
+         }
+
+         if (simulation().domain().isMaster()) {
+            maximumValue_[nSample_] = 0.0;
+         }
 
          Vector position;
          std::complex<double> expFactor;
@@ -131,28 +134,25 @@ namespace DdMd
                }
             }
          }
- 
-         #ifdef UTIL_MPI
-         DMatrix< std::complex<double> >  totalFourierModes_;
-         totalFourierModes_.allocate(nWave_, nMode_);
 
-         // Loop over wavevectors
          for (i = 0; i < nWave_; ++i) {
             for (j = 0; j < nMode_; ++j) {
                totalFourierModes_(i, j) = std::complex<double>(0.0, 0.0);
             }
          }
-
-         for (i = 0; i < nWave_; ++i) {
-            for (j = 0; j < nMode_; ++j) {
+ 
+         #ifdef UTIL_MPI
+         // Loop over wavevectors
+         for (int i = 0; i < nWave_; ++i) {
+            for (int j = 0; j < nMode_; ++j) {
             //Sum values from all processors.
             simulation().domain().communicator().Reduce(&fourierModes_(i, j), &totalFourierModes_(i, j), 1,
                                                          MPI::DOUBLE_COMPLEX, MPI::SUM, 0);
             }
          }
          #else
-         for (i = 0; i < nWave_; ++i) {
-            for (j = 0; j < nMode_; ++j) {
+         for (int i = 0; i < nWave_; ++i) {
+            for (int j = 0; j < nMode_; ++j) {
                totalFourierModes_(i, j) = fourierModes_(i, j);
             }
          }
@@ -177,7 +177,6 @@ namespace DdMd
          }
 
          ++nSample_;
-
       }
 
    }
@@ -198,7 +197,6 @@ namespace DdMd
             dWave  = boundaryPtr->reciprocalBasisVector(j);
             dWave *= waveIntVectors_[i][j];
             waveVectors_[i] += dWave;
-            //std::cout << waveVectors_[i] << std::endl;
          }
       }
    }
@@ -210,7 +208,6 @@ namespace DdMd
    {
 
       if (simulation().domain().isMaster()) {
-         std::cout << "In sf " << std::endl;
          // Echo parameters to a  log file 
          simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
          writeParam(outputFile_);
