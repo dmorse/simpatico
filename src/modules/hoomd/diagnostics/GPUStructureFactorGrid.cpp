@@ -19,7 +19,6 @@ namespace McMd
    void GPUStructureFactorGrid::sample(long iStep)
    {
       if (isAtInterval(iStep))  {
-         maximumValue_[nSample_] = 0.0;       
   
          Vector  position;
          System::ConstMoleculeIterator  molIter;
@@ -87,16 +86,22 @@ namespace McMd
              UTIL_THROW("Error updating structure factor.");
 
          // increment structure factors
-         for (i = 0; i < nWave_; ++i) {
-             for (j = 0; j < nMode_; ++j) {
-                if ((double) h_sq[j*nWave_+i] >= maximumValue_[nSample_]) {
-                  maximumValue_[nSample_] = (double) h_sq[j*nWave_+i];
-                  maximumWaveIntVector_[nSample_] = waveIntVectors_[i];
-                  maximumQ_[nSample_] = waveVectors_[i].abs();
-                }
-                structureFactors_(i, j) += (double) h_sq[j*nWave_ + i];
-             }
-          }
+         for (j = 0; j < nMode_; ++j) {
+            double maxValue = 0.0;
+            IntVector maxIntVector;
+            double maxQ;
+            for (i = 0; i < nWave_; ++i) {
+               if ((double) h_sq[j*nWave_+i] >= maxValue) {
+                  maxValue = (double) h_sq[j*nWave_+i];
+                  maxIntVector = waveIntVectors_[i];
+                  maxQ = waveVectors_[i].abs();
+               }
+               structureFactors_(i, j) += (double) h_sq[j*nWave_ + i];
+            }
+            maximumValue_[j].insert(maximumValue_[j].end(), 1, maxValue);
+            maximumWaveIntVector_[j].insert(maximumWaveIntVector_[j].end(), 1, maxIntVector);
+            maximumQ_[j].insert(maximumQ_[j].end(), 1, maxQ);
+         }
 
          delete [] h_wave_vectors;
          delete [] h_pos;
