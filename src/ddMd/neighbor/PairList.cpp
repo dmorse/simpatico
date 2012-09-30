@@ -35,9 +35,9 @@ namespace DdMd
       nAtom2_(0),
       maxNAtomLocal_(0),
       maxNPairLocal_(0),
+      buildCounter_(0),
       maxNAtom_(0),
       maxNPair_(0),
-      buildCounter_(0),
       isAllocated_(false)
    {}
    

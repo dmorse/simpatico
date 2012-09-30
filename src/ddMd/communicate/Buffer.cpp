@@ -34,13 +34,13 @@ namespace DdMd
       sendPtr_(0),
       recvPtr_(0),
       bufferCapacity_(-1),
-      maxSendLocal_(0),
       dataCapacity_(-1),
       sendSize_(0),
       recvSize_(0),
       #endif
       atomCapacity_(-1),
       ghostCapacity_(-1),
+      maxSendLocal_(0),
       isInitialized_(false)
    { setClassName("Buffer"); }
 

@@ -803,7 +803,7 @@ namespace DdMd
       Tensor localStress;
       Vector dr;
       Vector f;
-      double rsq, forceOverR;
+      double rsq;
       PairIterator iter;
       Atom*  atom0Ptr;
       Atom*  atom1Ptr;
