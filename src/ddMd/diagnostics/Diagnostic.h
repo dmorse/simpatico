@@ -60,15 +60,28 @@ namespace DdMd
       /**
       * Setup before simulation.
       *
-      * This method must be called just before the beginning of
-      * the main simulation loop, after an initial configuration 
-      * is known. It may be used to complete any initialization
-      * that cannot be completed in the readParam method, because
-      * knowledge of the configuration is needed. 
+      * This method is called just before the beginning of the
+      * main simulation loop within the Integrator::run() method.
+      * It may be used to complete any initialization or checks 
+      * that require knowledge of the configuration. It will be 
+      * called every time run is invoked, not just the first.
       *
-      * The default implementation is an empty function.
+      * The default implementation is empty.
       */
       virtual void setup()
+      {}
+
+      /**
+      * Clear statistical accumulators.
+      *
+      * This method is called by the Integrator::clear() method,
+      * which is called before the main simulation loop only the 
+      * first time that the integrator is run, and when invoked
+      * explicitly thereafter.
+      *
+      * The default implementation is empty.
+      */
+      virtual void clear()
       {}
 
       /**
@@ -83,9 +96,9 @@ namespace DdMd
       virtual void sample(long iStep) = 0;
 
       /**
-      * Output any results at the end of the simulation.
+      * Output any results at the end of a simulation.
       *
-      * The default implementation is an empty function.
+      * The default implementation is empty.
       */
       virtual void output()
       {}
@@ -187,7 +200,6 @@ namespace DdMd
    */
    inline Simulation& Diagnostic::simulation()
    {  return *simulationPtr_; }
-
 
 
 }

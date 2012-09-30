@@ -106,7 +106,7 @@ namespace DdMd
       /** 
       * Clear accumulators.
       */
-      virtual void setup();
+      virtual void clear();
    
       /**
       * Add particles to StructureFactor accumulators.

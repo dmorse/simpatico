@@ -166,13 +166,6 @@ namespace DdMd
          }
       }
 
-      // Clear accumulators
-      for (i = 0; i < nWave_; ++i) {
-         for (j = 0; j < nMode_; ++j) {
-            structureFactors_(i, j) = 0.0;
-         }
-      }
-
       maximumValue_.allocate(Samples);
       maximumWaveIntVector_.allocate(Samples);
       maximumQ_.allocate(Samples);
@@ -180,13 +173,9 @@ namespace DdMd
       for (i=0; i < Samples; ++i) {
          maximumValue_[i] = 0.0;
       }
-      nSample_ = 0;
 
       isInitialized_ = true;
    }
-
-   void StructureFactorGrid::setup() 
-   {}
 
    void StructureFactorGrid::output()
    {

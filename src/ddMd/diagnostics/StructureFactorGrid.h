@@ -84,11 +84,6 @@ namespace DdMd
       virtual void readParameters(std::istream& in);
 
       /**
-      * Set up before a simulation.
-      */
-      virtual void setup();
-
-      /**
       * Output structure factors, averaged over stars.
       */
       virtual void output();

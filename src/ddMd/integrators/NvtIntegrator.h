@@ -41,12 +41,12 @@ namespace DdMd
       */
       void readParameters(std::istream& in);
 
+   protected:
+
       /**
       * Setup state just before integration.
       */
       void setup();
-
-   protected:
 
       /**
       * Execute first step of two-step integrator.
@@ -57,6 +57,11 @@ namespace DdMd
       * Execute secodn step of two-step integrator.
       */
       virtual void integrateStep2();
+
+      /**
+      * Initialize internal dynamical state variables to default value.
+      */
+      virtual void initDynamicalState();
 
    private:
 

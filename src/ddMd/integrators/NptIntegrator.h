@@ -45,14 +45,17 @@ namespace DdMd
       */
       void readParameters(std::istream& in);
 
+   protected:
+
       /**
-      * Setup state just before integration.
-      *
-      * Must be called before run() method.
+      * Initialize internal state variables xi, eta, and nu to zero.
+      */
+      virtual void initDynamicalState();
+
+      /**
+      * Setup state just before main loop.
       */
       void setup();
-
-   protected:
 
       /**
       * Execute first step of two-step integrator.
@@ -65,6 +68,7 @@ namespace DdMd
       virtual void integrateStep2();
 
    private:
+
       double xi_;
       double eta_;
       Vector nu_;

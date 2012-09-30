@@ -92,6 +92,27 @@ namespace DdMd
       double pairForceOverR(double rsq, int iAtomType, int jAtomType) const;
 
       /**
+      * Modify a pair interaction parameter, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      type index of first atom
+      * \param j      type index of first atom
+      * \param value  new value of parameter
+      */
+      void set(std::string name, int i, int j, double value)
+      {  interactionPtr_->set(name, i, j, value); }
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      type index of first atom
+      * \param j      type index of first atom
+      */
+      double get(std::string name, int i, int j) const
+      {  return interactionPtr_->get(name, i, j); }
+
+      /**
       * Return maximum cutoff.
       */
       virtual double maxPairCutoff() const;

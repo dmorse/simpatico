@@ -70,7 +70,7 @@ namespace DdMd
    /*
    * Clear accumulators.
    */
-   void StructureFactor::setup() 
+   void StructureFactor::clear() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Error: object is not initialized");
@@ -91,9 +91,7 @@ namespace DdMd
             maximumValue_[i] = 0.0;
          }
       }
-
       nSample_ = 0;
-
    }
  
    /// Increment Structure Factor
@@ -177,7 +175,6 @@ namespace DdMd
          }
 
          ++nSample_;
-
       }
 
    }

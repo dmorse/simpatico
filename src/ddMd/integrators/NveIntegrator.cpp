@@ -52,21 +52,15 @@ namespace DdMd
 
    void NveIntegrator::setup()
    {
-      #if 0
-      atomStorage().clearSnapshot();
-      exchanger().exchange();
-      pairPotential().buildCellList();
-      if (!UTIL_ORTHOGONAL) {
-         atomStorage().transformGenToCart(boundary());
+
+      // Initialize state on first usage.
+      if (!isSetup()) {
+         clear();
+         setIsSetup();
       }
-      atomStorage().makeSnapshot();
-      pairPotential().buildPairList();
-      simulation().computeForces();
-      #endif
+
       // Exchange atoms, build pair list, compute forces.
       setupAtoms();
-
-      simulation().diagnosticManager().setup();
 
       // Set prefactors for acceleration
       double dtHalf = 0.5*dt_;
