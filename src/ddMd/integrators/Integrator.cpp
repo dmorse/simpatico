@@ -244,7 +244,7 @@ namespace DdMd
    }
 
    /**
-   * Clear timing, dynamical state, and memory use statistics, set iStep_ = 0.
+   * Clear timing, dynamical state, statistics, and diagnostic accumulators.
    */
    void Integrator::clear()
    { 

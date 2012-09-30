@@ -80,7 +80,7 @@ namespace DdMd
    void NvtIntegrator::setup()
    {
 
-      // Initialize state on first usage.
+      // Initialize state and clear statistics on first usage.
       if (!isSetup()) {
          clear();
          setIsSetup();

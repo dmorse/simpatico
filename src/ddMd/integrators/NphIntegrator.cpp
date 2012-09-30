@@ -48,21 +48,19 @@ namespace DdMd
       read<double>(in, "W", W_);
       read<LatticeSystem>(in, "mode", mode_);
 
+      // Allocate memory
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
       }
-
    }
 
    void NphIntegrator::initDynamicalState()
-   {
-      nu_ = Vector(0.0,0.0,0.0);
-   }
+   {  nu_ = Vector(0.0,0.0,0.0); }
 
    void NphIntegrator::setup()
    {
-      // Initialize state on first usage.
+      // Initialize state and clear statistics on first usage.
       if (!isSetup()) {
          clear();
          setIsSetup();

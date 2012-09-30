@@ -137,9 +137,6 @@ namespace DdMd
          atomStorage().transformCartToGen(boundary());
       }
 
-      // Final diagnostic output
-      simulation().diagnosticManager().output();
- 
       if (domain().isMaster()) {
          Log::file() << std::endl;
       }

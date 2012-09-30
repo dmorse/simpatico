@@ -49,6 +49,7 @@ namespace DdMd
       read<double>(in, "tauP", tauP_);
       read<LatticeSystem>(in, "mode", mode_);
 
+      // Allocate memory
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
@@ -68,7 +69,7 @@ namespace DdMd
 
    void NptIntegrator::setup()
    {
-      // Initialize state on first usage.
+      // Initialize state and clear statistics on first usage.
       if (!isSetup()) {
          clear();
          setIsSetup();

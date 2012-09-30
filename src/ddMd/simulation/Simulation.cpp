@@ -556,6 +556,8 @@ namespace DdMd
 
          inBuffer >> command;
          if (command == "READ_CONFIG") {
+            // Read configuration from file (boundary + positions + topology).
+            // Uses current ConfigIo, if set, or creates instance of default.
             inBuffer >> filename;
             readConfig(filename);
          } else
@@ -569,13 +571,18 @@ namespace DdMd
             inBuffer >> endStep;
             simulate(endStep);
          } else
+         if (command == "OUTPUT_DIAGNOSTICS") {
+            diagnosticManager().output();
+         } else
          if (command == "OUTPUT_INTEGRATOR_STATS") {
+            // Output statistics about time usage during simulation.
             integratorPtr_->computeStatistics();
             if (domain_.isMaster()) {
                integratorPtr_->outputStatistics(Log::file());
             }
          } else
          if (command == "OUTPUT_EXCHANGER_STATS") {
+            // Output detailed statistics about time usage by Exchanger.
             integratorPtr_->computeStatistics();
             #ifdef UTIL_MPI
             exchanger().timer().reduce(domain().communicator());
@@ -587,6 +594,7 @@ namespace DdMd
             }
          } else
          if (command == "OUTPUT_MEMORY_STATS") {
+            // Output statistics about memory usage during simulation.
             atomStorage().computeStatistics(domain_.communicator());
             bondStorage().computeStatistics(domain_.communicator());
             buffer().computeStatistics(domain_.communicator());
@@ -600,24 +608,32 @@ namespace DdMd
             }
          } else
          if (command == "CLEAR_INTEGRATOR") {
+            // Clear timing, memory statistics and diagnostic accumulators.
+            // Also resets integrator iStep() to zero
             integratorPtr_->clear();
          } else
          if (command == "WRITE_CONFIG") {
+            // Write current configuration to file.
+            // Uses current ConfigIo, if set, or creates instance of default.
             inBuffer >> filename;
             writeConfig(filename);
          } else
          if (command == "WRITE_PARAM") {
+            // Write parameter file to file, using current variable values.
             inBuffer >> filename;
             fileMaster().openOutputFile(filename, outputFile);
             writeParam(outputFile);
             outputFile.close();
          } else
          if (command == "SET_CONFIG_IO") {
+            // Create an associated ConfigIo object of specified class.
+            // This determines file format for subsequent reads and writes.
             std::string classname;
             inBuffer >> classname;
             setConfigIo(classname);
          } else
          if (command == "SET_PAIR") {
+            // Modify one parameter of a pair interaction.
             std::string paramName;
             int typeId1, typeId2; 
             double value;
@@ -625,6 +641,7 @@ namespace DdMd
             pairPotential().set(paramName, typeId1, typeId2, value);
          } else 
          if (command == "SET_BOND") {
+            // Modify one parameter of a bond interaction.
             std::string paramName;
             int typeId; 
             double value;
@@ -633,6 +650,7 @@ namespace DdMd
          } else 
          #ifdef INTER_ANGLE
          if (command == "SET_ANGLE") {
+            // Modify one parameter of an angle interaction.
             std::string paramName;
             int typeId; 
             double value;
@@ -642,6 +660,7 @@ namespace DdMd
          #endif
          #ifdef INTER_DIHEDRAL
          if (command == "SET_DIHEDRAL") {
+            // Modify one parameter of a dihedral interaction.
             std::string paramName;
             int typeId; 
             double value;
@@ -650,6 +669,7 @@ namespace DdMd
          } else
          #endif
          if (command == "FINISH") {
+            // Terminate loop over commands.
             readNext = false;
          } else {
             Log::file() << "Error: Unknown command  " << std::endl;

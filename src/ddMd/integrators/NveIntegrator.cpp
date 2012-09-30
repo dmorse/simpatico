@@ -47,13 +47,12 @@ namespace DdMd
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
       }
-
    }
 
    void NveIntegrator::setup()
    {
 
-      // Initialize state on first usage.
+      // Initialize state and clear statistics on first usage.
       if (!isSetup()) {
          clear();
          setIsSetup();
