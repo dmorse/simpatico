@@ -138,6 +138,12 @@ namespace DdMd
       * First index is wavevector, second is atom type.
       */
       DMatrix< std::complex<double> >  fourierModes_;
+
+      /**
+      * Total fourier modes of concentration.
+      *
+      * First index is wavevector, second is atom type.
+      */
       DMatrix< std::complex<double> >  totalFourierModes_;
 
       /**
@@ -160,17 +166,17 @@ namespace DdMd
       /**
       * Array of maximum structure factor values. 
       */
-      DArray<double> maximumValue_;
+      DArray< std::vector<double> > maximumValue_;
 
       /**
       * Array of Miller index IntVector with maximum S(q).
       */
-      DArray<IntVector> maximumWaveIntVector_;
+      DArray< std::vector<IntVector> > maximumWaveIntVector_;
 
       /**
       * Array of magnitudes of waveVector with maximum S(q).
       */
-      DArray<double> maximumQ_;
+      DArray< std::vector<double> > maximumQ_;
 
       /// Number of wavevectors.
       int  nWave_;
