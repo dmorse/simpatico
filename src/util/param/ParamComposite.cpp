@@ -119,8 +119,9 @@ namespace Util
       isLeaf_.push_back(false);
       ++size_;
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) 
+      if (hasParamCommunicator()) {
          child.setParamCommunicator(paramCommunicator());
+      }
       #endif
    }
    
