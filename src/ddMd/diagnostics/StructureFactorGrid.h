@@ -105,9 +105,6 @@ namespace DdMd
       /// Lattice system used to create stars.
       LatticeSystem   lattice_;
 
-      /// Has readParam been called?
-      bool    isInitialized_;
-
    };
 
 }

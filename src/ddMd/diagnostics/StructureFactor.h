@@ -195,8 +195,6 @@ namespace DdMd
       */
       void makeWaveVectors();
 
-   private:
-
       /// Has readParam been called?
       bool isInitialized_;
 
