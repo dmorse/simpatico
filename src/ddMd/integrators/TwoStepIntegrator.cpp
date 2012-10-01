@@ -43,21 +43,23 @@ namespace DdMd
    void TwoStepIntegrator::run(int nStep)
    {
       bool needExchange;
-      nStep_ = nStep;
 
+      // Unset all stored computations.
+      simulation().modifySignal().notify();
 
-      // Compute nAtomTotal.
+      // Recompute nAtomTotal.
       atomStorage().unsetNAtomTotal();
       atomStorage().computeNAtomTotal(domain().communicator());
 
-      // Clear all stored computations, compute nAtomTotal.
-      simulation().modifySignal().notify();
-      clearStatistics();
+      // Setup this Integrator before main loop
+      setup();
+      simulation().diagnosticManager().setup();
 
       // Main MD loop
       timer().start();
       exchanger().timer().start();
-      for (iStep_ = 0; iStep_ < nStep_; ++iStep_) {
+      int endStep = iStep_ + nStep;
+      for ( ; iStep_ < endStep; ++iStep_) {
 
          if (Diagnostic::baseInterval > 0) {
             if (iStep_ % Diagnostic::baseInterval == 0) {
@@ -118,7 +120,7 @@ namespace DdMd
          }
 
          // 2nd step of integration, which finishes the velocity update.
-         // This method normally call simulation().velocitySignal().notify()
+         // This method normally calls simulation().velocitySignal().notify()
          integrateStep2();
          timer().stamp(INTEGRATE2);
    
@@ -129,18 +131,11 @@ namespace DdMd
       }
       exchanger().timer().stop();
       timer().stop();
+
+      // Transform to coordinates expected for beginning of next run.
       if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {
          atomStorage().transformCartToGen(boundary());
       }
-
-      // Final diagnostic output
-      simulation().diagnosticManager().output();
-             
-      // Reduce statistics for run
-      #ifdef UTIL_MPI
-      timer().reduce(domain().communicator());
-      exchanger().timer().reduce(domain().communicator());
-      #endif
 
       if (domain().isMaster()) {
          Log::file() << std::endl;

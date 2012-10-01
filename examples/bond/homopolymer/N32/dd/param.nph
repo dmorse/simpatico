@@ -11,17 +11,17 @@ Simulation{
   nBondType          1
   atomTypes          A    1.0
   AtomStorage{
-    atomCapacity      12000
-    ghostCapacity     12000
+    atomCapacity       6000
+    ghostCapacity      6000
     totalAtomCapacity 20000
   }
   BondStorage{
-    capacity          10000
+    capacity           6000
     totalCapacity     20000
   }
   Buffer{
-    atomCapacity      10000
-    ghostCapacity     10000
+    atomCapacity       1000
+    ghostCapacity      1000
   }
   pairStyle           LJPair
   bondStyle           HarmonicBond

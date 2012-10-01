@@ -23,7 +23,7 @@ namespace DdMd
    void Diagnostic::initStatic()
    {  Diagnostic::baseInterval = 1; }
 
-   /* 
+   /*
    * Default constructor.
    */
    Diagnostic::Diagnostic(Simulation& simulation)
@@ -32,19 +32,19 @@ namespace DdMd
       simulationPtr_(&simulation),
       interval_(1)
    {}
-   
-   /* 
+
+   /*
    * Destructor.
    */
    Diagnostic::~Diagnostic()
    {}
-   
+
    /*
    * Read the interval from parameter file, with error checking.
    */
-   void Diagnostic::readInterval(std::istream &in) 
+   void Diagnostic::readInterval(std::istream &in)
    {
-   
+
       // Check that baseInterval has a nonzero, positive value
       if (baseInterval == 0) {
          UTIL_THROW("baseInterval == 0");
@@ -52,10 +52,10 @@ namespace DdMd
       if (baseInterval < 0) {
          UTIL_THROW("baseInterval < 0");
       }
-   
+
       // Read interval value (inherited from Interval)
       read<long>(in, "interval", interval_);
-   
+
       // Check that interval has a nonzero, positive value
       if (interval_ == 0) {
          UTIL_THROW("interval_ == 0");
@@ -68,16 +68,14 @@ namespace DdMd
       if (interval_ % baseInterval != 0) {
          UTIL_THROW("interval is not a multiple of baseInterval");
       }
-   
+
    }
 
    /*
    * Read output file name and open output file.
    */
-   void Diagnostic::readOutputFileName(std::istream &in) 
-   {  
-      read<std::string>(in, "outputFileName", outputFileName_); 
-   }
+   void Diagnostic::readOutputFileName(std::istream &in)
+   {  read<std::string>(in, "outputFileName", outputFileName_); }
 
    /*
    * Get the outputFileName string with an added suffix

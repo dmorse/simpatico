@@ -190,9 +190,6 @@ namespace DdMd
       isInitialized_ = true;
    }
 
-   void StructureFactorGrid::setup() 
-   {}
-
    void StructureFactorGrid::output()
    {
       if (simulation().domain().isMaster()) {

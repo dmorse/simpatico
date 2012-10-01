@@ -77,7 +77,7 @@ namespace DdMd
    /*
    * Clear accumulators.
    */
-   void StructureFactor::setup() 
+   void StructureFactor::clear() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Error: object is not initialized");

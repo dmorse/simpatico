@@ -102,6 +102,25 @@ namespace DdMd
       dihedralForce(const Vector& R1, const Vector& R2, const Vector& R3,
                     Vector& F1, Vector& F2, Vector& F3, int type) const;
 
+      /**
+      * Modify an dihedral parameter, identified by a string.
+      *
+      * \param name  parameter variable name
+      * \param type  type index for dihedral group
+      * \param value  new value of parameter
+      */
+      void set(std::string name, int type, double value)
+      {  interactionPtr_->set(name, type, value); }
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name  parameter variable name
+      * \param type  type index of dihedral group
+      */
+      double get(std::string name, int type) const
+      {  return interactionPtr_->get(name, type); }
+
       #if 0
       /**
       * Return pair interaction class name (e.g., "CosineDihedral").

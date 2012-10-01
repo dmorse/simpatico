@@ -38,19 +38,20 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
+
+      // Open output file
+      std::string filename;
+      filename  = outputFileName();
+      simulation().fileMaster().openOutputFile(filename, outputFile_);
+
       isInitialized_ = true;
    }
 
    /*
-   * Read interval and outputFileName.
+   * Clear nSample counter.
    */
-   void OutputTemperature::setup()
-   {
-      nSample_ = 0;
-      std::string filename;
-      filename  = outputFileName();
-      simulation().fileMaster().openOutputFile(filename, outputFile_);
-   }
+   void OutputTemperature::clear()
+   {  nSample_ = 0; }
 
    /*
    * Dump configuration to file
