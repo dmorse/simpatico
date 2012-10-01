@@ -1,0 +1,76 @@
+Goal:
+
+To create an independent serialization system, in which the entire internal 
+state is stored in a single binary file. 
+
+Serialization methods: save and load vs. serialize template
+-----------------------------------------------------------
+
+Which classes will use the serialize method template and which will use save and 
+load virtual functions?
+
+i) Polymorphic classes, which are accessed through a Base class pointer, must all 
+be Serializable, and must use the virtual save and load methods. This includes all 
+of the Species, Diagnostic, McMove, MdIntegrator and Potential classes in McMd, 
+and all Diagnostic, Integrator, and Potential classes in DdMd.
+
+ii) Classes that own polymorphic classes must also be Serializable, and implement
+save and load methods, since they require substantially different interfaces for
+saving and loading. This includes the Manager, System, and Simulation classes.
+
+ii) Other Classes that read and write to the paramfile could use either the 
+save and load methods, implemented using saveParam() and loadParam() methods, 
+or a serialize() method template, implemented using serializeParam() methods.
+Such classes include: ensembles, PairList and CellList, and FileMaster.
+
+Conclusion: It is probably simplest to just use save and load for all subclasses 
+of ParamComposite.
+
+Note: The methods that save a parameter do not necessarily require a special
+method. These could just use the & or << method for the relevant type of 
+parameter. Only the loading requires creation of a Parameter object with a
+pointer to the correct variable. 
+
+ParamComposite:
+---------------
+
+The Save method of a ParamComposite must just save each parameter value, for which
+it can use the << operator.
+
+The load method of a ParamComposite must:
+   1) Load value, using the >> operator.
+   2) Add a Parameter object to the format list. 
+
+It would be convenient to create a loadParam() method combining these two operations. 
+There seems to be no need for a saveParam() method, unless we want to save the label
+for error checking. 
+
+Manager Classes:
+----------------
+
+The save method of a Manager class must save the number of items, and must
+precede each item by a class name that will be recognized by the associated
+Factory. 
+
+The load method of a Manager will read the name of each item, and use the
+Factory to create the required object and read the remainder of the file
+block for that object. 
+
+Add saveItem() and loadItem() methods.
+
+Util Classes
+------------
+
+FileMaster     -> needs serialize method
+Random         -> has serialize method
+containers     -> pointer arrays need serialize method to allocate
+ensembles      -> need serialize methods
+ParamComponent -> members set by methods of ParamComposite during loading.
+Manager        -> need save and load methods
+
+Boundary       -> already have serialize methods
+
+Inter Classes
+--------------
+
+All interactions should have serialize methods.

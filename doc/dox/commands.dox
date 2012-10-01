@@ -57,8 +57,8 @@ The following table shows a list of available commands for all three programs.  
   </tr>
   <tr> 
     <td> SIMULATE </td>
-    <td> endStep [int] </td>
-    <td> Run a new simulation of endStep MD or MC steps. 
+    <td> nStep [int] </td>
+    <td> Run a simulation of nStep MD or MC steps. 
          Initialize state of simulation, and set iStep = 0, before
          entering the main loop. </td>
     <td> <b>X</b> </td>
@@ -152,7 +152,7 @@ The following table shows a list of available commands for all three programs.  
          in pair potential for particles of types i and j. </td>
     <td> <b>X</b> </td>
     <td> <b>X</b> </td>
-    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
   </tr>
   <tr>
     <td> SET_BOND </td>
@@ -162,7 +162,7 @@ The following table shows a list of available commands for all three programs.  
          in the bond potential for specific bond type </td>
     <td> <b>X</b> </td>
     <td> <b>X</b> </td>
-    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
   </tr>
   <tr>
     <td> SET_ANGLE </td>
@@ -172,7 +172,7 @@ The following table shows a list of available commands for all three programs.  
          in the angle potential for specific angle type </td>
     <td> <b>X</b> </td>
     <td> <b>X</b> </td>
-    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
   </tr>
   <tr>
     <td> SET_DIHEDRAL </td>
@@ -182,10 +182,34 @@ The following table shows a list of available commands for all three programs.  
          potential for specific dihedral type </td>
     <td> <b>X</b> </td>
     <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr>
+    <td> OUTPUT_INTEGRATOR_STATS </td>
+    <td>  </td>
+    <td> Output timing statistics </td>
     <td> <b>-</b> </td>
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr>
+    <td> OUTPUT_MEMORY_STATS </td>
+    <td>  </td>
+    <td> Output memory usage statistics. </td>
+    <td> <b>-</b> </td>
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr>
+    <td> CLEAR_INTEGRATOR </td>
+    <td>  </td>
+    <td> Clear integrator state and all statistical accumulators. </td>
+    <td> <b>-</b> </td>
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
   </tr>
 </table>
-The SET_ANGLE and SET_DIHEDRAL commands are only available in versions of mcSim or mdSim in which angle and dihedral potentials were enabled at compile time. 
+The SET_ANGLE and SET_DIHEDRAL commands are only available in programs compiled with angle and dihedral potentials enabled.
 
 <ul>
  <li> \ref param_page        (Prev) </li>
