@@ -1,5 +1,5 @@
-#ifndef COSINE_DIHEDRAL_CPP
-#define COSINE_DIHEDRAL_CPP
+#ifndef INTER_COSINE_DIHEDRAL_CPP
+#define INTER_COSINE_DIHEDRAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -20,7 +20,12 @@ namespace Inter
    */
    CosineDihedral::CosineDihedral()
     : nDihedralType_(0)
-   { for (int i = 0; i < MaxNDihedralType; ++i) kappa_[i] = 0.0; }
+   { 
+      setClassName("CosineDihedral");
+      for (int i = 0; i < MaxNDihedralType; ++i) {
+         kappa_[i] = 0.0; 
+      }
+   }
 
    /* 
    * Copy constructor.

@@ -1,5 +1,5 @@
-#ifndef COSINE_DIHEDRAL_H
-#define COSINE_DIHEDRAL_H
+#ifndef INTER_COSINE_DIHEDRAL_H
+#define INTER_COSINE_DIHEDRAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

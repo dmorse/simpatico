@@ -1,5 +1,5 @@
-#ifndef BOX_EXTERNAL_CPP
-#define BOX_EXTERNAL_CPP
+#ifndef INTER_BOX_EXTERNAL_CPP
+#define INTER_BOX_EXTERNAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -24,7 +24,7 @@ namespace Inter
     : boundaryPtr_(0),
       nAtomType_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("BoxExternal"); }
    
    /* 
    * Copy constructor.

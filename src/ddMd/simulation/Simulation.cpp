@@ -665,7 +665,7 @@ namespace DdMd
             int typeId; 
             double value;
             inBuffer >> paramName >> typeId >> value;
-            system().dihedralPotential().set(paramName, typeId, value);
+            dihedralPotential().set(paramName, typeId, value);
          } else
          #endif
          if (command == "FINISH") {
