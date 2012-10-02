@@ -180,17 +180,17 @@ namespace McMd
       DMatrix<double>  modes_;
 
       /**
-      * Array of maximum structure factor values. 
+      * Array of vector of maximum structure factor values. 
       */
       DArray< std::vector<double> > maximumValue_;
 
       /**
-      * Array of Miller index IntVector with maximum S(q).
+      * Array of vector of Miller index IntVector with maximum S(q).
       */
       DArray< std::vector<IntVector> > maximumWaveIntVector_;
 
       /**
-      * Array of magnitudes of waveVector with maximum S(q).
+      * Array of vector of magnitudes of waveVector with maximum S(q).
       */
       DArray< std::vector<double> > maximumQ_;
 
