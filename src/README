@@ -5,7 +5,6 @@ util       general utility classes for scientific computation
 inter      classes that define potential interaction functions
 mcMd       code for Monte Carlo (MC) / molecular dynamics (MD) simulation
 ddMd       code for domain-decomposition parallel MD simulation
-test       simple unit test framework
 modules    add-on components for particular applications
 draft      unfinished or proposed classes
 
