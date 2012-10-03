@@ -273,6 +273,103 @@ namespace Util
       Blank& readBlank(std::istream &in);
 
       //@}
+      /// \name load* methods   
+      /// \brief Each of these methods invokes an associated add* method to create a 
+      /// new ParamComponent object, and then invokes the loadParam() method of the 
+      /// new object to load the associated parameter value from an archive.
+      //@{
+     
+      #if 0 
+      /** 
+      * Add and load a child ParamComposite.
+      *
+      * \param ar    input stream for loading
+      * \param child child ParamComposite object
+      * \param next  true if the indent level is one higher than parent.
+      */
+      void 
+      loadParamComposite(Serializable::IArchiveType &ar, ParamComposite &child, bool next = true);
+      #endif
+   
+      /**  
+      * Add a new Param < Type > object, and load its value.
+      *
+      * \param ar     archive for loading
+      * \param label  Label string 
+      * \param value  reference to new ScalarParam< Type >
+      */
+      template <typename Type>
+      ScalarParam<Type>& load(Serializable::IArchiveType &ar, const char *label, Type &value);
+   
+      /**  
+      * Add a C array parameter, and load its elements.
+      *
+      * \param ar     archive for loading
+      * \param label  Label string for new array
+      * \param value  pointer to array
+      * \param n      number of elements
+      * \return reference to the new CArrayParam<Type> object
+      */
+      template <typename Type>
+      CArrayParam<Type>& 
+      loadCArray(Serializable::IArchiveType &ar, const char *label, Type *value, int n);
+   
+      /**  
+      * Add a DArray < Type > parameter, and load its elements.
+      *
+      * \param ar     archive for loading
+      * \param label  Label string for new array
+      * \param array  DArray object
+      * \param n      number of elements
+      * \return reference to the new DArrayParam<Type> object
+      */
+      template <typename Type>
+      DArrayParam<Type>&
+      loadDArray(Serializable::IArchiveType &ar, const char *label, DArray<Type>& array, int n);
+   
+      /**  
+      * Add and load an FArray < Type, N > fixed-size array parameter.
+      *
+      * \param ar     archive for loading
+      * \param label  Label string for new array
+      * \param array  FArray object
+      * \return reference to the new FArrayParam<Type, N> object
+      */
+      template <typename Type, int N>
+      FArrayParam<Type, N>&
+      loadFArray(Serializable::IArchiveType &ar, const char *label, FArray<Type, N >& array);
+   
+      /**  
+      * Add and load a CArray2DParam < Type > C two-dimensional array parameter.
+      *
+      * \param ar     archive for loading
+      * \param label  Label string for new array
+      * \param value  pointer to array
+      * \param m      number of rows (1st dimension)
+      * \param n      number of columns (2nd dimension)
+      * \return reference to the CArray2DParam<Type> object
+      */
+      template <typename Type> 
+      CArray2DParam<Type>&
+      loadCArray2D(Serializable::IArchiveType &ar, const char *label, 
+                   Type *value, int m, int n);
+  
+      /**  
+      * Add and load a DMatrix < Type > C two-dimensional matrix parameter.
+      *
+      * \param ar     archive for loading
+      * \param label  Label string for new array
+      * \param matrix DMatrix object
+      * \param m      number of rows (1st dimension)
+      * \param n      number of columns (2nd dimension)
+      * \return reference to the DMatrixParam<Type> object
+      */
+      template <typename Type> 
+      DMatrixParam<Type>& 
+      loadDMatrix(Serializable::IArchiveType &ar, const char *label, 
+                  DMatrix<Type>& matrix, int m, int n);
+  
+      //@}
       /// \name add* methods
       /// \brief These methods add a ParamComponent object to the parameter
       /// list, but do not read any data from an input stream.
@@ -431,7 +528,7 @@ namespace Util
    }
    
    /* 
-   * Add a Param to the list, and read its contents from file. 
+   * Add a ScalarParam to the list, and read its contents from file. 
    */ 
    template <typename Type>
    ScalarParam<Type>& 
@@ -442,8 +539,21 @@ namespace Util
       return *ptr;
    }
   
-   // Templates for 1D C Arrays 
+   /*  
+   * Add a new ScalarParam< Type > object, and load its value.
+   */
+   template <typename Type>
+   ScalarParam<Type>& 
+   ParamComposite::load(Serializable::IArchiveType &ar, const char *label, 
+                        Type &value)
+   {
+      ScalarParam<Type>* ptr = &add<Type>(label, value);
+      ptr->loadParam(ar);
+      return *ptr;
+   }
    
+   // Templates for 1D C Arrays 
+
    /* 
    * Add a CArrayParam object associated with a built-in array.
    */
@@ -477,6 +587,19 @@ namespace Util
       return *ptr;
    }
    
+   /*  
+   * Add a C array parameter, and load its elements.
+   */
+   template <typename Type>
+   CArrayParam<Type>& 
+   ParamComposite::loadCArray(Serializable::IArchiveType &ar, const char *label, 
+                              Type *value, int n)
+   {
+      CArrayParam<Type>* ptr = &addCArray<Type>(label, value, n);
+      ptr->loadParam(ar);
+      return *ptr;
+   }
+
    // Templates for DArray parameters
    
    /* 
@@ -509,6 +632,19 @@ namespace Util
    {
       DArrayParam<Type>* ptr = &addDArray<Type>(label, array, n);
       ptr->readParam(in);
+      return *ptr;
+   }
+
+   /*
+   * Add a DArray < Type > parameter, and load its elements.
+   */
+   template <typename Type>
+   DArrayParam<Type>&
+   ParamComposite::loadDArray(Serializable::IArchiveType &ar, const char *label, 
+                              DArray<Type>& array, int n)
+   {
+      DArrayParam<Type>* ptr = &addDArray<Type>(label, array, n);
+      ptr->loadParam(ar);
       return *ptr;
    }
 
@@ -547,6 +683,19 @@ namespace Util
       return *ptr;
    }
 
+   /*
+   * Add and load an FArray < Type, N > fixed-size array parameter.
+   */
+   template <typename Type, int N>
+   FArrayParam<Type, N>&
+   ParamComposite::loadFArray(Serializable::IArchiveType &ar, const char *label, 
+                              FArray<Type, N >& array)
+   {
+      FArrayParam<Type, N>* ptr = &addFArray<Type, N>(label, array);
+      ptr->loadParam(ar);
+      return *ptr;
+   }
+
    // Templates for built-in two-dimensional C Arrays
 
    /* 
@@ -582,6 +731,19 @@ namespace Util
       return *ptr;
    }
  
+   /*
+   * Add and load a CArray2DParam < Type > C two-dimensional array parameter.
+   */
+   template <typename Type> 
+   CArray2DParam<Type>&
+   ParamComposite::loadCArray2D(Serializable::IArchiveType &ar, const char *label, 
+                Type *value, int m, int n)
+   {
+      CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n);
+      ptr->loadParam(ar);
+      return *ptr;
+   }
+  
    // Templates for DMatrix containers
 
    /* 
@@ -609,14 +771,27 @@ namespace Util
    */
    template <typename Type>   
    DMatrixParam<Type>&
-   ParamComposite::readDMatrix(std::istream &in, 
-                   const char *label, DMatrix<Type>& matrix, int m, int n) 
+   ParamComposite::readDMatrix(std::istream &in, const char *label, 
+                               DMatrix<Type>& matrix, int m, int n) 
    {
       DMatrixParam<Type>* ptr = &addDMatrix<Type>(label, matrix, m, n);
       ptr->readParam(in);
       return *ptr;
    }
  
+   /*
+   * Add and load a DMatrix < Type > C two-dimensional matrix parameter.
+   */
+   template <typename Type> 
+   DMatrixParam<Type>& 
+   ParamComposite::loadDMatrix(Serializable::IArchiveType &ar, const char *label, 
+                               DMatrix<Type>& matrix, int m, int n)
+   {
+      DMatrixParam<Type>* ptr = &addDMatrix<Type>(label, matrix, m, n);
+      ptr->loadParam(ar);
+      return *ptr;
+   }
+
    /*
    * Get class name string.
    */
