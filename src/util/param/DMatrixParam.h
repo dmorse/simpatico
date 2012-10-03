@@ -1,5 +1,5 @@
-#ifndef DMATRIX_PARAM_H
-#define DMATRIX_PARAM_H
+#ifndef UTIL_DMATRIX_PARAM_H
+#define UTIL_DMATRIX_PARAM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -36,12 +36,6 @@ namespace Util
       /** 
       * Constructor.
       *
-      * Example: 
-      * \code
-      *    double                matrix[3][2];
-      *    DMatrixParam<double> param("matrix", matrix[0], 3, 2);
-      * \endcode
-      *
       * \param label  parameter label (usually a literal C-string)
       * \param matrix DMatrix object
       * \param m      number of rows
@@ -50,14 +44,29 @@ namespace Util
       DMatrixParam(const char *label, DMatrix<Type>& matrix, int m, int n);
   
       /** 
-      * Read 2D array from file.
+      * Read DMatrix from file.
       */
       void readParam(std::istream &in);
   
       /**
-      * Write 2D C array to file.
+      * Write DMatrix to file.
       */ 
       void writeParam(std::ostream &out);
+
+      /**
+      * Load DMatrix from archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      void loadParam(Serializable::IArchiveType& ar);
+
+      /**
+      * Save DMatrix to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      void saveParam(Serializable::OArchiveType& ar);
+
 
    protected:
    
@@ -132,6 +141,42 @@ namespace Util
          out << std::endl;
       }
    }
+
+   /*
+   * Load from an archive.
+   */
+   template <class Type>
+   void DMatrixParam<Type>::loadParam(Serializable::IArchiveType& ar)
+   {
+      if (isParamIoProcessor()) {
+         int i, j; 
+         for (i = 0; i < m_; ++i) {
+            for (j = 0; j < n_; ++j) {
+               ar >> (*matrixPtr_)(i, j);
+            }
+         }
+      }
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         bcast<Type>(paramCommunicator(), *matrixPtr_, n_*m_, 0); 
+      }
+      #endif
+   }
+
+   /*
+   * Save to an archive.
+   */
+   template <class Type>
+   void DMatrixParam<Type>::saveParam(Serializable::OArchiveType& ar)
+   {
+      int i, j;
+      for (i = 0; i < m_; ++i) {
+         for (j = 0; j < n_; ++j) {
+            ar << (*matrixPtr_)(i, j);
+         }
+      }
+   }
+
 
 } 
 #endif

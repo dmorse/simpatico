@@ -146,14 +146,12 @@ namespace Util
 
    /*
    * Load from an archive.
-   *
-   * \param ar loading (input) archive.
    */
    template <class Type>
    void DArrayParam<Type>::loadParam(Serializable::IArchiveType& ar)
    {
       if (!(arrayPtr_->isAllocated())) {
-         UTIL_THROW("Cannot read unallocated DArray");
+         UTIL_THROW("Cannot load unallocated DArray");
       }
       if (arrayPtr_->capacity() < n_) {
          UTIL_THROW("Error: DArray capacity < n");
@@ -172,24 +170,20 @@ namespace Util
 
    /*
    * Save to an archive.
-   *
-   * \param ar saving (output) archive.
    */
    template <class Type>
    void DArrayParam<Type>::saveParam(Serializable::OArchiveType& ar)
    {
       // Preconditions
       if (!(arrayPtr_->isAllocated())) {
-         UTIL_THROW("Cannot read unallocated DArray");
+         UTIL_THROW("Cannot save unallocated DArray");
       }
       if (arrayPtr_->capacity() < n_) {
          UTIL_THROW("Error: DArray capacity < n");
       }
 
-      if (isParamIoProcessor()) {
-         for (int i = 0; i < n_; ++i) {
-            ar << (*arrayPtr_)[i];
-         }
+      for (int i = 0; i < n_; ++i) {
+         ar << (*arrayPtr_)[i];
       }
    }
 
