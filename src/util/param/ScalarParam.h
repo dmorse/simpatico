@@ -9,6 +9,7 @@
 */
 
 #include <util/param/Parameter.h>
+#include <util/archives/Serializable.h>
 #include <util/global.h>
 
 #ifdef UTIL_MPI
@@ -52,12 +53,26 @@ namespace Util
       */
       void readParam(std::istream& in); 
  
+      /**
+      * Load from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      void loadParam(Serializable::IArchiveType& ar);
+
       /** 
       * Write parameter to stream.
       *
       * \param out output stream
       */
       void writeParam(std::ostream& out);
+
+      /**
+      * Save to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      void saveParam(Serializable::OArchiveType& ar);
 
       /**
       * Set the pointer to point a specific variable.
@@ -123,6 +138,37 @@ namespace Util
       out << std::right << std::scientific 
           << std::setprecision(Parameter::Precision) 
           << std::setw(Parameter::Width) << *valuePtr_ << std::endl;
+   }
+
+   /*
+   * Load from an archive.
+   *
+   * \param ar loading (input) archive.
+   */
+   template <class Type>
+   void ScalarParam<Type>::loadParam(Serializable::IArchiveType& ar)
+   {
+      if (isParamIoProcessor()) {
+         ar >> *valuePtr_;
+      }
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         bcast<Type>(paramCommunicator(), *valuePtr_, 0); 
+      }
+      #endif
+   }
+
+   /*
+   * Save to an archive.
+   *
+   * \param ar saving (output) archive.
+   */
+   template <class Type>
+   void ScalarParam<Type>::saveParam(Serializable::OArchiveType& ar)
+   {
+      if (isParamIoProcessor()) {
+         ar << *valuePtr_;
+      }
    }
 
    /*

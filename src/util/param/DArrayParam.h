@@ -47,6 +47,20 @@ namespace Util
       */
       void writeParam(std::ostream &out);
 
+      /**
+      * Load from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      void loadParam(Serializable::IArchiveType& ar);
+
+      /**
+      * Save to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      void saveParam(Serializable::OArchiveType& ar);
+
    protected:
    
       /// Pointer to associated DArray.
@@ -128,6 +142,55 @@ namespace Util
              << std::endl;
       }
 
+   }
+
+   /*
+   * Load from an archive.
+   *
+   * \param ar loading (input) archive.
+   */
+   template <class Type>
+   void DArrayParam<Type>::loadParam(Serializable::IArchiveType& ar)
+   {
+      if (!(arrayPtr_->isAllocated())) {
+         UTIL_THROW("Cannot read unallocated DArray");
+      }
+      if (arrayPtr_->capacity() < n_) {
+         UTIL_THROW("Error: DArray capacity < n");
+      }
+      if (isParamIoProcessor()) {
+         for (int i = 0; i < n_; ++i) {
+            ar >> (*arrayPtr_)[i];
+         }
+      }
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         bcast<Type>(paramCommunicator(), *arrayPtr_, n_, 0); 
+      }
+      #endif
+   }
+
+   /*
+   * Save to an archive.
+   *
+   * \param ar saving (output) archive.
+   */
+   template <class Type>
+   void DArrayParam<Type>::saveParam(Serializable::OArchiveType& ar)
+   {
+      // Preconditions
+      if (!(arrayPtr_->isAllocated())) {
+         UTIL_THROW("Cannot read unallocated DArray");
+      }
+      if (arrayPtr_->capacity() < n_) {
+         UTIL_THROW("Error: DArray capacity < n");
+      }
+
+      if (isParamIoProcessor()) {
+         for (int i = 0; i < n_; ++i) {
+            ar << (*arrayPtr_)[i];
+         }
+      }
    }
 
 } 
