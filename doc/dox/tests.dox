@@ -3,20 +3,25 @@ namespace McMd
 
 /*! \page test_page Unit Tests
 
-The src/test/ directory contain source code for a simple unit test framework.
-This framework can be used to test MPI parallel programs as well as single
-processor classes and programs.  Documentation for the test framework is
-provided within the header files in the src/test directory, and in several 
-examples in the src/test/examples directory.
+The tests/ directory contains a set of unit tests.  The tests/test 
+directory contains the source code for a simple unit test framework that 
+is used to construct all of the actual unit tests. This framework can be 
+used to test classes that rely on MPI for inter-processor communication 
+as well as classes that can be tested on single processors. Documentation 
+for the test framework is provided within the header files in the 
+tests/test directory, and in several examples in the tests/test/examples 
+directory.
 
-Actual unit tests are located in the simpatico/tests/ directory. This contains
-a directory treee analogous to that of the src/ directory, in which the test 
-for each class is located in a position analogous to that of the source files
-in the src/ directory.  Unit tests are not compiled by the makefile system that 
-is used to compile the classes needed for simulation. Tests may be compiled
-separately by invoking "make all" from the subdirectory containing a particular
-test. This generally creates an executable named "Test" that runs all of the 
-tests in that directory.
+Actual unit tests are located in other subdirectories of the tests/, 
+using a directory structure analogous to that of the src/ directory.
+Tests of the classes defined in the src/util, src/inter, src/mcMd, and
+src/ddMd directories are located in the tests/util, tests/inter, tests/mcMd
+and tests/ddMd directories, respectively. These unit tests are not compiled 
+by the set of makefiles that compiles the classes in the src/ directory.
+Unit tests may instead be compiled separately by invoking "make all" 
+from the subdirectory containing a particular test. This generally 
+creates an executable, of named named "Test", that runs all of the tests 
+in that directory.
 
 <ul>
  <li> \ref make_page        (Previous)    </li>

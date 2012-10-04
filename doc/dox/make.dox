@@ -300,28 +300,32 @@ source.mk file in that directory.
 
 \section make_single How to compile a single source file
 
-Because the Simpatico build system uses absolute paths for 
-all source files, and because the make program is not smart 
-enough to recognize the equivalence of absolute and relative 
-paths, the only way to explicitly compile a single source file 
-is to use the absolute path to the object file as a makefile 
-target, as in
+The most convenient way to compile a source file that you are 
+working on is usually to just enter "make all" from the directory 
+containing that source file and the associated header. If automatic 
+dependency generation is enabled, and if you are working on only 
+one class in that directory at a time, this will cause the make 
+system to compile only the source file that you have modified.
+
+Unfortunately, it is awkward to explictly make only a single
+source file. The Simpatico makefile system uses absolute paths 
+for all file paths. The gnu make program is not smart enough 
+to recognize the equivalence of absolute and relative paths. 
+As a result, the only way explicitly compile a single source 
+file is to use the absolute path to the object file as a 
+makefile target, as in
 \code 
 make /home/george/simpatico/src/mcMd/simulation/Simulation.o
 \endcode 
-This is to much of a nuisance for most programmers. If you
-want to compile a file that you are working on, it is more
-convenient to just enter "make all" from the directory containing 
-that file. If automatic dependency generation is enabled, and
-if you are working on only one file in that directory at a 
-time, this will cause the make system to compile only the 
-file that you just modified.
+This is too much of a nuisance for almost all programmers, which
+is why we recommend just using "make all" from the enclosing
+directory.
 
-This way of working does require that you comment broken or
-or unfinished source files out of the *_SRCS list in the
-sources.mk file until you are ready to fix them. Otherwise, 
-entering "make all" will try to compile files that may not 
-yet be compilable.
+This use of make all does, however, require that you remove
+or comment out broken or or unfinished source files from the 
+*_SRCS list in the sources.mk file, until you are ready to 
+complete or fix them. Otherwise, entering "make all" will 
+try to compile files that may not yet be compilable.
 
 <ul>
  <li> \ref developer_page  (Up)    </li>

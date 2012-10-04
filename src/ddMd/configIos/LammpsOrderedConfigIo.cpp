@@ -207,6 +207,7 @@ namespace DdMd
          Atom*  atomPtr;
          int id;
          int typeId;
+         int moleculeId;
          int rank;
          IntVector shift;
 
@@ -215,7 +216,7 @@ namespace DdMd
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
 
-            file >> id >> typeId;
+            file >> id >> moleculeId >> typeId;
             if (id <= 0 || id > totalAtomCapacity) {
                UTIL_THROW("Invalid atom id");
             }
@@ -259,6 +260,18 @@ namespace DdMd
       }
       }
 
+      bool hasGhosts = false;
+
+      if (bondStorage().capacity()) {
+         readGroups<2>(file, "BONDS", "nBond", bondDistributor());
+         bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+         //Set atom "mask" values
+         if (maskPolicy == MaskBonded) {
+            setAtomMasks();
+         }
+      }
+        
+
        
    }
 
@@ -276,16 +289,38 @@ namespace DdMd
       int       nGroup;
       storage.computeNTotal(domain().communicator());
       nGroup = storage.nTotal();
-      if (domain().isMaster()) {  
+      if (domain().isMaster()) { 
          file << std::endl;
          file << sectionLabel << std::endl;
          file << nGroupLabel << Int(nGroup, 10) << std::endl;
+
+         IoGroup<N> ioGroup;
+         std::vector<IoGroup <N> > groups;
+         groups.reserve(nGroup);
+         groups.clear();
+         groups.insert(groups.end(), nGroup, ioGroup);
+
          collector.setup();
          groupPtr = collector.nextPtr();
+         int id;
+         int n = 0;
          while (groupPtr) {
-            file << *groupPtr << std::endl;
+            id = groupPtr->id();
+            groups[id].id = id;
+            groups[id].group = *groupPtr;
             groupPtr = collector.nextPtr();
+            ++n;
          }
+         if (n != nGroup) {
+            UTIL_THROW("Something is rotten in Denmark");
+         }
+         for (id = 0; id < nGroup; ++id) {
+            if (id != groups[id].id) {
+               UTIL_THROW("Something is rotten in Denmark");
+            }
+            file << groups[id].group << std::endl;
+         }
+         file << std::endl;
       } else { 
          collector.send();
       }
@@ -351,6 +386,7 @@ namespace DdMd
          // lammps atom     tag = Simpatico atom id + 1
          // lammps molecule id  = Simpatico molecule id + 1
          file << "Atoms" << endl;
+         file << endl;
 
          IoAtom atom;
          atoms_.reserve(nAtom);
@@ -361,13 +397,15 @@ namespace DdMd
          Atom* atomPtr = atomCollector().nextPtr();
          int id;
          int n = 0;
+         Vector r;
          int shift;
          while (atomPtr) {
             id = atomPtr->id();
             if (UTIL_ORTHOGONAL) {
                atoms_[id].position = atomPtr->position();
             } else {
-               boundary().transformGenToCart(atomPtr->position(), atoms_[id].position);
+               boundary().transformGenToCart(atomPtr->position(), r);
+               atoms_[id].position = r;
             }
             atoms_[id].typeId = atomPtr->typeId();
             atoms_[id].id = id;
@@ -381,7 +419,7 @@ namespace DdMd
             if (id != atoms_[id].id) {
                UTIL_THROW("Something is rotten in Denmark");
             }
-            file << Int(id+1, 10) << Int(atoms_[id].typeId + 1, 6)
+            file << Int(id+1, 10) << Int(0,6) << Int(atoms_[id].typeId + 1, 6)
                  << atoms_[id].position;
             for (int i = 0; i < Dimension; ++i) {
                file << Int(shift, 4);
@@ -392,10 +430,6 @@ namespace DdMd
          atomCollector().send();
       }
 
-
-      // Write bond topology
-      file << "Bonds" << endl;
-      file << endl;
       // Write the groups
       if (bondStorage().capacity()) {
          writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector());

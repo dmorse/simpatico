@@ -70,10 +70,10 @@ Simpatico is distributed with a collection of classes for statistical analysis, 
 The diagnostic classes available for use with the single-processor mcSim and mdSim programs include classes to evaluate:
 <ul>
   <li> Thermodynamic properties (energies and stress components) </li>
-  <li> Full and partial radial distribution functions (in real space). </li>
-  <li> Structure factors (in coordinate space). </li>
+  <li> Full and partial radial distribution functions (in coordinate space). </li>
+  <li> Structure factors (in Fourier space). </li>
   <li> Intramolecular correlation functions. </li>
-  <li> Radii of gyration </li>
+  <li> Molecular radii of gyration </li>
   <li> Mean-squared distances between specific atoms in a molecule.</li>
   <li> Mean-squared displacements for atoms or molecular centers-of-mass. </li>
   <li> Auto-correlation functions for vector separations of atom pairs. </li>
@@ -83,7 +83,7 @@ All mcSim and mdSim data analysis classes can be used either on-the-fly, during 
 
 A smaller set of diagnostics is distributed for use on-the-fly with ddSim. Classes are available to evaluate thermodynamic properties (energy contributions and stress components) and structure factors. MD trajectories from ddSim simulations can also be post-processed by using mcSim or msSim as analysis tools. 
 
-Simpatico is now a convenient tool for simulating and analyzing coarse-grained models of polymer liquids.  It is not yet suitable for use with atomistic models, because of the absence of an electrostatic potential, and the absence of MC conformation sampling algorithms designed specifically for use with stiff angle potentials. 
+Simpatico is a convenient tool for simulating and analyzing coarse-grained models of polymer liquids.  It is not yet suitable for use with atomistic models, because of the absence of an electrostatic potential, and the absence of MC conformation sampling moves designed specifically for use with stiff angle potentials. 
 
 Navigation:
 <ul>

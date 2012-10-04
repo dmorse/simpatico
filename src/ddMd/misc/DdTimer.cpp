@@ -51,8 +51,6 @@ namespace DdMd
    void DdTimer::reduce(MPI::Intracomm& communicator) 
    {
       int procs = communicator.Get_size();
-      int rank  = communicator.Get_rank();
-      bool isMaster = bool(rank == 0);
       double sum;
       for (int i = 0; i < size_; i++) {
          communicator.Allreduce(&times_[i], &sum, 1, MPI::DOUBLE, MPI::SUM);

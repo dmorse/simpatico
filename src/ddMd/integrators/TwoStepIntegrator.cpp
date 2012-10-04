@@ -129,6 +129,9 @@ namespace DdMd
       }
       exchanger().timer().stop();
       timer().stop();
+      if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {
+         atomStorage().transformCartToGen(boundary());
+      }
 
       // Final diagnostic output
       simulation().diagnosticManager().output();
