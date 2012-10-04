@@ -8,7 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/mpi/MpiFileIo.h>   // class member
+#include <util/mpi/MpiFileIo.h>          // class member
+#include <util/archives/Serializable.h>  // typedef
 #include <util/global.h>
 
 #include <iostream>
@@ -48,6 +49,12 @@ namespace Util
       * \param out output stream
       */
       virtual void writeParam(std::ostream& out) = 0;
+
+      virtual void saveParam(Serializable::OArchiveType &ar)
+      {}
+
+      //virtual void loadParam(Serializable::IArchiveType &ar)
+      //{}
 
       /**
       * Nontrivial implementation provided by ParamComposite subclass.

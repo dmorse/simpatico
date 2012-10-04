@@ -9,7 +9,7 @@
 */
 
 #include <util/param/Parameter.h>
-#include <util/archives/Serializable.h>
+#include <util/archives/Serializable_includes.h>
 #include <util/global.h>
 
 #ifdef UTIL_MPI

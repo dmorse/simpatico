@@ -15,6 +15,7 @@
 #include <util/param/FArrayParam.h>        // template class
 #include <util/param/CArray2DParam.h>      // template class
 #include <util/param/DMatrixParam.h>       // template class
+#include <util/archives/Serializable_includes.h>   
 #include <util/global.h>            
 
 #include <vector>
@@ -152,10 +153,21 @@ namespace Util
       */
       virtual void writeParam(std::ostream &out);
    
-      /// \name read* methods   
-      /// \brief Each of these method invokes an associated add* method to create a 
-      /// new ParamComponent object, and then invoke the readParam() method of the 
-      /// new object to read the associated line or block of a file.
+      /** 
+      * Saves all parameters to an archive.
+      *
+      * This default implementation writes all parameters to file,
+      * descending children recursively. 
+      *
+      * \param ar saving archive.
+      */
+      virtual void saveParam(Serializable::OArchiveType &ar);
+   
+      /// \name read* methods
+      /// \brief Each of these methods invokes an associated add* method to 
+      /// create a new ParamComponent object, and then invoke the readParam() 
+      /// method of the new object to read the associated line or block of a 
+      /// parameter file.
       //@{
       
       /** 

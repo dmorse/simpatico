@@ -93,6 +93,16 @@ namespace Util
    }
    
    /* 
+   * Default saveParam implementation.
+   */
+   void ParamComposite::saveParam(Serializable::OArchiveType& ar) 
+   {
+      for (int i=0; i < size_; ++i) {
+         list_[i]->saveParam(ar);
+      }
+   }
+
+   /* 
    * Reset list to empty state.
    */
    void ParamComposite::resetParam() 
