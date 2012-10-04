@@ -9,6 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>
+#include <util/archives/serialize.h>
 #ifdef UTIL_MPI
 #include <util/mpi/MpiTraits.h>
 #endif
@@ -128,6 +129,17 @@ namespace Util
    inline bool BoundaryEnsemble::isIsobaric() const
    { return (type_ == ISOBARIC); }
  
+   /**
+   * Serialize a BoundaryEnsemble::Type enum value.
+   *
+   * \param ar      archive object
+   * \param data    enum value to be serialized
+   * \param version archive version id
+   */
+   template <class Archive>
+   inline void serialize(Archive& ar, BoundaryEnsemble::Type& data, const unsigned int version)
+   {  serializeEnum(ar, data, version); }
+
    #ifdef UTIL_MPI
    /**
    * Explicit specialization MpiTraits<BoundaryEnsemble>.

@@ -8,11 +8,12 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/global.h>
 #include <util/param/ParamComposite.h>
+#include <util/archives/serialize.h>
 #ifdef UTIL_MPI
 #include <util/mpi/MpiTraits.h>
 #endif
+#include <util/global.h>
 
 namespace Util
 {
@@ -136,6 +137,17 @@ namespace Util
    // Return true if this is an IsothermalEnsemble.
    inline bool EnergyEnsemble::isIsothermal() const
    { return (type_ == ISOTHERMAL); }
+
+   /**
+   * Serialize a EnergyEnsemble::Type enum value.
+   *
+   * \param ar      archive object
+   * \param data    enum value to be serialized
+   * \param version archive version id
+   */
+   template <class Archive>
+   inline void serialize(Archive& ar, EnergyEnsemble::Type& data, const unsigned int version)
+   {  serializeEnum(ar, data, version); }
 
 
    #ifdef UTIL_MPI
