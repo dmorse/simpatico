@@ -58,14 +58,14 @@ namespace Util
       *
       * \param ar loading (input) archive.
       */
-      void loadParam(Serializable::IArchiveType& ar);
+      void load(Serializable::IArchiveType& ar);
 
       /**
       * Save DMatrix to an archive.
       *
       * \param ar saving (output) archive.
       */
-      void saveParam(Serializable::OArchiveType& ar);
+      void save(Serializable::OArchiveType& ar);
 
 
    protected:
@@ -146,7 +146,7 @@ namespace Util
    * Load from an archive.
    */
    template <class Type>
-   void DMatrixParam<Type>::loadParam(Serializable::IArchiveType& ar)
+   void DMatrixParam<Type>::load(Serializable::IArchiveType& ar)
    {
       if (isParamIoProcessor()) {
          int i, j; 
@@ -167,7 +167,7 @@ namespace Util
    * Save to an archive.
    */
    template <class Type>
-   void DMatrixParam<Type>::saveParam(Serializable::OArchiveType& ar)
+   void DMatrixParam<Type>::save(Serializable::OArchiveType& ar)
    {
       int i, j;
       for (i = 0; i < m_; ++i) {

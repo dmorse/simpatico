@@ -52,14 +52,14 @@ namespace Util
       *
       * \param ar loading (input) archive.
       */
-      void loadParam(Serializable::IArchiveType& ar);
+      void load(Serializable::IArchiveType& ar);
 
       /**
       * Save to an archive.
       *
       * \param ar saving (output) archive.
       */
-      void saveParam(Serializable::OArchiveType& ar);
+      void save(Serializable::OArchiveType& ar);
 
    protected:
    
@@ -148,7 +148,7 @@ namespace Util
    * Load from an archive.
    */
    template <class Type>
-   void DArrayParam<Type>::loadParam(Serializable::IArchiveType& ar)
+   void DArrayParam<Type>::load(Serializable::IArchiveType& ar)
    {
       if (!(arrayPtr_->isAllocated())) {
          UTIL_THROW("Cannot load unallocated DArray");
@@ -172,7 +172,7 @@ namespace Util
    * Save to an archive.
    */
    template <class Type>
-   void DArrayParam<Type>::saveParam(Serializable::OArchiveType& ar)
+   void DArrayParam<Type>::save(Serializable::OArchiveType& ar)
    {
       // Preconditions
       if (!(arrayPtr_->isAllocated())) {

@@ -58,7 +58,7 @@ namespace Util
       *
       * \param ar loading (input) archive.
       */
-      void loadParam(Serializable::IArchiveType& ar);
+      void load(Serializable::IArchiveType& ar);
 
       /** 
       * Write parameter to stream.
@@ -72,7 +72,7 @@ namespace Util
       *
       * \param ar saving (output) archive.
       */
-      void saveParam(Serializable::OArchiveType& ar);
+      void save(Serializable::OArchiveType& ar);
 
       /**
       * Set the pointer to point a specific variable.
@@ -144,7 +144,7 @@ namespace Util
    * Load from an archive.
    */
    template <class Type>
-   void ScalarParam<Type>::loadParam(Serializable::IArchiveType& ar)
+   void ScalarParam<Type>::load(Serializable::IArchiveType& ar)
    {
       if (isParamIoProcessor()) {
          ar >> *valuePtr_;
@@ -160,7 +160,7 @@ namespace Util
    * Save to an archive.
    */
    template <class Type>
-   void ScalarParam<Type>::saveParam(Serializable::OArchiveType& ar)
+   void ScalarParam<Type>::save(Serializable::OArchiveType& ar)
    {  ar << *valuePtr_; }
 
    /*

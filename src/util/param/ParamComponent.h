@@ -28,7 +28,7 @@ namespace Util
    *
    *  \ingroup Param_Module
    */
-   class ParamComponent
+   class ParamComponent : public Serializable
    {
 
    public:
@@ -50,11 +50,11 @@ namespace Util
       */
       virtual void writeParam(std::ostream& out) = 0;
 
-      virtual void saveParam(Serializable::OArchiveType &ar)
+      virtual void save(Serializable::OArchiveType &ar)
       {}
 
-      //virtual void loadParam(Serializable::IArchiveType &ar)
-      //{}
+      virtual void load(Serializable::IArchiveType &ar)
+      {}
 
       /**
       * Nontrivial implementation provided by ParamComposite subclass.

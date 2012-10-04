@@ -154,14 +154,32 @@ namespace Util
       virtual void writeParam(std::ostream &out);
    
       /** 
+      * Load all parameters from an archive.
+      *
+      * This default implementation saves all parameters to file,
+      * descending children recursively. 
+      *
+      * \param ar input/loading archive.
+      */
+      virtual void load(Serializable::IArchiveType &ar);
+   
+      /** 
+      * Load body of parameter block excluding opening and closing lines.
+      *
+      * \param ar input/loading archive.
+      */
+      virtual void loadParameters(Serializable::IArchiveType &ar)
+      {};
+
+      /** 
       * Saves all parameters to an archive.
       *
       * This default implementation writes all parameters to file,
       * descending children recursively. 
       *
-      * \param ar saving archive.
+      * \param ar output/saving archive.
       */
-      virtual void saveParam(Serializable::OArchiveType &ar);
+      virtual void save(Serializable::OArchiveType &ar);
    
       /// \name read* methods
       /// \brief Each of these methods invokes an associated add* method to 
@@ -287,21 +305,19 @@ namespace Util
       //@}
       /// \name load* methods   
       /// \brief Each of these methods invokes an associated add* method to create a 
-      /// new ParamComponent object, and then invokes the loadParam() method of the 
+      /// new ParamComponent object, and then invokes the load() method of the 
       /// new object to load the associated parameter value from an archive.
       //@{
      
-      #if 0 
       /** 
       * Add and load a child ParamComposite.
       *
-      * \param ar    input stream for loading
+      * \param ar    input archive for loading
       * \param child child ParamComposite object
       * \param next  true if the indent level is one higher than parent.
       */
       void 
       loadParamComposite(Serializable::IArchiveType &ar, ParamComposite &child, bool next = true);
-      #endif
    
       /**  
       * Add a new Param < Type > object, and load its value.
@@ -560,7 +576,7 @@ namespace Util
                         Type &value)
    {
       ScalarParam<Type>* ptr = &add<Type>(label, value);
-      ptr->loadParam(ar);
+      ptr->load(ar);
       return *ptr;
    }
    
@@ -608,7 +624,7 @@ namespace Util
                               Type *value, int n)
    {
       CArrayParam<Type>* ptr = &addCArray<Type>(label, value, n);
-      ptr->loadParam(ar);
+      ptr->load(ar);
       return *ptr;
    }
 
@@ -656,7 +672,7 @@ namespace Util
                               DArray<Type>& array, int n)
    {
       DArrayParam<Type>* ptr = &addDArray<Type>(label, array, n);
-      ptr->loadParam(ar);
+      ptr->load(ar);
       return *ptr;
    }
 
@@ -704,7 +720,7 @@ namespace Util
                               FArray<Type, N >& array)
    {
       FArrayParam<Type, N>* ptr = &addFArray<Type, N>(label, array);
-      ptr->loadParam(ar);
+      ptr->load(ar);
       return *ptr;
    }
 
@@ -752,7 +768,7 @@ namespace Util
                 Type *value, int m, int n)
    {
       CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n);
-      ptr->loadParam(ar);
+      ptr->load(ar);
       return *ptr;
    }
   
@@ -800,7 +816,7 @@ namespace Util
                                DMatrix<Type>& matrix, int m, int n)
    {
       DMatrixParam<Type>* ptr = &addDMatrix<Type>(label, matrix, m, n);
-      ptr->loadParam(ar);
+      ptr->load(ar);
       return *ptr;
    }
 
