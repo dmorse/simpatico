@@ -11,7 +11,6 @@
 #include <util/global.h>
 
 #include <util/param/ParamComposite.h>        // base class
-#include <util/archives/Serializable.h>       // base class
 
 #include <util/boundary/Boundary.h>           // member (typedef)
 #include <mcMd/chemistry/Molecule.h>          // member template parameter
@@ -100,7 +99,7 @@ namespace McMd
    *
    * \ingroup McMd_System_Module
    */
-   class System : public ParamComposite, public Serializable
+   class System : public ParamComposite
    {
    
    public:

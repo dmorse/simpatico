@@ -10,7 +10,6 @@
 
 #include "Diagnostic.h"                  // template parameter
 #include <util/param/Manager.h>          // base class template
-#include <util/archives/Serializable.h>  // base class 
 
 namespace McMd
 {
@@ -23,7 +22,7 @@ namespace McMd
    * \ingroup McMd_Manager_Module
    * \ingroup McMd_Diagnostic_Module
    */
-   class DiagnosticManager : public Manager<Diagnostic>, public Serializable
+   class DiagnosticManager : public Manager<Diagnostic>
    {
 
    public:

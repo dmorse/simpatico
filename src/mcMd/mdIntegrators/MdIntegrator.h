@@ -9,7 +9,6 @@
 */
 
 #include <util/param/ParamComposite.h>    // base class
-#include <util/archives/Serializable.h>   // base class
 #include <util/boundary/Boundary.h>       // typedef
 
 #include <iostream>
@@ -27,7 +26,7 @@ namespace McMd
    *
    * \ingroup McMd_MdIntegrator_Module
    */
-   class MdIntegrator : public ParamComposite, public Serializable
+   class MdIntegrator : public ParamComposite
    {
    
    public:

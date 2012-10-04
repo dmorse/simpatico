@@ -10,7 +10,6 @@
 
 #include <util/param/Manager.h>          // base class template
 #include "McMove.h"                      // base class template parameter
-#include <util/archives/Serializable.h>  // base class
 #include <util/containers/DArray.h>      // member template
 
 namespace Util { class Random; }
@@ -29,7 +28,7 @@ namespace McMd
    * \ingroup McMd_Manager_Module
    * \ingroup McMd_McMove_Module
    */
-   class McMoveManager : public Manager<McMove>, public Serializable
+   class McMoveManager : public Manager<McMove>
    {
 
    public:

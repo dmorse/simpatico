@@ -107,6 +107,8 @@ namespace McMd
       friend std::istream& operator>>(std::istream& in, PairSelector& selector);
       friend std::ostream& operator<<(std::ostream& out, const PairSelector& selector);
 
+      template <class Archive> friend
+      void serialize(Archive& ar, PairSelector& selector, const unsigned int version);
    }; 
 
    /*
@@ -152,6 +154,24 @@ namespace McMd
    std::ostream& operator<<(std::ostream& out, const PairSelector& selector);
 
    /**
+   * Serialize a PairSelector.
+   *
+   * Default implementation calls serialize method of data object.
+   * Can be overridden by any explicit specialization.
+   *
+   * \param ar        archive object
+   * \param selector  object to be serialized
+   * \param version   archive version id
+   */
+   template <class Archive>
+   void serialize(Archive& ar, PairSelector& selector, const unsigned int version)
+   {
+      ar & selector.pairType_;
+      ar & selector.atom1TypeId_;
+      ar & selector.atom2TypeId_;
+   }
+
+   /**
    * istream extractor (>>) for a PairSelector::PairType enum.
    *
    * \param in        input stream
@@ -168,6 +188,20 @@ namespace McMd
    * \return modified output stream
    */
    std::ostream& operator<<(std::ostream& out, const PairSelector::PairType& type);
+
+   /**
+   * Serialize a PairSelector.
+   *
+   * Default implementation calls serialize method of data object.
+   * Can be overridden by any explicit specialization.
+   *
+   * \param ar      archive object
+   * \param type    object to be serialized
+   * \param version archive version id
+   */
+   template <class Archive>
+   void serialize(Archive& ar, PairSelector::PairType& type, const unsigned int version)
+   {  serializeEnum(ar, type, version); }
 
 } 
 

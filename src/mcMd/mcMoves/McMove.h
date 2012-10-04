@@ -9,7 +9,6 @@
 */
 
 #include <util/param/ParamComposite.h>
-#include <util/archives/Serializable.h>
 #include <util/random/Random.h>
 #include <util/global.h>
 
@@ -29,7 +28,7 @@ namespace McMd
    *
    * \ingroup McMd_McMove_Module
    */
-   class McMove : public ParamComposite, public Serializable
+   class McMove : public ParamComposite
    {
 
    public:

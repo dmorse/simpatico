@@ -9,7 +9,6 @@
 */
 
 #include <util/param/ParamComposite.h>      // base class
-#include <util/archives/Serializable.h>     // base class
 #include <util/misc/FileMaster.h>           // member variable
 
 #include <string>
@@ -50,7 +49,7 @@ namespace McMd
    *
    * \ingroup McMd_Diagnostic_Module
    */
-   class Diagnostic : public ParamComposite, public Serializable
+   class Diagnostic : public ParamComposite
    {
 
    public:
