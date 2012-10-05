@@ -195,12 +195,6 @@
       Factory<A>* newDefaultFactory() const
       { return new AFactory(); }
 
-      //void readParameters(std::istream& in) 
-      //{
-      //   readBegin(in, "AManager");
-      //   Manager<A>::readParameters(in);
-      //} 
-
    };
 
 
@@ -231,7 +225,7 @@
          read<IntVector>(in, "value8", value8_);
          readDMatrix<double>(in, "value9", value9_, 2, 2);
          readParamComposite(in, e_);
-         //readParamComposite(in, manager_);
+         readParamComposite(in, manager_);
       }
    
       virtual void loadParameters(Serializable::IArchiveType& ar)
@@ -249,7 +243,7 @@
          loadParameter<IntVector>(ar, "value8", value8_);
          loadDMatrix<double>(ar, "value9", value9_, 2, 2);
          loadParamComposite(ar, e_);
-         //loadParamComposite(ar, manager_);
+         loadParamComposite(ar, manager_);
       }
 
    private:

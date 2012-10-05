@@ -19,8 +19,6 @@ ClassName{
   E{
     e               35.00
   }
-}
-
   AManager{
   
      B{
@@ -33,4 +31,5 @@ ClassName{
      }
 
   }
+}
 

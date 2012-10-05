@@ -312,9 +312,13 @@ namespace Util
       std::string name;
       std::string managerName = ParamComposite::className();
 
+      // Check if a Factory exists, create one if necessary.
+      initFactory();
+
       addBegin(managerName.c_str());
       ar >> size;
       for (int i = 0; i < size; ++i) {
+         addBlank();
          typePtr = factoryPtr_->loadObject(ar, *this, name);
          if (typePtr) {
             append(*typePtr, name);
@@ -324,6 +328,7 @@ namespace Util
             UTIL_THROW(msg.c_str());
          }
       }
+      addBlank();
       addEnd();
    }
 

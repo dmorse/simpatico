@@ -124,7 +124,7 @@ public:
       paramComposite_.read<IntVector>(file(), "value8", value8);
       paramComposite_.readDMatrix<double>(file(), "value9", value9, 2, 2);
       paramComposite_.readParamComposite(file(), e);
-      //paramComposite_.readParamComposite(file(), manager);
+      paramComposite_.readParamComposite(file(), manager);
       paramComposite_.readEnd(file());
 
       printEndl();
@@ -135,7 +135,7 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      openFile("in/ParamComposite2");
+      openFile("in/ParamComposite");
 
       AComposite original;
       original.readParam(file());
@@ -164,7 +164,7 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      openFile("in/ParamComposite2");
+      openFile("in/ParamComposite");
 
       AComposite original;
       original.readParam(file());
@@ -307,9 +307,9 @@ public:
       DMatrix<double>  value9;
       value9.allocate(2, 2);
       E e;
-      //AManager  manager;
+      AManager  manager;
 
-      openFile("in/ParamComposite2");
+      openFile("in/ParamComposite");
 
       //paramComposite_.setEcho();
       paramComposite_.readBegin(file(), "ClassName");
@@ -326,7 +326,7 @@ public:
       paramComposite_.read<IntVector>(file(), "value8", value8);
       paramComposite_.readDMatrix<double>(file(), "value9", value9, 2, 2);
       paramComposite_.readParamComposite(file(), e);
-      //paramComposite_.readParamComposite(file(), manager);
+      paramComposite_.readParamComposite(file(), manager);
       paramComposite_.readEnd(file());
 
       Serializable::OArchiveType oar;
@@ -349,7 +349,7 @@ public:
       DMatrix<double>  cValue9;
       cValue9.allocate(2, 2);
       E cE;
-      //AManager  manager;
+      AManager cManager;
 
       ParamComposite clone;
       Serializable::IArchiveType iar;
@@ -370,11 +370,13 @@ public:
       clone.loadParameter<IntVector>(iar, "value8", cValue8);
       clone.loadDMatrix<double>(iar, "value9", cValue9, 2, 2);
       clone.loadParamComposite(iar, cE);
-      //clone.loadParamComposite(iar, manager);
+      clone.loadParamComposite(iar, cManager);
       clone.addEnd();
 
       printEndl();
       clone.writeParam(std::cout);
+      #if 0
+      #endif
    }
 
 };
