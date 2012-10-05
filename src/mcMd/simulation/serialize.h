@@ -10,7 +10,6 @@
 
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
-#include <util/boundary/serialize.h>
 #include <mcMd/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>

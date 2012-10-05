@@ -28,12 +28,28 @@ namespace Util
    /*
    * Read random seed and initialize.
    */
-   void Random::readParam(std::istream &in)
+   void Random::readParameters(std::istream &in)
    {
-      readBegin(in, "Random");
       read<SeedType>(in, "seed", seed_);
       setSeed();
-      readEnd(in);
+   }
+
+   /*
+   * Load random seed and internal state.
+   */
+   void Random::loadParameters(Serializable::IArchiveType& ar)
+   {
+      load<SeedType>(ar, "seed", seed_);
+      ar >> engine_;
+   }
+
+   /*
+   * Save internal state.
+   */
+   void Random::save(Serializable::OArchiveType& ar)
+   {
+      ar << seed_;
+      ar << engine_;
    }
 
    /*

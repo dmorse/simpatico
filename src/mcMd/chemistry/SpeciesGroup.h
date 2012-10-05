@@ -28,8 +28,18 @@ namespace McMd
    template <int NAtom> std::ostream& 
    operator << (std::ostream& out, const SpeciesGroup<NAtom>& speciesGroup);
 
-   template <int NAtom, class Archive>
-   void serialize(Archive& ar, SpeciesGroup<NAtom> &speciesGroup, 
+   /**
+   * Serialize one SpeciesGroup<NAtom>.
+   *
+   * Default implementation calls serialize method of data object.
+   * Can be overridden by any explicit specialization.
+   *
+   * \param ar            archive object
+   * \param speciesGroup  object to be serialized
+   * \param version       archive version id
+   */
+   template <class Archive, int NAtom>
+   void serialize(Archive& ar, SpeciesGroup<NAtom>& speciesGroup, 
                   const unsigned int version);
 
    /**
@@ -135,7 +145,11 @@ namespace McMd
       operator << <> (std::ostream& out, const SpeciesGroup<NAtom>& speciesGroup);
 
       template <class Archive> friend
-      void serialize(Archive& ar, SpeciesGroup<NAtom> &speciesGroup, 
+      void serialize(Archive& ar, SpeciesGroup<NAtom>& speciesGroup, 
+                     const unsigned int version);
+
+      template <class Archive> friend
+      void serialize(Archive& ar, SpeciesGroup<NAtom>& speciesGroup, 
                      const unsigned int version);
 
    };
@@ -172,26 +186,32 @@ namespace McMd
    std::ostream& 
    operator << (std::ostream& out, const SpeciesGroup<NAtom> &speciesGroup);
 
-   /**
-   * Serialize one object of type T.
-   *
-   * Default implementation calls serialize method of data object.
-   * Can be overridden by any explicit specialization.
-   *
-   * \param ar      archive object
-   * \param data    object to be serialized
-   * \param version archive version id
-   */
-   template <int NAtom, class Archive>
-   void serialize(Archive& ar, SpeciesGroup<NAtom>& speciesGroup, 
-                  const unsigned int version)
+   template <class Archive>
+   void serialize(Archive& ar, SpeciesGroup<2>& speciesGroup, const unsigned int version)
    {
-      for (int i = 0; i < NAtom; ++i) {
+      for (int i = 0; i < 2; ++i) {
          ar & speciesGroup.atomIds_[i];
       }
       ar & speciesGroup.typeId_;
    }
 
+   template <class Archive>
+   void serialize(Archive& ar, SpeciesGroup<3>& speciesGroup, const unsigned int version)
+   {
+      for (int i = 0; i < 3; ++i) {
+         ar & speciesGroup.atomIds_[i];
+      }
+      ar & speciesGroup.typeId_;
+   }
+
+   template <class Archive>
+   void serialize(Archive& ar, SpeciesGroup<4>& speciesGroup, const unsigned int version)
+   {
+      for (int i = 0; i < 4; ++i) {
+         ar & speciesGroup.atomIds_[i];
+      }
+      ar & speciesGroup.typeId_;
+   }
 
 }
 #endif

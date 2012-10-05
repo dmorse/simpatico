@@ -1,0 +1,11 @@
+
+   /*
+   * Serialize to/from an archive.
+   */
+   template <class Archive>
+   void Random::serialize(Archive& ar, const unsigned int version)
+   {
+      ar & engine_;
+      ar & seed_;
+   }
+

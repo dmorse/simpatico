@@ -111,6 +111,34 @@ namespace Util
    }
 
    /*
+   * Load internal state from file.
+   */
+   void FileMaster::loadParameters(Serializable::IArchiveType &ar)
+   {
+      load<std::string>(ar, "commandFileName",  commandFileName_);
+      load<std::string>(ar, "inputPrefix",  inputPrefix_);
+      load<std::string>(ar, "outputPrefix", outputPrefix_);
+      ar >> directoryIdPrefix_;
+      ar >> rootPrefix_;
+      ar >> hasDirectoryId_;
+      ar >> isSetParamFileStdIn_;
+   }
+
+   /*
+   * Save internal state to file. 
+   */
+   void FileMaster::save(Serializable::OArchiveType &ar)
+   {
+      ar << commandFileName_;
+      ar << inputPrefix_;
+      ar << outputPrefix_;
+      ar << directoryIdPrefix_;
+      ar << rootPrefix_;
+      ar << hasDirectoryId_;
+      ar << isSetParamFileStdIn_;
+   }
+   
+   /*
    * Get the default parameter stream.
    */
    std::istream& FileMaster::paramFile()

@@ -170,6 +170,20 @@ namespace Util
       virtual void readParameters(std::istream& in);
 
       /**
+      * Load internal state from file.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchiveType &ar);
+   
+      /**
+      * Save internal state to file. 
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchiveType &ar);
+   
+      /**
       * Get a default parameter stream by reference.
       *
       * If setDirectoryId() has not been called, of if setParamFileStdIn()
