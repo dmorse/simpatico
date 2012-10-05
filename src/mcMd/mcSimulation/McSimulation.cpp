@@ -12,7 +12,6 @@
 
 #include "McSimulation.h"
 #include "McDiagnosticManager.h"
-//#include <mcMd/simulation/serialize.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/diagnostics/Diagnostic.h>
@@ -232,6 +231,7 @@ namespace McMd
       loadParamComposite(ar, diagnosticManager());
       isValid();
       ar >> iStep_;
+      system().loadConfig(ar);
       isInitialized_ = true;
    }
 
@@ -246,6 +246,7 @@ namespace McMd
       mcMoveManagerPtr_->save(ar);
       diagnosticManager().save(ar);
       ar << iStep_;
+      system().saveConfig(ar);
    }
 
    /*

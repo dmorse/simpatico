@@ -140,13 +140,13 @@ public:
       AComposite original;
       original.readParam(file());
 
-      printEndl();
-      original.writeParam(std::cout);
+      // printEndl();
+      // original.writeParam(std::cout);
 
       Serializable::OArchiveType oar;
       std::ofstream out("out/save1.bin");
       oar.setStream(out); 
-      paramComposite_.save(oar);
+      original.save(oar);
       out.close();
 
       AComposite clone;
@@ -338,6 +338,7 @@ public:
       int     cValue0;
       long    cValue1;
       double  cValue2;
+      std::string cStr;
       int     cValue3[3];
       double  cValue4[3];
       double  cValue5[2][2];
@@ -359,6 +360,7 @@ public:
       clone.loadParameter<int>(iar, "value0", cValue0);
       clone.loadParameter<long>(iar, "value1", cValue1);
       clone.loadParameter<double>(iar, "value2", cValue2);
+      clone.loadParameter<std::string>(iar, "str", cStr);
       clone.addBlank();
       clone.loadCArray<int>(iar, "value3", cValue3, 3);
       clone.loadCArray<double>(iar, "value4", cValue4, 3);

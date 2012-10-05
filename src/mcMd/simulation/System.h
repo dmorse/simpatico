@@ -243,31 +243,6 @@ namespace McMd
       */
       void saveConfig(Serializable::OArchiveType& ar);
 
-      #if 0
-      /**
-      * Serialize the System to/from an archive.
-      *
-      * \param ar      output or input Archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-      #endif
-
-      /**
-      * Save the System configuration to an archive.
-      *
-      * \param ar output (saving) archive object.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load the System configuration from an archive.
-      *
-      * \param ar input (loading) archive object.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
-
       //@}
       /// \name Trajectory File IO
       //@{

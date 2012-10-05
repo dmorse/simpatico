@@ -10,28 +10,22 @@ This file documents programming and formatting conventions that should be used
 in the source code of Simpatico:
 
 --------------------------------------------------------------------------------
-Source Code Formatting:
+Low-level source Code Formatting:
 
-1) Indent 3 spaces per level. Do not use tabs for indentation.
+1) Indent exactly 3 spaces per level. Do not use tabs for indentation.
 
-2) Break lines at 80 characters or less, to preserve readability in printouts.
+2) For control structures (if, for, while, etc.), place the opening brace 
+at the end of a line, and the closing brace on a line by itself, aligned 
+with the beginning of the opening line, like this:
+\code
+   for (int i = 0; i < end; ++i) {
+      doSomething();
+   }
+\endcode
 
-3) Set off binary operators (e.g., =, ==, <, >, etc.) by one space on either
-side. Exceptions can be made when saving a few spaces can avoid a line wrap. 
-
-4) Use one space to separate keywords, parentheseses, and opening braces in 
-conditional statements. Use one space after each semi-colon in for-loop 
-statements, and one space after each comma in function parameter lists. Do 
-not follow opening parentheses or precede closing parentheses by a space.
-Do not add whitespace space before commas or semicolons.
-
-5) Use Kernigan and Richie (K&R) style for opening and closing braces. 
-For control structures (if, for, while, etc.), place the opening brace at 
-the end of a line, and the closing brace on a line by itself, aligned with
-the beginning of the opening line. For definitions of functions and classes,
-however, put the opening brace on a separate line, and align both opening
-and closing braces with the beginning of the function or class definition.
-Also put the opening brace on a separate line for namespace blocks.
+3) For definitions of functions, classes, and namespaces, put the opening brace 
+on a separate line, and align both opening and closing braces with the beginning 
+of the function, class or namespace definition.
 
 Example:
 \code
@@ -69,63 +63,52 @@ namespace Util
 
 \end
 
-6) Wrap every source file in a namespace block. Start the namespace
-declaration in the first column, with no preceding white space.  All 
-source code in Simpatico is defined within one of several namespaces 
-(Util, McMd, and DdMd).  The only exception is the unit test framework 
-in directory src/test, which is not intended to be included in the 
-source code, and so is defined in the global namespace.
+3) Wrap every source file in the src/ directory in a namespace block. Start 
+the namespace declaration in the first column, with no preceding white space.  
+The unit test framework in the in the tests/test directory is the only code
+that is defined in the global namespace. 
 
-Example:
+4) In class definitions, align "public:", "protected:", and "private:" declarations 
+with the beginning of the class definition statement, and with the opening and 
+closing braces of the class definition. 
+
+5) Use one space to separate keywords, parentheseses, and opening braces in 
+conditional statements. Use one space after each semi-colon in for-loop 
+statements, and one space after each comma in function parameter lists. Do 
+not follow opening parentheses or precede closing parentheses by a space.
+Do not add whitespace space before commas or semicolons.
+
+6) Set off the operators  =, ==, <, >, +, and - by one space on either side. 
+Multipication (*) and division (/) operators may or may not be set off by white
+space. Exceptions can be made when saving a few spaces can avoid a line wrap. 
+
+7) Break lines at 80 characters or less whenever possible, to preserve 
+readability in printouts.
+
+8) For one-line functions, the function definition may be defined on a single 
+line after the line containing the function signature, like this:
 \code
-namespace Util
-{
- 
-   int myFunction(int param1, int power) 
-   {
-      int output = 1;
-      for (int i = 0; i < counter; ++i) {
-         output *= param1;
-      }
-      return output;
-   }
-
-}
-\endcode
-
-7) For one-line functions, the function body may instead be defined on a 
-single line after the line containing the function signature. The opening 
-brace should be aligned with the beginning of the function signature, with 
-the closing brace at the end of the line:
-
-\code
-   inline int data() 
+   inline int SillyClass::data() 
    {  return data_; }
 \endcode
 
-8) Consecutive function definitions and associated documentation blocks
-within a file should be separated by a single blank line. This applies 
-to both global functions and class method definitions.
+9) Consecutive function declarations or definitions within a file, with associated
+documentation blocks, should be separated by only single blank line.
 
 ------------------------------------------------------------------------------
 Class Definitions:
 
-1) In class definitions, list public members first, then protected, then 
-private.  Within each block, list data members first, then methods.  Align 
-"public:", "protected:", and "private:" declarations with the beginning of
-the class definition statement, and with the opening and closing braces of 
-the class definition. 
+1) In class definitions, list public members first, then protected, then private.  
+Within each block, list data members first, then methods.  
 
 2) List any friend declarations at the end of a class definition in a 
 "pseudo-block" that is preceded by a comment "//friends:" on a line by itself,
 after the private members.  The "//friends:" comment should be aligned with 
-the "public", "protected:" and "private:" declarations, and with the outer 
-braces of the class definition. 
+the outer braces of the class definition. 
 
 3) Inline method definitions should be given outside the class definition,
 within the header file. The word "inline" should be added to the function 
 definition, outside the class definition, but not to the function declaration.
-
 
 Example (without dOxygen comment blocks):
 
@@ -184,8 +167,10 @@ namespace Util
 
 4) Declarations of class members (data or methods) and associated 
 documentation comments within a class definition should be separated by 
-a single blank line. Real code should contain doxygen documentation for
-all class members, though the above examples do not. 
+a single blank line. 
+
+5) Document every class definition and member function declarations with a 
+doxygen documentation block.
 
 ------------------------------------------------------------------------------
 Name Conventions:
@@ -224,30 +209,29 @@ class member variable should be set should be the member variable name,
 without the the trailing underscore.
 
 9) Names of methods and other functions that are not simple accessors 
-(discussed below) should be verbs. 
+(discussed below) should usually be verbs. 
 
 10) The name of a "setter" function that is passed a value for a corresponding 
-member variable should begin with the prefix "set". For example:
+member variable should begin with the prefix "set". The name of the value
+should be the same as the name of member variable, without the underscore.
+For example:
 
 \code
 
    void Thing::setData(int data)
-   { data_ = data; }
+   {  data_ = data; }
 
 \endcode
-
-The same convention is used for methods that are passed an object by value 
-or constant reference and copy its value into a member variable, or that are 
-passed a non-const reference and that store the address of the object in a 
-member variable. For example:
-
+The same convention is used whether the value is passed by value, by const 
+reference, or by non-constant references (which is necessary for methods that
+store the address of the value). For example:
 \code
 
     void Thing::setPosition(const Vector &position)
-    { position_ = position; }
+    {  position_ = position; }
 
     void Thing::setMolecule(Molecule &molecule)
-    { moleculePtr_ = &molecule; }
+    {  moleculePtr_ = &molecule; }
 
 \endcode
 
@@ -262,10 +246,8 @@ be inlined to avoid computational overhead.
 12) Avoid preprocessor macros, except for #include of header files and those 
 used for conditional compilation (e.g., those used to distinguish debugging 
 and production code).  All preprocessor macro names are upper case, with 
-underscores between words.  Macros that are used in the util directory should 
-be defined in src/util/config.h, and should be given names that begin with 
-UTIL_. No preprocessor macros (other than include guards) should be defined 
-in header files, or in files that contain class templates. 
+underscores between words.  No preprocessor macros other than include guards 
+should be defined in header files, or in files that contain class templates. 
 
 -------------------------------------------------------------------------------
 Class and Function Interface Design Guidelines:
@@ -320,15 +302,15 @@ following accessor functions:
 
    // Read access to a member of a primitive data type.
    int Thing::data() const
-   { return data_; }
+   {  return data_; }
 
    // Read access to a member object.
    const Object& Thing::object() const
-   { return object_; }
+   {  return object_; }
 
    // Read-write access to a member object.
    Object& Thing::&object_()
-   { return object_; }
+   {  return object_; }
 
 \endcode
 
@@ -413,7 +395,7 @@ Data Structure Conventions:
 C fscan() and fprint() methods. Use the wrapper classes in the src/format 
 directory to simplify coding of formatted output to ostreams.
 
-2) Use std::string to represent all character strings. 
+2) Use std::string to represent character strings whenever possible.
 
 3) Use Util::Vector objects to represent Cartesian positions and separations, 
 or any array of floating point numbers for which the number of elements equals 
@@ -421,19 +403,25 @@ the dimensionality of space (e.g., the dimensions of the Boundary for a
 periodic orthorhombic unit cell). Use IntVector to represent corresponding
 arrays of integers.
 
-4) Prefer the container objects in src/util/containers over bare C arrays 
+4) Prefer the container templates in src/util/containers over bare C arrays 
 and STL containers. STL containers should be used when their is a need for 
 their resizability or for other features not provided by the custom
-containers. The preference for the custom containers is based on the fact
-that they provide bound checking when NDEBUG is not defined. Use a DArray 
-container (dynamically allocated array) as a replacement for 1D dynamically 
-allocated C arrays or std::vector, if a maximum dimension can be determined 
-during initialization of a simulation. Use an FArray or an SArray as 
-replacement for static C array, to construct small arrays on the stack. Use
-an FArray when the exact number of dimensions is known at compile time,
-and an SArray when the maximum number of elements can be specified at
+containers. 
+
+Rational: The preference for the custom containers is based on the fact that:
+(1) They provide bound checking when NDEBUG is not defined, and (2) They do
+not allow silently resized. The second property is important only for 
+algorithms that use pointers to array elements, which could be invalidated
+if the array is resized.
+
+Use a DArray container (dynamically allocated array) as a replacement for 
+1D dynamically allocated C array or std::vector, if a maximum dimension 
+can be determined during initialization of a simulation. Use an FArray or 
+SArray as replacement for static C array, to construct small arrays on the 
+stack. Use an FArray when the exact number of dimensions is known at compile 
+time, and an SArray when the maximum number of elements can be specified at
 compile time, but the logical size of the array may be less than this
-maximum.  Use the corresponding DPArray and SPArray containers for arrays 
+maximum. Use the corresponding DPArray and SPArray containers for arrays 
 that only store pointers to objects, rather than actual objects. These can 
 also be dereferenced and accessed by the array [] operator syntax, which 
 always returns a reference to the associated object (not a pointer).
@@ -451,35 +439,33 @@ The code uses several types of container iterators, all of which follow the
 conventions described below. These conventions are slightly different from 
 those of the C++ STL:
 
-1) All iterators overload *, ->, and (prefix) ++ operators. The bidirectional 
-ListIterator also overload (prefix) --. *Iterator returns the object to which
-the iterator points. Iterator->member returns a member of that object, and
-++Iterator increments the iterator.
+1) All iterators overload *, ->, and (prefix) ++ operators.  Iterator->member 
+returns a member of that object, and ++Iterator increments the iterator.
 
-2) Every iterator provides a bool method atEnd(). This returns true when the 
-end of the container has already been passed by the previous increment or 
-(for a bidirectional iterator) decrement operation.
+2) Every iterator provides a bool method notEnd(), which should be used as 
+the condition to terminate a loop. This returns false when the end of the 
+container has already been passed by the previous increment operation.
 
-3) Each container may be accessed by a forward iterator that is initialized by 
-a method void begin(Iterator&) method that initializes the relevant type of 
-iterator. The standard form of a for-loop is thus:
+3) Each container provides a method begin(Iterator& ) that takes the relevant
+type of iterator as an argument, and that initializes the iterator to the 
+first element in the container.  The standard form of a for-loop is thus:
 
 Example:
 
 \code
 
    Iterator iter;
-   for (container.begin(iter); !iter.atEnd(); ++i){
+   for (container.begin(iter); iter.notEnd(); ++i){
       // Do something with iter.
    }
 
 \endcode
 
-4) Typenames for the most important iterators are defined by typedefs. The 
-typedef System::MoleculeIterator is the type of iterator for all molecules of 
-a specific Species within one System. The typedef Molecule::AtomIterator is 
-the type for an iterator for all atoms within one molecule. The System class 
-provides a method void begin(speciesId, iter) that initializes a 
+4) Typenames for some of most important iterators are defined by typedefs. The 
+typedef McMd::System::MoleculeIterator is the type of iterator for all molecules 
+of a specific Species within one System. The typedef McMd::Molecule::AtomIterator 
+is the type for an iterator for all atoms within one molecule. The McMd::System 
+class provides a method void begin(speciesId, iter) that initializes a 
 System::MolecularIerator iterator iter for species number speciesId. 
 The Molecule class provides a method void begin(iter) initializes a 
 Molecule::AtomIterator. The syntax for a loop over all atoms in a System 
@@ -513,15 +499,15 @@ is thus:
 ----------------------------------------------------------------------------
 File Conventions
 
-1) Header files names end with .h and implementation files end with the suffix 
-.cpp. Header (*.h) files are intended to be included by other files, whereas 
-implementation (*.cpp) files are compiled separately and linked. 
+1) Header files names end with a suffix .h and source (implementation) files end with 
+the suffix .cpp. Header (*.h) files are intended to be included by other files, 
+whereas source (*.cpp) files are compiled separately and linked. 
 
 2) Write one public class per file. The base name of the header and implementation 
 files for a class (excluding the .h and .cpp suffixes) should be the class name, 
 capitalized the same way as the class name.
 
-3) Use header guards in all header and source files.
+3) Use header guards in all header files.
 
 4) In header files, use forward class declarations rather than including class 
 headers whenever possible. Headers are needed for base classes, member objects,
@@ -529,7 +515,8 @@ typdefs, templates, and base classes used in inline functions.
   
 5) With few exceptions, project header files that are required by a source file 
 should be included explicitly, to document the dependency, even if they would 
-be indirectly included via another included header file. Exceptions are: 
+be indirectly included via another included header file. Reliance on indirect
+inclusion is fragile. Exceptions are: 
 
    a) A class MyClass.cpp implementation file may indirectly include any 
       header files that are included by the corresponding in MyClass.h.
@@ -537,25 +524,14 @@ be indirectly included via another included header file. Exceptions are:
    c) The Exception.h header is always included indirectly by including 
       the src/util/global.h file. 
 
-6) Standard C and C++ header files may be included indirectly when it is not 
-felt that this will not cause confusion. For example, <iostream> will be 
-included in the header file of any class derived ParamComponent, or from its 
-subclass ParamComposite, and so does not need to be directly included. 
+6) Avoid "using" statements for namespaces in header files. Specifically, do 
+not EVER use a "using std" statement to load the entire C++ standard library 
+into a header file. 
 
-7) Avoid "using" statements in header files. Specifically, do not ever use a 
-"using std" statement to load the entire C++ standard library into a header 
-file. Instead use explicitly qualified names, such as std::istream, std::cin, 
-std::string within header files. 
-
-8) Use explicitly qualified names, such as std::cin and std:: string, in 
+7) Use explicitly qualified names, such as std::cin and std:: string, in 
 function parameter lists, within both declarations and definitions. Do this 
 even in *.cpp implementation files, because dOxygen gets confused if you use 
 different conventions in the declaration and the definition of a function
-
-9) Each *.cpp implementation file must have a *.o target in the Makefile. 
-Header *.h files for which there is no corresponding *.cpp file may also 
-have targets in the Makefile, but these are used only for debugging, and 
-are not compiled as part of the "make all" target.
 
 ----------------------------------------------------------------------------
 Documentation Conventions (via dOxygen):
@@ -565,8 +541,8 @@ named quantities, i.e., all classes, methods, member variables, namespaces,
 global functions, typedefs, enums, and constants. 
 
 2) The documentation for every such named item should begin with a brief 
-single-sentence synopsis, which ends with a period. For many items, this 
-is all that is required. 
+single-sentence synopsis, which ends with a period. For many items, this is 
+all that is required. 
 
 3) dOxygen documentation for a class method should be above the method
 declaration within the class definition. This comment block should document 
@@ -604,9 +580,9 @@ Example:
 
 \endcode
 
-6) Class member variables may be documented either using the long style used
-for functions or by using a single line dOxygen comment format that begins with 
-"///" (note the extra backslash), as follows:
+6) Private class member variables may be documented either using the long style 
+used for functions or by using a single line dOxygen comment format that begins 
+with "///" (note the extra backslash), as follows:
 
 \code
 
@@ -628,9 +604,9 @@ for functions or by using a single line dOxygen comment format that begins with
 \endcode
 
 7) Do not use a dOxygen comment format to document the definition of a method
-outside of a class definition. Most function definitions are documented in the 
-following format, with only a single * in the first line, so that the comment 
-will not be parsed by dOxygen:
+outside of a class definition. Doxygen comments are used only for declarations.
+Most function definitions are documented in the following format, with only a 
+single * in the first line, so that the comment will not be parsed by dOxygen:
 
 \code
 

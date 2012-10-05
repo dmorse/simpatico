@@ -77,13 +77,6 @@ namespace McMd
       virtual void loadParameters(Serializable::IArchiveType &ar);
 
       /**
-      * Save internal state to an archive.
-      *
-      * \param ar output/saving archive
-      */
-      virtual void save(Serializable::OArchiveType &ar);
-
-      /**
       * Read system configuration from file.
       *
       * Calls System::readConfig() and then builds CellList.
@@ -92,12 +85,21 @@ namespace McMd
       */
       virtual void readConfig(std::istream& in);
 
+      #if 0
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchiveType &ar);
+
       /**
       * Load the MdSystem configuration from an archive.
       *
       * \param ar input (loading) archive object.
       */
       virtual void load(Serializable::IArchiveType& ar);
+      #endif
 
       /// \name Energy and Stress calculators
       //@{
