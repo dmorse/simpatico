@@ -304,8 +304,8 @@ namespace Util
 
       //@}
       /// \name load* methods   
-      /// \brief Each of these methods invokes an associated add* method to create a 
-      /// new ParamComponent object, and then invokes the load() method of the 
+      /// \brief Each of these methods invokes an associated add* method to create
+      /// a new ParamComponent object, and then invokes the load() method of the 
       /// new object to load the associated parameter value from an archive.
       //@{
      
@@ -317,7 +317,8 @@ namespace Util
       * \param next  true if the indent level is one higher than parent.
       */
       void 
-      loadParamComposite(Serializable::IArchiveType &ar, ParamComposite &child, bool next = true);
+      loadParamComposite(Serializable::IArchiveType &ar, ParamComposite &child, 
+                         bool next = true);
    
       /**  
       * Add a new Param < Type > object, and load its value.
@@ -327,7 +328,7 @@ namespace Util
       * \param value  reference to new ScalarParam< Type >
       */
       template <typename Type>
-      ScalarParam<Type>& load(Serializable::IArchiveType &ar, const char *label, Type &value);
+      ScalarParam<Type>& loadParameter(Serializable::IArchiveType &ar, const char *label, Type &value);
    
       /**  
       * Add a C array parameter, and load its elements.
@@ -572,8 +573,8 @@ namespace Util
    */
    template <typename Type>
    ScalarParam<Type>& 
-   ParamComposite::load(Serializable::IArchiveType &ar, const char *label, 
-                        Type &value)
+   ParamComposite::loadParameter(Serializable::IArchiveType &ar, const char *label, 
+                                 Type &value)
    {
       ScalarParam<Type>* ptr = &add<Type>(label, value);
       ptr->load(ar);

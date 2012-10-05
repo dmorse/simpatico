@@ -115,9 +115,9 @@ namespace Util
    */
    void FileMaster::loadParameters(Serializable::IArchiveType &ar)
    {
-      load<std::string>(ar, "commandFileName",  commandFileName_);
-      load<std::string>(ar, "inputPrefix",  inputPrefix_);
-      load<std::string>(ar, "outputPrefix", outputPrefix_);
+      loadParameter<std::string>(ar, "commandFileName",  commandFileName_);
+      loadParameter<std::string>(ar, "inputPrefix",  inputPrefix_);
+      loadParameter<std::string>(ar, "outputPrefix", outputPrefix_);
       ar >> directoryIdPrefix_;
       ar >> rootPrefix_;
       ar >> hasDirectoryId_;

@@ -244,6 +244,46 @@ namespace McMd
    }
 
    /*
+   * Load internal state from an archive.
+   */
+   void Simulation::loadParameters(Serializable::IArchiveType &ar)
+   {
+      loadParamComposite(ar, fileMaster_);
+
+      loadParameter<int>(ar, "nAtomType", nAtomType_);
+      loadParameter<int>(ar, "nBondType", nBondType_);
+      #ifdef INTER_ANGLE
+      loadParameter<int>(ar, "nAngleType", nAngleType_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      loadParameter<int>(ar, "nDihedralType", nDihedralType_);
+      #endif
+      #ifdef MCMD_LINK
+      loadParameter<int>(ar, "nLinkType", nLinkType_);
+      #endif
+      #ifdef INTER_EXTERNAL
+      loadParameter<int>(ar, "hasExternal", hasExternal_);
+      #endif
+      #ifdef INTER_TETHER
+      loadParameter<int>(ar, "hasTether", hasTether_);
+      #endif
+      #ifndef MCMD_NOATOMTYPES
+      // Allocate and load an array of AtomType objects
+      atomTypes_.allocate(nAtomType_);
+      for (int i = 0; i < nAtomType_; ++i) {
+         atomTypes_[i].setId(i);
+      }
+      loadDArray<AtomType>(ar, "atomTypes", atomTypes_, nAtomType_);
+      #endif
+      loadParameter<MaskPolicy>(ar, "maskedPairPolicy", maskedPairPolicy_);
+      loadParamComposite(ar, *speciesManagerPtr_);
+      loadParamComposite(ar, random_);
+
+      // Allocate and initialize all private arrays.
+      initialize();
+   }
+
+   /*
    * Allocate and initialize all private data (private method).
    *
    * Allocates global arrays (molecules_, atoms_, bonds_, angles_) and the
