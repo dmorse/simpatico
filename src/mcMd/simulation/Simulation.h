@@ -119,6 +119,13 @@ namespace McMd
       */
       virtual void readParameters(std::istream &in);
 
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchiveType &ar);
+
       /// \name Initialization 
       //@{
 

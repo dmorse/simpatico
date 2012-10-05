@@ -66,14 +66,14 @@ namespace McMd
    #ifdef MCMD_LINK
    class LinkPotential;
    class LinkMaster;
-   #endif
+   #endif // MCMD_LINK
    #ifdef INTER_EXTERNAL
    class ExternalPotential;
    #endif
    #ifdef INTER_TETHER
    class TetherFactory;
    class TetherMaster;
-   #endif
+   #endif 
    #ifdef MCMD_PERTURB
    class Perturbation;
    class ReplicaMove;
@@ -166,6 +166,22 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
  
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchiveType &ar);
+
+      #if 0
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchiveType &ar);
+      #endif
+
       //@}
       /// \name Config File IO
       //@{
@@ -381,7 +397,6 @@ namespace McMd
       //@{
     
       #ifndef INTER_NOPAIR 
-
       /**
       * Get the PairFactory by reference.
       */
@@ -391,7 +406,6 @@ namespace McMd
       * Return nonbonded pair style string.
       */
       std::string pairStyle() const;
-  
       #endif
 
       /**
@@ -505,7 +519,6 @@ namespace McMd
       Perturbation& perturbation() const;
      
       #ifdef UTIL_MPI 
-      
       /**
       * Does this system have an associated ReplicaMove?
       */
@@ -515,11 +528,10 @@ namespace McMd
       * Get the associated ReplicaMove by reference.
       */
       ReplicaMove& replicaMove() const;
+      #endif // UTIL_MPI
 
       //@}
-      #endif
-
-      #endif
+      #endif // MCMD_PERTURB
 
       /// \name Accessors (Miscellaneous)
       //@{
@@ -591,15 +603,17 @@ namespace McMd
       void readPerturbation(std::istream& in);
 
       #ifdef UTIL_MPI
+
       /**
       * Read the ReplicaMove parameter block (if any)
       *
       * \param in input parameter stream
       */
       void readReplicaMove(std::istream& in);
-      #endif
 
-      #endif
+      #endif // UTIL_MPI
+      #endif // MCMD_PERTURB
+
       /**
       * Allocate and initialize molecule sets for all species.
       *
@@ -623,6 +637,13 @@ namespace McMd
       void readFileMaster(std::istream& in);
 
       /**
+      * If no FileMaster exists, create and initialize one. 
+      *
+      * \param ar input parameter stream
+      */
+      void loadFileMaster(Serializable::IArchiveType& ar);
+
+      /**
       * Read potential styles, initialize LinkMaster or TetherMaster if needed.
       *
       * Invoked in implementation of readParameters().
@@ -630,6 +651,13 @@ namespace McMd
       * \param in input parameter stream
       */
       void readPotentialStyles(std::istream& in);
+
+      /**
+      * Load potential styles, initialize LinkMaster or TetherMaster if needed.
+      *
+      * \param ar input parameter stream
+      */
+      void loadPotentialStyles(Serializable::IArchiveType& ar);
 
       /**
       * Read energy and boundary ensembles.
@@ -640,6 +668,13 @@ namespace McMd
       */
       void readEnsembles(std::istream& in);
 
+      /**
+      * Load energy and boundary ensembles.
+      *
+      * \param ar input parameter stream
+      */
+      void loadEnsembles(Serializable::IArchiveType& ar);
+
       #ifdef MCMD_LINK
       /**
       * Read the LinkMaster.
@@ -649,7 +684,14 @@ namespace McMd
       * \param in input parameter stream
       */
       void readLinkMaster(std::istream& in);
-      #endif
+
+      /**
+      * Load the LinkMaster.
+      *
+      * \param ar input parameter stream
+      */
+      void loadLinkMaster(Serializable::IArchiveType& ar);
+      #endif // MCMD_LINK
 
       #ifdef INTER_TETHER
       /**
@@ -660,7 +702,28 @@ namespace McMd
       * \param in input parameter stream
       */
       void readTetherMaster(std::istream& in);
-      #endif
+
+      /**
+      * Load the TetherMaster.
+      *
+      * \param ar input parameter stream
+      */
+      void loadTetherMaster(Serializable::IArchiveType& ar);
+      #endif // INTER_TETHER
+
+      /**
+      * Load configuration.
+      *
+      * \param ar input/loading archive
+      */
+      void loadConfig(Serializable::IArchiveType& ar);
+
+      /**
+      * Save configuration.
+      *
+      * \param ar output/save archive
+      */
+      void saveConfig(Serializable::OArchiveType& ar);
 
    private:
 
@@ -753,8 +816,8 @@ namespace McMd
       /// Does system have ReplicaMove.
       bool hasReplicaMove_;
 
-      #endif
-      #endif 
+      #endif  // UTIL_MPI
+      #endif  // MCMD_PERTURB
 
       #ifndef INTER_NOPAIR
       /// Name of pair potential style.
@@ -986,12 +1049,12 @@ namespace McMd
       assert(replicaMovePtr_);
       return *replicaMovePtr_;
    }
-   #endif
+   #endif // UTIL_MPI
 
    inline bool System::expectPerturbation() const
    { return expectPerturbationParam_; }
 
-   #endif
+   #endif // MCMD_PERTURB
 
    /*
     * Subscribe to moleculeSet change signal

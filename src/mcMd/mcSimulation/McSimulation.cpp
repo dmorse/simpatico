@@ -35,7 +35,6 @@
 #endif
 
 #include <util/param/Factory.h>
-#include <util/random/serialize.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
@@ -221,6 +220,33 @@ namespace McMd
    */
    void McSimulation::readParam()
    {  ParamComposite::readParam(fileMaster().paramFile()); }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void McSimulation::loadParameters(Serializable::IArchiveType &ar)
+   {
+      Simulation::loadParameters(ar);
+      loadParamComposite(ar, system());
+      loadParamComposite(ar, *mcMoveManagerPtr_);
+      loadParamComposite(ar, diagnosticManager());
+      isValid();
+      ar >> iStep_;
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void McSimulation::save(Serializable::OArchiveType &ar)
+   {
+      Simulation::save(ar);
+      random().save(ar);
+      system().save(ar);
+      mcMoveManagerPtr_->save(ar);
+      diagnosticManager().save(ar);
+      ar << iStep_;
+   }
 
    /*
    * Read and execute commands from a specified command file.
