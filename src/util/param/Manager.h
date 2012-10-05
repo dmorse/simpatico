@@ -72,7 +72,7 @@ namespace Util
       void setFactory(Factory<Data>* factoryPtr);
 
       /**
-      * Read a list from file that controls creation of a series of objects.
+      * Read and create a set of objects.
       *
       * The default implementation of this method reads a sequence of blocks
       * for different subclasses of Data, terminated by a closing bracket.
@@ -92,6 +92,20 @@ namespace Util
       * \param in input stream
       */
       virtual void readParam(std::istream &in);
+
+      /**
+      * Load a set of objects to an output archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void load(Serializable::IArchiveType &ar);
+
+      /**
+      * Save a set of objects to an output archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchiveType &ar);
 
       /**
       * Append a Data object to the end of the sequence.
@@ -291,6 +305,46 @@ namespace Util
    * Read instructions for creating objects from file.
    */
    template <typename Data>
+   void Manager<Data>::load(Serializable::IArchiveType &ar)
+   {
+      int size;
+      Data* typePtr;
+      std::string name;
+      std::string managerName = ParamComposite::className();
+
+      addBegin(managerName.c_str());
+      ar >> size;
+      for (int i = 0; i < size; ++i) {
+         typePtr = factoryPtr_->loadObject(ar, *this, name);
+         if (typePtr) {
+            append(*typePtr, name);
+         } else {
+            std::string msg("Unknown subclass name: ");
+            msg += name;
+            UTIL_THROW(msg.c_str());
+         }
+      }
+      addEnd();
+   }
+
+   /*
+   * Read instructions for creating objects from file.
+   */
+   template <typename Data>
+   void Manager<Data>::save(Serializable::OArchiveType &ar)
+   {
+      int size = ptrs_.size();
+      ar << size;
+      for (int i = 0; i < size; ++i) {
+         ar << names_[i];
+         (ptrs_[i])->save(ar);
+      }
+   }
+
+   /*
+   * Read instructions for creating objects from file.
+   */
+   template <typename Data>
    void Manager<Data>::readChildren(std::istream &in)
    {
       // Check if a Factory exists, create one if necessary.
@@ -298,7 +352,7 @@ namespace Util
 
       // Loop over managed objects
       std::string name;
-      Data *typePtr;
+      Data* typePtr;
       bool  isEnd = false;
       while (!isEnd) {
 
