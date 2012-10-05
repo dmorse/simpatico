@@ -32,12 +32,12 @@
 
       virtual void readParameters(std::istream& in) {
          read<double>(in, "x", x_);
-         read<int>(in,    "m", m_);
+         read<int>(in, "m", m_);
       }
 
       virtual void loadParameters(Serializable::IArchiveType& in) {
-         load<double>(in, "x", x_);
-         load<int>(in,    "m", m_);
+         loadParameter<double>(in, "x", x_);
+         loadParameter<int>(in, "m", m_);
       }
 
    private:
@@ -65,7 +65,7 @@
       }
 
       virtual void loadParameters(Serializable::IArchiveType& in) {
-         load<int>(in, "m", m_);
+         loadParameter<int>(in, "m", m_);
       }
 
    private:
@@ -91,7 +91,7 @@
       }
 
       virtual void loadParameters(Serializable::IArchiveType& in) {
-         load<double>(in, "d", d_);
+         loadParameter<double>(in, "d", d_);
       }
 
    private:
@@ -118,7 +118,7 @@
       }
 
       virtual void loadParameters(Serializable::IArchiveType& in) {
-         load<double>(in, "e", e_);
+         loadParameter<double>(in, "e", e_);
       }
 
       double e()
@@ -236,17 +236,17 @@
    
       virtual void loadParameters(Serializable::IArchiveType& ar)
       {
-         load<int>(ar, "value0", value0_);
-         load<long>(ar, "value1", value1_);
-         load<double>(ar, "value2", value2_);
-         load<std::string>(ar, "str", str_);
+         loadParameter<int>(ar, "value0", value0_);
+         loadParameter<long>(ar, "value1", value1_);
+         loadParameter<double>(ar, "value2", value2_);
+         loadParameter<std::string>(ar, "str", str_);
          loadCArray<int>(ar, "value3", value3_, 3);
          loadCArray<double>(ar, "value4", value4_, 3);
          loadCArray2D<double>(ar, "value5", value5_[0], 2, 2);
          loadDArray<double>(ar, "value6", value6_, 4);
          addBlank();
-         load<Vector>(ar, "value7", value7_);
-         load<IntVector>(ar, "value8", value8_);
+         loadParameter<Vector>(ar, "value7", value7_);
+         loadParameter<IntVector>(ar, "value8", value8_);
          loadDMatrix<double>(ar, "value9", value9_, 2, 2);
          loadParamComposite(ar, e_);
          //loadParamComposite(ar, manager_);

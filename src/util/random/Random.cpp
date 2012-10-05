@@ -39,7 +39,7 @@ namespace Util
    */
    void Random::loadParameters(Serializable::IArchiveType& ar)
    {
-      load<SeedType>(ar, "seed", seed_);
+      loadParameter<SeedType>(ar, "seed", seed_);
       ar >> engine_;
    }
 

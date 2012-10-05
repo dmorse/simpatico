@@ -250,22 +250,22 @@ namespace McMd
    {
       loadParamComposite(ar, fileMaster_);
 
-      load<int>(ar, "nAtomType", nAtomType_);
-      load<int>(ar, "nBondType", nBondType_);
+      loadParameter<int>(ar, "nAtomType", nAtomType_);
+      loadParameter<int>(ar, "nBondType", nBondType_);
       #ifdef INTER_ANGLE
-      load<int>(ar, "nAngleType", nAngleType_);
+      loadParameter<int>(ar, "nAngleType", nAngleType_);
       #endif
       #ifdef INTER_DIHEDRAL
-      load<int>(ar, "nDihedralType", nDihedralType_);
+      loadParameter<int>(ar, "nDihedralType", nDihedralType_);
       #endif
       #ifdef MCMD_LINK
-      load<int>(ar, "nLinkType", nLinkType_);
+      loadParameter<int>(ar, "nLinkType", nLinkType_);
       #endif
       #ifdef INTER_EXTERNAL
-      load<int>(ar, "hasExternal", hasExternal_);
+      loadParameter<int>(ar, "hasExternal", hasExternal_);
       #endif
       #ifdef INTER_TETHER
-      load<int>(ar, "hasTether", hasTether_);
+      loadParameter<int>(ar, "hasTether", hasTether_);
       #endif
       #ifndef MCMD_NOATOMTYPES
       // Allocate and load an array of AtomType objects
@@ -275,7 +275,7 @@ namespace McMd
       }
       loadDArray<AtomType>(ar, "atomTypes", atomTypes_, nAtomType_);
       #endif
-      load<MaskPolicy>(ar, "maskedPairPolicy", maskedPairPolicy_);
+      loadParameter<MaskPolicy>(ar, "maskedPairPolicy", maskedPairPolicy_);
       loadParamComposite(ar, *speciesManagerPtr_);
       loadParamComposite(ar, random_);
 

@@ -268,8 +268,6 @@ namespace McMd
       */
       virtual void load(Serializable::IArchiveType& ar);
 
-      using ParamComposite::load;
-
       //@}
       /// \name Trajectory File IO
       //@{

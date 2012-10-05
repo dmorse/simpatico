@@ -124,7 +124,7 @@ public:
       paramComposite_.read<IntVector>(file(), "value8", value8);
       paramComposite_.readDMatrix<double>(file(), "value9", value9, 2, 2);
       paramComposite_.readParamComposite(file(), e);
-      paramComposite_.readParamComposite(file(), manager);
+      //paramComposite_.readParamComposite(file(), manager);
       paramComposite_.readEnd(file());
 
       printEndl();
@@ -140,8 +140,8 @@ public:
       AComposite original;
       original.readParam(file());
 
-      //printEndl();
-      //original.writeParam(std::cout);
+      printEndl();
+      original.writeParam(std::cout);
 
       Serializable::OArchiveType oar;
       std::ofstream out("out/save1.bin");
@@ -254,9 +254,9 @@ public:
 
       ParamComposite clone;
       clone.addBegin("ClassName");
-      clone.load<int>(iar, "value0", cValue0);
-      clone.load<long>(iar, "value1", cValue1);
-      clone.load<double>(iar, "value2", cValue2);
+      clone.loadParameter<int>(iar, "value0", cValue0);
+      clone.loadParameter<long>(iar, "value1", cValue1);
+      clone.loadParameter<double>(iar, "value2", cValue2);
       clone.loadCArray<int>(iar, "value3", cValue3, 3);
       clone.loadCArray<double>(iar, "value4", cValue4, 3);
       clone.loadCArray2D<double>(iar, "value5", &cValue5[0][0], 2, 2);
@@ -356,16 +356,16 @@ public:
       iar.setStream(inc); 
 
       clone.addBegin("ClassName");
-      clone.load<int>(iar, "value0", cValue0);
-      clone.load<long>(iar, "value1", cValue1);
-      clone.load<double>(iar, "value2", cValue2);
+      clone.loadParameter<int>(iar, "value0", cValue0);
+      clone.loadParameter<long>(iar, "value1", cValue1);
+      clone.loadParameter<double>(iar, "value2", cValue2);
       clone.addBlank();
       clone.loadCArray<int>(iar, "value3", cValue3, 3);
       clone.loadCArray<double>(iar, "value4", cValue4, 3);
       clone.loadCArray2D<double>(iar, "value5", &cValue5[0][0], 2, 2);
       clone.loadDArray<double>(iar, "value6", cValue6, 4);
-      clone.load<Vector>(iar, "value7", cValue7);
-      clone.load<IntVector>(iar, "value8", cValue8);
+      clone.loadParameter<Vector>(iar, "value7", cValue7);
+      clone.loadParameter<IntVector>(iar, "value8", cValue8);
       clone.loadDMatrix<double>(iar, "value9", cValue9, 2, 2);
       clone.loadParamComposite(iar, cE);
       //clone.loadParamComposite(iar, manager);

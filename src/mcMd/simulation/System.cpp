@@ -426,34 +426,34 @@ namespace McMd
    void System::loadPotentialStyles(Serializable::IArchiveType& ar)
    {
       #ifndef INTER_NOPAIR
-      load<std::string>(ar, "pairStyle", pairStyle_);
+      loadParameter<std::string>(ar, "pairStyle", pairStyle_);
       #endif
       if (simulation().nBondType() > 0) {
-         load<std::string>(ar, "bondStyle", bondStyle_);
+         loadParameter<std::string>(ar, "bondStyle", bondStyle_);
       }
       #ifdef INTER_ANGLE
       if (simulation().nAngleType() > 0) {
-         load<std::string>(ar, "angleStyle", angleStyle_);
+         loadParameter<std::string>(ar, "angleStyle", angleStyle_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (simulation().nDihedralType() > 0) {
-         load<std::string>(ar, "dihedralStyle", dihedralStyle_);
+         loadParameter<std::string>(ar, "dihedralStyle", dihedralStyle_);
       }
       #endif
       #ifdef MCMD_LINK
       if (simulation().nLinkType() > 0) {
-         load<std::string>(ar, "linkStyle", linkStyle_);
+         loadParameter<std::string>(ar, "linkStyle", linkStyle_);
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
-         load<std::string>(ar, "externalStyle", externalStyle_);
+         loadParameter<std::string>(ar, "externalStyle", externalStyle_);
       }
       #endif
       #ifdef INTER_TETHER
       if (simulation().hasTether()) {
-         load<std::string>(ar, "tetherStyle", tetherStyle_);
+         loadParameter<std::string>(ar, "tetherStyle", tetherStyle_);
       }
       #endif
    }
@@ -785,7 +785,7 @@ namespace McMd
    void System::loadReplicaMove(Serializable::IArchiveType& ar) 
    {
       if (hasPerturbation()) {
-          load<bool>(ar, "hasReplicaMove", hasReplicaMove_);
+          loadParameter<bool>(ar, "hasReplicaMove", hasReplicaMove_);
           if (hasReplicaMove_) {
              replicaMovePtr_ = new ReplicaMove(*this);
              readParamComposite(in, *replicaMovePtr_);
