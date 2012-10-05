@@ -173,14 +173,7 @@ namespace McMd
       */
       virtual void loadParameters(Serializable::IArchiveType &ar);
 
-      #if 0
-      /**
-      * Save internal state to an archive.
-      *
-      * \param ar output/saving archive
-      */
-      virtual void save(Serializable::OArchiveType &ar);
-      #endif
+      /// Use default ParamComposite::save()
 
       //@}
       /// \name Config File IO
@@ -237,6 +230,21 @@ namespace McMd
       void writeConfig(std::ostream& out);
 
       /**
+      * Load configuration.
+      *
+      * \param ar input/loading archive
+      */
+      void loadConfig(Serializable::IArchiveType& ar);
+
+      /**
+      * Save configuration.
+      *
+      * \param ar output/save archive
+      */
+      void saveConfig(Serializable::OArchiveType& ar);
+
+      #if 0
+      /**
       * Serialize the System to/from an archive.
       *
       * \param ar      output or input Archive
@@ -244,6 +252,7 @@ namespace McMd
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
+      #endif
 
       /**
       * Save the System configuration to an archive.
@@ -258,6 +267,8 @@ namespace McMd
       * \param ar input (loading) archive object.
       */
       virtual void load(Serializable::IArchiveType& ar);
+
+      using ParamComposite::load;
 
       //@}
       /// \name Trajectory File IO
@@ -602,8 +613,14 @@ namespace McMd
       */
       void readPerturbation(std::istream& in);
 
-      #ifdef UTIL_MPI
+      /**
+      * Load the perturbation parameter block (if any)
+      *
+      * \param ar input/saving archive
+      */
+      void loadPerturbation(Serializable::IArchiveType& ar);
 
+      #ifdef UTIL_MPI
       /**
       * Read the ReplicaMove parameter block (if any)
       *
@@ -611,6 +628,12 @@ namespace McMd
       */
       void readReplicaMove(std::istream& in);
 
+      /**
+      * Read the ReplicaMove parameter block (if any)
+      *
+      * \param ar input/saving archive
+      */
+      void loadReplicaMove(Serializable::IArchiveType& ar);
       #endif // UTIL_MPI
       #endif // MCMD_PERTURB
 
@@ -710,20 +733,6 @@ namespace McMd
       */
       void loadTetherMaster(Serializable::IArchiveType& ar);
       #endif // INTER_TETHER
-
-      /**
-      * Load configuration.
-      *
-      * \param ar input/loading archive
-      */
-      void loadConfig(Serializable::IArchiveType& ar);
-
-      /**
-      * Save configuration.
-      *
-      * \param ar output/save archive
-      */
-      void saveConfig(Serializable::OArchiveType& ar);
 
    private:
 
@@ -1013,11 +1022,13 @@ namespace McMd
 
    #ifdef MCMD_PERTURB
    /**
-   * return the perturbation factory by reference.
+   * Return the perturbation factory by reference.
    */
    inline Factory<Perturbation>& System::perturbationFactory()
    { return *perturbationFactoryPtr_; }
 
+   inline bool System::expectPerturbation() const
+   { return expectPerturbationParam_; }
 
    /* 
    * Does this system have an associated Perturbation?
@@ -1050,31 +1061,23 @@ namespace McMd
       return *replicaMovePtr_;
    }
    #endif // UTIL_MPI
-
-   inline bool System::expectPerturbation() const
-   { return expectPerturbationParam_; }
-
    #endif // MCMD_PERTURB
 
    /*
-    * Subscribe to moleculeSet change signal
-    */
+   * Subscribe to moleculeSet change signal.
+   */
    inline void System::subscribeMoleculeSetChange(MoleculeSetObserver& observer)
-   {
-      observers_.insert(&observer);
-   }
+   {  observers_.insert(&observer); }
 
    /*
-    * Unsubscribe from moleculeSet change signal
-    */
+   * Unsubscribe from moleculeSet change signal.
+   */
    inline void System::unsubscribeMoleculeSetChange(MoleculeSetObserver& observer)
-   {
-      observers_.erase(&observer);
-   }
+   {  observers_.erase(&observer); }
 
    /*
-    * Notifiy all observers
-    */
+   * Notifiy all observers
+   */
    inline void System::notifyMoleculeSetObservers() const
    {
       std::set<MoleculeSetObserver*>::iterator itr;
@@ -1083,5 +1086,6 @@ namespace McMd
             itr != observers_.end(); itr++ )
          (*itr)->notifyMoleculeSetChanged();
    }
+
 }
 #endif

@@ -11,7 +11,7 @@
 // namespace McMd
 #include "System.h"
 #include "Simulation.h"
-#include "serialize.h"
+//#include "serialize.h"
 
 #include <mcMd/species/Species.h>
 #include <util/ensembles/EnergyEnsemble.h>
@@ -376,6 +376,9 @@ namespace McMd
       }
    }
 
+   /*
+   * Read potential style strings from parameter file.
+   */
    void System::readPotentialStyles(std::istream &in)
    {
       #ifndef INTER_NOPAIR
@@ -417,7 +420,9 @@ namespace McMd
       #endif
    }
 
-   #if 0
+   /*
+   * Load potential style strings.
+   */
    void System::loadPotentialStyles(Serializable::IArchiveType& ar)
    {
       #ifndef INTER_NOPAIR
@@ -452,7 +457,6 @@ namespace McMd
       }
       #endif
    }
-   #endif
 
    /*
    * Create EnergyEnsemble and BoundaryEnsemble
@@ -620,18 +624,6 @@ namespace McMd
       configIoPtr_->write(out);
    }
 
-   /* 
-   * Save a System configuration to an archive.
-   */
-   void System::save(Serializable::OArchiveType& ar)
-   {  ar & *this; }
-
-   /* 
-   * Load a System configuration from an archive.
-   */
-   void System::load(Serializable::IArchiveType& ar)
-   {  ar & *this; }
-
    /*
    * Set System integer Id.
    *
@@ -754,6 +746,27 @@ namespace McMd
          createdPerturbation_ = true;
       }
    }
+
+   #if 0
+   void System::loadPerturbation(Seriaizable::IArchiveType& ar) 
+   {
+
+      // Create Perturbation and read object, if required.
+      if (!hasPerturbation() and expectPerturbationParam_) {
+         std::string className;
+         bool        isEnd;
+         perturbationPtr_ = 
+            perturbationFactoryPtr_->loadObject(ar, *this, className, isEnd);
+         if (!perturbationPtr_) {
+            std::string msg = "Unrecognized Perturbation subclass name ";
+            msg += className;
+            UTIL_THROW(msg.c_str());
+         }
+         createdPerturbation_ = true;
+      }
+   }
+   #endif
+
    #ifdef UTIL_MPI  
    void System::readReplicaMove(std::istream& in) 
    {
@@ -762,7 +775,20 @@ namespace McMd
           if (hasReplicaMove_) {
              replicaMovePtr_ = new ReplicaMove(*this);
              readParamComposite(in, *replicaMovePtr_);
-             // replicaMovePtr_->initialize();
+          }
+          createdReplicaMove_ = true;
+      } else {
+         hasReplicaMove_ = false;
+      }
+   }
+
+   void System::loadReplicaMove(Serializable::IArchiveType& ar) 
+   {
+      if (hasPerturbation()) {
+          load<bool>(ar, "hasReplicaMove", hasReplicaMove_);
+          if (hasReplicaMove_) {
+             replicaMovePtr_ = new ReplicaMove(*this);
+             readParamComposite(in, *replicaMovePtr_);
           }
           createdReplicaMove_ = true;
       } else {

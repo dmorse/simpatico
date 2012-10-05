@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace Util;
 
@@ -45,6 +46,7 @@ public:
       int     value0 = 4;
       long    value1 = 25;
       double  value2 = 3.0;
+      std::string str("Thunk");
       int     value3[3];
       value3[0] = 4;
       value3[1] = 5;
@@ -74,6 +76,7 @@ public:
       paramComposite_.add<int>("value0", value0);
       paramComposite_.add<long>("value1", value1);
       paramComposite_.add<double>("value2", value2);
+      paramComposite_.add<std::string>("str", str);
       paramComposite_.addCArray<int>("value3", value3, 3);
       paramComposite_.addCArray<double>("value4", value4, 3);
       paramComposite_.addCArray2D<double>("value5", &value5[0][0], 2, 2);
@@ -85,14 +88,13 @@ public:
       paramComposite_.writeParam(std::cout);
    }
 
-
-
    void testReadWrite() 
    {
       printMethod(TEST_FUNC);
       int     value0;
       long    value1;
       double  value2;
+      std::string str;
       int     value3[3];
       double  value4[3];
       double  value5[2][2];
@@ -112,6 +114,7 @@ public:
       paramComposite_.read<int>(file(), "value0", value0);
       paramComposite_.read<long>(file(), "value1", value1);
       paramComposite_.read<double>(file(), "value2", value2);
+      paramComposite_.read<std::string>(file(), "str", str);
       paramComposite_.readBlank(file());
       paramComposite_.readCArray<int>(file(), "value3", value3, 3);
       paramComposite_.readCArray<double>(file(), "value4", value4, 3);
@@ -128,11 +131,40 @@ public:
       paramComposite_.writeParam(std::cout);
    }
 
+   void testReadSaveLoadWrite1() 
+   {
+      printMethod(TEST_FUNC);
+
+      openFile("in/ParamComposite2");
+
+      AComposite original;
+      original.readParam(file());
+
+      //printEndl();
+      //original.writeParam(std::cout);
+
+      Serializable::OArchiveType oar;
+      std::ofstream out("out/save1.bin");
+      oar.setStream(out); 
+      paramComposite_.save(oar);
+      out.close();
+
+      AComposite clone;
+      Serializable::IArchiveType iar;
+      std::ifstream inc("out/save1.bin");
+      iar.setStream(inc); 
+      clone.load(iar);
+
+      printEndl();
+      clone.writeParam(std::cout);
+
+   }
+
    void testSerialize() 
    {
       printMethod(TEST_FUNC);
 
-      openFile("in/ParamComposite");
+      openFile("in/ParamComposite2");
 
       AComposite original;
       original.readParam(file());
@@ -264,6 +296,7 @@ public:
       int     value0;
       long    value1;
       double  value2;
+      std::string str;
       int     value3[3];
       double  value4[3];
       double  value5[2][2];
@@ -283,6 +316,7 @@ public:
       paramComposite_.read<int>(file(), "value0", value0);
       paramComposite_.read<long>(file(), "value1", value1);
       paramComposite_.read<double>(file(), "value2", value2);
+      paramComposite_.read<std::string>(file(), "str", str);
       paramComposite_.readBlank(file());
       paramComposite_.readCArray<int>(file(), "value3", value3, 3);
       paramComposite_.readCArray<double>(file(), "value4", value4, 3);
@@ -347,6 +381,7 @@ TEST_BEGIN(ParamCompositeTest)
 TEST_ADD(ParamCompositeTest, testConstructor)
 TEST_ADD(ParamCompositeTest, testAddWrite)
 TEST_ADD(ParamCompositeTest, testReadWrite)
+TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite1)
 TEST_ADD(ParamCompositeTest, testSerialize)
 TEST_ADD(ParamCompositeTest, testAddSave)
 TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite)

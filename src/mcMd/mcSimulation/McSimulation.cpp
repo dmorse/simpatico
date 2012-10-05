@@ -12,7 +12,7 @@
 
 #include "McSimulation.h"
 #include "McDiagnosticManager.h"
-#include <mcMd/simulation/serialize.h>
+//#include <mcMd/simulation/serialize.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/diagnostics/Diagnostic.h>

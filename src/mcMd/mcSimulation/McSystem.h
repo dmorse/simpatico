@@ -70,6 +70,20 @@ namespace McMd
       virtual void readParameters(std::istream &in);
 
       /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchiveType &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchiveType &ar);
+
+      /**
       * Read system configuration from file.
       *
       * Calls System::readConfig() and then builds CellList.
