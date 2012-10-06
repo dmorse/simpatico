@@ -75,15 +75,31 @@ namespace Inter
    */
    void CosineAngle::readParameters(std::istream &in) 
    {
-      // Preconditions
       if (nAngleType_ <= 0) {
          UTIL_THROW("nAngleType must be set before readParam");
       }
-
-      // Read parameters
-      //readBegin(in, "CosineAngle");
       readCArray<double>(in, "kappa",  kappa_,  nAngleType_);
-      //readEnd(in);
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void CosineAngle::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nAngleType_; 
+      if (nAngleType_ == 0) {
+         UTIL_THROW( "nAtomType must be positive");
+      }
+      loadCArray<double> (ar, "kappa", kappa_, nAngleType_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void CosineAngle::save(Serializable::OArchive &ar)
+   {
+      ar << nAngleType_;
+      ar.pack(kappa_, nAngleType_);
    }
 
    /*
