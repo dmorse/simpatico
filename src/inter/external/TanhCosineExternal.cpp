@@ -111,7 +111,6 @@ namespace Inter
       }
    
       // Read parameters
-      //readBegin(in,  "TanhCosineExternal");
       read<int>(in, "perpDirection", perpDirection_);
       if (perpDirection_ < 0 || perpDirection_ >= Dimension) {
          UTIL_THROW("Invalid index for perpendicular direction.");
@@ -121,17 +120,46 @@ namespace Inter
       read<double>(in, "externalParameter", externalParameter_);
       read<double>(in, "interfaceWidth", width_);
       read<int>(in, "periodicity", periodicity_);
-      //readEnd(in);
-
-      // Initialize dependent variables (kT = 1.0)
 
       isInitialized_ = true;
    }
 
-   double TanhCosineExternal::externalParameter() const
-   { 
-     return externalParameter_; 
+   /*
+   * Load internal state from an archive.
+   */
+   void TanhCosineExternal::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nAtomType_; 
+      if (nAtomType_ <= 0) {
+         UTIL_THROW( "nAtomType must be positive");
+      }
+      loadParameter<int>(ar, "perpDirection", perpDirection_);
+      if (perpDirection_ < 0 || perpDirection_ >= Dimension) {
+         UTIL_THROW("Invalid index for perpendicular direction.");
+      }
+      prefactor_.allocate(nAtomType_);
+      loadDArray<double>(ar, "prefactor", prefactor_, nAtomType_);
+      loadParameter<double>(ar, "externalParameter", externalParameter_);
+      loadParameter<double>(ar, "interfaceWidth", width_);
+      loadParameter<int>(ar, "periodicity", periodicity_);
+      isInitialized_ = true;
    }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void TanhCosineExternal::save(Serializable::OArchive &ar)
+   {
+      ar << nAtomType_;
+      ar << perpDirection_;
+      ar << externalParameter_;
+      ar << prefactor_;
+      ar << width_;
+      ar << periodicity_;
+   }
+
+   double TanhCosineExternal::externalParameter() const
+   {  return externalParameter_; }
 
    /*
    * Return name string "TanhCosineExternal".
