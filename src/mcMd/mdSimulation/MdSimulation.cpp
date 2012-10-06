@@ -671,7 +671,7 @@ namespace McMd
       out.close();
 
       fileMaster().openRestartOFile(filename, ".rst", out);
-      Serializable::OArchiveType ar;
+      Serializable::OArchive ar;
       ar.setStream(out);
 
       ar & random();
@@ -701,7 +701,7 @@ namespace McMd
 
       // Open restart *.rst file and associate with an archive
       fileMaster().openRestartIFile(filename, ".rst", in);
-      Serializable::IArchiveType ar;
+      Serializable::IArchive ar;
       ar.setStream(in);
 
       // Load internal state from restart (*.rst) file.

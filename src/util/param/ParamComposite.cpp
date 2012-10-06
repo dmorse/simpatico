@@ -102,7 +102,7 @@ namespace Util
    /*
    * Default load implementation, adds begin and end.
    */
-   void ParamComposite::load(Serializable::IArchiveType& ar)
+   void ParamComposite::load(Serializable::IArchive& ar)
    {
       addBegin(className().c_str());
       loadParameters(ar);
@@ -112,7 +112,7 @@ namespace Util
    /*
    * Default save implementation.
    */
-   void ParamComposite::save(Serializable::OArchiveType& ar)
+   void ParamComposite::save(Serializable::OArchive& ar)
    {
       for (int i=0; i < size_; ++i) {
          list_[i]->save(ar);
@@ -166,7 +166,7 @@ namespace Util
    * Add a ParamComposite Node, and load the contents of that ParamComposite.
    */
    void
-   ParamComposite::loadParamComposite(Serializable::IArchiveType &ar, ParamComposite &child, bool next)
+   ParamComposite::loadParamComposite(Serializable::IArchive &ar, ParamComposite &child, bool next)
    {
       addParamComposite(child, next);
       list_.back()->load(ar);

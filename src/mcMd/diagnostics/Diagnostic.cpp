@@ -110,13 +110,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void Diagnostic::save(Serializable::OArchiveType& ar)
+   void Diagnostic::save(Serializable::OArchive& ar)
    {}
 
    /*
    * Load state from a binary file archive.
    */
-   void Diagnostic::load(Serializable::IArchiveType& ar)
+   void Diagnostic::load(Serializable::IArchive& ar)
    {}
 
 }

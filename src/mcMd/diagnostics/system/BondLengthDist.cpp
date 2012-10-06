@@ -95,13 +95,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void BondLengthDist::save(Serializable::OArchiveType& ar)
+   void BondLengthDist::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void BondLengthDist::load(Serializable::IArchiveType& ar)
+   void BondLengthDist::load(Serializable::IArchive& ar)
    { ar & *this; }
 }
 #endif

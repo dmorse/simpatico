@@ -69,13 +69,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void DumpConfig::save(Serializable::OArchiveType& ar)
+   void DumpConfig::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void DumpConfig::load(Serializable::IArchiveType& ar)
+   void DumpConfig::load(Serializable::IArchive& ar)
    { ar & *this; }
 
 }

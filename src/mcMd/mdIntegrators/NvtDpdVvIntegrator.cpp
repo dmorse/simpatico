@@ -255,7 +255,7 @@ namespace McMd
    /*
    * Save the internal state to an archive.
    */
-   void NvtDpdVvIntegrator::save(Serializable::OArchiveType& ar)
+   void NvtDpdVvIntegrator::save(Serializable::OArchive& ar)
    {  
       ar & temperature_;
       ar & sigma_;
@@ -271,7 +271,7 @@ namespace McMd
    /**
    * Load the internal state to an archive.
    */
-   void NvtDpdVvIntegrator::load(Serializable::IArchiveType& ar)
+   void NvtDpdVvIntegrator::load(Serializable::IArchive& ar)
    {  
       ar & temperature_;
       ar & sigma_;

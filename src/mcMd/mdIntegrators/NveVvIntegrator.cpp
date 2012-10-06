@@ -167,7 +167,7 @@ namespace McMd
    /*
    * Save the internal state to an archive.
    */
-   void NveVvIntegrator::save(Serializable::OArchiveType& ar)
+   void NveVvIntegrator::save(Serializable::OArchive& ar)
    {  
       ar & dt_;
       ar & prefactors_;
@@ -176,7 +176,7 @@ namespace McMd
    /**
    * Load the internal state to an archive.
    */
-   void NveVvIntegrator::load(Serializable::IArchiveType& ar)
+   void NveVvIntegrator::load(Serializable::IArchive& ar)
    {  
       ar & dt_;
       ar & prefactors_;

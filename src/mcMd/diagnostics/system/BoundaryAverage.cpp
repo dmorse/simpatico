@@ -118,13 +118,13 @@ namespace McMd
    /*   
    * Save state to binary file archive.
    */
-   void BoundaryAverage::save(Serializable::OArchiveType& ar)
+   void BoundaryAverage::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void BoundaryAverage::load(Serializable::IArchiveType& ar)
+   void BoundaryAverage::load(Serializable::IArchive& ar)
    { ar & *this; }
 
 }

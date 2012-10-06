@@ -149,13 +149,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void McPairEnergyAverage::save(Serializable::OArchiveType& ar)
+   void McPairEnergyAverage::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void McPairEnergyAverage::load(Serializable::IArchiveType& ar)
+   void McPairEnergyAverage::load(Serializable::IArchive& ar)
    { ar & *this; }
 
 }

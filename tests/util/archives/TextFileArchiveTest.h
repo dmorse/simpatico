@@ -87,7 +87,7 @@ void TextFileArchiveTest::testPack()
    v << a1;
    v << o1;
    v.pack(b1, 4);
-   v.pack(&m1[0][0], 2, 2);
+   v.pack(m1[0], 2, 2);
    out.close();
 
    std::ifstream in;
@@ -119,7 +119,7 @@ void TextFileArchiveTest::testPack()
       TEST_ASSERT(b1[j] == b2[j]);
    }
 
-   u.unpack(&m2[0][0], 2, 2);
+   u.unpack(m2[0], 2, 2);
    int i, j;
    for (i = 0; i < 2; ++i) {
       for (j = 0; j < 2; ++j) {

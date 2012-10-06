@@ -37,7 +37,7 @@ namespace Util
    /*
    * Load random seed and internal state.
    */
-   void Random::loadParameters(Serializable::IArchiveType& ar)
+   void Random::loadParameters(Serializable::IArchive& ar)
    {
       loadParameter<SeedType>(ar, "seed", seed_);
       ar >> engine_;
@@ -46,7 +46,7 @@ namespace Util
    /*
    * Save internal state.
    */
-   void Random::save(Serializable::OArchiveType& ar)
+   void Random::save(Serializable::OArchive& ar)
    {
       ar << seed_;
       ar << engine_;

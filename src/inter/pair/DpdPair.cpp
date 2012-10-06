@@ -102,7 +102,7 @@ namespace Inter
    /*
    * Load internal state from an archive.
    */
-   void DpdPair::loadParameters(Serializable::IArchiveType &ar)
+   void DpdPair::loadParameters(Serializable::IArchive &ar)
    {
       ar >> nAtomType_; 
       if (nAtomType_ == 0) {
@@ -123,7 +123,7 @@ namespace Inter
    /*
    * Save internal state to an archive.
    */
-   void DpdPair::save(Serializable::OArchiveType &ar)
+   void DpdPair::save(Serializable::OArchive &ar)
    {
       ar << nAtomType_;
       ar.pack(epsilon_[0], nAtomType_, nAtomType_);

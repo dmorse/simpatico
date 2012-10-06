@@ -226,13 +226,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void BlockRadiusGyration::save(Serializable::OArchiveType& ar)
+   void BlockRadiusGyration::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void BlockRadiusGyration::load(Serializable::IArchiveType& ar)
+   void BlockRadiusGyration::load(Serializable::IArchive& ar)
    { ar & *this; }
 
 }

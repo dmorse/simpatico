@@ -124,7 +124,7 @@ namespace McMd
       *
       * \param ar input/loading archive
       */
-      virtual void loadParameters(Serializable::IArchiveType &ar);
+      virtual void loadParameters(Serializable::IArchive &ar);
 
       /// \name Initialization 
       //@{

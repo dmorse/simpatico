@@ -108,7 +108,7 @@ namespace McMd
       *
       * \param ar input (loading) archive object.
       */
-      virtual void load(Serializable::IArchiveType& ar);
+      virtual void load(Serializable::IArchive& ar);
 
       /// \name Force, Energy and Stress calculators
       //@{

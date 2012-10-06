@@ -182,13 +182,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void AtomMSD::save(Serializable::OArchiveType& ar)
+   void AtomMSD::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void AtomMSD::load(Serializable::IArchiveType& ar)
+   void AtomMSD::load(Serializable::IArchive& ar)
    { ar & *this; }
 
 }

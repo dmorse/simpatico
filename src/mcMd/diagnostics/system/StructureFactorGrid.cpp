@@ -289,13 +289,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void StructureFactorGrid::save(Serializable::OArchiveType& ar)
+   void StructureFactorGrid::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void StructureFactorGrid::load(Serializable::IArchiveType& ar)
+   void StructureFactorGrid::load(Serializable::IArchive& ar)
    { ar & *this; }
 
 }

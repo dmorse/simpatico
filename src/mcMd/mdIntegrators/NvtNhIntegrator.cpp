@@ -180,7 +180,7 @@ namespace McMd
    /*
    * Save the internal state to an archive.
    */
-   void NvtNhIntegrator::save(Serializable::OArchiveType& ar)
+   void NvtNhIntegrator::save(Serializable::OArchive& ar)
    {  
       ar & dt_;
       ar & T_target_;
@@ -195,7 +195,7 @@ namespace McMd
    /**
    * Load the internal state to an archive.
    */
-   void NvtNhIntegrator::load(Serializable::IArchiveType& ar)
+   void NvtNhIntegrator::load(Serializable::IArchive& ar)
    {  
       ar & dt_;
       ar & T_target_;

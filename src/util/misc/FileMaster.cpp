@@ -113,7 +113,7 @@ namespace Util
    /*
    * Load internal state from file.
    */
-   void FileMaster::loadParameters(Serializable::IArchiveType &ar)
+   void FileMaster::loadParameters(Serializable::IArchive &ar)
    {
       loadParameter<std::string>(ar, "commandFileName",  commandFileName_);
       loadParameter<std::string>(ar, "inputPrefix",  inputPrefix_);
@@ -127,7 +127,7 @@ namespace Util
    /*
    * Save internal state to file. 
    */
-   void FileMaster::save(Serializable::OArchiveType &ar)
+   void FileMaster::save(Serializable::OArchive &ar)
    {
       ar << commandFileName_;
       ar << inputPrefix_;

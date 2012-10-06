@@ -73,7 +73,7 @@ namespace McMd
    /*
    * Save the internal state to an archive.
    */
-   void McMove::save(Serializable::OArchiveType& ar)
+   void McMove::save(Serializable::OArchive& ar)
    {  
       ar & nAttempt_;
       ar & nAccept_;
@@ -82,7 +82,7 @@ namespace McMd
    /**
    * Load the internal state to an archive.
    */
-   void McMove::load(Serializable::IArchiveType& ar)
+   void McMove::load(Serializable::IArchive& ar)
    {  
       ar & nAttempt_;
       ar & nAccept_;

@@ -174,14 +174,14 @@ namespace Util
       *
       * \param ar input/loading archive
       */
-      virtual void loadParameters(Serializable::IArchiveType &ar);
+      virtual void loadParameters(Serializable::IArchive &ar);
    
       /**
       * Save internal state to file. 
       *
       * \param ar output/saving archive
       */
-      virtual void save(Serializable::OArchiveType &ar);
+      virtual void save(Serializable::OArchive &ar);
    
       /**
       * Get a default parameter stream by reference.

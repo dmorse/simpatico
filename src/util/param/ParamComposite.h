@@ -161,14 +161,14 @@ namespace Util
       *
       * \param ar input/loading archive.
       */
-      virtual void load(Serializable::IArchiveType &ar);
+      virtual void load(Serializable::IArchive &ar);
    
       /** 
       * Load body of parameter block excluding opening and closing lines.
       *
       * \param ar input/loading archive.
       */
-      virtual void loadParameters(Serializable::IArchiveType &ar)
+      virtual void loadParameters(Serializable::IArchive &ar)
       {};
 
       /** 
@@ -179,7 +179,7 @@ namespace Util
       *
       * \param ar output/saving archive.
       */
-      virtual void save(Serializable::OArchiveType &ar);
+      virtual void save(Serializable::OArchive &ar);
    
       /// \name read* methods
       /// \brief Each of these methods invokes an associated add* method to 
@@ -317,7 +317,7 @@ namespace Util
       * \param next  true if the indent level is one higher than parent.
       */
       void 
-      loadParamComposite(Serializable::IArchiveType &ar, ParamComposite &child, 
+      loadParamComposite(Serializable::IArchive &ar, ParamComposite &child, 
                          bool next = true);
    
       /**  
@@ -328,7 +328,7 @@ namespace Util
       * \param value  reference to new ScalarParam< Type >
       */
       template <typename Type>
-      ScalarParam<Type>& loadParameter(Serializable::IArchiveType &ar, const char *label, Type &value);
+      ScalarParam<Type>& loadParameter(Serializable::IArchive &ar, const char *label, Type &value);
    
       /**  
       * Add a C array parameter, and load its elements.
@@ -341,7 +341,7 @@ namespace Util
       */
       template <typename Type>
       CArrayParam<Type>& 
-      loadCArray(Serializable::IArchiveType &ar, const char *label, Type *value, int n);
+      loadCArray(Serializable::IArchive &ar, const char *label, Type *value, int n);
    
       /**  
       * Add a DArray < Type > parameter, and load its elements.
@@ -354,7 +354,7 @@ namespace Util
       */
       template <typename Type>
       DArrayParam<Type>&
-      loadDArray(Serializable::IArchiveType &ar, const char *label, DArray<Type>& array, int n);
+      loadDArray(Serializable::IArchive &ar, const char *label, DArray<Type>& array, int n);
    
       /**  
       * Add and load an FArray < Type, N > fixed-size array parameter.
@@ -366,7 +366,7 @@ namespace Util
       */
       template <typename Type, int N>
       FArrayParam<Type, N>&
-      loadFArray(Serializable::IArchiveType &ar, const char *label, FArray<Type, N >& array);
+      loadFArray(Serializable::IArchive &ar, const char *label, FArray<Type, N >& array);
    
       /**  
       * Add and load a CArray2DParam < Type > C two-dimensional array parameter.
@@ -380,7 +380,7 @@ namespace Util
       */
       template <typename Type> 
       CArray2DParam<Type>&
-      loadCArray2D(Serializable::IArchiveType &ar, const char *label, 
+      loadCArray2D(Serializable::IArchive &ar, const char *label, 
                    Type *value, int m, int n);
   
       /**  
@@ -395,7 +395,7 @@ namespace Util
       */
       template <typename Type> 
       DMatrixParam<Type>& 
-      loadDMatrix(Serializable::IArchiveType &ar, const char *label, 
+      loadDMatrix(Serializable::IArchive &ar, const char *label, 
                   DMatrix<Type>& matrix, int m, int n);
   
       //@}
@@ -573,7 +573,7 @@ namespace Util
    */
    template <typename Type>
    ScalarParam<Type>& 
-   ParamComposite::loadParameter(Serializable::IArchiveType &ar, const char *label, 
+   ParamComposite::loadParameter(Serializable::IArchive &ar, const char *label, 
                                  Type &value)
    {
       ScalarParam<Type>* ptr = &add<Type>(label, value);
@@ -621,7 +621,7 @@ namespace Util
    */
    template <typename Type>
    CArrayParam<Type>& 
-   ParamComposite::loadCArray(Serializable::IArchiveType &ar, const char *label, 
+   ParamComposite::loadCArray(Serializable::IArchive &ar, const char *label, 
                               Type *value, int n)
    {
       CArrayParam<Type>* ptr = &addCArray<Type>(label, value, n);
@@ -669,7 +669,7 @@ namespace Util
    */
    template <typename Type>
    DArrayParam<Type>&
-   ParamComposite::loadDArray(Serializable::IArchiveType &ar, const char *label, 
+   ParamComposite::loadDArray(Serializable::IArchive &ar, const char *label, 
                               DArray<Type>& array, int n)
    {
       DArrayParam<Type>* ptr = &addDArray<Type>(label, array, n);
@@ -717,7 +717,7 @@ namespace Util
    */
    template <typename Type, int N>
    FArrayParam<Type, N>&
-   ParamComposite::loadFArray(Serializable::IArchiveType &ar, const char *label, 
+   ParamComposite::loadFArray(Serializable::IArchive &ar, const char *label, 
                               FArray<Type, N >& array)
    {
       FArrayParam<Type, N>* ptr = &addFArray<Type, N>(label, array);
@@ -765,7 +765,7 @@ namespace Util
    */
    template <typename Type> 
    CArray2DParam<Type>&
-   ParamComposite::loadCArray2D(Serializable::IArchiveType &ar, const char *label, 
+   ParamComposite::loadCArray2D(Serializable::IArchive &ar, const char *label, 
                 Type *value, int m, int n)
    {
       CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n);
@@ -813,7 +813,7 @@ namespace Util
    */
    template <typename Type> 
    DMatrixParam<Type>& 
-   ParamComposite::loadDMatrix(Serializable::IArchiveType &ar, const char *label, 
+   ParamComposite::loadDMatrix(Serializable::IArchive &ar, const char *label, 
                                DMatrix<Type>& matrix, int m, int n)
    {
       DMatrixParam<Type>* ptr = &addDMatrix<Type>(label, matrix, m, n);

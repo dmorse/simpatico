@@ -130,7 +130,7 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void McMoveManager::save(Serializable::OArchiveType& ar)
+   void McMoveManager::save(Serializable::OArchive& ar)
    {
       for (int i=0; i < size(); ++i) {
          (*this)[i].save(ar);
@@ -140,7 +140,7 @@ namespace McMd
    /*
    * Load state from a binary file archive.
    */
-   void McMoveManager::load(Serializable::IArchiveType& ar)
+   void McMoveManager::load(Serializable::IArchive& ar)
    {
       for (int i=0; i < size(); ++i) {
          (*this)[i].load(ar);

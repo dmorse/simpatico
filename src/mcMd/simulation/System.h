@@ -171,7 +171,7 @@ namespace McMd
       *
       * \param ar input/loading archive
       */
-      virtual void loadParameters(Serializable::IArchiveType &ar);
+      virtual void loadParameters(Serializable::IArchive &ar);
 
       /// Use default ParamComposite::save()
 
@@ -234,14 +234,14 @@ namespace McMd
       *
       * \param ar input/loading archive
       */
-      void loadConfig(Serializable::IArchiveType& ar);
+      void loadConfig(Serializable::IArchive& ar);
 
       /**
       * Save configuration.
       *
       * \param ar output/save archive
       */
-      void saveConfig(Serializable::OArchiveType& ar);
+      void saveConfig(Serializable::OArchive& ar);
 
       //@}
       /// \name Trajectory File IO
@@ -591,7 +591,7 @@ namespace McMd
       *
       * \param ar input/saving archive
       */
-      void loadPerturbation(Serializable::IArchiveType& ar);
+      void loadPerturbation(Serializable::IArchive& ar);
 
       #ifdef UTIL_MPI
       /**
@@ -606,7 +606,7 @@ namespace McMd
       *
       * \param ar input/saving archive
       */
-      void loadReplicaMove(Serializable::IArchiveType& ar);
+      void loadReplicaMove(Serializable::IArchive& ar);
       #endif // UTIL_MPI
       #endif // MCMD_PERTURB
 
@@ -637,7 +637,7 @@ namespace McMd
       *
       * \param ar input parameter stream
       */
-      void loadFileMaster(Serializable::IArchiveType& ar);
+      void loadFileMaster(Serializable::IArchive& ar);
 
       /**
       * Read potential styles, initialize LinkMaster or TetherMaster if needed.
@@ -653,7 +653,7 @@ namespace McMd
       *
       * \param ar input parameter stream
       */
-      void loadPotentialStyles(Serializable::IArchiveType& ar);
+      void loadPotentialStyles(Serializable::IArchive& ar);
 
       /**
       * Read energy and boundary ensembles.
@@ -669,7 +669,7 @@ namespace McMd
       *
       * \param ar input parameter stream
       */
-      void loadEnsembles(Serializable::IArchiveType& ar);
+      void loadEnsembles(Serializable::IArchive& ar);
 
       #ifdef MCMD_LINK
       /**
@@ -686,7 +686,7 @@ namespace McMd
       *
       * \param ar input parameter stream
       */
-      void loadLinkMaster(Serializable::IArchiveType& ar);
+      void loadLinkMaster(Serializable::IArchive& ar);
       #endif // MCMD_LINK
 
       #ifdef INTER_TETHER
@@ -704,7 +704,7 @@ namespace McMd
       *
       * \param ar input parameter stream
       */
-      void loadTetherMaster(Serializable::IArchiveType& ar);
+      void loadTetherMaster(Serializable::IArchive& ar);
       #endif // INTER_TETHER
 
    private:

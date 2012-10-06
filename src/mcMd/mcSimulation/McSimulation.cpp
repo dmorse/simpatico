@@ -223,7 +223,7 @@ namespace McMd
    /*
    * Load internal state from an archive.
    */
-   void McSimulation::loadParameters(Serializable::IArchiveType &ar)
+   void McSimulation::loadParameters(Serializable::IArchive &ar)
    {
       Simulation::loadParameters(ar);
       loadParamComposite(ar, system());
@@ -238,7 +238,7 @@ namespace McMd
    /*
    * Save internal state to an archive.
    */
-   void McSimulation::save(Serializable::OArchiveType &ar)
+   void McSimulation::save(Serializable::OArchive &ar)
    {
       Simulation::save(ar);
       random().save(ar);
@@ -720,7 +720,7 @@ namespace McMd
       out.close();
 
       fileMaster().openRestartOFile(filename, ".rst", out);
-      Serializable::OArchiveType ar;
+      Serializable::OArchive ar;
       ar.setStream(out);
       ar & random();
       ar & system();
@@ -747,7 +747,7 @@ namespace McMd
 
       // Open restart (*.rst) file and associate with an archive
       fileMaster().openRestartIFile(filename, ".rst", in);
-      Serializable::IArchiveType ar;
+      Serializable::IArchive ar;
       ar.setStream(in);
 
       // Load state from restart file

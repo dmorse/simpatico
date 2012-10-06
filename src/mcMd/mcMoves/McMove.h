@@ -114,14 +114,14 @@ namespace McMd
       *
       * \param ar saving (output) archive object.
       */
-      virtual void save(Serializable::OArchiveType& ar);
+      virtual void save(Serializable::OArchive& ar);
 
       /**
       * Load the internal state to an archive.
       *
       * \param ar loading (input) archive object.
       */
-      virtual void load(Serializable::IArchiveType& ar);
+      virtual void load(Serializable::IArchive& ar);
 
    protected:
 

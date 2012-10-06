@@ -175,14 +175,14 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void RingRouseAutoCorr::save(Serializable::OArchiveType& ar)
+   void RingRouseAutoCorr::save(Serializable::OArchive& ar)
    {}
    //{ ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void RingRouseAutoCorr::load(Serializable::IArchiveType& ar)
+   void RingRouseAutoCorr::load(Serializable::IArchive& ar)
    {}
    //{ ar & *this; }
 

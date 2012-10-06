@@ -336,7 +336,7 @@ namespace McMd
    /*
    * Save the internal state to an archive.
    */
-   void NphIntegrator::save(Serializable::OArchiveType& ar)
+   void NphIntegrator::save(Serializable::OArchive& ar)
    {  
       ar & dt_;
       ar & prefactors_;
@@ -348,7 +348,7 @@ namespace McMd
    /**
    * Load the internal state to an archive.
    */
-   void NphIntegrator::load(Serializable::IArchiveType& ar)
+   void NphIntegrator::load(Serializable::IArchive& ar)
    {  
       ar & dt_;
       ar & prefactors_;

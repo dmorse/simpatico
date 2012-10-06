@@ -38,7 +38,7 @@ namespace McMd
    /*
    * Save the internal state to an archive.
    */
-   void MdIntegrator::save(Serializable::OArchiveType& ar)
+   void MdIntegrator::save(Serializable::OArchive& ar)
    {  
       ar & dt_;
    }
@@ -46,7 +46,7 @@ namespace McMd
    /**
    * Load the internal state to an archive.
    */
-   void MdIntegrator::load(Serializable::IArchiveType& ar)
+   void MdIntegrator::load(Serializable::IArchive& ar)
    {  
       ar & dt_;
    }

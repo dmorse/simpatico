@@ -78,7 +78,7 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void DiagnosticManager::save(Serializable::OArchiveType& ar)
+   void DiagnosticManager::save(Serializable::OArchive& ar)
    {
       for (int i=0; i < size(); ++i) {
          (*this)[i].save(ar);
@@ -88,7 +88,7 @@ namespace McMd
    /*
    * Load state from a binary file archive.
    */
-   void DiagnosticManager::load(Serializable::IArchiveType& ar)
+   void DiagnosticManager::load(Serializable::IArchive& ar)
    {
       for (int i=0; i < size(); ++i) {
          (*this)[i].load(ar);

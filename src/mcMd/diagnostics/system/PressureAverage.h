@@ -64,14 +64,14 @@ namespace McMd
       *
       * \param ar binary saving (output) archive.
       */
-      virtual void save(Serializable::OArchiveType& ar);
+      virtual void save(Serializable::OArchive& ar);
 
       /**
       * Load state from a binary file archive.
       *
       * \param ar binary loading (input) archive.
       */
-      virtual void load(Serializable::IArchiveType& ar);
+      virtual void load(Serializable::IArchive& ar);
 
       /**
       * Serialize to/from an archive. 
@@ -192,14 +192,14 @@ namespace McMd
    * Save state to binary file archive.
    */
    template <class SystemType>
-   void PressureAverage<SystemType>::save(Serializable::OArchiveType& ar)
+   void PressureAverage<SystemType>::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
    template <class SystemType>
-   void PressureAverage<SystemType>::load(Serializable::IArchiveType& ar)
+   void PressureAverage<SystemType>::load(Serializable::IArchive& ar)
    { ar & *this; }
 
    /*

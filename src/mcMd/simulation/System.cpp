@@ -334,7 +334,7 @@ namespace McMd
    /*
    * Load internal state from an archive.
    */
-   void System::loadParameters(Serializable::IArchiveType &ar)
+   void System::loadParameters(Serializable::IArchive &ar)
    {
       if (!isCopy()) {
          allocateMoleculeSets();
@@ -366,7 +366,7 @@ namespace McMd
    /*
    * If no FileMaster exists, create and initialize one. 
    */
-   void System::loadFileMaster(Serializable::IArchiveType& ar)
+   void System::loadFileMaster(Serializable::IArchive& ar)
    {
       // Create FileMaster if necessary
       if (!fileMasterPtr_) {
@@ -423,7 +423,7 @@ namespace McMd
    /*
    * Load potential style strings.
    */
-   void System::loadPotentialStyles(Serializable::IArchiveType& ar)
+   void System::loadPotentialStyles(Serializable::IArchive& ar)
    {
       #ifndef INTER_NOPAIR
       loadParameter<std::string>(ar, "pairStyle", pairStyle_);
@@ -470,7 +470,7 @@ namespace McMd
    /*
    * Load EnergyEnsemble and BoundaryEnsemble
    */
-   void System::loadEnsembles(Serializable::IArchiveType& ar)
+   void System::loadEnsembles(Serializable::IArchive& ar)
    {
       loadParamComposite(ar, *energyEnsemblePtr_);
       loadParamComposite(ar, *boundaryEnsemblePtr_);
@@ -485,7 +485,7 @@ namespace McMd
       }
    }
 
-   void System::loadLinkMaster(Serializable::IArchiveType& ar)
+   void System::loadLinkMaster(Serializable::IArchive& ar)
    {
       if (simulation().nLinkType() > 0) {
          linkMasterPtr_ = new LinkMaster();
@@ -503,7 +503,7 @@ namespace McMd
       }
    }
 
-   void System::loadTetherMaster(Serializable::IArchiveType &ar)
+   void System::loadTetherMaster(Serializable::IArchive &ar)
    {
       if (simulation().hasTether()) {
          tetherMasterPtr_ = new TetherMaster();
@@ -515,7 +515,7 @@ namespace McMd
    /*
    * Load configuration from an archive.
    */
-   void System::loadConfig(Serializable::IArchiveType &ar)
+   void System::loadConfig(Serializable::IArchive &ar)
    {
       ar >> boundary();
 
@@ -556,7 +556,7 @@ namespace McMd
    /*
    * Save internal state to an archive.
    */
-   void System::saveConfig(Serializable::OArchiveType& ar)
+   void System::saveConfig(Serializable::OArchive& ar)
    {
       ar << boundary();
 
@@ -748,7 +748,7 @@ namespace McMd
    }
 
    #if 0
-   void System::loadPerturbation(Seriaizable::IArchiveType& ar) 
+   void System::loadPerturbation(Serializable::IArchive& ar) 
    {
 
       // Create Perturbation and read object, if required.
@@ -782,7 +782,7 @@ namespace McMd
       }
    }
 
-   void System::loadReplicaMove(Serializable::IArchiveType& ar) 
+   void System::loadReplicaMove(Serializable::IArchive& ar) 
    {
       if (hasPerturbation()) {
           loadParameter<bool>(ar, "hasReplicaMove", hasReplicaMove_);

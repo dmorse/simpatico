@@ -35,7 +35,7 @@
          read<int>(in, "m", m_);
       }
 
-      virtual void loadParameters(Serializable::IArchiveType& in) {
+      virtual void loadParameters(Serializable::IArchive& in) {
          loadParameter<double>(in, "x", x_);
          loadParameter<int>(in, "m", m_);
       }
@@ -64,7 +64,7 @@
          read<int>(in, "m", m_);
       }
 
-      virtual void loadParameters(Serializable::IArchiveType& in) {
+      virtual void loadParameters(Serializable::IArchive& in) {
          loadParameter<int>(in, "m", m_);
       }
 
@@ -90,7 +90,7 @@
          read<double>(in, "d", d_);
       }
 
-      virtual void loadParameters(Serializable::IArchiveType& in) {
+      virtual void loadParameters(Serializable::IArchive& in) {
          loadParameter<double>(in, "d", d_);
       }
 
@@ -117,7 +117,7 @@
          read<double>(in, "e", e_);
       }
 
-      virtual void loadParameters(Serializable::IArchiveType& in) {
+      virtual void loadParameters(Serializable::IArchive& in) {
          loadParameter<double>(in, "e", e_);
       }
 
@@ -228,7 +228,7 @@
          readParamComposite(in, manager_);
       }
    
-      virtual void loadParameters(Serializable::IArchiveType& ar)
+      virtual void loadParameters(Serializable::IArchive& ar)
       {
          loadParameter<int>(ar, "value0", value0_);
          loadParameter<long>(ar, "value1", value1_);

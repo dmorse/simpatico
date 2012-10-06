@@ -155,13 +155,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void RDF::save(Serializable::OArchiveType& ar)
+   void RDF::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void RDF::load(Serializable::IArchiveType& ar)
+   void RDF::load(Serializable::IArchive& ar)
    { ar & *this; }
 }
 #endif

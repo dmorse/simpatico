@@ -246,7 +246,7 @@ namespace McMd
    /*
    * Load internal state from an archive.
    */
-   void Simulation::loadParameters(Serializable::IArchiveType &ar)
+   void Simulation::loadParameters(Serializable::IArchive &ar)
    {
       loadParamComposite(ar, fileMaster_);
 

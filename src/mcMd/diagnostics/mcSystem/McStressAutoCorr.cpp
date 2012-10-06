@@ -114,13 +114,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void McStressAutoCorr::save(Serializable::OArchiveType& ar)
+   void McStressAutoCorr::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void McStressAutoCorr::load(Serializable::IArchiveType& ar)
+   void McStressAutoCorr::load(Serializable::IArchive& ar)
    { ar & *this; }
 
 }

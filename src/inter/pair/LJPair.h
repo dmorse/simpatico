@@ -70,14 +70,14 @@ namespace Inter
       *
       * \param ar input/loading archive
       */
-      virtual void loadParameters(Serializable::IArchiveType &ar);
+      virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
       * Save internal state to an archive.
       *
       * \param ar output/saving archive
       */
-      virtual void save(Serializable::OArchiveType &ar);
+      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Set LJ interaction energy for a specific pair of Atom types.

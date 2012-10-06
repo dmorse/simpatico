@@ -9,7 +9,7 @@
 */
 
 // The archive types included below must match those declared in 
-// Serializable::OArchiveType and Serializable::IArchiveType in
+// Serializable::OArchive and Serializable::IArchive in
 // Serializable.h
 
 #include "Serializable.h"

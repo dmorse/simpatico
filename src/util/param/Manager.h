@@ -98,14 +98,14 @@ namespace Util
       *
       * \param ar input/loading archive
       */
-      virtual void load(Serializable::IArchiveType &ar);
+      virtual void load(Serializable::IArchive &ar);
 
       /**
       * Save a set of objects to an output archive.
       *
       * \param ar output/saving archive
       */
-      virtual void save(Serializable::OArchiveType &ar);
+      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Append a Data object to the end of the sequence.
@@ -305,7 +305,7 @@ namespace Util
    * Read instructions for creating objects from file.
    */
    template <typename Data>
-   void Manager<Data>::load(Serializable::IArchiveType &ar)
+   void Manager<Data>::load(Serializable::IArchive &ar)
    {
       int size;
       Data* typePtr;
@@ -336,7 +336,7 @@ namespace Util
    * Read instructions for creating objects from file.
    */
    template <typename Data>
-   void Manager<Data>::save(Serializable::OArchiveType &ar)
+   void Manager<Data>::save(Serializable::OArchive &ar)
    {
       int size = ptrs_.size();
       ar << size;

@@ -254,13 +254,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void StructureFactor::save(Serializable::OArchiveType& ar)
+   void StructureFactor::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void StructureFactor::load(Serializable::IArchiveType& ar)
+   void StructureFactor::load(Serializable::IArchive& ar)
    { ar & *this; }
 }
 #endif

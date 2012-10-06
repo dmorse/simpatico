@@ -225,13 +225,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void MigratingVanHove::save(Serializable::OArchiveType& ar)
+   void MigratingVanHove::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void MigratingVanHove::load(Serializable::IArchiveType& ar)
+   void MigratingVanHove::load(Serializable::IArchive& ar)
    { ar & *this; }
 
 

@@ -244,7 +244,7 @@ void MemoryArchiveTest::testPackArray()
    v << c1;
    offset += sizeof(std::complex<double>);
    TEST_ASSERT(v.cursor() == v.begin() + offset);
-   v.pack(&m1[0][0], 2, 2);
+   v.pack(m1[0], 2, 2);
    offset += 4*sizeof(double);
    TEST_ASSERT(v.cursor() == v.begin() + offset);
 
@@ -269,7 +269,7 @@ void MemoryArchiveTest::testPackArray()
    u & c2;
    offset += sizeof(std::complex<double>);
    TEST_ASSERT(u.cursor() == u.begin() + offset);
-   u.unpack(&m2[0][0], 2, 2);
+   u.unpack(m2[0], 2, 2);
    offset += 4*sizeof(double);
    TEST_ASSERT(u.cursor() == u.begin() + offset);
 

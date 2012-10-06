@@ -143,14 +143,14 @@ public:
       // printEndl();
       // original.writeParam(std::cout);
 
-      Serializable::OArchiveType oar;
+      Serializable::OArchive oar;
       std::ofstream out("out/save1.bin");
       oar.setStream(out); 
       original.save(oar);
       out.close();
 
       AComposite clone;
-      Serializable::IArchiveType iar;
+      Serializable::IArchive iar;
       std::ifstream inc("out/save1.bin");
       iar.setStream(inc); 
       clone.load(iar);
@@ -232,13 +232,13 @@ public:
 
       printEndl();
 
-      Serializable::OArchiveType oar;
+      Serializable::OArchive oar;
       std::ofstream out("out/save.bin");
       oar.setStream(out); 
       paramComposite_.save(oar);
       out.close();
 
-      Serializable::IArchiveType iar;
+      Serializable::IArchive iar;
       std::ifstream in("out/save.bin");
       iar.setStream(in); 
 
@@ -329,7 +329,7 @@ public:
       paramComposite_.readParamComposite(file(), manager);
       paramComposite_.readEnd(file());
 
-      Serializable::OArchiveType oar;
+      Serializable::OArchive oar;
       std::ofstream out("out/save2.bin");
       oar.setStream(out); 
       paramComposite_.save(oar);
@@ -352,7 +352,7 @@ public:
       AManager cManager;
 
       ParamComposite clone;
-      Serializable::IArchiveType iar;
+      Serializable::IArchive iar;
       std::ifstream inc("out/save2.bin");
       iar.setStream(inc); 
 

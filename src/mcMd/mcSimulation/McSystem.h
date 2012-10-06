@@ -74,7 +74,7 @@ namespace McMd
       *
       * \param ar input/loading archive
       */
-      virtual void loadParameters(Serializable::IArchiveType &ar);
+      virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
       * Read system configuration from file.
@@ -91,14 +91,14 @@ namespace McMd
       *
       * \param ar output/saving archive
       */
-      virtual void save(Serializable::OArchiveType &ar);
+      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Load the MdSystem configuration from an archive.
       *
       * \param ar input (loading) archive object.
       */
-      virtual void load(Serializable::IArchiveType& ar);
+      virtual void load(Serializable::IArchive& ar);
       #endif
 
       /// \name Energy and Stress calculators

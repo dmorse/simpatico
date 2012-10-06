@@ -64,14 +64,14 @@ namespace Util
       *
       * \param ar loading (input) archive.
       */
-      void load(Serializable::IArchiveType& ar);
+      void load(Serializable::IArchive& ar);
 
       /**
       * Save 2D C array to an archive.
       *
       * \param ar saving (output) archive.
       */
-      void save(Serializable::OArchiveType& ar);
+      void save(Serializable::OArchive& ar);
 
    protected:
    
@@ -152,7 +152,7 @@ namespace Util
    * Load from an archive.
    */
    template <class Type>
-   void CArray2DParam<Type>::load(Serializable::IArchiveType& ar)
+   void CArray2DParam<Type>::load(Serializable::IArchive& ar)
    {
       if (isParamIoProcessor()) {
          int i, j; 
@@ -173,7 +173,7 @@ namespace Util
    * Save to an archive.
    */
    template <class Type>
-   void CArray2DParam<Type>::save(Serializable::OArchiveType& ar)
+   void CArray2DParam<Type>::save(Serializable::OArchive& ar)
    {
       int i, j;
       for (i = 0; i < m_; ++i) {

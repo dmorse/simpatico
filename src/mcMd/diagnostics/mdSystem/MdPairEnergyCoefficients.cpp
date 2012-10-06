@@ -304,13 +304,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void MdPairEnergyCoefficients::save(Serializable::OArchiveType& ar)
+   void MdPairEnergyCoefficients::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void MdPairEnergyCoefficients::load(Serializable::IArchiveType& ar)
+   void MdPairEnergyCoefficients::load(Serializable::IArchive& ar)
    { ar & *this; }
 
 }

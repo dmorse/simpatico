@@ -208,7 +208,7 @@ namespace McMd
    /*
    * Load parameters from an archive.
    */
-   void McSystem::loadParameters(Serializable::IArchiveType& ar)
+   void McSystem::loadParameters(Serializable::IArchive& ar)
    {
       allocateMoleculeSets();
       loadFileMaster(ar);

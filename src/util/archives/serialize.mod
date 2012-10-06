@@ -197,11 +197,11 @@ namespace Util
    * method templates.  Each subclass of Serializable must define virtual 
    * save() and load() methods with the following signatures:
    * \code
-   * virtual void save(Serializable::OArchiveType& ar);
-   * virtual void load(Serializable::IArchiveType& ar);
+   * virtual void save(Serializable::OArchive& ar);
+   * virtual void load(Serializable::IArchive& ar);
    * \endcode
-   * The typenames Serializable::OArchiveType and Serializable::IArchiveType
-   * are typedefs that define a pair of archive classes to be used for 
+   * The typenames Serializable::OArchive and Serializable::IArchive are
+   * typedefs that define a pair of archive classes to be used for 
    * serialization. 
    *
    * The advantage of using virtual functions is that it allows these methods 

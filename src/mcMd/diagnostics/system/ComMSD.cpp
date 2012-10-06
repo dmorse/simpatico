@@ -201,13 +201,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void ComMSD::save(Serializable::OArchiveType& ar)
+   void ComMSD::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void ComMSD::load(Serializable::IArchiveType& ar)
+   void ComMSD::load(Serializable::IArchive& ar)
    { ar & *this; }
 }
 #endif 

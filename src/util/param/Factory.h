@@ -113,7 +113,7 @@ namespace Util
       * \param  className (output) name of subclass of Data
       * \return pointer to new instance of className
       */
-      Data* loadObject(Serializable::IArchiveType& ar, ParamComposite& parent,
+      Data* loadObject(Serializable::IArchive& ar, ParamComposite& parent,
                        std::string& className);
 
    protected:
@@ -300,7 +300,7 @@ namespace Util
    * Load subclass name, create object, and load object.
    */
    template <typename Data>
-   Data* Factory<Data>::loadObject(Serializable::IArchiveType& ar, ParamComposite& parent,
+   Data* Factory<Data>::loadObject(Serializable::IArchive& ar, ParamComposite& parent,
                                    std::string& className)
    {
       #ifdef UTIL_MPI

@@ -334,7 +334,7 @@ namespace McMd
    /* 
    * Load a System configuration from an archive.
    */
-   void MdSystem::load(Serializable::IArchiveType& ar)
+   void MdSystem::load(Serializable::IArchive& ar)
    {  
       System::load(ar); 
 

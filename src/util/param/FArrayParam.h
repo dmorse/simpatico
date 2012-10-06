@@ -57,14 +57,14 @@ namespace Util
       *
       * \param ar loading (input) archive.
       */
-      void load(Serializable::IArchiveType& ar);
+      void load(Serializable::IArchive& ar);
 
       /**
       * Save to an archive.
       *
       * \param ar saving (output) archive.
       */
-      void save(Serializable::OArchiveType& ar);
+      void save(Serializable::OArchive& ar);
 
    protected:
    
@@ -129,7 +129,7 @@ namespace Util
    * Load from an archive.
    */
    template <class Type, int N>
-   void FArrayParam<Type, N>::load(Serializable::IArchiveType& ar)
+   void FArrayParam<Type, N>::load(Serializable::IArchive& ar)
    {
       if (isParamIoProcessor()) {
          for (int i = 0; i < N; ++i) {
@@ -147,7 +147,7 @@ namespace Util
    * Save to an archive.
    */
    template <class Type, int N>
-   void FArrayParam<Type, N>::save(Serializable::OArchiveType& ar)
+   void FArrayParam<Type, N>::save(Serializable::OArchive& ar)
    {
       for (int i = 0; i < N; ++i) {
          ar << (*arrayPtr_)[i];

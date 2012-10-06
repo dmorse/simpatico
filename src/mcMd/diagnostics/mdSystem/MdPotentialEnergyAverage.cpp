@@ -88,13 +88,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void MdPotentialEnergyAverage::save(Serializable::OArchiveType& ar)
+   void MdPotentialEnergyAverage::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void MdPotentialEnergyAverage::load(Serializable::IArchiveType& ar)
+   void MdPotentialEnergyAverage::load(Serializable::IArchive& ar)
    { ar & *this; }
 
    

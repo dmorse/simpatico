@@ -140,13 +140,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void RadiusGyration::save(Serializable::OArchiveType& ar)
+   void RadiusGyration::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void RadiusGyration::load(Serializable::IArchiveType& ar)
+   void RadiusGyration::load(Serializable::IArchive& ar)
    { ar & *this; }
 }
 #endif 

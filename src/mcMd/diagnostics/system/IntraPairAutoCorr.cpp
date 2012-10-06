@@ -175,13 +175,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void IntraPairAutoCorr::save(Serializable::OArchiveType& ar)
+   void IntraPairAutoCorr::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void IntraPairAutoCorr::load(Serializable::IArchiveType& ar)
+   void IntraPairAutoCorr::load(Serializable::IArchive& ar)
    { ar & *this; }
 
 }

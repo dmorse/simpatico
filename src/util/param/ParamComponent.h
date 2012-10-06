@@ -50,10 +50,10 @@ namespace Util
       */
       virtual void writeParam(std::ostream& out) = 0;
 
-      virtual void save(Serializable::OArchiveType &ar)
+      virtual void save(Serializable::OArchive &ar)
       {}
 
-      virtual void load(Serializable::IArchiveType &ar)
+      virtual void load(Serializable::IArchive &ar)
       {}
 
       /**

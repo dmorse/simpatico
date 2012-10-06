@@ -190,7 +190,7 @@ namespace Inter
    /*
    * Load internal state from an archive.
    */
-   void LJPair::loadParameters(Serializable::IArchiveType &ar)
+   void LJPair::loadParameters(Serializable::IArchive &ar)
    {
       ar >> nAtomType_; 
       if (nAtomType_ == 0) {
@@ -213,7 +213,7 @@ namespace Inter
    /*
    * Save internal state to an archive.
    */
-   void LJPair::save(Serializable::OArchiveType &ar)
+   void LJPair::save(Serializable::OArchive &ar)
    {
       ar << nAtomType_;
       ar.pack(epsilon_[0], nAtomType_, nAtomType_);
