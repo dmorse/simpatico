@@ -66,11 +66,31 @@ namespace Util
       template <typename T>
       BinaryFileIArchive& operator >> (T& data);
 
+      /**
+      * Unpack one T object.
+      *
+      */
       template <typename T> 
       void unpack(T& data);
 
+      /**
+      * Unpack a C array.
+      *
+      * \param array array of T objects
+      * \param n number of elements
+      */
       template <typename T> 
       void unpack(T* array, int n);
+
+      /**
+      * Unpack a 2D C array.
+      *
+      * \param array pointer to [0][0] element of 2D C-array 
+      * \param m     number of rows
+      * \param n     number of columns
+      */
+      template <typename T> 
+      void unpack(T* array, int m, int n);
 
    private:
 
@@ -129,6 +149,20 @@ namespace Util
    {
       for (int i=0; i < n; ++i) {
          istreamPtr_->read( (char*)(&array[i]), sizeof(T));
+      }
+   }
+
+   /*
+   * Bitwise pack a 2D C-array of objects of type T.
+   */
+   template <typename T>
+   void BinaryFileIArchive::unpack(T* array, int m, int n)
+   {
+      int i, j;
+      for (i = 0; i < m; ++i) {
+         for (j = 0; j < n; ++j) {
+            istreamPtr_->read( (char*)(&array[i*n + j]), sizeof(T));
+         }
       }
    }
 

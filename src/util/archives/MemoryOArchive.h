@@ -72,11 +72,30 @@ namespace Util
       template <typename T>
       MemoryOArchive& operator << (T& data);
 
+      /**
+      * Pack a T object.
+      */
       template <typename T> 
       void pack(const T& data);
 
+      /**
+      * Pack a C array.
+      *
+      * \param array C array
+      * \param n     number of elements
+      */
       template <typename T> 
       void pack(const T* array, int n);
+
+      /**
+      * Pack a 2D C array.
+      *
+      * \param array poiner to [0][0] element of 2D array 
+      * \param m     number of rows
+      * \param n     number of columns
+      */
+      template <typename T> 
+      void pack(const T* array, int m, int n);
 
       #ifdef UTIL_MPI
       /**
@@ -246,6 +265,29 @@ namespace Util
       for (int i=0; i < n; ++i) {
          *ptr = array[i];
          ++ptr;
+      }
+      cursor_ = (Byte *)ptr;
+   }
+
+   /*
+   * Bitwise pack a 2D C-array of objects of type T.
+   */
+   template <typename T>
+   inline void MemoryOArchive::pack(const T* array, int m, int n)
+   {
+      if (isLocked_) {
+         UTIL_THROW("Locked archive");
+      }
+      if (cursor_ + m*n*sizeof(T) > endAllocated_) {
+         UTIL_THROW("Attempted write past end of allocated block");
+      }
+      int i, j;
+      T* ptr = (T *)cursor_;
+      for (i=0; i < m; ++i) {
+         for (j=0; j < n; ++j) {
+            *ptr = array[i*n + j];
+            ++ptr;
+         }
       }
       cursor_ = (Byte *)ptr;
    }

@@ -159,14 +159,12 @@ namespace Inter
       }
    
       // Read parameters
-      // //readBegin(in,  "LJPair");
       readCArray2D<double> (
                   in, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
       readCArray2D<double>(
                   in, "sigma", sigma_[0], nAtomType_, nAtomType_);
       readCArray2D<double>(
                   in, "cutoff", cutoff_[0], nAtomType_, nAtomType_);
-      //readEnd(in);
    
       // Initialize dependent variables sigmaSq, cutoffSq, and ljShift,
       // and calculate maxPairCutoff_
@@ -187,7 +185,44 @@ namespace Inter
       } // end for i
 
       isInitialized_ = true;
-   
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void LJPair::loadParameters(Serializable::IArchiveType &ar)
+   {
+      ar >> nAtomType_; 
+      if (nAtomType_ == 0) {
+         UTIL_THROW( "nAtomType must be positive");
+      }
+      // Read parameters
+      loadCArray2D<double> (
+                  ar, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
+      loadCArray2D<double>(
+                  ar, "sigma", sigma_[0], nAtomType_, nAtomType_);
+      loadCArray2D<double>(
+                  ar, "cutoff", cutoff_[0], nAtomType_, nAtomType_);
+      ar.unpack(sigmaSq_[0], nAtomType_, nAtomType_);
+      ar.unpack(cutoffSq_[0], nAtomType_, nAtomType_);
+      ar.unpack(ljShift_[0], nAtomType_, nAtomType_);
+      ar >> maxPairCutoff_;
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void LJPair::save(Serializable::OArchiveType &ar)
+   {
+      ar << nAtomType_;
+      ar.pack(epsilon_[0], nAtomType_, nAtomType_);
+      ar.pack(sigma_[0], nAtomType_, nAtomType_);
+      ar.pack(cutoff_[0], nAtomType_, nAtomType_);
+      ar.pack(sigmaSq_[0], nAtomType_, nAtomType_);
+      ar.pack(cutoffSq_[0], nAtomType_, nAtomType_);
+      ar.pack(ljShift_[0], nAtomType_, nAtomType_);
+      ar << maxPairCutoff_;
    }
 
    /* 

@@ -105,11 +105,21 @@ namespace Util
       /**
       * Read a C-array of objects of type T.
       *
-      * \param array array into which data should be read.
-      * \param n     expected number of elements in the array.
+      * \param array array into which data should be read
+      * \param n     expected number of elements in the array
       */
       template <typename T>
       void unpack(T* array, int n);
+
+      /**
+      * Unpack a 2D C array.
+      *
+      * \param array pointer to [0][0] element of 2D array
+      * \param m     number of rows
+      * \param n     number of columns
+      */
+      template <typename T> 
+      void unpack(T* array, int m, int n);
 
       #ifdef UTIL_MPI
       /**
@@ -267,6 +277,26 @@ namespace Util
       for (int i=0; i < n; ++i) {
          array[i] = *ptr;
          ++ptr;
+      }
+      cursor_ = (Byte *)ptr;
+   }
+
+   /*
+   * Bitwise pack a 2D C-array of objects of type T.
+   */
+   template <typename T>
+   void MemoryIArchive::unpack(T* array, int m, int n)
+   {
+      if (cursor_ + m*n*sizeof(T) > end_) {
+         UTIL_THROW("Attempted read past end of data");
+      }
+      int i, j;
+      T* ptr = (T *)cursor_;
+      for (i = 0; i < m; ++i) {
+         for (j = 0; j < n; ++j) {
+            array[i*n + j] = *ptr;
+            ++ptr;
+         }
       }
       cursor_ = (Byte *)ptr;
    }

@@ -55,22 +55,41 @@ namespace Util
       void setStream(std::ostream& out);
 
       /**
-      * Write one object.
+      * Save one object.
       */
       template <typename T>
       BinaryFileOArchive& operator & (T& data);
 
       /**
-      * Write one object.
+      * Save one object.
       */
       template <typename T>
       BinaryFileOArchive& operator << (T& data);
 
+      /**
+      * Pack one object of type T.
+      */
       template <typename T> 
       void pack(const T& data);
 
+      /**
+      * Pack a C array.
+      * 
+      * \param array address of first element
+      * \param n     number of elements
+      */
       template <typename T> 
       void pack(const T* array, int n);
+
+      /**
+      * Pack a 2D C array.
+      *
+      * \param array pointer to [0][0] element in 2D array
+      * \param m     number of rows
+      * \param m     number of columns
+      */
+      template <typename T> 
+      void pack(const T* array, int m, int n);
 
    private:
 
@@ -119,7 +138,7 @@ namespace Util
    */
    template <typename T>
    inline void BinaryFileOArchive::pack(const T& data)
-   {  ostreamPtr_->write( (char*)(&data), sizeof(T) ); }
+   {  ostreamPtr_->write( (char*)(&data), sizeof(T)); }
 
    /*
    * Bitwise pack a C-array of objects of type T.
@@ -129,6 +148,20 @@ namespace Util
    {
       for (int i=0; i < n; ++i) {
          ostreamPtr_->write( (char*)(&array[i]), sizeof(T));
+      }
+   }
+
+   /*
+   * Bitwise pack a 2D C-array of objects of type T.
+   */
+   template <typename T>
+   inline void BinaryFileOArchive::pack(const T* array, int m, int n)
+   {
+      int i, j;
+      for (i=0; i < m; ++i) {
+         for (j=0; j < n; ++j) {
+            ostreamPtr_->write( (char*)(&array[i*n + j]), sizeof(T));
+         }
       }
    }
 

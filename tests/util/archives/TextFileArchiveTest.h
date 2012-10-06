@@ -57,7 +57,8 @@ void TextFileArchiveTest::testPack()
    SerializeTestClass o1, o2;
    double b1[4];
    double b2[4];
-
+   double m1[2][2];
+   double m2[2][2];
 
    // Initialize variables
    i1 = 3;
@@ -73,6 +74,10 @@ void TextFileArchiveTest::testPack()
    b1[1] = 8.0;
    b1[2] = 7.0;
    b1[3] = 6.0;
+   m1[0][0] = 13.0;
+   m1[0][1] = 14.0;
+   m1[1][0] = 15.0;
+   m1[1][1] = 16.0;
   
    // Write variables to OArchive v
    v << i1;
@@ -82,6 +87,7 @@ void TextFileArchiveTest::testPack()
    v << a1;
    v << o1;
    v.pack(b1, 4);
+   v.pack(&m1[0][0], 2, 2);
    out.close();
 
    std::ifstream in;
@@ -112,6 +118,15 @@ void TextFileArchiveTest::testPack()
    for (int j = 0; j < 4; ++j) {
       TEST_ASSERT(b1[j] == b2[j]);
    }
+
+   u.unpack(&m2[0][0], 2, 2);
+   int i, j;
+   for (i = 0; i < 2; ++i) {
+      for (j = 0; j < 2; ++j) {
+         TEST_ASSERT(eq(m1[i][j], m2[i][j]));
+      }
+   }
+
 }
 
 TEST_BEGIN(TextFileArchiveTest)

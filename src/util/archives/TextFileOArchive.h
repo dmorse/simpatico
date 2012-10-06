@@ -69,8 +69,24 @@ namespace Util
       template <typename T> 
       void pack(const T& data);
 
+      /**
+      * Pack a C array.
+      *
+      * \param array 1D C array 
+      * \param n     number of elements
+      */
       template <typename T> 
       void pack(const T* array, int n);
+
+      /**
+      * Pack a 2D C array.
+      *
+      * \param array address of first element of 2D array
+      * \param m     number of rows
+      * \param n     number of columns
+      */
+      template <typename T> 
+      void pack(const T* array, int m, int n);
 
    private:
 
@@ -143,6 +159,21 @@ namespace Util
         *ostreamPtr_ << array[i] << "  ";
       }
       *ostreamPtr_ << std::endl;
+   }
+
+   /*
+   * Bitwise pack a 2D C-array of objects of type T.
+   */
+   template <typename T>
+   inline void TextFileOArchive::pack(const T* array, int m, int n)
+   {
+      int i, j;
+      for (i=0; i < m; ++i) {
+         for (j=0; j < n; ++j) {
+            *ostreamPtr_ << array[i*n + j] << "  ";
+         }
+         *ostreamPtr_ << std::endl;
+      }
    }
 
    // Explicit serialize functions for primitive types
