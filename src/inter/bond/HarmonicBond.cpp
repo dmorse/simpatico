@@ -46,7 +46,7 @@ namespace Inter
    */
    HarmonicBond& HarmonicBond::operator = (const HarmonicBond& other)
    {
-      nBondType_   = other.nBondType_;
+      nBondType_  = other.nBondType_;
       for (int i = 0; i < nBondType_; ++i) {
          kappa_[i]  = other.kappa_[i];
          length_[i] = other.length_[i];
@@ -81,6 +81,30 @@ namespace Inter
       readCArray<double>(in, "length", length_, nBondType_);
    }
    
+   /*
+   * Load internal state from an archive.
+   */
+   void HarmonicBond::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nBondType_; 
+      if (nBondType_ == 0) {
+         UTIL_THROW( "nAtomType must be positive");
+      }
+      // Read parameters
+      loadCArray<double>(ar, "kappa", kappa_, nBondType_);
+      loadCArray<double>(ar, "length", length_, nBondType_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void HarmonicBond::save(Serializable::OArchive &ar)
+   {
+      ar << nBondType_;
+      ar.pack(kappa_, nBondType_);
+      ar.pack(length_, nBondType_);
+   }
+
    /* 
    * Generate a random bond length chosen from an equilibrium distribution for
    * randomly oriented bonds. 
