@@ -11,7 +11,7 @@
 #include <util/param/ParamComposite.h>     // base class
 #include <util/containers/ArrayStack.h>    // member template
 #include <util/containers/DArray.h>        // member template
-#include <util/containers/FSArray.h>        // member template
+#include <util/containers/FSArray.h>       // member template
 
 #include <mcMd/chemistry/Molecule.h>       // member template parameter
 #include <mcMd/chemistry/SpeciesGroup.h>   // member template parameter
@@ -20,9 +20,9 @@
 #include <mcMd/chemistry/Angle.h>          // typedef
 #endif
 #ifdef INTER_DIHEDRAL
-#include <mcMd/chemistry/Dihedral.h>          // typedef
+#include <mcMd/chemistry/Dihedral.h>       // typedef
 #endif
-#include <util/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>        // typedef
 
 namespace McMd
 {
@@ -150,6 +150,20 @@ namespace McMd
       * \param in input stream.
       */
       virtual void readParameters(std::istream &in);
+
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Set integer id for this Species.
@@ -385,6 +399,12 @@ namespace McMd
       int    nDihedral_;
       #endif
 
+      /// Number of molecules associated with the species.
+      int    moleculeCapacity_;
+
+      /// Integer index for this Species.
+      int    id_;
+
       // Methods
 
       /**
@@ -406,14 +426,26 @@ namespace McMd
       virtual void readSpeciesParam(std::istream &in);
 
       /**
+      * Define chemical structure for this Species.
+      *
+      * Analogous to readSpeciesParam, but reads data from a
+      * Serializable::IArchive rather than an input stream.
+      * This method must define the same parameter file format 
+      * as readSpeciesParam.
+      *
+      * \param ar input parameter file stream.
+      */
+      virtual void loadSpeciesParam(Serializable::IArchive &ar);
+
+      /**
       * Allocate chemical structure arrays.
       *
       * This method allocates the arrays that are used to define the
       * chemical structure of a generic molecule, such as atomTypeIds_, 
       * speciesBonds_, atomBondIdArrays_, speciesAngles_, etc.
       * 
-      * Precondition: nAtom_, nBond_, nAngles_, etc. must 
-      * have been assigned values.
+      * Precondition: nAtom_, nBond_, nAngles_, etc. must have nonzero
+      * values on entry.
       */
       void allocate();
 
@@ -530,15 +562,6 @@ namespace McMd
 
       /// Pointer to associated Species Mutator (if any).
       SpeciesMutator* mutatorPtr_;
-
-      /// Number of molecules associated with the species.
-      int    moleculeCapacity_;
-
-      /// Integer index for this Species.
-      int    id_;
-
-      /// True if the reservoir has been allocated
-      bool   isAllocated_;
 
    //friends:
    
