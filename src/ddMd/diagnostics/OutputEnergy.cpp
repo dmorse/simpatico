@@ -43,13 +43,8 @@ namespace DdMd
    /*
    * Read interval and outputFileName. 
    */
-   void OutputEnergy::setup() 
-   {  
-       nSample_ = 0; 
-      //std::string filename;
-      //filename  = outputFileName();
-      //simulation().fileMaster().openOutputFile(filename, outputFile_);
-   }
+   void OutputEnergy::clear() 
+   {  nSample_ = 0;  }
 
    /*
    * Dump configuration to file

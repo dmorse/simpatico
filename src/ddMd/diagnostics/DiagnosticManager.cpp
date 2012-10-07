@@ -54,6 +54,16 @@ namespace DdMd
    }
  
    /*
+   * Call clear method of each diagnostic.
+   */
+   void DiagnosticManager::clear() 
+   {
+      for (int i = 0; i < size(); ++i) {
+         (*this)[i].clear();
+      }
+   }
+
+   /*
    * Call sample method of each diagnostic.
    */
    void DiagnosticManager::sample(long iStep) 

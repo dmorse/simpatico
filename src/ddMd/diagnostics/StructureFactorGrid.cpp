@@ -28,8 +28,7 @@ namespace DdMd
     : StructureFactor(simulation),
       hMax_(0),
       nStar_(0),
-      lattice_(Triclinic),
-      isInitialized_(false)
+      lattice_(Triclinic)
    {}
 
    /// Read parameters from file, and allocate data array.
@@ -52,6 +51,7 @@ namespace DdMd
       waveIntVectors_.allocate(nWave_);
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
+      totalFourierModes_.allocate(nWave_, nMode_);
       structureFactors_.allocate(nWave_, nMode_);
 
       int i, j, h, k, l, m;
@@ -166,27 +166,19 @@ namespace DdMd
          }
       }
 
-      // Clear accumulators
-      for (i = 0; i < nWave_; ++i) {
-         for (j = 0; j < nMode_; ++j) {
-            structureFactors_(i, j) = 0.0;
+      if (simulation().domain().isMaster()) {
+         maximumValue_.allocate(nMode_);
+         maximumWaveIntVector_.allocate(nMode_);
+         maximumQ_.allocate(nMode_);
+         for (int j = 0; j < nMode_; ++j) {
+            maximumValue_[j].reserve(Samples);
+            maximumWaveIntVector_[j].reserve(Samples);
+            maximumQ_[j].reserve(Samples);
          }
       }
 
-      maximumValue_.allocate(Samples);
-      maximumWaveIntVector_.allocate(Samples);
-      maximumQ_.allocate(Samples);
-   
-      for (i=0; i < Samples; ++i) {
-         maximumValue_[i] = 0.0;
-      }
-      nSample_ = 0;
-
       isInitialized_ = true;
    }
-
-   void StructureFactorGrid::setup() 
-   {}
 
    void StructureFactorGrid::output()
    {
@@ -229,11 +221,15 @@ namespace DdMd
 
          // Outputs history of maximum structure factors
          simulation().fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_);
-         for (i = 0; i < nSample_; ++i) {
-            outputFile_ << maximumWaveIntVector_[i];
-            outputFile_ << Dbl(maximumQ_[i], 20, 8);
-            outputFile_ << Dbl(maximumValue_[i], 20, 8);
-            outputFile_ << std::endl;
+         for (j = 0; j < nMode_; ++j) {
+            for (i = 0; i < nSample_; ++i) {
+               for (n = 0; n < Dimension; ++n) {
+                  outputFile_ << Int(maximumWaveIntVector_[j][i][n], 5);
+               }
+               outputFile_ << Dbl(maximumQ_[j][i], 20, 8);
+               outputFile_ << Dbl(maximumValue_[j][i], 20, 8);
+               outputFile_ << std::endl;
+            }
          }
          outputFile_.close();
       

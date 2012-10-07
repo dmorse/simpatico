@@ -43,22 +43,24 @@ namespace DdMd
       */
       void readParameters(std::istream& in);
 
-      /**
-      * Setup state just before integration.
-      * 
-      * Must be called before run() method.
-      */
-      void setup();
-
    protected:
 
       /**
+      * Setup state just before main loop.
+      */
+      void setup();
+
+      /**
       * Execute first step of two-step integrator.
+      *
+      * Update positions and half-update velocities.
       */
       virtual void integrateStep1();
 
       /**
-      * Execute secodn step of two-step integrator.
+      * Execute second step of two-step integrator.
+      *
+      * Second half-update of velocities.
       */
       virtual void integrateStep2();
 

@@ -173,10 +173,15 @@ namespace McMd
          }
       }
 
-      maximumValue_.allocate(Samples);
-      maximumWaveIntVector_.allocate(Samples);
-      maximumQ_.allocate(Samples);
-   
+      maximumValue_.allocate(nMode_);
+      maximumWaveIntVector_.allocate(nMode_);
+      maximumQ_.allocate(nMode_);
+      for (int j = 0; j < nMode_; ++j) {
+         maximumValue_[j].reserve(Samples);
+         maximumWaveIntVector_[j].reserve(Samples);
+         maximumQ_[j].reserve(Samples);
+      }
+     
       nSample_ = 0;
 
       isInitialized_ = true;
@@ -243,11 +248,13 @@ namespace McMd
 
       // Outputs history of maximum structure factors
       fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_);
-      for (int i = 0; i < nSample_; ++i) {
-         outputFile_ << maximumWaveIntVector_[i];
-         outputFile_ << Dbl(maximumQ_[i], 20, 8);
-         outputFile_ << Dbl(maximumValue_[i], 20, 8);
-         outputFile_ << std::endl;
+      for (j = 0; j < nMode_; ++j) {
+         for (int i = 0; i < nSample_; ++i) {
+            outputFile_ << maximumWaveIntVector_[j][i];
+            outputFile_ << Dbl(maximumQ_[j][i], 20, 8);
+            outputFile_ << Dbl(maximumValue_[j][i], 20, 8);
+            outputFile_ << std::endl;
+         }
       }
       outputFile_.close();
                                                                   

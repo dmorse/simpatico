@@ -59,9 +59,14 @@ namespace McMd
       fourierModes_.allocate(nWave_, nMode_);
       structureFactors_.allocate(nWave_, nMode_);
 
-      maximumValue_.allocate(Samples);
-      maximumWaveIntVector_.allocate(Samples);
-      maximumQ_.allocate(Samples);
+      maximumValue_.allocate(nMode_);
+      maximumWaveIntVector_.allocate(nMode_);
+      maximumQ_.allocate(nMode_);
+      for (int j = 0; j < nMode_; ++j) {
+         maximumValue_[j].reserve(Samples);
+         maximumWaveIntVector_[j].reserve(Samples);
+         maximumQ_[j].reserve(Samples);
+      }
 
       isInitialized_ = true;
    }
@@ -92,7 +97,6 @@ namespace McMd
    void StructureFactor::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
-         maximumValue_[nSample_] = 0.0;
 
          Vector  position;
          std::complex<double>  expFactor;
@@ -139,20 +143,25 @@ namespace McMd
          // Increment structure factors
          double volume = system().boundary().volume();
          double norm;
-         for (i = 0; i < nWave_; ++i) {
-            for (j = 0; j < nMode_; ++j) {
+         for (j = 0; j < nMode_; ++j) {
+            double maxValue = 0.0;
+            IntVector maxIntVector;
+            double maxQ;
+            for (i = 0; i < nWave_; ++i) {
                norm = std::norm(fourierModes_(i, j));
-               if (norm/volume >= maximumValue_[nSample_]) {
-                  maximumValue_[nSample_] = norm/volume;
-                  maximumWaveIntVector_[nSample_] = waveIntVectors_[i];
-                  maximumQ_[nSample_] = waveVectors_[i].abs();
+               if (double(norm/volume) >= maxValue) {
+                  maxValue = double(norm/volume);
+                  maxIntVector = waveIntVectors_[i];
+                  maxQ = waveVectors_[i].abs();
                }
                structureFactors_(i, j) += norm/volume;
             }
+            maximumValue_[j].insert(maximumValue_[j].end(), 1, maxValue);
+            maximumWaveIntVector_[j].insert(maximumWaveIntVector_[j].end(), 1, maxIntVector);
+            maximumQ_[j].insert(maximumQ_[j].end(), 1, maxQ);
          }
 
          ++nSample_;
-
       }
 
    }
@@ -173,7 +182,6 @@ namespace McMd
             dWave  = boundaryPtr->reciprocalBasisVector(j);
             dWave *= waveIntVectors_[i][j];
             waveVectors_[i] += dWave;
-            //std::cout << waveVectors_[i] << std::endl;
          }
       }
    }
@@ -204,13 +212,14 @@ namespace McMd
 
       // Outputs history of maximum structure factors
       fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_);
-      for (int i = 0; i < nSample_; ++i) {
-         outputFile_ << maximumWaveIntVector_[i];
-         outputFile_ << Dbl(maximumQ_[i], 20, 8);
-         outputFile_ << Dbl(maximumValue_[i], 20, 8);
-         outputFile_ << std::endl;
+      for (j = 0; j < nMode_; ++j) {
+         for (int i = 0; i < nSample_; ++i) {
+            outputFile_ << maximumWaveIntVector_[j][i];
+            outputFile_ << Dbl(maximumQ_[j][i], 20, 8);
+            outputFile_ << Dbl(maximumValue_[j][i], 20, 8);
+            outputFile_ << std::endl;
+         }
       }
-      outputFile_.close();
 
       #if 0
       // Output each structure factor to a separate file

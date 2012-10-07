@@ -48,12 +48,13 @@ namespace DdMd
 
       /**
       * Call setup method of each Diagnostic.
-      * 
-      * This method should be called just before the main
-      * simulation loop, after an initial configuration is
-      * known.
       */
       void setup();
+ 
+      /**
+      * Call clear method of each Diagnostic.
+      */
+      void clear();
  
       /**
       * Call sample method of each Diagnostic.

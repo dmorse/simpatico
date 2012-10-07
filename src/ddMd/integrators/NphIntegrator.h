@@ -46,14 +46,17 @@ namespace DdMd
       */
       void readParameters(std::istream& in);
 
+   protected:
+
+      /**
+      * Initialize Vector nu to zero.
+      */
+      void initDynamicalState();
+
       /**
       * Setup state just before integration.
-      *
-      * Must be called before run() method.
       */
       void setup();
-
-   protected:
 
       /**
       * Execute first step of two-step integrator.
@@ -66,10 +69,10 @@ namespace DdMd
       virtual void integrateStep2();
 
    private:
+
       Vector nu_;
       double  dt_;
       double W_;
-      double T_target_;
       double P_target_;
       double T_kinetic_;
       Vector P_curr_diag_;
