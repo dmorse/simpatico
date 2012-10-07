@@ -33,6 +33,13 @@ namespace McMd
       virtual ~Point()
       {}
    
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
    protected:
    
       /**
@@ -53,13 +60,12 @@ namespace McMd
       virtual int getAtomTypeId(Molecule &molecule, int index);
    
       /**
-      * Return same bond type for any bond in any chain.
+      * Load species structure from an Archive.
       *
-      * \param moleculeId  index of molecule within species
-      * \param molBondId   index of bond within the molecule
+      * \param ar input/loading archive
       */
-      //virtual int getBondTypeId(Molecule &molecule, int index);
-   
+      virtual void loadSpeciesParam(Serializable::IArchive &ar);
+
    };
    
    
