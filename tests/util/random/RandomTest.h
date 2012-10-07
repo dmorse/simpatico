@@ -2,7 +2,6 @@
 #define RANDOM_TEST_H
 
 #include <util/random/Random.h>
-#include <util/random/serialize.h>
 #include <util/archives/BinaryFileOArchive.h>
 #include <util/archives/BinaryFileIArchive.h>
 

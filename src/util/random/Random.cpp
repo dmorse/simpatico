@@ -17,7 +17,7 @@ namespace Util
     : engine_(),
       seed_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("Random"); }
 
    /*
    * Destructor.
