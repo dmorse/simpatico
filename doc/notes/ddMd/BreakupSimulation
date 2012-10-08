@@ -1,11 +1,10 @@
 A Simulation has:
 
    
-   Configuration: atomStorage, GroupStorage containers
-                  boundary
+   Storage: atomStorage, GroupStorage containers
 
-   Properties:    kinetic energy, stress, etc.
-             
+   Boundary
+
    Types:         
       nAtomType_, nBondType_, ....
       AtomTypes
@@ -16,32 +15,38 @@ A Simulation has:
       Potential classes:  pair, bond, angle, ...
       MaskedPairPolicy 
 
+   Communication Utilities:
+      Domain
+      Exchanger
+      Buffer
+
    RNG
 
-   Communication Utilities:
-      Buffer
-      Exchanger
-      Domain
+   ConfigIo
+   Integrator
 
+   Properties:    kinetic energy, stress, etc.
+             
 
 Proposed Smaller Classes:
 
-    1) Configuration -> storage classes and boundary
+    1) Storage -> composite of storage classes 
 
        -> Only requires nType values for validity checking. 
        -> Configuraiton needs parameters only for allocation.
        -> Add Configuration::isEmpty member to check if initialized.
-       -> Add associated ConfigIo.
 
-    2) Force Field:
+    2) ForceField:
 
        nAtomType              
-       AtomTypes              (note, includes charge)
+       AtomTypes  (Note: includes charge, which is part of force field)
        nBondType, nAngleType  
+       potential style strings
+       MaskedPairPolicy
        Potential classes      
        Potential factory classes
 
-       Could ALSO have GroupPrototypes, but not necessary.
+       Could ALSO have GroupType<N>, but this is not necessary.
 
        Kinetic energy and stress must be calculated, also make members.
       
@@ -62,3 +67,35 @@ Other categories:
     1) Communication classes: Buffer, Exchanger, Domain 
     2) RNG
 
+-------------------------------------------------------------------
+Class Hierarchy for Interactions, Potentials, ForceFields:
+
+      Hierarchy #1)
+      -------------
+
+       DdMd::IPotential      Inter::IPairInteraction         
+                     \          /                  \               
+                  DdMd::PairPotential             McMd::MdPairPotential
+                          |                               | 
+               DdMd::PairPotentialImpl<T>      McMd::MdPairPotentialImpl<T>
+
+
+       Advantage:    Avoids repeated declaration of IPairInteraction in McMd and DdMd
+       Disadvantage: Does not avoid repeated declaration of IPairPotential.
+
+       No need for a pointer to a IPairInteraction, but is conceptually well defined.
+
+      Hierarchy #2)
+      -------------
+
+       DdMd::IPotential    Inter::IPairInteraction            
+                   \           /             \                      
+               DdMd::PairInteraction       Inter::PairInteractionImpl<T>   
+                              \               /           
+                          DdMd::PairPotentialImpl<T>
+
+     
+       Advantage:    Avoids repetition of IPairInteraction interface and implementation.
+       Disadvantage: Multiple inheritance with diamond topology.
+
+       This would require virtual inheritance of Inter::IPairInteraction. 

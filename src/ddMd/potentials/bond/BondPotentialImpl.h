@@ -98,6 +98,12 @@ namespace DdMd
       double get(std::string name, int bondTypeId) const
       {  return interactionPtr_->get(name, bondTypeId); }
 
+
+      /**
+      * Return pair interaction class name (e.g., "HarmonicBond").
+      */
+      virtual std::string interactionClassName() const;
+
       /**
       * Return bond interaction by const reference.
       */
@@ -261,14 +267,21 @@ namespace DdMd
       randomBondLength(Random* random, double beta, int bondTypeId) const
    {  return interaction().randomBondLength(random, beta, bondTypeId); }
 
-   /**
+   /*
+   * Return bond potential interaction class name.
+   */
+   template <class Interaction>
+   std::string BondPotentialImpl<Interaction>::interactionClassName() const
+   {  return interaction().className(); }
+
+   /*
    * Get Interaction by reference.
    */
    template <class Interaction>
    inline Interaction& BondPotentialImpl<Interaction>::interaction()
    {  return *interactionPtr_; }
 
-   /**
+   /*
    * Get Interaction by const reference.
    */
    template <class Interaction>

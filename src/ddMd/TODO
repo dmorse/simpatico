@@ -1,12 +1,4 @@
 
-Main Loop and Command Script
-----------------------------
-
-- Modify setup of integrator, add ability to continue a simulation without 
-  reinitialization.
-
-- Add commands to clear state of integrator, all statistics, and diagnostics.
-
 Extensibility, Ease-of-Use
 ----------------------------
 

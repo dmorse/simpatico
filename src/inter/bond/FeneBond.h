@@ -1,5 +1,5 @@
-#ifndef FENE_BOND_H
-#define FENE_BOND_H
+#ifndef INTER_FENE_BOND_H
+#define INTER_FENE_BOND_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

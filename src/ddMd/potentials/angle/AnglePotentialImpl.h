@@ -107,12 +107,10 @@ namespace DdMd
       double get(std::string name, int type) const
       {  return interactionPtr_->get(name, type); }
 
-      #if 0
       /**
       * Return pair interaction class name (e.g., "CosineAngle").
       */
       virtual std::string interactionClassName() const;
-      #endif
 
       /**
       * Return angle interaction by const reference.
@@ -255,14 +253,12 @@ namespace DdMd
                                                int typeId) const
    {  interaction().force(R1, R2, F1, F2, typeId); }
 
-   #if 0
    /*
    * Return angle potential interaction class name.
    */
    template <class Interaction>
    std::string AnglePotentialImpl<Interaction>::interactionClassName() const
    {  return interaction().className(); }
-   #endif
 
    /**
    * Get Interaction by reference.

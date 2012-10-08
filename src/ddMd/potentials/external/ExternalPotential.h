@@ -84,12 +84,10 @@ namespace DdMd
       virtual void getExternalForce(const Vector& position, int type, 
                                     Vector& force) const = 0;
 
-      #if 0
       /**
       * Return name of interaction class (e.g., "TanhCosineExternal").
       */
       virtual std::string interactionClassName() const = 0;
-      #endif
    
       //@}
 

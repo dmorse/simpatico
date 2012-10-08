@@ -1,5 +1,5 @@
-#ifndef HARMONIC_BOND_H
-#define HARMONIC_BOND_H
+#ifndef INTER_HARMONIC_BOND_H
+#define INTER_HARMONIC_BOND_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

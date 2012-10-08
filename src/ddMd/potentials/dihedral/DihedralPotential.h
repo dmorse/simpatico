@@ -115,12 +115,10 @@ namespace DdMd
       */
       virtual double get(std::string name, int type) const = 0;
 
-      #if 0
       /**
       * Return pair interaction class name (e.g., "HarmonicDihedral").
       */
       virtual std::string interactionClassName() const = 0;
-      #endif
 
       //@}
 

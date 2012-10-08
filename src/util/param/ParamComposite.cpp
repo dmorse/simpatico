@@ -54,7 +54,8 @@ namespace Util
     : ParamComponent(other),
       list_(),
       isLeaf_(),
-      size_(0)
+      size_(0),
+      className_(other.className_)
    {}
 
    /* 
@@ -62,16 +63,22 @@ namespace Util
    */
    ParamComposite::~ParamComposite()
    {
-    
       if (size_ > 0) { 
          for (int i=0; i < size_; ++i) {
             if (isLeaf_[i]) {
                delete list_[i];
             }
+            /* Only delete Param, Begin, End & Blank leaf objects.
+            * Do NOT delete node objects here. These are instances of
+            * of subclasses of ParamComposite, which must be deleted
+            * by their parent object, i.e., by the object of which they 
+            * are a member or, if created on the heap, the object that
+            * has sole responsibility for deleting them.
+            */
          }
       }
    }
-  
+
    /*
    * Read parameter block, including begin and end.
    */
@@ -119,8 +126,9 @@ namespace Util
       isLeaf_.push_back(false);
       ++size_;
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) 
+      if (hasParamCommunicator()) {
          child.setParamCommunicator(paramCommunicator());
+      }
       #endif
    }
    

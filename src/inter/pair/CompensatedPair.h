@@ -1,5 +1,5 @@
-#ifndef COMPENSATED_PAIR_H
-#define COMPENSATED_PAIR_H
+#ifndef INTER_COMPENSATED_PAIR_H
+#define INTER_COMPENSATED_PAIR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

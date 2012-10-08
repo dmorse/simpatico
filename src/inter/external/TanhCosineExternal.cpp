@@ -1,5 +1,5 @@
-#ifndef TANH_COSINE_EXTERNAL_CPP
-#define TANH_COSINE_EXTERNAL_CPP
+#ifndef INTER_TANH_COSINE_EXTERNAL_CPP
+#define INTER_TANH_COSINE_EXTERNAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -28,7 +28,7 @@ namespace Inter
       boundaryPtr_(0),
       nAtomType_(0), 
       isInitialized_(false)
-   {}
+   { setClassName("TanhCosineExternal"); }
    
    /* 
    * Copy constructor.
