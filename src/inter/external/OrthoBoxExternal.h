@@ -1,5 +1,5 @@
-#ifndef ORTHO_BOX_EXTERNAL_H
-#define ORTHO_BOX_EXTERNAL_H
+#ifndef INTER_ORTHO_BOX_EXTERNAL_H
+#define INTER_ORTHO_BOX_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

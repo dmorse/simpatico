@@ -1,5 +1,5 @@
-#ifndef COSINE_SQ_ANGLE_CPP
-#define COSINE_SQ_ANGLE_CPP
+#ifndef INTER_COSINE_SQ_ANGLE_CPP
+#define INTER_COSINE_SQ_ANGLE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -22,6 +22,7 @@ namespace Inter
    CosineSqAngle::CosineSqAngle()
     : nAngleType_(0)
    {
+      setClassName("CosineSqAngle");
       for (int i = 0; i < MaxNAngleType; ++i) {
          kappa_[i]     = 0.0;
          theta0_[i]    = 0.0;

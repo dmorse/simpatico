@@ -80,8 +80,9 @@ namespace Util
          }
       }
       #ifdef UTIL_MPI
-         if (hasParamCommunicator()) 
-            bcast<Type>(paramCommunicator(), value_, n_, 0); 
+      if (hasParamCommunicator()) {
+         bcast<Type>(paramCommunicator(), value_, n_, 0); 
+      }
       #endif
    }
 

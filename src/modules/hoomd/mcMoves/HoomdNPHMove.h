@@ -69,6 +69,10 @@ namespace McMd
       
       /// Geometry of simulation cell
       std::string modeIn_;
+
+      bool toImposeConstrain_;
+      bool setConstrain_;
+      Vector constrainLengths_;
    };
 
 }

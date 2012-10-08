@@ -1,5 +1,5 @@
-#ifndef LJ_PAIR_CPP
-#define LJ_PAIR_CPP
+#ifndef INTER_LJ_PAIR_CPP
+#define INTER_LJ_PAIR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

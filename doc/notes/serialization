@@ -1,0 +1,80 @@
+Goal:
+
+To create an independent serialization system, in which the entire internal state 
+is stored in a single binary file. 
+
+Serialization methods: save and load vs. serialize template
+-----------------------------------------------------------
+
+Which classes will use the serialize method template and which will use save and 
+load virtual functions?
+
+i) Polymorphic classes, which are accessed through a base class pointer, must all 
+be Serializable, and must use the virtual save and load methods. This includes all 
+of the Species, Diagnostic, McMove, MdIntegrator and Potential classes in McMd, 
+and all Diagnostic, Integrator, and Potential classes in DdMd.
+
+ii) Classes that own polymorphic classes will generally also need to be Serializable,
+and implement save and load methods, since they require substantially different 
+interfaces for saving and loading. This includes all of the Manager, System, and 
+Simulation classes.
+
+ii) Other Classes that read and write to the parameter file could use either 
+the save and load methods, implemented using saveParam() and loadParam() methods, 
+or a serialize() method template, implemented using serializeParam() methods.
+Such classes include: ensembles, PairList and CellList, and FileMaster.
+
+Conclusion: It is probably simplest to just use save and load for all subclasses 
+of ParamComposite. Do not make ParamComposite a subclass of Serializable, just 
+add as an additional base class for subclasses.
+
+Since Serializable is a pure interface, perhaps rename as ISerializable.
+
+ParamComposite:
+---------------
+
+For each subclass of Parameter, add load() and save() methods analogous to
+the readParam and writeParam methods. Like the readParam() methods, these
+can deal intelligently with the need to read on some nodes and broadcast
+to others. 
+
+In ParamComposite, add load<T> and save<T> method templates analogous to the 
+read<T> and write<T> templates. The load method can use the add<T> method and 
+then simply call the load method of the parameter rather than the readParam
+method.
+
+In ParamComposite, add loadComposite<T> method which adds the composite to
+the format list before actually loading it. 
+
+In ParamComposite, add a default save() method that calls the save methods
+of all items in the format list. Subclasses could all ParamComposite::save()
+explicitly, then add additional information. 
+
+Manager Classes:
+----------------
+
+The save method of a Manager class must save the number of items, followed
+by a set of items. Each item must contain a class name, followed by the
+rest of the saved state of the item. 
+
+The load method of a Manager will read the name of each item, and use the
+Factory to create the required object and read the remainder of the file
+block for that object. 
+
+Add saveItem() and loadItem() methods to the Manager.h template, and 
+create default save() and load() methods for all subclasses of Manager<T>.
+
+Util Classes
+------------
+
+FileMaster     -> needs save and load methods.
+Random         -> has serialize method. save and load methods could call this.
+ensembles      -> need save and load methods.
+containers     -> pointer arrays need serialize method to allocate arrays.
+
+Boundary       -> already have serialize methods
+
+Inter Classes
+-------------
+
+All interactions should have serialize methods.

@@ -177,6 +177,19 @@ namespace DdMd
          }
       }
 
+      if (simulation().domain().isMaster()) {
+         maximumValue_.allocate(nMode_);
+         maximumWaveIntVector_.allocate(nMode_);
+         maximumQ_.allocate(nMode_);
+         for (int j = 0; j < nMode_; ++j) {
+            maximumValue_[j].reserve(Samples);
+            maximumWaveIntVector_[j].reserve(Samples);
+            maximumQ_[j].reserve(Samples);
+         }
+      }
+
+      nSample_ = 0;
+
       isInitialized_ = true;
    }
 

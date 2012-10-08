@@ -1,5 +1,5 @@
-#ifndef BOX_EXTERNAL_H
-#define BOX_EXTERNAL_H
+#ifndef INTER_BOX_EXTERNAL_H
+#define INTER_BOX_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

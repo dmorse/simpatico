@@ -121,12 +121,10 @@ namespace DdMd
       double get(std::string name, int type) const
       {  return interactionPtr_->get(name, type); }
 
-      #if 0
       /**
       * Return pair interaction class name (e.g., "CosineDihedral").
       */
       virtual std::string interactionClassName() const;
-      #endif
 
       /**
       * Return dihedral interaction by const reference.
@@ -275,14 +273,12 @@ namespace DdMd
                     Vector& F1, Vector& F2, Vector& F3, int typeId) const
    {  interaction().force(R1, R2, R3, F1, F2, F3, typeId); }
 
-   #if 0
    /*
    * Return dihedral potential interaction class name.
    */
    template <class Interaction>
    std::string DihedralPotentialImpl<Interaction>::interactionClassName() const
    {  return interaction().className(); }
-   #endif
 
    /**
    * Get Interaction by reference.

@@ -1,5 +1,5 @@
-#ifndef COSINE_ANGLE_CPP
-#define COSINE_ANGLE_CPP
+#ifndef INTER_COSINE_ANGLE_CPP
+#define INTER_COSINE_ANGLE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -21,6 +21,7 @@ namespace Inter
    CosineAngle::CosineAngle()
     : nAngleType_(0)
    { 
+      setClassName("CosineAngle");
       for (int i = 0; i < MaxNAngleType; ++i) {
          kappa_[i] = 0.0; 
       }

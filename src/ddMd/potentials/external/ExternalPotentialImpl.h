@@ -94,12 +94,10 @@ namespace DdMd
       virtual void getExternalForce(const Vector& position, int typeId, 
                                     Vector& force) const; 
 
-      #if 0
       /**
       * Return external interaction class name (e.g., "TanhCosineExternal").
       */
       virtual std::string interactionClassName() const;
-      #endif
 
       /**
       * Return external interaction by reference.
@@ -247,14 +245,12 @@ namespace DdMd
                                                 int typeId, Vector& force) const
    { interaction().getForce(position, typeId, force); }
 
-   #if 0
    /*
    * Return external interaction class name.
    */
    template <class Interaction>
    std::string ExternalPotentialImpl<Interaction>::interactionClassName() const
    {  return interaction().className(); }
-   #endif
 
    /**
    * Return underlying interaction object by const reference.
