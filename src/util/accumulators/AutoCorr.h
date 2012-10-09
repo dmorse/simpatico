@@ -116,6 +116,7 @@ namespace Util
       */
       Product autoCorrelation(int t) const;
 
+      #if 0
       /**
       * Pack array into a block of memory.
       *
@@ -138,6 +139,7 @@ namespace Util
       * \return required sizeof packed buffer for this AutoCorr, in bytes.
       */
       int packedSize() const;
+      #endif
 
       /**
       * Serial to or from an Archive.
@@ -390,6 +392,7 @@ namespace Util
       return autocorr;
    }
 
+   #if 0
    /*
    * Pack this AutoCorr into a memory block.
    */
@@ -455,6 +458,7 @@ namespace Util
       size = size + sizeof(Data) + 2*sizeof(int);
       return size;
    }
+   #endif
 
    /*
    * Serialize this AutoCorr.
