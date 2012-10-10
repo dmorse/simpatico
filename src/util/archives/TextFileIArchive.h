@@ -16,7 +16,7 @@
 
 #include <complex>
 #include <string>
-#include <iostream>
+#include <fstream>
 
 namespace Util
 {
@@ -43,28 +43,21 @@ namespace Util
       TextFileIArchive();
 
       /**
+      * Constructor.
+      *
+      * \param filename name of file to open for reading.
+      */
+      TextFileIArchive(std::string filename);
+
+      /**
       * Destructor.
       */
       virtual ~TextFileIArchive();
 
       /**
-      * Set the stream.
-      *
-      * \param out output stream to which to write.
+      * Get the underlying ifstream by reference.
       */
-      void setStream(std::istream& out);
-
-      /**
-      * Write one object.
-      */
-      template <typename T>
-      TextFileIArchive& operator & (T& data);
-
-      /**
-      * Write one object.
-      */
-      template <typename T>
-      TextFileIArchive& operator >> (T& data);
+      std::ifstream& file();
 
       /**
       * Unpack an item of type T.
@@ -91,10 +84,22 @@ namespace Util
       template <typename T> 
       void unpack(T* array, int m, int n);
 
+      /**
+      * Write one object.
+      */
+      template <typename T>
+      TextFileIArchive& operator & (T& data);
+
+      /**
+      * Write one object.
+      */
+      template <typename T>
+      TextFileIArchive& operator >> (T& data);
+
    private:
 
-      /// Pointer to output stream file.
-      std::istream* istreamPtr_;
+      /// Pointer to input text file.
+      std::ifstream* filePtr_;
 
       /// Archive version id.
       unsigned int  version_;
@@ -138,7 +143,7 @@ namespace Util
    */
    template <typename T>
    inline void TextFileIArchive::unpack(T& data)
-   {  *istreamPtr_ >> data; }
+   {  *filePtr_ >> data; }
 
    /*
    * Unpack a C array.
@@ -147,7 +152,7 @@ namespace Util
    inline void TextFileIArchive::unpack(T* array, int n)
    {
       for (int i=0; i < n; ++i) {
-         *istreamPtr_ >> array[i];
+         *filePtr_ >> array[i];
       }
    }
 
@@ -160,7 +165,7 @@ namespace Util
       int i, j;
       for (i = 0; i < m; ++i) {
          for (j = 0; j < n; ++j) {
-            *istreamPtr_ >> array[i*n + j];
+            *filePtr_ >> array[i*n + j];
          }
       }
    }
@@ -170,7 +175,7 @@ namespace Util
    */
    template <>
    inline void TextFileIArchive::unpack(char& data)
-   {   istreamPtr_->get(data); }
+   {   filePtr_->get(data); }
 
    /*
    * Unpack a C-array of characters.
@@ -178,7 +183,7 @@ namespace Util
    template <>
    inline void TextFileIArchive::unpack(char* array, int n)
    {
-      istreamPtr_->get(array, n+1,'\0');
+      filePtr_->get(array, n+1,'\0');
    }
 
    // Explicit serialize functions for primitive types

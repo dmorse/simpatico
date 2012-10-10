@@ -16,7 +16,7 @@
 
 #include <complex>
 #include <string>
-#include <iostream>
+#include <fstream>
 
 namespace Util
 {
@@ -43,16 +43,21 @@ namespace Util
       TextFileOArchive();
 
       /**
+      * Constructor.
+      *
+      * \param filename name of file to open for reading.
+      */
+      TextFileOArchive(std::string filename);
+
+      /**
       * Destructor.
       */
       virtual ~TextFileOArchive();
 
       /**
-      * Set the stream.
-      *
-      * \param out output stream to which to write.
+      * Get the underlying ifstream by reference.
       */
-      void setStream(std::ostream& out);
+      std::ofstream& file();
 
       /**
       * Write one object.
@@ -66,13 +71,16 @@ namespace Util
       template <typename T>
       TextFileOArchive& operator << (T& data);
 
+      /**
+      * Pack one object.
+      */
       template <typename T> 
       void pack(const T& data);
 
       /**
       * Pack a C array.
       *
-      * \param array 1D C array 
+      * \param array address of a C array (or first element)
       * \param n     number of elements
       */
       template <typename T> 
@@ -81,7 +89,7 @@ namespace Util
       /**
       * Pack a 2D C array.
       *
-      * \param array address of first element of 2D array
+      * \param array address of first row (or element) of 2D array
       * \param m     number of rows
       * \param n     number of columns
       */
@@ -91,7 +99,7 @@ namespace Util
    private:
 
       /// Pointer to output stream file.
-      std::ostream* ostreamPtr_;
+      std::ofstream* filePtr_;
 
       /// Archive version id.
       unsigned int  version_;
@@ -135,18 +143,18 @@ namespace Util
    */
    template <typename T>
    inline void TextFileOArchive::pack(const T& data)
-   {  *ostreamPtr_ << data << std::endl; }
+   {  *filePtr_ << data << std::endl; }
 
    /*
-   * Bitwise pack a single object of type double.
+   * Pack a single object of type double.
    */
    template <>
    inline void TextFileOArchive::pack(const double& data)
    {  
-      ostreamPtr_->setf(std::ios::scientific);
-      ostreamPtr_->width(25);
-      ostreamPtr_->precision(17);
-      *ostreamPtr_ << data << std::endl; 
+      filePtr_->setf(std::ios::scientific);
+      filePtr_->width(25);
+      filePtr_->precision(17);
+      *filePtr_ << data << std::endl; 
    }
 
    /*
@@ -156,13 +164,13 @@ namespace Util
    inline void TextFileOArchive::pack(const T* array, int n)
    {
       for (int i=0; i < n; ++i) {
-        *ostreamPtr_ << array[i] << "  ";
+        *filePtr_ << array[i] << "  ";
       }
-      *ostreamPtr_ << std::endl;
+      *filePtr_ << std::endl;
    }
 
    /*
-   * Bitwise pack a 2D C-array of objects of type T.
+   * Pack a 2D C-array of objects of type T.
    */
    template <typename T>
    inline void TextFileOArchive::pack(const T* array, int m, int n)
@@ -170,9 +178,9 @@ namespace Util
       int i, j;
       for (i=0; i < m; ++i) {
          for (j=0; j < n; ++j) {
-            *ostreamPtr_ << array[i*n + j] << "  ";
+            *filePtr_ << array[i*n + j] << "  ";
          }
-         *ostreamPtr_ << std::endl;
+         *filePtr_ << std::endl;
       }
    }
 

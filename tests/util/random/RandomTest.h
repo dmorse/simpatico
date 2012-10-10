@@ -174,13 +174,11 @@ public:
          x = random->uniformInt(0, 255);
          // std::cout << x << std::endl;
       }
-      std::ofstream out;
-      openOutputFile("binary", out);
       BinaryFileOArchive oar;
-      oar.setStream(out);
+      openOutputFile("binary", oar.file());
   
       oar << *random;
-      out.close();
+      oar.file().close();
 
       printEndl();
       std::cout << random->uniformInt(0,255) << std::endl;
@@ -196,10 +194,8 @@ public:
       //   x = random->uniformInt(0, 255);
       //}
 
-      std::ifstream in;
-      openInputFile("binary", in);
       BinaryFileIArchive iar;
-      iar.setStream(in);
+      openInputFile("binary", iar.file());
   
       iar >> *random;
 

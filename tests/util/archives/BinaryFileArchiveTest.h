@@ -27,29 +27,33 @@ public:
    {}
 
    void tearDown() {}
-   void testOArchiveConstructor();
+   void testOArchiveConstructor1();
+   void testOArchiveConstructor2();
    void testPack();
 
 };
 
 
-void BinaryFileArchiveTest::testOArchiveConstructor()
+void BinaryFileArchiveTest::testOArchiveConstructor1()
 {
    printMethod(TEST_FUNC);
-   std::ofstream out;
-   openOutputFile("binary", out);
    BinaryFileOArchive  v;
-   v.setStream(out);
-   out.close();
+   openOutputFile("binary", v.file());
+   v.file().close();
+} 
+
+void BinaryFileArchiveTest::testOArchiveConstructor2()
+{
+   printMethod(TEST_FUNC);
+   BinaryFileOArchive  v("dummy");
+   v.file().close();
 } 
 
 void BinaryFileArchiveTest::testPack()
 {
    printMethod(TEST_FUNC);
-   std::ofstream out;
-   openOutputFile("binary", out);
    BinaryFileOArchive  v;
-   v.setStream(out);
+   openOutputFile("binary", v.file());
 
    // Declare variables
    int i1, i2;
@@ -92,13 +96,11 @@ void BinaryFileArchiveTest::testPack()
    v << o1;
    v.pack(b1, 4);
    v.pack(m1[0], 2, 2);
-   out.close();
+   v.file().close();
 
    // Create IArchive u
-   std::ifstream in;
-   openInputFile("binary", in);
    BinaryFileIArchive u;
-   u.setStream(in);
+   openInputFile("binary", u.file());
 
    u >> i2;
    TEST_ASSERT(i1 == i2);
@@ -134,7 +136,8 @@ void BinaryFileArchiveTest::testPack()
 }
 
 TEST_BEGIN(BinaryFileArchiveTest)
-TEST_ADD(BinaryFileArchiveTest, testOArchiveConstructor)
+TEST_ADD(BinaryFileArchiveTest, testOArchiveConstructor1)
+TEST_ADD(BinaryFileArchiveTest, testOArchiveConstructor2)
 TEST_ADD(BinaryFileArchiveTest, testPack)
 TEST_END(BinaryFileArchiveTest)
 

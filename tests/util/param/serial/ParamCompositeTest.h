@@ -131,63 +131,7 @@ public:
       paramComposite_.writeParam(std::cout);
    }
 
-   void testReadSaveLoadWrite1() 
-   {
-      printMethod(TEST_FUNC);
-
-      openFile("in/ParamComposite");
-
-      AComposite original;
-      original.readParam(file());
-
-      // printEndl();
-      // original.writeParam(std::cout);
-
-      Serializable::OArchive oar;
-      std::ofstream out("out/save1.bin");
-      oar.setStream(out); 
-      original.save(oar);
-      out.close();
-
-      AComposite clone;
-      Serializable::IArchive iar;
-      std::ifstream inc("out/save1.bin");
-      iar.setStream(inc); 
-      clone.load(iar);
-
-      printEndl();
-      clone.writeParam(std::cout);
-
-   }
-
-   void testSerialize() 
-   {
-      printMethod(TEST_FUNC);
-
-      openFile("in/ParamComposite");
-
-      AComposite original;
-      original.readParam(file());
-
-      MemoryCounter  car;
-      car << original;
-      int size = car.size();
-
-      MemoryOArchive oar;
-      oar.allocate(size);
-      oar << original;
-
-      MemoryIArchive iar;
-      iar = oar;
-
-      AComposite clone;
-      iar >> clone;
-
-      printEndl();
-      clone.writeParam(std::cout);
-   }
-
-   void testAddSave() 
+   void testAddSaveLoadWrite() 
    {
       printMethod(TEST_FUNC);
 
@@ -233,14 +177,12 @@ public:
       printEndl();
 
       Serializable::OArchive oar;
-      std::ofstream out("out/save.bin");
-      oar.setStream(out); 
+      openOutputFile("out/save.bin", oar.file());
       paramComposite_.save(oar);
-      out.close();
+      oar.file().close();
 
       Serializable::IArchive iar;
-      std::ifstream in("out/save.bin");
-      iar.setStream(in); 
+      openInputFile("out/save.bin", iar.file());
 
       int     cValue0;
       long    cValue1;
@@ -290,7 +232,7 @@ public:
       clone.writeParam(std::cout);
    }
 
-   void testReadSaveLoadWrite() 
+   void testReadSaveLoadWrite1() 
    {
       printMethod(TEST_FUNC);
       int     value0;
@@ -330,10 +272,9 @@ public:
       paramComposite_.readEnd(file());
 
       Serializable::OArchive oar;
-      std::ofstream out("out/save2.bin");
-      oar.setStream(out); 
+      openOutputFile("out/save2.bin", oar.file());
       paramComposite_.save(oar);
-      out.close();
+      oar.file().close();
 
       int     cValue0;
       long    cValue1;
@@ -351,11 +292,10 @@ public:
       E cE;
       AManager cManager;
 
-      ParamComposite clone;
       Serializable::IArchive iar;
-      std::ifstream inc("out/save2.bin");
-      iar.setStream(inc); 
+      openInputFile("out/save2.bin", iar.file());
 
+      ParamComposite clone;
       clone.addBegin("ClassName");
       clone.loadParameter<int>(iar, "value0", cValue0);
       clone.loadParameter<long>(iar, "value1", cValue1);
@@ -375,9 +315,62 @@ public:
 
       printEndl();
       clone.writeParam(std::cout);
-      #if 0
-      #endif
    }
+
+   void testReadSaveLoadWrite2() 
+   {
+      printMethod(TEST_FUNC);
+
+      openFile("in/ParamComposite");
+
+      AComposite original;
+      original.readParam(file());
+
+      // printEndl();
+      // original.writeParam(std::cout);
+
+      Serializable::OArchive oar;
+      openOutputFile("out/save1.bin", oar.file());
+      original.save(oar);
+      oar.file().close();
+
+      AComposite clone;
+      Serializable::IArchive iar;
+      openInputFile("out/save1.bin", iar.file());
+      clone.load(iar);
+
+      printEndl();
+      clone.writeParam(std::cout);
+
+   }
+
+   void testMemoryArchiveSerialize() 
+   {
+      printMethod(TEST_FUNC);
+
+      openFile("in/ParamComposite");
+
+      AComposite original;
+      original.readParam(file());
+
+      MemoryCounter  car;
+      car << original;
+      int size = car.size();
+
+      MemoryOArchive oar;
+      oar.allocate(size);
+      oar << original;
+
+      MemoryIArchive iar;
+      iar = oar;
+
+      AComposite clone;
+      iar >> clone;
+
+      printEndl();
+      clone.writeParam(std::cout);
+   }
+
 
 };
 
@@ -385,10 +378,10 @@ TEST_BEGIN(ParamCompositeTest)
 TEST_ADD(ParamCompositeTest, testConstructor)
 TEST_ADD(ParamCompositeTest, testAddWrite)
 TEST_ADD(ParamCompositeTest, testReadWrite)
+TEST_ADD(ParamCompositeTest, testAddSaveLoadWrite)
 TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite1)
-TEST_ADD(ParamCompositeTest, testSerialize)
-TEST_ADD(ParamCompositeTest, testAddSave)
-TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite)
+TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite2)
+TEST_ADD(ParamCompositeTest, testMemoryArchiveSerialize)
 TEST_END(ParamCompositeTest)
 
 #endif // ifndef PARAM_COMPOSITE_TEST_H

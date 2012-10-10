@@ -43,6 +43,13 @@ namespace Util
       BinaryFileIArchive();
 
       /**
+      * Constructor.
+      *
+      * \param filename name of file to open for reading.
+      */
+      BinaryFileIArchive(std::string filename);
+
+      /**
       * Destructor.
       */
       virtual ~BinaryFileIArchive();
@@ -53,6 +60,11 @@ namespace Util
       * \param out output stream to which to write.
       */
       void setStream(std::istream& out);
+
+      /**
+      * Get the underlying ifstream by reference.
+      */
+      std::ifstream& file();
 
       /**
       * Write one object.
@@ -67,8 +79,7 @@ namespace Util
       BinaryFileIArchive& operator >> (T& data);
 
       /**
-      * Unpack one T object.
-      *
+      * Unpack a single T object.
       */
       template <typename T> 
       void unpack(T& data);
@@ -76,7 +87,7 @@ namespace Util
       /**
       * Unpack a C array.
       *
-      * \param array array of T objects
+      * \param array pointer to array (or first element)
       * \param n number of elements
       */
       template <typename T> 
@@ -85,9 +96,9 @@ namespace Util
       /**
       * Unpack a 2D C array.
       *
-      * \param array pointer to [0][0] element of 2D C-array 
-      * \param m     number of rows
-      * \param n     number of columns
+      * \param array pointer to first row
+      * \param m number of rows
+      * \param n number of columns
       */
       template <typename T> 
       void unpack(T* array, int m, int n);
@@ -95,7 +106,7 @@ namespace Util
    private:
 
       /// Pointer to output stream file.
-      std::istream* istreamPtr_;
+      std::ifstream* filePtr_;
 
       /// Archive version id.
       unsigned int  version_;
@@ -139,7 +150,7 @@ namespace Util
    */
    template <typename T>
    inline void BinaryFileIArchive::unpack(T& data)
-   {  istreamPtr_->read( (char*)(&data), sizeof(T) ); }
+   {  filePtr_->read( (char*)(&data), sizeof(T) ); }
 
    /*
    * Bitwise unpack a C-array of objects of type T.
@@ -148,20 +159,20 @@ namespace Util
    inline void BinaryFileIArchive::unpack(T* array, int n)
    {
       for (int i=0; i < n; ++i) {
-         istreamPtr_->read( (char*)(&array[i]), sizeof(T));
+         filePtr_->read( (char*)(&array[i]), sizeof(T));
       }
    }
 
    /*
-   * Bitwise pack a 2D C-array of objects of type T.
+   * Unpack a 2D C-array of objects of type T.
    */
    template <typename T>
-   void BinaryFileIArchive::unpack(T* array, int m, int n)
+   inline void BinaryFileIArchive::unpack(T* array, int m, int n)
    {
       int i, j;
       for (i = 0; i < m; ++i) {
          for (j = 0; j < n; ++j) {
-            istreamPtr_->read( (char*)(&array[i*n + j]), sizeof(T));
+            filePtr_->read( (char*)(&array[i*n + j]), sizeof(T));
          }
       }
    }

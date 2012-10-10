@@ -19,23 +19,29 @@ namespace Util
    * Constructor.
    */
    TextFileIArchive::TextFileIArchive()
-    : istreamPtr_(0),
+    : filePtr_(0),
       version_(0)
-   {}
+   {  filePtr_ = new std::ifstream(); }
+
+   /*
+   * Constructor.
+   */
+   TextFileIArchive::TextFileIArchive(std::string filename)
+    : filePtr_(0),
+      version_(0)
+   {  filePtr_ = new std::ifstream(filename.c_str()); }
 
    /*
    * Destructor.
    */
    TextFileIArchive::~TextFileIArchive()
-   {}  
+   {  delete filePtr_; }  
 
    /*
-   * Allocate a block of memory.
+   * Return underlying file by reference.
    */
-   void TextFileIArchive::setStream(std::istream& out)
-   { 
-      istreamPtr_ = &out;
-   }
+   std::ifstream& TextFileIArchive::file()
+   {  return *filePtr_; }
 
    /*
    * Load a std::string from TextFileIArchive.

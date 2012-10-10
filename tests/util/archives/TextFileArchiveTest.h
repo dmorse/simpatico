@@ -18,35 +18,36 @@ class TextFileArchiveTest : public UnitTest
 
 public:
 
-   TextFileArchiveTest()
-   {}
+   TextFileArchiveTest() {}
 
-   void setUp() 
-   {}
-
+   void setUp() {}
    void tearDown() {}
-   void testOArchiveConstructor();
+
+   void testOArchiveConstructor1();
+   void testOArchiveConstructor2();
    void testPack();
 
 };
 
-
-void TextFileArchiveTest::testOArchiveConstructor()
+void TextFileArchiveTest::testOArchiveConstructor1()
 {
    printMethod(TEST_FUNC);
-   std::ofstream out;
-   openOutputFile("text", out);
    TextFileOArchive  v;
-   v.setStream(out);
+   openOutputFile("text", v.file());
+} 
+
+void TextFileArchiveTest::testOArchiveConstructor2()
+{
+   printMethod(TEST_FUNC);
+   TextFileOArchive  v("dummy");
+   v.file().close();
 } 
 
 void TextFileArchiveTest::testPack()
 {
    printMethod(TEST_FUNC);
-   std::ofstream out;
-   openOutputFile("text", out);
    TextFileOArchive  v;
-   v.setStream(out);
+   openOutputFile("text", v.file());
 
    // Declare variables
    int i1, i2;
@@ -88,12 +89,10 @@ void TextFileArchiveTest::testPack()
    v << o1;
    v.pack(b1, 4);
    v.pack(m1[0], 2, 2);
-   out.close();
+   v.file().close();
 
-   std::ifstream in;
-   openInputFile("text", in);
    TextFileIArchive u;
-   u.setStream(in);
+   openInputFile("text", u.file());
 
    u >> i2;
    TEST_ASSERT(i1 == i2);
@@ -130,7 +129,8 @@ void TextFileArchiveTest::testPack()
 }
 
 TEST_BEGIN(TextFileArchiveTest)
-TEST_ADD(TextFileArchiveTest, testOArchiveConstructor)
+TEST_ADD(TextFileArchiveTest, testOArchiveConstructor1)
+TEST_ADD(TextFileArchiveTest, testOArchiveConstructor2)
 TEST_ADD(TextFileArchiveTest, testPack)
 TEST_END(TextFileArchiveTest)
 

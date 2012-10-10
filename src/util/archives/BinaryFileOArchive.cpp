@@ -17,23 +17,29 @@ namespace Util
    * Constructor.
    */
    BinaryFileOArchive::BinaryFileOArchive()
-    : ostreamPtr_(0),
+    : filePtr_(0),
       version_(0)
-   {}
+   {  filePtr_ = new std::ofstream(); }
+
+   /*
+   * Constructor.
+   */
+   BinaryFileOArchive::BinaryFileOArchive(std::string filename)
+    : filePtr_(0),
+      version_(0)
+   {  filePtr_ = new std::ofstream(filename.c_str()); }
 
    /*
    * Destructor.
    */
    BinaryFileOArchive::~BinaryFileOArchive()
-   {}  
+   {  delete filePtr_; }  
 
    /*
-   * Allocate a block of memory.
+   * Return underlying file by reference.
    */
-   void BinaryFileOArchive::setStream(std::ostream& out)
-   { 
-      ostreamPtr_ = &out;
-   }
+   std::ofstream& BinaryFileOArchive::file()
+   {  return *filePtr_; }
 
 }
 #endif

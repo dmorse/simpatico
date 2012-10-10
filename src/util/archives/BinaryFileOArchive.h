@@ -43,16 +43,21 @@ namespace Util
       BinaryFileOArchive();
 
       /**
+      * Constructor.
+      *
+      * \param filename name of file to open for reading.
+      */
+      BinaryFileOArchive(std::string filename);
+
+      /**
       * Destructor.
       */
       virtual ~BinaryFileOArchive();
 
       /**
-      * Set the stream.
-      *
-      * \param out output stream to which to write.
+      * Get the underlying ifstream by reference.
       */
-      void setStream(std::ostream& out);
+      std::ofstream& file();
 
       /**
       * Save one object.
@@ -93,8 +98,8 @@ namespace Util
 
    private:
 
-      /// Pointer to output stream file.
-      std::ostream* ostreamPtr_;
+      /// Pointer to output file.
+      std::ofstream* filePtr_;
 
       /// Archive version id.
       unsigned int  version_;
@@ -138,7 +143,7 @@ namespace Util
    */
    template <typename T>
    inline void BinaryFileOArchive::pack(const T& data)
-   {  ostreamPtr_->write( (char*)(&data), sizeof(T)); }
+   {  filePtr_->write( (char*)(&data), sizeof(T)); }
 
    /*
    * Bitwise pack a C-array of objects of type T.
@@ -147,7 +152,7 @@ namespace Util
    inline void BinaryFileOArchive::pack(const T* array, int n)
    {
       for (int i=0; i < n; ++i) {
-         ostreamPtr_->write( (char*)(&array[i]), sizeof(T));
+         filePtr_->write( (char*)(&array[i]), sizeof(T));
       }
    }
 
@@ -160,7 +165,7 @@ namespace Util
       int i, j;
       for (i=0; i < m; ++i) {
          for (j=0; j < n; ++j) {
-            ostreamPtr_->write( (char*)(&array[i*n + j]), sizeof(T));
+            filePtr_->write( (char*)(&array[i*n + j]), sizeof(T));
          }
       }
    }
