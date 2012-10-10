@@ -670,9 +670,8 @@ namespace McMd
       out << "iStep = " << iStep_; 
       out.close();
 
-      fileMaster().openRestartOFile(filename, ".rst", out);
       Serializable::OArchive ar;
-      ar.setStream(out);
+      fileMaster().openRestartOFile(filename, ".rst", ar.file());
 
       ar & random();
       //ar & system();
@@ -680,7 +679,7 @@ namespace McMd
       system().mdIntegrator().save(ar);
       ar & iStep_;
       mdDiagnosticManagerPtr_->save(ar);
-      out.close();
+      ar.file().close();
    }
 
    void MdSimulation::readRestart(const std::string& filename)
@@ -700,9 +699,8 @@ namespace McMd
       in.close();
 
       // Open restart *.rst file and associate with an archive
-      fileMaster().openRestartIFile(filename, ".rst", in);
       Serializable::IArchive ar;
-      ar.setStream(in);
+      fileMaster().openRestartIFile(filename, ".rst", ar.file());
 
       // Load internal state from restart (*.rst) file.
       ar & random();
@@ -710,7 +708,7 @@ namespace McMd
       system().mdIntegrator().load(ar);
       ar & iStep_;
       mdDiagnosticManagerPtr_->load(ar);
-      in.close();
+      ar.file().close();
 
       // Read command (*.cmd) file
       std::string commandFileName = filename + ".cmd";

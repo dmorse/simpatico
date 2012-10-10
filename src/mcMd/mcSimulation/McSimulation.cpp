@@ -719,15 +719,14 @@ namespace McMd
       writeParam(out);
       out.close();
 
-      fileMaster().openRestartOFile(filename, ".rst", out);
       Serializable::OArchive ar;
-      ar.setStream(out);
+      fileMaster().openRestartOFile(filename, ".rst", ar.file());
       ar & random();
       ar & system();
       ar & iStep_;
       mcMoveManagerPtr_->save(ar);
       mcDiagnosticManagerPtr_->save(ar);
-      out.close();
+      ar.file().close();
    }
 
    void McSimulation::readRestart(const std::string& filename)
@@ -746,9 +745,8 @@ namespace McMd
       in.close();
 
       // Open restart (*.rst) file and associate with an archive
-      fileMaster().openRestartIFile(filename, ".rst", in);
       Serializable::IArchive ar;
-      ar.setStream(in);
+      fileMaster().openRestartIFile(filename, ".rst", ar.file());
 
       // Load state from restart file
       ar & random();
@@ -756,13 +754,10 @@ namespace McMd
       ar & iStep_;
       mcMoveManagerPtr_->load(ar);
       mcDiagnosticManagerPtr_->load(ar);
-      in.close();
+      ar.file().close();
 
       std::string commandFileName = filename + ".cmd";
       fileMaster().setCommandFileName(commandFileName);
-      //fileMaster().openParamIFile(filename, ".cmd", in);
-      //readCommands(in);
-      //in.close();
    }
 
    /*
