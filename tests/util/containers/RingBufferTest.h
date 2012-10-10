@@ -92,6 +92,7 @@ void RingBufferTest::testSubscript2()
    TEST_ASSERT(v.size() == 3);
 } 
 
+#if 0
 void RingBufferTest::testPack1()
 {
    printMethod(TEST_FUNC);
@@ -166,8 +167,7 @@ void RingBufferTest::testPack2()
    TEST_ASSERT(u.capacity() == 3);
    TEST_ASSERT(u.size() == 2);
 }
-
-
+#endif
 
 void RingBufferTest::testSerialize1()
 {
@@ -281,8 +281,8 @@ TEST_ADD(RingBufferTest, testConstructor)
 TEST_ADD(RingBufferTest, testAllocate)
 TEST_ADD(RingBufferTest, testSubscript1)
 TEST_ADD(RingBufferTest, testSubscript2)
-TEST_ADD(RingBufferTest, testPack1)
-TEST_ADD(RingBufferTest, testPack2)
+//TEST_ADD(RingBufferTest, testPack1)
+//TEST_ADD(RingBufferTest, testPack2)
 TEST_ADD(RingBufferTest, testSerialize1)
 TEST_ADD(RingBufferTest, testSerialize2)
 TEST_END(RingBufferTest)
