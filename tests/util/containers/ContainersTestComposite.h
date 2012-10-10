@@ -22,8 +22,6 @@
 #include "FMatrixTest.h"
 #include "DRaggedMatrixTest.h"
 
-#include "PackedDataTest.h"
-
 #include "ListTest.h"
 
 TEST_COMPOSITE_BEGIN(ContainersTestComposite)
@@ -48,8 +46,6 @@ TEST_COMPOSITE_ADD_UNIT(FMatrixTest)
 TEST_COMPOSITE_ADD_UNIT(DRaggedMatrixTest)
 
 TEST_COMPOSITE_ADD_UNIT(ListTest)
-
-TEST_COMPOSITE_ADD_UNIT(PackedDataTest)
 
 TEST_COMPOSITE_END
 
