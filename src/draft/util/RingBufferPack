@@ -302,6 +302,102 @@ namespace Util
       return data_[i];
    }
 
+   #if 0 
+   /*
+   * Pack this RingBuffer into a block of memory.
+   */
+   template <typename Data>
+   void RingBuffer<Data>::pack(char*& current, char* end) const
+   {
+      if (current + packedSize() > end) {
+         UTIL_THROW("Attempted write past end of send buffer");
+      }
+    
+      int* capacityPtr = (int*)current;
+      *capacityPtr = capacity_;
+
+      int* sizePtr = (int*)(capacityPtr+1);
+      *sizePtr = size_;
+
+      int* lastPtr = (int*)(sizePtr+1);
+      *lastPtr = last_;
+
+      Data* ptr = (Data *)(lastPtr + 1);
+      for (int i = 0; i < capacity_; ++i) {
+         *(ptr+i)=data_[i];
+      }
+      current = (char*)(ptr + capacity_);
+   }
+
+   /*
+   * Unpack a RingBuffer from a block of memory.
+   */
+   template <typename Data>
+   void RingBuffer<Data>::unpack(char*& current, char* end)
+   {
+      if (current + packedSize() > end) {
+         UTIL_THROW("Attempted read past end of recv buffer");
+      }
+
+      // Read capacity of RingBuffer being received.
+      int* capacityPtr = (int*)current;
+      capacity_ = *capacityPtr;
+      
+      int capacityOther = *capacityPtr;
+      if (capacity_ != capacityOther) {
+         UTIL_THROW("Inconsistent RingBuffer capacities");
+      } 
+
+      int* sizePtr = (int*)(capacityPtr+1);
+      size_ = *sizePtr;
+
+      int* lastPtr = (int*)(sizePtr+1);
+      last_ = *lastPtr;
+
+      Data* ptr = (Data *)(lastPtr + 1);
+      for (int i = 0; i < capacity_; ++i) {
+         data_[i] = *(ptr+i);
+      }
+      current = (char*)(ptr + capacity_);
+   }
+
+   /*
+   * Pack this RingBuffer into a PackedData object.
+   */
+   template <class Data>
+   void RingBuffer<Data>::pack(PackedData& buffer) const 
+   {
+      buffer.pack(capacity_);
+      buffer.pack(size_);
+      buffer.pack(last_);
+      buffer.pack(data_, capacity_);
+   }
+
+   /*
+   * Unpack this RingBuffer from a PackedData object.
+   */
+   template <class Data>
+   void RingBuffer<Data>::unpack(PackedData& buffer)
+   {
+      int capacity;
+      buffer.unpack(capacity);
+      if (capacity_ != capacity) {
+         UTIL_THROW("Inconsistent RingBuffer capacities");
+      } 
+      buffer.unpack(size_);
+      buffer.unpack(last_);
+      buffer.unpack(data_, capacity_);
+   }
+
+   template <typename Data>
+   int RingBuffer<Data>::packedSize() const
+   {
+      int size;
+      size = capacity_*sizeof(Data) + 3*sizeof(int);
+      return size;
+   }
+   #endif
+
    /*
    * Serialize a RingBuffer to/from an Archive.
    */

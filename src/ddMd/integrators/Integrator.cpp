@@ -183,8 +183,7 @@ namespace DdMd
       out << "time / nStep         " << time/double(iStep_) 
           << " sec" << std::endl;
 
-      double ratio = double(nProc)/double(iStep_*nAtomTot);
-
+      // Save contributions to total time
       double diagnosticT = timer().time(DIAGNOSTIC);
       double integrate1T = timer().time(INTEGRATE1);
       double checkT =  timer().time(CHECK);
@@ -197,6 +196,9 @@ namespace DdMd
       double pairForceT = timer().time(PAIR_FORCE);
       double bondForceT = timer().time(BOND_FORCE);
       double integrate2T = timer().time(INTEGRATE2);
+
+      // Conversion factor from time to (time per step)/(atoms per processor)
+      double ratio = double(nProc)/(double(iStep_)*double(nAtomTot));
 
       out << std::endl;
       out << "time * nproc / (nStep*nAtom):" << std::endl;

@@ -5,7 +5,6 @@
 #include <test/UnitTestRunner.h>
 
 #include <util/containers/DArray.h>
-#include <util/containers/PackedData.h>
 #include <util/archives/MemoryOArchive.h>
 #include <util/archives/MemoryIArchive.h>
 #include <util/archives/MemoryCounter.h>
@@ -165,6 +164,7 @@ void DArrayTest::testBaseClassReference()
    TEST_ASSERT(real(u[2]) == 30 );
 }
 
+#if 0
 void DArrayTest::testPack1()
 {
    printMethod(TEST_FUNC);
@@ -240,7 +240,7 @@ void DArrayTest::testPack2()
    TEST_ASSERT(u.capacity() == 3);
 
 }
-
+#endif
  
 void DArrayTest::testSerialize1()
 {
@@ -380,8 +380,8 @@ TEST_ADD(DArrayTest, testIterator)
 TEST_ADD(DArrayTest, testCopyConstructor)
 TEST_ADD(DArrayTest, testAssignment)
 TEST_ADD(DArrayTest, testBaseClassReference)
-TEST_ADD(DArrayTest, testPack1)
-TEST_ADD(DArrayTest, testPack2)
+//TEST_ADD(DArrayTest, testPack1)
+//TEST_ADD(DArrayTest, testPack2)
 TEST_ADD(DArrayTest, testSerialize1)
 TEST_ADD(DArrayTest, testSerialize2)
 TEST_END(DArrayTest)
