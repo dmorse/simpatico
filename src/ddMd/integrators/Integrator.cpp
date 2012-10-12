@@ -198,54 +198,91 @@ namespace DdMd
       double integrate2T = timer().time(INTEGRATE2);
 
       // Conversion factor from time to (time per step)/(atoms per processor)
-      double ratio = double(nProc)/(double(iStep_)*double(nAtomTot));
+      double iStepInv = 1.0/double(iStep_); 
+      double ratio    = double(nProc)/(double(iStep_)*double(nAtomTot));
 
       out << std::endl;
-      out << "time * nproc / (nStep*nAtom):" << std::endl;
-      out << "Total                " << Dbl(time*ratio, 12, 6)
-          << " sec   " << std::endl;
-      out << "Diagnostics          " << Dbl(diagnosticT*ratio, 12, 6)
-          << " sec   " << Dbl(diagnosticT/time, 12, 6, true) << std::endl;
-      out << "Integrate1           " << Dbl(integrate1T*ratio, 12, 6) 
-          << " sec   " << Dbl(integrate1T/time, 12, 6, true) << std::endl;
-      out << "Check                " << Dbl(checkT*ratio, 12, 6)
-          << " sec   " << Dbl(checkT/time, 12, 6, true) << std::endl;
+      out << "                     "
+          << " T = time/nStep      " 
+          << " T*nProc/nAtom       " 
+          << " percentage " 
+          << std::endl;
+      out << "                     "
+          << " ---------------     " 
+          << " ---------------     " 
+          << " ---------- " 
+          << std::endl;
+      out << "Total                " 
+          << Dbl(time*iStepInv, 12, 6) << " sec     " 
+          << Dbl(time*ratio, 12, 6)    << " sec   " 
+          << "      .... " 
+          << std::endl;
+      out << "Diagnostics          " 
+          << Dbl(diagnosticT*iStepInv, 12, 6) << " sec     " 
+          << Dbl(diagnosticT*ratio, 12, 6)    << " sec   "
+          << Dbl(diagnosticT*100.0/time, 12, 6, true) << std::endl;
+      out << "Integrate1           " 
+          << Dbl(integrate1T*iStepInv, 12, 6) << " sec     " 
+          << Dbl(integrate1T*ratio, 12, 6)    << " sec   " 
+          << Dbl(integrate1T*100.0/time, 12, 6, true) << std::endl;
+      out << "Check                " 
+          << Dbl(checkT*iStepInv, 12, 6) << " sec     " 
+          << Dbl(checkT*ratio, 12, 6)    << " sec   " 
+          << Dbl(checkT*100.0/time, 12, 6, true) << std::endl;
       if (!UTIL_ORTHOGONAL) {
-         out << "Transform (forward)  " << Dbl(transformFT*ratio, 12, 6)
-             << " sec   " << Dbl(transformFT/time, 12, 6, true) << std::endl;
+         out << "Transform (forward)  " 
+             << Dbl(transformFT*iStepInv, 12, 6) << " sec     " 
+             << Dbl(transformFT*ratio, 12, 6)    << " sec   " 
+             << Dbl(transformFT*100.0/time, 12, 6, true) << std::endl;
       }
-      out << "Exchange             " << Dbl(exchangeT*ratio, 12, 6)
-          << " sec   " << Dbl(exchangeT/time, 12, 6, true) << std::endl;
-      out << "CellList             " << Dbl(cellListT*ratio, 12, 6)
-          << " sec   " << Dbl(cellListT/time, 12, 6, true) << std::endl;
+      out << "Exchange             " 
+          << Dbl(exchangeT*iStepInv, 12, 6) << " sec     " 
+          << Dbl(exchangeT*ratio, 12, 6)    << " sec   " 
+          << Dbl(exchangeT*100.0/time, 12, 6, true) << std::endl;
+      out << "CellList             " 
+          << Dbl(cellListT*iStepInv, 12, 6) << " sec     " 
+          << Dbl(cellListT*ratio, 12, 6)    << " sec   " 
+          << Dbl(cellListT*100.0/time, 12, 6, true) << std::endl;
       if (!UTIL_ORTHOGONAL) {
-         out << "Transform (reverse)  " << Dbl(transformRT*ratio, 12, 6)
-             << " sec   " << Dbl(transformRT/time, 12, 6, true) << std::endl;
+         out << "Transform (reverse)  " 
+             << Dbl(transformRT*iStepInv, 12, 6) << " sec     " 
+             << Dbl(transformRT*ratio, 12, 6)    << " sec   " 
+             << Dbl(transformRT*100.0/time, 12, 6, true) << std::endl;
       }
-      out << "PairList             " << Dbl(pairListT*ratio, 12, 6)
-          << " sec   " << Dbl(pairListT/time, 12, 6, true) << std::endl;
-      out << "Update               " << Dbl(updateT*ratio, 12, 6)
-          << " sec   " << Dbl(updateT/time, 12, 6, true) << std::endl;
-      out << "Pair Forces          " << Dbl(pairForceT*ratio, 12, 6)
-          << " sec   " << Dbl(pairForceT/time, 12 , 6, true) << std::endl;
-      out << "Bond Forces          " << Dbl(bondForceT*ratio, 12, 6)
-          << " sec   " << Dbl(bondForceT/time, 12 , 6, true) << std::endl;
-      out << "Integrate2           " << Dbl(integrate2T*ratio, 12, 6) 
-          << " sec   " << Dbl(integrate2T/time, 12, 6, true) << std::endl;
+      out << "PairList             " 
+          << Dbl(pairListT*iStepInv, 12, 6) << " sec     " 
+          << Dbl(pairListT*ratio, 12, 6)    << " sec   " 
+          << Dbl(pairListT*100.0/time, 12, 6, true) << std::endl;
+      out << "Update               " 
+          << Dbl(updateT*iStepInv, 12, 6) << " sec     " 
+          << Dbl(updateT*ratio, 12, 6)    << " sec   " 
+          << Dbl(updateT*100.0/time, 12, 6, true) << std::endl;
+      out << "Pair Forces          " 
+          << Dbl(pairForceT*iStepInv, 12, 6) << " sec     " 
+          << Dbl(pairForceT*ratio, 12, 6)    << " sec   " 
+          << Dbl(pairForceT*100.0/time, 12 , 6, true) << std::endl;
+      out << "Bond Forces          " 
+          << Dbl(bondForceT*iStepInv, 12, 6) << " sec     " 
+          << Dbl(bondForceT*ratio, 12, 6)    << " sec   " 
+          << Dbl(bondForceT*100.0/time, 12 , 6, true) << std::endl;
+      out << "Integrate2           " 
+          << Dbl(integrate2T*iStepInv, 12, 6) << " sec     " 
+          << Dbl(integrate2T*ratio, 12, 6)    << " sec   " 
+          << Dbl(integrate2T*100.0/time, 12, 6, true) << std::endl;
       out << std::endl;
 
       int buildCounter = pairPotential().pairList().buildCounter(); 
       out << "buildCounter             " 
-                  << Int(buildCounter, 10)
-                  << std::endl;
+          << Int(buildCounter, 10)
+          << std::endl;
       out << "steps / build            "
-                  << double(iStep_)/double(buildCounter)
-                  << std::endl;
+          << double(iStep_)/double(buildCounter)
+          << std::endl;
       out << std::endl;
 
    }
 
-   /**
+   /*
    * Clear timing, dynamical state, statistics, and diagnostic accumulators.
    */
    void Integrator::clear()
