@@ -172,7 +172,6 @@ public:
 
    }
 
-   #if 0
    void testSaveLoad() {
       printMethod(TEST_FUNC);
 
@@ -195,8 +194,14 @@ public:
       TEST_ASSERT(eq(interaction_.sigma(1, 0), clone.sigma(1,0)));
       TEST_ASSERT(eq(interaction_.sigma(0, 1), clone.sigma(0,1)));
       TEST_ASSERT(eq(interaction_.sigma(1, 1), clone.sigma(1,1)));
+
+      TEST_ASSERT(eq(interaction_.energy(0.95, 0, 1), clone.energy(0.95, 0, 1)));
+      TEST_ASSERT(eq(interaction_.forceOverR(0.95, 0, 1), clone.forceOverR(0.95, 0, 1)));
+      TEST_ASSERT(eq(interaction_.energy(1.25, 0, 1), clone.energy(1.25, 0, 1)));
+      TEST_ASSERT(eq(interaction_.forceOverR(1.25, 0, 1), clone.forceOverR(1.25, 0, 1)));
+      TEST_ASSERT(eq(interaction_.energy(1.26, 0, 1), clone.energy(1.26, 0, 1)));
+      TEST_ASSERT(eq(interaction_.forceOverR(1.26, 0, 1), clone.forceOverR(1.26, 0, 1)));
    }
-   #endif
 
 };
 
@@ -207,8 +212,7 @@ TEST_ADD(LJPairTest, testEnergy1)
 TEST_ADD(LJPairTest, testForceOverR)
 TEST_ADD(LJPairTest, testGetSet)
 TEST_ADD(LJPairTest, testModify)
-//TEST_ADD(LJPairTest, testSaveLoad)
+TEST_ADD(LJPairTest, testSaveLoad)
 TEST_END(LJPairTest)
-
 
 #endif
