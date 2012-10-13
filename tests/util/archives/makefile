@@ -13,6 +13,7 @@ all: $(tests_util_archives_OBJS) MpiTest
 
 clean:
 	rm -f $(tests_util_archives_OBJS) MpiTest $(tests_util_archives_OBJS:.o=.d)
+	rm -f text binary dummy
 
 MpiTest: $(util_LIB) $(tests_util_archives_OBJS)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o MpiTest MpiTest.o \
@@ -23,6 +24,7 @@ all: $(tests_util_archives_OBJS) Test
 
 clean:
 	rm -f $(tests_util_archives_OBJS) Test $(tests_util_archives_OBJS:.o=.d)
+	rm -f text binary dummy
 
 Test: $(util_LIB) $(tests_util_archives_OBJS)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \

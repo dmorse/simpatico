@@ -55,25 +55,18 @@ namespace Util
       virtual ~BinaryFileIArchive();
 
       /**
-      * Set the stream.
-      *
-      * \param out output stream to which to write.
-      */
-      void setStream(std::istream& out);
-
-      /**
       * Get the underlying ifstream by reference.
       */
       std::ifstream& file();
 
       /**
-      * Write one object.
+      * Read one object.
       */
       template <typename T>
       BinaryFileIArchive& operator & (T& data);
 
       /**
-      * Write one object.
+      * Read one object.
       */
       template <typename T>
       BinaryFileIArchive& operator >> (T& data);
@@ -121,10 +114,10 @@ namespace Util
    inline bool BinaryFileIArchive::is_loading()
    {  return true; }
 
-   // Inline non-static methods
+   // Inline non-static method templates
 
    /*
-   * Write one object.
+   * Read one object.
    */
    template <typename T>
    inline BinaryFileIArchive& BinaryFileIArchive::operator & (T& data)
@@ -134,7 +127,7 @@ namespace Util
    }
 
    /*
-   * Write one object.
+   * Read one object.
    */
    template <typename T>
    inline BinaryFileIArchive& BinaryFileIArchive::operator >> (T& data)
@@ -146,14 +139,14 @@ namespace Util
    // Method templates
 
    /*
-   * Bitwise unpack a single object of type T.
+   * Load a single object of type T.
    */
    template <typename T>
    inline void BinaryFileIArchive::unpack(T& data)
    {  filePtr_->read( (char*)(&data), sizeof(T) ); }
 
    /*
-   * Bitwise unpack a C-array of objects of type T.
+   * Load a C-array of objects of type T.
    */
    template <typename T>
    inline void BinaryFileIArchive::unpack(T* array, int n)
@@ -179,7 +172,7 @@ namespace Util
 
    // Explicit serialize functions for primitive types
 
-   /**
+   /*
    * Load a bool from a BinaryFileIArchive.
    */
    template <>
@@ -187,7 +180,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a char from a BinaryFileIArchive.
    */
    template <>
@@ -195,23 +188,23 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
-   * Save an unsigned int from a BinaryFileIArchive.
+   /*
+   * Load an unsigned int from a BinaryFileIArchive.
    */
    template <>
    inline void serialize(BinaryFileIArchive& ar, unsigned int& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
-   * Save an int from a BinaryFileIArchive.
+   /*
+   * Load an int from a BinaryFileIArchive.
    */
    template <>
    inline void serialize(BinaryFileIArchive& ar, int& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load an unsigned long int from a BinaryFileIArchive.
    */
    template <>
@@ -219,7 +212,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a long int from a BinaryFileIArchive.
    */
    template <>
@@ -227,7 +220,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a float from a BinaryFileIArchive.
    */
    template <>
@@ -235,17 +228,17 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
-   * Save an double from a BinaryFileIArchive.
+   /*
+   * Load a double from a BinaryFileIArchive.
    */
    template <>
    inline void serialize(BinaryFileIArchive& ar, double& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   // Explicit serialize functions for primitive types
+   // Explicit serialize functions for std library types
 
-   /**
+   /*
    * Load a std::complex<float> from a BinaryFileIArchive.
    */
    template <>
@@ -254,7 +247,7 @@ namespace Util
                   const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a std::complex<double> from a BinaryFileIArchive.
    */
    template <>
@@ -263,16 +256,16 @@ namespace Util
                   const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a std::string from a BinaryFileIArchive.
    */
    template <>
    void serialize(BinaryFileIArchive& ar, std::string& data, 
                   const unsigned int version);
 
-   // Explicit serialize functions for namespace Util
+   // Explicit serialize functions for namespace Util types
 
-   /**
+   /*
    * Load a Util::Vector from a BinaryFileIArchive.
    */
    template <>
@@ -280,7 +273,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); } 
 
-   /**
+   /*
    * Load a Util::IntVector from a BinaryFileIArchive.
    */
    template <>

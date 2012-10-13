@@ -22,7 +22,7 @@ namespace Util
 {
 
    /**
-   * Saving archive for binary ostream.
+   * Saving / output archive for binary ostream.
    *
    * \ingroup Archive_Module
    */
@@ -236,7 +236,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   // Explicit serialize functions for primitive types
+   // Explicit serialize functions for std library types
 
    /*
    * Save a std::complex<float> to a BinaryFileOArchive.

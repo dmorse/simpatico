@@ -60,34 +60,36 @@ namespace Util
       std::ofstream& file();
 
       /**
-      * Write one object.
+      * Save one T object to this archive.
       */
       template <typename T>
       TextFileOArchive& operator & (T& data);
 
       /**
-      * Write one object.
+      * Save one T object to this archive.
       */
       template <typename T>
       TextFileOArchive& operator << (T& data);
 
       /**
-      * Pack one object.
+      * Save one T object to this archive.
+      *
+      * \param data object to be written to file
       */
       template <typename T> 
       void pack(const T& data);
 
       /**
-      * Pack a C array.
+      * Save a C-array of T objects to this archive.
       *
-      * \param array address of a C array (or first element)
+      * \param array C-array of T objects
       * \param n     number of elements
       */
       template <typename T> 
       void pack(const T* array, int n);
 
       /**
-      * Pack a 2D C array.
+      * Save a 2D C array to this archive.
       *
       * \param array address of first row (or element) of 2D array
       * \param m     number of rows
@@ -114,10 +116,10 @@ namespace Util
    inline bool TextFileOArchive::is_loading()
    {  return false; }
 
-   // Inline non-static methods
+   // Inline non-static method templates.
 
    /*
-   * Write one object.
+   * Save one object.
    */
    template <typename T>
    inline TextFileOArchive& TextFileOArchive::operator & (T& data)
@@ -127,7 +129,7 @@ namespace Util
    }
 
    /*
-   * Write one object.
+   * Save one object to this archive.
    */
    template <typename T>
    inline TextFileOArchive& TextFileOArchive::operator << (T& data)
@@ -139,14 +141,14 @@ namespace Util
    // Method templates
 
    /*
-   * Pack a single object of type T.
+   * Save a single object of type T.
    */
    template <typename T>
    inline void TextFileOArchive::pack(const T& data)
    {  *filePtr_ << data << std::endl; }
 
    /*
-   * Pack a single object of type double.
+   * Save a single object of type double.
    */
    template <>
    inline void TextFileOArchive::pack(const double& data)
@@ -158,7 +160,7 @@ namespace Util
    }
 
    /*
-   * Write a C-array of objects of type T.
+   * Save a C-array of objects of type T.
    */
    template <typename T>
    inline void TextFileOArchive::pack(const T* array, int n)
@@ -184,9 +186,24 @@ namespace Util
       }
    }
 
+   /*
+   * Save a C-array of double values.
+   */
+   template <>
+   inline void TextFileOArchive::pack(const double* array, int n)
+   {
+      filePtr_->setf(std::ios::scientific);
+      filePtr_->precision(17);
+      for (int i=0; i < n; ++i) {
+        filePtr_->width(25);
+        *filePtr_ << array[i] << "  ";
+      }
+      *filePtr_ << std::endl;
+   }
+
    // Explicit serialize functions for primitive types
 
-   /**
+   /*
    * Save a bool to a TextFileOArchive.
    */
    template <>
@@ -194,7 +211,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a char to a TextFileOArchive.
    */
    template <>
@@ -202,7 +219,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an unsigned int to a TextFileOArchive.
    */
    template <>
@@ -210,7 +227,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an int to a TextFileOArchive.
    */
    template <>
@@ -218,7 +235,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an unsigned long int to a TextFileOArchive.
    */
    template <>
@@ -226,7 +243,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a long int to a TextFileOArchive.
    */
    template <>
@@ -234,7 +251,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a float to a TextFileOArchive.
    */
    template <>
@@ -242,7 +259,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an double to a TextFileOArchive.
    */
    template <>
@@ -252,7 +269,7 @@ namespace Util
 
    // Explicit serialize functions for primitive types
 
-   /**
+   /*
    * Save a std::complex<float> to a TextFileOArchive.
    */
    template <>
@@ -261,7 +278,7 @@ namespace Util
                   const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a std::complex<double> to a TextFileOArchive.
    */
    template <>
@@ -270,7 +287,7 @@ namespace Util
                   const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a std::string to a TextFileOArchive.
    */
    template <>
@@ -284,7 +301,7 @@ namespace Util
 
    // Explicit serialize functions for namespace Util
 
-   /**
+   /*
    * Save a Util::Vector to a TextFileOArchive.
    */
    template <>
@@ -292,7 +309,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); } 
 
-   /**
+   /*
    * Save a Util::IntVector to a TextFileOArchive.
    */
    template <>
