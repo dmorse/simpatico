@@ -3,7 +3,7 @@
 
 #include <test/CompositeTestRunner.h>
 
-#include "pair/LJPairTest.h"
+#include "pair/PairTestComposite.h"
 #include "bond/HarmonicBondTest.h"
 #include "bond/HarmonicL0BondTest.h"
 #ifdef MCMC_DIHEDRAL
@@ -11,7 +11,7 @@
 #endif
 
 TEST_COMPOSITE_BEGIN(InteractionTestComposite)
-TEST_COMPOSITE_ADD_UNIT(LJPairTest);
+addChild(new PairTestComposite, "pair/");
 TEST_COMPOSITE_ADD_UNIT(HarmonicBondTest);
 TEST_COMPOSITE_ADD_UNIT(HarmonicL0BondTest);
 #ifdef MCMC_DIHEDRAL
