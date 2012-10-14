@@ -341,7 +341,7 @@ namespace McMd
       /// Grant access to unit test class.
       friend class ::CellListTest;
 
-   }; // end class CellList
+   }; 
 
 
    // Public inline method definitions:

@@ -57,7 +57,21 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
-      /// \name Energy, Force, Stress Interactions
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
+      /// \name Interaction interface
       //@{
 
       /**
@@ -102,6 +116,20 @@ namespace McMd
       virtual std::string interactionClassName() const;
 
       /**
+      * Return reference to underlying pair interaction.
+      */
+      Interaction& interaction();
+
+      /**
+      * Return reference to underlying pair interaction.
+      */
+      const Interaction& interaction() const;
+
+      //@}
+      /// \name System energy and stress calculators
+      //@{
+
+      /**
       * Calculate the nonbonded pair energy for one Atom.
       *
       * \param  atom Atom object of interest
@@ -144,16 +172,6 @@ namespace McMd
       virtual void computeStress(Util::Tensor& stress) const;
 
       //@}
-
-      /**
-      * Return reference to underlying pair interaction.
-      */
-      Interaction& interaction();
-
-      /**
-      * Return reference to underlying pair interaction.
-      */
-      const Interaction& interaction() const;
 
    private:
   
@@ -205,7 +223,6 @@ namespace McMd
    template <class Interaction>
    void McPairPotentialImpl<Interaction>::readParameters(std::istream &in) 
    {
-      // Must setNAtomTypes in interaction before calling readParam.
       interaction().setNAtomType(simulation().nAtomType());
 
       // Read potential energy parameters with no indent or brackets.
@@ -220,7 +237,39 @@ namespace McMd
       cellList_.allocate(simulation().atomCapacity(), maxBoundary_, 
                          maxPairCutoff());
    }
-  
+
+   /*
+   * Load internal state from an archive.
+   */
+   template <class Interaction>
+   void 
+   McPairPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
+   {
+      interaction().setNAtomType(simulation().nAtomType());
+
+      // Read potential energy parameters with no indent or brackets.
+      bool nextIndent = false;
+      addParamComposite(interaction(), nextIndent);
+      interaction().loadParameters(ar);
+
+      // Read maxBoundary (needed to allocate memory for cell list).
+      loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
+
+      // Allocate memory for the CellList.
+      cellList_.allocate(simulation().atomCapacity(), maxBoundary_, 
+                         maxPairCutoff());
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   template <class Interaction>
+   void McPairPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
+   {
+      interaction().save(ar);
+      ar << maxBoundary_;
+   }
+
    /*
    * Return pair energy for a single pair.
    */

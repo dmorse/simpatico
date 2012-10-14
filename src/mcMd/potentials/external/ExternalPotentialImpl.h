@@ -60,7 +60,21 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
-      /// \name Energy, Force, Stress Interactions
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
+      /// \name Interaction interface
       //@{
 
       /**
@@ -85,6 +99,10 @@ namespace McMd
       * Return external interaction class name (e.g., "TanhCosineExternal").
       */
       virtual std::string interactionClassName() const;
+
+      //@}
+      /// \name System energy and force calculators
+      //@{
 
       /**
       * Add external force of an Atom to the total force acting on it.
@@ -187,6 +205,34 @@ namespace McMd
       }
    }
   
+   /*
+   * Load internal state from an archive.
+   */
+   template <class Interaction>
+   void 
+   ExternalPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> isCopy_;
+      if (!isCopy_) {
+         interaction().setNAtomType(simulation().nAtomType());
+         bool nextIndent = false;
+         addParamComposite(interaction(), nextIndent);
+         interaction().loadParameters(ar);
+      } 
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   template <class Interaction>
+   void ExternalPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
+   {
+      ar << isCopy_;
+      if (!isCopy_) {
+         interaction().save(ar);
+      }
+   }
+
    /*
    * Return external energy of an atom.
    */

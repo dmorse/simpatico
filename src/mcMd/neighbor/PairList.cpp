@@ -46,7 +46,7 @@ namespace McMd
    */
    PairList::~PairList() 
    {}
-   
+
    /*
    * Read atomCapacity and pairCapacity from file.
    */
@@ -54,7 +54,27 @@ namespace McMd
    {
       read<int>(in, "atomCapacity", atomCapacity_);
       read<int>(in, "pairCapacity", pairCapacity_);
-      read<double>(in, "skin",      skin_);
+      read<double>(in, "skin", skin_);
+   }
+
+   /*
+   * Load parameters an archive, but do not allocate.
+   */
+   void PairList::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<int>(ar, "atomCapacity", atomCapacity_);
+      loadParameter<int>(ar, "pairCapacity", pairCapacity_);
+      loadParameter<double>(ar, "skin", skin_);
+   }
+
+   /*
+   * Save parameters an archive.
+   */
+   void PairList::save(Serializable::OArchive &ar)
+   {
+      ar << atomCapacity_;
+      ar << pairCapacity_;
+      ar << skin_;
    }
 
    /*
@@ -83,7 +103,6 @@ namespace McMd
       cellList_.allocate(atomIdEnd, boundary, cutoff_);
    
       // Allocate neighbor list data structures
-
       atom1Ptrs_.allocate(atomCapacity_);
       atom2Ptrs_.allocate(pairCapacity_);
       first_.allocate(atomCapacity_ + 1);
@@ -99,7 +118,6 @@ namespace McMd
       for (i=0; i < pairCapacity_; ++i) {
          atom2Ptrs_[i] = 0;
       }
-   
    }
 
    /*
