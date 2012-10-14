@@ -1,5 +1,5 @@
-#ifndef METHOD_FUNCTOR_H
-#define METHOD_FUNCTOR_H
+#ifndef UTIL_METHOD_FUNCTOR_H
+#define UTIL_METHOD_FUNCTOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

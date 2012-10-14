@@ -187,11 +187,6 @@ namespace McMd
    */
    void McSimulation::readParameters(std::istream &in)
    {
-      if (isRestarting_) {
-         if (isInitialized_) {
-            return;
-         }
-      } else 
       if (isInitialized_) {
          UTIL_THROW("Error: Called readParam when already initialized");
       }
@@ -217,10 +212,25 @@ namespace McMd
    }
 
    /*
+   * Read parameter block, including begin and end.
+   */
+   void McSimulation::readParam(std::istream& in)
+   {
+      if (isRestarting_) {
+         if (isInitialized_) {
+            return;
+         }
+      }
+      readBegin(in, className().c_str());
+      readParameters(in);
+      readEnd(in);
+   }
+
+   /*
    * Read default parameter file.
    */
    void McSimulation::readParam()
-   {  ParamComposite::readParam(fileMaster().paramFile()); }
+   {  readParam(fileMaster().paramFile()); }
 
    /*
    * Read and execute commands from a specified command file.
@@ -246,7 +256,7 @@ namespace McMd
       bool readNext = true;
       while (readNext) {
 
-         // fdef   UTIL_MPI, read a line and copy to stringstream inBuffer
+         // iffdef UTIL_MPI, read a line and copy to stringstream inBuffer
          // ifndef UTIL_MPI, inBuffer is simply a reference to istream in.
 
          #ifdef UTIL_MPI
@@ -715,7 +725,7 @@ namespace McMd
       // Open and read parameter (*.prm) file
       std::ifstream in;
       fileMaster().openParamIFile(filename, ".prm", in);
-      readParameters(in);
+      readParam(in);
       in.close();
 
       // Open restart (*.rst) file and associate with an archive
@@ -733,9 +743,7 @@ namespace McMd
 
       std::string commandFileName = filename + ".cmd";
       fileMaster().setCommandFileName(commandFileName);
-      //fileMaster().openParamIFile(filename, ".cmd", in);
-      //readCommands(in);
-      //in.close();
+      isInitialized_ = true;
    }
 
    /*

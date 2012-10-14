@@ -1,5 +1,5 @@
-#ifndef BINARY_FILE_O_ARCHIVE_H
-#define BINARY_FILE_O_ARCHIVE_H
+#ifndef UTIL_BINARY_FILE_O_ARCHIVE_H
+#define UTIL_BINARY_FILE_O_ARCHIVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

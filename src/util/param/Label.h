@@ -1,5 +1,5 @@
-#ifndef LABEL_H
-#define LABEL_H
+#ifndef UTIL_LABEL_H
+#define UTIL_LABEL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

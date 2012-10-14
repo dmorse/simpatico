@@ -1,5 +1,5 @@
-#ifndef INT_VECTOR_CPP
-#define INT_VECTOR_CPP
+#ifndef UTIL_INT_VECTOR_CPP
+#define UTIL_INT_VECTOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

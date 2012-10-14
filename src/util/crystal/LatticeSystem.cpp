@@ -1,5 +1,5 @@
-#ifndef LATTICE_SYSTEM_CPP
-#define LATTICE_SYSTEM_CPP
+#ifndef UTIL_LATTICE_SYSTEM_CPP
+#define UTIL_LATTICE_SYSTEM_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

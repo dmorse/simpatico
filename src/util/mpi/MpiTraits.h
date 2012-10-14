@@ -1,5 +1,5 @@
-#ifndef MPI_TRAITS_H
-#define MPI_TRAITS_H
+#ifndef UTIL_MPI_TRAITS_H
+#define UTIL_MPI_TRAITS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

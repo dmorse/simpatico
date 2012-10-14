@@ -1,5 +1,5 @@
-#ifndef GRID_CPP
-#define GRID_CPP
+#ifndef UTIL_GRID_CPP
+#define UTIL_GRID_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef MATRIX_H
-#define MATRIX_H
+#ifndef UTIL_MATRIX_H
+#define UTIL_MATRIX_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

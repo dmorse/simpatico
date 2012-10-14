@@ -1,5 +1,5 @@
-#ifndef SETABLE_H
-#define SETABLE_H
+#ifndef UTIL_SETABLE_H
+#define UTIL_SETABLE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

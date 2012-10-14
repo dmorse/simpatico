@@ -1,6 +1,6 @@
 #ifdef  UTIL_MPI
-#ifndef MPI_LOGGER_CPP
-#define MPI_LOGGER_CPP
+#ifndef UTIL_MPI_LOGGER_CPP
+#define UTIL_MPI_LOGGER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

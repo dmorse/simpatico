@@ -1,5 +1,5 @@
-#ifndef LOG_CPP
-#define LOG_CPP
+#ifndef UTIL_LOG_CPP
+#define UTIL_LOG_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

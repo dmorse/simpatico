@@ -1,5 +1,5 @@
-#ifndef INT_DISTRIBUTION_H
-#define INT_DISTRIBUTION_H
+#ifndef UTIL_INT_DISTRIBUTION_H
+#define UTIL_INT_DISTRIBUTION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

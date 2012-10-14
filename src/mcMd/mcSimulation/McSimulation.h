@@ -70,8 +70,13 @@ namespace McMd
       */
       void setOptions(int argc, char **argv);
 
-      using ParamComposite::readParam;
-
+      /**
+      * Read parameter file.
+      *
+      * \param in parameter file stream
+      */
+      virtual void readParam(std::istream &in);
+   
       /**
       * Read parameters from the default parameter stream.
       *

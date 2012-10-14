@@ -1,5 +1,5 @@
-#ifndef SIGNAL_CPP
-#define SIGNAL_CPP
+#ifndef UTIL_SIGNAL_CPP
+#define UTIL_SIGNAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef BEGIN_CPP
-#define BEGIN_CPP
+#ifndef UTIL_BEGIN_CPP
+#define UTIL_BEGIN_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef MEAN_SQ_DISP_ARRAY_H
-#define MEAN_SQ_DISP_ARRAY_H
+#ifndef UTIL_MEAN_SQ_DISP_ARRAY_H
+#define UTIL_MEAN_SQ_DISP_ARRAY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

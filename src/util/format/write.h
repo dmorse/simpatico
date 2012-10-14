@@ -1,5 +1,5 @@
-#ifndef WRITE_H
-#define WRITE_H
+#ifndef UTIL_WRITE_H
+#define UTIL_WRITE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

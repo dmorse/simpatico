@@ -1,5 +1,5 @@
-#ifndef RING_BUFFER_H
-#define RING_BUFFER_H
+#ifndef UTIL_RING_BUFFER_H
+#define UTIL_RING_BUFFER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,6 +1,6 @@
 #ifdef  UTIL_MPI
-#ifndef STRUCT_BUILDER_H
-#define STRUCT_BUILDER_H
+#ifndef UTIL_STRUCT_BUILDER_H
+#define UTIL_STRUCT_BUILDER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

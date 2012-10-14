@@ -1,6 +1,6 @@
 #ifdef UTIL_MPI
-#ifndef MPI_STRUCT_BUILDER_CPP
-#define MPI_STRUCT_BUILDER_CPP
+#ifndef UTIL_MPI_STRUCT_BUILDER_CPP
+#define UTIL_MPI_STRUCT_BUILDER_CPP
 
 #include "MpiStructBuilder.h"
 #include <util/global.h>

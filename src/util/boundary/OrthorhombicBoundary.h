@@ -611,4 +611,4 @@ namespace Util
 }
 #endif // ifdef  UTIL_MPI
 
-#endif // ifndef ORTHORHOMBIC_BOUNDARY_H
+#endif // ifndef UTIL_ORTHORHOMBIC_BOUNDARY_H

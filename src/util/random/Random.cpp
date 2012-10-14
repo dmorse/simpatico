@@ -1,5 +1,5 @@
-#ifndef RANDOM_CPP
-#define RANDOM_CPP
+#ifndef UTIL_RANDOM_CPP
+#define UTIL_RANDOM_CPP
 
 #include "Random.h"
 

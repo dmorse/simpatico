@@ -1,5 +1,5 @@
-#ifndef LATTICE_SYSTEM_H
-#define LATTICE_SYSTEM_H
+#ifndef UTIL_LATTICE_SYSTEM_H
+#define UTIL_LATTICE_SYSTEM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -159,11 +159,6 @@ namespace McMd
    */
    void MdSimulation::readParameters(std::istream &in)
    { 
-      if (isRestarting_) {
-         if (isInitialized_) {
-            return;
-         }
-      } else 
       if (isInitialized_) {
          UTIL_THROW("Error: Called readParam when already initialized");
       }
@@ -181,8 +176,22 @@ namespace McMd
    * Read default parameter file.
    */
    void MdSimulation::readParam()
-   {  ParamComposite::readParam(fileMaster().paramFile()); }
+   {  readParam(fileMaster().paramFile()); }
 
+   /*
+   * Read parameter block, including begin and end.
+   */
+   void MdSimulation::readParam(std::istream &in)
+   {
+      if (isRestarting_) {
+         if (isInitialized_) {
+            return;
+          }
+      } 
+      readBegin(in, className().c_str());
+      readParameters(in);
+      readEnd(in);
+   }
 
    /*
    * Read and implement commands in an input script.
@@ -696,7 +705,7 @@ namespace McMd
       // Open and read parameter (*.prm) file
       std::ifstream in;
       fileMaster().openParamIFile(filename, ".prm", in);
-      readParameters(in);
+      readParam(in);
       in.close();
 
       // Open restart *.rst file and associate with an archive
@@ -712,7 +721,7 @@ namespace McMd
       mdDiagnosticManagerPtr_->load(ar);
       in.close();
 
-      // Read command (*.cmd) file
+      // Set command (*.cmd) file
       std::string commandFileName = filename + ".cmd";
       fileMaster().setCommandFileName(commandFileName);
 

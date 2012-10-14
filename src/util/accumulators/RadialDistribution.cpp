@@ -1,5 +1,5 @@
-#ifndef RADIAL_DISTRIBUTION_CPP
-#define RADIAL_DISTRIBUTION_CPP
+#ifndef UTIL_RADIAL_DISTRIBUTION_CPP
+#define UTIL_RADIAL_DISTRIBUTION_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
