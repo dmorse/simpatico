@@ -1,5 +1,5 @@
-#ifndef POINT_SYMMETRY_H
-#define POINT_SYMMETRY_H
+#ifndef UTIL_POINT_SYMMETRY_H
+#define UTIL_POINT_SYMMETRY_H
 
 #include <util/space/Dimension.h>
 #include <util/containers/FMatrix.h>

@@ -1,5 +1,5 @@
-#ifndef OBSERVER_H
-#define OBSERVER_H 
+#ifndef UTIL_OBSERVER_H
+#define UTIL_OBSERVER_H 
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

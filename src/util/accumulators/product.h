@@ -1,5 +1,5 @@
-#ifndef PRODUCT_H
-#define PRODUCT_H
+#ifndef UTIL_PRODUCT_H
+#define UTIL_PRODUCT_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

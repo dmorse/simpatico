@@ -1,5 +1,5 @@
-#ifndef ORTHO_REGION_CPP
-#define ORTHO_REGION_CPP
+#ifndef UTIL_ORTHO_REGION_CPP
+#define UTIL_ORTHO_REGION_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -12,6 +12,8 @@
 #include <util/space/Dimension.h>
 #include <util/math/feq.h>
 #include <util/global.h>
+
+#include <sstream>
 
 namespace Util
 {
@@ -49,15 +51,30 @@ namespace Util
    bool OrthoRegion::isValid() 
    { 
       for (int i = 0; i < Dimension; ++i) {
-         if (maxima_[i] <= minima_[i])   
+         if (maxima_[i] <= minima_[i]) {
             UTIL_THROW("maxima_[i] <= minima_[i]");
-         if (!feq(lengths_[i], maxima_[i] - minima_[i]))
+         }
+         if (!feq(lengths_[i], maxima_[i] - minima_[i])) {
             UTIL_THROW("lengths_[i] != maxima_[i] - minima_[i]");
-         if (!feq(halfLengths_[i], 0.5*lengths_[i]))
+         }
+         if (!feq(halfLengths_[i], 0.5*lengths_[i])) {
             UTIL_THROW("halfLengths_[i] != 0.5*lengths_[i]");
+         }
       }
-      if (!feq(volume_, lengths_[0]*lengths_[1]*lengths_[2]))
-         UTIL_THROW("volume_ != product of lengths_");
+      double product = lengths_[0]*lengths_[1]*lengths_[2];
+      double diff = volume_ - product;
+      if (!feq(volume_, product)) {
+         std::stringstream buf;
+         buf.precision(12);
+         buf << "volume_ != product of lengths_" << std::endl;
+         buf << "volume_     = " << volume_ << std::endl;
+         buf << "lengths_[0] = " << lengths_[0] << std::endl;
+         buf << "lengths_[1] = " << lengths_[1] << std::endl;
+         buf << "lengths_[2] = " << lengths_[2] << std::endl;
+         buf << "product     = " << product;
+         buf << "diff        = " << diff;
+         UTIL_THROW(buf.str().c_str());
+      }
       return true;
    }
 

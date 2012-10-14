@@ -1,5 +1,5 @@
-#ifndef TENSOR_H
-#define TENSOR_H
+#ifndef UTIL_TENSOR_H
+#define UTIL_TENSOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

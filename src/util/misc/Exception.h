@@ -1,5 +1,5 @@
-#ifndef EXCEPTION_H
-#define EXCEPTION_H
+#ifndef UTIL_EXCEPTION_H
+#define UTIL_EXCEPTION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

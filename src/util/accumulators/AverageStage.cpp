@@ -1,5 +1,5 @@
-#ifndef AVERAGE_STAGE_CPP
-#define AVERAGE_STAGE_CPP
+#ifndef UTIL_AVERAGE_STAGE_CPP
+#define UTIL_AVERAGE_STAGE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

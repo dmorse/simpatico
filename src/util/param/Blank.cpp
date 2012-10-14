@@ -1,5 +1,5 @@
-#ifndef BLANK_CPP
-#define BLANK_CPP
+#ifndef UTIL_BLANK_CPP
+#define UTIL_BLANK_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

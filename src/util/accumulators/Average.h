@@ -1,5 +1,5 @@
-#ifndef AVERAGE_H
-#define AVERAGE_H
+#ifndef UTIL_AVERAGE_H
+#define UTIL_AVERAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

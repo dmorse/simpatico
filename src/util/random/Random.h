@@ -1,5 +1,5 @@
-#ifndef RANDOM_H
-#define RANDOM_H
+#ifndef UTIL_RANDOM_H
+#define UTIL_RANDOM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -14,7 +14,7 @@
 #include <cmath>
 
 #include <util/random/mersenne/mtrand.h>
-#define ENGINE MTRand_int32
+#define UTIL_ENGINE MTRand_int32
 
 namespace Util
 {
@@ -178,7 +178,7 @@ namespace Util
       /**
       * Uniform random number generator engine.
       */
-      ENGINE engine_;
+      UTIL_ENGINE engine_;
 
       /**
       * Seed value.
@@ -288,4 +288,5 @@ namespace Util
    }
 
 } 
-#endif
+#undef UTIL_ENGINE 
+#endif // ifndef UTIL_RANDOM_H

@@ -1,5 +1,5 @@
-#ifndef SCOPED_PTR_H
-#define SCOPED_PTR_H
+#ifndef UTIL_SCOPED_PTR_H
+#define UTIL_SCOPED_PTR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

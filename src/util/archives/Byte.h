@@ -1,5 +1,5 @@
-#ifndef BYTE_H
-#define BYTE_H
+#ifndef UTIL_BYTE_H
+#define UTIL_BYTE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

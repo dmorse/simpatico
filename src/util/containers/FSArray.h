@@ -1,5 +1,5 @@
-#ifndef FS_ARRAY_H
-#define FS_ARRAY_H
+#ifndef UTIL_FS_ARRAY_H
+#define UTIL_FS_ARRAY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

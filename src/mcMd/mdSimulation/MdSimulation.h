@@ -66,22 +66,31 @@ namespace McMd
       void setOptions(int argc, char **argv);
 
       /**
-      * Read parameters from stream.
+      * Read parameter file.
+      *
+      * Returns and does nothing if in process of restarting.
+      *
+      * \param in parameter file stream
+      */
+      void readParam(std::istream &in);
+   
+      /**
+      * Read parameters from the default parameter istream.
+      *
+      * Calls readParam(std::istream& ) internally, with a
+      * default parameter file istream.  The default file is 
+      * std::cin in serial mode (ifndef UTIL_MPI) and the 
+      * file "n/param" for processor n in parallel mode 
+      * (ifdef UTIL_MPI).
+      */
+      void readParam();
+
+      /**
+      * Read parameters from stream, without begin and end lines.
       *
       * \param in input stream
       */
       virtual void readParameters(std::istream &in);
-
-      /**
-      * Read parameters from the default parameter istream.
-      *
-      * Default parameter istream is std::cin in serial mode 
-      * (ifndef UTIL_MPI) and the file "n/param" for 
-      * processor n in parallel mode (ifdef UTIL_MPI).
-      */
-      void readParam();
-
-      using ParamComposite::readParam;
 
       /**
       * Read and execute commands from an input stream.

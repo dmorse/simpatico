@@ -1,5 +1,5 @@
-#ifndef TEXT_FILE_O_ARCHIVE_H
-#define TEXT_FILE_O_ARCHIVE_H
+#ifndef UTIL_TEXT_FILE_O_ARCHIVE_H
+#define UTIL_TEXT_FILE_O_ARCHIVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

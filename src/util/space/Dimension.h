@@ -1,5 +1,5 @@
-#ifndef DIMENSION_H
-#define DIMENSION_H
+#ifndef UTIL_DIMENSION_H
+#define UTIL_DIMENSION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

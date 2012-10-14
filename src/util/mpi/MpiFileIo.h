@@ -1,5 +1,5 @@
-#ifndef MPI_FILE_IO_H
-#define MPI_FILE_IO_H
+#ifndef UTIL_MPI_FILE_IO_H
+#define UTIL_MPI_FILE_IO_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

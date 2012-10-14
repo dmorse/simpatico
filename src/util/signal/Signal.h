@@ -1,5 +1,5 @@
-#ifndef SIGNAL_H
-#define SIGNAL_H
+#ifndef UTIL_SIGNAL_H
+#define UTIL_SIGNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

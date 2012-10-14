@@ -1,5 +1,5 @@
-#ifndef LIST_ARRAY_H
-#define LIST_ARRAY_H
+#ifndef UTIL_LIST_ARRAY_H
+#define UTIL_LIST_ARRAY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

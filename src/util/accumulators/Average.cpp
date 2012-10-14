@@ -1,5 +1,5 @@
-#ifndef AVERAGE_CPP
-#define AVERAGE_CPP
+#ifndef UTIL_AVERAGE_CPP
+#define UTIL_AVERAGE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

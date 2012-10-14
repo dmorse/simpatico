@@ -1,5 +1,5 @@
-#ifndef ORTHO_REGION_H
-#define ORTHO_REGION_H
+#ifndef UTIL_ORTHO_REGION_H
+#define UTIL_ORTHO_REGION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

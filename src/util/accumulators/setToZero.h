@@ -1,5 +1,5 @@
-#ifndef SET_TO_ZERO_H
-#define SET_TO_ZERO_H
+#ifndef UTIL_SET_TO_ZERO_H
+#define UTIL_SET_TO_ZERO_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

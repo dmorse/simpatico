@@ -1,5 +1,5 @@
-#ifndef ORTHORHOMBIC_BOUNDARY_CPP
-#define ORTHORHOMBIC_BOUNDARY_CPP
+#ifndef UTIL_ORTHORHOMBIC_BOUNDARY_CPP
+#define UTIL_ORTHORHOMBIC_BOUNDARY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -146,7 +146,7 @@ namespace Util
    /* 
    * Input a OrthorhombicBoundary from an istream, without line breaks.
    */
-   std::istream& operator>>(std::istream& in, OrthorhombicBoundary &boundary)
+   std::istream& operator >> (std::istream& in, OrthorhombicBoundary &boundary)
    {
       LatticeSystem lattice;
       in >> lattice;
@@ -178,7 +178,7 @@ namespace Util
    * Output an OrthorhombicBoundary to an ostream, without line breaks.
    */
    std::ostream& 
-   operator<<(std::ostream& out, const OrthorhombicBoundary &boundary) 
+   operator << (std::ostream& out, const OrthorhombicBoundary &boundary) 
    {
       out << boundary.lattice_ << "   ";
       if (boundary.lattice_ == Orthorhombic) {

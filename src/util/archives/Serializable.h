@@ -1,5 +1,5 @@
-#ifndef SERIALIZABLE_H
-#define SERIALIZABLE_H
+#ifndef UTIL_SERIALIZABLE_H
+#define UTIL_SERIALIZABLE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

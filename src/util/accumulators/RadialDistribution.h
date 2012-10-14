@@ -1,5 +1,5 @@
-#ifndef RADIAL_DISTRIBUTION_H
-#define RADIAL_DISTRIBUTION_H
+#ifndef UTIL_RADIAL_DISTRIBUTION_H
+#define UTIL_RADIAL_DISTRIBUTION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

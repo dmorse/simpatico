@@ -1,5 +1,5 @@
-#ifndef DBL_CPP
-#define DBL_CPP
+#ifndef UTIL_DBL_CPP
+#define UTIL_DBL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

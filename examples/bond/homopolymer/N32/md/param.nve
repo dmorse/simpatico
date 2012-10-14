@@ -54,11 +54,17 @@ MdSimulation{
     baseInterval                         100
 
     LogProgress{
+      interval                           200
+    }
+
+    MdWriteRestart{
       interval                           500
+      fileName                       restart
     }
 
   }
 }
+
 
     DumpConfig{
       interval                          1000

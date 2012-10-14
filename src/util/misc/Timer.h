@@ -1,5 +1,5 @@
-#ifndef TIMER_H
-#define TIMER_H
+#ifndef UTIL_TIMER_H
+#define UTIL_TIMER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

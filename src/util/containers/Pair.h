@@ -1,5 +1,5 @@
-#ifndef PAIR_H
-#define PAIR_H
+#ifndef UTIL_PAIR_H
+#define UTIL_PAIR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

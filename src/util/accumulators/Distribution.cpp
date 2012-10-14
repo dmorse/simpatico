@@ -1,5 +1,5 @@
-#ifndef DISTRIBUTION_CPP
-#define DISTRIBUTION_CPP
+#ifndef UTIL_DISTRIBUTION_CPP
+#define UTIL_DISTRIBUTION_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
