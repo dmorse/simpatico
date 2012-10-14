@@ -5,16 +5,23 @@ Improve Extensibility
 
 - In modules, add protected methods to add subfactories.
 
+- Document various ways of adding new classes to factories.
 
-Required changes in Boundary classes (in util/TODO)
----------------------------------------------------
+Angles and Dihedrals
+--------------------
 
-- Add applyShift(Vector& r, IntVector &t) to boundary class.
+- Write and test HarmonicAngle class.
 
-- Add bool isOrthorhombic() method to Boundary classes.
+- Write and test MultiHarmonicDihedral class.
 
-- Add minimumDeformRatio method to Boundary classes.
+- Switch macros from, e.g., ifdef INTER_ANGLE to ifndef INTER_NO_ANGLE
 
+- Change examples accordingly to work with code with everything enabled.
+
+Constant Pressure MD (Jens)
+---------------------------
+
+- Port and test NptIntegrator subclass from DdMd.
 
 Non-Orthorhombic Boundaries
 ---------------------------
@@ -38,29 +45,6 @@ Deformable Boundaries
 - Generalize snapshot and obsolete pair list methods to use
   miniminumDeformRatio to deal optimally with MD in deforming 
   boundaries.
-
-Angles and Dihedrals
---------------------
-
-- Write and test HarmonicAngle class.
-
-- Write and test MultiHarmonicDihedral class.
-
-- Switch macros from, e.g., ifdef INTER_ANGLE to ifndef INTER_NO_ANGLE
-
-- Change examples accordingly to work with code with everything enabled.
-
-Constant Pressure MD (Jens)
----------------------------
-
-- Write and test NptIntegrator subclass (Jens).
-
-- Modify integrators to preserve ratios of unequal lengths.
-
-Restart System
---------------
-
-- Test / debug restart system for parallel jobs.
 
 Serialization
 -------------
