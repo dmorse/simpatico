@@ -60,6 +60,20 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
       /// \name Interactions Methods
       //@{
 
@@ -239,6 +253,34 @@ namespace McMd
       }
    }
   
+   /*
+   * Load internal state from an archive.
+   */
+   template <class Interaction>
+   void 
+   BondPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> isCopy_;
+      if (!isCopy_) {
+         interaction().setNBondType(simulation().nBondType());
+         bool nextIndent = false;
+         addParamComposite(interaction(), nextIndent);
+         interaction().loadParameters(ar);
+      } 
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   template <class Interaction>
+   void BondPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
+   {
+      ar << isCopy_;
+      if (!isCopy_) {
+         interaction().save(ar);
+      }
+   }
+
    /*
    * Return bond energy for a single pair.
    */
