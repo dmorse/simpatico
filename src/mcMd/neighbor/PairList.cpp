@@ -65,6 +65,26 @@ namespace McMd
       loadParameter<int>(ar, "atomCapacity", atomCapacity_);
       loadParameter<int>(ar, "pairCapacity", pairCapacity_);
       loadParameter<double>(ar, "skin", skin_);
+      ar >> cutoff_;
+      ar >> cellList_;
+
+      // Allocate neighbor list data structures
+      atom1Ptrs_.allocate(atomCapacity_);
+      atom2Ptrs_.allocate(pairCapacity_);
+      first_.allocate(atomCapacity_ + 1);
+      oldPositions_.allocate(atomCapacity_);
+   
+      // Initialize array elements to null values
+      for (int i=0; i < atomCapacity_; ++i) {
+         atom1Ptrs_[i] = 0;
+         first_[i] = PairList::NullIndex;
+         oldPositions_[i].zero();
+      }
+      first_[atomCapacity_] = PairList::NullIndex;
+      for (int i=0; i < pairCapacity_; ++i) {
+         atom2Ptrs_[i] = 0;
+      }
+      clear();
    }
 
    /*
@@ -75,6 +95,8 @@ namespace McMd
       ar << atomCapacity_;
       ar << pairCapacity_;
       ar << skin_;
+      ar << cutoff_;
+      ar << cellList_;
    }
 
    /*
@@ -87,13 +109,13 @@ namespace McMd
 
       // Preconditions
       if (skin_ < 0.0000001) {
-         UTIL_THROW("skin must be set before PairList::initialize");
+         UTIL_THROW("skin must be set before PairList::allocate");
       }
       if (atomCapacity_ <= 0 ) {
-         UTIL_THROW("atomCapacity_ must be set before PairList::initialize");
+         UTIL_THROW("atomCapacity_ must be set before PairList::allocate");
       }
       if (pairCapacity_ <= 0 ) {
-         UTIL_THROW("pairCapacity_ must be set before PairList::initialize");
+         UTIL_THROW("pairCapacity_ must be set before PairList::allocate");
       }
 
       // PairList cutoff = cutoff for potential + a "skin"

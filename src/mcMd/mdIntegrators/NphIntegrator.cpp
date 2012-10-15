@@ -30,7 +30,8 @@ namespace McMd
    * Constructor.   
    */
    NphIntegrator::NphIntegrator(MdSystem& system)
-   : MdIntegrator(system), W_(0.0)
+    : MdIntegrator(system),
+      W_(0.0)
    {
       setClassName("NphIntegrator"); 
 
@@ -51,12 +52,37 @@ namespace McMd
    {
       read<double>(in, "dt", dt_);
       read<double>(in, "W", W_);
-      std::string modeIn;
       read<LatticeSystem>(in, "mode", mode_);
 
       int nAtomType = simulation().nAtomType();
       prefactors_.allocate(nAtomType);
 
+   }
+
+   /**
+   * Load the internal state to an archive.
+   */
+   void NphIntegrator::loadParameters(Serializable::IArchive& ar)
+   {  
+      loadParameter<double>(ar, "dt", dt_);
+      loadParameter<double>(ar, "W", W_);
+      loadParameter<LatticeSystem>(ar, "mode", mode_);
+      ar & eta_;
+      ar & currP_;
+      ar & prefactors_;
+   }
+
+   /*
+   * Save the internal state to an archive.
+   */
+   void NphIntegrator::save(Serializable::OArchive& ar)
+   {  
+      ar & dt_;
+      ar & W_;
+      serializeEnum(ar, mode_);
+      ar & eta_;
+      ar & currP_;
+      ar & prefactors_;
    }
 
    /* 
@@ -333,29 +359,5 @@ namespace McMd
       eta_[index] = eta; 
    }
    
-   /*
-   * Save the internal state to an archive.
-   */
-   void NphIntegrator::save(Serializable::OArchive& ar)
-   {  
-      ar & dt_;
-      ar & prefactors_;
-      ar & eta_;
-      ar & currP_;
-      serializeEnum(ar, mode_);
-   }
-
-   /**
-   * Load the internal state to an archive.
-   */
-   void NphIntegrator::load(Serializable::IArchive& ar)
-   {  
-      ar & dt_;
-      ar & prefactors_;
-      ar & eta_;
-      ar & currP_;
-      serializeEnum(ar, mode_);
-   }
-
 }
 #endif

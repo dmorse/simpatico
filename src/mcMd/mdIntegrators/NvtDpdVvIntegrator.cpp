@@ -83,6 +83,43 @@ namespace McMd
 
    }
 
+   /*
+   * Load the internal state to an archive.
+   */
+   void NvtDpdVvIntegrator::loadParameters(Serializable::IArchive& ar)
+   {  
+      loadParameter<double>(ar, "dt", dt_);
+      loadParameter<double>(ar, "cutoff", cutoff_);
+      if (cutoff_ > system().pairPotential().maxPairCutoff()) {
+         UTIL_THROW("Error: Dpd pair cutoff > maxCutoff of pair potential");
+      }
+      loadParameter<double>(ar, "gamma", gamma_);
+      ar & temperature_;
+      ar & sigma_;
+      ar & cutoffSq_;
+      ar & atomCapacity_;
+      ar & dtMinvFactors_;
+      ar & dissipativeForces_;
+      ar & randomForces_;
+   }
+
+   /*
+   * Save the internal state to an archive.
+   */
+   void NvtDpdVvIntegrator::save(Serializable::OArchive& ar)
+   {
+      ar & dt_;  
+      ar & cutoff_;  
+      ar & gamma_;  
+      ar & temperature_;
+      ar & sigma_;
+      ar & cutoffSq_;
+      ar & atomCapacity_;
+      ar & dtMinvFactors_;
+      ar & dissipativeForces_;
+      ar & randomForces_;
+   }
+
    /* 
    * Initialize constants and forces.
    */
@@ -250,38 +287,6 @@ namespace McMd
       // Recompute disipative force (but not random forces).
       computeDpdForces(false);
 
-   }
-
-   /*
-   * Save the internal state to an archive.
-   */
-   void NvtDpdVvIntegrator::save(Serializable::OArchive& ar)
-   {  
-      ar & temperature_;
-      ar & sigma_;
-      ar & cutoffSq_;
-      ar & dtMinvFactors_;
-      ar & dissipativeForces_;
-      ar & randomForces_;
-      serializeCheck(ar, atomCapacity_, "atomCapacity");
-      //ar & cutoff_;
-      //ar & gamma_;
-   }
-
-   /**
-   * Load the internal state to an archive.
-   */
-   void NvtDpdVvIntegrator::load(Serializable::IArchive& ar)
-   {  
-      ar & temperature_;
-      ar & sigma_;
-      ar & cutoffSq_;
-      ar & dtMinvFactors_;
-      ar & dissipativeForces_;
-      ar & randomForces_;
-      serializeCheck(ar, atomCapacity_, "atomCapacity");
-      //ar & cutoff_;
-      //ar & gamma_;
    }
 
 }

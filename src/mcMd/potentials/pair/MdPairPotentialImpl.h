@@ -274,11 +274,6 @@ namespace McMd
       }
       loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
       loadParamComposite(ar, pairList_);
-
-      // Allocate the PairList 
-      double cutoff = interaction().maxPairCutoff();
-      pairList_.allocate(simulation().atomCapacity(), 
-                         maxBoundary_, cutoff);
    }
 
    /*

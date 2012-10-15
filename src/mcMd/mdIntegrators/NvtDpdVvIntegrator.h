@@ -54,14 +54,11 @@ namespace McMd
       virtual void readParameters(std::istream &in);
 
       /**
-      * Setup private variables before main loop.
+      * Load the internal state to an archive.
+      *
+      * \param ar archive object.
       */
-      virtual void setup();
-
-      /**
-      * Take a complete integration step.
-      */
-      virtual void step();
+      virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
       * Save the internal state to an archive.
@@ -71,11 +68,14 @@ namespace McMd
       virtual void save(Serializable::OArchive& ar);
 
       /**
-      * Load the internal state to an archive.
-      *
-      * \param ar archive object.
+      * Setup private variables before main loop.
       */
-      virtual void load(Serializable::IArchive& ar);
+      virtual void setup();
+
+      /**
+      * Take a complete integration step.
+      */
+      virtual void step();
 
    private:
 

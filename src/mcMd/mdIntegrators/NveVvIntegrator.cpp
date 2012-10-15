@@ -49,6 +49,24 @@ namespace McMd
 
    }
 
+   /*
+   * Load the internal state to an archive.
+   */
+   void NveVvIntegrator::loadParameters(Serializable::IArchive& ar)
+   {  
+      loadParameter<double>(ar, "dt", dt_);
+      ar & prefactors_;
+   }
+
+   /*
+   * Save the internal state to an archive.
+   */
+   void NveVvIntegrator::save(Serializable::OArchive& ar)
+   {  
+      ar & dt_;
+      ar & prefactors_;
+   }
+
    /* 
    * Initialize constants.
    */
@@ -162,24 +180,6 @@ namespace McMd
       }
       #endif
 
-   }
-
-   /*
-   * Save the internal state to an archive.
-   */
-   void NveVvIntegrator::save(Serializable::OArchive& ar)
-   {  
-      ar & dt_;
-      ar & prefactors_;
-   }
-
-   /**
-   * Load the internal state to an archive.
-   */
-   void NveVvIntegrator::load(Serializable::IArchive& ar)
-   {  
-      ar & dt_;
-      ar & prefactors_;
    }
 
 }
