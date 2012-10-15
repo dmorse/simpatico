@@ -51,7 +51,21 @@ namespace Util
       * The type is specified in the input file by a string 
       * literal "adiabatic" or "isothermal".
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
+
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       ///\name Accessors
       //@{

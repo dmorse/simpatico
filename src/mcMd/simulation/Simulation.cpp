@@ -284,6 +284,37 @@ namespace McMd
    }
 
    /*
+   * Load internal state from an archive.
+   */
+   void Simulation::save(Serializable::OArchive &ar)
+   {
+      fileMaster_.save(ar);
+      ar << nAtomType_;
+      ar << nBondType_;
+      #ifdef INTER_ANGLE
+      ar << nAngleType_;
+      #endif
+      #ifdef INTER_DIHEDRAL
+      ar << nDihedralType_;
+      #endif
+      #ifdef MCMD_LINK
+      ar << nLinkType_;
+      #endif
+      #ifdef INTER_EXTERNAL
+      ar << hasExternal_;
+      #endif
+      #ifdef INTER_TETHER
+      ar << hasTether_;
+      #endif
+      #ifndef MCMD_NOATOMTYPES
+      ar << atomTypes_;
+      #endif
+      ar << maskedPairPolicy_;
+      speciesManagerPtr_->save(ar);
+      random_.save(ar);
+   }
+
+   /*
    * Allocate and initialize all private data (private method).
    *
    * Allocates global arrays (molecules_, atoms_, bonds_, angles_) and the

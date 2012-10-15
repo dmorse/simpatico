@@ -193,6 +193,37 @@ namespace McMd
       readEnd(in);
    }
 
+   /* 
+   * Load parameters from an archive.
+   */
+   void MdSimulation::loadParameters(Serializable::IArchive& ar)
+   { 
+      if (isInitialized_) {
+         UTIL_THROW("Error: Called readParam when already initialized");
+      }
+
+      Simulation::loadParameters(ar); 
+      loadParamComposite(ar, system_); 
+      loadParamComposite(ar, diagnosticManager());
+      system_.loadConfig(ar);
+      ar & iStep_;
+
+      isValid();
+      isInitialized_ = true;
+   }
+ 
+   /* 
+   * Save parameters to an archive.
+   */
+   void MdSimulation::save(Serializable::OArchive& ar)
+   { 
+      Simulation::save(ar); 
+      system_.save(ar);
+      diagnosticManager().save(ar);
+      system_.saveConfig(ar);
+      ar & iStep_;
+   }
+ 
    /*
    * Read and implement commands in an input script.
    */
@@ -671,26 +702,6 @@ namespace McMd
 
    }
 
-   void MdSimulation::writeRestart(const std::string& filename)
-   {
-      std::ofstream out;
-      fileMaster().openParamOFile(filename, ".prm", out);
-      writeParam(out);
-      out << "iStep = " << iStep_; 
-      out.close();
-
-      Serializable::OArchive ar;
-      fileMaster().openRestartOFile(filename, ".rst", ar.file());
-
-      ar & random();
-      //ar & system();
-      system().save(ar);
-      system().mdIntegrator().save(ar);
-      ar & iStep_;
-      mdDiagnosticManagerPtr_->save(ar);
-      ar.file().close();
-   }
-
    void MdSimulation::readRestart(const std::string& filename)
    {
       // readRestart
@@ -701,22 +712,10 @@ namespace McMd
          UTIL_THROW("Error: Called readRestart without restart option");
       }
 
-      // Open and read parameter (*.prm) file
-      std::ifstream in;
-      fileMaster().openParamIFile(filename, ".prm", in);
-      readParam(in);
-      in.close();
-
-      // Open restart *.rst file and associate with an archive
+      // Load from archive
       Serializable::IArchive ar;
       fileMaster().openRestartIFile(filename, ".rst", ar.file());
-
-      // Load internal state from restart (*.rst) file.
-      ar & random();
-      system().load(ar);
-      system().mdIntegrator().load(ar);
-      ar & iStep_;
-      mdDiagnosticManagerPtr_->load(ar);
+      load(ar);
       ar.file().close();
 
       // Set command (*.cmd) file
@@ -724,6 +723,14 @@ namespace McMd
       fileMaster().setCommandFileName(commandFileName);
 
       isInitialized_ = true;
+   }
+
+   void MdSimulation::writeRestart(const std::string& filename)
+   {
+      Serializable::OArchive ar;
+      fileMaster().openRestartOFile(filename, ".rst", ar.file());
+      save(ar);
+      ar.file().close();
    }
 
    /* 

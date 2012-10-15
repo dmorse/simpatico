@@ -86,12 +86,11 @@ namespace Util
       */
       bool isAllocated() const;
 
-      /*
+      /**
       * Serialize a DArray to/from an Archive.
       *
-      * \param ar        archive 
-      * \param container dynamic array 
-      * \param version   archive version id
+      * \param ar       archive 
+      * \param version  archive version id
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);

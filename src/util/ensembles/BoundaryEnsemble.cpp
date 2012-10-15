@@ -22,7 +22,7 @@ namespace Util
    BoundaryEnsemble::BoundaryEnsemble(Type type)
     : pressure_(1.0),
       type_(type)
-   {}
+   {  setClassName("BoundaryEnsemble"); }
 
    /*
    * Set the pressure.
@@ -38,14 +38,33 @@ namespace Util
    /*
    * Read the type and (if necessary) pressure from file.
    */
-   void BoundaryEnsemble::readParam(std::istream& in)
+   void BoundaryEnsemble::readParameters(std::istream& in)
    {
-      readBegin(in, "BoundaryEnsemble");
       read<Type>(in, "type", type_);
       if (isIsobaric()) {
          read<double>(in, "pressure", pressure_);
       }
-      readEnd(in);
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void BoundaryEnsemble::loadParameters(Serializable::IArchive &ar)
+   { 
+      loadParameter<Type>(ar, "type", type_);
+      if (isIsobaric()) {
+         add<double>("pressure", pressure_);
+      }
+      ar >> pressure_;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void BoundaryEnsemble::save(Serializable::OArchive &ar)
+   { 
+      ar << type_;
+      ar << pressure_;
    }
 
    /*

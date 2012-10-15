@@ -40,6 +40,14 @@ namespace Util
       DPArray(const DPArray<Data>& other);
    
       /**
+      * Destructor.
+      *
+      * Deletes array of pointers, if allocated previously.
+      * Does not delete the associated Data objects.
+      */
+      virtual ~DPArray();
+
+      /**
       * Assignment, element by element.
       *
       * Preconditions: 
@@ -51,14 +59,6 @@ namespace Util
       DPArray<Data>& operator=(const DPArray<Data>& other);
 
       /**
-      * Destructor.
-      *
-      * Deletes array of pointers, if allocated previously.
-      * Does not delete the associated Data objects.
-      */
-      virtual ~DPArray();
-
-      /**
       * Allocate an array of pointers to Data.
       *
       * Throw an Exception if the DPArray has already been
@@ -67,6 +67,18 @@ namespace Util
       * \param capacity number of elements to allocate.
       */
       void allocate(int capacity);
+
+      /**
+      * Serialize a DPArray to/from an Archive.
+      *
+      * Serialization preserves only the capacity. Upon
+      * loading, the container is allocated by empty.
+      *
+      * \param ar       archive 
+      * \param version  archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
 
       /**
       * Append an element to the end of the sequence.
@@ -183,7 +195,6 @@ namespace Util
    template <typename Data>
    void DPArray<Data>::allocate(int capacity) 
    {
-
       // Preconditions
       if (!(ptrs_ == 0)) {
          UTIL_THROW("Cannot re-allocate a DPArray");
@@ -194,7 +205,31 @@ namespace Util
 
       ptrs_     = new Data*[capacity];
       capacity_ = capacity;
+   }
 
+   /*
+   * Serialize a DPArray to/from an Archive.
+   */
+   template <class Data>
+   template <class Archive>
+   void DPArray<Data>::serialize(Archive& ar, const unsigned int version)
+   {
+      int capacity;
+      if (Archive::is_saving()) {
+         capacity = capacity_;
+      }
+      ar & capacity;
+      if (Archive::is_loading()) {
+         if (!isAllocated()) {
+            if (capacity > 0) {
+               allocate(capacity);
+            }
+         } else {
+            if (capacity != capacity_) {
+               UTIL_THROW("Inconsistent DArray capacities");
+            }
+         }
+      }
    }
 
    /*

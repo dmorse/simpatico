@@ -195,6 +195,9 @@ namespace McMd
       return *mdIntegratorFactoryPtr_;
    }
 
+
+
+
    /* 
    * Read parameter and configuration files, initialize system.
    */
@@ -316,6 +319,177 @@ namespace McMd
       #endif
    }
   
+   /* 
+   * Load parameter and configuration files, initialize system.
+   */
+   void MdSystem::loadParameters(Serializable::IArchive& ar) 
+   {
+
+      if (!isCopy()) {
+         allocateMoleculeSets();
+         loadFileMaster(ar);
+         loadPotentialStyles(ar);
+      }
+
+      #ifndef INTER_NOPAIR 
+      if (!isCopy()) {
+         pairPotentialPtr_ = pairFactory().mdFactory(pairStyle(), *this);
+         if (pairPotentialPtr_ == 0) {
+            UTIL_THROW("Failed attempt to create PairPotential");
+         }
+      }
+      loadParamComposite(ar, *pairPotentialPtr_); 
+      #endif
+
+      if (!isCopy()) {
+
+         assert(bondPotentialPtr_ == 0);
+         if (simulation().nBondType() > 0) {
+            bondPotentialPtr_ = bondFactory().factory(bondStyle());
+            if (bondPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create bondPotential");
+            }
+            loadParamComposite(ar, *bondPotentialPtr_); 
+         }
+
+         #ifdef INTER_ANGLE
+         assert(anglePotentialPtr_ == 0);
+         if (simulation().nAngleType() > 0) {
+            anglePotentialPtr_ = 
+                       angleFactory().factory(angleStyle());
+            if (anglePotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create anglePotential");
+            }
+            loadParamComposite(ar, *anglePotentialPtr_); 
+         }
+         #endif
+
+         #ifdef INTER_DIHEDRAL
+         assert(dihedralPotentialPtr_ == 0);
+         if (simulation().nDihedralType() > 0) {
+            dihedralPotentialPtr_ = 
+                       dihedralFactory().factory(dihedralStyle());
+            if (dihedralPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create dihedralPotential");
+            }
+            loadParamComposite(ar, *dihedralPotentialPtr_); 
+         }
+         #endif
+
+         #ifdef MCMD_LINK
+         assert(linkPotentialPtr_ == 0);
+         if (simulation().nLinkType() > 0) {
+            loadLinkMaster(ar);
+            linkPotentialPtr_ = linkFactory().factory(linkStyle());
+            if (linkPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create linkPotential");
+            }
+            loadParamComposite(ar, *linkPotentialPtr_); 
+         }
+         #endif
+
+         #ifdef INTER_EXTERNAL
+         assert(externalPotentialPtr_ == 0);
+         if (simulation().hasExternal() > 0) {
+            externalPotentialPtr_ = 
+                       externalFactory().factory(externalStyle());
+            if (externalPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create externalPotential");
+            }
+            loadParamComposite(ar, *externalPotentialPtr_); 
+         }
+         #endif
+
+         #ifdef INTER_TETHER
+         if (simulation().hasExternal() > 0) {
+            loadTetherMaster(ar);
+            tetherPotentialPtr_ = 
+                       tetherFactory().factory(tetherStyle(), *this);
+            if (tetherPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create tetherPotential");
+            }
+            loadParamComposite(ar, *tetherPotentialPtr_); 
+         }
+         #endif
+
+         // Read EnergyEnsemble and BoundaryEnsemble
+         loadEnsembles(ar);
+      }
+
+      // Check for MdIntegratorFactory, create default if necessary.
+      if (mdIntegratorFactoryPtr_ == 0) {
+         mdIntegratorFactoryPtr_ = new MdIntegratorFactory(*this);
+         createdMdIntegratorFactory_ = true;
+      }
+
+      // Read polymorphic MdIntegrator 
+      std::string className;
+      mdIntegratorPtr_ = 
+              mdIntegratorFactoryPtr_->loadObject(ar, *this, className);
+      if (!mdIntegratorPtr_) {
+         std::string msg("Unknown MdIntegrator subclass name: ");
+         msg += className;
+         UTIL_THROW(msg.c_str());
+      }
+     
+      #ifdef MCMD_PERTURB
+      // Read Perturbation object for free energy perturbation.
+      loadPerturbation(ar);
+      #endif
+   }
+  
+   /* 
+   * Save parameters.
+   */
+   void MdSystem::saveParameters(Serializable::OArchive& ar) 
+   {
+      if (!isCopy()) {
+         saveFileMaster(ar);
+         savePotentialStyles(ar);
+      }
+      #ifndef INTER_NOPAIR 
+      pairPotentialPtr_->save(ar); 
+      #endif
+      if (!isCopy()) {
+         if (simulation().nBondType() > 0) {
+            bondPotentialPtr_->save(ar); 
+         }
+         #ifdef INTER_ANGLE
+         if (simulation().nAngleType() > 0) {
+            anglePotentialPtr_->save(ar); 
+         }
+         #endif
+         #ifdef INTER_DIHEDRAL
+         if (simulation().nDihedralType() > 0) {
+            dihedralPotentialPtr_->save(ar); 
+         }
+         #endif
+         #ifdef MCMD_LINK
+         if (simulation().nLinkType() > 0) {
+            saveLinkMaster(ar);
+            linkPotentialPtr_->save(ar); 
+         }
+         #endif
+         #ifdef INTER_EXTERNAL
+         assert(externalPotentialPtr_ == 0);
+         if (simulation().hasExternal() > 0) {
+            externalPotentialPtr_->save(ar); 
+         }
+         #endif
+         #ifdef INTER_TETHER
+         if (simulation().hasExternal() > 0) {
+            saveTetherMaster(ar);
+            tetherPotentialPtr_->save(ar); 
+         }
+         #endif
+         saveEnsembles(ar);
+      }
+      mdIntegratorPtr_->save(ar);
+      #ifdef MCMD_PERTURB
+      savePerturbation(ar);
+      #endif
+   }
+  
    /*
    * Read configuration from a specific input stream.
    */
@@ -327,17 +501,15 @@ namespace McMd
       pairPotential().clearPairListStatistics();
       pairPotential().buildPairList();
       #endif
-
       calculateForces();
    }
 
    /* 
    * Load a System configuration from an archive.
    */
-   void MdSystem::load(Serializable::IArchive& ar)
+   void MdSystem::loadConfig(Serializable::IArchive& ar)
    {  
-      System::load(ar); 
-
+      System::loadConfig(ar); 
       #ifndef INTER_NOPAIR 
       pairPotential().clearPairListStatistics();
       pairPotential().buildPairList();

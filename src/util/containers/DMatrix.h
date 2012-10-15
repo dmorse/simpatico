@@ -64,8 +64,8 @@ namespace Util
       /**
       * Serialize a DMatrix to/from an Archive.
       *
-      * \param ar        archive 
-      * \param version   archive version id
+      * \param ar       archive 
+      * \param version  archive version id
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);

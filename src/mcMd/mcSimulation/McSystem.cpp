@@ -297,11 +297,73 @@ namespace McMd
       #endif
       #endif
 
-      #if 0
-      loadConfig(ar);
+   }
+
+   /* 
+   * Save parameters.
+   */
+   void McSystem::saveParameters(Serializable::OArchive& ar) 
+   {
+      saveFileMaster(ar);
+      savePotentialStyles(ar);
+      #ifndef INTER_NOPAIR 
+      assert(pairPotentialPtr_);
+      pairPotentialPtr_->save(ar); 
+      #endif
+      if (simulation().nBondType() > 0) {
+         assert(bondPotentialPtr_);
+         bondPotentialPtr_->save(ar); 
+      }
+      #ifdef INTER_ANGLE
+      if (simulation().nAngleType() > 0) {
+         assert(anglePotentialPtr_);
+         anglePotentialPtr_->save(ar); 
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (simulation().nDihedralType() > 0) {
+         assert(dihedralPotentialPtr_);
+         dihedralPotentialPtr_->save(ar); 
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         saveLinkMaster(ar);
+         assert(linkPotentialPtr_);
+         linkPotentialPtr_->save(ar); 
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      assert(externalPotentialPtr_ == 0);
+      if (simulation().hasExternal() > 0) {
+         assert(externalPotentialPtr_);
+         externalPotentialPtr_->save(ar); 
+      }
+      #endif
+      #ifdef INTER_TETHER
+      if (simulation().hasExternal() > 0) {
+         saveTetherMaster(ar);
+         assert(tetherPotentialPtr_);
+         tetherPotentialPtr_->save(ar); 
+      }
+      #endif
+      saveEnsembles(ar);
+      #ifdef MCMD_PERTURB
+      savePerturbation(ar);
+      #ifdef UTIL_MPI
+      saveReplicaMove(ar);
+      #endif
+      #endif
+   }
+  
+   /* 
+   * Load a System configuration from an archive.
+   */
+   void McSystem::loadConfig(Serializable::IArchive& ar)
+   {  
+      System::loadConfig(ar); 
       #ifndef INTER_NOPAIR
       pairPotential().buildCellList();
-      #endif
       #endif
    }
 

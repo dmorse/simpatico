@@ -350,12 +350,30 @@ namespace McMd
       }
    }
 
+   /*
+   * Load parameters to an archive.
+   */
+   void System::saveParameters(Serializable::OArchive &ar)
+   {
+      if (!isCopy()) {
+         saveFileMaster(ar);
+         savePotentialStyles(ar);
+         #ifdef MCMD_LINK
+         saveLinkMaster(ar);
+         #endif
+         #ifdef INTER_TETHER
+         saveTetherMaster(ar);
+         #endif
+         saveEnsembles(ar);
+      }
+   }
+
    /**
-   * If no FileMaster exists, create and initialize one. 
+   * If no FileMaster exists, create and read one. 
    */
    void System::readFileMaster(std::istream &in)
    {
-      // Create FileMaster if necessary
+      // Create and read FileMaster if necessary
       if (!fileMasterPtr_) {
          fileMasterPtr_ = new FileMaster();
          createdFileMaster_ = true;
@@ -364,7 +382,7 @@ namespace McMd
    }
 
    /*
-   * If no FileMaster exists, create and initialize one. 
+   * If no FileMaster exists, create and load one. 
    */
    void System::loadFileMaster(Serializable::IArchive& ar)
    {
@@ -373,6 +391,16 @@ namespace McMd
          fileMasterPtr_ = new FileMaster();
          createdFileMaster_ = true;
          loadParamComposite(ar, *fileMasterPtr_);
+      }
+   }
+
+   /*
+   * If createdFileMaster_, save to archive.
+   */
+   void System::saveFileMaster(Serializable::OArchive& ar)
+   {
+      if (createdFileMaster_) {
+         fileMasterPtr_->save(ar);
       }
    }
 
@@ -459,6 +487,44 @@ namespace McMd
    }
 
    /*
+   * Save potential style strings.
+   */
+   void System::savePotentialStyles(Serializable::OArchive& ar)
+   {
+      #ifndef INTER_NOPAIR
+      ar << pairStyle_;
+      #endif
+      if (simulation().nBondType() > 0) {
+         ar << bondStyle_;
+      }
+      #ifdef INTER_ANGLE
+      if (simulation().nAngleType() > 0) {
+         ar << angleStyle_;
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (simulation().nDihedralType() > 0) {
+         ar << dihedralStyle_;
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         ar << linkStyle_;
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      if (simulation().hasExternal()) {
+         ar << externalStyle_;
+      }
+      #endif
+      #ifdef INTER_TETHER
+      if (simulation().hasTether()) {
+         ar << tetherStyle_;
+      }
+      #endif
+   }
+
+   /*
    * Create EnergyEnsemble and BoundaryEnsemble
    */
    void System::readEnsembles(std::istream &in)
@@ -468,12 +534,21 @@ namespace McMd
    }
 
    /*
-   * Load EnergyEnsemble and BoundaryEnsemble
+   * Load EnergyEnsemble and BoundaryEnsemble.
    */
    void System::loadEnsembles(Serializable::IArchive& ar)
    {
       loadParamComposite(ar, *energyEnsemblePtr_);
       loadParamComposite(ar, *boundaryEnsemblePtr_);
+   }
+
+   /*
+   * Save EnergyEnsemble and BoundaryEnsemble.
+   */
+   void System::saveEnsembles(Serializable::OArchive& ar)
+   {
+      energyEnsemblePtr_->save(ar);
+      boundaryEnsemblePtr_->save(ar);
    }
 
    #ifdef MCMD_LINK
@@ -492,6 +567,13 @@ namespace McMd
          loadParamComposite(ar, *linkMasterPtr_);
       }
    }
+
+   void System::saveLinkMaster(Serializable::OArchive& ar)
+   {
+      if (simulation().nLinkType() > 0) {
+         linkMasterPtr_->save(ar);
+      }
+   }
    #endif // MCMD_LINK
 
    #ifdef INTER_TETHER
@@ -508,6 +590,13 @@ namespace McMd
       if (simulation().hasTether()) {
          tetherMasterPtr_ = new TetherMaster();
          loadParamComposite(ar, *tetherMasterPtr_);
+      }
+   }
+
+   void System::saveTetherMaster(Serializable::OArchive& ar)
+   {
+      if (simulation().hasTether() > 0) {
+         tetherMasterPtr_->save(ar);
       }
    }
    #endif // INTER_TETHER

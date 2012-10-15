@@ -126,6 +126,13 @@ namespace McMd
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
       /// \name Initialization 
       //@{
 

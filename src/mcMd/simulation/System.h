@@ -173,7 +173,12 @@ namespace McMd
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
-      /// Use default ParamComposite::save()
+      /**
+      * Save internal state from an archive.
+      *
+      * \param ar output/saving archive
+      */
+      void saveParameters(Serializable::OArchive &ar);
 
       //@}
       /// \name Config File IO
@@ -234,7 +239,7 @@ namespace McMd
       *
       * \param ar input/loading archive
       */
-      void loadConfig(Serializable::IArchive& ar);
+      virtual void loadConfig(Serializable::IArchive& ar);
 
       /**
       * Save configuration.
@@ -635,9 +640,16 @@ namespace McMd
       /**
       * If no FileMaster exists, create and initialize one. 
       *
-      * \param ar input parameter stream
+      * \param ar input/loading archive
       */
       void loadFileMaster(Serializable::IArchive& ar);
+
+      /**
+      * If necessary, save FileMaster to archive.
+      *
+      * \param ar output/saving archive
+      */
+      void saveFileMaster(Serializable::OArchive& ar);
 
       /**
       * Read potential styles, initialize LinkMaster or TetherMaster if needed.
@@ -651,9 +663,16 @@ namespace McMd
       /**
       * Load potential styles, initialize LinkMaster or TetherMaster if needed.
       *
-      * \param ar input parameter stream
+      * \param ar input/loading archive
       */
       void loadPotentialStyles(Serializable::IArchive& ar);
+
+      /**
+      * Load potential styles, initialize LinkMaster or TetherMaster if needed.
+      *
+      * \param ar output/saving archive
+      */
+      void savePotentialStyles(Serializable::OArchive& ar);
 
       /**
       * Read energy and boundary ensembles.
@@ -667,9 +686,16 @@ namespace McMd
       /**
       * Load energy and boundary ensembles.
       *
-      * \param ar input parameter stream
+      * \param ar input/loading archive
       */
       void loadEnsembles(Serializable::IArchive& ar);
+
+      /**
+      * Save energy and boundary ensembles.
+      *
+      * \param ar output/saving archive
+      */
+      void saveEnsembles(Serializable::OArchive& ar);
 
       #ifdef MCMD_LINK
       /**
@@ -684,9 +710,16 @@ namespace McMd
       /**
       * Load the LinkMaster.
       *
-      * \param ar input parameter stream
+      * \param ar input archive.
       */
       void loadLinkMaster(Serializable::IArchive& ar);
+
+      /**
+      * Save the LinkMaster.
+      *
+      * \param ar output archive.
+      */
+      void saveLinkMaster(Serializable::OArchive& ar);
       #endif // MCMD_LINK
 
       #ifdef INTER_TETHER
@@ -702,9 +735,16 @@ namespace McMd
       /**
       * Load the TetherMaster.
       *
-      * \param ar input parameter stream
+      * \param ar input/loading archive
       */
       void loadTetherMaster(Serializable::IArchive& ar);
+
+      /**
+      * Save the TetherMaster.
+      *
+      * \param ar output/saving archive
+      */
+      void saveTetherMaster(Serializable::OArchive& ar);
       #endif // INTER_TETHER
 
    private:

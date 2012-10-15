@@ -105,11 +105,11 @@ namespace Util
       */
       Data operator [] (int offset) const;
 
-      /*
+      /**
       * Serialize a RingBuffer to/from an Archive.
       *
-      * \param ar        archive 
-      * \param version   archive version id
+      * \param ar      archive 
+      * \param version archive version id
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);

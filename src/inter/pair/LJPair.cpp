@@ -166,8 +166,7 @@ namespace Inter
       readCArray2D<double>(
                   in, "cutoff", cutoff_[0], nAtomType_, nAtomType_);
    
-      // Initialize dependent variables sigmaSq, cutoffSq, and ljShift,
-      // and calculate maxPairCutoff_
+      // Initialize sigmaSq, cutoffSq, and ljShift, and maxPairCutoff_
       double r6i;
       int i, j;
       maxPairCutoff_ = 0.0;
@@ -181,9 +180,8 @@ namespace Inter
             if (cutoff_[i][j] > maxPairCutoff_ ) {
                maxPairCutoff_ = cutoff_[i][j];
             }
-         } // end for j
-      } // end for i
-
+         } 
+      } 
       isInitialized_ = true;
    }
 
@@ -193,7 +191,7 @@ namespace Inter
    void LJPair::loadParameters(Serializable::IArchive &ar)
    {
       ar >> nAtomType_; 
-      if (nAtomType_ == 0) {
+      if (nAtomType_ <= 0) {
          UTIL_THROW( "nAtomType must be positive");
       }
       // Read parameters
