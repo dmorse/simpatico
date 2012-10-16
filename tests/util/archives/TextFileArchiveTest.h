@@ -51,6 +51,7 @@ void TextFileArchiveTest::testPack()
 
    // Declare variables
    int i1, i2;
+   int u1, u2;
    double d1, d2;
    std::complex<double> c1, c2;
    std::string s1, s2;
@@ -63,6 +64,7 @@ void TextFileArchiveTest::testPack()
 
    // Initialize variables
    i1 = 3;
+   u1 = 7;
    d1 = 45.0;
    c1 = std::complex<double>(3.0, 4.0);
    s1 = "My string has spaces";
@@ -82,6 +84,7 @@ void TextFileArchiveTest::testPack()
   
    // Write variables to OArchive v
    v << i1;
+   v & u1;
    v & d1;
    v << c1;
    v << s1;
@@ -96,6 +99,9 @@ void TextFileArchiveTest::testPack()
 
    u >> i2;
    TEST_ASSERT(i1 == i2);
+
+   u & u2;
+   TEST_ASSERT(u1 == u2);
 
    u & d2;
    TEST_ASSERT(d1 == d2);
