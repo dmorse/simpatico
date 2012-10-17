@@ -41,7 +41,7 @@ namespace McMd
       if (buffer == "MaskBonded" || buffer == "maskBonded") {
          policy = MaskBonded;
       } else {
-         UTIL_THROW("Invalid MaskPolicy string");
+         UTIL_THROW("Invalid MaskPolicy string in operator >>");
       } 
       return in;
    }
@@ -57,7 +57,8 @@ namespace McMd
       if (policy == MaskBonded) {
          out << "MaskBonded";
       } else {
-         UTIL_THROW("This should never happen");
+         std::cout << "Invalid MaskPolicy value on input" << std::endl;
+         //UTIL_THROW("Unrecognized value for MaskPolicy in operator <<.");
       } 
       return out; 
    }

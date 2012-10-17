@@ -26,7 +26,7 @@ namespace McMd
    *
    * \ingroup McMd_Chemistry_Module
    */
-   enum MaskPolicy {MaskNone, MaskBonded};
+   enum MaskPolicy {MaskNone=0, MaskBonded=1};
 
    /**
    * istream extractor for a MaskPolicy.
