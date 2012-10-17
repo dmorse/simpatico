@@ -296,7 +296,9 @@ namespace Util
    {
       int size = data.size();
       ar.pack(size);
-      ar.pack(data);
+      if (size > 0) {
+         ar.pack(data);
+      }
    }
 
    // Explicit serialize functions for namespace Util

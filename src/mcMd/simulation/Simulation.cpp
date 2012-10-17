@@ -309,7 +309,7 @@ namespace McMd
       #ifndef MCMD_NOATOMTYPES
       ar << atomTypes_;
       #endif
-      ar << maskedPairPolicy_;
+      ar & maskedPairPolicy_;
       speciesManagerPtr_->save(ar);
       random_.save(ar);
    }

@@ -50,20 +50,23 @@ namespace Util
    void serialize(TextFileIArchive& ar, std::string& data, 
                   const unsigned int version)
    {
-      static std::vector<char> charvec;
       size_t size;
       ar.unpack(size);
-      if (size > charvec.capacity()) {
-         charvec.reserve(size + 8);
+      if (size > 0) {
+         static std::vector<char> charvec;
+         if (size > charvec.capacity()) {
+            charvec.reserve(size + 8);
+         }
+         // Read endline character after size
+         char   endline;
+         ar.unpack(endline);
+         // Read actual string.
+         ar.unpack(&charvec[0], size);
+         data = &charvec[0];
+      } else {
+         data = "";
       }
-      // Read endline character after size
-      char   endline;
-      ar.unpack(endline);
-      // Read actual string.
-      ar.unpack(&charvec[0], size);
-      data = &charvec[0];
    }
-
 
 }
 #endif

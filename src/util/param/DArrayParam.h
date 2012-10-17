@@ -105,8 +105,9 @@ namespace Util
          }
       }
       #ifdef UTIL_MPI
-         if (hasParamCommunicator()) 
-            bcast<Type>(paramCommunicator(), *arrayPtr_, n_, 0); 
+      if (hasParamCommunicator()) {
+         bcast<Type>(paramCommunicator(), *arrayPtr_, n_, 0); 
+      }
       #endif
 
    }
@@ -159,6 +160,9 @@ namespace Util
       if (isParamIoProcessor()) {
          for (int i = 0; i < n_; ++i) {
             ar >> (*arrayPtr_)[i];
+         }
+         if (ParamComponent::echo()) {
+            writeParam(Log::file());
          }
       }
       #ifdef UTIL_MPI

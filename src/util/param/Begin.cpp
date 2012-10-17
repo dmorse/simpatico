@@ -27,7 +27,6 @@ namespace Util
    void Begin::readParam(std::istream &in)
    {
       if (isParamIoProcessor()) {
-
          // Read label
          std::string actual;
          in >> actual;
@@ -45,7 +44,6 @@ namespace Util
          if (ParamComponent::echo()) {
             writeParam(Log::file());
          }
-
       }
    }
 

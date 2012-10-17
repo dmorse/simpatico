@@ -104,9 +104,15 @@ namespace Util
    */
    void ParamComposite::load(Serializable::IArchive& ar)
    {
-      addBegin(className().c_str());
+      Begin* beginPtr = &addBegin(className().c_str());
+      if (ParamComponent::echo()) {
+         beginPtr->writeParam(Log::file());
+      }
       loadParameters(ar);
-      addEnd();
+      End* endPtr = &addEnd();
+      if (ParamComponent::echo()) {
+         endPtr->writeParam(Log::file());
+      }
    }
 
    /*

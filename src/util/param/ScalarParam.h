@@ -147,7 +147,10 @@ namespace Util
    void ScalarParam<Type>::load(Serializable::IArchive& ar)
    {
       if (isParamIoProcessor()) {
-         ar >> *valuePtr_;
+         ar & *valuePtr_;
+         if (ParamComponent::echo()) {
+            writeParam(Log::file());
+         }
       }
       #ifdef UTIL_MPI
       if (hasParamCommunicator()) {
@@ -161,7 +164,7 @@ namespace Util
    */
    template <class Type>
    void ScalarParam<Type>::save(Serializable::OArchive& ar)
-   {  ar << *valuePtr_; }
+   {  ar & *valuePtr_; }
 
    /*
    * Set the pointer to the parameter value.
