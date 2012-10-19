@@ -7,7 +7,7 @@ MdSimulation{
   nAtomType                              1
   nBondType                              1
   atomTypes                    A       1.0
-  maskedPairPolicy                MaskBonded
+  maskedPairPolicy              MaskBonded
   SpeciesManager{
 
     Homopolymer{
@@ -40,8 +40,7 @@ MdSimulation{
       length                1.000000000000e+00
     }
     EnergyEnsemble{
-      type                  isothermal
-      temperature           1.000000000000e+00
+      type                  adiabatic
     }
     BoundaryEnsemble{
       type                  rigid
@@ -58,7 +57,7 @@ MdSimulation{
     }
 
     MdWriteRestart{
-      interval                           500
+      interval                           200
       fileName                       restart
     }
 
