@@ -106,20 +106,6 @@ namespace McMd
       {}
 
       /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchive& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchive& ar);
-
-      /**
       * Get interval value.
       */
       int interval() const;
@@ -157,9 +143,23 @@ namespace McMd
       * is not a multiple of Diagnostic::baseInterval, or if
       * baseInterval has not been set to a nonzero positive value.
       *
-      * \param in input parameter file stream.
+      * \param in input parameter file stream
       */
       void readInterval(std::istream &in);
+
+      /**
+      * Load interval from archive.
+      *
+      * \param ar input/loading archive
+      */
+      void loadInterval(Serializable::IArchive& ar);
+
+      /**
+      * Save interval to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      void saveInterval(Serializable::OArchive& ar);
 
       /**
       * Read outputFileName from file.
@@ -167,6 +167,20 @@ namespace McMd
       * \param in input parameter file stream.
       */
       void readOutputFileName(std::istream &in);
+
+      /**
+      * Load output file name from archive.
+      *
+      * \param ar input/loading archive
+      */
+      void loadOutputFileName(Serializable::IArchive& ar);
+
+      /**
+      * Save output file name to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      void saveOutputFileName(Serializable::OArchive& ar);
 
       /**
       * Get the FileMaster by reference.

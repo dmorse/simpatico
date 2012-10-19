@@ -117,7 +117,6 @@ namespace McMd
    */
    void Homopolymer::save(Serializable::OArchive &ar)
    {
-      ar << id_;
       ar << moleculeCapacity_;
       ar << nAtom_;
       ar << atomType_;

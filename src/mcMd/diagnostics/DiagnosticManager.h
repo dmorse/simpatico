@@ -62,7 +62,8 @@ namespace McMd
       * Call output method of each diagnostic.
       */
       void output();
- 
+
+      #if 0 
       /**
       * Save state to a binary file archive.
       *
@@ -76,6 +77,7 @@ namespace McMd
       * \param ar binary loading (input) archive.
       */
       virtual void load(Serializable::IArchive& ar);
+      #endif
 
    };
 

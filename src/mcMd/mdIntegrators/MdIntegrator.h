@@ -52,20 +52,6 @@ namespace McMd
       virtual void step() = 0;
 
       /**
-      * Save the internal state to an archive.
-      *
-      * \param ar archive object.
-      */
-      virtual void save(Serializable::OArchive& ar);
-
-      /**
-      * Load the internal state to an archive.
-      *
-      * \param ar archive object.
-      */
-      virtual void load(Serializable::IArchive& ar);
-
-      /**
       * Get Boundary of parent System.
       */
       Boundary&   boundary();

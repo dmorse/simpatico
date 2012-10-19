@@ -68,7 +68,6 @@ namespace McMd
    */
    void Species::loadParameters(Serializable::IArchive& ar)
    {
-      ar >> id_;
       loadParameter<int>(ar, "moleculeCapacity", moleculeCapacity_);
       reservoir_.allocate(moleculeCapacity_);
 

@@ -29,7 +29,7 @@ namespace Util{
    /**
    * Set the temperature.
    */
-   void  EnergyEnsemble::setTemperature(double temperature)
+   void EnergyEnsemble::setTemperature(double temperature)
    {
       if (!isIsothermal()) {
 	 UTIL_THROW("Must be an isothermal ensemble");
@@ -57,10 +57,9 @@ namespace Util{
    { 
       loadParameter<Type>(ar, "type", type_);
       if (isIsothermal()) {
-         add<double>("temperature", temperature_);
+         loadParameter<double>(ar, "temperature", temperature_);
+         ar >> beta_;
       }
-      ar >> temperature_;
-      ar >> beta_;
    }
 
    /*
@@ -69,8 +68,10 @@ namespace Util{
    void EnergyEnsemble::save(Serializable::OArchive &ar)
    { 
       ar << type_;
-      ar << temperature_;
-      ar << beta_;
+      if (isIsothermal()) {
+         ar << temperature_;
+         ar << beta_;
+      }
    }
 
    /*

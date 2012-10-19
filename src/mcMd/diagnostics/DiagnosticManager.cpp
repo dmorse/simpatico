@@ -75,6 +75,7 @@ namespace McMd
       }
    }
 
+   #if 0
    /*
    * Save state to binary file archive.
    */
@@ -94,6 +95,7 @@ namespace McMd
          (*this)[i].load(ar);
       }
    }
+   #endif
 
 }
 #endif

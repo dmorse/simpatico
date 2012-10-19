@@ -43,10 +43,8 @@ namespace McMd
    void NveVvIntegrator::readParameters(std::istream &in) 
    {
       read<double>(in, "dt", dt_);
-
       int nAtomType = simulation().nAtomType();
       prefactors_.allocate(nAtomType);
-
    }
 
    /*
@@ -55,6 +53,8 @@ namespace McMd
    void NveVvIntegrator::loadParameters(Serializable::IArchive& ar)
    {  
       loadParameter<double>(ar, "dt", dt_);
+      int nAtomType = simulation().nAtomType();
+      prefactors_.allocate(nAtomType);
       ar & prefactors_;
    }
 

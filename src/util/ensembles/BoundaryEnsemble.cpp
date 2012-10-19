@@ -53,9 +53,8 @@ namespace Util
    { 
       loadParameter<Type>(ar, "type", type_);
       if (isIsobaric()) {
-         add<double>("pressure", pressure_);
+         loadParameter<double>(ar, "pressure", pressure_);
       }
-      ar >> pressure_;
    }
 
    /*
@@ -64,7 +63,9 @@ namespace Util
    void BoundaryEnsemble::save(Serializable::OArchive &ar)
    { 
       ar << type_;
-      ar << pressure_;
+      if (isIsobaric()) {
+         ar << pressure_;
+      }
    }
 
    /*

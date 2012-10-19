@@ -312,7 +312,7 @@ namespace Util
 
       // Read the class name.
       if (paramFileIo_.isIoProcessor()) {
-         ar >> className;
+         ar & className;
       }
 
       #ifdef UTIL_MPI
@@ -326,6 +326,9 @@ namespace Util
       Data* typePtr = factory(className);
       if (typePtr) {
          parent.loadParamComposite(ar, *typePtr);
+      } else {
+         Log::file() << "Failed attempt to create instance of " 
+                     << className << std::endl;
       }
       return typePtr;
    }

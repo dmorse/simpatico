@@ -134,7 +134,6 @@ namespace McMd
    */
    void Diblock::save(Serializable::OArchive &ar)
    {
-      ar << id_;
       ar << moleculeCapacity_;
       ar.pack(blockLengths_, 2);
       ar.pack(atomTypes_, 2);

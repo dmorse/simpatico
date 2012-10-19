@@ -161,6 +161,9 @@ namespace Util
                ar >> value_[i*n_ + j];
             }
          }
+         if (ParamComponent::echo()) {
+            writeParam(Log::file());
+         }
       }
       #ifdef UTIL_MPI
       if (hasParamCommunicator()) {

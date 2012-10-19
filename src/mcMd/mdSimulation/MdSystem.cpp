@@ -484,12 +484,14 @@ namespace McMd
          #endif
          saveEnsembles(ar);
       }
+      std::string className = mdIntegratorPtr_->className();
+      ar & className;
       mdIntegratorPtr_->save(ar);
       #ifdef MCMD_PERTURB
       savePerturbation(ar);
       #endif
    }
-  
+
    /*
    * Read configuration from a specific input stream.
    */

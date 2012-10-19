@@ -45,7 +45,6 @@ namespace McMd
    */
    void Diagnostic::readInterval(std::istream &in) 
    {
-   
       // Check that baseInterval has a nonzero, positive value
       if (baseInterval == 0) {
          UTIL_THROW("baseInterval == 0");
@@ -57,36 +56,75 @@ namespace McMd
       // Read interval value (inherited from Interval)
       read<long>(in, "interval", interval_);
    
-      // Check that interval has a nonzero, positive value
+      // Postconditons
       if (interval_ == 0) {
          UTIL_THROW("interval_ == 0");
       }
       if (interval_ < 0) {
          UTIL_THROW("interval_ < 0");
       }
-
-      // Check that interval is a multiple of baseInterval
       if (interval_ % baseInterval != 0) {
          UTIL_THROW("interval is not a multiple of baseInterval");
       }
-   
    }
+
+   /*
+   * Load interval from archive.
+   */
+   void Diagnostic::loadInterval(Serializable::IArchive& ar)
+   {
+      // Check that baseInterval has a nonzero, positive value
+      if (baseInterval == 0) {
+         UTIL_THROW("baseInterval == 0");
+      }
+      if (baseInterval < 0) {
+         UTIL_THROW("baseInterval < 0");
+      }
+   
+      // Read interval value (inherited from Interval)
+      loadParameter<long>(ar, "interval", interval_);
+   
+      // Postconditons
+      if (interval_ == 0) {
+         UTIL_THROW("interval_ == 0");
+      }
+      if (interval_ < 0) {
+         UTIL_THROW("interval_ < 0");
+      }
+      if (interval_ % baseInterval != 0) {
+         UTIL_THROW("interval is not a multiple of baseInterval");
+      }
+   }
+
+   /*
+   * Save interval to an archive.
+   */
+   void Diagnostic::saveInterval(Serializable::OArchive& ar)
+   {  ar & interval_; }
 
    /*
    * Read output file name and open output file.
    */
    void Diagnostic::readOutputFileName(std::istream &in) 
-   {  
-      read<std::string>(in, "outputFileName", outputFileName_); 
-   }
+   {  read<std::string>(in, "outputFileName", outputFileName_); }
+
+   /*
+   * Load output file name from archive.
+   */
+   void Diagnostic::loadOutputFileName(Serializable::IArchive& ar)
+   {  ar & outputFileName_; }
+
+   /*
+   * Save output file name to an archive.
+   */
+   void Diagnostic::saveOutputFileName(Serializable::OArchive& ar)
+   {  ar & outputFileName_; }
 
    /*
    * Set the FileMaster.
    */
    void Diagnostic::setFileMaster(FileMaster& fileMaster)
-   { 
-      fileMasterPtr_ = &fileMaster;
-   }
+   {  fileMasterPtr_ = &fileMaster; }
 
    /*
    * Get the FileMaster by reference.
@@ -106,18 +144,6 @@ namespace McMd
       filename += suffix;
       return filename;
    }
-
-   /*
-   * Save state to binary file archive.
-   */
-   void Diagnostic::save(Serializable::OArchive& ar)
-   {}
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void Diagnostic::load(Serializable::IArchive& ar)
-   {}
 
 }
 #endif

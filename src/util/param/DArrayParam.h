@@ -158,6 +158,11 @@ namespace Util
          UTIL_THROW("Error: DArray capacity < n");
       }
       if (isParamIoProcessor()) {
+         int n;
+         ar >> n;
+         if (n != n_) {
+            UTIL_THROW("Inconsistent DArrayParam sizes");
+         }
          for (int i = 0; i < n_; ++i) {
             ar >> (*arrayPtr_)[i];
          }
@@ -185,7 +190,7 @@ namespace Util
       if (arrayPtr_->capacity() < n_) {
          UTIL_THROW("Error: DArray capacity < n");
       }
-
+      ar << n_;
       for (int i = 0; i < n_; ++i) {
          ar << (*arrayPtr_)[i];
       }

@@ -98,7 +98,7 @@ namespace Util
       *
       * \param ar input/loading archive
       */
-      virtual void load(Serializable::IArchive &ar);
+      virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
       * Save a set of objects to an output archive.
@@ -305,17 +305,15 @@ namespace Util
    * Read instructions for creating objects from file.
    */
    template <typename Data>
-   void Manager<Data>::load(Serializable::IArchive &ar)
+   void Manager<Data>::loadParameters(Serializable::IArchive &ar)
    {
       int size;
       Data* typePtr;
       std::string name;
-      std::string managerName = ParamComposite::className();
 
       // Check if a Factory exists, create one if necessary.
       initFactory();
 
-      addBegin(managerName.c_str());
       ar >> size;
       for (int i = 0; i < size; ++i) {
          addBlank();
@@ -329,7 +327,7 @@ namespace Util
          }
       }
       addBlank();
-      addEnd();
+
    }
 
    /*
