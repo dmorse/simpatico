@@ -204,7 +204,7 @@ namespace McMd
 
       Simulation::loadParameters(ar); 
       loadParamComposite(ar, system_); 
-      //loadParamComposite(ar, diagnosticManager());
+      loadParamComposite(ar, diagnosticManager());
       system_.loadConfig(ar);
       ar & iStep_;
 
@@ -219,7 +219,7 @@ namespace McMd
    { 
       Simulation::save(ar); 
       system_.saveParameters(ar);
-      //diagnosticManager().save(ar);
+      diagnosticManager().save(ar);
       system_.saveConfig(ar);
       ar & iStep_;
    }

@@ -288,7 +288,7 @@ namespace Util
    {
       beginReadManager(in);
       readChildren(in);
-      addEnd();
+      endReadManager();
    }
 
    /*
@@ -299,49 +299,6 @@ namespace Util
    {
       std::string managerName = ParamComposite::className();
       readBegin(in, managerName.c_str());
-   }
-
-   /*
-   * Read instructions for creating objects from file.
-   */
-   template <typename Data>
-   void Manager<Data>::loadParameters(Serializable::IArchive &ar)
-   {
-      int size;
-      Data* typePtr;
-      std::string name;
-
-      // Check if a Factory exists, create one if necessary.
-      initFactory();
-
-      ar >> size;
-      for (int i = 0; i < size; ++i) {
-         addBlank();
-         typePtr = factoryPtr_->loadObject(ar, *this, name);
-         if (typePtr) {
-            append(*typePtr, name);
-         } else {
-            std::string msg("Unknown subclass name: ");
-            msg += name;
-            UTIL_THROW(msg.c_str());
-         }
-      }
-      addBlank();
-
-   }
-
-   /*
-   * Read instructions for creating objects from file.
-   */
-   template <typename Data>
-   void Manager<Data>::save(Serializable::OArchive &ar)
-   {
-      int size = ptrs_.size();
-      ar << size;
-      for (int i = 0; i < size; ++i) {
-         ar << names_[i];
-         (ptrs_[i])->save(ar);
-      }
    }
 
    /*
@@ -377,7 +334,6 @@ namespace Util
 
       }
    }
-
    
    /*
    * Add closing bracket.
@@ -388,6 +344,48 @@ namespace Util
       End* endPtr = &addEnd();
       if (ParamComponent::echo() && isParamIoProcessor()) {
          endPtr->writeParam(Log::file());
+      }
+   }
+
+   /*
+   * Read instructions for creating objects from file.
+   */
+   template <typename Data>
+   void Manager<Data>::loadParameters(Serializable::IArchive &ar)
+   {
+      int size;
+      Data* typePtr;
+      std::string name;
+
+      // Check if a Factory exists, create one if necessary.
+      initFactory();
+
+      ar >> size;
+      for (int i = 0; i < size; ++i) {
+         addBlank();
+         typePtr = factoryPtr_->loadObject(ar, *this, name);
+         if (typePtr) {
+            append(*typePtr, name);
+         } else {
+            std::string msg("Unknown subclass name: ");
+            msg += name;
+            UTIL_THROW(msg.c_str());
+         }
+      }
+      addBlank();
+   }
+
+   /*
+   * Read instructions for creating objects from file.
+   */
+   template <typename Data>
+   void Manager<Data>::save(Serializable::OArchive &ar)
+   {
+      int size = ptrs_.size();
+      ar << size;
+      for (int i = 0; i < size; ++i) {
+         ar << names_[i];
+         (ptrs_[i])->save(ar);
       }
    }
 

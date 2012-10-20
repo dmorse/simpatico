@@ -31,11 +31,20 @@ namespace McMd
       LogProgress();
 
       /**
-      * Read interval.
+      * Read interval parameter.
       *
       * \param in input parameter file
       */
       virtual void readParameters(std::istream& in);
+   
+      /**
+      * Load interval from archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      // Use Diagnostic::save() and Diagnostic::serializable().
    
       /**
       * Write iStep to Log file. 

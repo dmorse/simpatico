@@ -45,6 +45,20 @@ namespace McMd
       virtual void readParam(std::istream &in);
 
       /**
+      * Load state from a binary file archive.
+      *
+      * \param ar binary loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to a binary file archive.
+      *
+      * \param ar binary saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+
+      /**
       * Call initialize method of each Diagnostic.
       * 
       * This method should be called just before the main
@@ -62,22 +76,6 @@ namespace McMd
       * Call output method of each diagnostic.
       */
       void output();
-
-      #if 0 
-      /**
-      * Save state to a binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchive& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchive& ar);
-      #endif
 
    };
 

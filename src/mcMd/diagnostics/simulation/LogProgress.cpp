@@ -29,6 +29,15 @@ namespace McMd
    {  readInterval(in); }
 
    /*
+   * Load interval and empty outputFileName.
+   */
+   void LogProgress::loadParameters(Serializable::IArchive& ar) 
+   {  
+      loadInterval(ar);     // Load value and add to param file format.
+      ar & outputFileName_; // Load empty string, don't add to format.
+   }
+
+   /*
    * Dump configuration to file
    */
    void LogProgress::sample(long iStep) 

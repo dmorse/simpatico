@@ -58,7 +58,7 @@ MdSimulation{
 
     MdWriteRestart{
       interval                           200
-      fileName                       restart
+      outputFileName                 restart
     }
 
   }

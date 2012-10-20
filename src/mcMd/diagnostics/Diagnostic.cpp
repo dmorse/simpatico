@@ -30,8 +30,8 @@ namespace McMd
    Diagnostic::Diagnostic()
     : ParamComposite(),
       outputFileName_(),
-      fileMasterPtr_(0),
-      interval_(1)
+      interval_(1),
+      fileMasterPtr_(0)
    {}
    
    /* 
@@ -40,6 +40,15 @@ namespace McMd
    Diagnostic::~Diagnostic()
    {}
    
+   /*
+   * Read parameters from stream, default implementation.
+   */
+   void Diagnostic::readParameters(std::istream& in)
+   {
+      readInterval(in);
+      readOutputFileName(in);
+   }
+
    /*
    * Read the interval from parameter file, with error checking.
    */
@@ -68,8 +77,20 @@ namespace McMd
       }
    }
 
+   void Diagnostic::readOutputFileName(std::istream &in) 
+   {  read<std::string>(in, "outputFileName", outputFileName_); }
+
    /*
-   * Load interval from archive.
+   * Load parameters from archive, default implementation.
+   */
+   void Diagnostic::loadParameters(Serializable::IArchive& ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
+   }
+
+   /*
+   * Load parameters from archive, with error checking.
    */
    void Diagnostic::loadInterval(Serializable::IArchive& ar)
    {
@@ -81,7 +102,7 @@ namespace McMd
          UTIL_THROW("baseInterval < 0");
       }
    
-      // Read interval value (inherited from Interval)
+      // Load parameters
       loadParameter<long>(ar, "interval", interval_);
    
       // Postconditons
@@ -97,28 +118,19 @@ namespace McMd
    }
 
    /*
-   * Save interval to an archive.
-   */
-   void Diagnostic::saveInterval(Serializable::OArchive& ar)
-   {  ar & interval_; }
-
-   /*
-   * Read output file name and open output file.
-   */
-   void Diagnostic::readOutputFileName(std::istream &in) 
-   {  read<std::string>(in, "outputFileName", outputFileName_); }
-
-   /*
-   * Load output file name from archive.
+   * Load outputFileName from archive.
    */
    void Diagnostic::loadOutputFileName(Serializable::IArchive& ar)
-   {  ar & outputFileName_; }
+   { loadParameter<std::string>(ar, "outputFileName", outputFileName_); }
 
    /*
-   * Save output file name to an archive.
+   * Save interval and outputFileName to archive.
    */
-   void Diagnostic::saveOutputFileName(Serializable::OArchive& ar)
-   {  ar & outputFileName_; }
+   void Diagnostic::save(Serializable::OArchive& ar)
+   {
+      ar & interval_;
+      ar & outputFileName_;
+   }
 
    /*
    * Set the FileMaster.
