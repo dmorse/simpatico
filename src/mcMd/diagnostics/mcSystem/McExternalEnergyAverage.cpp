@@ -85,7 +85,7 @@ namespace McMd
            }
       }
 
-      accumulator_.sample(-1.0*energy, outputFile_);
+      accumulator_.sample(energy, outputFile_);
    }
 
    /*
