@@ -100,16 +100,14 @@ namespace Util
    /* 
    * Read parameters and initialize.
    */
-   void Distribution::readParam(std::istream& in)
+   void Distribution::readParameters(std::istream& in)
    {
-      readBegin(in,"Distribution");
       read<double>(in, "min", min_);
       read<double>(in, "max", max_);
       read<int>(in,   "nBin", nBin_);
       binWidth_  = (max_ - min_)/double(nBin_);
       histogram_.allocate(nBin_);
       clear();
-      readEnd(in);
    }
   
    /*
@@ -169,33 +167,6 @@ namespace Util
          out << Dbl(x, 18, 8) << Dbl(rho, 18, 8) << std::endl;
       }
    }
-  
-   #if 0 
-   /* 
-   *
-   */
-   void Distribution::backup(FILE *file) 
-   {
-      fprintf(file, "nSample       %i \n", nSample_);
-      fprintf(file, "nReject       %i \n", nReject_);
-      for (int i=0; i < nBin_; ++i) {
-         fprintf(file, "%li ", histogram_[i]);
-      }
-      fprintf(file, "\n");
-   }
-   
-   /* 
-   *
-   */
-   void Distribution::restore(FILE *file) {
-      fscanf(file, "nSample       %i \n", &nSample_);
-      fscanf(file, "nReject       %i \n", &nReject_);
-      for (int i=0; i < nBin_; ++i) {
-         fscanf(file, "%li ", &histogram_[i]);
-      }
-      fscanf(file, "\n");
-   }
-   #endif
 
 }
 #endif

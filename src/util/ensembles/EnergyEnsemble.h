@@ -94,7 +94,7 @@ namespace Util
       
       #ifdef UTIL_MPI
       /**
-      * Commit associated MPI DataType.
+      * Commit MPI data type for an EnergyEnsemble.
       */
       static void commitMpiType();
       #endif
@@ -132,32 +132,36 @@ namespace Util
 
    // Inline methods
  
-   /**
+   /*
    * Return the temperature.
    */
    inline double EnergyEnsemble::temperature() const
    {  return temperature_; }
 
-   /**
+   /*
    * Return the inverse temperature.
    */
    inline double EnergyEnsemble::beta() const
    {  return beta_; }
 
-   // Return true if this is an Adiabatic ensemble.
+   /*
+   * Return true if this is an adiabatic ensemble.
+   */
    inline bool EnergyEnsemble::isAdiabatic() const
    { return (type_ == ADIABATIC); }
- 
-   // Return true if this is an IsothermalEnsemble.
+
+   /* 
+   * Return true if this is an IsothermalEnsemble.
+   */
    inline bool EnergyEnsemble::isIsothermal() const
    { return (type_ == ISOTHERMAL); }
 
    /**
    * Serialize a EnergyEnsemble::Type enum value.
    *
-   * \param ar      archive object
-   * \param data    enum value to be serialized
-   * \param version archive version id
+   * \param ar  archive object
+   * \param data  enum value to be serialized
+   * \param version  archive version id
    */
    template <class Archive>
    inline void serialize(Archive& ar, EnergyEnsemble::Type& data, const unsigned int version)

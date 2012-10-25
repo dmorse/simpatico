@@ -17,7 +17,7 @@
 
 namespace Util{
 
-   /**
+   /*
    * Constructor.
    */
    EnergyEnsemble::EnergyEnsemble(Type type)
@@ -26,7 +26,7 @@ namespace Util{
       type_(type)
    {  setClassName("EnergyEnsemble"); }
 
-   /**
+   /*
    * Set the temperature.
    */
    void EnergyEnsemble::setTemperature(double temperature)
@@ -38,7 +38,7 @@ namespace Util{
       beta_        = 1.0/temperature;
    }
 
-   /**
+   /*
    * Read the type and (if necessary) temperature from file.
    */
    void EnergyEnsemble::readParameters(std::istream& in)
@@ -107,19 +107,19 @@ namespace Util{
    }
 
    #ifdef UTIL_MPI
-   /**
+   /*
    * Initialize EnergyEnsemble MPI Datatype.
    */
    MPI::Datatype MpiTraits<EnergyEnsemble>::type = MPI::BYTE;
    bool MpiTraits<EnergyEnsemble>::hasType = false;
 
-   /**
+   /*
    * Initialize EnergyEnsemble::Type MPI Datatype.
    */
    MPI::Datatype MpiTraits<EnergyEnsemble::Type>::type = MPI::INT;
    bool MpiTraits<EnergyEnsemble::Type>::hasType = true;
 
-   /**
+   /*
    * Commit MPI Datatype.
    */
    void EnergyEnsemble::commitMpiType()

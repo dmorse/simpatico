@@ -25,9 +25,9 @@ namespace Util
    {  setClassName("BoundaryEnsemble"); }
 
    /*
-   * Set the pressure.
+   * Set the target pressure.
    */
-   void  BoundaryEnsemble::setPressure(double pressure)
+   void BoundaryEnsemble::setPressure(double pressure)
    {
       if (!isIsobaric()) {
 	 UTIL_THROW("Must be an isobaric ensemble");
@@ -104,15 +104,11 @@ namespace Util
    }
 
    #ifdef UTIL_MPI
-   /**
-   * Initialize BoundaryEnsemble MPI Datatype.
-   */
+   // Initialize BoundaryEnsemble MPI Datatype.
    MPI::Datatype MpiTraits<BoundaryEnsemble>::type = MPI::BYTE;
    bool MpiTraits<BoundaryEnsemble>::hasType = false;
 
-   /**
-   * Initialize BoundaryEnsemble::Type MPI Datatype.
-   */
+   // Initialize BoundaryEnsemble::Type MPI Datatype.
    MPI::Datatype MpiTraits<BoundaryEnsemble::Type>::type = MPI::INT;
    bool MpiTraits<BoundaryEnsemble::Type>::hasType = true;
 

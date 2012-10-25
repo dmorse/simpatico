@@ -59,7 +59,7 @@ MdSimulation{
 
     MdWriteRestart{
       interval                         10000
-      fileName                       restart
+      outputFileName                 restart
     }
 
     MdEnergyOutput{

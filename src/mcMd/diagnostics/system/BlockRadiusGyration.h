@@ -105,7 +105,7 @@ namespace McMd
       *
       * \param ar binary loading (input) archive.
       */
-      virtual void load(Serializable::IArchive& ar);
+      virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
       * Serialize to/from an archive. 
@@ -127,7 +127,7 @@ namespace McMd
       /// Array of center of mass vectors for blocks of different types
       DArray<Vector> rCom_;
       
-      /// Pointer to array of number of atoms in blocks of different types
+      /// Array of number of atoms in blocks of different types
       DArray<int>  iTypeNAtom_;
       
       /// Pointer to relevant Species.
@@ -159,12 +159,13 @@ namespace McMd
    template <class Archive>
    void BlockRadiusGyration::serialize(Archive& ar, const unsigned int version)
    {  
-      ar &  accumulators_;
-      serializeCheck(ar, nSamplePerBlock_, "nSamplePerBlock");
-      serializeCheck(ar, speciesId_, "speciesId");
-      serializeCheck(ar, nAtom_, "nAtom");
-      serializeCheck(ar, nAtomType_, "nAtomType");
-      serializeCheck(ar, nAtomTypePairs_, "nAtomTypePairs");
+      Diagnostic::serialize(ar, version);
+      ar & nSamplePerBlock_;
+      ar & speciesId_;
+      ar & nAtom_;
+      ar & nAtomType_;
+      ar & nAtomTypePairs_;
+      ar & accumulators_;
    }
 
 }

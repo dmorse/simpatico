@@ -171,10 +171,6 @@ namespace McMd
       /**
       * Read interval from file, with error checking.
       *
-      * This function throws an exception if the value of interval
-      * is not a multiple of Diagnostic::baseInterval, or if
-      * baseInterval has not been set to a nonzero positive value.
-      *
       * \param in input parameter file stream
       */
       void readInterval(std::istream &in);

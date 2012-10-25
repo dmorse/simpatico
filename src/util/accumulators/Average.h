@@ -135,16 +135,16 @@ namespace Util
       void sample(double value, std::ostream* outPtr);
 
       /// Array of pointers to descendants.
-      std::vector<AverageStage*> descendants_;
+      std::vector<AverageStage*>  descendants_;
  
       /// Sum of values in current output block
-      double blockSum_;    
+      double  blockSum_;    
 
       /// Number of samples in current output block.
-      int    iBlock_;     
+      int  iBlock_;     
       
       /// Number of sampled values per output block.
-      int    nSamplePerBlock_;  
+      int  nSamplePerBlock_;  
 
       /// Private and not implemented to prohibit copying.
       Average(const Average& other);

@@ -56,7 +56,7 @@ namespace Util
       *
       * \param in input parameter file stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
   
       /** 
       * Set parameters and initialize.
@@ -172,13 +172,16 @@ namespace Util
    template <class Archive>
    void Distribution::serialize(Archive& ar, const unsigned int version)
    {
-      ar & histogram_; 
       ar & min_;        
       ar & max_;    
-      ar & binWidth_;  
       ar & nBin_;     
       ar & nSample_;   
       ar & nReject_;    
+      ar & binWidth_;  
+      ar & histogram_; 
+      if (histogram_.capacity() != nBin_) {
+         UTIL_THROW("Inconsistent histogram capacity");
+      }
    }
         
 }

@@ -41,7 +41,7 @@ namespace McMd
       isInitialized_(false)
    {  setClassName("BlockRadiusGyration"); }
 
-   /// Read parameters from file, and allocate data array.
+   /// Read parameters from file, and allocate arrays.
    void BlockRadiusGyration::readParameters(std::istream& in) 
    {
       readInterval(in);
@@ -91,6 +91,72 @@ namespace McMd
    }
 
    /*
+   * Load state from a binary file archive.
+   */
+   void BlockRadiusGyration::loadParameters(Serializable::IArchive& ar)
+   {
+      // Load (everything but accumulators_)
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      ar & nAtom_;
+      ar & nAtomType_;
+      ar & nAtomTypePairs_;
+
+      speciesPtr_ = &system().simulation().species(speciesId_);
+
+      // Validate
+      if (speciesId_ < 0) {
+         UTIL_THROW("Negative speciesId");
+      }
+      if (speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("speciesId > nSpecies");
+      }
+      if (nAtom_ != speciesPtr_->nAtom()) {
+         UTIL_THROW("Inconsistent nAtomType");
+      }
+      if (nAtomType_ != system().simulation().nAtomType()) {
+         UTIL_THROW("Inconsistent nAtomType");
+      }
+      {
+         int nPairTypes = 0;
+         int i, j;
+         for (i = 0; i < nAtomType_; ++i) {
+            for (j = i+1; j < nAtomType_; ++j) {
+               ++nPairTypes;
+            }
+         }
+         if (nAtomTypePairs_ != nPairTypes) {
+            UTIL_THROW("Inconsistent nAtomTypePairs");
+         }
+      }
+
+      // Allocate
+      positions_.allocate(nAtom_); 
+      rCom_.allocate(nAtomType_); 
+      iTypeNAtom_.allocate(nAtomType_); 
+      accumulators_.allocate(nAtomType_ + nAtomTypePairs_);
+      for (int i = 0; i < nAtomType_+nAtomTypePairs_; ++i) {
+         accumulators_[i].setNSamplePerBlock(nSamplePerBlock_);
+      }
+
+      ar & accumulators_;
+
+      // If nSamplePerBlock != 0, open an output file for block averages.
+      if (accumulators_[0].nSamplePerBlock()) {
+         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      }
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to binary file archive.
+   */
+   void BlockRadiusGyration::save(Serializable::OArchive& ar)
+   { ar & *this; }
+
+   /*
    * Clear accumulators.
    */
    void BlockRadiusGyration::setup() 
@@ -111,8 +177,8 @@ namespace McMd
 
          Molecule* moleculePtr;
          Vector    r1, r2, dR;
-         DArray<double> dRSq;      //to store dRSq of different atomTypes
-         DArray<double> dRSqPair;  //to store dRSq of different atomTypePairs
+         DArray<double> dRSq;      // to store dRSq of different atomTypes
+         DArray<double> dRSqPair;  // to store dRSq of different atomTypePairs
          int       i, j, k, l, m, typeId, nMolecule;
 
          dRSq.allocate(nAtomType_);
@@ -197,6 +263,7 @@ namespace McMd
    void BlockRadiusGyration::output() 
    {
       int i, j, k; 
+
       // If outputFile_ was used to write block averages, close it.
       if (accumulators_[0].nSamplePerBlock()) {
          outputFile_.close();
@@ -222,18 +289,6 @@ namespace McMd
       outputFile_.close();
 
    }
-
-   /*
-   * Save state to binary file archive.
-   */
-   void BlockRadiusGyration::save(Serializable::OArchive& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void BlockRadiusGyration::load(Serializable::IArchive& ar)
-   { ar & *this; }
 
 }
 #endif 

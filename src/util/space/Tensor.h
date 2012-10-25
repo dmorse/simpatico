@@ -257,8 +257,6 @@ namespace Util
       /**
       * Serialize to/from an archive.
       *
-      * Implementation uses syntax of Boost::serialize.
-      *
       * \param ar       archive
       * \param version  archive version id
       */
