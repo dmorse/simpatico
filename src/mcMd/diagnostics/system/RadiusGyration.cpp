@@ -31,7 +31,6 @@ namespace McMd
    /// Read parameters from file, and allocate data array.
    void RadiusGyration::readParameters(std::istream& in) 
    {
-
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
@@ -61,6 +60,45 @@ namespace McMd
 
       isInitialized_ = true;
    }
+
+   /*
+   * Load state from an archive.
+   */
+   void RadiusGyration::loadParameters(Serializable::IArchive& ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      ar & nAtom_;
+
+      // Validate
+      if (speciesId_ < 0) {
+         UTIL_THROW("Negative speciesId");
+      }
+      if (speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("speciesId > nSpecies");
+      }
+      speciesPtr_ = &system().simulation().species(speciesId_);
+      if (nAtom_ != speciesPtr_->nAtom()) {
+         UTIL_THROW("Inconsistent values for nAtom");
+      }
+
+      ar & accumulator_;
+      positions_.allocate(nAtom_); 
+      ar & positions_;
+
+      // If nSamplePerBlock != 0, open an output file for block averages.
+      if (nSamplePerBlock_) {
+         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      }
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save to archive.
+   */
+   void RadiusGyration::save(Serializable::OArchive& ar)
+   { ar & *this; }
 
    /*
    * Clear accumulator.
@@ -137,16 +175,5 @@ namespace McMd
       outputFile_.close();
    }
 
-   /*
-   * Save state to binary file archive.
-   */
-   void RadiusGyration::save(Serializable::OArchive& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void RadiusGyration::load(Serializable::IArchive& ar)
-   { ar & *this; }
 }
 #endif 

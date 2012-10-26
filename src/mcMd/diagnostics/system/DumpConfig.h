@@ -57,19 +57,6 @@ namespace McMd
       virtual void readParameters(std::istream& in);
    
       /**
-      * Clear nSample counter.
-      */
-      virtual void setup();
-  
-      /**
-      * Dump configuration to file
-      *
-      * \param iStep MC step index
-      */
-      virtual void sample(long iStep);
-  
-
-      /**
       * Save state to binary file archive.
       *
       * \param ar binary saving (output) archive.
@@ -81,7 +68,7 @@ namespace McMd
       *
       * \param ar binary loading (input) archive.
       */
-      virtual void load(Serializable::IArchive& ar);
+      virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
       * Serialize to/from an archive. 
@@ -92,6 +79,18 @@ namespace McMd
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
 
+      /**
+      * Clear nSample counter.
+      */
+      virtual void setup();
+  
+      /**
+      * Dump configuration to file
+      *
+      * \param iStep MC step index
+      */
+      virtual void sample(long iStep);
+  
    private:
       
       // Output file stream
@@ -111,9 +110,7 @@ namespace McMd
    template <class Archive>
    void DumpConfig::serialize(Archive& ar, const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
+      Diagnostic::serialize(ar, version);
       ar & nSample_;
    }
 

@@ -130,6 +130,12 @@ namespace McMd
       /// Array of number of atoms in blocks of different types
       DArray<int>  iTypeNAtom_;
       
+      /// Values of dRSq for atom types i=j (temporary storage)
+      DArray<double> dRSq_; 
+
+      /// Values of dRSq for atom types i !=j (not persistent)
+      DArray<double> dRSqPair_;  
+
       /// Pointer to relevant Species.
       Species*  speciesPtr_;
 

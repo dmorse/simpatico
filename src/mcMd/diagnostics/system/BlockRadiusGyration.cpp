@@ -32,6 +32,8 @@ namespace McMd
       positions_(),
       rCom_(),
       iTypeNAtom_(),
+      dRSq_(),
+      dRSqPair_(),
       speciesPtr_(0),
       nAtomType_(-1),
       nAtomTypePairs_(-1),
@@ -135,6 +137,8 @@ namespace McMd
       positions_.allocate(nAtom_); 
       rCom_.allocate(nAtomType_); 
       iTypeNAtom_.allocate(nAtomType_); 
+      dRSq_.allocate(nAtomType_);
+      dRSqPair_.allocate(nAtomTypePairs_);
       accumulators_.allocate(nAtomType_ + nAtomTypePairs_);
       for (int i = 0; i < nAtomType_+nAtomTypePairs_; ++i) {
          accumulators_[i].setNSamplePerBlock(nSamplePerBlock_);
@@ -146,7 +150,6 @@ namespace McMd
       if (accumulators_[0].nSamplePerBlock()) {
          fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       }
-
       isInitialized_ = true;
    }
 
@@ -177,19 +180,15 @@ namespace McMd
 
          Molecule* moleculePtr;
          Vector    r1, r2, dR;
-         DArray<double> dRSq;      // to store dRSq of different atomTypes
-         DArray<double> dRSqPair;  // to store dRSq of different atomTypePairs
          int       i, j, k, l, m, typeId, nMolecule;
 
-         dRSq.allocate(nAtomType_);
-         dRSqPair.allocate(nAtomTypePairs_);
          k = 0;
          for (i = 0; i < nAtomType_; ++i) {
-            dRSq[i] = 0.0;
+            dRSq_[i] = 0.0;
             iTypeNAtom_[i] = 0;
             for (j = i+1; j < nAtomType_; ++j) { 
                ++k;
-               dRSqPair[k-1] = 0.0;
+               dRSqPair_[k-1] = 0.0;
             }
          }
 
@@ -203,7 +202,7 @@ namespace McMd
          for (i = 0; i < system().nMolecule(speciesId_); i++) {
             moleculePtr = &system().molecule(speciesId_, i);
 
-            //Initializing the center of mass positions for different block types to be zero
+            // Initializing COM positions for different types to zero
             for (j = 0; j < nAtomType_; ++j) {
                rCom_[j].zero();
             }
@@ -229,27 +228,27 @@ namespace McMd
                for (m = l+1; m < nAtomType_; ++m) {
                   ++k;
                   dR.subtract(rCom_[l], rCom_[m]);
-                  dRSqPair[k-1] += dR.square();
+                  dRSqPair_[k-1] += dR.square();
                }  
             }
             for (j = 0 ; j < nAtom_; j++) {
                typeId = moleculePtr->atom(j).typeId();
                dR.subtract(positions_[j], rCom_[typeId]);
-               dRSq[typeId] += dR.square();
+               dRSq_[typeId] += dR.square();
             }
      
          }
          k = 0;
          for (i = 0; i < nAtomType_; ++i) {
-            dRSq[i] /= double(nMolecule);
-            dRSq[i] /= double(iTypeNAtom_[i]);
-            accumulators_[i].sample(dRSq[i]);
-            outputFile_ << Dbl(dRSq[i]) << "	";
+            dRSq_[i] /= double(nMolecule);
+            dRSq_[i] /= double(iTypeNAtom_[i]);
+            accumulators_[i].sample(dRSq_[i]);
+            outputFile_ << Dbl(dRSq_[i]) << "	";
             for (j = i+1; j < nAtomType_; ++j) {
                ++k;
-               dRSqPair[k-1] /= double(nMolecule);
-               accumulators_[nAtomType_+k-1].sample(dRSqPair[k-1]);
-               outputFile_ << Dbl(dRSqPair[k-1]) << "	";
+               dRSqPair_[k-1] /= double(nMolecule);
+               accumulators_[nAtomType_+k-1].sample(dRSqPair_[k-1]);
+               outputFile_ << Dbl(dRSqPair_[k-1]) << "	";
             }
          }
          outputFile_ << std::endl;
