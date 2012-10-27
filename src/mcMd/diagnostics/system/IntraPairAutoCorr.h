@@ -120,7 +120,7 @@ namespace McMd
       /// Statistical accumulator
       AutoCorrArray<Vector, double> accumulator_;
 
-      /// Array of separation vectors, one per molecule of species.
+      /// Array of separation vectors, one per molecule (temporary)
       DArray<Vector> data_;
    
       /// Pointer to relevant Species.
@@ -160,7 +160,6 @@ namespace McMd
 
       ar & nMolecule_;
       ar & accumulator_;
-      ar & data_;
    }
 
 }

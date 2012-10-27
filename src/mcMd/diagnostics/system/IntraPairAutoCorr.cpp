@@ -44,11 +44,8 @@ namespace McMd
    */
    void IntraPairAutoCorr::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
       readInterval(in);
       readOutputFileName(in);
-
       read<int>(in, "speciesId", speciesId_);
       read<int>(in, "atom1Id", atom1Id_);
       read<int>(in, "atom2Id", atom2Id_);
@@ -99,8 +96,9 @@ namespace McMd
       loadParameter<int>(ar, "atom2Id", atom2Id_);
       loadParameter<int>(ar, "capacity", capacity_);
       ar & nMolecule_;
+      ar & accumulator_;
 
-      // Validate input
+      // Validate
       if (speciesId_ < 0) UTIL_THROW("Negative speciesId");
       if (atom1Id_ < 0) UTIL_THROW("Negative atom1Id");
       if (atom2Id_ < 0) UTIL_THROW("Negative atom2Id"); 
@@ -109,15 +107,14 @@ namespace McMd
       if (speciesId_ >= system().simulation().nSpecies()) {
          UTIL_THROW("speciesId > nSpecies");
       }
+
       speciesPtr_ = &system().simulation().species(speciesId_);
       int nAtom = speciesPtr_->nAtom();
       if (atom1Id_ >= nAtom) UTIL_THROW("atom1Id >= nAtom");
       if (atom2Id_ >= nAtom) UTIL_THROW("atom2Id >= nAtom");
 
-      // Maximum possible number of molecules of this species
-      int speciesCapacity = speciesPtr_->capacity();
-
       // Allocate an array of separation Vectors
+      int speciesCapacity = speciesPtr_->capacity();
       data_.allocate(speciesCapacity); 
  
       isInitialized_ = true;
@@ -154,13 +151,15 @@ namespace McMd
          Vector    r1, r2, dR;
          int       i, j;
 
-         // Validate nMolecule_
-         if (nMolecule_ <= 0)
+         // Validate nMolecules_
+         if (nMolecule_ <= 0) {
             UTIL_THROW("nMolecule <= 0");
-         if (nMolecule_ != system().nMolecule(speciesId_)) 
+         }
+         if (nMolecule_ != system().nMolecule(speciesId_)) {
             UTIL_THROW("Number of molecules has changed");
+         }
 
-         // Loop over molecules
+         // Loop over molecules in species
          for (i = 0; i < nMolecule_; ++i) {
             moleculePtr = &system().molecule(speciesId_, i);
 
