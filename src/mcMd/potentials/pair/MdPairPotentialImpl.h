@@ -57,8 +57,8 @@ namespace McMd
       * 
       * This method reads the maxBoundary, PairList and pair potential 
       * Interaction parameter blocks, in  that order, and initializes an
-      * internal PairList. Before calling the Interaction::readParameters method,
-      * it passes simulation().nAtomType() to Interaction::setNAtomType().
+      * internal PairList. Before calling the Interaction::readParameters 
+      * method, it passes nAtomType to Interaction::setNAtomType().
       *
       * \param in input parameter stream.
       */

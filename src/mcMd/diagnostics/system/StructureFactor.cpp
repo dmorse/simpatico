@@ -27,16 +27,23 @@ namespace McMd
 
    using namespace Util;
 
-   /// Constructor.
+   /*
+   * Constructor.
+   */
    StructureFactor::StructureFactor(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
    {  setClassName("StructureFactor"); }
 
+   /*
+   * Destructor.
+   */
    StructureFactor::~StructureFactor() 
    {}
 
-   /// Read parameters from file, and allocate data array.
+   /*
+   * Read parameters from file, and allocate data array.
+   */
    void StructureFactor::readParameters(std::istream& in) 
    {
 
@@ -58,7 +65,6 @@ namespace McMd
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
       structureFactors_.allocate(nWave_, nMode_);
-
       maximumValue_.allocate(nMode_);
       maximumWaveIntVector_.allocate(nMode_);
       maximumQ_.allocate(nMode_);
@@ -70,6 +76,53 @@ namespace McMd
 
       isInitialized_ = true;
    }
+
+   /*
+   * Load state from a binary file archive.
+   */
+   void StructureFactor::loadParameters(Serializable::IArchive& ar)
+   {
+      Diagnostic::loadParameters(ar);
+      ar & nAtomType_;
+      loadParameter<int>(ar, "nMode", nMode_);
+      loadDMatrix<double>(ar, "modes", modes_, nMode_, nAtomType_);
+      loadParameter<int>(ar, "nWave", nWave_);
+      loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
+
+      if (nAtomType_ != system().simulation().nAtomType()) {
+         UTIL_THROW("Inconsistent values of nAtomType_");
+      }
+      if (modes_.capacity1() != nMode_) {
+         UTIL_THROW("Inconsistent capacity1 for modes array");
+      }
+      if (modes_.capacity2() != nAtomType_) {
+         UTIL_THROW("Inconsistent capacity2 for modes array");
+      }
+      if (waveIntVectors_.capacity() != nWave_) {
+         UTIL_THROW("Inconsistent capacity for waveIntVector");
+      }
+      ar & structureFactors_;
+      ar & fourierModes_;
+      ar & nSample_;
+
+      waveVectors_.allocate(nWave_);
+      maximumValue_.allocate(nMode_);
+      maximumWaveIntVector_.allocate(nMode_);
+      maximumQ_.allocate(nMode_);
+      for (int j = 0; j < nMode_; ++j) {
+         maximumValue_[j].reserve(Samples);
+         maximumWaveIntVector_[j].reserve(Samples);
+         maximumQ_[j].reserve(Samples);
+      }
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to binary file archive.
+   */
+   void StructureFactor::save(Serializable::OArchive& ar)
+   { ar & *this; }
 
    /*
    * Clear accumulators.
@@ -251,16 +304,5 @@ namespace McMd
 
    }
 
-   /*
-   * Save state to binary file archive.
-   */
-   void StructureFactor::save(Serializable::OArchive& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void StructureFactor::load(Serializable::IArchive& ar)
-   { ar & *this; }
 }
 #endif

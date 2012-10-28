@@ -162,7 +162,8 @@ namespace Util
    * Add a ParamComposite Node, and read the contents of that ParamComposite.
    */
    void
-   ParamComposite::readParamComposite(std::istream &in, ParamComposite &child, bool next)
+   ParamComposite::readParamComposite(std::istream &in, ParamComposite &child, 
+                                      bool next)
    {
       addParamComposite(child, next);
       list_.back()->readParam(in);
@@ -172,7 +173,8 @@ namespace Util
    * Add a ParamComposite Node, and load the contents of that ParamComposite.
    */
    void
-   ParamComposite::loadParamComposite(Serializable::IArchive &ar, ParamComposite &child, bool next)
+   ParamComposite::loadParamComposite(Serializable::IArchive &ar, 
+                                      ParamComposite &child, bool next)
    {
       addParamComposite(child, next);
       list_.back()->load(ar);

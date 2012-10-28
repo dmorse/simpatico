@@ -103,6 +103,29 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load state from a binary file archive.
+      *
+      * \param ar binary loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to binary file archive.
+      *
+      * \param ar binary saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
       /** 
       * Clear accumulators.
       */
@@ -120,32 +143,11 @@ namespace McMd
       */
       virtual void output();
 
-      /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchive& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchive& ar);
-
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
    protected:
 
-      /// Output file stream.
+      /*
+      * Output file stream.
+      */
       std::ofstream outputFile_;
 
       /**
@@ -224,19 +226,16 @@ namespace McMd
    template <class Archive>
    void StructureFactor::serialize(Archive& ar, const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
+      Diagnostic::serialize(ar, version);
+      ar & nAtomType_;
+      ar & nMode_;
+      ar & modes_;
+      ar & nWave_;
+      ar & waveIntVectors_;
+
       ar & structureFactors_;
       ar & fourierModes_;
       ar & nSample_;
-
-      serializeCheck(ar, nAtomType_, "nAtomType");
-      serializeCheck(ar, nMode_, "nMode");
-      serializeCheck(ar, nWave_, "nWave");
-      for (int i = 0; i < nWave_; ++i) {
-         serializeCheck(ar, waveIntVectors_[i], "waveIntVector");
-      }
    }
 
 }

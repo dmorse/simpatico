@@ -34,30 +34,25 @@ namespace McMd
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
-
-      accumulator_.setNSamplePerBlock(nSamplePerBlock_);
-      accumulator_.clear();
-
-      // If nSamplePerBlock != 0, open an output file for block averages.
-      if (accumulator_.nSamplePerBlock()) {
-         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
-      }
-
       read<int>(in, "speciesId", speciesId_);
+
       if (speciesId_ < 0) {
          UTIL_THROW("Negative speciesId");
       }
-
       if (speciesId_ >= system().simulation().nSpecies()) {
          UTIL_THROW("speciesId > nSpecies");
       }
-
       speciesPtr_ = &system().simulation().species(speciesId_);
       nAtom_ = speciesPtr_->nAtom();
 
-      // Allocate an array of separation Vectors
       positions_.allocate(nAtom_); 
+      accumulator_.setNSamplePerBlock(nSamplePerBlock_);
+      accumulator_.clear();
 
+      // Open output file for block averages, if nSamplePerBlock != 0.
+      if (accumulator_.nSamplePerBlock()) {
+         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      }
       isInitialized_ = true;
    }
 
@@ -84,10 +79,9 @@ namespace McMd
       }
 
       ar & accumulator_;
-      positions_.allocate(nAtom_); 
       ar & positions_;
 
-      // If nSamplePerBlock != 0, open an output file for block averages.
+      // Open output file for block averages, if nSamplePerBlock != 0.
       if (nSamplePerBlock_) {
          fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       }
@@ -110,12 +104,13 @@ namespace McMd
       }  
       accumulator_.clear(); 
    }
- 
-   /// Evaluate end-to-end vectors of all chains, add to ensemble.
+
+   /* 
+   * Evaluate end-to-end vectors of all chains, add to ensemble.
+   */
    void RadiusGyration::sample(long iStep) 
    { 
       if (isAtInterval(iStep))  {
-
          Molecule* moleculePtr;
          Vector    r1, r2, dR, Rcm;
          double    dRSq;
@@ -126,7 +121,7 @@ namespace McMd
          for (i = 0; i < system().nMolecule(speciesId_); i++) {
             moleculePtr = &system().molecule(speciesId_, i);
 
-            // Construct map of molecule with no periodic boundary conditions
+            // Construct unwrapped map of molecule (no periodic b.c.'s)
             positions_[0] = moleculePtr->atom(0).position();
             Rcm = positions_[0];
             for (j = 1 ; j < nAtom_; j++) {
@@ -139,19 +134,16 @@ namespace McMd
             }
             Rcm /= double(nAtom_);
 
+            // Calculate dRSq
             for (j = 0 ; j < nAtom_; j++) {
                dR.subtract(positions_[j], Rcm);
                dRSq += dR.square();
             }
-     
          }
          dRSq /= double(nMolecule);
          dRSq /= double(nAtom_);
-      
          accumulator_.sample(dRSq, outputFile_);
-
       } 
-
    }
 
    /*
