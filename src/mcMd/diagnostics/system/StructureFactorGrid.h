@@ -84,14 +84,11 @@ namespace McMd
       virtual void readParameters(std::istream& in);
 
       /**
-      * Set up before a simulation.
+      * Load state from a binary file archive.
+      *
+      * \param ar binary loading (input) archive.
       */
-      virtual void setup();
-
-      /**
-      * Output structure factors, averaged over stars.
-      */
-      virtual void output();
+      virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
       * Save state to binary file archive.
@@ -101,12 +98,24 @@ namespace McMd
       virtual void save(Serializable::OArchive& ar);
 
       /**
-      * Load state from a binary file archive.
+      * Serialize to/from an archive. 
       *
-      * \param ar binary loading (input) archive.
+      * \param ar      saving or loading archive
+      * \param version archive version id
       */
-      virtual void load(Serializable::IArchive& ar);
- 
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
+      /**
+      * Set up before a simulation.
+      */
+      virtual void setup();
+
+      /**
+      * Output structure factors, averaged over stars.
+      */
+      virtual void output();
+
    private:
 
       /// Array of ids for first wavevector in each star.
@@ -128,6 +137,22 @@ namespace McMd
       bool    isInitialized_;
 
    };
+
+   /**
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void StructureFactorGrid::serialize(Archive& ar, const unsigned int version)
+   {
+      StructureFactor::serialize(ar, version);
+      ar & hMax_;
+      //serializeEnum(ar, lattice_);
+      ar & lattice_;
+
+      ar & nStar_;
+      ar & starIds_;
+      ar & starSizes_;
+   }
 
 }
 #endif

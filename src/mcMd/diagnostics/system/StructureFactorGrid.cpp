@@ -31,7 +31,9 @@ namespace McMd
       isInitialized_(false)
    {  setClassName("StructureFactorGrid"); }
 
-   /// Read parameters from file, and allocate data array.
+   /*
+   * Read parameters from file, and allocate data array.
+   */
    void StructureFactorGrid::readParameters(std::istream& in) 
    {
 
@@ -47,7 +49,7 @@ namespace McMd
       read<Util::LatticeSystem>(in, "lattice", lattice_);
 
       // Allocate wavevectors arrays
-      nWave_     = (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1);
+      nWave_  = (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1);
       waveIntVectors_.allocate(nWave_);
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
@@ -187,6 +189,66 @@ namespace McMd
       isInitialized_ = true;
    }
 
+   /*
+   * Load state from a binary file archive.
+   */
+   void StructureFactorGrid::loadParameters(Serializable::IArchive& ar)
+   {
+      // Load from StructureFactor::serialize
+      Diagnostic::loadParameters(ar);
+      ar & nAtomType_;
+      loadParameter<int>(ar, "nMode", nMode_);
+      loadDMatrix<double>(ar, "modes", modes_, nMode_, nAtomType_);
+      ar & nWave_;
+      ar & waveIntVectors_;
+      ar & structureFactors_;
+      ar & fourierModes_;
+      ar & nSample_;
+
+      // Load additional from StructureFactorGrid::serialize
+      loadParameter<int>(ar, "hMax", hMax_);
+      loadParameter<Util::LatticeSystem>(ar, "lattice", lattice_);
+      ar & nStar_;
+      ar & starIds_;
+      ar & starSizes_;
+
+      // Validate
+      if (nWave_  != (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1)) {
+         UTIL_THROW("Inconsistent value of nWave_");
+      }
+      if (nAtomType_ != system().simulation().nAtomType()) {
+         UTIL_THROW("Inconsistent values of nAtomType_");
+      }
+      if (modes_.capacity1() != nMode_) {
+         UTIL_THROW("Inconsistent capacity1 for modes array");
+      }
+      if (modes_.capacity2() != nAtomType_) {
+         UTIL_THROW("Inconsistent capacity2 for modes array");
+      }
+      if (waveIntVectors_.capacity() != nWave_) {
+         UTIL_THROW("Inconsistent capacity for waveIntVector");
+      }
+
+      waveVectors_.allocate(nWave_);
+      maximumValue_.allocate(nMode_);
+      maximumWaveIntVector_.allocate(nMode_);
+      maximumQ_.allocate(nMode_);
+      for (int j = 0; j < nMode_; ++j) {
+         maximumValue_[j].reserve(Samples);
+         maximumWaveIntVector_[j].reserve(Samples);
+         maximumQ_[j].reserve(Samples);
+      }
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to binary file archive.
+   */
+   void StructureFactorGrid::save(Serializable::OArchive& ar)
+   { ar & *this; }
+
+
    void StructureFactorGrid::setup() 
    {}
 
@@ -285,18 +347,6 @@ namespace McMd
       #endif
 
    }
-
-   /*
-   * Save state to binary file archive.
-   */
-   void StructureFactorGrid::save(Serializable::OArchive& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void StructureFactorGrid::load(Serializable::IArchive& ar)
-   { ar & *this; }
 
 }
 #endif
