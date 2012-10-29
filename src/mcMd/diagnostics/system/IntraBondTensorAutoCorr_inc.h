@@ -52,8 +52,6 @@ namespace McMd
    template <class SystemType>
    void IntraBondTensorAutoCorr<SystemType>::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
       readInterval(in);
       readOutputFileName(in);
 
@@ -85,21 +83,67 @@ namespace McMd
    }
 
    /*
+   * Load internal state from file.
+   */
+   template <class SystemType> 
+   void IntraBondTensorAutoCorr<SystemType>::loadParameters(Serializable::IArchive &ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter(ar, "speciesId", speciesId_);
+      loadParameter(ar, "capacity", capacity_);
+      ar & nBond_;
+      ar & nMolecule_;
+      ar & accumulator_;
+
+      // Validate parameters and set speciesPtr_
+      if (speciesId_ < 0) {
+         UTIL_THROW("Negative speciesId");
+      }
+      if (speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("speciesId >= nSpecies");
+      }
+      if (capacity_ <= 0) {
+         UTIL_THROW("Negative capacity");
+      }
+      if (nBond_ <= 0) {
+         UTIL_THROW("Number of bonds per molecule <= 0");
+      }
+      speciesPtr_ = &system().simulation().species(speciesId_);
+      if (nBond_ != speciesPtr_->nBond()) {
+         UTIL_THROW("Inconsistent values for nBond");
+      }
+
+      // Allocate data_ array for internal usage.
+      int speciesCapacity = speciesPtr_->capacity();
+      if (speciesCapacity <= 0) {
+         UTIL_THROW("Species capacity <= 0");
+      }
+      data_.allocate(speciesCapacity);
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   template <class SystemType>
+   void
+   IntraBondTensorAutoCorr<SystemType>::save(Serializable::OArchive &ar)
+   {  ar & *this; }
+   
+   /*
    * Evaluate end-to-end vectors of all chains, add to ensemble.
    */
    template <class SystemType>
    void IntraBondTensorAutoCorr<SystemType>::setup() 
    { 
-
       if (!isInitialized_) {
          UTIL_THROW("Object is not intitialized");
       }
 
-      // Get number of molecules and number of atoms per molecule.
+      // Get number of molecules and initialize the accumulator
       nMolecule_ = system().nMolecule(speciesId_);
       if (nMolecule_ <= 0) UTIL_THROW("nMolecule <= 0");
-
-      // Initialize the AutoCorrArray object
       accumulator_.setNEnsemble(nMolecule_);
    }
 
@@ -110,20 +154,18 @@ namespace McMd
    void IntraBondTensorAutoCorr<SystemType>::sample(long iStep) 
    { 
       if (isAtInterval(iStep))  {
-
+         Boundary& boundary = system().boundary();
+         System::ConstMoleculeIterator  molIter;
+         Molecule::ConstBondIterator  bondIter;
          Tensor  t;
          Vector  dr, u;
          double  trace;
-         int     i, j;
+         int  i, j;
 
-         // Confirm that nMolecule has remained constant
+         // Validate nMolecule_ (must remain constant).
          if (nMolecule_ != system().nMolecule(speciesId_)) {
             UTIL_THROW("Number of molecules has changed.");
          }
-
-         Boundary& boundary = system().boundary();
-         System::ConstMoleculeIterator molIter;
-         Molecule::ConstBondIterator   bondIter;
 
          // Loop over molecules
          i = 0;
@@ -146,16 +188,16 @@ namespace McMd
             for (j=0; j < Dimension; ++j) {
                data_[i](j, j) -= trace;
             }
-
             ++i;
          }
 
          accumulator_.sample(data_);
-
-      } // Is at interval
+      } 
    }
 
-   /// Output results after simulation is completed.
+   /*
+   * Output results after simulation is completed.
+   */
    template <class SystemType>
    void IntraBondTensorAutoCorr<SystemType>::output() 
    {  

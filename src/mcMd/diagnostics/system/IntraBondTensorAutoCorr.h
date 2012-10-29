@@ -54,7 +54,30 @@ namespace McMd
       * \param in input parameter stream
       */
       virtual void readParameters(std::istream& in);
+   
+      /**
+      * Load internal state from file.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+   
+      /**
+      * Save internal state to file. 
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
   
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
       /** 
       * Set number of molecules and clear accumulator.
       */
@@ -72,21 +95,12 @@ namespace McMd
       */
       virtual void output();
 
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
-
    protected:
 
       using SystemDiagnostic<SystemType>::read;
       using SystemDiagnostic<SystemType>::readOutputFileName;
       using SystemDiagnostic<SystemType>::readInterval;
+      using SystemDiagnostic<SystemType>::loadParameter;
       using SystemDiagnostic<SystemType>::isAtInterval;
       using SystemDiagnostic<SystemType>::writeParam;
       using SystemDiagnostic<SystemType>::system;
@@ -129,20 +143,16 @@ namespace McMd
    */
    template <class SystemType>
    template <class Archive>
-   void IntraBondTensorAutoCorr<SystemType>::serialize(Archive& ar, const unsigned int version)
+   void IntraBondTensorAutoCorr<SystemType>::serialize(Archive& ar, 
+                                                       const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
+      Diagnostic::serialize(ar, version);
+      ar & speciesId_;
+      ar & capacity_;
 
-      // Data not set by readParam
-      ar & accumulator_;
+      ar & nBond_;
       ar & nMolecule_;
-
-      // Data set by readParam (check consistency).
-      serializeCheck(ar, speciesId_, "speciesId");
-      serializeCheck(ar, nBond_, "nBond");
-      serializeCheck(ar, capacity_, "capacity");
+      ar & accumulator_;
    }
 
 }

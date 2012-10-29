@@ -53,11 +53,8 @@ namespace McMd
    template <class SystemType>
    void IntraBondStressAutoCorr<SystemType>::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
       readInterval(in);
       readOutputFileName(in);
-
       read(in, "speciesId", speciesId_);
       read(in, "capacity", capacity_);
 
@@ -84,6 +81,54 @@ namespace McMd
 
       isInitialized_ = true;
    }
+
+   /*
+   * Load internal state from file.
+   */
+   template <class SystemType> void 
+   IntraBondStressAutoCorr<SystemType>::loadParameters(Serializable::IArchive &ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter(ar, "speciesId", speciesId_);
+      loadParameter(ar, "capacity", capacity_);
+      ar & nBond_;
+      ar & nMolecule_;
+      ar & accumulator_;
+
+      // Validate parameters and set speciesPtr_
+      if (speciesId_ < 0) {
+         UTIL_THROW("Negative speciesId");
+      }
+      if (speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("speciesId >= nSpecies");
+      }
+      if (capacity_ <= 0) {
+         UTIL_THROW("Negative capacity");
+      }
+      if (nBond_ <= 0) {
+         UTIL_THROW("Number of bonds per molecule <= 0");
+      }
+      speciesPtr_ = &system().simulation().species(speciesId_);
+      if (nBond_ != speciesPtr_->nBond()) {
+         UTIL_THROW("Inconsistent values for nBond");
+      }
+
+      // Allocate data_ array for internal usage.
+      int speciesCapacity = speciesPtr_->capacity();
+      if (speciesCapacity <= 0) {
+         UTIL_THROW("Species capacity <= 0");
+      }
+      data_.allocate(speciesCapacity);
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   template <class SystemType> void 
+   IntraBondStressAutoCorr<SystemType>::save(Serializable::OArchive &ar)
+   {  ar & *this; }
 
    /*
    * Evaluate end-to-end vectors of all chains, add to ensemble.
