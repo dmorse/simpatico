@@ -55,14 +55,13 @@ namespace Util
       void clear();
    
       /**
-      * Read parameters from file and initialize.
+      * Read parameter nSamplePerBlock from file and initialize.
       *
-      * Read nSamplePerBlock. See setNSamplePerBlock() for
-      * discussion of value.
+      * See setNSamplePerBlock() for discussion of value.
       *
       * \param in input stream 
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
    
       /**
       * Set nSamplePerBlock
@@ -70,25 +69,48 @@ namespace Util
       * If nSamplePerBlock > 0, output a block average to file every
       * nSamplePerBlock samples.
       *
-      * If nSamplePerBlock = 0, do not output block averages.
+      * If nSamplePerBlock == 0, do not output block averages.
       *
       * \param nSamplePerBlock number of samples per block average output
       */
       void setNSamplePerBlock(int nSamplePerBlock);
   
       /**
-      * Add a sampled value to the ensemble, and output block averages.
+      * Load internal state from an archive.
       *
-      * \param value sampled value
-      * \param out   output stream to which to write block averages
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+   
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+   
+      /**
+      * Serialize this Average to or from an archive.
+      *
+      * \param ar       input or output archive
+      * \param version  file version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
+      /**
+      * Add a sampled value to the ensemble, and output block average (if any).
+      *
+      * \param value  sampled value
+      * \param out  output stream to which to write block averages
       */
       void sample(double value, std::ostream& out);
  
       /**
       * Add a sampled value to the ensemble.
       *
-      * If blockFile != 0 and a datafile has been set, this method
-      * outputs block averages to the datafile.
+      * If blockFile != 0 and a datafile has been set, this method outputs
+      * block averages to the datafile.
       *
       * \param value  sampled value
       */
@@ -113,15 +135,6 @@ namespace Util
       */
       virtual void registerDescendant(AverageStage* descendantPtr);
          
-      /**
-      * Serialize this Average to or from an archive.
-      *
-      * \param ar       input or output archive
-      * \param version  file version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
    private:
    
       /**

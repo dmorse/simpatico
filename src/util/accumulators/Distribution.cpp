@@ -127,6 +127,34 @@ namespace Util
       clear();
    }  
    
+   /*
+   * Load internal state from archive.
+   */
+   void Distribution::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<double>(ar, "min", min_);
+      loadParameter<double>(ar, "max", max_);
+      loadParameter<int>(ar, "nBin", nBin_);
+      ar & nSample_;
+      ar & nReject_;
+      ar & binWidth_;
+      ar & histogram_;
+
+      // Validate
+      if (histogram_.capacity() != nBin_) {
+         UTIL_THROW("Inconsistent histogram capacity");
+      }
+      if (!feq(binWidth_, (max_ - min_)/double(nBin_))) {
+         UTIL_THROW("Inconsistent binWidth_");
+      }
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   void Distribution::save(Serializable::OArchive &ar)
+   { ar & *this; }
+   
    /* 
    * Zero all accumulators.
    */

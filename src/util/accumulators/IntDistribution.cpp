@@ -102,7 +102,7 @@ namespace Util
    /* 
    * Read min and max from file.
    */
-   void IntDistribution::readParam(std::istream& in)
+   void IntDistribution::readParameters(std::istream& in)
    {
       read<int>(in, "min", min_);
       read<int>(in, "max", max_);

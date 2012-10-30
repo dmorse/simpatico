@@ -56,7 +56,7 @@ namespace Util
       *
       * \param in input parameter file stream
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
   
       /** 
       * Set parameters and initialize.

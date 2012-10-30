@@ -57,7 +57,7 @@ namespace Util
       *
       * \param in input parameter stream
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
    
       /**
       * Set parameters, allocate memory, and clear history.
@@ -196,7 +196,7 @@ namespace Util
    * Read parameters from file.
    */
    template <typename Data>
-   void MeanSqDispArray<Data>::readParam(std::istream& in)
+   void MeanSqDispArray<Data>::readParameters(std::istream& in)
    {
       readBegin(in, "MeanSqDisp");
 

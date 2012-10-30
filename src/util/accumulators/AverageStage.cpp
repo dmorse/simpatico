@@ -31,9 +31,7 @@ namespace Util
       rootPtr_(0),
       stageId_(0),
       blockFactor_(blockFactor)
-   {
-      rootPtr_ = this;
-   }
+   {  rootPtr_ = this; }
    
    /*
    * Constructor for dynamically generated objects with stageId > 0.
