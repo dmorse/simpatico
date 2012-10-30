@@ -123,6 +123,33 @@ namespace Util
       clear();
    }  
    
+   /*
+   * Load state from an archive.
+   */
+   void IntDistribution::loadParameters(Serializable::IArchive& ar)
+   {  
+      loadParameter<int>(ar, "min", min_);
+      loadParameter<int>(ar, "max", max_);
+      ar & nBin_;
+      ar & nSample_;
+      ar & nReject_;
+      ar & histogram_;
+
+      // Validate
+      if (nBin_ != max_ - min_ + 1) {
+         UTIL_THROW("Inconsistent values of nBin");
+      }
+      if (nBin_ != histogram_.capacity()) {
+         UTIL_THROW("Inconsistent histogram capacity");
+      }
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   void IntDistribution::save(Serializable::OArchive& ar)
+   {  ar & *this; }
+
    /* 
    * Zero all accumulators.
    */
