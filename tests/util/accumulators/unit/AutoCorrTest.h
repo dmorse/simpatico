@@ -2,7 +2,6 @@
 #define AUTOCORR_TEST_H
 
 #include <test/UnitTest.h>
-#include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
 
 #include <util/accumulators/AutoCorr.h>
@@ -15,21 +14,22 @@
 
 using namespace Util;
 
-class AutoCorrTest : public ParamFileTest< AutoCorr<double, double> >
+class AutoCorrTest : public UnitTest
 {
 
-public:
+   AutoCorr<double, double> accumulator_;
 
-   //typedef AutoCorr<double, double> Object;
+public:
 
    AutoCorrTest() 
    {}
 
    void setUp() 
-   { 
-      openFile("in/AutoCorr"); 
-      object().readParam(file());
-      closeFile();
+   {
+      std::ifstream paramFile; 
+      openInputFile("in/AutoCorr", paramFile); 
+      accumulator_.readParam(paramFile);
+      paramFile.close();
    }
 
    void tearDown() 
@@ -39,13 +39,14 @@ public:
    {
       int i, n;
       double x;
-      std::ifstream datafile("in/data");
-      datafile >> n;
+      std::ifstream dataFile; 
+      openInputFile("in/data", dataFile); 
+      dataFile >> n;
       for (i = 0; i < n; ++i) {
-         datafile >> x;
-         object().sample(x);
+         dataFile >> x;
+         accumulator_.sample(x);
       }
-      datafile.close();
+      dataFile.close();
    }
 
    void testReadParam() 
@@ -53,7 +54,7 @@ public:
       printMethod(TEST_FUNC);
 
       printEndl();
-      object().writeParam(std::cout);
+      accumulator_.writeParam(std::cout);
    }
 
    void testSample() 
@@ -63,9 +64,10 @@ public:
       readData();
 
       printEndl();
-      object().output(std::cout);
+      accumulator_.output(std::cout);
    }
 
+   #if 0
    void testPack() 
    {
       printMethod(TEST_FUNC);
@@ -73,13 +75,13 @@ public:
 
       readData();
 
-      int size = object().packedSize();
+      int size = accumulator_.packedSize();
       std::cout << size << std::endl;
 
       char* begin  = new char[size];
       char* end    = begin + size;
       char* cursor = begin;
-      object().pack(cursor, end);
+      accumulator_.pack(cursor, end);
       TEST_ASSERT(cursor == end);
 
       AutoCorr<double, double> clone;
@@ -90,6 +92,7 @@ public:
       clone.output(std::cout);
 
    }
+   #endif
 
    void testSerialize() 
    {
@@ -98,14 +101,14 @@ public:
 
       readData();
 
-      int size = memorySize(object());
+      int size = memorySize(accumulator_);
 
       MemoryOArchive u;
       u.allocate(size);
 
       std::cout << size << std::endl;
 
-      u << object();
+      u << accumulator_;
       TEST_ASSERT(u.cursor() == u.begin() + size);
 
       MemoryIArchive v;
@@ -122,7 +125,7 @@ public:
 TEST_BEGIN(AutoCorrTest)
 TEST_ADD(AutoCorrTest, testReadParam)
 TEST_ADD(AutoCorrTest, testSample)
-TEST_ADD(AutoCorrTest, testPack)
+//TEST_ADD(AutoCorrTest, testPack)
 TEST_ADD(AutoCorrTest, testSerialize)
 TEST_END(AutoCorrTest)
 

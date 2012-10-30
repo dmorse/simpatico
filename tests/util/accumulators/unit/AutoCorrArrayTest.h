@@ -2,7 +2,6 @@
 #define AUTOCORR_ARRAY_TEST_H
 
 #include <test/UnitTest.h>
-#include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
 
 #include <util/accumulators/AutoCorrArray.h>
@@ -15,22 +14,23 @@
 
 using namespace Util;
 
-class AutoCorrArrayTest : public ParamFileTest< AutoCorrArray<double, double> >
+class AutoCorrArrayTest : public UnitTest
 {
 
 public:
 
-   //typedef AutoCorrArray<double, double> Object;
+   AutoCorrArray<double, double> accumulator_;
 
    AutoCorrArrayTest() 
    {}
 
    void setUp() 
    { 
-      openFile("in/AutoCorrArray"); 
-      object().readParam(file());
-      closeFile();
-      object().setNEnsemble(4);
+      std::ifstream paramFile;
+      openInputFile("in/AutoCorrArray", paramFile); 
+      accumulator_.readParam(paramFile);
+      paramFile.close();
+      accumulator_.setNEnsemble(4);
    }
 
    void tearDown() 
@@ -41,18 +41,19 @@ public:
       DArray<double> data;
       int i, j, m, n, p;
 
-      std::ifstream datafile("in/data");
-      datafile >> m;
-      n = object().nEnsemble();
+      std::ifstream dataFile;
+      openInputFile("in/data", dataFile); 
+      dataFile >> m;
+      n = accumulator_.nEnsemble();
       data.allocate(n);
       p = m / n;
       for (i = 0; i < p; ++i) {
          for (j = 0; j < n; ++j) {
-           datafile >> data[j];
+           dataFile >> data[j];
          }
-         object().sample(data);
+         accumulator_.sample(data);
       }
-      datafile.close();
+      dataFile.close();
    }
 
    void testReadParam() 
@@ -60,7 +61,7 @@ public:
       printMethod(TEST_FUNC);
 
       printEndl();
-      object().writeParam(std::cout);
+      accumulator_.writeParam(std::cout);
    }
 
    void testSample() 
@@ -70,7 +71,7 @@ public:
       readData();
 
       printEndl();
-      object().output(std::cout);
+      accumulator_.output(std::cout);
    }
 
    void testSerialize() 
@@ -80,14 +81,14 @@ public:
 
       readData();
 
-      int size = memorySize(object());
+      int size = memorySize(accumulator_);
 
       MemoryOArchive u;
       u.allocate(size);
 
       std::cout << size << std::endl;
 
-      u << object();
+      u << accumulator_;
       TEST_ASSERT(u.cursor() == u.begin() + size);
 
       MemoryIArchive v;
