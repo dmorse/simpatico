@@ -220,7 +220,7 @@ namespace Util
       }
       ar & capacity;
       if (Archive::is_loading()) {
-         if (!isAllocated()) {
+         if (!DPArray<Data>::isAllocated()) {
             if (capacity > 0) {
                allocate(capacity);
             }
