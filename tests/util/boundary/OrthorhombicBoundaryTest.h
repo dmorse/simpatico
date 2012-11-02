@@ -5,7 +5,6 @@
 #include <test/UnitTestRunner.h>
 
 #include <util/boundary/OrthorhombicBoundary.h>
-#include <util/boundary/serialize.h>
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
 #include <util/random/Random.h>
@@ -75,8 +74,8 @@ public:
       // Read parameters from file
       std::ifstream in;
       openInputFile("in/OrthorhombicBoundary", in);
-     
       in >> boundary;
+      in.close();
 
       std::cout << std::endl;
       std::cout << boundary << std::endl;
@@ -105,8 +104,8 @@ public:
       // Read parameters from file
       std::ifstream in;
       openInputFile("in/TetragonalBoundary", in);
-     
       in >> boundary;
+      in.close();
 
       std::cout << std::endl;
       std::cout << boundary << std::endl;
@@ -118,6 +117,16 @@ public:
          TEST_ASSERT(eq(boundary.maxima_[i], boundary.lengths_[i]));
          TEST_ASSERT(boundary.lengths_[i] > 1.0E-8);
       }
+
+      TEST_ASSERT(eq(boundary.length(0), 2.0));
+      TEST_ASSERT(eq(boundary.length(1), 3.0));
+      TEST_ASSERT(eq(boundary.length(2), 3.0));
+
+      Vector Lp = boundary.lengths();
+      std::cout << "Lp = " << Lp << std::endl;
+      TEST_ASSERT(eq(Lp[0], 2.0));
+      TEST_ASSERT(eq(Lp[1], 3.0));
+      TEST_ASSERT(eq(Lp[2], 3.0));
 
       // Verbose output
       if (verbose() > 1) {
@@ -135,8 +144,8 @@ public:
       // Read parameters from file
       std::ifstream in;
       openInputFile("in/CubicBoundary", in);
-     
       in >> boundary;
+      in.close();
 
       std::cout << std::endl;
       std::cout << boundary << std::endl;
@@ -370,8 +379,8 @@ public:
       // Read parameters from file
       std::ifstream in;
       openInputFile("in/CubicBoundary", in);
-     
       in >> boundary;
+      in.close();
 
       std::cout << std::endl;
       std::cout << boundary << std::endl;
@@ -494,66 +503,39 @@ public:
 
       Lp = boundary.lengths();
       TEST_ASSERT(eq(Lp[0], 2.0));
-      TEST_ASSERT(eq(Lp[1], 2.0));
+      TEST_ASSERT(eq(Lp[1], 3.0));
       TEST_ASSERT(eq(Lp[2], 3.0));
 
       TEST_ASSERT(eq(boundary.length(0), 2.0));
-      TEST_ASSERT(eq(boundary.length(1), 2.0));
+      TEST_ASSERT(eq(boundary.length(1), 3.0));
       TEST_ASSERT(eq(boundary.length(2), 3.0));
 
    }
 
-   void testStreamIO1Tetragonal() 
+   void testStreamIOTetragonal() 
    {
       printMethod(TEST_FUNC);
 
       // Read parameters from file
       std::ifstream in;
       openInputFile("in/TetragonalBoundary", in);
-     
       in >> boundary;
+      in.close();
+
+      std::cout << std::endl;
       std::cout << boundary << std::endl;
 
       TEST_ASSERT(boundary.isValid());
-
-      Vector Lp = boundary.lengths();
-      TEST_ASSERT(eq(Lp[0], 2.0));
-      TEST_ASSERT(eq(Lp[1], 2.0));
-      TEST_ASSERT(eq(Lp[2], 3.0));
 
       TEST_ASSERT(eq(boundary.length(0), 2.0));
-      TEST_ASSERT(eq(boundary.length(1), 2.0));
-      TEST_ASSERT(eq(boundary.length(2), 3.0));
-
-      // Verbose output
-      if (verbose() > 1) {
-         std::cout << boundary << std::endl;
-      }
-
-   }
-
-   void testStreamIO2Tetragonal() 
-   {
-      printMethod(TEST_FUNC);
-
-      // Read parameters from file
-      std::ifstream in;
-      openInputFile("in/CubicBoundary", in);
-     
-      in >> boundary;
-      std::cout << boundary << std::endl;
-
-      // Assertions
-      TEST_ASSERT(boundary.isValid());
-
-      Vector Lp = boundary.lengths();
-      TEST_ASSERT(eq(Lp[0], 3.0));
-      TEST_ASSERT(eq(Lp[1], 3.0));
-      TEST_ASSERT(eq(Lp[2], 3.0));
-
-      TEST_ASSERT(eq(boundary.length(0), 3.0));
       TEST_ASSERT(eq(boundary.length(1), 3.0));
       TEST_ASSERT(eq(boundary.length(2), 3.0));
+
+      Vector Lp = boundary.lengths();
+      std::cout << "Lp = " << Lp << std::cout;
+      TEST_ASSERT(eq(Lp[0], 2.0));
+      TEST_ASSERT(eq(Lp[1], 3.0));
+      TEST_ASSERT(eq(Lp[2], 3.0));
 
       // Verbose output
       if (verbose() > 1) {
@@ -566,17 +548,15 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      Vector R;
-
-      // Setup Boundary
       boundary.setTetragonal(2.0, 3.0);
 
+      Vector R;
       R[0] =  1.6;
       R[1] = -0.6;
       R[2] =  3.1;
       boundary.shift(R);
       TEST_ASSERT(eq(R[0], 1.6));
-      TEST_ASSERT(eq(R[1], 1.4));
+      TEST_ASSERT(eq(R[1], 2.4));
       TEST_ASSERT(eq(R[2], 0.1));
 
    };
@@ -585,15 +565,11 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      Vector L;
       Vector R1;
       Vector R2;
       double dRSq, result;
 
       // Setup Boundary
-      L[0] = 2.0;
-      L[1] = 2.0;
-      L[2] = 3.0;
       boundary.setTetragonal(2.0, 3.0);
 
       R1[0] =  1.6;
@@ -601,7 +577,7 @@ public:
       R1[2] =  2.8;
 
       R2[0] =  1.2;
-      R2[1] =  1.8;
+      R2[1] =  2.8;
       R2[2] =  0.1;
 
       result = 0.4*0.4 + 0.6*0.6 + 0.3*0.3;
@@ -612,7 +588,6 @@ public:
 
    void testDistanceSq2Tetragonal()
    {
-      Vector L;
       Vector R1;
       Vector R2;
       Vector dR; 
@@ -620,10 +595,6 @@ public:
 
       printMethod(TEST_FUNC);
 
-      // Setup Boundary
-      L[0] = 2.0;
-      L[1] = 2.0;
-      L[2] = 3.0;
       boundary.setTetragonal(2.0, 3.0);
 
       R1[0] =  1.6;
@@ -631,7 +602,7 @@ public:
       R1[2] =  2.8;
 
       R2[0] =  1.2;
-      R2[1] =  1.8;
+      R2[1] =  2.8;
       R2[2] =  0.1;
       dRSq = boundary.distanceSq(R1, R2, dR);
 
@@ -641,7 +612,7 @@ public:
       TEST_ASSERT(eq(dRSq, dR.square()));
 
       R1[0] =  1.2;
-      R1[1] =  1.8;
+      R1[1] =  2.8;
       R1[2] =  0.1;
 
       R2[0] =  1.6;
@@ -675,8 +646,7 @@ TEST_ADD(OrthorhombicBoundaryTest, testDistanceSq1Cubic)
 TEST_ADD(OrthorhombicBoundaryTest, testDistanceSq2Cubic)
 
 TEST_ADD(OrthorhombicBoundaryTest, testInitializeTetragonal)
-TEST_ADD(OrthorhombicBoundaryTest, testStreamIO1Tetragonal)
-TEST_ADD(OrthorhombicBoundaryTest, testStreamIO2Tetragonal)
+TEST_ADD(OrthorhombicBoundaryTest, testStreamIOTetragonal)
 TEST_ADD(OrthorhombicBoundaryTest, testShiftTetragonal)
 TEST_ADD(OrthorhombicBoundaryTest, testDistanceSq1Tetragonal)
 TEST_ADD(OrthorhombicBoundaryTest, testDistanceSq2Tetragonal)
