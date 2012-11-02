@@ -1,1 +1,0 @@
-Bug in readRestart test, caused by changes in way command line options are set.

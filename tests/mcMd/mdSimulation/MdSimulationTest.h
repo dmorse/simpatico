@@ -305,17 +305,24 @@ void MdSimulationTest::testWriteRestart()
 
    std::cout << std::endl;
 
-   std::string baseFileName("writeRestart.0");
+   std::string baseFileName("begin");
    simulation_.writeRestart(baseFileName);
 
    simulation_.simulate(100000);
-   baseFileName = "writeRestart.n";
+
+   baseFileName = "middle";
    simulation_.writeRestart(baseFileName);
 
+   std::ofstream configFile("middle.cfg");
+   simulation_.system().writeConfig(configFile);
+   configFile.close();
+
    bool isContinuation = true;
-   simulation_.simulate(200000, isContinuation);
-   baseFileName = "writeRestart.2n";
-   simulation_.writeRestart(baseFileName);
+   simulation_.simulate(100100, isContinuation);
+
+   configFile.open("end.cfg");
+   simulation_.system().writeConfig(configFile);
+   configFile.close();
 
 }
 
@@ -324,11 +331,22 @@ void MdSimulationTest::testReadRestart()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   std::string baseFileName("writeRestart.n");
+   std::string baseFileName("middle");
    simulation_.readRestart(baseFileName);
 
-   baseFileName = "readRestart";
+   baseFileName = "middle2";
    simulation_.writeRestart(baseFileName);
+
+   std::ofstream configFile("middle2.cfg");
+   simulation_.system().writeConfig(configFile);
+   configFile.close();
+
+   bool isContinuation = true;
+   simulation_.simulate(100100, isContinuation);
+
+   configFile.open("end2.cfg");
+   simulation_.system().writeConfig(configFile);
+   configFile.close();
 }
 
 #if 0
@@ -377,7 +395,7 @@ TEST_ADD(MdSimulationTest, testStep)
    //TEST_ADD(MdSimulationTest, testIntegrator);
 TEST_ADD(MdSimulationTest, testSimulate)
 TEST_ADD(MdSimulationTest, testWriteRestart)
-//TEST_ADD(MdSimulationTest, testReadRestart)
+TEST_ADD(MdSimulationTest, testReadRestart)
 TEST_END(MdSimulationTest)
 
 #endif
