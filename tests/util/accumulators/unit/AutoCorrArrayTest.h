@@ -8,6 +8,8 @@
 #include <util/archives/MemoryOArchive.h>
 #include <util/archives/MemoryIArchive.h>
 #include <util/archives/MemoryCounter.h>
+#include <util/archives/BinaryFileIArchive.h>
+#include <util/archives/BinaryFileOArchive.h>
 
 #include <iostream>
 #include <fstream>
@@ -100,12 +102,58 @@ public:
       clone.output(std::cout);
    }
 
+   void testSerializeFile() 
+   {
+      printMethod(TEST_FUNC);
+      printEndl();
+
+      readData();
+
+      BinaryFileOArchive u;
+      openOutputFile("binary", u.file());
+      u << accumulator_;
+      u.file().close();
+
+      AutoCorrArray<double, double> clone;
+      BinaryFileIArchive v;
+      openInputFile("binary", v.file());
+      v >> clone;
+      v.file().close();
+      
+      clone.output(std::cout);
+   }
+
+   void testSaveLoad() 
+   {
+      printMethod(TEST_FUNC);
+      printEndl();
+
+      readData();
+
+      BinaryFileOArchive u;
+      openOutputFile("binary", u.file());
+      accumulator_.save(u);
+      u.file().close();
+
+      AutoCorrArray<double, double> clone;
+      BinaryFileIArchive v;
+      openInputFile("binary", v.file());
+      clone.load(v);
+      v.file().close();
+ 
+      clone.writeParam(std::cout);
+      clone.output(std::cout);
+   }
+
+
 };
 
 TEST_BEGIN(AutoCorrArrayTest)
 TEST_ADD(AutoCorrArrayTest, testReadParam)
 TEST_ADD(AutoCorrArrayTest, testSample)
 TEST_ADD(AutoCorrArrayTest, testSerialize)
+TEST_ADD(AutoCorrArrayTest, testSerializeFile)
+TEST_ADD(AutoCorrArrayTest, testSaveLoad)
 TEST_END(AutoCorrArrayTest)
 
 #endif

@@ -1,8 +1,8 @@
 #ifndef MCMD_MD_SIMULATION_TEST_H
 #define MCMD_MD_SIMULATION_TEST_H
 
-#include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
+#include <test/UnitTest.h>
 
 #include <mcMd/mdSimulation/MdSimulation.h>
 #include <mcMd/mdSimulation/MdSystem.h>
@@ -16,13 +16,13 @@
 using namespace Util;
 using namespace McMd;
 
-class MdSimulationTest : public ParamFileTest
+class MdSimulationTest : public UnitTest
 {
 
 public:
 
    MdSimulationTest()
-    : ParamFileTest(),
+    : UnitTest(),
       system_(simulation_.system())
    {} 
 
@@ -58,8 +58,9 @@ void MdSimulationTest::testReadParam()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    try {
@@ -80,8 +81,9 @@ void MdSimulationTest::testSetZeroVelocities()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    std::cout << std::endl;
@@ -98,8 +100,9 @@ void MdSimulationTest::testSetBoltzmannVelocities()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    std::cout << std::endl;
@@ -114,8 +117,9 @@ void MdSimulationTest::testBuildPairList()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    std::cout << std::endl;
@@ -139,8 +143,9 @@ void MdSimulationTest::testPairEnergy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    std::cout << std::endl;
@@ -159,8 +164,9 @@ void MdSimulationTest::testAddPairForces()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    std::cout << std::endl;
@@ -177,8 +183,9 @@ void MdSimulationTest::testBondEnergy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    std::cout << std::endl;
@@ -197,8 +204,9 @@ void MdSimulationTest::testAddBondForces()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    std::cout << std::endl;
@@ -216,8 +224,9 @@ void MdSimulationTest::testCalculateForces()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    std::cout << std::endl;
@@ -233,8 +242,9 @@ void MdSimulationTest::testStep()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    std::cout << std::endl;
@@ -266,8 +276,9 @@ void MdSimulationTest::testSimulate()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    std::cout << std::endl;
@@ -287,8 +298,9 @@ void MdSimulationTest::testWriteRestart()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/MdSimulation"); 
-   simulation_.readParam(file());
+   std::ifstream paramFile;
+   openInputFile("in/MdSimulation", paramFile); 
+   simulation_.readParam(paramFile);
    simulation_.readCommands();
 
    std::cout << std::endl;

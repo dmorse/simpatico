@@ -8,6 +8,8 @@
 #include <util/archives/MemoryOArchive.h>
 #include <util/archives/MemoryIArchive.h>
 #include <util/archives/MemoryCounter.h>
+#include <util/archives/BinaryFileIArchive.h>
+#include <util/archives/BinaryFileOArchive.h>
 
 #include <iostream>
 #include <fstream>
@@ -67,33 +69,6 @@ public:
       accumulator_.output(std::cout);
    }
 
-   #if 0
-   void testPack() 
-   {
-      printMethod(TEST_FUNC);
-      printEndl();
-
-      readData();
-
-      int size = accumulator_.packedSize();
-      std::cout << size << std::endl;
-
-      char* begin  = new char[size];
-      char* end    = begin + size;
-      char* cursor = begin;
-      accumulator_.pack(cursor, end);
-      TEST_ASSERT(cursor == end);
-
-      AutoCorr<double, double> clone;
-      clone.setParam(32);
-      cursor = begin;
-      clone.unpack(cursor, end);
-
-      clone.output(std::cout);
-
-   }
-   #endif
-
    void testSerialize() 
    {
       printMethod(TEST_FUNC);
@@ -120,13 +95,58 @@ public:
       clone.output(std::cout);
    }
 
+   void testSerializeFile() 
+   {
+      printMethod(TEST_FUNC);
+      printEndl();
+
+      readData();
+
+      BinaryFileOArchive u;
+      openOutputFile("binary", u.file());
+      u << accumulator_;
+      u.file().close();
+
+      AutoCorr<double, double> clone;
+      BinaryFileIArchive v;
+      openInputFile("binary", v.file());
+      v >> clone;
+      v.file().close();
+      
+      clone.output(std::cout);
+   }
+
+   void testSaveLoad() 
+   {
+      printMethod(TEST_FUNC);
+      printEndl();
+
+      readData();
+
+      BinaryFileOArchive u;
+      openOutputFile("binary", u.file());
+      accumulator_.save(u);
+      u.file().close();
+
+      AutoCorr<double, double> clone;
+      BinaryFileIArchive v;
+      openInputFile("binary", v.file());
+      clone.load(v);
+      v.file().close();
+ 
+      clone.writeParam(std::cout);
+      clone.output(std::cout);
+   }
+
+
 };
 
 TEST_BEGIN(AutoCorrTest)
 TEST_ADD(AutoCorrTest, testReadParam)
 TEST_ADD(AutoCorrTest, testSample)
-//TEST_ADD(AutoCorrTest, testPack)
 TEST_ADD(AutoCorrTest, testSerialize)
+TEST_ADD(AutoCorrTest, testSerializeFile)
+//TEST_ADD(AutoCorrTest, testSaveLoad)
 TEST_END(AutoCorrTest)
 
 #endif
