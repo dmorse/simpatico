@@ -186,8 +186,8 @@ namespace McMd
       if (isRestarting_) {
          if (isInitialized_) {
             return;
-          }
-      } 
+         }
+      }
       readBegin(in, className().c_str());
       readParameters(in);
       readEnd(in);
@@ -199,7 +199,7 @@ namespace McMd
    void MdSimulation::loadParameters(Serializable::IArchive& ar)
    { 
       if (isInitialized_) {
-         UTIL_THROW("Error: Called readParam when already initialized");
+         UTIL_THROW("Error: Called loadParameters when already initialized");
       }
 
       Simulation::loadParameters(ar); 
@@ -704,15 +704,12 @@ namespace McMd
 
    void MdSimulation::readRestart(const std::string& filename)
    {
-      // readRestart
+      // Precondition
       if (isInitialized_) {
          UTIL_THROW("Error: Called readRestart when already initialized");
       }
-      if (!isRestarting_) {
-         UTIL_THROW("Error: Called readRestart without restart option");
-      }
 
-      // Load from archive
+      // Load state from archive
       Serializable::IArchive ar;
       fileMaster().openRestartIFile(filename, ".rst", ar.file());
       load(ar);
@@ -723,6 +720,7 @@ namespace McMd
       fileMaster().setCommandFileName(commandFileName);
 
       isInitialized_ = true;
+      isRestarting_  = true;
    }
 
    void MdSimulation::writeRestart(const std::string& filename)
