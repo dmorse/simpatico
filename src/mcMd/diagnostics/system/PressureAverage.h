@@ -149,6 +149,10 @@ namespace McMd
       loadParameter(ar, "nSamplePerBlock", nSamplePerBlock_);
       ar & accumulator_;
 
+      if (accumulator_.nSamplePerBlock() != nSamplePerBlock_) {
+         UTIL_THROW("Inconsistent values of nSamplePerBlock");
+      }
+
       // Open output file for block averages, if nSamplePerBlock != 0.
       if (accumulator_.nSamplePerBlock()) {
          fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
@@ -171,9 +175,8 @@ namespace McMd
    template <class Archive>
    void PressureAverage<SystemType>::serialize(Archive& ar, const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
+      Diagnostic::serialize(ar, version);
+      ar & nSamplePerBlock_;
       ar & accumulator_;
    }
 

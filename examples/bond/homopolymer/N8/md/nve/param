@@ -67,11 +67,32 @@ MdSimulation{
       outputFileName                  energy
     }
 
+    MdKineticEnergyAverage{
+      interval                           200
+      outputFileName        kineticEnergyAve
+      nSamplePerBlock                     10
+    }
+
+    MdPotentialEnergyAverage{
+      interval                           200
+      outputFileName      potentialEnergyAve
+      nSamplePerBlock                     10
+    }
+
     RadiusGyration{
       interval                          1000
       outputFileName          RadiusGyration
       nSamplePerBlock                     10
       speciesId                            0
+    }
+
+    BondLengthDist{
+      interval                          1000
+      outputFileName          BondLengthDist
+      speciesId                            0
+      min                                0.0
+      max                                2.0
+      nBin                               400
     }
 
     RDF{
@@ -101,26 +122,4 @@ MdSimulation{
 
   }
 }
-
-
-    BondLengthDist{
-      interval                           1000
-      outputFileName          BondLengthDist
-      speciesId                            0
-      min                                0.0
-      max                                2.0
-      nBin                               400
-    }
-
-    MdPotentialEnergyAverage{
-      interval                           200
-      outputFileName      potentialEnergyAve
-      nSamplePerBlock                     10
-    }
-
-    MdKineticEnergyAverage{
-      interval                           200
-      outputFileName        kineticEnergyAve
-      nSamplePerBlock                     10
-    }
 

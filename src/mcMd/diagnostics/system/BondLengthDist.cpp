@@ -70,10 +70,10 @@ namespace McMd
       if (speciesId_ < 0) {
          UTIL_THROW("Negative speciesId");
       }
-      if (feq(accumulator_.min(),min_)) {
+      if (!feq(accumulator_.min(),min_)) {
          UTIL_THROW("Inconsistent values of min");
       }
-      if (feq(accumulator_.max(), max_)) {
+      if (!feq(accumulator_.max(), max_)) {
          UTIL_THROW("Inconsistent values of max");
       }
       if (accumulator_.nBin() != nBin_) {
