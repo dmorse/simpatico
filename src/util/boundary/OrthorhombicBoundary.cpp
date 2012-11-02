@@ -55,11 +55,11 @@ namespace Util
    /* 
    * Set box lengths and then call reset.
    */
-   void OrthorhombicBoundary::setTetragonal(double ab, double c) 
+   void OrthorhombicBoundary::setTetragonal(double a, double bc) 
    {  
-      maxima_[0] = ab;
-      maxima_[1] = c;
-      maxima_[2] = c;
+      maxima_[0] = a;
+      maxima_[1] = bc;
+      maxima_[2] = bc;
       lattice_ = Tetragonal;
       reset(); 
    }
@@ -154,11 +154,11 @@ namespace Util
          in >> boundary.maxima_;
       } else
       if (lattice == Tetragonal) {
-         double ab, c;
-         in >> ab >> c;
-         boundary.maxima_[0] = ab;
-         boundary.maxima_[1] = c;
-         boundary.maxima_[2] = c;
+         double a, bc;
+         in >> a >> bc;
+         boundary.maxima_[0] = a;
+         boundary.maxima_[1] = bc;
+         boundary.maxima_[2] = bc;
       } else 
       if (lattice == Cubic) {
          double a; 
