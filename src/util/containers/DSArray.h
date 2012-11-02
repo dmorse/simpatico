@@ -248,18 +248,18 @@ namespace Util
          capacity = capacity_;
       }
       ar & capacity;
+      ar & size_;
       if (Archive::is_loading()) {
          if (!isAllocated()) {
             if (capacity > 0) {
                allocate(capacity);
             }
          } else {
-            if (capacity != capacity_) {
-               UTIL_THROW("Inconsistent DSArray capacities");
+            if (size_ > capacity_) {
+               UTIL_THROW("Inconsistent DSArray size and capacity");
             }
          }
       }
-      ar & size_;
       for (int i = 0; i < size_; ++i) {
          ar & data_[i];
       }
