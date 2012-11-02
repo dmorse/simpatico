@@ -69,18 +69,6 @@ namespace Util
       void allocate(int capacity);
 
       /**
-      * Serialize a DPArray to/from an Archive.
-      *
-      * Serialization preserves only the capacity. Upon
-      * loading, the container is allocated by empty.
-      *
-      * \param ar       archive 
-      * \param version  archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
-      /**
       * Append an element to the end of the sequence.
       *
       * \param data Data object to be appended
@@ -205,31 +193,6 @@ namespace Util
 
       ptrs_     = new Data*[capacity];
       capacity_ = capacity;
-   }
-
-   /*
-   * Serialize a DPArray to/from an Archive.
-   */
-   template <class Data>
-   template <class Archive>
-   void DPArray<Data>::serialize(Archive& ar, const unsigned int version)
-   {
-      int capacity;
-      if (Archive::is_saving()) {
-         capacity = capacity_;
-      }
-      ar & capacity;
-      if (Archive::is_loading()) {
-         if (!DPArray<Data>::isAllocated()) {
-            if (capacity > 0) {
-               allocate(capacity);
-            }
-         } else {
-            if (capacity != capacity_) {
-               UTIL_THROW("Inconsistent DArray capacities");
-            }
-         }
-      }
    }
 
    /*

@@ -42,19 +42,7 @@ namespace Util
       * \param capacity maximum size of stack.
       */
       void allocate(int capacity);
-  
-      /**
-      * Serialize a ArrayStack to/from an Archive.
-      *
-      * Serialization only stores the capacity. Upon loading,
-      * the container is allocated but empty.
-      *
-      * \param ar       archive 
-      * \param version  archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
+ 
       /// \name Mutators
       //@{
 
@@ -167,31 +155,6 @@ namespace Util
       // Nullify all Data* pointer elements
       for (int i = 0; i < capacity; ++i) {
          ptrs_[i] =  0;
-      }
-   }
-
-   /*
-   * Serialize an ArrayStack to/from an Archive.
-   */
-   template <class Data>
-   template <class Archive>
-   void ArrayStack<Data>::serialize(Archive& ar, const unsigned int version)
-   {
-      int capacity;
-      if (Archive::is_saving()) {
-         capacity = capacity_;
-      }
-      ar & capacity;
-      if (Archive::is_loading()) {
-         if (!isAllocated()) {
-            if (capacity > 0) {
-               allocate(capacity);
-            }
-         } else {
-            if (capacity != capacity_) {
-               UTIL_THROW("Inconsistent ArrayStack capacities");
-            }
-         }
       }
    }
 
