@@ -385,12 +385,12 @@ namespace Util
    template <typename Data, typename Product>
    void AutoCorrArray<Data, Product>::output(std::ostream& outFile) 
    {
-      Data    ave = average();
       Product autocorr;
-      Product aveSq;
+      // Product aveSq;
+      // Data    ave = average();
    
       // Calculate and output autocorrelation
-      aveSq = product(ave, ave);
+      // aveSq = product(ave, ave);
       int bufferSize = buffers_[0].size();
       for (int i = 0; i < bufferSize; ++i) {
          autocorr = corr_[i]/double(nCorr_[i]*nEnsemble_);
