@@ -1,5 +1,5 @@
-#ifndef MEMORY_I_ARCHIVE_H
-#define MEMORY_I_ARCHIVE_H
+#ifndef UTIL_MEMORY_I_ARCHIVE_H
+#define UTIL_MEMORY_I_ARCHIVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -79,17 +79,17 @@ namespace Util
       void release();
 
       /**
-      * Write one object.
+      * Load one object.
       *
-      * \param data object to be written
+      * \param data object to be loaded from this archive.
       */
       template <typename T>
       MemoryIArchive& operator & (T& data);
 
       /**
-      * Write one object.
+      * Load one object.
       *
-      * \param data object to be written
+      * \param data object to be loaded from this archive.
       */
       template <typename T>
       MemoryIArchive& operator >> (T& data);
@@ -97,7 +97,7 @@ namespace Util
       /**
       * Unpack one object of type T.
       *
-      * \param data the object into which data should be read.
+      * \param data object to be loaded from this archive.
       */
       template <typename T>
       void unpack(T& data);
@@ -105,7 +105,7 @@ namespace Util
       /**
       * Read a C-array of objects of type T.
       *
-      * \param array array into which data should be read.
+      * \param array array into which data should be loaded.
       * \param n     expected number of elements in the array.
       */
       template <typename T>
@@ -219,8 +219,8 @@ namespace Util
 
    // Template methods
 
-   /**
-   * Read one object.
+   /*
+   * Load one T object from a MemoryIArchive.
    */
    template <typename T>
    inline MemoryIArchive& MemoryIArchive::operator & (T& data)
@@ -229,8 +229,8 @@ namespace Util
       return *this;
    }
 
-   /**
-   * Read one object.
+   /*
+   * Load one T object from this MemoryIArchive.
    */
    template <typename T>
    inline MemoryIArchive& MemoryIArchive::operator >> (T& data)
@@ -240,7 +240,7 @@ namespace Util
    }
 
    /*
-   * Unpack one object of type T.
+   * Load one T object from this MemoryIArchive.
    */
    template <typename T>
    void MemoryIArchive::unpack(T& data)
@@ -255,7 +255,7 @@ namespace Util
    }
 
    /*
-   * Read a C-array of objects of type T.
+   * Load a C-array of objects of type T.
    */
    template <typename T>
    void MemoryIArchive::unpack(T* array, int n)
@@ -273,7 +273,7 @@ namespace Util
 
    // Explicit specializations of serialize function
 
-   /**
+   /*
    * Load a char from a MemoryIArchive.
    */
    template <>
@@ -281,7 +281,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a bool from a MemoryIArchive.
    */
    template <>
@@ -289,7 +289,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load an unsigned int from a MemoryIArchive.
    */
    template <>
@@ -297,7 +297,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load an int from a MemoryIArchive.
    */
    template <>
@@ -305,7 +305,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load an unsigned long int from a MemoryIArchive.
    */
    template <>
@@ -313,7 +313,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a long int from a MemoryIArchive.
    */
    template <>
@@ -321,7 +321,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a float from a MemoryIArchive.
    */
    template <>
@@ -329,15 +329,17 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
-   * Load an double from a MemoryIArchive.
+   /*
+   * Load a double from a MemoryIArchive.
    */
    template <>
    inline void serialize(MemoryIArchive& ar, double& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   // Explicit serialize methods for std library types.
+
+   /*
    * Load a std::complex<float> from a MemoryIArchive.
    */
    template <>
@@ -345,7 +347,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a std::complex<double> from a MemoryIArchive.
    */
    template <>
@@ -360,7 +362,9 @@ namespace Util
    void serialize(MemoryIArchive& ar, std::string& data, 
                          const unsigned int version);
 
-   /**
+   // Explicit serialize methods for Util namespace types.
+
+   /*
    * Load a Util::Vector from a MemoryIArchive.
    */
    template <>
@@ -368,7 +372,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a Util::IntVector from a MemoryIArchive.
    */
    template <>

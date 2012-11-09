@@ -1,5 +1,5 @@
-#ifndef INT_H
-#define INT_H
+#ifndef UTIL_INT_H
+#define UTIL_INT_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

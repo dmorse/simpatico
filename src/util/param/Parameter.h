@@ -1,5 +1,5 @@
-#ifndef PARAMETER_H
-#define PARAMETER_H
+#ifndef UTIL_PARAMETER_H
+#define UTIL_PARAMETER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

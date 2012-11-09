@@ -1,5 +1,5 @@
-#ifndef D_RAGGED_MATRIX_H
-#define D_RAGGED_MATRIX_H
+#ifndef UTIL_D_RAGGED_MATRIX_H
+#define UTIL_D_RAGGED_MATRIX_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

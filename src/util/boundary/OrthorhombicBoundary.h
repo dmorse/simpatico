@@ -57,10 +57,10 @@ namespace Util
       /**
       * Set unit cell dimensions for tetragonal boundary.
       *
-      * \param ab unit cell dimensions in x and y directions
-      * \param c  unit cell length in z direction
+      * \param a  unit cell dimensions in unique x-direction
+      * \param bc unit cell length in y and z directions
       */
-      void setTetragonal(double ab, double c);
+      void setTetragonal(double a, double bc);
 
       /**
       * Set unit cell dimensions for a cubic boundary.
@@ -611,4 +611,4 @@ namespace Util
 }
 #endif // ifdef  UTIL_MPI
 
-#endif // ifndef ORTHORHOMBIC_BOUNDARY_H
+#endif // ifndef UTIL_ORTHORHOMBIC_BOUNDARY_H

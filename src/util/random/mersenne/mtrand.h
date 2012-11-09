@@ -1,5 +1,5 @@
-#ifndef MTRAND_H
-#define MTRAND_H
+#ifndef UTIL_MTRAND_H
+#define UTIL_MTRAND_H
 
 // mtrand.h
 // C++ include file for MT19937, with initialization improved 2002/1/26.

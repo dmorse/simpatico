@@ -1,5 +1,5 @@
-#ifndef MEMORY_O_ARCHIVE_H
-#define MEMORY_O_ARCHIVE_H
+#ifndef UTIL_MEMORY_O_ARCHIVE_H
+#define UTIL_MEMORY_O_ARCHIVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -61,13 +61,13 @@ namespace Util
       void clear();
 
       /**
-      * Write one object.
+      * Save one object.
       */
       template <typename T>
       void operator & (T& data);
 
       /**
-      * Write one object.
+      * Save one object.
       */
       template <typename T>
       MemoryOArchive& operator << (T& data);
@@ -194,14 +194,14 @@ namespace Util
    {  return cursor_; }
 
    /*
-   * Write one object.
+   * Save one object.
    */
    template <typename T>
    inline void MemoryOArchive::operator & (T& data)
    {  serialize(*this, data, version_); }
 
    /*
-   * Write one object.
+   * Save one object.
    */
    template <typename T>
    inline MemoryOArchive& MemoryOArchive::operator << (T& data)
@@ -213,7 +213,7 @@ namespace Util
    // Method templates
 
    /*
-   * Bitwise pack a single object of type T.
+   * Save a single object of type T.
    */
    template <typename T>
    inline void MemoryOArchive::pack(const T& data)
@@ -231,7 +231,7 @@ namespace Util
    }
 
    /*
-   * Bitwise pack a C-array of objects of type T.
+   * Save a C-array of objects of type T.
    */
    template <typename T>
    inline void MemoryOArchive::pack(const T* array, int n)
@@ -252,7 +252,7 @@ namespace Util
 
    // Explicit serialize functions for primitive types
 
-   /**
+   /*
    * Save a bool to a MemoryOArchive.
    */
    template <>
@@ -260,7 +260,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a char to a MemoryOArchive.
    */
    template <>
@@ -268,7 +268,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an unsigned int to a MemoryOArchive.
    */
    template <>
@@ -276,7 +276,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an int to a MemoryOArchive.
    */
    template <>
@@ -284,7 +284,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a unsigned long int to a MemoryOArchive.
    */
    template <>
@@ -292,7 +292,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a long int to a MemoryOArchive.
    */
    template <>
@@ -300,7 +300,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a float to a MemoryOArchive.
    */
    template <>
@@ -308,7 +308,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an double to a MemoryOArchive.
    */
    template <>
@@ -318,7 +318,7 @@ namespace Util
 
    // Explicit serialize functions for standard library types
 
-   /**
+   /*
    * Save a std::complex<float> to a MemoryOArchive.
    */
    template <>
@@ -326,7 +326,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a std::complex<double> to a MemoryOArchive.
    */
    template <>
@@ -334,7 +334,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a std::string to a MemoryOArchive.
    */
    template <>
@@ -349,7 +349,7 @@ namespace Util
 
    // Explicit serialize functions for namespace Util
 
-   /**
+   /*
    * Save a Util::Vector to a MemoryOArchive.
    */
    template <>
@@ -357,7 +357,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); } 
 
-   /**
+   /*
    * Save a Util::IntVector to a MemoryOArchive.
    */
    template <>

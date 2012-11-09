@@ -1,5 +1,5 @@
-#ifndef MTRAND_CPP
-#define MTRAND_CPP
+#ifndef UTIL_MTRAND_CPP
+#define UTIL_MTRAND_CPP
 
 // mtrand.cpp, see include file mtrand.h for information
 

@@ -1,5 +1,5 @@
-#ifndef FACTORY_H
-#define FACTORY_H
+#ifndef UTIL_FACTORY_H
+#define UTIL_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

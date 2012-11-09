@@ -1,5 +1,5 @@
-#ifndef FORMAT_H
-#define FORMAT_H
+#ifndef UTIL_FORMAT_H
+#define UTIL_FORMAT_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

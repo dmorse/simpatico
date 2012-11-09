@@ -1,5 +1,5 @@
-#ifndef STR_H
-#define STR_H
+#ifndef UTIL_STR_H
+#define UTIL_STR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

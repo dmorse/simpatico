@@ -1,5 +1,5 @@
-#ifndef AR1_PROCESS_H
-#define AR1_PROCESS_H
+#ifndef UTIL_AR1_PROCESS_H
+#define UTIL_AR1_PROCESS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef PARAM_COMPOSITE_H
-#define PARAM_COMPOSITE_H
+#ifndef UTIL_PARAM_COMPOSITE_H
+#define UTIL_PARAM_COMPOSITE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

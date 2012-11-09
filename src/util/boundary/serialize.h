@@ -1,5 +1,5 @@
-#ifndef BOUNDARY_SERIALIZE_H
-#define BOUNDARY_SERIALIZE_H
+#ifndef UTIL_BOUNDARY_SERIALIZE_H
+#define UTIL_BOUNDARY_SERIALIZE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

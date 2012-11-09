@@ -1,5 +1,5 @@
-#ifndef FORMAT_CPP
-#define FORMAT_CPP
+#ifndef UTIL_FORMAT_CPP
+#define UTIL_FORMAT_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

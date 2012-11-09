@@ -1,5 +1,5 @@
-#ifndef LIST_ITERATOR_H
-#define LIST_ITERATOR_H
+#ifndef UTIL_LIST_ITERATOR_H
+#define UTIL_LIST_ITERATOR_H
 
 #include <util/containers/Node.h>
 

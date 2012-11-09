@@ -1,5 +1,5 @@
-#ifndef AUTO_CORR_H
-#define AUTO_CORR_H
+#ifndef UTIL_AUTO_CORR_H
+#define UTIL_AUTO_CORR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -115,31 +115,6 @@ namespace Util
       * \param t the lag time
       */
       Product autoCorrelation(int t) const;
-
-      #if 0
-      /**
-      * Pack array into a block of memory.
-      *
-      * \param current pointer to current position in write buffer
-      * \param end     pointer to end (one char* past last) of buffer
-      */
-      void pack(char*& current, char* end) const;
-
-      /**
-      * Unpack array from a block of memory.
-      *
-      * \param current pointer to current position in read buffer
-      * \param end     pointer to end (one char* past last) of buffer
-      */
-      void unpack(char*& current, char* end);
-       
-      /**
-      * Return packed size of this AutoCorr
-      *
-      * \return required sizeof packed buffer for this AutoCorr, in bytes.
-      */
-      int packedSize() const;
-      #endif
 
       /**
       * Serial to or from an Archive.
@@ -367,10 +342,10 @@ namespace Util
       return sum; 
    }
   
-   /**
-   * Return autocorrelation at a given lag time
+   /*
+   * Return autocorrelation at a given lag time index
    * 
-   * \param t the lag time
+   * \param t the lag time index
    */
    template <typename Data, typename Product>
    Product AutoCorr<Data, Product>::autoCorrelation(int t) const
@@ -391,74 +366,6 @@ namespace Util
 
       return autocorr;
    }
-
-   #if 0
-   /*
-   * Pack this AutoCorr into a memory block.
-   */
-   template <typename Data, typename Product>
-   void AutoCorr<Data, Product>::pack(char*& current, char* end) const
-   {
-      if (current + packedSize() > end) {
-         UTIL_THROW("Attempted write past end of send buffer");
-      }
-      buffer_.pack(current, end);
-      
-      corr_.pack(current, end);
-      
-      nCorr_.pack(current, end);
-      
-      Data* ptr = (Data *)(current);
-      *ptr = sum_;
-      current = (char*)(ptr + 1);
-      
-      int* ptr0 = (int*)(current);
-      *ptr0 = bufferCapacity_;
-      ++ptr0;
-      *ptr0 = nSample_;
-      ++ptr0;
-      current = (char*)(ptr0);
-   }
-
-   /*
-   * Unpack this AutoCorr from a memory block.
-   */
-   template <typename Data, typename Product>
-   void AutoCorr<Data, Product>::unpack(char*& current, char* end) 
-   {
-      if (current + packedSize() > end) {
-         UTIL_THROW("Attempted read past end of recv buffer");
-      }
-      buffer_.unpack(current, end);
-      
-      corr_.unpack(current, end);
-      
-      nCorr_.unpack(current, end);
-      
-      Data* ptr = (Data *)(current);
-      sum_ = *ptr;
-      current = (char*)(ptr + 1);
-      
-      int* ptr0 = (int*)(current);
-      bufferCapacity_ = *ptr0;
-      ++ptr0;
-      nSample_ = *ptr0;
-      ++ptr0;
-      current = (char*)(ptr0);
-   }
-
-   /*
-   * Return packed sizeof this AutoCorr, in bytes.
-   */
-   template <typename Data, typename Product>
-   int AutoCorr<Data, Product>::packedSize() const
-   {
-      int size;
-      size = buffer_.packedSize() + corr_.packedSize() + nCorr_.packedSize(); 
-      size = size + sizeof(Data) + 2*sizeof(int);
-      return size;
-   }
-   #endif
 
    /*
    * Serialize this AutoCorr.

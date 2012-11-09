@@ -1,5 +1,5 @@
-#ifndef OFFSET_H
-#define OFFSET_H
+#ifndef UTIL_OFFSET_H
+#define UTIL_OFFSET_H
 
 #include <cstddef>
 

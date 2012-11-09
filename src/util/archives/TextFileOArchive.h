@@ -1,5 +1,5 @@
-#ifndef TEXT_FILE_O_ARCHIVE_H
-#define TEXT_FILE_O_ARCHIVE_H
+#ifndef UTIL_TEXT_FILE_O_ARCHIVE_H
+#define UTIL_TEXT_FILE_O_ARCHIVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -55,20 +55,31 @@ namespace Util
       void setStream(std::ostream& out);
 
       /**
-      * Write one object.
+      * Serialize one object to this archive.
       */
       template <typename T>
       TextFileOArchive& operator & (T& data);
 
       /**
-      * Write one object.
+      * Serialize one object.
       */
       template <typename T>
       TextFileOArchive& operator << (T& data);
 
+      /**
+      * Serialize a single T object to file as formatted ascii.
+      *
+      * \param data object to be written to file
+      */
       template <typename T> 
       void pack(const T& data);
 
+      /**
+      * Serialize an array of objects to file.
+      *
+      * \param array C-array of T objects
+      * \param n     number of elements
+      */
       template <typename T> 
       void pack(const T* array, int n);
 
@@ -90,10 +101,10 @@ namespace Util
    inline bool TextFileOArchive::is_loading()
    {  return false; }
 
-   // Inline non-static methods
+   // Inline non-static method templates.
 
    /*
-   * Write one object.
+   * Serialize one object.
    */
    template <typename T>
    inline TextFileOArchive& TextFileOArchive::operator & (T& data)
@@ -103,7 +114,7 @@ namespace Util
    }
 
    /*
-   * Write one object.
+   * Serialize one object to this archive.
    */
    template <typename T>
    inline TextFileOArchive& TextFileOArchive::operator << (T& data)
@@ -115,14 +126,14 @@ namespace Util
    // Method templates
 
    /*
-   * Pack a single object of type T.
+   * Serialize a single object of type T.
    */
    template <typename T>
    inline void TextFileOArchive::pack(const T& data)
    {  *ostreamPtr_ << data << std::endl; }
 
    /*
-   * Bitwise pack a single object of type double.
+   * Serialize a single object of type double.
    */
    template <>
    inline void TextFileOArchive::pack(const double& data)
@@ -134,7 +145,7 @@ namespace Util
    }
 
    /*
-   * Write a C-array of objects of type T.
+   * Serialize a C-array of objects of type T.
    */
    template <typename T>
    inline void TextFileOArchive::pack(const T* array, int n)
@@ -145,66 +156,81 @@ namespace Util
       *ostreamPtr_ << std::endl;
    }
 
+   /*
+   * Serialize a C-array of double values.
+   */
+   template <>
+   inline void TextFileOArchive::pack(const double* array, int n)
+   {
+      ostreamPtr_->setf(std::ios::scientific);
+      ostreamPtr_->precision(17);
+      for (int i=0; i < n; ++i) {
+        ostreamPtr_->width(25);
+        *ostreamPtr_ << array[i] << "  ";
+      }
+      *ostreamPtr_ << std::endl;
+   }
+
    // Explicit serialize functions for primitive types
 
-   /**
-   * Save a bool to a TextFileOArchive.
+   /*
+   * Serialize a bool to a TextFileOArchive.
    */
    template <>
    inline void serialize(TextFileOArchive& ar, bool& data, 
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
-   * Save a char to a TextFileOArchive.
+   /*
+   * Serialize a char to a TextFileOArchive.
    */
    template <>
    inline void serialize(TextFileOArchive& ar, char& data, 
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
-   * Save an unsigned int to a TextFileOArchive.
+   /*
+   * Serialize an unsigned int to a TextFileOArchive.
    */
    template <>
    inline void serialize(TextFileOArchive& ar, unsigned int& data, 
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
-   * Save an int to a TextFileOArchive.
+   /*
+   * Serialize an int to a TextFileOArchive.
    */
    template <>
    inline void serialize(TextFileOArchive& ar, int& data, 
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
-   * Save an unsigned long int to a TextFileOArchive.
+   /*
+   * Serialize an unsigned long int to a TextFileOArchive.
    */
    template <>
    inline void serialize(TextFileOArchive& ar, unsigned long& data,  
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
-   * Save a long int to a TextFileOArchive.
+   /*
+   * Serialize a long int to a TextFileOArchive.
    */
    template <>
    inline void serialize(TextFileOArchive& ar, long& data,  
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
-   * Save a float to a TextFileOArchive.
+   /*
+   * Serialize a float to a TextFileOArchive.
    */
    template <>
    inline void serialize(TextFileOArchive& ar, float& data, 
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
-   * Save an double to a TextFileOArchive.
+   /*
+   * Serialize an double to a TextFileOArchive.
    */
    template <>
    inline void serialize(TextFileOArchive& ar, double& data, 
@@ -213,8 +239,8 @@ namespace Util
 
    // Explicit serialize functions for primitive types
 
-   /**
-   * Save a std::complex<float> to a TextFileOArchive.
+   /*
+   * Serialize a std::complex<float> to a TextFileOArchive.
    */
    template <>
    inline 
@@ -222,8 +248,8 @@ namespace Util
                   const unsigned int version)
    {  ar.pack(data); }
 
-   /**
-   * Save a std::complex<double> to a TextFileOArchive.
+   /*
+   * Serialize a std::complex<double> to a TextFileOArchive.
    */
    template <>
    inline 
@@ -231,8 +257,8 @@ namespace Util
                   const unsigned int version)
    {  ar.pack(data); }
 
-   /**
-   * Save a std::string to a TextFileOArchive.
+   /*
+   * Serialize a std::string to a TextFileOArchive.
    */
    template <>
    inline void serialize(TextFileOArchive& ar, std::string& data, 
@@ -245,16 +271,16 @@ namespace Util
 
    // Explicit serialize functions for namespace Util
 
-   /**
-   * Save a Util::Vector to a TextFileOArchive.
+   /*
+   * Serialize a Util::Vector to a TextFileOArchive.
    */
    template <>
    inline void serialize(TextFileOArchive& ar, Vector& data, 
                          const unsigned int version)
    {  ar.pack(data); } 
 
-   /**
-   * Save a Util::IntVector to a TextFileOArchive.
+   /*
+   * Serialize a Util::IntVector to a TextFileOArchive.
    */
    template <>
    inline void serialize(TextFileOArchive& ar, IntVector& data, 

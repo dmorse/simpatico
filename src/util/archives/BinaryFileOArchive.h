@@ -1,5 +1,5 @@
-#ifndef BINARY_FILE_O_ARCHIVE_H
-#define BINARY_FILE_O_ARCHIVE_H
+#ifndef UTIL_BINARY_FILE_O_ARCHIVE_H
+#define UTIL_BINARY_FILE_O_ARCHIVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -22,7 +22,7 @@ namespace Util
 {
 
    /**
-   * Saving archive for binary ostream.
+   * Saving / output archive for binary ostream.
    *
    * \ingroup Archive_Module
    */
@@ -134,7 +134,7 @@ namespace Util
 
    // Explicit serialize functions for primitive types
 
-   /**
+   /*
    * Save a bool to a BinaryFileOArchive.
    */
    template <>
@@ -142,7 +142,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a char to a BinaryFileOArchive.
    */
    template <>
@@ -150,7 +150,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an unsigned int to a BinaryFileOArchive.
    */
    template <>
@@ -158,7 +158,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an int to a BinaryFileOArchive.
    */
    template <>
@@ -166,7 +166,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an unsigned long int to a BinaryFileOArchive.
    */
    template <>
@@ -174,7 +174,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a long int to a BinaryFileOArchive.
    */
    template <>
@@ -182,7 +182,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a float to a BinaryFileOArchive.
    */
    template <>
@@ -190,7 +190,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an double to a BinaryFileOArchive.
    */
    template <>
@@ -198,9 +198,9 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   // Explicit serialize functions for primitive types
+   // Explicit serialize functions for std library types
 
-   /**
+   /*
    * Save a std::complex<float> to a BinaryFileOArchive.
    */
    template <>
@@ -209,7 +209,7 @@ namespace Util
                   const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a std::complex<double> to a BinaryFileOArchive.
    */
    template <>
@@ -218,7 +218,7 @@ namespace Util
                   const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a std::string to a BinaryFileOArchive.
    */
    template <>
@@ -233,7 +233,7 @@ namespace Util
 
    // Explicit serialize functions for namespace Util
 
-   /**
+   /*
    * Save a Util::Vector to a BinaryFileOArchive.
    */
    template <>
@@ -241,7 +241,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); } 
 
-   /**
+   /*
    * Save a Util::IntVector to a BinaryFileOArchive.
    */
    template <>

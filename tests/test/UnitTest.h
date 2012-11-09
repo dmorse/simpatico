@@ -200,13 +200,13 @@ protected:
    /**
    * Return true if two integers are equal.
    */
-   bool eq(int s1, int s2) const
+   static bool eq(int s1, int s2)
    {  return (s1 == s2); }
 
    /**
    * Return true if two double precision floats are equal.
    */
-   bool eq(double s1, double s2) const
+   static bool eq(double s1, double s2)
    {
       double epsilon = 1.0E-10; 
       return ( fabs(s1-s2) < epsilon ); 

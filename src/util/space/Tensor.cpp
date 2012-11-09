@@ -1,5 +1,5 @@
-#ifndef TENSOR_CPP
-#define TENSOR_CPP
+#ifndef UTIL_TENSOR_CPP
+#define UTIL_TENSOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -34,12 +34,12 @@ namespace Util
 
    // Equality operators
    
-   #define EPSILON 1.0E-8
+   #define UTIL_TENSOR_EPSILON 1.0E-8
    
    bool operator==(const Tensor& t1, const Tensor& t2) 
    {
       for (int i = 0; i < DimensionSq; ++i) {
-         if ( fabs(t1.elem_[i] - t2.elem_[i]) > EPSILON) {
+         if ( fabs(t1.elem_[i] - t2.elem_[i]) > UTIL_TENSOR_EPSILON) {
             return false;
          }
       }
@@ -50,7 +50,7 @@ namespace Util
    {
       for (int i = 0; i < Dimension; ++i) {
          for (int j = 0; j < Dimension; ++j) {
-            if ( fabs(t1(i, j) - a2[i][j]) > EPSILON) {
+            if ( fabs(t1(i, j) - a2[i][j]) > UTIL_TENSOR_EPSILON) {
                return false;
             }
          }
@@ -58,7 +58,7 @@ namespace Util
       return true;
    }
    
-   #undef EPSILON
+   #undef UTIL_TENSOR_EPSILON
    
    bool operator==(const double a1[][Dimension], const Tensor& t2) 
    { return (t2 == a1); }

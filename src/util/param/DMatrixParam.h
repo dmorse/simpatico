@@ -1,5 +1,5 @@
-#ifndef DMATRIX_PARAM_H
-#define DMATRIX_PARAM_H
+#ifndef UTIL_DMATRIX_PARAM_H
+#define UTIL_DMATRIX_PARAM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

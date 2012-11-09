@@ -82,6 +82,11 @@ McSimulation{
       outputFileName            dump/config.
     }
 
+    McWriteRestart{
+      interval                         10000
+      fileName                       restart
+    }
+
     McEnergyOutput{
       interval                          1000
       outputFileName                  energy

@@ -1,5 +1,5 @@
-#ifndef FEQ_H
-#define FEQ_H
+#ifndef UTIL_FEQ_H
+#define UTIL_FEQ_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -18,8 +18,11 @@ namespace Util
    * 
    * \ingroup Math_Module
    */
-   inline bool feq(double x, double y, double eps = 1.0E-12)
-   {  return (fabs(x-y) < eps); }
+   inline bool feq(double x, double y, double eps = 1.0E-10)
+   {
+      double diff = fabs(x - y) / (fabs(x) + fabs(y) + 1.0E-5);
+      return (diff < eps);
+   }
 
 }
 #endif

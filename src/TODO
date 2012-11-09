@@ -4,19 +4,6 @@ This file contains only items that are not localized to a namespace.
 Makefiles
 ---------
 
-- Add separate macros COMPILER_MPI and COMPILER_SERIAL, and set COMPILER to 
-  an appropriate value depending on if UTIL_MPI is defined.
-
 - Add python script setOptions to modify common options by editing compiler.mk 
   and defines.mk files.
-
-Tests
------
-
-- Configure tests so that appropriate tests are run depending on value of 
-  UTIL_MPI or TEST_MPI. Have serial tests run in either mode, parallel tests 
-  only in parallel mode.
-
-- Automate regression tests for stream and string outputs, to remove remaining 
-  need for human inspection. 
 

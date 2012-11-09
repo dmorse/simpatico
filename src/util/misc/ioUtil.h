@@ -1,5 +1,5 @@
-#ifndef IO_UTIL_H
-#define IO_UTIL_H
+#ifndef UTIL_IO_UTIL_H
+#define UTIL_IO_UTIL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

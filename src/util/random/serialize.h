@@ -1,5 +1,5 @@
-#ifndef RANDOM_SERIALIZE_H
-#define RANDOM_SERIALIZE_H
+#ifndef UTIL_RANDOM_SERIALIZE_H
+#define UTIL_RANDOM_SERIALIZE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

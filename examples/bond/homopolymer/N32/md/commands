@@ -2,7 +2,9 @@ SET_CONFIG_IO    McConfigIo
 WRITE_PARAM      param
 READ_CONFIG      config
 THERMALIZE       1.0
-SIMULATE         2000
+SIMULATE         1200
 SET_CONFIG_IO    DdMdConfigIo
-WRITE_CONFIG     config
+WRITE_CONFIG     config.dmd
+SET_CONFIG_IO    LammpsConfigIo
+WRITE_CONFIG     config.lmp
 FINISH

@@ -25,26 +25,6 @@ Serialization
 -------------
 
 Create ability to do true binary serialization, with single restart file for 
-each system. Required changes in Util namespace:
-
-  - Create serialize methods for pointer containers. These should allocate data, 
-    but not copy pointers. 
-
-  - Create serialize methods for Manager template that save the class names, and 
-    that uses the factory to reconstruct associated objects during loading. After
-    instantiation, the serialize method should be called for each such object.
-
-  - Create serialize methods for all base classes defined in Util (e.g., ParamComposite). 
-    These must be called explicitly in subclass serialize methods.
-
-  Further changes to McMd namespace are discussed there. These include:
-
-  - Create serialize methods for all objects created by factories. Base class 
-    methods should just throw exceptions.
-
-  - Make sure that loading methods explicitly allocate all required memory, and 
-    create required associations between child objects.
-
-  - Create serialization method (serialize or save and load) for Simulation that 
-    initialize all pointers after allocating all arrays.
+each system. Make ParamComposite a subclass of Serializable, and add load and
+save methods for all subclasses of ParamComposite. Work in branch.
 

@@ -1,5 +1,5 @@
-#ifndef CONST_ARRAY_ITERATOR_H
-#define CONST_ARRAY_ITERATOR_H
+#ifndef UTIL_CONST_ARRAY_ITERATOR_H
+#define UTIL_CONST_ARRAY_ITERATOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

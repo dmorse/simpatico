@@ -1,5 +1,5 @@
-#ifndef MEMORY_H
-#define MEMORY_H
+#ifndef UTIL_MEMORY_H
+#define UTIL_MEMORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
