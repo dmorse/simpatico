@@ -1,6 +1,5 @@
 Add loadParameters / save serialization to:
 
-CompositionProfile
 LinearRouseAutoCorr
 RingRouseAutoCorr
 StructureFactorP

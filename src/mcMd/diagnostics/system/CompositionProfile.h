@@ -75,6 +75,30 @@ namespace McMd
       void sample(long iStep);
 
       /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
+      /**
+      * Serialize internal state to/from archive.
+      *
+      * \param ar       archive
+      * \param version  index for archive version
+      */
+      template <class Archive>
+      void serialize(Archive &ar, const unsigned int version);
+
+
+      /**
       * Output results to predefined output file.
       */
       virtual void output();
@@ -112,6 +136,21 @@ namespace McMd
 
 
    };
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void CompositionProfile::serialize(Archive& ar, const unsigned int version)
+   {
+      Diagnostic::serialize(ar, version);
+      ar & nDirection_;
+      ar & intVectors_;
+      ar & waveVectors_;
+      ar & accumulators_;
+      ar & nSample_;
+      ar & nAtomType_;
+   }
 
 }
 #endif
