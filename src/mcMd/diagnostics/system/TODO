@@ -1,7 +1,5 @@
 Add loadParameters / save serialization to:
 
-LinearRouseAutoCorr
-RingRouseAutoCorr
 StructureFactorP
 StructureFactorPGrid
 VanHove

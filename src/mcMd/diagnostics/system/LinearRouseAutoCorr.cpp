@@ -104,16 +104,21 @@ namespace McMd
       data_.allocate(speciesCapacity); 
    
       // Validate input
-      if (speciesId_ < 0)       
+      if (speciesId_ < 0) {
          UTIL_THROW("Negative speciesId");
-      if (p_ < 0)               
+      }
+      if (p_ < 0) {
          UTIL_THROW("Negative mode index");
-      if (capacity_ <= 0)       
+      }
+      if (capacity_ <= 0) {
          UTIL_THROW("Negative capacity");
-      if (speciesId_ < 0) 
+      }
+      if (speciesId_ < 0) {
          UTIL_THROW("speciesId < 0");
-      if (speciesId_ >= system().simulation().nSpecies()) 
+      }
+      if (speciesId_ >= system().simulation().nSpecies()) {
          UTIL_THROW("speciesId >= nSpecies");
+      }
       if (nAtom_ != speciesPtr_->nAtom()) {
          UTIL_THROW("Inconsistent values of nAtom");
       }
