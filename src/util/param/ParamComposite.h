@@ -47,41 +47,46 @@ namespace Util
    * ParamComposite defines two closely related virtual methods, named
    * readParam() and readParameters(), either of which may be used by 
    * subclasses to define a parameter file format. The readParam() method 
-   * read the entire parameter block. The readParameters() method, if used, 
-   * must read the body of the associated parameter file block, without
-   * the opening and closing lines. ParamComposite provides a default 
-   * implementation of readParam() that simply calls readParameters() 
-   * and explicitly adds the opening and closing lines. Subclasses of
-   * of ParamComposite should reimplement either readParam() or
-   * readParameters(), but not both. Re-implementing readParameters()
-   * but not readParam() will cause the default implementation of
-   * readParam() to be used. 
+   * read the entire parameter block, including the opening and closing
+   * lines. The readParameters() method, if provided, must read the body 
+   * of the associated parameter file block, without the opening and 
+   * closing lines. The default implementation of ParamComposite::readParam()
+   * simply calls readParameters() and explicitly adds the opening and 
+   * closing lines, using the return value of the className() method 
+   * as the class name in the opening line. Each subclass must re-implement
+   * either readParam() or readParameters(), but not both. Almost all
+   * subclasses of ParamComposite should re-implement readParameters(),
+   * and call setClassName() in the constructor, thus relying on the default
+   * implementation of ParamComposite::readParam() to add the begin and
+   * end lines. The only exception are classes for which the default
+   * treatment of the end lines is not adequate, such as the Manager 
+   * class template.
    *
-   * The readParam() or readParameters() method of each subclass should
-   * be implemented using protected methods provided by ParamComposite 
-   * to read individual parameters and "child" ParamComposite objects. 
-   * The implementation of readParameters() (if any) uses read< T >, 
-   * which reads an individual parameter, readParamComposite, which
-   * reads a nested subblock, and readBlank, which reads a blank line.
-   * The implementation of readParam() also uses the methods readBegin
-   * and readEnd to read the opening and closing lines.  Each of these 
-   * methods creates a new object of the specified type, adds a pointer
-   * to the new object to the format array, and invokes the readParam
-   * method of the new object in order to read the associated line or 
-   * block of the parameter file. Other specialized methods are 
-   * provided to read one and two dimensional arrays. 
+   * The setClassName() and className() methods may be used to set and
+   * get a string representing the name of a subclass. The setClassName()
+   * should be called in the constructor of each subclass of ParamComposite. 
+   * The name string set in the constructor of a subclass will replace any
+   * name set by a base class, because of the order in which constructors
+   * are called. The class name string is used by the default implementation 
+   * of ParamComposite::readParam() in order to check that the opening line 
+   * of a parameter block contains the correct class name.
+   * 
+   * The readParameters() method of each subclass should be implemented 
+   * using protected methods provided by ParamComposite to read individual 
+   * parameters and "child" ParamComposite objects.  The implementation of 
+   * readParameters() normally uses read< T >, which reads an individual 
+   * parameter, readParamComposite, which reads a nested subblock, and 
+   * readBlank, which reads a blank line.  Each of these methods creates 
+   * a new ParamComponent of the specified type, adds a pointer to the 
+   * new object to the format array, and invokes the readParam method of 
+   * the new object in order to read the associated line or block of the 
+   * parameter file. Other specialized methods are provided to read one 
+   * and two dimensional arrays. 
    *
    * The ParamComposite::writeParam() method uses the format array to
    * write data to a file in the same format in which it was read by
    * a previous call to readParam(). 
    *
-   * The setClassName() and className() methods may be used to set
-   * and get a string representing the name of a subclass. This should
-   * be called in the constructor of each subclass. The class name 
-   * string is used by the default implementation of readParam() in
-   * order to check that the opening line contains the correct class
-   * name when reading the parameter file block.
-   * 
    * \ingroup Param_Module
    */
    class ParamComposite : public ParamComponent
@@ -113,30 +118,26 @@ namespace Util
       */
       virtual ~ParamComposite();
    
-      /**
-      * Resets ParamComposite to its empty state.
-      *
-      * This method deletes Parameter, Begin, End, and Blank objects in the
-      * format list, recursively invokes resetParam() for any ParamComposite 
-      * objects in the list, nullifies all pointers in the list, and resets 
-      * the number of items in the list to 0. 
-      */
-      void resetParam();
-   
+      /// \name Initialization methods
+      //@{
+
       /** 
       * Read all parameters from an input stream.
       *
-      * This method reads the entire parameter block, including the
-      * opening line "ClassName{" and the closing bracket "}". The
-      * implementation calls virtual readParameters method to read
-      * the body of the block.
+      * Inherited from ParamComponent. This method reads the entire parameter 
+      * block, including the opening line "ClassName{" and the closing bracket 
+      * "}". The implementation calls the virtual readParameters method to read
+      * the body of the block, and adds Begin and End objects.
       *
       * \param in input stream for reading
       */
       virtual void readParam(std::istream &in);
    
       /** 
-      * Read body of parameter block excluding opening and closing lines.
+      * Read body of parameter block, excluding opening and closing lines.
+      *
+      * Every subclass of ParamComposite should overload readParameters, and
+      * should call setClassName() in its constructor.
       *
       * \param in input stream for reading
       */
@@ -156,15 +157,22 @@ namespace Util
       /** 
       * Load all parameters from an archive.
       *
-      * This default implementation saves all parameters to file,
-      * descending children recursively. 
+      * This method is inherited from Serializable. The default
+      * implementation for a ParamComposite calls loadParameters, and 
+      * adds Begin and End lines. All subclasses of ParamComposite 
+      * should overload loadParameters.
       *
       * \param ar input/loading archive.
       */
       virtual void load(Serializable::IArchive &ar);
    
       /** 
-      * Load body of parameter block excluding opening and closing lines.
+      * Load state from archive, without adding Begin and End lines.
+      *
+      * This default implementation is empty, and should be overloaded
+      * by all subclasses. The overloaded method should load the entire
+      * internal state from the archive, including members that do not
+      * appear in the parameter file format.
       *
       * \param ar input/loading archive.
       */
@@ -174,13 +182,35 @@ namespace Util
       /** 
       * Saves all parameters to an archive.
       *
-      * This default implementation writes all parameters to file,
-      * descending children recursively. 
+      * This default implementation calls the save method for all
+      * items in the parameter file format list. It it not sufficient
+      * for classes that contain non-volatile members that do not
+      * appear in the parameter file format. 
+      *
+      * One way to overload this method is to write a serialize method
+      * template void serialize(Archive& ar, const unsigned int version),
+      * and have the save method invoke the serialize method through an
+      * operator, as follows:
+      * \code
+      *    void save(Serializable::OArchive& ar)
+      *    { ar & *this; }
+      * \endcode
       *
       * \param ar output/saving archive.
       */
       virtual void save(Serializable::OArchive &ar);
    
+      /**
+      * Resets ParamComposite to its empty state.
+      *
+      * This method deletes Parameter, Begin, End, and Blank objects in the
+      * format list, recursively invokes resetParam() for any ParamComposite 
+      * objects in the list, nullifies all pointers in the list, and resets 
+      * the number of items in the list to 0. 
+      */
+      void resetParam();
+   
+      //@}
       /// \name read* methods
       /// \brief Each of these methods invokes an associated add* method to 
       /// create a new ParamComponent object, and then invoke the readParam() 

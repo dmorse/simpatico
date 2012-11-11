@@ -33,18 +33,38 @@ namespace McMd
 
    public:
 
-      /// Constructor.
+      /**
+      * Constructor.
+      *
+      * \param simulation parent McSimulation
+      */
       McMoveManager(McSimulation& simulation);
 
-      /// Destructor.
+      /**
+      * Destructor.
+      */
       ~McMoveManager();
 
       /**
       * Read instructions for creating McMove objects.
       *
-      * \param in parameter file input stream
+      * \param in input parameter stream
       */
       virtual void readParam(std::istream &in);
+
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Initialize at beginning of simulation run.
@@ -55,35 +75,23 @@ namespace McMd
 
       /**
       * Choose an McMove at random, using specified probabilities.
+      *
+      * \return chosen McMove
       */
       McMove& chooseMove();
 
       /**
       * Return probability of move i.
       *
-      * \param i index for McMove.
-      * \return probability of move number i.
+      * \param i index for McMove
+      * \return probability of McMove number i
       */
-      double probability(int i);
+      double probability(int i) const;
 
       /**
       * Output statistics for all moves.
       */
       void output();
-
-      /**
-      * Save state to a binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchive& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchive& ar);
 
    private:
 
@@ -106,8 +114,10 @@ namespace McMd
 
    // Inline functions
 
-   /// Return probability of move number i
-   inline double McMoveManager::probability(int i)
+   /*
+   * Return probability of move number i
+   */
+   inline double McMoveManager::probability(int i) const
    {
       assert(i >= 0);  
       assert(i < size());  
