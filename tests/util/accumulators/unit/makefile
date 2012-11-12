@@ -11,9 +11,10 @@ include sources.mk
 all: $(tests_util_accumulators_unit_OBJS) Test
 
 clean:
-	rm -f Test $(tests_util_accumulators_unit_OBJS)
-	rm -f $(tests_util_accumulators_unit_OBJS)
-	rm -f $(tests_util_accumulators_unit_OBJS:.o=.d)
+	-rm -f Test $(tests_util_accumulators_unit_OBJS)
+	-rm -f $(tests_util_accumulators_unit_OBJS)
+	-rm -f $(tests_util_accumulators_unit_OBJS:.o=.d)
+	-rm -f binary
 
 clean-deps:
 	rm -f $(tests_util_accumulators_unit_OBJS:.o=.d)
