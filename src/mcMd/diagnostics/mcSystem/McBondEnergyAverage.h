@@ -38,7 +38,7 @@ namespace McMd
       */
       virtual void sample(long iStep);
   
-      using AverageDiagnostic<McSystem>::readParam;
+      using AverageDiagnostic<McSystem>::readParameters;
       using AverageDiagnostic<McSystem>::output;
 
    protected:

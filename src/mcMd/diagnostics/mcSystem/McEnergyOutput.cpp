@@ -30,6 +30,21 @@ namespace McMd
       fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
    }
  
+   /*
+   * Load state from an archive.
+   */
+   void McEnergyOutput::loadParameters(Serializable::IArchive& ar)
+   {  
+      Diagnostic::load(ar);
+      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   void McEnergyOutput::save(Serializable::OArchive& ar)
+   {  ar & *this; }
+
    // Evaluate energy and print.
    void McEnergyOutput::sample(long iStep) 
    {
