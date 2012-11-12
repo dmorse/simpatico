@@ -28,6 +28,11 @@ namespace McMd
       */
       McPressureAverage(McSystem& system);
 
+      /**
+      * Destructor.
+      */
+      ~McPressureAverage();
+
    };
 
 }

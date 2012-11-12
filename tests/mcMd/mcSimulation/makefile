@@ -13,7 +13,7 @@ all: $(tests_mcMd_mcSimulation_OBJS) Test
 
 clean:
 	rm -f $(tests_mcMd_mcSimulation_OBJS) $(tests_mcMd_mcSimulation_OBJS:.o=.d) 
-	rm -f Test *.prm *.rst
+	rm -f Test *.prm *.rst *.cfg
 
 clean-deps:
 	rm -f $(tests_mcMd_mcSimulation_OBJS:.o=.d)

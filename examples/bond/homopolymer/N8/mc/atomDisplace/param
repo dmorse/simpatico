@@ -22,8 +22,8 @@ McSimulation{
     seed                              10732192
   }
   McSystem{
-    pairStyle                        LJPair
-    bondStyle                  HarmonicBond
+    pairStyle                           LJPair
+    bondStyle                     HarmonicBond
     McPairPotential{
       epsilon               1.000000000000e+00 
       sigma                 1.000000000000e+00 
@@ -52,76 +52,76 @@ McSimulation{
 
   }
   DiagnosticManager{
-    baseInterval                        10000
+    baseInterval                         10000
 
     LogProgress{
-      interval                         200000
+      interval                          200000
+    }
+
+    McWriteRestart{
+      interval                           20000
+      outputFileName                   restart
     }
 
     McEnergyOutput{
-      interval                          10000
-      outputFileName                  energy
+      interval                           10000
+      outputFileName                    energy
     }
 
     McEnergyAverage{
-      interval                          10000
-      outputFileName               energyAve
-      nSamplePerBlock                     10
+      interval                           10000
+      outputFileName                 energyAve
+      nSamplePerBlock                       10
     }
 
     McPairEnergyAverage{
-      interval                          10000
-      outputFileName              pairEnergy
-      nSamplePerBlock                     10
-      selector                           all  -1  -1
+      interval                           10000
+      outputFileName                pairEnergy
+      nSamplePerBlock                       10
+      selector                     all  -1  -1
     }
-   
+
     RadiusGyration{
-      interval                          10000
-      outputFileName          RadiusGyration
-      nSamplePerBlock                     10
-      speciesId                            0
+      interval                           10000
+      outputFileName            RadiusGyration
+      nSamplePerBlock                       10
+      speciesId                              0
     }
 
     RDF{
-      interval                         10000
-      outputFileName                     RDF
-      max                                5.0
-      nBin                               500
-      selector                         inter   -1    -1
+      interval                           10000
+      outputFileName                       RDF
+      max                                  5.0
+      nBin                                 500
+      selector                           inter   -1    -1
     }
 
     BondLengthDist{
-      interval                          10000
-      outputFileName          BondLengthDist
-      speciesId                            0
-      min                                0.0
-      max                                2.0
-      nBin                               400
+      interval                           10000
+      outputFileName            BondLengthDist
+      speciesId                              0
+      min                                  0.0
+      max                                  2.0
+      nBin                                 400
     }
 
     AtomMSD{
-      interval                         10000
-      outputFileName                 AtomMSD
-      speciesId                            0
-      atomId                               5
-      capacity                           400
+      interval                           10000
+      outputFileName                   AtomMSD
+      speciesId                              0
+      atomId                                 5
+      capacity                             400
     }
 
     IntraPairAutoCorr{
-      interval                         10000
-      outputFileName      IntraPairAutoCorr
-      speciesId                           0
-      atom1Id                             0
-      atom2Id                             7 
-      capacity                         1000
+      interval                           10000
+      outputFileName       IntraPairAutoCorr
+      speciesId                              0
+      atom1Id                                0
+      atom2Id                                7
+      capacity                            1000
     }
 
   }
 }
-
-    McWriteRestart{
-      interval                        20000
-      outputFileName                restart
-    }
 

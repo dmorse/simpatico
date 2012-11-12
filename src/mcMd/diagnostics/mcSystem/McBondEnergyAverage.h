@@ -19,7 +19,7 @@ namespace McMd
    using namespace Util;
 
    /**
-   * McBondEnergyAverage averages of total potential energy.
+   * McBondEnergyAverage averages of bond potential energy.
    *
    * \ingroup McMd_Diagnostic_Module
    */
@@ -39,13 +39,16 @@ namespace McMd
       virtual void sample(long iStep);
   
       using AverageDiagnostic<McSystem>::readParameters;
+      using AverageDiagnostic<McSystem>::loadParameters;
+      using AverageDiagnostic<McSystem>::save;
+      using AverageDiagnostic<McSystem>::setup;
       using AverageDiagnostic<McSystem>::output;
 
    protected:
  
       using AverageDiagnostic<McSystem>::outputFile_;
-      using AverageDiagnostic<McSystem>::accumulator_;
       using AverageDiagnostic<McSystem>::nSamplePerBlock_;
+      using AverageDiagnostic<McSystem>::accumulator_;
 
    };
 

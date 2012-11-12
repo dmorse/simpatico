@@ -39,7 +39,9 @@ namespace McMd
       */
       virtual ~McIntraBondTensorAutoCorr();
   
-      using IntraBondTensorAutoCorr<McSystem>::readParam;
+      using IntraBondTensorAutoCorr<McSystem>::readParameters;
+      using IntraBondTensorAutoCorr<McSystem>::loadParameters;
+      using IntraBondTensorAutoCorr<McSystem>::save;
       using IntraBondTensorAutoCorr<McSystem>::setup;
       using IntraBondTensorAutoCorr<McSystem>::sample;
       using IntraBondTensorAutoCorr<McSystem>::output;

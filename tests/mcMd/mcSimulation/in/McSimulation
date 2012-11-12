@@ -67,7 +67,7 @@ McSimulation{
 
     McWriteRestart{
       interval               10
-      fileName          restart
+      outputFileName    restart
     }
 
   }

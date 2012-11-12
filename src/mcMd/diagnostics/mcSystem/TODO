@@ -1,14 +1,8 @@
 Add save / loadParameters serialization
 
-McBondEnergyAverage.h
-McEnergyAverage.h
 McEnergyOutput.h
-McExternalEnergyAverage.h
-McPairEnergyAverage.h
 McStressAutoCorr.h
-McWriteRestart.h
 
 Templates (minimal changes, if any):
 McIntraBondStressAutoCorr.h
 McIntraBondTensorAutoCorr.h
-McPressureAverage.h
