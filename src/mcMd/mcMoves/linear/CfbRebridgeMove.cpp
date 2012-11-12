@@ -54,6 +54,9 @@ namespace McMd
       // Use dynamic_cast to check that the Species is actually a Linear species
       Linear* chainPtr;
       chainPtr = dynamic_cast<Linear*>(&(simulation().species(speciesId_)));
+      if (!chainPtr) {
+         UTIL_THROW("Not a Linear species");
+      }
   
       // Allocate array to store old positions 
       oldPos_.allocate(nRegrow_); 

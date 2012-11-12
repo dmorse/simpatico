@@ -128,7 +128,7 @@ namespace McMd
       Vector  partPos = partPtr->position();
       Vector  bondVec, trialPos, u_20, u_21;
       double  trialEnergy, bondEnergy, wExt, length, lengthSq;
-      double  l_20, l_21, l_10, bias;
+      double  l_20, l_21, bias;
       double  prefAng, kappaAng, normConst;
       int     iTrial;
       bool    ready;
@@ -146,7 +146,6 @@ namespace McMd
    
       // Bond length between 1 and 0 & bonding energy
       lengthSq   = boundary().distanceSq(partPos, nextPos);
-      l_10       = sqrt(lengthSq);
       bondEnergy = system().bondPotential().energy(lengthSq, nextBType);
       energy    += bondEnergy;
    

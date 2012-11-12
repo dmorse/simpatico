@@ -43,6 +43,26 @@ namespace McMd
       read<int>(in, "speciesId", speciesId_);
       read<double>(in, "delta", delta_);
    }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void AtomDisplaceMove::loadParameters(Serializable::IArchive &ar)
+   {
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<double>(ar, "delta", delta_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void AtomDisplaceMove::save(Serializable::OArchive &ar)
+   {
+      McMove::save(ar);
+      ar << speciesId_;
+      ar << delta_;
+   }
    
    /* 
    * Generate, attempt and accept or reject a move.

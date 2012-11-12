@@ -347,7 +347,9 @@ namespace McMd
          tetherPotentialPtr_->save(ar); 
       }
       #endif
+
       saveEnsembles(ar);
+
       #ifdef MCMD_PERTURB
       savePerturbation(ar);
       #ifdef UTIL_MPI
@@ -356,23 +358,23 @@ namespace McMd
       #endif
    }
   
-   /* 
-   * Load a System configuration from an archive.
-   */
-   void McSystem::loadConfig(Serializable::IArchive& ar)
-   {  
-      System::loadConfig(ar); 
-      #ifndef INTER_NOPAIR
-      pairPotential().buildCellList();
-      #endif
-   }
-
    /*
    * Read configuration from a specific input stream.
    */
    void McSystem::readConfig(std::istream &in)
    {
       System::readConfig(in);
+      #ifndef INTER_NOPAIR
+      pairPotential().buildCellList();
+      #endif
+   }
+
+   /* 
+   * Load a System configuration from an archive.
+   */
+   void McSystem::loadConfig(Serializable::IArchive& ar)
+   {  
+      System::loadConfig(ar); 
       #ifndef INTER_NOPAIR
       pairPotential().buildCellList();
       #endif

@@ -54,6 +54,9 @@ namespace McMd
       // Use dynamic_cast to check that the Species is actually a Linear species
       Ring* ringPtr;
       ringPtr = dynamic_cast<Ring*>(&(simulation().species(speciesId_)));
+      if (!ringPtr) {
+         UTIL_THROW("Not a Ring species");
+      }
   
       // Allocate array to store old positions 
       oldPos_.allocate(nRegrow_); 

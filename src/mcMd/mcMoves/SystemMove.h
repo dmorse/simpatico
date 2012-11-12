@@ -62,34 +62,39 @@ namespace McMd
   
    private:
  
-      /// Pointer to parent System object.
-      McSystem       *systemPtr_;
+      /// Pointer to parent McSystem object.
+      McSystem  *systemPtr_;
 
       /// Pointer to Boundary of parent System.
-      Boundary       *boundaryPtr_;
+      Boundary  *boundaryPtr_;
 
       /// Pointer to EnergyEnsemble of parent System.
-      EnergyEnsemble* isothermalPtr_;
+      EnergyEnsemble*  isothermalPtr_;
  
    };
 
-
    // Inline methods
 
-   // Get parent McSystem.
+   /*
+   * Get parent McSystem.
+   */
    inline McSystem& SystemMove::system()
-   { return *systemPtr_; }
-
-   // Get Boundary object of parent McSystem.
-   inline Boundary& SystemMove::boundary()
-   { return *boundaryPtr_; }
-
-   // Get EnergyEnsemble object of parent McSystem.
-   inline EnergyEnsemble& SystemMove::energyEnsemble()
-   { return *isothermalPtr_; }
+   {  return *systemPtr_; }
 
    /*
-   * Boltzmann weight associated with an energy
+   * Get Boundary object of parent McSystem.
+   */
+   inline Boundary& SystemMove::boundary()
+   {  return *boundaryPtr_; }
+
+   /*
+   * Get EnergyEnsemble object of parent McSystem.
+   */
+   inline EnergyEnsemble& SystemMove::energyEnsemble()
+   {  return *isothermalPtr_; }
+
+   /*
+   * Boltzmann weight associated with an energy difference.
    */
    inline double SystemMove::boltzmann(double energy)
    {  return exp(-isothermalPtr_->beta()*energy); }

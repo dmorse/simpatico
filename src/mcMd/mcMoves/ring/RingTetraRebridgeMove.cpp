@@ -51,6 +51,9 @@ namespace McMd
       // Use dynamic_cast to check that the Species is actually a Linear species
       Ring* ringPtr;
       ringPtr = dynamic_cast<Ring*>(&(simulation().species(speciesId_)));
+      if (!ringPtr) {
+         UTIL_THROW("Not a Ring species");
+      }
 
       // Allocate Vector array storing atom positions.
       nAtom_ = system().simulation().species(speciesId_).nAtom();

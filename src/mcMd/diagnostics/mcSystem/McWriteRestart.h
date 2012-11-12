@@ -42,7 +42,7 @@ namespace McMd
       {} 
    
       /**
-      * Read interval and file name.
+      * Read interval and output file name.
       *
       * \param in input parameter file
       */
@@ -57,9 +57,6 @@ namespace McMd
   
    private:
       
-      // Name of restart file.
-      std::string filename_;
-
       // Pointer to parent McSimulation
       McSimulation* simulationPtr_;
 
