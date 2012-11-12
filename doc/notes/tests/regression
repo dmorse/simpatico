@@ -1,0 +1,62 @@
+Goal: Create simple automated method to generate regression tests for 
+strings.
+
+Additions to UnitTest class:
+----------------------------
+
+class UnitTest {
+
+private:
+
+  /**
+  * Stream to be used for stream output regression tests.
+  */
+  std::stringstream stream_;
+
+  /**
+  * If true, output stream file, else compare to existing file.
+  */
+  bool isStreamOutput_;
+
+public:
+
+  /**
+  * Return regression test stream.
+  */
+  std::ostream& stream()
+  {  stream_; }
+
+  setIsStreamOutput(bool isStreamOutput)
+  {  isStreamOutput_ = isStreamOutput_; }
+
+  bool testStream(bool char* filename) 
+  {
+     bool same = true;
+     if (isStreamOutput_) {
+        \\ Open file
+        \\ Write to file
+        \\ Close output file
+        \\ Clear stream_
+     } else {
+        \\ Open file
+        \\ Read string from file.
+        \\ Compare strings to stream_;
+        \\ Close file.
+        \\ Clear stream_
+     }
+     return same;
+  }
+
+}
+
+Usage:
+------
+
+Usage involves two steps: Writing to stream and testing the stream.
+
+    stream() << "Things we want to write to file" << std::endl;
+    TEST_ASSERT(testStream(filename));
+
+The setIsStreamOutput method should be called before the FIRST time
+a test is run, to write regression tests, and whenever it is changed 
+thereafter.
