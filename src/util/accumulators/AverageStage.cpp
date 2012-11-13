@@ -153,7 +153,7 @@ namespace Util
    * Estimated statistical error of the average().
    */
    double AverageStage::error() const
-   {  return sqrt(variance()/double(nSample_)); }
+   {  return sqrt(variance()/double(nSample_-1)); }
 
 }
 #endif
