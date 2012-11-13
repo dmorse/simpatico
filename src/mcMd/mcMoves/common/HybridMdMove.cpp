@@ -74,7 +74,7 @@ namespace McMd
    {
       McMove::save(ar);
       ar << nStep_;
-      mdSystemPtr_->save(ar);
+      mdSystemPtr_->saveParameters(ar);
    }
 
    /*

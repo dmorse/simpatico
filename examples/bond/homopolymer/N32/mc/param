@@ -84,7 +84,7 @@ McSimulation{
 
     McWriteRestart{
       interval                         10000
-      fileName                       restart
+      outputFileName                 restart
     }
 
     McEnergyOutput{
@@ -116,11 +116,9 @@ McSimulation{
       interval                          1000
       outputFileName          BondLengthDist
       speciesId                            0
-      Distribution{
-         min                             0.0
-         max                             2.0
-         nBin                            400
-      }
+      min                                0.0
+      max                                2.0
+      nBin                               400
     }
 
     AtomMSD{

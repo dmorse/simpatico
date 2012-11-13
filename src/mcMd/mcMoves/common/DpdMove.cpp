@@ -45,13 +45,33 @@ namespace McMd
    }
 
    /*
-   * Read parameter maxDisp
+   * Read probability, nStep, and MdSystem parameters.
    */
    void DpdMove::readParameters(std::istream& in)
    {
       readProbability(in);
       read<int>(in, "nStep", nStep_);
       readParamComposite(in, *mdSystemPtr_);
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void DpdMove::loadParameters(Serializable::IArchive &ar)
+   {
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "nStep", nStep_);
+      loadParamComposite(ar, *mdSystemPtr_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void DpdMove::save(Serializable::OArchive &ar)
+   {
+      McMove::save(ar);
+      ar << nStep_;
+      mdSystemPtr_->saveParameters(ar);
    }
 
    /*

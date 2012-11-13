@@ -71,7 +71,7 @@ namespace McMd
    {
       McMove::save(ar);
       ar << nStep_;
-      mdSystemPtr_->save(ar);
+      mdSystemPtr_->saveParameters(ar);
    }
 
    /*
@@ -79,7 +79,6 @@ namespace McMd
    */
    bool MdMove::move()
    {
-      // Increment counter for attempted moves
       incrementNAttempt();
 
       // Initialize MdSystem
@@ -102,7 +101,6 @@ namespace McMd
       // Accept all moves
       incrementNAccept();
       return true;
-
    }
 
 }

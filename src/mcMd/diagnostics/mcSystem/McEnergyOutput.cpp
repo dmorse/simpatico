@@ -40,7 +40,7 @@ namespace McMd
    */
    void McEnergyOutput::loadParameters(Serializable::IArchive& ar)
    {  
-      Diagnostic::load(ar);
+      Diagnostic::loadParameters(ar);
       fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
    }
 

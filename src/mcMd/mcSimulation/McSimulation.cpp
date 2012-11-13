@@ -255,7 +255,7 @@ namespace McMd
    void McSimulation::save(Serializable::OArchive &ar)
    {
       Simulation::save(ar);
-      system().save(ar);
+      system().saveParameters(ar);
       ar << random();
       mcMoveManagerPtr_->save(ar);
       diagnosticManager().save(ar);

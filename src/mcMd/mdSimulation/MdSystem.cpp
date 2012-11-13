@@ -8,15 +8,15 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/global.h> 
+#include <util/global.h>
 #include "MdSystem.h"
 #include "MdSimulation.h"
 #include <mcMd/configIos/MdConfigIo.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <util/ensembles/BoundaryEnsemble.h>
 #include <util/ensembles/EnergyEnsemble.h>
-#include <mcMd/neighbor/PairIterator.h> 
-#include <mcMd/mdIntegrators/MdIntegratorFactory.h> 
+#include <mcMd/neighbor/PairIterator.h>
+#include <mcMd/mdIntegrators/MdIntegratorFactory.h>
 
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/PairFactory.h>
@@ -57,7 +57,7 @@ namespace McMd
 
    using namespace Util;
 
-   /* 
+   /*
    * Default constructor.
    */
    MdSystem::MdSystem()
@@ -79,14 +79,14 @@ namespace McMd
       externalPotentialPtr_(0),
       #endif
       #ifdef INTER_TETHER
-      tetherPotentialPtr_(0), 
+      tetherPotentialPtr_(0),
       #endif
       mdIntegratorPtr_(0),
       mdIntegratorFactoryPtr_(0),
       createdMdIntegratorFactory_(false)
    {  setClassName("MdSystem"); }
- 
-   /* 
+
+   /*
    * Constructor, copy of a System.
    */
    MdSystem::MdSystem(McSystem& system)
@@ -108,12 +108,12 @@ namespace McMd
       externalPotentialPtr_(0),
       #endif
       #ifdef INTER_TETHER
-      tetherPotentialPtr_(0), 
+      tetherPotentialPtr_(0),
       #endif
       mdIntegratorPtr_(0),
       mdIntegratorFactoryPtr_(0),
       createdMdIntegratorFactory_(false)
-   {  
+   {
       setClassName("MdSystem");
 
       #ifndef INTER_NOPAIR
@@ -148,11 +148,11 @@ namespace McMd
       }
       #endif
    }
- 
-   /* 
-   * Destructor. 
+
+   /*
+   * Destructor.
    */
-   MdSystem::~MdSystem() 
+   MdSystem::~MdSystem()
    {
       #ifndef INTER_NOPAIR
       if (pairPotentialPtr_) delete pairPotentialPtr_;
@@ -186,7 +186,7 @@ namespace McMd
    /*
    * Get the MdIntegrator factory
    */
-   Factory<MdIntegrator>& MdSystem::mdIntegratorFactory() 
+   Factory<MdIntegrator>& MdSystem::mdIntegratorFactory()
    {
       if (mdIntegratorFactoryPtr_ == 0) {
          mdIntegratorFactoryPtr_ = new MdIntegratorFactory(*this);
@@ -198,10 +198,10 @@ namespace McMd
 
 
 
-   /* 
+   /*
    * Read parameter and configuration files, initialize system.
    */
-   void MdSystem::readParameters(std::istream &in) 
+   void MdSystem::readParameters(std::istream &in)
    {
 
       if (!isCopy()) {
@@ -210,15 +210,15 @@ namespace McMd
          readPotentialStyles(in);
       }
 
-      #ifndef INTER_NOPAIR 
+      #ifndef INTER_NOPAIR
       if (!isCopy()) {
-
+         assert(pairPotentialPtr_ == 0);
          pairPotentialPtr_ = pairFactory().mdFactory(pairStyle(), *this);
          if (pairPotentialPtr_ == 0) {
             UTIL_THROW("Failed attempt to create PairPotential");
          }
       }
-      readParamComposite(in, *pairPotentialPtr_); 
+      readParamComposite(in, *pairPotentialPtr_);
       #endif
 
       if (!isCopy()) {
@@ -229,30 +229,30 @@ namespace McMd
             if (bondPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create bondPotential");
             }
-            readParamComposite(in, *bondPotentialPtr_); 
+            readParamComposite(in, *bondPotentialPtr_);
          }
 
          #ifdef INTER_ANGLE
          assert(anglePotentialPtr_ == 0);
          if (simulation().nAngleType() > 0) {
-            anglePotentialPtr_ = 
+            anglePotentialPtr_ =
                        angleFactory().factory(angleStyle());
             if (anglePotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create anglePotential");
             }
-            readParamComposite(in, *anglePotentialPtr_); 
+            readParamComposite(in, *anglePotentialPtr_);
          }
          #endif
 
          #ifdef INTER_DIHEDRAL
          assert(dihedralPotentialPtr_ == 0);
          if (simulation().nDihedralType() > 0) {
-            dihedralPotentialPtr_ = 
+            dihedralPotentialPtr_ =
                        dihedralFactory().factory(dihedralStyle());
             if (dihedralPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create dihedralPotential");
             }
-            readParamComposite(in, *dihedralPotentialPtr_); 
+            readParamComposite(in, *dihedralPotentialPtr_);
          }
          #endif
 
@@ -264,31 +264,31 @@ namespace McMd
             if (linkPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create linkPotential");
             }
-            readParamComposite(in, *linkPotentialPtr_); 
+            readParamComposite(in, *linkPotentialPtr_);
          }
          #endif
 
          #ifdef INTER_EXTERNAL
          assert(externalPotentialPtr_ == 0);
          if (simulation().hasExternal() > 0) {
-            externalPotentialPtr_ = 
+            externalPotentialPtr_ =
                        externalFactory().factory(externalStyle());
             if (externalPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create externalPotential");
             }
-            readParamComposite(in, *externalPotentialPtr_); 
+            readParamComposite(in, *externalPotentialPtr_);
          }
          #endif
 
          #ifdef INTER_TETHER
          if (simulation().hasExternal() > 0) {
             readTetherMaster(in);
-            tetherPotentialPtr_ = 
+            tetherPotentialPtr_ =
                        tetherFactory().factory(tetherStyle(), *this);
             if (tetherPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create tetherPotential");
             }
-            readParamComposite(in, *tetherPotentialPtr_); 
+            readParamComposite(in, *tetherPotentialPtr_);
          }
          #endif
 
@@ -301,44 +301,46 @@ namespace McMd
          mdIntegratorFactoryPtr_ = new MdIntegratorFactory(*this);
          createdMdIntegratorFactory_ = true;
       }
+      assert(mdIntegratorFactoryPtr_);
+      assert(mdIntegratorPtr_ == 0);
 
-      // Read polymorphic MdIntegrator 
+      // Read polymorphic MdIntegrator
       std::string className;
-      bool        isEnd;
-      mdIntegratorPtr_ = 
+      bool isEnd;
+      mdIntegratorPtr_ =
               mdIntegratorFactoryPtr_->readObject(in, *this, className, isEnd);
       if (!mdIntegratorPtr_) {
          std::string msg("Unknown MdIntegrator subclass name: ");
          msg += className;
          UTIL_THROW(msg.c_str());
       }
-     
+
       #ifdef MCMD_PERTURB
       // Read Perturbation object for free energy perturbation.
       readPerturbation(in);
       #endif
    }
-  
-   /* 
+
+   /*
    * Load parameter and configuration files, initialize system.
    */
-   void MdSystem::loadParameters(Serializable::IArchive& ar) 
+   void MdSystem::loadParameters(Serializable::IArchive& ar)
    {
-
       if (!isCopy()) {
          allocateMoleculeSets();
          loadFileMaster(ar);
          loadPotentialStyles(ar);
       }
 
-      #ifndef INTER_NOPAIR 
+      #ifndef INTER_NOPAIR
       if (!isCopy()) {
+         assert(pairPotentialPtr_ == 0);
          pairPotentialPtr_ = pairFactory().mdFactory(pairStyle(), *this);
          if (pairPotentialPtr_ == 0) {
             UTIL_THROW("Failed attempt to create PairPotential");
          }
       }
-      loadParamComposite(ar, *pairPotentialPtr_); 
+      loadParamComposite(ar, *pairPotentialPtr_);
       #endif
 
       if (!isCopy()) {
@@ -349,30 +351,30 @@ namespace McMd
             if (bondPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create bondPotential");
             }
-            loadParamComposite(ar, *bondPotentialPtr_); 
+            loadParamComposite(ar, *bondPotentialPtr_);
          }
 
          #ifdef INTER_ANGLE
          assert(anglePotentialPtr_ == 0);
          if (simulation().nAngleType() > 0) {
-            anglePotentialPtr_ = 
+            anglePotentialPtr_ =
                        angleFactory().factory(angleStyle());
             if (anglePotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create anglePotential");
             }
-            loadParamComposite(ar, *anglePotentialPtr_); 
+            loadParamComposite(ar, *anglePotentialPtr_);
          }
          #endif
 
          #ifdef INTER_DIHEDRAL
          assert(dihedralPotentialPtr_ == 0);
          if (simulation().nDihedralType() > 0) {
-            dihedralPotentialPtr_ = 
+            dihedralPotentialPtr_ =
                        dihedralFactory().factory(dihedralStyle());
             if (dihedralPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create dihedralPotential");
             }
-            loadParamComposite(ar, *dihedralPotentialPtr_); 
+            loadParamComposite(ar, *dihedralPotentialPtr_);
          }
          #endif
 
@@ -384,31 +386,32 @@ namespace McMd
             if (linkPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create linkPotential");
             }
-            loadParamComposite(ar, *linkPotentialPtr_); 
+            loadParamComposite(ar, *linkPotentialPtr_);
          }
          #endif
 
          #ifdef INTER_EXTERNAL
          assert(externalPotentialPtr_ == 0);
          if (simulation().hasExternal() > 0) {
-            externalPotentialPtr_ = 
+            externalPotentialPtr_ =
                        externalFactory().factory(externalStyle());
             if (externalPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create externalPotential");
             }
-            loadParamComposite(ar, *externalPotentialPtr_); 
+            loadParamComposite(ar, *externalPotentialPtr_);
          }
          #endif
 
          #ifdef INTER_TETHER
-         if (simulation().hasExternal() > 0) {
+         assert(tetherPotentialPtr_ == 0);
+         if (simulation().hasTether() > 0) {
             loadTetherMaster(ar);
-            tetherPotentialPtr_ = 
+            tetherPotentialPtr_ =
                        tetherFactory().factory(tetherStyle(), *this);
             if (tetherPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create tetherPotential");
             }
-            loadParamComposite(ar, *tetherPotentialPtr_); 
+            loadParamComposite(ar, *tetherPotentialPtr_);
          }
          #endif
 
@@ -421,65 +424,67 @@ namespace McMd
          mdIntegratorFactoryPtr_ = new MdIntegratorFactory(*this);
          createdMdIntegratorFactory_ = true;
       }
+      assert(mdIntegratorFactoryPtr_);
+      assert(mdIntegratorPtr_ == 0);
 
-      // Read polymorphic MdIntegrator 
+      // Read polymorphic MdIntegrator
       std::string className;
-      mdIntegratorPtr_ = 
+      mdIntegratorPtr_ =
               mdIntegratorFactoryPtr_->loadObject(ar, *this, className);
       if (!mdIntegratorPtr_) {
          std::string msg("Unknown MdIntegrator subclass name: ");
          msg += className;
          UTIL_THROW(msg.c_str());
       }
-     
+
       #ifdef MCMD_PERTURB
       // Read Perturbation object for free energy perturbation.
       loadPerturbation(ar);
       #endif
    }
-  
-   /* 
-   * Save parameters.
+
+   /*
+   * Save state, excluding configuration.
    */
-   void MdSystem::saveParameters(Serializable::OArchive& ar) 
+   void MdSystem::saveParameters(Serializable::OArchive& ar)
    {
       if (!isCopy()) {
          saveFileMaster(ar);
          savePotentialStyles(ar);
       }
-      #ifndef INTER_NOPAIR 
-      pairPotentialPtr_->save(ar); 
+      #ifndef INTER_NOPAIR
+      pairPotentialPtr_->save(ar);
       #endif
       if (!isCopy()) {
          if (simulation().nBondType() > 0) {
-            bondPotentialPtr_->save(ar); 
+            bondPotentialPtr_->save(ar);
          }
          #ifdef INTER_ANGLE
          if (simulation().nAngleType() > 0) {
-            anglePotentialPtr_->save(ar); 
+            anglePotentialPtr_->save(ar);
          }
          #endif
          #ifdef INTER_DIHEDRAL
          if (simulation().nDihedralType() > 0) {
-            dihedralPotentialPtr_->save(ar); 
+            dihedralPotentialPtr_->save(ar);
          }
          #endif
          #ifdef MCMD_LINK
          if (simulation().nLinkType() > 0) {
             saveLinkMaster(ar);
-            linkPotentialPtr_->save(ar); 
+            linkPotentialPtr_->save(ar);
          }
          #endif
          #ifdef INTER_EXTERNAL
          assert(externalPotentialPtr_ == 0);
          if (simulation().hasExternal() > 0) {
-            externalPotentialPtr_->save(ar); 
+            externalPotentialPtr_->save(ar);
          }
          #endif
          #ifdef INTER_TETHER
-         if (simulation().hasExternal() > 0) {
+         if (simulation().hasTether() > 0) {
             saveTetherMaster(ar);
-            tetherPotentialPtr_->save(ar); 
+            tetherPotentialPtr_->save(ar);
          }
          #endif
          saveEnsembles(ar);
@@ -499,36 +504,36 @@ namespace McMd
    {
       System::readConfig(in);
 
-      #ifndef INTER_NOPAIR 
+      #ifndef INTER_NOPAIR
       pairPotential().clearPairListStatistics();
       pairPotential().buildPairList();
       #endif
       calculateForces();
    }
 
-   /* 
+   /*
    * Load a System configuration from an archive.
    */
    void MdSystem::loadConfig(Serializable::IArchive& ar)
-   {  
-      System::loadConfig(ar); 
-      #ifndef INTER_NOPAIR 
+   {
+      System::loadConfig(ar);
+      #ifndef INTER_NOPAIR
       pairPotential().clearPairListStatistics();
       pairPotential().buildPairList();
       #endif
       calculateForces();
    }
 
-   /* 
+   /*
    * Shift all atoms into primary unit cell.
-   */ 
-   void MdSystem::shiftAtoms() 
+   */
+   void MdSystem::shiftAtoms()
    {
       MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
-            molIter->begin(atomIter); 
+            molIter->begin(atomIter);
             for ( ; atomIter.notEnd(); ++atomIter) {
                #ifdef MCMD_SHIFT
                boundary().shift(atomIter->position(), atomIter->shift());
@@ -540,10 +545,10 @@ namespace McMd
       }
    }
 
-   /* 
+   /*
    * Set force vectors to zero for all atoms in this System.
-   */ 
-   void MdSystem::setZeroForces() 
+   */
+   void MdSystem::setZeroForces()
    {
       MoleculeIterator       molIter;
       Molecule::AtomIterator atomIter;
@@ -556,10 +561,10 @@ namespace McMd
       }
    }
 
-   /* 
+   /*
    * Set velocity vectors to zero for all atoms in this System.
-   */ 
-   void MdSystem::setZeroVelocities() 
+   */
+   void MdSystem::setZeroVelocities()
    {
       MoleculeIterator       molIter;
       Molecule::AtomIterator atomIter;
@@ -573,19 +578,19 @@ namespace McMd
 
    }
 
-   /* 
+   /*
    * Set velocities to Boltzmannian random values, for all atoms in System.
-   */ 
-   void MdSystem::setBoltzmannVelocities(double temperature) 
+   */
+   void MdSystem::setBoltzmannVelocities(double temperature)
    {
       Simulation& sim = simulation();
       Random &random = sim.random();
       double scale;
       double mass;
       MoleculeIterator molIter;
-      int nSpec = sim.nSpecies(); 
+      int nSpec = sim.nSpecies();
       int iSpec, j;
-   
+
       Molecule::AtomIterator atomIter;
       for (iSpec = 0; iSpec < nSpec; ++iSpec) {
          for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
@@ -598,21 +603,21 @@ namespace McMd
             }
          }
       }
-   
+
    }
 
-   /* 
+   /*
    * Subtract average velocity from all atomic velocities.
-   */ 
-   Vector MdSystem::removeDriftVelocity() 
+   */
+   Vector MdSystem::removeDriftVelocity()
    {
       Vector average(0.0);
       MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
-      int    nSpec = simulation().nSpecies(); 
-      int    nAtom = 0; 
+      int    nSpec = simulation().nSpecies();
+      int    nAtom = 0;
       int    iSpec;
-   
+
       for (iSpec = 0; iSpec < nSpec; ++iSpec) {
          for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
@@ -629,11 +634,11 @@ namespace McMd
             }
          }
       }
-   
+
       return average;
    }
 
-   /* 
+   /*
    * Calculate all forces.
    */
    void MdSystem::calculateForces()
@@ -672,7 +677,7 @@ namespace McMd
       #endif
    }
 
-   /* 
+   /*
    * Calculate and return total potential energy.
    */
    double MdSystem::potentialEnergy()
@@ -712,7 +717,7 @@ namespace McMd
       return energy;
    }
 
-   /* 
+   /*
    * Return total kinetic energy.
    */
    double MdSystem::kineticEnergy() const
@@ -739,7 +744,7 @@ namespace McMd
 
    // Kinetic Stress
 
-   /* 
+   /*
    * Compute the kinetic (velocity) stress.
    */
    template <typename T>
@@ -829,12 +834,12 @@ namespace McMd
    {  computeVirialStressImpl(stress); }
 
    template <>
-   void MdSystem::computeVirialStress<Util::Vector>(Util::Vector& stress) 
+   void MdSystem::computeVirialStress<Util::Vector>(Util::Vector& stress)
       const
    {  computeVirialStressImpl(stress); }
 
    template <>
-   void MdSystem::computeVirialStress<Util::Tensor>(Util::Tensor& stress) 
+   void MdSystem::computeVirialStress<Util::Tensor>(Util::Tensor& stress)
       const
    {  computeVirialStressImpl(stress); }
 
@@ -871,7 +876,7 @@ namespace McMd
       stress += kineticStress;
    }
 
-   /* 
+   /*
    * Return true if this MdSystem is valid, or an throw Exception.
    */
    bool MdSystem::isValid() const
@@ -881,7 +886,7 @@ namespace McMd
       pairPotentialPtr_->pairList().isValid();
       #endif
       return true;
-   } 
+   }
 
    /*
    * Return a pointer to a new default ConfigIo.
