@@ -1,8 +1,0 @@
-Add save / loadParameters serialization
-
-McEnergyOutput.h
-McStressAutoCorr.h
-
-Templates (minimal changes, if any):
-McIntraBondStressAutoCorr.h
-McIntraBondTensorAutoCorr.h

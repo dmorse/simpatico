@@ -28,7 +28,7 @@ namespace McMd
    * Constructor.
    */
    McExternalEnergyAverage::McExternalEnergyAverage(McSystem& system)
-    : AverageDiagnostic<McSystem>(system),
+    : AverageDiagnostic<McSystem>(system)
    {  setClassName("McExternalEnergyAverage"); }
  
    /*
