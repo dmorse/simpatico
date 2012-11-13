@@ -59,7 +59,7 @@ namespace McMd
       Linear* speciesPtr;
       speciesPtr = dynamic_cast<Linear*>(&(simulation().species(speciesId_)));
       if (!speciesPtr) {
-         UTIL_THROW("Attempted use ReptationMove with Species that is not Linear");
+         UTIL_THROW("Species is not a subclass of Linear");
       }
 
       // Identify bond type 
@@ -100,7 +100,7 @@ namespace McMd
 
       read<int>(in, "hasAutoCorr", hasAutoCorr_);
  
-      // read autocorrelation parameters 
+      // Read autocorrelation parameters 
       if (hasAutoCorr_) {
          read<int>(in, "autoCorrCapacity", autoCorrCapacity_);
          read<std::string>(in, "autoCorrName", outputFileName_);
@@ -112,6 +112,105 @@ namespace McMd
          {
             acceptedStepsAccumulators_[i].setParam(autoCorrCapacity_);
          }
+      }
+
+   }
+
+   /* 
+   * Load from archive.
+   */
+   void CfbReptationMove::loadParameters(Serializable::IArchive& ar) 
+   {
+      // Read parameters
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "nTrial", nTrial_);
+      ar & bondTypeId_;
+      ar & maskPolicy_;
+
+      // Validate
+      if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
+         UTIL_THROW("Invalid value input for nTrial");
+      }
+      Linear* speciesPtr;
+      speciesPtr = dynamic_cast<Linear*>(&(simulation().species(speciesId_)));
+      if (!speciesPtr) {
+         UTIL_THROW("Species is not a subclass of Linear");
+      }
+      int nBond = speciesPtr->nBond();
+      for (int i = 0; i < nBond; ++i) {
+         if (bondTypeId_ != speciesPtr->speciesBond(i).typeId()) {
+            UTIL_THROW("Inconsistent or unequal bond type ids");
+         }
+      }
+      if (maskPolicy_ != simulation().maskedPairPolicy()) {
+         UTIL_THROW("Inconsistent values of maskPolicy_");
+      }
+
+      ar & junctions_; 
+      ar & lTypes_; 
+      ar & uTypes_; 
+
+      #if 0
+      // Allocate memory for junction arrays
+      int nAtom = speciesPtr->nAtom();
+      junctions_.allocate(nAtom-1);
+      lTypes_.allocate(nAtom-1);
+      uTypes_.allocate(nAtom-1);
+
+      // Identify junctions between atoms of different types
+      int lType, uType;
+      nJunction_ = 0;
+      for (int i = 0; i < nAtom - 1; ++i) {
+         lType = speciesPtr->atomTypeId(i); 
+         uType = speciesPtr->atomTypeId(i+1); 
+         if (lType != uType) {
+            junctions_[nJunction_] = i;
+            lTypes_[nJunction_] = lType;
+            uTypes_[nJunction_] = uType;
+            ++nJunction_;
+         }
+      }
+      #endif
+
+      // Read autocorrelation parameters 
+      loadParameter<int>(ar, "hasAutoCorr", hasAutoCorr_);
+      if (hasAutoCorr_) {
+         loadParameter<int>(ar, "autoCorrCapacity", autoCorrCapacity_);
+         loadParameter<std::string>(ar, "autoCorrName", outputFileName_);
+         ar & acceptedStepsAccumulators_;
+ 
+         #if 0
+         // Allocate memory for autocorrelation function of reptation steps
+         int moleculeCapacity = simulation().species(speciesId_).capacity();
+         acceptedStepsAccumulators_.allocate(moleculeCapacity); 
+         for (int i = 0; i < moleculeCapacity; i++)
+         {
+            acceptedStepsAccumulators_[i].setParam(autoCorrCapacity_);
+         }
+         #endif
+      }
+
+   }
+
+   /* 
+   * Load from archive.
+   */
+   void CfbReptationMove::save(Serializable::OArchive& ar) 
+   {
+      McMove::save(ar);
+      ar & speciesId_;
+      ar & nTrial_;
+      ar & bondTypeId_;
+      ar & maskPolicy_;
+      ar & junctions_; 
+      ar & lTypes_; 
+      ar & uTypes_; 
+      ar & hasAutoCorr_;
+      if (hasAutoCorr_) {
+         ar & autoCorrCapacity_;
+         ar & outputFileName_;
+         ar & acceptedStepsAccumulators_;
       }
    }
 
