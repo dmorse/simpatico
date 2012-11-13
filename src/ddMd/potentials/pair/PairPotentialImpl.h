@@ -889,7 +889,6 @@ namespace DdMd
    {
       Vector f;
       double rsq;
-      double energy = 0.0;
       PairIterator iter;
       Atom*  atom0Ptr;
       Atom*  atom1Ptr;
@@ -912,8 +911,7 @@ namespace DdMd
             type1 = atom1Ptr->typeId();
             f.subtract(atom0Ptr->position(), atom1Ptr->position());
             rsq = f.square();
-            energy = interactionPtr_->energy(rsq, type0, type1);
-            localPairEnergies(type0,type1) += energy;
+            localPairEnergies(type0, type1) += interactionPtr_->energy(rsq, type0, type1);
          }
       } else {
          for (pairList_.begin(iter); iter.notEnd(); ++iter) {
@@ -924,11 +922,10 @@ namespace DdMd
             f.subtract(atom0Ptr->position(), atom1Ptr->position());
             rsq = f.square();
             if (!atom1Ptr->isGhost()) {
-               energy = interactionPtr_->energy(rsq, type0, type1);
+               localPairEnergies += interactionPtr_->energy(rsq, type0, type1); 
             } else {
-               energy = 0.5*interactionPtr_->energy(rsq, type0, type1);
+               localPairEnergies += 0.5*interactionPtr_->energy(rsq, type0, type1); 
             } 
-            localPairEnergies(type0,type1) += energy;
          }
       }
 

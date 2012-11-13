@@ -67,7 +67,7 @@ namespace McMd
       // Number of atoms must match atomCapacity.
       in >> Label("ATOMS");
       int nAtom;
-      in >> nAtom;
+      in >> Label("nAtom") >> nAtom;
       if (nAtom != atomCapacity) {
          UTIL_THROW("nAtom != atomCapacity");
       }

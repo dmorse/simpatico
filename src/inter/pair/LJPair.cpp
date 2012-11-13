@@ -264,6 +264,19 @@ namespace Inter
       } else {
          UTIL_THROW("Unrecognized parameter name");
       }
+
+      sigmaSq_[i][j] = sigma_[i][j]*sigma_[i][j];
+
+      // Recalculate shift
+      double r6i = sigmaSq_[i][j]/cutoffSq_[i][j];
+      r6i = r6i*r6i*r6i;
+      ljShift_[i][j] = -4.0*epsilon_[i][j]*(r6i*r6i - r6i);
+
+      //Symmetrize
+      if (j != i) {
+         sigmaSq_[j][i] = sigmaSq_[i][j];
+         ljShift_[j][i] = ljShift_[j][i];
+      }
    }
 
    /*
