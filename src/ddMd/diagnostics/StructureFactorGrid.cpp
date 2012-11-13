@@ -177,6 +177,8 @@ namespace DdMd
          }
       }
 
+      nSample_ = 0;
+
       isInitialized_ = true;
    }
 
