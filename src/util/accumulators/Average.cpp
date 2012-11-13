@@ -126,7 +126,7 @@ namespace Util
       }
 
       double error  = ptr->error();
-      double sigma  = error/sqrt(double(nSample));
+      double sigma  = error/sqrt(2.0*double(nSample-1));
       double weight = 1.0/(sigma*sigma);
       double sum    = error*weight;
       double norm   = weight;
@@ -142,7 +142,7 @@ namespace Util
          error = ptr->error();
          if (fabs(error - aveErr) < 2.0*oldSig) {
             nSample = ptr->nSample();
-            sigma  = error/sqrt(double(nSample));
+            sigma  = error/sqrt(2.0*double(nSample-1));
             weight = 1.0/(sigma*sigma);
             sum   += error*weight;
             norm  += weight;
