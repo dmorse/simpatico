@@ -94,19 +94,20 @@ namespace McMd
       /// Policy for masking of nonbonded interactions between bonded atoms.
       MaskPolicy maskPolicy_;
 
-      double junctionFactor(Molecule* molPtr, int sign);
-
-      /// do we calculate the autocorrelation of accepted MC steps?
+      /// Do we calculate the autocorrelation of accepted MC steps?
       int hasAutoCorr_;
 
-      /// capacity of accepted step autocorrelation
+      /// Capacity of accepted step autocorrelation
       int autoCorrCapacity_;
 
-      /// filename for autocorrelation output
+      /// Filename for autocorrelation output
       std::string outputFileName_;
 
-      /// array of autocorrelators for accepted steps
+      /// Array of autocorrelators for accepted steps
       DArray<AutoCorr<double, double> > acceptedStepsAccumulators_;
+
+      double junctionFactor(Molecule* molPtr, int sign);
+
    };
 
 }      

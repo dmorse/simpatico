@@ -64,6 +64,42 @@ namespace McMd
    }
 
    /* 
+   * Load from archive.
+   */
+   void EndSwapMove::loadParameters(Serializable::IArchive& ar) 
+   {
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      ar & atomTypeIds_;
+
+      // Validate
+      Species* speciesPtr = &(simulation().species(speciesId_));
+      int nAtom = speciesPtr->nAtom();
+      if (speciesPtr->isMutable()) {
+         UTIL_THROW("EndSwapMove applied to mutable species");
+      }
+      Linear* linearPtr = dynamic_cast<Linear*>(speciesPtr);
+      if (linearPtr == 0) {
+         UTIL_THROW("EndSwapMove applied to species that is not Linear");
+      }
+      if (nAtom != atomTypeIds_.capacity()) {
+         UTIL_THROW("Inconsistent capacity for atomTypeIds array");
+      }
+  
+      positions_.allocate(nAtom);
+   }
+
+   /* 
+   * Save to archive.
+   */
+   void EndSwapMove::save(Serializable::OArchive& ar) 
+   {
+      McMove::save(ar);
+      ar & speciesId_;
+      ar & atomTypeIds_;
+   }
+
+   /* 
    * Generate, attempt and accept or reject a Monte Carlo move.
    */
    bool EndSwapMove::move() 

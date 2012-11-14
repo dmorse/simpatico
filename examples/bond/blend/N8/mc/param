@@ -154,10 +154,8 @@ McSimulation{
     RDF{
       interval                         1000
       outputFileName                     RDF
-      RadialDistribution{
-         max                             5.0
-         nBin                            500
-      }
+      max                                5.0
+      nBin                               500
       selector                         inter   -1    -1
     }
 
@@ -165,11 +163,9 @@ McSimulation{
       interval                          1000
       outputFileName          BondLengthDist
       speciesId                            0
-      Distribution{
-         min                             0.0
-         max                             2.0
-         nBin                            400
-      }
+      min                                0.0
+      max                                2.0
+      nBin                               400
     }
 
     AtomMSD{

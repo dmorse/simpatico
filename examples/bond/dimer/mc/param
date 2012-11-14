@@ -99,10 +99,8 @@ McSimulation{
     RDF{
       interval                        100000
       outputFileName                     RDF
-      RadialDistribution{
-         max                             5.0
-         nBin                            500
-      }
+      max                                5.0
+      nBin                               500
       selector                         inter   -1    -1
     }
 

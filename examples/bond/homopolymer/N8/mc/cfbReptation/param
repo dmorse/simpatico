@@ -56,29 +56,34 @@ McSimulation{
     baseInterval                        1000
 
     LogProgress{
-      interval                        500000
+      interval                         20000
+    }
+
+    McWriteRestart{
+      interval                        100000
+      outputFileName                 restart
     }
 
     McEnergyOutput{
-      interval                          1000
+      interval                         10000
       outputFileName                  energy
     }
 
     McEnergyAverage{
-      interval                          1000
+      interval                         10000
       outputFileName               energyAve
       nSamplePerBlock                     10
     }
 
     McPairEnergyAverage{
-      interval                          1000
+      interval                         10000
       outputFileName              pairEnergy
       nSamplePerBlock                     10
       selector                           all  -1  -1
     }
    
     RadiusGyration{
-      interval                          1000
+      interval                         10000
       outputFileName          RadiusGyration
       nSamplePerBlock                     10
       speciesId                            0
@@ -93,7 +98,7 @@ McSimulation{
     }
 
     BondLengthDist{
-      interval                          1000
+      interval                         10000
       outputFileName          BondLengthDist
       speciesId                            0
       min                                0.0
@@ -102,7 +107,7 @@ McSimulation{
     }
 
     AtomMSD{
-      interval                          1000
+      interval                         10000
       outputFileName                 AtomMSD
       speciesId                            0
       atomId                               5
@@ -110,7 +115,7 @@ McSimulation{
     }
 
     IntraPairAutoCorr{
-      interval                         1000
+      interval                        10000
       outputFileName      IntraPairAutoCorr
       speciesId                           0
       atom1Id                             0
@@ -120,11 +125,6 @@ McSimulation{
 
   }
 }
-WRITE_PARAM      param
-READ_CONFIG      config
-SIMULATE         100000000
-WRITE_CONFIG     config
-FINISH
 
 
     HybridMdMove{

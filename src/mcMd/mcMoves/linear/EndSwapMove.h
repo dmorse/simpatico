@@ -46,6 +46,20 @@ namespace McMd
       virtual void readParameters(std::istream& in);
    
       /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive& ar);
+
+      /**
       * Generate and accept or reject configuration bias move
       */
       virtual bool move();
@@ -58,7 +72,7 @@ namespace McMd
       /// Array of atom type indices
       DArray<int>    atomTypeIds_;
  
-      /// Array of atom type indices
+      /// Array of atomic positions (temporary).
       DArray<Vector> positions_;
  
    };

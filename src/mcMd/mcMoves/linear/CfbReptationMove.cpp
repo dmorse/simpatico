@@ -33,10 +33,15 @@ namespace McMd
       speciesId_(-1),
       bondTypeId_(-1),
       nJunction_(0),
+      junctions_(),
+      lTypes_(),
+      uTypes_(),
       maskPolicy_(MaskBonded),
       hasAutoCorr_(0),
-      autoCorrCapacity_(0)
-   { setClassName("CfbReptationMove"); } 
+      autoCorrCapacity_(0),
+      outputFileName_(),
+      acceptedStepsAccumulators_()
+   {  setClassName("CfbReptationMove"); } 
    
    /* 
    * Read parameters speciesId, nRegrow, and nTrial
@@ -151,44 +156,12 @@ namespace McMd
       ar & lTypes_; 
       ar & uTypes_; 
 
-      #if 0
-      // Allocate memory for junction arrays
-      int nAtom = speciesPtr->nAtom();
-      junctions_.allocate(nAtom-1);
-      lTypes_.allocate(nAtom-1);
-      uTypes_.allocate(nAtom-1);
-
-      // Identify junctions between atoms of different types
-      int lType, uType;
-      nJunction_ = 0;
-      for (int i = 0; i < nAtom - 1; ++i) {
-         lType = speciesPtr->atomTypeId(i); 
-         uType = speciesPtr->atomTypeId(i+1); 
-         if (lType != uType) {
-            junctions_[nJunction_] = i;
-            lTypes_[nJunction_] = lType;
-            uTypes_[nJunction_] = uType;
-            ++nJunction_;
-         }
-      }
-      #endif
-
       // Read autocorrelation parameters 
       loadParameter<int>(ar, "hasAutoCorr", hasAutoCorr_);
       if (hasAutoCorr_) {
          loadParameter<int>(ar, "autoCorrCapacity", autoCorrCapacity_);
          loadParameter<std::string>(ar, "autoCorrName", outputFileName_);
          ar & acceptedStepsAccumulators_;
- 
-         #if 0
-         // Allocate memory for autocorrelation function of reptation steps
-         int moleculeCapacity = simulation().species(speciesId_).capacity();
-         acceptedStepsAccumulators_.allocate(moleculeCapacity); 
-         for (int i = 0; i < moleculeCapacity; i++)
-         {
-            acceptedStepsAccumulators_[i].setParam(autoCorrCapacity_);
-         }
-         #endif
       }
 
    }

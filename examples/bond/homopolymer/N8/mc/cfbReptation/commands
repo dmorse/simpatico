@@ -1,5 +1,5 @@
-WRITE_PARAM      param
-READ_CONFIG      config
-SIMULATE         100000000
-WRITE_CONFIG     config
+WRITE_PARAM          param
+READ_CONFIG         config
+SIMULATE            160000
+WRITE_CONFIG        config
 FINISH

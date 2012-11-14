@@ -1,7 +1,7 @@
 WRITE_PARAM         param
 SET_CONFIG_IO       MdConfigIo
 READ_CONFIG         config
-SIMULATE            4000
+SIMULATE            1700
 WRITE_CONFIG        config
 FINISH
 
