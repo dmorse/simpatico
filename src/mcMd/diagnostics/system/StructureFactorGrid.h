@@ -145,10 +145,20 @@ namespace McMd
    void StructureFactorGrid::serialize(Archive& ar, const unsigned int version)
    {
       StructureFactor::serialize(ar, version);
+
+      #if 0
+      ar & nAtomType_;
+      ar & nMode_;
+      ar & modes_;
+      ar & nWave_;
+      ar & waveIntVectors_;
+      ar & structureFactors_;
+      ar & nSample_;
+      #endif
+
       ar & hMax_;
       //serializeEnum(ar, lattice_);
       ar & lattice_;
-
       ar & nStar_;
       ar & starIds_;
       ar & starSizes_;

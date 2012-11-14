@@ -22,7 +22,9 @@ namespace McMd
 
    using namespace Util;
 
-   /// Constructor.
+   /*
+   * Constructor.
+   */
    StructureFactorGrid::StructureFactorGrid(System& system) 
     : StructureFactor(system),
       hMax_(0),
@@ -36,13 +38,10 @@ namespace McMd
    */
    void StructureFactorGrid::readParameters(std::istream& in) 
    {
-
-      nAtomType_ = system().simulation().nAtomType();
-
-      // Read parameters
       readInterval(in);
       readOutputFileName(in);
       read<int>(in, "nMode", nMode_);
+      nAtomType_ = system().simulation().nAtomType();
       modes_.allocate(nMode_, nAtomType_);
       readDMatrix<double>(in, "modes", modes_, nMode_, nAtomType_);
       read<int>(in, "hMax", hMax_);
@@ -202,7 +201,6 @@ namespace McMd
       ar & nWave_;
       ar & waveIntVectors_;
       ar & structureFactors_;
-      ar & fourierModes_;
       ar & nSample_;
 
       // Load additional from StructureFactorGrid::serialize
@@ -229,7 +227,11 @@ namespace McMd
          UTIL_THROW("Inconsistent capacity for waveIntVector");
       }
 
+      // Allocate temporary data structures (defined in StructureFactor)
       waveVectors_.allocate(nWave_);
+      fourierModes_.allocate(nWave_, nMode_);
+
+      // Allocate maximum value history.
       maximumValue_.allocate(nMode_);
       maximumWaveIntVector_.allocate(nMode_);
       maximumQ_.allocate(nMode_);
@@ -246,8 +248,7 @@ namespace McMd
    * Save state to binary file archive.
    */
    void StructureFactorGrid::save(Serializable::OArchive& ar)
-   { ar & *this; }
-
+   {  ar & *this; }
 
    void StructureFactorGrid::setup() 
    {}
@@ -319,32 +320,6 @@ namespace McMd
          }
       }
       outputFile_.close();
-                                                                  
-      #if 0
-      // Output each structure factor to a separate file
-      std::string suffix;
-      int         typeId;
-      for (j = 0; j < nMode_; ++j) {
-
-         // Construct file suffix for this structure factor
-         suffix = std::string(".");
-         for (k = 0; k < 2; k++) {
-            typeId = atomTypeIdPairs_[j][k];
-            if (typeId < 0) {
-               suffix += std::string("A");
-            } else {
-               suffix += toString(typeId);
-            }
-         }
-         suffix += std::string(".dat");
-
-         fileMaster().openOutputFile(outputFileName(suffix), outputFile_);
-
-         // Loop over waves to output structure factor
-
-         outputFile_.close();
-      }
-      #endif
 
    }
 

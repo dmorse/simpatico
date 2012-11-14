@@ -29,8 +29,10 @@ namespace Util
    {
    
    public:
-   
-      /// Constructor.
+
+      /*   
+      * Constructor.
+      */
       DArrayParam(const char *label, DArray<Type>& array, int n = 0);
  
       /** 
@@ -121,15 +123,14 @@ namespace Util
 
       // Preconditions
       if (!(arrayPtr_->isAllocated())) {
-         UTIL_THROW("Cannot read unallocated DArray");
+         UTIL_THROW("Cannot write unallocated DArray");
       }
       if (arrayPtr_->capacity() < n_) {
-         UTIL_THROW("Error: DArray capacity < n");
+         UTIL_THROW("Error: DArray capacity < n in writeParam");
       }
 
       Label space("");
       int i;
-
       for (i = 0; i < n_; ++i) {
          if (i == 0) {
             out << indent() << label_;
@@ -142,7 +143,6 @@ namespace Util
              << (*arrayPtr_)[i] 
              << std::endl;
       }
-
    }
 
    /*
@@ -151,20 +151,10 @@ namespace Util
    template <class Type>
    void DArrayParam<Type>::load(Serializable::IArchive& ar)
    {
-      if (!(arrayPtr_->isAllocated())) {
-         UTIL_THROW("Cannot load unallocated DArray");
-      }
-      if (arrayPtr_->capacity() < n_) {
-         UTIL_THROW("Error: DArray capacity < n");
-      }
       if (isParamIoProcessor()) {
-         int n;
-         ar >> n;
-         if (n != n_) {
-            UTIL_THROW("Inconsistent DArrayParam sizes");
-         }
-         for (int i = 0; i < n_; ++i) {
-            ar >> (*arrayPtr_)[i];
+         ar >> *arrayPtr_;
+         if (arrayPtr_->capacity() < n_) {
+            UTIL_THROW("Error: DArray capacity < n");
          }
          if (ParamComponent::echo()) {
             writeParam(Log::file());
@@ -190,10 +180,7 @@ namespace Util
       if (arrayPtr_->capacity() < n_) {
          UTIL_THROW("Error: DArray capacity < n");
       }
-      ar << n_;
-      for (int i = 0; i < n_; ++i) {
-         ar << (*arrayPtr_)[i];
-      }
+      ar << *arrayPtr_;
    }
 
 } 

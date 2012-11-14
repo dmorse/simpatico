@@ -42,22 +42,16 @@ namespace McMd
    {}
 
    /*
-   * Read parameters from file, and allocate data array.
+   * Read parameters from file, and allocate memory.
    */
    void StructureFactor::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
-      //SystemDiagnostic<System>::readParameters(in);
       readInterval(in);
       readOutputFileName(in);
-
-      nAtomType_ = system().simulation().nAtomType();
-
       read<int>(in, "nMode", nMode_);
+      nAtomType_ = system().simulation().nAtomType();
       modes_.allocate(nMode_, nAtomType_);
       readDMatrix<double>(in, "modes", modes_, nMode_, nAtomType_);
-
       read<int>(in, "nWave", nWave_);
       waveIntVectors_.allocate(nWave_);
       readDArray<IntVector>(in, "waveIntVectors", waveIntVectors_, nWave_);
@@ -65,6 +59,7 @@ namespace McMd
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
       structureFactors_.allocate(nWave_, nMode_);
+
       maximumValue_.allocate(nMode_);
       maximumWaveIntVector_.allocate(nMode_);
       maximumQ_.allocate(nMode_);
@@ -88,7 +83,10 @@ namespace McMd
       loadDMatrix<double>(ar, "modes", modes_, nMode_, nAtomType_);
       loadParameter<int>(ar, "nWave", nWave_);
       loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
+      ar & structureFactors_;
+      ar & nSample_;
 
+      // Validate
       if (nAtomType_ != system().simulation().nAtomType()) {
          UTIL_THROW("Inconsistent values of nAtomType_");
       }
@@ -101,11 +99,12 @@ namespace McMd
       if (waveIntVectors_.capacity() != nWave_) {
          UTIL_THROW("Inconsistent capacity for waveIntVector");
       }
-      ar & structureFactors_;
-      ar & fourierModes_;
-      ar & nSample_;
 
+      // Allocate temporary data structures
       waveVectors_.allocate(nWave_);
+      fourierModes_.allocate(nWave_, nMode_);
+
+      // Allocate data structures that track maximum
       maximumValue_.allocate(nMode_);
       maximumWaveIntVector_.allocate(nMode_);
       maximumQ_.allocate(nMode_);
@@ -119,10 +118,10 @@ namespace McMd
    }
 
    /*
-   * Save state to binary file archive.
+   * Save state to archive.
    */
    void StructureFactor::save(Serializable::OArchive& ar)
-   { ar & *this; }
+   {  ar & *this; }
 
    /*
    * Clear accumulators.
@@ -142,11 +141,12 @@ namespace McMd
             structureFactors_(i, j) = 0.0;
          }
       }
-
       nSample_ = 0;
    }
- 
-   /// Increment Structure Factor
+
+   /* 
+   * Increment structure factors for all wavevectors and modes.
+   */
    void StructureFactor::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
@@ -210,7 +210,8 @@ namespace McMd
                structureFactors_(i, j) += norm/volume;
             }
             maximumValue_[j].insert(maximumValue_[j].end(), 1, maxValue);
-            maximumWaveIntVector_[j].insert(maximumWaveIntVector_[j].end(), 1, maxIntVector);
+            maximumWaveIntVector_[j].insert(maximumWaveIntVector_[j].end(), 
+                                            1, maxIntVector);
             maximumQ_[j].insert(maximumQ_[j].end(), 1, maxQ);
          }
 
@@ -219,16 +220,14 @@ namespace McMd
 
    }
 
-   /**
-   * Calculate floating point wavevectors.
+   /*
+   * Calculate floating point wavevectors, using current boundary.
    */
    void StructureFactor::makeWaveVectors() 
    {
-      Vector    dWave;
       Boundary* boundaryPtr = &system().boundary();
-      int       i, j;
-
-      // Calculate wavevectors
+      Vector  dWave;
+      int  i, j;
       for (i = 0; i < nWave_; ++i) {
          waveVectors_[i] = Vector::Zero;
          for (j = 0; j < Dimension; ++j) {
@@ -239,6 +238,9 @@ namespace McMd
       }
    }
 
+   /*
+   * Output final results to output file.
+   */
    void StructureFactor::output() 
    {
       // Echo parameters to a log file

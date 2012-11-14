@@ -158,11 +158,11 @@ namespace McMd
       DMatrix<double> structureFactors_;
       
       /**
-      * Fourier modes of concentration.
+      * Instantaneous Fourier amplitudes (temporary)
       *
-      * First index is wavevector, second is atom type.
+      * First index is wavevector, second is mode index.
       */
-      DMatrix< std::complex<double> >  fourierModes_;
+      DMatrix< std::complex<double> > fourierModes_;
 
       /**
       * Array of Miller index IntVectors for wavevectors.
@@ -170,7 +170,7 @@ namespace McMd
       DArray<IntVector>  waveIntVectors_;
 
       /**
-      * Array of floating point wave vectors.
+      * Array of floating point wave vectors (temporary).
       */
       DArray<Vector>  waveVectors_;
 
@@ -234,8 +234,13 @@ namespace McMd
       ar & waveIntVectors_;
 
       ar & structureFactors_;
-      ar & fourierModes_;
       ar & nSample_;
+
+      #if 0
+      ar & maximumValue_;
+      ar & maximumWaveIntVector_;
+      ar & maximumQ_;
+      #endif
    }
 
 }

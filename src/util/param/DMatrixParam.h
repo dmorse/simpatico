@@ -70,7 +70,7 @@ namespace Util
 
    protected:
    
-      /// Pointer to first element in associated 1D C array
+      /// Pointer to associated DMatrix.
       DMatrix<Type>* matrixPtr_;
    
       /// Number of rows in array[m][n]
@@ -100,9 +100,11 @@ namespace Util
    {
       if (isParamIoProcessor()) {
          int i, j;
+         int m = matrixPtr_->capacity1();
+         int n = matrixPtr_->capacity2();
          in >> label_;
-         for (i = 0; i < m_; ++i) {
-            for (j = 0; j < n_; ++j) {
+         for (i = 0; i < m; ++i) {
+            for (j = 0; j < n; ++j) {
                in >> (*matrixPtr_)(i, j);
             }
          }
@@ -112,7 +114,9 @@ namespace Util
       }
       #ifdef UTIL_MPI
       if (hasParamCommunicator()) {
-         bcast<Type>(paramCommunicator(), *matrixPtr_, m_, n_, 0); 
+         int m = matrixPtr_->capacity1();
+         int n = matrixPtr_->capacity2();
+         bcast<Type>(paramCommunicator(), *matrixPtr_, m, n, 0); 
       }
       #endif
    }
@@ -149,12 +153,7 @@ namespace Util
    void DMatrixParam<Type>::load(Serializable::IArchive& ar)
    {
       if (isParamIoProcessor()) {
-         int i, j; 
-         for (i = 0; i < m_; ++i) {
-            for (j = 0; j < n_; ++j) {
-               ar >> (*matrixPtr_)(i, j);
-            }
-         }
+         ar >> *matrixPtr_;
       }
       #ifdef UTIL_MPI
       if (hasParamCommunicator()) {
@@ -168,15 +167,7 @@ namespace Util
    */
    template <class Type>
    void DMatrixParam<Type>::save(Serializable::OArchive& ar)
-   {
-      int i, j;
-      for (i = 0; i < m_; ++i) {
-         for (j = 0; j < n_; ++j) {
-            ar << (*matrixPtr_)(i, j);
-         }
-      }
-   }
-
+   {  ar << *matrixPtr_; }
 
 } 
 #endif

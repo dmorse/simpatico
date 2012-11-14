@@ -165,7 +165,6 @@ namespace Util
    template <typename Data>
    void DMatrix<Data>::allocate(int capacity1, int capacity2)
    {
-
       // Preconditions
       if (capacity1 <= 0) UTIL_THROW("Capacity1 must be positive");
       if (capacity2 <= 0) UTIL_THROW("Capacity2 must be positive");
@@ -194,6 +193,8 @@ namespace Util
          if (!isAllocated()) {
             if (capacity1 > 0 && capacity2 > 0) {
                allocate(capacity1, capacity2);
+            } else {
+               UTIL_THROW("Attempt to load empty DMatrix");
             }
          } else {
             if (capacity1 != capacity1_) {
@@ -204,12 +205,16 @@ namespace Util
             }
          }
       }
-      for (int i = 0; i < capacity1_*capacity2_; ++i) {
-         ar & data_[i];
+      if (isAllocated()) {
+         for (int i = 0; i < capacity1_*capacity2_; ++i) {
+            ar & data_[i];
+         }
       }
    }
 
-   /// Return true if the DMatrix has been allocated, false otherwise.
+   /*
+   * Return true if the DMatrix has been allocated, false otherwise.
+   */
    template <class Data>
    inline bool DMatrix<Data>::isAllocated() const 
    {  return !(data_ == 0); }
