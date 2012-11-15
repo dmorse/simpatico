@@ -51,7 +51,6 @@ namespace McMd
    */
    void Point::save(Serializable::OArchive &ar)
    {
-      ar << id_;
       ar << moleculeCapacity_;
       ar << type_;
    }

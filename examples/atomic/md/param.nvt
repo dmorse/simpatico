@@ -67,29 +67,23 @@ MdSimulation{
       nSamplePerBlock                     10
     }
 
-    MdPressureAverage{
-      interval                           100
-      outputFileName                pressure
-      nSamplePerBlock                     10
-    }
-
-  }
-
-}
-
     MdKineticEnergyAverage{
       interval                           100
       outputFileName        kineticEnergyAve
       nSamplePerBlock                     10
     }
 
+    MdPressureAverage{
+      interval                           100
+      outputFileName                pressure
+      nSamplePerBlock                     10
+    }
+
     RDF{
-      interval                          1000
+      interval                          5000
       outputFileName                     RDF
-      RadialDistribution{
-         max                             5.0
-         nBin                            500
-      }
+      max                                5.0
+      nBin                               500
       selector                         inter   -1    -1
     }
 
@@ -100,6 +94,10 @@ MdSimulation{
       atomId                               0
       capacity                           200
     }
+
+  }
+
+}
 
     DumpConfig{
       interval                           4000
