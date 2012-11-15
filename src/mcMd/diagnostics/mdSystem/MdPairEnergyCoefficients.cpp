@@ -97,7 +97,7 @@ namespace McMd
    }
  
    /*
-   * Load state from a binary file archive.
+   * Load state from an archive.
    */
    void MdPairEnergyCoefficients::loadParameters(Serializable::IArchive& ar)
    {
@@ -149,7 +149,7 @@ namespace McMd
    }
 
    /*
-   * Save state to binary file archive.
+   * Save state to archive.
    */
    void MdPairEnergyCoefficients::save(Serializable::OArchive& ar)
    { ar & *this; }

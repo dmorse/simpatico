@@ -73,7 +73,7 @@ namespace McMd
    }
 
    /*
-   * Load state from a binary file archive.
+   * Load state from an archive.
    */
    void StructureFactor::loadParameters(Serializable::IArchive& ar)
    {

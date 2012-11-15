@@ -130,7 +130,7 @@ namespace McMd
    }
 
    /*
-   * Save state to binary file archive.
+   * Save state to archive.
    */
    void AtomMSD::save(Serializable::OArchive& ar)
    { ar & (*this); }

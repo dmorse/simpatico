@@ -53,7 +53,7 @@ namespace McMd
    }
 
    /*
-   * Load state from a binary file archive.
+   * Load state from an archive.
    */
    void BondLengthDist::loadParameters(Serializable::IArchive& ar)
    {
@@ -84,7 +84,7 @@ namespace McMd
    }
 
    /*
-   * Save state to binary file archive.
+   * Save state to archive.
    */
    void BondLengthDist::save(Serializable::OArchive& ar)
    { ar & *this; }

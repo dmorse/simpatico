@@ -94,16 +94,16 @@ namespace McMd
       virtual void output();
 
       /**
-      * Save state to binary file archive.
+      * Save state to archive.
       *
-      * \param ar binary saving (output) archive.
+      * \param ar saving (output) archive.
       */
       virtual void save(Serializable::OArchive& ar);
 
       /**
-      * Load state from a binary file archive.
+      * Load state from an archive.
       *
-      * \param ar binary loading (input) archive.
+      * \param ar loading (input) archive.
       */
       virtual void loadParameters(Serializable::IArchive& ar);
 

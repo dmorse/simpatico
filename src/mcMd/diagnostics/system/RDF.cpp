@@ -58,7 +58,7 @@ namespace McMd
    }
 
    /*
-   * Load state from a binary file archive.
+   * Load state from an archive.
    */
    void RDF::loadParameters(Serializable::IArchive& ar)
    {
@@ -90,7 +90,7 @@ namespace McMd
    }
 
    /*
-   * Save state to binary file archive.
+   * Save state to archive.
    */
    void RDF::save(Serializable::OArchive& ar)
    { ar & *this; }

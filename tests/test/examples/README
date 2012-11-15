@@ -1,5 +1,5 @@
-This directory contains three simple usage examples for the unit
-test framework:
+This directory contains three simple usage examples for the unit test 
+framework:
 
 example1 constructs and runs a UnitTestRunner. 
 example2 constructs and runs a CompositeTestRunner for two unit tests.

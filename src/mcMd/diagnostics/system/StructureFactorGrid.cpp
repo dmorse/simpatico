@@ -189,7 +189,7 @@ namespace McMd
    }
 
    /*
-   * Load state from a binary file archive.
+   * Load state from an archive.
    */
    void StructureFactorGrid::loadParameters(Serializable::IArchive& ar)
    {
@@ -245,7 +245,7 @@ namespace McMd
    }
 
    /*
-   * Save state to binary file archive.
+   * Save state to archive.
    */
    void StructureFactorGrid::save(Serializable::OArchive& ar)
    {  ar & *this; }

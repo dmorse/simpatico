@@ -45,16 +45,16 @@ namespace McMd
       virtual void readParam(std::istream &in);
 
       /**
-      * Load state from a binary file archive.
+      * Load state from an archive.
       *
-      * \param ar binary loading (input) archive.
+      * \param ar loading (input) archive.
       */
       virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
-      * Save state to a binary file archive.
+      * Save state to an archive.
       *
-      * \param ar binary saving (output) archive.
+      * \param ar saving (output) archive.
       */
       virtual void save(Serializable::OArchive& ar);
 

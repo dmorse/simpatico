@@ -119,14 +119,14 @@ namespace McMd
       /**
       * Load state from archive.
       *
-      * \param ar binary loading (input) archive.
+      * \param ar loading (input) archive.
       */
       virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
       * Save state to archive.
       *
-      * \param ar binary saving (output) archive.
+      * \param ar saving (output) archive.
       */
       virtual void save(Serializable::OArchive& ar);
 

@@ -40,7 +40,7 @@ namespace McMd
    }
 
    /*
-   * Load state from a binary file archive.
+   * Load state from an archive.
    */
    void DumpConfig::loadParameters(Serializable::IArchive& ar)
    {
@@ -50,7 +50,7 @@ namespace McMd
    }
 
    /*
-   * Save state to binary file archive.
+   * Save state to archive.
    */
    void DumpConfig::save(Serializable::OArchive& ar)
    { ar & *this; }
