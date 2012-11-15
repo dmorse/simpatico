@@ -24,11 +24,15 @@ namespace McMd
    {
    
    public:
-   
-      /// Default constructor.
+  
+      /* 
+      * Default constructor.
+      */
       Homopolymer();
-   
-      /// Destructor.
+  
+      /* 
+      * Destructor.
+      */
       virtual ~Homopolymer()
       {}
    

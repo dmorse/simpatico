@@ -97,20 +97,15 @@ McSimulation{
     RDF{
       interval                        100000
       outputFileName                     RDF
-      RadialDistribution{
-         max                             5.0
-         nBin                            500
-      }
+      max                                5.0
+      nBin                               500
       selector                         inter   -1    -1
     }
 
   }
 }
-WRITE_PARAM      param
-READ_CONFIG      config
-SIMULATE        2000000
-WRITE_CONFIG     config
-FINISH
+
+---------------------------------------------------------
 
     DumpConfig{
       interval                         10000

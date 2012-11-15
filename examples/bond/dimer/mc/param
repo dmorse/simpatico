@@ -52,7 +52,7 @@ McSimulation{
 
     HybridMdMove{
       probability           0.002000000000e+00
-      nStep                                 20
+      nStep                                100
       MdSystem{
         MdPairPotential{
           maxBoundary             cubic  10.5 
@@ -74,6 +74,11 @@ McSimulation{
 
     LogProgress{
       interval                        500000
+    }
+
+    McWriteRestart{
+      interval                         10000
+      outputFileName                 restart
     }
 
     McEnergyAverage{
