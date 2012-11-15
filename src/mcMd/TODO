@@ -46,23 +46,6 @@ Deformable Boundaries
   miniminumDeformRatio to deal optimally with MD in deforming 
   boundaries.
 
-Serialization
--------------
-
-- Create ability to do true binary serialization, without single restart 
-  file for each processor. Required changes in Util namespace are discussed
-  in src/util/TODO. Required changes in McMd namespace include:
-
-  - Create binary serialize methods for all objects created by factories.
-    Base class methods should just throw exceptions.
-
-  - Create serialization method (serialize or save and load) for Simulation
-    that initialize all pointers after allocating all arrays, as done during
-    readParam.
-
-  - Make sure that loading methods explicitly creates required associations 
-    between child objects.
-
 Python File Tools
 -----------------
 
