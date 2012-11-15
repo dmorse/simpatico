@@ -151,9 +151,11 @@ public:
       printMethod(TEST_FUNC);
       printEndl();
       IntVector v;
-      std::ifstream in("in/IntVector");
+      std::ifstream in;
+      openInputFile("in/IntVector", in);
+      //std::ifstream in("in/IntVector");
 
-      in        >> v;
+      in >> v;
       std::cout.width(20);
       std::cout.precision(6);
       std::cout << v << std::endl ;

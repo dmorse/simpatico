@@ -1,4 +1,4 @@
-util_space_tests_SRCS=$(SRC_DIR)/util/space/tests/Test.cc 
+tests_util_space_SRCS=$(TESTS_DIR)/util/space/Test.cc 
 
-util_space_tests_OBJS=$(util_space_tests_SRCS:.cc=.o)
+tests_util_space_OBJS=$(tests_util_space_SRCS:.cc=.o)
 

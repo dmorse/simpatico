@@ -22,6 +22,7 @@ clean:
 	cd misc; make clean
 	rm -f */*.o */*/*.o 
 	rm -f */*.d */*/*.d
+	rm dummy
 
 Test: $(util_LIB) $(TESTS_DIR)/util/Test.o
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test $(TESTS_DIR)/util/Test.o \
