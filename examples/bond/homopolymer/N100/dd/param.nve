@@ -20,13 +20,13 @@ Simulation{
     totalCapacity    32000
   }
   Buffer{
-    atomCapacity     20000
-    ghostCapacity    30000
+    atomCapacity      5000
+    ghostCapacity     5000
   }
   pairStyle          LJPair
   bondStyle          HarmonicBond
   maskedPairPolicy   maskBonded
-  forceCommFlag      0
+  reverseUpdateFlag  0
   PairPotential{
     epsilon          1.0
     sigma            1.0

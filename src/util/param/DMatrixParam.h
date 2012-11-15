@@ -157,7 +157,9 @@ namespace Util
       }
       #ifdef UTIL_MPI
       if (hasParamCommunicator()) {
-         bcast<Type>(paramCommunicator(), *matrixPtr_, n_*m_, 0); 
+         int m = matrixPtr_->capacity1();
+         int n = matrixPtr_->capacity2();
+         bcast<Type>(paramCommunicator(), *matrixPtr_, m, n, 0); 
       }
       #endif
    }
