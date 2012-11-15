@@ -15,6 +15,7 @@
 #include <util/space/IntVector.h>
 
 #include <complex>
+#include <vector>
 #include <string>
 #include <iostream>
 
@@ -235,6 +236,20 @@ namespace Util
    inline void serialize(BinaryFileOArchive& ar, double& data, 
                          const unsigned int version)
    {  ar.pack(data); }
+
+   /*
+   * Save a std::complex<double> to a BinaryFileOArchive.
+   */
+   template <typename T>
+   void serialize(BinaryFileOArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      size_t size = data.size();
+      ar.pack(size);
+      for (size_t i = 0; i < size; ++i) {
+         ar & data[i];
+      }
+   }
 
    // Explicit serialize functions for std library types
 

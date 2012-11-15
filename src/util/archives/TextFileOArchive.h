@@ -16,6 +16,7 @@
 
 #include <complex>
 #include <string>
+#include <vector>
 #include <fstream>
 
 namespace Util
@@ -267,7 +268,21 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   // Explicit serialize functions for primitive types
+   /*
+   * Save a std::vector to a TextFileOArchive.
+   */
+   template <typename T>
+   void serialize(TextFileOArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      size_t size = data.size();
+      ar.pack(size);
+      for (size_t i = 0; i < size; ++i) {
+         ar & data[i];
+      }
+   }
+
+   // Explicit serialize functions for standard library types
 
    /*
    * Save a std::complex<float> to a TextFileOArchive.

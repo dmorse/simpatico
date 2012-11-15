@@ -16,6 +16,7 @@
 
 #include <complex>
 #include <string>
+#include <vector>
 #include <iostream>
 
 namespace Util
@@ -235,6 +236,24 @@ namespace Util
    inline void serialize(BinaryFileIArchive& ar, double& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
+
+   /*
+   * Load a std::vector from a BinaryFileIArchive.
+   */
+   template <typename T>
+   void serialize(BinaryFileIArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      T element;
+      std::size_t size;
+      ar.unpack(size);
+      data.reserve(size);
+      data.clear();
+      for (size_t i = 0; i < size; ++i) {
+         ar & element;
+         data.push_back(element);
+      }
+   }
 
    // Explicit serialize functions for std library types
 

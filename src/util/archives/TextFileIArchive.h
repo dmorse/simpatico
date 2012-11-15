@@ -16,6 +16,7 @@
 
 #include <complex>
 #include <string>
+#include <vector>
 #include <fstream>
 
 namespace Util
@@ -254,7 +255,25 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   // Explicit serialize functions for primitive types
+   /*
+   * Load a std::vector from a TextFileIArchive.
+   */
+   template <typename T>
+   void serialize(TextFileIArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      T element;
+      std::size_t size;
+      ar.unpack(size);
+      data.reserve(size);
+      data.clear();
+      for (size_t i = 0; i < size; ++i) {
+         ar & element;
+         data.push_back(element);
+      }
+   }
+
+   // Explicit serialize functions for std library types
 
    /*
    * Load a std::complex<float> from a TextFileIArchive.

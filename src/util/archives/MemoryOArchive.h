@@ -16,6 +16,7 @@
 
 #include <complex>
 #include <string>
+#include <vector>
 
 namespace Util
 {
@@ -357,6 +358,20 @@ namespace Util
    inline void serialize(MemoryOArchive& ar, double& data, 
                          const unsigned int version)
    {  ar.pack(data); }
+
+   /*
+   * Save a std::vector to a MemoryOArchive.
+   */
+   template <typename T>
+   void serialize(MemoryOArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      size_t size = data.size();
+      ar.pack(size);
+      for (size_t i = 0; i < size; ++i) {
+         ar & data[i];
+      }
+   }
 
    // Explicit serialize functions for standard library types
 

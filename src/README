@@ -1,10 +1,10 @@
 Subdirectories:
 ---------------
 
-util       general utility classes for scientific computation
-inter      classes that define potential interaction functions
-mcMd       code for Monte Carlo (MC) / molecular dynamics (MD) simulation
-ddMd       code for domain-decomposition parallel MD simulation
+util       utility classes for scientific computation (namespace Util)
+inter      classes defining potential energy functions (namespace Inter)
+mcMd       serial Monte Carlo (MC) / molecular dynamics (MD) (namespace McMd)
+ddMd       parallel domain-decomposition MD simulation (namespace DdMd)
 modules    add-on components for particular applications
 draft      unfinished or proposed classes
 

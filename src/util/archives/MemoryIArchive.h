@@ -367,6 +367,24 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
+   /*
+   * Load a std::vector from a MemoryIArchive.
+   */
+   template <typename T>
+   void serialize(MemoryIArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      T element;
+      std::size_t size;
+      ar.unpack(size);
+      data.reserve(size);
+      data.clear();
+      for (size_t i = 0; i < size; ++i) {
+         ar & element;
+         data.push_back(element);
+      }
+   }
+
    // Explicit serialize methods for std library types.
 
    /*
