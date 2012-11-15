@@ -135,6 +135,15 @@ McSimulation{
       lattice                          Cubic
     }
 
+    StructureFactorPGrid{
+      interval                          1000
+      outputFileName    StructureFactorPGrid
+      nAtomTypeIdPair                      2
+      atomTypeIdPairs                  0   0
+                                       0   1
+      hMax                                 4
+      lattice                          Cubic
+    }
     VanHove{
       interval                           100
       outputFileName                 VanHove
@@ -168,15 +177,6 @@ McSimulation{
       selector                         inter   -1    -1
     }
 
-    StructureFactorPGrid{
-      interval                          1000
-      outputFileName    StructureFactorPGrid
-      nAtomTypeIdPair                      2
-      atomTypeIdPairs                  0   0
-                                       0   1
-      hMax                                 4
-      lattice                          Cubic
-    }
 
     StructureFactorP{
       interval                           100

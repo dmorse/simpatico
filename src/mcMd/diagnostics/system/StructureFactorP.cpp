@@ -26,20 +26,24 @@ namespace McMd
 
    using namespace Util;
 
-   /// Constructor.
+   /*
+   * Constructor.
+   */
    StructureFactorP::StructureFactorP(System& system) 
     : SystemDiagnostic<System>(system)
    {  setClassName("StructureFactorP"); }
 
+   /*
+   * Destructor.
+   */
    StructureFactorP::~StructureFactorP() 
    {}
 
-   /// Read parameters from file, and allocate data array.
+   /*
+   * Read parameters from file, and allocate memory.
+   */
    void StructureFactorP::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
-      //SystemDiagnostic<System>::readParameters(in);
       readInterval(in);
       readOutputFileName(in);
 
@@ -62,6 +66,51 @@ namespace McMd
    }
 
    /*
+   * Load state from archive.
+   */
+   void StructureFactorP::loadParameters(Serializable::IArchive& ar) 
+   {
+      Diagnostic::loadParameters(ar);
+      ar & nAtomType_;
+      loadParameter<int>(ar, "nAtomTypeIdPair", nAtomTypeIdPair_);
+      loadDArray< Pair<int> >(ar, "atomTypeIdPairs", atomTypeIdPairs_, 
+                              nAtomTypeIdPair_);
+      loadParameter<int>(ar, "nWave", nWave_);
+      loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
+      ar & structureFactors_;
+      ar & nSample_;
+
+      // Validate
+      if (nAtomType_ != system().simulation().nAtomType()) {
+         UTIL_THROW("Inconsistent values of nAtomType");
+      }
+      if (nAtomTypeIdPair_ != atomTypeIdPairs_.capacity()) {
+         UTIL_THROW("Inconsistent capacity for atomTypeIdPairs");
+      }
+      if (nWave_ != waveIntVectors_.capacity()) {
+         UTIL_THROW("Inconsistent capacity for waveIntVectors");
+      }
+      if (nWave_ != structureFactors_.capacity1()) {
+         UTIL_THROW("Inconsistent capacity1 for structureFactors");
+      }
+      if (nAtomTypeIdPair_ != structureFactors_.capacity2()) {
+         UTIL_THROW("Inconsistent capacity2 for structureFactors");
+      }
+
+      // Allocate
+      waveVectors_.allocate(nWave_);
+      fourierModes_.allocate(nWave_, nAtomType_ + 1);
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to archive.
+   */
+   void StructureFactorP::save(Serializable::OArchive& ar) 
+   {  ar & *this; }
+
+   /*
    * Setup immediately before simulation.
    */
    void StructureFactorP::setup() 
@@ -80,7 +129,6 @@ namespace McMd
          }
       }
       nSample_ = 0;
-
    }
  
    /// Increment Structure Factor
