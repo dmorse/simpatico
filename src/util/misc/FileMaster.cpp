@@ -235,7 +235,7 @@ namespace Util
    * Open and return an output file named outputPrefix + name
    */
    void
-   FileMaster::openOutputFile(const std::string& name, std::ofstream& out)
+   FileMaster::openOutputFile(const std::string& name, std::ofstream& out, bool append)
    const
    {
       // Construct filename = outputPrefix_ + name
@@ -246,7 +246,10 @@ namespace Util
       filename += outputPrefix_;
       filename += name;
 
-      out.open(filename.c_str());
+      if (append)
+         out.open(filename.c_str(), std::ios::out | std::ios::app);
+      else
+         out.open(filename.c_str(), std::ios::out);
 
       // Check for error opening file
       if (out.fail()) {

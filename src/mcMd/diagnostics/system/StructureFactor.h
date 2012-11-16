@@ -113,7 +113,7 @@ namespace McMd
       *
       * \param iStep step counter
       */
-      void sample(long iStep);
+      virtual void sample(long iStep);
 
       /**
       * Output results to predefined output file.

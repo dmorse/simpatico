@@ -106,7 +106,14 @@ namespace McMd
       * \param ar binary loading (input) archive.
       */
       virtual void load(Serializable::IArchiveType& ar);
- 
+
+      /**
+      * Add particles to StructureFactor accumulators.
+      *
+      * \param iStep step counter
+      */
+      virtual void sample(long iStep);
+
    private:
 
       /// Array of ids for first wavevector in each star.
@@ -127,6 +134,11 @@ namespace McMd
       /// Has readParam been called?
       bool    isInitialized_;
 
+      /// Log file
+      std::ofstream logFile_;
+
+      /// Is this the first step?
+      bool isFirstStep_;
    };
 
 }
