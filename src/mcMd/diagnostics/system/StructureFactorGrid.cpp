@@ -28,7 +28,8 @@ namespace McMd
       hMax_(0),
       nStar_(0),
       lattice_(Triclinic),
-      isInitialized_(false)
+      isInitialized_(false),
+      isFirstStep_(true)
    {  setClassName("StructureFactorGrid"); }
 
    /// Read parameters from file, and allocate data array.
@@ -190,6 +191,46 @@ namespace McMd
    void StructureFactorGrid::setup() 
    {}
 
+   void StructureFactorGrid::sample(long iStep)
+   {
+      StructureFactor::sample(iStep);
+
+      fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
+      isFirstStep_ = false;
+
+      // Log structure factors
+      double volume = system().boundary().volume();
+      double norm;
+      for (int i = 0; i < nStar_; ++i) {
+         int size = starSizes_[i];
+
+         int k = starIds_[i];
+         for (int n = 0; n < Dimension; ++n) {
+            logFile_ << Int(waveIntVectors_[k][n], 5);
+         }
+         logFile_ << Dbl(waveVectors_[k].abs(), 20, 8);
+
+
+         for (int j = 0; j < nMode_; ++j) {
+            double average = 0.0;
+            double value = 0.0;
+            k = starIds_[i];
+            for (int m = 0; m < size; ++m) {
+               norm = std::norm(fourierModes_(k, j));
+               value = norm/volume;
+               average += value;
+               ++k;
+            }
+            average = average/double(size);
+            logFile_ << Dbl(average, 20, 8);
+         } 
+         logFile_ << std::endl;
+      }
+      logFile_ << std::endl;
+      logFile_.close();
+   } 
+
+
    void StructureFactorGrid::output() 
    {
       double  value, average, size;
@@ -201,7 +242,7 @@ namespace McMd
       outputFile_.close();
 
       // Output structure factors to one file
-      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      fileMaster().openOutputFile(outputFileName("_avg.dat"), outputFile_);
 
       // Loop over waves to output structure factor
       for (i = 0; i < nStar_; ++i) {
