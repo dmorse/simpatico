@@ -32,8 +32,10 @@ namespace McMd
       */
       MdEnergyOutput(MdSystem& system);
 
-      /*
+      /**
       * Read output file and nStepPerSample.
+      *
+      * \param in input parameter stream
       */
       virtual void readParameters(std::istream& in);
  

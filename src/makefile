@@ -41,6 +41,5 @@ veryclean:
 	-rm -f inter/defines.mk
 	-rm -f mcMd/defines.mk
 	-rm -f ddMd/defines.mk
-	-rm -f compiler.mk
 
 # ==============================================================================

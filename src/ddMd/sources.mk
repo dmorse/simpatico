@@ -8,13 +8,15 @@ include $(SRC_DIR)/ddMd/potentials/sources.mk
 include $(SRC_DIR)/ddMd/integrators/sources.mk
 include $(SRC_DIR)/ddMd/diagnostics/sources.mk
 include $(SRC_DIR)/ddMd/misc/sources.mk
+include $(SRC_DIR)/ddMd/user/sources.mk
 
 ddMd_SRCS=$(ddMd_chemistry_SRCS) $(ddMd_storage_SRCS) \
     $(ddMd_communicate_SRCS) $(ddMd_neighbor_SRCS) \
     $(ddMd_simulation_SRCS) $(ddMd_configIos_SRCS) \
     $(ddMd_potentials_SRCS) $(ddMd_integrators_SRCS) \
     $(ddMd_diagnostics_SRCS) \
-    $(ddMd_misc_SRCS)
+    $(ddMd_misc_SRCS) \
+    $(ddMd_user_SRCS) 
 
 ddMd_OBJS=$(ddMd_SRCS:.cpp=.o)
 

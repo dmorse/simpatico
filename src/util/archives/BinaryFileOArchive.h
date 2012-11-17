@@ -92,7 +92,7 @@ namespace Util
       *
       * \param array pointer to [0][0] element in 2D array
       * \param m     number of rows
-      * \param m     number of columns
+      * \param n     number of columns
       */
       template <typename T> 
       void pack(const T* array, int m, int n);

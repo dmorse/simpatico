@@ -71,7 +71,7 @@ namespace McMd
       *
       * Default implementation, reads interval and outputFileName.
       *
-      * \param ar input/loading archive
+      * \param in input parameter stream
       */
       virtual void readParameters(std::istream& in);
 

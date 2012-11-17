@@ -43,11 +43,13 @@ namespace McMd
       /// Destructor
       ~MdPairEnergyCoefficients();
 
-      /*
+      /**
       * Read parameters and initialize.
       *
       * Reads output file, pair selector and maximum number of neighbors
       * per molecule
+      *
+      * \param in input parameter stream
       */
       virtual void readParameters(std::istream& in);
  
