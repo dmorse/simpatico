@@ -11,7 +11,9 @@ The syntax for running a simulation is very similar for the mcSim, mdSim and ddS
 \code
    mdSim < param
 \endcode
-To run a single-processor MC simulation, one would instead enter "mcSim < param" instead, or "ddSim < param" for a parallel MD simulation.  During execution, a log output is sent to standard output (i.e., the screen). This log output can be directed to a file using, e.g., 
+To run a single-processor MC simulation, one would instead enter "mcSim < param" instead, or "ddSim < param" for a parallel MD simulation.
+
+During execution, a log output is sent to standard output (i.e., the screen). This log output can be directed to a file using, e.g., 
 \code
   mdSim < param > log
 \endcode
@@ -24,6 +26,8 @@ Each simulation normally requires three input files:
    <li> a configuration file </li>
 </ul>
 The parameter file is read from standard input, and contains the name of the command file.  The command file contains a sequence of commands that are interpreted and executed in sequence. Among these is normally a command that instructs the program to read a specific input configuration file.  The contents and formats of these different types of file are discussed briefly below and in more detail in several separate pages (see \ref param_page , \ref commands_page and \ref cfgfile_page).
+
+The available command line options are discussed \ref section_options "below". The most commonly used option is the "-e" (echo) option, as in "mdSim -e < param > log", which causes each line of the parameter file to be echoed to standard output as it is read. This is useful for debugging errors in the parameter file syntax, since the echoed output ends immediately before an error is detected, and is followed by a message explaining the nature of the error. 
 
 \section section_program Main Program
 
@@ -103,12 +107,11 @@ The mdSim and mcSim programs can each be invoked with any combination of three c
 </ul>
 The -e (echo) option causes each parameter in the parameter file to be echoed to standard output immediately after it is read. This is very useful for locating errors in the parameter file: The first parameter that is not echoed to standard output is usually the one that is causing trouble. 
 
-The -r (restart) option takes a required parameter "filename". This is the base name of three input files required to restart a simulation, which have filename suffixes *.prm, *.rst, and *.cmd. 
-This option is discussed in more detail \ref restart_page "here".
+The -r (restart) option takes a required parameter "filename". This is the base name of two input files required to restart a simulation, which have filename suffixes *.rst, (restart file) and *.cmd (restart command file). This option is discussed in more detail \ref restart_page "here".
 
 The -p (perturbation) option enables the definition of a free energy perturbation, for use with thermodynamic integration and replica exchange algorithms. This is generally only useful when used with a version of mcSim or mdSim that is compiled for use on multiple processors.  This option is discussed in more detail \ref multiMcMd_page "here".  
 
-The ddSim domain-decomposition MD program can be invoked with the two options:
+The ddSim domain-decomposition MD program can be invoked with the following two options:
 <ul>
   <li> -e: Activates echoing of the parameter file to standard output.</li>
   <li> -s  p: Enables simulation of p independent systems. </li>
