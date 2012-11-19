@@ -1,11 +1,9 @@
 Improve Extensibility
 ---------------------
 
-- Make factory *.cpp files configurable (make _r versions)
+- Document various ways of adding new classes to factories.
 
 - In modules, add protected methods to add subfactories.
-
-- Document various ways of adding new classes to factories.
 
 Angles and Dihedrals
 --------------------

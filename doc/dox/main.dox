@@ -44,10 +44,12 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    </ul>
  <li> \subpage extend_page  "Extending Simpatico" </li>
    <ul>
-   <li> \subpage inherit_page      "Base Classes" </li>
-   <li> \subpage factory_page      "Factory Classes" </li>
-   <li> \subpage potentials_page   "Potential Energy Classes" </li>
-   <li> \subpage module_page       "Module Classes" </li>
+   <li> \subpage inherit_page        "Base Classes" </li>
+   <li> \subpage extend_build_page  "Build System (adding new classes)" </li>
+   <li> \subpage factory_page        "Factory Classes" </li>
+   <li> \subpage potentials_page     "Potential Energy Classes" </li>
+   <li> \subpage subfactory_page     "SubFactories" </li>
+   <li> \subpage module_page         "Module Classes" </li>
    </ul>
  </li>
  <li> \subpage hoomd_page     "Hoomd-blue integration" </li>

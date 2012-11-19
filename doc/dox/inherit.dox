@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page inherit_page Polymorphic Base Classes
+/*! \page inherit_page Base Classes (Inheritance)
 
 The mcSim and mdSim programs use several base classes that can be extended by users to implement new algorithms, molecular species, and file formats. Among these are:
 <ul>

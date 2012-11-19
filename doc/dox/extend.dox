@@ -13,11 +13,13 @@ For larger projects, one can also  organize a set several related subclasses int
 <ul>
   <li> \subpage inherit_page      "Base classes" 
   </li>
-  <li> \subpage extend_build_page "Add a new class to the build system" 
+  <li> \subpage extend_build_page "Build system" 
   </li>
   <li> \subpage factory_page      "Factory classes" 
   </li>
   <li> \subpage potentials_page   "Potential energies" 
+  </li>
+  <li> \subpage subfactory_page   "Subfactories" 
   </li>
   <li> \subpage module_page       "Module classes"
   </li>

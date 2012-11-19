@@ -166,7 +166,7 @@ user to add these factories to a simulation with a single line of code.
 The creation of a module class can be convenient, but is not necessary.
 
 <ul>
- <li> \ref potentials_page   (Previous)    </li>
+ <li> \ref subfactory_page   (Previous)    </li>
  <li> \ref extend_page       (Up)    </li>
 </ul>
  
