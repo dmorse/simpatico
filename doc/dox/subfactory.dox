@@ -102,7 +102,7 @@ Here, simulation is an instance of McSimulation. The method McSimulation::system
 <ul>
  <li> \ref potentials_page  (Previous) </li>
  <li> \ref extend_page      (Up)  </li>
- <li> \ref modules_page     (Next)  </li>
+ <li> \ref module_page     (Next)  </li>
 </ul>
  
 */

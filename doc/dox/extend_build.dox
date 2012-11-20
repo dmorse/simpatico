@@ -4,10 +4,9 @@ namespace McMd
 /*! \page extend_build_page Build system (adding new classes)
 
 Simpatico is built using a system of unix makefiles. The procedure described here allows users to add new classes to the list of source files maintained by the build system, so that new classes can be compiled and linked by the same system. 
+Source and header files for user-defined classes should be placed in special user/ directories that are provided for this purpose. Any new class that is a subclass of an existing base class should be defined within the same C++ namespace as the base class. Source (*.cpp) and Header (*.h) files for classes that are defined in the McMd namespace, which can be used in the mcSim and mdSim programs, should be placed in the src/mcMd/user/ directory. Header and source files for new classes that are added to the DdMd namespace, which can be used only by ddSim, should be placed in the src/ddMd/user/ directory. Files for classes that define new interaction potential functions should be placed the directory src/inter/user, as discussed in more detail \ref potentials_page "here". 
 
-New classes written by users should be placed in special user/ directories that are provided for this purpose. Any new class that is a subclass of one of the base classes defined in McMd or DdMd should be defined within the same C++ namespace as the base class. Header (*.h) and implementation (*.cpp) files for classes that are defined in the McMd namespace, which can be used in the mcSim and mdSim programs, should be placed in the directory src/mcMd/user/. Header and implementation files for new classes that are defined in the DdMd namespace, which can be used only by ddSim, should be placed in the src/ddMd/user/ directory. Header (*.h) and implementation (*.cpp) files for classes that define new interaction potentials, which can be used in any program, should be placed the directory src/inter/user, as discussed in more detail \ref potential_page "here. All header files should use the file extension *.h and all implementation files should use extension *.cpp, and both files should be placed in the same directory.
-
-After placing the new C++ files in the appropriate directory, one must then modify a file named "sources.mk" in the same directory, by adding the class to a list in that file. The "sources.mk" file in any source directory isa makefile fragment that contains a list of all of the source files in that directory. For examples, the file file src/mcMd/user/ initially looks like this:
+After placing new files in the appropriate directory, one must modify a file named "sources.mk" in the same directory to adding the source file to the build system. The "sources.mk" file in any subdirectory of src/ is a makefile fragment that contains a list of all of the source files in that directory. The source.mk file in the user/ initially contains an empty list. For example, the file src/mcMd/user/ initially looks like this:
 \code
 mcMd_user_SRCS=\
     #$(SRC_DIR)/mcMd/user/Class1.cpp \
@@ -15,18 +14,17 @@ mcMd_user_SRCS=\
 
 mcMd_user_OBJS=$(mcMd_user_SRCS:.cpp=.o)
 \endcode
-In this file, mcMd_user_SRCS is a makefile variable that lists all of the *.cpp implementation files in this directory. The corresponding makefile variable in any "sources.mk" file is given by a mangled form of the directory containing the file, expressed relative to the src/ directory, followed by the suffix "_SRCS".  The corresponding _OBJS variable (mcMd_user_OBJS in this example) gives a list of all of the object (*.o) files that will be created by compiling these source files. The list of object files is created by simply replacing the *.cpp file extension in each source file names by a *.o extension. 
+In this file, mcMd_user_SRCS is a makefile variable that lists all of the *.cpp implementation files in this directory. In any such file, this name of this variable is constructed by appending the suffix "_SRCS" to a mangled form of the directory path, expressed relative to the src/ directory.  The corresponding _OBJS variable (mcMd_user_OBJS in this example) gives a list of all of the object (*.o) files that should be created by compiling these source files. Each name in the list of object files is created by simply replacing the *.cpp file extension a source file name by  a *.o extension. 
 
-In each of the user/ directories, the list of object files is initially empty. In the above example, the entries listing the files Class1.cpp and Class2.cpp are commented out by the '#' symbol at the beginning of each line. 
-In order to add a new class to the list of src files, simply uncomment the last entry after the definition of the _SRCS variable, by removing the `#', and replace the placeholder "Class2.cpp" by the name of the new implementation file. The backslash at the end of each line is the line continuation symbol for a makefile, and should thus appear at the end of every line of the definition of the _SRCS variable except the last line. The path must be given using the same format as the examples, using the macro $(SRC_DIR) to represent the simpatico/src/ directory. Only the implementation file should be listed, and not the corresponding header file. 
+In the above example, the entries Class1.cpp and Class2.cpp are placeholders that are commented out by the '#' symbol at the beginning of each line. To add a new class to this initially empty list, uncomment the last of these lines, by removing the `#', and replace the placeholder "Class2.cpp" by the name of the new source file. The backslash at the end of each line is the makefile line continuation symbol, and should thus appear at the end of every line of the definition of the _SRCS variable except the last line. The path to each source file must be given using the same format as that of the placeholder examples, which use the macro $(SRC_DIR) to represent the absolute path of the simpatico/src/ directory. Only the *.cpp source file should be listed, and not the corresponding header file. Header-only classes do not need to be compiled separately or linked, and thus should not be added to the build system. 
 
-To compile all of the source files in a user/ directory, without re-compiling any other files, simply type
-\end
+To compile all of the *.cpp files in a user/ directory, without re-compiling any other files, simply type
+\code
   > make all
 \endcode
-from within that directory. 
+from within that directory. This is the command used to compile a new class while it is being written and debugged. 
 
-After the path to new source file is added to the build system by the above procedure, the resulting object file will automatically be compiled and and linked when the relevant program or programs are compiled.
+After the new source file is added to the appropriate _SRCS variable, it will automatically be compiled and linked into an executable when the relevant program or programs are compiled. 
 
 Navigation: 
 <ul>
