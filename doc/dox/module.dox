@@ -3,16 +3,15 @@ namespace McMd
 
 /*! \page module_page Modules
 
-A module is a class that encapsulates several Factory classes for 
-a set of classes that were designed for a specific application 
-area. The classes McModule and MdModule are abstract base classes
-for modules designed for use with with MC and MD simulations, 
-respectively.  The developer of a new set of subclasses of, e.g., 
-Diagnostic, Species, and McMove or MdIntegrator, can create a 
-subclass of McModule and/or MdModule to organize these classes. 
-Once the developer creates a module, user of Simpatico can use
-an instance of the module class to add this entire set of classes 
-to a simulation with one function call.  
+A module is a class that encapsulates a set of classes that were designed for a 
+specific application area, along with a set of factory classes that are required
+to allow the new classes to be used within the parameter files. The classes 
+McModule and MdModule are abstract base classes for modules designed for use 
+with with mcSim and mdSim simulations, respectively.  The developer of a new set 
+of subclasses of, e.g., Diagnostic, Species, and McMove or MdIntegrator, can 
+create a subclass of McModule and/or MdModule to organize these classes. Once 
+the developer creates a module, a user of Simpatico can use an instance of the 
+module class to make this entire set of classes accessible in a simulation.
 
 The McModule class is defined as follows:
 \code
@@ -32,26 +31,11 @@ protected:
 
 }
 \endcode
-In each subclass of McModule, the implementation of the pure 
-virtual addFactories() method must add a set of factories to 
-the simulation, using the methods of the parent McSimulation 
-and system objects. Normally, instances of the new factory
-factory classes are created in the constructor of the McModule
-subclass, and destroyed in its destructor. The protected 
-methods simulation() and system() return references to the 
-parent McSimulation and McSystem, for use in the implementation
-of addFactories() by subclasses.
+In each subclass of McModule, the implementation of the pure virtual addFactories() method must add a set of factories to the simulation, using the methods of the parent McSimulation and system objects. Normally, instances of the new factory factory classes are created in the constructor of the McModule subclass, and destroyed in its destructor. The protected methods simulation() and system() return references to the parent McSimulation and McSystem, for use in the implementation of addFactories() by subclasses.
 
-The class definition for an MdSimulation is almost identical, 
-except for the replacement of McSimulation and McSystem 
-typenames by MdSimulation and MdSystem throughout.
-
-The following example is used in what follows: Imagine that 
-a user/developer writes a set of Species and McMove classes 
-that allow efficient MC simulation of star polymers. Imagine, 
-further, that he or she defines Factory classes named 
-StarSpeciesFactory and StarMcMoveFactory, and packages them 
-in a subclass of McModule named StarMcModule. 
+The class definition for an MdSimulation is almost identical, except for the replacement of McSimulation and McSystem typenames by MdSimulation and MdSystem throughout.
+  
+The following example is used in what follows: Imagine that a user/developer writes a set of Species and McMove classes that allow efficient MC simulation of star polymers. Imagine, further, that he or she defines Factory classes named StarSpeciesFactory and StarMcMoveFactory, and packages them in a subclass of McModule named StarMcModule. 
 
 \section module_use_sec Using a Module (public interface)
 Here is an example of a simple main MC program that uses an

@@ -3,16 +3,24 @@ namespace McMd
 
 /*! \page subfactory_page Sub-Factories
 
-A Factory may actually contain one or more subfactories. The creation of a subfactory is an alternative way of adding new classes to the set that will be recognized by a factory, without modifying the Factory implementation.  Each subfactory of a Factory<Base> object is another Factory<Base> object. A Factory and its subfactories (if any) form a tree that is searched in a depth first manner: The factory() method of the parent class calls the factory method of every subfactory in a attempt to match the name, before attempting to match it against its own list of names. 
+A Factory may contain one or more subfactories. Creation of subfactories is an alternative way of adding new classes to the set that can be recognized by a factory, without modifying the Factory implementation. Subfactories may be used to define Modules, whichencapsulate a set of related classes that are needed for a particular applicatin.
 
-The Factory template provides an addSubfactory() method, which allows a user to add a subfactory to a parent factory.  This method has the following signature:
+Every subfactory of a Factory<Base> object is another Factory<Base> object. A factory and its subfactories (if any) form a tree that is searched in a depth first manner: The factory() method of the parent calls the factory method of each subfactory in a attempt to match a class name, before attempting to match it against its own explicit list of names. 
+
+A subfactory may be added to a parent factory by calling the Factory<Base>::addSubfactory() method of the Factory class template. This has a signature:
 \code
    template <class Base>
    void Factory<Base>::addSubfactory(Factory<Base>& subfactory);
 \endcode
 Any number of subfactories can be added to a parent factory class.
 
-This recursive search of subfactories is implemented by the trySubfactories() method. This method calls the factory() method of each subfactory, passing the subclass name as argument. The factory() method of each subfactory then attempts to match the name. If a match is found, the factory() method creates a new object of the desired subclass, and returns a pointer to the new object. When a match is found by any subfactory, trySubfactories() immediately stops and returns the pointer to the new object. If no match is found by any subfactory, trySubfactories() returns a null pointer.
+The recursive search of subfactories is implemented by the trySubfactories() method, which has the signature
+\code
+   template <class Base>
+   void Factory<Base>::trySubfactories(std::string& classname);
+\endcode
+in which classname is the class name string. This method called by the factory() method of any factory class, and calls factory() method of every subfactory that has been added to that factory, passing the classname string as argument. The factory() method of each factory attempts to match this class name, and creates a new object of the desired subclass if it recognizes the name. If a
+a match is found by any subfactory, trySubfactories() immediately stops the search and returns the pointer to the new object. If no match is found by any subfactory, trySubfactories() returns a null pointer.
 
 As an example, imagine that you have written an NvtLangevinIntegrator subclass of MdIntegrator, because no Langevin integrator is (thus far) provided by Simpatico. You would then also define a subclass of Factory<MdIntegrator>, which we will called MyMdIntegratorFactory, with a factory() method that can recognize the name "NvtLangevinIntegrator" and instantiate an object of this class.  Here is an example of the required class definition:
 \code
