@@ -877,7 +877,7 @@ namespace McMd
           loadParameter<bool>(ar, "hasReplicaMove", hasReplicaMove_);
           if (hasReplicaMove_) {
              replicaMovePtr_ = new ReplicaMove(*this);
-             readParamComposite(in, *replicaMovePtr_);
+             loadParamComposite(ar, *replicaMovePtr_);
           }
           createdReplicaMove_ = true;
       } else {
@@ -955,7 +955,7 @@ namespace McMd
    /*
    * Return all molecules of all Species to their reservoirs.
    *
-   * Ifdef MCMD_LINK, it also clears the LinkMaster.
+   * Ifdef MCMD_LINK, also clears the LinkMaster.
    */
    void System::removeAllMolecules()
    {
@@ -998,8 +998,10 @@ namespace McMd
    Molecule& System::randomMolecule(int speciesId)
    {
       int nMol, moleculeId;
-      nMol  = nMolecule(speciesId); 
+      nMol = nMolecule(speciesId); 
       if (nMol <= 0) {
+         Log::file() << "Number of molecules in species " << speciesId
+                     << " = " << nMol << std::endl;
          UTIL_THROW("Number of molecules in species <= 0");
       }
       moleculeId = simulation().random().uniformInt(0, nMol);

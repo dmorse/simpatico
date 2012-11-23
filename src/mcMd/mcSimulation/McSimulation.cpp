@@ -148,7 +148,7 @@ namespace McMd
            break;
          #endif
          case '?':
-           std::cout << "Unknown option -" << optopt << std::endl;
+           Log::file() << "Unknown option -" << optopt << std::endl;
            UTIL_THROW("Invalid command line option");
          }
       }
@@ -173,8 +173,8 @@ namespace McMd
       }
       #endif
       if (rflag) {
-         std::cout << "Reading restart" << std::endl;
-         std::cout << "Base file name " << std::string(rarg) << std::endl;
+         Log::file() << "Reading restart" << std::endl;
+         Log::file() << "Base file name " << std::string(rarg) << std::endl;
          isRestarting_ = true; 
          readRestart(std::string(rarg));
       }

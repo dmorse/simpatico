@@ -1,9 +1,12 @@
-Improve Extensibility
----------------------
+Serialization
+-------------
 
-- Document various ways of adding new classes to factories.
+- Add save / load to remaining Cfb Mc moves (rebridge moves and ring moves).
+- Add save / load for a few diagnostics (mutable and semigrand)
+- Add save / load for perturbations and replica move
 
-- In modules, add protected methods to add subfactories.
+- Try forcing pair list rebuild upon restart output.
+
 
 Angles and Dihedrals
 --------------------
@@ -21,8 +24,8 @@ Constant Pressure MD (Jens)
 
 - Port and test NptIntegrator subclass from DdMd.
 
-Non-Orthorhombic Boundaries
----------------------------
+Non-Orthorhombic (Rigid) Boundaries
+-----------------------------------
 
 - Use new applyShift method in MSD diagnostic classes.
 
@@ -53,14 +56,12 @@ Python File Tools
   * Copy config and param files into a newly created directory structure.
   * Copy and move files to continue a run.
 
-Testing
--------
+Improve Extensibility
+---------------------
 
-- Test SET commands in command script.
+- Improve documentation of modules.
 
-- Add capacity for regression tests, using comparison to old files.
-
-- More thorough tests of dihedral potentials.
+- In modules, add protected methods to add subfactories.
 
 Interface changes
 ------------------
