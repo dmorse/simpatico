@@ -70,11 +70,76 @@ namespace McMd
          readDArray<double>(in, "parameter", parameter_, nParameters_);
       }
       #else
+      read<int>(in, "nParameters", nParameters_);
       parameter_.allocate(nParameters_);
       readDArray<double>(in, "parameter", parameter_, nParameters_);
       #endif
 
       setParameter();  // Modify parameter of associated System
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void Perturbation::loadParameters(Serializable::IArchive &ar)
+   {  
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         int size = paramCommunicator().Get_size();
+         int rank = paramCommunicator().Get_rank();
+         loadParameter<int>(ar, "mode", mode_);
+         loadParameter<int>(ar, "nParameters", nParameters_);
+         parameter_.allocate(nParameters_);
+         parameters_.allocate(size, nParameters_);
+         initialParameter_.allocate(nParameters_);
+         finalParameter_.allocate(nParameters_);
+         if (mode_ == 0) {
+           loadDMatrix<double>(ar, "parameters", parameters_, size, nParameters_);
+         } else if (mode_ == 1) {
+           loadDArray<double>(ar, "initialParameter", initialParameter_, nParameters_);
+           loadDArray<double>(ar, "finalParameter", finalParameter_, nParameters_);
+           ar & parameters_;
+         }
+         ar & parameter_;
+      } else {
+         loadParameter<int>(ar, "nParameters", nParameters_);
+         parameter_.allocate(nParameters_);
+         loadDArray<double>(ar, "parameter", parameter_, nParameters_);
+      }
+      #else
+      loadParameter<int>(ar, "nParameters", nParameters_);
+      parameter_.allocate(nParameters_);
+      loadDArray<double>(ar, "parameter", parameter_, nParameters_);
+      #endif
+
+      setParameter();  // Modify parameter of associated System
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void Perturbation::save(Serializable::OArchive &ar)
+   {
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         ar & mode_;
+         ar & nParameters_;
+         if (mode_ == 0) {
+           ar & parameters_;
+         } else if (mode_ == 1) {
+           ar & initialParameter_;
+           ar & finalParameter_;
+           ar & parameters_;
+         }
+         ar & parameter_;
+      } else {
+         ar & nParameters_;
+         ar & parameter_;
+      }
+      #else
+      ar & nParameters_;
+      ar & parameter_;
+      #endif
    }
 
    /*

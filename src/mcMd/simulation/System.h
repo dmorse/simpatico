@@ -598,6 +598,13 @@ namespace McMd
       */
       void loadPerturbation(Serializable::IArchive& ar);
 
+      /**
+      * Save the perturbation parameter block (if any)
+      *
+      * \param ar output/saving archive
+      */
+      void savePerturbation(Serializable::OArchive& ar);
+
       #ifdef UTIL_MPI
       /**
       * Read the ReplicaMove parameter block (if any)
@@ -609,9 +616,16 @@ namespace McMd
       /**
       * Read the ReplicaMove parameter block (if any)
       *
-      * \param ar input/saving archive
+      * \param ar input/loading archive
       */
       void loadReplicaMove(Serializable::IArchive& ar);
+
+      /**
+      * Save the ReplicaMove parameter block (if any)
+      *
+      * \param ar output/saving archive
+      */
+      void saveReplicaMove(Serializable::OArchive& ar);
       #endif // UTIL_MPI
       #endif // MCMD_PERTURB
 

@@ -11,7 +11,6 @@
 // namespace McMd
 #include "System.h"
 #include "Simulation.h"
-//#include "serialize.h"
 
 #include <mcMd/species/Species.h>
 #include <util/ensembles/EnergyEnsemble.h>
@@ -55,6 +54,7 @@
 #include <util/misc/FileMaster.h>
 #include <util/param/Factory.h>
 #include <util/archives/Serializable_includes.h>
+#include <util/archives/serialize.h>
 
 #include <fstream>
 #include <string>
@@ -836,16 +836,13 @@ namespace McMd
       }
    }
 
-   #if 0
    void System::loadPerturbation(Serializable::IArchive& ar) 
    {
-
-      // Create Perturbation and read object, if required.
+      // Create Perturbation and load object, if required.
       if (!hasPerturbation() and expectPerturbationParam_) {
          std::string className;
-         bool        isEnd;
          perturbationPtr_ = 
-            perturbationFactoryPtr_->loadObject(ar, *this, className, isEnd);
+            perturbationFactoryPtr_->loadObject(ar, *this, className);
          if (!perturbationPtr_) {
             std::string msg = "Unrecognized Perturbation subclass name ";
             msg += className;
@@ -854,7 +851,15 @@ namespace McMd
          createdPerturbation_ = true;
       }
    }
-   #endif
+
+   void System::savePerturbation(Serializable::OArchive& ar) 
+   {
+      if (hasPerturbation()) {
+         std::string className = perturbationPtr_->className();
+         ar << className;
+         perturbationPtr_->save(ar);
+      }
+   }
 
    #ifdef UTIL_MPI  
    void System::readReplicaMove(std::istream& in) 
@@ -882,6 +887,16 @@ namespace McMd
           createdReplicaMove_ = true;
       } else {
          hasReplicaMove_ = false;
+      }
+   }
+
+   void System::saveReplicaMove(Serializable::OArchive& ar) 
+   {
+      if (hasPerturbation()) {
+          ar & hasReplicaMove_;
+          if (hasReplicaMove_) {
+             replicaMovePtr_->save(ar);
+          }
       }
    }
    #endif // UTIL_MPI

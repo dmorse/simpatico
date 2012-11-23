@@ -109,6 +109,46 @@ namespace McMd
    }
 
    /*
+   * Load internal state from an archive.
+   */
+   void ReplicaMove::loadParameters(Serializable::IArchive &ar)
+   {
+      // Load parameters
+      loadParameter<long>(ar, "interval", interval_);
+      loadParameter<int>(ar, "nSampling", nSampling_);
+      ar & swapAttempt_;
+      ar & swapAccept_;
+
+      // Validate
+      if (interval_ <= 0) {
+         UTIL_THROW("Invalid value input for interval_");
+      }
+      if (nSampling_ <= 0) {
+         UTIL_THROW("Invalid value input for nSampling_");
+      }
+
+      // Allocate memory
+      int nAtom = system().simulation().atomCapacity();
+      ptPositionPtr_ = new Vector[nAtom];
+      myPositionPtr_ = new Vector[nAtom];
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void ReplicaMove::save(Serializable::OArchive &ar)
+   {
+      ar & interval_;
+      ar & nSampling_;
+      ar & swapAttempt_;
+      ar & swapAccept_;
+
+      int nAtom = system().simulation().atomCapacity();
+      ptPositionPtr_ = new Vector[nAtom];
+      myPositionPtr_ = new Vector[nAtom];
+   }
+   
+   /*
    * Perform replica exchange move.
    */
    bool ReplicaMove::move()
@@ -132,8 +172,7 @@ namespace McMd
       for (int i=0; i< nParameters_; i++) {
          myDerivatives[i] = system().perturbation().derivative(i);
          myParameters[i] = system().perturbation().parameter(i);
-         }
-
+      }
 
       int size = 0;
       size += memorySize(myDerivatives);
@@ -217,20 +256,18 @@ namespace McMd
       }
 
       
-      if (myId_ != 0)
-         {
+      if (myId_ != 0) {
          // partner id to receive from
          communicatorPtr_->Recv(&sendPt, 1, MPI::INT, 0, 0);
          // partner id to send to
          communicatorPtr_->Recv(&recvPt, 1, MPI::INT, 0, 1);
-         }
+      }
 
-      if (recvPt == myId_ || sendPt == myId_)
-         {
+      if (recvPt == myId_ || sendPt == myId_) {
          // no exchange necessary
          outputFile_ << sendPt << std::endl;
          return true;
-         }
+      }
 
       assert(recvPt != myId_ && sendPt != myId_);
 
@@ -292,8 +329,7 @@ namespace McMd
       partners[1] = recvPt;
       Notifier<sendRecvPair>::notifyObservers(partners);
 
-
-      // log information about exchange partner to file
+      // Log information about exchange partner to file
       outputFile_ << sendPt << std::endl;
 
       return true;
