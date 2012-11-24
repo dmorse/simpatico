@@ -44,8 +44,12 @@ namespace McMd
 
       /**
       * Constructor. 
+      *
+      * \param system parent McSystem
+      * \param size   number of systems (communicator size)
+      * \param rank   id of this system (communicator rank)
       */
-      McPairPerturbation(McSystem& system);
+      McPairPerturbation(McSystem& system, int size, int rank);
 
       /**
       * Destructor
@@ -59,6 +63,13 @@ namespace McMd
       */ 
       virtual void readParameters(std::istream& in);
  
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
       /**
       * Set pair interaction parameter epsilon(0,1) for this System.
       */
@@ -94,8 +105,8 @@ namespace McMd
       mutable Interaction* interactionPtr_;
 
       /*
-      Number of perturbation parameters associated with a System.
-      nParameters = 1 for McPairPerturbation.
+      * Number of perturbation parameters associated with a System.
+      * nParameters = 1 for McPairPerturbation.
       */
       int nParameters_;
 
@@ -107,8 +118,9 @@ namespace McMd
    * Constructor.
    */
    template < class Interaction >
-   McPairPerturbation<Interaction>::McPairPerturbation(McSystem& system)
-    : LinearPerturbation<McSystem>(system),
+   McPairPerturbation<Interaction>::McPairPerturbation(McSystem& system, 
+                                                       int size, int rank)
+    : LinearPerturbation<McSystem>(system, size, rank),
       interactionPtr_(0)
    {  setClassName("McPairPerturbation"); }
 
@@ -129,7 +141,18 @@ namespace McMd
       nParameters_ = Perturbation::getNParameters();
    }
 
+   /**
+   * Load internal state from an archive.
+   */
+   template < class Interaction >
+   void McPairPerturbation<Interaction>::loadParameters(Serializable::IArchive& ar)
+   {
+      Perturbation::loadParameters(ar); 
+      nParameters_ = Perturbation::getNParameters();
+   }
+
    /*
+   * Return the pair interaction by reference.
    */
    template < class Interaction >
    Interaction& McPairPerturbation<Interaction>::interaction() const

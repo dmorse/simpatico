@@ -808,21 +808,21 @@ namespace McMd
    */
    void System::setExpectPerturbation()
    {
-      // create perturbation factory
-      perturbationFactoryPtr_ = newDefaultPerturbationFactory();
-      createdPerturbationFactory_ = true;
-
+      // Precondition
       if (hasPerturbation()) {
          UTIL_THROW("A Perturbation is already set");
       }
+
+      // Create perturbation factory
+      perturbationFactoryPtr_ = newDefaultPerturbationFactory();
+      createdPerturbationFactory_ = true;
+
       expectPerturbationParam_ = true;
    }
 
    void System::readPerturbation(std::istream& in) 
    {
-
-      // Create Perturbation and read object, if required.
-      if (!hasPerturbation() and expectPerturbationParam_) {
+      if (!hasPerturbation() && expectPerturbationParam_) {
          std::string className;
          bool        isEnd;
          perturbationPtr_ = 
@@ -836,11 +836,20 @@ namespace McMd
       }
    }
 
+   /*
+   * Load Perturbation, if any, or do nothing. 
+   */
    void System::loadPerturbation(Serializable::IArchive& ar) 
    {
-      // Create Perturbation and load object, if required.
-      if (!hasPerturbation() and expectPerturbationParam_) {
-         std::string className;
+      if (hasParamCommunicator()) {
+         UTIL_THROW("Sysstem has paramCommunicator in loadPerturbation");
+      }
+
+      bool savedPerturbation;
+      ar >> savedPerturbation;
+      if (savedPerturbation) {
+         setExpectPerturbation();
+         std::string className = "unknown";
          perturbationPtr_ = 
             perturbationFactoryPtr_->loadObject(ar, *this, className);
          if (!perturbationPtr_) {
@@ -852,9 +861,14 @@ namespace McMd
       }
    }
 
+   /*
+   * Save Perturbation, if any, or do nothing. 
+   */
    void System::savePerturbation(Serializable::OArchive& ar) 
    {
-      if (hasPerturbation()) {
+      bool savingPerturbation = hasPerturbation();
+      ar << savingPerturbation;  
+      if (savingPerturbation) {
          std::string className = perturbationPtr_->className();
          ar << className;
          perturbationPtr_->save(ar);
@@ -862,6 +876,9 @@ namespace McMd
    }
 
    #ifdef UTIL_MPI  
+   /*
+   * Read ReplicaMove, if any, or do nothing. 
+   */
    void System::readReplicaMove(std::istream& in) 
    {
       if (hasPerturbation()) {
@@ -876,6 +893,9 @@ namespace McMd
       }
    }
 
+   /*
+   * Load ReplicaMove, if any, or do nothing. 
+   */
    void System::loadReplicaMove(Serializable::IArchive& ar) 
    {
       if (hasPerturbation()) {
@@ -890,6 +910,9 @@ namespace McMd
       }
    }
 
+   /*
+   * Save ReplicaMove, if any, or do nothing. 
+   */
    void System::saveReplicaMove(Serializable::OArchive& ar) 
    {
       if (hasPerturbation()) {

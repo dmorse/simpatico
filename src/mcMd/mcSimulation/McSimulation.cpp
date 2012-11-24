@@ -238,9 +238,12 @@ namespace McMd
       if (isInitialized_) {
          UTIL_THROW("Error: Called readParam when already initialized");
       }
+      if (hasParamCommunicator()) {
+         UTIL_THROW("Error: Has a param communicator in loadParameters");
+      }
+
       Simulation::loadParameters(ar);
       loadParamComposite(ar, system());
-      ar >> random();
       loadParamComposite(ar, *mcMoveManagerPtr_);
       loadParamComposite(ar, diagnosticManager());
       system().loadConfig(ar);
@@ -256,7 +259,6 @@ namespace McMd
    {
       Simulation::save(ar);
       system().saveParameters(ar);
-      ar << random();
       mcMoveManagerPtr_->save(ar);
       diagnosticManager().save(ar);
       system().saveConfig(ar);

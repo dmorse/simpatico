@@ -45,8 +45,11 @@ namespace McMd
 
       /**
       * Constructor.
+      *  
+      * \param size number of parameter values (e.g., communicator size)
+      * \param rank index of this system (e.g., communicator rank)
       */
-      Perturbation();
+      Perturbation(int size, int rank);
 
       /**
       * Destructor.
@@ -92,10 +95,8 @@ namespace McMd
       /// \name Accessors
       //@{
      
-      #ifdef UTIL_MPI 
       /**
-      * Gets the perturbation parameter p[i] of index i associated with the 
-      * replica system of index id.
+      * Get parameter i of system id.
       *
       * \param i index of perturbation parameter
       * \param id id of system in a mpi simulation
@@ -103,17 +104,16 @@ namespace McMd
       * Returns the value of the perturbation parameter p[i].
       */
       double parameter(int i, int id);
-      #endif    
  
       /**
-      * Gets the number of perturbation parameters asssociated with a system.
+      * Gets the number of parameters per system.
       *
       * Returns the number of perturbation parameters for this system.
       */ 
       int getNParameters() const;
 
       /**
-      * Gets the perturbation parameter p[i] of index i associated with this system.
+      * Get perturbation parameter p[i] of index i for this system.
       *
       * Returns the value of the perturbation parameter p[i].
       */
@@ -147,13 +147,23 @@ namespace McMd
    protected:
 
       /**
+      * Number of systems (e.g., communicator size)  
+      */
+      int size_;
+
+      /**
+      * Index for this system (e.g., communicator size)  
+      */
+      int rank_;
+
+      /**
       * Number of perturbation parameters associated with a System.
       */
       int nParameters_;
 
       /**
       * mode 0: parameters of all replica systems are specified.
-      * mode 1: parameters of only the first and last replica systems are specified.
+      * mode 1: parameters of first and last replica systems are specified.
       */
       int mode_;
 
@@ -175,13 +185,11 @@ namespace McMd
       */
       DArray<double> finalParameter_;
 
-      #if UTIL_MPI
       /**
       * Value of the perturbation parameter for all the replica Systems.
       * parameters is a DMatrix of dimensions nProcsxnParameters.
       */
       DMatrix<double> parameters_;
-      #endif
 
       /**
       * Sets the perturbation parameter in the associated system.
