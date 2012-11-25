@@ -4,7 +4,7 @@ Simpatico is distributed only as source code, and must be compiled by the user. 
 
 The single-processor programs mcSim and mdSim have no external dependencies.  The ddSim program requires a Message Passing Interface (MPI) library to run on multiple processors. An MPI library is also required to compile multiprocessor versions of mcSim and mdSim, for parallel simulations in which different systems run on different processors. 
 
-The build system uses unix makefiles. The code was developed using gnu make (gmake), which is a standard component of in any unix-like environment (linux or Mac OS). We assume that the makefile system would also work using Cygwin on Windows operating system, but have never tried this.
+The build system uses unix makefiles. The code was developed using gnu make (gmake), which is a standard component of in any unix-like environment (linux or Mac OS). We assume that the makefile system would also work using Cygwin in a Windows operating system, but have never tried this.
 
 \section getcode_section Getting the Source Code
 
@@ -31,9 +31,9 @@ Before the first time you compile any of the programs, you must run a configure 
 
 The configure script must be entered from within the simpatico root directory. The script creates several configurations files that are required for compilation.  The contents of the resulting configuration files are discussed below (\ref compile_config_section).  The configure script only needs to be invoked once, before the first time you compile any source code.
 
-After running the configure script, inspect the file src/compiler.mk makefile fragment, which is created by the configure script. The value of the variable ROOT_DIR should have been set to the absolute path to the simpatico/ root directory on your machine. 
+After running the configure script, inspect the file src/compiler.mk makefile fragment, which is created by the configure script. The value of the variable ROOT_DIR should now be set to the absolute path to the simpatico/ root directory on your machine. 
 
-The COMPILER variable defined in src/compiler.mk chooses from among several different compilers. By default, COMPILER is set to "gcc", which denotes the gnu C++ compiler.  To choose another compiler from among those listed (e.g., the intel compiler), comment out the line defining COMPILER=gcc and uncomment the line that uses the preferred compiler. Compiler names such as gcc_openmpi and intel_mpicxx that contain the string "mpi" denote compiler settings that contain instructions regarding the path to mpi header files and that link executables to an MPI library. These are needed to compile ddSim or the multi-processor versions of mcSim and mdSim.
+The value of the COMPILER variable defined in src/compiler.mk is a label for one of several different compilers. By default, COMPILER is set to "gcc", which denotes the gnu C++ compiler.  To choose another compiler from among those listed (e.g., the intel compiler), comment out the line defining COMPILER=gcc and uncomment the line that uses the preferred compiler. (Comment lines in makefiles begin with a hash, "#") Compiler names such as gcc_openmpi and intel_mpicxx that contain the string "mpi" denote compiler settings that contain instructions regarding the path to mpi header files and that link executables to an MPI library. One of these should be chosen to compile ddSim and the multi-processor versions of mcSim and mdSim, but should not be used for the single-processor version.
 
 \section compile_mcMd_section Compiling mcSim and mdSim
 
@@ -55,8 +55,7 @@ To remove all of the object files, libraries, and executable files created by "m
 
 \section compile_ddMd_section Compiling ddSim
 
-To compile the multi-processor ddMd program, one must first select a compiler that links to an MPI library. To begin, choose one of the values for the 
-COMPILER variable that contains the string "mpi" somewhere in the name. These denote combinations of compilers and options that link to an MPI library,
+To compile the multi-processor ddMd program, one must first select a compiler that links to an MPI library. To begin, choose one of the values for the COMPILER variable that contains the string "mpi" somewhere in the name. These denote combinations of compilers and options that link to an MPI library,
 using paths that were appropriate on some of the machines used for development.
   
 The settings for gcc_mpicxx and intel_mpicxx in the default compiler.mk file use a value "mpicxx" for the variable CXX, which specifies the compiler executable.  This is the name of a script that is used on some of the machines on which this code was developed. When this script is available, it invokes an mpi-enabled compiler that is selected by loading an appropriate software module. 
@@ -71,33 +70,35 @@ After selecting an appropriate value for COMPILER variable and making any requir
 
 If successful, this procedure will create an executable named ddMd in the simpatico bin/ directory. To do so, it will recompile all of the code in the src/util/ and src/inter/ directories, and compile all of the code in the src/ddMd/ directory. As part of this process, it will create new MPI-enabled versions of the library containing objects from the src/util/ directory, named lib/libutil_m.a (in which the suffix "_m" stands for mpi), and create a new library lib/libddMd.a for the classes in the ddMd/ directory. 
 
-The name of the parallel MD executable (ddSim by default) is defined by the variable DDSIM_EXE defined in src/ddMd/defines.mk. The executable is placed in the BIN_DIR directory.  To remove all object files libraries and executable created by the "make ddMd' command, enter "make clean-ddMd".
+The default name of the parallel MD executable is ddSim. The executable name is defined by the variable DDSIM_EXE, which is defined in src/ddMd/defines.mk. The executable is placed in the BIN_DIR directory.  To remove all object files libraries and executable created by the "make ddMd' command, enter "make clean-ddMd".
 
 \section compile_multi_section Compiling mcSim and mdSim (multi-processor versions)
-
-To compile multi-processor versions of mcSim and mdSim, select a compiler block that links to an MPI library, as described above for ddSim. Then:
-
-  - cd the src/ directory.
-
-  - Enter "make mcMd"
-
-This should re-compile all of the classes in the src/mcMd directory, and create an mpi-enabled library named lib/libutil_m.a. If you have not previously compiled ddMd, this should recompile all of the code in the src/util and src/inter directories, and create MPI-enabled versions of the libraries, which are also distinguished from the serial versions by the addition of a suffix _m. 
-
-The multi-processor versions of mcSim and mdSim can be used to run:
+Multi-processor versions of mcSim and mdSim can be used to run:
 
   - Multiple completely independent simulations as an MPI job, with separate parameter files
 
   - Multiple simulations with a sequence of parameter values from a single param file, using the 
     perturbation theory feature.
 
-  - Replica exchange simulations.
+  - Replica exchange simulations, which also rely on the perturbation theory feature.
 
-Multi-processor mcSim and mdSim simulations are discussed in more detail \ref multiMcMd_page "here". 
+Multi-processor mcSim and mdSim simulations and the perturbation theory feature are discussed in more detail \ref multiMcMd_page "here". 
+ 
+To compile multi-processor versions of mcSim and mdSim:
 
+  - Select a compiler block that links to an MPI library by changing the value of the COMPILER variable in the src/compiler.mk file, as described above for ddSim.
+
+  - Enable the perturbation theory feature, if desired, by uncommenting the variable MCMD_PERTURB in the file src/mcMd/defines.mk.
+
+  - cd the src/ directory.
+
+  - Enter "make mcMd"
+
+This should re-compile all of the classes in the src/mcMd directory, and create an mpi-enabled library named lib/libmcMd_m.a. If you have not previously compiled ddMd, this should recompile all of the code in the src/util and src/inter directories, and create MPI-enabled versions of the libraries, named lib/libutil_m.a and lib/libinter_m.a., which are also distinguished from the serial versions by the addition of a suffix _m.
+ 
 \section compile_config_section Configuration Files
 
-After the .configure script is run, the src/ directory and its subdirectories contains several makefile fragments
-that users may need to edit in order to change compiler options or to enable or disable specific features of the code. These user configuration files are:
+After the .configure script is run, the src/ directory and its subdirectories contains several makefile fragments that users may need to edit in order to change compiler options or to enable or disable specific features of the code. These configurable makefiles are:
  
     - src/compiler.mk
 
@@ -117,7 +118,7 @@ The makefile fragments src/util/defines.mk, src/inter/defines.mk, mcMd/defines.m
 
 Several C++ files are also created by the configure script, as can be seen by inspecting the source code of this shell script. The files that are creatd by the configure script are all files that users may need to modify in order to customize or extend some aspect of the simulation. Each of the files is created by copying a default version whose name is obtained by adding a suffix _r to the name of the user version.  
 
-IMPORTANT: Because the configure script actually copies some C++ files, users be careful to NOT call the ./configure script again after modifying any of these files. Doing so will cause any changes to these files to be overwritten by the default file version. It should only be necessary to call the configure script once, when the package is first cloned or downloaded. 
+IMPORTANT: Because the configure script actually copies some C++ files that users may subsequently modify, users should NOT call the ./configure script again after modifying any of these files. Doing so would cause their changes to these files to be overwritten by the default file version. Only call the configure script once, when the package is first cloned or downloaded.
 
 \section dependency_doc_section Dependency Generation 
 
@@ -153,9 +154,9 @@ The html documentation you are reading was generated using the <a href=http://ww
 \code
 > make html 
 \endcode
-The resulting html documentation is deposited in the doc/html/ directory. To read the documentation, open the file index.html in a browser to open the main page. One may also open any other html file in this directory and follow the link to the main page. 
+from within the doc/ directory. The resulting html documentation is deposited in the doc/html/ directory. To read the main page of the documentation, open the file doc/html/index.html in a browser. One may also open any other html file in this directory and follow the link to the main page. 
 
-The text of the page you are reading now, along with others that are not extracted from C++ files, is in a set of files in the doc/dox directory. These are written in plain text, and so can also be read with a text editor.  Documentation for each C++ class is instead extracted from documentation blocks in the class header file. 
+The text of the page you are reading now, along with others that are not extracted from C++ files, is in a set of files in the doc/dox directory. These are written in plain text, and can also be read with any text editor.  Documentation for each C++ class is extracted by doxygen from documentation blocks in the class header file. 
 
 Entering 
 \code
