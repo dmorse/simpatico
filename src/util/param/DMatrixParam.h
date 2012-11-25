@@ -154,6 +154,9 @@ namespace Util
    {
       if (isParamIoProcessor()) {
          ar >> *matrixPtr_;
+         if (ParamComponent::echo()) {
+            writeParam(Log::file());
+         }
       }
       #ifdef UTIL_MPI
       if (hasParamCommunicator()) {

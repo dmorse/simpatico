@@ -363,6 +363,7 @@ namespace Util
       ar >> size;
       for (int i = 0; i < size; ++i) {
          addBlank();
+         name = "unknown";
          typePtr = factoryPtr_->loadObject(ar, *this, name);
          if (typePtr) {
             append(*typePtr, name);

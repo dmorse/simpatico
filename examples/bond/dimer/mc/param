@@ -52,7 +52,7 @@ McSimulation{
 
     HybridMdMove{
       probability           0.002000000000e+00
-      nStep                                100
+      nStep                                200
       MdSystem{
         MdPairPotential{
           maxBoundary             cubic  10.5 
@@ -63,7 +63,7 @@ McSimulation{
           }
         }
         NveVvIntegrator{
-          dt                    1.000000000000e-02
+          dt                    2.000000000000e-02
         }
       }
     }

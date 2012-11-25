@@ -52,6 +52,8 @@ McSimulation{
       type                  rigid
     }
     McPairPerturbation{
+      mode                  0
+      nParameters           1
       parameters            1.000000000000e+00
                             1.150000000000e+00
                             1.300000000000e+00
@@ -60,26 +62,14 @@ McSimulation{
   }
   McMoveManager{
 
-    HybridMdMove{
-      probability           0.010000000000e+00
-      nStep                                 20
-      MdSystem{
-        MdPairPotential{
-          maxBoundary             cubic  10.5 
-          PairList{
-            atomCapacity                        1000
-            pairCapacity                       10000
-            skin                  3.000000000000e-01
-          }
-        }
-        NveVvIntegrator{
-          dt                    5.000000000000e-03
-        }
-      }
+    AtomDisplaceMove{
+      probability           0.800000000000e+00
+      speciesId                              0
+      delta                               0.04
     }
 
     CfbReptationMove{
-      probability           0.990000000000e+00
+      probability           0.200000000000e+00
       speciesId                              0
       nTrial                                20
       hasAutoCorr 0
@@ -91,6 +81,11 @@ McSimulation{
 
     LogProgress{
       interval                         20000
+    }
+
+    McWriteRestart{
+      interval                         20000
+      outputFileName                 restart
     }
 
     McEnergyAverage{
@@ -124,6 +119,7 @@ McSimulation{
       interval                         10000
       outputFileName                 perturb
       nSamplePerBlock                      0
+      parameterIndex                       0
     }
    
     RadiusGyration{
@@ -136,10 +132,8 @@ McSimulation{
     RDF{
       interval                         10000
       outputFileName                     RDF
-      RadialDistribution{
-         max                             5.0
-         nBin                            500
-      }
+      max                                5.0
+      nBin                               500
       selector                         inter   -1    -1
     }
 
@@ -147,11 +141,9 @@ McSimulation{
       interval                         10000
       outputFileName          BondLengthDist
       speciesId                            0
-      Distribution{
-         min                             0.0
-         max                             2.0
-         nBin                            400
-      }
+      min                                0.0
+      max                                2.0
+      nBin                               400
     }
 
     AtomMSD{
@@ -190,10 +182,22 @@ FINISH
       kappa                 1.000000000000e+00
     }
 
-    AtomDisplaceMove{
-      probability           0.908000000000e+00
-      speciesId                              0
-      delta                               0.04
+    HybridMdMove{
+      probability           0.010000000000e+00
+      nStep                                 20
+      MdSystem{
+        MdPairPotential{
+          maxBoundary             cubic  10.5 
+          PairList{
+            atomCapacity                        1000
+            pairCapacity                       10000
+            skin                  3.000000000000e-01
+          }
+        }
+        NveVvIntegrator{
+          dt                    5.000000000000e-03
+        }
+      }
     }
 
     CfbEndMove{

@@ -182,14 +182,14 @@ namespace Util
       } else {
          if (!commandFilePtr_) {
 
-            // Construct filename "n/param" for processor n
+            // Construct command file name 
             std::string filename(rootPrefix_);
-            if (hasDirectoryId_) {
+            if (hasDirectoryId_ && !isSetParamFileStdIn_) {
                filename += directoryIdPrefix_;
             }
             filename += commandFileName_;
 
-            // Open parameter input file
+            // Open command file
             std::ifstream* filePtr = new std::ifstream();
             filePtr->open(filename.c_str());
             if (filePtr->fail()) {

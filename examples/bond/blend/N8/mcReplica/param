@@ -53,6 +53,8 @@ McSimulation{
       type                  rigid
     }
     McPairPerturbation{
+      mode                  0
+      nParameters           1
       parameters            1.000000000000e+00
                             1.150000000000e+00
                             1.300000000000e+00
@@ -60,6 +62,7 @@ McSimulation{
     hasReplicaMove                             1
     ReplicaMove{
       interval                             2000
+      nSampling                             100
     }
   }
   McMoveManager{
@@ -128,6 +131,7 @@ McSimulation{
       interval                          1000
       outputFileName                 perturb
       nSamplePerBlock                      0
+      parameterIndex                       0
     }
    
     RadiusGyration{
@@ -138,12 +142,10 @@ McSimulation{
     }
 
     RDF{
-      interval                         1000
+      interval                          1000
       outputFileName                     RDF
-      RadialDistribution{
-         max                             5.0
-         nBin                            500
-      }
+      max                                5.0
+      nBin                               500
       selector                         inter   -1    -1
     }
 
@@ -151,11 +153,9 @@ McSimulation{
       interval                          1000
       outputFileName          BondLengthDist
       speciesId                            0
-      Distribution{
-         min                             0.0
-         max                             2.0
-         nBin                            400
-      }
+      min                                0.0
+      max                                2.0
+      nBin                               400
     }
 
     AtomMSD{
