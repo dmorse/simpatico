@@ -84,7 +84,7 @@ namespace Util
       /**
       * Set an MPI communicator for parameter IO.
       */
-      void setParamCommunicator(MPI::Intracomm& communicator);
+      virtual void setParamCommunicator(MPI::Intracomm& communicator);
       #endif
 
       /**

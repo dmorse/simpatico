@@ -169,7 +169,7 @@ namespace McMd
    * Set an MPI job to read a single parameter file, from std::cin.
    */
    void Simulation::setParamCommunicator()
-   {  Simulation::setParamCommunicator(*communicatorPtr_); }
+   {  Simulation::setParamCommunicator(communicator()); }
    #endif
 
    /*

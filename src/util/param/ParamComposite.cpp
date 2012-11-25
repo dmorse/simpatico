@@ -79,6 +79,21 @@ namespace Util
       }
    }
 
+   #ifdef UTIL_MPI
+   /*
+   * Set an MPI communicator for this ParamComposite and all descendants.
+   */
+   void ParamComposite::setParamCommunicator(MPI::Intracomm& communicator)
+   {
+      ParamComponent::setParamCommunicator(communicator);
+      if (size_ > 0) {
+         for (int i=0; i < size_; ++i) {
+            list_[i]->setParamCommunicator(communicator);
+         }
+      }
+   }
+   #endif
+
    /*
    * Read parameter block, including begin and end.
    */

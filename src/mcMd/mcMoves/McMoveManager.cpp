@@ -45,7 +45,7 @@ namespace McMd
    {
       Manager<McMove>::readParam(in);
 
-      // Allocate, store and normalize probabilities
+      // Allocate and store probabilities
       probabilities_.allocate(size());
       double  totalProbability = 0.0;
       int     iMove;
@@ -53,6 +53,8 @@ namespace McMd
          probabilities_[iMove] = (*this)[iMove].probability();
          totalProbability += probabilities_[iMove];
       }
+
+      // Allocate and store and normalize probabilities
       for (iMove = 0; iMove < size(); ++iMove) {
          probabilities_[iMove] = probabilities_[iMove]/totalProbability;
          (*this)[iMove].setProbability(probabilities_[iMove]);

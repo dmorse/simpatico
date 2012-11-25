@@ -44,8 +44,10 @@ namespace McMd
       * object with the SystemType object system.
       *
       * \param system parent system.
+      * \param size   number of systems (communicator size)
+      * \param rank   id of this system (communicator rank)
       */
-      LinearPerturbation(SystemType& system);
+      LinearPerturbation(SystemType& system, int size, int rank);
 
       /**
       * Destructor.
@@ -75,8 +77,9 @@ namespace McMd
    * Constructor. 
    */
    template <class SystemType>
-   LinearPerturbation<SystemType>::LinearPerturbation(SystemType& system)
-    : Perturbation(),
+   LinearPerturbation<SystemType>
+        ::LinearPerturbation(SystemType& system, int size, int rank)
+    : Perturbation(size, rank),
       systemPtr_(&system)
    {}
 
