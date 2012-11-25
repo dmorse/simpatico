@@ -157,26 +157,37 @@ namespace McMd
       if (eflag) {
          Util::ParamComponent::setEcho(true);
       }
+
       #ifdef MCMD_PERTURB
       // Set to use a perturbation.
       if (pflag) {
+
+         if (rflag) {
+            std::string msg("Error: Options -r and option -p are incompatible. Use -r alone. ");
+            msg += "Existence of a perturbation is specified in restart file.";
+            UTIL_THROW(msg.c_str());
+         }
    
          // Set to expect perturbation in the param file.
          system().setExpectPerturbation();
    
          #ifdef UTIL_MPI
-         Util::Log::file() << "Set to read parameters from a single file" 
+         Util::Log::file() << "Set to use single parameter and command files" 
                            << std::endl;
          setParamCommunicator();
          #endif
    
       }
       #endif
+
+      // Read a restart file.
       if (rflag) {
-         Log::file() << "Reading restart" << std::endl;
-         Log::file() << "Base file name " << std::string(rarg) << std::endl;
+         Log::file() << "Begin reading restart, base file name " 
+                     << std::string(rarg) << std::endl;
          isRestarting_ = true; 
          readRestart(std::string(rarg));
+         Util::Log::file() << std::endl;
+
       }
    }
 
@@ -283,6 +294,15 @@ namespace McMd
       // Set command (*.cmd) file
       std::string commandFileName = filename + ".cmd";
       fileMaster().setCommandFileName(commandFileName);
+
+      #if UTIL_MPI
+      if (system().hasPerturbation()) {
+         // Read one command file, after reading multiple restart files.
+         Util::Log::file() << "Set to use a single command file" 
+                           << std::endl;
+         setParamCommunicator();
+      }
+      #endif
 
       isInitialized_ = true;
    }

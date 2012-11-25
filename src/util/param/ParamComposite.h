@@ -210,6 +210,15 @@ namespace Util
       */
       void resetParam();
    
+      #ifdef UTIL_MPI
+      /**
+      * Set an MPI communicator for parameter IO.
+      *
+      * This method recursively sets the ParamCommunicator for all children.
+      */
+      virtual void setParamCommunicator(MPI::Intracomm& communicator);
+      #endif
+
       //@}
       /// \name read* methods
       /// \brief Each of these methods invokes an associated add* method to 
