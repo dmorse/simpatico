@@ -43,22 +43,34 @@ McSimulation{
     }
   }
   McMoveManager{
-   
-    CfbEndMove{
-      probability           0.125000000000e+00
-      speciesId                              0
-      nRegrow                                1
-      nTrial                                20
+
+    HybridMdMove{
+      probability            0.05000000000e+00
+      nStep                                 20
+      MdSystem{
+        MdPairPotential{
+          maxBoundary              cubic   10.5000
+          PairList{
+            atomCapacity                        1000
+            pairCapacity                       10000
+            skin                  3.000000000000e-01
+          }
+        }
+        NveVvIntegrator{
+          dt                    5.000000000000e-03
+        }
+      }
     }
 
-    CfbRebridgeMove{
-      probability             0.8750000000e+00
+    CfbDoubleRebridgeMove{
+      probability           0.950000000000e+00
       speciesId                              0
       nRegrow                                1
+      bridgeLength                         2.0
       nTrial                                10
       length21                             1.0
       length10                             1.0
-      kappa10                            400.0
+      kappa10                            800.0
     }
 
   }
@@ -68,34 +80,39 @@ McSimulation{
     LogProgress{
       interval                         10000
     }
-    
+
+    McWriteRestart{
+      interval                         10000
+      outputFileName                 restart
+    }
+
     McEnergyOutput{
-      interval                          1000
+      interval                         10000
       outputFileName                  energy
     }
 
     McEnergyAverage{
-      interval                          1000
+      interval                          5000
       outputFileName               energyAve
       nSamplePerBlock                     10
     }
 
     McPairEnergyAverage{
-      interval                          1000
+      interval                          5000
       outputFileName              pairEnergy
       nSamplePerBlock                     10
       selector                           all  -1  -1
     }
    
     RadiusGyration{
-      interval                          1000
+      interval                          5000
       outputFileName          RadiusGyration
       nSamplePerBlock                     10
       speciesId                            0
     }
 
     RDF{
-      interval                          1000
+      interval                         40000
       outputFileName                     RDF
       max                                5.0
       nBin                               500
@@ -103,7 +120,7 @@ McSimulation{
     }
 
     BondLengthDist{
-      interval                          1000
+      interval                         10000
       outputFileName          BondLengthDist
       speciesId                            0
       min                                0.0
@@ -112,15 +129,15 @@ McSimulation{
     }
 
     AtomMSD{
-      interval                         1000
+      interval                          5000
       outputFileName                 AtomMSD
       speciesId                            0
       atomId                               5
-      capacity                           400
+      capacity                          400
     }
 
     IntraPairAutoCorr{
-      interval                         1000
+      interval                         5000
       outputFileName      IntraPairAutoCorr
       speciesId                           0
       atom1Id                             0
@@ -132,9 +149,10 @@ McSimulation{
 }
 WRITE_PARAM      param
 READ_CONFIG      config
-SIMULATE         490000000
+SIMULATE         80000000
 WRITE_CONFIG     config
 FINISH
+
 
     HarmonicTether{
       nTetherType                            1
