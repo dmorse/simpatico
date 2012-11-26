@@ -2,5 +2,3 @@ compiler.mk
 *.o
 edit.py
 temp*
-/modules/hoomd/defines.mk
-/modules/hoomd/makefile
