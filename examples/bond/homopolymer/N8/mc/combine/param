@@ -45,7 +45,7 @@ McSimulation{
   McMoveManager{
 
     AtomDisplaceMove{
-      probability           0.799000000000e+00
+      probability           0.779000000000e+00
       speciesId                              0
       delta                               0.04
     }
@@ -80,6 +80,27 @@ McSimulation{
           dt                    7.000000000000e-03
         }
       }
+    }
+
+    CfbRebridgeMove{
+      probability           0.010000000000e+00
+      speciesId                              0
+      nRegrow                                1
+      nTrial                                10
+      length21                             1.0
+      length10                             1.0
+      kappa10                            400.0
+    }
+
+    CfbDoubleRebridgeMove{
+      probability           0.010000000000e+00
+      speciesId                              0
+      nRegrow                                1
+      bridgeLength                         2.0
+      nTrial                                10
+      length21                             1.0
+      length10                             1.0
+      kappa10                            800.0
     }
 
   }
@@ -146,27 +167,6 @@ McSimulation{
   }
 }
 
-
-    CfbRebridgeMove{
-      speciesId                              0
-      nRegrow                                1
-      nTrial                                10
-      length21                             1.0
-      length10                             1.0
-      kappa10                            400.0
-    }
-    probability             0.010000000000e+00
-
-    CfbDoubleRebridgeMove{
-      speciesId                              0
-      nRegrow                                1
-      bridgeLength                         2.0
-      nTrial                                10
-      length21                             1.0
-      length10                             1.0
-      kappa10                            800.0
-    }
-    probability             0.010000000000e+00
 
     DumpConfig{
       interval                         10000
