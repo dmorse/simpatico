@@ -70,7 +70,7 @@ namespace McMd
       int speciesId_;
 
       /// Array of atom type indices
-      DArray<int>    atomTypeIds_;
+      DArray<int> atomTypeIds_;
  
       /// Array of atomic positions (temporary).
       DArray<Vector> positions_;

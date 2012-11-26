@@ -249,9 +249,11 @@ namespace McMd
       if (isInitialized_) {
          UTIL_THROW("Error: Called readParam when already initialized");
       }
+      #if UTIL_MPI
       if (hasParamCommunicator()) {
          UTIL_THROW("Error: Has a param communicator in loadParameters");
       }
+      #endif
 
       Simulation::loadParameters(ar);
       loadParamComposite(ar, system());

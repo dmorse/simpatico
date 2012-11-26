@@ -1,9 +1,9 @@
 Serialization
 -------------
 
-- Add save / load to remaining Cfb Mc moves (rebridge moves and ring moves).
+- Add save / load to remaining Mc moves (ring moves and semigrand).
 - Add save / load for a few diagnostics (mutable and semigrand)
-- Add save / load for perturbations and replica move
+- Test save / load for replica move
 
 - Try forcing pair list rebuild upon restart output.
 

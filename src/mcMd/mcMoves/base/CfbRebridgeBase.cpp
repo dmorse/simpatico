@@ -40,7 +40,7 @@ namespace McMd
    {} 
    
    /* 
-   * 
+   * Read parameters from file.
    */
    void CfbRebridgeBase::readParameters(std::istream& in) 
    {
@@ -54,6 +54,33 @@ namespace McMd
       read<double>(in, "length21", length21_);
       read<double>(in, "length10", length10_);
       read<double>(in, "kappa10", kappa10_);
+   }
+
+   /* 
+   * Load state from archive.
+   */
+   void CfbRebridgeBase::loadParameters(Serializable::IArchive& ar) 
+   {
+      loadParameter<int>(ar, "nTrial", nTrial_);
+      loadParameter<double>(ar, "length21", length21_);
+      loadParameter<double>(ar, "length10", length10_);
+      loadParameter<double>(ar, "kappa10", kappa10_);
+
+      // Validate
+      if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
+         UTIL_THROW("Invalid value input for nTrial");
+      }
+   }
+
+   /* 
+   * Save state to archive.
+   */
+   void CfbRebridgeBase::save(Serializable::OArchive& ar) 
+   {
+      ar & nTrial_;
+      ar & length21_;
+      ar & length10_;
+      ar & kappa10_;
    }
 
    /* 
@@ -101,7 +128,7 @@ namespace McMd
       computeNormalization(angTable[MaxBin_-1], kappaTable[MaxBin_-1], 
                            normalTable[MaxBin_-1]);
    }
-   
+
    /* 
    * Configuration bias algorithm for deleting the last particle of an interior
    * bridge. 

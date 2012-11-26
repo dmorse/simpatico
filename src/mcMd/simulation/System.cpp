@@ -649,7 +649,6 @@ namespace McMd
    {
       ar << boundary();
 
-      Species* speciesPtr;
       int nSpecies = simulation().nSpecies();
       System::MoleculeIterator molIter;
       Molecule::AtomIterator   atomIter;
@@ -659,7 +658,6 @@ namespace McMd
          ar << iSpecies;
          nMoleculeOut = nMolecule(iSpecies);
          ar << nMoleculeOut;
-         speciesPtr = &simulation().species(iSpecies);
          begin(iSpecies, molIter); 
          for ( ; molIter.notEnd(); ++molIter) {
             molIter->begin(atomIter); 
