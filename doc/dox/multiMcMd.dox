@@ -14,7 +14,7 @@ a way to submit multiple independent simulations as an MPI job.
 \section parallel_compile_sec Compilation
 
 Instructions for compiling the multi-processor versions of mcSim 
-and mdSim are given \ref compile_page elsewhere. Briefly, one must
+and mdSim are given \ref compile_page "elsewhere". Briefly, one must
 choose compiler settings that link to an MPI library, by choosing
 an appropriate value for the COMPILER variable in the file 
 src/compiler.mk. 
@@ -330,6 +330,11 @@ McSimulation{
 
     LogProgress{
       interval                         20000
+    }
+
+    McWriteRestart{
+      interval                          1000
+      outputFileName                 restart
     }
 
     McEnergyAverage{

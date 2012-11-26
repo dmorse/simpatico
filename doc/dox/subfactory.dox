@@ -3,7 +3,7 @@ namespace McMd
 
 /*! \page subfactory_page Sub-Factories
 
-A Factory may contain one or more subfactories. Creation of subfactories is an alternative way of adding new classes to the set that can be recognized by a factory, without modifying the Factory implementation. Subfactories may be used to define Modules, whichencapsulate a set of related classes that are needed for a particular applicatin.
+A Factory may contain one or more subfactories. Creating a subfactories is an alternative way of adding new classes to the set that can be recognized by a Factory, without modifying the Factory implementation. The main use of subfactories is in the construction of \ref module_page "modules", which are classes that encapsulate a set of related classes that are needed for an application area.
 
 Every subfactory of a Factory<Base> object is another Factory<Base> object. A factory and its subfactories (if any) form a tree that is searched in a depth first manner: The factory() method of the parent calls the factory method of each subfactory in a attempt to match a class name, before attempting to match it against its own explicit list of names. 
 
@@ -14,15 +14,14 @@ A subfactory may be added to a parent factory by calling the Factory<Base>::addS
 \endcode
 Any number of subfactories can be added to a parent factory class.
 
-The recursive search of subfactories is implemented by the trySubfactories() method, which has the signature
+A recursive, depth-first search of subfactories is implemented by the trySubfactories() method. This has a signature:
 \code
    template <class Base>
    void Factory<Base>::trySubfactories(std::string& classname);
 \endcode
-in which classname is the class name string. This method called by the factory() method of any factory class, and calls factory() method of every subfactory that has been added to that factory, passing the classname string as argument. The factory() method of each factory attempts to match this class name, and creates a new object of the desired subclass if it recognizes the name. If a
-a match is found by any subfactory, trySubfactories() immediately stops the search and returns the pointer to the new object. If no match is found by any subfactory, trySubfactories() returns a null pointer.
+The value of the "classname" parameter is the name of a subclass of Base. This method should be called by the factory() method of every factory class. It calls the factory() method of every subfactory that has been added to that factory, passing the classname string as argument. The factory() method of each subfactory attempts to match this class name, and creates a new object of the desired subclass if it recognizes the name. If a match is found by any subfactory, trySubfactories() immediately stops the search and returns a Base* pointer to the new object. If no match is found by any subfactory, trySubfactories() returns a null pointer.
 
-As an example, imagine that you have written an NvtLangevinIntegrator subclass of MdIntegrator, because no Langevin integrator is (thus far) provided by Simpatico. You would then also define a subclass of Factory<MdIntegrator>, which we will called MyMdIntegratorFactory, with a factory() method that can recognize the name "NvtLangevinIntegrator" and instantiate an object of this class.  Here is an example of the required class definition:
+As an example, imagine that you have written an NvtLangevinIntegrator subclass of MdIntegrator, because no Langevin integrator is (thus far) distributed with Simpatico. You would then also define a subclass of Factory<MdIntegrator>, which we will called "MyMdIntegratorFactory", with a factory() method that can recognize the name "NvtLangevinIntegrator" and instantiate an object of this new class.  Here is an example of the required class definition:
 \code
 #include "MdIntegratorFactory.h"
 #include "NvtLangevinIntegrator.h"
@@ -34,14 +33,17 @@ namespace McMd
    {
    public:
 
-      virtual MdIntegrator* factory(std::string &subclassName)
+      virtual MdIntegrator* factory(std::string &classname)
       {
+         // Initialize ptr to null
          MdIntegrator *ptr = 0;
 
-         ptr = trySubfactories(className);
+         // Search subfactories (if any), return if matched.
+         ptr = trySubfactories(classname);
          if (ptr) return ptr;
 
-         if (subclassName == "NvtLangevinIntegrator") {
+         // Attempt to explicitly match classname 
+         if (classname == "NvtLangevinIntegrator") {
             ptr = new NvtLangevinIntegrator(*systemPtr_);
          }
          return ptr;
@@ -63,7 +65,7 @@ namespace McMd
 
    int main 
    {
-      McSimulation          sim;
+      MdSimulation sim;
       MyMdIntegratorFactory myFactory;
  
       \\ Register the custom Factory with the MdSystem
@@ -79,7 +81,7 @@ namespace McMd
 
 }
 \endcode
-A similar pattern is used to set user defined Factory classes for subclasses of Species, McMove, and Diagnostic. The SpeciesFactory and DiagnosticFactory are accessed through methods of the Simulation class. The McMoveFactory is accessible through a method of McSimulation.
+The addSubfactory() method must be invoked before MdSimulation::readParam() in order for the subfactory to be available for use when the parameter file is read. A similar pattern is used to set user defined Factory classes for subclasses of Species, McMove, and Diagnostic. The SpeciesFactory and DiagnosticFactory are accessed through methods of the Simulation class. The McMoveFactory is accessible through a method of McSimulation.
 
 \section custom_factory_accessor_sec Access to Factory Classes
 
@@ -103,9 +105,9 @@ Methods of Simulation and System are also available in the MC and MD subclasses 
 
 When a factory must be accessed via an instance of System or one of its subclasesses, a reference to the required McSystem or MdSystem object can be obtained using the system() method of the parent McSimulation or MdSimulation object. This is done in the above example, in which the MdIntegratorFactory is accessed via the line 
 \code
-    simulation.system().mdIntegratorFactory().addSubfactory(myFactory);
+    sim.system().mdIntegratorFactory().addSubfactory(myFactory);
 \endcode
-Here, simulation is an instance of McSimulation. The method McSimulation::system() returns a reference to the associated McSystem object. The method System::mdIntegratorFactory() then returns a reference to the default Factory<MdIntegrator>.  Invoking the method method Factory<MdIntegrator>::addSubFactory() of this factory object then adds the user-defined subfactory to the default factory.
+Here, sim is an instance of MdSimulation. The method MdSimulation::system() returns a reference to the associated MdSystem object. The method MdSystem::mdIntegratorFactory() then returns a reference to the default Factory<MdIntegrator>.  Invoking the method Factory<MdIntegrator>::addSubFactory() of this factory object then adds the user-defined subfactory to the default MdIntegratorFactory.
 
 <ul>
  <li> \ref potentials_page  (Previous) </li>
