@@ -2,7 +2,7 @@ Serialization
 -------------
 
 - Add save / load to remaining Mc moves (ring moves and semigrand).
-- Add save / load for a few diagnostics (mutable and semigrand)
+- Add save / load for a few diagnostics (perturb)
 - Test save / load for replica move
 
 - Try forcing pair list rebuild upon restart output.
