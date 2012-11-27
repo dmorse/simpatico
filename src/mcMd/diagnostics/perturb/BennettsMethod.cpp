@@ -130,14 +130,30 @@ namespace McMd
          loadDArray<double>(ar, "shifts", shifts_, nProcs_-1);
          shift_ = shifts_[myId_];
       } else {
-         loadParameter<double>(in, "shift", shift_);
+         loadParameter<double>(ar, "shift", shift_);
       }
       #else
-      loadParameter<double>(in, "shift", shift_);
+      loadParameter<double>(ar, "shift", shift_);
       #endif
      
       ar & myAccumulator_; 
       ar & upperAccumulator_; 
+
+      // ar & myId_;
+      // ar & nProcs_;
+      // ar & lowerId_;
+      // ar & upperId_;
+      // ar & nParameter_;
+      // ar & myParam_;
+      
+      ar & lowerParam_;
+      ar & upperParam_;
+      ar & myArg_;
+      ar & lowerArg_;
+      ar & myFermi_;
+      ar & lowerFermi_;
+      ar & upperFermi_;
+
 
       //If nSamplePerBlock != 0, open an output file for block averages.
       if (myAccumulator_.nSamplePerBlock()) {
@@ -150,12 +166,12 @@ namespace McMd
    /*
    * Save internal state to archive.
    */
-   void BennetsMethod::save(Serializable::OArchive &ar)
+   void BennettsMethod::save(Serializable::OArchive &ar)
    { ar & *this; }
    
    void BennettsMethod::setup()
    { 
-      if (!isInitialized_) {
+     if (!isInitialized_) {
          UTIL_THROW("Object is not initialized");
       }
 
