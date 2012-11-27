@@ -47,6 +47,8 @@ namespace McMd
       * \param in input parameter file
       */
       virtual void readParameters(std::istream& in);
+
+      // Use inherited Diagnostic::loadParameters and Diagnostic::save
    
       /**
       * Write restart file.
