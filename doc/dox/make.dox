@@ -5,7 +5,7 @@ namespace McMd
 
 Simpatico is compiled using a system of unix makefiles.  All development was done using gnu make (gmake). We have never checked if the build system works with other variants of make (though it very well might).
   
-\section make_main Source File and Namespace Conventions
+\section make_files Source File and Namespace Conventions
 All C++ files for Simpatico, including both header (*.h) and source (*.cpp) files, are in subdirectories of the src/ directory.  The header and source file for each class are in the same directory. The name of each such file is the same as the class name, followed by the extension .h or .cpp.  All class names and corresponding file names are upper space camel (like Util::Vector or McMd::FileMaster).  When each source file is compiled, the resulting object (*.o) file is placed in the same directory as the source file, using the same base name, with a .o extension.  When automatic dependency generation is enabled, a dependency file with the same base name and a suffix *.d is also created for each source file as a side effect of compilation.
 
 The src/util, src/inter, src/mcMd, and src/ddMd directories each contain the code for a different C++ namespace: 
@@ -23,7 +23,9 @@ These four directories will thus be referred to in what follows as "namespace" l
 By convention, classes in the McMd and DdMd namespace may use names defined in the Util and Inter namespace, but classes in the DdMd namespace do not use names defined in the McMd namespace, and classes in the McMd namespace may not use names defined in the DdMd namespace. Classes in namespace Inter may use names defined in namespace Util, but not names defined in McMd or DdMd. We may summarize these relationships by speaking of one namespace being "dependent" on another: 
 
   - namespace Inter depends on namespace Util
+
   - namespace McMd depends on namespaces Inter and Util
+
   - namespace DdMd depends on namespaces Inter and Util
 
 The main program mdSim.cpp and mcSim.cpp for single processor operation are in the src/mcMd directory.
@@ -56,7 +58,8 @@ The "mcMd" annd "ddMd" targets of the main src/makefile both use recursive make:
 
 Each of the namespace level directories src/util, src/inter, src/mcMd and src/ddMd has a makefile with an "all" target that:
 
-  - compiles all of the class source files in the associated directory tree, or in the associated namespace
+  - compiles all of the class source files in the associated directory tree, or in the associated namespace.
+
   - builds a static library that contains compiled object code for all classes in that namespace. 
 
 The "all" targets in the src/mcMd and src/ddMd namespace level makefiles also build executables. Invoking "make all" from src/mcMd compiles the main programs src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp and builds the mcSim and mdSim executables. Invoking "make all" from src/ddMd compiles src/ddMd/ddSim.cpp and builds the ddSim executable. 
@@ -71,15 +74,13 @@ Each namespace level directory has three makefile fragments named "patterns.mk",
 
 The makefile in each namespace level directory includes the src/compiler.mk file, and the three makefile fragments listed from the same directory. The makefile in each namespace level directory also include sources.mk and defines.mk files from any other namespaces upon which the associated namespace depends. For example, because the McMd namespace "depends" upon the Util and Inter namespaces, the file src/mcMd/makefile includes the sources.mk and defines.mk files from the src/inter and src/util directories, in addition to those from the src/mcMd directory.
 
-The sources.mk file in each namespace level directory defines a variable whose name ends with _SRCS that lists allof the class source (*.cpp) files in the associated directory tree or namespace, and variable whose name ends with _OBJS that lists names of all the object (*.o) files that should be created by compiling these files. The names of these makefile variables are constructed by appending suffixes _SRCS and _OBJS to the directory names util, inter, mcMd and ddMd. For example, in the file src/mcMd/sources.mk, these variables are named mcMd_SRCS and mcMd_OBJS, respectively. The "all" target of each namespace level makefile makes all of the object files listed in the corresponding _OBJS variable and builds a library from them.
+The sources.mk file in each namespace level directory defines two variable whose name ends with SRCS and OBJS. The SRCS variable expands into a list all of the class source (*.cpp) files in the associated directory tree or namespace. The OBJS variable expands into a list of all the corresponding object (*.o) files. The names of these makefile variables are constructed by appending the suffixes SRCS and OBJS to the directory names util, inter, mcMd and ddMd, separated by an underscore ("_"). For example, in the file src/mcMd/sources.mk, these variables are named mcMd_SRCS and mcMd_OBJS, respectively. The "all" target of each namespace level makefile makes all of the object files listed in the corresponding _OBJS variable and builds a static library from the resulting object files.
 
 \section make_sources Subdirectory Makefiles
 
-Every subdirectory in the directory tree rooted at a namespace level directory contains a makefile. The makefile in each such directory has an "all" target that compiles all of the class source files in the sub-tree rooted at that directory. Each such makefile includes the same set of makefile fragments as those included in the corresponding namespace level makefile. 
+Every subdirectory in the directory tree rooted at a namespace level directory contains a makefile. The makefile in each such directory has an "all" target that compiles all of the class source files in the sub-tree rooted at that directory. Each such makefile includes the same set of makefile fragments as those included by the makefile in the parent namespace level directory.
 
-Every directory at the namespace level and below also contains a "sources.mk" makefile fragment. Each sources.mk file defines a pair of variables defines two variables with names of the form [directory]_SRCS and [directory]_OBJS, analogous to the _SRCS and _OBJS variables in the namespace level file. Here, [directory] is a mangled form of the directory name that is constructed by taking the path from the src/ directory to the subdirectory of interest and replacing each "/" directory separator by an underscore ("_").  For example, the file src/util/param/sources.mk defines variables util_param_SRCS and util_param_OBJS. In each such directory, the value of [directory]_SRCS is a list of paths to the all of the source (*.cpp) files in the directory tree rooted at the specified directory. The value of [directory]_OBJS variable is a list of the paths for all of the corresponding *.o object files.  As a special case of this, the namespace level makefiles define variables that contain lists of all of the source files in a namespace. For example, src/util/sources.mk defines variables util_SRCS and util_OBJS that contain lists of the paths for all of the source files and and object file targets in the util/ directory and its subdirectories.
-
-Theses lists of source files are constructed recursively, by concatenating corresponding lists defined in subdirectories.  In each source code directory that contains subdirectories, the parent directory "sources.mk" file includes the sources.mk file from each of its subdirectories. The value of the [directory]_SRCS variable for the parent directory is then constructed by concatenating values of the [subdirectory]_SRCS variables defined in the subdirectories, and then adding paths for any source files in the parent directory. Take a look at a few sources.mk files to see how this works.
+Every directory at the namespace level and below also contains a "sources.mk" makefile fragment. Each sources.mk file defines defines two variables with names of the form [directory]_SRCS and [directory]_OBJS, analogous to the SRCS and OBJS variables in the namespace level file. Here, [directory] represents a mangled form of the path to the directory containing the makefile fragment, which is constructed by taking the path from the src/ directory to the subdirectory of interest and replacing each "/" directory separator by an underscore ("_").  For example, the file src/util/param/sources.mk defines variables util_param_SRCS and util_param_OBJS. In each such directory, the variable [directory]_SRCS expands into a list of paths to the all of the source (*.cpp) files in the directory tree rooted at the specified directory, and [directory]_OBJS expands into a list of all of the corresponding *.o object files.  In each namespace level directory, these variables contain lists of all of the source files in a namespace. 
 
 The [directory]_OBJS variable in each sources.mk file is defined using a substitution pattern that simply replaces the suffix *.cpp by *.o for every file in the corresponding [directory]_SRCS file.  For example, in the file src/util/sources.mk, util_OBJS is defined by the pattern 
 \code 
@@ -87,19 +88,49 @@ util_OBJS=$(util_SRCS:.cpp=.o)
 \endcode
 that simply replaces the file extension .cpp by .o in every path listed in the variable util_SRCS.
 
-To add a source file to the makefile system, one must simply add the path to the source file in the sources.mk file in the directory that contains the new source file. The path to the each source file should be given as an absolute path in which the simpatico/src directory is represented using the variable $(SRC_DIR), as discussed in detail \ref make_paths "below". Adding the path to a source file to the [directory]_SRCS variable in the directory that contains the source file is enough to guarantee that it will be added to the corresponding variables in all parent directories, up to the namespace level directories.
+Lists of source files in directories that contain subdirectories constructed recursively, by concatenating corresponding lists defined in subdirectories.  In each source code directory that contains subdirectories, the parent directory "sources.mk" file includes the sources.mk file from each of its subdirectories. The value of the [directory]_SRCS variable for the parent directory is then constructed by concatenating values of the [subdirectory]_SRCS variables defined in the subdirectories, and then adding paths for any source files in the parent directory. For example, here is the source of the namespace level file src/util/sources.mk
+\code
+include $(SRC_DIR)/util/misc/sources.mk
+include $(SRC_DIR)/util/format/sources.mk
+include $(SRC_DIR)/util/memory/sources.mk
+include $(SRC_DIR)/util/containers/sources.mk
+include $(SRC_DIR)/util/mpi/sources.mk
+include $(SRC_DIR)/util/signal/sources.mk
+include $(SRC_DIR)/util/param/sources.mk
+include $(SRC_DIR)/util/math/sources.mk
+include $(SRC_DIR)/util/space/sources.mk
+include $(SRC_DIR)/util/random/sources.mk
+include $(SRC_DIR)/util/boundary/sources.mk
+include $(SRC_DIR)/util/crystal/sources.mk
+include $(SRC_DIR)/util/ensembles/sources.mk
+include $(SRC_DIR)/util/accumulators/sources.mk
+include $(SRC_DIR)/util/archives/sources.mk
 
-The "all" target in each directory builds all of the object files listed in the [directory]_OBJS variable for that directory. Each file in that list is built using a pattern defined in the patterns.mk file of the associated namespace level directory. Entering "make all" from any directory at the namespace level or below will thus compile all of the object files in that directory and all of its subdirectories, and no others.
+util_SRCS=$(util_misc_SRCS) $(util_format_SRCS) \
+    $(util_memory_SRCS) $(util_containers_SRCS) $(util_mpi_SRCS) \
+    $(util_signal_SRCS) $(util_param_SRCS) $(util_math_SRCS) \
+    $(util_space_SRCS) $(util_random_SRCS) $(util_boundary_SRCS) \
+    $(util_crystal_SRCS) $(util_ensembles_SRCS) \
+    $(util_accumulators_SRCS) $(util_archives_SRCS)
 
-\section make_paths Source and Object File Paths
+util_OBJS=$(util_SRCS:.cpp=.o)
 
-All file paths in sources.mk files are specified as absolute paths by using the makefile variable $(SRC_DIR) to represent the absolute path to the src/ directory, and adding the relative path from the src/ directory to source file of interest.  For example, the path to src/util/math/Vector.cpp is given in src/util/math/sources.mk as
+$(util_LIB): $(util_OBJS)
+	$(AR) rcs $(util_LIB) $(util_OBJS)
+\endcode
+The first segment includes the sources.mk files defined in all subdirectories. The line that defines util_SRCS simply concatenates the [directory]_SRCS variables defines in all of the subdirectory sources.mk files. The definition of util_OBJS uses a pattern that replaces .cpp by .o in every file name. The last line defines a makefile rule to construct a static library whose name is defined by the variable util_LIB.
+
+In directories that contain source files, all file paths are specified in the sources.mk file as absolute paths in which the makefile variable SRC_DIR is used to represent the absolute path to the src/ directory. Each path is given by concatenating SRC_DIR and the relative path from the src/ directory to the file of interest.  For example, the path to src/util/math/Vector.cpp is given in src/util/math/sources.mk as
 \code
 
    $(SRC_DIR)/util/math/Vector.cpp
 
 \endcode
-The variable SRC_DIR must be set equal to the absolute path to the src/ directory in the file src/compiler.mk, which is then included in every other makefile. The correct value for this path should be set by the ./configure script during initial configuration. After substituting the value of $(SRC_DIR), every source file path in every sources.mk file expands to an absolute path.  
+The variable SRC_DIR is set to the absolute path to the src/ directory in the file src/compiler.mk, which is then included in every makefile in the build system. The correct value for SRC_DIR should be set by the ./configure script during initial configuration. 
+ 
+To add a source file to the makefile system, one must simply add the path to the source file in the sources.mk file in the directory that contains the new source file. The path to a new source file should be given in the form discussed above, using SRC_DIR to represent the src/ directory. Adding the path to a source file to the [directory]_SRCS variable in the directory that contains the source file is enough to guarantee that it will be added to the corresponding variables in all parent directories, up to the namespace level directories.
+
+The "all" target in each directory builds all of the object files listed in the [directory]_OBJS variable for that directory. Each file in that list is built using a pattern defined in the patterns.mk file of the associated namespace level directory. Entering "make all" from any directory at the namespace level or below will thus compile all of the object files in that directory and all of its subdirectories, and no others.
 
 \section make_dependency Dependency Files
 
