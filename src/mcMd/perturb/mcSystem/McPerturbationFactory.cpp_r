@@ -55,17 +55,20 @@ namespace McMd
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
+      int size = systemPtr_->simulation().communicator().Get_size();
+      int rank = systemPtr_->simulation().communicator().Get_rank();
+
       if (className == "McEnergyPerturbation") {
-         ptr = new McEnergyPerturbation(*systemPtr_);
+         ptr = new McEnergyPerturbation(*systemPtr_, size, rank);
       }
       #ifndef INTER_NOPAIR
       else if (className == "McPairPerturbation") {
-         const std::string& interactionClassName = systemPtr_->pairPotential().
-            interactionClassName();
+         const std::string& interactionClassName 
+                        = systemPtr_->pairPotential().interactionClassName();
          if (interactionClassName == "LJPair") {
-            ptr = new McPairPerturbation<LJPair> (*systemPtr_);
+            ptr = new McPairPerturbation<LJPair> (*systemPtr_, size, rank);
          } else if (interactionClassName == "DpdPair") {
-            ptr = new McPairPerturbation<DpdPair> (*systemPtr_);
+            ptr = new McPairPerturbation<DpdPair> (*systemPtr_, size, rank);
          } else {
             UTIL_THROW("Unsupported pair potential.");
          }
@@ -74,17 +77,19 @@ namespace McMd
       #ifdef INTER_EXTERNAL
       #ifndef INTER_NOPAIR
       else if (className == "McPairExternalPerturbation") {
-         const std::string& pairInteractionClassName = systemPtr_->pairPotential().interactionClassName();
-         const std::string& externalInteractionClassName = systemPtr_->externalPotential().interactionClassName();
+         const std::string& pairInteractionClassName 
+                     = systemPtr_->pairPotential().interactionClassName();
+         const std::string& externalInteractionClassName 
+                     = systemPtr_->externalPotential().interactionClassName();
          if (pairInteractionClassName == "LJPair") {
             if (externalInteractionClassName == "TanhCosineExternal") {
-               ptr = new McPairExternalPerturbation<LJPair,TanhCosineExternal> (*systemPtr_);
+               ptr = new McPairExternalPerturbation<LJPair,TanhCosineExternal> (*systemPtr_, size rank);
             } else {
                UTIL_THROW("Unsupported external potential.");
             }
          } else if (pairInteractionClassName == "DpdPair") {
             if (externalInteractionClassName == "TanhCosineExternal") {
-               ptr = new McPairExternalPerturbation<DpdPair,TanhCosineExternal> (*systemPtr_);
+               ptr = new McPairExternalPerturbation<DpdPair,TanhCosineExternal> (*systemPtr_, size, rank);
             } else {
                UTIL_THROW("Unsupported external potential.");
             }
@@ -96,10 +101,10 @@ namespace McMd
       #endif
       #ifdef INTER_EXTERNAL
       else if (className == "McExternalPerturbation") {
-         const std::string& interactionClassName = systemPtr_->externalPotential().
-            interactionClassName();
+         const std::string& interactionClassName 
+                            = systemPtr_->externalPotential().interactionClassName();
          if (interactionClassName == "TanhCosineExternal") {
-            ptr = new McExternalPerturbation<TanhCosineExternal> (*systemPtr_);
+            ptr = new McExternalPerturbation<TanhCosineExternal>(*systemPtr_, size, rank);
          } else {
             UTIL_THROW("Unsupported external potential.");
          }
