@@ -28,17 +28,50 @@ namespace McMd
    {
 
    public:
-   
-      /// Constructor.
+  
+      /**
+      * Constructor.
+      */
       TypeDistribution(McSystem& system);
 
-      /// Read output file and nStepPerSample.
+      /**
+      * Read output file and nStepPerSample.
+      *
+      * \param in input parameters stream
+      */
       virtual void readParameters(std::istream& in);
- 
-      /// Evaluate energy and print.
+
+      /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar saving (output) archive
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
+      /**
+      * Serialize to/from an archive. 
+      * 
+      * \param ar      archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
+      /* 
+      * Evaluate energy and print.
+      */
       void sample(long iStep);
 
-      /// Output final summary and file format
+      /*
+      * Output final summary and file format.
+      */
       virtual void output();
 
    private:
@@ -65,6 +98,19 @@ namespace McMd
      SpeciesMutator* mutatorPtr_;
    
    };
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void TypeDistribution::serialize(Archive& ar, const unsigned int version)
+   {  
+       Diagnostic::serialize(ar, version); 
+       ar & speciesId_;
+       ar & nState_;
+       ar & nSample_;
+       ar & distribution_;
+   }
 
 }
 #endif 
