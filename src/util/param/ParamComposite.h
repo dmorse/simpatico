@@ -31,11 +31,6 @@ namespace Util
    /**
    * An object that can read multiple parameters from file.
    *
-   * Any class that reads parameters from the input parameter file must
-   * be derived from ParamComposite. The format of the associated block 
-   * of a parameter file is defined by the implementation of the virtual
-   * readParam() method. 
-   * 
    * A ParamComposite has a private array of pointers to ParamComponent 
    * objects, stored in the order in which they are read from file by the
    * readParam() method. We will refer to this as the format array. Each 
@@ -44,26 +39,20 @@ namespace Util
    * a line containing the opening or closing bracket for a parameter block), 
    * a Blank object (i.e., a blank line), or another ParamComposite object. 
    *
-   * ParamComposite defines two closely related virtual methods, named
-   * readParam() and readParameters(), either of which may be used by 
-   * subclasses to define a parameter file format. The readParam() method 
-   * read the entire parameter block, including the opening and closing
-   * lines. The readParameters() method, if provided, must read the body 
-   * of the associated parameter file block, without the opening and 
-   * closing lines. The default implementation of ParamComposite::readParam()
-   * simply calls readParameters() and explicitly adds the opening and 
-   * closing lines, using the return value of the className() method 
-   * as the class name in the opening line. Each subclass must re-implement
-   * either readParam() or readParameters(), but not both. Almost all
-   * subclasses of ParamComposite should re-implement readParameters(),
-   * and call setClassName() in the constructor, thus relying on the default
-   * implementation of ParamComposite::readParam() to add the begin and
-   * end lines. The only exception are classes for which the default
-   * treatment of the end lines is not adequate, such as the Manager 
-   * class template.
+   * Any class that reads a block of parameters from the input parameter file 
+   * should be derived from ParamComposite. The readParam() method must read 
+   * the associated parameter file block. The virtual readParameters() method,
+   * if re-implemented, should read only the body of the parameter file
+   * block, without opening and closing lines. The default implementation of
+   * ParamComposite::readParam() reads the opening line of the block, calls 
+   * readParameters() to read the body of the  parameter file block, and then
+   * reads the closing line. Almost all subclasses of ParamComposite should 
+   * re-implement the readParameters() method, and rely on the default 
+   * implementation of ParamComposite::readParam() to add the begin and end 
+   * lines. 
    *
-   * The setClassName() and className() methods may be used to set and
-   * get a string representing the name of a subclass. The setClassName()
+   * The setClassName() and className() methods are used to set and get a 
+   * string representing the a subclass name. The setClassName() method 
    * should be called in the constructor of each subclass of ParamComposite. 
    * The name string set in the constructor of a subclass will replace any
    * name set by a base class, because of the order in which constructors
@@ -75,17 +64,16 @@ namespace Util
    * using protected methods provided by ParamComposite to read individual 
    * parameters and "child" ParamComposite objects.  The implementation of 
    * readParameters() normally uses read< T >, which reads an individual 
-   * parameter, readParamComposite, which reads a nested subblock, and 
-   * readBlank, which reads a blank line.  Each of these methods creates 
-   * a new ParamComponent of the specified type, adds a pointer to the 
-   * new object to the format array, and invokes the readParam method of 
-   * the new object in order to read the associated line or block of the 
-   * parameter file. Other specialized methods are provided to read one 
-   * and two dimensional arrays. 
+   * parameter, readParamComposite, which reads a nested subblock, readBlank,
+   * which reads a blank line, and more specialized methods to read arrays
+   * and matrices of parameters.  Each of these methods creates a new 
+   * ParamComponent of a specified type, adds a pointer to the new object 
+   * to the format array, and invokes the readParam method of the new object 
+   * in order to read the associated line or block of the parameter file. 
    *
-   * The ParamComposite::writeParam() method uses the format array to
-   * write data to a file in the same format in which it was read by
-   * a previous call to readParam(). 
+   * The ParamComposite::writeParam() method uses the format array to write
+   * data to a file in the same format in which it was read by a previous
+   * call to readParam(). 
    *
    * \ingroup Param_Module
    */
@@ -107,11 +95,11 @@ namespace Util
       /** 
       * Constructor.
       *
-      * Sets maximum length of list to listCapacity.
+      * Reserve space for capacity elements in the format array.
       *
-      * \param listCapacity maximum length of parameter list
+      * \param capacity maximum length of parameter list
       */
-      ParamComposite(int listCapacity);
+      ParamComposite(int capacity);
   
       /** 
       * Virtual destructor.
@@ -122,22 +110,23 @@ namespace Util
       //@{
 
       /** 
-      * Read all parameters from an input stream.
+      * Read a parameter file block. 
       *
       * Inherited from ParamComponent. This method reads the entire parameter 
       * block, including the opening line "ClassName{" and the closing bracket 
-      * "}". The implementation calls the virtual readParameters method to read
-      * the body of the block, and adds Begin and End objects.
+      * "}". The default implementation calls the virtual readParameters 
+      * method to read the body of the block, and adds Begin and End objects.
       *
       * \param in input stream for reading
       */
       virtual void readParam(std::istream &in);
    
       /** 
-      * Read body of parameter block, excluding opening and closing lines.
+      * Read body of parameter block, without opening and closing lines.
       *
-      * Every subclass of ParamComposite should overload readParameters, and
-      * should call setClassName() in its constructor.
+      * Most subclasses of ParamComposite should overload readParameters.
+      * The default implementation is empty. All subclasses must overload
+      * either readParameters or readParam, but not both. 
       *
       * \param in input stream for reading
       */
@@ -147,8 +136,8 @@ namespace Util
       /** 
       * Write all parameters to an output stream.
       *
-      * This default implementation writes all parameters to file,
-      * descending children recursively. 
+      * The default implementation calls the readParam method of each
+      * child in the format array.
       *
       * \param out output stream for reading
       */
@@ -183,14 +172,13 @@ namespace Util
       * Saves all parameters to an archive.
       *
       * This default implementation calls the save method for all
-      * items in the parameter file format list. It it not sufficient
+      * items in the parameter file format array. This is not sufficient
       * for classes that contain non-volatile members that do not
       * appear in the parameter file format. 
       *
-      * One way to overload this method is to write a serialize method
-      * template void serialize(Archive& ar, const unsigned int version),
-      * and have the save method invoke the serialize method through an
-      * operator, as follows:
+      * If a class also defines a serialize method template, which allows 
+      * instances to be serialized to any type of archive, then the save 
+      * method can be implemented as follows:
       * \code
       *    void save(Serializable::OArchive& ar)
       *    { ar & *this; }
@@ -204,9 +192,9 @@ namespace Util
       * Resets ParamComposite to its empty state.
       *
       * This method deletes Parameter, Begin, End, and Blank objects in the
-      * format list, recursively invokes resetParam() for any ParamComposite 
-      * objects in the list, nullifies all pointers in the list, and resets 
-      * the number of items in the list to 0. 
+      * format array, recursively invokes resetParam() for any ParamComposite 
+      * objects in the format array, nullifies all pointers in the list, and 
+      * resets the number of items in the array to 0. 
       */
       void resetParam();
    
@@ -439,12 +427,12 @@ namespace Util
   
       //@}
       /// \name add* methods
-      /// \brief These methods add a ParamComponent object to the parameter
-      /// list, but do not read any data from an input stream.
+      /// \brief These methods add a ParamComponent object to the format
+      /// array, but do not read any data from an input stream.
       //@{
    
       /**
-      * Add a child ParamComposite object to the list.
+      * Add a child ParamComposite object to the format array.
       *
       * \param child child ParamComposite object
       * \param next  true if the indent level is one higher than parent.
@@ -452,7 +440,7 @@ namespace Util
       void addParamComposite(ParamComposite& child, bool next = true);
    
       /**  
-      * Add a new Param < Type > object to the list.
+      * Add a new Param < Type > object to the format array.
       *
       * \param label  Label string for new ScalarParam < Type >
       * \param value  reference to parameter value
@@ -566,7 +554,7 @@ namespace Util
       /// Array of booleans, elements false for ParamComposite, true otherwise.
       std::vector<bool> isLeaf_;  
 
-      /// Number of ParamComponent objects in list
+      /// Number of ParamComponent objects in format array
       int size_;     
 
       /// Name of subclass.
@@ -577,7 +565,7 @@ namespace Util
    // add and read method templates for scalar parameters
  
    /* 
-   * Add a ScalarParam to the list.
+   * Add a ScalarParam to the format array.
    */ 
    template <typename Type>
    ScalarParam<Type>& ParamComposite::add(const char *label, Type &value) 
@@ -596,7 +584,7 @@ namespace Util
    }
    
    /* 
-   * Add a ScalarParam to the list, and read its contents from file. 
+   * Add a ScalarParam to the format array, and read its contents from file. 
    */ 
    template <typename Type>
    ScalarParam<Type>& 

@@ -19,7 +19,6 @@
 
 #include "linear/EndSwapMove.h"
 #include "linear/CfbEndMove.h"
-#include "linear/CfbHomoReptationMove.h"
 #include "linear/CfbReptationMove.h"
 #include "linear/CfbRebridgeMove.h"
 #include "linear/CfbDoubleRebridgeMove.h"
@@ -69,9 +68,6 @@ namespace McMd
       } else 
       if (className == "CfbEndMove") {
          ptr = new CfbEndMove(*systemPtr_);
-      } else 
-      if (className == "CfbHomoReptationMove") {
-         ptr = new CfbHomoReptationMove(*systemPtr_);
       } else 
       if (className == "CfbReptationMove") {
          ptr = new CfbReptationMove(*systemPtr_);
