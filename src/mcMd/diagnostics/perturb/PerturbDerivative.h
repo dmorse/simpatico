@@ -40,6 +40,29 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+   
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
       /** 
       * Clear accumulator.
       */
@@ -73,6 +96,18 @@ namespace McMd
       bool    isInitialized_;
       
    };
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void PerturbDerivative::serialize(Archive& ar, const unsigned int version)
+   {
+      Diagnostic::serialize(ar, version);
+      ar & nSamplePerBlock_;
+      ar & parameterIndex_;
+      ar & accumulator_;
+   }
 
 }
 #endif   // ifndef PERTURB_DERIVATIVE_H

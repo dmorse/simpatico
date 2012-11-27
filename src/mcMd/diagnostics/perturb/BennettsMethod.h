@@ -162,6 +162,28 @@ namespace McMd
       virtual void analyze();
    };
 
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void BennettsMethod::serialize(Archive& ar, const unsigned int version)
+   {
+      Diagnostic::serialize(ar, version);
+      ar & nSamplePerBlock_;
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         ar & shifts_;
+      } else {
+         ar & shift_;
+      }
+      #else
+      ar & shift_;
+      #endif
+      ar & myAccumulator_; 
+      ar & upperAccumulator_; 
+   }
+
+
 }
 #endif   // ifndef BENNETTS_METHOD_H
 #endif   // ifdef  UTIL_MPI
