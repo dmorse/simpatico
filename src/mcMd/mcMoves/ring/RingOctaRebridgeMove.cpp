@@ -55,6 +55,34 @@ namespace McMd
       }
    }
 
+   /*
+   * Load state from an archive.
+   */
+   void RingOctaRebridgeMove::loadParameters(Serializable::IArchive& ar)
+   {  
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<double>(ar, "upperBridge", upperBridge_);
+      loadParameter<double>(ar, "lowerBridge", lowerBridge_);
+
+      // Validate
+      Ring* ringPtr;
+      ringPtr = dynamic_cast<Ring*>(&(simulation().species(speciesId_)));
+      if (!ringPtr) {
+         UTIL_THROW("Species is not a Ring species");
+      }
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   void RingOctaRebridgeMove::save(Serializable::OArchive& ar)
+   {
+      McMove::save(ar);
+      ar & speciesId_;
+      ar & upperBridge_;
+      ar & lowerBridge_;
+   }
 
    /* 
    * Generate, attempt and accept or reject a Monte Carlo move.

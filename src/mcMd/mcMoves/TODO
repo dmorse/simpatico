@@ -1,8 +1,0 @@
-
-TODO (McMoves):
-
-Add save / load to ring Cfb moves.
-
-Add save / load to semi-grand moves.
-
-Remove frequent allocation from some Cfb moves.
