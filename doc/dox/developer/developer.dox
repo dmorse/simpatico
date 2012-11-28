@@ -5,10 +5,10 @@ namespace McMd
 
    Contents: 
    <ul>
-   <li> \subpage make_page "Makefiles" </li>
+   <li> \subpage make_page "Build System" </li>
    <li> \subpage test_page "Unit Tests"</li>
    <li> \subpage read_param_page "ReadParam Methods"</li>
-   <li> \subpage data_page "Data Structures" </ul>
+   <li> \subpage data_page "Data Structures (mcSim and mdSim)" </ul>
  
 
 Navigation: 

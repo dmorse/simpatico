@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page make_page Makefiles
+/*! \page make_page Build System
 
 Simpatico is compiled using a system of unix makefiles.  All development was done using gnu make (gmake). We have never checked if the build system works with other variants of make (though it very well might).
   

@@ -55,7 +55,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
  <li> \subpage hoomd_page     "Hoomd-blue integration" </li>
  <li> \subpage developer_page "Developer Information"
    <ul>
-   <li> \subpage make_page "Makefiles" </li>
+   <li> \subpage make_page "Build System" </li>
    <li> \subpage test_page "Unit Tests" </li>
    <li> \subpage read_param_page  "ReadParam Methods"</li>
    <li> \subpage data_page "Data Structures" </li>
