@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page preprocessor_page Preprocessor macros
+/*! \page preprocessor_page Preprocessor Macros
 
 Several optional features of Simpatico can be conditionally compiled by 
 defining preprocessor macros when compiling the code. 

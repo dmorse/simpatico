@@ -20,8 +20,9 @@ Contents:
 
 Navigation:
 <ul>
- <li> \ref index      (Up)     </li>
- <li> \ref guide_page (Next)   </li>
+ <li> \ref index          (Up)             </li>
+ <li> \ref goals_page     (Next / Down) </li>
+ <li> \ref guide_page     (Next Section)   </li>
 </ul>
 
 */

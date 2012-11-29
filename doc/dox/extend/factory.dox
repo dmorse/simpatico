@@ -15,7 +15,7 @@ To allow a user-defined subclass to be included in the parameter file, the devel
 
 In order to allow users to modify the factory implementation files, but to avoid changing files that are under version control, their are two versions of the implementation file for each factory. The file whose name ends with the file extension ".cpp_r" (for example, MdIntegratorFactory.cpp_r)is a default version that is stored in the git repository, but that is never actually compiled. The file whose name ends with ".cpp" (e.g., MdIntegrator.cpp) is a user version that is actually compiled and linked, but that is not stored in the repository. The initial version of each such *.cpp file is created by the "configure" script by simply copying the *.cpp_r file, when Simpatico is first configured. Users should modify the *Factory.cpp files in order to add new subclasses that are intended for their own use, and should avoid modifying the *Factory.cpp_r files. The *.cpp_r files should be modified only to add new classes that are intended to be distributed with Simpatico. After modifying one or more Factory implementation files, users must also be careful to not rerun the configure script, since this would overwrite their changes.
 
-\section factory_structure_sec Factory Class Structure
+\section factory_structure_sec factory() Methods
 
 The Factory class associated with a class named "Base" (where "Base" could be McMove, MdIntegrator, Diagnostic, etc.) is normally derived from the class template Util::Factory < Base >. For example, McMd::McMoveFactory is derived from the template instantiation Util::Factory < McMd::McMove >. The Util::Factory template declares a pure virtual method named factory() with the following interface.
 \code

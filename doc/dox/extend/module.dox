@@ -152,6 +152,7 @@ The creation of a module class can be convenient, but is not necessary.
 <ul>
  <li> \ref subfactory_page   (Previous)    </li>
  <li> \ref extend_page       (Up)    </li>
+ <li> \ref hoomd_page        (Next)    </li>
 </ul>
  
 */

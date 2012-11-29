@@ -49,10 +49,10 @@ Contents:
 
 Navigation:
 <ul>
- <li> \ref directory_page (Previous)  </li>
- <li> \ref overview_page  (Up)        </li>
- <li> \ref Util_NS_page   (Next)      </li>
- <li> \ref custom_page    (Skip)      </li>
+ <li> \ref directory_page (Previous)      </li>
+ <li> \ref overview_page  (Up)            </li>
+ <li> \ref Util_NS_page   (Next / Down)   </li>
+ <li> \ref custom_page    (Next Section)  </li>
 </ul>
 
 */

@@ -13,8 +13,9 @@ namespace McMd
 
 Navigation: 
 <ul>
- <li> \ref extend_page   (Previous)  </li>
- <li> \ref index         (Up)       </li>
+ <li> \ref hoomd_page   (Previous)     </li>
+ <li> \ref index         (Up)          </li>
+ <li> \ref make_page     (Next / Down) </li>
 </ul>
  
 */

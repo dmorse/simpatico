@@ -22,9 +22,11 @@ Contents:
 
 Navigation: 
 <ul>
- <li> \ref guide_page    (Prev)   </li>
- <li> \ref index         (Up)     </li>
- <li> \ref custom_page   (Next)   </li>
+ <li> \ref guide_page      (Prev section)  </li>
+ <li> \ref multiMcMd_page  (Prev)          </li>
+ <li> \ref index           (Up)            </li>
+ <li> \ref directory_page  (Next)          </li>
+ <li> \ref custom_page     (Next section)  </li>
 </ul>
  
 */

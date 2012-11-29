@@ -212,7 +212,8 @@ FINISH
 
 
 <ul>
- <li> \ref extend_page      (Prev)  </li>
+ <li> \ref extend_page      (Previous section)  </li>
+ <li> \ref module_page      (Prev)  </li>
  <li> \ref index            (Up)    </li>
  <li> \ref developer_page   (Next)  </li>
 </ul>

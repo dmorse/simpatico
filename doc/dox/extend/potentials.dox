@@ -3,7 +3,7 @@ namespace McMd
 
 /*! \page potentials_page Potential Energy Classes
 
-\section potentials_base_sec Base Classes
+\section potentials_base_sec Potential Energy Base Classes
 The mcSim and mdSim programs use the following set of abstract base classes for different types of potential energy:
 <ul>
  <li> McMd::McPairPotential </li>

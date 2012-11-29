@@ -13,8 +13,10 @@ Contents:
 
 Navigation: 
 <ul>
- <li> \ref restart_page  (Prev)   </li>
- <li> \ref guide_page    (Up)     </li>
+ <li> \ref restart_page   (Previous)   </li>
+ <li> \ref guide_page     (Up)  </li>
+ <li> \ref multiMcMd_page (Next / Down) </li>
+ <li> \ref overview_page  (Next Section)  </li>
 </ul>
  
 */
