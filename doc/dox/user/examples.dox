@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page examples_page Examples
+/*! \page examples_page 2.6 Examples
 
 A set of examples are provided with Simpatico in the examples/ 
 directory. Examining and running these examples is the easiest
@@ -82,7 +82,7 @@ The above directions assume that the users PATH shell variable
 has been set to include the directory that contains the mcSim 
 (or mdSim) executable file.
 
-<ul>
+<ul style="list-style: none;">
  <li> \ref cfgfile_page      (Previous) </li>
  <li> \ref guide_page        (Up)       </li>
  <li> \ref analysis_page  (Next) </li>

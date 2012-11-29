@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page subfactory_page Sub-Factories
+/*! \page subfactory_page 5.5 Sub-Factories
 
 A Factory may contain one or more subfactories. Creating a subfactories is an alternative way of adding new classes to the set that can be recognized by a Factory, without modifying the Factory implementation. The main use of subfactories is in the construction of \ref module_page "modules", which are classes that encapsulate a set of related classes that are needed for an application area.
 
@@ -86,7 +86,7 @@ The addSubfactory() method must be invoked before MdSimulation::readParam() in o
 \section custom_factory_accessor_sec Access to Factory Classes
 
 The default Factory object for each of the polymorphic base classes in an mcSim or mdSim simulation can be accessed by reference via a method of either the Simulation or McMd::System classes, or of the McSimulation, MdSimulation, McSystem or MdSystem subclasses. The required accessor methods for the factory classes used by mcSim and mdSim are: 
-<ul>
+<ul style="list-style: none;">
   <li> McMd::Factory<Species>&            McMd::Simulation::speciesFactory(); </li>
   <li> McMd::Factory<Diagnostic>&         McMd::Simulation::diagnosticFactory(); </li>
   <li> McMd::Factory<McMove>&             McMd::McSimulation::mcMoveFactory(); </li>
@@ -109,7 +109,7 @@ When a factory must be accessed via an instance of System or one of its subclase
 \endcode
 Here, sim is an instance of MdSimulation. The method MdSimulation::system() returns a reference to the associated MdSystem object. The method MdSystem::mdIntegratorFactory() then returns a reference to the default Factory<MdIntegrator>.  Invoking the method Factory<MdIntegrator>::addSubFactory() of this factory object then adds the user-defined subfactory to the default MdIntegratorFactory.
 
-<ul>
+<ul style="list-style: none;">
  <li> \ref potentials_page  (Previous) </li>
  <li> \ref extend_page      (Up)  </li>
  <li> \ref module_page     (Next)  </li>

@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page param_page Parameter File
+/*! \page param_page 2.3 Parameter File
 
 All of the Simpatico programs use parameter files with a heirarchical file format. Each parameter file contains a set of nested blocks that begin and end with matched curly brackets, like blocks in a C program.  The parameter files required by the three programs mcSim, mdSim and ddSim use a similar syntax, but differ in many details. 
 
@@ -144,8 +144,8 @@ The block associated with a pair potential contain information required to const
 
 For covalent bonded interactions, the same class is used in mcSim and mdSim simulations. The class name for the object that represents a bond potential is thus simply called BondPotential, rather than MdBondPotential or McBondPotential.  The file format for a code compiled with angle and dihedral potentials would contains subsequent AnglePotential and DihedralPotential blocks. 
 
-<ul>
- <li> \ref usage_page   (Prev) </li>
+<ul style="list-style: none;">
+ <li> \ref usage_page   (Previous) </li>
  <li> \ref guide_page     (Up)   </li>
  <li> \ref commands_page  (Next) </li>
 </ul>

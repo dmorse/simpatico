@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page commands_page Command File
+/*! \page commands_page 2.4 Command File
 
 After the main simulation object is initialized by the readParam() method, the progress of a simulation is controlled by a command file that is read by the readCommand() method. The name of the command file is specified by the commandFileName parameter in the FileMaster block of the parameter file. If the value of commandFileName is given by the special string "paramfile", however, readCommand() will assume that command file has been appended to the end of the param file, after the closing bracket of the main McSimulation or MdSimulation block, and will attempt to continue reading from the parameter file. 
 
@@ -211,8 +211,8 @@ The following table shows a list of available commands for all three programs.  
 </table>
 The SET_ANGLE and SET_DIHEDRAL commands are only available in programs compiled with angle and dihedral potentials enabled.
 
-<ul>
- <li> \ref param_page        (Prev) </li>
+<ul style="list-style: none;">
+ <li> \ref param_page        (Previous) </li>
  <li> \ref guide_page        (Up)   </li>
  <li> \ref cfgfile_page      (Next) </li>
 </ul>

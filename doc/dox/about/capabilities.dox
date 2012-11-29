@@ -1,4 +1,4 @@
-/*! \page capabilities_page Capabilities
+/*! \page capabilities_page 1.2 Capabilities
 
 \section features_potential_sec Potential Energy
 
@@ -19,14 +19,14 @@ Long-range electrostatic potentials have not yet been implemented in any of the 
 \section features_algorithms_sec Simulation Algorithms
 
 For single-processor MD simulations, mdSim currently provides:
-<ul>
+<ul style="list-style: none;">
   <li> NVE velocity Verlet </li>
   <li> NVT Nose-Hoover </li>
   <li> NVT dissipative particle dynamics (DPD) </li>
   <li> NPH Anderson barostat </li>
 </ul>
 For Monte-Carlo simulation, mcSim currently provides the following MC moves, and a few others:
-<ul>
+<ul style="list-style: none;">
    <li> Single atom displacement </li>
    <li> Rigid molecule displacement </li>
    <li> Hybrid MC moves (short NVE or NPH simulations as proposed MC moves) 
@@ -39,7 +39,7 @@ For Monte-Carlo simulation, mcSim currently provides the following MC moves, and
    <li> Semi-grand canonical move (for, e.g., homopolymer blends) </li>
 </ul>
 For parallel Md simulations, DdSim provides the following integrators:
-<ul>
+<ul style="list-style: none;">
   <li> NVE velocity Verlet </li>
   <li> NVT Nose-Hoover thermostate </li>
   <li> NPH Anderson barostat </li>
@@ -68,7 +68,7 @@ interactions.
 Simpatico is distributed with a collection of classes for statistical analysis, referred to as "diagnostics". 
 
 The diagnostic classes available for use with the single-processor mcSim and mdSim programs include classes to evaluate:
-<ul>
+<ul style="list-style: none;">
   <li> Thermodynamic properties (energies and stress components) </li>
   <li> Full and partial radial distribution functions (in coordinate space). </li>
   <li> Structure factors (in Fourier space). </li>
@@ -86,7 +86,7 @@ A smaller set of diagnostics is distributed for use on-the-fly with ddSim. Class
 Simpatico is a convenient tool for simulating and analyzing coarse-grained models of polymer liquids.  It is not yet suitable for use with atomistic models, because of the absence of an electrostatic potential, and the absence of MC conformation sampling moves designed specifically for use with stiff angle potentials. 
 
 Navigation:
-<ul>
+<ul style="list-style: none;">
  <li> \ref goals_page        (Previous) </li>
  <li> \ref about_page        (Up)       </li>
  <li> \ref contributors_page (Next)     </li>

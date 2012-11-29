@@ -1,4 +1,4 @@
-/*! \page goals_page Goals
+/*! \page goals_page 1.1 Goals
 
 The design of Simpatico was motivated by the following goals: 
 
@@ -15,7 +15,7 @@ The design of mcSim and mdSim (which share a great deal of code) is similar in m
 Simpatico is a relatively young project, and has thus far been used only for simulations of coarse-grained bead-spring models of polymer liquids.  As such, it lacks some features found in more mature molecular dynamics packages, such as Lammps, NAMD, Gromacs, and Espresso, and in a smaller number of MC packages, such as Towhee. 
 
 Navigation:
-<ul>
+<ul style="list-style: none;">
  <li> \ref about_page        (Up)     </li>
  <li> \ref capabilities_page (Next)   </li>
 </ul>

@@ -1,33 +1,28 @@
 namespace McMd
 {
 
-/*! \page custom_page Compile-Time Options
+/*! \page custom_page 4 Compile-Time Options
 
-Many features and behaviors of Simpatico can be modified when the program is compiled:
+Many optional features of Simpatico can be enabled or disabled the program is compiled
+by using C++ preprocessor macros to control conditional compilation, or by changing a
+typedef to change the type of periodic unit cell. 
    
    Contents: 
-   <ul>
-   <li> \subpage preprocessor_page "Preprocessor Macros": 
-   Some optional features can be enabled or disabled at compile time by 
-   C++ preprocessor macros that control conditional compilation.
-   </li>
-   <li> \subpage boundary_page      "Unit Cell Type": 
-   The type of unit cell (cubic, orthorhombic, etc) is also specified by 
-   a typedef, which may be modified at compile time to change the type
-   of unit cell. 
-   </li>
+   <ul style="list-style: none;">
+   <li> \subpage preprocessor_page </li>
+   <li> \subpage boundary_page   </li>
    </ul>
  
 
 Navigation: 
-<ul>
- <li> \ref overview_page     (Previous Section) </li>
- <li> \ref DdMdNS_page       (Previous) </li>
- <li> \ref index             (Up)       </li>
- <li> \ref preprocessor_page (Next / Down)       </li>
- <li> \ref extend_page       (Next Section)     </li>
+<ul style="list-style: none;">
+ <li> \ref overview_page     (Previous section) </li>
+ <li> \ref index "Main Page"  (Up)       </li>
+ <li> \ref extend_page       (Next section)     </li>
 </ul>
-
- 
 */
+
+// <li> \ref DdMd_NS_page       (Previous) </li>
+// <li> \ref preprocessor_page (Next / Down)       </li>
+ 
 }

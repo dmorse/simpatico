@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page hoomd_page Integration with Hoomd-blue
+/*! \page hoomd_page 6 Integration with Hoomd-blue
 
 Simpatico supports the use of the Hoomd-blue code for MD on the GPU 
 as a simulation engine for hybrid Monte Carlo simulations.  
@@ -211,12 +211,13 @@ FINISH
 \endcode
 
 
-<ul>
+<ul style="list-style: none;">
  <li> \ref extend_page      (Previous section)  </li>
- <li> \ref module_page      (Prev)  </li>
- <li> \ref index            (Up)    </li>
+ <li> \ref index "Main Page"  (Up)    </li>
  <li> \ref developer_page   (Next)  </li>
 </ul>
 
 */
+
+// <li> \ref module_page      (Previous)  </li>
 }

@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page preprocessor_page Preprocessor Macros
+/*! \page preprocessor_page 4.1 Preprocessor Macros
 
 Several optional features of Simpatico can be conditionally compiled by 
 defining preprocessor macros when compiling the code. 
@@ -136,7 +136,7 @@ MCMD_ Macros (defined in mcMd/defines.mk):
     To enable this, define MCMD_SHIFT=1 in src/mcMd/defines.mk.
     Suffix string: _s.
 
-<ul>
+<ul style="list-style: none;">
  <li> \ref custom_page      (Up)   </li>
  <li> \ref boundary_page  (Next) </li>
 </ul>

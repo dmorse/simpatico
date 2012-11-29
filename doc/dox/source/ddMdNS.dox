@@ -4,7 +4,7 @@ namespace DdMd
    using namespace Util;
    using namespace Inter;
 
-/*! \page DdMd_NS_page DdMd namespace
+/*! \page DdMd_NS_page 3.2.4 DdMd namespace
 
 The DdMd namespace contains classes used to construct parallel domain
 decomposition molecular dynamics simulations. Some classes in the DdMd 
@@ -171,7 +171,7 @@ A DdMd::Simulation object is the top level object in a DdMd simulation.  There i
 
 See also: \ref DdMd_Simulation_Module "Simulation Module"
 
-<ul>
+<ul style="list-style: none;">
  <li> \ref McMd_NS_page (Previous)  </li>
  <li> \ref design_page  (Up)        </li>
  <li> \ref custom_page  (Next)      </li>

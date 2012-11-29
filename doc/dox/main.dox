@@ -3,62 +3,63 @@
 Simpatico is a C++ package for Monte Carlo (MC), Molecular Dynamics (MD) and 
 hybrid MD/MC simulations of polymeric and molecular liquids.
 
-<h3> Table of contents: </h3>
-<ul>
- <li> \subpage about_page "About"
-   <ul>
-   <li> \subpage goals_page        "Goals"
-   <li> \subpage capabilities_page "Capabilities"
-   <li> \subpage contributors_page "Contributors"
-   </ul>
- <li> \subpage guide_page "User Guide"
-   <ul>
-   <li> \subpage compile_page     "Compilation" </li>
-   <li> \subpage usage_page       "Basic Usage" </li>
-   <li> \subpage param_page       "Parameter File"</li>
-   <li> \subpage commands_page    "Command File"</li>
-   <li> \subpage cfgfile_page     "Configuration File"</li>
-   <li> \subpage examples_page    "Examples"</li>
-   <li> \subpage analysis_page    "Data Analysis"</li>
-   <li> \subpage restart_page     "Restarting"</li>
-   <li> \subpage multi_page       "Multi-system simulations" </li>
+<h3> Contents: </h3>
+<ul style="list-style: none;">
+ <li> \subpage about_page "1. About"
+   <ul style="list-style: none;">
+   <li> \subpage goals_page  </li> 
+   <li> \subpage capabilities_page </li> 
+   <li> \subpage contributors_page </li>
    </ul>
  </li>
- <li> \subpage overview_page "Source Code Overview"
-   <ul>
-   <li> \subpage directory_page  "Directory Structure" </li>
-   <li> \subpage design_page     "Namespaces" 
-   <ul>
-     <li> \subpage Util_NS_page  "Util namespace" </li>
-     <li> \subpage Inter_NS_page "Inter namespace" </li>
-     <li> \subpage McMd_NS_page  "McMd namespace" </li>
-     <li> \subpage DdMd_NS_page  "DdMd namespace" </li>
+ <li> \subpage guide_page "2. User Guide"
+   <ul style="list-style: none;">
+   <li> \subpage compile_page  </li>
+   <li> \subpage usage_page    </li>
+   <li> \subpage param_page    </li>
+   <li> \subpage commands_page </li>
+   <li> \subpage cfgfile_page  </li>
+   <li> \subpage examples_page </li>
+   <li> \subpage analysis_page </li>
+   <li> \subpage restart_page  </li>
+   <li> \subpage multi_page    </li>
    </ul>
+ </li>
+ <li> \subpage overview_page "3. Source Code Overview"
+   <ul style="list-style: none;">
+   <li> \subpage directory_page </li>
+   <li> \subpage design_page    
+     <ul style="list-style: none;">
+     <li> \subpage Util_NS_page  </li>
+     <li> \subpage Inter_NS_page </li>
+     <li> \subpage McMd_NS_page  </li>
+     <li> \subpage DdMd_NS_page  </li>
+     </ul>
    </li>
    </ul>
  </li>
- <li> \subpage custom_page "Compile-Time Options"
-   <ul>
-   <li> \subpage preprocessor_page "Preprocessor Macros" </li>
-   <li> \subpage boundary_page     "Unit Cell Type" </li>
+ <li> \subpage custom_page "4. Compile-Time Options"
+   <ul style="list-style: none;">
+   <li> \subpage preprocessor_page </li>
+   <li> \subpage boundary_page </li>
    </ul>
- <li> \subpage extend_page  "Extending Simpatico" </li>
-   <ul>
-   <li> \subpage inherit_page        "Base Classes" </li>
-   <li> \subpage extend_build_page  "Build System (adding new classes)" </li>
-   <li> \subpage factory_page        "Factory Classes" </li>
-   <li> \subpage potentials_page     "Potential Energy Classes" </li>
-   <li> \subpage subfactory_page     "SubFactories" </li>
-   <li> \subpage module_page         "Module Classes" </li>
+ <li> \subpage extend_page  "5. Extending Simpatico" </li>
+   <ul style="list-style: none;">
+   <li> \subpage inherit_page  </li>
+   <li> \subpage extend_build_page </li>
+   <li> \subpage factory_page      </li>
+   <li> \subpage potentials_page   </li>
+   <li> \subpage subfactory_page  </li>
+   <li> \subpage module_page   </li>
    </ul>
  </li>
- <li> \subpage hoomd_page     "Hoomd-blue integration" </li>
- <li> \subpage developer_page "Developer Information"
-   <ul>
-   <li> \subpage make_page "Build System" </li>
-   <li> \subpage test_page "Unit Tests" </li>
-   <li> \subpage read_param_page  "ReadParam Methods"</li>
-   <li> \subpage data_page "Data Structures" </li>
+ <li> \subpage hoomd_page     "6. Hoomd-blue integration" </li>
+ <li> \subpage developer_page "7. Developer Information"
+   <ul style="list-style: none;">
+   <li> \subpage make_page </li>
+   <li> \subpage test_page </li>
+   <li> \subpage read_param_page  </li>
+   <li> \subpage data_page </li>
    </ul>
  </li>
 </ul>

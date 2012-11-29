@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page boundary_page Unit Cell Type
+/*! \page boundary_page 4.2 Boundary Type
 
 The choice of lattice system for the periodic unit cell (i.e., cubic, 
 tetragonal, or orthorombic) used by Simpatico is set by a typedef
@@ -27,7 +27,7 @@ instances of subclasses that represent orthogonal or
 non-orthogonal boundary conditions at run time, but would also
 prevent inlining of the minimum image separation calculations.
 
-<ul>
+<ul style="list-style: none;">
  <li> \ref preprocessor_page (Previous)  </li>
  <li> \ref custom_page       (Up)        </li>
  <li> \ref extend_page     (Next)      </li>

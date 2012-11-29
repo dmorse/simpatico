@@ -1,4 +1,4 @@
-/*! \page design_page Namespaces
+/*! \page design_page 3.2 Namespaces
 
 The classes used in the current version of Simpatico are divided into four
 namespaces. The source code for each namespace is in a corresponding 
@@ -15,14 +15,14 @@ subdirectories of the src/directory:
    required to construct single-processor Monte Carlo and molecular 
    dynamics simulations, and the main programs for mcSim and mdSim.  
 
- -namespace DdMd (in directory src/ddMd) contains classes for a parallel 
-  domain-decomposition molecular dynamics code, and the main program for 
-  the ddSim executable. 
+ - namespace DdMd (in directory src/ddMd) contains classes for a parallel 
+   domain-decomposition molecular dynamics code, and the main program for 
+   the ddSim executable. 
 
 
 The code in some namespaces depend on sybmols defined in others. A namespace
-named D will be said "depends" on another namespace C if any classes in 
-namespace D use symbols that are defined in C. These relationships are:
+named D will be said to "depend" on another namespace C if any class in 
+namespace D uses any symbols that are defined in C. These relationships are:
 
  - namespace Util does not depend on any other namespace
 
@@ -40,7 +40,7 @@ a sets of functionally related classes, with links to the documentation
 for individual classes.
 
 Contents:
-<ul>
+<ul style="list-style: none;">
  <li> \subpage Util_NS_page  </li>
  <li> \subpage Inter_NS_page </li>
  <li> \subpage McMd_NS_page  </li>
@@ -48,12 +48,11 @@ Contents:
 </ul>
 
 Navigation:
-<ul>
+<ul style="list-style: none;">
  <li> \ref directory_page (Previous)      </li>
  <li> \ref overview_page  (Up)            </li>
- <li> \ref Util_NS_page   (Next / Down)   </li>
  <li> \ref custom_page    (Next Section)  </li>
 </ul>
-
 */
  
+// <li> \ref Util_NS_page   (Next / Down)   </li>

@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page usage_page Usage
+/*! \page usage_page 2.2 Usage
 
 This section describes how to use the programs mcSim, mdSim and ddSim.  The discussion assumes that the executables have been installed in a directory that is in the users command search $PATH variable. 
 
@@ -20,7 +20,7 @@ During execution, a log output is sent to standard output (i.e., the screen). Th
 This is the command normally used when a job is run in background, or in a queue.
 
 Each simulation normally requires three input files: 
-<ul>
+<ul style="list-style: none;">
    <li> a parameter file </li>
    <li> a command file </li>
    <li> a configuration file </li>
@@ -99,7 +99,7 @@ A variety of other output files may also be written by classes that implement on
 \section section_options Command Line Options
 
 The mdSim and mcSim programs can each be invoked with any combination of three command line options:
-<ul>
+<ul style="list-style: none;">
   <li> -e: Activates echoing of the parameter file to standard output.</li>
   <li> -r filename: Restarts and continues a previous simulation. </li>
   <li> -p: Enables the use of free energy perturbation theory.
@@ -112,7 +112,7 @@ The -r (restart) option takes a required parameter "filename". This is the base 
 The -p (perturbation) option enables the definition of a free energy perturbation, for use with thermodynamic integration and replica exchange algorithms. This is generally only useful when used with a version of mcSim or mdSim that is compiled for use on multiple processors.  This option is discussed in more detail \ref multiMcMd_page "here".  
 
 The ddSim domain-decomposition MD program can be invoked with the following two options:
-<ul>
+<ul style="list-style: none;">
   <li> -e: Activates echoing of the parameter file to standard output.</li>
   <li> -s  p: Enables simulation of p independent systems. </li>
   </li>
@@ -123,7 +123,7 @@ The -s (split) option takes a required parameter p, and enables simultaneous sim
 by splitting the MPI communicator into p subcommunicators and using each to run a separate simulation. This option
 is discussed in more detail \ref multiDdMd_page "here". 
 
-<ul>
+<ul style="list-style: none;">
  <li> \ref compile_page  (Previous) </li>
  <li> \ref guide_page    (Up)       </li>
  <li> \ref param_page    (Next)     </li>

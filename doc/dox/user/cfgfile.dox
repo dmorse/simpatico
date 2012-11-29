@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page cfgfile_page Configuration Files
+/*! \page cfgfile_page 2.5 Configuration Files
 
 The instantaneous state of a system is recorded in a configuration file.  Each of the simpatico programs has a default configuration file format, and is also able to read and write several other formats. 
 
@@ -184,7 +184,7 @@ to generate random velocities chosen from a Maxwell-Boltzmann distribution. A SE
 
 A command file that contains only SET_CONFIG_IO, READ_CONFIG and WRITE_CONFIG commands can be used to convert between file formats.
 
-<ul>
+<ul style="list-style: none;">
  <li> \ref commands_page  (Previous) </li>
  <li> \ref guide_page     (Up)       </li>
  <li> \ref examples_page  (Next)     </li>

@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page data_page Data Structures (mcSim and mdSim)
+/*! \page data_page 7.4 Data Structures (mcSim and mdSim)
 
 In this section, we discuss details of how the most important data
 structures are organized in the implementation of the mcSim and 
@@ -274,7 +274,7 @@ position and atomic type id) and the atom array index that
 is required to rapidly access the other attributes that are
 stored in separate arrays. 
 
-<ul>
+<ul style="list-style: none;">
  <li> \ref read_param_page       (Previous)  </li>
  <li> \ref developer_page  (Up)        </li>
 </ul>
