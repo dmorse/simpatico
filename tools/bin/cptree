@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# ---------------------------------------------------------------
+# Recursive script to copy an empty directory tree, with no files.
+# 
+# Synopsis:  cptree old new
+#
+# Makes a copy of the directory tree rooted at old within
+# directory new. Directory new must already exist. 
+# ---------------------------------------------------------------
+echo $1
+if [ ! -d "$2" ]; then
+  mkdir "$2"
+fi
+mkdir "$2/$1"
+for i in "$1"/*
+do
+  if [ -d "$i" ]
+  then
+    newdir="$i"
+    $0 $newdir $2
+  fi
+done
