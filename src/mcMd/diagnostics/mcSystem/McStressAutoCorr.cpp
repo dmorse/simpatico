@@ -50,7 +50,6 @@ namespace McMd
       accumulator_.setParam(capacity_);
 
       fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
-
       isInitialized_ = true;
    }
 
@@ -69,6 +68,9 @@ namespace McMd
    void McStressAutoCorr::sample(long iStep) 
    { 
       if (isAtInterval(iStep))  {
+
+	 outputFile_ <<  "t = " << iStep << "\n";	 
+
          Tensor stress;
          system().computeStress(stress);
          double pressure = stress.trace()/double(Dimension);
@@ -78,7 +80,7 @@ namespace McMd
          stress.symmetrize();
          double volume = system().boundary().volume();
          stress *= sqrt(volume);
-         outputFile_ << stress << std::endl;
+         outputFile_ << stress << "\n";
          accumulator_.sample(stress);
       } 
    }
