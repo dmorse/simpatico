@@ -13,7 +13,12 @@ Contents:
    <li> \subpage examples_page  </li>
    <li> \subpage analysis_page  </li>
    <li> \subpage restart_page   </li>
-   <li> \subpage multi_page     </li>
+   <li> \subpage multi_page     
+     <ul style="list-style: none;">
+     <li> \subpage multiMcMd_page  </li>
+     <li> \subpage multiDdMd_page  </li>
+     </ul>
+   </li>
    </ul>
 
 Navigation: 

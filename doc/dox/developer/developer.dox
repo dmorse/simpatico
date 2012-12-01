@@ -8,7 +8,8 @@ namespace McMd
    <li> \subpage make_page </li>
    <li> \subpage test_page </li>
    <li> \subpage read_param_page </li>
-   <li> \subpage data_page </ul>
+   <li> \subpage data_page </li>
+   </ul>
  
 
 Navigation: 
@@ -20,4 +21,5 @@ Navigation:
 */
 
 // <li> \ref make_page     (Next / Down) </li>
+// <li> \subpage standards_page </li>
 }
