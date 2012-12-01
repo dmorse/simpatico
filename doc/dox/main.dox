@@ -59,6 +59,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \subpage make_page </li>
    <li> \subpage test_page </li>
    <li> \subpage read_param_page  </li>
+   <li> \subpage standards_page </li>
    <li> \subpage data_page </li>
    </ul>
  </li>
