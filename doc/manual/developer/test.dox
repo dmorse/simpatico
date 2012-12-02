@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page developer_test_page 7.5 Unit Tests
+/*! \page developer_test_page 7.6 Unit Tests
 
 The tests/ directory contains a set of unit tests of individual classes. The directory structure is as follows:
 \code
