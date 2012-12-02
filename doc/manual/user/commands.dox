@@ -1,0 +1,223 @@
+namespace McMd
+{
+
+/*! \page user_commands_page 2.4 Command File
+
+After the main simulation object is initialized by the readParam() method, the progress of a simulation is controlled by a command file that is read by the readCommand() method. The name of the command file is specified by the commandFileName parameter in the FileMaster block of the parameter file. If the value of commandFileName is given by the special string "paramfile", however, readCommand() will assume that command file has been appended to the end of the param file, after the closing bracket of the main McSimulation or MdSimulation block, and will attempt to continue reading from the parameter file. 
+
+The command file contains a sequence of one-line commands that are read and executed in sequence. Each command begins with an all upper case label. Some commands take one or more required parameters after the upper case label. The script stops execution when it encounters the command string 'FINISH' on a line by itself. 
+
+\section example_sec Example
+
+Here is a example of a command file for an mdSim MD simulation that reads in a file in the MC format, generates random velocities, runs a simulation of 100000 MD steps, then outputs the final configuration in the MD format:
+\code
+SET_CONFIG_IO  McConfigIo
+READ_CONFIG        config
+THERMALIZE         1.0000
+SIMULATE           100000
+SET_CONFIG_IO  MdConfigIo
+WRITE_CONFIG       config
+FINISH
+\endcode
+The command "SET_CONFIG_IO McConfigIo" identifies the configuration file format to be used in subsequent READ_CONFIG and WRITE_CONFIG commands.  The "McConfigIo" format is the default format for an mcSim MC simulation, but can also be used as an input to an Md simulation, as done here. If no SET_CONFIG command is given before the first READ_CONFIG or WRITE_CONFIG command, the program will choose the default format for the program, i.e., and MC file format with no velocities for mcSim and an MD file format that does contain velocities for mdSim.
+
+The command "READ_CONFIG config" reads an MC configuration file from a file named "config", prefixed by the input prefix string given in the param file. 
+
+The "THERMALIZE 1.0" command generates random velocities chosen from the Maxwell-Boltzmann distribution with a thermal energy kT = 1.0. This is necessary here because the MC file format used here does not contain any velocities.
+
+The command "SIMULATE 100000" runs a simulation of 100000 MD steps. 
+
+The command "SET_CONFIG_IO MdConfigIo" resets the configuration file format to the "MdConfigIo" format, which is the default for mdSim.
+  
+"WRITE_CONFIG config" writes the final configuration in the MdConfigIo format, which includes velocities. The configuration is written to a file whose name is given by the string argument "config" prefixed by the output path prefix which is specified in the param file FileMaster block.
+
+The ANALYZE_DUMPS or ANALYZE_TRAJECTORY commands can be used to read and analyze (i.e., post-process) a sequence of configuration files that were dumped by a previous simulation or a whole trajectory that was dumped by a different simulation program (such as Hoomd).  For ANALYZE_DUMPS, the name each of these files must be a concatenation of the input prefix, followed by the filename argument of the ANALYZE command, followed by an integer suffix. For ANALYZE_TRAJECTORY, the file name is simply the single trajectory file.
+
+A system can be initialized either by reading a configuration from file or by using the GENERATE_MOLECULES command to generate a partiall random initial configuration. The GENERATE_MOLECULES command generates a initial configuration in which atoms of molecules are distributed at random, using conformations chosen from the equilibrium distribution for a molecule in vaccum, supplemented by a constraint that rejects all conformations that violate a hard-core constraint on the distance between any pair of atoms. The command guarantees that no two atoms will be closer than the sum of their exclusion radii.
+
+\section commands_sec Commands
+
+The following table shows a list of available commands for all three programs.  The last three columns indicate which commands are valid for each program: An "X" represents a valid command for mcSim, mdSim, or ddSim.
+<table>
+  <tr> 
+    <td> <b>command     </b> </td>
+    <td> <b>parameter(s)</b> </td>
+    <td> <b>description </b> </td>
+    <td> <b>mcSim</b> </td>
+    <td> <b>mdSim</b> </td>
+    <td> <b>ddSim</b> </td>
+  </tr>
+  <tr> 
+    <td> READ_CONFIG </td>
+    <td> filename [string] </td>
+    <td> Read configuration from file filename, with input prefix  </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr> 
+    <td> SIMULATE </td>
+    <td> nStep [int] </td>
+    <td> Run a simulation of nStep MD or MC steps. 
+         Initialize state of simulation, and set iStep = 0, before
+         entering the main loop. </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr> 
+    <td> CONTINUE </td>
+    <td> endStep [int] </td>
+    <td> Continue a simulation simulation until step counter iStep 
+         reaches endStep, with no re-initialization. </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>-</b> </td>
+  </tr>
+  <tr> 
+    <td> WRITE_CONFIG </td>
+    <td> filename [string] </td>
+    <td> Write configuration from file filename, with output prefix  </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr> 
+    <td> WRITE_PARAM </td>
+    <td> filename [string] </td>
+    <td> Write parameter file block to file filename, with output prefix </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr> 
+    <td> SET_CONFIG_IO </td>
+    <td> className [string] </td>
+    <td> Choose a file format form reading and writing config files, by
+         creating a new instance of a specified subclass className of
+         ConfigIo to be used for these purposes. The resulting object
+         will be used until the next SET_CONFIG_IO command. </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr> 
+    <td> THERMALIZE </td>
+    <td> temperature [float] </td>
+    <td> 
+       Generate random velocities for specified temperature (in energy units). 
+    </td>
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr>
+    <td> GENERATE_MOLECULES </td>
+    <td> boxL [float], nMol0 [int], nMol1 [int], ...,
+         radius0 [float], radius1[float], ... </td>
+    <td> Generate random molecules in a cubix box of size boxL.
+         The number of molecules is nMol0 for species 0, nMol1
+         for species 1, etc. The hard core exclusion radius is
+         radius0 for atoms of type 0, etc.
+         </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>-</b> </td>
+  </tr>
+  <tr> 
+    <td> ANALYZE_DUMPS </td>
+    <td> min [int], max [int], filename [string] </td>
+    <td> Postprocess a series of configuration dump files with integer suffix 
+         labels min <= i <= max and a specified base filename </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>-</b> </td>
+  </tr>
+  <tr>
+    <td> ANALYZE_TRAJECTORY </td>
+    <td> min[int], max[int], classname [string], filename [string] </td>
+    <td> Postprocess frames from a trajectory file filename using an instance 
+         of TrajectoryIo classname. Reads frame numbers min <= i <= max.  
+         Negative values for min, max are counted from the end of the file.
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>-</b> </td>
+    </td>
+  </tr>
+  <tr>
+    <td> SET_PAIR </td>
+    <td> name[string], i[int], j[int], value[float] </td>
+
+    <td> Set value of specific parameter (e.g., name = "epsilon")
+         in pair potential for particles of types i and j. </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr>
+    <td> SET_BOND </td>
+    <td> name[string], type[int], value[float] </td>
+
+    <td> Set value of specific parameter (e.g., name = "kappa")
+         in the bond potential for specific bond type </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr>
+    <td> SET_ANGLE </td>
+    <td> name[string], type[int], value[float] </td>
+
+    <td> Set value of specific parameter (e.g., name = "kappa")
+         in the angle potential for specific angle type </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr>
+    <td> SET_DIHEDRAL </td>
+    <td> name[string], type[int], value[float] </td>
+
+    <td> Set value of specific parameter in the dihedral
+         potential for specific dihedral type </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr>
+    <td> OUTPUT_INTEGRATOR_STATS </td>
+    <td>  </td>
+    <td> Output timing statistics </td>
+    <td> <b>-</b> </td>
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr>
+    <td> OUTPUT_MEMORY_STATS </td>
+    <td>  </td>
+    <td> Output memory usage statistics. </td>
+    <td> <b>-</b> </td>
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr>
+    <td> CLEAR_INTEGRATOR </td>
+    <td>  </td>
+    <td> Clear integrator state and all statistical accumulators. </td>
+    <td> <b>-</b> </td>
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+</table>
+The SET_ANGLE and SET_DIHEDRAL commands are only available in programs compiled with angle and dihedral potentials enabled.
+
+Navigation:
+<ul style="list-style: none;">
+ <li> \ref user_param_page        (Previous) </li>
+ <li> \ref user_page        (Up)   </li>
+ <li> \ref user_cfgfile_page      (Next) </li>
+</ul>
+
+*/
+
+}

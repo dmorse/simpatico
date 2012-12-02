@@ -1,0 +1,32 @@
+namespace McMd
+{
+
+/*! \page user_page 2 User Guide
+
+Contents:
+   <ul style="list-style: none;">
+   <li> \subpage user_compile_page   </li>
+   <li> \subpage user_usage_page     </li>
+   <li> \subpage user_param_page     </li>
+   <li> \subpage user_commands_page  </li>
+   <li> \subpage user_cfgfile_page   </li>
+   <li> \subpage user_examples_page  </li>
+   <li> \subpage user_analysis_page  </li>
+   <li> \subpage user_restart_page   </li>
+   <li> \subpage user_multi_page     
+     <ul style="list-style: none;">
+     <li> \subpage user_multi_McMd_page  </li>
+     <li> \subpage user_multi_DdMd_page  </li>
+     </ul>
+   </li>
+   </ul>
+
+Navigation: 
+<ul style="list-style: none;">
+ <li> \ref about_page (Previous section)</li>
+ <li> \ref index "Main Page"  (Up) </li>
+ <li> \ref source_page (Next section)  </li>
+</ul>
+*/
+ 
+}

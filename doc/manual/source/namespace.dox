@@ -1,0 +1,58 @@
+/*! \page source_namespace_page 3.2 Namespaces
+
+The classes used in the current version of Simpatico are divided into four
+namespaces. The source code for each namespace is in a corresponding 
+subdirectories of the src/directory: 
+
+ - namespace Util (in directory src/util) contains general utilities for 
+   C++ programming and scientific computation. 
+
+ - namespace Inter (in directory src/inter) contains classes that define 
+   specific potential energy functions, such as the Lennard-Jones pair 
+   potential. 
+
+ - namespace McMd namespace (in directory src/mcMd) contains classes 
+   required to construct single-processor Monte Carlo and molecular 
+   dynamics simulations, and the main programs for mcSim and mdSim.  
+
+ - namespace DdMd (in directory src/ddMd) contains classes for a parallel 
+   domain-decomposition molecular dynamics code, and the main program for 
+   the ddSim executable. 
+
+
+The code in some namespaces depend on sybmols defined in others. A namespace
+named D will be said to "depend" on another namespace C if any class in 
+namespace D uses any symbols that are defined in C. These relationships are:
+
+ - namespace Util does not depend on any other namespace
+
+ - namespace Inter depends only on Util
+
+ - namespace McMd depends on Util and Inter, but not on DdMd
+
+ - namespace DdMd depends on Util and Inter, but not on McMd
+
+A few of the most important classes in each namespace are introduced in
+the pages listed below. An alternate, and more complete, view of all of 
+the classes in each namespace may be obtained clicking on the "Modules" 
+link above and browsing a hierarchy of modules, each of which contains 
+a sets of functionally related classes, with links to the documentation
+for individual classes.
+
+Contents:
+<ul style="list-style: none;">
+ <li> \subpage Util_NS_page  </li>
+ <li> \subpage Inter_NS_page </li>
+ <li> \subpage McMd_NS_page  </li>
+ <li> \subpage DdMd_NS_page  </li>
+</ul>
+
+Navigation:
+<ul style="list-style: none;">
+ <li> \ref source_directory_page (Previous)      </li>
+ <li> \ref source_page  (Up)            </li>
+ <li> \ref custom_page    (Next Section)  </li>
+</ul>
+*/
+ 
+// <li> \ref Util_NS_page   (Next / Down)   </li>

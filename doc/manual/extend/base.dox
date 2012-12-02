@@ -1,0 +1,52 @@
+namespace McMd
+{
+
+/*! \page extend_base_page 5.1 Base Classes
+
+The mcSim and mdSim programs use several base classes that can be extended by users to implement new algorithms, molecular species, and file formats, which are all defined in the McMd namespace. Among these are:
+<ul style="list-style: none;">
+ <li> McMd::Species, which represents a molecular species. </li>
+ <li> McMd::McMove, which represents a MC Markov move. </li>
+ <li> McMd::MdIntegrator, which represents an MD integration algorithm. </li>
+ <li> McMd::Diagnostic, which represents a data analysis or output operation. </li>
+ <li> McMd::ConfigIo, which represents a configuration file format.</li>
+ <li> McMd::TrajectoryIo, which represents an MD trajectory file format.</li>
+ <li> McMd::Perturbation, which defines a free energy perturbation.</li>
+</ul>
+In order to implement, for instance, a new data analysis operation in mcSim and/or MdSim, the user must thus write a subclass of the McMd::Diagnostic base class. The McMd namespace also contains a set of potential energy base classes:
+<ul style="list-style: none;">
+ <li> McMd::McPairPotential, which represents a nonbonded pair interaction for MC simulations. </li>
+ <li> McMd::MdPairPotential, which represents a nonbonded pair interaction for MD simulations. </li>
+ <li> McMd::BondPotential, which represents an covalent two-body bond potential. </li>
+ <li> McMd::AnglePotential, which represents an covalent three-body angle potential. </li>
+ <li> McMd::AnglePotential, which represents an covalent four-body dihedral potential. </li>
+ <li> McMd::ExternalPotential, which represents an external one-body potential.</li>
+</ul>
+The BondPotential, AnglePotential, DihedralPotential, and ExternalPotential classes are used in both MC and MD simulations. Two different classes, McPairPotential and MdPairPotential, are provided for nonbonded interations in MC and MD simulations, respectively, because of differences in the algorithms and calculations required in these two contexts.
+
+The ddSim parallel program uses a smaller set of base classes. These are defined in the DdMd namespace and have similar or identical names to analogous classes from the McMd namespace. These include;
+<ul style="list-style: none;">
+ <li> DdMd::Integrator, which represents a parallel MD integration algorithm. </li>
+ <li> DdMd::Diagnostic, which represents a data analysis or output operation. </li>
+ <li> DdMd::ConfigIo,   which represents a configuration file format.    </li>
+</ul>
+and potential energy classes
+<ul style="list-style: none;">
+ <li> DdMd::PairPotential, which represents a nonbonded pair interaction for MD simulations. </li>
+ <li> DdMd::BondPotential, which represents an covalent two-body bond potential. </li>
+ <li> DdMd::AnglePotential, which represents an covalent three-body angle potential. </li>
+ <li> DdMd::AnglePotential, which represents an covalent four-body dihedral potential. </li>
+ <li> DdMd::ExternalPotential, which represents an external one-body potential.</li>
+</ul>
+Implementation of subclasses of these DdMd base classes generally require interprocessor communication.
+
+Subclasses of the McMd and DdMd potential energy classes are implemented differently than the other base classes discussed above. Each subclass of these "potential" classes is implemented as an instantiations of a class template that takes a simpler "interaction" class as an argument. An "interaction" class is a non-polymorphic class that defines a potential energy function (e.g., a Lennard-Jones pair interaction) and is responsible for the core calculations of forces and energies for a small group of atoms (e.g., for a single nonbonded pair). The interaction classes are all defined in the Inter namespace, and are located in the src/inter directory. The potential energy classes listed above use an associated interaction class for the core calculations, but can also calculate energies and (in MD simulations) forces for an entire system, and (in MC simulations) energies for individual atoms and molecules. Because the potential energy classes are implemented using templates, the procedure for extending the potential classes so as to implement new interactions is somewhat different than the procedure for extending the other base classes. These peculiarities of the potential energy classes are discussed in more detail \ref extend_potential_page "here".
+
+Navigation: 
+<ul style="list-style: none;">
+ <li> \ref extend_page     (Up)       </li>
+ <li> \ref extend_build_page    (Next)     </li>
+</ul>
+
+*/
+}
