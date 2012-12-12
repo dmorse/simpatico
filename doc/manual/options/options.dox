@@ -1,0 +1,28 @@
+namespace McMd
+{
+
+/*! \page custom_page 4 Compile-Time Options
+
+Many optional features of Simpatico can be enabled or disabled the program is compiled
+by using C++ preprocessor macros to control conditional compilation, or by changing a
+typedef to change the type of periodic unit cell. 
+   
+   Contents: 
+   <ul style="list-style: none;">
+   <li> \subpage preprocessor_page </li>
+   <li> \subpage boundary_page   </li>
+   </ul>
+ 
+
+Navigation: 
+<ul style="list-style: none;">
+ <li> \ref source_page     (Previous section) </li>
+ <li> \ref index "Main Page"  (Up)       </li>
+ <li> \ref extend_page       (Next section)     </li>
+</ul>
+*/
+
+// <li> \ref DdMd_NS_page       (Previous) </li>
+// <li> \ref preprocessor_page (Next / Down)       </li>
+ 
+}

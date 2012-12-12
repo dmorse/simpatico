@@ -1,0 +1,64 @@
+namespace McMd
+{
+
+/*! \page user_restart_page 2.8 Restarting
+
+The -r command line option can be used to restart an mcSim or mdSim simulation from a checkpoint file that preserves the full internal state of a simulation. It is, of course, always possible to restart any simulation from a configuration file. Restarting from a configuration file, however, loses some information about the internal state of the program, such as the state of the random number generator, the values of auxiliary state variables used by some MD integrators, and the state of statistical accumulators used by on-the-fly diagnostics. Restarting from a binary checkpoint file preserves all of this internal state information, and simply continues the simulation from the point at which the checkpoint file was written. Both single-processor and multi-processor mcSim and mdSim simulations can be restarted from checkpoint files.
+
+No analogous restart capability has yet been implemented for ddSim simulations: Thus far, these can only be restarted from a configuration file. 
+
+\section user_restart_page_checkpoint Writing Checkpoint Files
+
+To be able to restart an mdSim or mcSim simulation, the original simulation musthave been run using the MdWriteRestart (for mdSim) or McWriteRestart (for mcSim) diagnostic. Each of these diagnostics periodically writes the required checkpoint file. The parameter file format for the McWriteRestart diagnostic looks like this:
+\code
+   McWriteRestart{
+     interval       10000
+     outputFileName restart
+   }
+\endcode
+The format for MdWriteRestart is identical except for the replacement of the class name identifier "McWriteRestart" by "MdWriteRestart" in the opening line. The interval parameter determines the number of MC or MD steps between subsequent file writes. The outputFileName is a base name for the checkpoint file. The full name of the checkpoint file is constructed by appending a suffix ".rst" to the base name. The checkpoint file is overwritten repeatedly, so that only the most recent state is available. Using the above parameter file block, a file named restart.rst would be overwritten when the MC step counter is a multiple of 10000.
+
+\section user_restart_page_command Command File
+
+To restart an mcSim or mdSim simulation, one must also write a short command file.  The name of this file must end with the suffix ".cmd", and must have the same base name as the corresponding *.rst checkpoint file. The *.rst checkpoint file and the *.cmd command file must be placed in the same directory. For single-processor simulations, this must be the directory from which the program was invoked. When a program is invoked with the -r command line option, the first line of the command file must be a "RESTART" command, as discussed below.
+
+The simplest possible *.cmd command file looks like this:
+\code
+   RESTART   150000
+   FINISH
+\endcode
+The RESTART command causes the program to re-enter the main simulation loop at the point at which the checkpoint file was written. The step counter is initially set to the value it had when the checkpoint file was written, which is stored in the checkpoint file. The simulation is then run until the step counter reaches a final value that is given in the command file as an integer argument after the RESTART keyword. The RESTART command bypasses some initialization steps that are executed before the main loop in a normal SIMULATE command, in order to recreate the state of the simulation at the moment that the checkpoint file was written. 
+
+The RESTART command is only valid if the program was invoked with the RESTART (-r) command line option, in which case it must be the first line of the file. Other commands may follow after the RESTART command and before the FINISH command, which stops execution. 
+
+\section user_restart_page_usage Usage
+
+To restart an mcSim or mdSim simulation, one must invoke the mdSim or mcSim executable with the -r option, and supply the common base name of the *.rst and *.cmd files as an option argument. Thus, for example, if a previous MC simulation were run using a base name of "restart" for the outputFileName in the McWriteRestart Diagnostic, one could type
+\code
+   mcSim -e -r restart
+\endcode
+to restart the simulation. The use of the -e option is optional, but causes parameters that would normally be read from the parameter file to be echoed to standard output while the program is reading the checkpoint file. In this example, the -r option would cause the program to read restart.rst to initialize the simulation and then execute the commands in the file restart.cmd in the order listed.
+
+\section user_restart_page_multiprocessor Multi-processor simulations
+Is is also possible to restart multi-processor mcSim and mdSim simulations. Please read the discussion of \ref user_multi_McMd_page "multi-processor mcSim and mdSim simulations" before reading the following discussion of multi-processor restart procedures.
+
+In multi-processor simulations, as for single processor simulations, checkpoint files are written by McWriteRestart or MdWriteRestart diagnostic. The parameter file format for these diagnostics is the same in single- and multi-processor simulations. In all multi-processor simulations, whether independent or replicated, these diagnostics write a separate restart file for each processor. The checkpoint file for each processor is placed in the numbered directory that contains data associated with that processor. For example, if the outputFileName parameter in the McWriteRestart or MdWriteRestart parameter file is "restart", the checkpoint file for processor 2 would be 2/restart.rst. 
+
+The conventions for command files are different for "independent" and "replicated" simulations. Independent simulations use a separate *.rst restart command file for each processor, each of which is placed in the same directory as the associated checkpoint file. Replicated simulations use a single restart command file, which must be placed in the same directory as the single parameter file and command file for the original simulation, which is also the directory from which the mcSim or mdSim executable is invoked. In either case, the base name of the command file or files must be the same as the base name of the restart files, whichis determined by the outputFileName parameter used by the McWriteRestart or MdWriteRestart diagnostic during the original simulation.
+
+The command to restart a multi-processor simulation is similar to that for a single-processor simulation. The command to restart a 3 processor mcSim simulation of either independent or replicated systems, using the mcSim_m_f executable and the mpirun command to launch an MPI program, is
+\code
+   mpirun -np 3 mcSim_m_f -e -r restart
+\endcode
+Information about whether the original simulation was a simulation of independent or replicated systems is stored within all checkpoint files, and does not need to be specified by a command line option when the simulation is restarted. Invoke an mcSim or mdSim executable with both the "-r" and "-p" options is thus illegal, and will cause execution to halt.
+
+Navigation:
+<ul style="list-style: none;">
+ <li> \ref user_analysis_page (Previous) </li>
+ <li> \ref user_page      (Up)   </li>
+ <li> \ref user_multi_page   (Next) </li>
+</ul>
+
+*/
+
+}

@@ -54,7 +54,7 @@ Simpatico is prepared using the Doxygen utility (www.doxygen.org).
 Doxygen creates html web pages that are deposited in the directory 
 doc/html/ of the working tree. These pages are created from 
 comments extracted from the C++ source code, and from a set of 
-text files in the directory doc/dox/. These text files, which 
+text files in the directory doc/manual/. These text files, which 
 have the file extension *.dox, contain the text for a set of 
 introductory documentation pages, and are readable in any text 
 editor. 
@@ -84,8 +84,8 @@ The code is standard C++ and must be compiled from source.
 Multi-processor programs (ddSim and multi-processor versions 
 of mcSim and mdSim) require an MPI library.  Complete instructions 
 for compiling various versions of Simpatico are given in the text 
-file simpatico/doc/dox/compile.dox, or in the corresponding html 
-web page in the doc/html directory.
+file simpatico/doc/manual/user/compile.dox, or in the corresponding 
+html web page in the doc/html directory.
 
 Short instructions for compiling the default single-processor 
 versions of mcSim and mdSim (for the impatient) are:

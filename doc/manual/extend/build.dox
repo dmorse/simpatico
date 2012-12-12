@@ -1,0 +1,38 @@
+namespace McMd
+{
+
+/*! \page extend_build_page 5.2 Build system (adding new classes)
+
+Simpatico is built using a system of unix makefiles. The procedure described here allows users to add new classes to the list of source files maintained by the build system, so that new classes can be compiled and linked along with the rest of simpatico. 
+
+Source and header files for user-defined classes should be placed in one of three special user/ directories that are provided for this purpose. Any new class that is a subclass of an existing base class should be defined within the same C++ namespace as the base class. Source (*.cpp) and header (*.h) files for classes that are defined in the McMd namespace, which can be used in the mcSim and mdSim programs, should be placed in the src/mcMd/user/ directory. Source and header files for new classes defined in the DdMd namespace, which will accessible only by ddSim, should be placed in the src/ddMd/user/ directory. Files for classes that define new interaction potential functions should be placed the directory src/inter/user, as discussed in more detail \ref extend_potential_page "here". 
+
+After placing new C++ files in the appropriate user/ directory, the user must also modify a file named "sources.mk" in the same directory. The "sources.mk" file in any subdirectory of src/ is a makefile fragment that contains a list of all of the source files in that directory. The source.mk file in user/ directory initially contains an empty list of such files. For example, the file src/mcMd/user/ initially looks like this:
+\code
+mcMd_user_SRCS=\
+    #$(SRC_DIR)/mcMd/user/Class1.cpp \
+    #$(SRC_DIR)/mcMd/user/Class2.cpp
+
+mcMd_user_OBJS=$(mcMd_user_SRCS:.cpp=.o)
+\endcode
+Here, mcMd_user_SRCS is a makefile variable that lists all of the *.cpp source files in this directory. In any such file, this name of this variable is constructed by appending the suffix "_SRCS" to a mangled form of the directory path, expressed relative to the src/ directory.  The corresponding _OBJS variable (mcMd_user_OBJS in this example) gives a list of all of the object (*.o) files that will be created by compiling all of the source files. Each name in the list of object files is created automatically by simply replacing the *.cpp file extension a source file name by  a *.o extension. For the build system to work correctly, all source files must have a file extension *.cpp. 
+
+In the above example, the entries Class1.cpp and Class2.cpp are placeholders that are commented out by the '#' symbol at the beginning of each line. To add a new class to this initially empty list, uncomment the last of these lines, by removing the `#', and replace the placeholder "Class2.cpp" by the name of the new source file. The backslash at the end of each line is a line continuation symbol, which should appear at the end of every uncommented line of the definition of the _SRCS variable except the last line. The path to each source file must be given using the same format as that of the placeholder examples. In this format, the makefile variable $(SRC_DIR) is used to represent the absolute path of the simpatico/src/ directory, and the path relative to the src/ directory is given explicitly. Only *.cpp files should be add to this list, and not the corresponding header file. Header-only classes do not need to be compiled separately or linked, and thus should not be added to the build system. 
+
+To compile all of the *.cpp files in a user/ directory, without re-compiling any other files, simply type
+\code
+  > make all
+\endcode
+from within that directory. This command may be used to compile a new class while it is being written and debugged. 
+
+After the new source file is added to the appropriate _SRCS variable, it will automatically be compiled and linked into an executable when the relevant program or programs are compiled. 
+
+Navigation: 
+<ul style="list-style: none;">
+ <li> \ref extend_base_page    (Previous)       </li>
+ <li> \ref extend_page     (Up)       </li>
+ <li> \ref extend_factory_page    (Next)     </li>
+</ul>
+
+*/
+}

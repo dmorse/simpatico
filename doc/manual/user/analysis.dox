@@ -1,0 +1,46 @@
+namespace McMd
+{
+
+/*! \page user_analysis_page 2.7 Data Analysis
+
+All of the Simpatico programs allow a user to evaluate and analyze a variety of physical properties during a simulation, "on the fly". The mcSim and mdSim programs (but not ddSim) can also be used to postprocess of a sequence of system configurations that were saved to file during an earlier simulation. 
+
+The classes that are used for data analysis in mcSim and mdSim are subclasses of the McMd::Diagnostic base class.  The classes used for data analysis in ddSim are subclasses of DdMd::Diagnostic. A typical diagnostic class, in either namespace, evaluates one or more physical properties of interest, and either outputs a sequence of values to an associated file for later analysis or updates one or more statistical accumulators in order to accumulate, e.g., averages, autocorrelation functions, histograms etc.  Source code for the diagnostic classes that are distributed with Simpatico can be found in the src/mcMd/diagnostics and src/ddMd/diagnostic directories. Users may create new diagnostic classes.
+
+\section analysis_onthefly_section On-the-fly Analysis
+
+The choice of which diagnostic operations (if any) should be executed during any Simpatico simulation is specified by the DiagnosticManager block of the parameter file. In each type of simulation, the DiagnosticManager object maintains an array of pointers to McMd::Diagnostic objects (for mcSim or mdSim simulations) or DdMd::Diagnostic objects (for ddSim). The DiagnosticManager block of the parameter file contains a list of polymorphic subbblocks, each of which contains the parameter file format for a diagnostic that should be applied during the simulation. Any number of diagnostics may be added to a simulation in this way. 
+
+Each subclass of either McMd::Diagnostic or DdMd::Diagnostic must re-implement a pure virtual method named sample(), which is invoked periodically during a simulation. The sample() method generally evaluates a physical property, and may either write data to an associated file or update a statistical accumulator, or both. The sample() method of each diagnostic is called only when the step counter is an integer multiple of the number of an integer "interval" parameter.  The step counter and interval represents count MD time steps or attempted MC Markov moves during a simulation, or the number of configurations read from file in an mcSim or mdSim postprocessing run. Implementation of each subclass of DdMd::Diagnostic generally involves some MPI communication in order to gather data onto the root processor for output or statistical analysis.
+
+The parameter file block associated with each subclass of McMd::Diagnostic thus contains an interval parameter, which specifies the frequency with which the "sample()" method should be called. The interval parameter may be different for different diagnostics, but the interval for each diagnostic must be a multiple of a "baseInterval" parameter that is specified as the first line within the DiagnosticManager block of the parameter file, before any of the subblocks. Most diagnostics also write data to an associated output file, either during the simulation or as a summery at the end of a simulation, and thus require an output file name as a parameter. 
+
+\section analysis_configWrite_section Dumping Configurations to File
+
+McMd::DumpConfig (for mcSim and mdSim simulations) and DdMd::WriteConfig (for ddMd simulations) are diagnostic classes that write system configurations to file at regular intervals, for later post-processing. These classes write each configuration to a separate file. The name of each file is constructed by concatenating the outputPrefix, a base name that is specified in the parameter file block for the DumpConfig or WriteConfig class, and a sequential integer counter that is incremented by 1 after each file is written. Each configuration file contains (at a minimum) the atomic coordinates and the dimensions of the periodic simulation cell at a given instant. Any of several configuration file output formats may be chosen by placing a SET_CONFIG_IO command in the command file before the SIMULATE command.  
+
+The McMd::DumpTrajectory diagnostic can also be used in an mdSim program to write a sequence of configurations to a single MD "trajectory" file.
+ 
+\section analysis_postprocess_section Postprocessing
+
+To postprocess a sequence of configuration dump files, one must run mcSim or mdSim program using a parameter file very similar to that used for a simulation, and using a command script that contains an "ANALYZE_DUMPS" command in place of a "SIMULATE" command.  The ANALYZE_DUMPS command causes the program to read in a sequence of configuration files and treat each configuration exactly as if they were generated during a simulation.  The set of diagnostics that will be applied to a sequence of configurations during postprocessing is specified in the "DiagnosticManager" block of the parameter file, as for diagnostics that are applied on-the-fly during a simulation.  The same set of diagnostic subclasses are available for use in either mode. 
+
+The names of the input configuration files are constructed by concatenating the inputPrefix parameter of the FileMaster, a base name that is specified as an argument to the ANALYZE_DUMPS command and an integer in a range that is specified in the ANALYZE command. For example, if the inputPrefix of the FileMaster was set to out/ (because this was the output prefix used by a previous simulation), and the outputPrefix was set to analyze/, the command
+\code
+   ANALYZE_DUMPS  0   19   dump/config
+\endcode
+would cause the main McSimulation or MdSimulation object to read in and apply all of the specified diagnostics to configurations files with names out/dump/config.0 out/dump/config.1 ... in/dump/config.19, and write the results of the analysis to files in the analyze/ directory. 
+
+The mdSim program may also be used postprocess an MD trajectory file. An MD trajectory file is a binary file that contains a sequence of configurations ("frames") within a single file. To analyze an MD trajectory file, simply use an ANALYZE_TRAJECTORY command rather than ANALYZE_DUMPS.
+
+During postprocessing, the "interval" of each diagnostic is interpreted as a number of configurations to be read from file between subsequent calls of the sample method, rather than the number of MD or MC steps. Unless configurations were written to file more frequently than necessary, the interval for each diagnostics should thus generally be set to 1 in the parameter file for a postprocessing run.
+
+Navigation:
+<ul style="list-style: none;">
+ <li> \ref user_examples_page (Previous) </li>
+ <li> \ref user_page    (Up)   </li>
+ <li> \ref user_restart_page  (Next) </li>
+</ul>
+
+*/
+}

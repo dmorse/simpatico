@@ -81,7 +81,9 @@ namespace McMd
 
    public:
 
-      /// Number of diagnostic samples in simulation.
+      /**
+      * Number of diagnostic samples in simulation.
+      */
       static const int Samples = 100000;
       
       /**	
@@ -136,7 +138,7 @@ namespace McMd
       *
       * \param iStep step counter
       */
-      void sample(long iStep);
+      virtual void sample(long iStep);
 
       /**
       * Output results to predefined output file.
@@ -145,7 +147,7 @@ namespace McMd
 
    protected:
 
-      /*
+      /**
       * Output file stream.
       */
       std::ofstream outputFile_;
@@ -153,7 +155,7 @@ namespace McMd
       /**
       * Structure factor accumulators. 
       * 
-      * First index is wavevector, second index is mode index.
+      * First index is wavevector, second is a mode index.
       */
       DMatrix<double> structureFactors_;
       

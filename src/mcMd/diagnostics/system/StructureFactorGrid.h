@@ -116,6 +116,13 @@ namespace McMd
       */
       virtual void output();
 
+      /**
+      * Add particles to StructureFactor accumulators.
+      *
+      * \param iStep step counter
+      */
+      virtual void sample(long iStep);
+
    private:
 
       /// Array of ids for first wavevector in each star.
@@ -136,26 +143,21 @@ namespace McMd
       /// Has readParam been called?
       bool    isInitialized_;
 
+      /// Log file
+      std::ofstream logFile_;
+
+      /// Is this the first step?
+      bool isFirstStep_;
    };
 
-   /**
+
+   /*
    * Serialize to/from an archive. 
    */
    template <class Archive>
    void StructureFactorGrid::serialize(Archive& ar, const unsigned int version)
    {
       StructureFactor::serialize(ar, version);
-
-      #if 0
-      ar & nAtomType_;
-      ar & nMode_;
-      ar & modes_;
-      ar & nWave_;
-      ar & waveIntVectors_;
-      ar & structureFactors_;
-      ar & nSample_;
-      #endif
-
       ar & hMax_;
       //serializeEnum(ar, lattice_);
       ar & lattice_;
