@@ -5,9 +5,13 @@ in the source code of Simpatico:
 
 \section file_section File Conventions
 
-  - Header files name use file extension .h and source (implementation) files use .cpp. 
+  - Header files name use file extension *.h and source (implementation) files use *.cpp. 
 
-  - Write one public class per file. The base name of the header and implementation files should be the class name: The header and source files for class MyClass should be MyClass.h and MyClass.cpp.
+  - Write one public class per file. 
+
+  - The base name of the header and implementation files should be the class name: The header and source files for a class named MyClass should be MyClass.h and MyClass.cpp.
+
+  - Place the header and source file for each class in the same directory.
 
   - Use header guards in all header files. 
 
@@ -70,7 +74,7 @@ in the source code of Simpatico:
 namespace Util
 {
 
-   class SillyClass : derived Base
+   class SillyClass : public Base
    {
       \\ ....
    } 
@@ -139,7 +143,7 @@ Within each block, list data members first, then methods.
 namespace Util
 {
 
-   /*\*
+   /**
    * A truly pointless class.
    */
    class SillyClass : public Base
@@ -196,23 +200,23 @@ Simpatico uses the doxygen (www.doxygen.org) utility to create html documentatio
 \verbatim
 
    /** 
-   * This is a doxygen documentation block.
+   * This comment will be extracted by doxygen (note the extra asterisk)
    */
 
-   /// and So is this. 
+   /// So is this one (note the extra slash)
 
    /*
-   * but this will not be extracted,
+   * This comment, however, will not be extracted by doxygen.
    */
 
-   // nor will this
+   // Nor will this one.
 
 \endverbatim
-Comments that should not be extracted by doxygen should use the usual form for multi-line comments, using only a single asterisk, or for single line comments, using only two slashes. The documentation block for a class or function should appear immediately above the first line of the class definition or function declaration.
+Comments within functions that you do not wish to be extracted by doxygen should use the usual form for C comments, using only a single asterisk for multi-line comments or only two slashes for for single line comments. The documentation block for a class or function should appear immediately above the first line of the class definition or function declaration.
 
   - Create dOxygen documentation blocks for public and protected named quantities, i.e., all classes, public and protected member functions, protected member variables, namespaces, global functions, typedefs, enums, and constants. 
 
-  - Place the doxygen documentation block for functions above the function declaration (within the header file), rather than above the function definition (which may be in a separate source file). More detailed discussion may be given on subsequent lines if needed. 
+  - Place the doxygen documentation block for functions above the function declaration (within the header file), rather than above the function definition (which may be in a separate source file).
 
   - Document all parameters of public and protected functions, using the dOxygen param keyword.
   
@@ -240,8 +244,8 @@ Example:
 
   - Private class member variables may be documented either using the multi-line or single line doxygen format.
 
- - Use a conventional C/C++ comment format that will not be extracted by doxygen (with one asterisk, or two slashes) above the definition of a class member function outside of the class definition, like this:
-\code
+ - Do not use doxygen-style comments for the function definitions (implementations) when the definition is separate from the declaration. Use a conventional C/C++ comment format that will not be extracted by doxygen (with one asterisk, or two slashes) above each function definition, like this:
+\verbatim
 
    /* 
    * Brief reminder of purpose. Possibly comments on implementation.
@@ -251,7 +255,7 @@ Example:
        // Do something here
    }
 
-\endcode
+\endverbatim
 
 \section interface_section Design Guidelines
 
