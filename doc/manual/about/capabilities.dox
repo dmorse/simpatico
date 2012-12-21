@@ -19,14 +19,14 @@ Long-range electrostatic potentials have not yet been implemented in any of the 
 \section features_algorithms_sec Simulation Algorithms
 
 For single-processor MD simulations, mdSim currently provides:
-<ul style="list-style: none;">
+<ul>
   <li> NVE velocity Verlet </li>
   <li> NVT Nose-Hoover </li>
   <li> NVT dissipative particle dynamics (DPD) </li>
   <li> NPH Anderson barostat </li>
 </ul>
 For Monte-Carlo simulation, mcSim currently provides the following MC moves, and a few others:
-<ul style="list-style: none;">
+<ul>
    <li> Single atom displacement </li>
    <li> Rigid molecule displacement </li>
    <li> Hybrid MC moves (short NVE or NPH simulations as proposed MC moves) 
@@ -39,7 +39,7 @@ For Monte-Carlo simulation, mcSim currently provides the following MC moves, and
    <li> Semi-grand canonical move (for, e.g., homopolymer blends) </li>
 </ul>
 For parallel Md simulations, DdSim provides the following integrators:
-<ul style="list-style: none;">
+<ul>
   <li> NVE velocity Verlet </li>
   <li> NVT Nose-Hoover thermostate </li>
   <li> NPH Anderson barostat </li>
@@ -68,7 +68,7 @@ interactions.
 Simpatico is distributed with a collection of classes for statistical analysis, referred to as "diagnostics". 
 
 The diagnostic classes available for use with the single-processor mcSim and mdSim programs include classes to evaluate:
-<ul style="list-style: none;">
+<ul>
   <li> Thermodynamic properties (energies and stress components) </li>
   <li> Full and partial radial distribution functions (in coordinate space). </li>
   <li> Structure factors (in Fourier space). </li>
@@ -87,9 +87,9 @@ Simpatico is a convenient tool for simulating and analyzing coarse-grained model
 
 Navigation:
 <ul style="list-style: none;">
- <li> \ref about_goals_page        (Previous) </li>
- <li> \ref about_page        (Up)       </li>
- <li> \ref about_contributors_page (Next)     </li>
+ <li> \ref about_goals_page (Previous) </li>
+ <li> \ref about_page (Up) </li>
+ <li> \ref about_contributors_page (Next)</li>
 </ul>
 
 */

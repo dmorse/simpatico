@@ -3,6 +3,11 @@ namespace McMd
 
 /*! \page user_page 2 User Guide
 
+ \ref about_page (Previous), &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref index "Main Page" (Up), &nbsp; &nbsp; &nbsp; &nbsp;
+ \ref source_page (Next)
+  <HR>
+
 Contents:
    <ul style="list-style: none;">
    <li> \subpage user_compile_page   </li>
