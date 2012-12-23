@@ -922,9 +922,9 @@ namespace DdMd
             f.subtract(atom0Ptr->position(), atom1Ptr->position());
             rsq = f.square();
             if (!atom1Ptr->isGhost()) {
-               localPairEnergies += interactionPtr_->energy(rsq, type0, type1); 
+               localPairEnergies(type0, type1) += interactionPtr_->energy(rsq, type0, type1); 
             } else {
-               localPairEnergies += 0.5*interactionPtr_->energy(rsq, type0, type1); 
+               localPairEnergies(type0, type1) += 0.5*interactionPtr_->energy(rsq, type0, type1); 
             } 
          }
       }
