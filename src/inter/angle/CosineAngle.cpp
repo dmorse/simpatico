@@ -87,8 +87,8 @@ namespace Inter
    void CosineAngle::loadParameters(Serializable::IArchive &ar)
    {
       ar >> nAngleType_; 
-      if (nAngleType_ == 0) {
-         UTIL_THROW( "nAtomType must be positive");
+      if (nAngleType_ <= 0) {
+         UTIL_THROW( "nAngleType must be positive");
       }
       loadCArray<double> (ar, "kappa", kappa_, nAngleType_);
    }

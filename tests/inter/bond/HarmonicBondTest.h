@@ -149,7 +149,7 @@ public:
       beta = 1.0;
       type = 0;
       for (i=0; i < 20; i++) {
-         r = bondPotential.randomBondLength(random, 1.0, 0);
+         r = bondPotential.randomBondLength(random, beta, type);
          std::cout << "random bond length = " << r << std::endl;
       }
    }

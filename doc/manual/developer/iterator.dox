@@ -2,23 +2,25 @@
 
 Most loops in Simpatico are written using iterators, rather than simple for-loops.
 
-\section iterator_iterator_section Iterator Types
-The directory src/util/containers contains several class templates for forward iterators. Each iterator type allows iteration over the elements of a corresponding container type. The iterator interfaces are slightly different from those of C++ standard library iterators.  All Simpatico  iterators overload *, ->, and (prefix) ++ operators.  The meaning of these operators is identical to that for bare C pointers, or for C++ standard library iterators. Unlike bare pointers or standard library iterators, however, each Simpatico iterator also provides method that can be used to test for termination of a loop, so that a single iterator (rather than a pair) can be used to implement a loop.
+\section iterator_iterator_section Iterators
+The directory src/util/containers contains several class templates for iterators. Each iterator type allows iteration over the elements of one or more corresponding container types. The interface used for iterators in Simpatico is slightly different from that for C++ standard library iterators. All Simpatico  iterators overload *, ->, and (prefix) ++ operators.  The meaning of these operators is identical to that for bare C pointers, or for C++ standard library iterators. In addition to these operators, however, each Simpatico iterator provides a bool method named ``notEnd()" that can be used to test for termination of a loop. A single Simaptico iterator can thus be used to implement a loop, whereas a pair of iterators (one of which is used to locate the end of a sequence) is normally requierd with C++ standard library iterators. 
 
-If ``iter" is the name of a simpatico iterator that points to an object A of type T within a container, then
+If ``iter" is the name of a Simpatico iterator that points to an object A of type T within a container, then
 <ul>
     <li> *iter returns object A by reference </li>
     <li> iter->method() is equivalent to A.method() </li>
     <li> ++iter advances iter to the next element in the container. </li>
-    <li> iter.notEnd() returns false true at the end of the loop. </li>
+    <li> iter.notEnd() returns false when iter no longer points to a valid element. </li>
 </ul>
-When the notEnd() method returns true, the iterator does not point at a valid element.
+The notEnd() method returns true as long as the iterator points to a valid element in the
+sequence, and false when the iterator has already been incremented one past the last element 
+in the sequence.
 
-Each Simpatico container templates provides at least one method named begin() that takes an iterator of the relevant type as its parameter. The method iniitializes the iterator, setting it to point at the first element in the container. The interface for this method is always:
+An iterator is initialized to point to the first element in a container by a member function of the container. Each Simpatico container template provides at least one method named begin(), which takes an iterator as its parameter, which is passed by reference. The interface for this method is always:
 \code
    void begin(Iterator& )
 \endcode
-where Iterator denotes an associated iterator type. The usual syntax for a loop that iterates over elements of a container is thus:
+where Iterator denotes an associated iterator type. The begin() method modifies the iterator so as to point at the first element within the sequence stored by the container. It also passes the integrator the information required to identify the end of the sequence (e.g., the address of an element one past the last element, for a simple array container). The usual syntax for a loop that iterates over elements of a container is thus:
 \code
    Container container;
    Iterator  iter;
@@ -36,7 +38,7 @@ There are actually two types of Iterator associated with each container template
 
    - A const forward iterator, which provides read-only (const) access. 
 
-The name of the class template for a const iterator always begins with the prefix Const. For example, Util::ArrayIterator<T> and Util::ConstArrayIterator<T> are the non-const and const iterator types for instances of one-dimensional arrays that store objects of type T. These iterator types are used by the container types Util::DArray<T> and Util::FArray<T>, and Util::SArray<T>. Two overloaded begin methods are provided for each container, one of which takes an instance of the non-const iterator as an parameter, and the other of which takes a const iterator.
+The name of the class template for a const iterator always begins with the prefix Const. For example, Util::ArrayIterator<T> and Util::ConstArrayIterator<T> are the non-const and const iterator types for instances of one-dimensional arrays that store objects of type T. These iterator types are used by the container types Util::DArray<T> and Util::FArray<T>, and Util::SArray<T>. Two overloaded begin() methods are defined for each container, one of which takes an instance of the non-const iterator as an parameter, and the other of which takes a const iterator.
 
 Loops over atoms, covalent groups (e.g,. bonds) and (in McMd) molecules are also implemented using iterators. Different interfaces are used in the McMd and DdMd namespaces, which are discussed separately below.
 
