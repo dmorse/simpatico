@@ -153,8 +153,11 @@ namespace Inter
       /// Array of Miller index IntVectors for the reciprocal lattice vectors.
       DArray<IntVector>  waveIntVectors_;
 
-      /// Interface widths array ofsize nWaveVectors
-      DArray<double> interfaceWidths_;
+      /// Number of unit cells in box
+      int periodicity_;
+
+      /// Interface width
+      double interfaceWidth_;
 
       /// Pointer to associated Boundary object.
       Boundary *boundaryPtr_;
@@ -175,9 +178,9 @@ namespace Inter
    inline double OrderingExternal::energy(const Vector& position, int type) const
    {
       const Vector cellLengths = boundaryPtr_->lengths();
+      double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);
 
       double cosine = 0.0;
-
       for (int i = 0; i < nWaveVectors_; ++i) {
          Vector q;
          q[0] = 2.0*M_PI*waveIntVectors_[i][0]/cellLengths[0];
@@ -185,10 +188,9 @@ namespace Inter
          q[2] = 2.0*M_PI*waveIntVectors_[i][2]/cellLengths[2];
          double arg, clipParameter;
          arg = q.dot(position);
-         //double qLengths = q.dot(cellLengths);
-         //clipParameter = 1.0/qLengths;
          cosine += cos(arg);
       }
+      cosine *= clipParameter;
       return prefactor_[type]*externalParameter_*tanh(cosine);
    }
 
@@ -200,6 +202,7 @@ namespace Inter
                                      Vector& force) const
    {
       const Vector cellLengths = boundaryPtr_->lengths();
+      double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);
 
       double cosine = 0.0;
       Vector deriv;
@@ -211,13 +214,13 @@ namespace Inter
          q[2] = 2.0*M_PI*waveIntVectors_[i][2]/cellLengths[2];
          double arg, sine, clipParameter;
          arg = q.dot(position);
-         //double qLengths = q.dot(cellLengths);
-         //clipParameter = 1.0/qLengths;
          cosine += cos(arg);
          sine = -1.0*sin(arg);
          q *= sine;
          deriv += q;
       }
+      cosine *= clipParameter;
+      deriv *= clipParameter;
       double tanH = tanh(cosine);
       double sechSq = (1.0 - tanH*tanH);
       double f = prefactor_[type]*externalParameter_*sechSq;

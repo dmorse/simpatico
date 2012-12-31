@@ -21,6 +21,8 @@
 #include "OutputPairEnergies.h"
 #include "StructureFactor.h"
 #include "StructureFactorGrid.h"
+#include "AsymmSF.h"
+#include "AsymmSFGrid.h"
 
 namespace DdMd
 {
@@ -69,6 +71,12 @@ namespace DdMd
       } else
       if (className == "StructureFactorGrid") {
          ptr = new StructureFactorGrid(simulation());
+      }
+      if (className == "AsymmSF") {
+         ptr = new AsymmSF(simulation());
+      } else
+      if (className == "AsymmSFGrid") {
+         ptr = new AsymmSFGrid(simulation());
       }
       return ptr;
    }

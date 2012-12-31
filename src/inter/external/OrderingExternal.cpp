@@ -23,6 +23,8 @@ namespace Inter
    OrderingExternal::OrderingExternal() 
     : externalParameter_(),
       nWaveVectors_(),
+      periodicity_(),
+      interfaceWidth_(),
       boundaryPtr_(0),
       nAtomType_(0), 
       isInitialized_(false)
@@ -34,6 +36,8 @@ namespace Inter
    OrderingExternal::OrderingExternal(const OrderingExternal& other)
     : externalParameter_(other.externalParameter_),
       nWaveVectors_(other.nWaveVectors_),
+      periodicity_(other.periodicity_),
+      interfaceWidth_(other.interfaceWidth_),
       boundaryPtr_(other.boundaryPtr_),
       nAtomType_(other.nAtomType_),
       isInitialized_(other.isInitialized_)
@@ -57,6 +61,8 @@ namespace Inter
    {
       externalParameter_   = other.externalParameter_;
       nWaveVectors_        = other.nWaveVectors_;
+      periodicity_         = other.periodicity_;
+      interfaceWidth_      = other.interfaceWidth_;
       boundaryPtr_         = other.boundaryPtr_;
       nAtomType_           = other.nAtomType_;
       isInitialized_       = other.isInitialized_;
@@ -124,6 +130,9 @@ namespace Inter
       waveIntVectors_.allocate(nWaveVectors_);
       readDArray<IntVector>(in, "waveIntVectors", waveIntVectors_, nWaveVectors_);
       
+      read<double>(in, "interfaceWidth", interfaceWidth_);
+      read<int>(in, "periodicity", periodicity_);
+
       isInitialized_ = true;
    }
 
