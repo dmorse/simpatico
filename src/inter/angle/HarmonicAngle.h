@@ -9,7 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>  // base class
-#include <inter/angle/Angle.h>          // base class
+#include <inter/angle/BendForce.h>      // used in inline function
 #include <util/global.h>
 
 #include <cmath>
@@ -106,13 +106,13 @@ namespace Inter
       *
       * Computes forces F1 and F2 along the two bonds in the angle.
       *
-      * \param R1     bond vector from atom 1 to 2.
-      * \param R2     bond vector from atom 2 to 3.
-      * \param F1     return force along R1 direction.
-      * \param F2     return force along R2 direction.
+      * \param b1     bond vector from atom 1 to 2.
+      * \param b2     bond vector from atom 2 to 3.
+      * \param F1     return force along b1 direction.
+      * \param F2     return force along b2 direction.
       * \param type   type of angle.
       */
-      void force(const Vector& R1, const Vector& R2,
+      void force(const Vector& b1, const Vector& b2,
                        Vector& F1, Vector& F2, int type) const;
 
       /**
@@ -134,10 +134,9 @@ namespace Inter
       /// Maximum possible number of angle types (two bonds: 11, 12, 21, 22).
       static const int MaxNAngleType = 4;
    
-      mutable Angle  angle_;             ///< Angle for internal calculations
-      double  kappa_[MaxNAngleType];      ///< spring constant
-      double  theta0_[MaxNAngleType];     ///< preferred angle
-      int  nAngleType_;                ///< number of angle types
+      double  kappa_[MaxNAngleType];    ///< spring constant
+      double  theta0_[MaxNAngleType];   ///< preferred angle
+      int  nAngleType_;                 ///< number of angle types
 
    };
    
@@ -154,20 +153,21 @@ namespace Inter
 
    /* 
    * Return:
-   *    F1 = d energy / d(R1)
-   *    F2 = d energy / d(R2)
+   *    F1 = d energy / d(b1)
+   *    F2 = d energy / d(b2)
    * for use in MD and stress calculation.
    */
    inline
-   void HarmonicAngle::force(const Vector& R1, const Vector& R2,
+   void HarmonicAngle::force(const Vector& b1, const Vector& b2,
                              Vector& F1, Vector& F2, int type) const
    {
-      angle_.computeDerivatives(R1, R2);
-      double s = angle_.sinTheta();
+      BendForce bend;
+      bend.computeDerivatives(b1, b2);
+      double s = bend.sinTheta();
       if (s > 1.0E-10) {
-         double factor = kappa_[type]*(theta0_[type] - angle_.theta())/s;
-         F1.multiply(angle_.d1, factor);
-         F2.multiply(angle_.d2, factor);
+         double factor = kappa_[type]*(theta0_[type] - bend.theta())/s;
+         F1.multiply(bend.d1, factor);
+         F2.multiply(bend.d2, factor);
       } else {
          F1.zero();
          F2.zero();

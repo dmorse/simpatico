@@ -2,7 +2,7 @@
 #define LJ_PAIR_TEST_H
 
 #include <inter/pair/LJPair.h>
-#include <inter/pair/PairTest.h>
+#include <inter/pair/PairTestTemplate.h>
 
 #include <iostream>
 #include <fstream>
@@ -10,7 +10,7 @@
 using namespace Util;
 using namespace Inter;
 
-class LJPairTest : public PairTest<LJPair>
+class LJPairTest : public PairTestTemplate<LJPair>
 {
 
 public:
@@ -26,59 +26,79 @@ public:
 
    void testSetUp() {
       printMethod(TEST_FUNC);
-   }
-
-   void testWrite() {
-
-      printMethod(TEST_FUNC);
-
-      // Verbose output
       if (verbose() > 0) {
          std::cout << std::endl; 
          interaction_.writeParam(std::cout);
       }
-
    }
 
-   void testEnergy1() {
+   void testEnergy() {
      
       printMethod(TEST_FUNC);
-      std::cout << std::endl; 
 
-      ParameterSet parameter(interaction_);
-      parameter.set(1.00, 0, 1);
-      std::cout << "interaction_.energy(1.00, 0, 1) = " << parameter.energy() << std::endl;
+      pair_.set(1.00, 0, 1);
+      if (verbose() > 0) {
+         std::cout << std::endl; 
+         std::cout << "interaction_.energy(1.00, 0, 1) = " 
+                   << pair_.energy() << std::endl;
+      }
+      TEST_ASSERT(eq(pair_.energy(), 2.0));
 
-      parameter.set(0.81, 0, 1);
-      std::cout << "interaction_.energy(0.81, 0, 1) = " << parameter.energy() << std::endl;
+      pair_.set(0.81, 0, 1);
+      if (verbose() > 0) {
+         std::cout << "interaction_.energy(0.81, 0, 1) = " 
+                   << pair_.energy() << std::endl;
+      }
 
-      parameter.set(1.25992, 0, 1);
-      std::cout << "interaction_.energy(1.15992, 0, 1) = " << parameter.energy() << std::endl;
+      pair_.set(1.25992105, 0, 1);
+      if (verbose() > 0) {
+         std::cout << "interaction_.energy(1.25992105, 0, 1) = " 
+                   << pair_.energy() << std::endl;
+      }
+      TEST_ASSERT(eq(pair_.energy(), 0.0));
 
-      parameter.set(1.5, 0, 1);
-      std::cout << "interaction_.energy(1.50, 0, 1) = " << parameter.energy() << std::endl;
+      pair_.set(1.5, 0, 1);
+      if (verbose() > 0) {
+         std::cout << "interaction_.energy(1.50, 0, 1) = " 
+                   << pair_.energy() << std::endl;
+      }
+      TEST_ASSERT(eq(pair_.energy(), 0.0));
    }
 
 
-   void testForceOverR() {
+   void testForceOverR() 
+   {
       printMethod(TEST_FUNC);
-     
-      ParameterSet parameter(interaction_);
-      parameter.set(1.00, 0, 1);
-      TEST_ASSERT(parameter.testForce());
-      std::cout << "interaction_.forceOverR(1.00, 0, 1) = " << parameter.forceOverR() << std::endl;
+  
+      pair_.set(1.00, 0, 1);
+      TEST_ASSERT(pair_.testForce());
+      if (verbose() > 0) {
+         std::cout << "interaction_.forceOverR(1.00, 0, 1) = " 
+                   << pair_.forceOverR() << std::endl;
+      }
+      TEST_ASSERT(eq(pair_.forceOverR(), 48.0));
 
-      parameter.set(0.81, 0, 1);
-      TEST_ASSERT(parameter.testForce());
-      std::cout << "interaction_.forceOverR(0.81, 0, 1) = " << parameter.forceOverR() << std::endl;
+      pair_.set(0.81, 0, 1);
+      TEST_ASSERT(pair_.testForce());
+      if (verbose() > 0) {
+         std::cout << "interaction_.forceOverR(0.81, 0, 1) = " 
+                   << pair_.forceOverR() << std::endl;
+      }
 
-      parameter.set(1.25990, 0, 1);
-      TEST_ASSERT(parameter.testForce());
-      std::cout << "interaction_.forceOverR(1.25990, 0, 1) = " << parameter.forceOverR() << std::endl;
+      pair_.set(1.25900, 0, 1);
+      TEST_ASSERT(pair_.testForce());
+      if (verbose() > 0) {
+         std::cout << "interaction_.forceOverR(1.25900, 0, 1) = " 
+                   << pair_.forceOverR() << std::endl;
+      }
 
-      parameter.set(1.5, 0, 1);
-      TEST_ASSERT(parameter.testForce());
-      std::cout << "interaction_.forceOverR(1.50, 0, 1) = " << parameter.forceOverR() << std::endl;
+      pair_.set(1.26, 0, 1);
+      TEST_ASSERT(pair_.testForce());
+      if (verbose() > 0) {
+         std::cout << "interaction_.forceOverR(1.26, 0, 1) = " 
+                   << pair_.forceOverR() << std::endl;
+      }
+      TEST_ASSERT(eq(pair_.forceOverR(), 0.0));
    }
 
    void testGetSet() {
@@ -207,8 +227,7 @@ public:
 
 TEST_BEGIN(LJPairTest)
 TEST_ADD(LJPairTest, testSetUp)
-TEST_ADD(LJPairTest, testWrite)
-TEST_ADD(LJPairTest, testEnergy1)
+TEST_ADD(LJPairTest, testEnergy)
 TEST_ADD(LJPairTest, testForceOverR)
 TEST_ADD(LJPairTest, testGetSet)
 TEST_ADD(LJPairTest, testModify)

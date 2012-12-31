@@ -1,20 +1,20 @@
-#ifndef ANGLE_TEST_H
-#define ANGLE_TEST_H
+#ifndef BEND_FORCE_TEST_H
+#define BEND_FORCE_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 
-#include <inter/angle/Angle.h>
+#include <inter/angle/BendForce.h>
 
 using namespace Util;
 using namespace Inter;
 
-class AngleTest : public UnitTest 
+class BendForceTest : public UnitTest 
 {
 
 private:
 
-   Angle   angle_;
+   BendForce  angle_;
    Vector  b1_, b2_;
    double  eps_;
 
@@ -22,14 +22,6 @@ public:
 
    void setUp()
    { eps_ = 1.0E-6; }
-
-   void tearDown()
-   {}
-
-   void testSetUp()
-   {
-      printMethod(TEST_FUNC);
-   }
 
    void testComputeAngle()
    {
@@ -65,18 +57,11 @@ public:
    {
       double product, b1Abs, b2Abs, c;
       product = b1_[0]*b2_[0] + b1_[1]*b2_[1] + b1_[2]*b2_[2];
-      b1Abs   = sqrt(b1_[0]*b1_[0] + b1_[1]*b1_[1] + b1_[2]*b1_[2]);
-      b2Abs   = sqrt(b2_[0]*b2_[0] + b2_[1]*b2_[1] + b2_[2]*b2_[2]);
-      c       = product/(b1Abs*b2Abs);
+      b1Abs = sqrt(b1_[0]*b1_[0] + b1_[1]*b1_[1] + b1_[2]*b1_[2]);
+      b2Abs = sqrt(b2_[0]*b2_[0] + b2_[1]*b2_[1] + b2_[2]*b2_[2]);
+      c = product/(b1Abs*b2Abs);
 
       TEST_ASSERT(eq(angle_.cosTheta, c));
-
-      Vector t;
-      t.multiply(angle_.u1, b1Abs);
-      TEST_ASSERT(b1_ == t);
-
-      t.multiply(angle_.u2, b2Abs);
-      TEST_ASSERT(b2_ == t);
 
       c = angle_.cosTheta;
       double s = angle_.sinTheta();
@@ -131,10 +116,9 @@ public:
 
 };
 
-TEST_BEGIN(AngleTest)
-TEST_ADD(AngleTest, testSetUp)
-TEST_ADD(AngleTest, testComputeAngle)
-TEST_ADD(AngleTest, testComputeDerivatives)
-TEST_END(AngleTest)
+TEST_BEGIN(BendForceTest)
+TEST_ADD(BendForceTest, testComputeAngle)
+TEST_ADD(BendForceTest, testComputeDerivatives)
+TEST_END(BendForceTest)
 
 #endif

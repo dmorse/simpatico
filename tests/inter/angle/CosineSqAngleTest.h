@@ -12,9 +12,6 @@ public:
       AngleTestTemplate<CosineSqAngle>("in/CosineSqAngle")
    {}
 
-   void testSetUp()
-   {  printMethod(TEST_FUNC); } 
-
    void testForce()
    {
       printMethod(TEST_FUNC);
@@ -26,7 +23,6 @@ public:
 };
 
 TEST_BEGIN(CosineSqAngleTest)
-TEST_ADD(CosineSqAngleTest, testSetUp)
 TEST_ADD(CosineSqAngleTest, testForce)
 TEST_END(CosineSqAngleTest)
 

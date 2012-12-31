@@ -12,7 +12,10 @@
 #include <util/space/Vector.h>
 #include <util/param/ParamComposite.h>  // base class
 
-#include <cmath>
+#include "Torsion.h"                    // used in in-line function
+#include "TorsionForce.h"               // used in in-line function
+
+//#include <cmath>
 
 namespace Inter
 {
@@ -156,6 +159,11 @@ namespace Inter
    double CosineDihedral::energy(const Vector& R1, const Vector& R2,
           const Vector& R3, int type) const
    {
+      Torsion torsion;
+      torsion.computeAngle(R1, R2, R3);
+      return (kappa_[type] * (1.0 + torsion.cosPhi));
+
+      #if 0
       Vector u1, u2;
 
       u1.cross(R1, R2);
@@ -165,6 +173,7 @@ namespace Inter
       u2 /= u2.abs();
 
       return ( kappa_[type] * (1.0 + u1.dot(u2)) );
+      #endif
    }
 
    /* 
@@ -178,6 +187,15 @@ namespace Inter
    void CosineDihedral::force(const Vector& R1, const Vector& R2,
         const Vector& R3, Vector& F1, Vector& F2, Vector& F3, int type) const
    {
+      TorsionForce torsion;
+      torsion.computeDerivatives(R1, R2, R3);
+
+      double ed = kappa_[type];
+      F1.multiply(torsion.d1, ed);
+      F2.multiply(torsion.d2, ed);
+      F3.multiply(torsion.d3, ed);
+
+      #if 0
       Vector u1, u2, tmp1, tmp2;
       double r1, r2, cosPhi;
 
@@ -206,6 +224,7 @@ namespace Inter
       F2 += tmp1;
 
       F3.cross(tmp2, R2);
+      #endif // if 0
    }
 
 } 
