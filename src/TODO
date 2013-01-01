@@ -4,6 +4,10 @@ This file contains only items that are not localized to a namespace.
 Makefiles
 ---------
 
-- Add python script setOptions to modify common options by editing compiler.mk 
-  and defines.mk files.
+- Move all makefile variables to define preprocessor macros to a common 
+  file src/config.mk. Include this and compiler.mk into global.mk, have
+  other makefiles import global.mk rather than compiler.mk.
+
+- Add python script setOptions to modify common options by editing config.mk
+  file (?).
 

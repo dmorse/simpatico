@@ -8,7 +8,7 @@ MdSimulation{
   nBondType                              1
   nAngleType                             1
   nDihedralType                          0
-  atomTypes                     A      1.0
+  atomTypes                    A       1.0
   maskedPairPolicy              MaskBonded
   SpeciesManager{
 
@@ -27,9 +27,9 @@ MdSimulation{
     seed                          13451892
   }
   MdSystem{
-    pairStyle                       LJPair
-    bondStyle                 HarmonicBond
-    angleStyle                 CosineAngle
+    pairStyle       LJPair
+    bondStyle       HarmonicBond
+    angleStyle      CosineAngle
     MdPairPotential{
       epsilon           1.000000000000e+00
       sigma             1.000000000000e+00
@@ -46,42 +46,59 @@ MdSimulation{
       length            1.000000000000e+00
     }
     AnglePotential{
-      kappa             1.500000000000e+00
+      kappa             4.000000000000e+00
     }
     EnergyEnsemble{
-      type                       adiabatic
+      type                      isothermal
+      temperature       1.000000000000e+00
     }
     BoundaryEnsemble{
       type                           rigid
     }
-    NveVvIntegrator{
-       dt               1.000000000000e-03
+    NvtNhIntegrator{
+       dt               5.000000000000e-03
+       tauT             1.000000000000e+00
     }
   }
   DiagnosticManager{
-    baseInterval                       100
+    baseInterval                       1000
 
     LogProgress{
       interval                       10000
     }
 
-    MdEnergyOutput{
-      interval                         100
-      outputFileName                energy
+    RadiusGyration{
+      interval                        1000
+      outputFileName                  RgSq
+      nSamplePerBlock                    1
+      speciesId                          0
     }
 
     MdPotentialEnergyAverage{
-      interval                         100
+      interval                         1000
       outputFileName       potentialEnergy
       nSamplePerBlock                   10
     }
 
+    MdEnergyOutput{
+      interval                         10000
+      outputFileName        energyOutput
+    }
+
     MdKineticEnergyAverage{
-      interval                         100
+      interval                         1000
       outputFileName         kineticEnergy
       nSamplePerBlock                   10
     }
 
+    IntraPairAutoCorr{
+      interval                         1000
+      outputFileName         IntraPairAutoCorr
+      speciesId                        0
+      atom1Id                          0
+      atom2Id                          7
+      capacity  	              1000
+    }
   }
 }
 

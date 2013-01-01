@@ -96,17 +96,14 @@ namespace McMd
       bool accept = random().metropolis(boltzmann(newEnergy - oldEnergy));
 
       if (accept) {
-  
          #ifndef INTER_NOPAIR
          system().pairPotential().updateAtomCell(*atomPtr);
          #endif
          incrementNAccept();
-
       } else {
-   
          atomPtr->position() = oldPos;
-   
       }
+
       return accept;
    }
 

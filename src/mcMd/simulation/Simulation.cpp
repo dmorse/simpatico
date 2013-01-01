@@ -333,17 +333,28 @@ namespace McMd
    */
    void Simulation::initialize()
    {
-
       //Preconditions
       assert(nSpecies() > 0);
+      if (nSpecies() <= 0) {
+         UTIL_THROW("Error: nSpecies() <= 0 in Simulation::initialize()");
+      }
+      if (nBondType_ < 0) {
+         UTIL_THROW("Error: nBondType < 0 in Simulation::initialize()");
+      }
       #ifdef INTER_ANGLE
-      assert(nAngleType_ >= 0);
+      if (nAngleType_ < 0) {
+         UTIL_THROW("Error: nAngleType < 0 in Simulation::initialize()");
+      }
       #endif
       #ifdef INTER_DIHEDRAL
-      assert(nDihedralType_ >= 0);
+      if (nDihedralType_ < 0) {
+         UTIL_THROW("Error: nDihedralType < 0 in Simulation::initialize()");
+      }
       #endif
       #ifdef MCMD_LINK
-      assert(nLinkType_ >= 0);
+      if (nLinkType_ < 0) {
+         UTIL_THROW("Error: nLinkType_ < 0 in Simulation::initialize()");
+      }
       #endif
 
       Species *speciesPtr;
@@ -470,7 +481,7 @@ namespace McMd
       #endif
 
       #ifdef INTER_DIHEDRAL
-      if (nAngleType_ > 0) {
+      if (nDihedralType_ > 0) {
          if (dihedralCapacity_ > 0) {
             dihedrals_.allocate(dihedralCapacity_);
          } else {

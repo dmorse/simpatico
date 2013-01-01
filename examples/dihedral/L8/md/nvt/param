@@ -1,12 +1,13 @@
 MdSimulation{
   FileMaster{
     commandFileName               commands
-    inputPrefix                        in/
+    inputPrefix                     ../in/
     outputPrefix                      out/
   }
   nAtomType                              1
   nBondType                              1
   nAngleType                             1
+  nDihedralType                          1
   atomTypes                    A       1.0
   maskedPairPolicy              MaskBonded
   SpeciesManager{
@@ -18,6 +19,8 @@ MdSimulation{
       bondType                           0
       hasAngles                          1
       angleType                          0
+      hasDihedrals                       1
+      dihedralType                       0
     }
 
   }
@@ -27,7 +30,8 @@ MdSimulation{
   MdSystem{
     pairStyle       LJPair
     bondStyle       HarmonicBond
-    angleStyle      CosineAngle
+    angleStyle      HarmonicAngle
+    dihedralStyle   CosineDihedral
     MdPairPotential{
       epsilon           1.000000000000e+00
       sigma             1.000000000000e+00
@@ -39,12 +43,16 @@ MdSimulation{
         skin              3.000000000000e-01
       }
     }
-    MdBondPotential{
+    BondPotential{
       kappa             4.000000000000e+02
       length            1.000000000000e+00
     }
-    MdAnglePotential{
-      kappa             4.000000000000e+00
+    AnglePotential{
+      kappa             20.00000000000e+00
+      theta0            60.00000000000e+00
+    }
+    DihedralPotential{
+      kappa              1.00000000000e+00
     }
     EnergyEnsemble{
       type                      isothermal
@@ -54,7 +62,7 @@ MdSimulation{
       type                           rigid
     }
     NvtNhIntegrator{
-       dt               2.500000000000e-03
+       dt               5.000000000000e-03
        tauT             1.000000000000e+00
     }
   }
@@ -79,7 +87,7 @@ MdSimulation{
     }
 
     MdEnergyOutput{
-      interval                        10000
+      interval                         10000
       outputFileName        energyOutput
     }
 

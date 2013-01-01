@@ -29,8 +29,14 @@ namespace McMd
       length10_(1.0),
       kappa10_(0.0)
    {
+      // Preconditions
       #ifdef MCMD_NOMASKBONDED
       UTIL_THROW("CfbRebridgeBase is unusable ifdef MCMD_NOMASKBONDED");
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (system.hasDihedralPotential()) {
+         UTIL_THROW("CfbRebrigeBase is unusable with dihedrals");
+      }
       #endif
    } 
    /* 

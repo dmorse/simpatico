@@ -6,6 +6,8 @@ MdSimulation{
   }
   nAtomType                              1
   nBondType                              1
+  nAngleType                             0
+  nDihedralType                          0
   atomTypes                              A       1.0
   maskedPairPolicy                MaskBonded
   SpeciesManager{
@@ -15,6 +17,8 @@ MdSimulation{
       nAtom                                  8
       atomType                               0
       bondType                               0
+      hasAngles                              0
+      hasDihedrals                           0
     }
 
   }
@@ -31,8 +35,8 @@ MdSimulation{
       maxBoundary              cubic   10.5000
       PairList{
         atomCapacity                        1000
-        pairCapacity                        5000
-        skin                  2.500000000000e-01
+        pairCapacity                        4000
+        skin                  3.000000000000e-01
       }
     }
     BondPotential{
@@ -46,16 +50,20 @@ MdSimulation{
     BoundaryEnsemble{
       type                               rigid
     }
-    NvtNhIntegrator{
-       dt                   5.000000000000e-03
-       tauT                 1.00000000e+00
+    NveVvIntegrator{
+       dt                   4.000000000000e-03
     }
   }
   DiagnosticManager{
-    baseInterval                           10
+    baseInterval                         100
 
     LogProgress{
-      interval                          10000
+      interval                          5000
+    }
+
+    MdWriteRestart{
+      interval                         10000
+      outputFileName                 restart
     }
 
     MdEnergyOutput{
@@ -63,23 +71,32 @@ MdSimulation{
       outputFileName                  energy
     }
 
-    MdPotentialEnergyAverage{
-      interval                          1000
-      outputFileName      potentialEnergyAve
-      nSamplePerBlock                     10
-    }
-
     MdKineticEnergyAverage{
-      interval                          1000
+      interval                           200
       outputFileName        kineticEnergyAve
       nSamplePerBlock                     10
     }
 
+    MdPotentialEnergyAverage{
+      interval                           200
+      outputFileName      potentialEnergyAve
+      nSamplePerBlock                     10
+    }
+
     RadiusGyration{
-      interval                           100
+      interval                          1000
       outputFileName          RadiusGyration
       nSamplePerBlock                     10
       speciesId                            0
+    }
+
+    BondLengthDist{
+      interval                          1000
+      outputFileName          BondLengthDist
+      speciesId                            0
+      min                                0.0
+      max                                2.0
+      nBin                               400
     }
 
     RDF{
@@ -90,49 +107,21 @@ MdSimulation{
       selector                         inter   -1    -1
     }
 
-    BondLengthDist{
-      interval                           100
-      outputFileName          BondLengthDist
-      speciesId                            0
-      min                                0.0
-      max                                2.0
-      nBin                               100
-    }
-
     AtomMSD{
-      interval                           100
+      interval                          1000
       outputFileName                 AtomMSD
       speciesId                            0
       atomId                               5
-      capacity                           100
+      capacity                           400
     }
 
     IntraPairAutoCorr{
-      interval                           100
-      outputFileName       IntraPairAutoCorr
-      speciesId                            0
-      atom1Id                              0
-      atom2Id                              7 
-      capacity                           100
-    }
-
-    MdIntraBondTensorAutoCorr{
-      interval                           100
-      outputFileName  IntraBondTensorAutoCorr
-      speciesId                            0
-      capacity        j                  100
-    }
-
-    MdIntraBondStressAutoCorr{
-      interval                           100
-      outputFileName  IntraBondStressAutoCorr
-      speciesId                            0
-      capacity                           100
-    }
-
-    MdWriteRestart{
-      interval                          2000
-      outputFileName                 restart
+      interval                         1000
+      outputFileName      IntraPairAutoCorr
+      speciesId                           0
+      atom1Id                             0
+      atom2Id                             7 
+      capacity                         1000
     }
 
   }
