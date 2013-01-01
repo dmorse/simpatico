@@ -22,6 +22,13 @@ protected:
    Vector       b1_, b2_, b3_;
    double       eps_;
    int          nDihedralType_;
+   int          type_;
+
+   DihedralTestTemplate()
+    : eps_(1.0E-5),
+      nDihedralType_(0),
+      type_(0)
+   {}
 
    void setNDihedralType(int nDihedralType)
    {
@@ -41,19 +48,18 @@ protected:
    {
       Vector f1, f2, f3, t;
       double d, e0, e1, e2;
-      int type = 0;
 
-      e0 = interaction_.energy(b1_, b2_, b3_, type);
-      interaction_.force(b1_, b2_, b3_, f1, f2, f3, type);
+      e0 = interaction_.energy(b1_, b2_, b3_, type_);
+      interaction_.force(b1_, b2_, b3_, f1, f2, f3, type_);
 
       // Derivative with respect to b1
       // std::cout << std::endl;
       for (int i = 0; i < Dimension; ++i) {
          t = b1_;
          t[i] += eps_;
-         e1 = interaction_.energy(t, b2_, b3_, type);
+         e1 = interaction_.energy(t, b2_, b3_, type_);
          t[i] += eps_;
-         e2 = interaction_.energy(t, b2_, b3_, type);
+         e2 = interaction_.energy(t, b2_, b3_, type_);
          d = (4.0*e1 - e2 - 3.0*e0)/(2.0*eps_);
          // std::cout << f1[i] << "   " << d << "   "
          //           << d - f1[i] << std::endl;
@@ -64,9 +70,9 @@ protected:
       for (int i = 0; i < Dimension; ++i) {
          t = b2_;
          t[i] += eps_;
-         e1 = interaction_.energy(b1_, t, b3_, type);
+         e1 = interaction_.energy(b1_, t, b3_, type_);
          t[i] += eps_;
-         e2 = interaction_.energy(b1_, t, b3_, type);
+         e2 = interaction_.energy(b1_, t, b3_, type_);
          d = (4.0*e1 - e2 - 3.0*e0)/(2.0*eps_);
          // std::cout << f2[i] << "   " << d << "   "
          //           << d - f2[i] << std::endl;
@@ -77,9 +83,9 @@ protected:
       for (int i = 0; i < Dimension; ++i) {
          t = b3_;
          t[i] += eps_;
-         e1 = interaction_.energy(b1_, b2_, t, type);
+         e1 = interaction_.energy(b1_, b2_, t, type_);
          t[i] += eps_;
-         e2 = interaction_.energy(b1_, b2_, t, type);
+         e2 = interaction_.energy(b1_, b2_, t, type_);
          d = (4.0*e1 - e2 - 3.0*e0)/(2.0*eps_);
          // std::cout << f3[i] << "   " << d << "   "
          //           << d - f3[i] << std::endl;

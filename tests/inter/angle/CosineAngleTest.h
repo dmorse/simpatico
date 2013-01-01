@@ -8,9 +8,20 @@ class CosineAngleTest : public AngleTestTemplate<CosineAngle>
 {
 public:
 
+   #if 0
    CosineAngleTest() :
       AngleTestTemplate<CosineAngle>("in/CosineAngle")
    {}
+   #endif
+
+   using AngleTestTemplate<CosineAngle>::readParamFile;
+
+   void setUp()
+   {
+      eps_ = 1.0E-5;
+      setNAngleType(1);  
+      readParamFile("in/CosineAngle");  
+   } 
 
    void testSetUp()
    {  printMethod(TEST_FUNC); } 
@@ -20,6 +31,7 @@ public:
       printMethod(TEST_FUNC);
       b1_ = Vector( 0.2, 0.90,  0.3);
       b2_ = Vector(-0.1, 0.85, -0.4);
+      type_ = 0;
       forceTest();
    }
 

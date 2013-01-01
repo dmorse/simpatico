@@ -19,6 +19,10 @@ using namespace Inter;
 class CosineDihedralTest : public DihedralTestTemplate<CosineDihedral>
 {
 
+protected:
+
+   using DihedralTestTemplate<CosineDihedral>::readParamFile;
+
 public:
 
    void setUp() {
@@ -39,12 +43,12 @@ public:
    {
       printMethod(TEST_FUNC); 
       double energy;
-      int type = 0;
 
       b1_ = Vector(1.0, 0.0,  0.0);
       b2_ = Vector(0.0, 1.0,  0.0);
       b3_ = Vector(0.0, 0.0,  1.0);
-      energy = interaction_.energy(b1_, b2_, b3_, type);
+      type_ = 0;
+      energy = interaction_.energy(b1_, b2_, b3_, type_);
       TEST_ASSERT(eq(energy, 1.0));
       // std::cout << std::endl;
       // std::cout << energy << std::endl;
@@ -52,7 +56,8 @@ public:
       b1_ = Vector( 1.1,  0.2, -0.3);
       b2_ = Vector( 0.1,  0.9,  0.2);
       b3_ = Vector(-0.1,  0.2,  1.0);
-      energy = interaction_.energy(b1_, b2_, b3_, type);
+      type_ = 0;
+      energy = interaction_.energy(b1_, b2_, b3_, type_);
       // std::cout << energy << std::endl;
 
    }
@@ -64,11 +69,13 @@ public:
       b1_ = Vector(1.0, 0.0,  0.0);
       b2_ = Vector(0.0, 1.0,  0.0);
       b3_ = Vector(0.0, 0.0,  1.0);
+      type_ = 0;
       forceTest();
 
       b1_ = Vector( 1.1,  0.2, -0.3);
       b2_ = Vector( 0.1,  0.9,  0.2);
       b3_ = Vector(-0.1,  0.2,  1.0);
+      type_ = 0;
       forceTest();
    }
 

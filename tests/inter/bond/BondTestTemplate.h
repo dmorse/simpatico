@@ -1,5 +1,5 @@
-#ifndef PAIR_TEST_TEMPLATE_H
-#define PAIR_TEST_TEMPLATE_H
+#ifndef BOND_TEST_TEMPLATE_H
+#define BOND_TEST_TEMPLATE_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
@@ -16,7 +16,7 @@ using namespace Util;
 using namespace Inter;
 
 template <class Interaction>
-class PairTestTemplate : public UnitTest
+class BondTestTemplate : public UnitTest
 {
 
 protected:
@@ -24,23 +24,21 @@ protected:
    Interaction  interaction_;
    double  rsq_;
    double  eps_;
-   int  nAtomType_;
-   int  type1_;
-   int  type2_;
+   int  nBondType_;
+   int  type_;
 
-   PairTestTemplate()
+   BondTestTemplate()
     : interaction_(),
       rsq_(1.0),
       eps_(1.0E-5),
-      nAtomType_(0),
-      type1_(0),
-      type2_(0)
+      nBondType_(0),
+      type_(0)
    {}
 
-   void setNAtomType(int nAtomType)
+   void setNBondType(int nBondType)
    {
-      nAtomType_ = nAtomType;
-      interaction_.setNAtomType(nAtomType);
+      nBondType_ = nBondType;
+      interaction_.setNBondType(nBondType);
    }
 
    void readParamFile(std::string filename)
@@ -51,29 +49,29 @@ protected:
       in.close();
    }
 
-   double energy(double rsq, int type1, int type2)
-   {  return interaction_.energy(rsq, type1, type2); }
+   double energy(double rsq, int type)
+   {  return interaction_.energy(rsq, type); }
 
    double energy()
-   {  return interaction_.energy(rsq_, type1_, type2_); }
+   {  return interaction_.energy(rsq_, type_); }
 
-   double forceOverR(double rsq, int type1, int type2)
-   {  return interaction_.forceOverR(rsq, type1, type2); }
+   double forceOverR(double rsq, int type)
+   {  return interaction_.forceOverR(rsq, type); }
 
    double forceOverR()
-   {  return interaction_.forceOverR(rsq_, type1_, type2_); }
+   {  return interaction_.forceOverR(rsq_, type_); }
 
    bool testForce()
    {
-      double fOverR  = interaction_.forceOverR(rsq_, type1_, type2_);
-      double energy0 = interaction_.energy(rsq_, type1_, type2_);
+      double fOverR  = interaction_.forceOverR(rsq_, type_);
+      double energy0 = interaction_.energy(rsq_, type_);
 
       double dRsq = eps_*rsq_;
       double rsq1 = rsq_ + dRsq;
-      double energy1 = interaction_.energy(rsq1, type1_, type2_);
+      double energy1 = interaction_.energy(rsq1, type_);
 
       double rsq2 = rsq1 + dRsq;
-      double energy2 = interaction_.energy(rsq2, type1_, type2_);
+      double energy2 = interaction_.energy(rsq2, type_);
 
       double dEdRsq = (4.0*energy1 - energy2 - 3.0*energy0)/(2.0*dRsq);
       double diff = fOverR + 2.0*dEdRsq;

@@ -16,26 +16,6 @@ template <class Interaction>
 class AngleTestTemplate : public UnitTest 
 {
 
-public:
-
-   AngleTestTemplate(const char* paramFileName)
-    : paramFileName_(paramFileName)
-   {}
-
-   void setUp()
-   {
-      eps_ = 1.0E-5;
-      nAngleType_ = 1;
-      interaction_.setNAngleType(nAngleType_);
-      std::ifstream paramFile;
-      openInputFile(paramFileName_, paramFile);
-      interaction_.readParam(paramFile);
-      paramFile.close();
-   }
-
-   void tearDown()
-   {}
-
 protected:
 
    BendForce    bend_;
@@ -43,7 +23,27 @@ protected:
    Vector       b1_, b2_;
    double       eps_;
    int          nAngleType_;
-   std::string  paramFileName_;
+   int          type_;
+
+   AngleTestTemplate()
+    : eps_(1.0E-5),
+      nAngleType_(0),
+      type_(0)
+   {}
+
+   void setNAngleType(int nAngleType)
+   {
+      nAngleType_ = nAngleType;
+      interaction_.setNAngleType(nAngleType);
+   }
+
+   void readParamFile(std::string fileName)
+   {
+      std::ifstream paramFile;
+      openInputFile(fileName, paramFile);
+      interaction_.readParam(paramFile);
+      paramFile.close();
+   }
 
    void forceTest()
    {
@@ -52,9 +52,8 @@ protected:
       Vector b20 = b2_;
 
       Vector f1, f2;
-      int type = 0;
-      double e0 = interaction_.energy(bend_.cosTheta, type);
-      interaction_.force(b1_, b2_, f1, f2, type);
+      double e0 = interaction_.energy(bend_.cosTheta, type_);
+      interaction_.force(b1_, b2_, f1, f2, type_);
 
       // Derivative with respect to b1
       double d, e1, e2;
@@ -65,11 +64,11 @@ protected:
 
          b1_[i] += eps_;
          bend_.computeAngle(b1_, b2_);
-         e1 = interaction_.energy(bend_.cosTheta, type);
+         e1 = interaction_.energy(bend_.cosTheta, type_);
 
          b1_[i] += eps_;
          bend_.computeAngle(b1_, b2_);
-         e2 = interaction_.energy(bend_.cosTheta, type);
+         e2 = interaction_.energy(bend_.cosTheta, type_);
 
          d = (4.0*e1 - e2 - 3.0*e0)/(2.0*eps_);
          //std::cout << f1[i] << "   " << d << "   "
@@ -84,11 +83,11 @@ protected:
 
          b2_[i] += eps_;
          bend_.computeAngle(b1_, b2_);
-         e1 = interaction_.energy(bend_.cosTheta, type);
+         e1 = interaction_.energy(bend_.cosTheta, type_);
 
          b2_[i] += eps_;
          bend_.computeAngle(b1_, b2_);
-         e2 = interaction_.energy(bend_.cosTheta, type);
+         e2 = interaction_.energy(bend_.cosTheta, type_);
 
          d = (4.0*e1 - e2 - 3.0*e0)/(2.0*eps_);
          //std::cout << f2[i] << "   " << d << "   "

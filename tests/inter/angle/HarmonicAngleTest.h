@@ -8,9 +8,14 @@ class HarmonicAngleTest : public AngleTestTemplate<HarmonicAngle>
 {
 public:
 
-   HarmonicAngleTest() :
-      AngleTestTemplate<HarmonicAngle>("in/HarmonicAngle")
-   {}
+   using AngleTestTemplate<HarmonicAngle>::readParamFile;
+
+   void setUp()
+   {
+      eps_ = 1.0E-5;
+      setNAngleType(1);  
+      readParamFile("in/HarmonicAngle");  
+   } 
 
    void testSetUp()
    {  printMethod(TEST_FUNC); } 
@@ -20,6 +25,7 @@ public:
       printMethod(TEST_FUNC);
       b1_ = Vector( 0.2, 0.90,  0.3);
       b2_ = Vector(-0.1, 0.85, -0.4);
+      type_ = 0;
       forceTest();
    }
 
