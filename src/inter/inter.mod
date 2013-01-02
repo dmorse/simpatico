@@ -30,39 +30,4 @@ namespace Inter
    * \ref DdMd_Potential_Module "DdMd Potential Module"
    */
 
-   /**
-   * \defgroup Inter_Pair_Module Pair Interactions
-   * \ingroup  Inter_Module
-   *
-   * \brief    Potential energy functions for non-bonded pair interactions.
-   */
-
-   /**
-   * \defgroup Inter_Bond_Module Bond Interactions
-   * \ingroup  Inter_Module
-   *
-   * \brief    Potential energy functions for covalent bond interactions.
-   */
-
-   /**
-   * \defgroup Inter_Angle_Module Angle Interactions
-   * \ingroup  Inter_Module
-   *
-   * \brief    Potential energy functions for covalent angle interactions.
-   */
-
-   /**
-   * \defgroup Inter_Dihedral_Module Dihedral Interactions
-   * \ingroup  Inter_Module
-   *
-   * \brief    Potential energy functions for covalent dihedral interactions.
-   */
-
-   /**
-   * \defgroup Inter_External_Module External Interactions
-   * \ingroup  Inter_Module
-   *
-   * \brief    Potential energy functions for external one-body interactions.
-   */
-
 }

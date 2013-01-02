@@ -20,10 +20,14 @@ namespace Inter
    /**
    * Computes dihedral / torsion angle involving 3 bonds.
    *
-   * Models the dihedral angle of vectors b1, b2, and b3 that are 
-   * passed to the function computeAngle().
+   * Models the dihedral angle of 3 bond vectors b1, b2, and b3 
+   * that connect 4 atoms. These three vectors must be passed to
+   * the function computeAngle(), which computes the cosine of 
+   * the resulting dihedral angle, and stores it in the public 
+   * member cosPhi.
    *
-   * The scalar cosPhi is the cosine of the dihdral angle phi.
+   * See \ref Inter_Dihedral_Module in the file dihedral.mod for 
+   * the definition of cosPhi.
    *
    * \ingroup Inter_Dihedral_Module
    */

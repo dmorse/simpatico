@@ -18,17 +18,27 @@ namespace Inter
    using namespace Util;
 
    /**
-   * Calculates derivatives of torsion angle involving 3 bonds.
+   * Computes derivatives of dihedral angle with respect to bond vectors.
    *
-   * Models the dihedral angle of vectors b1, b2, and b3 that are 
-   * passed to the function computeAngle() or computeDerivatives().
+   * Models the dihedral angle formed by three sequentil bond vectors b1, b2,
+   * and b3. See \ref Inter_Dihedral_Module in the file dihedral.mod for the 
+   * definition of the dihedral angle phi and its relationship to these 
+   * bond vectors
    *
-   * The scalar cosPhi is the cosine of the dihdral angle phi.
+   * These 3 bond vectors must be passed to the method computeDerivatives()
+   * which computes the cosine of the dihedral angle and the derivatives of
+   * the cosine with respect to the elements of the bond vectors. This 
+   * function stores its results in the public members cosPhi, d1, d2, and
+   * d3. Upon return:
    *
-   * The elements of the vectors d1, d2, and d3 (if calculated) are
-   * derivatives of cosPhi with respect to the elements of b1, b2, 
-   * and b3, respectively. 
-   * 
+   * The scalar member cosPhi is the cosine of the dihdral angle phi.
+   *
+   * The elements of the vectors d1, d2, and d3 are derivatives of cosPhi 
+   * with respect to the elements of the bond vectors b1, b2, and b3.
+   *
+   * The function computeAngle(), which is inherited from the Torsion
+   * base class, computes only cosPhi, but not the derivatives. 
+   *
    * \ingroup Inter_Dihedral_Module
    */
    struct TorsionForce : public Torsion
