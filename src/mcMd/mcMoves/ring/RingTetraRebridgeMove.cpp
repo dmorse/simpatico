@@ -193,11 +193,15 @@ namespace McMd
 
             //system().moveAtom(*lTmp, hTmp->position());
             lTmp->position() = hTmp->position();
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*lTmp);
+            #endif
 
             //system().moveAtom(*hTmp, swapV);
             hTmp->position() = swapV;
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*hTmp);
+            #endif
 
          }
 

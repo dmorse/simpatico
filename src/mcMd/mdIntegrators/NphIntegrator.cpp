@@ -253,9 +253,11 @@ namespace McMd
          }
       }
 
+      #ifndef INTER_NOPAIR
       if (!system().pairPotential().isPairListCurrent()) {
          system().pairPotential().buildPairList();
       } 
+      #endif
 
       system().calculateForces();
 

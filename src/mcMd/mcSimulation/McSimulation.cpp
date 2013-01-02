@@ -525,6 +525,7 @@ namespace McMd
 
             } else
             #ifndef UTIL_MPI
+            #ifndef INTER_NOPAIR
             if (command == "SET_PAIR") {
                std::string paramName;
                int typeId1, typeId2; 
@@ -536,6 +537,7 @@ namespace McMd
                system().pairPotential()
                        .set(paramName, typeId1, typeId2, value);
             } else 
+            #endif // ifndef INTER_NOPAIR
             if (command == "SET_BOND") {
                std::string paramName;
                int typeId; 
@@ -555,7 +557,7 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().anglePotential().set(paramName, typeId, value);
             } else 
-            #endif
+            #endif // ifdef INTER_ANGLE
             #ifdef INTER_DIHEDRAL
             if (command == "SET_DIHEDRAL") {
                std::string paramName;
@@ -566,8 +568,8 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().dihedralPotential().set(paramName, typeId, value);
             } else 
-            #endif
-            #endif
+            #endif // ifdef INTER_DIHEDRAL
+            #endif // ifndef UTIL_MPI
             {
                Log::file() << "  Error: Unknown command  " << std::endl;
                readNext = false;

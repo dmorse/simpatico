@@ -1,9 +1,12 @@
-include $(SRC_DIR)/mcMd/potentials/pair/sources.mk
 include $(SRC_DIR)/mcMd/potentials/bond/sources.mk
 
 mcMd_potentials_SRCS=\
-    $(mcMd_potentials_pair_SRCS) \
     $(mcMd_potentials_bond_SRCS) 
+
+ifndef INTER_NOPAIR
+include $(SRC_DIR)/mcMd/potentials/pair/sources.mk
+mcMd_potentials_SRCS+=$(mcMd_potentials_pair_SRCS) 
+endif
 
 ifdef INTER_ANGLE
 include $(SRC_DIR)/mcMd/potentials/angle/sources.mk

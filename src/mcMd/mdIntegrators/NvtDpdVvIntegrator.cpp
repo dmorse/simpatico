@@ -39,7 +39,9 @@ namespace McMd
      sigma_(-1.0),
      temperature_(1.0),
      cutoffSq_(-1.0),
+     #ifndef INTER_NOPAIR
      pairListPtr_(&system.pairPotential().pairList()),
+     #endif
      boundaryPtr_(&system.boundary()),
      randomPtr_(&system.simulation().random()),
      energyEnsemblePtr_(&system.energyEnsemble()),
@@ -71,9 +73,11 @@ namespace McMd
    {
       read<double>(in, "dt", dt_);
       read<double>(in, "cutoff", cutoff_);
+      #ifndef INTER_NOPAIR
       if (cutoff_ > system().pairPotential().maxPairCutoff()) {
          UTIL_THROW("Error: Dpd pair cutoff > maxCutoff of pair potential");
       }
+      #endif
       read<double>(in, "gamma", gamma_);
 
       // Allocate arrays for internal use
@@ -90,9 +94,11 @@ namespace McMd
    {  
       loadParameter<double>(ar, "dt", dt_);
       loadParameter<double>(ar, "cutoff", cutoff_);
+      #ifndef INTER_NOPAIR
       if (cutoff_ > system().pairPotential().maxPairCutoff()) {
          UTIL_THROW("Error: Dpd pair cutoff > maxCutoff of pair potential");
       }
+      #endif
       loadParameter<double>(ar, "gamma", gamma_);
       ar & temperature_;
       ar & sigma_;
@@ -137,8 +143,11 @@ namespace McMd
       sigma_ = sqrt(2.0*gamma_*temperature_/dt_);
       cutoffSq_ = cutoff_*cutoff_;
 
+      #ifndef INTER_NOPAIR
       system().pairPotential().clearPairListStatistics();
       system().pairPotential().buildPairList();
+      #endif
+
       system().calculateForces();
       computeDpdForces(true);
    }
