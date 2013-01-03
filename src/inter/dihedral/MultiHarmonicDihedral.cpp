@@ -211,6 +211,7 @@ namespace Inter
       } else {
          UTIL_THROW("Unrecognized parameter name");
       }
+      ptr->init();
    }
 
    /*
