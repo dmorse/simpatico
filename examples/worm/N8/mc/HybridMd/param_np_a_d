@@ -1,6 +1,6 @@
 McSimulation{
   FileMaster{
-    commandFileName           commands_a_d
+    commandFileName        commands_np_a_d
     inputPrefix                        in/
     outputPrefix                      out/
   }
@@ -27,15 +27,8 @@ McSimulation{
     seed                          13451892
   }
   McSystem{
-    pairStyle       LJPair
     bondStyle       HarmonicBond
     angleStyle      CosineAngle
-    McPairPotential{
-      epsilon           1.000000000000e+00
-      sigma             1.000000000000e+00
-      cutoff            1.122460000000e+00
-      maxBoundary         cubic         10.5
-    }
     BondPotential{
       kappa             4.000000000000e+02
       length            1.000000000000e+00
@@ -57,14 +50,6 @@ McSimulation{
       probability         1.000000000000e+00
       nStep                              200
       MdSystem{
-        MdPairPotential{
-          maxBoundary         cubic         10.5
-          PairList{
-            atomCapacity                     800
-            pairCapacity                   10000
-            skin                 3.000000000e-01
-          }
-        }
         NveVvIntegrator{
           dt               8.000000000e-03
         }
