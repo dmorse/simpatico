@@ -1,0 +1,102 @@
+MdSimulation{
+  FileMaster{
+    commandFileName              commands_np
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              1
+  nBondType                              1
+  atomTypes                    A       1.0
+  maskedPairPolicy              MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                     100
+      nAtom                                  2
+      atomType                               0
+      bondType                               0
+    }
+
+  }
+  Random{
+    seed                           13452692
+  }
+  MdSystem{
+    bondStyle                  HarmonicBond
+    BondPotential{
+      kappa                 1.000000000000e+02
+      length                1.000000000000e+00
+    }
+    EnergyEnsemble{
+      type                  isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                  rigid
+    }
+    NvtNhIntegrator{
+      dt                    1.000000000000e-03
+      tauT                  1.000000000000e+00
+    }
+  }
+  DiagnosticManager{
+    baseInterval                          10
+
+    LogProgress{
+      interval                        200000
+    }
+
+    MdPotentialEnergyAverage{
+      interval                            20
+      outputFileName               potential
+      nSamplePerBlock                     50
+    }
+
+    MdKineticEnergyAverage{
+      interval                            20
+      outputFileName                 kinetic
+      nSamplePerBlock                     50
+    }
+
+    MdPressureAverage{
+      interval                            20
+      outputFileName                pressure
+      nSamplePerBlock                     50
+    }
+
+    AtomMSD{
+      interval                            10
+      outputFileName              AtomMSD.20
+      speciesId                            0
+      atomId                               0
+      capacity                            10
+    }
+
+    AtomMSD{
+      interval                           100
+      outputFileName             AtomMSD.100
+      speciesId                            0
+      atomId                               0
+      capacity                           200
+    }
+  }
+}
+
+    RDF{
+      interval                         50000
+      outputFileName                     RDF
+      max                                5.0
+      nBin                               500
+      selector                         inter   -1    -1
+    }
+
+    DumpConfig{
+      interval                         10000
+      outputFileName            dump/config.
+    }
+
+    MdWriteRestart{
+      interval                         10000
+      outputFileName                 restart
+    }
+
