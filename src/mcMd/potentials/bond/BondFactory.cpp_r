@@ -57,10 +57,13 @@ namespace McMd
       } else
       if (name == "FeneBond") {
          ptr = new BondPotentialImpl<FeneBond>(*systemPtr_);
-      } else
+      }
+      #ifndef INTER_NOPAIR 
+      else
       if (name == "CompositeBond<HarmonicL0Bond,DpdPair>") {
          ptr = new BondPotentialImpl< CompositeBond<HarmonicL0Bond, DpdPair> >(*systemPtr_);
       }
+      #endif
       return ptr;
    }
 

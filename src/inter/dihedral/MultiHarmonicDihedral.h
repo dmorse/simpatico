@@ -9,6 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>     // base class
+#include <util/containers/DArray.h>        // member
 #include <util/space/Vector.h>             // inline function
 #include <inter/dihedral/Torsion.h>        // inline function
 #include <inter/dihedral/TorsionForce.h>   // inline function
@@ -20,13 +21,13 @@ namespace Inter
    using namespace Util;
 
    /**
-   * A dihedral potential proportional to cos(phi).
+   * A truncated Fourier series dihedral potential.
    *
    * This class defines a dihedral potential:
    * \f[
    *    V(\phi) = K_{0} + \sum_{m=1}^{4} K_{m} \cos(m \phi)]
    * \f]
-   * where phi is the dihedral potential, as defined in \ref Inter_Dihedral_Module.
+   * where phi is the dihedral potential defined in \ref Inter_Dihedral_Module.
    *
    * \ingroup Inter_Dihedral_Module
    */
@@ -69,6 +70,15 @@ namespace Inter
       void readParameters(std::istream &in);
 
       /**
+      * Write Fourier coefficients to output stream.
+      *
+      * \pre nDihedralType must be set, by calling setNDihedralType().
+      *
+      * \param out output stream
+      */
+      void writeParam(std::ostream& out);
+
+      /**
       * Load internal state from an archive.
       *
       * \param ar input/loading archive
@@ -92,7 +102,7 @@ namespace Inter
       void set(std::string name, int type, double value);
 
       /**
-      * Returns potential energy for one dihedral.
+      * Returns potential energy for one dihedral group.
       *
       *     0   2    3
       *     o   o----o
@@ -112,9 +122,9 @@ namespace Inter
       * Returns derivatives of energy with respect to bond vectors forming the
       * dihedral group.
       *
-      * \param b1     bond vector from atom 1 to 2.
-      * \param b2     bond vector from atom 2 to 3.
-      * \param b3     bond vector from atom 3 to 4.
+      * \param b1     bond vector from atom 1 to 2 (input)
+      * \param b2     bond vector from atom 2 to 3 (input)
+      * \param b3     bond vector from atom 3 to 4 (input)
       * \param f1     derivative of energy w/respect to b1 (output)
       * \param f2     derivative of energy w/respect to b2 (output)
       * \param f3     derivative of energy w/respect to b3 (output)
@@ -126,14 +136,14 @@ namespace Inter
       /**
       * Get a parameter value, identified by a string.
       *
-      * \param name  parameter name
+      * \param name  parameter name (k0, k1, k2, k3, or k4)
       * \param type  dihedral type index
       * \return parameter value
       */
       double get(std::string name, int type) const;
 
       /**
-      * Return name string "MultiHarmonicDihedral" for this evaluator class.
+      * Return name string "MultiHarmonicDihedral".
       */
       std::string className() const;
  
@@ -142,33 +152,43 @@ namespace Inter
       struct Parameter 
       {
 
-         // Coefficients in expansion V(phi) = \sum_m K_m cos(m phi)
-         double K0; 
-         double K1; 
-         double K2;
-         double K3; 
-         double K4;
+      public:
 
-         // Coefficients in expansion V(phi) = \sum_m A_m cos^m(phi)
-         double A0; 
-         double A1; 
-         double A2; 
-         double A3; 
-         double A4; 
+         // Coefficients in expansion V(phi) = \sum_m k_m cos(m phi)
+         double k0; 
+         double k1; 
+         double k2;
+         double k3; 
+         double k4;
+
+         // Coefficients in expansion V(phi) = \sum_m a_m cos^m(phi)
+         double a0;
+         double a1; 
+         double a2; 
+         double a3; 
+         double a4; 
+
+         double g2; 
+         double g3; 
+         double g4; 
 
          void init()
          {
-            A0 = K0 - K2 + K4;
-            A1 = K1 - 3.0*K3;
-            A2 = 2.0*K2 - 8.0*K4;
-            A3 = 4.0*K3;
-            A4 = 8.0*K4;
+            a0 = k0 - k2 + k4;
+            a1 = k1 - 3.0*k3;
+            a2 = 2.0*k2 - 8.0*k4;
+            a3 = 4.0*k3;
+            a4 = 8.0*k4;
+
+            g2 = 2.0*a2;
+            g3 = 3.0*a3;
+            g4 = 4.0*a4;
          }
 
-      }
+      };
 
       /// Array of parameters, one struct per dihedral type
-      DArray<Parameters> parameters;
+      DArray<MultiHarmonicDihedral::Parameter> parameters_;
 
       /// Number of dihedral types
       int nDihedralType_;        
@@ -188,8 +208,8 @@ namespace Inter
       torsion.computeAngle(b1, b2, b3); // computes cosPhi
       double c = torsion.cosPhi;
 
-      Parameter* p = &parameters[type];
-      return p->A0 + c*(p->A1 + c*(p->A2 + c*(p->A3 + c*p->A4)));
+      const Parameter* p = &parameters_[type];
+      return (p->a0 + c*(p->a1 + c*(p->a2 + c*(p->a3 + c*p->a4))));
    }
 
    /* 
@@ -209,8 +229,8 @@ namespace Inter
       torsion.computeDerivatives(b1, b2, b3);
       double c = torsion.cosPhi;
 
-      Parameter* p = parameters[type];
-      double dEdC = p.A1 + c*(2.0*p.A2 + c*(3.0*p.A3 + 4.0*c*p.A4));
+      const Parameter* p = &parameters_[type];
+      double dEdC = p->a1 + c*(p->g2 + c*(p->g3 + c*p->g4));
       f1.multiply(torsion.d1, dEdC);
       f2.multiply(torsion.d2, dEdC);
       f3.multiply(torsion.d3, dEdC);

@@ -9,6 +9,8 @@
 */
 
 #include "MultiHarmonicDihedral.h"
+#include <util/format/Int.h>
+#include <util/format/Dbl.h>
 
 namespace Inter
 {
@@ -29,15 +31,54 @@ namespace Inter
    */
    MultiHarmonicDihedral::MultiHarmonicDihedral(const MultiHarmonicDihedral& other)
     : nDihedralType_(other.nDihedralType_)
-   { for (int i = 0; i < nDihedralType_; ++i) kappa_[i] = other.kappa_[i]; }
+   {  
+      Parameter* ptr;
+      const Parameter* otherPtr;
+      if (nDihedralType_ > 0) {
+         parameters_.allocate(nDihedralType_);
+         for (int i = 0; i < nDihedralType_; ++i) {
+            ptr = &(parameters_[i]);
+            otherPtr = &(other.parameters_[i]);
+            ptr->k0 = otherPtr->k0;
+            ptr->k1 = otherPtr->k1;
+            ptr->k2 = otherPtr->k2;
+            ptr->k3 = otherPtr->k3;
+            ptr->k4 = otherPtr->k4;
+            ptr->init();
+         }
+      }
+   }
 
    /* 
    * Assignment.
    */
-   MultiHarmonicDihedral& MultiHarmonicDihedral::operator = (const MultiHarmonicDihedral& other)
+   MultiHarmonicDihedral& 
+   MultiHarmonicDihedral::operator = (const MultiHarmonicDihedral& other)
    {
-      nDihedralType_ = other.nDihedralType_;
-      for (int i = 0; i < nDihedralType_; ++i) kappa_[i] = other.kappa_[i];
+      if (!parameters_.isAllocated()) {
+         nDihedralType_ = other.nDihedralType_;
+         if (nDihedralType_ > 0) {
+            parameters_.allocate(nDihedralType_);
+         }
+      } else {
+         if (nDihedralType_ != other.nDihedralType_) {
+           UTIL_THROW("Unequal values of nDihedralType_");
+         }
+      }
+      if (nDihedralType_ > 0) {
+         Parameter* ptr;
+         const Parameter* otherPtr;
+         for (int i = 0; i < nDihedralType_; ++i) {
+            ptr = &(parameters_[i]);
+            otherPtr = &(other.parameters_[i]);
+            ptr->k0 = otherPtr->k0;
+            ptr->k1 = otherPtr->k1;
+            ptr->k2 = otherPtr->k2;
+            ptr->k3 = otherPtr->k3;
+            ptr->k4 = otherPtr->k4;
+            ptr->init();
+         }
+      }
       return *this;
    }
 
@@ -50,18 +91,45 @@ namespace Inter
          UTIL_THROW("nDihedralType must be positive");
       }
       nDihedralType_ = nDihedralType;
-      parameters.allocate(nDihedralType_);
+      parameters_.allocate(nDihedralType_);
    }
 
    /* 
-   * Read bend interaction parameters kappa from file.
+   * Read Fourier coefficients from file.
    */
    void MultiHarmonicDihedral::readParameters(std::istream &in) 
    {
       if (nDihedralType_ <= 0) {
          UTIL_THROW("nDihedralType must be set before readParam");
       }
-      read<ParameterSet>(in, "K",  parameters[i]);
+      Parameter* ptr;
+      int j;
+      for (int i = 0; i < nDihedralType_; ++i) {
+         in >> j;
+         if (i != j) UTIL_THROW("Inconsistent dihedral type index");
+         ptr = &(parameters_[i]);
+         in >> ptr->k0 >> ptr->k1 >> ptr->k2 
+            >> ptr->k3 >> ptr->k4;
+         ptr->init();
+      }
+   }
+
+   /* 
+   * Write Fourier coefficients to file.
+   */
+   void MultiHarmonicDihedral::writeParam(std::ostream &out) 
+   {
+      Parameter* ptr;
+      for (int i = 0; i < nDihedralType_; ++i) {
+         ptr = &parameters_[i];
+         out << Int(i, 5)
+             << Dbl(ptr->k0, 10)
+             << Dbl(ptr->k1, 10)
+             << Dbl(ptr->k2, 10)
+             << Dbl(ptr->k3, 10) 
+             << Dbl(ptr->k4, 10)
+             << std::endl;
+      }
    }
 
    /*
@@ -73,19 +141,23 @@ namespace Inter
       if (nDihedralType_ <= 0) {
          UTIL_THROW( "nDihedralType must be positive");
       }
-      parameters.allocate(nDihedralType_);
+      parameters_.allocate(nDihedralType_);
+      Parameter* ptr;
       for (int i = 0; i < nDihedralType_; ++i) {
-         ParametersSet* p = &parameters[i];
-         ar & p->K0;
-         ar & p->K1;
-         ar & p->K2;
-         ar & p->K3;
-         ar & p->K4;
-         ar & p->A0;
-         ar & p->A1;
-         ar & p->A2;
-         ar & p->A3;
-         ar & p->A4;
+         ptr = &(parameters_[i]);
+         ar >> ptr->k0;
+         ar >> ptr->k1;
+         ar >> ptr->k2;
+         ar >> ptr->k3;
+         ar >> ptr->k4;
+         ar >> ptr->a0;
+         ar >> ptr->a1;
+         ar >> ptr->a2;
+         ar >> ptr->a3;
+         ar >> ptr->a4;
+         ar >> ptr->g2;
+         ar >> ptr->g3;
+         ar >> ptr->g4;
       }
    }
 
@@ -95,18 +167,22 @@ namespace Inter
    void MultiHarmonicDihedral::save(Serializable::OArchive &ar)
    {
       ar << nDihedralType_;
+      Parameter* ptr;
       for (int i = 0; i < nDihedralType_; ++i) {
-         ParametersSet* p = &parameters[i];
-         ar & p->K0;
-         ar & p->K1;
-         ar & p->K2;
-         ar & p->K3;
-         ar & p->K4;
-         ar & p->A0;
-         ar & p->A1;
-         ar & p->A2;
-         ar & p->A3;
-         ar & p->A4;
+         ptr = &(parameters_[i]);
+         ar << ptr->k0;
+         ar << ptr->k1;
+         ar << ptr->k2;
+         ar << ptr->k3;
+         ar << ptr->k4;
+         ar << ptr->a0;
+         ar << ptr->a1;
+         ar << ptr->a2;
+         ar << ptr->a3;
+         ar << ptr->a4;
+         ar << ptr->g2;
+         ar << ptr->g3;
+         ar << ptr->g4;
       }
    }
 
@@ -115,20 +191,21 @@ namespace Inter
    */
    void MultiHarmonicDihedral::set(std::string name, int type, double value)
    {
-      if (name == "K0") {
-        parameters[type].K0 = value;
+      Parameter* ptr = &(parameters_[type]);
+      if (name == "k0") {
+        ptr->k0 = value;
       } else 
-      if (name == "K1") {
-        parameters[type].K1 = value;
+      if (name == "k1") {
+        ptr->k1 = value;
       } else 
-      if (name == "K2") {
-        parameters[type].K2 = value;
+      if (name == "k2") {
+        ptr->k2 = value;
       } else 
-      if (name == "K3") {
-        parameters[type].K3 = value;
+      if (name == "k3") {
+        ptr->k3 = value;
       } else 
-      if (name == "K4") {
-        parameters[type].K4 = value;
+      if (name == "k4") {
+        ptr->k4 = value;
       } else {
          UTIL_THROW("Unrecognized parameter name");
       }
@@ -140,21 +217,21 @@ namespace Inter
    double MultiHarmonicDihedral::get(std::string name, int type) const
    {
       double value = 0.0;
-      ParameterSet p = &parameters[type];
-      if (name == "K0") {
-         value = p->K0;
+      const Parameter* ptr = &(parameters_[type]);
+      if (name == "k0") {
+         value = ptr->k0;
       } else 
-      if (name == "K1") {
-         value = p->K1;
+      if (name == "k1") {
+         value = ptr->k1;
       } else 
-      if (name == "K2") {
-         value = p->K2;
+      if (name == "k2") {
+         value = ptr->k2;
       } else 
-      if (name == "K3") {
-         value = p->K3;
+      if (name == "k3") {
+         value = ptr->k3;
       } else 
-      if (name == "K4") {
-         value = p->K4;
+      if (name == "k4") {
+         value = ptr->k4;
       } else {
          UTIL_THROW("Unrecognized parameter name");
       }
@@ -162,7 +239,7 @@ namespace Inter
    }
 
    /*
-   * Return name string "MultiHarmonicDihedral" for this evaluator class.
+   * Return class name string "MultiHarmonicDihedral".
    */
    std::string MultiHarmonicDihedral::className() const
    {  return std::string("MultiHarmonicDihedral"); }
