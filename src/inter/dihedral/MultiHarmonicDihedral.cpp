@@ -12,6 +12,7 @@
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 
+#include <iomanip>
 namespace Inter
 {
 
@@ -120,14 +121,15 @@ namespace Inter
    void MultiHarmonicDihedral::writeParam(std::ostream &out) 
    {
       Parameter* ptr;
+      out.setf(std::ios_base::fixed);
       for (int i = 0; i < nDihedralType_; ++i) {
          ptr = &parameters_[i];
-         out << Int(i, 5)
-             << Dbl(ptr->k0, 10)
-             << Dbl(ptr->k1, 10)
-             << Dbl(ptr->k2, 10)
-             << Dbl(ptr->k3, 10) 
-             << Dbl(ptr->k4, 10)
+         out << Int(i, 5) << "  " << std::setprecision(6)
+             << std::setw(10) << ptr->k0   << "  "
+             << std::setw(10) << ptr->k1   << "  "
+             << std::setw(10) << ptr->k2   << "  "
+             << std::setw(10) << ptr->k3   << "  "
+             << std::setw(10) << ptr->k4   << "  "
              << std::endl;
       }
    }
