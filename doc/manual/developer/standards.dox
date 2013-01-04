@@ -3,7 +3,7 @@
 This file documents programming and formatting conventions that should be used
 in the source code of Simpatico:
 
-\section file_section File Conventions
+\section file_section Files
 
   - Header files name use file extension *.h and source (implementation) files use *.cpp. 
 
@@ -15,27 +15,27 @@ in the source code of Simpatico:
 
   - Use header guards in all header files. 
 
-\section name_section Name Conventions
+\section name_section Symbol Names
 
   -  Names of functions and variables are lower case camel, as in "myVariable" or "myData".  
 
   -  Names of user-defined types (class, typedef, and enum) and namespaces are upper case camel, as in "MyClass" or "Util". 
 
-  -  Names of class member variable names (other than static constants) end with a trailing underscore, like "data_" or "outputFile_". Such variables are all private or (occasionally) protected.
+  -  Names of class member variable (other than static constants) must end with a trailing underscore, like "data_" or "outputFile_". All such variables are private or (occasionally) protected.
 
   -  Static constant class member variable names are upper case camel, as in "MaxDimension". These may be public.
 
-  -  Use plural knowns for names of arrays and other containers. An array of Atom objects might thus be named "atoms", or "atoms_" if it is a class member. 
+  -  Use plural nouns for names of arrays and other containers. An array of Atom objects might thus be named "atoms", or "atoms_" if it is a class member. 
 
-  -  Names of pointer variables end with a suffix Ptr.  A local Atom* pointer variable within a function might thus be called "atomPtr", while an Atom* class member might be called "atomPtr_". Do not use this convention for pointers that point at C arrays (and prefer containers to bare C-arrays).
+  -  Names of pointer variables end with a suffix Ptr.  A local Atom* pointer variable within a function might thus be called "atomPtr". An Atom* pointer class member variable might be called "atomPtr_". Do not use this convention for pointers that point at C arrays (and avoid bare C-arrays): The suffix "Ptr" denotes a pointer that will point at a single object.
 
-  - Names of preprocessor macros are upper case, with underscores between words.  No preprocessor macros other than include guards should be defined in header files, or in files that contain class templates. 
+  - Names of preprocessor macros are upper case, with underscores between words.
 
-  - Use the same parameter names in function definitions and corresponding declarations.
+  - Use the same parameter names in the declaration of a function and in the corresponding definition.
 
   - Names of functions that are not simple accessors (discussed below) should generally be verbs. 
 
-  - The name of a "setter" function that is passed a value for a member should begin with the prefix "set".  The name of a parameter that holds a new value in such a function should be the same as the name of the member variable, without the trailing underscore. The same convention is used whether the value is passed by value or by reference. For example:
+  - The name of a "setter" class member function that is passed a value for a member variable should begin with the prefix "set".  The name of the function parameter that holds the new value should be the same as the name of the member variable, without any trailing underscore. The same convention is used whether the value is passed by value or by reference. For example:
 \code
 
     void Thing::setData(int data)
@@ -49,7 +49,7 @@ in the source code of Simpatico:
 
 \endcode
 
-  - The name of simple accessor ("getter") functions that return a member variable by value or by reference should be the name of the member variable, without the trailing underscore. Simpatico does NOT use the convention of appending a prefix "get" to the name of simple accessors. The same syntax is use for accessors that return by value, const reference, or non-const reference. Thus, for example:
+  - The name of a simple accessor ("getter") class member function that returns a member variable by value or by reference should simply be the name of the member variable, without any trailing underscore. Simpatico thus does NOT use the convention of appending a prefix "get" to the names of accessor functions. The same name convention is use for accessors that return by value, const reference, or non-const reference. Thus, for example:
 \code
 
     int Thing::data() const
@@ -194,7 +194,7 @@ namespace Util
 #endif
 \endverbatim
 
-\section Dox_section Documentation Conventions (via doxygen):
+\section Dox_section Documentation (via doxygen):
 
 Simpatico uses the doxygen (www.doxygen.org) utility to create html documentation from documentations blocks that are extracted from the source code. Doxygen will extracts any multi-line comment that begin with a slash and two asterisks ("/**"), or single line comments that begin with three slashes ("///"), like this:
 \verbatim
@@ -212,15 +212,19 @@ Simpatico uses the doxygen (www.doxygen.org) utility to create html documentatio
    // Nor will this one.
 
 \endverbatim
-Comments within functions that you do not wish to be extracted by doxygen should use the usual form for C comments, using only a single asterisk for multi-line comments or only two slashes for for single line comments. The documentation block for a class or function should appear immediately above the first line of the class definition or function declaration.
+Comments within functions that you do not wish to be extracted by doxygen should use the usual form for C comments, using only a single asterisk for multi-line comments or only two slashes for for single line comments. 
 
   - Create dOxygen documentation blocks for public and protected named quantities, i.e., all classes, public and protected member functions, protected member variables, namespaces, global functions, typedefs, enums, and constants. 
 
-  - Place the doxygen documentation block for functions above the function declaration (within the header file), rather than above the function definition (which may be in a separate source file).
+  - The doxygen documentation block for a class should appear immediately above the first line of the class definition.
+
+  - The doxygen documentation block for a class member function should be immediately above the function declaration, within the class definition, in the header file.
+
+  - Prefer doxygen multiline comments for documentation of classes and class member functions.
 
   - Document all parameters of public and protected functions, using the dOxygen param keyword.
   
-  - The documentation for every class and public or protected function should begin with a brief single-sentence synopsis, which must end with a period and be followed by a blank line. This brief description is often sufficient. More detailed discussion may be given on subsequent lines, if needed.
+  - The documentation for every class and public or protected function should begin with a brief single-sentence synopsis, which must end with a period and be followed by a blank line. This brief description is often sufficient. If needed, more detailed discussion may be given in one or more subsequent paragraphs, separated by blank lines.
 Example:
 \verbatim
 
@@ -242,9 +246,9 @@ Example:
 
 \endverbatim
 
-  - Private class member variables may be documented either using the multi-line or single line doxygen format.
+  - Document private class member variables using either the multi-line or single line doxygen format. This does not normally appear in the html documentation, but can be included if desired. Documentation of the meaning of member variables is important for developers who must read the implementation, though not strictly necessary for users.
 
- - Do not use doxygen-style comments for the function definitions (implementations) when the definition is separate from the declaration. Use a conventional C/C++ comment format that will not be extracted by doxygen (with one asterisk, or two slashes) above each function definition, like this:
+  - Do not use doxygen-style comments for the function definitions (implementations), when the definition is given outside the class definition. Use a conventional C/C++ comment format (with one asterisk or two slashes) above each function definition, like this:
 \verbatim
 
    /* 
@@ -257,95 +261,101 @@ Example:
 
 \endverbatim
 
-\section interface_section Design Guidelines
+\section interface_section Interface Design
 
   - All nonstatic class member variables should be private or (occassionally) protected.  
 
-  - Pass and return primitive C/C++ data types by value.  Pass such values by non-const reference when they must be modified within a function.
+  - Pass and return primitive C/C++ data types by value.  Pass primitive data types to functions by non-const reference only when they must be modified within the function.
 
-  - Pass objects (class instances) to functions by reference, not by value. Pass by const reference whenever possible.
+  - Pass objects (class instances) to functions by reference, not by value. Pass by const reference if the object is not modified.
 
-  - Prefer references over pointers as method parameters. Pass pointers to functions only if: i) a null value for the pointer is a meaningful possibility, or ii) the pointer contains an address that must be re-assigned within the function.
+  - Prefer references over pointers as function parameters. Pass pointers to functions only if: i) a null value for the pointer is a meaningful possibility, or ii) the pointer contains an address that must be re-assigned within the function.
 
-  - Prefer references over pointers as function return values. Return pointers only if a null pointer is a meaningful possibility.  
-
+  - Prefer references over pointers as function return values. Return a pointer only if a null pointer is a meaningful possibility.  
   - Practice strict "const correctness".  Mark function parameters and class member functions as const whenever possible. 
 
-  - Read-only access to a member variable of primitive type should be provided (when needed) by an accessor function that returns the member variable by value.  Access to a class instance that is owned by a class may be provided by a accessor method that returns the object by const reference (for read-only access) or a non-const reference (for read write access). Simple accessors that return by value or const references should be marked const.  For example, if a class has an int member variable data_ and a member object_ that is an instance of class Object, you might consider providing any or (none) of the following methods:
+  - Read-only access to a member variable of primitive type should be provided (when needed) by an accessor function that returns the member variable by value.  Read-only access to an object (class instance) that is owned by a class may be provided by an accessor function that returns the object by const reference. Read-write access to an object may be provided by an accessor that returns the object by non-const reference. Simple accessors that return by value or const references should be marked const.  For example, if a class has an int member variable data_ and a member object_ that is an instance of class Object, you might consider providing any or (none) of the following methods:
 \code
 
-   // Read access to a member of a primitive data type.
+   /**
+   * Get data.
+   */
    int Thing::data() const
    {  return data_; }
 
-   // Read access to a member object.
+   /**
+   * Get object (by const reference).
+   */
    const Object& Thing::object() const
    {  return object_; }
 
-   // Read-write access to a member object.
+   /**
+   * Get object (by non-const reference).
+   */
    Object& Thing::&object_()
    {  return object_; }
 
 \endcode
 
-  - Providing an accessor function that returns a non-const reference to a member object is equivalent to making the member public, and should be used when this is what is desired, rather than actually making the member public. For example, the Atom and McSimulation classes provide the following methods:
+  - Providing an accessor function that returns a non-const reference to a member object is equivalent to making the member public, and should be used when this is what is desired. Do not simply make the data member public. For example, the McMd::Atom and McMd::McSimulation classes provide the following methods:
 \code
 
-   McSystem& McSimulation::system() 
+   Util::Vector& Atom::position() 
    {  return system_; }
 
-   Vector& Atom::position() 
+   McMd::McSystem& McMd::McSimulation::system() 
    {  return system_; }
 
 \endcode
-The advantages of this scheme are:
+These provide pseudo-public access to the position of an Atom (represented as a Util::Vector) and to the system component of an McSimulation. The advantages of this scheme are:
      <ul>
-     <li> Uniform interface: All members must be accessed through accessors, so users need not remember which members are public and which must accessed  through accessors. </li>
-     <li> Uniform name conventions: We can use a naming scheme in which all member variable names end with an underscore, without exposing underscored names outside the class implementation. </li>
-     <li> The same syntax is used for accessor functions that return by value, const reference, or reference, but the compiler will enforce access control. </li>
-     <li> Implementation hiding: The same syntax is used to access objects that are actually members of a class and those that are accessed through a pointer member. Use of accessor functions also makes it possible to add (removable) sanity checks for debugging, such as checks that pointers are not null.
+     <li> Uniform interface: All members must be accessed through accessors, so users need not remember which members are public and which are accessed through accessor functions. </li>
+     <li> Uniform name conventions: The name of the accessor that returns a member is always the name of the member variable, without amy underscore. This allows us to use an underscore to mark member variable names, without exposing underscored names outside the class implementation. </li>
+     <li> Uniform access: The same name convention is used for accessors that return by value, const reference, or reference, but the compiler can still enforce access control. </li>
+     <li> Implementation hiding: The same convention is for functions that access members of a class and those that access objects athrough a pointer. Use of accessor functions also makes it possible to add and remove sanity checks for debugging, such as checks that pointers are not null.
      </ul>
 
   - Write access to a class instance may sometimes instead be provided by an explicit "set" function. The use of a set function is preferable when one needs to check preconditions or carry out operations necessary to guarantee data validity.
 
-\section data_section Data Structure Conventions:
+\section data_section Data Structures 
 
   - Use the C++ iostream classes for all file IO. For consistency, avoid the C fscan() and fprint() methods. Use the wrapper classes in the src/format directory to simplify coding of formatted output to ostreams.
 
   - Use std::string to represent character strings whenever possible.
 
-  - Use Util::Vector objects to represent Cartesian positions and separations, or any array of floating point numbers for which the number of elements equals the dimensionality of space (e.g., the dimensions of the Boundary for a periodic orthorhombic unit cell). Use IntVector to represent corresponding arrays of integers.
+  - Use Util::Vector objects to represent Cartesian positions and separations, or any array floating point numbers for which the number of elements must equal the dimensionality of space (e.g., the dimensions of the Boundary for a periodic orthorhombic unit cell). Use IntVector to represent corresponding arrays of integers.
 
-  - Prefer the container templates in src/util/containers over bare C arrays and STL containers. STL containers should be used when their is a need for their resizability or for other features not provided by the custom containers. Rational: The preference for the custom containers is based on the fact that: 
-
-    - They provide bound checking when NDEBUG is not defined, and 
-    - They cannot be silently resized. The second property is important for algorithms that use pointers to array elements, which could be invalidated if the array is resized.
+  - Prefer the array container templates in src/util/containers over bare C arrays and STL containers. STL containers such as std::vector should be used when their is a need for their resizability. Our preference for the home-made containers is based on the fact that: 
+    <ul>
+    <li> The Simpatico containers provide optional bounds checking, which is enabled only when NDEBUG is not defined. </li>
+    <li> Unlike std::vector, Simpatico array classes are not automatically resizable, and so will never be silently moved to a new location in memory.
+    </ul>
+The lack of resizability is essential for algorithms that store pointers to particular objects within an array, since the address of an object that is stored in resizable array such as a std::vector generally changes whenever the array is resized.
 
 \section header_section Header File Includes
 
-  - In header files, use forward class declarations rather than including class headers when possible. Header files must be included for base classes, member objects, typdefs, templates, and base classes used in inline functions. Forward declarations may be used for types used only in function prototypes or to define types of pointer member variables.
+  - In header files, use forward class declarations rather than including class headers when possible.  Forward declarations are sufficient for classes or class templates that used only in function declarations (as parameter or return types) or in the declaration of types for pointer member variables. Header files are generally necessary for base classes, member objects, and classes that are used in the implementation of inline functions. 
   
-  - With few exceptions, header files that are required by a source file should be included explicitly, to document the dependency, even if they would be indirectly included via another included header file. Reliance on indirect inclusion is fragile. Exceptions are: 
+  - Header files that provide information required in another C++ file should normally be included explicitly, even if they would be indirectly included via another included header file. Reliance on indirect inclusion is fragile, and explicit inclusion helps document the dependency. Exceptions are: 
        <ul>
-       <li> A class MyClass.cpp implementation file may indirectly include any header files that are included by the corresponding header MyClass.h </li>
-       <li> A derived class may indirectly include files from its base class </li>
-       <li> The Exception.h header is always included indirectly by including the src/util/global.h file. </li>
+       <li> A class implementation file MyClass.cpp may rely on indirect inclusion of header files that are included by the corresponding header file MyClass.h </li>
+       <li> A derived class may sometimes rely on indirect inclusion of header files that are included by a base class. </li>
+       <li> The Exception.h header is should always be included indirectly by inclusion of src/util/global.h. </li>
        </ul>
 
-  - Do not ever use a "using std" statement to load the entire C++ standard library into a header file. 
+  - Use explicitly qualified names for standard library symbols such as std::string in function parameter lists and return values. Use this convention both in function declarations and functions definitions.
 
-  - Use explicitly qualified namesfor symbols such as std::cin and std:: string in function parameter lists, within both declarations and definitions. Do this also in *.cpp implementation files, because dOxygen gets confused if you use different conventions in the declaration and the definition of a function
+  - Never use a "using std" statement to load the entire C++ standard library namespace into a header file.
 
+\section error_section Error Handling
 
-\section error_section Error Handling and Debugging
+  - Include the file <util/global.h> in all files that use C assert() statements or that can throw exceptions. This automatically includes the "Exception.h" and "Log.h" header files, defines the UTIL_THROW(..) macro that is used to throw exceptions, and enables assert() statements if UTIL_DEBUG is defined, 
 
-  - Include the file <util/global.h> in all files that use C assert() statements or that can throw exceptions. This causes NDEBUG to be defined if UTIL_DEBUG is defined, automatically includes the "Exception.h" and "Log.h" header files, and defines the UTIL_THROW(..) macro that is used to throw exceptions.
+  - For checks that are intended only for debugging, use C assert() statements or enclose the test in a ifndef UTIL_DEBUG .... endif conditional compilation block. 
 
-  - For checks that are intended only for debugging, use c assert() statements or enclose the test in a ifndef UTIL_DEBUG .... endif conditional compilation block. Undefining the UTIL_DEBUG macro, which also causes NDEBUG to be defined, will then turn off all such debugging tests. 
+  - Use the UTIL_THROW macro defined in src/util/global.h to throw Exception objects for all errors, except those caught in debugging mode by C assert() statements.  Like the standard assert() macro, this macro prints a message and showing the file and line number from which an Exception is thrown, as an aid to debugging.
 
-  - In both debugging and release code, throw Exception objects for all errors except those caught by C assert() statements.  Use the UTIL_THROW macro defined in src/util/global.h to throw Exceptions. This macro prints a message and the file and line number from which an Exception is thrown to aid debugging.
-
-  - Use user-defined Exceptions only for real errors, and not for control flow.  Exceptions should cause the program to terminate.
+  - Do not Exceptions for control flow. Exceptions should be used only for errors, and should normally cause the program to terminate.
 
 Navigation:
 <ul style="list-style: none;">

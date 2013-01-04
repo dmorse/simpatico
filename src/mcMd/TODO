@@ -1,23 +1,10 @@
-Serialization
+Serialization 
 -------------
 
-- Add save / load to remaining Mc moves (ring moves and semigrand).
-- Add save / load for a few diagnostics (perturb)
+- Double check that all Mc moves and diagnostics have save / load methods.
+- Test MD serialization after forcing pair list rebuild upon restart output.
+- Generalize to multi-processor serialize and test.
 - Test save / load for replica move
-
-- Try forcing pair list rebuild upon restart output.
-
-
-Angles and Dihedrals
---------------------
-
-- Write and test HarmonicAngle class.
-
-- Write and test MultiHarmonicDihedral class.
-
-- Switch macros from, e.g., ifdef INTER_ANGLE to ifndef INTER_NO_ANGLE
-
-- Change examples accordingly to work with code with everything enabled.
 
 Constant Pressure MD (Jens)
 ---------------------------
@@ -40,37 +27,36 @@ Non-Orthorhombic (Rigid) Boundaries
 - Make an example in a Monoclinic cell and try running it with 
   mdSim and mcSim.
 
+
 Deformable Boundaries
 ---------------------
 
-- Generalize snapshot and obsolete pair list methods to use
-  miniminumDeformRatio to deal optimally with MD in deforming 
-  boundaries.
-
-Python File Tools
------------------
-
-- Tools for manipulating files and directories. We need scripts to:
-
-  * Create standard directory structures for serial or parallel jobs.
-  * Copy config and param files into a newly created directory structure.
-  * Copy and move files to continue a run.
-
-Improve Extensibility
----------------------
-
-- Improve documentation of modules.
-
-- In modules, add protected methods to add subfactories.
+- Generalize snapshot and obsolete pair list methods to use miniminumDeformRatio 
+  to deal optimally with MD in deforming boundaries.
 
 Interface changes
 ------------------
 
 - If possible, remove moleculeId() and molecule(speciesId, moleculeId)
-  methods of System.
+  methods of McMd::System.
+
+Interactions (Design change):
+-----------------------------
+
+- Make Interaction classes apply to only one choice of type index / indices.
+  Potential class would then hold an array of Interactions.
+
+- Create << and >> operators for each Interaction class. 
+
+- Create PairInteractionMaster to hold an array of interactions
+
+- Change file format to read typeId (ids) << Interaction.
+
+- Make each potential take an InteractionMaster as an argument
+  (How can we avoid the need for an additional Factory?)
 
 SystemAccess base classes
---------------------------
+-------------------------
 
 - Rename SubSystem SystemAccess
 
@@ -91,16 +77,3 @@ SystemAccess base classes
 
 
 Interactions (Design Changes)
------------------------------
-
-Interactions:
-
-- Make Interaction class apply to only one choice of type index / indices.
-  Potential class would then hold an array of Interactions.
-
-- Create << and >> operators for each Interaction class. 
-
-- Change file format to read typeId (ids) << Interaction.
-
-- Add a constructor to each potential that takes an Interaction as an
-  argument. 
