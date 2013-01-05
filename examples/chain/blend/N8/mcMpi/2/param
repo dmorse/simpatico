@@ -94,11 +94,6 @@ McSimulation{
       interval                         10000
     }
 
-    McWriteRestart{
-      interval                         1000
-      outputFileName                restart
-    }
-
     DumpConfig{
       interval                         1000
       outputFileName            dump/config.
@@ -164,6 +159,8 @@ McSimulation{
     }
 
   }
+  writeRestartInterval             1000
+  writeRestartFileName          restart
 }
 WRITE_PARAM      param
 READ_CONFIG      config

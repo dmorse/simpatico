@@ -126,12 +126,9 @@ MdSimulation{
       capacity                          100
     }
 
-    MdWriteRestart{
-      interval                         2000
-      outputFileName                restart
-    }
-
   }
+  writeRestartInterval                 2000
+  writeRestartFileName              restart
 }
 
     RDF{

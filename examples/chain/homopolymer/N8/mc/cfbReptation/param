@@ -59,11 +59,6 @@ McSimulation{
       interval                         20000
     }
 
-    McWriteRestart{
-      interval                        100000
-      outputFileName                 restart
-    }
-
     McEnergyOutput{
       interval                         10000
       outputFileName                  energy
@@ -124,6 +119,8 @@ McSimulation{
     }
 
   }
+  writeRestartInterval            100000
+  writeRestartFileName           restart
 }
 
 

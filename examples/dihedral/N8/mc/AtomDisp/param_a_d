@@ -7,6 +7,7 @@ McSimulation{
   nAtomType                              1
   nBondType                              1
   nAngleType                             1
+  nDihedralType                          1
   atomTypes                    A       1.0
   maskedPairPolicy              MaskBonded
   SpeciesManager{
@@ -18,6 +19,8 @@ McSimulation{
       bondType                           0
       hasAngles                          1
       angleType                          0
+      hasDihedrals                       1
+      dihedralType                       0
     }
 
   }
@@ -28,6 +31,7 @@ McSimulation{
     pairStyle       LJPair
     bondStyle       HarmonicBond
     angleStyle      CosineAngle
+    dihedralStyle   CosineDihedral
     McPairPotential{
       epsilon           1.000000000000e+00
       sigma             1.000000000000e+00
@@ -39,6 +43,9 @@ McSimulation{
       length            1.000000000000e+00
     }
     AnglePotential{
+      kappa             4.000000000000e+00
+    }
+    DihedralPotential{
       kappa             4.000000000000e+00
     }
     EnergyEnsemble{
@@ -54,7 +61,7 @@ McSimulation{
     AtomDisplaceMove{
       probability      1.0000000000e+00
       speciesId                       0
-      delta                        0.10
+      delta                        0.07
     }
 
   }
@@ -86,14 +93,16 @@ McSimulation{
     }
 
     IntraPairAutoCorr{
-      interval                  4000000
+      interval                        4000000
       outputFileName        IntraPairAutoCorr
-      speciesId                      0
-      atom1Id                        0
-      atom2Id                        7
-      capacity                     500
+      speciesId                             0
+      atom1Id                               0
+      atom2Id                               7
+      capacity                            500
     }
   }
+  writeRestartInterval        10000000
+  writeRestartFileName         restart
 }
 
     HybridMdMove{

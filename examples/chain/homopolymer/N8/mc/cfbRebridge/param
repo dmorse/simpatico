@@ -69,11 +69,6 @@ McSimulation{
       interval                         10000
     }
     
-    McWriteRestart{
-      interval                          1000
-      outputFileName                 restart
-    }
-
     McEnergyOutput{
       interval                          1000
       outputFileName                  energy
@@ -134,7 +129,10 @@ McSimulation{
     }
 
   }
+  writeRestartInterval              1000
+  writeRestartFileName           restart
 }
+
 WRITE_PARAM      param
 READ_CONFIG      config
 SIMULATE         490000000

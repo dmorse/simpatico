@@ -44,7 +44,7 @@ namespace McMd
       */
       virtual void loadParameters(Serializable::IArchive& ar);
 
-      // Use Diagnostic::save() and Diagnostic::serializable().
+      // using Diagnostic::save() and Diagnostic::serializable().
    
       /**
       * Write iStep to Log file. 

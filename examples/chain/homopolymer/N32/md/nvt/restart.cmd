@@ -1,3 +1,3 @@
-RESTART         1200
+RESTART         2000
 FINISH
 

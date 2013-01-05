@@ -228,6 +228,12 @@ namespace McMd
       /// Pointer to parameter file passed to readParameters(istream&)
       std::istream*   paramFilePtr_;
 
+      /// Restart output file name
+      std::string writeRestartFileName_;
+
+      /// Interval for writing restart files (no output if 0)
+      int writeRestartInterval_;
+
       /// Has readParam been called?
       bool isInitialized_;
 

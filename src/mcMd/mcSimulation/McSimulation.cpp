@@ -63,6 +63,8 @@ namespace McMd
       mcMoveManagerPtr_(0),
       mcDiagnosticManagerPtr_(0),
       paramFilePtr_(0),
+      writeRestartFileName_(),
+      writeRestartInterval_(0),
       isInitialized_(false),
       isRestarting_(false)
    {
@@ -91,6 +93,8 @@ namespace McMd
       mcMoveManagerPtr_(0),
       mcDiagnosticManagerPtr_(0),
       paramFilePtr_(0),
+      writeRestartFileName_(),
+      writeRestartInterval_(0),
       isInitialized_(false),
       isRestarting_(false)
    {
@@ -216,6 +220,12 @@ namespace McMd
       // Read Diagnostics
       readParamComposite(in, diagnosticManager());
 
+      // Parameters for writing restart files
+      read<int>(in, "writeRestartInterval", writeRestartInterval_);
+      if (writeRestartInterval_ > 0) {
+         read<std::string>(in, "writeRestartFileName", writeRestartFileName_);
+      }
+
       isValid();
       isInitialized_ = true;
    }
@@ -311,10 +321,14 @@ namespace McMd
 
    void McSimulation::writeRestart(const std::string& filename)
    {
-      Serializable::OArchive ar;
-      fileMaster().openRestartOFile(filename, ".rst", ar.file());
-      save(ar);
-      ar.file().close();
+      if (writeRestartInterval_ > 0) {
+         if (iStep_ % writeRestartInterval_ == 0) {
+            Serializable::OArchive ar;
+            fileMaster().openRestartOFile(filename, ".rst", ar.file());
+            save(ar);
+            ar.file().close();
+         }
+      }
    }
 
    /*
@@ -595,7 +609,8 @@ namespace McMd
       }
 
       if (isContinuation) {
-         Log::file() << "Restarting from iStep = " << iStep_ << std::endl;
+         Log::file() << "Restarting from iStep = " 
+                     << iStep_ << std::endl;
       } else {
          iStep_ = 0;
          diagnosticManager().setup();
@@ -610,9 +625,10 @@ namespace McMd
       timer.start();
       for ( ; iStep_ < endStep; ++iStep_) {
 
-         // Sample diagnostics
+         // Diagnostics and restart outut
          if (Diagnostic::baseInterval > 0) {
             if (iStep_ % Diagnostic::baseInterval == 0) {
+               writeRestart(writeRestartFileName_);
                diagnosticManager().sample(iStep_);
             }
          }
@@ -642,10 +658,11 @@ namespace McMd
       timer.stop();
       double time = timer.time();
 
-      // Final diagnostic sample
+      // Final diagnostics / restart 
       assert(iStep_ == endStep);
       if (Diagnostic::baseInterval > 0) {
          if (iStep_ % Diagnostic::baseInterval == 0) {
+            writeRestart(writeRestartFileName_);
             diagnosticManager().sample(iStep_);
          }
       }

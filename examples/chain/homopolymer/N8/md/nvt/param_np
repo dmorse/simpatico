@@ -71,7 +71,12 @@ MdSimulation{
     }
 
   }
+  writeRestartInterval              2000
+  writeRestartFileName           restart
 }
+
+
+
     RDF{
       interval                         10000
       outputFileName                     RDF
@@ -118,10 +123,5 @@ MdSimulation{
       outputFileName  IntraBondStressAutoCorr
       speciesId                            0
       capacity                           100
-    }
-
-    MdWriteRestart{
-      interval                          2000
-      outputFileName                 restart
     }
 

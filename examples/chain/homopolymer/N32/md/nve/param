@@ -1,7 +1,7 @@
 MdSimulation{
   FileMaster{
     commandFileName                 commands
-    inputPrefix                          in/
+    inputPrefix                       ../in/
     outputPrefix                        out/
   }
   nAtomType                              1
@@ -56,12 +56,9 @@ MdSimulation{
       interval                           200
     }
 
-    MdWriteRestart{
-      interval                           500
-      outputFileName                 restart
-    }
-
   }
+  writeRestartInterval                500
+  writeRestartFileName            restart
 }
 
     DumpConfig{

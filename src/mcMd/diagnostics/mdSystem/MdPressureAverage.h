@@ -28,6 +28,9 @@ namespace McMd
       */
       MdPressureAverage(MdSystem& system);
 
+      // using inherited PressureAverage<MdSystem>::loadParameters
+      // using inherited PressureAverage<MdSystem>::save
+
    };
 
 }

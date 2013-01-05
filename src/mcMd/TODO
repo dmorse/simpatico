@@ -1,9 +1,10 @@
 Serialization 
 -------------
 
-- Double check that all Mc moves and diagnostics have save / load methods.
-- Test MD serialization after forcing pair list rebuild upon restart output.
+- Update manual to reflect new param file syntax for writeRestart parameters
+- Move restart interval and file name, and isInitialized_  to Simulation base classs.
 - Generalize to multi-processor serialize and test.
+- Test MD serialization after forcing pair list rebuild upon restart output.
 - Test save / load for replica move
 
 Constant Pressure MD (Jens)

@@ -212,6 +212,12 @@ namespace McMd
       /// Pointer to manager for Diagnostic objects.
       MdDiagnosticManager*  mdDiagnosticManagerPtr_;
 
+      /// Restart output file name
+      std::string writeRestartFileName_;
+
+      /// Interval for writing restart files (no output if 0)
+      int writeRestartInterval_;
+
       /// Has readParam been called?
       bool isInitialized_;
 

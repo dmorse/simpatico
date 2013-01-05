@@ -130,4 +130,5 @@ McSimulation{
     }
 
   }
+  writeRestartInterval                0
 }

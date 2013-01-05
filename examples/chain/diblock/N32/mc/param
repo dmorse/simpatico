@@ -81,11 +81,6 @@ McSimulation{
       interval                           200
     }
 
-    McWriteRestart{
-      interval                           200
-      outputFileName                 restart
-    }
-
     McEnergyOutput{
       interval                           200
       outputFileName                  energy
@@ -130,6 +125,8 @@ McSimulation{
     }
 
   }
+  writeRestartInterval                200
+  writeRestartFileName            restart
 }
 
     DumpConfig{

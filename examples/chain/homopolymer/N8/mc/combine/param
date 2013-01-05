@@ -159,12 +159,10 @@ McSimulation{
       capacity                         1000
     }
 
-    McWriteRestart{
-      interval                         2000
-      outputFileName                restart
-    }
-
   }
+  writeRestartInterval             2000
+  writeRestartFileName          restart
+
 }
 
 

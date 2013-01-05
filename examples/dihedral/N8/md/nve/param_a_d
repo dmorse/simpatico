@@ -89,6 +89,8 @@ MdSimulation{
     }
 
   }
+  writeRestartInterval               50000
+  writeRestartFileName             restart
 }
 
     DihedralPotential{

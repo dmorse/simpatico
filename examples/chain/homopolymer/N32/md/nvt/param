@@ -63,11 +63,6 @@ MdSimulation{
       outputFileName            dump/config.
     }
 
-    MdWriteRestart{
-      interval                           500
-      outputFileName                 restart
-    }
-
     MdEnergyOutput{
       interval                           100
       outputFileName                  energy
@@ -102,11 +97,13 @@ MdSimulation{
       outputFileName      IntraPairAutoCorr
       speciesId                           0
       atom1Id                             0
-      atom2Id                            31 
+      atom2Id                            31
       capacity                          200
     }
 
   }
+  writeRestartInterval                  500
+  writeRestartFileName              restart
 }
 
     RDF{

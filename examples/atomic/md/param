@@ -56,11 +56,6 @@ MdSimulation{
       interval                          2000
     }
 
-    MdWriteRestart{
-      interval                          5000
-      outputFileName                 restart
-    }
-
     MdPotentialEnergyAverage{
       interval                           100
       outputFileName      potentialEnergyAve
@@ -96,7 +91,8 @@ MdSimulation{
     }
 
   }
-
+  writeRestartInterval                  5000
+  writeRestartFileName               restart
 }
 
     DumpConfig{

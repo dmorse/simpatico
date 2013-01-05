@@ -61,11 +61,6 @@ McSimulation{
       interval                        500000
     }
 
-    McWriteRestart{
-      interval                         10000
-      outputFileName                 restart
-    }
-
     McEnergyAverage{
       interval                         10000
       outputFileName                  energy
@@ -87,6 +82,8 @@ McSimulation{
     }
 
   }
+  writeRestartInterval            10000
+  writeRestartFileName          restart
 }
 
     RDF{

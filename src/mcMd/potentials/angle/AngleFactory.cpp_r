@@ -17,6 +17,7 @@
 // Angle Potential interaction classes
 #include <inter/angle/CosineAngle.h>
 #include <inter/angle/CosineSqAngle.h>
+#include <inter/angle/HarmonicAngle.h>
 
 namespace McMd
 {
@@ -46,6 +47,9 @@ namespace McMd
       } else
       if (name == "CosineSqAngle") {
          ptr = new AnglePotentialImpl<CosineSqAngle>(*systemPtr_);
+      } else
+      if (name == "HarmonicAngle") {
+         ptr = new AnglePotentialImpl<HarmonicAngle>(*systemPtr_);
       }
       return ptr;
    }

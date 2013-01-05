@@ -61,7 +61,7 @@ MdSimulation{
     baseInterval                         100
 
     LogProgress{
-      interval                          1000
+      interval                           500
     }
 
     DumpConfig{
@@ -138,6 +138,7 @@ MdSimulation{
     }
 
   }
+  writeRestartInterval      0
 }
 
 

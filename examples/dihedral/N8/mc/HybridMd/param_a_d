@@ -1,6 +1,6 @@
 McSimulation{
   FileMaster{
-    commandFileName               commands
+    commandFileName           commands_a_d
     inputPrefix                        in/
     outputPrefix                      out/
   }
@@ -114,6 +114,8 @@ McSimulation{
       capacity                     500
     }
   }
+  writeRestartInterval            100
+  writeRestartFileName        restart
 }
 
     AtomDisplaceMove{

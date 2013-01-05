@@ -33,6 +33,9 @@ namespace McMd
       */
       ~McPressureAverage();
 
+      // Use inherited PressureAverage<McSystem>::loadParameters
+      // Use inherited PressureAverage<McSystem>::save
+
    };
 
 }

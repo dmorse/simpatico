@@ -48,6 +48,8 @@ namespace McMd
     : Simulation(communicator),
       system_(),
       mdDiagnosticManagerPtr_(0),
+      writeRestartFileName_(),
+      writeRestartInterval_(0),
       isInitialized_(false),
       isRestarting_(false)
    {
@@ -68,6 +70,8 @@ namespace McMd
     : Simulation(),
       system_(),
       mdDiagnosticManagerPtr_(0),
+      writeRestartFileName_(),
+      writeRestartInterval_(0),
       isInitialized_(false),
       isRestarting_(false)
    {
@@ -167,6 +171,12 @@ namespace McMd
 
       readParamComposite(in, system_); 
       readParamComposite(in, diagnosticManager());
+
+      // Parameters for writing restart files
+      read<int>(in, "writeRestartInterval", writeRestartInterval_);
+      if (writeRestartInterval_ > 0) {
+         read<std::string>(in, "writeRestartFileName", writeRestartFileName_);
+      }
 
       isValid();
       isInitialized_ = true;
@@ -473,6 +483,7 @@ namespace McMd
          if (Diagnostic::baseInterval > 0) {
             if (iStep_ % Diagnostic::baseInterval == 0) {
                system().shiftAtoms();
+               writeRestart(writeRestartFileName_);
                diagnosticManager().sample(iStep_);
             }
          }
@@ -497,9 +508,10 @@ namespace McMd
       // Shift final atomic positions 
       system().shiftAtoms();
 
-      // Sample diagnostic for final configuration
+      // Final restart / diagnostics
       if (Diagnostic::baseInterval > 0) {
          if (iStep_ % Diagnostic::baseInterval == 0) {
+            writeRestart(writeRestartFileName_);
             diagnosticManager().sample(iStep_);
          }
       }
@@ -725,12 +737,20 @@ namespace McMd
       isRestarting_  = true;
    }
 
+   /*
+   * Write a restart file with specified filename, if at interval.
+   */
    void MdSimulation::writeRestart(const std::string& filename)
    {
-      Serializable::OArchive ar;
-      fileMaster().openRestartOFile(filename, ".rst", ar.file());
-      save(ar);
-      ar.file().close();
+      // Write restart file
+      if (writeRestartInterval_ > 0) {
+         if (iStep_ % writeRestartInterval_ == 0) {
+            Serializable::OArchive ar;
+            fileMaster().openRestartOFile(filename, ".rst", ar.file());
+            save(ar);
+            ar.file().close();
+         }
+      }
    }
 
    /* 

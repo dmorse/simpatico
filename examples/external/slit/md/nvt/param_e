@@ -85,4 +85,5 @@ MdSimulation{
       nSamplePerBlock                       20
     }
   }
+  writeRestartInterval                    0
 }

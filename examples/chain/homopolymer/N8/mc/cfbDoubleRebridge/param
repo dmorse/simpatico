@@ -78,12 +78,7 @@ McSimulation{
     baseInterval                        1000
 
     LogProgress{
-      interval                         10000
-    }
-
-    McWriteRestart{
-      interval                         10000
-      outputFileName                 restart
+      interval                          2000
     }
 
     McEnergyOutput{
@@ -146,6 +141,8 @@ McSimulation{
     }
 
   }
+  writeRestartInterval            10000
+  writeRestartFileName          restart
 }
 WRITE_PARAM      param
 READ_CONFIG      config

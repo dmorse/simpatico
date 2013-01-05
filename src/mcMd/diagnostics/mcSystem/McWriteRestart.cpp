@@ -37,7 +37,8 @@ namespace McMd
       readOutputFileName(in);
    }
 
-   // Using Diagnostic::loadParameters and Diagnostic::save
+   // using inherited Diagnostic::loadParameters
+   // using inherited Diagnostic::save
 
    /*
    * Write state to restart file.

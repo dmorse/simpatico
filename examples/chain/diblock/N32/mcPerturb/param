@@ -90,6 +90,7 @@ McSimulation{
     }
 
   }
+  writeRestartInterval                  0
 }
 WRITE_PARAM       param
 READ_CONFIG      config
