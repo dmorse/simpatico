@@ -3,16 +3,16 @@ namespace McMd
 
 /*! \page custom_page 4 Compile-Time Options
 
-Many optional features of Simpatico can be enabled or disabled the program is compiled
-by using C++ preprocessor macros to control conditional compilation, or by changing a
-typedef to change the type of periodic unit cell. 
+Many optional features of the three Simpatico programs can be enabled or disabled when 
+these programs are compiled, by using C++ preprocessor macros to control conditional
+compilation.  It is also possible to change the type of periodic unit cell (e.g., from 
+orthorhombic to triclinc) by changing a typedef.
    
    Contents: 
    <ul style="list-style: none;">
    <li> \subpage preprocessor_page </li>
    <li> \subpage boundary_page   </li>
    </ul>
- 
 
 Navigation: 
 <ul style="list-style: none;">
@@ -22,7 +22,4 @@ Navigation:
 </ul>
 */
 
-// <li> \ref DdMd_NS_page       (Previous) </li>
-// <li> \ref preprocessor_page (Next / Down)       </li>
- 
 }
