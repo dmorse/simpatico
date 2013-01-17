@@ -12,15 +12,9 @@ Restart
 
 - Add restart capability, based on save / load methods. 
 
-- Question: Should there should be a single restart file for the entire 
-  system, or one per processor?  
-
-- Proposal: Modify the <<, >> and & operators so that loading can automatically 
-  distributes values, as done for the ParamComposite::read*() methods. Add
-  methods bool isIoProcessor() and bool isBroadCasting() to LoadingArchive 
-  classes to identify if this is the io node and if broadcasting to other 
-  nodes is desired. When not desired, simply toggle by calling the setter
-  setIsBroadCasting(bool).
+- Use new BinaryMpiIArchive for reading. The new Archive will have a broadcast
+  mode that will read one one processor and broadcast parameters, as for the
+  existing ParamComposite::read*() methods.
 
 Hybrid MD
 ---------

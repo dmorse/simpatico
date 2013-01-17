@@ -1,7 +1,6 @@
-Serialization 
+Serialization
 -------------
 
-- Update manual to reflect new param file syntax for writeRestart parameters
 - Move restart interval and file name, and isInitialized_  to Simulation base classs.
 - Generalize to multi-processor serialize and test.
 - Test MD serialization after forcing pair list rebuild upon restart output.
@@ -28,12 +27,11 @@ Non-Orthorhombic (Rigid) Boundaries
 - Make an example in a Monoclinic cell and try running it with 
   mdSim and mcSim.
 
-
 Deformable Boundaries
 ---------------------
 
-- Generalize snapshot and obsolete pair list methods to use miniminumDeformRatio 
-  to deal optimally with MD in deforming boundaries.
+- Generalize snapshot and obsolete pair list methods to use 
+   miniminumDeformRatio to deal optimally with MD in deforming boundaries.
 
 Interface changes
 ------------------
