@@ -26,3 +26,16 @@
 \form#25:\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]
 \form#26:$ c_{a} $
 \form#27:$ \psi = \rho_0 - \rho_1 $
+\form#28:\[ {\bf b}_i = {\bf r}_i - {\bf r}_{i-1} \]
+\form#29:$ i = 1, \ldots, 3 $
+\form#30:$\phi$
+\form#31:\[ {\bf v}_{1} = {\bf b}_1 \cross {\bf b}_2 \quad,\quad {\bf v}_{2} = {\bf b}_2 \cross {\bf b}_3 \]
+\form#32:\[ {\bf u}_i = {\bf v}_{i}/|{\bf v}_{i}| \]
+\form#33:\[ \cos(\phi) \equiv {\bf u}_1 \cdot {\bf u}_2 \]
+\form#34:\[ {\bf v}_{1} = {\bf b}_1 \times {\bf b}_2 \quad,\quad {\bf v}_{2} = {\bf b}_2 \times {\bf b}_3 \]
+\form#35:$ {\bf r}_{i} $
+\form#36:\[ {\bf v}_{1} = {\bf b}_1 \times {\bf b}_2 \quad\quad {\bf v}_{2} = {\bf b}_2 \times {\bf b}_3 \]
+\form#37:\[ {\bf u}_1 = {\bf v}_{1}/|{\bf v}_{1}| \quad\quad {\bf u}_2 = {\bf v}_{2}/|{\bf v}_{2}| \]
+\form#38:$ \phi $
+\form#39:\[ V(\phi) = kappa [1 + cos(phi)] \]
+\form#40:\[ V(\phi) = K_{0} + \sum_{m=1}^{4} K_{m} \cos(m \phi)] \]
