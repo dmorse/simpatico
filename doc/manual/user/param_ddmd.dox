@@ -107,10 +107,10 @@ The PairPotential and BondPotential blocks are associated with instances of DdMd
 
 The DiagnosticManager block is associated with an instance of DdMd::DiagnosticManager, and has a format similar to that of the corresponding block in a mdSim or mcSim parameter file. This block must contain a value for the baseInterval, followed by zero or more polymorphic blocks, each of which contains the parameter block for a subclass of DdMd::Diagnostic. The number of diagnostics that are provided for use on-the-fly during ddSim simulations is thus far much smaller than the number avaiable for mdSim and mcSim simulations. This is partly a result of lack of time, and partly because some diagnostics that are easy to implement in single-processor simulations are more difficult to implement efficiently in a parallel simulation.
 
-\subsection user_param_Domain_subsection Domain
+\section user_param_Domain_section Domain
 The Domain block is associated with a DdMd::Domain object. This object defines a processor grid, and controls the pattern of communication between neighboring processors within the grid. In the domain decomposition algorithm used by ddSim, the periodic simulation cell is divided into a regular grid of spatial domains, each of which is assigned to a different processor. The gridDimensions parameter is a vector of 3 integers (a Util::IntVector) that defines the dimensions of this grid (the number of processors) along each of the three spatial directions.  The product of these three integers gives the total number of processors, which must agree with the number of processors that is requested from the operating system in the command line that runs the executable.
 
-\subsection user_param_Storage_subection AtomStorage and BondStorage 
+\section user_param_Storage_section AtomStorage and BondStorage 
 The AtomStorage and BondStorage blocks are associated with DdMd::AtomStorage and DdMd::BondStorage objects. An AtomStorage is a container that holds DdMd::Atom objects for one processor. A BondStorage is a container that instead holds objects that represent covalent bonds, each of which contains references to two atoms. The parameter file for a ddSim simulation with angle and dihedral potentials enabled would also have AngleStorage and DihedralStorage blocks associated with containers for 3-body and 4-body covalent groups.
 
 An AtomStorage maintains separate lists of two types of atoms. Local atoms are atoms that are "owned" by a processor. "Ghost" atoms are atoms that are "owned" by neighboring processors, but that are close enough to the boundaries between processor domains to interact with atoms owned by this processor.
@@ -121,12 +121,12 @@ The atomCapacity, ghostCapacity, and bondCapacity parameters must be chosen by t
 
 The log output produced by a ddSim simulation lists the actual maximum number of local atom and ghost atoms encountered on any processor during a simulation. Before running large simulations of a particular system, it is useful to run some short simulations and use these reported maximum values as a guide to the choice of appropriate (larger) capacity parameters.
 
-\subsection user_param_Buffer_subection Buffer
+\section user_param_Buffer_section Buffer
 The Buffer block is associated with a DdMd::Buffer object that provides memory that is used for interprocessor communication. The atomCapacity parameters specify the maximum number of local atoms that may be communicated at once between neighboring processors when ownership is exchanged. Atom ownership is exchanged only when the neighbor list is rebuilt, which typically occurs about everten time steps. The ghostCapacity specifies the maximum number of ghost atom positions to be communicated at once between neighboring processors after every time step. These two parameters are used to decide how large a block of memory to allocate for use in interprocessor communication.  
 
 When setting up a first simulation for a particular system, one can be conservative and set these values larger than is expected to be necessary, e.g., by setting both parameters greater than or equal to the average total number of atoms per processor. If needed, values output in the log file for the maximum values of these parameters actually encountered during an initial simulation can then be used to adjust parameter values used in subsequent runs.
 
-\subsection user_param_DdMdIntegrator_subection MD Integrator
+\section user_param_DdMdIntegrator_section MD Integrator
 The NveIntegrator block in the above example is a polymorphic block that must contain the file format for a subclass of DdMd::Integrator. Each subclass of DdMd::Integrator implements a parallel MD integrator. The DdMd::NveIntegrator class used in the above example implements a simple NVE velocity-Verlet algorithm. The only parameter required for this integrator is a value for the time step size dt. The required parameters are different for different integrators, but always include a value for dt.
 
 Navigation:
