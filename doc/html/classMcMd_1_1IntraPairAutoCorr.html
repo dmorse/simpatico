@@ -71,11 +71,11 @@
 <!-- doxytag: class="McMd::IntraPairAutoCorr" --><!-- doxytag: inherits="SystemDiagnostic&lt; System &gt;" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Autocorrelation for vector separation of any two monomers on a molecule. </p>
 <p>This class evaluates the autocorrelation function for the vector that separates two atoms with indices atom1Id and atom2Id on a molecule of species speciesId. It can be used to evaluate the autocorrelation function for individual bonds or for the end-to-end vector of a linear polymer.</p>
-<p>If atom1Id = i and atom2Id = j, let <img class="formulaInl" alt="$ V(t) = R_i(t) - R_j(t) $" src="form_4.png"/>. This class calculates and outputs the function </p>
+<p>If atom1Id = i and atom2Id = j, let <img class="formulaInl" alt="$ V(t) = R_i(t) - R_j(t) $" src="form_12.png"/>. This class calculates and outputs the function </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ F(\tau) \equiv \langle V(t) \cdot V(t-\tau) \rangle \]" src="form_5.png"/>
+<img class="formulaDsp" alt="\[ F(\tau) \equiv \langle V(t) \cdot V(t-\tau) \rangle \]" src="form_13.png"/>
 </p>
-<p> where <img class="formulaInl" alt="$ \tau $" src="form_6.png"/> is a time separation, and where <img class="formulaInl" alt="$ \langle \cdots \rangle$" src="form_7.png"/> denotes an * average over values of the time t and over all molecules in a species. Here, <img class="formulaInl" alt="$ V(t) \cdot V(t') $" src="form_8.png"/> denotes a dot product of values of the vector <img class="formulaInl" alt="$ V(t) $" src="form_9.png"/> at different times. </p>
+<p> where <img class="formulaInl" alt="$ \tau $" src="form_14.png"/> is a time separation, and where <img class="formulaInl" alt="$ \langle \cdots \rangle$" src="form_15.png"/> denotes an * average over values of the time t and over all molecules in a species. Here, <img class="formulaInl" alt="$ V(t) \cdot V(t') $" src="form_16.png"/> denotes a dot product of values of the vector <img class="formulaInl" alt="$ V(t) $" src="form_17.png"/> at different times. </p>
 
 <p>Definition at line <a class="el" href="IntraPairAutoCorr_8h_source.html#l00046">46</a> of file <a class="el" href="IntraPairAutoCorr_8h_source.html">IntraPairAutoCorr.h</a>.</p>
 </div>
@@ -378,7 +378,7 @@ template&lt;class Archive &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 21 2013 23:05:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jan 21 2013 23:22:50 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

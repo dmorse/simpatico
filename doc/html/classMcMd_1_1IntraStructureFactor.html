@@ -72,15 +72,15 @@
 <div class="textblock"><p>Intramolecular contribution to the structure factor S(k) </p>
 <p>The intramolecular contribution to the structure factor S(k) for a wavevector k is defined as an expectation value </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ S(k) = \sum_{m} < \rho_{ma}(k) \rho_{mb}(-k) / V > \]" src="form_10.png"/>
+<img class="formulaDsp" alt="\[ S(k) = \sum_{m} < \rho_{ma}(k) \rho_{mb}(-k) / V > \]" src="form_18.png"/>
 </p>
-<p> in which the sum is taken over all molecules m of a specified species, V is system volume, and <img class="formulaInl" alt="$\rho_a(k)$" src="form_11.png"/> is a Fourier component </p>
+<p> in which the sum is taken over all molecules m of a specified species, V is system volume, and <img class="formulaInl" alt="$\rho_a(k)$" src="form_19.png"/> is a Fourier component </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \rho_{ma}(k) = \sum_{i} \exp( i k \cdot r_{mi} ) \]" src="form_12.png"/>
+<img class="formulaDsp" alt="\[ \rho_{ma}(k) = \sum_{i} \exp( i k \cdot r_{mi} ) \]" src="form_20.png"/>
 </p>
 <p> in which the sum is taken over all particles in a set defined by the particle type index a on a specific molecule m.</p>
-<p>If 0 &lt;= a &lt; nAtomType, then, <img class="formulaInl" alt="$ \rho_{ma}(k) $" src="form_13.png"/> is given by a sum over all atoms of type a on molecule m.</p>
-<p>If a &lt; 0, then <img class="formulaInl" alt="$ \rho_a(k) $" src="form_14.png"/> is given by a sum over all atoms on molecule m, including those of all types. By convention, we use a = -1 to indicate this.</p>
+<p>If 0 &lt;= a &lt; nAtomType, then, <img class="formulaInl" alt="$ \rho_{ma}(k) $" src="form_21.png"/> is given by a sum over all atoms of type a on molecule m.</p>
+<p>If a &lt; 0, then <img class="formulaInl" alt="$ \rho_a(k) $" src="form_22.png"/> is given by a sum over all atoms on molecule m, including those of all types. By convention, we use a = -1 to indicate this.</p>
 <p>This class can evaluate multiple types of structures factors, corresponding to different choices for the type pair ab, for multiple wavevectors. The input format thus requires the user to specify one or more atom typeId pairs, and one or more wavevectors. Each wavevector is specified as an IntVector containing integer Miller indices. These are the coeficients in an expansion of a reciprocal lattice wavevector in terms of recprocal lattice basis vectors for the periodic unit cell.</p>
 <p>In a system with nAtomType = 2, with two monomer types 0 and 1, the parameter file input for calculating the total, 00 and 01 correlation functions for 5 wavevectors along the x axis in an orthorhombic unit cell might look like this:</p>
 <div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a1dc81b99bc2de6e9c9beb58c252b98b6" title="Constructor.">IntraStructureFactor</a>{
@@ -401,7 +401,7 @@ template&lt;class Archive &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 21 2013 23:05:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jan 21 2013 23:22:50 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

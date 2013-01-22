@@ -72,15 +72,15 @@
 <div class="textblock"><p>Evaluates the van Hove function S(k,t) for one or more wavevector k. </p>
 <p>The van Hove function S(k,t) is defined here as an expectation value </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ S(k,t) = < \psi(k,t) \psi^{*}(k,0) > / V \]" src="form_23.png"/>
+<img class="formulaDsp" alt="\[ S(k,t) = < \psi(k,t) \psi^{*}(k,0) > / V \]" src="form_31.png"/>
 </p>
-<p> where V is system volume, and <img class="formulaInl" alt="$\psi(k,t)$" src="form_24.png"/> is given by a sum </p>
+<p> where V is system volume, and <img class="formulaInl" alt="$\psi(k,t)$" src="form_32.png"/> is given by a sum </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]" src="form_25.png"/>
+<img class="formulaDsp" alt="\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]" src="form_33.png"/>
 </p>
-<p> over all atoms in the system, where <img class="formulaInl" alt="$ c_{a} $" src="form_26.png"/> is a user-specified coefficient for monomers of type a.</p>
+<p> over all atoms in the system, where <img class="formulaInl" alt="$ c_{a} $" src="form_34.png"/> is a user-specified coefficient for monomers of type a.</p>
 <p>The Van Hove class can calculate S(k,t) for a list of wavevectors. Each wavevector is specified as an IntVector containing integer Miller indices. These are the coefficients in an expansion of a reciprocal lattice wavevector in terms of recprocal lattice basis vectors.</p>
-<p>In a system with nAtomType = 2, with two monomer types 0 and 1, the parameter file input for calculating the autocorrelation of an order parameter <img class="formulaInl" alt="$ \psi = \rho_0 - \rho_1 $" src="form_27.png"/> for 5 wavevectors along the x axis in an orthorhombic unit cell might look like this:</p>
+<p>In a system with nAtomType = 2, with two monomer types 0 and 1, the parameter file input for calculating the autocorrelation of an order parameter <img class="formulaInl" alt="$ \psi = \rho_0 - \rho_1 $" src="form_35.png"/> for 5 wavevectors along the x axis in an orthorhombic unit cell might look like this:</p>
 <div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1VanHove.html#a5fc8d5a8a01c4387d69f66705c0c1883" title="Constructor.">VanHove</a>{
     <a class="code" href="classMcMd_1_1Diagnostic.html#ad399e6c8cf5acab10360278dc964b4f4" title="Get interval value.">interval</a>                      1000
     <a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>             <a class="code" href="classMcMd_1_1VanHove.html#a5fc8d5a8a01c4387d69f66705c0c1883" title="Constructor.">VanHove</a>
@@ -419,7 +419,7 @@ template&lt;class Archive &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 21 2013 23:05:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jan 21 2013 23:22:51 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

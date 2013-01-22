@@ -70,11 +70,11 @@
 <div class="contents">
 <!-- doxytag: class="McMd::BlockRadiusGyration" --><!-- doxytag: inherits="SystemDiagnostic&lt; System &gt;" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Radius of gyration of different blocks in a molecule. </p>
-<p>The radius of gyration R_{g,i} of a block of atom type i is the root mean-squared separation of atoms in a block from the center of mass of block. For a species of molecule with N_i atoms of type i, with positions <img class="formulaInl" alt="$ R_0, R_1, ...., R_{N_{i}-1} $" src="form_0.png"/>,we define </p>
+<p>The radius of gyration R_{g,i} of a block of atom type i is the root mean-squared separation of atoms in a block from the center of mass of block. For a species of molecule with N_i atoms of type i, with positions <img class="formulaInl" alt="$ R_0, R_1, ...., R_{N_{i}-1} $" src="form_8.png"/>,we define </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ R_{g,i}^2 = \sum_j \langle | R_j - R_{cm,i} |^2 \rangle / N_i \]" src="form_1.png"/>
+<img class="formulaDsp" alt="\[ R_{g,i}^2 = \sum_j \langle | R_j - R_{cm,i} |^2 \rangle / N_i \]" src="form_9.png"/>
 </p>
-<p> where <img class="formulaInl" alt="$ R_{cm,i} = (R_0 + R_1 + ... R_{N_{i}-1})/N_i $" src="form_2.png"/> is the center of mass of block, and where <img class="formulaInl" alt="$ \langle \cdots \rangle $" src="form_3.png"/> denotes an ensemble average over all molecules of a specified species.</p>
+<p> where <img class="formulaInl" alt="$ R_{cm,i} = (R_0 + R_1 + ... R_{N_{i}-1})/N_i $" src="form_10.png"/> is the center of mass of block, and where <img class="formulaInl" alt="$ \langle \cdots \rangle $" src="form_11.png"/> denotes an ensemble average over all molecules of a specified species.</p>
 <p>This class calculates the radius of gyration of blocks by accumulating an average value for the above quantity, and optionally outputs block averages to file at an interval specified by the input parameter nSamplePerBlock. No block averages are output if nSamplePerBlock = 0. </p>
 
 <p>Definition at line <a class="el" href="BlockRadiusGyration_8h_source.html#l00050">50</a> of file <a class="el" href="BlockRadiusGyration_8h_source.html">BlockRadiusGyration.h</a>.</p>
@@ -371,7 +371,7 @@ template&lt;class Archive &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 21 2013 23:05:21 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jan 21 2013 23:22:50 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
