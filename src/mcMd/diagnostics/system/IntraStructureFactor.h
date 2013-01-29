@@ -156,7 +156,7 @@ namespace McMd
       */
       virtual void output();
 
-   private:
+   protected:
 
       /**
       * Output file stream.
@@ -169,6 +169,11 @@ namespace McMd
       * First index denotes wavevector, second denotes an atom typeId pair.
       */
       DMatrix<double>          structureFactors_;
+
+      /**
+       * Contribution of current time step to structure factor average.
+       */
+      DMatrix<double>          structureFactorDelta_;
 
       /**
       * Fourier modes. First index is wavevector, second is atom type.
@@ -199,6 +204,8 @@ namespace McMd
       /// Number of atom types, copied from Simulation::nAtomType().
       int  nAtomType_;
 
+
+   private:
       /// Has readParam been called?
       bool isInitialized_;
 

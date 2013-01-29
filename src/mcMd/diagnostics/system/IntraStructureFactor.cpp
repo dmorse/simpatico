@@ -53,6 +53,7 @@ namespace McMd
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nAtomType_ + 1);
       structureFactors_.allocate(nWave_, nAtomTypeIdPair_);
+      structureFactorDelta_.allocate(nWave_, nAtomTypeIdPair_);
 
       isInitialized_ = true; 
    }
@@ -136,6 +137,13 @@ namespace McMd
 
          makeWaveVectors();
 
+         // Set all Deltas to zero
+         for (i = 0; i < nWave_; ++i) {
+            for (int pairId = 0; pairId < nAtomTypeIdPair_; ++pairId) {
+               structureFactorDelta_(i, pairId) = 0;
+            }
+         }
+ 
          // Loop over molecules in species
          system().begin(speciesId_, molIter); 
          for ( ; molIter.notEnd(); ++molIter) {
@@ -177,6 +185,7 @@ namespace McMd
                   rho[0] = std::conj(rho[0]);
                   dS = std::real(rho[0]*rho[1])/volume;
                   structureFactors_(i, j) += dS;
+                  structureFactorDelta_(i,j) += dS;
                }
             }
 
