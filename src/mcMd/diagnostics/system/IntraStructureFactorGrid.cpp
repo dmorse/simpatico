@@ -296,7 +296,6 @@ namespace McMd
             average = 0.0;
             for (m = 0; m < size; ++m) {
                 value = structureFactors_(k, j)/double(nSample_);
-                std::cout << "k " << k << " " << value << std::endl;
                 average += value;
                 ++k;
             }
