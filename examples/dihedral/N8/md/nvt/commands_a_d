@@ -1,5 +1,5 @@
-SET_CONFIG_IO    McConfigIo
-READ_CONFIG      config
+SET_CONFIG_IO    DdMdConfigIo
+READ_CONFIG      config.ddMd
 THERMALIZE       1.0
 SIMULATE         100000
 WRITE_CONFIG     config

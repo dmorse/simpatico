@@ -10,9 +10,8 @@
 */
 
 #include <util/param/ParamComposite.h>  // Base class
-#include <util/containers/DMatrix.h>     // member
+#include <util/containers/DMatrix.h>    // member
 #include <util/containers/DArray.h>     // member
-
 
 namespace McMd
 {

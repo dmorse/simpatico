@@ -1,5 +1,6 @@
-READ_CONFIG   config
+READ_CONFIG   config.ddMd
 THERMALIZE    1.0
 SIMULATE      10000
 WRITE_CONFIG  config
 FINISH
+

@@ -37,7 +37,7 @@ namespace DdMd
    { reverseUpdateFlag_ = reverseUpdateFlag; }
 
    /*
-   * Set a value for the total energy.
+   * Get the value of the total energy.
    */
    double Potential::energy() const
    {  return energy_.value(); }

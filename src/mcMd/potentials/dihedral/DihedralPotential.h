@@ -50,32 +50,31 @@ namespace McMd
       /**
       * Returns potential energy for one dihedral.
       *
-      *     1   3    4
+      *     0   2    3
       *     o   o----o
       *      \ /
       *       o 
-      *       2 
+      *       1 
       *
-      * \param R1     bond vector from atom 1 to 2.
-      * \param R2     bond vector from atom 2 to 3.
-      * \param R3     bond vector from atom 3 to 4.
-      * \param type   type of dihedral.
+      * \param R1     bond vector r1 - r0 from atom 0 to 1
+      * \param R2     bond vector r2 - r1 from atom 1 to 2
+      * \param R3     bond vector r3 - r2 from atom 2 to 3
+      * \param type   type index for dihedral
       */
       virtual
       double energy(const Vector& R1, const Vector& R2, const Vector& R3,
                     int type) const = 0;
  
       /**
-      * Returns derivatives of energy with respect to bond vectors forming the
-      * dihedral group.
+      * Returns derivatives of energy with respect to bond vectors.
       *
-      * \param R1     bond vector from atom 1 to 2.
-      * \param R2     bond vector from atom 2 to 3.
-      * \param R3     bond vector from atom 3 to 4.
-      * \param F1     return force along R1 direction.
-      * \param F2     return force along R2 direction.
-      * \param F3     return force along R2 direction.
-      * \param type   type of dihedral.
+      * \param R1    bond vector from atom 0 to 1 (input)
+      * \param R2    bond vector from atom 1 to 2 (input)
+      * \param R3    bond vector from atom 2 to 3 (input)
+      * \param F1    derivative of energy w/respect to R1 (output)
+      * \param F2    derivative of energy w/respect to R2 (output)
+      * \param F3    derivative of energy w/respect to R3 (output)
+      * \param type  type index for dihedral
       */
       virtual
       void force(const Vector& R1, const Vector& R2, const Vector& R3,
@@ -111,11 +110,17 @@ namespace McMd
       /**
       * Compute and return the dihedral potential energy for one Atom.
       *
+      * Default method throws an exception.This allows testing of subclasses 
+      * that only work for MD simulation, and crash gracefully if used for MC.
+
       * \param  atom Atom object of interest
       * \return bond potential energy of atom
       */
       virtual double atomEnergy(const Atom& atom) const
-      {  UTIL_THROW("Unimplemented method"); }
+      {  
+         UTIL_THROW("Unimplemented method"); 
+         return 0.0; // Never reached, but avoids compiler warning.
+      }
 
       /**
       * Compute and return the total Dihedral energy for the associated System.
@@ -124,6 +129,9 @@ namespace McMd
 
       /**
       * Add dihedral potential forces to all atomic forces.
+      *
+      * Default version throws an exception.This allows testing of subclasses 
+      * that only work for MC simulation, and crash gracefully if used for MD.
       */
       virtual void addForces()
       {  UTIL_THROW("Unimplemented method"); }

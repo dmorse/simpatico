@@ -32,7 +32,7 @@ namespace DdMd
    {} 
 
    /*
-   * Associate with related objects. (for unit testing).
+   * Associate with related objects (for unit testing).
    */
    void DihedralPotential::associate(Boundary& boundary, GroupStorage<4>& storage)
    {

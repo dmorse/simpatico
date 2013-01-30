@@ -16,7 +16,7 @@
 namespace Util
 {
 
-   /**
+   /*
    * Constructor.
    */
    SpeciesEnsemble::SpeciesEnsemble(Type type)
@@ -24,7 +24,7 @@ namespace Util
       type_(type)
    {}
 
-   /**
+   /*
    * Set the chemical potential mu.
    */
    void  SpeciesEnsemble::setMu(double mu)
@@ -35,7 +35,7 @@ namespace Util
       mu_ = mu; 
    }
 
-   /**
+   /*
    * Read the type and (if necessary) chemical potential mu from file.
    */
    void SpeciesEnsemble::readParam(std::istream& in)
@@ -87,20 +87,20 @@ namespace Util
    MPI::Datatype MpiTraits<SpeciesEnsemble>::type = MPI::BYTE;
    bool MpiTraits<SpeciesEnsemble>::hasType = false;
 
-   /**
+   /*
    * Initialize MPI Datatype.
    */
    MPI::Datatype MpiTraits<SpeciesEnsemble::Type>::type = MPI::INT;
    bool MpiTraits<SpeciesEnsemble::Type>::hasType = true;
 
 
-   /**
+   /*
    * Commit MPI Datatype.
    */
    void SpeciesEnsemble::commitMpiType() 
    {
       MpiStructBuilder builder;
-      SpeciesEnsemble   object;
+      SpeciesEnsemble  object;
 
       builder.setBase(&object);
       builder.addMember(&object.mu_, MPI::DOUBLE);

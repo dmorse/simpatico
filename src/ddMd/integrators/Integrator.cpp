@@ -103,7 +103,7 @@ namespace DdMd
       }
 
       // Send signal indicating change in atomic forces
-      simulation().forceSignal().notify();
+      // simulation().forceSignal().notify();
    }
 
    /*
@@ -140,7 +140,7 @@ namespace DdMd
       }
 
       // Send signal indicating change in atomic forces
-      simulation().forceSignal().notify();
+      // simulation().forceSignal().notify();
    }
 
    /*
