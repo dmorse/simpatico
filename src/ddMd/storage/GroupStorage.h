@@ -192,15 +192,21 @@ namespace DdMd
 
       /**
       * Return total number of distinct groups on all processors.
+      *
+      * This function should be called only on the master processors, after
+      * a subsequent call to computeNTotal().
       */
       int nTotal() const;
 
       /**
       * Compute and store the number of distinct groups on all processors.
       *
-      * This is an MPI reduce operation. The correct result is stored and
-      * returned only on the rank 0 processor. On other processors, the
-      * method stores a null value of -1.
+      * This is an MPI reduce operation. The correct result is stored only
+      * on the rank 0 processor. 
+      *
+      * Algorithm: For purposes of counting, each group is assigned to the
+      * processor that owns its first atom (index 0), and then values from
+      * different processors are summed and stored on the master.
       *
       * \param  communicator MPI communicator for this system.
       * \return on master node, return total number of groups.
@@ -562,7 +568,7 @@ namespace DdMd
    }
 
    /**
-   * Compute, store and return total number of atoms on all processors.
+   * Compute and store total number of atoms on all processors.
    */
    template <int N>
    #ifdef UTIL_MPI

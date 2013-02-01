@@ -21,14 +21,22 @@
 #include <util/containers/DArray.h>
 #include <util/space/Vector.h>
 
+
 #include <ddMd/potentials/pair/PairPotentialImpl.h>
 #include <inter/pair/DpdPair.h>
 
 #define TEST_EXCHANGER_FORCE_BOND
-
 #ifdef TEST_EXCHANGER_FORCE_BOND
 #include <ddMd/potentials/bond/BondPotentialImpl.h>
 #include <inter/bond/HarmonicL0Bond.h>
+#ifdef INTER_ANGLE
+#include <ddMd/potentials/angle/AnglePotentialImpl.h>
+#include <inter/angle/HarmonicAngle.h>
+#endif
+#ifdef INTER_DIHEDRAL
+#include <ddMd/potentials/dihedral/DihedralPotentialImpl.h>
+#include <inter/dihedral/MultiHarmonicDihedral.h>
+#endif
 #endif 
 
 #include <util/mpi/MpiLogger.h>
@@ -74,6 +82,12 @@ private:
    PairPotentialImpl<DpdPair>        pairPotential;
    #ifdef TEST_EXCHANGER_FORCE_BOND
    BondPotentialImpl<HarmonicL0Bond> bondPotential;
+   #ifdef INTER_ANGLE
+   AnglePotentialImpl<HarmonicAngle> anglePotential;
+   #endif
+   #ifdef INTER_DIHEDRAL
+   DihedralPotentialImpl<MultiHarmonicDihedral> dihedralPotential;
+   #endif
    #endif
 
 public:
@@ -135,8 +149,18 @@ public:
       domain.setRank(0);
       #endif
 
-      // Read parameter file
+      // Open parameter file
+      #ifdef INTER_ANGLE
+      #ifdef INTER_DIHEDRAL
+      openFile("in/Exchanger_a_d");
+      #else
+      openFile("in/Exchanger_a");
+      #endif
+      #else
       openFile("in/Exchanger");
+      #endif
+
+      // Read parameter file
       domain.readParam(file());
       buffer.readParam(file());
       configIo.readParam(file());

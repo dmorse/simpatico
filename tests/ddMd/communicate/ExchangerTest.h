@@ -41,6 +41,8 @@ private:
    Domain domain;
    Buffer buffer;
    Exchanger exchanger;
+   DdMdConfigIo configIo;
+   Random random;
    AtomStorage atomStorage;
    BondStorage bondStorage;
    #ifdef INTER_ANGLE
@@ -49,8 +51,6 @@ private:
    #ifdef INTER_DIHEDRAL
    DihedralStorage dihedralStorage;
    #endif
-   DdMdConfigIo configIo;
-   Random random;
    int atomCount;
 
 public:
@@ -97,7 +97,15 @@ public:
       #endif
 
       // Open parameter file
+      #ifdef INTER_ANGLE
+      #ifdef INTER_DIHEDRAL
+      openFile("in/Exchanger_a_d");
+      #else
+      openFile("in/Exchanger_a");
+      #endif
+      #else
       openFile("in/Exchanger");
+      #endif
 
       domain.readParam(file());
       buffer.readParam(file());
@@ -111,17 +119,15 @@ public:
       #ifdef INTER_DIHEDRAL
       dihedralStorage.readParam(file());
       #endif
-
-      // Finish reading parameter file
-      closeFile();
+      closeFile(); // close parameter file
 
       exchanger.setPairCutoff(0.5);
       exchanger.allocate();
 
-      MaskPolicy policy = MaskBonded;
+      // Read input configuration file
       std::ifstream configFile;
-      //std::ifstream configFile("in/config");
       openInputFile("in/config", configFile);
+      MaskPolicy policy = MaskBonded;
       configIo.readConfig(configFile, policy);
 
       int  nAtom = 0;     // Number received on this processor.
@@ -169,6 +175,7 @@ public:
       printMethod(TEST_FUNC); 
    }
 
+   #if 0
    void testAtomExchange()
    {
       printMethod(TEST_FUNC);
@@ -184,11 +191,20 @@ public:
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
+      // Check validity of all storage objects
       TEST_ASSERT(atomStorage.isValid());
+      TEST_ASSERT(!atomStorage.isCartesian());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   false));
+      #ifdef INTER_ANGLE
+      TEST_ASSERT(angleStorage.isValid(atomStorage, domain.communicator(), 
+                  false));
+      #endif
+      #ifdef INTER_DIHEDRAL
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, domain.communicator(), 
+                  false));
+      #endif
 
-      TEST_ASSERT(!atomStorage.isCartesian());
       double range = 0.4;
       displaceAtoms(range);
 
@@ -208,10 +224,8 @@ public:
       }
 
       TEST_ASSERT(atomStorage.isValid());
-      TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
-                  false));
-
    }
+   #endif
 
    void testExchange()
    {
@@ -221,12 +235,34 @@ public:
       int  nAtomAll  = 0; // Number received on all processors.
       int  myRank = domain.gridRank();
 
+      // Check that all atoms are within the processor domain.
       AtomIterator  atomIter;
-      GhostIterator ghostIter;
+      atomStorage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         TEST_ASSERT(domain.isInDomain(atomIter->position()));
+      }
 
+      // Check validity of all storage
+      TEST_ASSERT(atomStorage.isValid());
+      TEST_ASSERT(!atomStorage.isCartesian());
+      TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
+                  false));
+      #ifdef INTER_ANGLE
+      TEST_ASSERT(angleStorage.isValid(atomStorage, domain.communicator(), 
+                  false));
+      #endif
+      #ifdef INTER_DIHEDRAL
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, domain.communicator(), 
+                  false));
+      #endif
+
+      // Record number of atoms and ghosts after exchange
+      //nAtom = atomStorage.nAtom();
+      //nGhost = atomStorage.nGhost();
+
+      // Displace atoms and then exchange atoms and ghosts
       double range = 0.4;
       displaceAtoms(range);
-      
       exchanger.exchange();
 
       // Check that all atoms are accounted for after ghost exchange.
@@ -245,12 +281,13 @@ public:
       }
 
       // Check that all ghosts are outside the processor domain.
+      GhostIterator ghostIter;
       atomStorage.begin(ghostIter);
       for ( ; ghostIter.notEnd(); ++ghostIter) {
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
       }
 
-      // Call isVlaid() methods of all storage containers.
+      // Call isValid() methods of all storage containers.
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   true));
@@ -592,7 +629,7 @@ public:
 
 TEST_BEGIN(ExchangerTest)
 TEST_ADD(ExchangerTest, testDistribute)
-TEST_ADD(ExchangerTest, testAtomExchange)
+//TEST_ADD(ExchangerTest, testAtomExchange)
 TEST_ADD(ExchangerTest, testExchange)
 TEST_ADD(ExchangerTest, testGhostUpdate)
 TEST_ADD(ExchangerTest, testGhostUpdateCycle)
