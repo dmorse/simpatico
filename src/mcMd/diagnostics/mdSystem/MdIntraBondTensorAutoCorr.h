@@ -43,6 +43,8 @@ namespace McMd
       using IntraBondTensorAutoCorr<MdSystem>::setup;
       using IntraBondTensorAutoCorr<MdSystem>::sample;
       using IntraBondTensorAutoCorr<MdSystem>::output;
+      using IntraBondTensorAutoCorr<MdSystem>::loadParameters;
+      using IntraBondTensorAutoCorr<MdSystem>::save;
 
       /**
       * Serialize to/from an archive. 

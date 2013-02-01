@@ -5,6 +5,8 @@
 #include <util/space/IntVector.h>
 #include <util/containers/Matrix.h>
 
+#include <string>
+
    // Base class for Factory and Manager. 
    class A : public ParamComposite 
    {
@@ -30,7 +32,12 @@
 
       virtual void readParameters(std::istream& in) {
          read<double>(in, "x", x_);
-         read<int>(in,    "m", m_);
+         read<int>(in, "m", m_);
+      }
+
+      virtual void loadParameters(Serializable::IArchive& in) {
+         loadParameter<double>(in, "x", x_);
+         loadParameter<int>(in, "m", m_);
       }
 
    private:
@@ -57,6 +64,10 @@
          read<int>(in, "m", m_);
       }
 
+      virtual void loadParameters(Serializable::IArchive& in) {
+         loadParameter<int>(in, "m", m_);
+      }
+
    private:
 
       int    m_;
@@ -77,6 +88,10 @@
 
       virtual void readParameters(std::istream& in) {
          read<double>(in, "d", d_);
+      }
+
+      virtual void loadParameters(Serializable::IArchive& in) {
+         loadParameter<double>(in, "d", d_);
       }
 
    private:
@@ -100,6 +115,10 @@
 
       virtual void readParameters(std::istream& in) {
          read<double>(in, "e", e_);
+      }
+
+      virtual void loadParameters(Serializable::IArchive& in) {
+         loadParameter<double>(in, "e", e_);
       }
 
       double e()
@@ -176,12 +195,6 @@
       Factory<A>* newDefaultFactory() const
       { return new AFactory(); }
 
-      //void readParameters(std::istream& in) 
-      //{
-      //   readBegin(in, "AManager");
-      //   Manager<A>::readParameters(in);
-      //} 
-
    };
 
 
@@ -199,10 +212,10 @@
    
       virtual void readParameters(std::istream& in)
       {
-         //readBegin(in, "ClassName");
          read<int>(in, "value0", value0_);
          read<long>(in, "value1", value1_);
          read<double>(in, "value2", value2_);
+         read<std::string>(in, "str", str_);
          readCArray<int>(in, "value3", value3_, 3);
          readCArray<double>(in, "value4", value4_, 3);
          readCArray2D<double>(in, "value5", value5_[0], 2, 2);
@@ -213,14 +226,32 @@
          readDMatrix<double>(in, "value9", value9_, 2, 2);
          readParamComposite(in, e_);
          readParamComposite(in, manager_);
-         //readEnd(in);
       }
    
+      virtual void loadParameters(Serializable::IArchive& ar)
+      {
+         loadParameter<int>(ar, "value0", value0_);
+         loadParameter<long>(ar, "value1", value1_);
+         loadParameter<double>(ar, "value2", value2_);
+         loadParameter<std::string>(ar, "str", str_);
+         loadCArray<int>(ar, "value3", value3_, 3);
+         loadCArray<double>(ar, "value4", value4_, 3);
+         loadCArray2D<double>(ar, "value5", value5_[0], 2, 2);
+         loadDArray<double>(ar, "value6", value6_, 4);
+         addBlank();
+         loadParameter<Vector>(ar, "value7", value7_);
+         loadParameter<IntVector>(ar, "value8", value8_);
+         loadDMatrix<double>(ar, "value9", value9_, 2, 2);
+         loadParamComposite(ar, e_);
+         loadParamComposite(ar, manager_);
+      }
+
    private:
    
       int     value0_;
       long    value1_;
       double  value2_;
+      std::string str_;
       int     value3_[3];
       double  value4_[3];
       double  value5_[2][2];

@@ -33,10 +33,15 @@ namespace McMd
       speciesId_(-1),
       bondTypeId_(-1),
       nJunction_(0),
+      junctions_(),
+      lTypes_(),
+      uTypes_(),
       maskPolicy_(MaskBonded),
       hasAutoCorr_(0),
-      autoCorrCapacity_(0)
-   { setClassName("CfbReptationMove"); } 
+      autoCorrCapacity_(0),
+      outputFileName_(),
+      acceptedStepsAccumulators_()
+   {  setClassName("CfbReptationMove"); } 
    
    /* 
    * Read parameters speciesId, nRegrow, and nTrial
@@ -59,7 +64,7 @@ namespace McMd
       Linear* speciesPtr;
       speciesPtr = dynamic_cast<Linear*>(&(simulation().species(speciesId_)));
       if (!speciesPtr) {
-         UTIL_THROW("Attempted use ReptationMove with Species that is not Linear");
+         UTIL_THROW("Species is not a subclass of Linear");
       }
 
       // Identify bond type 
@@ -100,7 +105,7 @@ namespace McMd
 
       read<int>(in, "hasAutoCorr", hasAutoCorr_);
  
-      // read autocorrelation parameters 
+      // Read autocorrelation parameters 
       if (hasAutoCorr_) {
          read<int>(in, "autoCorrCapacity", autoCorrCapacity_);
          read<std::string>(in, "autoCorrName", outputFileName_);
@@ -112,6 +117,73 @@ namespace McMd
          {
             acceptedStepsAccumulators_[i].setParam(autoCorrCapacity_);
          }
+      }
+
+   }
+
+   /* 
+   * Load from archive.
+   */
+   void CfbReptationMove::loadParameters(Serializable::IArchive& ar) 
+   {
+      // Read parameters
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "nTrial", nTrial_);
+      ar & bondTypeId_;
+      ar & maskPolicy_;
+
+      // Validate
+      if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
+         UTIL_THROW("Invalid value input for nTrial");
+      }
+      Linear* speciesPtr;
+      speciesPtr = dynamic_cast<Linear*>(&(simulation().species(speciesId_)));
+      if (!speciesPtr) {
+         UTIL_THROW("Species is not a subclass of Linear");
+      }
+      int nBond = speciesPtr->nBond();
+      for (int i = 0; i < nBond; ++i) {
+         if (bondTypeId_ != speciesPtr->speciesBond(i).typeId()) {
+            UTIL_THROW("Inconsistent or unequal bond type ids");
+         }
+      }
+      if (maskPolicy_ != simulation().maskedPairPolicy()) {
+         UTIL_THROW("Inconsistent values of maskPolicy_");
+      }
+
+      ar & junctions_; 
+      ar & lTypes_; 
+      ar & uTypes_; 
+
+      // Read autocorrelation parameters 
+      loadParameter<int>(ar, "hasAutoCorr", hasAutoCorr_);
+      if (hasAutoCorr_) {
+         loadParameter<int>(ar, "autoCorrCapacity", autoCorrCapacity_);
+         loadParameter<std::string>(ar, "autoCorrName", outputFileName_);
+         ar & acceptedStepsAccumulators_;
+      }
+
+   }
+
+   /* 
+   * Load from archive.
+   */
+   void CfbReptationMove::save(Serializable::OArchive& ar) 
+   {
+      McMove::save(ar);
+      ar & speciesId_;
+      ar & nTrial_;
+      ar & bondTypeId_;
+      ar & maskPolicy_;
+      ar & junctions_; 
+      ar & lTypes_; 
+      ar & uTypes_; 
+      ar & hasAutoCorr_;
+      if (hasAutoCorr_) {
+         ar & autoCorrCapacity_;
+         ar & outputFileName_;
+         ar & acceptedStepsAccumulators_;
       }
    }
 

@@ -94,6 +94,20 @@ namespace McMd
       virtual void readParameters(std::istream &in);
 
       /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
+      /**
       * Read and execute commands from a specific input stream.
       * 
       * \param in command file input stream. 
@@ -213,6 +227,12 @@ namespace McMd
 
       /// Pointer to parameter file passed to readParameters(istream&)
       std::istream*   paramFilePtr_;
+
+      /// Restart output file name
+      std::string writeRestartFileName_;
+
+      /// Interval for writing restart files (no output if 0)
+      int writeRestartInterval_;
 
       /// Has readParam been called?
       bool isInitialized_;

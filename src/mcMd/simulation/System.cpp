@@ -11,7 +11,6 @@
 // namespace McMd
 #include "System.h"
 #include "Simulation.h"
-#include "serialize.h"
 
 #include <mcMd/species/Species.h>
 #include <util/ensembles/EnergyEnsemble.h>
@@ -55,8 +54,10 @@
 #include <util/misc/FileMaster.h>
 #include <util/param/Factory.h>
 #include <util/archives/Serializable_includes.h>
+#include <util/archives/serialize.h>
 
 #include <fstream>
+#include <string>
 
 namespace McMd
 {
@@ -330,12 +331,49 @@ namespace McMd
 
    }
 
+   /*
+   * Load internal state from an archive.
+   */
+   void System::loadParameters(Serializable::IArchive &ar)
+   {
+      if (!isCopy()) {
+         allocateMoleculeSets();
+         loadFileMaster(ar);
+         loadPotentialStyles(ar);
+         #ifdef MCMD_LINK
+         loadLinkMaster(ar);
+         #endif
+         #ifdef INTER_TETHER
+         loadTetherMaster(ar);
+         #endif
+         loadEnsembles(ar);
+      }
+   }
+
+   /*
+   * Load parameters to an archive.
+   */
+   void System::saveParameters(Serializable::OArchive &ar)
+   {
+      if (!isCopy()) {
+         saveFileMaster(ar);
+         savePotentialStyles(ar);
+         #ifdef MCMD_LINK
+         saveLinkMaster(ar);
+         #endif
+         #ifdef INTER_TETHER
+         saveTetherMaster(ar);
+         #endif
+         saveEnsembles(ar);
+      }
+   }
+
    /**
-   * If no FileMaster exists, create and initialize one. 
+   * If no FileMaster exists, create and read one. 
    */
    void System::readFileMaster(std::istream &in)
    {
-      // Create FileMaster if necessary
+      // Create and read FileMaster if necessary
       if (!fileMasterPtr_) {
          fileMasterPtr_ = new FileMaster();
          createdFileMaster_ = true;
@@ -343,6 +381,32 @@ namespace McMd
       }
    }
 
+   /*
+   * If no FileMaster exists, create and load one. 
+   */
+   void System::loadFileMaster(Serializable::IArchive& ar)
+   {
+      // Create FileMaster if necessary
+      if (!fileMasterPtr_) {
+         fileMasterPtr_ = new FileMaster();
+         createdFileMaster_ = true;
+         loadParamComposite(ar, *fileMasterPtr_);
+      }
+   }
+
+   /*
+   * If createdFileMaster_, save to archive.
+   */
+   void System::saveFileMaster(Serializable::OArchive& ar)
+   {
+      if (createdFileMaster_) {
+         fileMasterPtr_->save(ar);
+      }
+   }
+
+   /*
+   * Read potential style strings from parameter file.
+   */
    void System::readPotentialStyles(std::istream &in)
    {
       #ifndef INTER_NOPAIR
@@ -385,6 +449,82 @@ namespace McMd
    }
 
    /*
+   * Load potential style strings.
+   */
+   void System::loadPotentialStyles(Serializable::IArchive& ar)
+   {
+      #ifndef INTER_NOPAIR
+      loadParameter<std::string>(ar, "pairStyle", pairStyle_);
+      #endif
+      if (simulation().nBondType() > 0) {
+         loadParameter<std::string>(ar, "bondStyle", bondStyle_);
+      }
+      #ifdef INTER_ANGLE
+      if (simulation().nAngleType() > 0) {
+         loadParameter<std::string>(ar, "angleStyle", angleStyle_);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (simulation().nDihedralType() > 0) {
+         loadParameter<std::string>(ar, "dihedralStyle", dihedralStyle_);
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         loadParameter<std::string>(ar, "linkStyle", linkStyle_);
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      if (simulation().hasExternal()) {
+         loadParameter<std::string>(ar, "externalStyle", externalStyle_);
+      }
+      #endif
+      #ifdef INTER_TETHER
+      if (simulation().hasTether()) {
+         loadParameter<std::string>(ar, "tetherStyle", tetherStyle_);
+      }
+      #endif
+   }
+
+   /*
+   * Save potential style strings.
+   */
+   void System::savePotentialStyles(Serializable::OArchive& ar)
+   {
+      #ifndef INTER_NOPAIR
+      ar << pairStyle_;
+      #endif
+      if (simulation().nBondType() > 0) {
+         ar << bondStyle_;
+      }
+      #ifdef INTER_ANGLE
+      if (simulation().nAngleType() > 0) {
+         ar << angleStyle_;
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (simulation().nDihedralType() > 0) {
+         ar << dihedralStyle_;
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         ar << linkStyle_;
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      if (simulation().hasExternal()) {
+         ar << externalStyle_;
+      }
+      #endif
+      #ifdef INTER_TETHER
+      if (simulation().hasTether()) {
+         ar << tetherStyle_;
+      }
+      #endif
+   }
+
+   /*
    * Create EnergyEnsemble and BoundaryEnsemble
    */
    void System::readEnsembles(std::istream &in)
@@ -393,15 +533,48 @@ namespace McMd
       readParamComposite(in, *boundaryEnsemblePtr_);
    }
 
+   /*
+   * Load EnergyEnsemble and BoundaryEnsemble.
+   */
+   void System::loadEnsembles(Serializable::IArchive& ar)
+   {
+      loadParamComposite(ar, *energyEnsemblePtr_);
+      loadParamComposite(ar, *boundaryEnsemblePtr_);
+   }
+
+   /*
+   * Save EnergyEnsemble and BoundaryEnsemble.
+   */
+   void System::saveEnsembles(Serializable::OArchive& ar)
+   {
+      energyEnsemblePtr_->save(ar);
+      boundaryEnsemblePtr_->save(ar);
+   }
+
    #ifdef MCMD_LINK
-   void System::readLinkMaster(std::istream &in)
+   void System::readLinkMaster(std::istream& in)
    {
       if (simulation().nLinkType() > 0) {
          linkMasterPtr_ = new LinkMaster();
          readParamComposite(in, *linkMasterPtr_);
       }
    }
-   #endif 
+
+   void System::loadLinkMaster(Serializable::IArchive& ar)
+   {
+      if (simulation().nLinkType() > 0) {
+         linkMasterPtr_ = new LinkMaster();
+         loadParamComposite(ar, *linkMasterPtr_);
+      }
+   }
+
+   void System::saveLinkMaster(Serializable::OArchive& ar)
+   {
+      if (simulation().nLinkType() > 0) {
+         linkMasterPtr_->save(ar);
+      }
+   }
+   #endif // MCMD_LINK
 
    #ifdef INTER_TETHER
    void System::readTetherMaster(std::istream &in)
@@ -411,7 +584,98 @@ namespace McMd
          readParamComposite(in, *tetherMasterPtr_);
       }
    }
-   #endif 
+
+   void System::loadTetherMaster(Serializable::IArchive &ar)
+   {
+      if (simulation().hasTether()) {
+         tetherMasterPtr_ = new TetherMaster();
+         loadParamComposite(ar, *tetherMasterPtr_);
+      }
+   }
+
+   void System::saveTetherMaster(Serializable::OArchive& ar)
+   {
+      if (simulation().hasTether() > 0) {
+         tetherMasterPtr_->save(ar);
+      }
+   }
+   #endif // INTER_TETHER
+
+   /*
+   * Load configuration from an archive.
+   */
+   void System::loadConfig(Serializable::IArchive &ar)
+   {
+      ar >> boundary();
+
+      Species* speciesPtr;
+      int nSpecies = simulation().nSpecies();
+      Molecule* molPtr;
+      Molecule::AtomIterator atomIter;
+      int iSpeciesIn, nMoleculeIn;
+
+      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         speciesPtr = &simulation().species(iSpecies);
+         ar >> iSpeciesIn;
+         if (iSpeciesIn != iSpecies) {
+            UTIL_THROW("Error: iSpeciesIn != iSpecies");
+         }
+         ar >> nMoleculeIn;
+         for (int iMol = 0; iMol < nMoleculeIn; ++iMol) {
+            molPtr = &(speciesPtr->reservoir().pop());
+            addMolecule(*molPtr);
+            if (molPtr != &molecule(iSpecies, iMol)) {
+               UTIL_THROW("Molecule index error");
+            }
+            molPtr->begin(atomIter); 
+            for ( ; atomIter.notEnd(); ++atomIter) {
+               ar >> atomIter->position();
+               ar >> atomIter->velocity();
+               #ifdef MCMD_SHIFT
+               ar >> atomIter->shift();
+               boundary().shift(atomIter->position(), atom.shift());
+               #else
+               boundary().shift(atomIter->position());
+               #endif
+            }
+         }
+      }
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void System::saveConfig(Serializable::OArchive& ar)
+   {
+      ar << boundary();
+
+      int nSpecies = simulation().nSpecies();
+      System::MoleculeIterator molIter;
+      Molecule::AtomIterator   atomIter;
+      int nMoleculeOut;
+
+      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         ar << iSpecies;
+         nMoleculeOut = nMolecule(iSpecies);
+         ar << nMoleculeOut;
+         begin(iSpecies, molIter); 
+         for ( ; molIter.notEnd(); ++molIter) {
+            molIter->begin(atomIter); 
+            for ( ; atomIter.notEnd(); ++atomIter) {
+               #ifdef MCMD_SHIFT
+               boundary().shift(atomIter->position(), atomIter->shift());
+               #else
+               boundary().shift(atomIter->position());
+               #endif
+               ar << atomIter->position();
+               ar << atomIter->velocity();
+               #ifdef MCMD_SHIFT
+               ar << atomIter->shift();
+               #endif
+            }
+         }
+      }
+   }
 
    /*
    * Return a pointer to a new default ConfigIo.
@@ -446,18 +710,6 @@ namespace McMd
       }
       configIoPtr_->write(out);
    }
-
-   /* 
-   * Save a System configuration to an archive.
-   */
-   void System::save(Serializable::OArchiveType& ar)
-   {  ar & *this; }
-
-   /* 
-   * Load a System configuration from an archive.
-   */
-   void System::load(Serializable::IArchiveType& ar)
-   {  ar & *this; }
 
    /*
    * Set System integer Id.
@@ -554,21 +806,21 @@ namespace McMd
    */
    void System::setExpectPerturbation()
    {
-      // create perturbation factory
-      perturbationFactoryPtr_ = newDefaultPerturbationFactory();
-      createdPerturbationFactory_ = true;
-
+      // Precondition
       if (hasPerturbation()) {
          UTIL_THROW("A Perturbation is already set");
       }
+
+      // Create perturbation factory
+      perturbationFactoryPtr_ = newDefaultPerturbationFactory();
+      createdPerturbationFactory_ = true;
+
       expectPerturbationParam_ = true;
    }
 
    void System::readPerturbation(std::istream& in) 
    {
-
-      // Create Perturbation and read object, if required.
-      if (!hasPerturbation() and expectPerturbationParam_) {
+      if (!hasPerturbation() && expectPerturbationParam_) {
          std::string className;
          bool        isEnd;
          perturbationPtr_ = 
@@ -581,7 +833,50 @@ namespace McMd
          createdPerturbation_ = true;
       }
    }
+
+   /*
+   * Load Perturbation, if any, or do nothing. 
+   */
+   void System::loadPerturbation(Serializable::IArchive& ar) 
+   {
+      if (hasParamCommunicator()) {
+         UTIL_THROW("Sysstem has paramCommunicator in loadPerturbation");
+      }
+
+      bool savedPerturbation;
+      ar >> savedPerturbation;
+      if (savedPerturbation) {
+         setExpectPerturbation();
+         std::string className = "unknown";
+         perturbationPtr_ = 
+            perturbationFactoryPtr_->loadObject(ar, *this, className);
+         if (!perturbationPtr_) {
+            std::string msg = "Unrecognized Perturbation subclass name ";
+            msg += className;
+            UTIL_THROW(msg.c_str());
+         }
+         createdPerturbation_ = true;
+      }
+   }
+
+   /*
+   * Save Perturbation, if any, or do nothing. 
+   */
+   void System::savePerturbation(Serializable::OArchive& ar) 
+   {
+      bool savingPerturbation = hasPerturbation();
+      ar << savingPerturbation;  
+      if (savingPerturbation) {
+         std::string className = perturbationPtr_->className();
+         ar << className;
+         perturbationPtr_->save(ar);
+      }
+   }
+
    #ifdef UTIL_MPI  
+   /*
+   * Read ReplicaMove, if any, or do nothing. 
+   */
    void System::readReplicaMove(std::istream& in) 
    {
       if (hasPerturbation()) {
@@ -589,11 +884,40 @@ namespace McMd
           if (hasReplicaMove_) {
              replicaMovePtr_ = new ReplicaMove(*this);
              readParamComposite(in, *replicaMovePtr_);
-             // replicaMovePtr_->initialize();
           }
           createdReplicaMove_ = true;
       } else {
          hasReplicaMove_ = false;
+      }
+   }
+
+   /*
+   * Load ReplicaMove, if any, or do nothing. 
+   */
+   void System::loadReplicaMove(Serializable::IArchive& ar) 
+   {
+      if (hasPerturbation()) {
+          loadParameter<bool>(ar, "hasReplicaMove", hasReplicaMove_);
+          if (hasReplicaMove_) {
+             replicaMovePtr_ = new ReplicaMove(*this);
+             loadParamComposite(ar, *replicaMovePtr_);
+          }
+          createdReplicaMove_ = true;
+      } else {
+         hasReplicaMove_ = false;
+      }
+   }
+
+   /*
+   * Save ReplicaMove, if any, or do nothing. 
+   */
+   void System::saveReplicaMove(Serializable::OArchive& ar) 
+   {
+      if (hasPerturbation()) {
+          ar & hasReplicaMove_;
+          if (hasReplicaMove_) {
+             replicaMovePtr_->save(ar);
+          }
       }
    }
    #endif // UTIL_MPI
@@ -667,7 +991,7 @@ namespace McMd
    /*
    * Return all molecules of all Species to their reservoirs.
    *
-   * Ifdef MCMD_LINK, it also clears the LinkMaster.
+   * Ifdef MCMD_LINK, also clears the LinkMaster.
    */
    void System::removeAllMolecules()
    {
@@ -710,8 +1034,10 @@ namespace McMd
    Molecule& System::randomMolecule(int speciesId)
    {
       int nMol, moleculeId;
-      nMol  = nMolecule(speciesId); 
+      nMol = nMolecule(speciesId); 
       if (nMol <= 0) {
+         Log::file() << "Number of molecules in species " << speciesId
+                     << " = " << nMol << std::endl;
          UTIL_THROW("Number of molecules in species <= 0");
       }
       moleculeId = simulation().random().uniformInt(0, nMol);

@@ -36,24 +36,55 @@ namespace McMd
    /// Read parameters from file, and allocate direction vectors.
    void CompositionProfile::readParameters(std::istream& in) 
    {
-
-      // Read interval and output file 
       readInterval(in);
       readOutputFileName(in);
 
-      nAtomType_ = system().simulation().nAtomType();
-
       // Read number of direction vectors and direction vectors 
-      read<int>(in, "nDirections", nDirection_);
+      read<int>(in, "nDirection", nDirection_);
       intVectors_.allocate(nDirection_);
-      waveVectors_.allocate(nDirection_);
       readDArray<IntVector>(in, "intVectors", intVectors_, nDirection_);
 
+      nAtomType_ = system().simulation().nAtomType();
+      waveVectors_.allocate(nDirection_);
       accumulators_.allocate(nDirection_*nAtomType_);
 
       isInitialized_ = true;
-   
    }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void CompositionProfile::loadParameters(Serializable::IArchive &ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar, "nDirection", nDirection_);
+      loadDArray<IntVector>(ar, "intVectors", intVectors_, nDirection_);
+      ar & waveVectors_;
+      ar & accumulators_;
+      ar & nSample_;
+      ar & nAtomType_;
+
+      if (nAtomType_ != system().simulation().nAtomType()) {
+         UTIL_THROW("Inconsistent values for nAtomType_");
+      }
+      if (nDirection_ != intVectors_.capacity()) {
+         UTIL_THROW("Inconsistent intVectors capacity");
+      }
+      if (nDirection_ != waveVectors_.capacity()) {
+         UTIL_THROW("Inconsistent waveVectors capacity");
+      }
+      if (nDirection_*nAtomType_ != accumulators_.capacity()) {
+         UTIL_THROW("Inconsistent waveVectors capacity");
+      }
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void CompositionProfile::save(Serializable::OArchive &ar)
+   {  ar << *this; }
 
    /*
    * Clear accumulators.

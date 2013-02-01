@@ -46,6 +46,30 @@ namespace McMd
       }
   
    }
+ 
+   /*
+   * Load state from an archive.
+   */
+   void HomopolymerSemiGrandMove::loadParameters(Serializable::IArchive& ar)
+   {  
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+
+      // Cast the Species to HomopolymerSG
+      speciesPtr_ = dynamic_cast<HomopolymerSG*>(&(simulation().species(speciesId_)));
+      if (!speciesPtr_) {
+         UTIL_THROW("Species is not a HomopolymerSG");
+      }
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   void HomopolymerSemiGrandMove::save(Serializable::OArchive& ar)
+   {
+      McMove::save(ar);
+      ar & speciesId_;  
+   }
 
    /* 
    * Generate, attempt and accept or reject a Monte Carlo move.

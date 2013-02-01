@@ -42,6 +42,21 @@ namespace Util
       * \param out output stream
       */
       void writeParam(std::ostream &out);
+
+      /**
+      * Load from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      void load(Serializable::IArchive& ar);
+
+      /**
+      * Save to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      void save(Serializable::OArchive& ar);
+
  
    protected:
    
@@ -122,6 +137,38 @@ namespace Util
              << std::endl;
       }
 
+   }
+
+   /*
+   * Load from an archive.
+   */
+   template <class Type>
+   void CArrayParam<Type>::load(Serializable::IArchive& ar)
+   {
+      if (isParamIoProcessor()) {
+         for (int i = 0; i < n_; ++i) {
+            ar >> value_[i];
+         }
+         if (ParamComponent::echo()) {
+            writeParam(Log::file());
+         }
+      }
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         bcast<Type>(paramCommunicator(), value_, n_, 0); 
+      }
+      #endif
+   }
+
+   /*
+   * Save to an archive.
+   */
+   template <class Type>
+   void CArrayParam<Type>::save(Serializable::OArchive& ar)
+   {
+      for (int i = 0; i < n_; ++i) {
+         ar << value_[i];
+      }
    }
 
 } 

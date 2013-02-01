@@ -51,12 +51,55 @@ namespace McMd
       // Use dynamic_cast to check that the Species is actually a Linear species
       Ring* ringPtr;
       ringPtr = dynamic_cast<Ring*>(&(simulation().species(speciesId_)));
+      if (!ringPtr) {
+         UTIL_THROW("Not a Ring species");
+      }
 
-      // Allocate Vector array storing atom positions.
+      // Allocate array for atom position vectors.
       nAtom_ = system().simulation().species(speciesId_).nAtom();
       if (nAtom_ < 4) UTIL_THROW("nAtom < 4 for tetra rebridge move.");
       R_.allocate(nAtom_); 
 
+   }
+
+   /*
+   * Load state from an archive.
+   */
+   void RingTetraRebridgeMove::loadParameters(Serializable::IArchive& ar)
+   {  
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<double>(ar, "upperBridge", upperBridge_);
+      loadParameter<double>(ar, "lowerBridge", lowerBridge_);
+      ar & nAtom_;
+
+      // Validate
+      if (nAtom_ != system().simulation().species(speciesId_).nAtom()) {
+         UTIL_THROW("Inconsistent values of nAtom");
+      }
+      Ring* ringPtr;
+      ringPtr = dynamic_cast<Ring*>(&(simulation().species(speciesId_)));
+      if (!ringPtr) {
+         UTIL_THROW("Species is not a Ring species");
+      }
+      if (nAtom_ < 4) {
+         UTIL_THROW("nAtom < 4 for tetra rebridge move.");
+      }
+
+      // Allocate array for atom position vectors.
+      R_.allocate(nAtom_); 
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   void RingTetraRebridgeMove::save(Serializable::OArchive& ar)
+   {
+      McMove::save(ar);
+      ar & speciesId_;
+      ar & upperBridge_;
+      ar & lowerBridge_;
+      ar & nAtom_;
    }
 
 
@@ -150,11 +193,15 @@ namespace McMd
 
             //system().moveAtom(*lTmp, hTmp->position());
             lTmp->position() = hTmp->position();
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*lTmp);
+            #endif
 
             //system().moveAtom(*hTmp, swapV);
             hTmp->position() = swapV;
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*hTmp);
+            #endif
 
          }
 

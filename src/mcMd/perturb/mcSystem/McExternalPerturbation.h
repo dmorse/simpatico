@@ -41,8 +41,12 @@ namespace McMd
   
       /**
       * Constructor. 
+      *
+      * \param system parent McSystem.
+      * \param size   number of systems
+      * \param rank   id of this system
       */
-      McExternalPerturbation(McSystem& system);
+      McExternalPerturbation(McSystem& system, int size, int rank);
 
       /**
       * Destructor

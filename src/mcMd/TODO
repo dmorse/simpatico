@@ -1,30 +1,18 @@
-Improve Extensibility
----------------------
+Serialization
+-------------
 
-- Make factory *.cpp files configurable (make _r versions)
-
-- In modules, add protected methods to add subfactories.
-
-- Document various ways of adding new classes to factories.
-
-Angles and Dihedrals
---------------------
-
-- Write and test HarmonicAngle class.
-
-- Write and test MultiHarmonicDihedral class.
-
-- Switch macros from, e.g., ifdef INTER_ANGLE to ifndef INTER_NO_ANGLE
-
-- Change examples accordingly to work with code with everything enabled.
+- Move restart interval and file name, and isInitialized_  to Simulation base classs.
+- Generalize to multi-processor serialize and test.
+- Test MD serialization after forcing pair list rebuild upon restart output.
+- Test save / load for replica move
 
 Constant Pressure MD (Jens)
 ---------------------------
 
 - Port and test NptIntegrator subclass from DdMd.
 
-Non-Orthorhombic Boundaries
----------------------------
+Non-Orthorhombic (Rigid) Boundaries
+-----------------------------------
 
 - Use new applyShift method in MSD diagnostic classes.
 
@@ -42,53 +30,32 @@ Non-Orthorhombic Boundaries
 Deformable Boundaries
 ---------------------
 
-- Generalize snapshot and obsolete pair list methods to use
-  miniminumDeformRatio to deal optimally with MD in deforming 
-  boundaries.
-
-Serialization
--------------
-
-- Create ability to do true binary serialization, without single restart 
-  file for each processor. Required changes in Util namespace are discussed
-  in src/util/TODO. Required changes in McMd namespace include:
-
-  - Create binary serialize methods for all objects created by factories.
-    Base class methods should just throw exceptions.
-
-  - Create serialization method (serialize or save and load) for Simulation
-    that initialize all pointers after allocating all arrays, as done during
-    readParam.
-
-  - Make sure that loading methods explicitly creates required associations 
-    between child objects.
-
-Python File Tools
------------------
-
-- Tools for manipulating files and directories. We need scripts to:
-
-  * Create standard directory structures for serial or parallel jobs.
-  * Copy config and param files into a newly created directory structure.
-  * Copy and move files to continue a run.
-
-Testing
--------
-
-- Test SET commands in command script.
-
-- Add capacity for regression tests, using comparison to old files.
-
-- More thorough tests of dihedral potentials.
+- Generalize snapshot and obsolete pair list methods to use 
+   miniminumDeformRatio to deal optimally with MD in deforming boundaries.
 
 Interface changes
 ------------------
 
 - If possible, remove moleculeId() and molecule(speciesId, moleculeId)
-  methods of System.
+  methods of McMd::System.
+
+Interactions (Design change):
+-----------------------------
+
+- Make Interaction classes apply to only one choice of type index / indices.
+  Potential class would then hold an array of Interactions.
+
+- Create << and >> operators for each Interaction class. 
+
+- Create PairInteractionMaster to hold an array of interactions
+
+- Change file format to read typeId (ids) << Interaction.
+
+- Make each potential take an InteractionMaster as an argument
+  (How can we avoid the need for an additional Factory?)
 
 SystemAccess base classes
---------------------------
+-------------------------
 
 - Rename SubSystem SystemAccess
 
@@ -109,16 +76,3 @@ SystemAccess base classes
 
 
 Interactions (Design Changes)
------------------------------
-
-Interactions:
-
-- Make Interaction class apply to only one choice of type index / indices.
-  Potential class would then hold an array of Interactions.
-
-- Create << and >> operators for each Interaction class. 
-
-- Change file format to read typeId (ids) << Interaction.
-
-- Add a constructor to each potential that takes an Interaction as an
-  argument. 

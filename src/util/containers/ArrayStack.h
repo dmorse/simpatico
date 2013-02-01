@@ -42,7 +42,7 @@ namespace Util
       * \param capacity maximum size of stack.
       */
       void allocate(int capacity);
-  
+ 
       /// \name Mutators
       //@{
 

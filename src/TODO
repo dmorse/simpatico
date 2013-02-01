@@ -4,6 +4,9 @@ This file contains only items that are not localized to a namespace.
 Makefiles
 ---------
 
-- Add python script setOptions to modify common options by editing compiler.mk 
-  and defines.mk files.
+- Change name of configure script to setup.
+
+- Modify configure script so as to allow changes to preprocessor macros.
+
+- Modify makefiles to simplify compilation of MPI and noMpi versions.
 

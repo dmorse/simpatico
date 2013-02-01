@@ -11,7 +11,6 @@
 #include <util/global.h>
 
 #include <util/param/ParamComposite.h>        // base class
-#include <util/archives/Serializable.h>       // base class
 
 #include <util/boundary/Boundary.h>           // member (typedef)
 #include <mcMd/chemistry/Molecule.h>          // member template parameter
@@ -67,14 +66,14 @@ namespace McMd
    #ifdef MCMD_LINK
    class LinkPotential;
    class LinkMaster;
-   #endif
+   #endif // MCMD_LINK
    #ifdef INTER_EXTERNAL
    class ExternalPotential;
    #endif
    #ifdef INTER_TETHER
    class TetherFactory;
    class TetherMaster;
-   #endif
+   #endif 
    #ifdef MCMD_PERTURB
    class Perturbation;
    class ReplicaMove;
@@ -100,7 +99,7 @@ namespace McMd
    *
    * \ingroup McMd_System_Module
    */
-   class System : public ParamComposite, public Serializable
+   class System : public ParamComposite
    {
    
    public:
@@ -167,6 +166,20 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
  
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state from an archive.
+      *
+      * \param ar output/saving archive
+      */
+      void saveParameters(Serializable::OArchive &ar);
+
       //@}
       /// \name Config File IO
       //@{
@@ -222,27 +235,18 @@ namespace McMd
       void writeConfig(std::ostream& out);
 
       /**
-      * Serialize the System to/from an archive.
+      * Load configuration.
       *
-      * \param ar      output or input Archive
-      * \param version archive version id
+      * \param ar input/loading archive
       */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
+      virtual void loadConfig(Serializable::IArchive& ar);
 
       /**
-      * Save the System configuration to an archive.
+      * Save configuration.
       *
-      * \param ar output (saving) archive object.
+      * \param ar output/save archive
       */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load the System configuration from an archive.
-      *
-      * \param ar input (loading) archive object.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
+      void saveConfig(Serializable::OArchive& ar);
 
       //@}
       /// \name Trajectory File IO
@@ -382,7 +386,6 @@ namespace McMd
       //@{
     
       #ifndef INTER_NOPAIR 
-
       /**
       * Get the PairFactory by reference.
       */
@@ -392,7 +395,6 @@ namespace McMd
       * Return nonbonded pair style string.
       */
       std::string pairStyle() const;
-  
       #endif
 
       /**
@@ -506,7 +508,6 @@ namespace McMd
       Perturbation& perturbation() const;
      
       #ifdef UTIL_MPI 
-      
       /**
       * Does this system have an associated ReplicaMove?
       */
@@ -516,11 +517,10 @@ namespace McMd
       * Get the associated ReplicaMove by reference.
       */
       ReplicaMove& replicaMove() const;
+      #endif // UTIL_MPI
 
       //@}
-      #endif
-
-      #endif
+      #endif // MCMD_PERTURB
 
       /// \name Accessors (Miscellaneous)
       //@{
@@ -591,6 +591,20 @@ namespace McMd
       */
       void readPerturbation(std::istream& in);
 
+      /**
+      * Load the perturbation parameter block (if any)
+      *
+      * \param ar input/saving archive
+      */
+      void loadPerturbation(Serializable::IArchive& ar);
+
+      /**
+      * Save the perturbation parameter block (if any)
+      *
+      * \param ar output/saving archive
+      */
+      void savePerturbation(Serializable::OArchive& ar);
+
       #ifdef UTIL_MPI
       /**
       * Read the ReplicaMove parameter block (if any)
@@ -598,9 +612,23 @@ namespace McMd
       * \param in input parameter stream
       */
       void readReplicaMove(std::istream& in);
-      #endif
 
-      #endif
+      /**
+      * Read the ReplicaMove parameter block (if any)
+      *
+      * \param ar input/loading archive
+      */
+      void loadReplicaMove(Serializable::IArchive& ar);
+
+      /**
+      * Save the ReplicaMove parameter block (if any)
+      *
+      * \param ar output/saving archive
+      */
+      void saveReplicaMove(Serializable::OArchive& ar);
+      #endif // UTIL_MPI
+      #endif // MCMD_PERTURB
+
       /**
       * Allocate and initialize molecule sets for all species.
       *
@@ -624,6 +652,20 @@ namespace McMd
       void readFileMaster(std::istream& in);
 
       /**
+      * If no FileMaster exists, create and initialize one. 
+      *
+      * \param ar input/loading archive
+      */
+      void loadFileMaster(Serializable::IArchive& ar);
+
+      /**
+      * If necessary, save FileMaster to archive.
+      *
+      * \param ar output/saving archive
+      */
+      void saveFileMaster(Serializable::OArchive& ar);
+
+      /**
       * Read potential styles, initialize LinkMaster or TetherMaster if needed.
       *
       * Invoked in implementation of readParameters().
@@ -631,6 +673,20 @@ namespace McMd
       * \param in input parameter stream
       */
       void readPotentialStyles(std::istream& in);
+
+      /**
+      * Load potential styles, initialize LinkMaster or TetherMaster if needed.
+      *
+      * \param ar input/loading archive
+      */
+      void loadPotentialStyles(Serializable::IArchive& ar);
+
+      /**
+      * Load potential styles, initialize LinkMaster or TetherMaster if needed.
+      *
+      * \param ar output/saving archive
+      */
+      void savePotentialStyles(Serializable::OArchive& ar);
 
       /**
       * Read energy and boundary ensembles.
@@ -641,6 +697,20 @@ namespace McMd
       */
       void readEnsembles(std::istream& in);
 
+      /**
+      * Load energy and boundary ensembles.
+      *
+      * \param ar input/loading archive
+      */
+      void loadEnsembles(Serializable::IArchive& ar);
+
+      /**
+      * Save energy and boundary ensembles.
+      *
+      * \param ar output/saving archive
+      */
+      void saveEnsembles(Serializable::OArchive& ar);
+
       #ifdef MCMD_LINK
       /**
       * Read the LinkMaster.
@@ -650,7 +720,21 @@ namespace McMd
       * \param in input parameter stream
       */
       void readLinkMaster(std::istream& in);
-      #endif
+
+      /**
+      * Load the LinkMaster.
+      *
+      * \param ar input archive.
+      */
+      void loadLinkMaster(Serializable::IArchive& ar);
+
+      /**
+      * Save the LinkMaster.
+      *
+      * \param ar output archive.
+      */
+      void saveLinkMaster(Serializable::OArchive& ar);
+      #endif // MCMD_LINK
 
       #ifdef INTER_TETHER
       /**
@@ -661,7 +745,21 @@ namespace McMd
       * \param in input parameter stream
       */
       void readTetherMaster(std::istream& in);
-      #endif
+
+      /**
+      * Load the TetherMaster.
+      *
+      * \param ar input/loading archive
+      */
+      void loadTetherMaster(Serializable::IArchive& ar);
+
+      /**
+      * Save the TetherMaster.
+      *
+      * \param ar output/saving archive
+      */
+      void saveTetherMaster(Serializable::OArchive& ar);
+      #endif // INTER_TETHER
 
    private:
 
@@ -754,8 +852,8 @@ namespace McMd
       /// Does system have ReplicaMove.
       bool hasReplicaMove_;
 
-      #endif
-      #endif 
+      #endif  // UTIL_MPI
+      #endif  // MCMD_PERTURB
 
       #ifndef INTER_NOPAIR
       /// Name of pair potential style.
@@ -951,11 +1049,13 @@ namespace McMd
 
    #ifdef MCMD_PERTURB
    /**
-   * return the perturbation factory by reference.
+   * Return the perturbation factory by reference.
    */
    inline Factory<Perturbation>& System::perturbationFactory()
    { return *perturbationFactoryPtr_; }
 
+   inline bool System::expectPerturbation() const
+   { return expectPerturbationParam_; }
 
    /* 
    * Does this system have an associated Perturbation?
@@ -987,32 +1087,24 @@ namespace McMd
       assert(replicaMovePtr_);
       return *replicaMovePtr_;
    }
-   #endif
-
-   inline bool System::expectPerturbation() const
-   { return expectPerturbationParam_; }
-
-   #endif
+   #endif // UTIL_MPI
+   #endif // MCMD_PERTURB
 
    /*
-    * Subscribe to moleculeSet change signal
-    */
+   * Subscribe to moleculeSet change signal.
+   */
    inline void System::subscribeMoleculeSetChange(MoleculeSetObserver& observer)
-   {
-      observers_.insert(&observer);
-   }
+   {  observers_.insert(&observer); }
 
    /*
-    * Unsubscribe from moleculeSet change signal
-    */
+   * Unsubscribe from moleculeSet change signal.
+   */
    inline void System::unsubscribeMoleculeSetChange(MoleculeSetObserver& observer)
-   {
-      observers_.erase(&observer);
-   }
+   {  observers_.erase(&observer); }
 
    /*
-    * Notifiy all observers
-    */
+   * Notifiy all observers
+   */
    inline void System::notifyMoleculeSetObservers() const
    {
       std::set<MoleculeSetObserver*>::iterator itr;
@@ -1021,5 +1113,6 @@ namespace McMd
             itr != observers_.end(); itr++ )
          (*itr)->notifyMoleculeSetChanged();
    }
+
 }
 #endif

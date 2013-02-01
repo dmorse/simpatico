@@ -1,0 +1,9 @@
+#!/bin/bash -l
+
+#PBS -l walltime=5:00:00,pmem=500mb,nodes=1:ppn=1
+#PBS -o zout
+#PBS -j oe
+#PBS -N mdNvtAngle 
+
+cd $PBS_O_WORKDIR
+$HOME/molmcd/branches/evaluators/bin/mdSim_a < param > out/log

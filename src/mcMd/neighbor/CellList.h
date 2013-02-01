@@ -10,8 +10,9 @@
 
 #include "Cell.h"
 #include "CellTag.h"
-#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Atom.h>
+#include <util/boundary/Boundary.h>
+#include <util/space/IntVector.h>
 #include <util/containers/DArray.h>
 #include <util/containers/FSArray.h>
 #include <util/global.h>
@@ -110,6 +111,15 @@ namespace McMd
       void allocate(int atomCapacity, const Boundary &boundary, double cutoff);
 
       /**
+      * Serialize to/from an Archive.
+      *
+      * \param ar       archive 
+      * \param version  archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
+      /**
       * Initialize grid geometry and set pointer to Boundary.
       *
       * The number of cells in each direction is chosen such that the dimension
@@ -132,7 +142,7 @@ namespace McMd
       * Return index of the cell that contains the position pos = (x,y,z).
       *
       * \param pos position vector, as an array pos = {x, y, z}
-      * \return index of cell that contains position pos[3]
+      * \return index of cell that contains position pos
       */
       int cellIndexFromPosition(const Vector &pos) const;
 
@@ -153,7 +163,7 @@ namespace McMd
       /**
       * Update CellList to reflect a new atom position.
       *
-      * If a new atom position pos[3] lies in a new cell, with a cell index
+      * If a new atom position pos lies in a new cell, with a cell index
       * icell != atom.cellId, then delete the atom from the old Cell
       * object and add it to the new one. If the new cell is the same as the
       * old one (icell == atom.CellId), do nothing and return.
@@ -269,25 +279,28 @@ namespace McMd
       Vector invCellWidths_;   
 
       /// Minimum differences of grid coordinates for neighbors (usually -1)
-      int  minDel_[3];       
+      IntVector minDel_;       
 
-      /// Maximum difference of grid coordinates for neighbors (usually +1)
-      int  maxDel_[3];       
+      /// Maximum differences of grid coordinates for neighbors (usually +1)
+      IntVector maxDel_;       
 
       /// Number of cells in each direction
-      int  numCells_[3];     
+      IntVector numCells_;     
 
       /// Minimum cell coordinate for each axis == 0
-      int    minCells_[3]; 
+      IntVector minCells_; 
 
       ///  Maximum index coordinate for each axis = numCells - 1
-      int    maxCells_[3]; 
+      IntVector maxCells_; 
 
       /// Number of cells yz plane = numCells_[1]*numCells_[2]
       int    YZCells_;        
  
       /// Total number of cells in grid.
       int    totCells_;        
+
+      /// Maximum atom id.
+      int    atomCapacity_;        
 
       /// Pointer to associated Boundary (set in makeGrid)
       const Boundary* boundaryPtr_; 
@@ -341,7 +354,7 @@ namespace McMd
       /// Grant access to unit test class.
       friend class ::CellListTest;
 
-   }; // end class CellList
+   }; 
 
 
    // Public inline method definitions:
@@ -496,6 +509,29 @@ namespace McMd
 
    inline bool CellList::isAllocated() const
    {  return (cells_.capacity() > 0); }
+
+   /*
+   * Serialize to/from an Archive.
+   */
+   template <class Archive>
+   void CellList::serialize(Archive& ar, const unsigned int version)
+   {
+      ar & lengths_;      
+      ar & invCellWidths_;   
+      ar & minDel_;       
+      ar & maxDel_;       
+      ar & numCells_;     
+      ar & minCells_; 
+      ar & maxCells_; 
+      ar & YZCells_;        
+      ar & totCells_;   
+      ar & atomCapacity_;
+      if (ar.is_loading()) {
+         cells_.allocate(totCells_);
+         cellTags_.allocate(atomCapacity_);
+      }
+      clear();
+   }
 
 } 
 #endif

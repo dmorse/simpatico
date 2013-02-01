@@ -240,15 +240,19 @@ namespace Util
 
    // Inline methods
 
-   /// Does this object have a child?  (protected)
+   /*
+   * Does this object have a child?  (protected)
+   */
    inline bool AverageStage::hasChild() const
    { return bool(childPtr_); }
 
-   /// Return child object by reference. (protected)
+   /*
+   * Return child object by reference. (protected)
+   */
    inline AverageStage& AverageStage::child()
    { return *childPtr_; }
 
-   // Template method
+   // Method template
 
    /*
    * Serialize this stage.

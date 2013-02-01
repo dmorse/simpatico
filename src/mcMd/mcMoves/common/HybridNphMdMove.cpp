@@ -68,6 +68,31 @@ namespace McMd
    }
 
    /*
+   * Load internal state from an archive.
+   */
+   void HybridNphMdMove::loadParameters(Serializable::IArchive &ar)
+   {
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "nStep", nStep_);
+      loadParamComposite(ar, *mdSystemPtr_);
+      nphIntegratorPtr_ = dynamic_cast<NphIntegrator*>(&mdSystemPtr_->mdIntegrator());
+      
+      barostatMass_ = nphIntegratorPtr_->barostatMass();
+      mode_ = nphIntegratorPtr_->mode();
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void HybridNphMdMove::save(Serializable::OArchive &ar)
+   {
+      McMove::save(ar);
+      ar << nStep_;
+      mdSystemPtr_->saveParameters(ar);
+   }
+
+
+   /*
    * Generate, attempt and accept or reject a Hybrid MD/MC move.
    */
    bool HybridNphMdMove::move()

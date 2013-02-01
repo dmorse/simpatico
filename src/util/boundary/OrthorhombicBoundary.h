@@ -567,6 +567,24 @@ namespace Util
       }
    }
 
+   /*
+   * Serialize an OrthorhombicBoundary to/from an archive.
+   */
+   template <class Archive> void 
+   OrthorhombicBoundary::serialize(Archive& ar, const unsigned int version)
+   {
+      OrthoRegion::serialize(ar, version);
+      ar & bravaisBasisVectors_;
+      ar & reciprocalBasisVectors_;
+      ar & invLengths_;
+      ar & minLength_;
+      serializeEnum(ar, lattice_, version);
+      if (Archive::is_loading()) {
+         reset();
+         isValid();
+      }
+   }
+
 }
  
 #ifdef UTIL_MPI

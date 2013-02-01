@@ -23,12 +23,12 @@ namespace Util
    * can read and write to file. If the the class is compiled with UTIL_MPI
    * not defined, then isIoProcessor() always returns true. If the class is
    * compiled with UTIL_MPI defined, then this method returns true if either:
-   * (1) A communicator has been set  * and this processor has rank 0 within 
+   * (1) A communicator has been set and this processor has rank 0 within 
    * that communicator, or (2) No communicator has been set.
    *
    * When compiled with UTIL_MPI defined, an MpiFileIo object has a pointer 
-   * to an MPI communiciator, and provides methods to set and unset (nullify) the
-   * associated communicator.
+   * to an MPI communiciator, and provides methods to set and unset (nullify) 
+   * the associated communicator.
    */
    class MpiFileIo
    {

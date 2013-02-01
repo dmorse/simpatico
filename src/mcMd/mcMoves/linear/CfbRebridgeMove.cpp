@@ -48,17 +48,53 @@ namespace McMd
       // Read parameters hold by RebridgeBase
       CfbRebridgeBase::readParameters(in);
 
+      // Validate
+      Linear* chainPtr;
+      chainPtr = dynamic_cast<Linear*>(&(simulation().species(speciesId_)));
+      if (!chainPtr) {
+         UTIL_THROW("Not a Linear species");
+      }
+  
       // Initialize tables for spring constants and normalizations.
       setup();
 
-      // Use dynamic_cast to check that the Species is actually a Linear species
-      Linear* chainPtr;
-      chainPtr = dynamic_cast<Linear*>(&(simulation().species(speciesId_)));
-  
       // Allocate array to store old positions 
       oldPos_.allocate(nRegrow_); 
    }
 
+   /* 
+   * Read parameters speciesId, nRegrow, and nTrial
+   */
+   void CfbRebridgeMove::loadParameters(Serializable::IArchive& ar) 
+   {
+      // Read parameters
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "nRegrow", nRegrow_);
+      CfbRebridgeBase::loadParameters(ar);
+
+      // Validate
+      Linear* chainPtr;
+      chainPtr = dynamic_cast<Linear*>(&(simulation().species(speciesId_)));
+      if (!chainPtr) {
+         UTIL_THROW("Species is not a subclass of Linear");
+      }
+  
+      // Initialize tables for spring constants and normalizations.
+      setup();
+      oldPos_.allocate(nRegrow_); 
+   }
+
+   /* 
+   * Save state to archive.
+   */
+   void CfbRebridgeMove::save(Serializable::OArchive& ar) 
+   {
+      McMove::save(ar);
+      ar & speciesId_;
+      ar & nRegrow_;
+      CfbRebridgeBase::save(ar);
+   }
 
    /* 
    * Generate, attempt and accept or reject a Monte Carlo move.

@@ -105,7 +105,6 @@ namespace Inter
       }
    
       // Read parameters
-      //readBegin(in,  "OrthoBoxExternal");
       read<int>(in, "indexConfinement", indConfine_);
       if (indConfine_ < 0 || indConfine_ > Dimension) {
          UTIL_THROW("Invalid index for confinement directions.");
@@ -113,13 +112,50 @@ namespace Inter
       read<double>(in, "epsilon", epsilon_);
       read<double>(in, "sigma", sigma_);
       read<double>(in, "cutoff", cutoff_);
-      //readEnd(in);
 
       // Initialize dependent variables (particle number density = 0.7)
       sigmaCb_ = sigma_ * sigma_ * sigma_;
       coeff_   = 4.0 * epsilon_ * acos(-1.0) / 45.0 * 0.7 * sigmaCb_;
 
       isInitialized_ = true;
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void OrthoBoxExternal::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nAtomType_; 
+      if (nAtomType_ <= 0) {
+         UTIL_THROW( "nAtomType must be positive");
+      }
+      if (!boundaryPtr_) {
+         UTIL_THROW("Boundary must be set before readParam");
+      }
+      loadParameter<int>(ar, "indexConfinement", indConfine_);
+      if (indConfine_ < 0 || indConfine_ > Dimension) {
+         UTIL_THROW("Invalid index for confinement directions.");
+      }
+      loadParameter<double>(ar, "epsilon", epsilon_);
+      loadParameter<double>(ar, "sigma", sigma_);
+      loadParameter<double>(ar, "cutoff", cutoff_);
+      ar >> sigmaCb_;
+      ar >> coeff_;
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void OrthoBoxExternal::save(Serializable::OArchive &ar)
+   {
+      ar << nAtomType_;
+      ar << indConfine_;
+      ar << epsilon_;
+      ar << sigma_;
+      ar << cutoff_;
+      ar << sigmaCb_;
+      ar << coeff_;
    }
 
    /**

@@ -21,5 +21,11 @@ namespace McMd
     : PressureAverage<McSystem>(system)
    {  setClassName("McPressureAverage"); }
 
+   /* 
+   * Destructor.
+   */
+   McPressureAverage::~McPressureAverage()
+   {}
+
 }
 #endif

@@ -9,6 +9,7 @@
 */
 
 #include <util/param/Parameter.h>
+#include <util/archives/Serializable_includes.h>
 #include <util/global.h>
 
 #ifdef UTIL_MPI
@@ -52,12 +53,26 @@ namespace Util
       */
       void readParam(std::istream& in); 
  
+      /**
+      * Load from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      void load(Serializable::IArchive& ar);
+
       /** 
       * Write parameter to stream.
       *
       * \param out output stream
       */
       void writeParam(std::ostream& out);
+
+      /**
+      * Save to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      void save(Serializable::OArchive& ar);
 
       /**
       * Set the pointer to point a specific variable.
@@ -124,6 +139,32 @@ namespace Util
           << std::setprecision(Parameter::Precision) 
           << std::setw(Parameter::Width) << *valuePtr_ << std::endl;
    }
+
+   /*
+   * Load from an archive.
+   */
+   template <class Type>
+   void ScalarParam<Type>::load(Serializable::IArchive& ar)
+   {
+      if (isParamIoProcessor()) {
+         ar & *valuePtr_;
+         if (ParamComponent::echo()) {
+            writeParam(Log::file());
+         }
+      }
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         bcast<Type>(paramCommunicator(), *valuePtr_, 0); 
+      }
+      #endif
+   }
+
+   /*
+   * Save to an archive.
+   */
+   template <class Type>
+   void ScalarParam<Type>::save(Serializable::OArchive& ar)
+   {  ar & *valuePtr_; }
 
    /*
    * Set the pointer to the parameter value.

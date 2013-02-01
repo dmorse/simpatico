@@ -1,10 +1,3 @@
-
-Extensibility, Ease-of-Use
-----------------------------
-
-- Make factories easily modifiable, by defining *Factory.cpp_r files.
-  Modify documentation accordingly.
-
 Testing
 -------
 
@@ -12,10 +5,19 @@ Testing
 
 - Fix obsolete PairPotentialTest (change interface for PairPotential)
 
-- Test conservation of energy and stress in DdMd for angles and dihedrals.
+- Test angles and dihedrals (stress calculation and conservation of energy).
+
+Restart
+-------
+
+- Add restart capability, based on save / load methods. 
+
+- Use new BinaryMpiIArchive for reading. The new Archive will have a broadcast
+  mode that will read one one processor and broadcast parameters, as for the
+  existing ParamComposite::read*() methods.
 
 Hybrid MD
-----------
+---------
 
 - Finish and test transactions in AtomStorage (in transactions branch).
 
@@ -34,8 +36,8 @@ Flexible Unit Cells:
 - Generalize makeSnapShot and needsExchange methods in AtomStorage to 
   allow for deforming boundaries (requires further changes to Boundary).
 
-Distributor and Collector
--------------------------
+Distributor and Collector:
+--------------------------
 
 - Remove association with Domain, remove explicit use of domain communicator.
 
@@ -99,7 +101,3 @@ Files
 
 - Think about separating topology and configuration files. 
 
-Restart
--------
-
-- Add restart capability.

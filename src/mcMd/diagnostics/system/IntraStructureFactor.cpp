@@ -36,22 +36,19 @@ namespace McMd
    /// Read parameters from file, and allocate data array.
    void IntraStructureFactor::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
       readInterval(in);
       readOutputFileName(in);
-
-      nAtomType_ = system().simulation().nAtomType();
 
       read<int>(in, "speciesId", speciesId_);
       read<int>(in, "nAtomTypeIdPair", nAtomTypeIdPair_);
       atomTypeIdPairs_.allocate(nAtomTypeIdPair_);
       readDArray< Pair<int> >(in, "atomTypeIdPairs", atomTypeIdPairs_, 
                                                      nAtomTypeIdPair_);
-
       read<int>(in, "nWave", nWave_);
+
       waveIntVectors_.allocate(nWave_);
       readDArray<IntVector>(in, "waveIntVectors", waveIntVectors_, nWave_);
+      nAtomType_ = system().simulation().nAtomType();
 
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nAtomType_ + 1);
@@ -61,12 +58,53 @@ namespace McMd
    }
 
    /*
+   * Load state from an archive.
+   */
+   void IntraStructureFactor::loadParameters(Serializable::IArchive& ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
+
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "nAtomTypeIdPair", nAtomTypeIdPair_);
+      atomTypeIdPairs_.allocate(nAtomTypeIdPair_);
+      loadDArray< Pair<int> >(ar, "atomTypeIdPairs", atomTypeIdPairs_, 
+                                                     nAtomTypeIdPair_);
+      loadParameter<int>(ar, "nWave", nWave_);
+
+      //waveIntVectors_.allocate(nWave_);
+      loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
+
+      ar & nAtomType_;
+      if (nAtomType_ != system().simulation().nAtomType()) {
+         UTIL_THROW("Inconsistent nAtomType");
+      }
+      // structureFactors_.allocate(nWave_, nAtomTypeIdPair_);
+      ar & structureFactors_;
+      //fourierModes_.allocate(nWave_, nAtomType_ + 1);
+      ar & fourierModes_;
+      ar & nSample_;
+
+      waveVectors_.allocate(nWave_);
+      isInitialized_ = true; 
+   }
+
+
+   /*
+   * Save state to archive.
+   */
+   void IntraStructureFactor::save(Serializable::OArchive& ar)
+   { ar & *this; }
+
+   /*
    * Set up before simulation.
    */
    void IntraStructureFactor::setup() 
    {
-      if (!isInitialized_) 
+      // Preconditions
+      if (!isInitialized_) {
          UTIL_THROW("Object is not initialized");
+      }
       assert (nWave_ > 0);
       assert (nAtomTypeIdPair_ > 0);
 
@@ -196,18 +234,6 @@ namespace McMd
       outputFile_.close();
 
    }
-
-   /*
-   * Save state to binary file archive.
-   */
-   void IntraStructureFactor::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void IntraStructureFactor::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
 
 }
 #endif

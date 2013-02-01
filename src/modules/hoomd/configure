@@ -11,4 +11,5 @@
 #------------------------------------------------------------------------
 
 cp defines.mk_r  defines.mk
+cp makefile_r    makefile
 

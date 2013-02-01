@@ -60,15 +60,31 @@ namespace Inter
    */
    void CosineDihedral::readParameters(std::istream &in) 
    {
-      // Preconditions
       if (nDihedralType_ <= 0) {
          UTIL_THROW("nDihedralType must be set before readParam");
       }
-
-      // Read parameters
-      //readBegin(in, "CosineDihedral");
       readCArray<double>(in, "kappa",  kappa_,  nDihedralType_);
-      //readEnd(in);
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void CosineDihedral::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nDihedralType_; 
+      if (nDihedralType_ <= 0) {
+         UTIL_THROW( "nDihedralType must be positive");
+      }
+      loadCArray<double> (ar, "kappa", kappa_, nDihedralType_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void CosineDihedral::save(Serializable::OArchive &ar)
+   {
+      ar << nDihedralType_;
+      ar.pack(kappa_, nDihedralType_);
    }
 
    /*

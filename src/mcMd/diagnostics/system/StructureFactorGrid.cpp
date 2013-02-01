@@ -22,32 +22,34 @@ namespace McMd
 
    using namespace Util;
 
-   /// Constructor.
+   /*
+   * Constructor.
+   */
    StructureFactorGrid::StructureFactorGrid(System& system) 
     : StructureFactor(system),
       hMax_(0),
       nStar_(0),
       lattice_(Triclinic),
-      isInitialized_(false)
+      isInitialized_(false),
+      isFirstStep_(true)
    {  setClassName("StructureFactorGrid"); }
 
-   /// Read parameters from file, and allocate data array.
+   /*
+   * Read parameters from file, and allocate data array.
+   */
    void StructureFactorGrid::readParameters(std::istream& in) 
    {
-
-      nAtomType_ = system().simulation().nAtomType();
-
-      // Read parameters
       readInterval(in);
       readOutputFileName(in);
       read<int>(in, "nMode", nMode_);
+      nAtomType_ = system().simulation().nAtomType();
       modes_.allocate(nMode_, nAtomType_);
       readDMatrix<double>(in, "modes", modes_, nMode_, nAtomType_);
       read<int>(in, "hMax", hMax_);
       read<Util::LatticeSystem>(in, "lattice", lattice_);
 
       // Allocate wavevectors arrays
-      nWave_     = (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1);
+      nWave_  = (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1);
       waveIntVectors_.allocate(nWave_);
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
@@ -187,8 +189,110 @@ namespace McMd
       isInitialized_ = true;
    }
 
+   /*
+   * Load state from an archive.
+   */
+   void StructureFactorGrid::loadParameters(Serializable::IArchive& ar)
+   {
+      // Load from StructureFactor::serialize
+      Diagnostic::loadParameters(ar);
+      ar & nAtomType_;
+      loadParameter<int>(ar, "nMode", nMode_);
+      loadDMatrix<double>(ar, "modes", modes_, nMode_, nAtomType_);
+      ar & nWave_;
+      ar & waveIntVectors_;
+      ar & structureFactors_;
+      ar & nSample_;
+
+      // Load additional from StructureFactorGrid::serialize
+      loadParameter<int>(ar, "hMax", hMax_);
+      loadParameter<Util::LatticeSystem>(ar, "lattice", lattice_);
+      ar & nStar_;
+      ar & starIds_;
+      ar & starSizes_;
+
+      // Validate
+      if (nWave_  != (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1)) {
+         UTIL_THROW("Inconsistent value of nWave_");
+      }
+      if (nAtomType_ != system().simulation().nAtomType()) {
+         UTIL_THROW("Inconsistent values of nAtomType_");
+      }
+      if (modes_.capacity1() != nMode_) {
+         UTIL_THROW("Inconsistent capacity1 for modes array");
+      }
+      if (modes_.capacity2() != nAtomType_) {
+         UTIL_THROW("Inconsistent capacity2 for modes array");
+      }
+      if (waveIntVectors_.capacity() != nWave_) {
+         UTIL_THROW("Inconsistent capacity for waveIntVector");
+      }
+
+      // Allocate temporary data structures (defined in StructureFactor)
+      waveVectors_.allocate(nWave_);
+      fourierModes_.allocate(nWave_, nMode_);
+
+      // Allocate maximum value history.
+      maximumValue_.allocate(nMode_);
+      maximumWaveIntVector_.allocate(nMode_);
+      maximumQ_.allocate(nMode_);
+      for (int j = 0; j < nMode_; ++j) {
+         maximumValue_[j].reserve(Samples);
+         maximumWaveIntVector_[j].reserve(Samples);
+         maximumQ_[j].reserve(Samples);
+      }
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to archive.
+   */
+   void StructureFactorGrid::save(Serializable::OArchive& ar)
+   {  ar & *this; }
+
    void StructureFactorGrid::setup() 
    {}
+
+   void StructureFactorGrid::sample(long iStep)
+   {
+      StructureFactor::sample(iStep);
+
+      fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
+      isFirstStep_ = false;
+
+      // Log structure factors
+      double volume = system().boundary().volume();
+      double norm;
+      for (int i = 0; i < nStar_; ++i) {
+         int size = starSizes_[i];
+
+         int k = starIds_[i];
+         for (int n = 0; n < Dimension; ++n) {
+            logFile_ << Int(waveIntVectors_[k][n], 5);
+         }
+         logFile_ << Dbl(waveVectors_[k].abs(), 20, 8);
+
+
+         for (int j = 0; j < nMode_; ++j) {
+            double average = 0.0;
+            double value = 0.0;
+            k = starIds_[i];
+            for (int m = 0; m < size; ++m) {
+               norm = std::norm(fourierModes_(k, j));
+               value = norm/volume;
+               average += value;
+               ++k;
+            }
+            average = average/double(size);
+            logFile_ << Dbl(average, 20, 8);
+         } 
+         logFile_ << std::endl;
+      }
+      logFile_ << std::endl;
+      logFile_.close();
+   } 
+
 
    void StructureFactorGrid::output() 
    {
@@ -201,7 +305,7 @@ namespace McMd
       outputFile_.close();
 
       // Output structure factors to one file
-      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      fileMaster().openOutputFile(outputFileName("_avg.dat"), outputFile_);
 
       // Loop over waves to output structure factor
       for (i = 0; i < nStar_; ++i) {
@@ -257,46 +361,8 @@ namespace McMd
          }
       }
       outputFile_.close();
-                                                                  
-      #if 0
-      // Output each structure factor to a separate file
-      std::string suffix;
-      int         typeId;
-      for (j = 0; j < nMode_; ++j) {
-
-         // Construct file suffix for this structure factor
-         suffix = std::string(".");
-         for (k = 0; k < 2; k++) {
-            typeId = atomTypeIdPairs_[j][k];
-            if (typeId < 0) {
-               suffix += std::string("A");
-            } else {
-               suffix += toString(typeId);
-            }
-         }
-         suffix += std::string(".dat");
-
-         fileMaster().openOutputFile(outputFileName(suffix), outputFile_);
-
-         // Loop over waves to output structure factor
-
-         outputFile_.close();
-      }
-      #endif
 
    }
-
-   /*
-   * Save state to binary file archive.
-   */
-   void StructureFactorGrid::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void StructureFactorGrid::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
 
 }
 #endif

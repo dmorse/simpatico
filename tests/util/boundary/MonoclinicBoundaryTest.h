@@ -5,7 +5,6 @@
 #include <test/UnitTestRunner.h>
 
 #include <util/boundary/MonoclinicBoundary.h>
-#include <util/boundary/serialize.h>
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
 

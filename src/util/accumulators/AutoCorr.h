@@ -66,7 +66,7 @@ namespace Util
       *
       * \param in input parameter stream.
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
    
       /**
       * Set buffer capacity, allocate memory and initialize.
@@ -74,6 +74,29 @@ namespace Util
       * \param bufferCapacity maximum number of values in history buffer.
       */
       void setParam(int bufferCapacity);
+
+      /**
+      * Load state from an archive.
+      *
+      * \param ar binary loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar binary saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
+      /**
+      * Serialize to/from an archive. 
+      * 
+      * \param ar      archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
 
       /**
       * Sample a value.
@@ -115,15 +138,6 @@ namespace Util
       * \param t the lag time
       */
       Product autoCorrelation(int t) const;
-
-      /**
-      * Serial to or from an Archive.
-      * 
-      * \param ar      input or output archive 
-      * \param version id for file version
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
 
    private:
    
@@ -176,14 +190,10 @@ namespace Util
    * Read buffer capacity and allocate all required memory.
    */
    template <typename Data, typename Product>
-   void AutoCorr<Data, Product>::readParam(std::istream& in)
+   void AutoCorr<Data, Product>::readParameters(std::istream& in)
    {
-      readBegin(in, "AutoCorr");
-
       read<int>(in, "capacity", bufferCapacity_);
       allocate();
-
-      readEnd(in);
    }
    
    /*
@@ -196,6 +206,28 @@ namespace Util
       allocate();
    }
    
+   /*
+   * Load state from an archive.
+   */
+   template <typename Data, typename Product>
+   void AutoCorr<Data, Product>::loadParameters(Serializable::IArchive& ar)
+   {  
+      loadParameter<int>(ar, "capacity", bufferCapacity_);
+      ar & buffer_;
+      ar & corr_;
+      ar & nCorr_;
+      ar & sum_;
+      ar & nSample_;
+      isValid();
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   template <typename Data, typename Product>
+   void AutoCorr<Data, Product>::save(Serializable::OArchive& ar)
+   {  ar & *this; }
+
    /*
    * Set previously allocated to initial empty state.
    */
@@ -375,11 +407,11 @@ namespace Util
    void AutoCorr<Data, Product>::serialize(Archive& ar, 
                                            const unsigned int version)
    {
+      ar & bufferCapacity_;
       ar & buffer_;
       ar & corr_;
       ar & nCorr_;
       ar & sum_;
-      ar & bufferCapacity_;
       ar & nSample_;
       isValid();
    }

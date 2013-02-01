@@ -25,7 +25,14 @@ namespace McMd
    */
    GroupRebridgeBase::GroupRebridgeBase(McSystem& system) : 
       SystemMove(system)
-   {} 
+   {
+      // Precondition
+      #ifdef INTER_DIHEDRAL
+      if (system.hasDihedralPotential()) {
+         UTIL_THROW("GroupEndBase is unusable with dihedrals");
+      }
+      #endif
+   } 
    
    /* 
    * Destructor.

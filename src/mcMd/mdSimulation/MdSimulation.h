@@ -93,6 +93,20 @@ namespace McMd
       virtual void readParameters(std::istream &in);
 
       /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
+      /**
       * Read and execute commands from an input stream.
       * 
       * \param in command script input stream.
@@ -162,13 +176,6 @@ namespace McMd
          std::string classname, std::string filename);
 
       /**
-      * Write a restart file.
-      *
-      * \param filename base file name for all restart files.
-      */
-      void writeRestart(const std::string& filename);
-
-      /**
       * Read a restart file.
       *
       * \param filename base file name for all restart files.
@@ -176,13 +183,11 @@ namespace McMd
       void readRestart(const std::string& filename);
 
       /**
-      * Serialize to/from an archive. 
+      * Write a restart file.
       *
-      * \param ar      saving or loading archive
-      * \param version archive version id
+      * \param filename base file name for all restart files.
       */
-      template <class Archive>
-      void serialize(Archive& ar, unsigned int version);
+      void writeRestart(const std::string& filename);
 
       /**
       * Get the MdSystem being simulated by const reference.
@@ -206,6 +211,12 @@ namespace McMd
 
       /// Pointer to manager for Diagnostic objects.
       MdDiagnosticManager*  mdDiagnosticManagerPtr_;
+
+      /// Restart output file name
+      std::string writeRestartFileName_;
+
+      /// Interval for writing restart files (no output if 0)
+      int writeRestartInterval_;
 
       /// Has readParam been called?
       bool isInitialized_;

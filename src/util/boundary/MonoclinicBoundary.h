@@ -724,6 +724,20 @@ namespace Util
       Rc[2] = Rg[2]*l_[2] + Rg[1]*d_;
    }
 
+   /*
+   * Serialize an OrthorhombicBoundary to/from an archive.
+   */
+   template <class Archive> void 
+   MonoclinicBoundary::serialize(Archive& ar, const unsigned int version)
+   {
+      ar & l_;
+      ar & d_;
+      if (Archive::is_loading()) {
+         reset();
+         isValid();
+      }
+   }
+
 }
  
 #ifdef UTIL_MPI

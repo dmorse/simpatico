@@ -1296,121 +1296,70 @@ namespace DdMd
       #ifdef UTIL_MPI
       nProc = domainPtr_->communicator().Get_size();
       #endif
-    
-      double nStepInv = 1.0/double(nStep);
-      double ratio = double(nProc)/(double(nStep)*double(nAtomTot));
+
+      double ratio = double(nProc)/double(nStep*nAtomTot);
 
       out << std::endl;
-      out << "                     "
-          << " T = time/nStep      " 
-          << " T*nProc/nAtom       " 
-          << " percentage " 
-          << std::endl;
-      out << "                     "
-          << " ---------------     " 
-          << " ---------------     " 
-          << " ---------- " 
-          << std::endl;
       double AtomPlanT =  timer_.time(Exchanger::ATOM_PLAN);
-      out << "AtomPlan             " 
-          << Dbl(AtomPlanT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(AtomPlanT*ratio, 12, 6) << " sec   " 
-          << Dbl(AtomPlanT*100.0/time, 12, 6, true) << std::endl;
+      out << "AtomPlan              " << Dbl(AtomPlanT*ratio, 12, 6)
+          << " sec   " << Dbl(AtomPlanT/time, 12, 6, true) << std::endl;
       double InitGroupPlanT =  timer_.time(Exchanger::INIT_GROUP_PLAN);
-      out << "InitGroupPlan        " 
-          << Dbl(InitGroupPlanT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(InitGroupPlanT*ratio, 12, 6) << " sec   " 
-          << Dbl(InitGroupPlanT*100.0/time, 12, 6, true) << std::endl;
+      out << "InitGroupPlan         " << Dbl(InitGroupPlanT*ratio, 12, 6)
+          << " sec   " << Dbl(InitGroupPlanT/time, 12, 6, true) << std::endl;
       double ClearGhostsT =  timer_.time(Exchanger::CLEAR_GHOSTS);
-      out << "ClearGhosts          " 
-          << Dbl(ClearGhostsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(ClearGhostsT*ratio, 12, 6) << " sec   " 
-          << Dbl(ClearGhostsT*100.0/time, 12, 6, true) << std::endl;
+      out << "ClearGhosts           " << Dbl(ClearGhostsT*ratio, 12, 6)
+          << " sec   " << Dbl(ClearGhostsT/time, 12, 6, true) << std::endl;
       double PackAtomsT =  timer_.time(Exchanger::PACK_ATOMS);
-      out << "PackAtoms            " 
-          << Dbl(PackAtomsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(PackAtomsT*ratio, 12, 6) << " sec   " 
-          << Dbl(PackAtomsT*100.0/time, 12, 6, true) << std::endl;
+      out << "PackAtoms             " << Dbl(PackAtomsT*ratio, 12, 6)
+          << " sec   " << Dbl(PackAtomsT/time, 12, 6, true) << std::endl;
       double PackGroupsT =  timer_.time(Exchanger::PACK_GROUPS);
-      out << "PackGroups           " 
-          << Dbl(PackGroupsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(PackGroupsT*ratio, 12, 6) << " sec   " 
-          << Dbl(PackGroupsT*100.0/time, 12, 6, true) << std::endl;
+      out << "PackGroups            " << Dbl(PackGroupsT*ratio, 12, 6)
+          << " sec   " << Dbl(PackGroupsT/time, 12, 6, true) << std::endl;
       double RemoveAtomsT =  timer_.time(Exchanger::REMOVE_ATOMS);
-      out << "RemoveAtoms          " 
-          << Dbl(RemoveAtomsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(RemoveAtomsT*ratio, 12, 6) << " sec   " 
-          << Dbl(RemoveAtomsT*100.0/time, 12, 6, true) << std::endl;
+      out << "RemoveAtoms           " << Dbl(RemoveAtomsT*ratio, 12, 6)
+          << " sec   " << Dbl(RemoveAtomsT/time, 12, 6, true) << std::endl;
       double RemoveGroupsT =  timer_.time(Exchanger::REMOVE_GROUPS);
-      out << "RemoveGroups         " 
-          << Dbl(RemoveGroupsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(RemoveGroupsT*ratio, 12, 6) << " sec   " 
-          << Dbl(RemoveGroupsT*100.0/time, 12, 6, true) << std::endl;
+      out << "RemoveGroups          " << Dbl(RemoveGroupsT*ratio, 12, 6)
+          << " sec   " << Dbl(RemoveGroupsT/time, 12, 6, true) << std::endl;
       double SendRecvAtomsT =  timer_.time(Exchanger::SEND_RECV_ATOMS);
-      out << "SendRecvAtoms        " 
-          << Dbl(SendRecvAtomsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(SendRecvAtomsT*ratio, 12, 6) << " sec   " 
-          << Dbl(SendRecvAtomsT*100.0/time, 12, 6, true) << std::endl;
+      out << "SendRecvAtoms         " << Dbl(SendRecvAtomsT*ratio, 12, 6)
+          << " sec   " << Dbl(SendRecvAtomsT/time, 12, 6, true) << std::endl;
       double UnpackAtomsT =  timer_.time(Exchanger::UNPACK_ATOMS);
-      out << "UnpackAtoms          " 
-          << Dbl(UnpackAtomsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(UnpackAtomsT*ratio, 12, 6) << " sec   " 
-          << Dbl(UnpackAtomsT*100.0/time, 12, 6, true) << std::endl;
+      out << "UnpackAtoms           " << Dbl(UnpackAtomsT*ratio, 12, 6)
+          << " sec   " << Dbl(UnpackAtomsT/time, 12, 6, true) << std::endl;
       double UnpackGroupsT =  timer_.time(Exchanger::UNPACK_GROUPS);
-      out << "UnpackGroups         " 
-          << Dbl(UnpackGroupsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(UnpackGroupsT*ratio, 12, 6) << " sec   " 
-          << Dbl(UnpackGroupsT*100.0/time, 12, 6, true) << std::endl;
+      out << "UnpackGroups          " << Dbl(UnpackGroupsT*ratio, 12, 6)
+          << " sec   " << Dbl(UnpackGroupsT/time, 12, 6, true) << std::endl;
       double FinishGroupPlanT =  timer_.time(Exchanger::FINISH_GROUP_PLAN);
-      out << "FinishGroupPlan      " 
-          << Dbl(FinishGroupPlanT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(FinishGroupPlanT*ratio, 12, 6) << " sec   " 
-          << Dbl(FinishGroupPlanT*100.0/time, 12, 6, true) << std::endl;
+      out << "FinishGroupPlan       " << Dbl(FinishGroupPlanT*ratio, 12, 6)
+          << " sec   " << Dbl(FinishGroupPlanT/time, 12, 6, true) << std::endl;
       double SendArraysT =  timer_.time(Exchanger::INIT_SEND_ARRAYS);
-      out << "SendArrays           " 
-          << Dbl(SendArraysT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(SendArraysT*ratio, 12, 6) << " sec   " 
-          << Dbl(SendArraysT*100.0/time, 12, 6, true) << std::endl;
+      out << "SendArrays            " << Dbl(SendArraysT*ratio, 12, 6)
+          << " sec   " << Dbl(SendArraysT/time, 12, 6, true) << std::endl;
       double PackGhostsT =  timer_.time(Exchanger::PACK_GHOSTS);
-      out << "PackGhosts           " 
-          << Dbl(PackGhostsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(PackGhostsT*ratio, 12, 6) << " sec   " 
-          << Dbl(PackGhostsT*100.0/time, 12, 6, true) << std::endl;
+      out << "PackGhosts            " << Dbl(PackGhostsT*ratio, 12, 6)
+          << " sec   " << Dbl(PackGhostsT/time, 12, 6, true) << std::endl;
       double SendRecvGhostsT =  timer_.time(Exchanger::SEND_RECV_GHOSTS);
-      out << "SendRecvGhosts       " 
-          << Dbl(SendRecvGhostsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(SendRecvGhostsT*ratio, 12, 6) << " sec   " 
-          << Dbl(SendRecvGhostsT*100.0/time, 12, 6, true) << std::endl;
+      out << "SendRecvGhosts        " << Dbl(SendRecvGhostsT*ratio, 12, 6)
+          << " sec   " << Dbl(SendRecvGhostsT/time, 12, 6, true) << std::endl;
       double UnpackGhostsT =  timer_.time(Exchanger::UNPACK_GHOSTS);
-      out << "UnpackGhosts         " 
-          << Dbl(UnpackGhostsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(UnpackGhostsT*ratio, 12, 6) << " sec   " 
-          << Dbl(UnpackGhostsT*100.0/time, 12, 6, true) << std::endl;
+      out << "UnpackGhosts          " << Dbl(UnpackGhostsT*ratio, 12, 6)
+          << " sec   " << Dbl(UnpackGhostsT/time, 12, 6, true) << std::endl;
       double FindGroupGhostsT =  timer_.time(Exchanger::FIND_GROUP_GHOSTS);
-      out << "FindGroupGhosts      " 
-          << Dbl(FindGroupGhostsT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(FindGroupGhostsT*ratio, 12, 6) << " sec   " 
-          << Dbl(FindGroupGhostsT*100.0/time, 12, 6, true) << std::endl;
+      out << "FindGroupGhosts       " << Dbl(FindGroupGhostsT*ratio, 12, 6)
+          << " sec   " << Dbl(FindGroupGhostsT/time, 12, 6, true) << std::endl;
       double PackUpdateT =  timer_.time(Exchanger::PACK_UPDATE);
-      out << "PackUpdate           " 
-          << Dbl(PackUpdateT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(PackUpdateT*ratio, 12, 6) << " sec   " 
-          << Dbl(PackUpdateT*100.0/time, 12, 6, true) << std::endl;
+      out << "PackUpdate            " << Dbl(PackUpdateT*ratio, 12, 6)
+          << " sec   " << Dbl(PackUpdateT/time, 12, 6, true) << std::endl;
       double SendRecvUpdateT =  timer_.time(Exchanger::SEND_RECV_UPDATE);
-      out << "SendRecvUpdate       " 
-          << Dbl(SendRecvUpdateT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(SendRecvUpdateT*ratio, 12, 6)    << " sec   " 
-          << Dbl(SendRecvUpdateT*100.0/time, 12, 6, true) << std::endl;
+      out << "SendRecvUpdate        " << Dbl(SendRecvUpdateT*ratio, 12, 6)
+          << " sec   " << Dbl(SendRecvUpdateT/time, 12, 6, true) << std::endl;
       double UnpackUpdateT =  timer_.time(Exchanger::UNPACK_UPDATE);
-      out << "UnpackUpdate         " 
-          << Dbl(UnpackUpdateT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(UnpackUpdateT*ratio, 12, 6)    << " sec   " 
-          << Dbl(UnpackUpdateT*100.0/time, 12, 6, true) << std::endl;
+      out << "UnpackUpdate          " << Dbl(UnpackUpdateT*ratio, 12, 6)
+          << " sec   " << Dbl(UnpackUpdateT/time, 12, 6, true) << std::endl;
       double LocalUpdateT =  timer_.time(Exchanger::LOCAL_UPDATE);
-      out << "LocalUpdate          " 
-          << Dbl(LocalUpdateT*nStepInv, 12, 6) << " sec     " 
-          << Dbl(LocalUpdateT*ratio, 12, 6) << " sec   " 
-          << Dbl(LocalUpdateT*100.0/time, 12, 6, true) << std::endl;
+      out << "LocalUpdate           " << Dbl(LocalUpdateT*ratio, 12, 6)
+          << " sec   " << Dbl(LocalUpdateT/time, 12, 6, true) << std::endl;
       out << std::endl;
 
    }

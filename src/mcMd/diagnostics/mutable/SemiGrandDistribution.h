@@ -28,17 +28,48 @@ namespace McMd
    {
 
    public:
-   
-      /// Constructor.
+  
+      /** 
+      * Constructor.
+      */
       SemiGrandDistribution(McSystem& system);
 
-      /// Read output file and nStepPerSample.
+      /**
+      * Read output file and nStepPerSample.
+      */
       virtual void readParameters(std::istream& in);
  
-      /// Evaluate energy and print.
+      /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
+      /**
+      * Serialize to/from an archive. 
+      * 
+      * \param ar      archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
+      /**
+      * Evaluate energy and print.
+      */
       void sample(long iStep);
 
-      /// Output final summary and file format
+      /**
+      * Output final summary and file format.
+      */
       virtual void output();
 
    private:
@@ -62,6 +93,18 @@ namespace McMd
      SpeciesMutator* mutatorPtr_;
    
    };
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void SemiGrandDistribution::serialize(Archive& ar, const unsigned int version)
+   {  
+      Diagnostic::serialize(ar, version); 
+      ar & speciesId_;
+      ar & moleculeCapacity_;
+      ar & distribution_;
+   }
 
 }
 #endif 

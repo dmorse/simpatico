@@ -55,6 +55,26 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive& ar);
+
+      /**
+      * Serialize to/from an archive.  
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
       /** 
       * Clear accumulators.
       */
@@ -99,16 +119,16 @@ namespace McMd
       MPI::Intracomm* communicatorPtr_;
       
       /// Current processor's rank.
-      int   myId_;
+      int  myId_;
 
       /// Number of processors.
-      int   nProcs_;
+      int  nProcs_;
       
       /// Lower replica's rank.
-      int   lowerId_;
+      int  lowerId_;
       
       /// Upper replica's rank.
-      int   upperId_;
+      int  upperId_;
       
       /// Number of perturbation parameters.
       int nParameter_;
@@ -161,6 +181,44 @@ namespace McMd
       */
       virtual void analyze();
    };
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void BennettsMethod::serialize(Archive& ar, const unsigned int version)
+   {
+      Diagnostic::serialize(ar, version);
+      ar & nSamplePerBlock_;
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         ar & shifts_;
+      } else {
+         ar & shift_;
+      }
+      #else
+      ar & shift_;
+      #endif
+      ar & myAccumulator_; 
+      ar & upperAccumulator_; 
+
+      // Set in constructor
+      //ar & myId_;
+      //ar & nProcs_;
+      //ar & lowerId_;
+      //ar & upperId_;
+      //ar & nParameter_;
+      // ar & myParam_;
+      
+      ar & lowerParam_;
+      ar & upperParam_;
+      ar & myArg_;
+      ar & lowerArg_;
+      ar & myFermi_;
+      ar & lowerFermi_;
+      ar & upperFermi_;
+   }
+
 
 }
 #endif   // ifndef BENNETTS_METHOD_H

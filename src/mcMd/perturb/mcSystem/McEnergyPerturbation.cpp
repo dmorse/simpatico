@@ -21,8 +21,9 @@ namespace McMd
    /*
    * Constructor.
    */
-   McEnergyPerturbation::McEnergyPerturbation(McSystem& system)
-    : LinearPerturbation<McSystem>(system)
+   McEnergyPerturbation::McEnergyPerturbation(McSystem& system, 
+                                              int size, int rank)
+    : LinearPerturbation<McSystem>(system, size, rank)
    {}
 
    /*

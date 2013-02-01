@@ -43,25 +43,48 @@ namespace McMd
       read<int>(in, "capacity", capacity_);
 
       // Validate input
-      if (capacity_ <= 0)        
+      if (capacity_ <= 0) {
          UTIL_THROW("Negative capacity");
+      }
 
-      // Allocate memory for the AutoCorrArray accumulator object
       accumulator_.setParam(capacity_);
-
       fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
-
       isInitialized_ = true;
    }
 
+   /*
+   * Load internal state from archive.
+   */
+   void McStressAutoCorr::loadParameters(Serializable::IArchive &ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar, "capacity", capacity_);
+      ar & accumulator_;
+
+      // Validate input
+      if (capacity_ <= 0) {
+         UTIL_THROW("Negative capacity");
+      }
+      if (capacity_ != accumulator_.bufferCapacity()) {
+         UTIL_THROW("Inconsistent values for capacity");
+      }
+
+      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      isInitialized_ = true;
+   }
 
    /*
-   * Set actual number of molecules and clear accumulator.
+   * Save internal state to archive (use serialize method).
+   */
+   void McStressAutoCorr::save(Serializable::OArchive &ar)
+   {  ar & *this; }
+   
+
+   /*
+   * Clear accumulator.
    */
    void McStressAutoCorr::setup()
-   {
-      accumulator_.clear();
-   }
+   {  accumulator_.clear(); }
 
    /*
    * Evaluate shear stress autocorrelation function.
@@ -110,18 +133,6 @@ namespace McMd
       accumulator_.output(outputFile_); 
       outputFile_.close();
    }
-
-   /*
-   * Save state to binary file archive.
-   */
-   void McStressAutoCorr::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void McStressAutoCorr::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
 
 }
 

@@ -1,0 +1,29 @@
+
+/*! \page about_page 1 About
+
+Simpatico is a library of C++ classes and programs for Monte Carlo (MC), molecular dynamics (MD), and hybrid MC simulations of molecular and polymer liquids.  It has thus far been used to simulate coarse-grained bead-spring models of polymer liquids, but is adaptable to a much wider range of problems. It contains the following main programs:
+
+- Programs for MC and MD simulations on a single processor, named mcSim and mdSim.
+
+- A program for parallel domain-decomposition MD simulations, named ddSim.
+
+The single-processor programs mcSim and mdSim can also execute multi-processor algorithms, such as replica-exchange, in which each processor simulates a different system.
+
+Simpatico is free, open source software. It is distributed under the terms of the GNU General Public License as (GPL) published by the Free Software Foundation, either version 3 of the License or (at your option) any later version.  Simpatico is distributed without any warranty, without even the implied warranty of merchantability or fitness for a particular purpose. See the LICENSE file or the <a href=http://www.gnu.org/licenses/> gnu web page </a> for details.
+
+Contents:
+<ul style="list-style: none;">
+  <li> \subpage about_goals_page        "1.1 Goals" </li>
+  <li> \subpage about_capabilities_page "1.2 Capabilities" </li>
+  <li> \subpage about_contributors_page "1.3 Contributors" </li>
+</ul> 
+
+Navigation:
+<ul style="list-style: none;">
+ <li> \ref index "Main Page"  (Up)             </li>
+ <li> \ref user_page     (Next Section)   </li>
+</ul>
+
+*/
+
+//<li> \ref about_goals_page     (Next / Down) </li>

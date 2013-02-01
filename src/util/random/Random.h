@@ -61,11 +61,25 @@ namespace Util
       virtual ~Random();
 
       /**
-      * Read seed from file.
+      * Read seed from file, initialize RNG.
       *
-      * Reads an integer seed, then initializes random number generator.
+      * \param in input stream.
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
+   
+      /**
+      * Load internal state from file.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+   
+      /**
+      * Save internal state to file. 
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
    
       /**
       * Sets of random seed, and initializes random number generator.
@@ -263,6 +277,16 @@ namespace Util
    inline long Random::seed() 
    {  return seed_; }
 
-}
+   /*
+   * Serialize to/from an archive.
+   */
+   template <class Archive>
+   void Random::serialize(Archive& ar, const unsigned int version)
+   {
+      ar & engine_;
+      ar & seed_;
+   }
+
+} 
 #undef UTIL_ENGINE 
 #endif // ifndef UTIL_RANDOM_H

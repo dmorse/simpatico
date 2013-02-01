@@ -119,30 +119,41 @@ namespace McMd
       */
       virtual void readParameters(std::istream &in);
 
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
       /// \name Initialization 
       //@{
 
       #ifdef UTIL_MPI
       /**
-      * Set MPI job to read a single parameter file.
+      * Set MPI job to read one parameter file and one command file.
       *
-      * A communicator must be set before calling readParameters() to use
-      * allow a single parameter file to be used in a multi-processor
-      * free energy perturbation simulation. This method sets an 
-      * MPI communicator to be used to read parameters from a single
-      * file and broadcast them. It also sets the default parameter 
-      * stream to std::cin.
+      * Call this method before readParam() to allow a single parameter
+      * and command file to be used in multi-processor free energy 
+      * perturbation simulations, and to read the parameter file from
+      * std in. It calls Util::ParamComposite:setParamCommunicator()
+      * and Util::FileMaster::setParamFileStdIn().
       *
       * \param communicator MPI communicator used for parameter file.
       */
       virtual void setParamCommunicator(MPI::Intracomm& communicator);
 
       /**
-      * Set MPI job to read a single parameter file.
+      * Set MPI job to read one parameter file and one command file.
       *
-      * Equivalent to Simulation::setParamCommunicator(communicator()),
-      * thus using the default Simulation::communicator() to read and
-      * broadcast input parameters.
+      * Equivalent to Simulation::setParamCommunicator(communicator()).
       */
       void setParamCommunicator();
       #endif

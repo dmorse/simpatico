@@ -49,6 +49,13 @@ namespace Inter
       /// \name Mutators
       //@{ 
 
+      /**  
+      * Set nAtomType value.
+      *
+      * \param nAtomType number of atom types.
+      */
+      void setNAtomType(int nAtomType);
+
       /**
       * Read epsilon and sigma, initialize other variables.
       *
@@ -58,12 +65,19 @@ namespace Inter
       */
       void readParameters(std::istream &in);
 
-      /**  
-      * Set nAtomType value.
+      /**
+      * Load internal state from an archive.
       *
-      * \param nAtomType number of atom types.
+      * \param ar input/loading archive
       */
-      void setNAtomType(int nAtomType);
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Set LJ interaction energy for a specific pair of Atom types.

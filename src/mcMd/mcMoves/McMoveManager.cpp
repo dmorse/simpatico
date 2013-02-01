@@ -43,58 +43,40 @@ namespace McMd
    */
    void McMoveManager::readParam(std::istream &in)
    {
-
-      #if 0
-      beginReadManager(in);
-
-      initFactory();
- 
-      std::string name;
-      McMove* mcMovePtr;
-
-      // Loop over McMoves 
-      bool isEnd = false;
-      while (!isEnd) {
-
-         readBlank(in);
-
-         // Read and instantiate a new McMove
-         mcMovePtr = factory().readObject(in, *this, name, isEnd);
-
-         if (!isEnd) {
-            if (mcMovePtr != 0) {
-               append(*mcMovePtr, name);
-            } else {
-              UTIL_THROW("McMove subclass name not recognized"); 
-            }
-         }
-
-      }
-
-
-      // Add closing bracket to param output format
-      End* endPtr = &addEnd();
-      if (ParamComponent::echo() && isParamIoProcessor()) { 
-         endPtr->writeParam(Log::file());
-      }
-      #endif
-
       Manager<McMove>::readParam(in);
 
+      // Allocate and store probabilities
       probabilities_.allocate(size());
-
-      // Store and normalize probabilities
       double  totalProbability = 0.0;
       int     iMove;
       for (iMove = 0; iMove < size(); ++iMove) {
          probabilities_[iMove] = (*this)[iMove].probability();
          totalProbability += probabilities_[iMove];
       }
+
+      // Allocate and store and normalize probabilities
       for (iMove = 0; iMove < size(); ++iMove) {
          probabilities_[iMove] = probabilities_[iMove]/totalProbability;
          (*this)[iMove].setProbability(probabilities_[iMove]);
       }
+   }
 
+   /*
+   * Load internal state from an archive.
+   */
+   void McMoveManager::loadParameters(Serializable::IArchive &ar)
+   {
+      Manager<McMove>::loadParameters(ar);
+      ar & probabilities_;
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void McMoveManager::save(Serializable::OArchive &ar)
+   {
+      Manager<McMove>::save(ar);
+      ar & probabilities_;
    }
 
    /*
@@ -124,26 +106,6 @@ namespace McMd
    {
       for (int i=0; i< size(); i++) {
          (*this)[i].output();
-      }
-   }
-
-   /*
-   * Save state to binary file archive.
-   */
-   void McMoveManager::save(Serializable::OArchiveType& ar)
-   {
-      for (int i=0; i < size(); ++i) {
-         (*this)[i].save(ar);
-      }
-   }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void McMoveManager::load(Serializable::IArchiveType& ar)
-   {
-      for (int i=0; i < size(); ++i) {
-         (*this)[i].load(ar);
       }
    }
 

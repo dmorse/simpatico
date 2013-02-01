@@ -1,0 +1,7 @@
+
+inter_user_SRCS=\
+    #$(SRC_DIR)/inter/user/Class1.cpp \
+    #$(SRC_DIR)/inter/user/Class2.cpp 
+
+inter_user_OBJS=$(inter_user_SRCS:.cpp=.o)
+

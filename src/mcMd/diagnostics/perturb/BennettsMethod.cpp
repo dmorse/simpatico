@@ -29,8 +29,8 @@ namespace McMd
 
    using namespace Util;
    
-   const int BennettsMethod::TagDerivative[2]    = {1, 2};
-   const int BennettsMethod::TagFermi[2]    = {8, 9};
+   const int BennettsMethod::TagDerivative[2] = {1, 2};
+   const int BennettsMethod::TagFermi[2] = {8, 9};
 
    /* 
    * Constructor.
@@ -113,10 +113,67 @@ namespace McMd
 
       isInitialized_ = true;
    }
-    
+
+   /*
+   * Load internal state from archive.
+   */
+   void BennettsMethod::loadParameters(Serializable::IArchive &ar)
+   {
+      Diagnostic::loadParameters(ar);
+
+      loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
+ 
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         shifts_.allocate(nProcs_);
+         shifts_[nProcs_-1] = 0.0;
+         loadDArray<double>(ar, "shifts", shifts_, nProcs_-1);
+         shift_ = shifts_[myId_];
+      } else {
+         loadParameter<double>(ar, "shift", shift_);
+      }
+      #else
+      loadParameter<double>(ar, "shift", shift_);
+      #endif
+     
+      ar & myAccumulator_; 
+      ar & upperAccumulator_; 
+
+      // ar & myId_;
+      // ar & nProcs_;
+      // ar & lowerId_;
+      // ar & upperId_;
+      // ar & nParameter_;
+      // ar & myParam_;
+      
+      ar & lowerParam_;
+      ar & upperParam_;
+      ar & myArg_;
+      ar & lowerArg_;
+      ar & myFermi_;
+      ar & lowerFermi_;
+      ar & upperFermi_;
+
+
+      //If nSamplePerBlock != 0, open an output file for block averages.
+      if (myAccumulator_.nSamplePerBlock()) {
+         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      }
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   void BennettsMethod::save(Serializable::OArchive &ar)
+   { ar & *this; }
+   
    void BennettsMethod::setup()
    { 
-      if (!isInitialized_) UTIL_THROW("Object is not initialized");
+     if (!isInitialized_) {
+         UTIL_THROW("Object is not initialized");
+      }
 
       communicatorPtr_->Bcast((void*)&shifts_[0], nProcs_, MPI::DOUBLE, 0);
       if ( myId_ != 0 ) {

@@ -33,11 +33,15 @@ namespace McMd
    
       /**
       * Constructor. 
+      * 
+      * \param system parent McSystem
       */
       RingTetraRebridgeMove(McSystem& system);
    
       /**
       * Read species to which displacement is applied.
+      *
+      * \param in input parameter stream
       */
       virtual void readParameters(std::istream& in);
 
@@ -46,6 +50,20 @@ namespace McMd
       */
       virtual bool move();
    
+      /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar saving (output) archive
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
    protected:
    
       /// Integer index for molecular species.

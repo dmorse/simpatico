@@ -16,6 +16,7 @@
 
 #include <complex>
 #include <string>
+#include <vector>
 #include <iostream>
 
 namespace Util
@@ -43,16 +44,21 @@ namespace Util
       BinaryFileIArchive();
 
       /**
+      * Constructor.
+      *
+      * \param filename name of file to open for reading.
+      */
+      BinaryFileIArchive(std::string filename);
+
+      /**
       * Destructor.
       */
       virtual ~BinaryFileIArchive();
 
       /**
-      * Set the stream.
-      *
-      * \param out output stream to which to write.
+      * Get the underlying ifstream by reference.
       */
-      void setStream(std::istream& out);
+      std::ifstream& file();
 
       /**
       * Read one object.
@@ -66,16 +72,35 @@ namespace Util
       template <typename T>
       BinaryFileIArchive& operator >> (T& data);
 
+      /**
+      * Unpack a single T object.
+      */
       template <typename T> 
       void unpack(T& data);
 
+      /**
+      * Unpack a C array.
+      *
+      * \param array pointer to array (or first element)
+      * \param n number of elements
+      */
       template <typename T> 
       void unpack(T* array, int n);
+
+      /**
+      * Unpack a 2D C array.
+      *
+      * \param array pointer to first row
+      * \param m number of rows
+      * \param n number of columns
+      */
+      template <typename T> 
+      void unpack(T* array, int m, int n);
 
    private:
 
       /// Pointer to output stream file.
-      std::istream* istreamPtr_;
+      std::ifstream* filePtr_;
 
       /// Archive version id.
       unsigned int  version_;
@@ -119,7 +144,7 @@ namespace Util
    */
    template <typename T>
    inline void BinaryFileIArchive::unpack(T& data)
-   {  istreamPtr_->read( (char*)(&data), sizeof(T) ); }
+   {  filePtr_->read( (char*)(&data), sizeof(T) ); }
 
    /*
    * Load a C-array of objects of type T.
@@ -128,7 +153,21 @@ namespace Util
    inline void BinaryFileIArchive::unpack(T* array, int n)
    {
       for (int i=0; i < n; ++i) {
-         istreamPtr_->read( (char*)(&array[i]), sizeof(T));
+         filePtr_->read( (char*)(&array[i]), sizeof(T));
+      }
+   }
+
+   /*
+   * Unpack a 2D C-array of objects of type T.
+   */
+   template <typename T>
+   inline void BinaryFileIArchive::unpack(T* array, int m, int n)
+   {
+      int i, j;
+      for (i = 0; i < m; ++i) {
+         for (j = 0; j < n; ++j) {
+            filePtr_->read( (char*)(&array[i*n + j]), sizeof(T));
+         }
       }
    }
 
@@ -197,6 +236,24 @@ namespace Util
    inline void serialize(BinaryFileIArchive& ar, double& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
+
+   /*
+   * Load a std::vector from a BinaryFileIArchive.
+   */
+   template <typename T>
+   void serialize(BinaryFileIArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      T element;
+      std::size_t size;
+      ar.unpack(size);
+      data.reserve(size);
+      data.clear();
+      for (size_t i = 0; i < size; ++i) {
+         ar & element;
+         data.push_back(element);
+      }
+   }
 
    // Explicit serialize functions for std library types
 

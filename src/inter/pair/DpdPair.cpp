@@ -99,6 +99,41 @@ namespace Inter
       isInitialized_ = true; 
    }
 
+   /*
+   * Load internal state from an archive.
+   */
+   void DpdPair::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nAtomType_; 
+      if (nAtomType_ == 0) {
+         UTIL_THROW( "nAtomType must be positive");
+      }
+      // Read parameters
+      loadCArray2D<double> (
+                  ar, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
+      loadCArray2D<double>(
+                  ar, "sigma", sigma_[0], nAtomType_, nAtomType_);
+      ar.unpack(sigmaSq_[0], nAtomType_, nAtomType_);
+      ar.unpack(cf_[0], nAtomType_, nAtomType_);
+      ar.unpack(ce_[0], nAtomType_, nAtomType_);
+      ar >> maxPairCutoff_;
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void DpdPair::save(Serializable::OArchive &ar)
+   {
+      ar << nAtomType_;
+      ar.pack(epsilon_[0], nAtomType_, nAtomType_);
+      ar.pack(sigma_[0], nAtomType_, nAtomType_);
+      ar.pack(sigmaSq_[0], nAtomType_, nAtomType_);
+      ar.pack(cf_[0], nAtomType_, nAtomType_);
+      ar.pack(ce_[0], nAtomType_, nAtomType_);
+      ar << maxPairCutoff_;
+   }
+
    /* 
    * Set nAtomType
    */

@@ -95,6 +95,9 @@ namespace DdMd
       friend std::istream& operator>>(std::istream& in, AtomType &atomType);
       friend std::ostream& operator<<(std::ostream& out, const AtomType &atomType);
 
+      template <class Archive> friend
+      void serialize(Archive& ar, AtomType& atomType, const unsigned int version);
+
    };
 
    // Inline methods
@@ -146,6 +149,20 @@ namespace DdMd
    * \return modified output stream
    */
    std::ostream& operator<<(std::ostream& out, const AtomType &atomType);
+
+   /**
+   *  Serialize an AtomType.
+   *
+   *  \param ar       archive
+   *  \param atomType object to be serialized
+   *  \param version  archive version id
+   */
+   template <class Archive>
+   void serialize(Archive& ar, AtomType& atomType, const unsigned int version)
+   {
+      ar & atomType.name_;
+      ar & atomType.mass_;
+   }
 
 }
 

@@ -29,8 +29,14 @@ namespace McMd
       length10_(1.0),
       kappa10_(0.0)
    {
+      // Preconditions
       #ifdef MCMD_NOMASKBONDED
       UTIL_THROW("CfbRebridgeBase is unusable ifdef MCMD_NOMASKBONDED");
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (system.hasDihedralPotential()) {
+         UTIL_THROW("CfbRebrigeBase is unusable with dihedrals");
+      }
       #endif
    } 
    /* 
@@ -40,7 +46,7 @@ namespace McMd
    {} 
    
    /* 
-   * 
+   * Read parameters from file.
    */
    void CfbRebridgeBase::readParameters(std::istream& in) 
    {
@@ -54,6 +60,33 @@ namespace McMd
       read<double>(in, "length21", length21_);
       read<double>(in, "length10", length10_);
       read<double>(in, "kappa10", kappa10_);
+   }
+
+   /* 
+   * Load state from archive.
+   */
+   void CfbRebridgeBase::loadParameters(Serializable::IArchive& ar) 
+   {
+      loadParameter<int>(ar, "nTrial", nTrial_);
+      loadParameter<double>(ar, "length21", length21_);
+      loadParameter<double>(ar, "length10", length10_);
+      loadParameter<double>(ar, "kappa10", kappa10_);
+
+      // Validate
+      if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
+         UTIL_THROW("Invalid value input for nTrial");
+      }
+   }
+
+   /* 
+   * Save state to archive.
+   */
+   void CfbRebridgeBase::save(Serializable::OArchive& ar) 
+   {
+      ar & nTrial_;
+      ar & length21_;
+      ar & length10_;
+      ar & kappa10_;
    }
 
    /* 
@@ -101,7 +134,7 @@ namespace McMd
       computeNormalization(angTable[MaxBin_-1], kappaTable[MaxBin_-1], 
                            normalTable[MaxBin_-1]);
    }
-   
+
    /* 
    * Configuration bias algorithm for deleting the last particle of an interior
    * bridge. 
@@ -128,7 +161,7 @@ namespace McMd
       Vector  partPos = partPtr->position();
       Vector  bondVec, trialPos, u_20, u_21;
       double  trialEnergy, bondEnergy, wExt, length, lengthSq;
-      double  l_20, l_21, l_10, bias;
+      double  l_20, l_21, bias;
       double  prefAng, kappaAng, normConst;
       int     iTrial;
       bool    ready;
@@ -146,7 +179,6 @@ namespace McMd
    
       // Bond length between 1 and 0 & bonding energy
       lengthSq   = boundary().distanceSq(partPos, nextPos);
-      l_10       = sqrt(lengthSq);
       bondEnergy = system().bondPotential().energy(lengthSq, nextBType);
       energy    += bondEnergy;
    

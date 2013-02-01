@@ -19,23 +19,29 @@ namespace Util
    * Constructor.
    */
    BinaryFileIArchive::BinaryFileIArchive()
-    : istreamPtr_(0),
+    : filePtr_(0),
       version_(0)
-   {}
+   {  filePtr_ = new std::ifstream(); }
+
+   /*
+   * Constructor.
+   */
+   BinaryFileIArchive::BinaryFileIArchive(std::string filename)
+    : filePtr_(0),
+      version_(0)
+   {  filePtr_ = new std::ifstream(filename.c_str()); }
 
    /*
    * Destructor.
    */
    BinaryFileIArchive::~BinaryFileIArchive()
-   {}  
+   {  delete filePtr_; }  
 
    /*
-   * Allocate a block of memory.
+   * Return underlying file by reference.
    */
-   void BinaryFileIArchive::setStream(std::istream& out)
-   { 
-      istreamPtr_ = &out;
-   }
+   std::ifstream& BinaryFileIArchive::file()
+   {  return *filePtr_; }
 
    /*
    * Load a std::string from BinaryFileIArchive.

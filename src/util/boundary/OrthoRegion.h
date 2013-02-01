@@ -70,5 +70,19 @@ namespace Util
 
    };
 
+   /*
+   * Serialize an OrthoRegion to/from an archive.
+   */
+   template <class Archive>
+   void OrthoRegion::serialize(Archive& ar, const unsigned int version)
+   {
+      ar & minima_;
+      ar & maxima_;
+      ar & lengths_;
+      ar & halfLengths_;
+      ar & volume_;
+   }
+
+
 }
 #endif

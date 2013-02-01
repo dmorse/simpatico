@@ -37,10 +37,9 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       nDihedral_(0),
       #endif
-      mutatorPtr_(0),
       moleculeCapacity_(0),
       id_(-1),
-      isAllocated_(false)
+      mutatorPtr_(0)
    {}
 
    /*
@@ -54,9 +53,7 @@ namespace McMd
    */
    void Species::readParameters(std::istream &in)
    {
-
       read<int>(in, "moleculeCapacity", moleculeCapacity_);
-
       reservoir_.allocate(moleculeCapacity_);
 
       // Define chemical structure, after reading any parameters.
@@ -64,7 +61,21 @@ namespace McMd
 
       // Check validity, throw exception if not valid
       isValid();
+   }
 
+   /*
+   * Load parameters for species.
+   */
+   void Species::loadParameters(Serializable::IArchive& ar)
+   {
+      loadParameter<int>(ar, "moleculeCapacity", moleculeCapacity_);
+      reservoir_.allocate(moleculeCapacity_);
+
+      // Read and define chemical structure.
+      loadSpeciesParam(ar);
+
+      // Check validity, throw exception if not valid
+      isValid();
    }
 
    /*
@@ -80,16 +91,13 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       read<int>(in, "nDihedral", nDihedral_);
       #endif
-
       allocate();
 
       readDArray<int>(in, "atomTypeIds", atomTypeIds_, nAtom_);
 
       if (nBond_ > 0) {
-
          readDArray<SpeciesBond>(in, "speciesBonds", speciesBonds_, 
                                  nBond_);
-
          // Make atomBondIdArrays
          int bondId, atomId1, atomId2;
          for (bondId = 0; bondId < nBond_; ++bondId) {
@@ -98,15 +106,12 @@ namespace McMd
             atomBondIdArrays_[atomId1].append(bondId);
             atomBondIdArrays_[atomId2].append(bondId);
          }
-
       }
 
       #ifdef INTER_ANGLE
       if (nAngle_ > 0) {
-
          readDArray<SpeciesAngle>(in, "speciesAngles", speciesAngles_,
                                   nAngle_);
-
          // Make atomAngleIdArrays
          int angleId, atomId1, atomId2, atomId3;
          for (angleId = 0; angleId < nAngle_; ++angleId) {
@@ -123,13 +128,10 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       // Make atomDihedralIdArrays
       if (nDihedral_ > 0) {
-
          readDArray<SpeciesDihedral>(in, "speciesDihedrals", speciesDihedrals_,
                                      nDihedral_);
-
          int dihedralId;
          int tAtomId1, tAtomId2, tAtomId3, tAtomId4;
-
          for (dihedralId = 0; dihedralId < nDihedral_; ++dihedralId) {
             tAtomId1 = speciesDihedral(dihedralId).atomId(0);
             tAtomId2 = speciesDihedral(dihedralId).atomId(1);
@@ -143,6 +145,100 @@ namespace McMd
       }
       #endif
 
+   }
+
+   /*
+   * Load molecular structure (default implementation).
+   */
+   void Species::loadSpeciesParam(Serializable::IArchive &ar)
+   {
+      loadParameter<int>(ar, "nAtom", nAtom_);
+      loadParameter<int>(ar, "nBond", nBond_);
+      #ifdef INTER_ANGLE
+      loadParameter<int>(ar, "nAngle", nAngle_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      loadParameter<int>(ar, "nDihedral", nDihedral_);
+      #endif
+      allocate();
+
+      loadDArray<int>(ar, "atomTypeIds", atomTypeIds_, nAtom_);
+
+      if (nBond_ > 0) {
+         loadDArray<SpeciesBond>(ar, "speciesBonds", speciesBonds_, 
+                                 nBond_);
+         // Make atomBondIdArrays
+         int bondId, atomId1, atomId2;
+         for (bondId = 0; bondId < nBond_; ++bondId) {
+            atomId1 = speciesBond(bondId).atomId(0);
+            atomId2 = speciesBond(bondId).atomId(1);
+            atomBondIdArrays_[atomId1].append(bondId);
+            atomBondIdArrays_[atomId2].append(bondId);
+         }
+
+      }
+
+      #ifdef INTER_ANGLE
+      if (nAngle_ > 0) {
+         loadDArray<SpeciesAngle>(ar, "speciesAngles", speciesAngles_,
+                                  nAngle_);
+         // Make atomAngleIdArrays
+         int angleId, atomId1, atomId2, atomId3;
+         for (angleId = 0; angleId < nAngle_; ++angleId) {
+            atomId1 = speciesAngle(angleId).atomId(0);
+            atomId2 = speciesAngle(angleId).atomId(1);
+            atomId3 = speciesAngle(angleId).atomId(2);
+            atomAngleIdArrays_[atomId1].append(angleId);
+            atomAngleIdArrays_[atomId2].append(angleId);
+            atomAngleIdArrays_[atomId3].append(angleId);
+         }
+      }
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      // Make atomDihedralIdArrays
+      if (nDihedral_ > 0) {
+         loadDArray<SpeciesDihedral>(ar, "speciesDihedrals", speciesDihedrals_,
+                                     nDihedral_);
+         int dihedralId;
+         int tAtomId1, tAtomId2, tAtomId3, tAtomId4;
+         for (dihedralId = 0; dihedralId < nDihedral_; ++dihedralId) {
+            tAtomId1 = speciesDihedral(dihedralId).atomId(0);
+            tAtomId2 = speciesDihedral(dihedralId).atomId(1);
+            tAtomId3 = speciesDihedral(dihedralId).atomId(2);
+            tAtomId4 = speciesDihedral(dihedralId).atomId(3);
+            atomDihedralIdArrays_[tAtomId1].append(dihedralId);
+            atomDihedralIdArrays_[tAtomId2].append(dihedralId);
+            atomDihedralIdArrays_[tAtomId3].append(dihedralId);
+            atomDihedralIdArrays_[tAtomId4].append(dihedralId);
+         }
+      }
+      #endif
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void Species::save(Serializable::OArchive &ar)
+   {
+      ar << id_;
+      ar << moleculeCapacity_;
+      ar << nAtom_;
+      ar << nBond_;
+      #ifdef INTER_ANGLE
+      ar << nAngle_;
+      #endif
+      #ifdef INTER_DIHEDRAL
+      ar << nDihedral_;
+      #endif
+      ar << atomTypeIds_;
+      ar << speciesBonds_;
+      #ifdef INTER_ANGLE
+      ar << speciesAngles_;
+      #endif
+      #ifdef INTER_DIHEDRAL
+      ar << speciesDihedrals_;
+      #endif
    }
 
    // Accessors

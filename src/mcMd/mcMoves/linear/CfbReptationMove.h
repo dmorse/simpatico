@@ -48,6 +48,20 @@ namespace McMd
       virtual void readParameters(std::istream& in);
    
       /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+   
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+   
+      /**
       * Generate and accept or reject configuration bias move
       */
       virtual bool move();
@@ -80,19 +94,20 @@ namespace McMd
       /// Policy for masking of nonbonded interactions between bonded atoms.
       MaskPolicy maskPolicy_;
 
-      double junctionFactor(Molecule* molPtr, int sign);
-
-      /// do we calculate the autocorrelation of accepted MC steps?
+      /// Do we calculate the autocorrelation of accepted MC steps?
       int hasAutoCorr_;
 
-      /// capacity of accepted step autocorrelation
+      /// Capacity of accepted step autocorrelation
       int autoCorrCapacity_;
 
-      /// filename for autocorrelation output
+      /// Filename for autocorrelation output
       std::string outputFileName_;
 
-      /// array of autocorrelators for accepted steps
+      /// Array of autocorrelators for accepted steps
       DArray<AutoCorr<double, double> > acceptedStepsAccumulators_;
+
+      double junctionFactor(Molecule* molPtr, int sign);
+
    };
 
 }      

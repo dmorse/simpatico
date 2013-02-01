@@ -9,7 +9,6 @@
 */
 
 #include <util/param/ParamComposite.h>    // base class
-#include <util/archives/Serializable.h>   // base class
 #include <util/boundary/Boundary.h>       // typedef
 
 #include <iostream>
@@ -27,7 +26,7 @@ namespace McMd
    *
    * \ingroup McMd_MdIntegrator_Module
    */
-   class MdIntegrator : public ParamComposite, public Serializable
+   class MdIntegrator : public ParamComposite
    {
    
    public:
@@ -51,20 +50,6 @@ namespace McMd
       * Take a complete MD integration step.
       */
       virtual void step() = 0;
-
-      /**
-      * Save the internal state to an archive.
-      *
-      * \param ar archive object.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load the internal state to an archive.
-      *
-      * \param ar archive object.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
 
       /**
       * Get Boundary of parent System.

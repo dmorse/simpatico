@@ -77,10 +77,10 @@ namespace Util
       Data*  data_;
 
       /// Number of rows (range of first index).
-      int    capacity1_;
+      int  capacity1_;
 
       /// Number of columns (range of first index).
-      int    capacity2_;
+      int  capacity2_;
 
       /**
       * Default constructor. 

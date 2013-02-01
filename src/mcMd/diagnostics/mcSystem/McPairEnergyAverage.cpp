@@ -45,7 +45,6 @@ namespace McMd
    */
    void McPairEnergyAverage::readParameters(std::istream& in)
    {
-
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
@@ -57,9 +56,35 @@ namespace McMd
       if (nSamplePerBlock_) {
          fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       }
-
       isInitialized_ = true;
    }
+
+   /*
+   * Load state from an archive.
+   */
+   void McPairEnergyAverage::loadParameters(Serializable::IArchive& ar)
+   {
+      Diagnostic::loadParameters(ar);  
+      loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
+      loadParameter<PairSelector>(ar,"selector", selector_);
+      ar & accumulator_;
+ 
+      if (nSamplePerBlock_ != accumulator_.nSamplePerBlock()) {
+         UTIL_THROW("Inconsistent values of nSamplePerBlock");
+      } 
+
+      // If nSamplePerBlock != 0, open an output file for block averages.
+      if (nSamplePerBlock_) {
+         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      }
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to archive.
+   */
+   void McPairEnergyAverage::save(Serializable::OArchive& ar)
+   {  ar & *this; }
 
    /*
    * Clear accumulator.
@@ -123,7 +148,6 @@ namespace McMd
       } // cells
 
       accumulator_.sample(energy, outputFile_);
-
    }
 
    /*
@@ -146,18 +170,6 @@ namespace McMd
 
    }
    
-   /*
-   * Save state to binary file archive.
-   */
-   void McPairEnergyAverage::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void McPairEnergyAverage::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
-
 }
 #endif
 #endif 

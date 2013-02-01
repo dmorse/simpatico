@@ -26,7 +26,7 @@
 #include <util/format/Dbl.h>
 #include <util/format/Str.h>
 #include <util/misc/Log.h>
-#include <util/random/serialize.h>
+//#include <util/random/serialize.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/misc/ioUtil.h>
 #include <util/misc/Timer.h>
@@ -48,6 +48,8 @@ namespace McMd
     : Simulation(communicator),
       system_(),
       mdDiagnosticManagerPtr_(0),
+      writeRestartFileName_(),
+      writeRestartInterval_(0),
       isInitialized_(false),
       isRestarting_(false)
    {
@@ -68,6 +70,8 @@ namespace McMd
     : Simulation(),
       system_(),
       mdDiagnosticManagerPtr_(0),
+      writeRestartFileName_(),
+      writeRestartInterval_(0),
       isInitialized_(false),
       isRestarting_(false)
    {
@@ -168,6 +172,12 @@ namespace McMd
       readParamComposite(in, system_); 
       readParamComposite(in, diagnosticManager());
 
+      // Parameters for writing restart files
+      read<int>(in, "writeRestartInterval", writeRestartInterval_);
+      if (writeRestartInterval_ > 0) {
+         read<std::string>(in, "writeRestartFileName", writeRestartFileName_);
+      }
+
       isValid();
       isInitialized_ = true;
    }
@@ -186,13 +196,44 @@ namespace McMd
       if (isRestarting_) {
          if (isInitialized_) {
             return;
-          }
-      } 
+         }
+      }
       readBegin(in, className().c_str());
       readParameters(in);
       readEnd(in);
    }
 
+   /* 
+   * Load parameters from an archive.
+   */
+   void MdSimulation::loadParameters(Serializable::IArchive& ar)
+   { 
+      if (isInitialized_) {
+         UTIL_THROW("Error: Called loadParameters when already initialized");
+      }
+
+      Simulation::loadParameters(ar); 
+      loadParamComposite(ar, system_); 
+      loadParamComposite(ar, diagnosticManager());
+      system_.loadConfig(ar);
+      ar & iStep_;
+
+      isValid();
+      isInitialized_ = true;
+   }
+ 
+   /* 
+   * Save parameters to an archive.
+   */
+   void MdSimulation::save(Serializable::OArchive& ar)
+   { 
+      Simulation::save(ar); 
+      system_.saveParameters(ar);
+      diagnosticManager().save(ar);
+      system_.saveConfig(ar);
+      ar & iStep_;
+   }
+ 
    /*
    * Read and implement commands in an input script.
    */
@@ -355,6 +396,7 @@ namespace McMd
 
             } else
             #ifndef UTIL_MPI
+            #ifndef INTER_NOPAIR
             if (command == "SET_PAIR") {
                std::string paramName;
                int typeId1, typeId2; 
@@ -366,6 +408,7 @@ namespace McMd
                system().pairPotential()
                        .set(paramName, typeId1, typeId2, value);
             } else 
+            #endif // ifndef INTER_NOPAIR
             if (command == "SET_BOND") {
                std::string paramName;
                int typeId; 
@@ -385,7 +428,7 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().anglePotential().set(paramName, typeId, value);
             } else 
-            #endif
+            #endif // ifdef INTER_ANGLE
             #ifdef INTER_DIHEDRAL
             if (command == "SET_DIHEDRAL") {
                std::string paramName;
@@ -396,8 +439,8 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().dihedralPotential().set(paramName, typeId, value);
             } else 
-            #endif
-            #endif
+            #endif // ifdef INTER_DIHEDRAL
+            #endif // ifndef UTIL_MPI
             {
                Log::file() << "Error: Unknown command  " << std::endl;
                readNext = false;
@@ -440,6 +483,7 @@ namespace McMd
          if (Diagnostic::baseInterval > 0) {
             if (iStep_ % Diagnostic::baseInterval == 0) {
                system().shiftAtoms();
+               writeRestart(writeRestartFileName_);
                diagnosticManager().sample(iStep_);
             }
          }
@@ -464,9 +508,10 @@ namespace McMd
       // Shift final atomic positions 
       system().shiftAtoms();
 
-      // Sample diagnostic for final configuration
+      // Final restart / diagnostics
       if (Diagnostic::baseInterval > 0) {
          if (iStep_ % Diagnostic::baseInterval == 0) {
+            writeRestart(writeRestartFileName_);
             diagnosticManager().sample(iStep_);
          }
       }
@@ -671,61 +716,41 @@ namespace McMd
 
    }
 
-   void MdSimulation::writeRestart(const std::string& filename)
-   {
-      std::ofstream out;
-      fileMaster().openParamOFile(filename, ".prm", out);
-      writeParam(out);
-      out << "iStep = " << iStep_; 
-      out.close();
-
-      fileMaster().openRestartOFile(filename, ".rst", out);
-      Serializable::OArchiveType ar;
-      ar.setStream(out);
-
-      ar & random();
-      //ar & system();
-      system().save(ar);
-      system().mdIntegrator().save(ar);
-      ar & iStep_;
-      mdDiagnosticManagerPtr_->save(ar);
-      out.close();
-   }
-
    void MdSimulation::readRestart(const std::string& filename)
    {
-      // readRestart
+      // Precondition
       if (isInitialized_) {
          UTIL_THROW("Error: Called readRestart when already initialized");
       }
-      if (!isRestarting_) {
-         UTIL_THROW("Error: Called readRestart without restart option");
-      }
 
-      // Open and read parameter (*.prm) file
-      std::ifstream in;
-      fileMaster().openParamIFile(filename, ".prm", in);
-      readParam(in);
-      in.close();
-
-      // Open restart *.rst file and associate with an archive
-      fileMaster().openRestartIFile(filename, ".rst", in);
-      Serializable::IArchiveType ar;
-      ar.setStream(in);
-
-      // Load internal state from restart (*.rst) file.
-      ar & random();
-      system().load(ar);
-      system().mdIntegrator().load(ar);
-      ar & iStep_;
-      mdDiagnosticManagerPtr_->load(ar);
-      in.close();
+      // Load state from archive
+      Serializable::IArchive ar;
+      fileMaster().openRestartIFile(filename, ".rst", ar.file());
+      load(ar);
+      ar.file().close();
 
       // Set command (*.cmd) file
       std::string commandFileName = filename + ".cmd";
       fileMaster().setCommandFileName(commandFileName);
 
       isInitialized_ = true;
+      isRestarting_  = true;
+   }
+
+   /*
+   * Write a restart file with specified filename, if at interval.
+   */
+   void MdSimulation::writeRestart(const std::string& filename)
+   {
+      // Write restart file
+      if (writeRestartInterval_ > 0) {
+         if (iStep_ % writeRestartInterval_ == 0) {
+            Serializable::OArchive ar;
+            fileMaster().openRestartOFile(filename, ".rst", ar.file());
+            save(ar);
+            ar.file().close();
+         }
+      }
    }
 
    /* 

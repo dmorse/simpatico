@@ -84,6 +84,58 @@ namespace McMd
    }
 
    /*
+   * Load state from an archive.
+   */
+   void AtomMSD::loadParameters(Serializable::IArchive& ar)
+   { 
+      loadInterval(ar);
+      loadOutputFileName(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "atomId", atomId_);
+      loadParameter<int>(ar, "capacity", capacity_);
+
+      // Validate parameters
+      if (speciesId_ < 0)
+         UTIL_THROW("Negative speciesId");
+      if (speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("speciesId > nSpecies");
+      }
+      if (atomId_ < 0) UTIL_THROW("Negative atomId");
+      if (capacity_ <= 0) UTIL_THROW("Negative capacity");
+
+      Species* speciesPtr = &system().simulation().species(speciesId_);
+
+      if (atomId_ >= speciesPtr->nAtom()) {
+         UTIL_THROW("atomId >= nAtom");
+      }
+
+      // Maximum possible number of molecules of this species
+      int speciesCapacity = speciesPtr->capacity();
+
+      // Allocate local arrays
+      truePositions_.allocate(speciesCapacity);
+      oldPositions_.allocate(speciesCapacity);
+      shifts_.allocate(speciesCapacity);
+
+      // Allocate memory for the AutoCorrArray accumulator
+      accumulator_.setParam(speciesCapacity, capacity_);
+
+      ar & accumulator_;
+      ar & truePositions_;
+      ar & oldPositions_;
+      ar & shifts_;
+      ar & nMolecule_;
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to archive.
+   */
+   void AtomMSD::save(Serializable::OArchive& ar)
+   { ar & (*this); }
+
+   /*
    * Initialize at beginning of simulation.
    */
    void AtomMSD::setup() 
@@ -106,7 +158,6 @@ namespace McMd
          oldPositions_[i] = r;
          shifts_[i] = zero;
       }
-
    }
 
    /*
@@ -179,18 +230,5 @@ namespace McMd
 
    }
 
-   /*
-   * Save state to binary file archive.
-   */
-   void AtomMSD::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void AtomMSD::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
-
 }
-
 #endif 

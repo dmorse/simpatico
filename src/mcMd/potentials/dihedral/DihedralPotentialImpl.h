@@ -54,13 +54,27 @@ namespace McMd
       /**
       * Read dihedral potential parameters.
       * 
-      * This method reads the dihedral potential Interaction parameter 
-      * block.  Before calling Evalutor::readParameters(), it passes 
-      * simulation().nBondType() to Interaction::setNAtomType().
+      * This method sets the number of dihedral types in the Interaction,
+      * and the calls the Interaction::readParameters() to read the 
+      * parameters for the dihedral potential.
       *
       * \param in input parameter stream.
       */
       virtual void readParameters(std::istream& in);
+
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       /// \name Interaction Interface.
       //@{
@@ -251,6 +265,34 @@ namespace McMd
          bool nextIndent = false;
          addParamComposite(interaction(), nextIndent);
          interaction().readParameters(in);
+      }
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   template <class Interaction>
+   void 
+   DihedralPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> isCopy_;
+      if (!isCopy_) {
+         interaction().setNDihedralType(simulation().nDihedralType());
+         bool nextIndent = false;
+         addParamComposite(interaction(), nextIndent);
+         interaction().loadParameters(ar);
+      } 
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   template <class Interaction>
+   void DihedralPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
+   {
+      ar << isCopy_;
+      if (!isCopy_) {
+         interaction().save(ar);
       }
    }
 

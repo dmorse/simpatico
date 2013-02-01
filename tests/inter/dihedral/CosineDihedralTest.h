@@ -4,117 +4,87 @@
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 
+#include "DihedralTestTemplate.h"
 #include <inter/dihedral/CosineDihedral.h>
-#include <mcMd/chemistry/Atom.h>
-#include <util/random/Random.h>
-#include <util/containers/RArray.h>
 
-#include <iostream>
-#include <fstream>
+// #include <util/random/Random.h>
+// #include <util/containers/RArray.h>
+
+// #include <iostream>
+// #include <fstream>
 
 using namespace Util;
 using namespace Inter;
 
-class CosineDihedralTest : public UnitTest 
+class CosineDihedralTest : public DihedralTestTemplate<CosineDihedral>
 {
 
-private:
+protected:
 
-   CosineDihedral dihedralPotential;
-   Vector        r[3];
+   using DihedralTestTemplate<CosineDihedral>::readParamFile;
 
 public:
 
-   void setUp()
-   {
-      // Set Boundary Lengths
-      dihedralPotential.setNDihedralType(1);
-
-      // Read parameters from file
-      std::ifstream in("dihedral/in/CosineDihedral");
-      dihedralPotential.readParameters(in);
-      in >> r[0];
-      in >> r[1];
-      in >> r[2];
-      in.close();
-
-      //r[0] = Vector(1.0, 0.3, 0.5);
-      //r[1] = Vector(1.0, 1.0, 1.0);
-      //r[2] = Vector(1.0, 1.0, 0.4);
+   void setUp() {
+      eps_ = 1.0E-6;
+      setNDihedralType(1);
+      readParamFile("in/CosineDihedral");
    }
-
-
-   void tearDown()
-   {}
-
 
    void testSetUp() 
-   {
-      printMethod(TEST_FUNC);
-   }
-
-
-   void testWrite() {
-      printMethod(TEST_FUNC);
-
-      // Verbose output
+   {  
+      printMethod(TEST_FUNC); 
       if (verbose() > 0) { 
-         dihedralPotential.writeParam(std::cout);
+         interaction_.writeParam(std::cout);
       }
    }
-
 
    void testEnergy() 
    {
-      Vector re[3], force;
-      double energy, eps, newEnergy;
-     
-      printMethod(TEST_FUNC);
-      std::cout << std::endl;
-      
-      energy = dihedralPotential.energy(r[0], r[1], r[2], 0);
-      std::cout << r[0] << std::endl;
-      std::cout << r[1] << std::endl;
-      std::cout << r[2] << std::endl;
-      std::cout << "dihedralPotential.energy = " << energy << std::endl;
+      printMethod(TEST_FUNC); 
+      double energy;
 
-      eps = 0.00001;
-      re[0] = Vector(eps, 0.0, 0.0);
-      re[1] = Vector(0.0, eps, 0.0);
-      re[2] = Vector(0.0, 0.0, eps);
+      b1_ = Vector(1.0, 0.0,  0.0);
+      b2_ = Vector(0.0, 1.0,  0.0);
+      b3_ = Vector(0.0, 0.0,  1.0);
+      type_ = 0;
+      energy = interaction_.energy(b1_, b2_, b3_, type_);
+      TEST_ASSERT(eq(energy, 1.0));
+      // std::cout << std::endl;
+      // std::cout << energy << std::endl;
 
-      std::cout << "dihedralPotential.energy perturbation: " << std::endl;
-      for (int j = 0; j < 3; ++j) { // bond vectors
-         for (int k = 0; k < 3; ++k) { // components
-            r[j] += re[k];
-            newEnergy = dihedralPotential.energy(r[0], r[1], r[2], 0);
-            r[j] -= re[k];
-            force[k] = (newEnergy - energy) / eps;
-         }
-         std::cout << force << std::endl;
-      }
+      b1_ = Vector( 1.1,  0.2, -0.3);
+      b2_ = Vector( 0.1,  0.9,  0.2);
+      b3_ = Vector(-0.1,  0.2,  1.0);
+      type_ = 0;
+      energy = interaction_.energy(b1_, b2_, b3_, type_);
+      // std::cout << energy << std::endl;
+
    }
 
    void testForce() 
    {
-      Vector f1, f2, f3;
- 
-      printMethod(TEST_FUNC);
-      std::cout << std::endl;
-     
-      dihedralPotential.force(r[0], r[1], r[2], f1, f2, f3, 0);
+      printMethod(TEST_FUNC); 
 
-      std::cout << "dihedralPotential.force: " << std::endl;
-      std::cout << f1 << std::endl;
-      std::cout << f2 << std::endl;
-      std::cout << f3 << std::endl;
+      b1_ = Vector(1.0, 0.0,  0.0);
+      b2_ = Vector(0.0, 1.0,  0.0);
+      b3_ = Vector(0.0, 0.0,  1.0);
+      type_ = 0;
+      forceTest();
+
+      b1_ = Vector( 1.1,  0.2, -0.3);
+      b2_ = Vector( 0.1,  0.9,  0.2);
+      b3_ = Vector(-0.1,  0.2,  1.0);
+      type_ = 0;
+      forceTest();
    }
+
+
 
 };
 
 TEST_BEGIN(CosineDihedralTest)
 TEST_ADD(CosineDihedralTest, testSetUp)
-TEST_ADD(CosineDihedralTest, testWrite)
 TEST_ADD(CosineDihedralTest, testEnergy)
 TEST_ADD(CosineDihedralTest, testForce)
 TEST_END(CosineDihedralTest)

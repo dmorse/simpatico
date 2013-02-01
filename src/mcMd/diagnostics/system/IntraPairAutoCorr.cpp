@@ -44,11 +44,8 @@ namespace McMd
    */
    void IntraPairAutoCorr::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
       readInterval(in);
       readOutputFileName(in);
-
       read<int>(in, "speciesId", speciesId_);
       read<int>(in, "atom1Id", atom1Id_);
       read<int>(in, "atom2Id", atom2Id_);
@@ -88,6 +85,46 @@ namespace McMd
       isInitialized_ = true;
    }
 
+   /*
+   * Load state from an archive.
+   */
+   void IntraPairAutoCorr::loadParameters(Serializable::IArchive& ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "atom1Id", atom1Id_);
+      loadParameter<int>(ar, "atom2Id", atom2Id_);
+      loadParameter<int>(ar, "capacity", capacity_);
+      ar & nMolecule_;
+      ar & accumulator_;
+
+      // Validate
+      if (speciesId_ < 0) UTIL_THROW("Negative speciesId");
+      if (atom1Id_ < 0) UTIL_THROW("Negative atom1Id");
+      if (atom2Id_ < 0) UTIL_THROW("Negative atom2Id"); 
+      if (atom2Id_ <= atom1Id_)UTIL_THROW("atom2Id  <= atom1Id");
+      if (capacity_ <= 0) UTIL_THROW("Negative capacity");
+      if (speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("speciesId > nSpecies");
+      }
+
+      speciesPtr_ = &system().simulation().species(speciesId_);
+      int nAtom = speciesPtr_->nAtom();
+      if (atom1Id_ >= nAtom) UTIL_THROW("atom1Id >= nAtom");
+      if (atom2Id_ >= nAtom) UTIL_THROW("atom2Id >= nAtom");
+
+      // Allocate an array of separation Vectors
+      int speciesCapacity = speciesPtr_->capacity();
+      data_.allocate(speciesCapacity); 
+ 
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to archive.
+   */
+   void IntraPairAutoCorr::save(Serializable::OArchive& ar)
+   { ar & *this; }
 
    /*
    * Set actual number of molecules and clear accumulator.
@@ -101,7 +138,6 @@ namespace McMd
       // Set number of molecules and clear accumulator
       nMolecule_ = system().nMolecule(speciesId_);
       accumulator_.setNEnsemble(nMolecule_);
-
       accumulator_.clear();
    }
 
@@ -111,18 +147,19 @@ namespace McMd
    void IntraPairAutoCorr::sample(long iStep) 
    { 
       if (isAtInterval(iStep))  {
-
          Molecule* moleculePtr;
          Vector    r1, r2, dR;
          int       i, j;
 
-         // Validate nMolecule_
-         if (nMolecule_ <= 0)
+         // Validate nMolecules_
+         if (nMolecule_ <= 0) {
             UTIL_THROW("nMolecule <= 0");
-         if (nMolecule_ != system().nMolecule(speciesId_)) 
+         }
+         if (nMolecule_ != system().nMolecule(speciesId_)) {
             UTIL_THROW("Number of molecules has changed");
+         }
 
-         // Loop over molecules
+         // Loop over molecules in species
          for (i = 0; i < nMolecule_; ++i) {
             moleculePtr = &system().molecule(speciesId_, i);
 
@@ -137,11 +174,9 @@ namespace McMd
             }
 
          }
-      
          accumulator_.sample(data_);
 
       } // if isAtInterval
-
    }
 
    /*
@@ -169,21 +204,7 @@ namespace McMd
       fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       accumulator_.output(outputFile_); 
       outputFile_.close();
-
    }
 
-   /*
-   * Save state to binary file archive.
-   */
-   void IntraPairAutoCorr::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void IntraPairAutoCorr::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
-
 }
-
 #endif 

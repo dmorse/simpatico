@@ -9,8 +9,8 @@
 */
 
 #include "McEnergyAverage.h"                        // class header
-#include <util/misc/FileMaster.h>  
-#include <util/archives/Serializable_includes.h>
+//#include <util/misc/FileMaster.h>  
+//#include <util/archives/Serializable_includes.h>
 
 
 #include <cstdio> 
@@ -24,39 +24,10 @@ namespace McMd
    * Constructor.
    */
    McEnergyAverage::McEnergyAverage(McSystem& system)
-    : SystemDiagnostic<McSystem>(system),
-      outputFile_(),
-      accumulator_(),
-      nSamplePerBlock_(1),
-      isInitialized_(false)
+    : AverageDiagnostic<McSystem>(system)
    {  setClassName("McEnergyAverage"); }
 
-   /*
-   * Read parameters and initialize.
-   */
-   void McEnergyAverage::readParameters(std::istream& in)
-   {
 
-      readInterval(in);
-      readOutputFileName(in);
-      read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
-
-      accumulator_.setNSamplePerBlock(nSamplePerBlock_);
-
-      // If nSamplePerBlock != 0, open an output file for block averages.
-      if (accumulator_.nSamplePerBlock()) {
-         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
-      }
-
-      isInitialized_ = true;
-   }
-
-   /*
-   * Clear accumulator.
-   */
-   void McEnergyAverage::setup() 
-   {  accumulator_.clear(); }
- 
    /* 
    * Evaluate energy, and add to accumulator.
    */
@@ -66,37 +37,6 @@ namespace McMd
          accumulator_.sample(system().potentialEnergy(), outputFile_);
       }
    }
-
-   /*
-   * Output results to file after simulation is completed.
-   */
-   void McEnergyAverage::output() 
-   { 
-      // If outputFile_ was used to write block averages, close it.
-      if (accumulator_.nSamplePerBlock()) {
-         outputFile_.close();
-      }
-
-      fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
-      writeParam(outputFile_); 
-      outputFile_.close();
-
-      fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
-      accumulator_.output(outputFile_); 
-      outputFile_.close();
-   }
    
-   /*
-   * Save state to binary file archive.
-   */
-   void McEnergyAverage::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void McEnergyAverage::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
-
 }
 #endif 

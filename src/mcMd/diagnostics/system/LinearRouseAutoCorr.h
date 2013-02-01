@@ -55,6 +55,29 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
   
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
       /** 
       * Set number of molecules, initialize eigenvector, and clear accumulator.
       */
@@ -71,15 +94,6 @@ namespace McMd
       * Output results after simulation is completed.
       */
       virtual void output();
-
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
 
    private:
 
@@ -124,18 +138,15 @@ namespace McMd
    template <class Archive>
    void LinearRouseAutoCorr::serialize(Archive& ar, const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
-
-      // Data not set by readParam
-      ar & accumulator_;
+      Diagnostic::serialize(ar, version);
+      ar & speciesId_;
+      ar & p_;
+      ar & capacity_;
+      ar & nAtom_;
       ar & nMolecule_;
+      ar & accumulator_;
+      ar & projector_;
 
-      // Data set by readParam (check consistency).
-      serializeCheck(ar, speciesId_, "speciesId");
-      serializeCheck(ar, nAtom_, "nAtom");
-      serializeCheck(ar, capacity_, "capacity");
    }
 
 }

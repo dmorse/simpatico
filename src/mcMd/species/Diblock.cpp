@@ -82,6 +82,77 @@ namespace McMd
    }
  
    /* 
+   * Load from Serializable::IArchive.
+   */
+   void Diblock::loadSpeciesParam(Serializable::IArchive &ar)
+   {
+      loadCArray<int>(ar, "blockLengths", blockLengths_, 2);
+      for (int i=0; i < 2; ++i) {
+         if (blockLengths_[i] < 1) {
+            UTIL_THROW("Invalid blockLength for diblock.");
+         }
+      }
+      nAtom_ = blockLengths_[0] + blockLengths_[1];
+      loadCArray<int>(ar, "atomTypes", atomTypes_, 2);
+
+      nBond_  = nAtom_ - 1;
+      loadParameter<int>(ar,"bondType", bondType_);
+      #ifdef INTER_ANGLE
+      loadParameter<int>(ar,"hasAngles", hasAngles_);
+      if (hasAngles_) {
+         nAngle_ = nBond_ - 1;
+         if (nAngle_ > 0) {
+            loadParameter<int>(ar,"angleType", angleType_);
+         }
+      } else {
+         nAngle_ = 0;
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      loadParameter<int>(ar,"hasDihedrals", hasDihedrals_);
+      if (hasDihedrals_) {
+         if (nAtom_ > 3) {
+            nDihedral_ = nAtom_ - 3;
+         } else {
+            nDihedral_ = 0;
+         }
+         if (nDihedral_ > 0) {
+            loadParameter<int>(ar, "dihedralType", dihedralType_);
+         } else {
+            nDihedral_ = 0;
+         }
+      } else {
+         nDihedral_ = 0;
+      }
+      #endif
+
+      buildLinear();
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void Diblock::save(Serializable::OArchive &ar)
+   {
+      ar << moleculeCapacity_;
+      ar.pack(blockLengths_, 2);
+      ar.pack(atomTypes_, 2);
+      ar << bondType_;
+      #ifdef INTER_ANGLE
+      ar << hasAngles_;
+      if (hasAngles_ && nAngle_ > 0) {
+         ar << angleType_;
+      } 
+      #endif
+      #ifdef INTER_DIHEDRAL
+      ar << hasDihedrals_;
+      if (hasDihedrals_ && nDihedral_ > 0) {
+         ar << dihedralType_;
+      } 
+      #endif
+   }
+
+   /* 
    * Return atomTypes_ for every atom.
    */
    int Diblock::calculateAtomTypeId(int index) const

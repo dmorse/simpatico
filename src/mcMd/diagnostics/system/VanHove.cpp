@@ -27,20 +27,25 @@ namespace McMd
 
    using namespace Util;
 
-   /// Constructor.
+   /*
+   * Constructor.
+   */
    VanHove::VanHove(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
    {  setClassName("VanHove"); }
 
+   /*
+   * Destructor
+   */
    VanHove::~VanHove() 
    {}
 
-   /// Read parameters from file, and allocate data array.
+   /*
+   * Read parameters from file, and allocate memory.
+   */
    void VanHove::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
       readInterval(in);
       readOutputFileName(in);
 
@@ -61,6 +66,44 @@ namespace McMd
       readDArray<IntVector>(in, "waveIntVectors", waveIntVectors_, nWave_);
       isInitialized_ = true;
    }
+
+   /*
+   * Load state from an archive.
+   */
+   void VanHove::loadParameters(Serializable::IArchive& ar)
+   {  
+      Diagnostic::loadParameters(ar);
+      ar & nAtomType_;
+      loadDArray<double>(ar, "atomTypeCoeffs", atomTypeCoeffs_, nAtomType_);
+      loadParameter<int>(ar, "nBuffer", nBuffer_);
+      loadParameter<int>(ar, "nWave", nWave_);
+      loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
+      ar & accumulators_;
+      ar & nSample_;
+
+      // Validate
+      if (nAtomType_ != system().simulation().nAtomType()) {
+         UTIL_THROW("Inconsistent values of nAtomType");
+      }
+      if (nAtomType_ != atomTypeCoeffs_.capacity()) {
+         UTIL_THROW("Inconsistent capacity for atomTypeCoeffs");
+      }
+      if (nWave_ != waveIntVectors_.capacity()) {
+         UTIL_THROW("Inconsistent capacity for waveIntVectors");
+      }
+
+      // Allocate
+      waveVectors_.allocate(nWave_);
+      fourierModes_.allocate(nWave_);
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   void VanHove::save(Serializable::OArchive& ar)
+   {  ar & *this; }
 
    /*
    * Clear accumulators.
@@ -190,16 +233,5 @@ namespace McMd
 
    }
 
-   /*
-   * Save state to binary file archive.
-   */
-   void VanHove::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void VanHove::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
 }
 #endif

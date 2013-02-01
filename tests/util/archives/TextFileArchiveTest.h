@@ -18,38 +18,40 @@ class TextFileArchiveTest : public UnitTest
 
 public:
 
-   TextFileArchiveTest()
-   {}
+   TextFileArchiveTest() {}
 
-   void setUp() 
-   {}
-
+   void setUp() {}
    void tearDown() {}
-   void testOArchiveConstructor();
+
+   void testOArchiveConstructor1();
+   void testOArchiveConstructor2();
    void testPack();
 
 };
 
-
-void TextFileArchiveTest::testOArchiveConstructor()
+void TextFileArchiveTest::testOArchiveConstructor1()
 {
    printMethod(TEST_FUNC);
-   std::ofstream out;
-   openOutputFile("text", out);
    TextFileOArchive  v;
-   v.setStream(out);
+   openOutputFile("text", v.file());
+} 
+
+void TextFileArchiveTest::testOArchiveConstructor2()
+{
+   printMethod(TEST_FUNC);
+   TextFileOArchive  v("dummy");
+   v.file().close();
 } 
 
 void TextFileArchiveTest::testPack()
 {
    printMethod(TEST_FUNC);
-   std::ofstream out;
-   openOutputFile("text", out);
    TextFileOArchive  v;
-   v.setStream(out);
+   openOutputFile("text", v.file());
 
    // Declare variables
    int i1, i2;
+   int u1, u2;
    double d1, d2;
    std::complex<double> c1, c2;
    std::string s1, s2;
@@ -57,10 +59,12 @@ void TextFileArchiveTest::testPack()
    SerializeTestClass o1, o2;
    double b1[4];
    double b2[4];
-
+   double m1[2][2];
+   double m2[2][2];
 
    // Initialize variables
    i1 = 3;
+   u1 = 7;
    d1 = 45.0;
    c1 = std::complex<double>(3.0, 4.0);
    s1 = "My string has spaces";
@@ -73,24 +77,31 @@ void TextFileArchiveTest::testPack()
    b1[1] = 8.0;
    b1[2] = 7.0;
    b1[3] = 6.0;
+   m1[0][0] = 13.0;
+   m1[0][1] = 14.0;
+   m1[1][0] = 15.0;
+   m1[1][1] = 16.0;
   
    // Write variables to OArchive v
    v << i1;
+   v & u1;
    v & d1;
    v << c1;
    v << s1;
    v << a1;
    v << o1;
    v.pack(b1, 4);
-   out.close();
+   v.pack(m1[0], 2, 2);
+   v.file().close();
 
-   std::ifstream in;
-   openInputFile("text", in);
    TextFileIArchive u;
-   u.setStream(in);
+   openInputFile("text", u.file());
 
    u >> i2;
    TEST_ASSERT(i1 == i2);
+
+   u & u2;
+   TEST_ASSERT(u1 == u2);
 
    u & d2;
    TEST_ASSERT(d1 == d2);
@@ -112,10 +123,20 @@ void TextFileArchiveTest::testPack()
    for (int j = 0; j < 4; ++j) {
       TEST_ASSERT(b1[j] == b2[j]);
    }
+
+   u.unpack(m2[0], 2, 2);
+   int i, j;
+   for (i = 0; i < 2; ++i) {
+      for (j = 0; j < 2; ++j) {
+         TEST_ASSERT(eq(m1[i][j], m2[i][j]));
+      }
+   }
+
 }
 
 TEST_BEGIN(TextFileArchiveTest)
-TEST_ADD(TextFileArchiveTest, testOArchiveConstructor)
+TEST_ADD(TextFileArchiveTest, testOArchiveConstructor1)
+TEST_ADD(TextFileArchiveTest, testOArchiveConstructor2)
 TEST_ADD(TextFileArchiveTest, testPack)
 TEST_END(TextFileArchiveTest)
 

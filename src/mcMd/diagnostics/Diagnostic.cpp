@@ -30,8 +30,8 @@ namespace McMd
    Diagnostic::Diagnostic()
     : ParamComposite(),
       outputFileName_(),
-      fileMasterPtr_(0),
-      interval_(1)
+      interval_(1),
+      fileMasterPtr_(0)
    {}
    
    /* 
@@ -41,11 +41,19 @@ namespace McMd
    {}
    
    /*
+   * Read parameters from stream, default implementation.
+   */
+   void Diagnostic::readParameters(std::istream& in)
+   {
+      readInterval(in);
+      readOutputFileName(in);
+   }
+
+   /*
    * Read the interval from parameter file, with error checking.
    */
    void Diagnostic::readInterval(std::istream &in) 
    {
-   
       // Check that baseInterval has a nonzero, positive value
       if (baseInterval == 0) {
          UTIL_THROW("baseInterval == 0");
@@ -57,36 +65,78 @@ namespace McMd
       // Read interval value (inherited from Interval)
       read<long>(in, "interval", interval_);
    
-      // Check that interval has a nonzero, positive value
+      // Postconditons
       if (interval_ == 0) {
          UTIL_THROW("interval_ == 0");
       }
       if (interval_ < 0) {
          UTIL_THROW("interval_ < 0");
       }
-
-      // Check that interval is a multiple of baseInterval
       if (interval_ % baseInterval != 0) {
          UTIL_THROW("interval is not a multiple of baseInterval");
       }
-   
+   }
+
+   void Diagnostic::readOutputFileName(std::istream &in) 
+   {  read<std::string>(in, "outputFileName", outputFileName_); }
+
+   /*
+   * Load parameters from archive, default implementation.
+   */
+   void Diagnostic::loadParameters(Serializable::IArchive& ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
    }
 
    /*
-   * Read output file name and open output file.
+   * Load parameters from archive, with error checking.
    */
-   void Diagnostic::readOutputFileName(std::istream &in) 
-   {  
-      read<std::string>(in, "outputFileName", outputFileName_); 
+   void Diagnostic::loadInterval(Serializable::IArchive& ar)
+   {
+      // Check that baseInterval has a nonzero, positive value
+      if (baseInterval == 0) {
+         UTIL_THROW("baseInterval == 0");
+      }
+      if (baseInterval < 0) {
+         UTIL_THROW("baseInterval < 0");
+      }
+   
+      // Load parameters
+      loadParameter<long>(ar, "interval", interval_);
+   
+      // Postconditons
+      if (interval_ == 0) {
+         UTIL_THROW("interval_ == 0");
+      }
+      if (interval_ < 0) {
+         UTIL_THROW("interval_ < 0");
+      }
+      if (interval_ % baseInterval != 0) {
+         UTIL_THROW("interval is not a multiple of baseInterval");
+      }
+   }
+
+   /*
+   * Load outputFileName from archive.
+   */
+   void Diagnostic::loadOutputFileName(Serializable::IArchive& ar)
+   { loadParameter<std::string>(ar, "outputFileName", outputFileName_); }
+
+   /*
+   * Save interval and outputFileName to archive.
+   */
+   void Diagnostic::save(Serializable::OArchive& ar)
+   {
+      ar & interval_;
+      ar & outputFileName_;
    }
 
    /*
    * Set the FileMaster.
    */
    void Diagnostic::setFileMaster(FileMaster& fileMaster)
-   { 
-      fileMasterPtr_ = &fileMaster;
-   }
+   {  fileMasterPtr_ = &fileMaster; }
 
    /*
    * Get the FileMaster by reference.
@@ -106,18 +156,6 @@ namespace McMd
       filename += suffix;
       return filename;
    }
-
-   /*
-   * Save state to binary file archive.
-   */
-   void Diagnostic::save(Serializable::OArchiveType& ar)
-   {}
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void Diagnostic::load(Serializable::IArchiveType& ar)
-   {}
 
 }
 #endif

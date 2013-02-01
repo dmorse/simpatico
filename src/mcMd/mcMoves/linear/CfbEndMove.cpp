@@ -46,17 +46,54 @@ namespace McMd
       read<int>(in, "nRegrow", nRegrow_);
       read<int>(in, "nTrial", nTrial_);
 
-      // Check that 0 < nTrial_ <= MaxTrial
+      // Validate
       if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
          UTIL_THROW("Invalid value input for nTrial");
       }
-
-      // Use dynamic_cast to check that the Species is actually a Linear species
       Linear* chainPtr;
       chainPtr = dynamic_cast<Linear*>(&(simulation().species(speciesId_)));
+      if (!chainPtr) {
+         UTIL_THROW("Species is not a subclass of Linear");
+      }
+  
+      // Allocate 
+      oldPos_.allocate(nRegrow_); 
+   }
+
+   /* 
+   * Read parameters speciesId, nRegrow, and nTrial
+   */
+   void CfbEndMove::loadParameters(Serializable::IArchive& ar) 
+   {
+      // Read parameters
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "nRegrow", nRegrow_);
+      loadParameter<int>(ar, "nTrial", nTrial_);
+
+      // Validate
+      if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
+         UTIL_THROW("Invalid value input for nTrial");
+      }
+      Linear* chainPtr;
+      chainPtr = dynamic_cast<Linear*>(&(simulation().species(speciesId_)));
+      if (!chainPtr) {
+         UTIL_THROW("Species is not a subclass of Linear");
+      }
   
       // Allocate array to store old positions 
       oldPos_.allocate(nRegrow_); 
+   }
+
+   /* 
+   * Save state to archive.
+   */
+   void CfbEndMove::save(Serializable::OArchive& ar) 
+   {
+      McMove::save(ar);
+      ar & speciesId_;
+      ar & nRegrow_;
+      ar & nTrial_;
    }
 
    /* 

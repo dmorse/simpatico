@@ -26,17 +26,50 @@ namespace McMd
    {
 
    public:
-   
-      /// Constructor.
+  
+      /* 
+      * Constructor.
+      */
       MdEnergyOutput(MdSystem& system);
 
-      /// Read output file and nStepPerSample.
+      /**
+      * Read output file and nStepPerSample.
+      *
+      * \param in input parameter stream
+      */
       virtual void readParameters(std::istream& in);
  
-      /// Evaluate energy and print.
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+   
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+  
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
+      /** 
+      * Evaluate energy and print.
+      */
       virtual void sample(long iStep);
 
-      /// Output final summary and file format
+      /**
+      * Output final summary and file format.
+      */
       virtual void output();
 
    private:
@@ -45,6 +78,13 @@ namespace McMd
       std::ofstream outputFile_;
    
    };
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void MdEnergyOutput::serialize(Archive& ar, const unsigned int version)
+   {  Diagnostic::serialize(ar, version); }
 
 }
 #endif 

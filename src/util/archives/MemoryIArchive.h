@@ -111,6 +111,16 @@ namespace Util
       template <typename T>
       void unpack(T* array, int n);
 
+      /**
+      * Unpack a 2D C array.
+      *
+      * \param array pointer to [0][0] element of 2D array
+      * \param m     number of rows
+      * \param n     number of columns
+      */
+      template <typename T> 
+      void unpack(T* array, int m, int n);
+
       #ifdef UTIL_MPI
       /**
       * Receive packed data via MPI.
@@ -271,6 +281,26 @@ namespace Util
       cursor_ = (Byte *)ptr;
    }
 
+   /*
+   * Bitwise pack a 2D C-array of objects of type T.
+   */
+   template <typename T>
+   void MemoryIArchive::unpack(T* array, int m, int n)
+   {
+      if (cursor_ + m*n*sizeof(T) > end_) {
+         UTIL_THROW("Attempted read past end of data");
+      }
+      int i, j;
+      T* ptr = (T *)cursor_;
+      for (i = 0; i < m; ++i) {
+         for (j = 0; j < n; ++j) {
+            array[i*n + j] = *ptr;
+            ++ptr;
+         }
+      }
+      cursor_ = (Byte *)ptr;
+   }
+
    // Explicit specializations of serialize function
 
    /*
@@ -336,6 +366,24 @@ namespace Util
    inline void serialize(MemoryIArchive& ar, double& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
+
+   /*
+   * Load a std::vector from a MemoryIArchive.
+   */
+   template <typename T>
+   void serialize(MemoryIArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      T element;
+      std::size_t size;
+      ar.unpack(size);
+      data.reserve(size);
+      data.clear();
+      for (size_t i = 0; i < size; ++i) {
+         ar & element;
+         data.push_back(element);
+      }
+   }
 
    // Explicit serialize methods for std library types.
 

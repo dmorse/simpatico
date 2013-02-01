@@ -39,7 +39,9 @@ namespace McMd
      sigma_(-1.0),
      temperature_(1.0),
      cutoffSq_(-1.0),
+     #ifndef INTER_NOPAIR
      pairListPtr_(&system.pairPotential().pairList()),
+     #endif
      boundaryPtr_(&system.boundary()),
      randomPtr_(&system.simulation().random()),
      energyEnsemblePtr_(&system.energyEnsemble()),
@@ -71,9 +73,11 @@ namespace McMd
    {
       read<double>(in, "dt", dt_);
       read<double>(in, "cutoff", cutoff_);
+      #ifndef INTER_NOPAIR
       if (cutoff_ > system().pairPotential().maxPairCutoff()) {
          UTIL_THROW("Error: Dpd pair cutoff > maxCutoff of pair potential");
       }
+      #endif
       read<double>(in, "gamma", gamma_);
 
       // Allocate arrays for internal use
@@ -81,6 +85,45 @@ namespace McMd
       randomForces_.allocate(atomCapacity_);
       dtMinvFactors_.allocate(simulation().nAtomType());
 
+   }
+
+   /*
+   * Load the internal state to an archive.
+   */
+   void NvtDpdVvIntegrator::loadParameters(Serializable::IArchive& ar)
+   {  
+      loadParameter<double>(ar, "dt", dt_);
+      loadParameter<double>(ar, "cutoff", cutoff_);
+      #ifndef INTER_NOPAIR
+      if (cutoff_ > system().pairPotential().maxPairCutoff()) {
+         UTIL_THROW("Error: Dpd pair cutoff > maxCutoff of pair potential");
+      }
+      #endif
+      loadParameter<double>(ar, "gamma", gamma_);
+      ar & temperature_;
+      ar & sigma_;
+      ar & cutoffSq_;
+      ar & atomCapacity_;
+      ar & dtMinvFactors_;
+      ar & dissipativeForces_;
+      ar & randomForces_;
+   }
+
+   /*
+   * Save the internal state to an archive.
+   */
+   void NvtDpdVvIntegrator::save(Serializable::OArchive& ar)
+   {
+      ar & dt_;  
+      ar & cutoff_;  
+      ar & gamma_;  
+      ar & temperature_;
+      ar & sigma_;
+      ar & cutoffSq_;
+      ar & atomCapacity_;
+      ar & dtMinvFactors_;
+      ar & dissipativeForces_;
+      ar & randomForces_;
    }
 
    /* 
@@ -100,8 +143,11 @@ namespace McMd
       sigma_ = sqrt(2.0*gamma_*temperature_/dt_);
       cutoffSq_ = cutoff_*cutoff_;
 
+      #ifndef INTER_NOPAIR
       system().pairPotential().clearPairListStatistics();
       system().pairPotential().buildPairList();
+      #endif
+
       system().calculateForces();
       computeDpdForces(true);
    }
@@ -250,38 +296,6 @@ namespace McMd
       // Recompute disipative force (but not random forces).
       computeDpdForces(false);
 
-   }
-
-   /*
-   * Save the internal state to an archive.
-   */
-   void NvtDpdVvIntegrator::save(Serializable::OArchiveType& ar)
-   {  
-      ar & temperature_;
-      ar & sigma_;
-      ar & cutoffSq_;
-      ar & dtMinvFactors_;
-      ar & dissipativeForces_;
-      ar & randomForces_;
-      serializeCheck(ar, atomCapacity_, "atomCapacity");
-      //ar & cutoff_;
-      //ar & gamma_;
-   }
-
-   /**
-   * Load the internal state to an archive.
-   */
-   void NvtDpdVvIntegrator::load(Serializable::IArchiveType& ar)
-   {  
-      ar & temperature_;
-      ar & sigma_;
-      ar & cutoffSq_;
-      ar & dtMinvFactors_;
-      ar & dissipativeForces_;
-      ar & randomForces_;
-      serializeCheck(ar, atomCapacity_, "atomCapacity");
-      //ar & cutoff_;
-      //ar & gamma_;
    }
 
 }

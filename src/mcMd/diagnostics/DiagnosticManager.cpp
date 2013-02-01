@@ -76,23 +76,21 @@ namespace McMd
    }
 
    /*
-   * Save state to binary file archive.
+   * Read instructions for creating objects from file.
    */
-   void DiagnosticManager::save(Serializable::OArchiveType& ar)
+   void DiagnosticManager::loadParameters(Serializable::IArchive &ar)
    {
-      for (int i=0; i < size(); ++i) {
-         (*this)[i].save(ar);
-      }
+      loadParameter<long>(ar,"baseInterval", Diagnostic::baseInterval);
+      Manager<Diagnostic>::loadParameters(ar);
    }
 
    /*
-   * Load state from a binary file archive.
+   * Read instructions for creating objects from file.
    */
-   void DiagnosticManager::load(Serializable::IArchiveType& ar)
+   void DiagnosticManager::save(Serializable::OArchive &ar)
    {
-      for (int i=0; i < size(); ++i) {
-         (*this)[i].load(ar);
-      }
+      ar << Diagnostic::baseInterval;
+      Manager<Diagnostic>::save(ar);
    }
 
 }

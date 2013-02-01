@@ -1,0 +1,160 @@
+namespace McMd
+{
+
+/*! \page extend_module_page 5.6 Modules
+
+A module is a class that encapsulates a set of classes that were designed for a 
+specific application area, along with a set of factory classes that are required
+to allow the new classes to be used within the parameter files. The classes 
+McModule and MdModule are abstract base classes for modules designed for use 
+with with mcSim and mdSim simulations, respectively.  The developer of a new set 
+of subclasses of, e.g., Diagnostic, Species, and McMove or MdIntegrator, can 
+create a subclass of McModule and/or MdModule to organize these classes. Once 
+the developer creates a module, a user of Simpatico can use an instance of the 
+module class to make this entire set of classes accessible in a simulation.
+
+The McModule class is defined as follows:
+\code
+class McModule {
+public:
+
+   McModule(McSimulation& simulation);
+
+   ~McModule();
+
+   virtual void addFactories() = 0;
+
+protected:
+
+   McSimulation& simulation();
+   McSystem&     system();
+
+}
+\endcode
+In each subclass of McModule, the implementation of the pure virtual addFactories() method must add a set of factories to the simulation, using the methods of the parent McSimulation and system objects. Normally, instances of the new factory factory classes are created in the constructor of the McModule subclass, and destroyed in its destructor. The protected methods simulation() and system() return references to the parent McSimulation and McSystem, for use in the implementation of addFactories() by subclasses.
+
+The class definition for an MdSimulation is almost identical, except for the replacement of McSimulation and McSystem typenames by MdSimulation and MdSystem throughout.
+  
+The following example is used in what follows: Imagine that a user/developer writes a set of Species and McMove classes that allow efficient MC simulation of star polymers. Imagine, further, that he or she defines Factory classes named StarSpeciesFactory and StarMcMoveFactory, and packages them in a subclass of McModule named StarMcModule. 
+
+\section module_use_sec Using a Module (public interface)
+Here is an example of a simple main MC program that uses an
+an instance of the StarmcModule class discussed above.
+\code
+namespace McMd
+{
+
+   int main 
+   {
+      McSimulation  sim;
+      StarMcModule    module(sim);
+
+      module.addFactories();
+
+      sim.readParam();
+  
+      sim.readCommands();
+  
+   }
+
+}
+\endcode
+In this example, the constructor for the StarMcModule must create
+an instance of StarSpeciesFactory and StarMcMove Factory, which
+are then added to the simulation by the addFactories() method.
+
+The addFactories() method of a module must be called in the main 
+program before the readParam() method of the main McSimulation or 
+MdSimulation object, because the custom factories created by the 
+module are used to help parse the parameter file. 
+
+\section module_create_sec Implementing a Module 
+
+We now discuss how to implement a new module. Using the above example,
+imagine that a developer has already written and debugged several
+subclasses of Species and McMove, as well as two associated factory 
+classes named StarSpeciesFactory and StarMcMoveFactory. 
+He or she now wants to bundle these two factories into a McModule 
+named StarMcModule. The required definition of McStarModule might 
+look like this:
+\code
+namespace McMd
+{
+
+   class McStarModule : public McModule 
+   {
+
+   public:
+
+      /// Constructor
+      McStarModule(McSimulation& simulation);
+
+      /// Destructor
+      McStarModule();
+
+      /// Add all factories to simulation.
+      virtual void addFactories();
+
+   private:
+
+      /// Pointer to a StarSpeciesFactory
+      Factory<Species>* speciesFactoryPtr_;
+
+      /// Pointer to a StarMcMoveFactory
+      Factory<McMove>*  mcMoveFactoryPtr_;
+
+   }
+
+}
+\endcode
+with a minimal implementation
+\code
+namespace McMd
+{
+
+   // Constructor
+   StarModule::StarModule(McSimulation& simulation)
+    : McModule(simulation),
+      speciesFactoryPtr_(0),
+      mcMoveFactoryPtr_(0)
+   {
+      speciesFactoryPtr_ = new StarSpeciesFactory(simulation);
+      mcMoveFactoryPtr_  = new StarMcMoveFactory(simulation);
+   }
+
+   // Destructor
+   StarModule::StarModule()
+   {
+      delete speciesFactoryPtr_;
+      delete mcMoveFactoryPtr_;
+   }
+
+   StarModule::addFactories()
+   {
+      simulation().speciesFactory().addSubfactory(*speciesFactoryPtr_);
+      simulation().mcMoveFactory().addSubfactory(*mcMoveFactoryPtr_);
+   }
+
+}
+\endcode
+Here, the StarMcModule constructor creates one instance of each of the
+two required factory classes, which are deleted in the destructor. 
+The addFactories() method must then add each of these factories as a 
+subfactory to a default factory owned by the main simulation object, 
+using the appropriate accessors and addSubfactory() methods of the 
+default factory objects. 
+
+The main benefit of writing a module is that it encapsulates the creation
+and destruction of several closely related factory objects, and allows a 
+user to add these factories to a simulation with a single line of code.
+The creation of a module class can be convenient, but is not necessary.
+
+Navigation:
+<ul style="list-style: none;">
+ <li> \ref extend_subfactory_page   (Previous)    </li>
+ <li> \ref extend_page       (Up)    </li>
+ <li> \ref hoomd_page        (Next)    </li>
+</ul>
+ 
+*/
+}

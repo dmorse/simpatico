@@ -36,12 +36,6 @@ namespace Util
       /** 
       * Constructor.
       *
-      * Example: 
-      * \code
-      *    double                matrix[3][2];
-      *    DMatrixParam<double> param("matrix", matrix[0], 3, 2);
-      * \endcode
-      *
       * \param label  parameter label (usually a literal C-string)
       * \param matrix DMatrix object
       * \param m      number of rows
@@ -50,18 +44,33 @@ namespace Util
       DMatrixParam(const char *label, DMatrix<Type>& matrix, int m, int n);
   
       /** 
-      * Read 2D array from file.
+      * Read DMatrix from file.
       */
       void readParam(std::istream &in);
   
       /**
-      * Write 2D C array to file.
+      * Write DMatrix to file.
       */ 
       void writeParam(std::ostream &out);
 
+      /**
+      * Load DMatrix from archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      void load(Serializable::IArchive& ar);
+
+      /**
+      * Save DMatrix to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      void save(Serializable::OArchive& ar);
+
+
    protected:
    
-      /// Pointer to first element in associated 1D C array
+      /// Pointer to associated DMatrix.
       DMatrix<Type>* matrixPtr_;
    
       /// Number of rows in array[m][n]
@@ -91,9 +100,11 @@ namespace Util
    {
       if (isParamIoProcessor()) {
          int i, j;
+         int m = matrixPtr_->capacity1();
+         int n = matrixPtr_->capacity2();
          in >> label_;
-         for (i = 0; i < m_; ++i) {
-            for (j = 0; j < n_; ++j) {
+         for (i = 0; i < m; ++i) {
+            for (j = 0; j < n; ++j) {
                in >> (*matrixPtr_)(i, j);
             }
          }
@@ -103,7 +114,9 @@ namespace Util
       }
       #ifdef UTIL_MPI
       if (hasParamCommunicator()) {
-         bcast<Type>(paramCommunicator(), *matrixPtr_, m_, n_, 0); 
+         int m = matrixPtr_->capacity1();
+         int n = matrixPtr_->capacity2();
+         bcast<Type>(paramCommunicator(), *matrixPtr_, m, n, 0); 
       }
       #endif
    }
@@ -132,6 +145,34 @@ namespace Util
          out << std::endl;
       }
    }
+
+   /*
+   * Load from an archive.
+   */
+   template <class Type>
+   void DMatrixParam<Type>::load(Serializable::IArchive& ar)
+   {
+      if (isParamIoProcessor()) {
+         ar >> *matrixPtr_;
+         if (ParamComponent::echo()) {
+            writeParam(Log::file());
+         }
+      }
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         int m = matrixPtr_->capacity1();
+         int n = matrixPtr_->capacity2();
+         bcast<Type>(paramCommunicator(), *matrixPtr_, m, n, 0); 
+      }
+      #endif
+   }
+
+   /*
+   * Save to an archive.
+   */
+   template <class Type>
+   void DMatrixParam<Type>::save(Serializable::OArchive& ar)
+   {  ar << *matrixPtr_; }
 
 } 
 #endif

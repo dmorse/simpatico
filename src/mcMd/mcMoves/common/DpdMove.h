@@ -10,7 +10,7 @@
 
 #include <mcMd/mcMoves/SystemMove.h>  // base class
 #include <util/containers/DArray.h>   // member template
-#include <util/space/Vector.h>         // member template parameter
+#include <util/space/Vector.h>        // member template parameter
 
 namespace McMd
 {
@@ -55,6 +55,20 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
       /**
       * Initialize before a run.
       */

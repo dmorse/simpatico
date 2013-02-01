@@ -8,11 +8,12 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/global.h>
 #include <util/param/ParamComposite.h>
+#include <util/archives/serialize.h>
 #ifdef UTIL_MPI
 #include <util/mpi/MpiTraits.h>
 #endif
+#include <util/global.h>
 
 namespace Util
 {
@@ -50,7 +51,21 @@ namespace Util
       * The type is specified in the input file by a string 
       * literal "adiabatic" or "isothermal".
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
+
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       ///\name Accessors
       //@{
@@ -79,7 +94,7 @@ namespace Util
       
       #ifdef UTIL_MPI
       /**
-      * Commit associated MPI DataType.
+      * Commit MPI data type for an EnergyEnsemble.
       */
       static void commitMpiType();
       #endif
@@ -117,25 +132,40 @@ namespace Util
 
    // Inline methods
  
-   /**
+   /*
    * Return the temperature.
    */
    inline double EnergyEnsemble::temperature() const
    {  return temperature_; }
 
-   /**
+   /*
    * Return the inverse temperature.
    */
    inline double EnergyEnsemble::beta() const
    {  return beta_; }
 
-   // Return true if this is an Adiabatic ensemble.
+   /*
+   * Return true if this is an adiabatic ensemble.
+   */
    inline bool EnergyEnsemble::isAdiabatic() const
    { return (type_ == ADIABATIC); }
- 
-   // Return true if this is an IsothermalEnsemble.
+
+   /* 
+   * Return true if this is an IsothermalEnsemble.
+   */
    inline bool EnergyEnsemble::isIsothermal() const
    { return (type_ == ISOTHERMAL); }
+
+   /**
+   * Serialize a EnergyEnsemble::Type enum value.
+   *
+   * \param ar  archive object
+   * \param data  enum value to be serialized
+   * \param version  archive version id
+   */
+   template <class Archive>
+   inline void serialize(Archive& ar, EnergyEnsemble::Type& data, const unsigned int version)
+   {  serializeEnum(ar, data, version); }
 
 
    #ifdef UTIL_MPI

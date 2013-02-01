@@ -58,6 +58,26 @@ namespace McMd
    }
 
    /*
+   * Load internal state from an archive.
+   */
+   void HybridMdMove::loadParameters(Serializable::IArchive &ar)
+   {
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "nStep", nStep_);
+      loadParamComposite(ar, *mdSystemPtr_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void HybridMdMove::save(Serializable::OArchive &ar)
+   {
+      McMove::save(ar);
+      ar << nStep_;
+      mdSystemPtr_->saveParameters(ar);
+   }
+
+   /*
    * Generate, attempt and accept or reject a Hybrid MD/MC move.
    */
    bool HybridMdMove::move()
@@ -67,10 +87,8 @@ namespace McMd
       double oldEnergy, newEnergy;
       int    iSpec;
       int    nSpec = simulation().nSpecies();
-
       bool   accept;
 
-      // Increment counter for attempted moves
       incrementNAttempt();
 
       // Store old atom positions in oldPositions_ array.

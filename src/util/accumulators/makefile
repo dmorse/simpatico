@@ -3,7 +3,7 @@ SRC_DIR_REL =../..
 include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
 include $(SRC_DIR_REL)/util/patterns.mk
-include $(SRC_DIR_REL)/util/sources.mk
+include $(SRC_DIR_REL)/util/accumulators/sources.mk
 
 all: $(util_accumulators_OBJS)
 

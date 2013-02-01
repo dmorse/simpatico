@@ -39,6 +39,29 @@ namespace McMd
       virtual void readParameters(std::istream& in);
 
       /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
+      /**
+      * Serialize to/from an archive. 
+      * 
+      * \param ar      archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
+      /**
       * Clear accumulators.
       */
       virtual void setup();
@@ -91,6 +114,51 @@ namespace McMd
                              Diagnostic::outputFileName(".dat"), outputFile_);
       }
 
+   }
+
+   /*
+   * Load state from an archive.
+   */
+   template <class SystemType>
+   void AverageDiagnostic<SystemType>::loadParameters(
+                                       Serializable::IArchive& ar)
+   {  
+      Diagnostic::loadParameters(ar);
+      ParamComposite::loadParameter<int>(ar, "nSamplePerBlock", 
+                                         nSamplePerBlock_);
+      ar & accumulator_;
+
+      if (nSamplePerBlock_ != accumulator_.nSamplePerBlock()) {
+         UTIL_THROW("Inconsistent values of nSamplePerBlock_");
+      }
+
+      // If nSamplePerBlock != 0, open an output file for block averages.
+      if (accumulator_.nSamplePerBlock()) {
+         Diagnostic::fileMaster().openOutputFile(
+                             Diagnostic::outputFileName(".dat"), outputFile_);
+      }
+
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   template <class SystemType>
+   void AverageDiagnostic<SystemType>::save(Serializable::OArchive& ar)
+   {  ar & *this; }
+
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class SystemType>
+   template <class Archive>
+   void AverageDiagnostic<SystemType>::serialize(Archive& ar, 
+                                                 const unsigned int version)
+   {
+      Diagnostic::serialize(ar, version);
+      ar & nSamplePerBlock_;
+      ar & accumulator_;
    }
 
    /*

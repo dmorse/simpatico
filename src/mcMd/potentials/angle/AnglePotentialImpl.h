@@ -62,6 +62,20 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
       /// \name Interactions Interface
       //@{
 
@@ -243,6 +257,34 @@ namespace McMd
          bool nextIndent = false;
          addParamComposite(interaction(), nextIndent);
          interaction().readParameters(in);
+      }
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   template <class Interaction>
+   void 
+   AnglePotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> isCopy_;
+      if (!isCopy_) {
+         interaction().setNAngleType(simulation().nAngleType());
+         bool nextIndent = false;
+         addParamComposite(interaction(), nextIndent);
+         interaction().loadParameters(ar);
+      } 
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   template <class Interaction>
+   void AnglePotentialImpl<Interaction>::save(Serializable::OArchive &ar)
+   {
+      ar << isCopy_;
+      if (!isCopy_) {
+         interaction().save(ar);
       }
    }
 

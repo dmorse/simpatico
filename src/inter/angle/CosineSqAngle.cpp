@@ -79,7 +79,6 @@ namespace Inter
       }
 
       // Read parameters
-      //readBegin(in, "CosineSqAngle");
       readCArray<double>(in, "kappa",  kappa_,  nAngleType_);
       readCArray<double>(in, "theta0", theta0_, nAngleType_);
 
@@ -87,8 +86,32 @@ namespace Inter
       for (int i = 0; i < nAngleType_; ++i) {
          cosTheta0_[i] = cos(theta0_[i] / 180.0 * Constants::Pi);
       }
+   }
 
-      //readEnd(in);
+   /*
+   * Load internal state from an archive.
+   */
+   void CosineSqAngle::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nAngleType_; 
+      if (nAngleType_ == 0) {
+         UTIL_THROW( "nAtomType must be positive");
+      }
+      // Read parameters
+      loadCArray<double> (ar, "kappa", kappa_, nAngleType_);
+      loadCArray<double>(ar, "theta0", theta0_, nAngleType_);
+      ar.unpack(cosTheta0_, nAngleType_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void CosineSqAngle::save(Serializable::OArchive &ar)
+   {
+      ar << nAngleType_;
+      ar.pack(kappa_, nAngleType_);
+      ar.pack(theta0_, nAngleType_);
+      ar.pack(cosTheta0_, nAngleType_);
    }
 
    /*

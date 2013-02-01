@@ -91,6 +91,20 @@ namespace McMd
       virtual void readParameters(std::istream &in);
 
       /**
+      * Load parameters from an archive, without configuration.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save parameters to an archive, without configuration.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void saveParameters(Serializable::OArchive &ar);
+
+      /**
       * Read system configuration from file.
       *
       * This calls System::readConfig(), followed by
@@ -103,12 +117,12 @@ namespace McMd
       /**
       * Load the MdSystem configuration from an archive.
       *
-      * This calls System::load(ar), followed by
+      * This calls System::loadConfig(ar), followed by
       * pairPotential().buildPairList() and calculateForces().
       *
       * \param ar input (loading) archive object.
       */
-      virtual void load(Serializable::IArchiveType& ar);
+      virtual void loadConfig(Serializable::IArchive& ar);
 
       /// \name Force, Energy and Stress calculators
       //@{

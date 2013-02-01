@@ -14,6 +14,7 @@
 #include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+#include <util/math/feq.h>
 #include <util/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
 
@@ -27,6 +28,9 @@ namespace McMd
    /// Constructor.
    BondLengthDist::BondLengthDist(System& system) 
     : SystemDiagnostic<System>(system),
+      min_(0.0),
+      max_(0.0),
+      nBin_(0),
       isInitialized_(false)
    {  setClassName("BondLengthDist"); }
 
@@ -36,13 +40,54 @@ namespace McMd
       readInterval(in);
       readOutputFileName(in);
       read<int>(in, "speciesId", speciesId_);
+      read<double>(in, "min", min_);
+      read<double>(in, "max", max_);
+      read<double>(in, "nBin", nBin_);
       if (speciesId_ < 0) {
          UTIL_THROW("Negative speciesId");
       }
-      readParamComposite(in, accumulator_);
+      //readParamComposite(in, accumulator_);
+      accumulator_.setParam(min_, max_, nBin_);
       accumulator_.clear();
       isInitialized_ = true;
    }
+
+   /*
+   * Load state from an archive.
+   */
+   void BondLengthDist::loadParameters(Serializable::IArchive& ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<double>(ar, "min", min_);
+      loadParameter<double>(ar, "max", max_);
+      loadParameter<double>(ar, "nBin", nBin_);
+      ar & accumulator_;
+      //loadParamComposite(in, accumulator_);
+
+      // Validate
+      if (speciesId_ < 0) {
+         UTIL_THROW("Negative speciesId");
+      }
+      if (!feq(accumulator_.min(),min_)) {
+         UTIL_THROW("Inconsistent values of min");
+      }
+      if (!feq(accumulator_.max(), max_)) {
+         UTIL_THROW("Inconsistent values of max");
+      }
+      if (accumulator_.nBin() != nBin_) {
+         UTIL_THROW("Inconsistent values of max");
+      }
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to archive.
+   */
+   void BondLengthDist::save(Serializable::OArchive& ar)
+   { ar & *this; }
 
    /*
    * Clear accumulator.
@@ -92,16 +137,5 @@ namespace McMd
 
    }
 
-   /*
-   * Save state to binary file archive.
-   */
-   void BondLengthDist::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void BondLengthDist::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
 }
 #endif

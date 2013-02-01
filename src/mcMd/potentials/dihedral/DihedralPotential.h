@@ -37,14 +37,12 @@ namespace McMd
       /**
       * Constructor.
       */
-      DihedralPotential()
-      {  setClassName("DihedralPotential"); }
+      DihedralPotential();
 
       /**
       * Destructor (does nothing)
       */
-      virtual ~DihedralPotential()
-      {}
+      virtual ~DihedralPotential();
 
       /// \name Dihedral interaction interface
       //@{ 

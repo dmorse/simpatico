@@ -51,6 +51,29 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
   
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
+      /**
+      * Serialize internal state to/from archive.
+      *
+      * \param ar       archive
+      * \param version  id for archive version
+      */
+      template <class Archive>
+      void serialize(Archive &ar, const unsigned int version);
+
       /** 
       * Allocate memory and initialize Rouse mode eigenvector p.
       */
@@ -68,20 +91,6 @@ namespace McMd
       */
       virtual void output();
    
-      /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
-
    private:
    
       /// Output file stream.
@@ -118,6 +127,22 @@ namespace McMd
       bool    isInitialized_;
 
    };
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void RingRouseAutoCorr::serialize(Archive& ar, const unsigned int version)
+   {
+      Diagnostic::serialize(ar, version);
+      ar & speciesId_;
+      ar & p_;
+      ar & capacity_;
+      ar & nAtom_;
+      ar & nMolecule_;
+      ar & accumulator_;
+      ar & projector_;
+   }
 
 }
 #endif

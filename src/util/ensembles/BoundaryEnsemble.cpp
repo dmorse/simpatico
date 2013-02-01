@@ -22,12 +22,12 @@ namespace Util
    BoundaryEnsemble::BoundaryEnsemble(Type type)
     : pressure_(1.0),
       type_(type)
-   {}
+   {  setClassName("BoundaryEnsemble"); }
 
    /*
-   * Set the pressure.
+   * Set the target pressure.
    */
-   void  BoundaryEnsemble::setPressure(double pressure)
+   void BoundaryEnsemble::setPressure(double pressure)
    {
       if (!isIsobaric()) {
 	 UTIL_THROW("Must be an isobaric ensemble");
@@ -38,14 +38,34 @@ namespace Util
    /*
    * Read the type and (if necessary) pressure from file.
    */
-   void BoundaryEnsemble::readParam(std::istream& in)
+   void BoundaryEnsemble::readParameters(std::istream& in)
    {
-      readBegin(in, "BoundaryEnsemble");
       read<Type>(in, "type", type_);
       if (isIsobaric()) {
          read<double>(in, "pressure", pressure_);
       }
-      readEnd(in);
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void BoundaryEnsemble::loadParameters(Serializable::IArchive &ar)
+   { 
+      loadParameter<Type>(ar, "type", type_);
+      if (isIsobaric()) {
+         loadParameter<double>(ar, "pressure", pressure_);
+      }
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void BoundaryEnsemble::save(Serializable::OArchive &ar)
+   { 
+      ar << type_;
+      if (isIsobaric()) {
+         ar << pressure_;
+      }
    }
 
    /*
@@ -84,15 +104,11 @@ namespace Util
    }
 
    #ifdef UTIL_MPI
-   /**
-   * Initialize BoundaryEnsemble MPI Datatype.
-   */
+   // Initialize BoundaryEnsemble MPI Datatype.
    MPI::Datatype MpiTraits<BoundaryEnsemble>::type = MPI::BYTE;
    bool MpiTraits<BoundaryEnsemble>::hasType = false;
 
-   /**
-   * Initialize BoundaryEnsemble::Type MPI Datatype.
-   */
+   // Initialize BoundaryEnsemble::Type MPI Datatype.
    MPI::Datatype MpiTraits<BoundaryEnsemble::Type>::type = MPI::INT;
    bool MpiTraits<BoundaryEnsemble::Type>::hasType = true;
 

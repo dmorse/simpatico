@@ -112,9 +112,8 @@ namespace Util
       read<std::string>(in, "outputPrefix", outputPrefix_);
    }
 
-   #if 0
    /*
-   * Load internal state from file.
+   * Get the default parameter stream.
    */
    void FileMaster::loadParameters(Serializable::IArchive &ar)
    {
@@ -140,7 +139,6 @@ namespace Util
       ar << hasDirectoryId_;
       ar << isSetParamFileStdIn_;
    }
-   #endif
 
    /*
    * Get the default parameter stream.
@@ -184,14 +182,14 @@ namespace Util
       } else {
          if (!commandFilePtr_) {
 
-            // Construct filename "n/param" for processor n
+            // Construct command file name 
             std::string filename(rootPrefix_);
-            if (hasDirectoryId_) {
+            if (hasDirectoryId_ && !isSetParamFileStdIn_) {
                filename += directoryIdPrefix_;
             }
             filename += commandFileName_;
 
-            // Open parameter input file
+            // Open command file
             std::ifstream* filePtr = new std::ifstream();
             filePtr->open(filename.c_str());
             if (filePtr->fail()) {
@@ -235,7 +233,7 @@ namespace Util
    * Open and return an output file named outputPrefix + name
    */
    void
-   FileMaster::openOutputFile(const std::string& name, std::ofstream& out)
+   FileMaster::openOutputFile(const std::string& name, std::ofstream& out, bool append)
    const
    {
       // Construct filename = outputPrefix_ + name
@@ -246,7 +244,10 @@ namespace Util
       filename += outputPrefix_;
       filename += name;
 
-      out.open(filename.c_str());
+      if (append)
+         out.open(filename.c_str(), std::ios::out | std::ios::app);
+      else
+         out.open(filename.c_str(), std::ios::out);
 
       // Check for error opening file
       if (out.fail()) {

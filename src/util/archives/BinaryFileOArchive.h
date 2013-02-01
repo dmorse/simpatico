@@ -15,6 +15,7 @@
 #include <util/space/IntVector.h>
 
 #include <complex>
+#include <vector>
 #include <string>
 #include <iostream>
 
@@ -43,39 +44,63 @@ namespace Util
       BinaryFileOArchive();
 
       /**
+      * Constructor.
+      *
+      * \param filename name of file to open for reading.
+      */
+      BinaryFileOArchive(std::string filename);
+
+      /**
       * Destructor.
       */
       virtual ~BinaryFileOArchive();
 
       /**
-      * Set the stream.
-      *
-      * \param out output stream to which to write.
+      * Get the underlying ifstream by reference.
       */
-      void setStream(std::ostream& out);
+      std::ofstream& file();
 
       /**
-      * Write one object.
+      * Save one object.
       */
       template <typename T>
       BinaryFileOArchive& operator & (T& data);
 
       /**
-      * Write one object.
+      * Save one object.
       */
       template <typename T>
       BinaryFileOArchive& operator << (T& data);
 
+      /**
+      * Pack one object of type T.
+      */
       template <typename T> 
       void pack(const T& data);
 
+      /**
+      * Pack a C array.
+      * 
+      * \param array address of first element
+      * \param n     number of elements
+      */
       template <typename T> 
       void pack(const T* array, int n);
 
+      /**
+      * Pack a 2D C array.
+      *
+      * \param array pointer to [0][0] element in 2D array
+      * \param m     number of rows
+      * \param n     number of columns
+      */
+      template <typename T> 
+      void pack(const T* array, int m, int n);
+
    private:
 
-      /// Pointer to output stream file.
-      std::ostream* ostreamPtr_;
+      /// Pointer to output file.
+      std::ofstream* filePtr_;
 
       /// Archive version id.
       unsigned int  version_;
@@ -119,7 +144,7 @@ namespace Util
    */
    template <typename T>
    inline void BinaryFileOArchive::pack(const T& data)
-   {  ostreamPtr_->write( (char*)(&data), sizeof(T) ); }
+   {  filePtr_->write( (char*)(&data), sizeof(T)); }
 
    /*
    * Bitwise pack a C-array of objects of type T.
@@ -128,7 +153,21 @@ namespace Util
    inline void BinaryFileOArchive::pack(const T* array, int n)
    {
       for (int i=0; i < n; ++i) {
-         ostreamPtr_->write( (char*)(&array[i]), sizeof(T));
+         filePtr_->write( (char*)(&array[i]), sizeof(T));
+      }
+   }
+
+   /*
+   * Bitwise pack a 2D C-array of objects of type T.
+   */
+   template <typename T>
+   inline void BinaryFileOArchive::pack(const T* array, int m, int n)
+   {
+      int i, j;
+      for (i=0; i < m; ++i) {
+         for (j=0; j < n; ++j) {
+            filePtr_->write( (char*)(&array[i*n + j]), sizeof(T));
+         }
       }
    }
 
@@ -197,6 +236,20 @@ namespace Util
    inline void serialize(BinaryFileOArchive& ar, double& data, 
                          const unsigned int version)
    {  ar.pack(data); }
+
+   /*
+   * Save a std::complex<double> to a BinaryFileOArchive.
+   */
+   template <typename T>
+   void serialize(BinaryFileOArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      size_t size = data.size();
+      ar.pack(size);
+      for (size_t i = 0; i < size; ++i) {
+         ar & data[i];
+      }
+   }
 
    // Explicit serialize functions for std library types
 

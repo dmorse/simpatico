@@ -22,7 +22,9 @@ namespace McMd
 
    using namespace Util;
 
-   // Constructor
+   /*
+   * Constructor.
+   */
    SemiGrandDistribution::SemiGrandDistribution(McSystem& system)
     : SystemDiagnostic<McSystem>(system),
       outputFile_(),
@@ -31,8 +33,11 @@ namespace McMd
       moleculeCapacity_(-1),
       speciesPtr_(0),
       mutatorPtr_(0)
-   { setClassName("SemiGrandDistribution"); }
+   {  setClassName("SemiGrandDistribution"); }
 
+   /*
+   * Read parameters from file and initialize. 
+   */
    void SemiGrandDistribution::readParameters(std::istream& in)
    {
       readInterval(in);
@@ -52,10 +57,45 @@ namespace McMd
       // Allocate IntDistribution accumulator
       distribution_.setParam(0, moleculeCapacity_);
       distribution_.clear();
-
    }
- 
-   // Sample occupation
+
+   /*
+   * Load state from an archive.
+   */
+   void SemiGrandDistribution::loadParameters(Serializable::IArchive& ar)
+   {  
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      ar & moleculeCapacity_;
+      ar & distribution_;
+
+      // Validate values and set pointer members.
+      if (speciesId_ < 0 || speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("Invalid speciesId");
+      }
+      if (moleculeCapacity_ <= 0) {
+         UTIL_THROW("Error: moleculeCapacity <= 0");
+      }
+      speciesPtr_ = &(system().simulation().species(speciesId_));
+      if (moleculeCapacity_ != speciesPtr_->capacity()) {
+          UTIL_THROW("Inconsiste moleculeCapacity");
+      }
+      if (!speciesPtr_->isMutable()) {
+         UTIL_THROW("Error: Species must be mutable");
+      }
+      mutatorPtr_ = &speciesPtr_->mutator();
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   void SemiGrandDistribution::save(Serializable::OArchive& ar)
+   {  ar & *this; }
+
+
+   /* 
+   * Sample occupation.
+   */
    void SemiGrandDistribution::sample(long iStep) 
    {
       if (isAtInterval(iStep)) {
@@ -64,18 +104,12 @@ namespace McMd
    }
  
    /*
-   * Summary
+   * Open and write summary output file.
    */
    void SemiGrandDistribution::output() 
    {
-      // Open and write summary file
       fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       distribution_.output(outputFile_);
-      //double norm = 1.0/double(nSample_);
-      //for (int i = 0; i < moleculeCapacity_; ++i) {
-      //   outputFile_ << Int(i,5) 
-      //               << Dbl(distribution_[i]*norm, 15) << std::endl;
-      //}
       outputFile_.close();
    }
    

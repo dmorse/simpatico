@@ -9,6 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>
+#include <util/archives/serialize.h>
 #ifdef UTIL_MPI
 #include <util/mpi/MpiTraits.h>
 #endif
@@ -121,6 +122,17 @@ namespace Util
    // Return true if this is an Grand Ensemble.
    inline bool SpeciesEnsemble::isGrand() const
    { return (type_ == GRAND); }
+
+   /**
+   * Serialize a SpeciesEnsemble::Type enum value.
+   *
+   * \param ar      archive object
+   * \param data    enum value to be serialized
+   * \param version archive version id
+   */
+   template <class Archive>
+   inline void serialize(Archive& ar, SpeciesEnsemble::Type& data, const unsigned int version)
+   {  serializeEnum(ar, data, version); }
 
    #ifdef UTIL_MPI
    /**

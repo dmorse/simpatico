@@ -4,10 +4,12 @@
 #include <test/CompositeTestRunner.h>
 
 #include "AtomTypeTest.h"
+#include "MaskPolicyTest.h"
 #include "SpeciesGroupTest.h"
 
 TEST_COMPOSITE_BEGIN(ChemistryTestComposite)
 TEST_COMPOSITE_ADD_UNIT(AtomTypeTest);
+TEST_COMPOSITE_ADD_UNIT(MaskPolicyTest);
 TEST_COMPOSITE_ADD_UNIT(SpeciesGroupTest);
 TEST_COMPOSITE_END
 

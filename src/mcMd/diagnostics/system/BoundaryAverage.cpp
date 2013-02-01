@@ -39,7 +39,6 @@ namespace McMd
    */
    void BoundaryAverage::readParameters(std::istream& in) 
    {
-
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
@@ -57,6 +56,28 @@ namespace McMd
  
       isInitialized_ = true;
    }
+
+   /*
+   * Load state from an archive.
+   */
+   void BoundaryAverage::loadParameters(Serializable::IArchive& ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
+      ar & accumulators_;
+
+      // If nSamplePerBlock != 0, open an output file for block averages.
+      if (accumulators_[0].nSamplePerBlock()) {
+         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      }
+      isInitialized_ = true;
+   }
+
+   /*   
+   * Save state to archive.
+   */
+   void BoundaryAverage::save(Serializable::OArchive& ar)
+   { ar & *this; }
 
    /*
    * Initialize at beginning of simulation.
@@ -114,18 +135,6 @@ namespace McMd
       outputFile_.close();
       
    }
-
-   /*   
-   * Save state to binary file archive.
-   */
-   void BoundaryAverage::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void BoundaryAverage::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
 
 }
 

@@ -9,7 +9,7 @@ include $(TESTS_DIR)/util/patterns.mk
 all:  Test
 
 clean:
-	rm -f Test Test.o Test.d
+	-rm -f Test Test.o Test.d
 	cd accumulators; make clean
 	cd archives; make clean
 	cd boundary; make clean
@@ -22,6 +22,7 @@ clean:
 	cd misc; make clean
 	rm -f */*.o */*/*.o 
 	rm -f */*.d */*/*.d
+	-rm -f dummy
 
 Test: $(util_LIB) $(TESTS_DIR)/util/Test.o
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test $(TESTS_DIR)/util/Test.o \

@@ -34,6 +34,9 @@ namespace McMd
       mutatorPtr_(0)
    {  setClassName("TypeDistribution"); }
 
+   /*
+   * Read parameters from file and initialize.
+   */
    void TypeDistribution::readParameters(std::istream& in)
    {
       readInterval(in);
@@ -54,8 +57,40 @@ namespace McMd
       }
 
    }
- 
-   // Evaluate energy and print.
+
+   /*
+   * Load state from an archive.
+   */
+   void TypeDistribution::loadParameters(Serializable::IArchive& ar)
+   {  
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      ar & nState_;
+      ar & nSample_;
+      ar & distribution_;
+
+      if (speciesId_ < 0 || speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("Invalid speciesId");
+      }
+      speciesPtr_ = &(system().simulation().species(speciesId_));
+      if (!speciesPtr_->isMutable()) {
+         UTIL_THROW("Error: Species must be mutable");
+      }
+      mutatorPtr_ = &speciesPtr_->mutator();
+      if (nState_ != mutatorPtr_->nState()) {
+         UTIL_THROW("Inconsistent values of nState");
+      }
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   void TypeDistribution::save(Serializable::OArchive& ar)
+   {  ar & *this; }
+
+   /* 
+   * Evaluate energy and print.
+   */
    void TypeDistribution::sample(long iStep) 
    {
       if (isAtInterval(iStep)) {

@@ -57,12 +57,26 @@ namespace McMd
       * 
       * This method reads the maxBoundary, PairList and pair potential 
       * Interaction parameter blocks, in  that order, and initializes an
-      * internal PairList. Before calling the Interaction::readParameters method,
-      * it passes simulation().nAtomType() to Interaction::setNAtomType().
+      * internal PairList. Before calling the Interaction::readParameters 
+      * method, it passes nAtomType to Interaction::setNAtomType().
       *
       * \param in input parameter stream.
       */
       virtual void readParameters(std::istream& in);
+
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Return pair energy for a single pair.
@@ -228,7 +242,6 @@ namespace McMd
    void MdPairPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
       // Read pair potential parameters only if not a copy.
-      // This block is not indented or surrounded by brackets.
       if (!isCopy_) {
          interaction().setNAtomType(simulation().nAtomType());
          bool nextIndent = false;
@@ -243,6 +256,38 @@ namespace McMd
       double cutoff = interaction().maxPairCutoff();
       pairList_.allocate(simulation().atomCapacity(), 
                          maxBoundary_, cutoff);
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   template <class Interaction>
+   void 
+   MdPairPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> isCopy_;
+      if (!isCopy_) {
+         interaction().setNAtomType(simulation().nAtomType());
+         bool nextIndent = false;
+         addParamComposite(interaction(), nextIndent);
+         interaction().loadParameters(ar);
+      }
+      loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
+      loadParamComposite(ar, pairList_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   template <class Interaction>
+   void MdPairPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
+   {
+      ar << isCopy_;
+      if (!isCopy_) {
+         interaction().save(ar);
+      }
+      ar << maxBoundary_;
+      pairList_.save(ar);
    }
 
    /*

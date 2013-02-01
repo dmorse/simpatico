@@ -34,18 +34,15 @@ namespace McMd
 
    public:
 
-
       /**
       * Constructor.
       */
-      AnglePotential()
-      {  setClassName("AnglePotential"); }
+      AnglePotential();
 
       /**
       * Destructor (does nothing)
       */
-      virtual ~AnglePotential()
-      {}
+      virtual ~AnglePotential();
 
       /// \name Angle Interaction interface
       //@{

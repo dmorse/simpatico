@@ -57,6 +57,29 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
   
+      /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
       /** 
       * Setup before a simulation (clear accumulator).
       */
@@ -74,29 +97,6 @@ namespace McMd
       */
       virtual void output();
 
-      /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
-
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
    private:
 
       // Output file stream
@@ -111,13 +111,19 @@ namespace McMd
       /// Rule specifying which atom pairs to accept
       PairSelector   selector_;
 
+      /// Maximum radius in histogram.
+      double max_;
+
       /// Sum of snapshot values of concentration for each atom type.
       double normSum_;
+
+      /// Number of bins in histogram.
+      int nBin_;
 
       /// Number of atom types, copied from Simulation::nAtomType().
       int nAtomType_;
 
-      /// Has readParam been called?
+      /// Is this initialized (Has readParam or loadParam been called?)
       bool    isInitialized_;
 
    };
@@ -128,16 +134,14 @@ namespace McMd
    template <class Archive>
    void RDF::serialize(Archive& ar, const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: object not initialized");
-      }
-
-      // Members that are not set by readParam
+      Diagnostic::serialize(ar, version);
+      ar & max_;
+      ar & nBin_;
+      ar & selector_;
       ar & accumulator_;
+      ar & nAtomType_;
       ar & typeNumbers_;
       ar & normSum_;
-
-      serializeCheck(ar, nAtomType_, "nAtomType");
    }
 
 }

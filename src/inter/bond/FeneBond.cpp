@@ -99,7 +99,6 @@ namespace Inter
       }
 
       // Read parameters
-      //readBegin(in, "FeneBond");
       readCArray<double>(in, "kappa",  kappa_,  nBondType_);
       readCArray<double>(in, "r0", r0_, nBondType_);
       //read<double>(in, "energyCutoff", energyCutoff_);
@@ -121,8 +120,44 @@ namespace Inter
          //std::cout << "Distance cutoff = " << rl_[i] << std::endl;
          //std::cout << "Energy cutoff   = " << energyCutoff_[i] << std::endl;
       }
+   }
 
-      //readEnd(in);
+   /*
+   * Load internal state from an archive.
+   */
+   void FeneBond::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nBondType_; 
+      if (nBondType_ == 0) {
+         UTIL_THROW( "nAtomType must be positive");
+      }
+      // Read parameters
+      loadCArray<double> (ar, "kappa", kappa_, nBondType_);
+      loadCArray<double>(ar, "r0", r0_, nBondType_);
+      ar >> forceCutoff_;
+      ar.unpack(r0Sq_, nBondType_);
+      ar.unpack(r0SqInv_, nBondType_);
+      ar.unpack(ce_, nBondType_);
+      ar.unpack(rl_, nBondType_);
+      ar.unpack(rlSq_, nBondType_);
+      ar.unpack(energyCutoff_, nBondType_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void FeneBond::save(Serializable::OArchive &ar)
+   {
+      ar << nBondType_;
+      ar.pack(kappa_, nBondType_);
+      ar.pack(r0_, nBondType_);
+      ar << forceCutoff_;
+      ar.pack(r0Sq_, nBondType_);
+      ar.pack(r0SqInv_, nBondType_);
+      ar.pack(ce_, nBondType_);
+      ar.pack(rl_, nBondType_);
+      ar.pack(rlSq_, nBondType_);
+      ar.pack(energyCutoff_, nBondType_);
    }
 
    /*

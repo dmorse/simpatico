@@ -12,7 +12,6 @@
 
 #include "McSimulation.h"
 #include "McDiagnosticManager.h"
-#include <mcMd/simulation/serialize.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/diagnostics/Diagnostic.h>
@@ -35,7 +34,6 @@
 #endif
 
 #include <util/param/Factory.h>
-#include <util/random/serialize.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
@@ -65,6 +63,8 @@ namespace McMd
       mcMoveManagerPtr_(0),
       mcDiagnosticManagerPtr_(0),
       paramFilePtr_(0),
+      writeRestartFileName_(),
+      writeRestartInterval_(0),
       isInitialized_(false),
       isRestarting_(false)
    {
@@ -93,6 +93,8 @@ namespace McMd
       mcMoveManagerPtr_(0),
       mcDiagnosticManagerPtr_(0),
       paramFilePtr_(0),
+      writeRestartFileName_(),
+      writeRestartInterval_(0),
       isInitialized_(false),
       isRestarting_(false)
    {
@@ -150,7 +152,7 @@ namespace McMd
            break;
          #endif
          case '?':
-           std::cout << "Unknown option -" << optopt << std::endl;
+           Log::file() << "Unknown option -" << optopt << std::endl;
            UTIL_THROW("Invalid command line option");
          }
       }
@@ -159,26 +161,37 @@ namespace McMd
       if (eflag) {
          Util::ParamComponent::setEcho(true);
       }
+
       #ifdef MCMD_PERTURB
       // Set to use a perturbation.
       if (pflag) {
+
+         if (rflag) {
+            std::string msg("Error: Options -r and option -p are incompatible. Use -r alone. ");
+            msg += "Existence of a perturbation is specified in restart file.";
+            UTIL_THROW(msg.c_str());
+         }
    
          // Set to expect perturbation in the param file.
          system().setExpectPerturbation();
    
          #ifdef UTIL_MPI
-         Util::Log::file() << "Set to read parameters from a single file" 
+         Util::Log::file() << "Set to use single parameter and command files" 
                            << std::endl;
          setParamCommunicator();
          #endif
    
       }
       #endif
+
+      // Read a restart file.
       if (rflag) {
-         std::cout << "Reading restart" << std::endl;
-         std::cout << "Base file name " << std::string(rarg) << std::endl;
+         Log::file() << "Begin reading restart, base file name " 
+                     << std::string(rarg) << std::endl;
          isRestarting_ = true; 
          readRestart(std::string(rarg));
+         Util::Log::file() << std::endl;
+
       }
    }
 
@@ -207,6 +220,12 @@ namespace McMd
       // Read Diagnostics
       readParamComposite(in, diagnosticManager());
 
+      // Parameters for writing restart files
+      read<int>(in, "writeRestartInterval", writeRestartInterval_);
+      if (writeRestartInterval_ > 0) {
+         read<std::string>(in, "writeRestartFileName", writeRestartFileName_);
+      }
+
       isValid();
       isInitialized_ = true;
    }
@@ -231,6 +250,86 @@ namespace McMd
    */
    void McSimulation::readParam()
    {  readParam(fileMaster().paramFile()); }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void McSimulation::loadParameters(Serializable::IArchive &ar)
+   {
+      if (isInitialized_) {
+         UTIL_THROW("Error: Called readParam when already initialized");
+      }
+      #if UTIL_MPI
+      if (hasParamCommunicator()) {
+         UTIL_THROW("Error: Has a param communicator in loadParameters");
+      }
+      #endif
+
+      Simulation::loadParameters(ar);
+      loadParamComposite(ar, system());
+      loadParamComposite(ar, *mcMoveManagerPtr_);
+      loadParamComposite(ar, diagnosticManager());
+      system().loadConfig(ar);
+      ar >> iStep_;
+      isValid();
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void McSimulation::save(Serializable::OArchive &ar)
+   {
+      Simulation::save(ar);
+      system().saveParameters(ar);
+      mcMoveManagerPtr_->save(ar);
+      diagnosticManager().save(ar);
+      system().saveConfig(ar);
+      ar << iStep_;
+   }
+
+   void McSimulation::readRestart(const std::string& filename)
+   {
+      if (isInitialized_) {
+         UTIL_THROW("Error: Called readRestart when already initialized");
+      }
+      if (!isRestarting_) {
+         UTIL_THROW("Error: Called readRestart without restart option");
+      }
+
+      // Load from archive
+      Serializable::IArchive ar;
+      fileMaster().openRestartIFile(filename, ".rst", ar.file());
+      load(ar);
+      ar.file().close();
+
+      // Set command (*.cmd) file
+      std::string commandFileName = filename + ".cmd";
+      fileMaster().setCommandFileName(commandFileName);
+
+      #if UTIL_MPI
+      if (system().hasPerturbation()) {
+         // Read one command file, after reading multiple restart files.
+         Util::Log::file() << "Set to use a single command file" 
+                           << std::endl;
+         setParamCommunicator();
+      }
+      #endif
+
+      isInitialized_ = true;
+   }
+
+   void McSimulation::writeRestart(const std::string& filename)
+   {
+      if (writeRestartInterval_ > 0) {
+         if (iStep_ % writeRestartInterval_ == 0) {
+            Serializable::OArchive ar;
+            fileMaster().openRestartOFile(filename, ".rst", ar.file());
+            save(ar);
+            ar.file().close();
+         }
+      }
+   }
 
    /*
    * Read and execute commands from a specified command file.
@@ -440,6 +539,7 @@ namespace McMd
 
             } else
             #ifndef UTIL_MPI
+            #ifndef INTER_NOPAIR
             if (command == "SET_PAIR") {
                std::string paramName;
                int typeId1, typeId2; 
@@ -451,6 +551,7 @@ namespace McMd
                system().pairPotential()
                        .set(paramName, typeId1, typeId2, value);
             } else 
+            #endif // ifndef INTER_NOPAIR
             if (command == "SET_BOND") {
                std::string paramName;
                int typeId; 
@@ -470,7 +571,7 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().anglePotential().set(paramName, typeId, value);
             } else 
-            #endif
+            #endif // ifdef INTER_ANGLE
             #ifdef INTER_DIHEDRAL
             if (command == "SET_DIHEDRAL") {
                std::string paramName;
@@ -481,8 +582,8 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().dihedralPotential().set(paramName, typeId, value);
             } else 
-            #endif
-            #endif
+            #endif // ifdef INTER_DIHEDRAL
+            #endif // ifndef UTIL_MPI
             {
                Log::file() << "  Error: Unknown command  " << std::endl;
                readNext = false;
@@ -508,7 +609,8 @@ namespace McMd
       }
 
       if (isContinuation) {
-         Log::file() << "Restarting from iStep = " << iStep_ << std::endl;
+         Log::file() << "Restarting from iStep = " 
+                     << iStep_ << std::endl;
       } else {
          iStep_ = 0;
          diagnosticManager().setup();
@@ -523,9 +625,10 @@ namespace McMd
       timer.start();
       for ( ; iStep_ < endStep; ++iStep_) {
 
-         // Sample diagnostics
+         // Diagnostics and restart outut
          if (Diagnostic::baseInterval > 0) {
             if (iStep_ % Diagnostic::baseInterval == 0) {
+               writeRestart(writeRestartFileName_);
                diagnosticManager().sample(iStep_);
             }
          }
@@ -555,10 +658,11 @@ namespace McMd
       timer.stop();
       double time = timer.time();
 
-      // Final diagnostic sample
+      // Final diagnostics / restart 
       assert(iStep_ == endStep);
       if (Diagnostic::baseInterval > 0) {
          if (iStep_ % Diagnostic::baseInterval == 0) {
+            writeRestart(writeRestartFileName_);
             diagnosticManager().sample(iStep_);
          }
       }
@@ -693,57 +797,6 @@ namespace McMd
       Log::file() << std::endl;
 
       iStep_ = 0;
-   }
-
-   void McSimulation::writeRestart(const std::string& filename)
-   {
-      std::ofstream out;
-      fileMaster().openParamOFile(filename, ".prm", out);
-      writeParam(out);
-      out.close();
-
-      fileMaster().openRestartOFile(filename, ".rst", out);
-      Serializable::OArchiveType ar;
-      ar.setStream(out);
-      ar & random();
-      ar & system();
-      ar & iStep_;
-      mcMoveManagerPtr_->save(ar);
-      mcDiagnosticManagerPtr_->save(ar);
-      out.close();
-   }
-
-   void McSimulation::readRestart(const std::string& filename)
-   {
-      if (isInitialized_) {
-         UTIL_THROW("Error: Called readRestart when already initialized");
-      }
-      if (!isRestarting_) {
-         UTIL_THROW("Error: Called readRestart without restart option");
-      }
-
-      // Open and read parameter (*.prm) file
-      std::ifstream in;
-      fileMaster().openParamIFile(filename, ".prm", in);
-      readParam(in);
-      in.close();
-
-      // Open restart (*.rst) file and associate with an archive
-      fileMaster().openRestartIFile(filename, ".rst", in);
-      Serializable::IArchiveType ar;
-      ar.setStream(in);
-
-      // Load state from restart file
-      ar & random();
-      system().load(ar);
-      ar & iStep_;
-      mcMoveManagerPtr_->load(ar);
-      mcDiagnosticManagerPtr_->load(ar);
-      in.close();
-
-      std::string commandFileName = filename + ".cmd";
-      fileMaster().setCommandFileName(commandFileName);
-      isInitialized_ = true;
    }
 
    /*
