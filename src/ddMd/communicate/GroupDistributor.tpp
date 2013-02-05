@@ -238,6 +238,7 @@ namespace DdMd
       bufferPtr_->clearSendBuffer();
 
       validate();
+      groupStoragePtr_->unsetNTotal();
       groupStoragePtr_->computeNTotal(domainPtr_->communicator());
       if (groupStoragePtr_->nTotal() != nSentTotal_) {
          UTIL_THROW("Number of groups not equal number sent");
@@ -245,6 +246,7 @@ namespace DdMd
       groupStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(), 
                                 false);
       #else
+      groupStoragePtr_->unsetNTotal();
       groupStoragePtr_->computeNTotal();
       if (groupStoragePtr_->nTotal() != nSentTotal_) {
          UTIL_THROW("Number of groups not equal number sent");
@@ -318,6 +320,7 @@ namespace DdMd
       validate();
 
       // Validate Group Storage
+      groupStoragePtr_->unsetNTotal();
       groupStoragePtr_->computeNTotal(domainPtr_->communicator());
       groupStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(),
                                 false);

@@ -191,14 +191,6 @@ namespace DdMd
       int totalCapacity() const;
 
       /**
-      * Return total number of distinct groups on all processors.
-      *
-      * This function should be called only on the master processors, after
-      * a subsequent call to computeNTotal().
-      */
-      int nTotal() const;
-
-      /**
       * Compute and store the number of distinct groups on all processors.
       *
       * This is an MPI reduce operation. The correct result is stored only
@@ -217,6 +209,19 @@ namespace DdMd
       void computeNTotal();
       #endif
    
+      /**
+      * Return total number of distinct groups on all processors.
+      *
+      * This function should be called only on the master processors, after
+      * a subsequent call to computeNTotal().
+      */
+      int nTotal() const;
+
+      /**
+      *  Mark nTotal as unknown.
+      */
+      void unsetNTotal();
+
       /**
       * Return true if the container is valid, or throw an Exception.
       */
@@ -303,15 +308,15 @@ namespace DdMd
       // Maximum number of groups on all processors, maximum id + 1
       int totalCapacity_;
 
-      // Total number of distinct groups on all processors.
-      int nTotal_;
-
       /// Maximum of nAtom1_ on this proc since stats cleared.
       int  maxNGroupLocal_;     
    
       /// Maximum of nAtom1_ on all procs (defined only on master).
       Setable<int>  maxNGroup_;     
       
+      // Total number of distinct groups on all processors.
+      Setable<int> nTotal_;
+
       /*
       * Allocate and initialize all private containers.
       */
@@ -335,7 +340,7 @@ namespace DdMd
 
    template <int N>
    inline int GroupStorage<N>::nTotal() const
-   {  return nTotal_; }
+   {  return nTotal_.value(); }
 
    // Non-inline method templates.
 
@@ -577,6 +582,11 @@ namespace DdMd
    void GroupStorage<N>::computeNTotal()
    #endif
    {
+      // If nTotal is already known, return and do nothing.
+      if (nTotal_.isSet()) return;
+
+      // Loop over groups on this processor. 
+      // Increment nLocal only if atom 0 is owned by this processor
       GroupIterator<N> iterator;
       Atom* atomPtr;
       int nLocal = 0;
@@ -589,14 +599,18 @@ namespace DdMd
             }
          }
       }
+
+      // Reduce data on all processors and set nTotal_ on master.
+      int nTot;
       #ifdef UTIL_MPI
-      communicator.Reduce(&nLocal, &nTotal_, 1, 
+      communicator.Reduce(&nLocal, &nTot, 1, 
                           MPI::INT, MPI::SUM, 0);
       if (communicator.Get_rank() !=0) {
-         nTotal_ = -1;
+         nTot = -1;
       }
+      nTotal_.set(nTot);
       #else
-      nTotal_ = nLocal;
+      nTotal_.set(nLocal);
       #endif
    }
 
@@ -710,6 +724,12 @@ namespace DdMd
          nAtomGroup += nAtom;
       }
 
+      // Count number distinct groups.
+      #ifdef UTIL_MPI
+      unsetNTotal();
+      computeNTotal(communicator);
+      #endif
+
       #ifdef UTIL_MPI
       // Count & return number of local atoms in groups on all processors.
       int nAtomGroupTotal;
@@ -717,12 +737,12 @@ namespace DdMd
       communicator.Reduce(&nAtomGroup, &nAtomGroupTotal, 1, 
                           MPI::INT, MPI::SUM, source);
       if (communicator.Get_rank() == source) {
-         if (nTotal_ < 0) {
-            UTIL_THROW("nTotal not set before isValid");
+         if (!nTotal_.isSet()) {
+            UTIL_THROW("nTotal not set");
          }
-         if (nAtomGroupTotal != nTotal_*N) {
+         if (nAtomGroupTotal != N*nTotal()) {
             std::cout << "nAtomGroupTotal = " << nAtomGroupTotal << std::endl;
-            std::cout << "nTotal*N        = " << nTotal_*N  << std::endl;
+            std::cout << "nTotal*N        = " << N*nTotal() << std::endl;
             UTIL_THROW("Discrepancy in number of local atoms in Group objects");
          }
       }
@@ -730,5 +750,13 @@ namespace DdMd
 
       return true;
    }
+
+   /*
+   *  Mark nTotal as unknown.
+   */
+   template <int N>
+   void GroupStorage<N>::unsetNTotal()
+   {  nTotal_.unset(); }
+
 }
 #endif

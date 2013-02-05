@@ -82,18 +82,29 @@ private:
    PairPotentialImpl<DpdPair>        pairPotential;
    #ifdef TEST_EXCHANGER_FORCE_BOND
    BondPotentialImpl<HarmonicL0Bond> bondPotential;
+   bool hasBondPotential;
    #ifdef INTER_ANGLE
    AnglePotentialImpl<HarmonicAngle> anglePotential;
+   bool hasAnglePotential;
    #endif
    #ifdef INTER_DIHEDRAL
    DihedralPotentialImpl<MultiHarmonicDihedral> dihedralPotential;
+   bool hasDihedralPotential;
    #endif
    #endif
 
 public:
 
    void setUp()
-   {}
+   {
+      hasBondPotential = 1;
+      #ifdef INTER_ANGLE
+      hasAnglePotential = 0;
+      #endif
+      #ifdef INTER_DIHEDRAL
+      hasDihedralPotential = 0;
+      #endif
+   }
 
    void initialize()
    {
@@ -122,15 +133,33 @@ public:
       pairPotential.setReverseUpdateFlag(reverseUpdateFlag);
 
       #ifdef TEST_EXCHANGER_FORCE_BOND
-      bondPotential.setNBondType(1);
-      bondPotential.associate(boundary, bondStorage);
+      if (hasBondPotential) {
+         bondPotential.setNBondType(1);
+         bondPotential.associate(boundary, bondStorage);
+      }
+      #ifdef INTER_ANGLE
+      if (hasAnglePotential) {
+         anglePotential.setNAngleType(1);
+         anglePotential.associate(boundary, angleStorage);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (hasDihedralPotential) {
+         dihedralPotential.setNDihedralType(1);
+         dihedralPotential.associate(boundary, dihedralStorage);
+      }
+      #endif
       #endif
 
       #ifdef UTIL_MPI
       // Set communicators
       domain.setGridCommunicator(communicator());
       domain.setParamCommunicator(communicator());
+      buffer.setParamCommunicator(communicator());
+      configIo.setParamCommunicator(communicator());
+      random.setParamCommunicator(communicator());
       atomStorage.setParamCommunicator(communicator());
+      pairPotential.setParamCommunicator(communicator());
       bondStorage.setParamCommunicator(communicator());
       #ifdef INTER_ANGLE
       angleStorage.setParamCommunicator(communicator());
@@ -138,14 +167,22 @@ public:
       #ifdef INTER_DIHEDRAL
       dihedralStorage.setParamCommunicator(communicator());
       #endif
-      buffer.setParamCommunicator(communicator());
-      configIo.setParamCommunicator(communicator());
-      random.setParamCommunicator(communicator());
-      pairPotential.setParamCommunicator(communicator());
       #ifdef TEST_EXCHANGER_FORCE_BOND
-      bondPotential.setParamCommunicator(communicator());
+      if (hasBondPotential) {
+         bondPotential.setParamCommunicator(communicator());
+      }
+      #ifdef INTER_ANGLE
+      if (hasAnglePotential) {
+         anglePotential.setParamCommunicator(communicator());
+      }
       #endif
-      #else
+      #ifdef INTER_DIHEDRAL
+      if (hasDihedralPotential) {
+         dihedralPotential.setParamCommunicator(communicator());
+      }
+      #endif
+      #endif // TEST_EXCHANGER_FORCE_BOND
+      #else // ifdef UTIL_MPI
       domain.setRank(0);
       #endif
 
@@ -173,9 +210,22 @@ public:
       #ifdef INTER_DIHEDRAL
       dihedralStorage.readParam(file());
       #endif
+
       pairPotential.readParam(file());
       #ifdef TEST_EXCHANGER_FORCE_BOND
-      bondPotential.readParam(file());
+      if (hasBondPotential) {
+         bondPotential.readParam(file());
+      }
+      #ifdef INTER_ANGLE
+      if (hasAnglePotential) {
+         anglePotential.readParam(file());
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (hasDihedralPotential) {
+         dihedralPotential.readParam(file());
+      }
+      #endif
       #endif
       closeFile();
 
@@ -233,7 +283,6 @@ public:
 
    }
 
-
    void zeroForces()
    {
       // Zero atom forces
@@ -273,6 +322,25 @@ public:
 
    }
 
+   void computeForces() {
+      zeroForces();
+      pairPotential.computeForces();
+      #ifdef TEST_EXCHANGER_FORCE_BOND
+      if (hasBondPotential) {
+         bondPotential.computeForces();
+      }
+      #ifdef INTER_ANGLE
+      if (hasAnglePotential) {
+         anglePotential.computeForces();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (hasDihedralPotential) {
+         dihedralPotential.computeForces();
+      }
+      #endif
+      #endif
+    }
    void saveForces()
    {
       int id;
@@ -296,6 +364,17 @@ public:
       }
       #endif
    }
+
+   void exchangeNotify() {
+      bondStorage.unsetNTotal();
+      #ifdef INTER_ANGLE
+      angleStorage.unsetNTotal();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage.unsetNTotal();
+      #endif
+   }
+
 
    void testGhostUpdateF() {
       printMethod(TEST_FUNC);
@@ -321,6 +400,7 @@ public:
       double range = 0.4;
       displaceAtoms(range);
       exchanger.exchange();
+      exchangeNotify();
 
       // Record number of atoms and ghosts after exchange
       nAtom = atomStorage.nAtom();
@@ -406,6 +486,7 @@ public:
       //displaceAtoms(range);
 
       exchanger.exchange();
+      exchangeNotify();
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
 
@@ -450,6 +531,7 @@ public:
 
          atomStorage.clearSnapshot();
          exchanger.exchange();
+         exchangeNotify();
 
          nAtom  = atomStorage.nAtom();
          nGhost = atomStorage.nGhost();
@@ -508,6 +590,7 @@ public:
 
       atomStorage.clearSnapshot();
       exchanger.exchange();
+      exchangeNotify();
 
       // Record number of atoms and ghosts after exchange
       nAtom = atomStorage.nAtom();
@@ -570,10 +653,19 @@ public:
 
       // Compute forces etc. with N^2 loop
       pairPotential.setMethodId(2); 
+      computeForces();
+      #if 0
       zeroForces();
       pairPotential.computeForces();
       #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.computeForces();
+      #ifdef INTER_ANGLE
+      anglePotential.computeForces();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotential.computeForces();
+      #endif
+      #endif
       #endif
       if (reverseUpdateFlag) {
          exchanger.reverseUpdate();
@@ -592,14 +684,23 @@ public:
 
       // Compute forces etc. with pair list
       pairPotential.setMethodId(0); // PairList
+      #if 0
       zeroForces();
       pairPotential.computeForces();
       #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.computeForces();
+      #ifdef INTER_ANGLE
+      anglePotential.computeForces();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotential.computeForces();
+      #endif
+      #endif // TEST_EXCHANGER_FORCE_BOND
       #endif
       if (reverseUpdateFlag) {
          exchanger.reverseUpdate();
       }
+
       int nPairList;
       pairPotential.computeNPair(domain.communicator());
       if (domain.communicator().Get_rank() == 0) {
@@ -617,9 +718,11 @@ public:
       }
       #ifdef TEST_EXCHANGER_FORCE_BOND
       Tensor bondStress;
-      bondPotential.computeStress(domain.communicator());
-      if (domain.communicator().Get_rank() == 0) {
-         bondStress = bondPotential.stress();
+      if (hasBondPotential) {
+         bondPotential.computeStress(domain.communicator());
+         if (domain.communicator().Get_rank() == 0) {
+            bondStress = bondPotential.stress();
+         }
       }
       #endif
 
@@ -662,23 +765,43 @@ public:
       pairPotential.unsetStress();
       pairPotential.computeForcesAndStress(domain.communicator());
       #ifdef TEST_EXCHANGER_FORCE_BOND
-      bondPotential.unsetEnergy();
-      bondPotential.unsetStress();
-      bondPotential.computeForcesAndStress(domain.communicator());
+      if (hasBondPotential) {
+         bondPotential.unsetEnergy();
+         bondPotential.unsetStress();
+         bondPotential.computeForcesAndStress(domain.communicator());
+      }
+      #ifdef INTER_ANGLE
+      if (hasAnglePotential) {
+         anglePotential.unsetStress();
+         anglePotential.computeForcesAndStress(domain.communicator());
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (hasDihedralPotential) {
+         dihedralPotential.unsetStress();
+         dihedralPotential.computeForcesAndStress(domain.communicator());
+      }
+      #endif
       #endif
       if (reverseUpdateFlag) {
          exchanger.reverseUpdate();
       }
+
       if (domain.communicator().Get_rank() == 0) {
          Tensor pairStress2 = pairPotential.stress();
+         Tensor bondStress2;
          #ifdef TEST_EXCHANGER_FORCE_BOND
-         Tensor bondStress2 = bondPotential.stress();
+         if (hasBondPotential) {
+            bondStress2 = bondPotential.stress();
+         }
          #endif
          for (int i = 0; i < Dimension; ++i) {
             for (int j = 0; j < Dimension; ++j) {
                TEST_ASSERT(eq(pairStress(i, j), pairStress2(i, j)));
                #ifdef TEST_EXCHANGER_FORCE_BOND
-               TEST_ASSERT(eq(bondStress(i, j), bondStress2(i, j)));
+               if (hasBondPotential) {
+                  TEST_ASSERT(eq(bondStress(i, j), bondStress2(i, j)));
+               }
                #endif
             }
          }
@@ -723,6 +846,7 @@ public:
          TEST_ASSERT(!atomStorage.isCartesian());
       }
       exchanger.exchange();
+      exchangeNotify();
 
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
@@ -757,11 +881,21 @@ public:
       atomStorage.makeSnapshot();
       TEST_ASSERT(atomStorage.isCartesian());
 
-      pairPotential.setMethodId(0); // PairList
+      // Compute forces (Pairlist method)
+      pairPotential.setMethodId(0); 
+      computeForces();
+      #if 0
       zeroForces();
       pairPotential.computeForces();
       #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.computeForces();
+      #ifdef INTER_ANGLE
+      anglePotential.computeForces();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotential.computeForces();
+      #endif
+      #endif // TEST_EXCHANGER_FORCE_BOND
       #endif
       if (reverseUpdateFlag) {
          exchanger.reverseUpdate();
@@ -794,6 +928,7 @@ public:
             }
 
             exchanger.exchange();
+            exchangeNotify();
 
             // Confirm that all atoms are within the processor domain.
             atomStorage.begin(atomIter);
@@ -822,10 +957,6 @@ public:
 
          } else {
 
-            //if (domain.isMaster()) {
-            //   std::cout << "Step " << i << ",  update" << std::endl;
-            //}
-            
             exchanger.update();
          }
    
@@ -844,12 +975,21 @@ public:
                      domain.communicator(), true));
          #endif
 
-         // Calculate forces etc. by N^2 loop.
+         // Calculate forces by an N^2 loop.
+         computeForces();
+         #if 0
          zeroForces();
          pairPotential.setMethodId(2); // N^2 loop
          pairPotential.computeForces();
          #ifdef TEST_EXCHANGER_FORCE_BOND
          bondPotential.computeForces();
+         #ifdef INTER_ANGLE
+         anglePotential.computeForces();
+         #endif
+         #ifdef INTER_DIHEDRAL
+         dihedralPotential.computeForces();
+         #endif
+         #endif // TEST_EXCHANGER_FORCE_BOND
          #endif
          if (reverseUpdateFlag) {
             exchanger.reverseUpdate();
@@ -863,16 +1003,22 @@ public:
          if (domain.communicator().Get_rank() == 0) {
             pairEnergyNSq = pairPotential.energy();
          }
-         #ifdef TEST_EXCHANGER_FORCE_BOND
-         bondPotential.computeForces();
-         #endif
 
          // Calculate forces etc. via pair list.   
-         zeroForces();
          pairPotential.setMethodId(0); // PairList
+         computeForces();
+         #if 0
+         zeroForces();
          pairPotential.computeForces();
          #ifdef TEST_EXCHANGER_FORCE_BOND
          bondPotential.computeForces();
+         #ifdef INTER_ANGLE
+         anglePotential.computeForces();
+         #endif
+         #ifdef INTER_DIHEDRAL
+         dihedralPotential.computeForces();
+         #endif
+         #endif
          #endif
          if (reverseUpdateFlag) {
             exchanger.reverseUpdate();
@@ -926,9 +1072,18 @@ public:
             pairPotential.buildPairList();
             TEST_ASSERT(atomStorage.isCartesian());
             pairPotential.setMethodId(0);    
+            computeForces();
+            #if 0
             pairPotential.computeForces();
             #ifdef TEST_EXCHANGER_FORCE_BOND
             bondPotential.computeForces();
+            #ifdef INTER_ANGLE
+            anglePotential.computeForces();
+            #endif
+            #ifdef INTER_DIHEDRAL
+            dihedralPotential.computeForces();
+            #endif
+            #endif
             #endif
             saveForces();
             pairPotential.computeEnergy(domain.communicator());
@@ -987,10 +1142,10 @@ TEST_ADD(ExchangerForceTest, testGhostUpdateF)
 TEST_ADD(ExchangerForceTest, testGhostUpdateR)
 TEST_ADD(ExchangerForceTest, testGhostUpdateCycleF)
 TEST_ADD(ExchangerForceTest, testGhostUpdateCycleR)
-TEST_ADD(ExchangerForceTest, testInitialForcesF)
-TEST_ADD(ExchangerForceTest, testInitialForcesR)
-TEST_ADD(ExchangerForceTest, testForceCycleF)
-TEST_ADD(ExchangerForceTest, testForceCycleR)
+//TEST_ADD(ExchangerForceTest, testInitialForcesF)
+//TEST_ADD(ExchangerForceTest, testInitialForcesR)
+//TEST_ADD(ExchangerForceTest, testForceCycleF)
+//TEST_ADD(ExchangerForceTest, testForceCycleR)
 TEST_END(ExchangerForceTest)
 
 #endif /* EXCHANGER_TEST_H */

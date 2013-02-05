@@ -81,6 +81,9 @@ public:
       // Set communicators
       domain.setGridCommunicator(communicator());
       domain.setParamCommunicator(communicator());
+      buffer.setParamCommunicator(communicator());
+      configIo.setParamCommunicator(communicator());
+      random.setParamCommunicator(communicator());
       atomStorage.setParamCommunicator(communicator());
       bondStorage.setParamCommunicator(communicator());
       #ifdef INTER_ANGLE
@@ -89,9 +92,6 @@ public:
       #ifdef INTER_DIHEDRAL
       dihedralStorage.setParamCommunicator(communicator());
       #endif
-      buffer.setParamCommunicator(communicator());
-      configIo.setParamCommunicator(communicator());
-      random.setParamCommunicator(communicator());
       #else
       domain.setRank(0);
       #endif
@@ -168,6 +168,16 @@ public:
          }
       }
 
+   }
+
+   void exchangeNotify() {
+      bondStorage.unsetNTotal();
+      #ifdef INTER_ANGLE
+      angleStorage.unsetNTotal();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage.unsetNTotal();
+      #endif
    }
 
    virtual void testDistribute()
@@ -264,6 +274,7 @@ public:
       double range = 0.4;
       displaceAtoms(range);
       exchanger.exchange();
+      exchangeNotify();
 
       // Check that all atoms are accounted for after ghost exchange.
       nAtom = atomStorage.nAtom();
@@ -320,6 +331,7 @@ public:
 
       atomStorage.clearSnapshot();
       exchanger.exchange();
+      exchangeNotify();
 
       // Record number of atoms and ghosts after exchange
       nAtom = atomStorage.nAtom();
@@ -394,6 +406,7 @@ public:
       displaceAtoms(range);
 
       exchanger.exchange();
+      exchangeNotify();
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
 
@@ -436,6 +449,7 @@ public:
          }
 
          exchanger.exchange();
+         exchangeNotify();
          nAtom  = atomStorage.nAtom();
          nGhost = atomStorage.nGhost();
 
@@ -491,6 +505,7 @@ public:
 
       atomStorage.clearSnapshot();
       exchanger.exchange();
+      exchangeNotify();
 
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
@@ -561,6 +576,7 @@ public:
                atomStorage.transformCartToGen(boundary);
             }
             exchanger.exchange();
+            exchangeNotify();
 
             nAtom  = atomStorage.nAtom();
             nGhost = atomStorage.nGhost();

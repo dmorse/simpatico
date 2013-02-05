@@ -581,7 +581,7 @@ namespace DdMd
       //@{ 
      
       /** 
-      * Signal to force unsetting of all computed quantities.
+      * Signal to force unsetting of quantities that depend on x, v, or f.
       */
       Signal<>& modifySignal();
 
@@ -594,6 +594,11 @@ namespace DdMd
       * Signal to indicate change in atomic velocities.
       */
       Signal<>& velocitySignal();
+
+      /**
+      * Signal to indicate exchange of atoms and groups.
+      */
+      Signal<>& exchangeSignal();
 
       //@}
       
@@ -821,6 +826,9 @@ namespace DdMd
       /// Signal to indicate change in atomic velocities.
       Signal<>  velocitySignal_;
 
+      /// Signal to indicate exchange of atoms ownership.
+      Signal<>  exchangeSignal_;
+
       /// Log output file (if not standard out)
       std::ofstream logFile_;
 
@@ -1009,6 +1017,10 @@ namespace DdMd
    /// Signal to indicate change in atomic velocities.
    inline Signal<>& Simulation::velocitySignal()
    { return velocitySignal_; }
+
+   /// Signal to indicate exchange of atom ownership.
+   inline Signal<>& Simulation::exchangeSignal()
+   { return exchangeSignal_; }
 
 }
 #endif

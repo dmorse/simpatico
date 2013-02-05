@@ -474,6 +474,24 @@ namespace DdMd
 
       positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
       positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
+
+      // Add observerse to exchangeSignal
+      if (nBondType_) {
+         void (BondStorage::*memberPtr)() = &BondStorage::unsetNTotal;
+         exchangeSignal().addObserver(bondStorage_, memberPtr);
+      }
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         void (AngleStorage::*memberPtr)() = &AngleStorage::unsetNTotal;
+         exchangeSignal().addObserver(angleStorage_, memberPtr);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         void (DihedralStorage::*memberPtr)() = &DihedralStorage::unsetNTotal;
+         exchangeSignal().addObserver(dihedralStorage_, memberPtr);
+      }
+      #endif
    }
 
    /*

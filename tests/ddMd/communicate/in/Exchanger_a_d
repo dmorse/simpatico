@@ -41,5 +41,10 @@ PairPotential{
 BondPotential{
   kappa            20.0
 }
-
+AnglePotential{
+  kappa            20.0
+}
+DihedralPotential{
+  kappa            20.0
+}
 
