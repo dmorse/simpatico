@@ -29,7 +29,7 @@ namespace DdMd
    DihedralPotential::DihedralPotential()
     : boundaryPtr_(0),
       storagePtr_(0)
-   {} 
+   { setClassName("DihedralPotential"); }
 
    /*
    * Associate with related objects (for unit testing).

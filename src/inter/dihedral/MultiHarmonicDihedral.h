@@ -205,11 +205,15 @@ namespace Inter
           const Vector& b3, int type) const
    {
       Torsion torsion;
-      torsion.computeAngle(b1, b2, b3); // computes cosPhi
-      double c = torsion.cosPhi;
-
-      const Parameter* p = &parameters_[type];
-      return (p->a0 + c*(p->a1 + c*(p->a2 + c*(p->a3 + c*p->a4))));
+      bool status;
+      status = torsion.computeAngle(b1, b2, b3); // computes cosPhi
+      if (!status) { 
+         double c = torsion.cosPhi;
+         const Parameter* p = &parameters_[type];
+         return (p->a0 + c*(p->a1 + c*(p->a2 + c*(p->a3 + c*p->a4))));
+      } else {
+         return 0.0;
+      }
    }
 
    /* 
@@ -226,14 +230,20 @@ namespace Inter
         const Vector& b3, Vector& f1, Vector& f2, Vector& f3, int type) const
    {
       TorsionForce torsion;
-      torsion.computeDerivatives(b1, b2, b3);
-      double c = torsion.cosPhi;
-
-      const Parameter* p = &parameters_[type];
-      double dEdC = p->a1 + c*(p->g2 + c*(p->g3 + c*p->g4));
-      f1.multiply(torsion.d1, dEdC);
-      f2.multiply(torsion.d2, dEdC);
-      f3.multiply(torsion.d3, dEdC);
+      bool status;
+      status = torsion.computeDerivatives(b1, b2, b3);
+      if (!status) {
+         double c = torsion.cosPhi;
+         const Parameter* p = &parameters_[type];
+         double dEdC = p->a1 + c*(p->g2 + c*(p->g3 + c*p->g4));
+         f1.multiply(torsion.d1, dEdC);
+         f2.multiply(torsion.d2, dEdC);
+         f3.multiply(torsion.d3, dEdC);
+      } else {
+         f1.zero();
+         f2.zero();
+         f3.zero();
+      }
    }
 
 } 

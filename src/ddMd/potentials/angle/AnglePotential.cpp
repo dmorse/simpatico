@@ -29,7 +29,7 @@ namespace DdMd
    AnglePotential::AnglePotential()
     : boundaryPtr_(0),
       storagePtr_(0)
-   {} 
+   { setClassName("AnglePotential"); }
 
    /*
    * Associate with related objects. (for unit testing).

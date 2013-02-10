@@ -42,9 +42,9 @@ BondPotential{
   kappa            20.0
 }
 AnglePotential{
-  kappa            20.0
+  kappa            10.0
+  theta0           45.0
 }
 DihedralPotential{
   kappa            20.0
 }
-
