@@ -431,14 +431,14 @@ namespace DdMd
   
       #ifdef INTER_ANGLE 
       /**
-      * Get the angleStorage by reference.
+      * Get the AngleStorage by reference.
       */
       AngleStorage& angleStorage();
       #endif
    
       #ifdef INTER_DIHEDRAL
       /**
-      * Get the angleStorage by reference.
+      * Get the DihedralStorage by reference.
       */
       DihedralStorage& dihedralStorage();
       #endif
@@ -970,7 +970,7 @@ namespace DdMd
    inline int Simulation::nBondType()
    {  return nBondType_; }
 
-   #if INTER_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Get maximum number of angle types.
    */
@@ -978,7 +978,7 @@ namespace DdMd
    {  return nAngleType_; }
    #endif
 
-   #if INTER_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /*
    * Get maximum number of dihedral types.
    */
@@ -986,7 +986,7 @@ namespace DdMd
    {  return nDihedralType_; }
    #endif
 
-   #if INTER_EXTERNAL
+   #ifdef INTER_EXTERNAL
    /*
    * Does this simulation have an external potential?
    */

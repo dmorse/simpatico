@@ -323,13 +323,14 @@ namespace DdMd
       Atom* atom3Ptr;
       int   type, isLocal0, isLocal1, isLocal2, isLocal3;
 
+      // Loop over dihedral groups
       for (storage().begin(iter); iter.notEnd(); ++iter) {
          type = iter->typeId();
          atom0Ptr = iter->atomPtr(0);
          atom1Ptr = iter->atomPtr(1);
          atom2Ptr = iter->atomPtr(2);
          atom3Ptr = iter->atomPtr(3);
-         // Calculate minimimum image separations
+         // Calculate minimimum image separations dr1, dr2, dr3
          boundary().distanceSq(atom1Ptr->position(),
                                atom0Ptr->position(), dr1);
          boundary().distanceSq(atom2Ptr->position(),
@@ -338,24 +339,29 @@ namespace DdMd
                                atom2Ptr->position(), dr3);
 
          // Calculate derivatives of energy with respect to r1, r2, r3
-         interaction().force(dr1, dr2, dr2, f1, f2, f3, type);
+         interaction().force(dr1, dr2, dr3, f1, f2, f3, type);
 
-         isLocal0 = !(atom0Ptr->isGhost());
-         isLocal1 = !(atom1Ptr->isGhost());
-         isLocal2 = !(atom2Ptr->isGhost());
-         isLocal3 = !(atom3Ptr->isGhost());
-         if (isLocal0) {
+         // isLocal0 = !(atom0Ptr->isGhost());
+         // isLocal1 = !(atom1Ptr->isGhost());
+         // isLocal2 = !(atom2Ptr->isGhost());
+         // isLocal3 = !(atom3Ptr->isGhost());
+         
+         //if (isLocal0) {
+         if (!atom0Ptr->isGhost()) {
             atom0Ptr->force() += f1;
          }
-         if (isLocal1) {
+         //if (isLocal1) {
+         if (!atom1Ptr->isGhost()) {
             atom1Ptr->force() -= f1;
             atom1Ptr->force() += f2;
          }
-         if (isLocal2) {
+         //if (isLocal2) {
+         if (!atom2Ptr->isGhost()) {
             atom2Ptr->force() -= f2;
             atom2Ptr->force() += f3;
          }
-         if (isLocal3) {
+         //if (isLocal3) {
+         if (!atom3Ptr->isGhost()) {
             atom3Ptr->force() -= f3;
          }
       }
@@ -377,15 +383,14 @@ namespace DdMd
       //   UTIL_THROW("GroupStorage must be initialized");
       //}
 
-      // If energ is already set, do nothing and return.
+      // If energy is already set, do nothing and return.
       if (isEnergySet()) return;
 
       Vector dr1; // R[1] - R[0]
       Vector dr2; // R[2] - R[1]
       Vector dr3; // R[3] - R[2]
-      Vector f1, f2, f3;
       double dihedralEnergy;
-      double localEnergy = 0.0;
+      double localEnergy;
       double fraction;
       GroupIterator<4> iter;
       Atom* atom0Ptr;
@@ -395,6 +400,7 @@ namespace DdMd
       int   type, isLocal0, isLocal1, isLocal2, isLocal3;
 
       // Loop over dihedral groups
+      localEnergy = 0.0;
       for (storage().begin(iter) ; iter.notEnd(); ++iter) {
          type = iter->typeId();
          atom0Ptr = iter->atomPtr(0);

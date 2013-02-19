@@ -28,12 +28,10 @@
 #include <ddMd/potentials/bond/BondFactory.h>
 #ifdef INTER_ANGLE
 #include <ddMd/potentials/angle/AnglePotential.h>
-#include <ddMd/potentials/angle/AnglePotentialImpl.h>
 #include <ddMd/potentials/angle/AngleFactory.h>
 #endif
 #ifdef INTER_DIHEDRAL
 #include <ddMd/potentials/dihedral/DihedralPotential.h>
-#include <ddMd/potentials/dihedral/DihedralPotentialImpl.h>
 #include <ddMd/potentials/dihedral/DihedralFactory.h>
 #endif
 #ifdef INTER_EXTERNAL

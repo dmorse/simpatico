@@ -345,17 +345,17 @@ namespace DdMd
    inline int SimulationAccess::nBondType()
    {  return nBondType_; }
 
-   #if INTER_ANGLE
+   #ifdef INTER_ANGLE
    inline int SimulationAccess::nAngleType()
    {  return nAngleType_; }
    #endif
 
-   #if INTER_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    inline int SimulationAccess::nDihedralType()
    {  return nDihedralType_; }
    #endif
 
-   #if INTER_EXTERNAL
+   #ifdef INTER_EXTERNAL
    inline bool SimulationAccess::hasExternal()
    {  return hasExternal_; }
    #endif
