@@ -5,16 +5,12 @@ Testing
 
 - Fix obsolete PairPotentialTest (change interface for PairPotential)
 
-- Test angles and dihedrals (stress calculation and conservation of energy).
+- Test angle and dihedral stress calculations.
 
 Restart
 -------
 
-- Add restart capability, based on save / load methods. 
-
-- Use new BinaryMpiIArchive for reading. The new Archive will have a broadcast
-  mode that will read one one processor and broadcast parameters, as for the
-  existing ParamComposite::read*() methods.
+- Add ddMd restart capability, based on save / load methods. 
 
 Hybrid MD
 ---------
