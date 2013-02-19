@@ -282,13 +282,13 @@ namespace DdMd
    {  
       Vector dr1; // R[1] - R[0]
       Vector dr2; // R[2] - R[1]
-      Vector f1, f2;
-      double rsq1, rsq2;
+      Vector f1;  // d(energy)/d(dr1)
+      Vector f2;  // d(energy)/d(dr2)
       GroupIterator<3> iter;
       Atom* atom0Ptr;
       Atom* atom1Ptr;
       Atom* atom2Ptr;
-      int   type, isLocal0, isLocal1, isLocal2;
+      int   type;
 
       storage().begin(iter);
       for ( ; iter.notEnd(); ++iter) {
@@ -297,22 +297,19 @@ namespace DdMd
          atom1Ptr = iter->atomPtr(1);
          atom2Ptr = iter->atomPtr(2);
          // Calculate minimimum image separations
-         rsq1 = boundary().distanceSq(atom1Ptr->position(),
-                                      atom0Ptr->position(), dr1);
-         rsq2 = boundary().distanceSq(atom2Ptr->position(),
-                                      atom1Ptr->position(), dr2);
+         boundary().distanceSq(atom1Ptr->position(),
+                               atom0Ptr->position(), dr1);
+         boundary().distanceSq(atom2Ptr->position(),
+                               atom1Ptr->position(), dr2);
          interaction().force(dr1, dr2, f1, f2, type);
-         isLocal0 = !(atom0Ptr->isGhost());
-         isLocal1 = !(atom1Ptr->isGhost());
-         isLocal2 = !(atom2Ptr->isGhost());
-         if (isLocal0) {
+         if (!atom0Ptr->isGhost()) {
             atom0Ptr->force() += f1;
          }
-         if (isLocal1) {
+         if (!atom1Ptr->isGhost()) {
             atom1Ptr->force() -= f1;
             atom1Ptr->force() += f2;
          }
-         if (isLocal2) {
+         if (!atom2Ptr->isGhost()) {
             atom2Ptr->force() -= f2;
          }
       }
