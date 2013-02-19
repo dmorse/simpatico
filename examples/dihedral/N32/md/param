@@ -1,0 +1,136 @@
+MdSimulation{
+  FileMaster{
+    commandFileName                 commands
+    inputPrefix                       ../in/
+    outputPrefix                        out/
+  }
+  nAtomType                              1
+  nBondType                              1
+  nAngleType                             1
+  nDihedralType                          1
+  atomTypes                    A       1.0
+  maskedPairPolicy                MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                     588
+      nAtom                                 32
+      atomType                               0
+      bondType                               0
+      hasAngles                              1
+      angleType                              0
+      hasDihedrals                           1
+      dihedralType                           0
+    }
+
+  }
+  Random{
+    seed                           13741892
+  }
+  MdSystem{
+    pairStyle                           LJPair
+    bondStyle                     HarmonicBond
+    angleStyle                   HarmonicAngle
+    dihedralStyle               CosineDihedral
+    MdPairPotential{
+      epsilon               1.000000000000e+00 
+      sigma                 1.000000000000e+00 
+      cutoff                1.122460000000e+00
+      maxBoundary             orthorhombic 30.0  30.0  30.0
+      PairList{
+        atomCapacity                       20000
+        pairCapacity                      100000
+        skin                  3.000000000000e-01
+      }
+    }
+    BondPotential{
+      kappa                 4.000000000000e+02
+      length                1.000000000000e+00
+    }
+    AnglePotential{
+      kappa                 20.00000000000e+00
+      theta0                60.00000000000e+00
+    }
+    DihedralPotential{
+      kappa                  1.00000000000e+00
+    }
+    EnergyEnsemble{
+      type                  isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                  rigid
+    }
+    NvtNhIntegrator{
+      dt                    5.000000000000e-03
+      tauT                  1.000000000000
+    }
+  }
+  DiagnosticManager{
+    baseInterval                         100
+
+    LogProgress{
+      interval                           200
+    }
+
+    DumpConfig{
+      interval                          1000
+      outputFileName            dump/config.
+    }
+
+    MdWriteRestart{
+      interval                           500
+      outputFileName                 restart
+    }
+
+    MdEnergyOutput{
+      interval                           100
+      outputFileName                  energy
+    }
+
+    RadiusGyration{
+      interval                           100
+      outputFileName          RadiusGyration
+      nSamplePerBlock                     10
+      speciesId                            0
+    }
+
+    BondLengthDist{
+      interval                           100
+      outputFileName          BondLengthDist
+      speciesId                            0
+      min                                0.0
+      max                                2.0
+      nBin                               400
+    }
+
+    AtomMSD{
+      interval                           100
+      outputFileName                 AtomMSD
+      speciesId                            0
+      atomId                               5
+      capacity                           200
+    }
+
+    IntraPairAutoCorr{
+      interval                          100
+      outputFileName      IntraPairAutoCorr
+      speciesId                           0
+      atom1Id                             0
+      atom2Id                            31 
+      capacity                          200
+    }
+
+  }
+  writeRestartInterval           1000
+  writeRestartFileName        restart
+}
+
+    RDF{
+      interval                          1000
+      outputFileName                     RDF
+      max                                5.0
+      nBin                               500
+      selector                         inter   -1    -1
+    }
+
