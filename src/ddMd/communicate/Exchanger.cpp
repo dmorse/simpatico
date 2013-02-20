@@ -23,7 +23,9 @@
 #include <algorithm>
 #include <string>
 
-#define EXCHANGER_DEBUG
+#ifdef UTIL_DEBUG
+//#define DDMD_EXCHANGER_DEBUG
+#endif
 
 namespace DdMd
 {
@@ -151,18 +153,41 @@ namespace DdMd
       exchangeGhosts();
    }
 
+   /*
+   * Initialize group ghost communication plan, before exchanging atoms.
+   *
+   * This method is called by exchangeAtoms, after computing plans for
+   * exchanging atoms, based on their position, but before exchanging
+   * atoms, and before clearing ghosts from previous exchange.
+   *
+   * Algorithm: Loop over all Group<N> objects in the storage, identify
+   * groups that span boundaries of the processor domain associated with
+   * each of 6 transfer directions (3 Cartesian directions, and transfer
+   * "up" and "down" in each direction). This requires information about 
+   * positions of ghost as well as local atoms. For each boundary of the 
+   * domain, identify atoms whose positions are "inside" and "outside".
+   * Count ghost atoms very near the boundary as both inside and outside,
+   * for saftey. If a group has atoms both inside and outside a domain 
+   * boundary, it is marked for sending in the associated communication 
+   * step.
+   *
+   * After calculating ghost communication plan for each group, clear 
+   * the pointers to all ghost atoms in the group. The exchangeAtoms 
+   * method will clear the actual ghost atoms from the AtomStorage.
+   */
    template <int N>
    void Exchanger::initGroupGhostPlan (GroupStorage<N>& storage)
    {
       double coordinate;
       GroupIterator<N> groupIter;
       Atom* atomPtr;
-      int nEx[2];
+      //int nEx[2];
       int nIn;
       int nOut;
       int i, j, k;
       bool choose;
 
+      // Loop over groups
       storage.begin(groupIter);
       for ( ; groupIter.notEnd(); ++groupIter) {
 
@@ -174,7 +199,8 @@ namespace DdMd
                   choose = false;
                   nIn = 0;
                   nOut = 0;
-                  nEx[j] = 0;
+                  // nEx[j] = 0;
+                  // Loop over atoms in group
                   for (k = 0; k < N; ++k) {
                      atomPtr = groupIter->atomPtr(k);
                      if (atomPtr) {
@@ -184,38 +210,38 @@ namespace DdMd
                               assert(inner_(i, j) > bound_(i, j));
                               if (coordinate < inner_(i, j)) {
                                  ++nOut;
-                                 if (coordinate < bound_(i, j)) {
-                                    nEx[j] += 1;
-                                 }
+                                 //if (coordinate < bound_(i, j)) {
+                                 //   nEx[j] += 1;
+                                 //}
                               }
                               if (coordinate > outer_(i, j)) {
                                  ++nIn;
                               }
-                           } else {
+                           } else { // if j = 1
                               assert(inner_(i, j) < bound_(i, j));
                               if (coordinate > inner_(i, j)) {
                                  ++nOut;
-                                 if (coordinate > bound_(i, j)) {
-                                    nEx[j] += 1;
-                                 }
+                                 //if (coordinate > bound_(i, j)) {
+                                 //   nEx[j] += 1;
+                                 //}
                               }
                               if (coordinate < outer_(i, j)) {
                                  ++nIn;
                               }
                            }
-                        } else { 
+                        } else { // if atomPtr points to local atom
                            if (atomPtr->plan().exchange(i, j)) {
                               ++nOut;
-                              nEx[j] += 1;
+                              //nEx[j] += 1;
                            } else {
                               ++nIn;
                            }
                         }
-                     } else {
+                     } else { // if atomPtr is null
                         choose = true;
                         break;
                      }
-                  } // end for k
+                  } // end for k (atoms in group)
                   if (nOut > 0 && nIn > 0) {
                      choose = true;
                   }
@@ -224,7 +250,7 @@ namespace DdMd
                   } else {
                      groupIter->plan().clearGhost(i, j);
                   }
-               } // end for j
+               } // end for j = 0, 1
 
                #if 0
                if (nEx[0] > 0 && nEx[1] > 0) {
@@ -233,9 +259,9 @@ namespace DdMd
                #endif
 
             } // end if multiProcessorDirection
-         } // end for i
+         } // end for i (Cartesian axes)
 
-         // Clear pointers to all ghost atoms in group
+         // Clear pointers to all ghost atoms in this group
          for (k = 0; k < N; ++k) {
             atomPtr = groupIter->atomPtr(k);
             if (atomPtr) {
@@ -250,7 +276,13 @@ namespace DdMd
 
    #ifdef UTIL_MPI
    /*
-   * Pack groups that contain postmarked atoms.
+   * Pack groups that contain atoms marked for exchange in this 
+   * direction (direction i, j).
+   *
+   * Algorithm: Loop over groups. If the group contains one or
+   * more atoms that are marked for exchange in direction i, j, 
+   * pack the group for sending along. If the group is empty,
+   * add it to emptyGroups, to mark it for later removal.
    */
    template <int N>
    void Exchanger::packGroups(int i, int j, 
@@ -298,7 +330,7 @@ namespace DdMd
    {
       int nEmpty = emptyGroups.size();
       #ifdef UTIL_DEBUG
-      #ifdef EXCHANGER_DEBUG
+      #ifdef DDMD_EXCHANGER_DEBUG
       // Confirm that groups are actually empty
       Atom* atomPtr;
       int   atomId;
@@ -347,6 +379,21 @@ namespace DdMd
 
    /*
    * Set ghost communication flags for all atoms in incomplete groups.
+   *
+   * Precondition: This is called by exchangeAtoms after exchanging atoms 
+   * and groups between neighboring processors. All ghosts are cleared.
+   *
+   * Algorithm: Loop over all Group<N> objects in the group storage. 
+   * For each group, check if the group is incomplete, implying that one or
+   * more atoms in the group are owned by another processor. If the group 
+   * is incomplete, loop over 6 transfer directions. For each direction,
+   * if the group is marked for sending in that direction, set the ghost
+   * ghost communication flag for transfer in that direction for every 
+   * local atom in the group. 
+   *
+   * Note: The algorithm assumes that the ghost communication flag for each
+   * atom within a group whose atoms are divided among two or more processors 
+   * will be set on the processor that owns the atom.
    */
    template <int N>
    void Exchanger::finishGroupGhostPlan(GroupStorage<N>& storage)
@@ -361,7 +408,7 @@ namespace DdMd
       for ( ; groupIter.notEnd(); ++groupIter) {
 
          #ifdef UTIL_DEBUG
-         #ifdef EXCHANGER_DEBUG
+         #ifdef DDMD_EXCHANGER_DEBUG
          // Validate group
          int atomId;
          nAtom  = 0;
@@ -388,10 +435,10 @@ namespace DdMd
          }
          assert(nAtom == groupIter->nPtr());
          if (nAtom == 0) {
-            UTIL_THROW("Empty bond");
+            UTIL_THROW("Empty group");
          }
-         #endif
-         #endif
+         #endif // ifdef DDMD_EXCHANGER_DEBUG
+         #endif // ifdef UTIL_DEBUG
 
          // If this group is incomplete, set ghost flags for atoms 
          nAtom = groupIter->nPtr();
@@ -428,53 +475,74 @@ namespace DdMd
    *
    * Algorithm:
    *
-   *    - Loop over local atoms, set exchange and ghost communication 
-   *      flags for those beyond or near boundaries. 
+   *    - Loop over local atoms, set exchange and ghost communication
+   *      flags for those beyond or near processor domain boundaries. 
    *
    *    - Add local atoms that will be retained by this processor but 
    *      sent as ghosts to appropriate send arrays.
    *
-   *    - Loop over groups, set ghost communication flags for groups
-   *      that span boundaries are have atoms near boundaries.
+   *    - Call initGroupPlan each type of group (bond, angle, dihedral).
+   *      initGroupPlan<N>{
    *
-   *    - Clear ghosts.
+   *         For each group{
+   *            - Set ghost communication flags for groups that span 
+   *              or may span boundaries.
+   *            - Clear pointers to ghost atoms in the group.
+   *         }
+   *      }
+   *
+   *      Clear all ghosts from the AtomStorage
    *
    *      For each transfer directions (i and j) {
    *  
-   *         for each local atom {
+   *         For each local atom {
    *            if marked for exchange(i, j) {
    *               if gridDimension[i] > 1 {
    *                  - add to sendAtoms array for removal
    *                  - pack into send buffer
    *               } else {
-   *                  - make ghost copy
+   *                  shift position to apply periodic b.c.
    *               }
    *            }
    *         }
    *
    *         if gridDimension[i] > 1 {
-   *            - Pack groups containing atoms to be sent
+   *            - Call packGroups for each group type. 
+   *              This packs groups containing atoms that are sent.
    *            - Remove exchanged atoms and empty groups
-   *            - Send and receive data
-   *            for each atom in receive buffer {
-   *               - Unpack atom into storage
+   *            - Send and receive data buffers
+   *            for each atom in the receive buffer {
+   *               - Unpack atom into AtomStorage
    *               - shift periodic boundary conditions
    *               - Determine if this is new home (or way station)
    *               - If atom is home, add to appropriate ghost arrays.
    *            }
+   *            - Call unpackGroups for each group type.
    *         }
    * 
    *      } 
    *
-   *    - Loop over groups, identify incomplete groups. For each
-   *      atom in an incomplete groups, set all ghost communication
-   *      flags that are set for the group, and add to send arrays.
+   *    - Call finishGroupPlan<N> each type of group (bond, angle, dihedral).
+   *      finishGroupPlan<N> {
+   *         for each group{
+   *            if group is incomplete{
+   *               for each direction (i and j) {
+   *                  if group is marked for ghost communication {
+   *                     mark local atoms in group for ghost communication
+   *                  }
+   *               }
+   *            }
+   *         }
+   *      }
    *
-   *  Upon return, each processor owns all atoms in its domain, 
-   *  and all groups that contain one or more such atoms, all
-   *  ghost flags are set for local atoms, send arrays contain
-   *  all local atoms that are marked for sending as ghosts, 
-   *  and there are no ghosts.
+   *   }
+   *
+   *  Postconditions. Upon return:
+   *     Each processor owns all atoms in its domain.
+   *     Each processor owns all atoms containing one or more local atoms.
+   *     Ghost plans are set for all local atoms.
+   *     Send arrays contain local atoms marked for sending as ghosts.
+   *     The AtomStorage contains no ghost atoms.
    */
    void Exchanger::exchangeAtoms()
    {
@@ -616,7 +684,7 @@ namespace DdMd
       stamp(CLEAR_GHOSTS);
 
       #ifdef UTIL_DEBUG
-      #ifdef EXCHANGER_DEBUG
+      #ifdef DDMD_EXCHANGER_DEBUG
       int nAtomTotal;
       atomStoragePtr_->computeNAtomTotal(domainPtr_->communicator());
       int myRank = domainPtr_->gridRank();
@@ -665,7 +733,7 @@ namespace DdMd
 
                #ifdef UTIL_DEBUG
                coordinate = atomIter->position()[i];
-               #ifdef EXCHANGER_DEBUG
+               #ifdef DDMD_EXCHANGER_DEBUG
                {
                   bool choose;
                   if (j == 0) {
@@ -691,7 +759,7 @@ namespace DdMd
                   {
 
                      #ifdef UTIL_DEBUG
-                     #ifdef EXCHANGER_DEBUG 
+                     #ifdef DDMD_EXCHANGER_DEBUG 
                      assert(shift);
                      assert(coordinate > -1.0*fabs(rshift));
                      assert(coordinate <  2.0*fabs(rshift));
@@ -848,15 +916,15 @@ namespace DdMd
 
       /*
       * At this point:
-      * No ghost atoms exist.
-      * All atoms are on correct processor.
-      * No Groups are empty.
-      * All pointer to local atoms in Groups are set.
-      * All pointers to ghost atoms in Groups are null.
+      *    No ghost atoms exist.
+      *    All atoms are on correct processor.
+      *    No Groups are empty.
+      *    All pointer to local atoms in Groups are set.
+      *    All pointers to ghost atoms in Groups are null.
       */
 
       #ifdef UTIL_DEBUG
-      #ifdef EXCHANGER_DEBUG
+      #ifdef DDMD_EXCHANGER_DEBUG
       // Validity checks
       atomStoragePtr_->computeNAtomTotal(domainPtr_->communicator());
       if (myRank == 0) {
@@ -873,8 +941,8 @@ namespace DdMd
       dihedralStoragePtr_->isValid(*atomStoragePtr_, 
                                    domainPtr_->communicator(), false);
       #endif
-      #endif
-      #endif
+      #endif // ifdef DDMD_EXCHANGER_DEBUG
+      #endif // ifdef UTIL_DEBUG
 
       // Set ghost communication flags for atoms in incomplete groups
       finishGroupGhostPlan<2>(*bondStoragePtr_);
@@ -942,7 +1010,7 @@ namespace DdMd
 
       #ifdef UTIL_DEBUG
       double coordinate;
-      #ifdef EXCHANGER_DEBUG
+      #ifdef DDMD_EXCHANGER_DEBUG
       // Check send arrays
       {
          // Count local atoms marked for sending as ghosts.
@@ -974,8 +1042,8 @@ namespace DdMd
             }
          }
       }
-      #endif
-      #endif
+      #endif // ifdef DDMD_EXCHANGER_DEBUG
+      #endif // ifdef UTIL_DEBUG
       stamp(INIT_SEND_ARRAYS);
 
       // Cartesian directions
@@ -1130,7 +1198,7 @@ namespace DdMd
       #endif
 
       #ifdef UTIL_DEBUG
-      #ifdef EXCHANGER_DEBUG
+      #ifdef DDMD_EXCHANGER_DEBUG
       atomStoragePtr_->isValid();
       bondStoragePtr_->isValid(*atomStoragePtr_, 
                                domainPtr_->communicator(), true);

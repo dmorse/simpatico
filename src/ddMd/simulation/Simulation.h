@@ -101,6 +101,12 @@ namespace DdMd
       *   -e  Enable echoing of the parameter file to the log file as it
       *       is read.
       *
+      *   -s  nSystem [int]
+      *       Enable multi system simulation, using different groups of 
+      *       processors for different systems. Int argument nSystem is the 
+      *       number of systems. Rank of world communicator must be an 
+      *       integer multiple of nSystem.
+      *
       * \param argc number of arguments
       * \param argv vector of C-string argument strings
       */
@@ -608,18 +614,6 @@ namespace DdMd
       bool isValid();
 
    protected:
-
-      #if 0
-      /**
-      * Return a pointer to a new default ConfigIo.
-      */
-      virtual ConfigIo* newDefaultConfigIo();
-
-      /**
-      * Return a pointer to a new default ConfigIoFactory.
-      */
-      virtual Factory<ConfigIo>* newDefaultConfigIoFactory();
-      #endif
 
       /**
       * Read the FileMaster.
