@@ -111,6 +111,9 @@ namespace McMd
       #endif
    }
 
+   // -------------------------------------------------------------
+   // Initialization and Parameter I/O 
+   
    /*
    * Read parameters from file.
    */
@@ -358,6 +361,9 @@ namespace McMd
       #endif
    }
   
+   // -------------------------------------------------------------
+   // Configuration I/o
+   
    /*
    * Read configuration from a specific input stream.
    */
@@ -380,6 +386,7 @@ namespace McMd
       #endif
    }
 
+   // -------------------------------------------------------------
    // Energy Evaluators (including all components)
 
    /*
@@ -464,6 +471,7 @@ namespace McMd
       return energy;
    }
 
+   // -------------------------------------------------------------
    // Pressure/Stress Evaluators (including all components)
 
    template <typename T>
@@ -571,6 +579,17 @@ namespace McMd
       }
    }
 
+   // -------------------------------------------------------------
+   // Miscellaneous
+   
+   #ifdef MCMD_PERTURB
+   /*
+   * Return a pointer to a new default McPerturbationFactory.
+   */
+   Factory<Perturbation>* McSystem::newDefaultPerturbationFactory()
+   {  return new McPerturbationFactory(*this); }
+   #endif
+
    /*
    * Return true if this McSystem is valid, or an throw Exception.
    */
@@ -582,18 +601,6 @@ namespace McMd
       #endif
       return true;
    }
-
-   // -------------------------------------------------------------
-   #ifdef MCMD_PERTURB
-
-   /*
-   * Return a pointer to a new default McPerturbationFactory.
-   */
-   Factory<Perturbation>* McSystem::newDefaultPerturbationFactory()
-   {  return new McPerturbationFactory(*this); }
-
-   #endif
-   // ------------------------------------------------------------------
 
 }
 #endif

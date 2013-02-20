@@ -67,8 +67,10 @@ namespace Inter
       * \param b1  bond vector from atom 0 to 1.
       * \param b2  bond vector from atom 1 to 2.
       * \param b3  bond vector from atom 2 to 3.
+      *
+      * \return 0 if normal, 1 for divide by zero error
       */
-      void computeDerivatives(const Vector& b1, const Vector& b2, const Vector& b3);
+      bool computeDerivatives(const Vector& b1, const Vector& b2, const Vector& b3);
  
    };
 
@@ -77,7 +79,7 @@ namespace Inter
    /* 
    * Calculate cosPhi.
    */ 
-   inline void 
+   inline bool 
    TorsionForce::computeDerivatives(
                     const Vector& b1, const Vector& b2, const Vector& b3)
    {
@@ -85,11 +87,19 @@ namespace Inter
       double r1, r2;
 
       u1.cross(b1, b2);
-      r1 = u1.abs();
+      r1 = u1.square();
+      if (r1 < 1.0E-10) {
+         return 1; // Error code
+      }
+      r1 = sqrt(r1);
       u1 /= r1;
 
       u2.cross(b2, b3);
-      r2 = u2.abs();
+      r2 = u2.square();
+      if (r2 < 1.0E-10) {
+         return 1; // Error code
+      }
+      r2 = sqrt(r2);
       u2 /= r2;
 
       cosPhi = u1.dot(u2);
@@ -108,6 +118,8 @@ namespace Inter
       d2.cross(t1, b1);
       t1.cross(b3, t2);
       d2 += t1;
+
+      return 0; // Normal completion
    }
 
 } 

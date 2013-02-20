@@ -254,6 +254,7 @@ namespace DdMd
       * Return precomputed total potential energy.
       *
       * Call only on master processor, after computePotentialEnergies.
+      * Calls the energy() methods of each of the potential classes.
       * 
       * \return total potential energy (only correct on master node).
       */
@@ -263,6 +264,22 @@ namespace DdMd
       * Mark all potential energies as unknown.
       */
       void unsetPotentialEnergies();
+
+      /**
+      * Compute pair energies for each pair of atom types.
+      * 
+      * Reduce operation: Must be called on all nodes.
+      */
+      void computePairEnergies();
+
+      /**
+      * Return precomputed pair energies.
+      *
+      * Call only on master processor, after computePairEnergies.
+      * 
+      * \return total pair energies (only correct on master node).
+      */
+      DMatrix<double> pairEnergies() const;
 
       /**
       * Calculate and store kinetic stress.
@@ -298,7 +315,7 @@ namespace DdMd
       * Calculate and store all virial stress contributions.
       *
       * Reduce operation: Must be called on all nodes. This
-      * method calls computeStress for each potential.
+      * calls computeStress() method of each potential class.
       */
       void computeVirialStress();
 
@@ -306,7 +323,8 @@ namespace DdMd
       * Return total virial stress.
       *
       * Call only on master processor, after computeVirialStress.
-      * This method computes result by adding pair, bond, etc.
+      * This method calls the stress() method of each potential
+      * class (pair, bond, etc.) and adds the result. 
       * 
       * \return total virial stress (only correct on master node).
       */
@@ -316,28 +334,12 @@ namespace DdMd
       * Return total virial pressure.
       *
       * Call only on master processor, after computeVirialStress.
-      * This method computes result by adding pair, bond, etc.
+      * Similar to virialStress, but returns average of diagonal
+      * elements.
       * 
       * \return total virial pressure (only correct on master node).
       */
       double virialPressure() const;
-
-      /**
-      * Calculate and store pair energy 
-      * (or pair energies, depending on nAtomType) on all processors.
-      * 
-      * Reduce operation: Must be called on all nodes.
-      */
-      void computePairEnergies();
-
-      /**
-      * Return precomputed pair energy (or pair energies).
-      *
-      * Call only on master processor, after computePairEnergies.
-      * 
-      * \return total pair energies (only correct on master node).
-      */
-      DMatrix<double> pairEnergies() const;
 
       /**
       * Mark all virial stress contributions as unknown.
@@ -429,14 +431,14 @@ namespace DdMd
   
       #ifdef INTER_ANGLE 
       /**
-      * Get the angleStorage by reference.
+      * Get the AngleStorage by reference.
       */
       AngleStorage& angleStorage();
       #endif
    
       #ifdef INTER_DIHEDRAL
       /**
-      * Get the angleStorage by reference.
+      * Get the DihedralStorage by reference.
       */
       DihedralStorage& dihedralStorage();
       #endif
@@ -488,14 +490,20 @@ namespace DdMd
       * Get the Integrator by reference.
       */
       Integrator& integrator();
-   
-      /// Get the EnergyEnsemble by reference.
+  
+      /** 
+      * Get the EnergyEnsemble by reference.
+      */
       EnergyEnsemble& energyEnsemble();
 
-      /// Get the BoundaryEnsemble by reference.
+      /**
+      * Get the BoundaryEnsemble by reference.
+      */
       BoundaryEnsemble& boundaryEnsemble();
 
-      /// Get the associated FileMaster by reference.
+      /**
+      * Get the associated FileMaster by reference.
+      */
       FileMaster& fileMaster();
 
       /**
@@ -571,18 +579,26 @@ namespace DdMd
       //@}
       /// \name Signals
       //@{ 
-      
-      /// Signal to force unsetting of all computed quantities.
+     
+      /** 
+      * Signal to force unsetting of quantities that depend on x, v, or f.
+      */
       Signal<>& modifySignal();
 
-      /// Signal to indicate change in atomic positions.
+      /**
+      * Signal to indicate change in atomic positions.
+      */
       Signal<>& positionSignal();
 
-      /// Signal to indicate change in atomic velocities.
+      /**
+      * Signal to indicate change in atomic velocities.
+      */
       Signal<>& velocitySignal();
 
-      /// Signal to indicate change in atomic forces.
-      Signal<>& forceSignal();
+      /**
+      * Signal to indicate exchange of atoms and groups.
+      */
+      Signal<>& exchangeSignal();
 
       //@}
       
@@ -810,8 +826,8 @@ namespace DdMd
       /// Signal to indicate change in atomic velocities.
       Signal<>  velocitySignal_;
 
-      /// Signal to indicate change in atomic forces.
-      Signal<>  forceSignal_;
+      /// Signal to indicate exchange of atoms ownership.
+      Signal<>  exchangeSignal_;
 
       /// Log output file (if not standard out)
       std::ofstream logFile_;
@@ -954,7 +970,7 @@ namespace DdMd
    inline int Simulation::nBondType()
    {  return nBondType_; }
 
-   #if INTER_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Get maximum number of angle types.
    */
@@ -962,7 +978,7 @@ namespace DdMd
    {  return nAngleType_; }
    #endif
 
-   #if INTER_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /*
    * Get maximum number of dihedral types.
    */
@@ -970,7 +986,7 @@ namespace DdMd
    {  return nDihedralType_; }
    #endif
 
-   #if INTER_EXTERNAL
+   #ifdef INTER_EXTERNAL
    /*
    * Does this simulation have an external potential?
    */
@@ -1002,9 +1018,9 @@ namespace DdMd
    inline Signal<>& Simulation::velocitySignal()
    { return velocitySignal_; }
 
-   /// Signal to indicate change in atomic forces.
-   inline Signal<>& Simulation::forceSignal()
-   {  return forceSignal_; }
+   /// Signal to indicate exchange of atom ownership.
+   inline Signal<>& Simulation::exchangeSignal()
+   { return exchangeSignal_; }
 
 }
 #endif

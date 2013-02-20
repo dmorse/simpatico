@@ -76,7 +76,9 @@ namespace McMd
    #endif 
    #ifdef MCMD_PERTURB
    class Perturbation;
+   #ifdef UTIL_MPI
    class ReplicaMove;
+   #endif
    #endif
    
    /**
@@ -148,7 +150,7 @@ namespace McMd
       /** 
       * Set the FileMaster. 
       * 
-      * Can be used to set the FileMaster to that of the parent 
+      * Is normally used to set the FileMaster to that of the parent 
       * Simulation.
       * 
       * \param filemaster FileMaster object.
@@ -907,9 +909,12 @@ namespace McMd
       /// Has this System instantiated a PerturbationFactory?
       bool    createdPerturbationFactory_;
       
+      #ifdef UTIL_MPI
       /// Has this System instantiated a ReplicaMove?
       bool    createdReplicaMove_;
-      #endif
+      #endif // ifdef UTIL_MPI
+
+      #endif // ifdef MCMD_PERTURB
 
 
       /// list of observers
@@ -1049,13 +1054,16 @@ namespace McMd
 
    #ifdef MCMD_PERTURB
    /**
+   * Should this system create a Perturbation?
+   */
+   inline bool System::expectPerturbation() const
+   { return expectPerturbationParam_; }
+
+   /**
    * Return the perturbation factory by reference.
    */
    inline Factory<Perturbation>& System::perturbationFactory()
    { return *perturbationFactoryPtr_; }
-
-   inline bool System::expectPerturbation() const
-   { return expectPerturbationParam_; }
 
    /* 
    * Does this system have an associated Perturbation?

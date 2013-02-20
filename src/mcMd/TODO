@@ -1,10 +1,18 @@
 Serialization
 -------------
 
-- Move restart interval and file name, and isInitialized_  to Simulation base classs.
-- Generalize to multi-processor serialize and test.
-- Test MD serialization after forcing pair list rebuild upon restart output.
-- Test save / load for replica move
+- Test save / load with independent multi-processor
+- Test save / load with perturbation
+- Test save /load with replica move
+- Test MD serialization after forcing pair list rebuild upon restart output
+- Move restart interval and file name, and isInitialized_  to Simulation 
+  base classs.
+
+Perturbation
+------------
+
+- Modify so that perturbation can be used without MPI, or change conditional 
+  compilation so that a perturbation can only be compiled ifdef UTIL_MPI.
 
 Constant Pressure MD (Jens)
 ---------------------------
@@ -74,5 +82,3 @@ SystemAccess base classes
 
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
 
-
-Interactions (Design Changes)

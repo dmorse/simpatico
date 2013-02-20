@@ -27,8 +27,8 @@
 #ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
-#ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
+#ifdef MCMD_PERTURB
 #include <mcMd/perturb/ReplicaMove.h>
 #endif
 #endif
@@ -191,8 +191,8 @@ namespace McMd
          isRestarting_ = true; 
          readRestart(std::string(rarg));
          Util::Log::file() << std::endl;
-
       }
+
    }
 
    /*
@@ -259,7 +259,7 @@ namespace McMd
       if (isInitialized_) {
          UTIL_THROW("Error: Called readParam when already initialized");
       }
-      #if UTIL_MPI
+      #ifdef UTIL_MPI
       if (hasParamCommunicator()) {
          UTIL_THROW("Error: Has a param communicator in loadParameters");
       }
@@ -307,13 +307,15 @@ namespace McMd
       std::string commandFileName = filename + ".cmd";
       fileMaster().setCommandFileName(commandFileName);
 
-      #if UTIL_MPI
+      #ifdef UTIL_MPI
+      #ifdef MCMD_PERTURB
       if (system().hasPerturbation()) {
          // Read one command file, after reading multiple restart files.
          Util::Log::file() << "Set to use a single command file" 
                            << std::endl;
          setParamCommunicator();
       }
+      #endif
       #endif
 
       isInitialized_ = true;
@@ -636,8 +638,8 @@ namespace McMd
          // Choose and attempt an McMove
          mcMoveManagerPtr_->chooseMove().move();
 
-         #ifdef MCMD_PERTURB
          #ifdef UTIL_MPI
+         #ifdef MCMD_PERTURB
          // Attempt replica move, if any.
          if (system().hasPerturbation()) {
             if (system().hasReplicaMove()) {
@@ -708,8 +710,8 @@ namespace McMd
       }
       Log::file() << endl;
 
-      #ifdef MCMD_PERTURB
       #ifdef UTIL_MPI
+      #ifdef MCMD_PERTURB
       // Print replica-exchange acceptance statistics
       if (system().hasPerturbation()) {
          if (system().hasReplicaMove()) {

@@ -6,6 +6,7 @@ mcMd_diagnostics_system_SRCS=$(SRC_DIR)/mcMd/diagnostics/system/AtomMSD.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/DumpConfig.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/IntraPairAutoCorr.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/IntraStructureFactor.cpp \
+    $(SRC_DIR)/mcMd/diagnostics/system/IntraStructureFactorGrid.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/LinearRouseAutoCorr.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/RadiusGyration.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/RDF.cpp \

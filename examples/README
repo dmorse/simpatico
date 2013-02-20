@@ -15,21 +15,34 @@ atomic:   Examples of atomic liquids, with non-bonded point particles.
 dimer:    Liquids of diaatomic molecules, with pair and bond forces.
           These examples use default executables mdSim, mcSim, and ddSim.
 
-chain:    Liquids of flexible linear bead spring polymers, including 
-          homopolymers, homopolymer blends, and diblock copolymers. These 
+homopolymer:
+          Liquid of flexible linear bead-spring homopolymers. These
           examples use default executables mdSim, mcSim, and ddSim.
 
-worm:     These examples are melts of short wormlike polymers. These 
-          examples use executables mdSim_a_d and mcSim_a_d, with angle 
+diblock:
+          Liquid of flexible linear bead-spring diblock copolymers. These
+          examples use default executables mdSim, mcSim, and ddSim.
+
+blend:    Mixtures of A and B flexible linear bead-spring polymers, 
+          using default executables mdSim, mcSim, and ddSim.
+
+blend-semigrand:    
+          Mixtures of A and B flexible linear bead-spring polymers, in
+          semi-grand ensemble, using an MC move that transforms A to B
+          or vise-versa. Uses default mcSim executable. 
+
+worm:     Melts of short wormlike polymers, with bond and bending forces.
+          These examples use executables mdSim_a_d and mcSim_a_d, with angle 
           and dihedral but no external potentials, though the dihedral 
           potential is not actually used. These must be compiled with
           INTER_ANGLE=1 and INTER_DIHEDRAL=1 defined in src/inter/defines.mk. 
 
-dihedral: Melts of short linear polymers with a modest dihedral torsion 
-          potential. These examples also executables mdSim_a_d and mcSim_a_d, 
-          with angle and dihedral but no external potentials. 
+dihedral: Melts of short linear polymers with an angle potential and a 
+          modest dihedral torsion potential, as for alkanes. These 
+          examples also use executables mdSim_a_d and mcSim_a_d, with 
+          angle dihedral potentials but no external potentials. 
 
-external: Polymer melts in external one-body potentials. 
+external: Flexible bead-spring polymers in external one-body potentials. 
           These examples use executables named mdSim_e and mdSim_e with an 
           external one-body potential, but no angle or dihedral potentials.
           The required programs are compiled with INTER_EXTERNAL=1 defined 
@@ -56,6 +69,10 @@ The file "param" is the input parameter file, which the main executable reads
 from standard input. The file "commands" is the command script. The file 
 "in/config" is the input configuration file. Outputs are written to the out/ 
 directory. 
+
+In some examples in which an input configuration is shared by several examples
+that use different simulation algorithms, the in/ directory is further up the 
+directory hierarchy, at the level of the root directories for the examples.
 
 The names of the parameter and command files may sometimes contain suffixes 
 after "param" and "commands".  Some example directories may also contain 

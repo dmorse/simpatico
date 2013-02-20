@@ -18,6 +18,7 @@
 // Angle interaction classes
 #include <inter/angle/CosineSqAngle.h>
 #include <inter/angle/CosineAngle.h>
+#include <inter/angle/HarmonicAngle.h>
 
 namespace DdMd
 {
@@ -49,6 +50,9 @@ namespace DdMd
       } else
       if (name == "CosineAngle") {
          ptr = new AnglePotentialImpl<CosineAngle>(*simulationPtr_);
+      } else
+      if (name == "HarmonicAngle") {
+         ptr = new AnglePotentialImpl<HarmonicAngle>(*simulationPtr_);
       } //else
       return ptr;
    }

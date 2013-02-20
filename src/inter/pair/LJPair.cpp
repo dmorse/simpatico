@@ -154,7 +154,7 @@ namespace Inter
    */
    void LJPair::readParameters(std::istream &in) 
    {
-      if (nAtomType_ == 0) {
+      if (nAtomType_ <= 0) {
          UTIL_THROW( "nAtomType must be set before readParam");
       }
    

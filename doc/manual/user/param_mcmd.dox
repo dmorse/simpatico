@@ -187,10 +187,14 @@ The following parameters appear in the main block in the format for either type 
 <li> nAtomType: The number of atom types, which are indexed by an integer index with values 0, ...,  nAtomType - 1. </li>
 <li> nAtomType: The number of bond types, which are indexed by an integer index with values 0, ...,  nBondType - 1. </li>
 <li> atomTypes: atomTypes is an array of values of type McMd::AtomType. The string representation of each atom type consists of a string label (e.g., "A" or "B") followed by a floating point mass. </li>
+<li> maskedPairPolicy: Determines if nonbonded pair interactions between bonded atoms are "masked" (i.e., suppressed), or included. See below for further discussion.
 <li> writeRestartInterval: The interval, in MD time steps or attempted MC moves, between time steps when a restart file is written.
 <li> writeRestartFileName: The base name used for the restart file.
 </ul>
 The writeRestartInterval and writeRestartFileName parameters are discussed in more detail \ref user_restart_page "here".
+
+\section user_param_mcmd_maskPairPolicy_section MaskedPairPolicy
+The parameter maskedPairPolicy is represented internally by an instance of the enum McMd::MaskPolicy. This can have values MaskBonded or MaskNone, which are represented in the parameter file by strings "MaskBonded" or "maskBonded" and "MaskNone" or "maskNone", respectively. The value "MaskBonded" indicates that nonbonded pair interactions between bonded atoms should be suppressed or "masked", i.e., there should be no non-bonded pair interaction between pairs of atoms that are directly connected by a two-body covalent bond. The value "MaskNone" indicates, conversely, that the nonbonded pair interaction should operate between any two atoms that are separated by a distance less than the appropriate pair potential cutoff length.
 
 \section user_param_mcmd_filemaster_section FileMaster
 The FileMaster block is associated with an instance of the class Util::FileMaster. This block contains several string parameters that specify locations of input and output files. The string "commandFileName" is the name of the command file that controls program execution after the parameter file is processed. The "inputPrefix" string is prepended to the names of input configuration files and other input files. The "outputPrefix" string is predended to the names of most output files. 

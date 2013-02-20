@@ -1,15 +1,16 @@
 Simulation{
   Domain{
-    gridDimensions    2    2    1
+    gridDimensions    2    1    3
   }
   FileMaster{
-    commandFileName commands
-    inputPrefix     in/
-    outputPrefix    out/
+    commandFileName   commands
+    inputPrefix       in/
+    outputPrefix      out/
   }
   nAtomType          1
   nBondType          1
   nAngleType         1
+  nDihedralType      0
   atomTypes          A    1.0
   AtomStorage{
     atomCapacity      1000 
@@ -32,6 +33,7 @@ Simulation{
   bondStyle          HarmonicBond
   angleStyle         CosineAngle
   maskedPairPolicy   maskBonded
+  reverseUpdateFlag  0
   PairPotential{
     epsilon          1.0
     sigma            1.0
@@ -54,7 +56,7 @@ Simulation{
     type             rigid
   }
   NveIntegrator{
-    dt               0.001
+    dt               0.005 
   }
   Random{
     seed        8012457890
@@ -63,16 +65,8 @@ Simulation{
      baseInterval  1000
 
      OutputEnergy{
-        interval          1000
+        interval         10000
         outputFileName  energy
      }
   }
 }
-
-     WriteConfig{
-        interval          2000
-        outputFileName  config
-     }
-
-  nAngleType         0
-  hasExternal        0

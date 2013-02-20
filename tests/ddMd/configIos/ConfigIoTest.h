@@ -79,7 +79,15 @@ public:
 
       // Open parameter file
       std::ifstream file;
+      #ifdef INTER_ANGLE
+      #ifdef INTER_DIHEDRAL 
+      openInputFile("in/ConfigIo_a_d", file);
+      #else  // ifndef INTER_DIHEDRAL
+      openInputFile("in/ConfigIo_a", file);
+      #endif // INTER_DIHEDRAL
+      #else  // inndef INTER_ANGLE
       openInputFile("in/ConfigIo", file);
+      #endif // INTER_ANGLE
 
       domain.readParam(file);
       atomStorage.readParam(file);

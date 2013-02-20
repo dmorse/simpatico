@@ -1,4 +1,4 @@
-Make sure all link and worm examples have writeRestartInterval
+Make sure all examples have writeRestartInterval
 
 Recheck all ideal gas _np and _np_a_d examples
 Recheck all external  _e examples

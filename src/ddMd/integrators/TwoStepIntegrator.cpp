@@ -106,6 +106,7 @@ namespace DdMd
             exchanger().update();
             timer().stamp(UPDATE);
          }
+         simulation().exchangeSignal().notify();
    
          #ifdef DDMD_INTEGRATOR_DEBUG
          simulation().isValid();

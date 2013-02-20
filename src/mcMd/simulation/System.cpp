@@ -47,8 +47,8 @@
 #include <mcMd/perturb/Perturbation.h>
 #ifdef UTIL_MPI
 #include <mcMd/perturb/ReplicaMove.h>
-#endif
-#endif
+#endif // UTIL_MPI
+#endif // MCMD_PERTURB
 
 // namespace Util
 #include <util/misc/FileMaster.h>
@@ -108,8 +108,8 @@ namespace McMd
       #ifdef UTIL_MPI
       replicaMovePtr_(0),
       hasReplicaMove_(false),
-      #endif
-      #endif
+      #endif // UTIL_MPI
+      #endif // MCMD_PERTURB
       #ifndef INTER_NOPAIR
       pairStyle_(),
       #endif
@@ -135,8 +135,10 @@ namespace McMd
       #ifdef MCMD_PERTURB
       , createdPerturbation_(false)
       , createdPerturbationFactory_(false)
+      #ifdef UTIL_MPI
       , createdReplicaMove_(false)
-      #endif
+      #endif // UTIL_MPI
+      #endif // MCMD_PERTURB
    {
       moleculeSetsPtr_ = new DArray<MoleculeSet>;
       boundaryPtr_     = new Boundary;
@@ -189,11 +191,11 @@ namespace McMd
       #ifdef UTIL_MPI
       replicaMovePtr_(other.replicaMovePtr_),
       hasReplicaMove_(other.hasReplicaMove_),
-      #endif
-      #endif
+      #endif // ifdef UTIL_MPI
+      #endif // ifdef MCMD_PERTURB
       #ifndef INTER_NOPAIR
       pairStyle_(other.pairStyle_),
-      #endif
+      #endif 
       bondStyle_(other.bondStyle_),
       #ifdef INTER_ANGLE
       angleStyle_(other.angleStyle_),
@@ -216,8 +218,10 @@ namespace McMd
       #ifdef MCMD_PERTURB
       , createdPerturbation_(false)
       , createdPerturbationFactory_(false)
+      #ifdef UTIL_MPI
       , createdReplicaMove_(false)
-      #endif
+      #endif // UTIL_MPI
+      #endif // MCMD_PERTURB
    {}
 
    /*
@@ -285,8 +289,8 @@ namespace McMd
          if (replicaMovePtr_ && createdReplicaMove_) {
             delete replicaMovePtr_;
          }
-         #endif
-         #endif
+         #endif // UTIL_MPI
+         #endif // MCMD_PERTURB
       
          if (energyEnsemblePtr_) {
             delete energyEnsemblePtr_;
@@ -383,10 +387,15 @@ namespace McMd
 
    /*
    * If no FileMaster exists, create and load one. 
+   *
+   * This is called by System::loadParameters(). Except during unit testing, 
+   * a FileMaster will normally already exist when this is called, either 
+   * because the FileMaster has been set to that of a paranet Simulation 
+   * by calling setFileMaster(), or because the System was constructed by 
+   * copying another, for HMC.
    */
    void System::loadFileMaster(Serializable::IArchive& ar)
    {
-      // Create FileMaster if necessary
       if (!fileMasterPtr_) {
          fileMasterPtr_ = new FileMaster();
          createdFileMaster_ = true;
@@ -396,6 +405,11 @@ namespace McMd
 
    /*
    * If createdFileMaster_, save to archive.
+   *
+   * A System normally creates its own FileMaster only in unit tests.
+   * In a simulation, the FileMaster is normally set to that of either
+   * a parent Simulation or that of another System from which this was
+   * copied.
    */
    void System::saveFileMaster(Serializable::OArchive& ar)
    {
@@ -818,6 +832,24 @@ namespace McMd
       expectPerturbationParam_ = true;
    }
 
+   /*
+   * If a perturbation is expected, read the polymorphic perturbation block. 
+   *
+   * This method reads the array of perturbation parameters, and then
+   * modifies the appropriate system parameters accordingly. This function
+   * is not called by System::readParameters, but should be called by the 
+   * readParameters method of subclasses (e.g., MdSystem and McSystem). It 
+   * should be called after all of the potentials, ensmebles, and other 
+   * physical parameters, which provide a set of baseline parameters that 
+   * this method can then modify.
+   *
+   * The parameter value used for this system is determined by the rank
+   * of this System, which is a parameter of the Perturbation constructor.
+   * The rank must thus be known to the perturbation factory that creates 
+   * an instance of a subclass of Perturbation. Subclasses of system must
+   * re-implement the virtual System::newDefaultPerturbationFactory()
+   * method to create an appropriate Factory object.
+   */
    void System::readPerturbation(std::istream& in) 
    {
       if (!hasPerturbation() && expectPerturbationParam_) {
@@ -840,7 +872,7 @@ namespace McMd
    void System::loadPerturbation(Serializable::IArchive& ar) 
    {
       if (hasParamCommunicator()) {
-         UTIL_THROW("Sysstem has paramCommunicator in loadPerturbation");
+         UTIL_THROW("System has paramCommunicator in loadPerturbation");
       }
 
       bool savedPerturbation;

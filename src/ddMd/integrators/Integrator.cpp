@@ -103,7 +103,7 @@ namespace DdMd
       }
 
       // Send signal indicating change in atomic forces
-      simulation().forceSignal().notify();
+      // simulation().forceSignal().notify();
    }
 
    /*
@@ -140,7 +140,7 @@ namespace DdMd
       }
 
       // Send signal indicating change in atomic forces
-      simulation().forceSignal().notify();
+      // simulation().forceSignal().notify();
    }
 
    /*
@@ -184,52 +184,82 @@ namespace DdMd
           << " sec" << std::endl;
 
       double ratio = double(nProc)/double(iStep_*nAtomTot);
+      double totalT = 0.0;
 
-      double diagnosticT = timer().time(DIAGNOSTIC);
-      double integrate1T = timer().time(INTEGRATE1);
-      double checkT =  timer().time(CHECK);
-      double transformFT = timer().time(TRANSFORM_F);
-      double exchangeT = timer().time(EXCHANGE);
-      double cellListT = timer().time(CELLLIST);
-      double transformRT = timer().time(TRANSFORM_R);
-      double pairListT = timer().time(PAIRLIST);
-      double updateT = timer().time(UPDATE);
-      double pairForceT = timer().time(PAIR_FORCE);
-      double bondForceT = timer().time(BOND_FORCE);
-      double integrate2T = timer().time(INTEGRATE2);
 
       out << std::endl;
-      out << "time * nproc / (nStep*nAtom):" << std::endl;
+      out << "Times below are time per step per atom per processor, time * nproc / (nStep*nAtom)"
+          << std::endl << std::endl;
+      out << "                     " << " Time [sec] "
+          << "       " << " Percent (%)" << std::endl;
       out << "Total                " << Dbl(time*ratio, 12, 6)
-          << " sec   " << std::endl;
+          << " sec   " << 100.0 << std::endl;
+      double diagnosticT = timer().time(DIAGNOSTIC);
+      totalT += diagnosticT;
       out << "Diagnostics          " << Dbl(diagnosticT*ratio, 12, 6)
-          << " sec   " << Dbl(diagnosticT/time, 12, 6, true) << std::endl;
+          << " sec   " << Dbl(100.0*diagnosticT/time, 12, 6, true) << std::endl;
+      double integrate1T = timer().time(INTEGRATE1);
+      totalT += integrate1T;
       out << "Integrate1           " << Dbl(integrate1T*ratio, 12, 6) 
-          << " sec   " << Dbl(integrate1T/time, 12, 6, true) << std::endl;
+          << " sec   " << Dbl(100.0*integrate1T/time, 12, 6, true) << std::endl;
+      double checkT =  timer().time(CHECK);
+      totalT += checkT;
       out << "Check                " << Dbl(checkT*ratio, 12, 6)
-          << " sec   " << Dbl(checkT/time, 12, 6, true) << std::endl;
+          << " sec   " << Dbl(100.0*checkT/time, 12, 6, true) << std::endl;
       if (!UTIL_ORTHOGONAL) {
+         double transformFT = timer().time(TRANSFORM_F);
+         totalT += transformFT;
          out << "Transform (forward)  " << Dbl(transformFT*ratio, 12, 6)
-             << " sec   " << Dbl(transformFT/time, 12, 6, true) << std::endl;
+             << " sec   " << Dbl(100.0*transformFT/time, 12, 6, true) << std::endl;
       }
+      double exchangeT = timer().time(EXCHANGE);
+      totalT += exchangeT;
       out << "Exchange             " << Dbl(exchangeT*ratio, 12, 6)
-          << " sec   " << Dbl(exchangeT/time, 12, 6, true) << std::endl;
+          << " sec   " << Dbl(100.0*exchangeT/time, 12, 6, true) << std::endl;
+      double cellListT = timer().time(CELLLIST);
+      totalT += cellListT;
       out << "CellList             " << Dbl(cellListT*ratio, 12, 6)
-          << " sec   " << Dbl(cellListT/time, 12, 6, true) << std::endl;
+          << " sec   " << Dbl(100.0*cellListT/time, 12, 6, true) << std::endl;
       if (!UTIL_ORTHOGONAL) {
+         double transformRT = timer().time(TRANSFORM_R);
+         totalT += transformRT;
          out << "Transform (reverse)  " << Dbl(transformRT*ratio, 12, 6)
-             << " sec   " << Dbl(transformRT/time, 12, 6, true) << std::endl;
+             << " sec   " << Dbl(100.0*transformRT/time, 12, 6, true) << std::endl;
       }
+      double pairListT = timer().time(PAIRLIST);
+      totalT += pairListT;
       out << "PairList             " << Dbl(pairListT*ratio, 12, 6)
-          << " sec   " << Dbl(pairListT/time, 12, 6, true) << std::endl;
+          << " sec   " << Dbl(100.0*pairListT/time, 12, 6, true) << std::endl;
+      double updateT = timer().time(UPDATE);
+      totalT += updateT;
       out << "Update               " << Dbl(updateT*ratio, 12, 6)
-          << " sec   " << Dbl(updateT/time, 12, 6, true) << std::endl;
+          << " sec   " << Dbl(100.0*updateT/time, 12, 6, true) << std::endl;
+      double pairForceT = timer().time(PAIR_FORCE);
+      totalT += pairForceT;
       out << "Pair Forces          " << Dbl(pairForceT*ratio, 12, 6)
-          << " sec   " << Dbl(pairForceT/time, 12 , 6, true) << std::endl;
+          << " sec   " << Dbl(100.0*pairForceT/time, 12 , 6, true) << std::endl;
+      double bondForceT = timer().time(BOND_FORCE);
+      totalT += bondForceT;
       out << "Bond Forces          " << Dbl(bondForceT*ratio, 12, 6)
-          << " sec   " << Dbl(bondForceT/time, 12 , 6, true) << std::endl;
+          << " sec   " << Dbl(100.0*bondForceT/time, 12 , 6, true) << std::endl;
+      #ifdef INTER_ANGLE
+      double angleForceT = timer().time(ANGLE_FORCE);
+      totalT += angleForceT;
+      out << "Angle Forces         " << Dbl(angleForceT*ratio, 12, 6)
+          << " sec   " << Dbl(100.0*angleForceT/time, 12 , 6, true) << std::endl;
+      #endif
+      #ifdef INTER_DIHEDRAL
+      double dihedralForceT = timer().time(DIHEDRAL_FORCE);
+      totalT += dihedralForceT;
+      out << "Dihedral Forces      " << Dbl(dihedralForceT*ratio, 12, 6)
+          << " sec   " << Dbl(100.0*dihedralForceT/time, 12 , 6, true) << std::endl;
+      #endif
+      double integrate2T = timer().time(INTEGRATE2);
+      totalT += integrate2T;
       out << "Integrate2           " << Dbl(integrate2T*ratio, 12, 6) 
-          << " sec   " << Dbl(integrate2T/time, 12, 6, true) << std::endl;
+          << " sec   " << Dbl(100.0*integrate2T/time, 12, 6, true) << std::endl;
+      //out << "Sum of above         " << Dbl(totalT*ratio, 12, 6) 
+      //    << " sec   " << Dbl(100.0*totalT/time, 12, 6, true) << std::endl;
       out << std::endl;
 
       int buildCounter = pairPotential().pairList().buildCounter(); 

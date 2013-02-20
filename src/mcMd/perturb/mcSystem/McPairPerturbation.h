@@ -30,9 +30,9 @@ namespace McMd
    * A Perturbation in the pair interaction epsilon(0,1) for any pair
    * potential supporting setEpsilon().
    *
-   * An McPairPerturbation describes a Hamiltonian with a variable
-   * pair interaction between species 0 and 1. The perturbation
-   * parameter is the pair interaction parameter epsilon(0, 1).
+   * An McPairPerturbation describes a Hamiltonian with a variable pair
+   * interaction between species 0 and 1. The perturbation parameter is
+   * is the pair interaction parameter epsilon(0, 1).
    *
    * \ingroup McMd_Perturb_Module
    */
