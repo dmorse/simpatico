@@ -9,7 +9,6 @@
 */
 
 #include <util/param/ParamComposite.h>
-#include <util/archives/Serializable.h>
 #include <util/random/Random.h>
 #include <util/global.h>
 
@@ -29,7 +28,7 @@ namespace McMd
    *
    * \ingroup McMd_McMove_Module
    */
-   class McMove : public ParamComposite, public Serializable
+   class McMove : public ParamComposite
    {
 
    public:
@@ -54,6 +53,20 @@ namespace McMd
       * Empty default implementation.
       */
       virtual void readParameters(std::istream &in);
+
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Set the probability for this McMove.
@@ -110,32 +123,26 @@ namespace McMd
       */
       virtual void output();
 
-      /**
-      * Save the internal state to an archive.
-      *
-      * \param ar saving (output) archive object.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load the internal state to an archive.
-      *
-      * \param ar loading (input) archive object.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
-
    protected:
 
-      /// Increment the number of attempted moves.
+      /**
+      * Increment the number of attempted moves.
+      */
       void incrementNAttempt();
 
-      /// Increment the number of accepted moves.
+      /**
+      * Increment the number of accepted moves.
+      */
       void incrementNAccept();
 
-      /// Get parent Simulation object.
+      /**
+      * Get parent Simulation object.
+      */
       Simulation& simulation();
 
-      /// Get Random number generator of parent Simulation.
+      /**
+      * Get Random number generator of parent Simulation.
+      */
       Random& random();
 
       /**
@@ -146,13 +153,13 @@ namespace McMd
    private:
 
       /// Pointer to parent Simulation object
-      Simulation *simulationPtr_;
+      Simulation  *simulationPtr_;
 
       /// Pointer to random number generator
-      Random     *randomPtr_;
+      Random  *randomPtr_;
 
       /// Probability of choosing this move
-      double     probability_;
+      double  probability_;
 
       /// Number of moves that have been attempted by this object.
       long  nAttempt_;
@@ -161,7 +168,6 @@ namespace McMd
       long  nAccept_;
 
    };
-
 
    // Public inline methods
 

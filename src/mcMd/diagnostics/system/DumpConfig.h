@@ -57,6 +57,29 @@ namespace McMd
       virtual void readParameters(std::istream& in);
    
       /**
+      * Save state to archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+
+      /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
+      /**
       * Clear nSample counter.
       */
       virtual void setup();
@@ -68,30 +91,6 @@ namespace McMd
       */
       virtual void sample(long iStep);
   
-
-      /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
-
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
    private:
       
       // Output file stream
@@ -111,9 +110,7 @@ namespace McMd
    template <class Archive>
    void DumpConfig::serialize(Archive& ar, const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
+      Diagnostic::serialize(ar, version);
       ar & nSample_;
    }
 

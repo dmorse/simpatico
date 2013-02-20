@@ -1,5 +1,5 @@
-#ifndef FLEX_PTR_H
-#define FLEX_PTR_H
+#ifndef UTIL_FLEX_PTR_H
+#define UTIL_FLEX_PTR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

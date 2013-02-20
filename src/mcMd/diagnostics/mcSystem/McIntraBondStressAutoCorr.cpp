@@ -10,7 +10,7 @@
 
 #include <mcMd/diagnostics/mcSystem/McIntraBondStressAutoCorr.h>
 #include <mcMd/potentials/bond/BondPotential.h>
-#include <mcMd/diagnostics/system/IntraBondStressAutoCorr_inc.h>
+#include <mcMd/diagnostics/system/IntraBondStressAutoCorr.tpp>
 
 namespace McMd
 {

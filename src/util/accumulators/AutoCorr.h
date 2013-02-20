@@ -1,5 +1,5 @@
-#ifndef AUTO_CORR_H
-#define AUTO_CORR_H
+#ifndef UTIL_AUTO_CORR_H
+#define UTIL_AUTO_CORR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -66,7 +66,7 @@ namespace Util
       *
       * \param in input parameter stream.
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
    
       /**
       * Set buffer capacity, allocate memory and initialize.
@@ -74,6 +74,29 @@ namespace Util
       * \param bufferCapacity maximum number of values in history buffer.
       */
       void setParam(int bufferCapacity);
+
+      /**
+      * Load state from an archive.
+      *
+      * \param ar binary loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar binary saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
+      /**
+      * Serialize to/from an archive. 
+      * 
+      * \param ar      archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
 
       /**
       * Sample a value.
@@ -115,38 +138,6 @@ namespace Util
       * \param t the lag time
       */
       Product autoCorrelation(int t) const;
-
-      /**
-      * Pack array into a block of memory.
-      *
-      * \param current pointer to current position in write buffer
-      * \param end     pointer to end (one char* past last) of buffer
-      */
-      void pack(char*& current, char* end) const;
-
-      /**
-      * Unpack array from a block of memory.
-      *
-      * \param current pointer to current position in read buffer
-      * \param end     pointer to end (one char* past last) of buffer
-      */
-      void unpack(char*& current, char* end);
-       
-      /**
-      * Return packed size of this AutoCorr
-      *
-      * \return required sizeof packed buffer for this AutoCorr, in bytes.
-      */
-      int packedSize() const;
-
-      /**
-      * Serial to or from an Archive.
-      * 
-      * \param ar      input or output archive 
-      * \param version id for file version
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
 
    private:
    
@@ -199,14 +190,10 @@ namespace Util
    * Read buffer capacity and allocate all required memory.
    */
    template <typename Data, typename Product>
-   void AutoCorr<Data, Product>::readParam(std::istream& in)
+   void AutoCorr<Data, Product>::readParameters(std::istream& in)
    {
-      readBegin(in, "AutoCorr");
-
       read<int>(in, "capacity", bufferCapacity_);
       allocate();
-
-      readEnd(in);
    }
    
    /*
@@ -219,6 +206,28 @@ namespace Util
       allocate();
    }
    
+   /*
+   * Load state from an archive.
+   */
+   template <typename Data, typename Product>
+   void AutoCorr<Data, Product>::loadParameters(Serializable::IArchive& ar)
+   {  
+      loadParameter<int>(ar, "capacity", bufferCapacity_);
+      ar & buffer_;
+      ar & corr_;
+      ar & nCorr_;
+      ar & sum_;
+      ar & nSample_;
+      isValid();
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   template <typename Data, typename Product>
+   void AutoCorr<Data, Product>::save(Serializable::OArchive& ar)
+   {  ar & *this; }
+
    /*
    * Set previously allocated to initial empty state.
    */
@@ -365,10 +374,10 @@ namespace Util
       return sum; 
    }
   
-   /**
-   * Return autocorrelation at a given lag time
+   /*
+   * Return autocorrelation at a given lag time index
    * 
-   * \param t the lag time
+   * \param t the lag time index
    */
    template <typename Data, typename Product>
    Product AutoCorr<Data, Product>::autoCorrelation(int t) const
@@ -391,72 +400,6 @@ namespace Util
    }
 
    /*
-   * Pack this AutoCorr into a memory block.
-   */
-   template <typename Data, typename Product>
-   void AutoCorr<Data, Product>::pack(char*& current, char* end) const
-   {
-      if (current + packedSize() > end) {
-         UTIL_THROW("Attempted write past end of send buffer");
-      }
-      buffer_.pack(current, end);
-      
-      corr_.pack(current, end);
-      
-      nCorr_.pack(current, end);
-      
-      Data* ptr = (Data *)(current);
-      *ptr = sum_;
-      current = (char*)(ptr + 1);
-      
-      int* ptr0 = (int*)(current);
-      *ptr0 = bufferCapacity_;
-      ++ptr0;
-      *ptr0 = nSample_;
-      ++ptr0;
-      current = (char*)(ptr0);
-   }
-
-   /*
-   * Unpack this AutoCorr from a memory block.
-   */
-   template <typename Data, typename Product>
-   void AutoCorr<Data, Product>::unpack(char*& current, char* end) 
-   {
-      if (current + packedSize() > end) {
-         UTIL_THROW("Attempted read past end of recv buffer");
-      }
-      buffer_.unpack(current, end);
-      
-      corr_.unpack(current, end);
-      
-      nCorr_.unpack(current, end);
-      
-      Data* ptr = (Data *)(current);
-      sum_ = *ptr;
-      current = (char*)(ptr + 1);
-      
-      int* ptr0 = (int*)(current);
-      bufferCapacity_ = *ptr0;
-      ++ptr0;
-      nSample_ = *ptr0;
-      ++ptr0;
-      current = (char*)(ptr0);
-   }
-
-   /*
-   * Return packed sizeof this AutoCorr, in bytes.
-   */
-   template <typename Data, typename Product>
-   int AutoCorr<Data, Product>::packedSize() const
-   {
-      int size;
-      size = buffer_.packedSize() + corr_.packedSize() + nCorr_.packedSize(); 
-      size = size + sizeof(Data) + 2*sizeof(int);
-      return size;
-   }
-
-   /*
    * Serialize this AutoCorr.
    */
    template <typename Data, typename Product>
@@ -464,11 +407,11 @@ namespace Util
    void AutoCorr<Data, Product>::serialize(Archive& ar, 
                                            const unsigned int version)
    {
+      ar & bufferCapacity_;
       ar & buffer_;
       ar & corr_;
       ar & nCorr_;
       ar & sum_;
-      ar & bufferCapacity_;
       ar & nSample_;
       isValid();
    }

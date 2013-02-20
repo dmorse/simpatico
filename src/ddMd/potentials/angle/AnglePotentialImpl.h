@@ -70,8 +70,8 @@ namespace DdMd
       /**
       * Returns potential energy for one angle.
       *
-      * \param cosTheta  cosine of the bend angle.
-      * \param type      type of bend angle.
+      * \param cosTheta  cosine of the bend angle
+      * \param type      type index of angle group
       */
       double angleEnergy(double cosTheta, int type) const;
  
@@ -79,21 +79,38 @@ namespace DdMd
       * Returns forces along two bonds at the angle, for use in MD and stress
       * calculation.
       *
-      * \param R1     bond vector from atom 1 to 2.
-      * \param R2     bond vector from atom 2 to 3.
-      * \param F1     return force along R1 direction.
-      * \param F2     return force along R2 direction.
-      * \param type   type of angle.
+      * \param R1     bond vector from atom 1 to 2
+      * \param R2     bond vector from atom 2 to 3
+      * \param F1     return force along R1 direction
+      * \param F2     return force along R2 direction
+      * \param type   type index for angle group
       */
       void angleForce(const Vector& R1, const Vector& R2,
                       Vector& F1, Vector& F2, int type) const;
 
-      #if 0
+      /**
+      * Modify an angle parameter, identified by a string.
+      *
+      * \param name  parameter variable name
+      * \param type  type index for angle group
+      * \param value  new value of parameter
+      */
+      void set(std::string name, int type, double value)
+      {  interactionPtr_->set(name, type, value); }
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name  parameter variable name
+      * \param type  type index of angle group
+      */
+      double get(std::string name, int type) const
+      {  return interactionPtr_->get(name, type); }
+
       /**
       * Return pair interaction class name (e.g., "CosineAngle").
       */
       virtual std::string interactionClassName() const;
-      #endif
 
       /**
       * Return angle interaction by const reference.
@@ -236,14 +253,12 @@ namespace DdMd
                                                int typeId) const
    {  interaction().force(R1, R2, F1, F2, typeId); }
 
-   #if 0
    /*
    * Return angle potential interaction class name.
    */
    template <class Interaction>
    std::string AnglePotentialImpl<Interaction>::interactionClassName() const
    {  return interaction().className(); }
-   #endif
 
    /**
    * Get Interaction by reference.

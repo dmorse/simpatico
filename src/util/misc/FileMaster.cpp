@@ -16,37 +16,39 @@
 namespace Util
 {
 
-   /* 
-   * Default constructor.   
+   /*
+   * Default constructor.
    */
-   FileMaster::FileMaster() 
-   : commandFileName_(),
-     inputPrefix_(),
-     outputPrefix_(),
-     directoryIdPrefix_(),
-     rootPrefix_(),
-     paramFilePtr_(0),
-     commandFilePtr_(0),
-     hasDirectoryId_(false),
-     isSetParamFileStdIn_(false)
-   { setClassName("FileMaster"); }
+   FileMaster::FileMaster()
+    : commandFileName_(),
+      inputPrefix_(),
+      outputPrefix_(),
+      directoryIdPrefix_(),
+      rootPrefix_(),
+      paramFilePtr_(0),
+      commandFilePtr_(0),
+      hasDirectoryId_(false),
+      isSetParamFileStdIn_(false)
+   {  setClassName("FileMaster"); }
 
-   /* 
-   * Copy constructor.   
+   /*
+   * Copy constructor.
    */
-   FileMaster::FileMaster(const FileMaster& other) 
-   : inputPrefix_(other.inputPrefix_),
-     outputPrefix_(other.outputPrefix_),
-     directoryIdPrefix_(other.directoryIdPrefix_),
-     paramFilePtr_(0),
-     hasDirectoryId_(other.hasDirectoryId_),
-     isSetParamFileStdIn_(other.isSetParamFileStdIn_)
+   FileMaster::FileMaster(const FileMaster& other)
+    : inputPrefix_(other.inputPrefix_),
+      outputPrefix_(other.outputPrefix_),
+      directoryIdPrefix_(other.directoryIdPrefix_),
+      rootPrefix_(other.rootPrefix_),
+      paramFilePtr_(0),
+      commandFilePtr_(0),
+      hasDirectoryId_(other.hasDirectoryId_),
+      isSetParamFileStdIn_(other.isSetParamFileStdIn_)
    {}
 
-   /* 
-   * Destructor.   
+   /*
+   * Destructor.
    */
-   FileMaster::~FileMaster() 
+   FileMaster::~FileMaster()
    {
       if (paramFilePtr_) {
          paramFilePtr_->close();
@@ -82,28 +84,28 @@ namespace Util
    void FileMaster::setParamFileStdIn()
    {  isSetParamFileStdIn_ = true; }
 
-   /* 
+   /*
    * Set the input prefix.
    */
-   void FileMaster::setInputPrefix(const std::string& inputPrefix) 
+   void FileMaster::setInputPrefix(const std::string& inputPrefix)
    {  inputPrefix_ = inputPrefix; }
 
-   /* 
+   /*
    * Set the output prefix.
    */
-   void FileMaster::setOutputPrefix(const std::string& outputPrefix) 
+   void FileMaster::setOutputPrefix(const std::string& outputPrefix)
    {  outputPrefix_ = outputPrefix; }
 
-   /* 
+   /*
    * Set the output prefix.
    */
-   void FileMaster::setCommandFileName(const std::string& commandFileName) 
+   void FileMaster::setCommandFileName(const std::string& commandFileName)
    {  commandFileName_ = commandFileName; }
 
-   /* 
+   /*
    * Read parameters from file.
    */
-   void FileMaster::readParameters(std::istream &in) 
+   void FileMaster::readParameters(std::istream &in)
    {
       read<std::string>(in, "commandFileName",  commandFileName_);
       read<std::string>(in, "inputPrefix",  inputPrefix_);
@@ -113,24 +115,48 @@ namespace Util
    /*
    * Get the default parameter stream.
    */
+   void FileMaster::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<std::string>(ar, "commandFileName",  commandFileName_);
+      loadParameter<std::string>(ar, "inputPrefix",  inputPrefix_);
+      loadParameter<std::string>(ar, "outputPrefix", outputPrefix_);
+      ar >> directoryIdPrefix_;
+      ar >> rootPrefix_;
+      ar >> hasDirectoryId_;
+      ar >> isSetParamFileStdIn_;
+   }
+
+   /*
+   * Save internal state to file.
+   */
+   void FileMaster::save(Serializable::OArchive &ar)
+   {
+      ar << commandFileName_;
+      ar << inputPrefix_;
+      ar << outputPrefix_;
+      ar << directoryIdPrefix_;
+      ar << rootPrefix_;
+      ar << hasDirectoryId_;
+      ar << isSetParamFileStdIn_;
+   }
+
+   /*
+   * Get the default parameter stream.
+   */
    std::istream& FileMaster::paramFile()
    {
-
-      if ((!hasDirectoryId_) || isSetParamFileStdIn_) { 
-
+      if ((!hasDirectoryId_) || isSetParamFileStdIn_) {
          return std::cin;
+      } else {
+         if (!paramFilePtr_) {
 
-      } else { 
-
-         if (!paramFilePtr_) { 
-
-            // Construct filename "n/param" for processor n
+            // Construct parameter filename
             std::string filename(rootPrefix_);
             if (hasDirectoryId_) {
                filename += directoryIdPrefix_;
             }
             filename += "param";
-      
+
             // Open parameter input file
             std::ifstream* filePtr = new std::ifstream();
             filePtr->open(filename.c_str());
@@ -139,10 +165,9 @@ namespace Util
                message += filename;
                UTIL_THROW(message.c_str());
             }
+
             paramFilePtr_ = filePtr;
-
          }
-
          return *paramFilePtr_;
       }
    }
@@ -152,23 +177,19 @@ namespace Util
    */
    std::istream& FileMaster::commandFile()
    {
-
       if (commandFileName_ == "paramfile") {
-
          return paramFile();
+      } else {
+         if (!commandFilePtr_) {
 
-      } else { 
-
-         if (!commandFilePtr_) { 
-
-            // Construct filename "n/param" for processor n
+            // Construct command file name 
             std::string filename(rootPrefix_);
-            if (hasDirectoryId_) {
+            if (hasDirectoryId_ && !isSetParamFileStdIn_) {
                filename += directoryIdPrefix_;
             }
             filename += commandFileName_;
-      
-            // Open parameter input file
+
+            // Open command file
             std::ifstream* filePtr = new std::ifstream();
             filePtr->open(filename.c_str());
             if (filePtr->fail()) {
@@ -178,15 +199,13 @@ namespace Util
                UTIL_THROW(message.c_str());
             }
             commandFilePtr_ = filePtr;
-
          }
-
          return *commandFilePtr_;
       }
    }
 
    /*
-   * Open and return an input file named inputPrefix + name
+   * Open and return an input file with specified base name
    */
    void
    FileMaster::openInputFile(const std::string& name, std::ifstream& in) const
@@ -194,7 +213,7 @@ namespace Util
       // Construct filename = inputPrefix_ + name
       std::string filename(rootPrefix_);
       if (hasDirectoryId_) {
-         filename = directoryIdPrefix_;
+         filename += directoryIdPrefix_;
       }
       filename += inputPrefix_;
       filename += name;
@@ -214,18 +233,21 @@ namespace Util
    * Open and return an output file named outputPrefix + name
    */
    void
-   FileMaster::openOutputFile(const std::string& name, std::ofstream& out) 
+   FileMaster::openOutputFile(const std::string& name, std::ofstream& out, bool append)
    const
    {
       // Construct filename = outputPrefix_ + name
       std::string filename(rootPrefix_);
       if (hasDirectoryId_) {
-         filename = directoryIdPrefix_;
+         filename += directoryIdPrefix_;
       }
       filename += outputPrefix_;
       filename += name;
 
-      out.open(filename.c_str());
+      if (append)
+         out.open(filename.c_str(), std::ios::out | std::ios::app);
+      else
+         out.open(filename.c_str(), std::ios::out);
 
       // Check for error opening file
       if (out.fail()) {
@@ -242,10 +264,10 @@ namespace Util
    void FileMaster::openParamIFile(const std::string& name, const char* ext,
                                    std::ifstream& in) const
    {
-      // Construct filename 
+      // Construct filename
       std::string filename(rootPrefix_);
       if (hasDirectoryId_ && !isSetParamFileStdIn_) {
-         filename = directoryIdPrefix_;
+         filename += directoryIdPrefix_;
       }
       filename += name;
       filename += ext;
@@ -264,10 +286,10 @@ namespace Util
    void FileMaster::openParamOFile(const std::string& name, const char* ext,
                                    std::ofstream& out) const
    {
-      // Construct filename = outputPrefix_ + name
+      // Construct filename 
       std::string filename(rootPrefix_);
       if (hasDirectoryId_ && !isSetParamFileStdIn_) {
-         filename = directoryIdPrefix_;
+         filename += directoryIdPrefix_;
       }
       filename += name;
       filename += ext;
@@ -288,7 +310,7 @@ namespace Util
    {
       std::string filename(rootPrefix_);
       if (hasDirectoryId_) {
-         filename = directoryIdPrefix_;
+         filename += directoryIdPrefix_;
       }
       filename += name;
       filename += ext;
@@ -327,9 +349,9 @@ namespace Util
 
    /*
    * Will paramFile() return std::cin ?
-   */ 
+   */
    bool FileMaster::isParamFileStdIn() const
    {  return ((!hasDirectoryId_) || isSetParamFileStdIn_); }
 
-} 
+}
 #endif

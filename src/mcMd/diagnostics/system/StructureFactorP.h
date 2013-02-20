@@ -118,6 +118,29 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
+      /**
+      * Serialize to/from an archive. 
+      * 
+      * \param ar      archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
       /** 
       * Clear accumulators.
       */
@@ -135,15 +158,6 @@ namespace McMd
       */
       virtual void output();
 
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
    protected:
 
       /// Output file stream.
@@ -154,34 +168,38 @@ namespace McMd
       * 
       * First index is wavevector, second index is atom typeId pair.
       */
-      DMatrix<double>          structureFactors_;
+      DMatrix<double>  structureFactors_;
 
-      /// Fourier modes. First index is wavevector, second is atom type.
-      DMatrix< std::complex<double> >  fourierModes_;
+      /*
+      * Fourier modes (temporary).
+      *
+      * First index is wavevector, second is atom type.
+      */
+      DMatrix< std::complex<double> > fourierModes_;
 
       /// Array of miller index IntVectors for wavevectors.
-      DArray<IntVector>        waveIntVectors_;
+      DArray<IntVector>  waveIntVectors_;
 
-      /// Array of wave vectors.
-      DArray<Vector>           waveVectors_;
+      /// Array of wave vectors (temporary)
+      DArray<Vector> waveVectors_;
 
       /// Array of atom type indices (-1 indicates a sum of all types)
-      DArray< Pair<int> >      atomTypeIdPairs_;
+      DArray< Pair<int> >  atomTypeIdPairs_;
 
       /// Number of wavevectors.
-      int                      nWave_;
+      int  nWave_;
 
       /// Number of selected atom type pairs.
-      int                      nAtomTypeIdPair_;
+      int  nAtomTypeIdPair_;
 
       /// Number of samples thus far.
-      int                      nSample_;
+      int  nSample_;
 
       /// Number of atom types, copied from Simulation::nAtomType().
-      int                      nAtomType_;
+      int  nAtomType_;
 
       /// Has readParam been called?
-      bool    isInitialized_;
+      bool  isInitialized_;
 
       /**
       * Update wavevectors.
@@ -190,25 +208,21 @@ namespace McMd
 
    };
 
-   /*
+   /**
    * Serialize to/from an archive. 
    */
    template <class Archive>
    void StructureFactorP::serialize(Archive& ar, const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
-      ar & structureFactors_;
-      ar & fourierModes_;
-      ar & nSample_;
+      Diagnostic::serialize(ar, version);
+      ar & nAtomType_;
+      ar & nAtomTypeIdPair_;
+      ar & atomTypeIdPairs_;
+      ar & nWave_;
+      ar & waveIntVectors_;
 
-      serializeCheck(ar, nAtomType_, "nAtomType");
-      serializeCheck(ar, nAtomTypeIdPair_, "nAtomTypeIdPair");
-      serializeCheck(ar, nWave_, "nWave");
-      for (int i = 0; i < nWave_; ++i) {
-         serializeCheck(ar, waveIntVectors_[i], "waveIntVector");
-      }
+      ar & structureFactors_;
+      ar & nSample_;
    }
 
 }

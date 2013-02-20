@@ -1,5 +1,5 @@
-#ifndef ORTHO_REGION_H
-#define ORTHO_REGION_H
+#ifndef UTIL_ORTHO_REGION_H
+#define UTIL_ORTHO_REGION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -69,6 +69,20 @@ namespace Util
       void serialize(Archive& ar, const unsigned int version);
 
    };
+
+   /*
+   * Serialize an OrthoRegion to/from an archive.
+   */
+   template <class Archive>
+   void OrthoRegion::serialize(Archive& ar, const unsigned int version)
+   {
+      ar & minima_;
+      ar & maxima_;
+      ar & lengths_;
+      ar & halfLengths_;
+      ar & volume_;
+   }
+
 
 }
 #endif

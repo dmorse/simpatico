@@ -1,0 +1,64 @@
+namespace McMd
+{
+
+/*! \page extend_potential_page 5.4 Potential Energy Classes
+
+\section potentials_base_sec Potential Energy Base Classes
+The mcSim and mdSim programs use the following set of abstract base classes for different types of potential energy:
+<ul style="list-style: none;">
+ <li> McMd::McPairPotential </li>
+ <li> McMd::MdPairPotential </li>
+ <li> McMd::BondPotential </li>
+ <li> McMd::AnglePotential </li>
+ <li> McMd::DihedralPotential </li>
+ <li> McMd::ExternalPotential </li>
+</ul>
+Most of the names are self-explanatory: Bond, Angle, and Dihedral potentials represent 2-body bond, 3-body angle, and 4-body dihedral covalent interactions.  An ExternalPotential represents a one-body potential in which the energy depends upon the position and type of a single atom. The McPairPotential and MdPairPotential classes both represent nonbonded pair interactions, but define slightly different interfaces for MC and MD simulations. For all other potential energy types (i.e., for bond, angle, dihedral, and external potentials) the same base class is used in both MC and MD simulations.
+
+The ddSim program uses an analogous set of base classes defined in the DdMd namespace:
+<ul style="list-style: none;">
+ <li> DdMd::PairPotential </li>
+ <li> DdMd::BondPotential </li>
+ <li> DdMd::AnglePotential </li>
+ <li> DdMd::DihedralPotential </li>
+ <li> DdMd::ExternalPotential </li>
+</ul>
+with names similar or identical to those of the corresponding McMd classes.
+
+All of the above potential energy base classes declare methods to calculate the contribution from a particular type of potential to the total energy and total stress of an associated system, as well as methods to calculate energies and forces arising from single groups of atoms, such as a single pair of nonbonded atoms.  All of the classes that are intended for us in MD simualtion (i.e., all the DdMd potentials and all of the McMd potentials except MdPairPotential) provide a method to calculate the corresponding contribution to the forces exerted on all atoms in a System (e.g., all nonbonded pair forces).  All of the McMd potential classes that are intended for us in MC simulations (i.e,. all except MdPairPotential) also provide methods to calculate a corresponding energy contribution for a specific atom.
+
+\section potentials_interaction_sec Interaction Classes and Potential Energy Class Templates
+
+Subclassses of these potential energy abstract base classes are implemented using a simpler set of "interaction" classes. Each interaction class represents a specific function form for a potential energy function, and implements only the core calculations of energies and forces for small groups of 1, 2, 3 or 4 atoms. The interaction classes are simple, non-polymorphic classes, which provide non-virtual methods to calculate the energy and forces for a single group of interacting atoms, such as a single pair of nonbonded or bonded atoms, or the angle forces among a group of three bonded atoms. For example, LJPair is a pair interaction class that represents the Lennard-Jones pair interaction, while HarmonicBond is a bond interaction class that represents a harmonic bond potential.  Unlike the polymorphic potential energy classes, interaction classes do not provide methods to do calculations that involve, e.g., looping over atoms or covalent groups of an associated system.
+
+Subclasses of the potential energy base classes that use particular interaction functions are implemented by class templates. Each such potential energy class template takes an interaction class as a template
+argument, and is derived from an associated potential class. The name of each such class templates is given in all but a few cases by the name of the associated base class followed by the suffix "Impl" (for implementation). For example, the template that implements the McMd::BondPotential interface is called McMd::BondPotentialImpl. The template instantiation McMd::BondPotentialImpl<Inter::HarmonicBond> is a subclass of BondPotential that represents a harmonic bond potential.  The template McMd::BondPotentialImpl defines methods that implement a loop over all bonds in a system, as required to calculate the total bond energy of a System and to calculate bond forces for all atoms in a system, and that calls the methods of the associated interaction class within that loop to calculate forces and/or energies for individual bonds.  Analogous templates are provided in both the McMd and DdMd namespaces for angle, dihedral, link and external forces. 
+
+In the special case of non-bonded pair potentials, the McMd namespace contains two different implementation templates, named McMd::McPairPotentialImpl and McMd::MdPairPotentialImpl, which are designed for MC and MD simulations, respectively. These use different algorithms to do the energy and force calculations required in MC and MD simulations, and implement slightly different interfaces: The McPairPotentialImpl uses a cell list that is optimized for use in MC simulations. The MdPairPotentialImpl uses a Verlet pair list to implement the force loop required in MD simulations. 
+
+The DdMd namespace contains an analogous set of abstract base classes, e.g., DdMd::BondPotential, and implementation templates, such as DdMd::BondPotentialImpl. Their is no need in this case to distinguish between MC and MD variants of the pair potential, because this namespace only contains the code for parallel MD simulations. 
+
+\section potentials_factory_sec Factory Classes 
+
+Simpatico provides a default factory class for each of the above types of potential energy. The BondFactory, AngleFactory, DihedralFactory, and ExternalFactory classes in the McMd namespace, and analogous classes with the same names in the DdMd namesapce, are derived from the Factory template, and use an interface similar to that of other factory classes.  Like other factory classes, they all provide 
+a single factory() method that takes a string argument and that (if possible) returns a pointer to a new instance of a subclass of the associated potential energy base class.  In all of the potential energy factory classes, the name string that is passed as an argument to the factory method is actually the name of the required interaction classes (which is also a name for the potential energy function).  For example, if the BondFactory::factory(std::string&) method is passed the string "HarmonicBond", it constructs an instance of BondPotentialImpl<HarmonicBond>, and returns a "HarmonicBond* base class pointer to this new object.  
+
+The McMd::PairFactory class is slightly different. This class provides two methods, named mdFactory() and mcFactory(), that each take the name of a pair interaction, such as "LJPair", and return a pointer to a new MdPairPotential or McPairPotential object that is constructed using the appropriate implementation 
+template.  The signatures of these methods are:
+\code
+   McMd::McPairPotential* mcFactory(std::string className);
+   McMd::MdPairPotential* mdFactory(std::string className);
+\endcode
+Because McMd::PairFactory does not implement the interface defined by the standard Factory template, it is not derived from the Factory template. PairFactory also provides a third factory method that takes an McPairPotential by reference and returns a pointer to a corresponding MdPairPotential.  This method is required for hybrid MC simulations, in which short MD simulations are used as proposed MC moves, and is used to construct an MdPairPotential for use in MD simulation that implements the same pair interaction as the McPairPotential used by the parent MC simulation. 
+
+The implementations of the potential energy factory classes are generally very similar to those of other factory classes.  Developers should consult the implementations of the default factory classes for different types of potential in the src/mcMd/potential/ and/or src/ddMd/potentials/ directories for further guidance. 
+
+Navigation:
+<ul style="list-style: none;">
+ <li> \ref extend_factory_page   (Previous)  </li>
+ <li> \ref extend_page    (Up)        </li>
+ <li> \ref extend_subfactory_page    (Next)      </li>
+</ul>
+ 
+*/
+}

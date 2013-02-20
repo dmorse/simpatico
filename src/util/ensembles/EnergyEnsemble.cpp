@@ -17,19 +17,19 @@
 
 namespace Util{
 
-   /**
+   /*
    * Constructor.
    */
    EnergyEnsemble::EnergyEnsemble(Type type)
     : temperature_(1.0),
       beta_(1.0),
       type_(type)
-   {}
+   {  setClassName("EnergyEnsemble"); }
 
-   /**
+   /*
    * Set the temperature.
    */
-   void  EnergyEnsemble::setTemperature(double temperature)
+   void EnergyEnsemble::setTemperature(double temperature)
    {
       if (!isIsothermal()) {
 	 UTIL_THROW("Must be an isothermal ensemble");
@@ -38,24 +38,46 @@ namespace Util{
       beta_        = 1.0/temperature;
    }
 
-   /**
+   /*
    * Read the type and (if necessary) temperature from file.
    */
-   void EnergyEnsemble::readParam(std::istream& in)
+   void EnergyEnsemble::readParameters(std::istream& in)
    {
-      readBegin(in, "EnergyEnsemble");
       read<Type>(in, "type", type_);
       if (isIsothermal()) {
          read<double>(in, "temperature", temperature_);
          beta_ = 1.0/temperature_;
       }
-      readEnd(in);
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void EnergyEnsemble::loadParameters(Serializable::IArchive &ar)
+   { 
+      loadParameter<Type>(ar, "type", type_);
+      if (isIsothermal()) {
+         loadParameter<double>(ar, "temperature", temperature_);
+         ar >> beta_;
+      }
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void EnergyEnsemble::save(Serializable::OArchive &ar)
+   { 
+      ar << type_;
+      if (isIsothermal()) {
+         ar << temperature_;
+         ar << beta_;
+      }
    }
 
    /*
    * Extract an EnergyEnsemble::Type from an istream as a string.
    */
-   std::istream& operator>>(std::istream& in, EnergyEnsemble::Type &type)
+   std::istream& operator >> (std::istream& in, EnergyEnsemble::Type &type)
    {
       std::string buffer;
       in >> buffer;
@@ -85,19 +107,19 @@ namespace Util{
    }
 
    #ifdef UTIL_MPI
-   /**
+   /*
    * Initialize EnergyEnsemble MPI Datatype.
    */
    MPI::Datatype MpiTraits<EnergyEnsemble>::type = MPI::BYTE;
    bool MpiTraits<EnergyEnsemble>::hasType = false;
 
-   /**
+   /*
    * Initialize EnergyEnsemble::Type MPI Datatype.
    */
    MPI::Datatype MpiTraits<EnergyEnsemble::Type>::type = MPI::INT;
    bool MpiTraits<EnergyEnsemble::Type>::hasType = true;
 
-   /**
+   /*
    * Commit MPI Datatype.
    */
    void EnergyEnsemble::commitMpiType()

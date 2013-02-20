@@ -1,6 +1,6 @@
 WRITE_PARAM           param
 READ_CONFIG          config
-SIMULATE            2000000
+SIMULATE            1700000
 SET_CONFIG_IO  DdMdConfigIo
 WRITE_CONFIG         config
 FINISH

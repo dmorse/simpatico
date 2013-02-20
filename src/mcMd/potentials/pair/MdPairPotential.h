@@ -1,4 +1,3 @@
-#ifndef INTER_NOPAIR
 #ifndef MCMD_MD_PAIR_POTENTIAL_H
 #define MCMD_MD_PAIR_POTENTIAL_H
 
@@ -112,5 +111,4 @@ namespace McMd
    {  return pairList_; }
 
 } 
-#endif
 #endif

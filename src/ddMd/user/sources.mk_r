@@ -1,0 +1,7 @@
+
+ddMd_user_SRCS=\
+    #$(SRC_DIR)/ddMd/user/Class1.cpp \
+    #$(SRC_DIR)/ddMd/user/Class2.cpp 
+
+ddMd_user_OBJS=$(ddMd_user_SRCS:.cpp=.o)
+

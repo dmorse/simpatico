@@ -1,5 +1,5 @@
-#ifndef FS_ARRAY_H
-#define FS_ARRAY_H
+#ifndef UTIL_FS_ARRAY_H
+#define UTIL_FS_ARRAY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -119,8 +119,8 @@ namespace Util
       /**
       * Serialize to/from an Archive.
       *
-      * \param ar        archive 
-      * \param version   archive version id
+      * \param ar       archive 
+      * \param version  archive version id
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
@@ -279,7 +279,8 @@ namespace Util
                                           const unsigned int version)
    {
       ar & size_;
-      for (int i = 0; i < Capacity; ++i) {
+      if (size_ > Capacity) UTIL_THROW("Size > Capacity");
+      for (int i = 0; i < size_; ++i) {
          ar & data_[i];
       }
    }

@@ -1,5 +1,5 @@
-#ifndef BEGIN_H
-#define BEGIN_H
+#ifndef UTIL_BEGIN_H
+#define UTIL_BEGIN_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

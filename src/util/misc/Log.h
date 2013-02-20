@@ -1,5 +1,5 @@
-#ifndef LOG_H
-#define LOG_H
+#ifndef UTIL_LOG_H
+#define UTIL_LOG_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -78,6 +78,36 @@ namespace McMd
 
    }
 
+   /*
+   * Load the internal state to an archive.
+   */
+   void NvtNhIntegrator::loadParameters(Serializable::IArchive& ar)
+   {  
+      loadParameter<double>(ar, "dt",   dt_);
+      loadParameter<double>(ar, "tauT", tauT_);
+      ar & nuT_;
+      ar & T_target_;
+      ar & T_kinetic_;
+      ar & xiDot_;
+      ar & xi_;
+      ar & prefactors_;
+   }
+
+   /*
+   * Save the internal state to an archive.
+   */
+   void NvtNhIntegrator::save(Serializable::OArchive& ar)
+   {
+      ar & dt_;
+      ar & tauT_;
+      ar & nuT_;
+      ar & T_target_;
+      ar & T_kinetic_;
+      ar & xiDot_;
+      ar & xi_;
+      ar & prefactors_;
+   }
+
    void NvtNhIntegrator::setup() 
    {
       double mass, dtHalf;
@@ -175,36 +205,6 @@ namespace McMd
       xiDot_     = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
       xi_       += xiDot_*dtHalf;
 
-   }
-
-   /*
-   * Save the internal state to an archive.
-   */
-   void NvtNhIntegrator::save(Serializable::OArchiveType& ar)
-   {  
-      ar & dt_;
-      ar & T_target_;
-      ar & T_kinetic_;
-      ar & xi_;
-      ar & xiDot_;
-      ar & tauT_;
-      ar & nuT_;
-      ar & prefactors_;
-   }
-
-   /**
-   * Load the internal state to an archive.
-   */
-   void NvtNhIntegrator::load(Serializable::IArchiveType& ar)
-   {  
-      ar & dt_;
-      ar & T_target_;
-      ar & T_kinetic_;
-      ar & xi_;
-      ar & xiDot_;
-      ar & tauT_;
-      ar & nuT_;
-      ar & prefactors_;
    }
 
 }

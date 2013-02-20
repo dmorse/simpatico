@@ -32,6 +32,7 @@ namespace McMd
       }
       YZCells_ = 0;
       totCells_ = 0;
+      atomCapacity_ = 0;
    }
 
    /*
@@ -98,8 +99,7 @@ namespace McMd
    * Allocate cells_ and cellTags_ arrays.
    */
    void 
-   CellList::allocate(
-             int atomCapacity, const Boundary &boundary, double cutoff)
+   CellList::allocate(int atomCapacity, const Boundary &boundary, double cutoff)
    {
 
       // Precondition on parameters
@@ -107,7 +107,8 @@ namespace McMd
       if (cutoff       <= 0) UTIL_THROW("cutoff must be > 0");
 
       // Allocate an array of CellTag objects, indexed by atom Ids.
-      cellTags_.allocate(atomCapacity);
+      atomCapacity_ = atomCapacity;
+      cellTags_.allocate(atomCapacity_);
       
       // Allocate an Array of Cell objects
       makeGrid(boundary, cutoff);

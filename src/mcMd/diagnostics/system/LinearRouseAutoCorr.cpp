@@ -70,7 +70,7 @@ namespace McMd
       if (speciesId_ < 0) 
          UTIL_THROW("speciesId < 0");
       if (speciesId_ >= system().simulation().nSpecies()) 
-         UTIL_THROW("speciesId > nSpecies");
+         UTIL_THROW("speciesId >= nSpecies");
 
       speciesPtr_ = &system().simulation().species(speciesId_);
       nAtom_ = speciesPtr_->nAtom();
@@ -83,6 +83,60 @@ namespace McMd
 
       isInitialized_ = true;
    }
+
+
+   /*
+   * Load internal state from an archive.
+   */
+   void LinearRouseAutoCorr::loadParameters(Serializable::IArchive &ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "p", p_);
+      loadParameter<int>(ar, "capacity", capacity_);
+      ar & nAtom_;
+      ar & nMolecule_;
+      ar & accumulator_;
+      ar & projector_;
+
+      speciesPtr_ = &system().simulation().species(speciesId_);
+      int speciesCapacity = speciesPtr_->capacity();
+      data_.allocate(speciesCapacity); 
+   
+      // Validate input
+      if (speciesId_ < 0) {
+         UTIL_THROW("Negative speciesId");
+      }
+      if (p_ < 0) {
+         UTIL_THROW("Negative mode index");
+      }
+      if (capacity_ <= 0) {
+         UTIL_THROW("Negative capacity");
+      }
+      if (speciesId_ < 0) {
+         UTIL_THROW("speciesId < 0");
+      }
+      if (speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("speciesId >= nSpecies");
+      }
+      if (nAtom_ != speciesPtr_->nAtom()) {
+         UTIL_THROW("Inconsistent values of nAtom");
+      }
+      if (projector_.capacity() != nAtom_) {
+         UTIL_THROW("Inconsistent projector capacity");
+      }
+      if (accumulator_.bufferCapacity() != capacity_) {
+         UTIL_THROW("Inconsistent accumulator buffer capacity");
+      }
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void LinearRouseAutoCorr::save(Serializable::OArchive &ar)
+   {  ar << *this; }
 
    /*
    * Evaluate end-to-end vectors of all chains, add to ensemble.

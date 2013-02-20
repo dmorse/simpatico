@@ -1,5 +1,5 @@
-#ifndef BEGIN_CPP
-#define BEGIN_CPP
+#ifndef UTIL_BEGIN_CPP
+#define UTIL_BEGIN_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -27,7 +27,6 @@ namespace Util
    void Begin::readParam(std::istream &in)
    {
       if (isParamIoProcessor()) {
-
          // Read label
          std::string actual;
          in >> actual;
@@ -45,7 +44,6 @@ namespace Util
          if (ParamComponent::echo()) {
             writeParam(Log::file());
          }
-
       }
    }
 

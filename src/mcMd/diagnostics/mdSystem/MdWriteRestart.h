@@ -19,7 +19,7 @@ namespace McMd
    class MdSimulation;
 
    /**
-   * Periodically write restart file.
+   * Repeatedly write restart file.
    *
    * \ingroup McMd_Diagnostic_Module
    */
@@ -42,11 +42,13 @@ namespace McMd
       {} 
    
       /**
-      * Read interval and file name.
+      * Read interval and outputFileName.
       *
       * \param in input parameter file
       */
       virtual void readParameters(std::istream& in);
+
+      // Using default Diagnostic::loadParameters and Diagnostic::save.
    
       /**
       * Write restart file.

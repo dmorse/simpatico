@@ -22,9 +22,10 @@ include $(TESTS_DIR)/mcMd/patterns.mk
 all:  Test
 
 clean:
-	rm -f Test Test.o Test.d
-	rm -f */*.o */*/*.o 
-	rm -f */*.d */*/*.d
+	-rm -f Test Test.o Test.d
+	-rm -f */*.o */*/*.o 
+	-rm -f */*.d */*/*.d
+	-rm -f *.cfg
 
 Test: $(mcMd_LIB) $(inter_LIB) $(util_LIB) Test.o
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \

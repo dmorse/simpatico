@@ -53,8 +53,12 @@ namespace McMd
 
       /**
       * Constructor. 
+      * 
+      * \param system parent McSystem
+      * \param size   number of systems (communicator size).
+      * \param rank   id of this system (communicator rank).
       */
-      McPairExternalPerturbation(McSystem& system);
+      McPairExternalPerturbation(McSystem& system, int size, int rank);
 
       /**
       * Destructor
@@ -117,8 +121,8 @@ namespace McMd
    * Constructor.
    */
    template < class PairInteraction, class ExternalInteraction >
-   McPairExternalPerturbation<PairInteraction, ExternalInteraction>::McPairExternalPerturbation(McSystem& system)
-    : LinearPerturbation<McSystem>(system),
+   McPairExternalPerturbation<PairInteraction, ExternalInteraction>::McPairExternalPerturbation(McSystem& system, int size, int rank)
+    : LinearPerturbation<McSystem>(system, size, rank),
       pairInteractionPtr_(0),
       externalInteractionPtr_(0)
    {  setClassName("McPairExternalPerturbation"); }
@@ -299,7 +303,7 @@ namespace McMd
             UTIL_THROW("Non isothermal ensemble");
          }
 
-         deriv = externalEnergy/parameter_[i];
+         deriv = -1.0*(externalEnergy/parameter_[i]);
 
       } 
       return deriv;

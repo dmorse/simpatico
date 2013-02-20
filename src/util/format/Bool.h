@@ -1,5 +1,5 @@
-#ifndef BOOL_H
-#define BOOL_H
+#ifndef UTIL_BOOL_H
+#define UTIL_BOOL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

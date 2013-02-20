@@ -1,5 +1,5 @@
-#ifndef LATTICE_SYSTEM_H
-#define LATTICE_SYSTEM_H
+#ifndef UTIL_LATTICE_SYSTEM_H
+#define UTIL_LATTICE_SYSTEM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/archives/serialize.h>
 #ifdef UTIL_MPI
 #include <util/mpi/MpiTraits.h>
 #endif
@@ -46,6 +47,17 @@ namespace Util
    * \return modified output stream
    */
    std::ostream& operator << (std::ostream& out, LatticeSystem lattice);
+
+   /**
+   * Serialize a LatticeSystem value.
+   *
+   * \param ar      archive object
+   * \param lattice value to be serialized
+   * \param version archive version id
+   */
+   template <class Archive>
+   void serialize(Archive& ar, LatticeSystem& lattice, const unsigned int version)
+   {  serializeEnum(ar, lattice, version); }
 
    #ifdef UTIL_MPI
 

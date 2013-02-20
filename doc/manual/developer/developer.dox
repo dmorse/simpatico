@@ -1,0 +1,24 @@
+namespace McMd
+{
+
+/*! \page developer_page 7 Developer Information
+
+   Contents: 
+   <ul style="list-style: none;">
+   <li> \subpage developer_build_page </li>
+   <li> \subpage developer_standards_page </li>
+   <li> \subpage developer_param_page </li>
+   <li> \subpage developer_iterator_page </li>
+   <li> \subpage developer_mcMdData_page </li>
+   <li> \subpage developer_test_page </li>
+   </ul>
+ 
+
+Navigation: 
+<ul style="list-style: none;">
+ <li> \ref hoomd_page   (Previous)     </li>
+ <li> \ref index "Main Page"  (Up)          </li>
+</ul>
+ 
+*/
+}

@@ -3,20 +3,27 @@
 
 #include <test/CompositeTestRunner.h>
 
-#include "pair/LJPairTest.h"
-#include "bond/HarmonicBondTest.h"
-#include "bond/HarmonicL0BondTest.h"
-#ifdef MCMC_DIHEDRAL
-#include "dihedral/CosineDihedralTest.h"
+#include "pair/PairTestComposite.h"
+#include "bond/BondTestComposite.h"
+#ifdef INTER_ANGLE
+#include "angle/AngleTestComposite.h"
+#endif
+#ifdef INTER_DIHEDRAL
+#include "dihedral/DihedralTestComposite.h"
 #endif
 
 TEST_COMPOSITE_BEGIN(InteractionTestComposite)
-TEST_COMPOSITE_ADD_UNIT(LJPairTest);
-TEST_COMPOSITE_ADD_UNIT(HarmonicBondTest);
-TEST_COMPOSITE_ADD_UNIT(HarmonicL0BondTest);
-#ifdef MCMC_DIHEDRAL
-TEST_COMPOSITE_ADD_UNIT(CosineDihedralTest);
+addChild(new PairTestComposite, "pair/");
+addChild(new BondTestComposite, "bond/");
+
+#ifdef INTER_ANGLE
+addChild(new AngleTestComposite, "angle/");
 #endif
+
+#ifdef INTER_DIHEDRAL
+addChild(new DihedralTestComposite, "dihedral/");
+#endif
+
 TEST_COMPOSITE_END
 
 #endif

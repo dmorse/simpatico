@@ -1,5 +1,5 @@
-#ifndef RADIAL_DISTRIBUTION_CPP
-#define RADIAL_DISTRIBUTION_CPP
+#ifndef UTIL_RADIAL_DISTRIBUTION_CPP
+#define UTIL_RADIAL_DISTRIBUTION_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,6 +9,7 @@
 */
 
 #include "RadialDistribution.h"
+#include <util/math/feq.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 
@@ -54,16 +55,14 @@ namespace Util
    /* 
    * Read parameters and initialize.
    */
-   void RadialDistribution::readParam(std::istream& in)
+   void RadialDistribution::readParameters(std::istream& in)
    {
-      readBegin(in,"RadialDistribution");
       min_ = 0.0;
       read<double>(in, "max",  max_);
       read<int>(in, "nBin", nBin_);
       binWidth_ = (max_-min_)/double(nBin_);
       histogram_.allocate(nBin_);
       clear();
-      readEnd(in);
    }
 
    /*
@@ -78,6 +77,35 @@ namespace Util
       histogram_.allocate(nBin_);
       clear();
    }
+   
+   /*
+   * Load internal state from archive.
+   */
+   void RadialDistribution::loadParameters(Serializable::IArchive &ar)
+   {
+      min_ = 0.0;
+      loadParameter<double>(ar, "max",  max_);
+      loadParameter<int>(ar, "nBin", nBin_);
+      ar & nSample_;   
+      ar & nReject_;    
+      ar & binWidth_;  
+      ar & histogram_; 
+      ar & norm_;
+      ar & nSnapshot_;
+      ar & outputIntegral_;
+      if (!feq(binWidth_, (max_-min_)/double(nBin_))) {
+         UTIL_THROW("Inconsistent value for binWidth_");
+      }
+      if (nBin_ != histogram_.capacity()) {
+         UTIL_THROW("Inconsistent histogram capacity");
+      }
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   void RadialDistribution::save(Serializable::OArchive &ar)
+   {  ar & *this; }
    
    /* 
    * Zero accumulators (virtual).
@@ -98,13 +126,13 @@ namespace Util
    * Mark the beginning of a snapshot.
    */
    void RadialDistribution::beginSnapshot() 
-   { ++nSnapshot_; }
+   {  ++nSnapshot_; }
    
    /* 
    * Set outputIntegral true/false to enable/disable output of spatial integral.
    */
    void RadialDistribution::setOutputIntegral(bool outputIntegral)
-   { outputIntegral_ = outputIntegral; }
+   {  outputIntegral_ = outputIntegral; }
    
    /*
    * Output final results to file.
@@ -128,36 +156,6 @@ namespace Util
          out <<  std::endl;
       }
    }
-   
-   #if 0
-   /*
-   * Backup statistical accumulators to file.
-   */
-   void RadialDistribution::backup(FILE *file) 
-   {
-      fprintf(file, "nSample       %i \n", nSample);
-      fprintf(file, "nReject       %i \n", nReject);
-      fprintf(file, "nSnapshot     %li \n", nSnapshot);
-      for (int i=0; i < nBin; ++i) {
-         fprintf(file, "%li ", histogram[i]);
-      }
-      fprintf(file, "\n");
-   }
-   
-   /*
-   * Restore statistical accumulators from file.
-   */
-   void RadialDistribution::restore(FILE *file) 
-   {
-      fscanf(file, "nSample       %i \n", &nSample);
-      fscanf(file, "nReject       %i \n", &nReject);
-      fscanf(file, "nSnapshot     %li \n", &nSnapshot);
-      for (int i=0; i < nBin; ++i) {
-         fscanf(file, "%li ", &histogram[i]);
-      }
-      fscanf(file, "\n");
-   }
-   #endif
 
 }
 #endif

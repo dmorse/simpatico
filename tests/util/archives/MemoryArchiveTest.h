@@ -216,6 +216,8 @@ void MemoryArchiveTest::testPackArray()
    std::complex<double> c1, c2;
    double a1[4];
    double a2[4];
+   double m1[2][2];
+   double m2[2][2];
 
    i1 = 3;
    d1 = 45.0;
@@ -224,6 +226,10 @@ void MemoryArchiveTest::testPackArray()
    a1[1] = 8.0;
    a1[2] = 7.0;
    a1[3] = 6.0;
+   m1[0][0] = 13.0;
+   m1[0][1] = 14.0;
+   m1[1][0] = 15.0;
+   m1[1][1] = 16.0;
   
    // Pack data into OArchive v 
    v << i1;
@@ -237,6 +243,9 @@ void MemoryArchiveTest::testPackArray()
    TEST_ASSERT(v.cursor() == v.begin() + offset);
    v << c1;
    offset += sizeof(std::complex<double>);
+   TEST_ASSERT(v.cursor() == v.begin() + offset);
+   v.pack(m1[0], 2, 2);
+   offset += 4*sizeof(double);
    TEST_ASSERT(v.cursor() == v.begin() + offset);
 
    // Read data from IArchive u
@@ -260,14 +269,23 @@ void MemoryArchiveTest::testPackArray()
    u & c2;
    offset += sizeof(std::complex<double>);
    TEST_ASSERT(u.cursor() == u.begin() + offset);
+   u.unpack(m2[0], 2, 2);
+   offset += 4*sizeof(double);
+   TEST_ASSERT(u.cursor() == u.begin() + offset);
+
 
    TEST_ASSERT(i1 == i2);
    TEST_ASSERT(d1 == d2);
    TEST_ASSERT(c1 == c2);
-   for (int j = 0; j < 4; ++j) {
+   int i, j;
+   for (j = 0; j < 4; ++j) {
       TEST_ASSERT(a1[j] == a2[j]);
    }
-
+   for (i = 0; i < 2; ++i) {
+      for (j = 0; j < 2; ++j) {
+         TEST_ASSERT(eq(m1[i][j], m2[i][j]));
+      }
+   }
 
 }
 

@@ -49,6 +49,7 @@ namespace DdMd
       read<double>(in, "tauP", tauP_);
       read<LatticeSystem>(in, "mode", mode_);
 
+      // Allocate memory
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
@@ -56,12 +57,26 @@ namespace DdMd
 
    }
 
+   /*
+   * Initialize dynamical state variables to zero.
+   */
+   void NptIntegrator::initDynamicalState()
+   {  
+      xi_ = 0.0; 
+      eta_ = 0.0;
+      nu_ = Vector(0.0, 0.0, 0.0);
+   }
+
    void NptIntegrator::setup()
    {
+      // Initialize state and clear statistics on first usage.
+      if (!isSetup()) {
+         clear();
+         setIsSetup();
+      }
+
       // Exchange atoms, build pair list, compute forces.
       setupAtoms();
-
-      simulation().diagnosticManager().setup();
 
       // Set prefactors for acceleration
       double dtHalf = 0.5*dt_;
@@ -72,11 +87,8 @@ namespace DdMd
          prefactors_[i] = dtHalf/mass;
       }
 
-      xi_ = 0.0;
-      eta_ = 0.0;
-      nu_ = Vector(0.0,0.0,0.0);
-
       simulation().computeKineticEnergy();
+      simulation().computeKineticStress();
       #ifdef UTIL_MPI
       atomStorage().computeNAtomTotal(domain().communicator());
       #endif
@@ -86,29 +98,31 @@ namespace DdMd
          ndof_ = atomStorage().nAtomTotal()*3;
       }
       #ifdef UTIL_MPI
-      bcast(domain().communicator(), ndof_,0);
+      bcast(domain().communicator(), ndof_, 0);
       #endif
    }
 
+   /*
+   * First half of velocity-verlet update.
+   */
    void NptIntegrator::integrateStep1()
    {
       Vector dv;
       double prefactor; // = 0.5*dt/mass
-      AtomIterator atomIter;
-
-      Simulation& sys = simulation();
-      sys.computeVirialStress();
-      sys.computeKineticStress();
-      sys.computeKineticEnergy();
-
       double xi_prime;
+      AtomIterator atomIter;
+      Simulation& sim = simulation();
 
-      if (sys.domain().isMaster()) {
-         T_target_ = sys.energyEnsemble().temperature();
-         P_target_ = simulation().boundaryEnsemble().pressure();
-         T_kinetic_ = sys.kineticEnergy()*2.0/ndof_;
-         Tensor stress = sys.virialStress();
-         stress += sys.kineticStress();
+      sim.computeVirialStress();
+      sim.computeKineticStress();
+      sim.computeKineticEnergy();
+
+      if (sim.domain().isMaster()) {
+         T_target_ = sim.energyEnsemble().temperature();
+         P_target_ = sim.boundaryEnsemble().pressure();
+         T_kinetic_ = sim.kineticEnergy()*2.0/ndof_;
+         Tensor stress = sim.virialStress();
+         stress += sim.kineticStress();
 
          P_curr_diag_ = Vector(stress(0, 0), stress(1,1), stress(2,2));
          double P_curr = (1.0/3.0)*stress.trace();
@@ -117,13 +131,14 @@ namespace DdMd
          double mtk_term = (1.0/2.0)*dt_*T_kinetic_/W;
 
          // Advance barostat (first half of update)
-         double V = sys.boundary().volume();
+         double V = sim.boundary().volume();
          if (mode_ == Cubic) {
             nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr - P_target_) + mtk_term;
             nu_[1] = nu_[2] = nu_[0];
          } else if (mode_ == Tetragonal) {
             nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[0] - P_target_) + mtk_term;
-            nu_[1] += (1.0/2.0)*dt_*V/W*((1.0/2.0)*(P_curr_diag_[1]+P_curr_diag_[2]) - P_target_) + mtk_term;
+            nu_[1] += (1.0/2.0)*dt_*V/W*((1.0/2.0)*(P_curr_diag_[1] + P_curr_diag_[2]) - P_target_) 
+                      + mtk_term;
             nu_[2] = nu_[1];
          } else if (mode_  == Orthorhombic) {
             nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[0] - P_target_) + mtk_term;
@@ -220,13 +235,13 @@ namespace DdMd
                                     exp(nu_[1]*dt_),
                                     exp(nu_[2]*dt_));
 
-      Vector L = sys.boundary().lengths();
+      Vector L = sim.boundary().lengths();
       L[0] *= box_len_scale[0];
       L[1] *= box_len_scale[1];
       L[2] *= box_len_scale[2];
 
       // Update box lengths
-      sys.boundary().setOrthorhombic(L);
+      sim.boundary().setOrthorhombic(L);
    }
 
    void NptIntegrator::integrateStep2()
@@ -234,6 +249,7 @@ namespace DdMd
       Vector dv;
       double prefactor; // = 0.5*dt/mass
       AtomIterator atomIter;
+      Simulation& sim = simulation();
 
       Vector v_fac_2 = Vector((1.0/2.0)*(nu_[0]+mtk_term_2_),
                               (1.0/2.0)*(nu_[1]+mtk_term_2_),
@@ -289,17 +305,16 @@ namespace DdMd
          atomIter->velocity().multiply(atomIter->velocity(), exp_v_fac_thermo);
       }
 
-      Simulation& sys = simulation();
-      sys.velocitySignal().notify();
-      sys.computeKineticStress(); 
-      sys.computeKineticEnergy(); 
-      sys.computeVirialStress(); 
+      sim.velocitySignal().notify();
+      sim.computeKineticStress(); 
+      sim.computeKineticEnergy(); 
+      sim.computeVirialStress(); 
 
       // Advance barostat
-      if (sys.domain().isMaster()) {
-         T_kinetic_ = sys.kineticEnergy()*2.0/ndof_;
-         Tensor stress = sys.virialStress();
-         stress += sys.kineticStress();
+      if (sim.domain().isMaster()) {
+         T_kinetic_ = sim.kineticEnergy()*2.0/ndof_;
+         Tensor stress = sim.virialStress();
+         stress += sim.kineticStress();
 
          P_curr_diag_ = Vector(stress(0,0), stress(1,1), stress(2,2));
          double P_curr = (1.0/3.0)*stress.trace();
@@ -307,7 +322,7 @@ namespace DdMd
          double W = (1.0/2.0)*ndof_*T_target_*tauP_*tauP_;
          double mtk_term = (1.0/2.0)*dt_*T_kinetic_/W;
 
-         double V = sys.boundary().volume();
+         double V = sim.boundary().volume();
          if (mode_ == Cubic) {
             nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr - P_target_) + mtk_term;
             nu_[1] = nu_[2] = nu_[0];
@@ -324,16 +339,16 @@ namespace DdMd
 
       #if 0
       // Output conserved quantity
-      sys.computePotentialEnergies();
-      if (sys.domain().isMaster()) {
+      sim.computePotentialEnergies();
+      if (sim.domain().isMaster()) {
          std::ofstream file;
          file.open("NPT.log", std::ios::out | std::ios::app);
          double thermostat_energy = ndof_ * T_target_ * (eta_ + tauT_*tauT_*xi_*xi_/2.0);
          double W = (1.0/2.0)*ndof_*T_target_*tauP_*tauP_;
-         double V = sys.boundary().volume();
+         double V = sim.boundary().volume();
          double barostat_energy = W*(nu_[0]*nu_[0]+ nu_[1]*nu_[1] + nu_[2]*nu_[2]);
-         double pe = sys.potentialEnergy();
-         double ke = sys.kineticEnergy();
+         double pe = sim.potentialEnergy();
+         double ke = sim.kineticEnergy();
          file << Dbl(V,20)
               << Dbl(pe,20)
               << Dbl(ke,20)

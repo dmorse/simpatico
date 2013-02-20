@@ -19,11 +19,17 @@ namespace McMd
    */
    class MdPressureAverage : public PressureAverage<MdSystem>
    {
-   
    public:
 
-      // Constructor
+      /*
+      * Constructor
+      *
+      * \param system parent MdSystem
+      */
       MdPressureAverage(MdSystem& system);
+
+      // using inherited PressureAverage<MdSystem>::loadParameters
+      // using inherited PressureAverage<MdSystem>::save
 
    };
 

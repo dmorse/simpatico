@@ -1,5 +1,5 @@
-#ifndef D_ARRAY_PARAM_H
-#define D_ARRAY_PARAM_H
+#ifndef UTIL_D_ARRAY_PARAM_H
+#define UTIL_D_ARRAY_PARAM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -29,8 +29,10 @@ namespace Util
    {
    
    public:
-   
-      /// Constructor.
+
+      /*   
+      * Constructor.
+      */
       DArrayParam(const char *label, DArray<Type>& array, int n = 0);
  
       /** 
@@ -46,6 +48,20 @@ namespace Util
       * \param out output stream
       */
       void writeParam(std::ostream &out);
+
+      /**
+      * Load from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      void load(Serializable::IArchive& ar);
+
+      /**
+      * Save to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      void save(Serializable::OArchive& ar);
 
    protected:
    
@@ -91,8 +107,9 @@ namespace Util
          }
       }
       #ifdef UTIL_MPI
-         if (hasParamCommunicator()) 
-            bcast<Type>(paramCommunicator(), *arrayPtr_, n_, 0); 
+      if (hasParamCommunicator()) {
+         bcast<Type>(paramCommunicator(), *arrayPtr_, n_, 0); 
+      }
       #endif
 
    }
@@ -106,15 +123,14 @@ namespace Util
 
       // Preconditions
       if (!(arrayPtr_->isAllocated())) {
-         UTIL_THROW("Cannot read unallocated DArray");
+         UTIL_THROW("Cannot write unallocated DArray");
       }
       if (arrayPtr_->capacity() < n_) {
-         UTIL_THROW("Error: DArray capacity < n");
+         UTIL_THROW("Error: DArray capacity < n in writeParam");
       }
 
       Label space("");
       int i;
-
       for (i = 0; i < n_; ++i) {
          if (i == 0) {
             out << indent() << label_;
@@ -127,7 +143,44 @@ namespace Util
              << (*arrayPtr_)[i] 
              << std::endl;
       }
+   }
 
+   /*
+   * Load from an archive.
+   */
+   template <class Type>
+   void DArrayParam<Type>::load(Serializable::IArchive& ar)
+   {
+      if (isParamIoProcessor()) {
+         ar >> *arrayPtr_;
+         if (arrayPtr_->capacity() < n_) {
+            UTIL_THROW("Error: DArray capacity < n");
+         }
+         if (ParamComponent::echo()) {
+            writeParam(Log::file());
+         }
+      }
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         bcast<Type>(paramCommunicator(), *arrayPtr_, n_, 0); 
+      }
+      #endif
+   }
+
+   /*
+   * Save to an archive.
+   */
+   template <class Type>
+   void DArrayParam<Type>::save(Serializable::OArchive& ar)
+   {
+      // Preconditions
+      if (!(arrayPtr_->isAllocated())) {
+         UTIL_THROW("Cannot save unallocated DArray");
+      }
+      if (arrayPtr_->capacity() < n_) {
+         UTIL_THROW("Error: DArray capacity < n");
+      }
+      ar << *arrayPtr_;
    }
 
 } 

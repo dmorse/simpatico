@@ -1,5 +1,5 @@
-#ifndef MEAN_SQ_DISP_ARRAY_H
-#define MEAN_SQ_DISP_ARRAY_H
+#ifndef UTIL_MEAN_SQ_DISP_ARRAY_H
+#define UTIL_MEAN_SQ_DISP_ARRAY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -42,11 +42,15 @@ namespace Util
    {
    
    public:
-   
-      /// Default constructor.
+      
+      /* 
+      * Constructor.
+      */
       MeanSqDispArray();
 
-      /// Default destructor.
+      /* 
+      * Destructor.
+      */
       ~MeanSqDispArray();
 
       /**
@@ -57,7 +61,7 @@ namespace Util
       *
       * \param in input parameter stream
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
    
       /**
       * Set parameters, allocate memory, and clear history.
@@ -71,9 +75,32 @@ namespace Util
       void setParam(int ensembleCapacity, int bufferCapacity);
    
       /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+   
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+   
+      /**
+      * Serialize this MeanSqDispArray to/from an archive.
+      *
+      * \param ar       input or output archive
+      * \param version  file version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
+      /**
       * Set actual number of sequences in ensemble.
       *
-      * \pre readParam() or setParam() must have been called previously
+      * \pre readParameters() or setParam() must have been called previously
       * \pre nEnsemble <= ensembleCapacity
       *
       * \param nEnsemble actual number of sequences in ensemble
@@ -115,15 +142,6 @@ namespace Util
       int nSample() 
       {  return nSample_; }
    
-      /**
-      * Serialize this MeanSqDispArray to/from an archive.
-      *
-      * \param ar       input or output archive
-      * \param version  file version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
    private:
 
       /// Array of Ring buffers containing many sequences of stored values.
@@ -150,7 +168,7 @@ namespace Util
       /**
       * Allocate memory and call clear.
       *
-      * Called within readParam and setParam, after setting parameters.
+      * Called within readParameters and setParam, after setting parameters.
       *
       * Precondition: nEnsemble_ and bufferCapacity_ must have been set.
       */
@@ -196,16 +214,12 @@ namespace Util
    * Read parameters from file.
    */
    template <typename Data>
-   void MeanSqDispArray<Data>::readParam(std::istream& in)
+   void MeanSqDispArray<Data>::readParameters(std::istream& in)
    {
-      readBegin(in, "MeanSqDisp");
-
       read<int>(in, "ensembleCapacity", ensembleCapacity_);
       read<int>(in, "bufferCapacity", bufferCapacity_);
       allocate();
       nEnsemble_ = ensembleCapacity_;
-
-      readEnd(in);
    }
    
    /*
@@ -215,13 +229,11 @@ namespace Util
    void 
    MeanSqDispArray<Data>::setParam(int ensembleCapacity, int bufferCapacity)
    {
-      // Set capacities and allocate
       ensembleCapacity_ = ensembleCapacity;
-      bufferCapacity_   = bufferCapacity;
+      bufferCapacity_ = bufferCapacity;
       allocate();
-
-      // Set actual number of sequences to maximum capacity as a default.
-      nEnsemble_        = ensembleCapacity;
+      // Set number of sequences to maximum capacity as a default.
+      nEnsemble_  = ensembleCapacity;
    }
 
    /*
@@ -230,15 +242,50 @@ namespace Util
    template <typename Data>
    void MeanSqDispArray<Data>::setNEnsemble(int nEnsemble)
    {
-      // Preconditions
       if (ensembleCapacity_ == 0) 
          UTIL_THROW("No memory has been allocated: ensembleCapacity_ == 0"); 
       if (nEnsemble > ensembleCapacity_) 
          UTIL_THROW("nEnsemble > ensembleCapacity_");
-
       nEnsemble_ = nEnsemble;
    }
 
+   /*
+   * Load internal state from archive.
+   */
+   template <typename Data>
+   void MeanSqDispArray<Data>::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<int>(ar, "ensembleCapacity", ensembleCapacity_);
+      loadParameter<int>(ar, "bufferCapacity", bufferCapacity_);
+      ar & nEnsemble_;
+      ar & nValues_;
+      ar & nSample_;
+      ar & buffers_; 
+      ar & sqDiffSums_;
+   }
+
+   /*
+   * Serialize this MeanSqDispArray.
+   */
+   template <typename Data>
+   template <class Archive>
+   void MeanSqDispArray<Data>::serialize(Archive& ar, const unsigned int version)
+   {
+      ar & ensembleCapacity_;
+      ar & bufferCapacity_;
+      ar & nEnsemble_;
+      ar & nValues_;
+      ar & nSample_;
+      ar & buffers_; 
+      ar & sqDiffSums_;
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   template <typename Data>
+   void MeanSqDispArray<Data>::save(Serializable::OArchive &ar)
+   { ar & *this; }
    
    /* 
    * Set previously allocated to initial empty state.
@@ -371,21 +418,5 @@ namespace Util
       
    }
    
-   /*
-   * Serialize this MeanSqDispArray.
-   */
-   template <typename Data>
-   template <class Archive>
-   void MeanSqDispArray<Data>::serialize(Archive& ar, const unsigned int version)
-   {
-      ar &  buffers_; 
-      ar &  sqDiffSums_;
-      ar &  nValues_;
-      ar &  ensembleCapacity_;
-      ar &  bufferCapacity_;
-      ar &  nEnsemble_;
-      ar &  nSample_;
-   }
-
 }
 #endif

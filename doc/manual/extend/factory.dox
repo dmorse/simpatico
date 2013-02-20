@@ -1,0 +1,90 @@
+namespace McMd
+{
+
+/*! \page extend_factory_page 5.3 Factory Classes
+
+\section factory_purpose Why Factory Classes Exist
+
+Simpatico defines a set of base classes to represent modifiable elements of a simulation, such as molecular species and simulation algorithms. The parameter file format allows users to choose at run time from among various subclasses of these bases classes, and thereby choose particular elements to use in a simulation. This is done primarily by the use of polymorhpic blocks in the parameter file. A polymorphic block is a parameter file block that may contain the file format for any known subclass of a particular base class. The desired subclass is identified by the class name in the opening line of such a block. 
+
+The code which parses a polymorphic block must: (1) Extract the name of the desired subclass from the opening line of the block, (2) Compare this name string to a list of known subclasses of the relevant base class, (3) Create an instance of the desired subclass if the name is recognized, or throw an Exception if it is not, and (4) Call the readParameters() method of the new object in order to read the remainder of the block.  An associated Factory class implements steps (2) and (3) of this process: The recognition of the subclass name class, and the construction of an new instance of the desired class.  
+
+The implementation of a Factory class associated with a base class defines the set of subclasseses can be recognized in the parameter file, and that can thus be used in a simulation. Simpatico provides a Factory class for each base class that is associated with polymorphic block or blocks in the parameter file. The name of the factory class is usually given by the name of the base class followed by the word "Factory". For example, McMd::McMoveFactory is the factory class for McMove objects. The default factory implementation will recognize the names of any subclass that is distributed with Simpatico. 
+
+To allow a user-defined subclass to be included in the parameter file, the developer must thus add the new class to the list of classes that are recognized by the associated Factory. This can be done by adding a few lines to the Factory implementation (*.cpp) file, as discussed below.
+
+In order to allow users to modify the factory implementation files, but to avoid changing files that are under version control, their are two versions of the implementation file for each factory. The file whose name ends with the file extension ".cpp_r" (for example, MdIntegratorFactory.cpp_r)is a default version that is stored in the git repository, but that is never actually compiled. The file whose name ends with ".cpp" (e.g., MdIntegrator.cpp) is a user version that is actually compiled and linked, but that is not stored in the repository. The initial version of each such *.cpp file is created by the "configure" script by simply copying the *.cpp_r file, when Simpatico is first configured. Users should modify the *Factory.cpp files in order to add new subclasses that are intended for their own use, and should avoid modifying the *Factory.cpp_r files. The *.cpp_r files should be modified only to add new classes that are intended to be distributed with Simpatico. After modifying one or more Factory implementation files, users must also be careful to not rerun the configure script, since this would overwrite their changes.
+
+\section factory_structure_sec factory() Methods
+
+The Factory class associated with a class named "Base" (where "Base" could be McMove, MdIntegrator, Diagnostic, etc.) is normally derived from the class template Util::Factory < Base >. For example, McMd::McMoveFactory is derived from the template instantiation Util::Factory < McMd::McMove >. The Util::Factory template declares a pure virtual method named factory() with the following interface.
+\code
+   template <class Base>
+   Base* Factory<Base>::factory(const std::string className) const = 0;
+\endcode
+The function parameter className should contain the name of a subclass of Base. If the method recognizes this name, it creates a new instance of the specified subclass, and returns a Base* pointer to the new object.  This pointer can then be used by the invoking function to read the associated parameter file block, by invoking the readParam() method of the new object. If the classname string is not recognized, the factory method returns a null pointer. The function that calls this method should throw an Exception if a null pointer is returned. 
+
+
+As an example, consider the class McMd::MdIntegratorFactory that is distributed with Simpatico, which is a subclass of Util::Factory<McMd::MdIntegrator>. Here is the default implementation of the MdIntegratorFactory::factory() method:
+\code
+#include "MdIntegratorFactory.h"
+
+// Subclasses of MdIntegrator 
+#include "NveIntegrator.h"
+#include "NvtIntegrator.h"
+#include "NvtDpdIntegrator.h"
+
+namespace McMd 
+{
+
+   MdIntegrator* MdIntegratorFactory::factory(std::string &className)
+   {
+      MdIntegrator *ptr = 0;
+
+      // Search subfactories first (if any)
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
+
+      // Try matching names of specific subclasses of MdIntegrator.
+      if (className == "NveVvIntegrator") {
+         // NVE Velocity-Verlet (VV)
+         ptr = new NveIntegrator(*systemPtr_); 
+      } else
+      if (className == "NvtNhIntegrator") {
+         // NVT Nose-Hoover (NH)
+         ptr = new NvtNhIntegrator(*systemPtr_);  
+      } else
+      if (className == "NvtDpdIntegrator") {
+         // NVT Dissipative Particle Dynamics (DPD)
+         ptr = new NvtDpdIntegrator(*systemPtr_); 
+      }
+      return ptr;
+   }
+
+}
+\endcode
+The relevant part of this function is a sequence of nested else-if blocks. Each if-block in this sequence compares
+the "className" string parameter to the name of a known subclass of MdIntegrator, and creates a new object of that
+subclass if the name matches. To add a new subclass, a user must merely add another else-if block to this sequence,
+and then follow the usual instructions to recompile all relevant executables.
+
+This series of else-if blocks is preceded by a pair of lines:
+\code
+   ptr = trySubfactories(className);
+   if (ptr) return ptr;
+\endcode
+This pair of lines allows for the possibility that a Factory may contain one or more "subfactories". 
+The use of more subfactories is an alternative to the modification of the default factory implementation 
+that is described here. By default, none of the factories have any subfactories. If a factory has no
+subfactories, the trySubfactories() method returns a null pointer, and this pair of lines does nothing. 
+The use of subfactories is discussed \ref extend_subfactory_page "here".
+
+Navigation:
+<ul style="list-style: none;">
+ <li> \ref extend_build_page     (Previous)    </li>
+ <li> \ref extend_page      (Up)    </li>
+ <li> \ref extend_potential_page  (Next)    </li>
+</ul>
+ 
+*/
+}

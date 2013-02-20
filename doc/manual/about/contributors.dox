@@ -1,0 +1,26 @@
+/*! \page about_contributors_page 1.3 Contributors
+
+Simpatico has been developed since 2010 in David Morse's research group 
+at the University of Minnesota. The main contributors have
+been:
+<ul style="list-style: none;">
+  <li> David Morse (primary author) </li>
+  <li> Jian Qin (MC algorithms, angle and dihedral potentials) </li>
+  <li> Jens Glaser (HOOMD-Blue integration and constant pressure MD integrators) </li>
+  <li> Pavani Medapuram (replica exchange and perturbation theory) </li>
+</ul>
+
+Simpatico was written as a rewrite of a code named PMC that was used in 
+2006-2009 by Jun Chung and Jian Qin. PMC was not distributed outside of 
+our research group. Many of the MC algorithms for flexible polymers used 
+in mcSim were written by these two users and then ported to Simpatico by 
+Jian Qin.
+
+Navigation:
+<ul style="list-style: none;">
+ <li> \ref about_capabilities_page (Previous)   </li>
+ <li> \ref about_page        (Up)     </li>
+ <li> \ref user_page        (Next)   </li>
+</ul>
+
+*/

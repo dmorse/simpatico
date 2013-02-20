@@ -42,11 +42,13 @@ namespace McMd
       {} 
    
       /**
-      * Read interval and file name.
+      * Read interval and output file name.
       *
       * \param in input parameter file
       */
       virtual void readParameters(std::istream& in);
+
+      // Use inherited Diagnostic::loadParameters and Diagnostic::save
    
       /**
       * Write restart file.
@@ -57,9 +59,6 @@ namespace McMd
   
    private:
       
-      // Name of restart file.
-      std::string filename_;
-
       // Pointer to parent McSimulation
       McSimulation* simulationPtr_;
 

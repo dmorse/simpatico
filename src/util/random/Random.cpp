@@ -1,5 +1,5 @@
-#ifndef RANDOM_CPP
-#define RANDOM_CPP
+#ifndef UTIL_RANDOM_CPP
+#define UTIL_RANDOM_CPP
 
 #include "Random.h"
 
@@ -17,7 +17,7 @@ namespace Util
     : engine_(),
       seed_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("Random"); }
 
    /*
    * Destructor.
@@ -28,12 +28,28 @@ namespace Util
    /*
    * Read random seed and initialize.
    */
-   void Random::readParam(std::istream &in)
+   void Random::readParameters(std::istream &in)
    {
-      readBegin(in, "Random");
       read<SeedType>(in, "seed", seed_);
       setSeed();
-      readEnd(in);
+   }
+
+   /*
+   * Load random seed and internal state.
+   */
+   void Random::loadParameters(Serializable::IArchive& ar)
+   {
+      loadParameter<SeedType>(ar, "seed", seed_);
+      ar >> engine_;
+   }
+
+   /*
+   * Save internal state.
+   */
+   void Random::save(Serializable::OArchive& ar)
+   {
+      ar << seed_;
+      ar << engine_;
    }
 
    /*

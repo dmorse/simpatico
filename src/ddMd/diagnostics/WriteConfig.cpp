@@ -41,7 +41,7 @@ namespace DdMd
    /*
    * Read interval and outputFileName. 
    */
-   void WriteConfig::setup() 
+   void WriteConfig::clear() 
    {  nSample_ = 0; }
 
    /*

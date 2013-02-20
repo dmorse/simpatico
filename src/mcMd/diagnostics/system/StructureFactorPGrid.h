@@ -84,6 +84,29 @@ namespace McMd
       virtual void readParameters(std::istream& in);
 
       /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
+      /**
+      * Serialize to/from an archive. 
+      * 
+      * \param ar      archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
+      /**
       * Set up before a simulation.
       */
       virtual void setup();
@@ -113,7 +136,23 @@ namespace McMd
       /// Has readParam been called?
       bool    isInitialized_;
 
+      void makeStars();
+
    };
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void StructureFactorPGrid::serialize(Archive& ar, const unsigned int version)
+   {
+      StructureFactorP::serialize(ar, version);
+      ar & hMax_;
+      ar & lattice_;
+      //ar & nStar_;
+      //ar & starIds_;
+      //ar & starSizes_;
+   }
 
 }
 #endif

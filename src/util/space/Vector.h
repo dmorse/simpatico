@@ -1,5 +1,5 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef UTIL_VECTOR_H
+#define UTIL_VECTOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -122,8 +122,6 @@ namespace Util
       /**
       * Serialize to/from an archive.
       *
-      * Implementation uses syntax of Boost::serialize.
-      *
       * \param ar       archive
       * \param version  archive version id
       */
@@ -138,14 +136,14 @@ namespace Util
       *
       * \param v Vector to assign.
       */
-      Vector& operator=(const Vector& v);
+      Vector& operator = (const Vector& v);
 
       /**
       * Assignment from C double[] array.
       *
       * \param v array of coordinates
       */
-      Vector& operator=(const double* v);
+      Vector& operator = (const double* v);
 
       //@}
       /// \name Arithmetic Assignment
@@ -158,7 +156,7 @@ namespace Util
       *
       * \param  dv   vector increment (input)
       */
-      void operator+=(const Vector& dv);
+      void operator += (const Vector& dv);
 
       /**
       * Subtract vector dv from this vector.
@@ -167,7 +165,7 @@ namespace Util
       *
       * \param  dv   vector increment (input)
       */
-      void operator-=(const Vector& dv);
+      void operator -= (const Vector& dv);
 
       /**
       * Multiply this vector by scalar s.
@@ -176,7 +174,7 @@ namespace Util
       *
       * \param  s  scalar multiplier
       */
-      void operator*=(double s);
+      void operator *= (double s);
 
       /**
       * Divide this vector by scalar s.
@@ -185,7 +183,7 @@ namespace Util
       *
       * \param  s  scalar divisor (input)
       */
-      void operator/=(double s);
+      void operator /= (double s);
 
       //@}
       /// \name Array Subscript 
@@ -197,7 +195,7 @@ namespace Util
       * \param   i element index
       * \return  element i of the vector
       */
-      const double& operator[](int i) const;
+      const double& operator [] (int i) const;
 
       /**
       * Return a reference to one element of the vector.
@@ -205,7 +203,7 @@ namespace Util
       * \param   i element index
       * \return  element i of the vector
       */
-      double& operator[](int i);
+      double& operator [] (int i);
 
       //@}
       /// \name Scalar valued functions
@@ -503,7 +501,7 @@ namespace Util
    * Assignment.
    */
    inline
-   Vector& Vector::operator=(const Vector& v)
+   Vector& Vector::operator = (const Vector& v)
    {
       elem_[0] = v.elem_[0];
       elem_[1] = v.elem_[1];
@@ -515,7 +513,7 @@ namespace Util
    * Assignment from C double[] array.
    */
    inline
-   Vector& Vector::operator=(const double* v)
+   Vector& Vector::operator = (const double* v)
    {
       elem_[0] = v[0];
       elem_[1] = v[1];
@@ -527,7 +525,7 @@ namespace Util
    * Add vector dv to this vector.
    */
    inline
-   void Vector::operator+=(const Vector& dv)
+   void Vector::operator += (const Vector& dv)
    {
       elem_[0] += dv.elem_[0];
       elem_[1] += dv.elem_[1];
@@ -538,7 +536,7 @@ namespace Util
    * Subtract vector dv from this vector.
    */
    inline
-   void Vector::operator-=(const Vector& dv)
+   void Vector::operator -= (const Vector& dv)
    {
       elem_[0] -= dv.elem_[0];
       elem_[1] -= dv.elem_[1];
@@ -549,7 +547,7 @@ namespace Util
    * Multiply this vector by scalar s.
    */
    inline
-   void Vector::operator*=(double s)
+   void Vector::operator *= (double s)
    {
       elem_[0] *= s;
       elem_[1] *= s;
@@ -560,7 +558,7 @@ namespace Util
    * Divide this vector by scalar s.
    */
    inline
-   void Vector::operator/=(double s)
+   void Vector::operator /= (double s)
    {
       elem_[0] /= s;
       elem_[1] /= s;
@@ -571,14 +569,14 @@ namespace Util
    * Return one Cartesian element by value.
    */
    inline
-   const double& Vector::operator[](int i) const
+   const double& Vector::operator [] (int i) const
    { return elem_[i]; }
 
    /*
    * Return a reference to one element of the vector.
    */
    inline
-   double& Vector::operator[](int i)
+   double& Vector::operator [] (int i)
    { return elem_[i]; }
 
    /*

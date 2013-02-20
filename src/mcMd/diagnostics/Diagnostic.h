@@ -9,7 +9,6 @@
 */
 
 #include <util/param/ParamComposite.h>      // base class
-#include <util/archives/Serializable.h>     // base class
 #include <util/misc/FileMaster.h>           // member variable
 
 #include <string>
@@ -50,7 +49,7 @@ namespace McMd
    *
    * \ingroup McMd_Diagnostic_Module
    */
-   class Diagnostic : public ParamComposite, public Serializable
+   class Diagnostic : public ParamComposite
    {
 
    public:
@@ -68,6 +67,44 @@ namespace McMd
       virtual ~Diagnostic();
 
       /**
+      * Read parameters from archive.
+      *
+      * Default implementation, reads interval and outputFileName.
+      *
+      * \param in input parameter stream
+      */
+      virtual void readParameters(std::istream& in);
+
+      /**
+      * Load parameters from archive.
+      *
+      * Default implementation, loads interval and outputFileName.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Load parameters to archive.
+      *
+      * Default implementation saves interval and outputFileName.
+      *
+      * \param ar loading/saving archive
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
+      /**
+      * Serialize to/from an archive. 
+      *
+      * Saves interval and outputFileName.
+      * 
+      * \param ar      archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
+      /**
       * Complete any required initialization.
       *
       * This method must be called just before the beginning of
@@ -80,12 +117,6 @@ namespace McMd
       */
       virtual void setup()
       {}
-
-      /**
-      * Serialize to/from an archive. 
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
 
       /**
       * Calculate, analyze and/or output a physical quantity.
@@ -105,20 +136,6 @@ namespace McMd
       */
       virtual void output()
       {}
-
-      /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
 
       /**
       * Get interval value.
@@ -152,13 +169,9 @@ namespace McMd
       void setFileMaster(FileMaster& fileMaster);
 
       /**
-      * Read parameter interval from file.
+      * Read interval from file, with error checking.
       *
-      * This function throws an exception if the value of interval
-      * is not a multiple of Diagnostic::baseInterval, or if
-      * baseInterval has not been set to a nonzero positive value.
-      *
-      * \param in input parameter file stream.
+      * \param in input parameter file stream
       */
       void readInterval(std::istream &in);
 
@@ -168,6 +181,20 @@ namespace McMd
       * \param in input parameter file stream.
       */
       void readOutputFileName(std::istream &in);
+
+      /**
+      * Load interval from archive, with error checking.
+      *
+      * \param ar input/loading archive
+      */
+      void loadInterval(Serializable::IArchive& ar);
+
+      /**
+      * Load output file name from archive.
+      *
+      * \param ar input/loading archive
+      */
+      void loadOutputFileName(Serializable::IArchive& ar);
 
       /**
       * Get the FileMaster by reference.
@@ -186,16 +213,16 @@ namespace McMd
       */
       std::string outputFileName(const std::string& suffix) const;
 
-   private:
-
       /// Base name of output file(s).
       std::string outputFileName_;
 
-      /// Pointer to fileMaster for opening output file(s).
-      FileMaster* fileMasterPtr_;
-
       /// Number of simulation steps between subsequent actions.
       long   interval_;
+
+   private:
+
+      /// Pointer to fileMaster for opening output file(s).
+      FileMaster* fileMasterPtr_;
 
    };
 
@@ -226,8 +253,10 @@ namespace McMd
    */
    template <class Archive>
    void Diagnostic::serialize(Archive& ar, const unsigned int version)
-   {}
-
+   {
+      ar & interval_;
+      ar & outputFileName_;
+   }
 
 }
 #endif

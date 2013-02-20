@@ -19,19 +19,42 @@ namespace McMd
 
    using namespace Util;
 
-   // Constructor
+   /*
+   * Constructor.
+   */
    MdEnergyOutput::MdEnergyOutput(MdSystem& system) :
       SystemDiagnostic<MdSystem>(system)
    {  setClassName("MdEnergyOutput"); }
 
+   /*
+   * Read interval and output file name.
+   */
    void MdEnergyOutput::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);
       fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
    }
- 
-   // Evaluate energy and print.
+
+   /*
+   * Load internal state from archive.
+   */
+   void MdEnergyOutput::loadParameters(Serializable::IArchive &ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
+      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   void MdEnergyOutput::save(Serializable::OArchive &ar)
+   { ar & *this; }
+
+   /* 
+   * Evaluate energy and print.
+   */
    void MdEnergyOutput::sample(long iStep) 
    {
       if (isAtInterval(iStep)) {

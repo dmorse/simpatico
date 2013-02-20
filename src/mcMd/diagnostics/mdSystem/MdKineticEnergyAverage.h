@@ -38,6 +38,29 @@ namespace McMd
       * Read parameters and initialize.
       */
       virtual void readParameters(std::istream& in);
+   
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+   
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+   
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
 
       /** 
       * Clear accumulator.
@@ -53,29 +76,6 @@ namespace McMd
       * Output results at end of simulation.
       */
       virtual void output();
-
-      /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
-
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
 
    private:
 
@@ -99,12 +99,9 @@ namespace McMd
    template <class Archive>
    void MdKineticEnergyAverage::serialize(Archive& ar, const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
-
+      Diagnostic::serialize(ar, version);
+      ar & nSamplePerBlock_;
       ar & accumulator_;
-      serializeCheck(ar, nSamplePerBlock_, "nSamplePerBlock");
    }
 
 }

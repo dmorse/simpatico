@@ -46,6 +46,32 @@ namespace McMd
       nAtom_ = simulation().species(speciesId_).nAtom();
       oldPositions_.allocate(nAtom_);
    }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void RigidDisplaceMove::loadParameters(Serializable::IArchive &ar)
+   {
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<double>(ar, "delta", delta_);
+      ar & nAtom_;
+      if (nAtom_ != simulation().species(speciesId_).nAtom()) {
+         UTIL_THROW("Inconsistent values for nAtom.");
+      }
+      oldPositions_.allocate(nAtom_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void RigidDisplaceMove::save(Serializable::OArchive &ar)
+   {
+      McMove::save(ar);
+      ar & speciesId_;
+      ar & delta_;
+      ar & nAtom_;
+   }
    
    /* 
    * Generate, attempt and accept or reject a rigid molecule translation.

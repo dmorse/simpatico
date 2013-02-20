@@ -1,5 +1,5 @@
-#ifndef COSINE_ANGLE_CPP
-#define COSINE_ANGLE_CPP
+#ifndef INTER_COSINE_ANGLE_CPP
+#define INTER_COSINE_ANGLE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -21,6 +21,7 @@ namespace Inter
    CosineAngle::CosineAngle()
     : nAngleType_(0)
    { 
+      setClassName("CosineAngle");
       for (int i = 0; i < MaxNAngleType; ++i) {
          kappa_[i] = 0.0; 
       }
@@ -74,15 +75,31 @@ namespace Inter
    */
    void CosineAngle::readParameters(std::istream &in) 
    {
-      // Preconditions
       if (nAngleType_ <= 0) {
          UTIL_THROW("nAngleType must be set before readParam");
       }
-
-      // Read parameters
-      //readBegin(in, "CosineAngle");
       readCArray<double>(in, "kappa",  kappa_,  nAngleType_);
-      //readEnd(in);
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void CosineAngle::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nAngleType_; 
+      if (nAngleType_ <= 0) {
+         UTIL_THROW( "nAngleType must be positive");
+      }
+      loadCArray<double> (ar, "kappa", kappa_, nAngleType_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void CosineAngle::save(Serializable::OArchive &ar)
+   {
+      ar << nAngleType_;
+      ar.pack(kappa_, nAngleType_);
    }
 
    /*

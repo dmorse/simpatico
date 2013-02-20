@@ -31,13 +31,20 @@ namespace McMd
    CfbEndBase::CfbEndBase(McSystem& system) : 
       SystemMove(system),
       nTrial_(-1)
-   {} 
-   
+   {
+      // Precondition
+      #ifdef INTER_DIHEDRAL
+      if (system.hasDihedralPotential()) {
+         UTIL_THROW("CfbEndBase is unusable with dihedrals");
+      }
+      #endif
+   }
+  
    /* 
-   * Constructor
+   * Destructor
    */
    CfbEndBase::~CfbEndBase() 
-   {} 
+   {}
    
    /* 
    * Read parameter nTrial.

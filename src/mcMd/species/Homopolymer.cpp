@@ -72,6 +72,70 @@ namespace McMd
    }
 
    /* 
+   * Load from Serializable::IArchive.
+   */
+   void Homopolymer::loadSpeciesParam(Serializable::IArchive &ar)
+   {
+      loadParameter<int>(ar,"nAtom", nAtom_);
+      loadParameter<int>(ar,"atomType", atomType_);
+      nBond_  = nAtom_ - 1;
+      loadParameter<int>(ar,"bondType", bondType_);
+      #ifdef INTER_ANGLE
+      loadParameter<int>(ar,"hasAngles", hasAngles_);
+      if (hasAngles_) {
+         nAngle_ = nBond_ - 1;
+         if (nAngle_ > 0) {
+            loadParameter<int>(ar,"angleType", angleType_);
+         }
+      } else {
+         nAngle_ = 0;
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      loadParameter<int>(ar,"hasDihedrals", hasDihedrals_);
+      if (hasDihedrals_) {
+         if (nAtom_ > 3) {
+            nDihedral_ = nAtom_ - 3;
+         } else {
+            nDihedral_ = 0;
+         }
+         if (nDihedral_ > 0) {
+            loadParameter<int>(ar, "dihedralType", dihedralType_);
+         } else {
+            nDihedral_ = 0;
+         }
+      } else {
+         nDihedral_ = 0;
+      }
+      #endif
+
+      buildLinear();
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void Homopolymer::save(Serializable::OArchive &ar)
+   {
+      ar << moleculeCapacity_;
+      ar << nAtom_;
+      ar << atomType_;
+      ar << bondType_;
+      #ifdef INTER_ANGLE
+      ar << hasAngles_;
+      if (hasAngles_ && nAngle_ > 0) {
+         ar << angleType_;
+      } 
+      #endif
+      #ifdef INTER_DIHEDRAL
+      ar << hasDihedrals_;
+      if (hasDihedrals_ && nDihedral_ > 0) {
+         ar << dihedralType_;
+      } 
+      #endif
+   }
+
+   /* 
    * Return atomType_ for every atom.
    */
    int Homopolymer::calculateAtomTypeId(int index) const

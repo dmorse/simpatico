@@ -39,7 +39,9 @@ namespace McMd
       */
       virtual ~McIntraBondStressAutoCorr();
   
-      using IntraBondStressAutoCorr<McSystem>::readParam;
+      using IntraBondStressAutoCorr<McSystem>::readParameters;
+      using IntraBondStressAutoCorr<McSystem>::loadParameters;
+      using IntraBondStressAutoCorr<McSystem>::save;
       using IntraBondStressAutoCorr<McSystem>::setup;
       using IntraBondStressAutoCorr<McSystem>::sample;
       using IntraBondStressAutoCorr<McSystem>::output;

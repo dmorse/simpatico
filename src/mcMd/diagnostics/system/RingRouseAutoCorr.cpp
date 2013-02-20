@@ -52,11 +52,8 @@ namespace McMd
    */
    void RingRouseAutoCorr::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
       readInterval(in);
       readOutputFileName(in);
-
       read<int>(in, "speciesId", speciesId_);
       read<int>(in, "p", p_);
       read<int>(in, "capacity", capacity_);
@@ -77,6 +74,59 @@ namespace McMd
 
       isInitialized_ = true;
    }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void RingRouseAutoCorr::loadParameters(Serializable::IArchive &ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "p", p_);
+      loadParameter<int>(ar, "capacity", capacity_);
+      ar & nAtom_;
+      ar & nMolecule_;
+      ar & accumulator_;
+      ar & projector_;
+
+      speciesPtr_ = &system().simulation().species(speciesId_);
+      int speciesCapacity = speciesPtr_->capacity();
+      data_.allocate(speciesCapacity); 
+   
+      // Validate input
+      if (speciesId_ < 0) {
+         UTIL_THROW("Negative speciesId");
+      }
+      if (p_ < 0) {
+         UTIL_THROW("Negative mode index");
+      }
+      if (capacity_ <= 0) {
+         UTIL_THROW("Negative capacity");
+      }
+      if (speciesId_ < 0) {
+         UTIL_THROW("speciesId < 0");
+      }
+      if (speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("speciesId >= nSpecies");
+      }
+      if (nAtom_ != speciesPtr_->nAtom()) {
+         UTIL_THROW("Inconsistent values of nAtom");
+      }
+      if (projector_.capacity() != nAtom_) {
+         UTIL_THROW("Inconsistent projector capacity");
+      }
+      if (accumulator_.bufferCapacity() != capacity_) {
+         UTIL_THROW("Inconsistent accumulator buffer capacity");
+      }
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void RingRouseAutoCorr::save(Serializable::OArchive &ar)
+   {  ar << *this; }
 
    /*
    * Allocate memory, initialize accumulator, and initialize eigenvector.
@@ -171,20 +221,6 @@ namespace McMd
       outputFile_.close();
 
    }
-
-   /*
-   * Save state to binary file archive.
-   */
-   void RingRouseAutoCorr::save(Serializable::OArchiveType& ar)
-   {}
-   //{ ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void RingRouseAutoCorr::load(Serializable::IArchiveType& ar)
-   {}
-   //{ ar & *this; }
 
 }
 

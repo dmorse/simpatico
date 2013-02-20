@@ -1,5 +1,5 @@
-#ifndef MATRIX_H
-#define MATRIX_H
+#ifndef UTIL_MATRIX_H
+#define UTIL_MATRIX_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -77,10 +77,10 @@ namespace Util
       Data*  data_;
 
       /// Number of rows (range of first index).
-      int    capacity1_;
+      int  capacity1_;
 
       /// Number of columns (range of first index).
-      int    capacity2_;
+      int  capacity2_;
 
       /**
       * Default constructor. 

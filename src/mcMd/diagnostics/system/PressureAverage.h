@@ -44,6 +44,29 @@ namespace McMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
       /** 
       * Set up before simulation.
       */
@@ -58,29 +81,6 @@ namespace McMd
       * Output results at end of simulation.
       */
       virtual void output();
-
-      /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
-
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
 
    private:
 
@@ -98,7 +98,9 @@ namespace McMd
 
       using SystemDiagnostic<SystemType>::readInterval;
       using SystemDiagnostic<SystemType>::readOutputFileName;
+      using SystemDiagnostic<SystemType>::read;
       using SystemDiagnostic<SystemType>::writeParam;
+      using SystemDiagnostic<SystemType>::loadParameter;
       using SystemDiagnostic<SystemType>::isAtInterval;
       using SystemDiagnostic<SystemType>::outputFileName;
       using SystemDiagnostic<SystemType>::fileMaster;
@@ -124,19 +126,58 @@ namespace McMd
    template <class SystemType>
    void PressureAverage<SystemType>::readParameters(std::istream& in)
    {
-
       readInterval(in);
       readOutputFileName(in);
-      SystemDiagnostic<SystemType>::read(in,"nSamplePerBlock", nSamplePerBlock_);
+      read(in,"nSamplePerBlock", nSamplePerBlock_);
 
       accumulator_.setNSamplePerBlock(nSamplePerBlock_);
 
-      // If nSamplePerBlock != 0, open an output file for block averages.
+      // Open output file for block averages, if nSamplePerBlock != 0.
       if (accumulator_.nSamplePerBlock()) {
          fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       }
-
       isInitialized_ = true;
+   }
+
+   /*
+   * Load state from an archive.
+   */
+   template <class SystemType>
+   void PressureAverage<SystemType>::loadParameters(Serializable::IArchive& ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter(ar, "nSamplePerBlock", nSamplePerBlock_);
+      ar & accumulator_;
+
+      if (accumulator_.nSamplePerBlock() != nSamplePerBlock_) {
+         UTIL_THROW("Inconsistent values of nSamplePerBlock");
+      }
+
+      // Open output file for block averages, if nSamplePerBlock != 0.
+      if (accumulator_.nSamplePerBlock()) {
+         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      }
+      isInitialized_ = true;
+   }
+
+
+   /*
+   * Save state to archive.
+   */
+   template <class SystemType>
+   void PressureAverage<SystemType>::save(Serializable::OArchive& ar)
+   { ar & *this; }
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class SystemType>
+   template <class Archive>
+   void PressureAverage<SystemType>::serialize(Archive& ar, const unsigned int version)
+   {
+      Diagnostic::serialize(ar, version);
+      ar & nSamplePerBlock_;
+      ar & accumulator_;
    }
 
    /*
@@ -186,33 +227,6 @@ namespace McMd
       accumulator_.output(outputFile_); 
       outputFile_.close();
 
-   }
-
-   /*
-   * Save state to binary file archive.
-   */
-   template <class SystemType>
-   void PressureAverage<SystemType>::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   template <class SystemType>
-   void PressureAverage<SystemType>::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Serialize to/from an archive. 
-   */
-   template <class SystemType>
-   template <class Archive>
-   void PressureAverage<SystemType>::serialize(Archive& ar, const unsigned int version)
-   {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
-      ar & accumulator_;
    }
 
 }

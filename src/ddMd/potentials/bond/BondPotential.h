@@ -80,12 +80,27 @@ namespace DdMd
       virtual double 
       randomBondLength(Random* random, double beta, int bondTypeId) const = 0;
 
-      #if 0
+      /**
+      * Modify a bond interaction parameter, identified by a string.
+      *
+      * \param name       parameter variable name
+      * \param bondTypeId bond type index
+      * \param value      new value of parameter
+      */
+      virtual void set(std::string name, int bondTypeId, double value) = 0;
+
+      /**
+      * Get a bond parameter value, identified by a string.
+      *
+      * \param name       parameter variable name
+      * \param bondTypeId bond type index
+      */
+      virtual double get(std::string name, int bondTypeId) const = 0;
+
       /**
       * Return pair interaction class name (e.g., "HarmonicBond").
       */
       virtual std::string interactionClassName() const = 0;
-      #endif
 
       //@}
 

@@ -37,19 +37,19 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
+
+      std::string filename;
+      filename  = outputFileName();
+      simulation().fileMaster().openOutputFile(filename, outputFile_);
+
       isInitialized_ = true;
    }
 
    /*
    * Read interval and outputFileName. 
    */
-   void OutputPressure::setup() 
-   {  
-      nSample_ = 0; 
-      std::string filename;
-      filename  = outputFileName();
-      simulation().fileMaster().openOutputFile(filename, outputFile_);
-   }
+   void OutputPressure::clear() 
+   {  nSample_ = 0; }
 
    /*
    * Dump configuration to file

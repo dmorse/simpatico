@@ -1,5 +1,5 @@
-#ifndef NOTIFIER_H
-#define NOTIFIER_H
+#ifndef UTIL_NOTIFIER_H
+#define UTIL_NOTIFIER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

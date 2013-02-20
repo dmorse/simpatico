@@ -249,15 +249,14 @@ public:
       printEndl();
 
       Tensor v;
-      std::ifstream in("in/Tensor");
+      std::ifstream in;
+      openInputFile("in/Tensor", in);
 
-      in        >> v;
+      in >> v;
       std::cout.width(20);
       std::cout.precision(6);
       std::cout << v << std::endl ;
    }
-   #if 0 
-   #endif
 
 };
 

@@ -8,7 +8,6 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-
 #include "MdPressureAverage.h"        // class header
 
 namespace McMd
@@ -19,7 +18,7 @@ namespace McMd
    */
    MdPressureAverage::MdPressureAverage(MdSystem& system)
     : PressureAverage<MdSystem>(system)
-   { setClassName("MdPressureAverage"); }
+   {  setClassName("MdPressureAverage"); }
 
 }
 #endif

@@ -1,5 +1,5 @@
-#ifndef SYMMETRY_GROUP_H
-#define SYMMETRY_GROUP_H
+#ifndef UTIL_SYMMETRY_GROUP_H
+#define UTIL_SYMMETRY_GROUP_H
 
 #include <iostream>
 #include <vector>

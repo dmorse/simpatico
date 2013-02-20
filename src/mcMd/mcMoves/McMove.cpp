@@ -46,6 +46,26 @@ namespace McMd
    {  read<double>(in, "probability", probability_); }
    
    /*
+   * Load internal state from an archive.
+   */
+   void McMove::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<double>(ar, "probability", probability_); 
+      ar & nAttempt_;
+      ar & nAccept_;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void McMove::save(Serializable::OArchive &ar)
+   {  
+      ar & probability_;
+      ar & nAttempt_;
+      ar & nAccept_;
+   }
+
+   /*
    * Trivial implementation - initializes counters.
    */
    void McMove::setup()
@@ -67,26 +87,7 @@ namespace McMd
    * Trivial default implementation - do nothing
    */
    void McMove::output()
-   {
-   }
-
-   /*
-   * Save the internal state to an archive.
-   */
-   void McMove::save(Serializable::OArchiveType& ar)
-   {  
-      ar & nAttempt_;
-      ar & nAccept_;
-   }
-
-   /**
-   * Load the internal state to an archive.
-   */
-   void McMove::load(Serializable::IArchiveType& ar)
-   {  
-      ar & nAttempt_;
-      ar & nAccept_;
-   }
+   {}
 
 }
 #endif

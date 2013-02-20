@@ -1,6 +1,6 @@
 #ifdef  UTIL_MPI
-#ifndef MPI_SEND_RECV_CPP
-#define MPI_SEND_RECV_CPP
+#ifndef UTIL_MPI_SEND_RECV_CPP
+#define UTIL_MPI_SEND_RECV_CPP
 
 #include <string.h>
 /*

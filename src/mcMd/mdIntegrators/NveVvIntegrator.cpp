@@ -43,10 +43,28 @@ namespace McMd
    void NveVvIntegrator::readParameters(std::istream &in) 
    {
       read<double>(in, "dt", dt_);
-
       int nAtomType = simulation().nAtomType();
       prefactors_.allocate(nAtomType);
+   }
 
+   /*
+   * Load the internal state to an archive.
+   */
+   void NveVvIntegrator::loadParameters(Serializable::IArchive& ar)
+   {  
+      loadParameter<double>(ar, "dt", dt_);
+      int nAtomType = simulation().nAtomType();
+      prefactors_.allocate(nAtomType);
+      ar & prefactors_;
+   }
+
+   /*
+   * Save the internal state to an archive.
+   */
+   void NveVvIntegrator::save(Serializable::OArchive& ar)
+   {  
+      ar & dt_;
+      ar & prefactors_;
    }
 
    /* 
@@ -162,24 +180,6 @@ namespace McMd
       }
       #endif
 
-   }
-
-   /*
-   * Save the internal state to an archive.
-   */
-   void NveVvIntegrator::save(Serializable::OArchiveType& ar)
-   {  
-      ar & dt_;
-      ar & prefactors_;
-   }
-
-   /**
-   * Load the internal state to an archive.
-   */
-   void NveVvIntegrator::load(Serializable::IArchiveType& ar)
-   {  
-      ar & dt_;
-      ar & prefactors_;
    }
 
 }

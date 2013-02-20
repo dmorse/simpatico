@@ -32,7 +32,7 @@ namespace McMd
       /**
       * Constructor. 
       */
-      McEnergyPerturbation(McSystem& system);
+      McEnergyPerturbation(McSystem& system, int size, int rank);
   
       /**
       * Read beta parameter (inverse temperature) from file.

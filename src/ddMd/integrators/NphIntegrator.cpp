@@ -48,19 +48,26 @@ namespace DdMd
       read<double>(in, "W", W_);
       read<LatticeSystem>(in, "mode", mode_);
 
+      // Allocate memory
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
       }
-
    }
+
+   void NphIntegrator::initDynamicalState()
+   {  nu_ = Vector(0.0,0.0,0.0); }
 
    void NphIntegrator::setup()
    {
+      // Initialize state and clear statistics on first usage.
+      if (!isSetup()) {
+         clear();
+         setIsSetup();
+      }
+
       // Exchange atoms, build pair list, compute forces.
       setupAtoms();
-
-      simulation().diagnosticManager().setup();
 
       // Set prefactors for acceleration
       double dtHalf = 0.5*dt_;
@@ -71,14 +78,11 @@ namespace DdMd
          prefactors_[i] = dtHalf/mass;
       }
 
-      nu_ = Vector(0.0,0.0,0.0);
-
       simulation().computeKineticEnergy();
       #ifdef UTIL_MPI
       atomStorage().computeNAtomTotal(domain().communicator());
       #endif
       if (domain().isMaster()) {
-         T_target_ = simulation().energyEnsemble().temperature();
          P_target_ = simulation().boundaryEnsemble().pressure();
          ndof_ = atomStorage().nAtomTotal()*3;
       }
@@ -90,7 +94,6 @@ namespace DdMd
    void NphIntegrator::integrateStep1()
    {
       Vector dv;
-      double prefactor; // = 0.5*dt/mass
       AtomIterator atomIter;
 
       Simulation& sys = simulation();
@@ -99,7 +102,6 @@ namespace DdMd
       sys.computeKineticEnergy();
 
       if (sys.domain().isMaster()) {
-         T_target_ = sys.energyEnsemble().temperature();
          P_target_ = simulation().boundaryEnsemble().pressure();
          T_kinetic_ = sys.kineticEnergy()*2.0/ndof_;
          Tensor stress = sys.virialStress();
@@ -110,7 +112,7 @@ namespace DdMd
 
          double mtk_term = (1.0/2.0)*dt_*T_kinetic_/W_;
 
-         // advance barostat
+         // Advance barostat
          double V = sys.boundary().volume();
          if (mode_ == Cubic) {
             nu_[0] += (1.0/2.0)*dt_*V/W_*(P_curr - P_target_) + mtk_term;
@@ -178,8 +180,9 @@ namespace DdMd
       }
 
       // 1st half of NPH
-      atomStorage().begin(atomIter);
       Vector vtmp;
+      double prefactor; // = 0.5*dt/mass
+      atomStorage().begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          prefactor = prefactors_[atomIter->typeId()];
 
@@ -201,7 +204,7 @@ namespace DdMd
          r[0] = r[0]*exp_r_fac[0]*exp_r_fac[0] + vtmp[0]*dt_;
          r[1] = r[1]*exp_r_fac[1]*exp_r_fac[1] + vtmp[1]*dt_;
          r[2] = r[2]*exp_r_fac[2]*exp_r_fac[2] + vtmp[2]*dt_;
-         }
+      }
 
       // Advance box lengths
       Vector box_len_scale = Vector(exp(nu_[0]*dt_),

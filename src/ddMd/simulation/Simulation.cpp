@@ -537,6 +537,7 @@ namespace DdMd
       while (readNext) {
 
          #ifdef UTIL_MPI
+         // Read and broadcast command line
          if (!hasParamCommunicator() || isParamIoProcessor()) {
             getNextLine(in, line);
             Log::file() << line << std::endl;
@@ -544,18 +545,19 @@ namespace DdMd
          if (hasParamCommunicator()) {
             bcast<std::string>(domain_.communicator(), line, 0);
          }
+         #else // not UTIL_MPI
+         getNextLine(in, line);
+         Log::file() << line << std::endl;
+         #endif // not UTIL_MPI 
          inBuffer.clear();
          for (unsigned i=0; i < line.size(); ++i) {
             inBuffer.put(line[i]);
          }
-         #endif
 
          inBuffer >> command;
-         //Log::file().setf(std::ios_base::left);
-         //Log::file().width(15);
-         //Log::file() << command;
-
          if (command == "READ_CONFIG") {
+            // Read configuration from file (boundary + positions + topology).
+            // Uses current ConfigIo, if set, or creates instance of default.
             inBuffer >> filename;
             readConfig(filename);
          } else
@@ -563,22 +565,36 @@ namespace DdMd
             double temperature;
             inBuffer >> temperature;
             setBoltzmannVelocities(temperature);
-            //removeDriftVelocity();
          } else
          if (command == "SIMULATE") {
             int endStep;
             inBuffer >> endStep;
             simulate(endStep);
          } else
+         if (command == "OUTPUT_DIAGNOSTICS") {
+            diagnosticManager().output();
+         } else
          if (command == "OUTPUT_INTEGRATOR_STATS") {
-            integratorPtr_->outputStatistics(Log::file());
+            // Output statistics about time usage during simulation.
+            integratorPtr_->computeStatistics();
+            if (domain_.isMaster()) {
+               integratorPtr_->outputStatistics(Log::file());
+            }
          } else
          if (command == "OUTPUT_EXCHANGER_STATS") {
-            int nStep = integratorPtr_->nStep();
-            double time  = integratorPtr_->time();
-            exchanger_.outputStatistics(Log::file(), time, nStep);
+            // Output detailed statistics about time usage by Exchanger.
+            integratorPtr_->computeStatistics();
+            #ifdef UTIL_MPI
+            exchanger().timer().reduce(domain().communicator());
+            #endif
+            if (domain_.isMaster()) {
+               int iStep = integratorPtr_->iStep();
+               double time  = integratorPtr_->time();
+               exchanger_.outputStatistics(Log::file(), time, iStep);
+            }
          } else
          if (command == "OUTPUT_MEMORY_STATS") {
+            // Output statistics about memory usage during simulation.
             atomStorage().computeStatistics(domain_.communicator());
             bondStorage().computeStatistics(domain_.communicator());
             buffer().computeStatistics(domain_.communicator());
@@ -591,22 +607,69 @@ namespace DdMd
                Log::file() << std::endl;
             }
          } else
+         if (command == "CLEAR_INTEGRATOR") {
+            // Clear timing, memory statistics and diagnostic accumulators.
+            // Also resets integrator iStep() to zero
+            integratorPtr_->clear();
+         } else
          if (command == "WRITE_CONFIG") {
+            // Write current configuration to file.
+            // Uses current ConfigIo, if set, or creates instance of default.
             inBuffer >> filename;
             writeConfig(filename);
          } else
          if (command == "WRITE_PARAM") {
+            // Write parameter file to file, using current variable values.
             inBuffer >> filename;
             fileMaster().openOutputFile(filename, outputFile);
             writeParam(outputFile);
             outputFile.close();
          } else
          if (command == "SET_CONFIG_IO") {
+            // Create an associated ConfigIo object of specified class.
+            // This determines file format for subsequent reads and writes.
             std::string classname;
             inBuffer >> classname;
             setConfigIo(classname);
          } else
+         if (command == "SET_PAIR") {
+            // Modify one parameter of a pair interaction.
+            std::string paramName;
+            int typeId1, typeId2; 
+            double value;
+            inBuffer >> paramName >> typeId1 >> typeId2 >> value;
+            pairPotential().set(paramName, typeId1, typeId2, value);
+         } else 
+         if (command == "SET_BOND") {
+            // Modify one parameter of a bond interaction.
+            std::string paramName;
+            int typeId; 
+            double value;
+            inBuffer >> paramName >> typeId >> value;
+            bondPotential().set(paramName, typeId, value);
+         } else 
+         #ifdef INTER_ANGLE
+         if (command == "SET_ANGLE") {
+            // Modify one parameter of an angle interaction.
+            std::string paramName;
+            int typeId; 
+            double value;
+            inBuffer >> paramName >> typeId >> value;
+            anglePotential().set(paramName, typeId, value);
+         } else 
+         #endif
+         #ifdef INTER_DIHEDRAL
+         if (command == "SET_DIHEDRAL") {
+            // Modify one parameter of a dihedral interaction.
+            std::string paramName;
+            int typeId; 
+            double value;
+            inBuffer >> paramName >> typeId >> value;
+            dihedralPotential().set(paramName, typeId, value);
+         } else
+         #endif
          if (command == "FINISH") {
+            // Terminate loop over commands.
             readNext = false;
          } else {
             Log::file() << "Error: Unknown command  " << std::endl;
@@ -747,7 +810,7 @@ namespace DdMd
          Log::file() << std::endl;
       }
 
-      integratorPtr_->setup();
+      // integratorPtr_->setup();
       integratorPtr_->run(nStep);
    }
 

@@ -1,5 +1,5 @@
-#ifndef DISTRIBUTION_CPP
-#define DISTRIBUTION_CPP
+#ifndef UTIL_DISTRIBUTION_CPP
+#define UTIL_DISTRIBUTION_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -100,16 +100,14 @@ namespace Util
    /* 
    * Read parameters and initialize.
    */
-   void Distribution::readParam(std::istream& in)
+   void Distribution::readParameters(std::istream& in)
    {
-      readBegin(in,"Distribution");
       read<double>(in, "min", min_);
       read<double>(in, "max", max_);
       read<int>(in,   "nBin", nBin_);
       binWidth_  = (max_ - min_)/double(nBin_);
       histogram_.allocate(nBin_);
       clear();
-      readEnd(in);
    }
   
    /*
@@ -128,6 +126,34 @@ namespace Util
       histogram_.allocate(nBin_);
       clear();
    }  
+   
+   /*
+   * Load internal state from archive.
+   */
+   void Distribution::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<double>(ar, "min", min_);
+      loadParameter<double>(ar, "max", max_);
+      loadParameter<int>(ar, "nBin", nBin_);
+      ar & nSample_;
+      ar & nReject_;
+      ar & binWidth_;
+      ar & histogram_;
+
+      // Validate
+      if (histogram_.capacity() != nBin_) {
+         UTIL_THROW("Inconsistent histogram capacity");
+      }
+      if (!feq(binWidth_, (max_ - min_)/double(nBin_))) {
+         UTIL_THROW("Inconsistent binWidth_");
+      }
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   void Distribution::save(Serializable::OArchive &ar)
+   { ar & *this; }
    
    /* 
    * Zero all accumulators.
@@ -169,33 +195,6 @@ namespace Util
          out << Dbl(x, 18, 8) << Dbl(rho, 18, 8) << std::endl;
       }
    }
-  
-   #if 0 
-   /* 
-   *
-   */
-   void Distribution::backup(FILE *file) 
-   {
-      fprintf(file, "nSample       %i \n", nSample_);
-      fprintf(file, "nReject       %i \n", nReject_);
-      for (int i=0; i < nBin_; ++i) {
-         fprintf(file, "%li ", histogram_[i]);
-      }
-      fprintf(file, "\n");
-   }
-   
-   /* 
-   *
-   */
-   void Distribution::restore(FILE *file) {
-      fscanf(file, "nSample       %i \n", &nSample_);
-      fscanf(file, "nReject       %i \n", &nReject_);
-      for (int i=0; i < nBin_; ++i) {
-         fscanf(file, "%li ", &histogram_[i]);
-      }
-      fscanf(file, "\n");
-   }
-   #endif
 
 }
 #endif

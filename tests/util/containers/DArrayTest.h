@@ -5,10 +5,11 @@
 #include <test/UnitTestRunner.h>
 
 #include <util/containers/DArray.h>
-#include <util/containers/PackedData.h>
 #include <util/archives/MemoryOArchive.h>
 #include <util/archives/MemoryIArchive.h>
 #include <util/archives/MemoryCounter.h>
+#include <util/archives/BinaryFileOArchive.h>
+#include <util/archives/BinaryFileIArchive.h>
 
 using namespace Util;
 
@@ -33,10 +34,10 @@ public:
    void testCopyConstructor();
    void testAssignment();
    void testBaseClassReference();
-   void testPack1();
-   void testPack2();
-   void testSerialize1();
-   void testSerialize2();
+   void testSerialize1Memory();
+   void testSerialize2Memory();
+   void testSerialize1File();
+   void testSerialize2File();
 
 };
 
@@ -165,84 +166,8 @@ void DArrayTest::testBaseClassReference()
    TEST_ASSERT(real(u[2]) == 30 );
 }
 
-void DArrayTest::testPack1()
-{
-   printMethod(TEST_FUNC);
-   v.allocate(3);
-   for (int i=0; i < capacity; i++ ) {
-      real(v[i]) = (i+1)*10 ;
-      imag(v[i]) = (i+1)*10 + 0.1;
-   }
-   int size = v.packedSize();
-   
-   char* begin;
-   char* current;
-   char* end;
-   begin = new char[size + 4]; // make buffer too large
-   end = begin + size + 4;
-   current = begin;
-   
-   v.pack(current, end);
-   TEST_ASSERT(current == begin + size);
-   TEST_ASSERT(end == current + 4);
 
-   // Show that v is unchanged by packing
-   TEST_ASSERT(imag(v[0])==10.1);
-   TEST_ASSERT(real(v[1])==20.0);
-   TEST_ASSERT(imag(v[2])==30.1);
-   TEST_ASSERT(v.capacity() == 3);
-
-   DArray<Data> u;
-   u.allocate(3);
-   current = begin;
-   u.unpack(current, end);
-   TEST_ASSERT(current == begin + size);
-   TEST_ASSERT(end == current + 4);
-   TEST_ASSERT(imag(u[0])==10.1);
-   TEST_ASSERT(real(u[1])==20.0);
-   TEST_ASSERT(imag(u[2])==30.1);
-   TEST_ASSERT(u.capacity() == 3);
-
-}
- 
-void DArrayTest::testPack2()
-{
-   printMethod(TEST_FUNC);
-   v.allocate(3);
-   for (int i=0; i < capacity; i++ ) {
-      real(v[i]) = (i+1)*10 ;
-      imag(v[i]) = (i+1)*10 + 0.1;
-   }
-   int size = v.packedSize();
-  
-   PackedData buffer; 
-   buffer.allocate(size + 4);
-
-   buffer.beginPacking();
-   v.pack(buffer);
-   TEST_ASSERT(buffer.endAllocated() == buffer.cursor() + 4);
-
-   // Show that v is unchanged by packing
-   TEST_ASSERT(imag(v[0])==10.1);
-   TEST_ASSERT(real(v[1])==20.0);
-   TEST_ASSERT(imag(v[2])==30.1);
-   TEST_ASSERT(v.capacity() == 3);
-
-   DArray<Data> u;
-   u.allocate(3);
-   buffer.beginUnpacking();
-   u.unpack(buffer);
-   TEST_ASSERT(buffer.cursor() == buffer.begin() + size);
-   TEST_ASSERT(buffer.endAllocated() == buffer.cursor() + 4);
-   TEST_ASSERT(imag(u[0]) == 10.1);
-   TEST_ASSERT(real(u[1]) == 20.0);
-   TEST_ASSERT(imag(u[2]) == 30.1);
-   TEST_ASSERT(u.capacity() == 3);
-
-}
-
- 
-void DArrayTest::testSerialize1()
+void DArrayTest::testSerialize1Memory()
 {
    printMethod(TEST_FUNC);
    v.allocate(3);
@@ -328,7 +253,7 @@ void DArrayTest::testSerialize1()
 
 }
 
-void DArrayTest::testSerialize2()
+void DArrayTest::testSerialize2Memory()
 {
    printMethod(TEST_FUNC);
    v.allocate(capacity);
@@ -353,7 +278,7 @@ void DArrayTest::testSerialize2()
    DArray<Data> u;
 
    // Note: We do not allocate DArray<Data> u in this test.
-   // This is the main difference from testSerialize1()
+   // This is the main difference from testSerialize1Memory()
 
    MemoryIArchive iArchive;
 
@@ -372,6 +297,129 @@ void DArrayTest::testSerialize2()
 
 }
 
+
+
+void DArrayTest::testSerialize1File()
+{
+   printMethod(TEST_FUNC);
+   v.allocate(3);
+   for (int i=0; i < capacity; i++ ) {
+      real(v[i]) = (i+1)*10 ;
+      imag(v[i]) = (i+1)*10 + 0.1;
+   }
+  
+   int i1 = 13;
+   int i2;
+
+   BinaryFileOArchive oArchive;
+   openOutputFile("binary", oArchive.file());
+   oArchive << v;
+   oArchive << i1;
+   oArchive.file().close();
+
+   // Show that v is unchanged by packing
+   TEST_ASSERT(imag(v[0])==10.1);
+   TEST_ASSERT(real(v[1])==20.0);
+   TEST_ASSERT(imag(v[2])==30.1);
+   TEST_ASSERT(v.capacity() == 3);
+
+   DArray<Data> u;
+   u.allocate(3);
+
+   BinaryFileIArchive iArchive;
+   openInputFile("binary", iArchive.file());
+   iArchive >> u;
+   iArchive >> i2;
+   iArchive.file().close();
+
+   TEST_ASSERT(imag(u[0]) == 10.1);
+   TEST_ASSERT(real(u[1]) == 20.0);
+   TEST_ASSERT(imag(u[2]) == 30.1);
+   TEST_ASSERT(i2 == 13);
+   TEST_ASSERT(u.capacity() == 3);
+
+   // Clear values of u and i2
+   for (int i=0; i < capacity; i++ ) {
+      real(u[i]) = 0.0;
+      imag(u[i]) = 0.0;
+   }
+   i2 = 0;
+
+   // Reload into u and i2
+   openInputFile("binary", iArchive.file());
+   iArchive >> u;
+   iArchive >> i2;
+
+   TEST_ASSERT(imag(u[0]) == 10.1);
+   TEST_ASSERT(real(u[1]) == 20.0);
+   TEST_ASSERT(imag(u[2]) == 30.1);
+   TEST_ASSERT(i2 == 13);
+   TEST_ASSERT(u.capacity() == 3);
+
+}
+
+void DArrayTest::testSerialize2File()
+{
+   printMethod(TEST_FUNC);
+   v.allocate(3);
+   for (int i=0; i < capacity; i++ ) {
+      real(v[i]) = (i+1)*10 ;
+      imag(v[i]) = (i+1)*10 + 0.1;
+   }
+  
+   int i1 = 13;
+   int i2;
+
+   BinaryFileOArchive oArchive;
+   openOutputFile("binary", oArchive.file());
+   oArchive << v;
+   oArchive << i1;
+   oArchive.file().close();
+
+   // Show that v is unchanged by packing
+   TEST_ASSERT(imag(v[0])==10.1);
+   TEST_ASSERT(real(v[1])==20.0);
+   TEST_ASSERT(imag(v[2])==30.1);
+   TEST_ASSERT(v.capacity() == 3);
+
+   DArray<Data> u;
+
+   // u.allocate(3); -> 
+   // Note: We do not allocate first. This is the difference 
+   // from the previous test
+
+   BinaryFileIArchive iArchive;
+   openInputFile("binary", iArchive.file());
+   iArchive >> u;
+   iArchive >> i2;
+   iArchive.file().close();
+
+   TEST_ASSERT(imag(u[0]) == 10.1);
+   TEST_ASSERT(real(u[1]) == 20.0);
+   TEST_ASSERT(imag(u[2]) == 30.1);
+   TEST_ASSERT(i2 == 13);
+   TEST_ASSERT(u.capacity() == 3);
+
+   // Clear values of u and i2
+   for (int i=0; i < capacity; i++ ) {
+      real(u[i]) = 0.0;
+      imag(u[i]) = 0.0;
+   }
+   i2 = 0;
+
+   // Reload into u and i2
+   openInputFile("binary", iArchive.file());
+   iArchive >> u;
+   iArchive >> i2;
+
+   TEST_ASSERT(imag(u[0]) == 10.1);
+   TEST_ASSERT(real(u[1]) == 20.0);
+   TEST_ASSERT(imag(u[2]) == 30.1);
+   TEST_ASSERT(i2 == 13);
+   TEST_ASSERT(u.capacity() == 3);
+
+}
+
 TEST_BEGIN(DArrayTest)
 TEST_ADD(DArrayTest, testConstructor)
 TEST_ADD(DArrayTest, testAllocate)
@@ -380,10 +428,10 @@ TEST_ADD(DArrayTest, testIterator)
 TEST_ADD(DArrayTest, testCopyConstructor)
 TEST_ADD(DArrayTest, testAssignment)
 TEST_ADD(DArrayTest, testBaseClassReference)
-TEST_ADD(DArrayTest, testPack1)
-TEST_ADD(DArrayTest, testPack2)
-TEST_ADD(DArrayTest, testSerialize1)
-TEST_ADD(DArrayTest, testSerialize2)
+TEST_ADD(DArrayTest, testSerialize1Memory)
+TEST_ADD(DArrayTest, testSerialize2Memory)
+TEST_ADD(DArrayTest, testSerialize1File)
+TEST_ADD(DArrayTest, testSerialize2File)
 TEST_END(DArrayTest)
 
 #endif

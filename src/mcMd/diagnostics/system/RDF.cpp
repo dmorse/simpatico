@@ -13,6 +13,7 @@
 #include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+#include <util/math/feq.h>
 #include <util/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
 
@@ -24,30 +25,79 @@ namespace McMd
 
    using namespace Util;
 
-   /// Constructor.
+   /*
+   * Constructor.
+   */
    RDF::RDF(System& system) 
     : SystemDiagnostic<System>(system),
+      outputFile_(),
+      accumulator_(),
+      typeNumbers_(),
+      selector_(),
+      max_(1.0),
+      normSum_(0.0),
+      nBin_(1),
+      nAtomType_(0),
       isInitialized_(false)
    {  setClassName("RDF"); }
 
-   /// Read parameters from file, and allocate data array.
+   /*
+   * Read parameters from file, and allocate data array.
+   */
    void RDF::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
-      readInterval(in);
-      readOutputFileName(in);
-      readParamComposite(in, accumulator_);
-
+      Diagnostic::readParameters(in);
+      read<double>(in, "max", max_);
+      read<int>(in, "nBin", nBin_);
       read<PairSelector>(in, "selector", selector_);
 
       nAtomType_ = system().simulation().nAtomType();
       typeNumbers_.allocate(nAtomType_);
+      accumulator_.setParam(max_, nBin_);
+      isInitialized_ = true;
+   }
+
+   /*
+   * Load state from an archive.
+   */
+   void RDF::loadParameters(Serializable::IArchive& ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter<double>(ar, "max", max_);
+      loadParameter<int>(ar, "nBin", nBin_);
+      loadParameter<PairSelector>(ar, "selector", selector_);
+
+      ar & accumulator_;
+      ar & nAtomType_;
+      ar & typeNumbers_;
+      ar & normSum_;
+
+      // Validate
+      if (nAtomType_ != system().simulation().nAtomType()) {
+         UTIL_THROW("Inconsistent nAtomType");
+      }
+      if (nAtomType_ != typeNumbers_.capacity()) {
+         UTIL_THROW("Inconsistent typeNumbers capacity");
+      }
+      if (nBin_ != accumulator_.nBin()) {
+         UTIL_THROW("Inconsistent nBin values");
+      }
+      if (!feq(max_, accumulator_.max())) {
+         UTIL_THROW("Inconsistent max values");
+      }
 
       isInitialized_ = true;
    }
 
-   /// Add particle pairs to RDF histogram.
+   /*
+   * Save state to archive.
+   */
+   void RDF::save(Serializable::OArchive& ar)
+   { ar & *this; }
+
+   /*
+   * Add particle pairs to RDF histogram.
+   */
    void RDF::setup() 
    { 
       if (!isInitialized_) {
@@ -152,16 +202,5 @@ namespace McMd
 
    }
 
-   /*
-   * Save state to binary file archive.
-   */
-   void RDF::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void RDF::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
 }
 #endif

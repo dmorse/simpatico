@@ -24,14 +24,24 @@ namespace McMd
    {
    
    public:
-   
-      /// Default constructor.
+  
+      /* 
+      * Default constructor.
+      */
       Homopolymer();
-   
-      /// Destructor.
+  
+      /* 
+      * Destructor.
+      */
       virtual ~Homopolymer()
       {}
    
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
    
    protected:
    
@@ -66,6 +76,13 @@ namespace McMd
       */
       virtual void readSpeciesParam(std::istream &in);
    
+      /**
+      * Load species structure from an Archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadSpeciesParam(Serializable::IArchive &ar);
+
       /**
       * Return the same type for any particle in any chain.
       *

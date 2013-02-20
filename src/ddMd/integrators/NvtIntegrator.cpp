@@ -40,8 +40,8 @@ namespace DdMd
    {
       setClassName("NvtIntegrator");
 
-      // Note: Within the constructor, the method parameter "simulation" hides 
-      // the simulation() method name.
+      // Note: Within this constructor, the method parameter "simulation" 
+      // hides the simulation() method name.
 
       // Precondition
       if (!simulation.energyEnsemble().isIsothermal() ) {
@@ -71,24 +71,23 @@ namespace DdMd
 
    }
 
+   /*
+   * Initialize xi_ and xiDot_ to zero.
+   */
+   void NvtIntegrator::initDynamicalState()
+   {  xi_ = 0.0; }
+
    void NvtIntegrator::setup()
    {
-      #if 0
-      atomStorage().clearSnapshot();
-      exchanger().exchange();
-      pairPotential().buildCellList();
-      if (!UTIL_ORTHOGONAL) {
-         atomStorage().transformGenToCart(boundary());
+
+      // Initialize state and clear statistics on first usage.
+      if (!isSetup()) {
+         clear();
+         setIsSetup();
       }
-      pairPotential().buildPairList();
-      atomStorage().makeSnapshot();
-      simulation().computeForces();
-      #endif
 
       // Exchange atoms, build pair list, compute forces.
       setupAtoms();
-
-      simulation().diagnosticManager().setup();
 
       // Calculate prefactors for acceleration
       double dtHalf = 0.5*dt_;
@@ -99,7 +98,7 @@ namespace DdMd
          prefactors_[i] = dtHalf/mass;
       }
 
-      // Initialize nAtom_, xiDot_, xi_
+      // Initialize nAtom_, xiDot_
       simulation().computeKineticEnergy();
       #ifdef UTIL_MPI
       atomStorage().computeNAtomTotal(domain().communicator());
@@ -113,7 +112,6 @@ namespace DdMd
       #ifdef UTIL_MPI
       bcast(domain().communicator(), xiDot_, 0);
       #endif
-      xi_ = 0.0;
 
    }
 

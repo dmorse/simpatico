@@ -1,5 +1,5 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef UTIL_CONSTANTS_H
+#define UTIL_CONSTANTS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

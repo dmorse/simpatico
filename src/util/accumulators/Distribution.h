@@ -1,5 +1,5 @@
-#ifndef DISTRIBUTION_H
-#define DISTRIBUTION_H
+#ifndef UTIL_DISTRIBUTION_H
+#define UTIL_DISTRIBUTION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -10,6 +10,7 @@
 
 #include <util/param/ParamComposite.h>  // base class
 #include <util/containers/DArray.h>     // member template
+#include <util/math/feq.h>              // Used in serialize template
 
 namespace Util
 {
@@ -56,7 +57,7 @@ namespace Util
       *
       * \param in input parameter file stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
   
       /** 
       * Set parameters and initialize.
@@ -68,16 +69,39 @@ namespace Util
       void setParam(double min, double max, int nBin);
    
       /**
-      * Clear (i.e., zero) previously allocated histogram.
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
       */
-      virtual void clear();
+      virtual void loadParameters(Serializable::IArchive &ar);
    
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+   
+      /**
+      * Serialize this Distribution to/from an archive.
+      *
+      * \param ar       input or output archive
+      * \param version  file version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
       /**
       * Sample a value.
       *
       * \param value current value
       */
       void sample(double value);
+   
+      /**
+      * Clear (i.e., zero) previously allocated histogram.
+      */
+      virtual void clear();
    
       /**
       * Output the distribution to file. 
@@ -91,7 +115,7 @@ namespace Util
       *
       * \param value sampled value
       */
-      int binIndex(double value);
+      int binIndex(double value) const;
   
       /** 
       * Get minimum value in range of histogram.
@@ -113,15 +137,6 @@ namespace Util
       */
       int nBin() const;
         
-      /**
-      * Serialize this Distribution to/from an archive.
-      *
-      * \param ar       input or output archive
-      * \param version  file version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
    protected:
    
       DArray<long> histogram_;  ///< Histogram of occurences, one element per bin.
@@ -139,7 +154,7 @@ namespace Util
    /*
    * Return the index of the bin for a value.
    */
-   inline int Distribution::binIndex(double value) 
+   inline int Distribution::binIndex(double value) const
    { return int( (value - min_)/binWidth_ ); }
   
    /*
@@ -172,14 +187,22 @@ namespace Util
    template <class Archive>
    void Distribution::serialize(Archive& ar, const unsigned int version)
    {
-      ar & histogram_; 
       ar & min_;        
       ar & max_;    
-      ar & binWidth_;  
       ar & nBin_;     
       ar & nSample_;   
       ar & nReject_;    
+      ar & binWidth_;  
+      ar & histogram_; 
+
+      // Validate
+      if (histogram_.capacity() != nBin_) {
+         UTIL_THROW("Inconsistent histogram capacity");
+      }
+      if (!feq(binWidth_, (max_ - min_)/double(nBin_))) {
+         UTIL_THROW("Inconsistent binWidth");
+      }
    }
-        
+
 }
 #endif

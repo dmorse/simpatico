@@ -94,18 +94,18 @@ namespace McMd
       virtual void output();
 
       /**
-      * Save state to binary file archive.
+      * Save state to archive.
       *
-      * \param ar binary saving (output) archive.
+      * \param ar saving (output) archive.
       */
-      virtual void save(Serializable::OArchiveType& ar);
+      virtual void save(Serializable::OArchive& ar);
 
       /**
-      * Load state from a binary file archive.
+      * Load state from an archive.
       *
-      * \param ar binary loading (input) archive.
+      * \param ar loading (input) archive.
       */
-      virtual void load(Serializable::IArchiveType& ar);
+      virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
       * Serialize to/from an archive. 
@@ -127,9 +127,15 @@ namespace McMd
       /// Array of center of mass vectors for blocks of different types
       DArray<Vector> rCom_;
       
-      /// Pointer to array of number of atoms in blocks of different types
+      /// Array of number of atoms in blocks of different types
       DArray<int>  iTypeNAtom_;
       
+      /// Values of dRSq for atom types i=j (temporary storage)
+      DArray<double> dRSq_; 
+
+      /// Values of dRSq for atom types i !=j (not persistent)
+      DArray<double> dRSqPair_;  
+
       /// Pointer to relevant Species.
       Species*  speciesPtr_;
 
@@ -159,12 +165,13 @@ namespace McMd
    template <class Archive>
    void BlockRadiusGyration::serialize(Archive& ar, const unsigned int version)
    {  
-      ar &  accumulators_;
-      serializeCheck(ar, nSamplePerBlock_, "nSamplePerBlock");
-      serializeCheck(ar, speciesId_, "speciesId");
-      serializeCheck(ar, nAtom_, "nAtom");
-      serializeCheck(ar, nAtomType_, "nAtomType");
-      serializeCheck(ar, nAtomTypePairs_, "nAtomTypePairs");
+      Diagnostic::serialize(ar, version);
+      ar & nSamplePerBlock_;
+      ar & speciesId_;
+      ar & nAtom_;
+      ar & nAtomType_;
+      ar & nAtomTypePairs_;
+      ar & accumulators_;
    }
 
 }

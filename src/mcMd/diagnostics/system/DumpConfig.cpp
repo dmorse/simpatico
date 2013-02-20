@@ -40,6 +40,22 @@ namespace McMd
    }
 
    /*
+   * Load state from an archive.
+   */
+   void DumpConfig::loadParameters(Serializable::IArchive& ar)
+   {
+      Diagnostic::loadParameters(ar);
+      ar & nSample_;
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to archive.
+   */
+   void DumpConfig::save(Serializable::OArchive& ar)
+   { ar & *this; }
+
+   /*
    * Read interval and outputFileName. 
    */
    void DumpConfig::setup() 
@@ -66,17 +82,5 @@ namespace McMd
       }
    }
   
-   /*
-   * Save state to binary file archive.
-   */
-   void DumpConfig::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void DumpConfig::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
-
 }
 #endif // DUMP_CONFIG_CPP

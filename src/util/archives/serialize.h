@@ -1,5 +1,5 @@
-#ifndef SERIALIZE_H
-#define SERIALIZE_H
+#ifndef UTIL_SERIALIZE_H
+#define UTIL_SERIALIZE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -37,13 +37,13 @@ namespace Util
    template <class Archive, typename T>
    inline void serializeEnum(Archive& ar, T& data, const unsigned int version = 0)
    {  
-      int i;
+      unsigned int i;
       if (Archive::is_saving()) {
-         i = static_cast<int>(data);
+         i = (unsigned int)data;
       }
       ar & i;
       if (Archive::is_loading()) {
-         data = static_cast<T>(i);
+         data = (T)i;
       }
    }
 

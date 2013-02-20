@@ -25,7 +25,8 @@ public:
    void testAssignment();
    void testSubscript();
    void testIterator();
-   void testSerialize();
+   void testSerializeMemory();
+   void testSerializeFile();
 
 };
 
@@ -112,8 +113,7 @@ void FArrayTest::testIterator()
    TEST_ASSERT(it.isEnd());
 } 
 
-#if 1
-void FArrayTest::testSerialize()
+void FArrayTest::testSerializeMemory()
 {
    printMethod(TEST_FUNC);
 
@@ -201,7 +201,70 @@ void FArrayTest::testSerialize()
    TEST_ASSERT(i2 == 13);
    TEST_ASSERT(u.capacity() == 3);
 }
-#endif
+
+
+void FArrayTest::testSerializeFile()
+{
+   printMethod(TEST_FUNC);
+
+   const int Capacity = 3;
+   typedef std::complex<double> Data;
+
+   FArray<Data, Capacity> v;
+
+   for (int i=0; i < Capacity; i++ ) {
+      real(v[i]) = (i+1)*10 ;
+      imag(v[i]) = (i+1)*10 + 0.1;
+   }
+  
+   int i1 = 13;
+   int i2;
+
+   BinaryFileOArchive oArchive;
+   openOutputFile("binary", oArchive.file());
+   oArchive << v;
+   oArchive << i1;
+   oArchive.file().close();
+
+   // Show that v is unchanged by packing
+   TEST_ASSERT(imag(v[0])==10.1);
+   TEST_ASSERT(real(v[1])==20.0);
+   TEST_ASSERT(imag(v[2])==30.1);
+   TEST_ASSERT(v.capacity() == 3);
+
+   FArray<Data, Capacity> u;
+
+   BinaryFileIArchive iArchive;
+   openInputFile("binary", iArchive.file());
+   iArchive >> u;
+   iArchive >> i2;
+   iArchive.file().close();
+
+   TEST_ASSERT(imag(u[0]) == 10.1);
+   TEST_ASSERT(real(u[1]) == 20.0);
+   TEST_ASSERT(imag(u[2]) == 30.1);
+   TEST_ASSERT(i2 == 13);
+   TEST_ASSERT(u.capacity() == 3);
+
+   // Clear values of u and i2
+   for (int i=0; i < Capacity; i++ ) {
+      real(u[i]) = 0.0;
+      imag(u[i]) = 0.0;
+   }
+   i2 = 0;
+
+   // Reload into u and i2
+   openInputFile("binary", iArchive.file());
+   iArchive >> u;
+   iArchive >> i2;
+
+   TEST_ASSERT(imag(u[0]) == 10.1);
+   TEST_ASSERT(real(u[1]) == 20.0);
+   TEST_ASSERT(imag(u[2]) == 30.1);
+   TEST_ASSERT(i2 == 13);
+   TEST_ASSERT(u.capacity() == 3);
+
+}
 
 
 TEST_BEGIN(FArrayTest)
@@ -209,7 +272,8 @@ TEST_ADD(FArrayTest, testConstructor)
 TEST_ADD(FArrayTest, testCopyConstructor)
 TEST_ADD(FArrayTest, testAssignment)
 TEST_ADD(FArrayTest, testIterator)
-TEST_ADD(FArrayTest, testSerialize)
+TEST_ADD(FArrayTest, testSerializeMemory)
+TEST_ADD(FArrayTest, testSerializeFile)
 TEST_END(FArrayTest)
 
 #endif

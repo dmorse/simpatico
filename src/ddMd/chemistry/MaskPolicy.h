@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/archives/serialize.h>
 #include <util/global.h>
 
 #include <iostream>
@@ -44,6 +45,17 @@ namespace DdMd
    * \return modified output stream
    */
    std::ostream& operator << (std::ostream& out, MaskPolicy policy);
+
+   /**
+   * Serialize a MaskPolicy.
+   *
+   * \param ar      archive object
+   * \param policy  MaskPolicy enum value to be serialized
+   * \param version archive version id
+   */
+   template <class Archive>
+   void serialize(Archive& ar, MaskPolicy& policy, const unsigned int version)
+   {  serializeEnum(ar, policy, version); }
 
 }
 

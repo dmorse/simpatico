@@ -33,7 +33,6 @@ namespace McMd
    */
    void PerturbDerivative::readParameters(std::istream& in)
    {
-
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
@@ -50,6 +49,28 @@ namespace McMd
       isInitialized_ = true;
    }
 
+   /*
+   * Load internal state from archive.
+   */
+   void PerturbDerivative::loadParameters(Serializable::IArchive &ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
+      loadParameter<int>(ar,"parameterIndex", parameterIndex_);
+      ar & accumulator_;
+
+      if (accumulator_.nSamplePerBlock()) {
+         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      }
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   void PerturbDerivative::save(Serializable::OArchive &ar)
+   { ar & *this; }
+   
    /*
    * Clear accumulator.
    */

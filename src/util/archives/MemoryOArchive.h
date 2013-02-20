@@ -1,5 +1,5 @@
-#ifndef MEMORY_O_ARCHIVE_H
-#define MEMORY_O_ARCHIVE_H
+#ifndef UTIL_MEMORY_O_ARCHIVE_H
+#define UTIL_MEMORY_O_ARCHIVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -16,6 +16,7 @@
 
 #include <complex>
 #include <string>
+#include <vector>
 
 namespace Util
 {
@@ -61,22 +62,41 @@ namespace Util
       void clear();
 
       /**
-      * Write one object.
+      * Save one object.
       */
       template <typename T>
       void operator & (T& data);
 
       /**
-      * Write one object.
+      * Save one object.
       */
       template <typename T>
       MemoryOArchive& operator << (T& data);
 
+      /**
+      * Pack a T object.
+      */
       template <typename T> 
       void pack(const T& data);
 
+      /**
+      * Pack a C array.
+      *
+      * \param array C array
+      * \param n     number of elements
+      */
       template <typename T> 
       void pack(const T* array, int n);
+
+      /**
+      * Pack a 2D C array.
+      *
+      * \param array poiner to [0][0] element of 2D array 
+      * \param m     number of rows
+      * \param n     number of columns
+      */
+      template <typename T> 
+      void pack(const T* array, int m, int n);
 
       #ifdef UTIL_MPI
       /**
@@ -194,14 +214,14 @@ namespace Util
    {  return cursor_; }
 
    /*
-   * Write one object.
+   * Save one object.
    */
    template <typename T>
    inline void MemoryOArchive::operator & (T& data)
    {  serialize(*this, data, version_); }
 
    /*
-   * Write one object.
+   * Save one object.
    */
    template <typename T>
    inline MemoryOArchive& MemoryOArchive::operator << (T& data)
@@ -213,7 +233,7 @@ namespace Util
    // Method templates
 
    /*
-   * Bitwise pack a single object of type T.
+   * Save a single object of type T.
    */
    template <typename T>
    inline void MemoryOArchive::pack(const T& data)
@@ -231,7 +251,7 @@ namespace Util
    }
 
    /*
-   * Bitwise pack a C-array of objects of type T.
+   * Save a C-array of objects of type T.
    */
    template <typename T>
    inline void MemoryOArchive::pack(const T* array, int n)
@@ -250,9 +270,32 @@ namespace Util
       cursor_ = (Byte *)ptr;
    }
 
+   /*
+   * Bitwise pack a 2D C-array of objects of type T.
+   */
+   template <typename T>
+   inline void MemoryOArchive::pack(const T* array, int m, int n)
+   {
+      if (isLocked_) {
+         UTIL_THROW("Locked archive");
+      }
+      if (cursor_ + m*n*sizeof(T) > endAllocated_) {
+         UTIL_THROW("Attempted write past end of allocated block");
+      }
+      int i, j;
+      T* ptr = (T *)cursor_;
+      for (i=0; i < m; ++i) {
+         for (j=0; j < n; ++j) {
+            *ptr = array[i*n + j];
+            ++ptr;
+         }
+      }
+      cursor_ = (Byte *)ptr;
+   }
+
    // Explicit serialize functions for primitive types
 
-   /**
+   /*
    * Save a bool to a MemoryOArchive.
    */
    template <>
@@ -260,7 +303,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a char to a MemoryOArchive.
    */
    template <>
@@ -268,7 +311,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an unsigned int to a MemoryOArchive.
    */
    template <>
@@ -276,7 +319,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an int to a MemoryOArchive.
    */
    template <>
@@ -284,7 +327,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a unsigned long int to a MemoryOArchive.
    */
    template <>
@@ -292,7 +335,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a long int to a MemoryOArchive.
    */
    template <>
@@ -300,7 +343,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a float to a MemoryOArchive.
    */
    template <>
@@ -308,7 +351,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save an double to a MemoryOArchive.
    */
    template <>
@@ -316,9 +359,23 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
+   /*
+   * Save a std::vector to a MemoryOArchive.
+   */
+   template <typename T>
+   void serialize(MemoryOArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      size_t size = data.size();
+      ar.pack(size);
+      for (size_t i = 0; i < size; ++i) {
+         ar & data[i];
+      }
+   }
+
    // Explicit serialize functions for standard library types
 
-   /**
+   /*
    * Save a std::complex<float> to a MemoryOArchive.
    */
    template <>
@@ -326,7 +383,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a std::complex<double> to a MemoryOArchive.
    */
    template <>
@@ -334,7 +391,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); }
 
-   /**
+   /*
    * Save a std::string to a MemoryOArchive.
    */
    template <>
@@ -349,7 +406,7 @@ namespace Util
 
    // Explicit serialize functions for namespace Util
 
-   /**
+   /*
    * Save a Util::Vector to a MemoryOArchive.
    */
    template <>
@@ -357,7 +414,7 @@ namespace Util
                          const unsigned int version)
    {  ar.pack(data); } 
 
-   /**
+   /*
    * Save a Util::IntVector to a MemoryOArchive.
    */
    template <>

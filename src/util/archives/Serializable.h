@@ -1,5 +1,5 @@
-#ifndef SERIALIZABLE_H
-#define SERIALIZABLE_H
+#ifndef UTIL_SERIALIZABLE_H
+#define UTIL_SERIALIZABLE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -21,8 +21,8 @@ namespace Util
    * The save() method saves the internal state of an object to an 
    * archive, and the load() method loads the state from an archive.
    *
-   * The type of archive to be used is specified by the OArchiveType 
-   * and IArchiveType typedefs.  The two concrete classes that are 
+   * The type of archive to be used is specified by the OArchive 
+   * and IArchive typedefs.  The two concrete classes that are 
    * referred to by these typedefs should be forward declared in 
    * this file, and the header files for these two classes must be
    * included in the file Serializable_includes.h. The file
@@ -37,12 +37,12 @@ namespace Util
       /**
       * Type of output archive used by save method.
       */
-      typedef BinaryFileOArchive OArchiveType;
+      typedef BinaryFileOArchive OArchive;
 
       /**
       * Type of input archive used by load method.
       */
-      typedef BinaryFileIArchive IArchiveType;
+      typedef BinaryFileIArchive IArchive;
 
       /**
       * Destructor.
@@ -54,14 +54,14 @@ namespace Util
       *
       * \param ar binary saving (output) archive.
       */
-      virtual void save(OArchiveType& ar) = 0;
+      virtual void save(OArchive& ar) = 0;
 
       /**
       * Load from an archive.
 
       * \param ar binary loading (input) archive.
       */
-      virtual void load(IArchiveType& ar) = 0;
+      virtual void load(IArchive& ar) = 0;
 
    };
 

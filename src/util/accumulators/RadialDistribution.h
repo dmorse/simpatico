@@ -1,5 +1,5 @@
-#ifndef RADIAL_DISTRIBUTION_H
-#define RADIAL_DISTRIBUTION_H
+#ifndef UTIL_RADIAL_DISTRIBUTION_H
+#define UTIL_RADIAL_DISTRIBUTION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -49,7 +49,7 @@ namespace Util
       *
       * \param in input parameter file stream.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
    
       /** 
       * Set parameters and initialize.
@@ -58,6 +58,30 @@ namespace Util
       * \param nBin number of bins in range [min, max]
       */
       void setParam(double max, int nBin);
+   
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+   
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+   
+
+      /**
+      * Serialize this RadialDistribution to/from an archive.
+      *
+      * \param ar       input or output archive
+      * \param version  file version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
 
       /**
       * Clear all accumulators.
@@ -90,15 +114,6 @@ namespace Util
       */
       void output(std::ostream& out);
    
-      /**
-      * Serialize this RadialDistribution to/from an archive.
-      *
-      * \param ar       input or output archive
-      * \param version  file version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
       /**
       * Get number of snapshots.
       */

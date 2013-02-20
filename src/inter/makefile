@@ -4,7 +4,6 @@ include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
 include $(SRC_DIR_REL)/inter/defines.mk
 include $(SRC_DIR_REL)/inter/patterns.mk
-include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/inter/sources.mk
 
 all: $(inter_OBJS) $(inter_LIB)

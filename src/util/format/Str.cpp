@@ -1,5 +1,5 @@
-#ifndef STR_CPP
-#define STR_CPP
+#ifndef UTIL_STR_CPP
+#define UTIL_STR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

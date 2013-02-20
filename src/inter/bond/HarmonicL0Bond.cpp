@@ -1,5 +1,5 @@
-#ifndef HARMONIC_L0_BOND_CPP
-#define HARMONIC_L0_BOND_CPP
+#ifndef INTER_HARMONIC_L0_BOND_CPP
+#define INTER_HARMONIC_L0_BOND_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -72,12 +72,30 @@ namespace Inter
       if (nBondType_ <= 0) {
          UTIL_THROW("nBondType must be set before readParam");
       }
-
-      // Read parameters
-      //readBegin(in, "HarmonicL0Bond");
       readCArray<double>(in, "kappa",  kappa_,  nBondType_);
-      //readEnd(in);
    }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void HarmonicL0Bond::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nBondType_; 
+      if (nBondType_ == 0) {
+         UTIL_THROW( "nBondType must be positive");
+      }
+      loadCArray<double> (ar, "kappa", kappa_, nBondType_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void HarmonicL0Bond::save(Serializable::OArchive &ar)
+   {
+      ar << nBondType_;
+      ar.pack(kappa_, nBondType_);
+   }
+
    
    /* 
    * Generate a random bond length chosen from an equilibrium distribution for

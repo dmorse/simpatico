@@ -196,9 +196,10 @@ public:
       printEndl();
 
       Vector v;
-      std::ifstream in("in/Vector");
+      std::ifstream in;
+      openInputFile("in/Vector", in);
 
-      in        >> v;
+      in >> v;
       std::cout.width(20);
       std::cout.precision(6);
       std::cout << v << std::endl ;

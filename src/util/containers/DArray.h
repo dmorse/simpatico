@@ -1,5 +1,5 @@
-#ifndef D_ARRAY_H
-#define D_ARRAY_H
+#ifndef UTIL_D_ARRAY_H
+#define UTIL_D_ARRAY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,7 +9,6 @@
 */
 
 #include <util/containers/Array.h>
-#include <util/containers/PackedData.h>
 #include <util/global.h>
 
 
@@ -86,50 +85,12 @@ namespace Util
       * Return true if the DArray has been allocated, false otherwise.
       */
       bool isAllocated() const;
-  
-      /**
-      * Pack array into a block of memory.
-      *
-      * \param current pointer to current position in write buffer
-      * \param end     pointer to end (one char* past last) of buffer
-      */
-      void pack(char*& current, char* end) const;
 
       /**
-      * Unpack array from a block of memory.
-      *
-      * \param current pointer to current position in read buffer
-      * \param end     pointer to end (one char* past last) of buffer
-      */
-      void unpack(char*& current, char* end);
-
-      /**
-      * Pack array into a PackedData object.
-      *
-      * \param buffer PackedData object into which to write.
-      */
-      void pack(PackedData& buffer) const;
-
-      /**
-      * Unpack array from a PackedData object.
-      *
-      * \param buffer PackedData object into which
-      */
-      void unpack(PackedData& buffer);
-
-      /**
-      * Return packed size of this DArray.
-      *
-      * \return required sizeof packed buffer for this DArray, in bytes.
-      */
-      int packedSize() const;
-
-      /*
       * Serialize a DArray to/from an Archive.
       *
-      * \param ar        archive 
-      * \param container dynamic array 
-      * \param version   archive version id
+      * \param ar       archive 
+      * \param version  archive version id
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
@@ -257,87 +218,6 @@ namespace Util
    template <class Data>
    inline bool DArray<Data>::isAllocated() const 
    {  return !(data_ == 0); }
-
-
-   /*
-   * Pack this DArray into a memory block.
-   */
-   template <class Data>
-   void DArray<Data>::pack(char*& current, char* end) const 
-   {
-      if (current + packedSize() > end) {
-         UTIL_THROW("Attempted write past end of send buffer");
-      }
-
-      int* capacityPtr = (int*)current;
-      *capacityPtr = capacity_;
-      
-      Data* ptr = (Data *)(capacityPtr + 1);
-      for (int i = 0; i < capacity_; ++i) {
-         *(ptr+i) = data_[i];
-      }
-      current = (char*)(ptr + capacity_);
-   }
-
-   /*
-   * Unpack this DArray from a memory block.
-   */
-   template <class Data>
-   void DArray<Data>::unpack(char*& current, char* end)
-   {
-      if (current + packedSize() > end) {
-         UTIL_THROW("Recv buffer too small");
-      }
- 
-      int* capacityPtr = (int*)current;
-      capacity_ = *capacityPtr;
-
-      int  capacityOther = *capacityPtr;
-      if (capacity_ != capacityOther) {
-         UTIL_THROW("Inconsistent DArray capacities");
-      }
-      
-      Data* ptr = (Data *)(capacityPtr+1);
-      for (int i = 0; i < capacity_; ++i) {
-         data_[i] = *(ptr+i);
-      }
-      current = (char*)(ptr + capacity_);
-   }
-
-   /*
-   * Pack this DArray into a PackedData object.
-   */
-   template <class Data>
-   void DArray<Data>::pack(PackedData& buffer) const 
-   {
-      buffer.pack(capacity_);
-      buffer.pack(data_, capacity_);
-   }
-
-   /*
-   * Unpack this DArray from a PackedData object.
-   */
-   template <class Data>
-   void DArray<Data>::unpack(PackedData& buffer)
-   {
-      int capacity;
-      buffer.unpack(capacity);
-      if (capacity_ != capacity) {
-         UTIL_THROW("Inconsistent DArray capacities");
-      } 
-      buffer.unpack(data_, capacity_);
-   }
-
-   /*
-   * Return packed sizeof this DArray, in bytes.
-   */
-   template <class Data>
-   int DArray<Data>::packedSize() const
-   {
-      int size;
-      size = capacity_*sizeof(Data) + sizeof(int);
-      return size;
-   }
 
    /*
    * Serialize a DArray to/from an Archive.

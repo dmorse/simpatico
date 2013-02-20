@@ -1,5 +1,5 @@
-#ifndef NODE_H
-#define NODE_H
+#ifndef UTIL_NODE_H
+#define UTIL_NODE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

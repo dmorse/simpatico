@@ -18,13 +18,44 @@
 # 
 #------------------------------------------------------------------------
 
-# Copy repository (_r) versions of defines.mk files to user versions.
-# The resulting defines.mk makefile fragments may be modified by the user.
+# Copy repository (_r) versions of defines.mk makefile fragments.
+# The defines.mk makefile fragments can be used to enable/disable options.
 
-cp  src/util/defines.mk_r  src/util/defines.mk
+cp  src/util/defines.mk_r src/util/defines.mk
 cp  src/inter/defines.mk_r src/inter/defines.mk
-cp  src/mcMd/defines.mk_r  src/mcMd/defines.mk
-cp  src/ddMd/defines.mk_r  src/ddMd/defines.mk
+cp  src/mcMd/defines.mk_r src/mcMd/defines.mk
+cp  src/ddMd/defines.mk_r src/ddMd/defines.mk
+
+# Copy repository versions of sources.mk files in user directories.
+# These file list user-contributed classes.
+cp  src/inter/user/sources.mk_r src/inter/user/sources.mk
+cp  src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
+cp  src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
+
+# Copy repository version of Factory implementation files to user versions.
+cp  src/mcMd/configIos/ConfigIoFactory.cpp_r src/mcMd/configIos/ConfigIoFactory.cpp
+cp  src/mcMd/diagnostics/mcSystem/McDiagnosticFactory.cpp_r src/mcMd/diagnostics/mcSystem/McDiagnosticFactory.cpp
+cp  src/mcMd/diagnostics/mdSystem/MdDiagnosticFactory.cpp_r src/mcMd/diagnostics/mdSystem/MdDiagnosticFactory.cpp
+cp  src/mcMd/diagnostics/system/SystemDiagnosticFactory.cpp_r src/mcMd/diagnostics/system/SystemDiagnosticFactory.cpp
+cp  src/mcMd/mcMoves/McMoveFactory.cpp_r src/mcMd/mcMoves/McMoveFactory.cpp
+cp  src/mcMd/mdIntegrators/MdIntegratorFactory.cpp_r src/mcMd/mdIntegrators/MdIntegratorFactory.cpp
+cp  src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp_r src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp
+cp  src/mcMd/potentials/angle/AngleFactory.cpp_r src/mcMd/potentials/angle/AngleFactory.cpp
+cp  src/mcMd/potentials/bond/BondFactory.cpp_r src/mcMd/potentials/bond/BondFactory.cpp
+cp  src/mcMd/potentials/dihedral/DihedralFactory.cpp_r src/mcMd/potentials/dihedral/DihedralFactory.cpp
+cp  src/mcMd/potentials/external/ExternalFactory.cpp_r src/mcMd/potentials/external/ExternalFactory.cpp
+cp  src/mcMd/potentials/link/LinkFactory.cpp_r src/mcMd/potentials/link/LinkFactory.cpp
+cp  src/mcMd/potentials/pair/PairFactory.cpp_r src/mcMd/potentials/pair/PairFactory.cpp
+cp  src/mcMd/species/SpeciesFactory.cpp_r src/mcMd/species/SpeciesFactory.cpp
+cp  src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp_r src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp
+cp  src/ddMd/configIos/ConfigIoFactory.cpp_r src/ddMd/configIos/ConfigIoFactory.cpp
+cp  src/ddMd/diagnostics/DiagnosticFactory.cpp_r src/ddMd/diagnostics/DiagnosticFactory.cpp
+cp  src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/IntegratorFactory.cpp
+cp  src/ddMd/potentials/angle/AngleFactory.cpp_r src/ddMd/potentials/angle/AngleFactory.cpp
+cp  src/ddMd/potentials/bond/BondFactory.cpp_r src/ddMd/potentials/bond/BondFactory.cpp
+cp  src/ddMd/potentials/dihedral/DihedralFactory.cpp_r src/ddMd/potentials/dihedral/DihedralFactory.cpp
+cp  src/ddMd/potentials/external/ExternalFactory.cpp_r src/ddMd/potentials/external/ExternalFactory.cpp
+cp  src/ddMd/potentials/pair/PairFactory.cpp_r src/ddMd/potentials/pair/PairFactory.cpp
 
 # Copy typedef for the class that defines boundary conditions
 cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h

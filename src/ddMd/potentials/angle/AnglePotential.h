@@ -67,8 +67,8 @@ namespace DdMd
       /**
       * Returns potential energy for one angle.
       *
-      * \param cosTheta  cosine of the bend angle.
-      * \param type      type of bend angle.
+      * \param cosTheta  cosine of the angle.
+      * \param type  type of angle group
       */
       double angleEnergy(double cosTheta, int type) const;
  
@@ -84,12 +84,27 @@ namespace DdMd
       void angleForce(const Vector& R1, const Vector& R2,
                        Vector& F1, Vector& F2, int type) const;
 
-      #if 0
+      /**
+      * Modify a angle interaction parameter, identified by a string.
+      *
+      * \param name  parameter variable name
+      * \param type  angle type index
+      * \param value  new value of parameter
+      */
+      virtual void set(std::string name, int type, double value) = 0;
+
+      /**
+      * Get a angle parameter value, identified by a string.
+      *
+      * \param name  parameter variable name
+      * \param type  angle type index
+      */
+      virtual double get(std::string name, int type) const = 0;
+
       /**
       * Return pair interaction class name (e.g., "CosineAngle").
       */
       virtual std::string interactionClassName() const = 0;
-      #endif
 
       //@}
 

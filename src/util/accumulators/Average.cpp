@@ -1,5 +1,5 @@
-#ifndef AVERAGE_CPP
-#define AVERAGE_CPP
+#ifndef UTIL_AVERAGE_CPP
+#define UTIL_AVERAGE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -33,6 +33,9 @@ namespace Util
       descendants_.push_back(this);
    }
 
+   /*
+   * Destructor.
+   */
    Average::~Average()
    {}
 
@@ -41,7 +44,6 @@ namespace Util
    */
    void Average::clear()
    {
-
       blockSum_ = 0;
       iBlock_   = 0;
       AverageStage::clear();
@@ -50,21 +52,32 @@ namespace Util
    /*
    * Read nSamplePerBlock from file.
    */
-   void Average::readParam(std::istream& in)
-   {
-      readBegin(in, "Average");
-      read<int>(in, "nSamplePerBlock", nSamplePerBlock_);
-      readEnd(in);
-   }
+   void Average::readParameters(std::istream& in)
+   {  read<int>(in, "nSamplePerBlock", nSamplePerBlock_); }
 
    /*
    * Set nSamplePerBlock parameter.
    */
    void Average::setNSamplePerBlock(int nSamplePerBlock)
+   {  nSamplePerBlock_ = nSamplePerBlock; }
+
+   /*
+   * Load internal state from archive.
+   */
+   void Average::loadParameters(Serializable::IArchive &ar)
    {
-      nSamplePerBlock_ = nSamplePerBlock;
+      AverageStage::serialize(ar, 0);
+      ar & blockSum_;
+      ar & iBlock_;
+      loadParameter<int>(ar, "nSamplePerBlock", nSamplePerBlock_); 
    }
 
+   /*
+   * Save internal state to archive.
+   */
+   void Average::save(Serializable::OArchive &ar)
+   { ar & *this; }
+   
    /*
    * Add a sampled value to the ensemble.
    */
@@ -81,27 +94,17 @@ namespace Util
    */
    void Average::sample(double value, std::ostream* outFilePtr)
    {
-
-      // Add value to parent class
       AverageStage::sample(value);
 
       // Process block average for output
       if (nSamplePerBlock_ && outFilePtr) {
-
-         // Increment block accumulators
          blockSum_  += value;
          ++iBlock_;
-
          if (iBlock_ == nSamplePerBlock_) {
-
-            // Output block average to file
             *outFilePtr << Dbl(blockSum_/double(nSamplePerBlock_))
                         << std::endl;
-
-            // Reset block accumulators
             blockSum_ = 0.0;
             iBlock_  = 0;
-
          }
       }
    }
@@ -111,7 +114,6 @@ namespace Util
    */
    void Average::output(std::ostream& out)
    {
-
       // Find first stage (descending) with nSample >= 16
       AverageStage* ptr = 0;
       int n = descendants_.size();
@@ -124,7 +126,7 @@ namespace Util
       }
 
       double error  = ptr->error();
-      double sigma  = error/sqrt(double(nSample));
+      double sigma  = error/sqrt(2.0*double(nSample-1));
       double weight = 1.0/(sigma*sigma);
       double sum    = error*weight;
       double norm   = weight;
@@ -140,7 +142,7 @@ namespace Util
          error = ptr->error();
          if (fabs(error - aveErr) < 2.0*oldSig) {
             nSample = ptr->nSample();
-            sigma  = error/sqrt(double(nSample));
+            sigma  = error/sqrt(2.0*double(nSample-1));
             weight = 1.0/(sigma*sigma);
             sum   += error*weight;
             norm  += weight;
@@ -172,7 +174,6 @@ namespace Util
          }
       }
       out << std::endl;
-
    }
 
    /*
@@ -180,22 +181,6 @@ namespace Util
    */
    void Average::registerDescendant(AverageStage* descendantPtr)
    {  descendants_.push_back(descendantPtr); }
-
-   #if 0
-
-   /**
-   * Backup statistical accumulators to file.
-   */
-   void Average::backup(FILE *file)
-   {}
-
-   /**
-   * Restore statistical accumulators from file.
-   */
-   void Average::restore(FILE *file)
-   {}
-
-   #endif
 
 }
 #endif

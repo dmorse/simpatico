@@ -80,6 +80,12 @@ namespace DdMd
       */
       std::vector<IoAtom> atoms_;
 
+      template <int N>
+      struct IoGroup {
+         int    id;
+         Group<N> group;
+      };
+
       /**
       * Read Group<N> objects from file. 
       */

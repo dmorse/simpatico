@@ -1,13 +1,8 @@
 #ifndef HARMONIC_BOND_TEST_H
 #define HARMONIC_BOND_TEST_H
 
-#include <test/UnitTest.h>
-#include <test/UnitTestRunner.h>
-
 #include <inter/bond/HarmonicBond.h>
-#include <mcMd/chemistry/Atom.h>
-#include <util/random/Random.h>
-#include <util/containers/RArray.h>
+#include <inter/bond/BondTestTemplate.h>
 
 #include <iostream>
 #include <fstream>
@@ -15,122 +10,215 @@
 using namespace Util;
 using namespace Inter;
 
-class HarmonicBondTest : public UnitTest 
+class HarmonicBondTest : public BondTestTemplate<HarmonicBond>
 {
 
-private:
+protected:
 
-   HarmonicBond bondPotential;
+   BondTestTemplate<HarmonicBond>::setNBondType;
+   BondTestTemplate<HarmonicBond>::readParamFile;
+   BondTestTemplate<HarmonicBond>::forceOverR;
+   BondTestTemplate<HarmonicBond>::energy;
 
 public:
 
    void setUp()
    {
-      // Set Boundary Lengths
-      bondPotential.setNBondType(2);
-
-      // Read parameters from file
-      std::ifstream in;
-      openInputFile("bond/in/HarmonicBond", in);
-      bondPotential.readParameters(in);
-      in.close();
+      eps_ = 1.0E-6;
+      setNBondType(1);
+      readParamFile("in/HarmonicBond");
    }
-
-
-   void tearDown()
-   {}
-
 
    void testSetUp() 
    {
       printMethod(TEST_FUNC);
-   }
-
-
-   void testWrite() {
-      printMethod(TEST_FUNC);
-
-      // Verbose output
-      if (verbose() > 0) { 
-         bondPotential.writeParam(std::cout);
+      if (verbose() > 0) {
+         std::cout << std::endl; 
+         interaction_.writeParam(std::cout);
       }
    }
-
 
    void testEnergy() 
    {
-      int    i;
-      double rsq;
-      double energy;
-     
       printMethod(TEST_FUNC);
-      
-      rsq = 1.00;
-      i   = 0;
-      energy = bondPotential.energy(rsq, i);
-      if (verbose() > 1) {
-         std::cout << "bondPotential.energy(1.00, 0) = " << energy << std::endl;
-      }
+      double e;
 
-      rsq = 0.81;
-      i   = 0;
-      energy = bondPotential.energy(rsq, i);
-      if (verbose() > 1) {
-         std::cout << "bondPotential.energy(0.81, 0) = " << energy << std::endl;
+      e = energy(1.0, 0);
+      if (verbose() > 0) {
+         std::cout << std::endl; 
+         std::cout << "energy(1.00, 0) = " << e << std::endl;
       }
+      TEST_ASSERT(eq(e, 0.0));
 
-      rsq = 1.21000;
-      i   = 0;
-      energy = bondPotential.energy(rsq, i);
-      if (verbose() > 1) {
-         std::cout << "bondPotential.energy(1.21, 0) = " << energy << std::endl;
+      e = energy(0.81, 0);
+      if (verbose() > 0) {
+         std::cout << "energy(0.81, 0) = " << e << std::endl;
       }
+      TEST_ASSERT(e < 2.0);
 
-      rsq = 1.44;
-      i   = 0;
-      energy = bondPotential.energy(rsq, i);
-      if (verbose() > 1) {
-         std::cout << "bondPotential.energy(1.44, 0) = " << energy << std::endl;
+      e = energy(1.21, 0);
+      if (verbose() > 0) {
+         std::cout << "energy(1.25, 0) = " << e << std::endl;
       }
+      TEST_ASSERT(e > 0.0);
+
    }
 
    void testForceOverR() 
    {
-      int    i;
-      double rsq;
-      double force;
- 
       printMethod(TEST_FUNC);
-     
-      rsq = 1.00;
-      i   = 0;
-      force = bondPotential.forceOverR(rsq, i);
-      if (verbose() > 1) {
-         std::cout << "bondPotential.forceOverR(1.00, 0) = " << force << std::endl;
+      double f;
+      type_ = 0;
+ 
+      rsq_ = 1.0;
+      f = forceOverR();
+      TEST_ASSERT(testForce());
+      if (verbose() > 0) {
+         std::cout << std::endl;
+         std::cout << "forceOverR(1.00, 0) = " <<  f << std::endl;
       }
+      // TEST_ASSERT(eq(f, 48.0));
 
-      rsq = 0.81;
-      i   = 0;
-      force = bondPotential.forceOverR(rsq, i);
-      if (verbose() > 1) {
-         std::cout << "bondPotential.forceOverR(0.81, 0) = " << force << std::endl;
+      rsq_ = 0.81;
+      f = forceOverR();
+      TEST_ASSERT(testForce());
+      if (verbose() > 0) {
+         std::cout << "forceOverR(0.81, 0) = " <<  f << std::endl;
       }
+      // TEST_ASSERT(f > 48.0);
 
-      rsq = 1.21; 
-      i   = 0;
-      force = bondPotential.forceOverR(rsq, i);
-      if (verbose() > 1) {
-         std::cout << "bondPotential.forceOverR(1.21, 0) = " << force << std::endl;
+      rsq_ = 1.21;
+      f = forceOverR();
+      TEST_ASSERT(testForce());
+      if (verbose() > 0) {
+         std::cout << "forceOverR(1.21, 0) = " <<  f << std::endl;
       }
+      // TEST_ASSERT(eq(f, 0.0));
 
-      rsq = 1.44;
-      i   = 0;
-      force = bondPotential.forceOverR(rsq, i);
-      if (verbose() > 1) {
-         std::cout << "bondPotential.forceOverR(1.44, 0) = " << force << std::endl;
-      }
    }
 
+   #if 0
+   void testGetSet() {
+      printMethod(TEST_FUNC);
+
+      TEST_ASSERT(eq(interaction_.epsilon(0, 0), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(0, 1), 2.0));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 0), 2.0));
+      TEST_ASSERT(eq(interaction_.sigma(0, 0), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(0, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(1, 0), 1.0));
+
+      interaction_.setEpsilon(0, 1, 1.3);
+      TEST_ASSERT(eq(interaction_.epsilon(0, 0), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(0, 1), 1.3));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 0), 1.3));
+      
+      interaction_.setEpsilon(0, 0, 1.1);
+      TEST_ASSERT(eq(interaction_.epsilon(0, 0), 1.1));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(0, 1), 1.3));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 0), 1.3));
+      
+      interaction_.setSigma(0, 1, 1.05);
+      TEST_ASSERT(eq(interaction_.sigma(0, 0), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(0, 1), 1.05));
+      TEST_ASSERT(eq(interaction_.sigma(1, 0), 1.05));
+
+   }
+
+   void testModify() {
+      printMethod(TEST_FUNC);
+
+      TEST_ASSERT(eq(interaction_.epsilon(0, 0), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(0, 1), 2.0));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 0), 2.0));
+      TEST_ASSERT(eq(interaction_.sigma(0, 0), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(0, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(1, 0), 1.0));
+
+      interaction_.set("epsilon", 0, 1, 1.3);
+      TEST_ASSERT(eq(interaction_.epsilon(0, 0), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(0, 1), 1.3));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 0), 1.3));
+      
+      interaction_.set("epsilon", 0, 0, 1.1);
+      TEST_ASSERT(eq(interaction_.epsilon(0, 0), 1.1));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(0, 1), 1.3));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 0), 1.3));
+      TEST_ASSERT(eq(interaction_.sigma(0, 0), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(0, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(1, 0), 1.0));
+      
+      interaction_.set("epsilon", 0, 1, 1.05);
+      TEST_ASSERT(eq(interaction_.epsilon(0, 0), 1.1));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(0, 1), 1.05));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 0), 1.05));
+      TEST_ASSERT(eq(interaction_.sigma(0, 0), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(0, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(1, 0), 1.0));
+
+      interaction_.set("sigma", 0, 1, 1.05);
+      TEST_ASSERT(eq(interaction_.epsilon(0, 0), 1.1));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.epsilon(0, 1), 1.05));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 0), 1.05));
+      TEST_ASSERT(eq(interaction_.sigma(0, 0), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(1, 1), 1.0));
+      TEST_ASSERT(eq(interaction_.sigma(0, 1), 1.05));
+      TEST_ASSERT(eq(interaction_.sigma(1, 0), 1.05));
+
+      TEST_ASSERT(eq(interaction_.epsilon(0, 0), interaction_.get("epsilon", 0, 0)));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 1), interaction_.get("epsilon", 1, 1)));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 0), interaction_.get("epsilon", 1, 0)));
+      TEST_ASSERT(eq(interaction_.epsilon(0, 1), interaction_.get("epsilon", 0, 1)));
+      TEST_ASSERT(eq(interaction_.sigma(0, 0), interaction_.get("sigma", 0, 0)));
+      TEST_ASSERT(eq(interaction_.sigma(1, 1), interaction_.get("sigma", 1, 1)));
+      TEST_ASSERT(eq(interaction_.sigma(1, 0), interaction_.get("sigma", 1, 0)));
+      TEST_ASSERT(eq(interaction_.sigma(0, 1), interaction_.get("sigma", 0, 1)));
+
+   }
+
+   void testSaveLoad() {
+      printMethod(TEST_FUNC);
+
+      Serializable::OArchive oar;
+      openOutputFile("out/serial", oar.file());
+      interaction_.save(oar);
+      oar.file().close();
+      
+      Serializable::IArchive iar;
+      openInputFile("out/serial", iar.file());
+
+      HarmonicBond clone;
+      clone.load(iar);
+
+      TEST_ASSERT(eq(interaction_.epsilon(0, 0), clone.epsilon(0,0)));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 0), clone.epsilon(1,0)));
+      TEST_ASSERT(eq(interaction_.epsilon(0, 1), clone.epsilon(0,1)));
+      TEST_ASSERT(eq(interaction_.epsilon(1, 1), clone.epsilon(1,1)));
+      TEST_ASSERT(eq(interaction_.sigma(0, 0), clone.sigma(0,0)));
+      TEST_ASSERT(eq(interaction_.sigma(1, 0), clone.sigma(1,0)));
+      TEST_ASSERT(eq(interaction_.sigma(0, 1), clone.sigma(0,1)));
+      TEST_ASSERT(eq(interaction_.sigma(1, 1), clone.sigma(1,1)));
+
+      TEST_ASSERT(eq(interaction_.energy(0.95, 0, 1), clone.energy(0.95, 0, 1)));
+      TEST_ASSERT(eq(interaction_.forceOverR(0.95, 0, 1), clone.forceOverR(0.95, 0, 1)));
+      TEST_ASSERT(eq(interaction_.energy(1.25, 0, 1), clone.energy(1.25, 0, 1)));
+      TEST_ASSERT(eq(interaction_.forceOverR(1.25, 0, 1), clone.forceOverR(1.25, 0, 1)));
+      TEST_ASSERT(eq(interaction_.energy(1.26, 0, 1), clone.energy(1.26, 0, 1)));
+      TEST_ASSERT(eq(interaction_.forceOverR(1.26, 0, 1), clone.forceOverR(1.26, 0, 1)));
+   }
 
    void testRandomBondLength() 
    {
@@ -149,21 +237,22 @@ public:
       beta = 1.0;
       type = 0;
       for (i=0; i < 20; i++) {
-         r = bondPotential.randomBondLength(random, 1.0, 0);
+         r = bondPotential.randomBondLength(random, beta, type);
          std::cout << "random bond length = " << r << std::endl;
       }
    }
      
+   #endif
 
 };
 
 TEST_BEGIN(HarmonicBondTest)
 TEST_ADD(HarmonicBondTest, testSetUp)
-TEST_ADD(HarmonicBondTest, testWrite)
 TEST_ADD(HarmonicBondTest, testEnergy)
 TEST_ADD(HarmonicBondTest, testForceOverR)
-   //TEST_ADD(HarmonicBond, testRandomBondLength);
+//TEST_ADD(HarmonicBondTest, testGetSet)
+//TEST_ADD(HarmonicBondTest, testModify)
+//TEST_ADD(HarmonicBondTest, testSaveLoad)
 TEST_END(HarmonicBondTest)
-
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef POINT_GROUP_H
-#define POINT_GROUP_H
+#ifndef UTIL_POINT_GROUP_H
+#define UTIL_POINT_GROUP_H
 
 #include <util/crystal/PointSymmetry.h>
 #include <util/crystal/SymmetryGroup.h>

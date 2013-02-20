@@ -66,22 +66,45 @@ namespace McMd
       void setOptions(int argc, char **argv);
 
       /**
-      * Read parameters from stream.
+      * Read parameter file.
+      *
+      * Returns and does nothing if in process of restarting.
+      *
+      * \param in parameter file stream
+      */
+      void readParam(std::istream &in);
+   
+      /**
+      * Read parameters from the default parameter istream.
+      *
+      * Calls readParam(std::istream& ) internally, with a
+      * default parameter file istream.  The default file is 
+      * std::cin in serial mode (ifndef UTIL_MPI) and the 
+      * file "n/param" for processor n in parallel mode 
+      * (ifdef UTIL_MPI).
+      */
+      void readParam();
+
+      /**
+      * Read parameters from stream, without begin and end lines.
       *
       * \param in input stream
       */
       virtual void readParameters(std::istream &in);
 
       /**
-      * Read parameters from the default parameter istream.
+      * Load internal state from an archive.
       *
-      * Default parameter istream is std::cin in serial mode 
-      * (ifndef UTIL_MPI) and the file "n/param" for 
-      * processor n in parallel mode (ifdef UTIL_MPI).
+      * \param ar input/loading archive
       */
-      void readParam();
+      virtual void loadParameters(Serializable::IArchive &ar);
 
-      using ParamComposite::readParam;
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Read and execute commands from an input stream.
@@ -153,13 +176,6 @@ namespace McMd
          std::string classname, std::string filename);
 
       /**
-      * Write a restart file.
-      *
-      * \param filename base file name for all restart files.
-      */
-      void writeRestart(const std::string& filename);
-
-      /**
       * Read a restart file.
       *
       * \param filename base file name for all restart files.
@@ -167,13 +183,11 @@ namespace McMd
       void readRestart(const std::string& filename);
 
       /**
-      * Serialize to/from an archive. 
+      * Write a restart file.
       *
-      * \param ar      saving or loading archive
-      * \param version archive version id
+      * \param filename base file name for all restart files.
       */
-      template <class Archive>
-      void serialize(Archive& ar, unsigned int version);
+      void writeRestart(const std::string& filename);
 
       /**
       * Get the MdSystem being simulated by const reference.
@@ -197,6 +211,12 @@ namespace McMd
 
       /// Pointer to manager for Diagnostic objects.
       MdDiagnosticManager*  mdDiagnosticManagerPtr_;
+
+      /// Restart output file name
+      std::string writeRestartFileName_;
+
+      /// Interval for writing restart files (no output if 0)
+      int writeRestartInterval_;
 
       /// Has readParam been called?
       bool isInitialized_;

@@ -13,7 +13,6 @@ potentials     classes that evaluate potential energies and forces
   dihedral     covalent four-body dihedral potentials
   link         mutable covalent bond potentials (e.g., crosslinks)
   external     external one-body potentials.
-  tether       potentials to "tether" (restrain) specific atoms.
 neighbor       classes that implement a cell list and a Verlet pair list
 links          classes to manage crosslinks (mutable covalent bonds).
 tethers        classes to manage tethers that constrain specific atoms

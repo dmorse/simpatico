@@ -1,5 +1,5 @@
-#ifndef FACTORY_H
-#define FACTORY_H
+#ifndef UTIL_FACTORY_H
+#define UTIL_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -52,6 +52,24 @@ namespace Util
       void addSubfactory(Factory<Data>& subfactory);
 
       /**
+      * Returns a pointer to a new instance of specified subclass.
+      *
+      * This method takes the name className of a subclass of Data as a
+      * parameter, and attempts to instantiate an object of that class.
+      * If it recognizes the className, it creates an instance of that
+      * class and returns a Data* base class pointer to the new object.
+      * If it does not recognize the className, it returns a null pointer.
+      *
+      * An implementation should first call "trySubfactories(className)"
+      * and immediately return if this returns a non-null pointer, before
+      * attempting to match the className against specific strings.
+      *
+      * \param  className name of subclass
+      * \return base class pointer to new object, or a null pointer.
+      */
+      virtual Data* factory(const std::string &className) const = 0;
+
+      /**
       * Read a class name, instantiate an object, and read its parameters.
       *
       * This method:
@@ -76,22 +94,27 @@ namespace Util
                        std::string& className, bool& isEnd);
 
       /**
-      * Returns a pointer to a new instance of specified subclass.
+      * Load a class name, instantiate an object, and load the object.
       *
-      * This method takes the name className of a subclass of Data as a
-      * parameter, and attempts to instantiate an object of that class.
-      * If it recognizes the className, it creates an instance of that
-      * class and returns a Data* base class pointer to the new object.
-      * If it does not recognize the className, it returns a null pointer.
+      * This method:
+      *  - loads a className from an input archive
+      *  - invokes the factory method to create an instance of className
+      *  - invokes the load() method of the new object
       *
-      * An implementation should first call "trySubfactories(className)"
-      * and immediately return if this returns a non-null pointer, before
-      * attempting to match the className against specific strings.
+      * When compiled with MPI, if the parent ParamComposite has a param
+      * communicator, this method loads the comment line on the Io processor,
+      * broadcasts it to all others, and then lets each processor 
+      * independently match this string. 
       *
-      * \param  className name of subclass
-      * \return base class pointer to new object, or a null pointer.
+      * \throws Exception if className is not recognized.
+      *
+      * \param  ar        input/loading archive
+      * \param  parent    parent ParamComposite object
+      * \param  className (output) name of subclass of Data
+      * \return pointer to new instance of className
       */
-      virtual Data* factory(const std::string &className) const = 0;
+      Data* loadObject(Serializable::IArchive& ar, ParamComposite& parent,
+                       std::string& className);
 
    protected:
 
@@ -181,6 +204,9 @@ namespace Util
    void Factory<Data>::addSubfactory(Factory<Data>& subfactory)
    {  subfactories_.push_back(&subfactory); }
 
+
+
+
    /*
    * Read subclass name, create object, and read its parameters.
    */
@@ -266,6 +292,43 @@ namespace Util
          // Note: The readParam() methods for managed objects should not
          // read begin and end lines, since these are instead read here.
 
+      }
+      return typePtr;
+   }
+
+   /*
+   * Load subclass name, create object, and load object.
+   */
+   template <typename Data>
+   Data* Factory<Data>::loadObject(Serializable::IArchive& ar, ParamComposite& parent,
+                                   std::string& className)
+   {
+      #ifdef UTIL_MPI
+      // Set paramCommunicator to that of parent, if any.
+      if (parent.hasParamCommunicator()) {
+         setParamCommunicator(parent.paramCommunicator());
+      }
+      #endif
+
+      // Read the class name.
+      if (paramFileIo_.isIoProcessor()) {
+         ar & className;
+      }
+
+      #ifdef UTIL_MPI
+      // Broadcast the full string to all processors.
+      if (paramFileIo_.hasCommunicator()) {
+         bcast<std::string>(paramFileIo_.communicator(), className, 0);
+      }
+      #endif
+
+      // Create and load a new object of the specified class.
+      Data* typePtr = factory(className);
+      if (typePtr) {
+         parent.loadParamComposite(ar, *typePtr);
+      } else {
+         Log::file() << "Failed attempt to create instance of " 
+                     << className << std::endl;
       }
       return typePtr;
    }

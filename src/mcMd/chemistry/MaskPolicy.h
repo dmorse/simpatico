@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/archives/serialize.h>
 #include <util/global.h>
 
 #include <iostream>
@@ -25,7 +26,7 @@ namespace McMd
    *
    * \ingroup McMd_Chemistry_Module
    */
-   enum MaskPolicy {MaskNone, MaskBonded};
+   enum MaskPolicy {MaskNone=0, MaskBonded=1};
 
    /**
    * istream extractor for a MaskPolicy.
@@ -44,6 +45,17 @@ namespace McMd
    * \return modified output stream
    */
    std::ostream& operator << (std::ostream& out, MaskPolicy policy);
+
+   /**
+   * Serialize a MaskPolicy
+   *
+   * \param ar      archive object
+   * \param policy  object to be serialized
+   * \param version archive version id
+   */
+   template <class Archive>
+   void serialize(Archive& ar, MaskPolicy& policy, const unsigned int version)
+   { serializeEnum(ar, policy, version); }
 
 }
 

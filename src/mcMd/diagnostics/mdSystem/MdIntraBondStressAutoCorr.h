@@ -43,6 +43,8 @@ namespace McMd
       using IntraBondStressAutoCorr<MdSystem>::setup;
       using IntraBondStressAutoCorr<MdSystem>::sample;
       using IntraBondStressAutoCorr<MdSystem>::output;
+      using IntraBondStressAutoCorr<MdSystem>::loadParameters;
+      using IntraBondStressAutoCorr<MdSystem>::save;
 
       /**
       * Serialize to/from an archive. 

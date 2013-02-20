@@ -30,7 +30,26 @@ namespace McMd
    EndSwapMove::EndSwapMove(McSystem& system) : 
       SystemMove(system),
       speciesId_(-1)
-   {  setClassName("EndSwapMove"); } 
+   {
+      /* Preconditions:  
+      * For now, Usage with angles and dihedrals is prohibited. This
+      * move would work fine with homogeneous angles and dihedrals,
+      * and could be modified to work with heterogeneous potentials,
+      * but the required checks or modifications are not implemented.
+      */
+      #ifdef INTER_ANGLE
+      if (system.hasAnglePotential()) {
+         UTIL_THROW("CfbEndBase unusable with heterogeneous dihedrals");
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (system.hasDihedralPotential()) {
+         UTIL_THROW("CfbEndBase unusable with heterogeneous dihedrals");
+      }
+      #endif
+
+      setClassName("EndSwapMove"); 
+   }
    
    /* 
    * Read parameter speciesId.
@@ -43,15 +62,15 @@ namespace McMd
       Species* speciesPtr = &(simulation().species(speciesId_));
       int nAtom = speciesPtr->nAtom();
 
-      // Preconditions: species must be immutable and a subclass of Linear 
+      // Preconditions
       if (speciesPtr->isMutable()) {
-         UTIL_THROW("EndSwapMove applied to mutable species");
+         UTIL_THROW("EndSwapMove on mutable Species");
       }
       Linear* linearPtr = dynamic_cast<Linear*>(speciesPtr);
       if (linearPtr == 0) {
-         UTIL_THROW("EndSwapMove applied to species that is not Linear");
+         UTIL_THROW("EndSwapMove on Species that is not a Linear");
       }
-  
+
       // Allocate memory 
       atomTypeIds_.allocate(nAtom);
       positions_.allocate(nAtom);
@@ -60,7 +79,42 @@ namespace McMd
       for (int i = 0; i < nAtom; ++i) {
            atomTypeIds_[i] = speciesPtr->atomTypeId(i); 
       }
+   }
 
+   /* 
+   * Load from archive.
+   */
+   void EndSwapMove::loadParameters(Serializable::IArchive& ar) 
+   {
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      ar & atomTypeIds_;
+
+      // Validate
+      Species* speciesPtr = &(simulation().species(speciesId_));
+      int nAtom = speciesPtr->nAtom();
+      if (speciesPtr->isMutable()) {
+         UTIL_THROW("EndSwapMove applied to mutable species");
+      }
+      Linear* linearPtr = dynamic_cast<Linear*>(speciesPtr);
+      if (linearPtr == 0) {
+         UTIL_THROW("EndSwapMove applied to species that is not Linear");
+      }
+      if (nAtom != atomTypeIds_.capacity()) {
+         UTIL_THROW("Inconsistent capacity for atomTypeIds array");
+      }
+  
+      positions_.allocate(nAtom);
+   }
+
+   /* 
+   * Save to archive.
+   */
+   void EndSwapMove::save(Serializable::OArchive& ar) 
+   {
+      McMove::save(ar);
+      ar & speciesId_;
+      ar & atomTypeIds_;
    }
 
    /* 
@@ -136,8 +190,8 @@ namespace McMd
          incrementNAccept();
 
       }
+
       return accept;
-   
    }
 
 }

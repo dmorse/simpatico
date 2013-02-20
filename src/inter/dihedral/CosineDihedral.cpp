@@ -1,5 +1,5 @@
-#ifndef COSINE_DIHEDRAL_CPP
-#define COSINE_DIHEDRAL_CPP
+#ifndef INTER_COSINE_DIHEDRAL_CPP
+#define INTER_COSINE_DIHEDRAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -20,7 +20,12 @@ namespace Inter
    */
    CosineDihedral::CosineDihedral()
     : nDihedralType_(0)
-   { for (int i = 0; i < MaxNDihedralType; ++i) kappa_[i] = 0.0; }
+   { 
+      setClassName("CosineDihedral");
+      for (int i = 0; i < MaxNDihedralType; ++i) {
+         kappa_[i] = 0.0; 
+      }
+   }
 
    /* 
    * Copy constructor.
@@ -55,15 +60,31 @@ namespace Inter
    */
    void CosineDihedral::readParameters(std::istream &in) 
    {
-      // Preconditions
       if (nDihedralType_ <= 0) {
          UTIL_THROW("nDihedralType must be set before readParam");
       }
-
-      // Read parameters
-      //readBegin(in, "CosineDihedral");
       readCArray<double>(in, "kappa",  kappa_,  nDihedralType_);
-      //readEnd(in);
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void CosineDihedral::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nDihedralType_; 
+      if (nDihedralType_ <= 0) {
+         UTIL_THROW( "nDihedralType must be positive");
+      }
+      loadCArray<double> (ar, "kappa", kappa_, nDihedralType_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void CosineDihedral::save(Serializable::OArchive &ar)
+   {
+      ar << nDihedralType_;
+      ar.pack(kappa_, nDihedralType_);
    }
 
    /*

@@ -1,5 +1,5 @@
-#ifndef TEXT_FILE_O_ARCHIVE_CPP
-#define TEXT_FILE_O_ARCHIVE_CPP
+#ifndef UTIL_TEXT_FILE_O_ARCHIVE_CPP
+#define UTIL_TEXT_FILE_O_ARCHIVE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -17,23 +17,29 @@ namespace Util
    * Constructor.
    */
    TextFileOArchive::TextFileOArchive()
-    : ostreamPtr_(0),
+    : filePtr_(0),
       version_(0)
-   {}
+   {  filePtr_ = new std::ofstream(); }
+
+   /*
+   * Constructor.
+   */
+   TextFileOArchive::TextFileOArchive(std::string filename)
+    : filePtr_(0),
+      version_(0)
+   {  filePtr_ = new std::ofstream(filename.c_str()); }
 
    /*
    * Destructor.
    */
    TextFileOArchive::~TextFileOArchive()
-   {}  
+   {  delete filePtr_; }  
 
    /*
-   * Allocate a block of memory.
+   * Return underlying file by reference.
    */
-   void TextFileOArchive::setStream(std::ostream& out)
-   { 
-      ostreamPtr_ = &out;
-   }
+   std::ofstream& TextFileOArchive::file()
+   {  return *filePtr_; }
 
 }
 #endif

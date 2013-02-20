@@ -1,5 +1,5 @@
-#ifndef D_P_ARRAY_H
-#define D_P_ARRAY_H
+#ifndef UTIL_D_P_ARRAY_H
+#define UTIL_D_P_ARRAY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -40,6 +40,14 @@ namespace Util
       DPArray(const DPArray<Data>& other);
    
       /**
+      * Destructor.
+      *
+      * Deletes array of pointers, if allocated previously.
+      * Does not delete the associated Data objects.
+      */
+      virtual ~DPArray();
+
+      /**
       * Assignment, element by element.
       *
       * Preconditions: 
@@ -49,14 +57,6 @@ namespace Util
       * \param other the rhs DPArray 
       */
       DPArray<Data>& operator=(const DPArray<Data>& other);
-
-      /**
-      * Destructor.
-      *
-      * Deletes array of pointers, if allocated previously.
-      * Does not delete the associated Data objects.
-      */
-      virtual ~DPArray();
 
       /**
       * Allocate an array of pointers to Data.
@@ -183,7 +183,6 @@ namespace Util
    template <typename Data>
    void DPArray<Data>::allocate(int capacity) 
    {
-
       // Preconditions
       if (!(ptrs_ == 0)) {
          UTIL_THROW("Cannot re-allocate a DPArray");
@@ -194,7 +193,6 @@ namespace Util
 
       ptrs_     = new Data*[capacity];
       capacity_ = capacity;
-
    }
 
    /*

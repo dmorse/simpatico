@@ -17,26 +17,30 @@
 #endif
 
 /**
-* UnitTest is a base class for unit test classes.
+* UnitTest is a base class for classes that define unit tests.
 *
-* A unit test class for a particular class should be derived 
-* from UnitTest, and should define several test methods. The  
-* names of the tests are arbitrary. The tests should use the
-* TEST_ASSERT(expression) macro to assert the truth of logical
+* Each subclasses of UnitTest should define one or more test
+* methods.  The test methods may be given arbitrary names.
+* Individual test within test methods should use the 
+* TEST_ASSERT(expression) macro to assert the truth of logical 
 * expressions.
 *
-* The tests defined in a unit test named TestA must be added 
-* to an associated TestRunner class that is created using the
-* UnitTestRunner template. The run() method of such a
-* TestRunner class calls all of the associated test methods 
-* in the order in which they were added, and counts the number
-* of successful and failed tests.
+* The test methods defined by a subclass of UnitTest are run 
+* by an associated subclass of TestRunner. Each of the test
+* methods of a UnitTest must be added to the associated 
+* TestRunner.  The run() method of a TestRunner calls all of 
+* the associated test methods in the order in which they were 
+* added, and counts the number of successful and failed tests. 
 *
-* Preprocessor macros that are defined in UnitTestRunner.h 
-* file can be used to create the boiler-plate code necessary 
-* to define a unit test runner and to add test methods to 
-* it. See the class documentation for UnitTestRunner for 
-* more details. 
+* The TestRunner associated with a single UnitTest is defined 
+* by a class template UnitTestRunner that takes the UnitTest 
+* subclass as a template argument. For example, the TestRunner 
+* associated with a UnitTest subclass named TestA is a template 
+* instantiation UnitTestRunner<TestA>.
+*
+* Preprocessor macros defined in the file UnitTestRunner.h 
+* can be used to create the boiler-plate code necessary to
+* define a unit test runner and to add test methods to it. 
 */
 class UnitTest
 {
@@ -200,13 +204,13 @@ protected:
    /**
    * Return true if two integers are equal.
    */
-   bool eq(int s1, int s2) const
+   static bool eq(int s1, int s2)
    {  return (s1 == s2); }
 
    /**
    * Return true if two double precision floats are equal.
    */
-   bool eq(double s1, double s2) const
+   static bool eq(double s1, double s2)
    {
       double epsilon = 1.0E-10; 
       return ( fabs(s1-s2) < epsilon ); 

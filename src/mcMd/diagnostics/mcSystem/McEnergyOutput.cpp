@@ -18,11 +18,16 @@ namespace McMd
 
    using namespace Util;
 
-   // Constructor
+   /*
+   * Constructor.
+   */
    McEnergyOutput::McEnergyOutput(McSystem& system) :
       SystemDiagnostic<McSystem>(system)
    {  setClassName("McEnergyOutput"); }
 
+   /*
+   * Read file name and open output file.
+   */
    void McEnergyOutput::readParameters(std::istream& in)
    {
       readInterval(in);
@@ -30,7 +35,24 @@ namespace McMd
       fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
    }
  
-   // Evaluate energy and print.
+   /*
+   * Load state from an archive, and open output file.
+   */
+   void McEnergyOutput::loadParameters(Serializable::IArchive& ar)
+   {  
+      Diagnostic::loadParameters(ar);
+      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   void McEnergyOutput::save(Serializable::OArchive& ar)
+   {  ar & *this; }
+
+   /*
+   * Evaluate energy and output to outputFile_.
+   */
    void McEnergyOutput::sample(long iStep) 
    {
       if (isAtInterval(iStep)) {

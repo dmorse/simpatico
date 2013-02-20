@@ -54,11 +54,46 @@ namespace McMd
       // Use dynamic_cast to check that the Species is actually a Linear species
       Ring* ringPtr;
       ringPtr = dynamic_cast<Ring*>(&(simulation().species(speciesId_)));
+      if (!ringPtr) {
+         UTIL_THROW("Not a Ring species");
+      }
   
       // Allocate array to store old positions 
       oldPos_.allocate(nRegrow_); 
    }
 
+   /*
+   * Load state from an archive.
+   */
+   void CfbRingRebridgeMove::loadParameters(Serializable::IArchive& ar)
+   {  
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "nRegrow", nRegrow_);
+      CfbRebridgeBase::loadParameters(ar);
+
+      // Validate
+      Ring* ringPtr;
+      ringPtr = dynamic_cast<Ring*>(&(simulation().species(speciesId_)));
+      if (!ringPtr) {
+         UTIL_THROW("Species is not a Ring species");
+      }
+  
+      // Initialize tables for spring constants and normalizations.
+      setup();
+      oldPos_.allocate(nRegrow_); 
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   void CfbRingRebridgeMove::save(Serializable::OArchive& ar)
+   {  
+      McMove::save(ar);
+      ar & speciesId_;
+      ar & nRegrow_;
+      CfbRebridgeBase::save(ar);
+   }
 
    /* 
    * Generate, attempt and accept or reject a Monte Carlo move.

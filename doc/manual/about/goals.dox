@@ -1,0 +1,23 @@
+/*! \page about_goals_page 1.1 Goals
+
+The design of Simpatico was motivated by the following goals: 
+
+- Extensibility: New algorithms may be added for most elements of a simulation via C++ inheritance, without modifying the core source code.  Extensible elements include: Monte Carlo moves, molecular dynamics integrators, potential energy functions, molecular species, data analysis algorithms, and configuration file formats.
+
+- Integrated MC, MD and hybrid simulations: The single-processor mcSim and mdSim programs use similar data structures to provide efficient implementations of MC, MD and hybrid Monte Carlo (HMC) algorithms. Simpatico also provides a module that allows the HOOMD-blue code for MD on graphical processing units (GPUs) to be used as an engine for very fast HMC simulations.
+
+- Integrated data analysis: All programs come bundled with a set of data analysis classes that can be used "on-the-fly" analysis, during a simulation. The mcSim and mdSim programs can also be used for post-processing of trajectory files, using the same data analysis classes.
+
+- Efficiency: Both single-processor and parallel programs are competitive as tools for computationally demanding research projects. 
+
+The design of mcSim and mdSim (which share a great deal of code) is similar in many ways to that of <a href=http://www.etomica.org>Etomica</a>, which was written in Java by David Kofke's group at the University of Buffalo.  The domain decomposition algorithm used in ddSim is similar to that originally introduced in the <a href=http://www.lammps.sandia.gov>LAMMMPS</a> molecular dynamics code.
+
+Simpatico has thus far been used only for simulations of coarse-grained bead-spring models of polymer liquids.  It lacks some features found in more mature molecular dynamics packages, such as Lammps, NAMD, Gromacs, and Espresso, and in a smaller number of MC packages, such as Towhee.
+
+Navigation:
+<ul style="list-style: none;">
+ <li> \ref about_page        (Up)     </li>
+ <li> \ref about_capabilities_page (Next)   </li>
+</ul>
+
+*/

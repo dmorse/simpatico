@@ -1,5 +1,5 @@
-#ifndef TEXT_FILE_I_ARCHIVE_H
-#define TEXT_FILE_I_ARCHIVE_H
+#ifndef UTIL_TEXT_FILE_I_ARCHIVE_H
+#define UTIL_TEXT_FILE_I_ARCHIVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -16,13 +16,14 @@
 
 #include <complex>
 #include <string>
-#include <iostream>
+#include <vector>
+#include <fstream>
 
 namespace Util
 {
 
    /**
-   * Saving archive for binary istream.
+   * Loading archive for text istream.
    *
    * \ingroup Archive_Module
    */
@@ -43,39 +44,65 @@ namespace Util
       TextFileIArchive();
 
       /**
+      * Constructor.
+      *
+      * \param filename name of file to open for reading.
+      */
+      TextFileIArchive(std::string filename);
+
+      /**
       * Destructor.
       */
       virtual ~TextFileIArchive();
 
       /**
-      * Set the stream.
-      *
-      * \param out output stream to which to write.
+      * Get the underlying ifstream by reference.
       */
-      void setStream(std::istream& out);
+      std::ifstream& file();
 
       /**
-      * Write one object.
+      * Load one object.
       */
       template <typename T>
       TextFileIArchive& operator & (T& data);
 
       /**
-      * Write one object.
+      * Load one object.
       */
       template <typename T>
       TextFileIArchive& operator >> (T& data);
 
+      /**
+      * Load a single T object.
+      *
+      * \param data object to be loaded from this archive.
+      */
       template <typename T> 
       void unpack(T& data);
 
+      /**
+      * Load a C-array of T objects.
+      *
+      * \param array pointer to array of T objecs.
+      * \param n     number of elements in array
+      */
       template <typename T> 
       void unpack(T* array, int n);
 
+      /**
+      * Load a 2D C array.
+      *
+      * \param array pointer to first row or element
+      * \param m     number of rows
+      * \param n     number of columns
+      */
+      template <typename T> 
+      void unpack(T* array, int m, int n);
+
    private:
 
-      /// Pointer to output stream file.
-      std::istream* istreamPtr_;
+      /// Pointer to input text file.
+      std::ifstream* filePtr_;
 
       /// Archive version id.
       unsigned int  version_;
@@ -93,7 +120,7 @@ namespace Util
    // Inline non-static methods
 
    /*
-   * Write one object.
+   * Load one object.
    */
    template <typename T>
    inline TextFileIArchive& TextFileIArchive::operator & (T& data)
@@ -103,7 +130,7 @@ namespace Util
    }
 
    /*
-   * Write one object.
+   * Load one object.
    */
    template <typename T>
    inline TextFileIArchive& TextFileIArchive::operator >> (T& data)
@@ -115,42 +142,56 @@ namespace Util
    // Method templates
 
    /*
-   * Bitwise unpack a single object of type T.
+   * Load a single object of type T.
    */
    template <typename T>
    inline void TextFileIArchive::unpack(T& data)
-   {  *istreamPtr_ >> data; }
+   {  *filePtr_ >> data; }
 
    /*
-   * Unpack a C array.
+   * Load a C array.
    */
    template <typename T>
    inline void TextFileIArchive::unpack(T* array, int n)
    {
       for (int i=0; i < n; ++i) {
-         *istreamPtr_ >> array[i];
+         *filePtr_ >> array[i];
       }
    }
 
    /*
-   * Read a single char.
+   * Bitwise pack a 2D C-array of objects of type T.
+   */
+   template <typename T>
+   void TextFileIArchive::unpack(T* array, int m, int n)
+   {
+      int i, j;
+      for (i = 0; i < m; ++i) {
+         for (j = 0; j < n; ++j) {
+            *filePtr_ >> array[i*n + j];
+         }
+      }
+   }
+
+   /*
+   * Load a single char.
    */
    template <>
    inline void TextFileIArchive::unpack(char& data)
-   {   istreamPtr_->get(data); }
+   {   filePtr_->get(data); }
 
    /*
-   * Unpack a C-array of characters.
+   * Load a C-array of characters.
    */
    template <>
    inline void TextFileIArchive::unpack(char* array, int n)
    {
-      istreamPtr_->get(array, n+1,'\0');
+      filePtr_->get(array, n+1,'\0');
    }
 
    // Explicit serialize functions for primitive types
 
-   /**
+   /*
    * Load a bool from a TextFileIArchive.
    */
    template <>
@@ -158,7 +199,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a char from a TextFileIArchive.
    */
    template <>
@@ -166,23 +207,23 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
-   * Save an unsigned int from a TextFileIArchive.
+   /*
+   * Load an unsigned int from a TextFileIArchive.
    */
    template <>
    inline void serialize(TextFileIArchive& ar, unsigned int& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
-   * Save an int from a TextFileIArchive.
+   /*
+   * Load an int from a TextFileIArchive.
    */
    template <>
    inline void serialize(TextFileIArchive& ar, int& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load an unsigned long int from a TextFileIArchive.
    */
    template <>
@@ -190,7 +231,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a long int from a TextFileIArchive.
    */
    template <>
@@ -198,7 +239,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a float from a TextFileIArchive.
    */
    template <>
@@ -206,17 +247,35 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
-   * Save an double from a TextFileIArchive.
+   /*
+   * Load a double from a TextFileIArchive.
    */
    template <>
    inline void serialize(TextFileIArchive& ar, double& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   // Explicit serialize functions for primitive types
+   /*
+   * Load a std::vector from a TextFileIArchive.
+   */
+   template <typename T>
+   void serialize(TextFileIArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      T element;
+      std::size_t size;
+      ar.unpack(size);
+      data.reserve(size);
+      data.clear();
+      for (size_t i = 0; i < size; ++i) {
+         ar & element;
+         data.push_back(element);
+      }
+   }
 
-   /**
+   // Explicit serialize functions for std library types
+
+   /*
    * Load a std::complex<float> from a TextFileIArchive.
    */
    template <>
@@ -225,7 +284,7 @@ namespace Util
                   const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a std::complex<double> from a TextFileIArchive.
    */
    template <>
@@ -234,16 +293,16 @@ namespace Util
                   const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a std::string from a TextFileIArchive.
    */
    template <>
    void serialize(TextFileIArchive& ar, std::string& data, 
                   const unsigned int version);
 
-   // Explicit serialize functions for namespace Util
+   // Explicit serialize functions for namespace Util types
 
-   /**
+   /*
    * Load a Util::Vector from a TextFileIArchive.
    */
    template <>
@@ -251,7 +310,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); } 
 
-   /**
+   /*
    * Load a Util::IntVector from a TextFileIArchive.
    */
    template <>

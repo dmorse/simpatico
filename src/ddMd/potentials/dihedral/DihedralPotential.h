@@ -98,12 +98,27 @@ namespace DdMd
       dihedralForce(const Vector& R1, const Vector& R2, const Vector& R3,
                     Vector& F1, Vector& F2, Vector& F3, int type) const = 0;
 
-      #if 0
+      /**
+      * Modify a dihedral interaction parameter, identified by a string.
+      *
+      * \param name  parameter variable name
+      * \param type  dihedral type index
+      * \param value  new value of parameter
+      */
+      virtual void set(std::string name, int type, double value) = 0;
+
+      /**
+      * Get a dihedral parameter value, identified by a string.
+      *
+      * \param name  parameter variable name
+      * \param type  dihedral type index
+      */
+      virtual double get(std::string name, int type) const = 0;
+
       /**
       * Return pair interaction class name (e.g., "HarmonicDihedral").
       */
       virtual std::string interactionClassName() const = 0;
-      #endif
 
       //@}
 

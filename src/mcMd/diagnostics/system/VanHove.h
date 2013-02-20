@@ -25,7 +25,7 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Evaluates the van Hove function S(k,t) for several k.
+   * Evaluates the van Hove function S(k,t) for one or more wavevector k.
    *
    * The van Hove function S(k,t) is defined here as an expectation value
    * \f[
@@ -74,7 +74,6 @@ namespace McMd
    */
    class VanHove : public SystemDiagnostic<System>
    {
-
    public:
 
       /**	
@@ -97,13 +96,36 @@ namespace McMd
       *   - int               interval        sampling interval 
       *   - string            outputFileName  output file base name
       *   - DArray<double>    atomTypeCoeffs  array of type coefficients
-      *   - int               nBuffer         number of samples in history buffer
+      *   - int               nBuffer         number of samples in buffer
       *   - int               nWave           number of wavevectors
       *   - DArray<IntVector> waveIntVectors  IntVector wavevectors
       *
       * \param in input parameter stream
       */
       virtual void readParameters(std::istream& in);
+
+      /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
+      /**
+      * Serialize to/from an archive. 
+      * 
+      * \param ar      archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
 
       /** 
       * Clear accumulators.
@@ -121,29 +143,6 @@ namespace McMd
       * Output results to predefined output file.
       */
       virtual void output();
-
-      /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
-
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
 
    private:
 
@@ -192,20 +191,14 @@ namespace McMd
    template <class Archive>
    void VanHove::serialize(Archive& ar, const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("VanHove object is not initialized.");
-      }
-
-      ar & accumulators_;
-      ar & fourierModes_;
+      Diagnostic::serialize(ar, version);
+      ar & nAtomType_;
+      ar & atomTypeCoeffs_;
       ar & nBuffer_;
+      ar & nWave_;
+      ar & waveIntVectors_;
+      ar & accumulators_;
       ar & nSample_;
-
-      serializeCheck(ar, nAtomType_, "nAtomType");
-      serializeCheck(ar, nWave_, "nWave");
-      for (int i = 0; i < nWave_; ++i) {
-         serializeCheck(ar, waveIntVectors_[i], "waveIntVector");
-      }
    }
 
 }

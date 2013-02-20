@@ -1,6 +1,6 @@
 #ifdef UTIL_MPI
-#ifndef MPI_SEND_RECV_H
-#define MPI_SEND_RECV_H
+#ifndef UTIL_MPI_SEND_RECV_H
+#define UTIL_MPI_SEND_RECV_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

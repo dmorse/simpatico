@@ -1,5 +1,5 @@
-#ifndef ARRAY_STACK_H
-#define ARRAY_STACK_H
+#ifndef UTIL_ARRAY_STACK_H
+#define UTIL_ARRAY_STACK_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -42,7 +42,7 @@ namespace Util
       * \param capacity maximum size of stack.
       */
       void allocate(int capacity);
-  
+ 
       /// \name Mutators
       //@{
 

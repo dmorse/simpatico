@@ -9,6 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>
+#include <util/archives/serialize.h>
 #ifdef UTIL_MPI
 #include <util/mpi/MpiTraits.h>
 #endif
@@ -22,10 +23,6 @@ namespace Util
    *
    * A boundary ensemble has a type, which can be rigid or isobaric,
    * and stores a pressure if it is isobaric.
-   *
-   * NOTE: The algorithms required to implement and isobaric ensemble,
-   * by pressure and modify the cell size, are not yet implemented.
-   *
    */
    class BoundaryEnsemble : public ParamComposite
    {
@@ -53,7 +50,21 @@ namespace Util
       * The type is specified in the input file by a string 
       * literal "rigid" or "isobaric".
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
+
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       ///\name Accessors
       //@{
@@ -69,28 +80,30 @@ namespace Util
       bool isIsobaric() const;
 
       /**
-      * Get the pressure.
+      * Get the target pressure.
       */
       double pressure() const;
 
       //@}
       
       #ifdef UTIL_MPI
-
       /**
       * Commit associated MPI DataType.
       */
       static void commitMpiType();
-
       #endif
 
    private:
 
-      /// Pressure * kB (units of energy)
+      /**
+      * Target pressure 
+      */
       double pressure_;
 
-      /// Subclass name identifier.
-      Type   type_;
+      /**
+      * Ensemble type identifier.
+      */
+      Type  type_;
 
    };
 
@@ -114,20 +127,35 @@ namespace Util
 
    // Inline methods
  
-   /**
-   * Get the pressure.
+   /*
+   * Get the target pressure.
    */
    inline double BoundaryEnsemble::pressure() const
    {  return pressure_; }
 
-   // Return true if this is an rigid ensemble.
+   /*
+   * Return true iff this is an rigid ensemble.
+   */
    inline bool BoundaryEnsemble::isRigid() const
-   { return (type_ == RIGID); }
- 
-   // Return true if this is an isobaric Ensemble.
+   {  return (type_ == RIGID); }
+
+   /* 
+   * Return true if this is an isobaric Ensemble.
+   */
    inline bool BoundaryEnsemble::isIsobaric() const
-   { return (type_ == ISOBARIC); }
+   {  return (type_ == ISOBARIC); }
  
+   /**
+   * Serialize a BoundaryEnsemble::Type enum value.
+   *
+   * \param ar      archive object
+   * \param data    enum value to be serialized
+   * \param version archive version id
+   */
+   template <class Archive>
+   inline void serialize(Archive& ar, BoundaryEnsemble::Type& data, const unsigned int version)
+   {  serializeEnum(ar, data, version); }
+
    #ifdef UTIL_MPI
    /**
    * Explicit specialization MpiTraits<BoundaryEnsemble>.

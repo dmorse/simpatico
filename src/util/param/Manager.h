@@ -1,5 +1,5 @@
-#ifndef MANAGER_H
-#define MANAGER_H
+#ifndef UTIL_MANAGER_H
+#define UTIL_MANAGER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -72,7 +72,7 @@ namespace Util
       void setFactory(Factory<Data>* factoryPtr);
 
       /**
-      * Read a list from file that controls creation of a series of objects.
+      * Read and create a set of objects.
       *
       * The default implementation of this method reads a sequence of blocks
       * for different subclasses of Data, terminated by a closing bracket.
@@ -92,6 +92,20 @@ namespace Util
       * \param in input stream
       */
       virtual void readParam(std::istream &in);
+
+      /**
+      * Load a set of objects to an output archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save a set of objects to an output archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Append a Data object to the end of the sequence.
@@ -274,7 +288,7 @@ namespace Util
    {
       beginReadManager(in);
       readChildren(in);
-      addEnd();
+      endReadManager();
    }
 
    /*
@@ -298,7 +312,7 @@ namespace Util
 
       // Loop over managed objects
       std::string name;
-      Data *typePtr;
+      Data* typePtr;
       bool  isEnd = false;
       while (!isEnd) {
 
@@ -320,7 +334,6 @@ namespace Util
 
       }
    }
-
    
    /*
    * Add closing bracket.
@@ -331,6 +344,49 @@ namespace Util
       End* endPtr = &addEnd();
       if (ParamComponent::echo() && isParamIoProcessor()) {
          endPtr->writeParam(Log::file());
+      }
+   }
+
+   /*
+   * Read instructions for creating objects from file.
+   */
+   template <typename Data>
+   void Manager<Data>::loadParameters(Serializable::IArchive &ar)
+   {
+      int size;
+      Data* typePtr;
+      std::string name;
+
+      // Check if a Factory exists, create one if necessary.
+      initFactory();
+
+      ar >> size;
+      for (int i = 0; i < size; ++i) {
+         addBlank();
+         name = "unknown";
+         typePtr = factoryPtr_->loadObject(ar, *this, name);
+         if (typePtr) {
+            append(*typePtr, name);
+         } else {
+            std::string msg("Unknown subclass name: ");
+            msg += name;
+            UTIL_THROW(msg.c_str());
+         }
+      }
+      addBlank();
+   }
+
+   /*
+   * Read instructions for creating objects from file.
+   */
+   template <typename Data>
+   void Manager<Data>::save(Serializable::OArchive &ar)
+   {
+      int size = ptrs_.size();
+      ar << size;
+      for (int i = 0; i < size; ++i) {
+         ar << names_[i];
+         (ptrs_[i])->save(ar);
       }
    }
 

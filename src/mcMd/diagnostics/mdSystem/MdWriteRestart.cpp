@@ -25,7 +25,6 @@ namespace McMd
    */
    MdWriteRestart::MdWriteRestart(MdSimulation& simulation) 
     : Diagnostic(),
-      filename_(),
       simulationPtr_(&simulation)
    {  setClassName("MdWriteRestart"); }
 
@@ -35,24 +34,18 @@ namespace McMd
    void MdWriteRestart::readParameters(std::istream& in) 
    {
       readInterval(in);
-      read<std::string>(in, "fileName", filename_);
+      readOutputFileName(in);
    }
 
+   // Using default Diagnostic::save and Diagnostic::load.
+
    /*
-   * Dump configuration to file
+   * Write a restart file. 
    */
    void MdWriteRestart::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
-
-         // Construct new fileName: outputFileName + toString(nSample)
-         //std::string filename;
-         //filename  = filename_;
-         //filename += toString(nSample_);
-
-         // Open output file, write data, and close file
-         simulationPtr_->writeRestart(filename_);
-
+         simulationPtr_->writeRestart(outputFileName());
       }
    }
   

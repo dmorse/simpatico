@@ -26,7 +26,9 @@ namespace McMd
 
    using namespace Util;
 
-   // Constructor
+   /*
+   * Constructor.
+   */
    MdPairEnergyCoefficients::MdPairEnergyCoefficients(MdSystem& system)
     : SystemDiagnostic<MdSystem>(system),
     nAtomType_(system.simulation().nAtomType()),
@@ -37,11 +39,15 @@ namespace McMd
     maxMoleculeNeighbors_(0)
    {  setClassName("MdPairEnergyCoefficients"); }
 
-   // Destructor
+   /*
+   * Destructor
+   */
    MdPairEnergyCoefficients::~MdPairEnergyCoefficients()
    {}
 
-   // Clear molecules' neighbor list arrays
+   /*
+   * Clear molecules' neighbor list arrays.
+   */
    void MdPairEnergyCoefficients::clear()
    {
       int iSpecies1, iMolecule1;
@@ -57,19 +63,64 @@ namespace McMd
       }
    }
 
-   // Read input parameters
+   /*
+   * Read input parameters.
+   */
    void MdPairEnergyCoefficients::readParameters(std::istream& in)
    {
       readInterval(in);
       readOutputFileName(in);
-      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
-
       read<PairSelector>(in, "selector", selector_);
       read<int>(in, "maxMoleculeNeighbors", maxMoleculeNeighbors_);
 
-      // Set up arrays for every molecule in every species
+      // Allocate
       int iSpecies;
+      moleculeNeighbors_.allocate(nSpecies_);
+      twoMoleculePairEnergy_.allocate(nSpecies_);
+      for (iSpecies = 0; iSpecies < nSpecies_; ++iSpecies) {
+         Species *speciesPtr;
+         int nMolecule;
+         int iMolecule;
 
+         speciesPtr = &system().simulation().species(iSpecies); 
+         nMolecule = speciesPtr->capacity();
+
+         moleculeNeighbors_[iSpecies].allocate(nMolecule);
+         twoMoleculePairEnergy_[iSpecies].allocate(nMolecule);
+         for (iMolecule = 0; iMolecule < nMolecule; ++iMolecule) {
+            moleculeNeighbors_[iSpecies][iMolecule].
+               allocate(maxMoleculeNeighbors_);
+          }
+      }
+      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      isInitialized_ = true;
+   }
+ 
+   /*
+   * Load state from an archive.
+   */
+   void MdPairEnergyCoefficients::loadParameters(Serializable::IArchive& ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
+      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+
+      loadParameter<PairSelector>(ar, "selector", selector_);
+      loadParameter<int>(ar, "maxMoleculeNeighbors", maxMoleculeNeighbors_);
+
+      int nAtomType, nSpecies;
+      ar & nAtomType;
+      ar & nSpecies;
+     
+      if (nAtomType != nAtomType_) {
+         UTIL_THROW("Inconsistent values of nAtomType");
+      }
+      if (nSpecies != nSpecies_) {
+         UTIL_THROW("Inconsistent values of nSpecies");
+      }
+
+      // Allocate moleculeNeighbors and twoMoleculePairEnergy.
+      int iSpecies;
       moleculeNeighbors_.allocate(nSpecies_);
       twoMoleculePairEnergy_.allocate(nSpecies_);
 
@@ -89,10 +140,23 @@ namespace McMd
           }
       }
 
+      ar & pairEnergyAccumulator_;
+      ar & moleculePESqAccumulator_;
+      ar & twoMoleculePESqAccumulator_;
+      ar & pESqAccumulator_;
+
       isInitialized_ = true;
    }
- 
-   // Evaluate energy and print.
+
+   /*
+   * Save state to archive.
+   */
+   void MdPairEnergyCoefficients::save(Serializable::OArchive& ar)
+   { ar & *this; }
+
+   /*
+   * Evaluate contributions to accumulators.
+   */
    void MdPairEnergyCoefficients::sample(long iStep) 
    {
       if (isAtInterval(iStep)) {
@@ -299,19 +363,6 @@ namespace McMd
       pESqAccumulator_.output(outputFile_);
       outputFile_.close();
    }
-
-
-   /*
-   * Save state to binary file archive.
-   */
-   void MdPairEnergyCoefficients::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void MdPairEnergyCoefficients::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
 
 }
 #endif 

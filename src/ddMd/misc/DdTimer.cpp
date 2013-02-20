@@ -28,11 +28,11 @@ namespace DdMd
       for (int i = 0; i < size_; i++) {
          times_[i] = 0.0;
       }
+      time_ = 0.0;
    }
 
    void DdTimer::start()
    {
-      clear();
       begin_ = MPI_Wtime(); 
       previous_ = begin_;
    }
@@ -45,14 +45,12 @@ namespace DdMd
    }
 
    void DdTimer::stop()
-   {  time_ = MPI_Wtime() - begin_; }
+   {  time_ += MPI_Wtime() - begin_; }
 
    #ifdef UTIL_MPI
    void DdTimer::reduce(MPI::Intracomm& communicator) 
    {
       int procs = communicator.Get_size();
-      int rank  = communicator.Get_rank();
-      bool isMaster = bool(rank == 0);
       double sum;
       for (int i = 0; i < size_; i++) {
          communicator.Allreduce(&times_[i], &sum, 1, MPI::DOUBLE, MPI::SUM);

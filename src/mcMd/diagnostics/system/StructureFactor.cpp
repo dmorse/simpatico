@@ -27,30 +27,31 @@ namespace McMd
 
    using namespace Util;
 
-   /// Constructor.
+   /*
+   * Constructor.
+   */
    StructureFactor::StructureFactor(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
    {  setClassName("StructureFactor"); }
 
+   /*
+   * Destructor.
+   */
    StructureFactor::~StructureFactor() 
    {}
 
-   /// Read parameters from file, and allocate data array.
+   /*
+   * Read parameters from file, and allocate memory.
+   */
    void StructureFactor::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
-      //SystemDiagnostic<System>::readParameters(in);
       readInterval(in);
       readOutputFileName(in);
-
-      nAtomType_ = system().simulation().nAtomType();
-
       read<int>(in, "nMode", nMode_);
+      nAtomType_ = system().simulation().nAtomType();
       modes_.allocate(nMode_, nAtomType_);
       readDMatrix<double>(in, "modes", modes_, nMode_, nAtomType_);
-
       read<int>(in, "nWave", nWave_);
       waveIntVectors_.allocate(nWave_);
       readDArray<IntVector>(in, "waveIntVectors", waveIntVectors_, nWave_);
@@ -59,12 +60,68 @@ namespace McMd
       fourierModes_.allocate(nWave_, nMode_);
       structureFactors_.allocate(nWave_, nMode_);
 
-      maximumValue_.allocate(Samples);
-      maximumWaveIntVector_.allocate(Samples);
-      maximumQ_.allocate(Samples);
+      maximumValue_.allocate(nMode_);
+      maximumWaveIntVector_.allocate(nMode_);
+      maximumQ_.allocate(nMode_);
+      for (int j = 0; j < nMode_; ++j) {
+         maximumValue_[j].reserve(Samples);
+         maximumWaveIntVector_[j].reserve(Samples);
+         maximumQ_[j].reserve(Samples);
+      }
 
       isInitialized_ = true;
    }
+
+   /*
+   * Load state from an archive.
+   */
+   void StructureFactor::loadParameters(Serializable::IArchive& ar)
+   {
+      Diagnostic::loadParameters(ar);
+      ar & nAtomType_;
+      loadParameter<int>(ar, "nMode", nMode_);
+      loadDMatrix<double>(ar, "modes", modes_, nMode_, nAtomType_);
+      loadParameter<int>(ar, "nWave", nWave_);
+      loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
+      ar & structureFactors_;
+      ar & nSample_;
+
+      // Validate
+      if (nAtomType_ != system().simulation().nAtomType()) {
+         UTIL_THROW("Inconsistent values of nAtomType_");
+      }
+      if (modes_.capacity1() != nMode_) {
+         UTIL_THROW("Inconsistent capacity1 for modes array");
+      }
+      if (modes_.capacity2() != nAtomType_) {
+         UTIL_THROW("Inconsistent capacity2 for modes array");
+      }
+      if (waveIntVectors_.capacity() != nWave_) {
+         UTIL_THROW("Inconsistent capacity for waveIntVector");
+      }
+
+      // Allocate temporary data structures
+      waveVectors_.allocate(nWave_);
+      fourierModes_.allocate(nWave_, nMode_);
+
+      // Allocate data structures that track maximum
+      maximumValue_.allocate(nMode_);
+      maximumWaveIntVector_.allocate(nMode_);
+      maximumQ_.allocate(nMode_);
+      for (int j = 0; j < nMode_; ++j) {
+         maximumValue_[j].reserve(Samples);
+         maximumWaveIntVector_[j].reserve(Samples);
+         maximumQ_[j].reserve(Samples);
+      }
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to archive.
+   */
+   void StructureFactor::save(Serializable::OArchive& ar)
+   {  ar & *this; }
 
    /*
    * Clear accumulators.
@@ -84,15 +141,15 @@ namespace McMd
             structureFactors_(i, j) = 0.0;
          }
       }
-
       nSample_ = 0;
    }
- 
-   /// Increment Structure Factor
+
+   /* 
+   * Increment structure factors for all wavevectors and modes.
+   */
    void StructureFactor::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
-         maximumValue_[nSample_] = 0.0;
 
          Vector  position;
          std::complex<double>  expFactor;
@@ -139,45 +196,51 @@ namespace McMd
          // Increment structure factors
          double volume = system().boundary().volume();
          double norm;
-         for (i = 0; i < nWave_; ++i) {
-            for (j = 0; j < nMode_; ++j) {
+         for (j = 0; j < nMode_; ++j) {
+            double maxValue = 0.0;
+            IntVector maxIntVector;
+            double maxQ;
+            for (i = 0; i < nWave_; ++i) {
                norm = std::norm(fourierModes_(i, j));
-               if (norm/volume >= maximumValue_[nSample_]) {
-                  maximumValue_[nSample_] = norm/volume;
-                  maximumWaveIntVector_[nSample_] = waveIntVectors_[i];
-                  maximumQ_[nSample_] = waveVectors_[i].abs();
+               if (double(norm/volume) >= maxValue) {
+                  maxValue = double(norm/volume);
+                  maxIntVector = waveIntVectors_[i];
+                  maxQ = waveVectors_[i].abs();
                }
                structureFactors_(i, j) += norm/volume;
             }
+            maximumValue_[j].insert(maximumValue_[j].end(), 1, maxValue);
+            maximumWaveIntVector_[j].insert(maximumWaveIntVector_[j].end(), 
+                                            1, maxIntVector);
+            maximumQ_[j].insert(maximumQ_[j].end(), 1, maxQ);
          }
 
          ++nSample_;
-
       }
 
    }
 
-   /**
-   * Calculate floating point wavevectors.
+   /*
+   * Calculate floating point wavevectors, using current boundary.
    */
    void StructureFactor::makeWaveVectors() 
    {
-      Vector    dWave;
       Boundary* boundaryPtr = &system().boundary();
-      int       i, j;
-
-      // Calculate wavevectors
+      Vector  dWave;
+      int  i, j;
       for (i = 0; i < nWave_; ++i) {
          waveVectors_[i] = Vector::Zero;
          for (j = 0; j < Dimension; ++j) {
             dWave  = boundaryPtr->reciprocalBasisVector(j);
             dWave *= waveIntVectors_[i][j];
             waveVectors_[i] += dWave;
-            //std::cout << waveVectors_[i] << std::endl;
          }
       }
    }
 
+   /*
+   * Output final results to output file.
+   */
    void StructureFactor::output() 
    {
       // Echo parameters to a log file
@@ -204,13 +267,14 @@ namespace McMd
 
       // Outputs history of maximum structure factors
       fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_);
-      for (int i = 0; i < nSample_; ++i) {
-         outputFile_ << maximumWaveIntVector_[i];
-         outputFile_ << Dbl(maximumQ_[i], 20, 8);
-         outputFile_ << Dbl(maximumValue_[i], 20, 8);
-         outputFile_ << std::endl;
+      for (j = 0; j < nMode_; ++j) {
+         for (int i = 0; i < nSample_; ++i) {
+            outputFile_ << maximumWaveIntVector_[j][i];
+            outputFile_ << Dbl(maximumQ_[j][i], 20, 8);
+            outputFile_ << Dbl(maximumValue_[j][i], 20, 8);
+            outputFile_ << std::endl;
+         }
       }
-      outputFile_.close();
 
       #if 0
       // Output each structure factor to a separate file
@@ -242,16 +306,5 @@ namespace McMd
 
    }
 
-   /*
-   * Save state to binary file archive.
-   */
-   void StructureFactor::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void StructureFactor::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
 }
 #endif

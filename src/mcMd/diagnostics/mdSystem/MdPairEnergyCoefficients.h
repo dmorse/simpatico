@@ -43,29 +43,29 @@ namespace McMd
       /// Destructor
       ~MdPairEnergyCoefficients();
 
-      /// Read output file, pair selector and maximum number of neighbors
-      /// per molecule
+      /**
+      * Read parameters and initialize.
+      *
+      * Reads output file, pair selector and maximum number of neighbors
+      * per molecule
+      *
+      * \param in input parameter stream
+      */
       virtual void readParameters(std::istream& in);
  
-      /// Evaluate energy and print.
-      virtual void sample(long iStep);
-
-      /// Output final summary and file format
-      virtual void output();
+      /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
-      * Save state to binary file archive.
+      * Save state to archive.
       *
-      * \param ar binary saving (output) archive.
+      * \param ar saving (output) archive.
       */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
+      virtual void save(Serializable::OArchive& ar);
 
       /**
       * Serialize to/from an archive. 
@@ -75,6 +75,12 @@ namespace McMd
       */
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
+
+      /// Evaluate energy and print.
+      virtual void sample(long iStep);
+
+      /// Output final summary and file format
+      virtual void output();
 
    private:
 
@@ -139,18 +145,10 @@ namespace McMd
    template <class Archive>
    void MdPairEnergyCoefficients::serialize(Archive& ar, const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
-
       ar & pairEnergyAccumulator_;
       ar & moleculePESqAccumulator_;
       ar & twoMoleculePESqAccumulator_;
       ar & pESqAccumulator_;
-      serializeCheck(ar, nAtomType_, "nAtomType");
-      serializeCheck(ar, nSpecies_, "nSpecies");
-      serializeCheck(ar, maxMoleculeNeighbors_, "maxMoleculeNeighbors");
-      //PairSelector  selector_;
       //DArray< DArray< DSArray<  Pair< Atom *> > > > moleculeNeighbors_;
       //DArray< DArray< double > > twoMoleculePairEnergy_;
 

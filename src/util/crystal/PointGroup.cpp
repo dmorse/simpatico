@@ -1,5 +1,5 @@
-#ifndef POINT_GROUP_CPP
-#define POINT_GROUP_CPP
+#ifndef UTIL_POINT_GROUP_CPP
+#define UTIL_POINT_GROUP_CPP
 
 #include "PointGroup.h"
 

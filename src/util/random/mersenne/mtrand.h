@@ -1,5 +1,5 @@
-#ifndef MTRAND_H
-#define MTRAND_H
+#ifndef UTIL_MTRAND_H
+#define UTIL_MTRAND_H
 
 // mtrand.h
 // C++ include file for MT19937, with initialization improved 2002/1/26.
@@ -176,6 +176,19 @@ namespace Util
       x ^= (x << 7) & 0x9D2C5680UL;
       x ^= (x << 15) & 0xEFC60000UL;
       return x ^ (x >> 18);
+   }
+
+   /*
+   * Serialize to/from an archive.
+   */
+   template <class Archive>
+   void MTRand_int32::serialize(Archive& ar, const unsigned int version)
+   {
+      for (int i=0; i < n; ++i) {
+         ar & state[i];
+      }
+      ar & p;
+      ar & init;
    }
 
    /**

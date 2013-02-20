@@ -9,11 +9,15 @@
 #include <util/archives/MemoryOArchive.h>
 #include <util/archives/MemoryIArchive.h>
 #include <util/archives/MemoryCounter.h>
+#include <util/archives/BinaryFileIArchive.h>
+#include <util/archives/BinaryFileOArchive.h>
 
 using namespace Util;
 
-class AverageTest : public ParamFileTest<Average>
+class AverageTest : public UnitTest
 {
+
+   Average accumulator_;
 
 public:
 
@@ -21,34 +25,32 @@ public:
    { } 
 
    void setUp() {
-      openFile("in/Average"); 
-      object().readParam(file());
-      closeFile();
+      std::ifstream paramFile;
+      openInputFile("in/Average", paramFile); 
+      accumulator_.readParam(paramFile);
+      paramFile.close();
    }
       
    void readData() 
    {
       int i, n;
       double x;
-      std::ifstream datafile("in/data");
-      datafile >> n;
+      std::ifstream dataFile;
+      openInputFile("in/data", dataFile);
+      dataFile >> n;
       for (i = 0; i < n; ++i) {
-         datafile >> x;
-         object().sample(x);
+         dataFile >> x;
+         accumulator_.sample(x);
       }
-      datafile.close();
+      dataFile.close();
    }
 
    void testReadParam() 
    {
       printMethod(TEST_FUNC);
 
-      openFile("in/Average"); 
-      object().readParam(file());
-      closeFile();
-
       printEndl();      
-      object().writeParam(std::cout);
+      accumulator_.writeParam(std::cout);
    }
 
    void testSample() 
@@ -58,7 +60,7 @@ public:
       readData();
 
       printEndl();      
-      object().output(std::cout);
+      accumulator_.output(std::cout);
    }
 
    void testSerialize() 
@@ -69,12 +71,12 @@ public:
       readData();
 
       MemoryOArchive u;
-      int size = memorySize(object());
+      int size = memorySize(accumulator_);
       u.allocate(size);
 
       std::cout << size << std::endl;
 
-      u << object();
+      u << accumulator_;
       TEST_ASSERT(u.cursor() == u.begin() + size);
 
       MemoryIArchive v;
@@ -87,6 +89,48 @@ public:
       clone.output(std::cout);
    }
 
+   void testSerializeFile() 
+   {
+      printMethod(TEST_FUNC);
+      printEndl();
+
+      readData();
+
+      BinaryFileOArchive u;
+      openOutputFile("binary", u.file());
+      u << accumulator_;
+      u.file().close();
+
+      Average clone;
+      BinaryFileIArchive v;
+      openInputFile("binary", v.file());
+      v >> clone;
+      v.file().close();
+      
+      clone.output(std::cout);
+   }
+
+   void testSaveLoad() 
+   {
+      printMethod(TEST_FUNC);
+      printEndl();
+
+      readData();
+
+      BinaryFileOArchive u;
+      openOutputFile("binary", u.file());
+      accumulator_.save(u);
+      u.file().close();
+
+      Average clone;
+      BinaryFileIArchive v;
+      openInputFile("binary", v.file());
+      clone.load(v);
+      v.file().close();
+ 
+      clone.writeParam(std::cout);
+      clone.output(std::cout);
+   }
 
 };
 
@@ -94,6 +138,8 @@ TEST_BEGIN(AverageTest)
 TEST_ADD(AverageTest, testReadParam)
 TEST_ADD(AverageTest, testSample)
 TEST_ADD(AverageTest, testSerialize)
+TEST_ADD(AverageTest, testSerializeFile)
+TEST_ADD(AverageTest, testSaveLoad)
 TEST_END(AverageTest)
 
 #endif

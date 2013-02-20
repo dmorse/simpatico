@@ -37,8 +37,6 @@ namespace McMd
    
    public:
    
-      // Methods
-   
       /**
       * Constructor.
       */

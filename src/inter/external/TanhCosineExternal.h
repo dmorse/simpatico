@@ -1,5 +1,5 @@
-#ifndef TANH_COSINE_EXTERNAL_H
-#define TANH_COSINE_EXTERNAL_H
+#ifndef INTER_TANH_COSINE_EXTERNAL_H
+#define INTER_TANH_COSINE_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -86,6 +86,20 @@ namespace Inter
       * \param in input stream 
       */
       void readParameters(std::istream &in);
+
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Returns external parameter
@@ -183,7 +197,7 @@ namespace Inter
       
       return prefactor_[type]*externalParameter_*tanh(clipcos);
    }
-   
+
    /* 
    * Calculate external potential energy for a single atom.
    */
@@ -197,7 +211,7 @@ namespace Inter
       
       return totalEnergy;
    }
-  
+
    /* 
    * Calculate force for a particle as a function of distance to boundary.
    */
@@ -228,7 +242,6 @@ namespace Inter
       force.zero();
       scalarf = forceScalar(d, type);
       force[perpDirection_] = scalarf;
-      
    }
  
 }

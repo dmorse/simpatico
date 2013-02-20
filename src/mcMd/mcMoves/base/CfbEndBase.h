@@ -19,15 +19,20 @@ namespace McMd
    class McSystem;
 
    /**
-   * Base class for configuration bias end regrowth moves.
+   * Base class for configuration bias (CFB) end regrowth moves.
+   *
+   * This class provides methods deleteEndAtom and addEndAtom that
+   * delete or add a single atom to a specified end of a linear chain.
+   * These are the basic building blocks of CFB moves for flexible
+   * linear chains. 
    *
    * \ingroup McMd_McMove_Module MD_Module
    */
    class CfbEndBase : public SystemMove 
    {
-   
+
    public:
-   
+
       /**
       * Constructor. 
       */
@@ -39,9 +44,15 @@ namespace McMd
       virtual ~CfbEndBase();
 
       /**
-      * Read species to which displacement is applied.
+      * Read parameter nTrial.
+      *
+      * This function is used only for testing. Subclasses read the
+      * protected member nTrial directly. 
       */
       virtual void readParameters(std::istream& in);
+
+      // No loadParameters or save methods are needed. The nTrial
+      // can be directly loaded and saved by subclasses.
    
       /**
       * CFB algorithm for deleting an end atom from a flexible chain.
@@ -78,9 +89,9 @@ namespace McMd
       *
       * Upon return:
       *  
-      *   - rosenbluth is the nonbonded Rosenblush factor for the added atom,
-      *     i.e., the sum of Boltzmann factors from nonbonded pair interactions
-      *     for all nTrial_ trial positions.
+      *   - rosenbluth is the nonbonded Rosenblush factor for the added 
+      *     atom, i.e., the sum of Boltzmann factors from nonbonded pair 
+      *     interactions for all nTrial_ trial positions.
       *
       *   - energy is the total energy (bonded + nonbonded) of the new end
       *     atom in its chosen position.
@@ -95,7 +106,7 @@ namespace McMd
                       double &rosenbluth, double &energy);
    
    protected:
-   
+
       /// Maximum allowed number of trial positions for a regrown atom.
       static const int MaxTrial_ = 20; 
    
@@ -104,7 +115,7 @@ namespace McMd
    
       /// Grant friend access to unit test class
       //  friend class CbEndBaseTest;
-   
+
    };
 
 }      

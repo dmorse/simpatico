@@ -1,0 +1,287 @@
+namespace McMd
+{
+
+/*! \page developer_mcMdData_page 7.5 Data Structures (mcSim and mdSim)
+
+In this section, we discuss details of how the most important data
+structures are organized in the implementation of the mcSim and 
+mdSim single-processor programs. The organization of data in the
+parallel ddSim program is signficantly different.
+
+The underlying organization of memory in mcSim and mdSim is not 
+apparent from the public interface. The public interface of the
+System class allows Molecule objects to be accessed only through 
+methods of a System that either return a Molecule of a particular 
+species by reference, or initialize an iterator for all molecules 
+of one Species. To access a particular atom, one must first obtain 
+a reference or pointer to the parent Molecule, and then invoke a 
+method of the Molecule that either returns a particular Atom by 
+reference or that initializes an iterator for all atoms in one 
+Molecule. Particular Group<NAtom> objects within a molecule, which 
+represent covalent bonds (NAtom=2), angle groups and torsion groups 
+can be accessed by patterns similar to those used for access Atoms. 
+
+The implementation of Simpatico actually uses a set of large 
+arrays of Molecule, Atom, and Group objects, each of which acts
+as a sort of memory pool. Each of these arrays is a private 
+member of the main Simulation object, and is allocated during 
+the initialization of the simulation. Each of these arrays holds 
+all of the Molecule, Atom, and Group objects that are available 
+for use by molecules of any Species in any System during a 
+simulation. 
+
+Each molecule object is permanently associated with a block of Atom 
+objects in the global Atom array, a block of Bond (i.e,. Group<2>) 
+objects in the global array of Bond objects, and so forth for Angle
+(Group<3>) and Torsion (Group<4>) objects. This association of each
+molecule with blocks of constitutent objects is created immediately 
+after these arrays are allocated, by setting pointer members of 
+each molecule to point to the first element of the associated blocks 
+of Atom and Group<NAtom> objects. This association of Molecule 
+objects with blocks of atoms and groups is permanent: It is never
+changed after it is created. Each Atom object also has a pointer 
+to its parent Molecule, and each Molecule has a pointer to its 
+parent Species, which are also set during initialization of the 
+Simulation, and unchanged thereafter.
+
+Molecule objects and associated blocks of atoms and Group objects
+are never created or destroyed after initialization. Ownership of 
+a Molecule may, however, be transferred between a reservoir of 
+unused molecules of that Species and a System, or (in Gibbs 
+ensemble) between two Systems, by transferring a pointer to the 
+molecule between appropriate containers. This is discussed in 
+more detail below.
+
+<b> Molecules </b>
+
+The private molecules_ array container of a Simulation holds all 
+of the Molecule objects of that are available for all Species in 
+a Simulation. Each species is assigned a contiguous block of 
+Molecule elements within this array. 
+
+The number of molecules that is allocated for each species is the 
+capacity of the Species.  The capacity of the molecules_ array is 
+thus given by the sum of the values of capacity() for all Species.
+The capacity of each species is specified in the parameter file. 
+In Canonical and Gibbs ensembles, the total number of molecules 
+of each Species is fixed, and so the capacity can be set equal 
+to this actual number of molecules. In grand canonical ensembles, 
+the Species capacity must be chosen to be large enough to accomodate 
+any fluctuations that might be encountered during the simulation.  
+
+Each System in a Simulation has a container for each Species that
+that holds pointers to Molecules of that Species that are 
+currently in the System.  In addition, each Species object 
+has a container, known as a reservoir, that holds pointers to
+"unused" molecules within the block of memory reserved for that 
+species. The reservoir is implemented as a stack of pointers to 
+Molecule objects (an ArrayStack < Molecule > container). The typedef 
+Species::Reservoir is a synonym for ArrayStack < Molecule >. The 
+container used by each System to hold molecules of one Species is 
+an ArraySet < Molecule > object.  The typedef System::MoleculeSet 
+is a synonym for ArraySet < Molecule >.  An ArraySet < Molecule > 
+is a container for Molecule pointers that provides rapid O(1) 
+random access and O(1) insertion and deletion, but that generally 
+changes the order in which the Molecule* pointers are stored 
+when a Molecule is removed. 
+
+When a Simulation is initialized, all the molecules of each Species 
+are initially pushed onto the associated reservoir. Ownership of 
+some or all of the molecules of each species is then transferred to 
+a System when a configuration file is read. The configuration file 
+for a System contains the actual number of molecules of each species
+in that System, as well as all of the atomic coordinates. Ownership 
+of a molecule is transferred from the reservoir to a System by 
+popping a molecule off the reservoir, using the pop() method of the 
+Reservoir container, and then calling System::AddMolecule(Molecule&) 
+to add it to the MoleculeSet for that Species in the System. 
+
+This data structure is designed to accomodate later implementation
+of simulations of open ensembles, in which molecules may be added 
+to and removed from a System during a simulation. In grand-canonical 
+ensemble, a Molecule may be transferred from a reservoir to a System
+by the same procedure as that used when reading a configuration file, 
+and may be removed from a system by calling the system 
+removeMolecule(Molecule&) method and then pushing the molecule onto 
+the appropriate reservoir. In Gibbs ensemble, a Molecule may be 
+transferred from one System to another by invoking the addMolecule() 
+and removeMolecule() methods of the two System.
+
+The organization of data in Simpatico is a result of the desire 
+to: (1) Avoid dynamical allocation of memory after initialization 
+of the simulation, (2) Arrange memory as much as possible in 
+contiguous arrays, and (3) Allow for eventual extension to open 
+ensemble simulations. Criteria (1) and (2) were motivated by 
+efficiency considerations, in the belief that these criteria might 
+be necessary to implement molecular dynamics with an efficiency 
+that rivals that of well optimized MD programs.
+
+<b> Atom Objects </b>
+
+The atoms_ array of a Simulation holds all of the Atom objects that 
+are available in a simulation, for all molecules of all species. 
+When the initialization of a Simulation is completed, each Molecule 
+object is associated with a contiguous block of Atom objects within 
+this array. Molecules of the same Species are associated with 
+contiguous blocks of Atoms within this array, creating a larger 
+block of Atom objects associated with the Species. The size of the 
+atoms_ array is chosen to be large enough to hold all of the Atoms 
+associated with all molecules of all species. As already noted, the
+association between Molecules and blocks of Atoms is created during 
+initialization, by setting a pointer in each Molecule to point to 
+the first Atom in the associated block of the atoms_ array, and 
+setting a pointer for each Atom that points to the parent Molecule 
+object. 
+
+<b> Group Objects </b>
+
+The Group objects of each type (i.e., Bonds, Angle, and Torsion 
+objects) are also stored in a set of global arrays, which are
+DArray container members of the Simulation object. It is sufficient 
+to discuss the Bond (or Group<2>) objects. All Bond objects needed 
+construct all molecules of  all Species are held in the bonds_
+array. The organization of this array is closely analogous to 
+that of the atoms_ array: Each Molecule is associated with a 
+contiguous block of Bond objects, with consecutive Molecules 
+consecutive blocks.  Each Molecule contains a pointer to the 
+first Bond in the associated Block. Each Bond contains pointers 
+to the two associated Atom objects in the atoms_ array, and a 
+bond type index. The identities of the two Atom objects are established 
+during initialization of the simulation, using the description of
+covalent structure that is stored in the associate Species object,
+and never changes thereafter.  
+
+Arrays of Angle (Group<3>) and Torsion (Group<4>) objects have
+not yet been added, but will be organized and initialized in a
+manner closely analogous to that used for Bond objects.
+
+<b> Defining Chemical Structure: SpeciesGroup Objects </b>
+
+Each Species object contains a set of SpeciesGroup objects that 
+specify the chemical structure of a generic Molecule of that 
+Species. The set of Atoms involved in an N-body covalent
+interaction (i.e., a 2-body Bond, a 3-body Angle, or a 4-body
+torsion) are specified in a SpeciesGroup < N > object as a set 
+of integer atom indices, in which the atoms of each molecule are 
+indexed from 0 within each molecule. The resulting description 
+of chemical structure of a generic molecule is used during 
+initialization to assign pointers to specific Atom objects to 
+Group objects that are associated with specific Molecules. 
+Each SpeciesGroup is thus a template for initializing one 
+Group within each molecule of the associated species.
+
+<b> Initialization Process</b>
+
+All required initialization of a simulation is done within the
+readParam() method of the main Simulation object. More generally,
+the initialization of each object in Simpatico is, as much as 
+possible, carried out entirely within its readParam method. The 
+readParam methods of McSimulation and MdSimulation subclasses 
+both call Simulation::readParam() to carry out the initialization 
+of basic data structures required by both types of Simulation.
+
+Before allocating any memory for the data structures described
+above, Simulation::readParam() method invokes the readParam 
+method of the SpeciesManager. This calls the readParam method
+of each species, and thus determines the capacity of each 
+species (i.e., the number of molecules to be allocated) and
+the number of atoms, bonds, etc. per molecule of each species.
+This information is used to calculate the total number of
+molecules, atoms, and bonds needed, and the associated global 
+arrays are allocated. After associations between molecules and 
+blocks of Atom and Group<N> objects are created, Bond objects 
+are initialized, and atom type ids are set, using the public 
+interface of the Species class to describe the chemical 
+structure of each species. 
+
+The last step of Simulation::readParam() is to push all of
+the molecules of each Species onto the associated reservoir. 
+Molecules are initially added to the reservoir in reverse 
+order, so that the first (lowest address) molecule is at 
+the top of the stack. This is so that they can be popped 
+off in sequential order (first molecule first), when the 
+configuration file is read. The readParam() method of an 
+McSimulation or MdSimulation also calls the readParam() 
+method for the associated System object, which allocates 
+and initializes the container for each Species in the 
+associated System.  After the main readParam() method 
+returns, the System is empty, but is ready to read a 
+configuration file. 
+
+The config file for a System is read by an associated 
+ConfigIo object.  When a config file is read, ownership 
+of a specified number of molecules of each species (less
+than or equal to the capacity) is transferred from the 
+reservoir to the System, and atomic positions are assigned 
+to all atoms of these molecules. In simulations of closed 
+systems, in which molecules are added to a System only when 
+the configuration file is read, iteration over all molecules 
+of a Species will thus traverse the molecule array and the 
+associated blocks of the Atom and Group arrays sequentially. 
+
+In a long grand-canonical or Gibbs ensemble simulation, 
+iteration over all molecules of a Species within one System 
+will eventually lead to a random pattern access of Molecules 
+and associated blocks of Atoms and Groups.
+
+<b> Atom Class Implementation </b>
+
+In order to keep each Atom object small for efficiency, the 
+Atom class is implemented in a way that allows some of the 
+logical attributes of an Atom to be stored in separate 
+arrays, rather than as nonstatic members of the Atom class.
+All of the atom objects in a simulation are allocated in
+a single array, which is a private static member of the
+Atom class. The atoms_ array member of the main simulation
+object is actually an RArray<Atom> container that holds 
+the address and and capacity of this static array, and
+that thus acts as an alias for this array. Other private 
+static array members of Atom are allocated for attributes 
+of an Atom that are not actually members of an Atom object.  
+In the current implementation, 
+the Mask associated with an atom, the pointer to its parent 
+Molecule, and the associated force and velocity Vectors are 
+all stored in such separate arrays. The accessor and setter 
+methods associated with these attributes directly access 
+these arrays, thus providing an interface identical to what 
+one would expect if these attributes were stored as members 
+of the Atom object. In order for this scheme to work, however, 
+we must prohibit instantiation of individual Atom objects
+(by making the default and copy constructors private). 
+This scheme requires that all of the Atom objects in a
+simulation be allocated at once by calling the static
+Atom::allocate() method, which allocates both the array
+of Atom objects and associated arrays of atom attributes,
+all of which use the same indexing scheme. 
+
+This peculiar implementation of the Atom class was motivated 
+by efficiency, and by consideration of the nature of the inner 
+loop in the calculation of nonbonded interactions.  The inner 
+loop of the calculation of nonbonded pair interactions in either 
+an MC or an MD simulation involves an iteration of the neighbors 
+of a particular "root" atom (using either a cell list in MC or a 
+Verlet list in MD).  This requires access to the Mask object 
+associatd with the root atom, but requires access to only the 
+position and type ids of its neighbors. The inner loop in MD 
+also requires access to the force vector associated with both 
+the root Atom and each interacting neighbor. In the current 
+implementation, and Atom is a 32 byte object that contains 
+only a position Vector, an atomic type id, and a global atom 
+id, which is also the array index of the atom. In this case, 
+an Atom object thus contains only the information required 
+to calculate the pair interaction for each neighbor (its 
+position and atomic type id) and the atom array index that 
+is required to rapidly access the other attributes that are
+stored in separate arrays. 
+
+Navigation:
+<ul style="list-style: none;">
+ <li> \ref developer_iterator_page  (Previous)  </li>
+ <li> \ref developer_page           (Up)     </li>
+ <li> \ref developer_test_page      (Next)  </li>
+</ul>
+
+ 
+
+*/
+}

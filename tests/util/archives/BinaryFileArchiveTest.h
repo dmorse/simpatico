@@ -27,29 +27,33 @@ public:
    {}
 
    void tearDown() {}
-   void testOArchiveConstructor();
+   void testOArchiveConstructor1();
+   void testOArchiveConstructor2();
    void testPack();
 
 };
 
 
-void BinaryFileArchiveTest::testOArchiveConstructor()
+void BinaryFileArchiveTest::testOArchiveConstructor1()
 {
    printMethod(TEST_FUNC);
-   std::ofstream out;
-   openOutputFile("binary", out);
    BinaryFileOArchive  v;
-   v.setStream(out);
-   out.close();
+   openOutputFile("binary", v.file());
+   v.file().close();
+} 
+
+void BinaryFileArchiveTest::testOArchiveConstructor2()
+{
+   printMethod(TEST_FUNC);
+   BinaryFileOArchive  v("dummy");
+   v.file().close();
 } 
 
 void BinaryFileArchiveTest::testPack()
 {
    printMethod(TEST_FUNC);
-   std::ofstream out;
-   openOutputFile("binary", out);
    BinaryFileOArchive  v;
-   v.setStream(out);
+   openOutputFile("binary", v.file());
 
    // Declare variables
    int i1, i2;
@@ -60,7 +64,8 @@ void BinaryFileArchiveTest::testPack()
    SerializeTestClass o1, o2;
    double b1[4];
    double b2[4];
-
+   double m1[2][2];
+   double m2[2][2];
 
    // Initialize variables
    i1 = 3;
@@ -76,6 +81,11 @@ void BinaryFileArchiveTest::testPack()
    b1[1] = 8.0;
    b1[2] = 7.0;
    b1[3] = 6.0;
+   m1[0][0] = 13.0;
+   m1[0][1] = 14.0;
+   m1[1][0] = 15.0;
+   m1[1][1] = 16.0;
+  
   
    // Write variables to OArchive v
    v << i1;
@@ -85,12 +95,12 @@ void BinaryFileArchiveTest::testPack()
    v << a1;
    v << o1;
    v.pack(b1, 4);
-   out.close();
+   v.pack(m1[0], 2, 2);
+   v.file().close();
 
-   std::ifstream in;
-   openInputFile("binary", in);
+   // Create IArchive u
    BinaryFileIArchive u;
-   u.setStream(in);
+   openInputFile("binary", u.file());
 
    u >> i2;
    TEST_ASSERT(i1 == i2);
@@ -115,10 +125,19 @@ void BinaryFileArchiveTest::testPack()
    for (int j = 0; j < 4; ++j) {
       TEST_ASSERT(b1[j] == b2[j]);
    }
+
+   u.unpack(m2[0], 2, 2);
+   int i, j;
+   for (i = 0; i < 2; ++i) {
+      for (j = 0; j < 2; ++j) {
+         TEST_ASSERT(eq(m1[i][j], m2[i][j]));
+      }
+   }
 }
 
 TEST_BEGIN(BinaryFileArchiveTest)
-TEST_ADD(BinaryFileArchiveTest, testOArchiveConstructor)
+TEST_ADD(BinaryFileArchiveTest, testOArchiveConstructor1)
+TEST_ADD(BinaryFileArchiveTest, testOArchiveConstructor2)
 TEST_ADD(BinaryFileArchiveTest, testPack)
 TEST_END(BinaryFileArchiveTest)
 

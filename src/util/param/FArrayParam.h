@@ -1,5 +1,5 @@
-#ifndef F_ARRAY_PARAM_H
-#define F_ARRAY_PARAM_H
+#ifndef UTIL_F_ARRAY_PARAM_H
+#define UTIL_F_ARRAY_PARAM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -7,7 +7,6 @@
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
-
 
 #include <util/param/Parameter.h>
 #include <util/containers/FArray.h>
@@ -30,8 +29,13 @@ namespace Util
    {
    
    public:
-   
-      /// Constructor.
+
+      /**
+      * Constructor.
+      *
+      * \param label  label string for parameter file
+      * \param array  associated FArray variable
+      */
       FArrayParam(const char *label, FArray<Type, N>& array);
  
       /** 
@@ -47,6 +51,20 @@ namespace Util
       * \param out output stream
       */
       void writeParam(std::ostream &out);
+
+      /**
+      * Load from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      void load(Serializable::IArchive& ar);
+
+      /**
+      * Save to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      void save(Serializable::OArchive& ar);
 
    protected:
    
@@ -70,7 +88,6 @@ namespace Util
    template <class Type, int N>
    void FArrayParam<Type, N>::readParam(std::istream &in)
    {
-
       if (isParamIoProcessor()) {
          in >> label_;
          for (int i = 0; i < N; ++i) {
@@ -81,10 +98,10 @@ namespace Util
          }
       }
       #ifdef UTIL_MPI
-         if (hasParamCommunicator()) 
-            bcast<Type>(paramCommunicator(), &((*arrayPtr_)[0]), N, 0); 
+      if (hasParamCommunicator()) {
+         bcast<Type>(paramCommunicator(), &((*arrayPtr_)[0]), N, 0); 
+      }
       #endif
-
    }
 
    /*
@@ -105,6 +122,35 @@ namespace Util
              << std::setw(Parameter::Width)
              << (*arrayPtr_)[i] 
              << std::endl;
+      }
+   }
+
+   /*
+   * Load from an archive.
+   */
+   template <class Type, int N>
+   void FArrayParam<Type, N>::load(Serializable::IArchive& ar)
+   {
+      if (isParamIoProcessor()) {
+         for (int i = 0; i < N; ++i) {
+            ar >> (*arrayPtr_)[i];
+         }
+      }
+      #ifdef UTIL_MPI
+      if (hasParamCommunicator()) {
+         bcast<Type>(paramCommunicator(), *arrayPtr_, N, 0); 
+      }
+      #endif
+   }
+
+   /*
+   * Save to an archive.
+   */
+   template <class Type, int N>
+   void FArrayParam<Type, N>::save(Serializable::OArchive& ar)
+   {
+      for (int i = 0; i < N; ++i) {
+         ar << (*arrayPtr_)[i];
       }
    }
 

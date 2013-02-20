@@ -37,8 +37,24 @@ namespace McMd
    }
    
    /* 
-   * Return type_ for every atom.
+   * Read type.
    */
+   void Point::loadSpeciesParam(Serializable::IArchive &ar)
+   {  
+      loadParameter<int>(ar,"type", type_); 
+      allocate();
+      atomTypeIds_[0] = type_;
+   }
+   
+   /* 
+   * Save atom type.
+   */
+   void Point::save(Serializable::OArchive &ar)
+   {
+      ar << moleculeCapacity_;
+      ar << type_;
+   }
+    
    int Point::getAtomTypeId(Molecule& molecule, int index)
    {
       assert(index == 0);  

@@ -1,5 +1,5 @@
-#ifndef AUTO_CORR_ARRAY_H
-#define AUTO_CORR_ARRAY_H
+#ifndef UTIL_AUTO_CORR_ARRAY_H
+#define UTIL_AUTO_CORR_ARRAY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -73,7 +73,7 @@ namespace Util
       *
       * \param in input parameter stream
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
    
       /**
       * Allocate memory, and clear history.
@@ -85,6 +85,20 @@ namespace Util
       * \param bufferCapacity   maximum number of values in each history
       */
       void setParam(int ensembleCapacity, int bufferCapacity);
+   
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+   
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
    
       /**
       * Set actual number of sequences in ensemble.
@@ -202,7 +216,7 @@ namespace Util
    }
 
    /*
-   * Default destructor.
+   * Destructor.
    */
    template <typename Data, typename Product>
    AutoCorrArray<Data, Product>::~AutoCorrArray() 
@@ -212,16 +226,12 @@ namespace Util
    * Read parameters from file.
    */
    template <typename Data, typename Product>
-   void AutoCorrArray<Data, Product>::readParam(std::istream& in)
+   void AutoCorrArray<Data, Product>::readParameters(std::istream& in)
    {
-      readBegin(in, "AutoCorrArray");
-
       read<int>(in, "ensembleCapacity", ensembleCapacity_);
       read<int>(in, "bufferCapacity",   bufferCapacity_);
       nEnsemble_ = ensembleCapacity_;
       allocate();
-
-      readEnd(in);
    }
    
    /*
@@ -231,10 +241,33 @@ namespace Util
    void AutoCorrArray<Data, Product>::setParam(int ensembleCapacity, int bufferCapacity)
    {
       ensembleCapacity_ = ensembleCapacity;
-      bufferCapacity_   = bufferCapacity;
+      bufferCapacity_ = bufferCapacity;
       allocate();
-      nEnsemble_        = ensembleCapacity;
+      nEnsemble_ = ensembleCapacity;
    }
+
+   /*
+   * Load internal state from archive.
+   */
+   template <typename Data, typename Product>
+   void AutoCorrArray<Data, Product>::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<int>(ar, "ensembleCapacity", ensembleCapacity_);
+      loadParameter<int>(ar, "bufferCapacity",   bufferCapacity_);
+      ar & nEnsemble_;
+      ar & buffers_; 
+      ar & corr_;
+      ar & nCorr_;
+      ar & sum_;
+      ar & nSample_;
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   template <typename Data, typename Product>
+   void AutoCorrArray<Data, Product>::save(Serializable::OArchive &ar)
+   { ar & *this; }
 
    /*
    * Set or reset nEnsemble.
@@ -242,36 +275,33 @@ namespace Util
    template <typename Data, typename Product>
    void AutoCorrArray<Data, Product>::setNEnsemble(int nEnsemble)
    {
-      if (ensembleCapacity_ == 0) 
+      if (ensembleCapacity_ == 0) {
          UTIL_THROW("No memory has been allocated: ensembleCapacity_ == 0"); 
-      if (nEnsemble > ensembleCapacity_) 
+      }
+      if (nEnsemble > ensembleCapacity_) {
          UTIL_THROW("nEnsemble > ensembleCapacity_");      
+      }
       nEnsemble_ = nEnsemble;
    }
 
    /* 
-   * Set previously allocated to initial empty state.
+   * Set accumulator to initial empty state.
    */
    template <typename Data, typename Product>
    void AutoCorrArray<Data, Product>::clear()
    {   
       setToZero(sum_);
       nSample_ = 0;
-
       if (bufferCapacity_ > 0) {
-
          int i;
          for (i = 0; i < bufferCapacity_; ++i) {
             setToZero(corr_[i]);
             nCorr_[i] = 0;
          }
-   
          for (i = 0; i < ensembleCapacity_; ++i) {
             buffers_[i].clear();
          }
-
       }
-
    }
    
    /*
@@ -281,7 +311,6 @@ namespace Util
    void AutoCorrArray<Data, Product>::allocate()
    { 
       if (bufferCapacity_ > 0) { 
- 
          // Allocate autocorrelation accumulators
          corr_.allocate(bufferCapacity_);
          nCorr_.allocate(bufferCapacity_);
@@ -291,7 +320,6 @@ namespace Util
          for (int i=0; i < ensembleCapacity_; ++i) {
             buffers_[i].allocate(bufferCapacity_);
          }
-
       }
       clear();
    }
@@ -303,7 +331,6 @@ namespace Util
    void AutoCorrArray<Data, Product>::sample(const Array<Data>& values)
    {
       int i, j;
-
       ++nSample_;
 
       for (i = 0; i < nEnsemble_; ++i) {
@@ -358,12 +385,12 @@ namespace Util
    template <typename Data, typename Product>
    void AutoCorrArray<Data, Product>::output(std::ostream& outFile) 
    {
-      Data    ave = average();
       Product autocorr;
-      Product aveSq;
+      // Product aveSq;
+      // Data    ave = average();
    
       // Calculate and output autocorrelation
-      aveSq = product(ave, ave);
+      // aveSq = product(ave, ave);
       int bufferSize = buffers_[0].size();
       for (int i = 0; i < bufferSize; ++i) {
          autocorr = corr_[i]/double(nCorr_[i]*nEnsemble_);
@@ -371,7 +398,6 @@ namespace Util
          //outFile << Int(i) << Dbl(autocorr) << Int(nCorr_[i]) << std::endl;
          outFile << Int(i) << Dbl(autocorr) << std::endl;
       }
-      
    }
    
    /*
@@ -399,7 +425,6 @@ namespace Util
          sum += autocorr;
       }
       sum /= variance;
-      
       return sum; 
    }
   
@@ -411,13 +436,13 @@ namespace Util
    void AutoCorrArray<Data, Product>::serialize(Archive& ar, 
                                                 const unsigned int version)
    {
+      ar & ensembleCapacity_;
+      ar & bufferCapacity_;
+      ar & nEnsemble_;
       ar & buffers_; 
       ar & corr_;
       ar & nCorr_;
       ar & sum_;
-      ar & ensembleCapacity_;
-      ar & bufferCapacity_;
-      ar & nEnsemble_;
       ar & nSample_;
    }
 

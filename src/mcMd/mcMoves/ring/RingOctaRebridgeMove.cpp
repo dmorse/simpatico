@@ -50,8 +50,39 @@ namespace McMd
       // Use dynamic_cast to check that the Species is actually a Linear species
       Ring* ringPtr;
       ringPtr = dynamic_cast<Ring*>(&(simulation().species(speciesId_)));
-    }
+      if (!ringPtr) {
+         UTIL_THROW("Not a Ring species");
+      }
+   }
 
+   /*
+   * Load state from an archive.
+   */
+   void RingOctaRebridgeMove::loadParameters(Serializable::IArchive& ar)
+   {  
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<double>(ar, "upperBridge", upperBridge_);
+      loadParameter<double>(ar, "lowerBridge", lowerBridge_);
+
+      // Validate
+      Ring* ringPtr;
+      ringPtr = dynamic_cast<Ring*>(&(simulation().species(speciesId_)));
+      if (!ringPtr) {
+         UTIL_THROW("Species is not a Ring species");
+      }
+   }
+
+   /*
+   * Save state to an archive.
+   */
+   void RingOctaRebridgeMove::save(Serializable::OArchive& ar)
+   {
+      McMove::save(ar);
+      ar & speciesId_;
+      ar & upperBridge_;
+      ar & lowerBridge_;
+   }
 
    /* 
    * Generate, attempt and accept or reject a Monte Carlo move.
@@ -67,11 +98,9 @@ namespace McMd
    {
       Molecule *molPtr1;    // pointer to the rebridging molecule
       Molecule *molPtr2;    // pointer to the rebridging molecule
-      Atom     *aPtr, *bPtr, *cPtr, *dPtr; // atom pointers
-      Atom     *mPtr, *nPtr;               // atom pointers
+      Atom     *mPtr, *nPtr; // atom pointers
       Vector   swapV;
-      int      nAtom, ia, ib, ic, id, im, in, molId2;
-      int      bondType;
+      int      nAtom, im, in, molId2;
       double   energy;
       bool     found, accept;
 
@@ -88,23 +117,10 @@ namespace McMd
       found = scanBridge(molPtr1, im, molId2, in);
       if (!found) return false;
 
-      ia = modId(im-1, nAtom);
-      ib = modId(im+1, nAtom);
-      ic = modId(in-1, nAtom);
-      id = modId(in+1, nAtom);
-
       // Calcuate the energy change.
       mPtr = &(molPtr1->atom(im));
-      aPtr = &(molPtr1->atom(ia));
-      bPtr = &(molPtr1->atom(ib));
-
       molPtr2 = &(system().molecule(speciesId_, molId2));
-      cPtr = &(molPtr2->atom(ic));
-      dPtr = &(molPtr2->atom(id));
       nPtr = &(molPtr2->atom(in));
-
-      bondType = molPtr1->bond(im).typeId();
-      //octaEnergy(aPtr, bPtr, cPtr, dPtr, mPtr, nPtr, bondType, energy);
 
       energy = 0.0;
       energy -= system().atomPotentialEnergy(*mPtr);

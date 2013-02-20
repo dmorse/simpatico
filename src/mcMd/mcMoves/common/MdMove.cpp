@@ -55,11 +55,30 @@ namespace McMd
    }
 
    /*
+   * Load internal state from an archive.
+   */
+   void MdMove::loadParameters(Serializable::IArchive &ar)
+   {
+      McMove::loadParameters(ar);
+      loadParameter<int>(ar, "nStep", nStep_);
+      loadParamComposite(ar, *mdSystemPtr_);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void MdMove::save(Serializable::OArchive &ar)
+   {
+      McMove::save(ar);
+      ar << nStep_;
+      mdSystemPtr_->saveParameters(ar);
+   }
+
+   /*
    * Generate, attempt and accept or reject a Hybrid MD/MC move.
    */
    bool MdMove::move()
    {
-      // Increment counter for attempted moves
       incrementNAttempt();
 
       // Initialize MdSystem
@@ -82,7 +101,6 @@ namespace McMd
       // Accept all moves
       incrementNAccept();
       return true;
-
    }
 
 }

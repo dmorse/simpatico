@@ -1,4 +1,3 @@
-#ifndef INTER_NOPAIR
 #ifndef MCMD_MC_PAIR_POTENTIAL_H
 #define MCMD_MC_PAIR_POTENTIAL_H
 
@@ -168,5 +167,4 @@ namespace McMd
    { return cellList_; }
 
 } 
-#endif
 #endif

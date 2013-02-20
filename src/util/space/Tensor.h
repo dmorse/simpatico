@@ -1,5 +1,5 @@
-#ifndef TENSOR_H
-#define TENSOR_H
+#ifndef UTIL_TENSOR_H
+#define UTIL_TENSOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -256,8 +256,6 @@ namespace Util
 
       /**
       * Serialize to/from an archive.
-      *
-      * Implementation uses syntax of Boost::serialize.
       *
       * \param ar       archive
       * \param version  archive version id

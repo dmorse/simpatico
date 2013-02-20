@@ -9,10 +9,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/diagnostics/SystemDiagnostic.h>   // base class template
-#include <mcMd/mcSimulation/McSystem.h>          // base template parameter
-#include <util/accumulators/Average.h>           // member
-#include <mcMd/diagnostics/util/PairSelector.h>  // member
+#include <mcMd/diagnostics/util/AverageDiagnostic.h>  // base class template
+#include <mcMd/mcSimulation/McSystem.h>               // base template parameter
 
 #include <cstdio> 
 
@@ -26,89 +24,38 @@ namespace McMd
    *
    * \ingroup McMd_Diagnostic_Module
    */
-   class McExternalEnergyAverage : public SystemDiagnostic<McSystem>
+   class McExternalEnergyAverage : public AverageDiagnostic<McSystem>
    {
    
    public:
 
       /**   
       * Constructor.
+      *
+      * \param system parent McSystem
       */
       McExternalEnergyAverage(McSystem& system);
 
-      /**
-      * Read parameters and initialize.
-      */
-      virtual void readParameters(std::istream& in);
-
-      /** 
-      * Clear accumulator.
-      */
-      virtual void setup();
-   
       /* 
       * Evaluate external energy per particle, and add to ensemble. 
+      *
+      * \param iStep step counter index
       */
       virtual void sample(long iStep);
    
-      /**
-      * Output results at end of simulation.
-      */
-      virtual void output();
+      using AverageDiagnostic<McSystem>::readParameters;
+      using AverageDiagnostic<McSystem>::loadParameters;
+      using AverageDiagnostic<McSystem>::save;
+      using AverageDiagnostic<McSystem>::setup;
+      using AverageDiagnostic<McSystem>::output;
 
-      /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
-
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
-   private:
-
-      /// Output file stream
-      std::ofstream outputFile_;
-
-      /// Average object - statistical accumulator
-      Average  accumulator_;
-
-      /// Number of samples per block average output.
-      int nSamplePerBlock_;
-
-      // Has readParam been called?
-      bool isInitialized_;
+   protected:
+ 
+      using AverageDiagnostic<McSystem>::outputFile_;
+      using AverageDiagnostic<McSystem>::nSamplePerBlock_;
+      using AverageDiagnostic<McSystem>::accumulator_;
 
    };
-
-   /*
-   * Serialize to/from an archive. 
-   */
-   template <class Archive>
-   void McExternalEnergyAverage::serialize(Archive& ar, const unsigned int version)
-   {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
-
-      ar & accumulator_;
-      serializeCheck(ar, nSamplePerBlock_, "nSamplePerBlock");
-
-   }
 
 }
 #endif 

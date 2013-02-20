@@ -80,6 +80,31 @@ namespace DdMd
              const;
 
       /**
+      * Modify a bond parameter, identified by a string.
+      *
+      * \param name       parameter variable name
+      * \param bondTypeId type index of first atom
+      * \param value      new value of parameter
+      */
+      void set(std::string name, int bondTypeId, double value)
+      {  interactionPtr_->set(name, bondTypeId, value); }
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name        parameter variable name
+      * \param bondTypeId  type index of first atom
+      */
+      double get(std::string name, int bondTypeId) const
+      {  return interactionPtr_->get(name, bondTypeId); }
+
+
+      /**
+      * Return pair interaction class name (e.g., "HarmonicBond").
+      */
+      virtual std::string interactionClassName() const;
+
+      /**
       * Return bond interaction by const reference.
       */
       const Interaction& interaction() const;
@@ -242,14 +267,21 @@ namespace DdMd
       randomBondLength(Random* random, double beta, int bondTypeId) const
    {  return interaction().randomBondLength(random, beta, bondTypeId); }
 
-   /**
+   /*
+   * Return bond potential interaction class name.
+   */
+   template <class Interaction>
+   std::string BondPotentialImpl<Interaction>::interactionClassName() const
+   {  return interaction().className(); }
+
+   /*
    * Get Interaction by reference.
    */
    template <class Interaction>
    inline Interaction& BondPotentialImpl<Interaction>::interaction()
    {  return *interactionPtr_; }
 
-   /**
+   /*
    * Get Interaction by const reference.
    */
    template <class Interaction>

@@ -1,5 +1,5 @@
-#ifndef LNG_H
-#define LNG_H
+#ifndef UTIL_LNG_H
+#define UTIL_LNG_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef PARAM_COMPONENT_H
-#define PARAM_COMPONENT_H
+#ifndef UTIL_PARAM_COMPONENT_H
+#define UTIL_PARAM_COMPONENT_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/mpi/MpiFileIo.h>   // class member
+#include <util/mpi/MpiFileIo.h>          // class member
+#include <util/archives/Serializable.h>  // typedef
 #include <util/global.h>
 
 #include <iostream>
@@ -27,7 +28,7 @@ namespace Util
    *
    *  \ingroup Param_Module
    */
-   class ParamComponent
+   class ParamComponent : public Serializable
    {
 
    public:
@@ -48,6 +49,12 @@ namespace Util
       * \param out output stream
       */
       virtual void writeParam(std::ostream& out) = 0;
+
+      virtual void save(Serializable::OArchive &ar)
+      {}
+
+      virtual void load(Serializable::IArchive &ar)
+      {}
 
       /**
       * Nontrivial implementation provided by ParamComposite subclass.
@@ -77,7 +84,7 @@ namespace Util
       /**
       * Set an MPI communicator for parameter IO.
       */
-      void setParamCommunicator(MPI::Intracomm& communicator);
+      virtual void setParamCommunicator(MPI::Intracomm& communicator);
       #endif
 
       /**

@@ -56,14 +56,17 @@ TESTS_DIR=$(ROOT_DIR)/tests
 # and commenting out all others. The default choice is gcc, the gnu
 # compiler collection.  
 #
-# String values that end with _mpi set compiler options so as to 
-# link to an mpi library. All of these blocks use the mpicxx script
+# String values that contain the string "mpi" set compiler options so 
+# as to link to an mpi library. Some these blocks use an mpicxx script
 # to invoke the compiler, but users may modify this if needed.
 
+# Choose (uncomment) one value of COMPILER, comment out all others
+
 COMPILER:=gcc
-#COMPILER:=gcc_mpi
+#COMPILER:=gcc_mpicxx
+#COMPILER:=gcc_openmpi
 #COMPILER:=intel
-#COMPILER:=intel_mpi
+#COMPILER:=intel_mpicxx
 #COMPILER:=pathscale
 #COMPILER:=pathscale_mpi
 
@@ -82,12 +85,12 @@ COMPILER:=gcc
 # ARFLAGS    - flags used by archiver
 #
 # Blocks for compilers that link to the MPI library also define 
-# UTIL_MPI=1. The default value of CXX for gcc_mpi and intel_mpi
+# UTIL_MPI=1. The default value of CXX for gcc_mpicxx and intel_mpicxx
 # is CXX=mpicxx. The string mpicxx is the name of a script that 
-# invokes an mpi compiler on the systems that we have used for
+# invokes an mpi compiler several systems that we have used for
 # development.  On these systems, the choices of actual compiler 
 # and mpi library are determined by loading appropriate software
-#  modules (e.g., module load intel-mpi).
+# modules (e.g., module load intel-mpi).
 # ------------------------------------------------------------------
 
 #-- Gnu GCC compiler (Serial) ------
@@ -100,11 +103,22 @@ ifeq ($(COMPILER),gcc)
   ARFLAGS=rcs
 endif
 
-# -- Gnu GCC compiler (MPI) --------
-ifeq ($(COMPILER),gcc_mpi)
+# -- Gnu GCC compiler, MPI via mpicxx script -----
+ifeq ($(COMPILER),gcc_mpicxx)
   CXX=mpicxx
   CXXFLAGS= -O3 -ffast-math -Wall -Winline -std=c++98
   LDFLAGS=
+  TESTFLAGS= -O3 -ffast-math -Wall -std=c++98 -pedantic
+  AR=ar
+  ARFLAGS=rcs
+  UTIL_MPI=1
+endif
+
+# -- Gnu GCC compiler, OpenMPI - explicit headers and libs) -----
+ifeq ($(COMPILER),gcc_openmpi)
+  CXX=g++
+  CXXFLAGS= -O3 -ffast-math -Wall -Winline -std=c++98 -I/opt/local/include/openmpi
+  LDFLAGS= -L/opt/local/lib -lmpi_cxx -lmpi
   TESTFLAGS= -O3 -ffast-math -Wall -std=c++98 -pedantic
   AR=ar
   ARFLAGS=rcs
@@ -122,7 +136,7 @@ ifeq ($(COMPILER),intel)
 endif
 
 # -- Intel ICC compiler (MPI) ------
-ifeq ($(COMPILER),intel_mpi)
+ifeq ($(COMPILER),intel_mpicxx)
   CXX=mpicxx
   CXXFLAGS= -ansi
   LDFLAGS=

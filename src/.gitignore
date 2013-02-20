@@ -1,7 +1,4 @@
 compiler.mk
-edit.py
-*.a
 *.o
-.gitignore
-/modules/hoomd/defines.mk
-/modules/hoomd/makefile
+edit.py
+temp*

@@ -66,6 +66,7 @@ namespace DdMd
       if (domain().isMaster()) {  
          file >> Label(sectionLabel);
          file >> Label(nGroupLabel) >> nGroup;
+
          Group<N>* groupPtr;
          int i, j, k;
          distributor.setup();
@@ -235,12 +236,34 @@ namespace DdMd
          file << std::endl;
          file << sectionLabel << std::endl;
          file << nGroupLabel << Int(nGroup, 10) << std::endl;
+
+         IoGroup<N> ioGroup;
+         std::vector<IoGroup <N> > groups;
+         groups.reserve(nGroup);
+         groups.clear();
+         groups.insert(groups.end(), nGroup, ioGroup);
+
          collector.setup();
          groupPtr = collector.nextPtr();
+         int id;
+         int n = 0;
          while (groupPtr) {
-            file << *groupPtr << std::endl;
+            id = groupPtr->id();
+            groups[id].id = id;
+            groups[id].group = *groupPtr;
             groupPtr = collector.nextPtr();
+            ++n;
          }
+         if (n != nGroup) {
+            UTIL_THROW("Something is rotten in Denmark");
+         }
+         for (id = 0; id < nGroup; ++id) {
+            if (id != groups[id].id) {
+               UTIL_THROW("Something is rotten in Denmark");
+            }
+            file << groups[id].group << std::endl;
+         }
+         file << std::endl;
       } else { 
          collector.send();
       }

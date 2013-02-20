@@ -77,11 +77,58 @@ namespace McMd
    }
 
    /*
+   * Load state from an archive.
+   */
+   void ComMSD::loadParameters(Serializable::IArchive& ar)
+   {
+      Diagnostic::loadParameters(ar);
+      loadParameter<int>(ar, "speciesId", speciesId_);
+      loadParameter<int>(ar, "capacity", capacity_);
+      ar & nAtom_;
+
+      // Validate parameters
+      if (speciesId_ < 0) {
+         UTIL_THROW("Negative speciesId");
+      }
+      if (speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("speciesId > nSpecies");
+      }
+      if (capacity_ <= 0) {
+         UTIL_THROW("Negative capacity");
+      }
+      if (nAtom_ != system().simulation().species(speciesId_).nAtom()) {
+         UTIL_THROW("Inconsistent values for nAtom");
+      }
+
+      // Maximum possible number of molecules of this species
+      int speciesCapacity;
+      speciesCapacity = system().simulation().species(speciesId_).capacity();
+
+      // Allocate memory
+      truePositions_.allocate(speciesCapacity);
+      oldPositions_.allocate(speciesCapacity);
+      shifts_.allocate(speciesCapacity);
+      accumulator_.setParam(speciesCapacity, capacity_);
+
+      // Finish reading internal state
+      ar & accumulator_;
+      ar & truePositions_;
+      ar & oldPositions_;
+      ar & shifts_;
+      ar & nMolecule_;
+   }
+
+   /*
+   * Save state to archive.
+   */
+   void ComMSD::save(Serializable::OArchive& ar)
+   { ar & *this; }
+
+   /*
    * Set number of molecules and initialize state.
    */
    void ComMSD::setup() 
    {
-
       // Precondition: Confirm that readParam was called
       if (!isInitialized_)
          UTIL_THROW("Diagnostic not initialized");
@@ -198,16 +245,5 @@ namespace McMd
       R0 /= double(nAtom_);
    }
 
-   /*
-   * Save state to binary file archive.
-   */
-   void ComMSD::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void ComMSD::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
 }
 #endif 

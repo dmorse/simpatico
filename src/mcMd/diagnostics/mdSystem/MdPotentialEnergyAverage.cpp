@@ -34,21 +34,42 @@ namespace McMd
    */
    void MdPotentialEnergyAverage::readParameters(std::istream& in)
    {
-
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
-
       accumulator_.setNSamplePerBlock(nSamplePerBlock_);
 
       // If nSamplePerBlock != 0, open an output file for block averages.
       if (accumulator_.nSamplePerBlock()) {
          fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       }
-
       isInitialized_ = true;
    }
 
+   /*
+   * Load state from an archive.
+   */
+   void MdPotentialEnergyAverage::loadParameters(Serializable::IArchive& ar)
+   { 
+      loadInterval(ar);
+      loadOutputFileName(ar);
+      loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
+      ar & accumulator_;
+
+      // If nSamplePerBlock != 0, open an output file for block averages.
+      if (accumulator_.nSamplePerBlock()) {
+         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      }
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save state to archive.
+   */
+   void MdPotentialEnergyAverage::save(Serializable::OArchive& ar)
+   { ar & *this; }
+
+   
    /*
    * Clear accumulator.
    */
@@ -85,18 +106,5 @@ namespace McMd
 
    }
 
-   /*
-   * Save state to binary file archive.
-   */
-   void MdPotentialEnergyAverage::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void MdPotentialEnergyAverage::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
-
-   
 }
 #endif 

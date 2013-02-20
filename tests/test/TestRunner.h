@@ -23,6 +23,9 @@
 * the tests for an associated UnitTest. A CompositeTestRunner runs 
 * the tests for a sequence of other TestRunner objects, each of 
 * which can be a UnitTestRunner or another CompositeTestRunner.
+*
+* The pure virtual run() method of a TestRunner must run all of the 
+* associated test methods.
 */
 class TestRunner
 {

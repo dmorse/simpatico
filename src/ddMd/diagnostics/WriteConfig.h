@@ -59,7 +59,7 @@ namespace DdMd
       /**
       * Clear nSample counter.
       */
-      virtual void setup();
+      virtual void clear();
   
       /**
       * Dump configuration to file

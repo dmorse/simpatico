@@ -1,5 +1,5 @@
-#ifndef HARMONIC_BOND_H
-#define HARMONIC_BOND_H
+#ifndef INTER_HARMONIC_BOND_H
+#define INTER_HARMONIC_BOND_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -72,6 +72,20 @@ namespace Inter
       void readParameters(std::istream &in);
 
       /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
+      /**
       * Returns potential energy for one bond.
       *
       * \param rSq  square of distance between bonded particles.
@@ -117,12 +131,12 @@ namespace Inter
       /**
       * Returns bond stiffness
       */
-      double stiffness(unsigned int bondType) const;
+      double stiffness(int bondType) const;
 
       /**
       * Returns bond length
       */
-      double length(unsigned int bondType) const;
+      double length(int bondType) const;
 
       /**
       * Get a parameter value, identified by a string.
@@ -148,7 +162,7 @@ namespace Inter
    /*
     * Return bond stiffness
     */
-   inline double HarmonicBond::stiffness(unsigned int bondType) const
+   inline double HarmonicBond::stiffness(int bondType) const
    {
       assert(bondType < nBondType_);
       return kappa_[bondType];
@@ -157,7 +171,7 @@ namespace Inter
    /*
     * Return bond length
     */
-   inline double HarmonicBond::length(unsigned int bondType) const
+   inline double HarmonicBond::length(int bondType) const
    {
       assert(bondType < nBondType_);
       return length_[bondType];

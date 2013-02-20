@@ -10,7 +10,6 @@
 
 #include "Diagnostic.h"                  // template parameter
 #include <util/param/Manager.h>          // base class template
-#include <util/archives/Serializable.h>  // base class 
 
 namespace McMd
 {
@@ -23,7 +22,7 @@ namespace McMd
    * \ingroup McMd_Manager_Module
    * \ingroup McMd_Diagnostic_Module
    */
-   class DiagnosticManager : public Manager<Diagnostic>, public Serializable
+   class DiagnosticManager : public Manager<Diagnostic>
    {
 
    public:
@@ -46,6 +45,20 @@ namespace McMd
       virtual void readParam(std::istream &in);
 
       /**
+      * Load state from an archive.
+      *
+      * \param ar loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+
+      /**
       * Call initialize method of each Diagnostic.
       * 
       * This method should be called just before the main
@@ -63,20 +76,6 @@ namespace McMd
       * Call output method of each diagnostic.
       */
       void output();
- 
-      /**
-      * Save state to a binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
 
    };
 

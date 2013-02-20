@@ -1,5 +1,5 @@
-#ifndef INT_DISTRIBUTION_H
-#define INT_DISTRIBUTION_H
+#ifndef UTIL_INT_DISTRIBUTION_H
+#define UTIL_INT_DISTRIBUTION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -56,7 +56,7 @@ namespace Util
       *
       * \param in input parameter file stream
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
   
       /** 
       * Set parameters and initialize.
@@ -66,6 +66,29 @@ namespace Util
       */
       void setParam(int min, int max);
    
+      /**
+      * Load state from an archive.
+      *
+      * \param ar binary loading (input) archive.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an archive.
+      *
+      * \param ar binary saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+  
+      /**
+      * Serialize to/from an archive. 
+      * 
+      * \param ar      archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
+
       /**
       * Clear (i.e., zero) previously allocated histogram.
       */
@@ -107,15 +130,6 @@ namespace Util
       */
       int nBin() const;
         
-      /**
-      * Serialize this Distribution to/from an archive.
-      *
-      * \param ar       input or output archive
-      * \param version  file version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
    protected:
    
       DArray<long> histogram_;  ///< Histogram array.
@@ -159,12 +173,12 @@ namespace Util
    template <class Archive>
    void IntDistribution::serialize(Archive& ar, const unsigned int version)
    {
-      ar & histogram_; 
       ar & min_;        
       ar & max_;    
       ar & nBin_;     
       ar & nSample_;   
       ar & nReject_;    
+      ar & histogram_; 
    }
 
 }

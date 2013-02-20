@@ -1,5 +1,5 @@
-#ifndef IS_NULL_H
-#define IS_NULL_H
+#ifndef UTIL_IS_NULL_H
+#define UTIL_IS_NULL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

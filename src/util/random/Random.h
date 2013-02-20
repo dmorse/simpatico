@@ -1,5 +1,5 @@
-#ifndef RANDOM_H
-#define RANDOM_H
+#ifndef UTIL_RANDOM_H
+#define UTIL_RANDOM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -14,7 +14,7 @@
 #include <cmath>
 
 #include <util/random/mersenne/mtrand.h>
-#define ENGINE MTRand_int32
+#define UTIL_ENGINE MTRand_int32
 
 namespace Util
 {
@@ -61,11 +61,25 @@ namespace Util
       virtual ~Random();
 
       /**
-      * Read seed from file.
+      * Read seed from file, initialize RNG.
       *
-      * Reads an integer seed, then initializes random number generator.
+      * \param in input stream.
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
+   
+      /**
+      * Load internal state from file.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+   
+      /**
+      * Save internal state to file. 
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
    
       /**
       * Sets of random seed, and initializes random number generator.
@@ -164,7 +178,7 @@ namespace Util
       /**
       * Uniform random number generator engine.
       */
-      ENGINE engine_;
+      UTIL_ENGINE engine_;
 
       /**
       * Seed value.
@@ -263,5 +277,16 @@ namespace Util
    inline long Random::seed() 
    {  return seed_; }
 
+   /*
+   * Serialize to/from an archive.
+   */
+   template <class Archive>
+   void Random::serialize(Archive& ar, const unsigned int version)
+   {
+      ar & engine_;
+      ar & seed_;
+   }
+
 } 
-#endif
+#undef UTIL_ENGINE 
+#endif // ifndef UTIL_RANDOM_H

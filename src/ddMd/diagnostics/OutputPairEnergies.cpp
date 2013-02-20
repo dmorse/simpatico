@@ -37,19 +37,18 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
+
+      std::string filename;
+      filename  = outputFileName();
+      simulation().fileMaster().openOutputFile(filename, outputFile_);
       isInitialized_ = true;
    }
 
    /*
-   * Open output file. 
+   * Reset nSample_ counter.
    */
-   void OutputPairEnergies::setup() 
-   {  
-       nSample_ = 0; 
-       std::string filename;
-       filename  = outputFileName();
-       simulation().fileMaster().openOutputFile(filename, outputFile_);
-   }
+   void OutputPairEnergies::clear() 
+   {  nSample_ = 0; }
 
    /*
    * Compute and output pair energies at regular intervals.

@@ -1,5 +1,5 @@
-#ifndef VECTOR_CPP
-#define VECTOR_CPP
+#ifndef UTIL_VECTOR_CPP
+#define UTIL_VECTOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -24,12 +24,12 @@ namespace Util
 
    // Equality operators
    
-   #define EPSILON 1.0E-8
+   #define UTIL_VECTOR_EPSILON 1.0E-8
    
    bool operator==(const Vector& v1, const Vector& v2) 
    {
       for (int i=0; i < Dimension; ++i) {
-         if ( fabs(v1.elem_[i] - v2.elem_[i]) > EPSILON) {
+         if ( fabs(v1.elem_[i] - v2.elem_[i]) > UTIL_VECTOR_EPSILON) {
             return false;
          }
       }
@@ -39,14 +39,14 @@ namespace Util
    bool operator==(const Vector& v1, const double* v2) 
    {
       for (int i=0; i < Dimension; ++i) {
-         if ( fabs(v1.elem_[i] - v2[i]) > EPSILON) {
+         if ( fabs(v1.elem_[i] - v2[i]) > UTIL_VECTOR_EPSILON) {
             return false;
          }
       }
       return true;
    }
    
-   #undef EPSILON
+   #undef UTIL_VECTOR_EPSILON
    
    bool operator==(const double* v1, const Vector& v2) 
    { return (v2 == v1); }

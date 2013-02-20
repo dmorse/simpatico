@@ -1,5 +1,5 @@
-#ifndef EXCEPTION_CPP
-#define EXCEPTION_CPP
+#ifndef UTIL_EXCEPTION_CPP
+#define UTIL_EXCEPTION_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

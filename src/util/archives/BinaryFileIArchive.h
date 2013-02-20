@@ -1,5 +1,5 @@
-#ifndef BINARY_FILE_I_ARCHIVE_H
-#define BINARY_FILE_I_ARCHIVE_H
+#ifndef UTIL_BINARY_FILE_I_ARCHIVE_H
+#define UTIL_BINARY_FILE_I_ARCHIVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -16,6 +16,7 @@
 
 #include <complex>
 #include <string>
+#include <vector>
 #include <iostream>
 
 namespace Util
@@ -43,39 +44,63 @@ namespace Util
       BinaryFileIArchive();
 
       /**
+      * Constructor.
+      *
+      * \param filename name of file to open for reading.
+      */
+      BinaryFileIArchive(std::string filename);
+
+      /**
       * Destructor.
       */
       virtual ~BinaryFileIArchive();
 
       /**
-      * Set the stream.
-      *
-      * \param out output stream to which to write.
+      * Get the underlying ifstream by reference.
       */
-      void setStream(std::istream& out);
+      std::ifstream& file();
 
       /**
-      * Write one object.
+      * Read one object.
       */
       template <typename T>
       BinaryFileIArchive& operator & (T& data);
 
       /**
-      * Write one object.
+      * Read one object.
       */
       template <typename T>
       BinaryFileIArchive& operator >> (T& data);
 
+      /**
+      * Unpack a single T object.
+      */
       template <typename T> 
       void unpack(T& data);
 
+      /**
+      * Unpack a C array.
+      *
+      * \param array pointer to array (or first element)
+      * \param n number of elements
+      */
       template <typename T> 
       void unpack(T* array, int n);
+
+      /**
+      * Unpack a 2D C array.
+      *
+      * \param array pointer to first row
+      * \param m number of rows
+      * \param n number of columns
+      */
+      template <typename T> 
+      void unpack(T* array, int m, int n);
 
    private:
 
       /// Pointer to output stream file.
-      std::istream* istreamPtr_;
+      std::ifstream* filePtr_;
 
       /// Archive version id.
       unsigned int  version_;
@@ -90,10 +115,10 @@ namespace Util
    inline bool BinaryFileIArchive::is_loading()
    {  return true; }
 
-   // Inline non-static methods
+   // Inline non-static method templates
 
    /*
-   * Write one object.
+   * Read one object.
    */
    template <typename T>
    inline BinaryFileIArchive& BinaryFileIArchive::operator & (T& data)
@@ -103,7 +128,7 @@ namespace Util
    }
 
    /*
-   * Write one object.
+   * Read one object.
    */
    template <typename T>
    inline BinaryFileIArchive& BinaryFileIArchive::operator >> (T& data)
@@ -115,26 +140,40 @@ namespace Util
    // Method templates
 
    /*
-   * Bitwise unpack a single object of type T.
+   * Load a single object of type T.
    */
    template <typename T>
    inline void BinaryFileIArchive::unpack(T& data)
-   {  istreamPtr_->read( (char*)(&data), sizeof(T) ); }
+   {  filePtr_->read( (char*)(&data), sizeof(T) ); }
 
    /*
-   * Bitwise unpack a C-array of objects of type T.
+   * Load a C-array of objects of type T.
    */
    template <typename T>
    inline void BinaryFileIArchive::unpack(T* array, int n)
    {
       for (int i=0; i < n; ++i) {
-         istreamPtr_->read( (char*)(&array[i]), sizeof(T));
+         filePtr_->read( (char*)(&array[i]), sizeof(T));
+      }
+   }
+
+   /*
+   * Unpack a 2D C-array of objects of type T.
+   */
+   template <typename T>
+   inline void BinaryFileIArchive::unpack(T* array, int m, int n)
+   {
+      int i, j;
+      for (i = 0; i < m; ++i) {
+         for (j = 0; j < n; ++j) {
+            filePtr_->read( (char*)(&array[i*n + j]), sizeof(T));
+         }
       }
    }
 
    // Explicit serialize functions for primitive types
 
-   /**
+   /*
    * Load a bool from a BinaryFileIArchive.
    */
    template <>
@@ -142,7 +181,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a char from a BinaryFileIArchive.
    */
    template <>
@@ -150,23 +189,23 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
-   * Save an unsigned int from a BinaryFileIArchive.
+   /*
+   * Load an unsigned int from a BinaryFileIArchive.
    */
    template <>
    inline void serialize(BinaryFileIArchive& ar, unsigned int& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
-   * Save an int from a BinaryFileIArchive.
+   /*
+   * Load an int from a BinaryFileIArchive.
    */
    template <>
    inline void serialize(BinaryFileIArchive& ar, int& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load an unsigned long int from a BinaryFileIArchive.
    */
    template <>
@@ -174,7 +213,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a long int from a BinaryFileIArchive.
    */
    template <>
@@ -182,7 +221,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a float from a BinaryFileIArchive.
    */
    template <>
@@ -190,17 +229,35 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
-   * Save an double from a BinaryFileIArchive.
+   /*
+   * Load a double from a BinaryFileIArchive.
    */
    template <>
    inline void serialize(BinaryFileIArchive& ar, double& data, 
                          const unsigned int version)
    {  ar.unpack(data); }
 
-   // Explicit serialize functions for primitive types
+   /*
+   * Load a std::vector from a BinaryFileIArchive.
+   */
+   template <typename T>
+   void serialize(BinaryFileIArchive& ar, std::vector<T>& data, 
+                  const unsigned int version)
+   {
+      T element;
+      std::size_t size;
+      ar.unpack(size);
+      data.reserve(size);
+      data.clear();
+      for (size_t i = 0; i < size; ++i) {
+         ar & element;
+         data.push_back(element);
+      }
+   }
 
-   /**
+   // Explicit serialize functions for std library types
+
+   /*
    * Load a std::complex<float> from a BinaryFileIArchive.
    */
    template <>
@@ -209,7 +266,7 @@ namespace Util
                   const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a std::complex<double> from a BinaryFileIArchive.
    */
    template <>
@@ -218,16 +275,16 @@ namespace Util
                   const unsigned int version)
    {  ar.unpack(data); }
 
-   /**
+   /*
    * Load a std::string from a BinaryFileIArchive.
    */
    template <>
    void serialize(BinaryFileIArchive& ar, std::string& data, 
                   const unsigned int version);
 
-   // Explicit serialize functions for namespace Util
+   // Explicit serialize functions for namespace Util types
 
-   /**
+   /*
    * Load a Util::Vector from a BinaryFileIArchive.
    */
    template <>
@@ -235,7 +292,7 @@ namespace Util
                          const unsigned int version)
    {  ar.unpack(data); } 
 
-   /**
+   /*
    * Load a Util::IntVector from a BinaryFileIArchive.
    */
    template <>

@@ -6,7 +6,7 @@ include $(SRC_DIR_REL)/inter/defines.mk
 include $(SRC_DIR_REL)/mcMd/defines.mk
 include $(SRC_DIR_REL)/mcMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
-include $(SRC_DIR_REL)/mcMd/sources.mk
+include $(SRC_DIR_REL)/mcMd/diagnostics/mdSystem/sources.mk
 
 all: $(mcMd_diagnostics_mdSystem_OBJS)
 
