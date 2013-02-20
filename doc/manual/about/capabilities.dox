@@ -45,10 +45,10 @@ For parallel Md simulations, DdSim provides the following integrators:
   <li> NPH Anderson barostat </li>
   <li> NPT Nose-Hoover thermostat, Anderson barostat </li>
 </ul>
-All of the MD integrators excpect the DPD integrator use reversible,
+All of the MD integrators except the mdSim DPD integrator use reversible,
 symplectic algorithms.
 
-\section features_hoomd_sec GPU Acceleration via integration with Hoomd 
+\section features_hoomd_sec GPU Acceleration: Integration with Hoomd-blue
 
 Simpatico provides an optional module that allows the use of the 
 <a href=http://codeblue.umich.edu/hoomd-blue/>Hoomd-blue</a> code 

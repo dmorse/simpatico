@@ -15,6 +15,12 @@ namespace DdMd
 {
 
    /*
+   * Constructor  
+   */
+   DihedralStorage::DihedralStorage()
+   { setClassName("DihedralStorage"); }
+
+   /*
    * Read parameters and allocate memory.
    */
    void DihedralStorage::readParameters(std::istream& in)

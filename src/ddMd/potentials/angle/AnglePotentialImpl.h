@@ -282,13 +282,13 @@ namespace DdMd
    {  
       Vector dr1; // R[1] - R[0]
       Vector dr2; // R[2] - R[1]
-      Vector f1, f2;
-      double rsq1, rsq2;
+      Vector f1;  // d(energy)/d(dr1)
+      Vector f2;  // d(energy)/d(dr2)
       GroupIterator<3> iter;
       Atom* atom0Ptr;
       Atom* atom1Ptr;
       Atom* atom2Ptr;
-      int   type, isLocal0, isLocal1, isLocal2;
+      int   type;
 
       storage().begin(iter);
       for ( ; iter.notEnd(); ++iter) {
@@ -297,22 +297,19 @@ namespace DdMd
          atom1Ptr = iter->atomPtr(1);
          atom2Ptr = iter->atomPtr(2);
          // Calculate minimimum image separations
-         rsq1 = boundary().distanceSq(atom1Ptr->position(),
-                                      atom0Ptr->position(), dr1);
-         rsq2 = boundary().distanceSq(atom2Ptr->position(),
-                                      atom1Ptr->position(), dr2);
+         boundary().distanceSq(atom1Ptr->position(),
+                               atom0Ptr->position(), dr1);
+         boundary().distanceSq(atom2Ptr->position(),
+                               atom1Ptr->position(), dr2);
          interaction().force(dr1, dr2, f1, f2, type);
-         isLocal0 = !(atom0Ptr->isGhost());
-         isLocal1 = !(atom1Ptr->isGhost());
-         isLocal2 = !(atom2Ptr->isGhost());
-         if (isLocal0) {
+         if (!atom0Ptr->isGhost()) {
             atom0Ptr->force() += f1;
          }
-         if (isLocal1) {
+         if (!atom1Ptr->isGhost()) {
             atom1Ptr->force() -= f1;
             atom1Ptr->force() += f2;
          }
-         if (isLocal2) {
+         if (!atom2Ptr->isGhost()) {
             atom2Ptr->force() -= f2;
          }
       }
@@ -395,8 +392,8 @@ namespace DdMd
       int    type;
       int    isLocal0, isLocal1, isLocal2;
 
+      // Iterate over angle groups
       localStress.zero();
-      // Iterate over bonds
       storage().begin(iter);
       for ( ; iter.notEnd(); ++iter) {
          atom0Ptr = iter->atomPtr(0);
@@ -408,13 +405,15 @@ namespace DdMd
          boundary().distanceSq(atom2Ptr->position(),
                                   atom1Ptr->position(), dr2);
 
-         // f1 -- along dr1; f2 -- along dr2.
+         // Calculate derivatives f1, f2 of energy with respect to dr1, dr2
          interaction().force(dr1, dr2, f1, f2, type);
 
          isLocal0 = !(atom0Ptr->isGhost());
          isLocal1 = !(atom1Ptr->isGhost());
          isLocal2 = !(atom2Ptr->isGhost());
          factor = prefactor*(isLocal0 + isLocal1 + isLocal2);
+
+         // Increment localStress tensor
          dr1 *= factor;
          dr2 *= factor;
          incrementPairStress(f1, dr1, localStress);
@@ -427,70 +426,6 @@ namespace DdMd
       // Add localEnergy from all nodes, set sum on master.
       reduceStress(localStress, communicator);
    }
-
-   #if 0
-   /*
-   * Increment atomic forces and/or pair energy (private).
-   */
-   template <class Interaction> double 
-   AnglePotentialImpl<Interaction>::computeForces(bool needForce, bool needEnergy)
-   {
-      // Preconditions
-      //if (!storage().isInitialized()) {
-      //   UTIL_THROW("AtomStorage must be initialized");
-      //}
-
-      Vector dr1; // R[1] - R[0]
-      Vector dr2; // R[2] - R[1]
-      Vector f1, f2;
-      double rsq1, rsq2, cosTheta;
-      double energy = 0.0;
-      double angleEnergy;
-      double fraction;
-      double third = 1.0/3.0;
-      GroupIterator<3> iter;
-      Atom* atom0Ptr;
-      Atom* atom1Ptr;
-      Atom* atom2Ptr;
-      int   type, isLocal0, isLocal1, isLocal2;
-
-      storage().begin(iter);
-      for ( ; iter.notEnd(); ++iter) {
-         type = iter->typeId();
-         atom0Ptr = iter->atomPtr(0);
-         atom1Ptr = iter->atomPtr(1);
-         atom2Ptr = iter->atomPtr(2);
-         isLocal0 = !(atom0Ptr->isGhost());
-         isLocal1 = !(atom1Ptr->isGhost());
-         isLocal2 = !(atom2Ptr->isGhost());
-         // Calculate minimimum image separations
-         rsq1 = boundary().distanceSq(atom1Ptr->position(),
-                                         atom0Ptr->position(), dr1);
-         rsq2 = boundary().distanceSq(atom2Ptr->position(),
-                                         atom1Ptr->position(), dr2);
-         if (needEnergy) {
-            cosTheta = dr1.dot(dr2) / sqrt(rsq1 * rsq2);
-            angleEnergy = interaction().energy(cosTheta, type);
-            fraction = (isLocal0 + isLocal1 + isLocal2)*third;
-            energy += fraction*angleEnergy;
-         }
-         if (needForce) {
-            interaction().force(dr1, dr2, f1, f2, type);
-            if (isLocal0) {
-               atom0Ptr->force() += f1;
-            }
-            if (isLocal1) {
-               atom1Ptr->force() -= f1;
-               atom1Ptr->force() += f2;
-            }
-            if (isLocal2) {
-               atom2Ptr->force() -= f2;
-            }
-         }
-      }
-      return energy;
-   }
-   #endif
 
 }
 #endif

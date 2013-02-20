@@ -24,11 +24,18 @@ namespace DdMd
    public:
 
       /**
+      * Constructor
+      */
+      DihedralStorage();
+
+      /**
       * Read parameters, allocate memory and initialize.
       *
       * Parameters (file format):
       *  - capacity      [int]  max number of groups owned by processor.
       *  - totalcapacity [int]  max number of groups on all processors.
+      *   
+      * \param in input parameter stream
       */
       virtual void readParameters(std::istream& in);
 

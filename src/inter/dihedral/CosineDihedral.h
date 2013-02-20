@@ -163,9 +163,13 @@ namespace Inter
           const Vector& b3, int type) const
    {
       Torsion torsion;
-      torsion.computeAngle(b1, b2, b3); // computes cosPhi
-
-      return (kappa_[type] * (1.0 + torsion.cosPhi));
+      bool status;
+      status = torsion.computeAngle(b1, b2, b3); // computes cosPhi
+      if (!status) {
+         return (kappa_[type] * (1.0 + torsion.cosPhi));
+      } else {
+         return 0.0;
+      }
    }
 
    /* 
@@ -180,12 +184,19 @@ namespace Inter
         const Vector& b3, Vector& f1, Vector& f2, Vector& f3, int type) const
    {
       TorsionForce torsion;
-      torsion.computeDerivatives(b1, b2, b3);
+      bool status; // Error code, 0 is normal, 1 is error
+      status = torsion.computeDerivatives(b1, b2, b3);
 
-      double dEdCosPhi = kappa_[type];
-      f1.multiply(torsion.d1, dEdCosPhi);
-      f2.multiply(torsion.d2, dEdCosPhi);
-      f3.multiply(torsion.d3, dEdCosPhi);
+      if (!status) {
+         double dEdCosPhi = kappa_[type];
+         f1.multiply(torsion.d1, dEdCosPhi);
+         f2.multiply(torsion.d2, dEdCosPhi);
+         f3.multiply(torsion.d3, dEdCosPhi);
+      } else {
+         f1.zero();
+         f2.zero();
+         f3.zero();
+      }
    }
 
 } 

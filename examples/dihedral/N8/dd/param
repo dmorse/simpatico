@@ -3,16 +3,17 @@ Simulation{
     gridDimensions    2    2    1
   }
   FileMaster{
-    commandFileName commands
-    inputPrefix     in/
-    outputPrefix    out/
+    commandFileName    commands
+    inputPrefix        ../in/
+    outputPrefix       out/
   }
   nAtomType          1
   nBondType          1
   nAngleType         1
+  nDihedralType      1
   atomTypes          A    1.0
   AtomStorage{
-    atomCapacity      1000 
+    atomCapacity      1000
     ghostCapacity     2000 
     totalAtomCapacity 1000 
   }
@@ -24,14 +25,20 @@ Simulation{
     capacity          1000
     totalCapacity     1000
   }
+  DihedralStorage{
+    capacity          1000
+    totalCapacity     1000
+  }
   Buffer{
     atomCapacity     10000
     ghostCapacity    10000
   }
   pairStyle          LJPair
   bondStyle          HarmonicBond
-  angleStyle         CosineAngle
+  angleStyle         HarmonicAngle
+  dihedralStyle      CosineDihedral
   maskedPairPolicy   maskBonded
+  reverseUpdateFlag  0   
   PairPotential{
     epsilon          1.0
     sigma            1.0
@@ -45,7 +52,11 @@ Simulation{
     length           1.000
   }
   AnglePotential{
-    kappa              4.0
+    kappa              20.0
+    theta0             60.0
+  }
+  DihedralPotential{
+    kappa              1.0
   }
   EnergyEnsemble{
     type             adiabatic
@@ -54,25 +65,18 @@ Simulation{
     type             rigid
   }
   NveIntegrator{
-    dt               0.001
+    dt               0.0001
   }
   Random{
     seed        8012457890
   }
   DiagnosticManager{
-     baseInterval  1000
+     baseInterval  100
 
      OutputEnergy{
-        interval          1000
+        interval          5000
         outputFileName  energy
      }
   }
 }
 
-     WriteConfig{
-        interval          2000
-        outputFileName  config
-     }
-
-  nAngleType         0
-  hasExternal        0

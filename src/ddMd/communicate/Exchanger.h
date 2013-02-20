@@ -87,15 +87,6 @@ namespace DdMd
       void exchange();
 
       /**
-      * Exchange ownership of local atoms.
-      *
-      * This method exchanges ownershp of local atoms, and calculates
-      * communication plan for ghost atoms, but but does not actually
-      * exchange ghost atoms.  
-      */
-      void exchangeAtoms();
-
-      /**
       * Update ghost atom coordinates.
       * 
       * This method should be called every time step for which there is
@@ -237,6 +228,15 @@ namespace DdMd
 
       /// Timer
       DdTimer timer_;
+
+      /**
+      * Exchange ownership of local atoms.
+      *
+      * This method exchanges ownershp of local atoms, and calculates
+      * communication plan for ghost atoms, but but does not actually
+      * exchange ghost atoms.  
+      */
+      void exchangeAtoms();
 
       /**
       * Exchange ghosts.

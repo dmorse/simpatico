@@ -97,14 +97,23 @@ namespace McMd
       /**
       * Calculate the covalent bond energy for one Atom.
       *
+      * Default method throws an exception.This allows testing of subclasses 
+      * that only work for MD simulation, and crash gracefully if used for MC.
+      *
       * \param  atom Atom object of interest
       * \return bond potential energy of atom
       */
       virtual double atomEnergy(const Atom& atom) const
-      {  UTIL_THROW("Unimplemented method"); }
+      {  
+         UTIL_THROW("Unimplemented method"); 
+         return 0.0; // Never reached, but avoids compiler warning.
+      }
 
       /**
       * Add bond forces to all atomic forces.
+      *
+      * Default version throws an exception.This allows testing of subclasses 
+      * that only work for MC simulation, and crash gracefully if used for MD.
       */
       virtual void addForces()
       {  UTIL_THROW("Unimplemented method"); }
@@ -136,7 +145,6 @@ namespace McMd
       virtual void computeStress(Util::Tensor& stress) const = 0;
     
       //@}
-
    };
 
 }

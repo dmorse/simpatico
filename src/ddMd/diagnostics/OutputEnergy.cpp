@@ -9,10 +9,17 @@
 */
 
 #include "OutputEnergy.h"
-//#include <util/misc/FileMaster.h>
-#include <util/misc/ioUtil.h>
+#include <ddMd/potentials/pair/PairPotential.h>
+#include <ddMd/potentials/bond/BondPotential.h>
+#ifdef INTER_ANGLE
+#include <ddMd/potentials/angle/AnglePotential.h>
+#endif
+#ifdef INTER_DIHEDRAL
+#include <ddMd/potentials/dihedral/DihedralPotential.h>
+#endif
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
+#include <util/misc/ioUtil.h>
 
 #include <sstream>
 
@@ -56,15 +63,32 @@ namespace DdMd
          sys.computeKineticEnergy();
          sys.computePotentialEnergies();
          if (sys.domain().isMaster()) {
-            double kinetic = sys.kineticEnergy();
-            double potential = sys.potentialEnergy();
+            double kinetic   = sys.kineticEnergy();
+            double pair      = sys.pairPotential().energy();
+            double potential = pair;
+            double bond      = sys.bondPotential().energy();
+            potential += bond;
             Log::file() << Int(iStep, 10)
-                      << Dbl(kinetic, 20)
-                      << Dbl(potential, 20)
-                      << Dbl(kinetic + potential, 20)
-                      << std::endl;
+                        << Dbl(kinetic, 15)
+                        << Dbl(pair, 15)
+                        << Dbl(bond, 15);
+            #ifdef INTER_ANGLE
+            if (sys.nAngleType()) {
+               double angle = sys.anglePotential().energy();
+               potential += angle;
+               Log::file() << Dbl(angle, 15);
+            }
+            #endif
+            #ifdef INTER_DIHEDRAL
+            if (sys.nDihedralType()) {
+               double dihedral  = sys.dihedralPotential().energy();
+               potential += dihedral;
+               Log::file() << Dbl(dihedral, 15);
+            }
+            #endif
+            Log::file() << Dbl(kinetic + potential, 20)
+                        << std::endl;
          }
-
          ++nSample_;
       }
    }

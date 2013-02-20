@@ -45,9 +45,11 @@ To compile single-processor versions of the mcSim and mdSim, using the default g
 
 If successful, the above procedure should create executables bin/mcSim and bin/mdSim for MC and MD simulations. The "make mcMd" command will first compile all of the *.cpp source files in the src/util, src/inter, and src/mcMd directories, and create three static library files that contain the resulting objects.  Each *.cpp source file is compiled to create a *.o object file that is placed in the same directory as the corresponding source file.  Three static library (*.a) files named libutil.a, libinter.a and libmcmd.a will also be created and (by default) placed in the simpatico lib/ directory. These libraries contain all of the objects from the util/, inter/, and mcMd/ directories, respectively. These libraries are linked to the main programs src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp to create the executables.
 
-If the above procedure fails, inspect the file src/compiler.mk.  Make sure that the value assigned to the makefile variable ROOT_DIR contains the correct absolute path for the simpatico/ root directory. Also check that the makefile variables defined inside the enable by the chosen value of COMPILER specify choices of compiler executable name and compiler options that are appropriate for your system. You may edit the src/compiler.mk file as needed. 
+If the above procedure fails, inspect the file src/compiler.mk.  Make sure that the value assigned to the makefile variable ROOT_DIR contains the correct absolute path for the simpatico/ root directory. Also check that the makefile variables defined inside the block enable by the chosen value of COMPILER variable specify values for the compiler executable name and compiler options that are appropriate for your system. 
 
-Users may change the locations of the executable and library files. The directory to which all executables files are written is given by the makefile variable BIN_DIR defined in the file src/compiler.mk, which is set to $(ROOT_DIR)/bin by default.  All libraries are written in the directory specified by the variable LIB_DIR, which is also defined in src/compiler.mk, and is set to $(ROOT_DIR)/lib by default.  The names of the MC and MD single-processor executables (mcSim and mdSim, by default) are given by the values of the variables MCSIM_EXE and MDSIM_EXE defined in src/mcMd/defines.mk.  Users may rename the executables either by changing the values of any of these makefile variables, or by simply moving the executable files after they are created. 
+The file src/compiler.mk is created by the setup script by copying a default file version named src/compiler.mk_r. You may modify src/compiler.mk as needed, but should generally leave the default version src/compiler.mk_r untouched.
+
+Users may change the locations of the executable and library files. The directory to which all executables files are written is given by the makefile variable BIN_DIR defined in the file src/compiler.mk, which is set to $(ROOT_DIR)/bin by default.  The directory in which static libraries are installed is given by the variable LIB_DIR, which is also defined in src/compiler.mk, and is set to $(ROOT_DIR)/lib by default.  The names of the MC and MD single-processor executables (mcSim and mdSim, by default) are given by the values of the variables MCSIM_EXE and MDSIM_EXE defined in src/mcMd/defines.mk.  Users may rename the executables either by changing the values of any of these makefile variables, or by simply moving the executable files after they are created. 
 
 To make the executables accessible from the command line (without requiring that users invoke them with an absolute path name), users should either add the directory that contains these files to their unix PATH environment variable, or install all executable files in a directory that is already in their PATH.
   
@@ -77,28 +79,33 @@ Multi-processor versions of mcSim and mdSim can be used to run:
 
   - Multiple completely independent simulations as an MPI job, with separate parameter files
 
-  - Multiple simulations with a sequence of parameter values from a single param file, using the 
-    perturbation theory feature.
+  - Multiple simulations with a sequence of parameter values specified by a single parameter file, using the free energy perturbation theory feature.
 
-  - Replica exchange simulations, which also rely on the perturbation theory feature.
+  - Replica exchange simulations, which also rely on the free energy perturbation theory feature.
 
 Multi-processor mcSim and mdSim simulations and the perturbation theory feature are discussed in more detail \ref user_multi_McMd_page "here". 
+
+Because the free energy perturbation theory is useful, and can be enabled or disabled at run time if it is enabled when the program is compiled, we recommend enabling this feature before compiling multi-processor versions of mcSim and mdSim. To enable this feature, before compiling the code, you must edit the file src/mcMd/defines.mk, and uncomment the line 
+\code
+MCMD_PERTURB=1
+\endcode
+which is commented out in the default version of the file. 
  
-To compile multi-processor versions of mcSim and mdSim:
+To compile multi-processor versions of mcSim and mdSim, you must then:
 
-  - Select a compiler block that links to an MPI library by changing the value of the COMPILER variable in the src/compiler.mk file, as described above for ddSim.
+  - Select a compiler block that links to an MPI library, by editing src/compiler.mk
 
-  - Enable the perturbation theory feature, if desired, by uncommenting the variable MCMD_PERTURB in the file src/mcMd/defines.mk.
-
-  - cd the src/ directory.
+  - If automatic \ref dependency_doc_section "dependency generation" is not enabled, enter "make clean-McMd". If automatic dependency generation is enabled, this should not be necessary.
 
   - Enter "make mcMd"
 
-This should re-compile all of the classes in the src/mcMd directory, and create an mpi-enabled library named lib/libmcMd_m.a. If you have not previously compiled ddMd, this should recompile all of the code in the src/util and src/inter directories, and create MPI-enabled versions of the libraries, named lib/libutil_m.a and lib/libinter_m.a., which are also distinguished from the serial versions by the addition of a suffix _m.
+The choice of a value for the COMPILER variable, and required changes to the compiler executable name and compiler options, should be the same as those required to compile ddSim on the same system.
+
+If successful, this should re-compile all of the classes in the src/mcMd directory, creating new versions of the *.o object files, and create an mpi-enabled library named lib/libmcMd_m.a. If you have not previously compiled ddMd, or entered "make clean" before "make mcMd" this should recompile all of the code in the src/util and src/inter directories, and create MPI-enabled versions of corresponding static libraries, named lib/libutil_m.a and lib/libinter_m.a. Note that MPI-enabled versions of these three static libraries are distinguished from the serial versions by the addition of a suffix _m. 
  
 \section compile_config_section Configuration Files
 
-After the .configure script is run, the src/ directory and its subdirectories contains several makefile fragments that users may need to edit in order to change compiler options or to enable or disable specific features of the code. These configurable makefiles are:
+After the .configure script is run, the src/ directory and its subdirectories contains several makefile fragments that users may need to edit in order to change compiler options or to enable or disable specific features of the code. Several of these are mentioned above. These user-configurable makefiles are:
  
     - src/compiler.mk
 

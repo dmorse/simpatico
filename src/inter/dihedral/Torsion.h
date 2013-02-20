@@ -47,8 +47,10 @@ namespace Inter
       * \param b1  bond vector from atom 0 to 1.
       * \param b2  bond vector from atom 1 to 2.
       * \param b3  bond vector from atom 2 to 3.
+      *
+      * \return 0 if normal completion, 1 otherwise.
       */
-      void computeAngle(const Vector& b1, const Vector& b2, const Vector& b3);
+      bool computeAngle(const Vector& b1, const Vector& b2, const Vector& b3);
  
       /**
       * Return value of sin(phi) for precomputed cos(phi).
@@ -69,14 +71,28 @@ namespace Inter
    /* 
    * Calculate cosPhi.
    */ 
-   inline void 
+   inline bool
    Torsion::computeAngle(const Vector& b1, const Vector& b2, const Vector& b3)
    {
       Vector v1, v2;
+      double d1, d2;
+
       v1.cross(b1, b2);
+      d1 = v1.square();
+      if (d1 < 1.0E-10) {
+         return 1;
+      }
+      d1 = sqrt(d1); 
+
       v2.cross(b2, b3);
-      double d = sqrt(v1.square()*v2.square());
-      cosPhi = v1.dot(v2)/d;
+      d2 = v2.square();
+      if (d2 < 1.0E-10) {
+         return 1;
+      }
+      d2 = sqrt(d2); 
+
+      cosPhi = v1.dot(v2)/(d1*d2);
+      return 0;
    }
 
    /*

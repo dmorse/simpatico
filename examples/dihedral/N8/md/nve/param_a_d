@@ -1,7 +1,7 @@
 MdSimulation{
   FileMaster{
     commandFileName           commands_a_d
-    inputPrefix                     ../in/
+    inputPrefix                  ../../in/
     outputPrefix                      out/
   }
   nAtomType                              1
@@ -52,7 +52,7 @@ MdSimulation{
       theta0            60.00000000000e+00
     }
     DihedralPotential{
-      kappa             1.000000000000e+00
+      kappa             0.000000000000e+00
     }
     EnergyEnsemble{
       type                       adiabatic
@@ -61,7 +61,7 @@ MdSimulation{
       type                           rigid
     }
     NveVvIntegrator{
-       dt               1.000000000000e-04
+       dt               5.000000000000e-04
     }
   }
   DiagnosticManager{

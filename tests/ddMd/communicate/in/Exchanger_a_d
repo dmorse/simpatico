@@ -1,0 +1,50 @@
+Domain{
+  gridDimensions    2    1     3
+}
+Buffer{
+  atomCapacity    100
+  ghostCapacity   100
+}
+DdMdConfigIo{
+  atomCacheCapacity      50
+  bondCacheCapacity      50
+  angleCacheCapacity     50
+  dihedralCacheCapacity  50
+}
+Random{
+   seed 8762018674
+}
+AtomStorage{
+  atomCapacity         40
+  ghostCapacity       200
+  totalAtomCapacity   150
+}
+BondStorage{
+  capacity             40
+  totalCapacity       150
+}
+AngleStorage{
+  capacity             40
+  totalCapacity       150
+}
+DihedralStorage{
+  capacity             40
+  totalCapacity       150
+}
+PairPotential{
+  epsilon          1.00
+  sigma            1.00
+  skin             0.25
+  pairCapacity     4000
+  maxBoundary      orthorhombic   6.0   3.0   9.0
+}
+BondPotential{
+  kappa            20.0
+}
+AnglePotential{
+  kappa            10.0
+  theta0           45.0
+}
+DihedralPotential{
+  kappa            20.0
+}
