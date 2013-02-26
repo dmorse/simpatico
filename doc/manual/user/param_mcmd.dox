@@ -168,6 +168,7 @@ MdSimulation{
   SpeciesManager{ ... }
   Random{ ... }
   MdSystem{ ... }
+  DiagnosticManager{ ... }
   writeRestartInterval    [int]
   writeRestartFileName    [string]
 }
