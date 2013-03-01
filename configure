@@ -13,8 +13,9 @@
 #
 # Options: 
 #   
-# Each option enables or disables a feature. Each option takes 1 or 0 as 
-# required argument, using 1 to denote enable and 0 to denote disable.
+# Each of the following option enables or disables a feature. Each such
+# options takes 0 or 1 as a required argument, using 1 to denote "enable"
+# and 0 to denote "disable".
 #
 #   -g debugging                (defines/undefines UTIL_DEBUG)
 #   -a angle potentials         (defines/undefines INTER_ANGLE)
@@ -25,6 +26,8 @@
 #   -s shift                    (defines/undefines MCMD_SHIFT)
 #   -k dependency generation    (defines/undefines MAKEDEP)
 #
+#   -q query - prints a report showing which options are enabled / disabled.
+#
 # Example:
 #
 # To disable debugging, but enable angle and dihedral potentials:
@@ -32,7 +35,7 @@
 #   >  ./configure -g0 -a1 -d1
 #
 #-----------------------------------------------------------------------
-while getopts "g:a:d:e:f:l:s:k:" opt; do
+while getopts "g:a:d:e:f:l:s:k:q" opt; do
 
   if [ -n "$MACRO" ]; then 
     MACRO=""
@@ -92,6 +95,14 @@ while getopts "g:a:d:e:f:l:s:k:" opt; do
         ;;
       esac
       ;;
+    q)
+      grep "UTIL_DEBUG=" src/util/defines.mk >&2
+      grep "INTER_ANGLE=" src/inter/defines.mk >&2
+      grep "INTER_DIHEDRAL=" src/inter/defines.mk >&2
+      grep "INTER_EXTERNAL=" src/inter/defines.mk >&2
+      grep "MCMD_LINK=" src/mcMd/defines.mk >&2
+      grep "MCMD_PERTURB=" src/mcMd/defines.mk >&2
+      ;;
   esac
 
   if [ -n "$MACRO" ]; then
@@ -111,3 +122,4 @@ while getopts "g:a:d:e:f:l:s:k:" opt; do
   fi
 
 done
+
