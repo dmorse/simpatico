@@ -4,7 +4,5 @@ This file contains only items that are not localized to a namespace.
 Makefiles
 ---------
 
-- Create configure script that can change preprocessor macros.
-
 - Modify makefiles to simplify compilation of MPI and noMpi versions.
 
