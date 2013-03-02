@@ -80,7 +80,7 @@ cd src/modules/hoomd
 \endcode
 and type
 \code
-./configure
+./setup
 \endcode
 This copies the file defines.mk_r to <b>defines.mk</b>. You can now change this
 file to make it reflect the installation paths of Hoomd, CUDA,  Python
