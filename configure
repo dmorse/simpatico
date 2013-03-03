@@ -11,31 +11,39 @@
 #
 #      The script must be called from the Simpatico root directory
 #
-# Options: 
+# Enabling / Disabling Features: 
 #   
 # Each of the following option enables or disables a feature. Each such
 # options takes 0 or 1 as a required argument, using 1 to denote "enable"
 # and 0 to denote "disable".
 #
-#   -g debugging                (defines/undefines UTIL_DEBUG)
-#   -a angle potentials         (defines/undefines INTER_ANGLE)
-#   -d dihedral potentials      (defines/undefines INTER_DIHEDRAL)
-#   -e external potentials      (defines/undefines INTER_EXTERNAL)
-#   -f free energy perturbation (defines/undefines MCMD_PERTURB)
-#   -l links (mutable bonds)    (defines/undefines MCMD_LINK)
-#   -s shift                    (defines/undefines MCMD_SHIFT)
-#   -k dependency generation    (defines/undefines MAKEDEP)
+#   -m (0|1)   mpi parallelization      (defines/undefines UTIL_MPI)
+#   -g (0|1)   debugging                (defines/undefines UTIL_DEBUG)
+#   -a (0|1)   angle potentials         (defines/undefines INTER_ANGLE)
+#   -d (0|1)   dihedral potentials      (defines/undefines INTER_DIHEDRAL)
+#   -e (0|1)   external potentials      (defines/undefines INTER_EXTERNAL)
+#   -f (0|1)   free energy perturbation (defines/undefines MCMD_PERTURB)
+#   -l (0|1)   links (mutable bonds)    (defines/undefines MCMD_LINK)
+#   -s (0|1)   shift                    (defines/undefines MCMD_SHIFT)
+#   -k (0|1)   dependency generation    (defines/undefines MAKEDEP)
 #
-#   -q query - prints a report showing which options are enabled / disabled.
+# Other Command Line Options:
 #
-# Example:
+#   -c compiler  Chooses a compiler, set COMPILER=compiler in src/compiler.mk
+#   -q           query: prints report of options that are enabled / disabled.
+#
+# Examples:
 #
 # To disable debugging, but enable angle and dihedral potentials:
 #
 #   >  ./configure -g0 -a1 -d1
 #
+# To set COMPILER=intel in src/compiler.mk
+#
+#   >  ./configure -c intel
+#
 #-----------------------------------------------------------------------
-while getopts "g:a:d:e:f:l:s:k:q" opt; do
+while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
 
   if [ -n "$MACRO" ]; then 
     MACRO=""
@@ -45,6 +53,11 @@ while getopts "g:a:d:e:f:l:s:k:q" opt; do
   fi
   
   case $opt in
+    m)
+      MACRO=UTIL_MPI
+      VALUE=1
+      FILE=src/compiler.mk
+      ;;
     g)
       MACRO=UTIL_DEBUG
       VALUE=1
@@ -95,6 +108,13 @@ while getopts "g:a:d:e:f:l:s:k:q" opt; do
         ;;
       esac
       ;;
+    c)
+      FILE=src/compiler.mk
+      cp "$FILE" temp
+      sed "s/COMPILER:=.*$/COMPILER:=$OPTARG/" temp > "$FILE"
+      echo "Setting COMPILER = $OPTARG in file $FILE" >&2
+      rm temp
+      ;;
     q)
       grep "UTIL_DEBUG=" src/util/defines.mk >&2
       grep "INTER_ANGLE=" src/inter/defines.mk >&2
@@ -106,17 +126,27 @@ while getopts "g:a:d:e:f:l:s:k:q" opt; do
   esac
 
   if [ -n "$MACRO" ]; then
-    sed "s/$MACRO *=.*$/$MACRO=1/" "$FILE" > temp
+    
     case $OPTARG in
-    0)
-      echo "Disabling $MACRO in file $FILE" >&2
-      sed "s/^ *$MACRO=/#$MACRO=/" temp > "$FILE"
-      rm temp
+    0)  # Disable (comment out) the macro=1 definition
+      if [ `grep "^ *$MACRO *= *1" "$FILE"` ]; then
+         echo "Disabling $MACRO in file $FILE" >&2
+         sed "s/$MACRO *=.*$/$MACRO=1/" "$FILE" > temp
+         sed "s/^ *$MACRO=/#$MACRO=/" temp > "$FILE"
+         rm temp
+      else
+         echo "$MACRO already disabled in file $FILE" >&2
+      fi
       ;;
-    1)
-      echo "Enabling $MACRO in file $FILE" >&2
-      sed "s/^ *# *$MACRO=/$MACRO=/" temp > "$FILE"
-      rm temp
+    1) # Enable (uncomment) the macro=1 definition
+      if [ `grep "^ *$MACRO *= *1" "$FILE"` ]; then
+         echo "$MACRO already enabled in file $FILE" >&2
+      else
+         echo "Enabling $MACRO in file $FILE" >&2
+         sed "s/$MACRO *=.*$/$MACRO=1/" "$FILE" > temp
+         sed "s/^ *# *$MACRO=/$MACRO=/" temp > "$FILE"
+         rm temp
+      fi
       ;;
     esac
   fi

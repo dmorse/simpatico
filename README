@@ -94,8 +94,6 @@ versions of mcSim and mdSim (for the impatient) are:
 
 - Enter "./setup" to run a setup script
 
-- cd to the src/ directory
-
 - Enter "make mcMd".
 
 The resulting executables, named "mcSim" and "mdSim", will be 
