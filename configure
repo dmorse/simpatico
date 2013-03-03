@@ -98,12 +98,12 @@ while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
       case $OPTARG in
       0)
         echo "Disabling automatic dependency generation" >&2
-        sed "s/^ *MAKEDEP=/#MAKEDEP=/" temp > src/compiler.mk
+        sed "s/^ *MAKEDEP *=/#MAKEDEP=/" temp > src/compiler.mk
         rm temp
         ;;
       1)
         echo "Enabling automatic dependency generation" 
-        sed "s/^ *# *$MACRO=/$MACRO=/" temp > src/compiler.mk
+        sed "s/^ *# *MAKEDEP *=/MAKEDEP=/" temp > src/compiler.mk
         rm temp
         ;;
       esac
