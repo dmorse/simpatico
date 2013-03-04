@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page extend_subfactory_page 5.5 Sub-Factories
+/*! \page extend_subfactory_page 4.5 Sub-Factories
 
 A Factory may contain one or more subfactories. Creating a subfactories is an alternative way of adding new classes to the set that can be recognized by a Factory, without modifying the Factory implementation. The main use of subfactories is in the construction of \ref extend_module_page "modules", which are classes that encapsulate a set of related classes that are needed for an application area.
 

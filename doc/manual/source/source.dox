@@ -22,13 +22,11 @@ Contents:
 
 Navigation: 
 <ul style="list-style: none;">
- <li> \ref user_page          (Previous section)</li>
+ <li> \ref user_page          (Previous)</li>
  <li> \ref index "Main Page"  (Up)              </li>
- <li> \ref custom_page        (Next section)    </li>
+ <li> \ref extend_page        (Next)    </li>
 </ul>
  
 */
 
-// <li> \ref user_multi_McMd_page  (Previous)          </li>
-// <li> \ref source_directory_page  (Next)          </li>
 }

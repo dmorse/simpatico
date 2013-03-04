@@ -39,12 +39,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    </li>
    </ul>
  </li>
- <li> \subpage custom_page "4. Compile-Time Options"
-   <ul style="list-style: none;">
-   <li> \subpage preprocessor_page </li>
-   <li> \subpage boundary_page </li>
-   </ul>
- <li> \subpage extend_page  "5. Extending Simpatico" </li>
+ <li> \subpage extend_page  "4. Extending Simpatico" </li>
    <ul style="list-style: none;">
    <li> \subpage extend_base_page  </li>
    <li> \subpage extend_build_page </li>
@@ -54,8 +49,8 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \subpage extend_module_page   </li>
    </ul>
  </li>
- <li> \subpage hoomd_page     "6. Hoomd-blue integration" </li>
- <li> \subpage developer_page "7. Developer Information"
+ <li> \subpage hoomd_page     "5. Hoomd-blue integration" </li>
+ <li> \subpage developer_page "6. Developer Information"
    <ul style="list-style: none;">
    <li> \subpage developer_build_page </li>
    <li> \subpage developer_standards_page </li>

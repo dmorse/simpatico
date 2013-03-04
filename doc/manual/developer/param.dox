@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page developer_param_page 7.3 Parameter File I/O
+/*! \page developer_param_page 6.3 Parameter File I/O
 
 The format of the parameter file (discussed in \ref user_param_page) 
 consists of a set of nested blocks, in which each block contains 

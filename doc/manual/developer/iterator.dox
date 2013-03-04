@@ -1,4 +1,4 @@
-/*! \page developer_iterator_page 7.4 Loops and Iterators 
+/*! \page developer_iterator_page 6.4 Loops and Iterators 
 
 Most loops in Simpatico are written using iterators, rather than simple for-loops.
 

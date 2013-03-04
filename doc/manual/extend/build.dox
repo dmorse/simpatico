@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page extend_build_page 5.2 Build system (adding new classes)
+/*! \page extend_build_page 4.2 Build system (adding new classes)
 
 Simpatico is built using a system of unix makefiles. The procedure described here allows users to add new classes to the list of source files maintained by the build system, so that new classes can be compiled and linked along with the rest of simpatico. 
 
