@@ -18,7 +18,9 @@
 # Makefile variables to define preprocessor macros
 
 # Define MCMD_PERTURB, enable free energy perturbation
-#MCMD_PERTURB=1
+ifeq ($(UTIL_MPI),1)
+MCMD_PERTURB=1
+endif
 
 # Define MCMD_LINK, enable Link (mutable bond) potentials
 #MCMD_LINK=1

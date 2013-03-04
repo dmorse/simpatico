@@ -186,8 +186,8 @@ The two formats are similar in most respects. The most important differences are
 The following parameters appear in the main block in the format for either type of simulation:
 <ul>
 <li> nAtomType: The number of atom types, which are indexed by an integer index with values 0, ...,  nAtomType - 1. </li>
-<li> nAtomType: The number of bond types, which are indexed by an integer index with values 0, ...,  nBondType - 1. </li>
-<li> atomTypes: atomTypes is an array of values of type McMd::AtomType. The string representation of each atom type consists of a string label (e.g., "A" or "B") followed by a floating point mass. </li>
+<li> nBondType: The number of bond types, which are indexed by an integer index with values 0, ...,  nBondType - 1. </li>
+<li> atomTypes: atomTypes is an array of values of type McMd::AtomType. The string representation of each atom type consists of a string label (e.g., "A" or "B") followed by a floating point value for the atom mass. </li>
 <li> maskedPairPolicy: Determines if nonbonded pair interactions between bonded atoms are "masked" (i.e., suppressed), or included. See below for further discussion.
 <li> writeRestartInterval: The interval, in MD time steps or attempted MC moves, between time steps when a restart file is written.
 <li> writeRestartFileName: The base name used for the restart file.

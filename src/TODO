@@ -4,5 +4,3 @@ This file contains only items that are not localized to a namespace.
 Makefiles
 ---------
 
-- Modify makefiles to simplify compilation of MPI and noMpi versions.
-
