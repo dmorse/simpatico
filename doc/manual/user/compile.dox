@@ -1,5 +1,8 @@
 /*! \page user_compile_page 2.1 Compilation
 
+\ref user_usage_page (Next) 
+<HR> <BR>
+
 Simpatico is distributed only as source code, and must be compiled by the user. All source code is written in ANSI 1998 standard C++. It has been developed and tested using the gcc and intel compilers in a linux environment, and with the gcc compiler in Mac OS X.  It should compile with any modern, standard compliant C++ compiler.   
 
 The single-processor programs mcSim and mdSim have no external dependencies.  The ddSim program requires a Message Passing Interface (MPI) library to run on multiple processors. An MPI library is also required to compile multiprocessor versions of mcSim and mdSim, for parallel simulations in which different systems run on different processors. 
@@ -195,10 +198,8 @@ Entering
 \endcode
 from the doc/ directory will remove all the html documentation in the doc/html directory. 
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref user_page   (Up)    </li>
- <li> \ref user_usage_page (Next)  </li>
-</ul>
+<HR>
+\ref user_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_usage_page (Next) 
 
 */

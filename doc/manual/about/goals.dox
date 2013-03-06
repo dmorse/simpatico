@@ -14,10 +14,8 @@ The design of mcSim and mdSim (which share a great deal of code) is similar in m
 
 Simpatico has thus far been used only for simulations of coarse-grained bead-spring models of polymer liquids.  It lacks some features for simulation of atomistic models that are found in several more mature open source molecular dynamics simulation codes, such as Lammps, DL_POLY, NAMD, Gromacs, and in a smaller number of Monte Carlo codes, such as Towhee.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref about_page        (Up)     </li>
- <li> \ref about_capabilities_page (Next)   </li>
-</ul>
+<HR>
+\ref about_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref about_capabilities_page (Next) 
 
 */

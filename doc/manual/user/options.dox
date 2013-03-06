@@ -3,6 +3,10 @@ namespace McMd
 
 /*! \page user_options_page 2.10 Compile Time Options
 
+\ref user_multi_page      (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_page          (Next) 
+<HR> <BR>
+
 Many features of the Simpatico programs can be enabled or disabled when the program is 
 compiled, via conditional compilation of some parts of the code. This page lists briefly
 explains these optional features, and how they may be enabled or disabled.
@@ -159,12 +163,10 @@ The choice of lattice system for the periodic unit cell (i.e., cubic, tetragonal
 
 We have chosen to use a typedef rather than a polymorphic classes for the boundary conditions because of concerns about efficiency.  The Boundary class provides methods that calculate separations using the minimum image convention, which are called repeatedly in the inner loops of both MD and MC simulations. The use of a polymorphic class with virtual functions would be the most flexible solution. This would allow the user to choose a boundary type at run time, but would also prevent inlining of the minimum image separation calculations. This is one case where we chose to favor efficiency over run-time flexibility.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref user_multi_page      (Previous) </li>
- <li> \ref user_page            (Up)   </li>
- <li> \ref source_page          (Next) </li>
-</ul>
+<HR>
+\ref user_multi_page      (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_page            (Up)   &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_page          (Next) 
 
 */
 

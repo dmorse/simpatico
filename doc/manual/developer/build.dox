@@ -3,6 +3,9 @@ namespace McMd
 
 /*! \page developer_build_page 6.1 Build System
 
+\ref developer_standards_page  (Next)
+<HR>
+
 Simpatico is compiled using a system of unix makefiles.  All development was done using gnu make (gmake). We have never checked if the build system works with other variants of make (though it very well might).
   
 \section make_files Source File and Namespace Conventions
@@ -188,11 +191,9 @@ from either the src/mcMd/simulation or the src/mcMd/ directory.  Typing "make Si
 
 In order to use "make all" for development, however, you must be careful to only work on one file at a time. To do so, simply comment out incomplete or broken source files in the definition of the [directory]_SRCS in the sources.mk file, until you are ready to complete or fix them. Otherwise, the "make all" command will try to compile files that are not ready to be compiled.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref developer_page  (Up)    </li>
- <li> \ref developer_standards_page  (Next)  </li>
-</ul>
+<HR>
+\ref developer_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref developer_standards_page  (Next)
 
 */
 }

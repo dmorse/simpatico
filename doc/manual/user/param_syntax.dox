@@ -1,5 +1,9 @@
 /*! \page user_param_syntax_page 2.3.1 Parameter File Syntax
 
+\ref user_usage_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_param_mcmd_page (Next) 
+<HR> <BR>
+
 Before discussing the contents of parameter files for different types of simulation, we will discuss the syntax, which is similar for all Simpatico simulations. Let's start with an example:
 
 \section param_syntax_mdexample_section Example (for mdSim)
@@ -152,11 +156,9 @@ To use this file format effectively, and diagnose errors, it is useful to unders
 
 The most reliable documentation of the file format for each parameter block is thus provided by the source code of the the readParameters() method of the associated class. When an examination of available html documentation and error messages is not enough to explain the required format, users can always read the source code of this method of the associated class. The format of a parameter file is designed to make it very easy to find the relevant function. An html copy of the implementation of any function of any class can be found using the "Classes" link at the top of any page of this html documentation, open the doxygen class documentation, and clicking on the short function description to get the long function description, and then clicking on a link within the long description to open an html version of the function source code. An explanation of the programming conventions used in all readParameters() methods is given \ref developer_param_page "here".  
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref user_usage_page  (Previous) </li>
- <li> \ref user_param_page  (Up) </li>
- <li> \ref user_param_mcmd_page (Next) </li>
-</ul>
+<HR>
+\ref user_usage_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_param_page  (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_param_mcmd_page (Next) 
 
 */
