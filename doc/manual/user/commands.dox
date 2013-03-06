@@ -5,7 +5,7 @@ namespace McMd
 
  \ref user_param_page   (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_cfgfile_page (Next) 
- <HR> <BR>
+ <BR>
 
 For any Simpatico simulation program, after the main simulation object is initialized by the readParam() method, the progress of a simulation is controlled by a command file, which is read by a readCommand() method. The name of the command file is specified by the commandFileName parameter in the FileMaster block of the parameter file. If the value of commandFileName is given by the special string "paramfile", however, readCommand() will assume that command file has been appended to the end of the param file, after the closing bracket of the main McSimulation or MdSimulation block, and will attempt to continue reading from the parameter file. 
 
@@ -223,7 +223,7 @@ The following table shows a list of available commands for all three programs.  
 </table>
 The SET_ANGLE and SET_DIHEDRAL commands are only available in programs compiled with angle and dihedral potentials enabled, respectively.
 
- <HR>
+ <BR>
  \ref user_param_page   (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_page        (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_cfgfile_page (Next) 

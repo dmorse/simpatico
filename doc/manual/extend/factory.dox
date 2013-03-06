@@ -5,7 +5,7 @@ namespace McMd
 
 \ref extend_build_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_potential_page  (Next)
-<HR>
+<BR>
  
 \section factory_purpose Why Factory Classes Exist
 
@@ -83,7 +83,7 @@ that is described here. By default, none of the factories have any subfactories.
 subfactories, the trySubfactories() method returns a null pointer, and this pair of lines does nothing. 
 The use of subfactories is discussed \ref extend_subfactory_page "here".
 
-<HR>
+<BR>
 \ref extend_build_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_potential_page  (Next)

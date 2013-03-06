@@ -80,7 +80,7 @@ All mcSim and mdSim data analysis classes can be used either on-the-fly, during 
 
 A smaller set of diagnostics is distributed for use on-the-fly with ddSim. Classes are available to evaluate thermodynamic properties (energy contributions and stress components) and structure factors. MD trajectories from ddSim simulations can also be post-processed by using mcSim or msSim as analysis tools. 
 
-<HR>
+<BR>
 \ref about_goals_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref about_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref about_contributors_page (Next)

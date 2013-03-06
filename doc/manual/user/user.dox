@@ -5,7 +5,7 @@ namespace McMd
 
 \ref about_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_page (Next)
-<HR> <BR>
+<BR>
 
 Contents:
    <ul style="list-style: none;">
@@ -21,7 +21,7 @@ Contents:
    <li> \subpage user_options_page   </li>
    </ul>
 
-<HR>
+<BR>
 \ref about_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref index "Main Page" (Up) &nbsp; &nbsp; &nbsp; &nbsp;
 \ref source_page (Next)

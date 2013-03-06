@@ -2,7 +2,7 @@
 
 \ref developer_param_page   (Prev)   &nbsp; &nbsp; &nbsp; &nbsp;
 \ref developer_mcMdData_page  (Next)
-<HR>
+<BR>
 
 Most loops in Simpatico are written using iterators, rather than simple for-loops.
 
@@ -128,7 +128,7 @@ namespace DdMd
 \endcode
 This could also be written using the typedefs BondStorage and BondIterator, which are simply aliases for GroupStorage<2> and GroupIterator<2>, respectively. A corresponding loop over angles or dihedrals would be similar except for the use of a template argument N = 3 or N = 4, respectively, or the equivalent Angle or Dihedral typedefs (e.g., AngleStorage and AngleIterator).
 
-<HR>
+<BR>
 \ref developer_param_page   (Prev)   &nbsp; &nbsp; &nbsp; &nbsp;
 \ref developer_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref developer_mcMdData_page  (Next)

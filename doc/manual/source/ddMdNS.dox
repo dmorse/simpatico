@@ -8,7 +8,7 @@ namespace DdMd
 
 \ref McMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref extend_page  (Next)    
-<HR>
+<BR>
 
 The DdMd namespace contains classes used to construct parallel domain
 decomposition molecular dynamics simulations. Some classes in the DdMd 
@@ -177,7 +177,7 @@ A DdMd::Simulation object is the top level object in a DdMd simulation.  There i
 
 See also: \ref DdMd_Simulation_Module "Simulation Module"
 
-<HR>
+<BR>
 \ref McMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_namespace_page  (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref extend_page  (Next)    

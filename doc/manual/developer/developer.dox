@@ -4,7 +4,7 @@ namespace McMd
 /*! \page developer_page 6 Developer Information
 
 \ref hoomd_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
-<HR> 
+<BR>
  
    Contents: 
    <ul style="list-style: none;">
@@ -17,7 +17,7 @@ namespace McMd
    </ul>
  
 
-<HR> 
+<BR> 
 \ref hoomd_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref index "Main Page"  (Up) 
  

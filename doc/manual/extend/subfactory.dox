@@ -5,7 +5,7 @@ namespace McMd
 
 \ref extend_potential_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_module_page  (Next)
-<HR>
+<BR>
  
 A Factory may contain one or more subfactories. Creating a subfactories is an alternative way of adding new classes to the set that can be recognized by a Factory, without modifying the Factory implementation. The main use of subfactories is in the construction of \ref extend_module_page "modules", which are classes that encapsulate a set of related classes that are needed for an application area.
 
@@ -113,7 +113,7 @@ When a factory must be accessed via an instance of System or one of its subclase
 \endcode
 Here, sim is an instance of MdSimulation. The method MdSimulation::system() returns a reference to the associated MdSystem object. The method MdSystem::mdIntegratorFactory() then returns a reference to the default Factory<MdIntegrator>.  Invoking the method Factory<MdIntegrator>::addSubFactory() of this factory object then adds the user-defined subfactory to the default MdIntegratorFactory.
 
-<HR>
+<BR>
 \ref extend_potential_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_module_page  (Next)

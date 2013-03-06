@@ -5,7 +5,7 @@ namespace DdMd
 
 \ref user_multi_McMd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_page (Next) 
-<HR> <BR>
+<BR>
 
 The parallel ddSim program can be run in a multi-system mode 
 that runs simulations of different systems on different groups of 
@@ -43,7 +43,7 @@ or replica exchange features provided by mcSim and mdSim, which
 allow multiple systems with slightly different parameters to be
 controlled with a single pair of parameter and command files.
 
-<HR>
+<BR>
 \ref user_multi_McMd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_multi_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_page (Next) 

@@ -5,7 +5,7 @@ namespace McMd
 
 \ref user_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_page  (Next) 
-<HR> 
+<BR>
 
 These pages present an overview of the organization of the source
 code, and of the class library design.
@@ -24,7 +24,7 @@ Contents:
    
    </ul>
 
-<HR> 
+<BR> 
 \ref user_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref index "Main Page"  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_page  (Next) 

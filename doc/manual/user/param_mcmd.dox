@@ -2,7 +2,7 @@
 
 \ref user_param_syntax_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_param_ddmd_page (Next)
-<HR> <BR>
+<BR>
 
 The parameter file formats for mdSim and mcSim simulations are similar in many respects, and so will be discussed together.  
 
@@ -278,7 +278,7 @@ The pair list in an MD simulation is rebuilt whenever one or more atoms in the s
 \section user_param_mcmd_ensemble_section Energy and Boundary Ensembles
 The EnergyEnsemble and BoundaryEnsemble blocks are associated with instances of Util::EnergyEnsemble and Util::BoundaryEnsemble respectively. The EnergyEnsemble block specifies the type of statistical ensemble for energy fluctuations, which can be "adiabatic" (i.e., constant energy) or "isothermal". If the ensemble type is isothermal (as in the above example for mcSim), this this block must also contains a "temperature" parameter. Only "isothermal" makes sense for an MC simulation, but "adiabatic" ensemble is used for MD integrators that conserve energy or (for constant pressure ensembles) enthalpy. For isothermal simulations, temperature is specified as a value for kT, in units of energy. The BoundaryEnsemble block has a type parameter that can be either "rigid" (i.e., constant volume) or "isobaric". If this type is isobaric, the type parameter must be followed by a "pressure" parameter whose value specifies the target pressure in units of energy per volume.
 
-<HR>
+<BR>
 \ref user_param_syntax_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_param_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_param_ddmd_page (Next)

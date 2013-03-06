@@ -5,7 +5,7 @@ namespace McMd
 
  \ref user_commands_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_examples_page  (Next) 
- <HR> <BR>
+ <BR>
 
 The instantaneous state of a system is recorded in a configuration file.  Each of the simpatico programs has a default configuration file format, and is also able to read and write several other formats. 
 
@@ -188,7 +188,7 @@ to generate random velocities chosen from a Maxwell-Boltzmann distribution. A SE
 
 A command file that contains only SET_CONFIG_IO, READ_CONFIG and WRITE_CONFIG commands can be used to convert between file formats.
 
- <HR>
+ <BR>
  \ref user_commands_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_page     (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_examples_page  (Next) 

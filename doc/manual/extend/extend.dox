@@ -5,7 +5,7 @@ namespace McMd
 
 \ref source_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref hoomd_page  (Next)
-<HR> 
+<BR>
 
 Users may extend the capabilities of Simpatico by writing new subclasses of a set of base classes that represent elements of a simulation. Different base class are used to represent molecular species, potential energy functions, diagnostics, file formats, and Monte Carlo or molecular dynamics algorithms.  A basic procedure for adding a new subclass involves three steps:
 <ul>
@@ -25,7 +25,7 @@ Contents:
   <li> \subpage extend_module_page       </li>
 </ul>
 
-<HR> 
+<BR> 
 \ref source_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref index "Main Page"  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref hoomd_page  (Next)

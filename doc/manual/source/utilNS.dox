@@ -4,7 +4,7 @@ namespace Util
 /*! \page Util_NS_page 3.2.1 Util namespace
 
 \ref Inter_NS_page (Next)  
-<HR>
+<BR>
 
 The Util namespace contains a varity of general utility classes for scientific computation. Here we list only a few classes that are particularly heavily used in the McMd and DdMd namespaces.
 
@@ -135,7 +135,7 @@ implementation uses a Mersenne-Twister RNG.
  
 See also: \ref Random_Module "Random Module"
 
-<HR>
+<BR>
 \ref source_namespace_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref Inter_NS_page (Next)  
 

@@ -2,7 +2,7 @@
 
 \ref user_param_mcmd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_commands_page (Next) 
-<HR> <BR>
+<BR>
 
 \section param_ddMd_example_section Example (ddSim):
 
@@ -137,7 +137,7 @@ When setting up a first simulation for a particular system, one can be conservat
 \section user_param_DdMdIntegrator_section MD Integrator
 The NveIntegrator block in the above example is a polymorphic block that must contain the file format for a subclass of DdMd::Integrator. Each subclass of DdMd::Integrator implements a parallel MD integrator. The DdMd::NveIntegrator class used in the above example implements a simple NVE velocity-Verlet algorithm. The only parameter required for this integrator is a value for the time step size dt. The required parameters are different for different integrators, but always include a value for dt.
 
-<HR>
+<BR>
 \ref user_param_mcmd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_param_page  (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_commands_page (Next) 

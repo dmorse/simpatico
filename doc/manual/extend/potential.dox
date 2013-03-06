@@ -5,7 +5,7 @@ namespace McMd
 
 \ref extend_factory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_subfactory_page  (Next)
-<HR>
+<BR>
  
 \section potentials_base_sec Potential Energy Base Classes
 The mcSim and mdSim programs use the following set of abstract base classes for different types of potential energy:
@@ -62,7 +62,7 @@ Because McMd::PairFactory does not implement the interface defined by the standa
 
 The implementations of the potential energy factory classes are generally very similar to those of other factory classes.  Developers should consult the implementations of the default factory classes for different types of potential in the src/mcMd/potential/ and/or src/ddMd/potentials/ directories for further guidance. 
 
-<HR>
+<BR>
 \ref extend_factory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_subfactory_page  (Next)

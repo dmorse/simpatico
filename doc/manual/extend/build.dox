@@ -5,7 +5,7 @@ namespace McMd
 
 \ref extend_base_page   (Prev)   &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_factory_page  (Next)
-<HR> 
+<BR> 
 
 Simpatico is built using a system of unix makefiles. The procedure described here allows users to add new classes to the list of source files maintained by the build system, so that new classes can be compiled and linked along with the rest of simpatico. 
 
@@ -31,7 +31,7 @@ from within that directory. This command may be used to compile a new class whil
 
 After the new source file is added to the appropriate _SRCS variable, it will automatically be compiled and linked into an executable when the relevant program or programs are compiled. 
 
-<HR> 
+<BR> 
 \ref extend_base_page   (Prev)   &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_factory_page  (Next)

@@ -8,7 +8,7 @@ namespace Inter
 \ref Util_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_namespace_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref McMd_NS_page (Next) 
-<HR>
+<BR>
 
 The Inter namespace contains "interaction" classes that define various types of potential energy functions. All of the code for the Inter namespace is in the directory src/inter. Various subdirectories of src/inter contain classes that define nonbonded pair interactions, covalent 2-body bond potentials, covalent 3- and 4- body angle and dihedral interactions, and external one-body potentials.
 
@@ -24,7 +24,7 @@ See also:
 
 \ref DdMd_Potential_Module "DdMd Potential Module"
 
-<HR>
+<BR>
 \ref Util_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_namespace_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref McMd_NS_page (Next) 

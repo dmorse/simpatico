@@ -5,7 +5,7 @@ namespace McMd
 
 \ref user_restart_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_options_page   (Next) 
-<HR> <BR>
+<BR>
 
 These pages discuss how to run simultaneous simulations of more than one system with various programs. The discussion of multi-system simulations in mcSim and mdSim also discusses the use of free energy perturbations and replica exchange simulations.
 
@@ -15,7 +15,7 @@ Contents:
    <li> \subpage user_multi_DdMd_page  </li> 
    </ul>
 
-<HR>
+<BR>
 \ref user_restart_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_options_page   (Next) 

@@ -2,7 +2,7 @@
 
 \ref source_directory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref extend_page  (Next) 
-<HR>
+<BR>
 
 The classes used in the current version of Simpatico are divided into four
 namespaces. The source code for each namespace is in a corresponding 
@@ -51,7 +51,7 @@ Contents:
  <li> \subpage DdMd_NS_page  </li>
 </ul>
 
-<HR>
+<BR>
 \ref source_directory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref extend_page  (Next) 
