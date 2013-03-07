@@ -60,23 +60,24 @@ namespace DdMd
    * Private method to read Group<N> objects.
    */
    template <int N>
-   int LammpsOrderedConfigIo::readGroups(std::istream& file, 
-                  const char* sectionLabel,
-                  const char* nGroupLabel,
+   void LammpsOrderedConfigIo::readGroups(std::istream& file, 
+                  const char* sectionLabel, int nGroup,
                   GroupDistributor<N>& distributor) 
    {
-      int nGroup;  // Total number of groups in file
       if (domain().isMaster()) {  
          file >> Label(sectionLabel);
-         file >> Label(nGroupLabel) >> nGroup;
          Group<N>* groupPtr;
          int i, j, k;
          distributor.setup();
          for (i = 0; i < nGroup; ++i) {
             groupPtr = distributor.newPtr();
-            file >> *groupPtr;
-            for (j = 0; j < 2; ++j) {
-               k = groupPtr->atomId(j);
+            file >> k;
+            groupPtr->setId(k-1);
+            file >> k;
+            groupPtr->setTypeId(k-1);
+            for (j = 0; j < N; ++j) {
+               file >> k;
+               groupPtr->setAtomId(j, k-1);
             }
             distributor.add();
          }
@@ -86,7 +87,6 @@ namespace DdMd
          // Receive all groups into BondStorage
          distributor.receive();
       }
-      return nGroup;
    }
 
    /*
@@ -140,14 +140,13 @@ namespace DdMd
          * Lammps files can be read only if the number of atoms and bonds
          * in the lammps file exactly matches the corresponding capacities.
          */
-         if (nAtom != atomStorage().totalAtomCapacity()) {
-            UTIL_THROW("nAtom != atomCapacity");
-         }
+         //if (nAtom != atomStorage().totalAtomCapacity()) {
+         //   UTIL_THROW("nAtom != atomCapacity");
+         //}
          
-         if (nBond != bondStorage().totalCapacity()) {
-            UTIL_THROW("nBond != bondCapacity");
-         }
-         
+         //if (nBond != bondStorage().totalCapacity()) {
+         //   UTIL_THROW("nBond != bondCapacity");
+         //}
 
          // Read numbers of atom types, bond types, etc.
 
@@ -211,7 +210,7 @@ namespace DdMd
          int rank;
          IntVector shift;
 
-         for(int i = 0; i < nAtom; ++i) {
+         for (int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
@@ -223,7 +222,7 @@ namespace DdMd
             atomPtr->setId(id-1);
             atomPtr->setTypeId(typeId-1);
             file >> r;
-            atomPtr->position() += min;
+            atomPtr->position() += min; // Shift corner of Boundary to (0, 0, 0)
             if (UTIL_ORTHOGONAL) {
                atomPtr->position() = r;
             } else {
@@ -263,15 +262,13 @@ namespace DdMd
       bool hasGhosts = false;
 
       if (bondStorage().capacity()) {
-         readGroups<2>(file, "BONDS", "nBond", bondDistributor());
+         readGroups<2>(file, "Bonds", nBond, bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
          //Set atom "mask" values
          if (maskPolicy == MaskBonded) {
             setAtomMasks();
          }
       }
-        
-
        
    }
 
@@ -292,7 +289,7 @@ namespace DdMd
       if (domain().isMaster()) { 
          file << std::endl;
          file << sectionLabel << std::endl;
-         file << nGroupLabel << Int(nGroup, 10) << std::endl;
+         //file << nGroupLabel << Int(nGroup, 10) << std::endl;
 
          IoGroup<N> ioGroup;
          std::vector<IoGroup <N> > groups;
@@ -432,7 +429,7 @@ namespace DdMd
 
       // Write the groups
       if (bondStorage().capacity()) {
-         writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector());
+         writeGroups<2>(file, "Bonds", "nBond", bondStorage(), bondCollector());
       }
 
       /*
