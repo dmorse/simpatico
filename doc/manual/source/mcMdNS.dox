@@ -5,6 +5,11 @@ namespace McMd
 
 /*! \page McMd_NS_page 3.2.3 McMd namespace
 
+\ref Inter_NS_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_namespace_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref DdMd_NS_page (Next) 
+<BR>
+
 The McMd namespace contains most of the classes used to construct Monte Carlo and molecular dynamics simulations.
 
 See also: \ref McMd_Module "McMd Module"
@@ -107,12 +112,10 @@ The conceptual distinction between a System and a Simulation is somewhat arbitra
 
 See also: \ref McMd_Simulation_Module "Simulation Module"
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref Inter_NS_page  (Previous)  </li>
- <li> \ref source_namespace_page   (Up)        </li>
- <li> \ref DdMd_NS_page (Next)      </li>
-</ul>
+<BR>
+\ref Inter_NS_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_namespace_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref DdMd_NS_page (Next) 
 
 */
 } 

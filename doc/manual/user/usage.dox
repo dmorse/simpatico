@@ -3,6 +3,10 @@ namespace McMd
 
 /*! \page user_usage_page 2.2 Usage
 
+\ref user_compile_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_param_page (Next) 
+<BR>
+
 This section describes how to use the programs mcSim, mdSim and ddSim.  The discussion assumes that the executables have been installed in a directory that is in the users command search $PATH variable. 
 
 \section usage_running Running a Simulation 
@@ -129,13 +133,10 @@ The -e (echo) option causing echoing of the parameter file to the log file as it
 
 The -s (split) option takes a required parameter p, whose value is the number of independent systems that should be simulated. Invoking ddSim with this option causes the MPI communicator to be split into p subcommunicators, each of which is used to run a separate parallel MD simulation. The total number of processors requested for a job must thus be a multiple of p. This option is discussed in more detail \ref user_multi_DdMd_page "here". 
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref user_compile_page  (Previous) </li>
- <li> \ref user_page    (Up)       </li>
- <li> \ref user_param_page    (Next)     </li>
-
-</ul>
+<BR>
+\ref user_compile_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_param_page (Next) 
 
 */
 }

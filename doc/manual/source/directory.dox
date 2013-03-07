@@ -3,6 +3,9 @@ namespace McMd
 
 /*! \page source_directory_page 3.1 Directory Structure
 
+\ref source_namespace_page   (Next)  
+<BR>
+
 The following list explains the contents of the subdirectories of
 the root simpatico/ directory, and some of the most important 
 subdirectories at the next level. 
@@ -24,12 +27,9 @@ subdirectories at the next level.
 \endcode
 The lib/, bin/, and doc/html directories are initially empty.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref source_page (Up)    </li>
- <li> \ref source_namespace_page   (Next)  </li>
-</ul>
-
+<BR>
+\ref source_page (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_namespace_page   (Next)  
 
 */
 }

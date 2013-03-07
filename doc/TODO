@@ -1,0 +1,10 @@
+TODO:
+
+1) Document the functional forms and parameter format for all of the interactions.
+   Create a directory doc/manual/inter with one *.dox file per interaction.
+
+2) Document all of the diagnostics, with one *.dox file per interaction in new
+   directories doc/diagnostics/ddMd and doc/diagnostics/mcMd.
+
+3) Document change to the parameter file format caused by enabling particular features.
+

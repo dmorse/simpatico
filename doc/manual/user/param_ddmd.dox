@@ -1,5 +1,9 @@
 /*! \page user_param_ddmd_page 2.3.3 ddSim Parameter Files
 
+\ref user_param_mcmd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_commands_page (Next) 
+<BR>
+
 \section param_ddMd_example_section Example (ddSim):
 
 Below is an example parameter file for a simple NVE ddSim parallel MD simulation for simulating a relatively small system (up 20000 atoms) on 8 processors in a 2 x 2 x 2 processor grid.  
@@ -133,11 +137,9 @@ When setting up a first simulation for a particular system, one can be conservat
 \section user_param_DdMdIntegrator_section MD Integrator
 The NveIntegrator block in the above example is a polymorphic block that must contain the file format for a subclass of DdMd::Integrator. Each subclass of DdMd::Integrator implements a parallel MD integrator. The DdMd::NveIntegrator class used in the above example implements a simple NVE velocity-Verlet algorithm. The only parameter required for this integrator is a value for the time step size dt. The required parameters are different for different integrators, but always include a value for dt.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref user_param_mcmd_page  (Previous) </li>
- <li> \ref user_param_page  (Up) </li>
- <li> \ref user_commands_page (Next) </li>
-</ul>
+<BR>
+\ref user_param_mcmd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_param_page  (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_commands_page (Next) 
 
 */
