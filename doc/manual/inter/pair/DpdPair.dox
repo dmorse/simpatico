@@ -1,7 +1,7 @@
 namespace Inter
 {
 
-/*! \page inter_DpdPair_page DpdPair 
+/*! \page inter_pair_DpdPair_page DpdPair 
 
 The DpdPair interaction implements the soft pair interaction that
 was first introduced by Groot and Warren for use in dissipative 
@@ -21,14 +21,14 @@ Values of \f$\epsilon\f$ and \f$\sigma\f$ are denoted in the
 parameter file and source code by matrix-valued variables 
 named "epsilon" and "sigma", respectively. 
 
-The parameter file format for an DpdPair contains
+The parameter file format for DpdPair contains
 \code
    epsilon  Matrix<float>
    sigma    Matrix<float>
 \endcode
-All three matrices are symmetric, and are entered in 
-lower diagonal form. For example, for a system with two
-types of monomer, we might have:
+All three matrices are symmetric, and are entered in lower 
+diagonal form. For example, for a system with two types of 
+monomer, we might have:
 \code
    epsilon   10.0   
              25.0     10.0

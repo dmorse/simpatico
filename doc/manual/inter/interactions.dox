@@ -1,0 +1,19 @@
+/*! \page inter_pair_page Interactions
+ 
+<h3> Contents: </h3>
+<ul style="list-style: none;">
+  <li> Pair Interactions
+     <ul style="list-style: none;">
+       <li> \subpage inter_pair_LJPair_page </li>
+       <li> \subpage inter_pair_DpdPair_page </li>
+     </ul>
+  </li>
+  <li> Bond Interactions
+     <ul style="list-style: none;">
+       <li> Harmonic Bond </li>
+       <li> HarmonicL0 Bond </li>
+     </ul>
+  </li>
+</ul>
+ 
+*/
