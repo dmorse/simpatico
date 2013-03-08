@@ -19,10 +19,14 @@ namespace Inter
    using namespace Util;
 
    /**
-   * A cutoff Lennard-Jones nonbonded pair potential.
+   * A cutoff, shifted Lennard-Jones nonbonded pair interaction.
    *
-   * Member variables include interaction parameters. Member functions evaluate
-   * energy and force for an individual pair of nonbonded interacting particles.
+   * This class defines a Lennard-Jones potential that is cutoff and
+   * shifted so that the potential is zero at the cutoff distance.
+   *
+   * \sa \ref inter_pair_LJPair_page
+   * \sa \ref inter_pair_interface_page
+   * \sa \ref inter_pair_page
    * 
    * \ingroup Inter_Pair_Module
    */

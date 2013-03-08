@@ -19,10 +19,12 @@ namespace Inter
    using namespace Util;
 
    /**
-   * The soft potential introduced in DPD simulations of Groot et al. 
+   * Soft pair potential used in dissipative particle dynamics (DPD) simulations 
+   * of Groot, Warren et al. 
    *
-   * Member functions evaluate energy and force for an individual pair 
-   * of nonbonded interacting particles.
+   * \sa \ref inter_pair_DpdPair_page
+   * \sa \ref inter_pair_interface_page
+   * \sa \ref inter_pair_page
    * 
    * \ingroup Inter_Pair_Module
    */
