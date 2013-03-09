@@ -4,7 +4,7 @@ namespace McMd
 /*! \page user_examples_page 2.6 Examples
 
 \ref user_cfgfile_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_analysis_page  (Next)
+\ref inter_page  (Next)
 <BR>
 
 A set of examples are provided with Simpatico in the examples/ 
@@ -93,8 +93,8 @@ the mcSim (or mdSim) executable file.
 
 <BR>
 \ref user_cfgfile_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_page        (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_analysis_page  (Next)
+\ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref inter_page (Next)
 
 */
 

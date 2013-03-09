@@ -1,9 +1,9 @@
 namespace McMd
 {
 
-/*! \page user_analysis_page 2.7 Data Analysis
+/*! \page user_analysis_page 2.8 Data Analysis
 
- \ref user_examples_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref inter_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_restart_page  (Next) 
  <BR> 
 
@@ -40,8 +40,8 @@ The mdSim program may also be used postprocess an MD trajectory file. An MD traj
 During postprocessing, the "interval" of each diagnostic is interpreted as a number of configurations to be read from file between subsequent calls of the sample method, rather than the number of MD or MC steps. Unless configurations were written to file more frequently than necessary, the interval for each diagnostics should thus generally be set to 1 in the parameter file for a postprocessing run.
 
  <BR> 
- \ref user_examples_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
- \ref user_page    (Up)   &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref inter_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_page (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_restart_page  (Next) 
 
 */

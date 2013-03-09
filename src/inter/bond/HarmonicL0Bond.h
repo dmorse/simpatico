@@ -23,6 +23,9 @@ namespace Inter
    /**
    * A harmonic bond potential with zero rest length.
    *
+   * \sa \ref inter_bond_HarmonicL0Bond_page
+   * \sa \ref inter_bond_interface_page
+   *
    * \ingroup Inter_Bond_Module
    */
    class HarmonicL0Bond : public ParamComposite 
