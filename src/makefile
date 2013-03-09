@@ -3,8 +3,6 @@
 
 include compiler.mk
 
-MPI_TEST=grep '^ *UTIL_MPI *= *1' compiler.mk
-
 mcMd: 
 	cd $(ROOT_DIR); ./configure -m0
 	cd util;  make all
