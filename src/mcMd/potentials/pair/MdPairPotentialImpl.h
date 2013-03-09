@@ -304,7 +304,13 @@ namespace McMd
    template <class Interaction> double 
    MdPairPotentialImpl<Interaction>::forceOverR(double rsq, 
                                         int iAtomType, int jAtomType) const
-   { return interaction().forceOverR(rsq, iAtomType, jAtomType); }
+   {
+      if (rsq < interaction().cutoffSq(iAtomType, jAtomType)) { 
+         return interaction().forceOverR(rsq, iAtomType, jAtomType); 
+      } else {
+         return 0.0;
+      }
+   }
 
    /*
    * Return maximum cutoff.
@@ -360,21 +366,27 @@ namespace McMd
          buildPairList();
       }
 
-      // Loop over nonbonded neighbor pairs
       PairIterator iter;
       Vector       force;
       double       rsq;
       Atom        *atom0Ptr;
       Atom        *atom1Ptr;
+      int          type0, type1;
+
+      // Loop over nonbonded neighbor pairs
       for (pairList_.begin(iter); iter.notEnd(); ++iter) {
          iter.getPair(atom0Ptr, atom1Ptr);
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position(), force);
-         force *= interaction().
-                  forceOverR(rsq, atom0Ptr->typeId(), atom1Ptr->typeId());
-         atom0Ptr->force() += force;
-         atom1Ptr->force() -= force;
+         type0 = atom0Ptr->typeId();
+         type1 = atom1Ptr->typeId();
+         if (rsq < interaction().cutoffSq(type0, type1)) { 
+            force *= interaction().forceOverR(rsq, type0, type1);
+            atom0Ptr->force() += force;
+            atom1Ptr->force() -= force;
+         }
       }
+
    } 
 
    /* 
@@ -391,6 +403,7 @@ namespace McMd
       PairIterator iter;
       Atom        *atom1Ptr;
       Atom        *atom0Ptr;
+      int          type0, type1;
 
       setToZero(stress);
 
@@ -399,10 +412,13 @@ namespace McMd
          iter.getPair(atom0Ptr, atom1Ptr);
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position(), dr);
-         force  = dr;
-         force *= interaction().
-                  forceOverR(rsq, atom0Ptr->typeId(), atom1Ptr->typeId());
-         incrementPairStress(force, dr, stress);
+         type0 = atom0Ptr->typeId();
+         type1 = atom1Ptr->typeId();
+         if (rsq < interaction().cutoffSq(type0, type1)) {
+            force  = dr;
+            force *= interaction().forceOverR(rsq, type0, type1);
+            incrementPairStress(force, dr, stress);
+         }
       }
 
       // Normalize by volume 

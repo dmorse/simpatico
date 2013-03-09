@@ -58,11 +58,6 @@ MdSimulation{
       interval                           200
     }
 
-    DumpConfig{
-      interval                          1000
-      outputFileName            dump/config.
-    }
-
     MdEnergyOutput{
       interval                           100
       outputFileName                  energy
@@ -105,6 +100,11 @@ MdSimulation{
   writeRestartInterval                  500
   writeRestartFileName              restart
 }
+
+    DumpConfig{
+      interval                          1000
+      outputFileName            dump/config.
+    }
 
     RDF{
       interval                          1000

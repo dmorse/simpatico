@@ -139,6 +139,8 @@ McSimulation{
     }
 
   }
+  writeRestartInterval    1000
+  writeRestartFileName    restart
 }
 
     RDF{

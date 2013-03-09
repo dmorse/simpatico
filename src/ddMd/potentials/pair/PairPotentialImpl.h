@@ -323,7 +323,13 @@ namespace DdMd
    template <class Interaction> double 
    PairPotentialImpl<Interaction>::pairForceOverR(double rsq, 
                                         int iAtomType, int jAtomType) const
-   { return interaction().forceOverR(rsq, iAtomType, jAtomType); }
+   {
+      if (rsq < interaction().cutoffSq(iAtomType, jAtomType)) { 
+         return interaction().forceOverR(rsq, iAtomType, jAtomType); 
+      } else {
+         return 0.0;
+      }
+   }
 
    /*
    * Return maximum cutoff.
@@ -445,9 +451,11 @@ namespace DdMd
             rsq = f.square();
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
-            f *= interactionPtr_->forceOverR(rsq, type0, type1);
-            atom0Ptr->force() += f;
-            atom1Ptr->force() -= f;
+            if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+               f *= interactionPtr_->forceOverR(rsq, type0, type1);
+               atom0Ptr->force() += f;
+               atom1Ptr->force() -= f;
+            }
          }
 
       } else {
@@ -458,10 +466,12 @@ namespace DdMd
             rsq = f.square();
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
-            f *= interactionPtr_->forceOverR(rsq, type0, type1);
-            atom0Ptr->force() += f;
-            if (!atom1Ptr->isGhost()) {
-               atom1Ptr->force() -= f;
+            if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+               f *= interactionPtr_->forceOverR(rsq, type0, type1);
+               atom0Ptr->force() += f;
+               if (!atom1Ptr->isGhost()) {
+                  atom1Ptr->force() -= f;
+               }
             }
          }
 
@@ -565,9 +575,11 @@ namespace DdMd
                if (atomPtr1 > atomPtr0) {
                   f.subtract(atomPtr0->position(), atomPtr1->position());
                   rsq = f.square();
-                  f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                  atomPtr0->force() += f;
-                  atomPtr1->force() -= f;
+                  if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
+                     atomPtr0->force() += f;
+                     atomPtr1->force() -= f;
+                  }
                }
             }
 
@@ -578,9 +590,11 @@ namespace DdMd
                   type1 = atomPtr1->typeId();
                   f.subtract(atomPtr0->position(), atomPtr1->position());
                   rsq = f.square();
-                  f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                  atomPtr0->force() += f;
-                  atomPtr1->force() -= f;
+                  if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
+                     atomPtr0->force() += f;
+                     atomPtr1->force() -= f;
+                  }
                }
             } else {
                for (j = na; j < nn; ++j) {
@@ -588,10 +602,12 @@ namespace DdMd
                   type1 = atomPtr1->typeId();
                   f.subtract(atomPtr0->position(), atomPtr1->position());
                   rsq = f.square();
-                  f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                  atomPtr0->force() += f;
-                  if (!atomPtr1->isGhost()) {
-                     atomPtr1->force() -= f;
+                  if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
+                     atomPtr0->force() += f;
+                     if (!atomPtr1->isGhost()) {
+                        atomPtr1->force() -= f;
+                     }
                   }
                }
             }
@@ -693,9 +709,11 @@ namespace DdMd
                   rsq = f.square();
                   type1 = atomIter1->typeId();
                   // Set vector force = (r0-r1)*(forceOverR)
-                  f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                  atomIter0->force() += f;
-                  atomIter1->force() -= f;
+                  if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
+                     atomIter0->force() += f;
+                     atomIter1->force() -= f;
+                  }
                }
             }
          }
@@ -713,10 +731,12 @@ namespace DdMd
                      rsq = f.square();
                      type1 = ghostIter->typeId();
                      // force = (r0-r1)*(forceOverR)
-                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                     atomIter0->force() += f;
-                     ghostIter->force() -= f;
-                     // Note: If reverseUpdateFlag, increment ghost force 
+                     if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+                        f *= interactionPtr_->forceOverR(rsq, type0, type1);
+                        atomIter0->force() += f;
+                        ghostIter->force() -= f;
+                        // Note: If reverseUpdateFlag, increment ghost force 
+                     }
                   }
                }
             }
@@ -731,9 +751,11 @@ namespace DdMd
                   rsq = f.square();
                   type1 = ghostIter->typeId();
                   // force = (r0-r1)*(forceOverR)
-                  f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                  atomIter0->force() += f;
-                  // Note: If !reverseUpdateFlag, do not increment ghost force 
+                  if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
+                     atomIter0->force() += f;
+                     // Note: If !reverseUpdateFlag, do not increment ghost force 
+                  }
                }
             }
 
@@ -773,9 +795,11 @@ namespace DdMd
             rsq = dr.square();
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
-            f = dr;
-            f *= interactionPtr_->forceOverR(rsq, type0, type1);
-            incrementPairStress(f, dr, localStress);
+            if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+               f = dr;
+               f *= interactionPtr_->forceOverR(rsq, type0, type1);
+               incrementPairStress(f, dr, localStress);
+            }
          }
 
       } else {
@@ -786,14 +810,16 @@ namespace DdMd
             rsq = dr.square();
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
-            f = dr;
-            forceOverR = interactionPtr_->forceOverR(rsq, type0, type1);
-            assert(!atom0Ptr->isGhost());
-            if (atom1Ptr->isGhost()) {
-               forceOverR *= 0.5;
+            if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+               f = dr;
+               forceOverR = interactionPtr_->forceOverR(rsq, type0, type1);
+               assert(!atom0Ptr->isGhost());
+               if (atom1Ptr->isGhost()) {
+                  forceOverR *= 0.5;
+               }
+               f *= forceOverR;
+               incrementPairStress(f, dr, localStress);
             }
-            f *= forceOverR;
-            incrementPairStress(f, dr, localStress);
          }
 
       }
@@ -839,12 +865,14 @@ namespace DdMd
             rsq = dr.square();
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
-            f = dr;
-            f *= interactionPtr_->forceOverR(rsq, type0, type1);
-            assert(!atom0Ptr->isGhost());
-            atom0Ptr->force() += f;
-            atom1Ptr->force() -= f;
-            incrementPairStress(f, dr, localStress);
+            if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+               f = dr;
+               f *= interactionPtr_->forceOverR(rsq, type0, type1);
+               assert(!atom0Ptr->isGhost());
+               atom0Ptr->force() += f;
+               atom1Ptr->force() -= f;
+               incrementPairStress(f, dr, localStress);
+            }
          }
 
       } else {
@@ -855,15 +883,16 @@ namespace DdMd
             rsq = dr.square();
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
-            f  = dr;
-            f *= interactionPtr_->forceOverR(rsq, type0, type1);
-            assert(!atom0Ptr->isGhost());
-            atom0Ptr->force() += f;
-            if (!atom1Ptr->isGhost()) {
-               atom1Ptr->force() -= f;
-               incrementPairStress(f, dr, localStress);
-            } else { // if atom 1 is a ghost
-               f *= 0.5;
+            if (rsq < interactionPtr_->cutoffSq(type0, type1)) {
+               f  = dr;
+               f *= interactionPtr_->forceOverR(rsq, type0, type1);
+               assert(!atom0Ptr->isGhost());
+               atom0Ptr->force() += f;
+               if (!atom1Ptr->isGhost()) {
+                  atom1Ptr->force() -= f;
+               } else { // if atom 1 is a ghost
+                  f *= 0.5;
+               }
                incrementPairStress(f, dr, localStress);
             }
          }

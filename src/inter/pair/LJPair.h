@@ -128,6 +128,16 @@ namespace Inter
       * to obtain the force vector. A positive value for the return value
       * represents a repulsive force between a pair of particles.
       *
+      * Precondition: The distance squared rsq must be less than cutoffSq.
+      * If rsq > cutoffSq, the return value is undefined (i.e., wrong).
+      * Usage: Test for rsq < cutoffSq before calling this function
+      * \code
+      * if (rsq < interaction.cutoffSq(i, j)) {
+      *    f = forceOverR(rsq, i, j);
+      *    .....
+      * }
+      * \endcode
+      *
       * \param rsq square of distance between particles
       * \param i   type of particle 1
       * \param j   type of particle 2
@@ -135,6 +145,15 @@ namespace Inter
       */
       double forceOverR(double rsq, int i, int j) const;
   
+      /**
+      * Get square of cutoff distance for specific type pair.
+      *
+      * \param i   type of Atom 1
+      * \param j   type of Atom 2
+      * \return    cutoffSq_[i][j]
+      */
+      double cutoffSq(int i, int j) const;
+ 
       /**
       * Get maximum of pair cutoff distance, for all atom type pairs.
       */
@@ -223,18 +242,21 @@ namespace Inter
    inline double LJPair::forceOverR(double rsq, int i, int j) const
    {
       double r2i, r6i;
-      if ( rsq < cutoffSq_[i][j] ) {
-         if ( rsq < 0.6*sigmaSq_[i][j] ) {
-             return 0.0;
-         }
+      //if ( rsq < cutoffSq_[i][j] ) {
          r2i = 1.0/rsq;
          r6i = sigmaSq_[i][j]*r2i;
          r6i = r6i*r6i*r6i;
          return 24.0*epsilon_[i][j]*(2.0*r6i*r6i - r6i)*r2i;
-      } else {
-         return 0.0;
-      }
+      //} else {
+      //   return 0.0;
+      //}
    }
+
+   /* 
+   * Calculate force/distance for a pair as function of squared distance.
+   */
+   inline double LJPair::cutoffSq(int i, int j) const
+   {  return cutoffSq_[i][j]; }
 
 }
 #endif

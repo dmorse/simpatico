@@ -282,7 +282,13 @@ namespace McMd
    */
    template <class Interaction>
    double McPairPotentialImpl<Interaction>::forceOverR(double rsq, int iAtomType, int jAtomType) const
-   { return interaction().forceOverR(rsq, iAtomType, jAtomType); }
+   { 
+      if (rsq < interaction().cutoffSq(iAtomType, jAtomType)) {
+         return interaction().forceOverR(rsq, iAtomType, jAtomType); 
+      } else {
+         return 0.0;
+      }
+   }
 
    /*
    * Return maximum cutoff.
@@ -437,7 +443,7 @@ namespace McMd
       Vector force, dr;
       double rsq;
       const Atom *atom0Ptr, *atom1Ptr;
-      int nNeighbor, nInCell, ia, ja;
+      int nNeighbor, nInCell, ia, ja, type0, type1;
 
       setToZero(stress);
 
@@ -451,25 +457,25 @@ namespace McMd
          // Loop over primary atoms in this cell.
          for (ia = 0; ia < nInCell; ++ia) {
             atom0Ptr = neighbors_[ia];
+            type0 = atom0Ptr->typeId();
           
             // Loop over secondary atoms in the neighboring cells.
             for (ja = 0; ja < nNeighbor; ++ja) {
                atom1Ptr = neighbors_[ja];
+               type1 = atom1Ptr->typeId();
      
                // Count each pair only once.
                if (atom1Ptr->id() > atom0Ptr->id()) {
 
                   // Exclude masked pairs.
                   if (!atom0Ptr->mask().isMasked(*atom1Ptr)) {
-
-                     // Evaluate force.
                      rsq = boundary().distanceSq(atom0Ptr->position(),
                                                  atom1Ptr->position(), dr);
-                     force = dr;
-                     force *= interaction().forceOverR(rsq,
-                              atom0Ptr->typeId(), atom1Ptr->typeId());
-
-                     incrementPairStress(force, dr, stress);
+                     if (rsq < interaction().cutoffSq(type0, type1)) {
+                        force = dr;
+                        force *= interaction().forceOverR(rsq, type0, type1);
+                        incrementPairStress(force, dr, stress);
+                     }
 
                   }
 

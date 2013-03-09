@@ -108,7 +108,7 @@ namespace Inter
       void set(std::string name, int i, int j, double value);
 
       //@}
-      /// \name Accessors
+      /// \name Accessors (required)
       //@{ 
  
       /**
@@ -128,6 +128,16 @@ namespace Inter
       * to obtain the force vector. A positive value for the return value
       * represents a repulsive force between a pair of particles.
       *
+      * Precondition: The square separation rsq must be less than cutoffSq.
+      * If rsq > cutoffSq, the return value is undefined (i.e., wrong).
+      * Usage: Test for rsq < cutoffSq before calling this function
+      * \code
+      * if (rsq < interaction.cutoffSq(i, j)) {
+      *    f = forceOverR(rsq, i, j);
+      *    .....
+      * }
+      * \endcode
+      *
       * \param rsq square of distance between particles
       * \param i type of particle 1
       * \param j type of particle 2
@@ -135,27 +145,19 @@ namespace Inter
       */
       double forceOverR(double rsq, int i, int j) const;
    
-      //@}
-      /// \name Other Accessors
-      //@{
-
       /**
-      * Get LJ interaction energy for a specific pair of Atom types.
+      * Get square of cutoff distance for specific type pair.
       *
       * \param i   type of Atom 1
       * \param j   type of Atom 2
-      * \return    epsilon_[i][j]
+      * \return    cutoffSq_[i][j]
       */
-      double epsilon(int i, int j) const;
+      double cutoffSq(int i, int j) const;
  
       /**
-      * Get LJ range for a specific pair of Atom types.
-      *
-      * \param i   atom type index 1
-      * \param j   atom type index 2
-      * \return    sigma_[i][j]
+      * Get maximum of pair cutoff distance, for all atom type pairs.
       */
-      double sigma(int i, int j) const;
+      double maxPairCutoff() const;
  
       /**
       * Get a parameter value, identified by a string.
@@ -166,10 +168,27 @@ namespace Inter
       */
       double get(std::string name, int i, int j) const;
 
+      //@}
+      /// \name Accessors (extra)
+      //@{
+
       /**
-      * Get maximum of pair cutoff distance, for all atom type pairs.
+      * Get interaction energy for a specific pair of Atom types.
+      *
+      * \param i   type of Atom 1
+      * \param j   type of Atom 2
+      * \return    epsilon_[i][j]
       */
-      double maxPairCutoff() const;
+      double epsilon(int i, int j) const;
+ 
+      /**
+      * Get range for a specific pair of Atom types.
+      *
+      * \param i   atom type index 1
+      * \param j   atom type index 2
+      * \return    sigma_[i][j]
+      */
+      double sigma(int i, int j) const;
  
       //@}
 
@@ -227,6 +246,12 @@ namespace Inter
          return 0.0;
       }
    }
+
+   /* 
+   * Calculate force/distance for a pair as function of squared distance.
+   */
+   inline double DpdPair::cutoffSq(int i, int j) const
+   {  return sigmaSq_[i][j]; }
 
 }
 #endif

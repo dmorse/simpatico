@@ -22,7 +22,7 @@
 // Pair Potential interaction classes
 #include <inter/pair/LJPair.h>
 #include <inter/pair/DpdPair.h>
-#include <inter/pair/CompensatedPair.h>
+//#include <inter/pair/CompensatedPair.h>
 
 #include <inter/bond/FeneBond.h>
 
@@ -61,10 +61,13 @@ namespace McMd
       } else
       if (name == "DpdPair") {
          ptr = new McPairPotentialImpl<DpdPair>(system);
-      } else
+      }
+      #if 0 
+      else
       if (name == "CompensatedPair<DpdPair,FeneBond>") {
          ptr = new McPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(system);
       }
+      #endif
       return ptr;
    }
 
@@ -85,10 +88,13 @@ namespace McMd
       } else
       if (name == "DpdPair") {
          ptr = new MdPairPotentialImpl<DpdPair>(system);
-      } else
+      }
+      #if 0 
+      else
       if (name == "CompensatedPair<DpdPair,FeneBond>") {
          ptr = new MdPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(system);
       }
+      #endif
       return ptr;
    }
 
@@ -114,12 +120,15 @@ namespace McMd
          McPairPotentialImpl<DpdPair>* mcPtr 
              = dynamic_cast< McPairPotentialImpl<DpdPair>* >(&potential);
          ptr = new MdPairPotentialImpl<DpdPair>(*mcPtr);
-      } else 
+      }
+      #if 0 
+      else 
       if (name == "CompensatedPair<DpdPair,FeneBond>") {
          McPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >* mcPtr 
              = dynamic_cast< McPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >* >(&potential);
          ptr = new MdPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(*mcPtr);
       }
+      #endif
       return ptr;
    }
 
