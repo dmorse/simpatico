@@ -6,9 +6,6 @@ bonded atoms. Each bond is assigned a bond type index, and different
 values of the parameters in the bond potential function are used for
 different bond types.
 
-All of the bond interaction classes implement a common interfaces,
-which is described \subpage inter_bond_interface_page "here". 
-
 \section inter_bond_interactions_section Bond Interaction Classes 
 <ul style="list-style: none;">
    <ul style="list-style: none;">
@@ -18,4 +15,7 @@ which is described \subpage inter_bond_interface_page "here".
    </ul>
 </ul>
  
+All of the bond interaction classes implement a common interfaces,
+which is described \subpage inter_bond_interface_page "here". 
+
 */
