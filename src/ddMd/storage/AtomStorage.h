@@ -10,6 +10,7 @@
 
 #include <util/param/ParamComposite.h>   // base class
 #include <ddMd/chemistry/Atom.h>         // member template parameter
+#include <ddMd/chemistry/AtomArray.h>    // member template parameter
 #include <ddMd/chemistry/Group.h>        // Used in template methods
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/ArraySet.h>    // member template
@@ -489,7 +490,7 @@ namespace DdMd
    private:
 
       // Array that holds all available local Atom objects.
-      DArray<Atom>     atoms_;
+      AtomArray        atoms_;
 
       // Set of pointers to local atoms.
       ArraySet<Atom>   atomSet_;
@@ -498,7 +499,7 @@ namespace DdMd
       ArrayStack<Atom> atomReservoir_;
 
       // Array that holds all available local Atom objects.
-      DArray<Atom>     ghosts_;
+      AtomArray        ghosts_;
 
       // Set of pointers to ghost atoms.
       ArraySet<Atom>   ghostSet_;

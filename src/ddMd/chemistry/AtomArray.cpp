@@ -9,6 +9,7 @@
 */
 
 #include "AtomArray.h"
+#include "Atom.h"
 
 namespace DdMd
 {
@@ -29,6 +30,10 @@ namespace DdMd
    {
       if (data_) {
          delete [] data_;
+         delete [] velocities_;
+         delete [] masks_;
+         delete [] plans_;
+         delete [] ids_;
       }
    }
 
@@ -43,8 +48,36 @@ namespace DdMd
       if (capacity <= 0) {
          UTIL_THROW("Cannot allocate with capacity <= 0");
       }
-      data_     = new Atom[capacity];
-      capacity_ = capacity;
+      if (sizeof(Atom) != 64) {
+         std::cout << "Size of Atom  = " << sizeof(Atom)  << std::endl;
+         std::cout << "Size of Atom* = " << sizeof(Atom*) << std::endl;
+      }
+
+      // Allocate memory
+      data_        = new Atom[capacity];
+      velocities_  = new Vector[capacity];
+      masks_       = new Mask[capacity];
+      plans_       = new Plan[capacity];
+      ids_         = new int[capacity];
+      capacity_    = capacity;
+
+      // Initialize values.
+      unsigned int localId;
+      for (int i=0; i < capacity; ++i) {
+        data_[i].localId_ = (i << 1);
+        data_[i].arrayPtr_ = this;
+        localId = (data_[i].localId_ >> 1);
+        if (localId != i) {
+           UTIL_THROW("Error in localId");
+        }
+        if (data_[i].arrayPtr_->data_ != data_) {
+           UTIL_THROW("Inconsistent pointer to atom array");
+        }
+        ids_[i] = -1;
+        masks_[i].clear();
+        plans_[i].clearFlags();
+      }
+
    }
 
    /*
