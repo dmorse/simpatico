@@ -209,8 +209,9 @@ namespace DdMd
       }
       #endif
 
-      // Return pointer to new atom.
+      // Pop pointer to new atom from reservoir and return that pointer.
       newPtr_ = &reservoir_.pop();
+      newPtr_->clear();
       return newPtr_;
    }
 
@@ -253,15 +254,23 @@ namespace DdMd
       int rank = 0;
       #endif
 
+      // If owned by the master, add this atom to storage.
       // If not owned by the master, queue this atom for sending.
       if (rank == 0) {
 
          Atom* ptr = storagePtr_->newAtomPtr();
          *ptr = *newPtr_;
+         std::cout << rank
+         << " " << ptr->id() 
+         << " " << ptr->position()
+         << " " << ptr->mask().size()
+         << std::endl;
          storagePtr_->addNewAtom();
 
          reservoir_.push(*newPtr_); 
 
+         // Note: Atom is returned to reservoir dirty.
+         // Each Atom must thus be cleared when popped.
       }
       #ifdef UTIL_MPI
       else { // if rank !=0
@@ -283,8 +292,16 @@ namespace DdMd
          if (sendSizes_[rank] == sendCapacity_) {
 
             // Pack atoms into buffer, and return pointers for reuse.
+            Atom* ptr;
             for (int i = 0; i < sendCapacity_; ++i) {
-               bufferPtr_->packAtom(*sendArrays_(rank, i));
+               ptr = sendArrays_(rank, i);
+               std::cout << rank
+               << " " << ptr->id() 
+               << " " << ptr->position()
+               << " " << ptr->mask().size()
+               << std::endl;
+               bufferPtr_->packAtom(*ptr);
+               //bufferPtr_->packAtom(*sendArrays_(rank, i));
 
                // Push pointer onto reservoir and remove it from sendArrays_.
                reservoir_.push(*sendArrays_(rank, i));
@@ -346,12 +363,19 @@ namespace DdMd
       for (i = 1; i < gridSize; ++i) {
 
          // Pack all remaining atoms for this processor
+         Atom* ptr;
          for (j = 0; j < sendSizes_[i]; ++j) {
-            bufferPtr_->packAtom(*sendArrays_(i, j));
+            ptr = sendArrays_(i, j);
+            std::cout << i
+            << " " << ptr->id() 
+            << " " << ptr->position()
+            << " " << ptr->mask().size()
+            << std::endl;
+            bufferPtr_->packAtom(*ptr);
+            //bufferPtr_->packAtom(*sendArrays_(i, j));
 
             // Return pointer to atom to the reservoir.
             reservoir_.push(*sendArrays_(i, j));
-
          }
          bufferPtr_->endSendBlock(isComplete);
          nSentTotal_ += sendSizes_[i];
@@ -373,6 +397,7 @@ namespace DdMd
       }
 
       // Compute total number of atoms on all processors.
+      // Note: Matching call at end of AtomDistributor::receive()
       storagePtr_->computeNAtomTotal(domainPtr_->communicator());
 
       // Postconditions
@@ -435,6 +460,7 @@ namespace DdMd
       }
 
       // Compute total number of atoms on all processors.
+      // Note: Matching call at end of AtomDistributor::send()
       storagePtr_->computeNAtomTotal(domainPtr_->communicator());
    }
    #endif

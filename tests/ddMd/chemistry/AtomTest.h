@@ -177,6 +177,9 @@ void AtomTest::testAssignment()
    TEST_ASSERT(a[0].id() == -1);
    TEST_ASSERT(a[1].id() == -1);
    TEST_ASSERT(a[2].id() == -1);
+   TEST_ASSERT(a[0].mask().size() == 0);
+   TEST_ASSERT(a[1].mask().size() == 0);
+   TEST_ASSERT(a[2].mask().size() == 0);
 
    a[1].setId(25);
    a[1].setTypeId(5);

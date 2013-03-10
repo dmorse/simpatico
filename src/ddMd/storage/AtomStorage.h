@@ -79,10 +79,15 @@ namespace DdMd
       * Returns pointer an address available for a new Atom.
       *
       * This method returns the address of an Atom object that can 
-      * be used for a new local Atom. It does not add the Atom the
-      * the atom set, and so must be followed by a call to
-      * addNewAtom() to do this. 
+      * be used for a new local Atom. The Atom::clear() method is
+      * applied to the new atom before it is returned, so that the
+      * id, typeId, isGhost flag, mask, and plan have default values.
+      * After this method is called, the storage retains the address
+      * of the new atom.  This new atom pointer remains ``active"
+      * until a matching call to addNewAtom(), as discussed below.
       *
+      * This method does not add the new Atom to the atom set, and so 
+      * must be followed by a matching call to addNewAtom() to do so.
       * Usage:
       * \code
       * 
@@ -95,8 +100,10 @@ namespace DdMd
       * storage.addNewAtom();
       *
       * \endcode
+      * The matching call to addNewAtom() adds the new atom to the
+      * storage and deactivates the internal new atom pointer.
       *
-      * \return address for new atom.
+      * \return address for a new atom
       */
       Atom* newAtomPtr(); 
 
@@ -104,25 +111,28 @@ namespace DdMd
       * Finalize addition of the most recent new atom.
       *
       * This method adds the atom that was returned by the most 
-      * recent call to newAtomPtr to the atom set. The global atom 
+      * recent call to newAtomPtr to the atom set. Upon return
+      * there is no active new atom pointer. The global atom 
       * id must be set before calling this function, by calling 
       * Atom::setId(int), because the algorithm uses the global
-      * id returned by Atom::id(). 
+      * id returned by Atom::id().
       */
       void addNewAtom(); 
 
       /**
       * Add atom with specified global id.
       * 
-      * This method adds a new atom to the atom set and returns
-      * a pointer to the address of the new atom. It is equivalent to
-      * the following, in which storage is an instance of AtomStorage
-      * and ptr is an Atom pointer:
+      * This method adds a new atom to the atom set with a specified
+      * atom id, and returns a pointer to the address of the new atom. 
+      * It is equivalent to the following, in which storage is an 
+      * instance of AtomStorage and ptr is an Atom pointer:
       * \code
       * ptr = storage.newAtomPtr;
       * ptr->setId(id);
       * storage.addNewAtom();
       * \endcode
+      * The pointer returned by this method can then be used to set
+      * other properties of the new atom. 
       *
       * \param id global index for the new Atom.
       * \return address for new atom.

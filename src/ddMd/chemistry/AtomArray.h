@@ -70,12 +70,12 @@ namespace DdMd
       int    *ids_;
 
       /**
-      * Copy ctor (private and not implemented to prevent copying).
+      * Copy ctor (prohibited - private and not implemented).
       */
       AtomArray(const AtomArray& other);
    
       /**
-      * Assignment (private and not implemented to prevent assignment).
+      * Assignment (prohibited - private and not implemented).
       */
       AtomArray& operator = (const AtomArray& other); 
 

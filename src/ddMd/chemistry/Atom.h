@@ -186,6 +186,7 @@ namespace DdMd
    */
    inline void Atom::setIsGhost(bool isGhost)
    {
+      //unsigned int arrayId = localId_ >> 1;
       if (isGhost) {
          // Set least significant bit to 1
          localId_ = localId_ | 00000001;
@@ -193,6 +194,9 @@ namespace DdMd
          // Set least significant bit to 0
          localId_ = localId_ & 11111110;
       }
+      //if (arrayId != (localId_ >> 1)) {
+      //   UTIL_THROW("Changed array id");
+      //}
    }
 
    // Get type Id.

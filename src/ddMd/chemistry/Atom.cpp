@@ -38,8 +38,8 @@ namespace DdMd
    {
       position_ = other.position_;
       typeId_ = other.typeId_;
-      force_ = other.force_;
       setIsGhost(other.isGhost());
+      force_ = other.force_;
       velocity() = other.velocity();
       mask() = other.mask();
       plan() = other.plan();
