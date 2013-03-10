@@ -228,7 +228,18 @@ void AtomTest::testAssignment()
    TEST_ASSERT(a[2].plan().flags() == 23);
    TEST_ASSERT(a[2].id() == 25);
 
-
+   a[2].setId(28);
+   a[2].setIsGhost(true);
+   TEST_ASSERT(a[2].id() == 28);
+   TEST_ASSERT(a[2].isGhost());
+   TEST_ASSERT(a[2].typeId() == 5);
+   TEST_ASSERT(a[2].position() == r);
+   TEST_ASSERT(a[2].force()    == f);
+   TEST_ASSERT(a[2].velocity() == v);
+   TEST_ASSERT(a[2].mask().isMasked(39));
+   TEST_ASSERT(a[2].mask().isMasked(37));
+   TEST_ASSERT(!a[2].mask().isMasked(50));
+   TEST_ASSERT(a[2].plan().flags() == 23);
 
 } 
 TEST_BEGIN(AtomTest)

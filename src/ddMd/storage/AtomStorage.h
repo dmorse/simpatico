@@ -9,9 +9,9 @@
 */
 
 #include <util/param/ParamComposite.h>   // base class
-#include <ddMd/chemistry/Atom.h>         // member template parameter
-#include <ddMd/chemistry/AtomArray.h>    // member template parameter
-#include <ddMd/chemistry/Group.h>        // Used in template methods
+#include <ddMd/chemistry/AtomArray.h>    // member
+#include <ddMd/chemistry/Atom.h>         // member template argument
+#include <ddMd/chemistry/Group.h>        // used in template methods
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
@@ -24,7 +24,6 @@ namespace DdMd
 
    using namespace Util;
 
-   class Atom;
    class AtomIterator;
    class ConstAtomIterator;
    class GhostIterator;

@@ -159,9 +159,12 @@ namespace DdMd
          UTIL_THROW("Atom with specified id is already present");
       }
 
+      // Add to atom set
       atomSet_.append(*newAtomPtr_);
       atomPtrs_[atomId] = newAtomPtr_;
       newAtomPtr_->setIsGhost(false);
+
+      // De-activate new atom pointer
       newAtomPtr_ = 0;
 
       // Update statistics
@@ -210,6 +213,7 @@ namespace DdMd
          UTIL_THROW("AtomStorage is locked");
       newGhostPtr_ = &ghostReservoir_.pop();
       newGhostPtr_->clear();
+      newGhostPtr_->setIsGhost(true);
       return newGhostPtr_;
    }
 
@@ -218,21 +222,26 @@ namespace DdMd
    */ 
    void AtomStorage::addNewGhost()
    {
-      if (newGhostPtr_ == 0) 
+      if (newGhostPtr_ == 0) {
          UTIL_THROW("No active newGhostPtr_");
-      if (locked_) 
+      }
+      if (locked_) {
          UTIL_THROW("AtomStorage is locked");
+      }
       int atomId = newGhostPtr_->id();
-      if (atomId < 0 || atomId >= totalAtomCapacity_) 
+      if (atomId < 0 || atomId >= totalAtomCapacity_) {
          UTIL_THROW("atomId is out of range");
-      //if (atomPtrs_[atomId] != 0)
-      //   UTIL_THROW("Atom with specified id is already present");
+      }
 
+      // Add to ghost set
       ghostSet_.append(*newGhostPtr_);
       if (atomPtrs_[atomId] == 0) {
          atomPtrs_[atomId] = newGhostPtr_;
       }
+      // Note another atom with same id may already be present.
       newGhostPtr_->setIsGhost(true);
+
+      // De-activate new ghost pointer
       newGhostPtr_ = 0;
    }
 
@@ -278,9 +287,17 @@ namespace DdMd
          atomId = atomPtr->id();
          if (atomPtrs_[atomId] == atomPtr) { 
             atomPtrs_[atomId] = 0;
+         } else {
+            if (atomPtrs_[atomId] == 0) {
+               UTIL_THROW("Error: Unexpected null in atomPtrs_");
+            } else {
+               if (atomPtrs_[atomId]->id() != atomId) {
+                  UTIL_THROW("Error: Inconsistent id in atomPtrs_");
+               }
+            }
          }
-         atomPtr->setId(-1);
-         atomPtr->clear();
+         // atomPtr->setId(-1);
+         // atomPtr->clear();
          ghostReservoir_.push(*atomPtr);
       }
 
@@ -563,13 +580,13 @@ namespace DdMd
          if (ptr != 0) {
             ++j;
             if (ptr->id() != i) {
-               UTIL_THROW("ptr->id() != i"); 
+               std::cout << std::endl;
+               std::cout << "Index i in atomPtrs_  " << i << std::endl;
+               std::cout << "atomPtrs_[i]->id()    " << ptr->id() << std::endl;
+               UTIL_THROW("ptr->id() != i");
             }
          }
       }
-      // Feb. 2012: I don't remember why this test is commented out.
-      // if (nGhost() + nAtom() != j) 
-      //   UTIL_THROW("nGhost + nAtom != j"); 
 
       // Iterate over, count and find local atoms on this processor.
       ConstAtomIterator localIter;
@@ -585,7 +602,7 @@ namespace DdMd
          }
       }
       if (j != nAtom()) {
-         UTIL_THROW("Number from localIterator != nAtom()"); 
+         UTIL_THROW("Number counted by localIterator != nAtom()"); 
       }
 
       // Iterate over, count and find ghost atoms
@@ -598,12 +615,12 @@ namespace DdMd
             UTIL_THROW("find(ghostIter->id()) == 0"); 
          }
          // We do NOT test if ptr == ghostIter.get(), because it is possible
-         // to have multiple ghosts with the same id on one processor. One to 
+         // to have multiple atoms with the same id on one processor. One to 
          // one correspondence of ids and pointers is guaranteed only for 
          // local atoms.
       }
       if (j != nGhost()) {
-         UTIL_THROW("Number from ghostIterator != nGhost()"); 
+         UTIL_THROW("Number counted by ghostIterator != nGhost()"); 
       }
 
       return true;
