@@ -186,17 +186,13 @@ namespace DdMd
    */
    inline void Atom::setIsGhost(bool isGhost)
    {
-      //unsigned int arrayId = localId_ >> 1;
       if (isGhost) {
          // Set least significant bit to 1
-         localId_ = localId_ | 00000001;
+         localId_ = localId_ | 1;
       } else {
          // Set least significant bit to 0
-         localId_ = localId_ & 11111110;
+         localId_ = localId_ & ~1;
       }
-      //if (arrayId != (localId_ >> 1)) {
-      //   UTIL_THROW("Changed array id");
-      //}
    }
 
    // Get type Id.
@@ -231,57 +227,57 @@ namespace DdMd
    // Get const reference to velocity.
    inline const Vector& Atom::velocity() const
    {
-      int j = (int)(localId_ >> 1);  
-      return arrayPtr_->velocities_[j]; 
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->velocities_[localId_ >> 1]; 
    }
 
    // Get reference to velocity.
    inline Vector& Atom::velocity()
    {  
-      int j = (int)(localId_ >> 1);  
-      return arrayPtr_->velocities_[j]; 
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->velocities_[localId_ >> 1]; 
    }
 
    // Get the associated mask.
    inline Mask& Atom::mask()
    {  
-      int j = (int)(localId_ >> 1);  
-      return arrayPtr_->masks_[j]; 
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->masks_[localId_ >> 1]; 
    }
 
    // Get a const reference to the mask.
    inline const Mask& Atom::mask() const
    {  
-      int j = (int)(localId_ >> 1);  
-      return arrayPtr_->masks_[j]; 
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->masks_[localId_ >> 1]; 
    }
 
    // Get reference to communication plan.
    inline Plan& Atom::plan()
    {  
-      int j = (int)(localId_ >> 1);  
-      return arrayPtr_->plans_[j]; 
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->plans_[localId_ >> 1]; 
    }
 
    // Get const reference to communication plan.
    inline const Plan& Atom::plan() const
    {  
-      int j = (int)(localId_ >> 1);  
-      return arrayPtr_->plans_[j]; 
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->plans_[localId_ >> 1]; 
    }
 
    // Get global id for Atom.
    inline int  Atom::id() const
    {  
-      int j = (int)(localId_ >> 1);  
-      return arrayPtr_->ids_[j]; 
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->ids_[localId_ >> 1]; 
    }
 
    // Set unique global index for Atom.
    inline void Atom::setId(int id)
    {  
-      int j = (int)(localId_ >> 1);  
-      arrayPtr_->ids_[j] = id; 
+      //int j = (int)(localId_ >> 1);  
+      arrayPtr_->ids_[localId_ >> 1] = id; 
    }
 
 }

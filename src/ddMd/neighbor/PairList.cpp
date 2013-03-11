@@ -24,8 +24,7 @@ namespace DdMd
    * Default constructor.
    */
    PairList::PairList()
-    :
-      atom1Ptrs_(),
+    : atom1Ptrs_(),
       atom2Ptrs_(),
       first_(),
       cutoff_(0.0),
@@ -99,6 +98,7 @@ namespace DdMd
       const Cell*  cellPtr;
       Atom*  atom1Ptr;
       Atom*  atom2Ptr;
+      Mask*  maskPtr;
       Vector dr;
       int    na;      // number of atoms in this cell
       int    nn;      // number of neighbors for a cell
@@ -120,17 +120,20 @@ namespace DdMd
          cellPtr->getNeighbors(neighbors, reverseUpdateFlag);
          na = cellPtr->nAtom();
          nn = neighbors.size();
+
+         // Loop over primary atoms (atom1) in primary cell
          for (i = 0; i < na; ++i) {
             atom1Ptr = neighbors[i];
+            maskPtr  = &(atom1Ptr->mask());
             foundNeighbor = false;
 
+            // Loop over secondary atoms (atom2) in primary cell
             for (j = 0; j < na; ++j) {
                atom2Ptr = neighbors[j];
 
-               // Neighbors in the same cell as atom1
                if (atom2Ptr > atom1Ptr) {
                   atom2Id  = atom2Ptr->id();
-                  if (!atom1Ptr->mask().isMasked(atom2Id)) {
+                  if (!maskPtr->isMasked(atom2Id)) {
                      dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
                      dRSq = dr.square();
                      if (dRSq < cutoffSq) {
@@ -164,7 +167,7 @@ namespace DdMd
             for (j = na; j < nn; ++j) {
                atom2Ptr = neighbors[j];
                atom2Id  = atom2Ptr->id();
-               if (!atom1Ptr->mask().isMasked(atom2Id)) {
+               if (!maskPtr->isMasked(atom2Id)) {
                   dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
                   dRSq = dr.square();
                   if (dRSq < cutoffSq) {
@@ -200,6 +203,8 @@ namespace DdMd
                first_[nAtom1_] = nAtom2_;
             }
          }
+
+         // Advance to next cell in a linked list
          cellPtr = cellPtr->nextCellPtr();
       }
 
@@ -209,7 +214,6 @@ namespace DdMd
       // Increment maxima
       if (nAtom1_ > maxNAtomLocal_) maxNAtomLocal_ = nAtom1_;
       if (nAtom2_ > maxNPairLocal_) maxNPairLocal_ = nAtom2_;
-     
    }
 
    /*

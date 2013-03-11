@@ -260,17 +260,12 @@ namespace DdMd
 
          Atom* ptr = storagePtr_->newAtomPtr();
          *ptr = *newPtr_;
-         std::cout << rank
-         << " " << ptr->id() 
-         << " " << ptr->position()
-         << " " << ptr->mask().size()
-         << std::endl;
          storagePtr_->addNewAtom();
 
          reservoir_.push(*newPtr_); 
 
-         // Note: Atom is returned to reservoir dirty.
-         // Each Atom must thus be cleared when popped.
+         // Note: Atom is returned to reservoir in a dirty state.
+         // Atoms must thus be cleared when popped from reservoir.
       }
       #ifdef UTIL_MPI
       else { // if rank !=0
@@ -295,11 +290,6 @@ namespace DdMd
             Atom* ptr;
             for (int i = 0; i < sendCapacity_; ++i) {
                ptr = sendArrays_(rank, i);
-               std::cout << rank
-               << " " << ptr->id() 
-               << " " << ptr->position()
-               << " " << ptr->mask().size()
-               << std::endl;
                bufferPtr_->packAtom(*ptr);
                //bufferPtr_->packAtom(*sendArrays_(rank, i));
 
@@ -366,11 +356,6 @@ namespace DdMd
          Atom* ptr;
          for (j = 0; j < sendSizes_[i]; ++j) {
             ptr = sendArrays_(i, j);
-            std::cout << i
-            << " " << ptr->id() 
-            << " " << ptr->position()
-            << " " << ptr->mask().size()
-            << std::endl;
             bufferPtr_->packAtom(*ptr);
             //bufferPtr_->packAtom(*sendArrays_(i, j));
 

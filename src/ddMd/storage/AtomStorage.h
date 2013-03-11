@@ -19,6 +19,8 @@
 #include <util/boundary/Boundary.h>      // typedef
 #include <util/global.h>
 
+class AtomStorageTest;
+
 namespace DdMd
 {
 
@@ -562,6 +564,8 @@ namespace DdMd
       * Allocate and initialize all private containers.
       */
       void allocate();
+
+      friend class ::AtomStorageTest;
     
    };
 
