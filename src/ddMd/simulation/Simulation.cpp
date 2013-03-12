@@ -623,8 +623,15 @@ namespace DdMd
          } else
          if (command == "OUTPUT_MEMORY_STATS") {
             // Output statistics about memory usage during simulation.
+            // Also clears statistics after printing output
             atomStorage().computeStatistics(domain_.communicator());
             bondStorage().computeStatistics(domain_.communicator());
+            #ifdef INTER_ANGLE
+            angleStorage().computeStatistics(domain_.communicator());
+            #endif
+            #ifdef INTER_DIHEDRAL
+            dihedralStorage().computeStatistics(domain_.communicator());
+            #endif
             buffer().computeStatistics(domain_.communicator());
             pairPotential().pairList().computeStatistics(domain_.communicator());
             if (domain_.isMaster()) {
@@ -634,6 +641,18 @@ namespace DdMd
                pairPotential().pairList().outputStatistics(Log::file());
                Log::file() << std::endl;
             }
+
+            atomStorage().clearStatistics();
+            bondStorage().clearStatistics();
+            #ifdef INTER_ANGLE
+            angleStorage().clearStatistics();
+            #endif
+            #ifdef INTER_DIHEDRAL
+            dihedralStorage().clear(domain_.communicator());
+            #endif
+            buffer().clearStatistics();
+            pairPotential().pairList().clearStatistics();
+            
          } else
          if (command == "CLEAR_INTEGRATOR") {
             // Clear timing, memory statistics and diagnostic accumulators.

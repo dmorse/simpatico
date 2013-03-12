@@ -7,6 +7,27 @@ Testing
 
 - Test angle and dihedral stress calculations.
 
+Initial Ghost Exchange
+----------------------
+
+- Add exchangeGhosts method to AtomDistributor that distributes
+  the groups among neighboring processors without sending many
+  unnecessary ghosts (to decrease memory requirements).
+
+Dynamic Resizing
+----------------
+
+- Allow for dynamic resizing of Storage classes.
+  For AtomStorage, must emit signal to reset pointers to atoms.
+
+- Allow for dynamic resizing of Buffer class.
+
+Flexible Unit Cells:
+--------------------
+
+- Generalize makeSnapShot and needsExchange methods in AtomStorage to 
+  allow for deforming boundaries (requires further changes to Boundary).
+
 Restart
 -------
 
@@ -18,19 +39,6 @@ Hybrid MD
 - Finish and test transactions in AtomStorage (in transactions branch).
 
 - Add transactions to GroupStorage (in transactions branch).
-
-Dynamic Resizing
-----------------
-
-- Allow for dynamic resizing of Storage classes.
-
-- Allow for dynamic resizing of Buffer class.
-
-Flexible Unit Cells:
---------------------
-
-- Generalize makeSnapShot and needsExchange methods in AtomStorage to 
-  allow for deforming boundaries (requires further changes to Boundary).
 
 Distributor and Collector:
 --------------------------
@@ -55,8 +63,8 @@ Buffer:
   For groups, add enumerations BOND, ANGLE, DIHEDRAL and
   use Type = Buffer::BOND + N - 2 in templates for Group<N>. 
 
-- In beginSendBlock() method, add parametr itemSize and
-  remove parameter groupSize.
+- In beginSendBlock() method, add parametr itemSize and remove 
+  parameter groupSize.
 
 - Make pack/unpack methods public. 
 
@@ -86,11 +94,6 @@ Single Processor Operation
 - Modify Distributor, Collector, ConfigIo, and Exchanger classes 
   to work ifndef UTIL_MPI, continue with other classes, to enable 
   single processor operation with no MPI.
-
-Atom Class Implementation
---------------------------
-
-- see doc/notes/ddMd/Atom file
 
 Files
 -----

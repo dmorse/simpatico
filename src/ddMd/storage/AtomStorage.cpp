@@ -39,9 +39,11 @@ namespace DdMd
       ghostCapacity_(0),
       totalAtomCapacity_(0),
       maxNAtomLocal_(0),
+      maxNGhostLocal_(0),
       #ifdef UTIL_MPI
       nAtomTotal_(),
       maxNAtom_(),
+      maxNGhost_(),
       #endif
       locked_(false),
       isInitialized_(false),
@@ -130,6 +132,8 @@ namespace DdMd
          UTIL_THROW("AtomStorage is locked");
       if (ghostSet_.size() > 0)
          UTIL_THROW("Ghosts are not cleared");
+      if (atomReservoir_.size() == 0) 
+         UTIL_THROW("Atom to pop from empty atomReservoir");
 
       newAtomPtr_ = &atomReservoir_.pop();
       newAtomPtr_->clear();
@@ -211,6 +215,9 @@ namespace DdMd
          UTIL_THROW("Unregistered newGhostPtr_ still active");
       if (locked_ ) 
          UTIL_THROW("AtomStorage is locked");
+      if (ghostReservoir_.size() == 0) 
+         UTIL_THROW("Atom to pop from empty atomReservoir");
+
       newGhostPtr_ = &ghostReservoir_.pop();
       newGhostPtr_->clear();
       newGhostPtr_->setIsGhost(true);
@@ -243,6 +250,11 @@ namespace DdMd
 
       // De-activate new ghost pointer
       newGhostPtr_ = 0;
+
+      // Update statistics
+      if (ghostSet_.size() > maxNGhostLocal_) {
+         maxNGhostLocal_ = ghostSet_.size();
+      }
    }
 
    Atom* AtomStorage::addGhost(int id)
@@ -531,6 +543,16 @@ namespace DdMd
       #else
       maxNAtom_.set(maxNAtomLocal_);
       #endif
+
+      #ifdef UTIL_MPI
+      int maxNGhostGlobal;
+      communicator.Allreduce(&maxNGhostLocal_, &maxNGhostGlobal, 1, 
+                             MPI::INT, MPI::MAX);
+      maxNGhost_.set(maxNGhostGlobal);
+      maxNGhostLocal_ = maxNGhostGlobal;
+      #else
+      maxNGhost_.set(maxNGhostLocal_);
+      #endif
    }
 
    /*
@@ -540,6 +562,8 @@ namespace DdMd
    {
       maxNAtomLocal_ = 0;
       maxNAtom_.unset();
+      maxNGhostLocal_ = 0;
+      maxNGhost_.unset();
    }
 
    /*
@@ -550,9 +574,13 @@ namespace DdMd
 
       out << std::endl;
       out << "AtomStorage" << std::endl;
-      out << "NAtom: max, capacity     " 
+      out << "NAtom:  max, capacity     " 
                   << Int(maxNAtom_.value(), 10)
                   << Int(atomCapacity_, 10)
+                  << std::endl;
+      out << "NGhost: max, capacity     " 
+                  << Int(maxNGhost_.value(), 10)
+                  << Int(ghostCapacity_, 10)
                   << std::endl;
    }
 

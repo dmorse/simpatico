@@ -15,6 +15,8 @@
 
 #include <algorithm>
 
+#define DDMD_ATOM_DISTRIBUTOR_DEBUG
+
 namespace DdMd
 {
 
@@ -209,6 +211,10 @@ namespace DdMd
       }
       #endif
 
+      if (reservoir_.size() == 0) {
+         UTIL_THROW("Empty cache reservoir (This should not happen)");
+      }
+ 
       // Pop pointer to new atom from reservoir and return that pointer.
       newPtr_ = &reservoir_.pop();
       newPtr_->clear();
@@ -315,6 +321,18 @@ namespace DdMd
 
       // Nullify newPtr_ to release for reuse.
       newPtr_ = 0;
+
+      #ifdef DDMD_ATOM_DISTRIBUTOR_DEBUG
+      // Check allocation of cache atoms
+      int sendSizeSum = 0;
+      int gridSize  = domainPtr_->grid().size();
+      for (int i = 0; i < gridSize; ++i) {
+         sendSizeSum += sendSizes_[i]; 
+      }
+      if (sendSizeSum + reservoir_.size() != cacheCapacity_) {
+         UTIL_THROW("Error: Inconsistent cache atom count");
+      }
+      #endif
 
       // Return rank of processor that owns this atom.
       return rank;

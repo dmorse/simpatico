@@ -490,11 +490,18 @@ namespace DdMd
       void outputStatistics(std::ostream& out);
 
       /**
-      * Get the maximum number of primary atoms encountered thus far.
+      * Get the maximum number of local atoms encountered thus far.
       *
       * Call only on master.
       */
       int maxNAtom() const;
+
+      /**
+      * Get the maximum number of ghost atoms encountered thus far.
+      *
+      * Call only on master.
+      */
+      int maxNGhost() const;
 
       //@}
 
@@ -543,12 +550,18 @@ namespace DdMd
       /// Maximum number of atoms on this proc since stats cleared.
       int maxNAtomLocal_; 
    
+      /// Maximum number of ghosts on this proc since stats cleared.
+      int maxNGhostLocal_; 
+   
       #ifdef UTIL_MPI
       // Total number of local atoms on all processors.
       Setable<int> nAtomTotal_;
 
-      /// Maximum of nAtom1_ on all procs (defined only on master).
+      /// Maximum of maxNAtomLocal_ on all procs (defined on master).
       Setable<int>  maxNAtom_;     
+
+      /// Maximum of maxNGhostLocal_ on all procs (defined on master).
+      Setable<int>  maxNGhost_;     
       #endif
 
       // Is addition or removal of atoms forbidden?

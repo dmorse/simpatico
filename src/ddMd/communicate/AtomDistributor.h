@@ -103,8 +103,15 @@ namespace DdMd
       /**
       * Set cacheCapacity, allocate memory and initialize object.
       *
-      * This method sets cacheCapacity from file, and then goes through
-      * the same initialization steps as readParam.
+      * This method and readParameters both allocate all required memory 
+      * and initialize the AtomDistributor. Memory for a temporary read 
+      * cache is alocated only on the master.
+      *
+      * If cacheCapacity < 0, this sets a default value large enough to 
+      * accomodate full send buffers for all processors simultaneously.
+      * 
+      * Preconditions: The initialize method must have been called, the 
+      * Buffer must be allocated, and the Domain must be initialized.
       *
       * \param cacheCapacity max number of atoms cached for sending
       */
@@ -113,12 +120,8 @@ namespace DdMd
       /**
       * Read cacheCapacity, allocate memory and initialize object.
       *
-      * This method and setParam both allocate all required memory and 
-      * initialize the AtomDistributor. Memory for a temporary read cache is 
-      * alocated only on the master.
-      * 
-      * Preconditions: The initialize method must have been called, the 
-      * Buffer must be allocated, and the Domain must be initialized.
+      * This method reads cacheCapacity from file, and then goes through
+      * the same initialization steps as AtomDistributor::initialize().
       *
       * \param in input stream from which parameter is read.
       */

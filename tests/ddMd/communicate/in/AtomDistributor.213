@@ -7,9 +7,9 @@ AtomStorage{
    totalAtomCapacity  120
 }
 Buffer{
-  atomCapacity     8
-  ghostCapacity   10
+  atomCapacity     4
+  ghostCapacity    1
 }
 AtomDistributor{
-  cacheCapacity   35 
+  cacheCapacity   10
 }
