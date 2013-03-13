@@ -16,14 +16,23 @@ using namespace Util;
 /**
 * Program for parallel domain-decomposition molecular dynamics simulation.
 *
-* Command line options:
+* Usage:
+*
+*    mpirun -np NP ddSim [options] < paramFile
+*
+*    Here, NP is the number of processors and paramFile is a parameter 
+*    file that is read from standard input.
+*
+* Options:
 *
 *   -e  
 *    Enable echoing of parameter file to log file as it is read. 
 *    This is sometimes useful for debugging the parameter file.
 *
 *  -s nSystem 
-*   Split communicator nSystem processor groups, each for a different system.
+*   Split communicator into nSystem processor groups, each for a different 
+*   physical system. The original communicator rank must be a multiple of 
+*   nSystem.
 */
 int main(int argc, char **argv)
 {

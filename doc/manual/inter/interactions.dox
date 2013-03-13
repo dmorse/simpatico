@@ -25,6 +25,12 @@
        <li> \ref inter_angle_HarmonicAngle_page </li>
      </ul>
   </li>
+  <li> \subpage inter_dihedral_page 
+     <ul style="list-style: none;">
+       <li> \ref inter_dihedral_CosineDihedral_page </li>
+       <li> \ref inter_dihedral_MultiHarmonicDihedral_page </li>
+     </ul>
+  </li>
 </ul>
  
 <BR>
