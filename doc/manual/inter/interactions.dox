@@ -22,6 +22,7 @@
   <li> \subpage inter_angle_page 
      <ul style="list-style: none;">
        <li> \ref inter_angle_CosineAngle_page </li>
+       <li> \ref inter_angle_CosineSqAngle_page </li>
        <li> \ref inter_angle_HarmonicAngle_page </li>
      </ul>
   </li>

@@ -1,11 +1,11 @@
 namespace Inter
 {
 
-/*! \page inter_angle_CosineAngle_page CosineAngle 
+/*! \page inter_angle_CosineSqAngle_page CosineSqAngle 
 
-The CosineAngle interaction implements a potential that depends
-linearly on the cosine \f$\cos(\theta)\f$ of the bend angle. The
-energy is given by
+The CosineSqAngle interaction implements a potential that depends
+quadratically on the cosine \f$\cos(\theta)\f$ of the bend angle. 
+The energy is given by
 \f[
    V(\theta) = \frac{\kappa}{2} [ \cos(\theta) - \cos(\theta_0)]^{2}
 \f]

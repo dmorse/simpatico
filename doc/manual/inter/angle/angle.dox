@@ -9,6 +9,7 @@ in the angle potential function are used for different angle types.
 <ul style="list-style: none;">
    <ul style="list-style: none;">
      <li> \subpage inter_angle_CosineAngle_page </li>
+     <li> \subpage inter_angle_CosineSqAngle_page </li>
      <li> \subpage inter_angle_HarmonicAngle_page </li>
    </ul>
 </ul>
