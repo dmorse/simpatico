@@ -8,10 +8,8 @@ different dihedral types.
 
 \section inter_dihedral_interactions_section Dihedral Interaction Classes 
 <ul style="list-style: none;">
-   <ul style="list-style: none;">
-     <li> \subpage inter_dihedral_CosineDihedral_page </li>
-     <li> \subpage inter_dihedral_MultiHarmonicDihedral_page </li>
-   </ul>
+   <li> \subpage inter_dihedral_CosineDihedral_page </li>
+   <li> \subpage inter_dihedral_MultiHarmonicDihedral_page </li>
 </ul>
  
 All of the dihedral interaction classes implement a common interface, which 
@@ -31,8 +29,8 @@ i, with \f$0 \leq i < 3\f$. We define three bond vectors
 \f]
 The dihedral potentials are all function of the dihedral angle \f$\phi\f$.
 This angle \f$\phi\f$ is the angle between 
-the plane spanned by ${\bf b}_{1}$ and ${\bf b}_{2}$
-the plane spanned by ${\bf b}_{2}$ and ${\bf b}_{3}$.
+the plane spanned by \f${\bf b}_{1}\f$ and \f${\bf b}_{2}\f$
+the plane spanned by \f${\bf b}_{2}\f$ and \f${\bf b}_{3}\f$.
 It is defined so that a planar cis configuration corresponds to \f$\phi = 0\f$, 
 and a trans zigzag configuration corresponds to \f$\phi = \pi \f$. A more
 explicit expression for \f$\cos(\phi)\f$ is given in \ref Inter_Dihedral_Module.

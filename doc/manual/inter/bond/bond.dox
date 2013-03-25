@@ -8,11 +8,9 @@ different bond types.
 
 \section inter_bond_interactions_section Bond Interaction Classes 
 <ul style="list-style: none;">
-   <ul style="list-style: none;">
-     <li> \subpage inter_bond_HarmonicBond_page </li>
-     <li> \subpage inter_bond_HarmonicL0Bond_page </li>
-     <li> \subpage inter_bond_FeneBond_page </li>
-   </ul>
+  <li> \subpage inter_bond_HarmonicBond_page </li>
+  <li> \subpage inter_bond_HarmonicL0Bond_page </li>
+  <li> \subpage inter_bond_FeneBond_page </li>
 </ul>
  
 All of the bond interaction classes implement a common interfaces,

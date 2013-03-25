@@ -6,12 +6,11 @@ group of atoms is assigned an angle type index, values of the parameters
 in the angle potential function are used for different angle types.
 
 \section inter_angle_interactions_section Angle Interaction Classes 
+
 <ul style="list-style: none;">
-   <ul style="list-style: none;">
-     <li> \subpage inter_angle_CosineAngle_page </li>
-     <li> \subpage inter_angle_CosineSqAngle_page </li>
-     <li> \subpage inter_angle_HarmonicAngle_page </li>
-   </ul>
+   <li> \subpage inter_angle_CosineAngle_page </li>
+   <li> \subpage inter_angle_CosineSqAngle_page </li>
+   <li> \subpage inter_angle_HarmonicAngle_page </li>
 </ul>
  
 All of the angle interaction classes implement a common interface,

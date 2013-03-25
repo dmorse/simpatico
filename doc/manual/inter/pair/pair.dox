@@ -10,10 +10,8 @@ function is always set to zero for $r$ greater than some cutoff distance.
 \section inter_pair_interactions_section Pair Interaction Classes
 
 <ul style="list-style: none;">
-   <ul style="list-style: none;">
-     <li> \subpage inter_pair_LJPair_page </li>
-     <li> \subpage inter_pair_DpdPair_page </li>
-   </ul>
+   <li> \subpage inter_pair_LJPair_page </li>
+   <li> \subpage inter_pair_DpdPair_page </li>
 </ul>
  
 The pair interaction classes are not derived from a common base class, 
