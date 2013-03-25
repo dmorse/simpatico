@@ -38,13 +38,14 @@ namespace Inter
       int i,j;
       for (i = 0; i < nAtomType_; ++i) {
          for (j = 0; j < nAtomType_; ++j) {
-            epsilon_[i][j] = other.epsilon_[i][j];
+            cutoffSq_[i][j]= other.cutoffSq_[i][j];
             sigma_[i][j]   = other.sigma_[i][j];
+            eps48_[i][j]   = other.eps48_[i][j];
+            ljShift_[i][j] = other.ljShift_[i][j];
+            epsilon_[i][j] = other.epsilon_[i][j];
             cutoff_[i][j]  = other.cutoff_[i][j];
             sigmaSq_[i][j] = other.sigmaSq_[i][j];
-            cutoffSq_[i][j]= other.cutoffSq_[i][j];
-            ljShift_[i][j] = other.ljShift_[i][j];
-         } 
+         }
       }
    }
    
@@ -59,12 +60,13 @@ namespace Inter
       int i,j;
       for (i = 0; i < nAtomType_; ++i) {
          for (j = 0; j < nAtomType_; ++j) {
+            cutoffSq_[i][j]= other.cutoffSq_[i][j];
+            sigmaSq_[i][j] = other.sigmaSq_[i][j];
+            eps48_[i][j]   = other.eps48_[i][j];
+            ljShift_[i][j] = other.ljShift_[i][j];
             epsilon_[i][j] = other.epsilon_[i][j];
             sigma_[i][j]   = other.sigma_[i][j];
             cutoff_[i][j]  = other.cutoff_[i][j];
-            sigmaSq_[i][j] = other.sigmaSq_[i][j];
-            cutoffSq_[i][j]= other.cutoffSq_[i][j];
-            ljShift_[i][j] = other.ljShift_[i][j];
          } 
       }
       return *this;
@@ -102,6 +104,7 @@ namespace Inter
       }
 
       epsilon_[i][j] = epsilon;
+      eps48_[i][j]   = 48.0*epsilon;
 
       // Calculate shift
       double r6i = sigmaSq_[i][j]/cutoffSq_[i][j];
@@ -111,6 +114,7 @@ namespace Inter
       // Symmetrize
       if (j != i) {
          epsilon_[j][i] = epsilon_[i][j];
+         eps48_[j][i]   = eps48_[i][j];
          ljShift_[j][i] = ljShift_[i][j];
       }
    } 
@@ -172,7 +176,8 @@ namespace Inter
       maxPairCutoff_ = 0.0;
       for (i = 0; i < nAtomType_; ++i) {
          for (j = 0; j < nAtomType_; ++j) {
-            sigmaSq_[i][j]  = sigma_[i][j]*sigma_[i][j];
+            eps48_[i][j] = 48.0*epsilon_[i][j];
+            sigmaSq_[i][j] = sigma_[i][j]*sigma_[i][j];
             cutoffSq_[i][j] = cutoff_[i][j]*cutoff_[i][j];
             r6i = sigmaSq_[i][j]/cutoffSq_[i][j];
             r6i = r6i*r6i*r6i;

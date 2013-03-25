@@ -143,8 +143,8 @@ namespace DdMd
       /// Integer index of atom type.
       int typeId_;
 
-      // Least signicant bit: Is this Atom a ghost? (0=false, 1=true)
-      // All but least significant bits: Local id in Atom Array
+      /// Least signicant bit: Is this Atom a ghost? (0=false, 1=true)
+      /// Remaining bits: Local id in Atom Array, set by AtomArray.
       unsigned int localId_;
 
       /// Force on atom.
@@ -210,13 +210,13 @@ namespace DdMd
    inline Vector& Atom::position()
    {  return position_; }
 
-   // Get reference to force.
-   inline Vector& Atom::force()
-   {  return force_; }
-
    // Get const reference to position.
    inline const Vector& Atom::position() const
    {  return position_; }
+
+   // Get reference to force.
+   inline Vector& Atom::force()
+   {  return force_; }
 
    // Get const reference to force.
    inline const Vector& Atom::force() const

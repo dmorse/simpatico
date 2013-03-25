@@ -204,6 +204,7 @@ namespace Inter
       double cutoff_[MaxAtomType][MaxAtomType];    ///< LJ cutoff distance.
       double cutoffSq_[MaxAtomType][MaxAtomType];  ///< square of cutoff[][].
       double ljShift_[MaxAtomType][MaxAtomType];   ///< shift in LJ potential.
+      double eps48_[MaxAtomType][MaxAtomType];     ///< 48*epsilon
  
       /**
       * Maximum pair potential cutoff radius, for all monomer type pairs.
@@ -246,14 +247,10 @@ namespace Inter
    inline double LJPair::forceOverR(double rsq, int i, int j) const
    {
       double r2i, r6i;
-      //if ( rsq < cutoffSq_[i][j] ) {
-         r2i = 1.0/rsq;
-         r6i = sigmaSq_[i][j]*r2i;
-         r6i = r6i*r6i*r6i;
-         return 24.0*epsilon_[i][j]*(2.0*r6i*r6i - r6i)*r2i;
-      //} else {
-      //   return 0.0;
-      //}
+      r2i = 1.0/rsq;
+      r6i = sigmaSq_[i][j]*r2i;
+      r6i = r6i*r6i*r6i;
+      return eps48_[i][j]*(r6i - 0.5)*r6i*r2i;
    }
 
    /* 
