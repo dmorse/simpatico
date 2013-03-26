@@ -21,6 +21,7 @@
 
 // Pair Potential interaction classes
 #include <inter/pair/LJPair.h>
+#include <inter/pair/WcaPair.h>
 #include <inter/pair/DpdPair.h>
 #include <inter/pair/CompensatedPair.h>
 
@@ -59,6 +60,9 @@ namespace McMd
       if (name == "LJPair") {
          ptr = new McPairPotentialImpl<LJPair>(system);
       } else
+      if (name == "WcaPair") {
+         ptr = new McPairPotentialImpl<WcaPair>(system);
+      } else
       if (name == "DpdPair") {
          ptr = new McPairPotentialImpl<DpdPair>(system);
       } else
@@ -82,6 +86,9 @@ namespace McMd
 
       if (name == "LJPair") {
          ptr = new MdPairPotentialImpl<LJPair>(system);
+      } else
+      if (name == "WcaPair") {
+         ptr = new MdPairPotentialImpl<WcaPair>(system);
       } else
       if (name == "DpdPair") {
          ptr = new MdPairPotentialImpl<DpdPair>(system);
@@ -109,6 +116,11 @@ namespace McMd
          McPairPotentialImpl<LJPair>* mcPtr 
              = dynamic_cast< McPairPotentialImpl<LJPair>* >(&potential);
          ptr = new MdPairPotentialImpl<LJPair>(*mcPtr);
+      } else
+      if (name == "WcaPair") {
+         McPairPotentialImpl<WcaPair>* mcPtr 
+             = dynamic_cast< McPairPotentialImpl<WcaPair>* >(&potential);
+         ptr = new MdPairPotentialImpl<WcaPair>(*mcPtr);
       } else
       if (name == "DpdPair") {
          McPairPotentialImpl<DpdPair>* mcPtr 

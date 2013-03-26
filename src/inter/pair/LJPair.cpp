@@ -261,27 +261,31 @@ namespace Inter
    {
       if (name == "epsilon") {
          epsilon_[i][j] = value;
-         epsilon_[j][i] = value;
+         eps48_[i][j] = 48.0*value;
+         if (j != i) {
+            epsilon_[j][i] = value;
+            eps48_[j][i] = eps48_[i][j];
+         }
       } else
       if (name == "sigma") {
          sigma_[i][j] = value;
-         sigma_[j][i] = value;
+         sigmaSq_[i][j] = sigma_[i][j]*sigma_[i][j];
+         if (j != i) {
+            sigma_[j][i] = sigma_[i][j];
+            sigmaSq_[j][i] = sigmaSq_[i][j];
+         }
       } else {
          UTIL_THROW("Unrecognized parameter name");
       }
-
-      sigmaSq_[i][j] = sigma_[i][j]*sigma_[i][j];
 
       // Recalculate shift
       double r6i = sigmaSq_[i][j]/cutoffSq_[i][j];
       r6i = r6i*r6i*r6i;
       ljShift_[i][j] = -4.0*epsilon_[i][j]*(r6i*r6i - r6i);
-
-      //Symmetrize
       if (j != i) {
-         sigmaSq_[j][i] = sigmaSq_[i][j];
          ljShift_[j][i] = ljShift_[j][i];
       }
+
    }
 
    /*
