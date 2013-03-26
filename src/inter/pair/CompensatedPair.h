@@ -79,11 +79,6 @@ namespace Inter
       /// \name Accessors
       
       /**
-      * Get maximum of pair cutoff distance, for all atom type pairs.
-      */
-      double maxPairCutoff() const;      
- 
-      /**
       * Returns interaction energy for a single pair of particles. 
       *
       * \param rsq square of distance between particles
@@ -107,6 +102,16 @@ namespace Inter
       */
       double forceOverR(double rsq, int i, int j) const;
    
+      /**
+      * Get cutoff for pair potential, for a particular type pair.
+      */
+      double cutoffSq(int i, int j) const;
+ 
+      /**
+      * Get maximum of pair cutoff distance, for all atom type pairs.
+      */
+      double maxPairCutoff() const;      
+ 
       /// \name Other Accessors
       
       /**
@@ -141,6 +146,11 @@ namespace Inter
       * Used in construction of a cell list or Verlet pair list.
       */
       double maxPairCutoff_;
+
+      /**
+      * Square of maximum pair potential cutoff radius.
+      */
+      double maxPairCutoffSq_;
            
       BarePair        pair_;
       LinkPotential   link_;
@@ -168,6 +178,7 @@ namespace Inter
    template <class BarePair, class LinkPotential>
    CompensatedPair<BarePair, LinkPotential>::CompensatedPair() 
     : maxPairCutoff_(0.0),
+      maxPairCutoffSq_(0.0),
       temp_(0.0),
       mu_(0.0),
       activity_(0.0),
@@ -244,6 +255,7 @@ namespace Inter
       if (pair_.maxPairCutoff() > maxLinkLength_) {
          maxPairCutoff_ = pair_.maxPairCutoff();
       }
+      maxPairCutoffSq_ = maxPairCutoff_*maxPairCutoff_;
    }
    
    /* 
@@ -293,13 +305,24 @@ namespace Inter
    inline double 
    CompensatedPair<BarePair, LinkPotential>::forceOverR(double rsq, int i, int j) const
    {
-        double total = pair_.forceOverR(rsq, i, j);
+        double total = 0.0;
+        if (rsq < pair_.cutoffSq(i, j)) {
+           total += pair_.forceOverR(rsq, i, j);
+        }
         if (rsq < maxLinkLengthSq_) {
            total -= activity_ * exp(-beta_ * link_.energy(rsq, 0)) * link_.forceOverR(rsq, 0);
         }
         return total;
    }
 
+   /*
+   * Get square of maximum pair cutoff distance.
+   */
+   template <class BarePair, class LinkPotential>
+   inline 
+   double CompensatedPair<BarePair, LinkPotential>::cutoffSq(int i, int j) const
+   {  return maxPairCutoffSq_; }
+ 
    /*
    * Modify a parameter, identified by a string.
    */

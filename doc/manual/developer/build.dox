@@ -1,7 +1,10 @@
 namespace McMd
 {
 
-/*! \page developer_build_page 7.1 Build System
+/*! \page developer_build_page 6.1 Build System
+
+\ref developer_standards_page  (Next)
+<BR>
 
 Simpatico is compiled using a system of unix makefiles.  All development was done using gnu make (gmake). We have never checked if the build system works with other variants of make (though it very well might).
   
@@ -106,7 +109,7 @@ util_space_SRCS=\
 util_space_OBJS=$(util_space_SRCS:.cpp=.o)
 
 \endcode
-The directory src/util/space contains three sources files named Grid.cpp, IntVector.cpp, Vector.cpp and Tensor.cpp, and has no subdirectories. In the definition of the variable util_spaces_SRCS, absolute paths are given for each of these source files by using SRC_DIR to represent the absolute path to the simpatico src/ directory, followed by the path from src/ to a particular source file. The variable SRC_DIR is set to the absolute path to the src/ directory in the file src/compiler.mk, which is included by every makefile in the build system before including an sources.mk files. The correct value for SRC_DIR should be set by the ./configure script during initial configuration. 
+The directory src/util/space contains three sources files named Grid.cpp, IntVector.cpp, Vector.cpp and Tensor.cpp, and has no subdirectories. In the definition of the variable util_spaces_SRCS, absolute paths are given for each of these source files by using SRC_DIR to represent the absolute path to the simpatico src/ directory, followed by the path from src/ to a particular source file. The variable SRC_DIR is set to the absolute path to the src/ directory in the file src/compiler.mk, which is included by every makefile in the build system before including an sources.mk files. The correct value for SRC_DIR should be set by the "setup" script during initial configuration. 
 
 In directories that contain subdirectories, the _SRCS list is constructed recursively, by concatenating corresponding lists defined in subdirectories. In each directory at the namespace level and below that contains subdirectories, the parent directory "sources.mk" file includes the sources.mk file from each of its subdirectories. The value of the [directory]_SRCS variable for the parent directory is then constructed by concatenating values of the [subdirectory]_SRCS variables defined in the subdirectories, and then adding paths for any source files in the parent directory. For example, here is the source of the namespace level file src/util/sources.mk, which includes the file src/util/space/sources.mk shown above (among others):
 \code
@@ -188,11 +191,9 @@ from either the src/mcMd/simulation or the src/mcMd/ directory.  Typing "make Si
 
 In order to use "make all" for development, however, you must be careful to only work on one file at a time. To do so, simply comment out incomplete or broken source files in the definition of the [directory]_SRCS in the sources.mk file, until you are ready to complete or fix them. Otherwise, the "make all" command will try to compile files that are not ready to be compiled.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref developer_page  (Up)    </li>
- <li> \ref developer_standards_page  (Next)  </li>
-</ul>
+<BR>
+\ref developer_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref developer_standards_page  (Next)
 
 */
 }

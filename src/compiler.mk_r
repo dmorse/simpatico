@@ -34,41 +34,24 @@ LIB_DIR=$(ROOT_DIR)/lib
 TESTS_DIR=$(ROOT_DIR)/tests
 
 #-----------------------------------------------------------------------
+# Enabling / Disabling MPI (Mesage Passing Library)
+
+#UTIL_MPI=1
+
+#-----------------------------------------------------------------------
 # Automatic dependency generation:
 #
 # To enable automatic dependency generation: (1) uncomment the line below
 # that defines MAKEDEP, and (2) Modify the PYTHONPATH unix environment
-# variable to include the $(ROOT_DIR)/tools/python directory. The script 
-# makeDep is located in the $(ROOT_DIR)/bin/ directory, and is invoked 
-# as a side effect of compilation in order to generate a dependency file.  
-# The PYTHONPATH must include the $(ROOT_DIR)/tools/python directory so
-# that the python interpreter can find the python modules that are used 
-# by the makeDep script.
+# variable to include the $(ROOT_DIR)/tools/python directory. 
  
 #MAKEDEP=$(ROOT_DIR)/bin/makeDep
 
 #-----------------------------------------------------------------------
-# COMPILER identifier:
-#
-# The variable COMPILER is a string that identifies a choice of compiler.
-# To select a compiler for which default settings are available, set
-# the variable COMPILER by uncommenting one of the following lines
-# and commenting out all others. The default choice is gcc, the gnu
-# compiler collection.  
-#
-# String values that contain the string "mpi" set compiler options so 
-# as to link to an mpi library. Some these blocks use an mpicxx script
-# to invoke the compiler, but users may modify this if needed.
-
-# Choose (uncomment) one value of COMPILER, comment out all others
+# COMPILER and MPI_LIB identifiers:
 
 COMPILER:=gcc
-#COMPILER:=gcc_mpicxx
-#COMPILER:=gcc_openmpi
-#COMPILER:=intel
-#COMPILER:=intel_mpicxx
-#COMPILER:=pathscale
-#COMPILER:=pathscale_mpi
+MPI_LIB=mpicxx
 
 # ------------------------------------------------------------------
 # Compiler settings:
@@ -83,87 +66,82 @@ COMPILER:=gcc
 # TESTFLAGS  - flags usd to compile unit test programs
 # AR         - path to archiver, to create library (*.a) files
 # ARFLAGS    - flags used by archiver
-#
-# Blocks for compilers that link to the MPI library also define 
-# UTIL_MPI=1. The default value of CXX for gcc_mpicxx and intel_mpicxx
-# is CXX=mpicxx. The string mpicxx is the name of a script that 
-# invokes an mpi compiler several systems that we have used for
-# development.  On these systems, the choices of actual compiler 
-# and mpi library are determined by loading appropriate software
-# modules (e.g., module load intel-mpi).
 # ------------------------------------------------------------------
 
-#-- Gnu GCC compiler (Serial) ------
+#-- Gnu GCC compiler ------
 ifeq ($(COMPILER),gcc)
-  CXX=g++
-  CXXFLAGS= -O3 -ffast-math -Wall -Winline -std=c++98 -pedantic
-  LDFLAGS=
-  TESTFLAGS= -Wall -std=c++98 -pedantic
-  AR=ar
-  ARFLAGS=rcs
+   ifneq ($(UTIL_MPI),1)
+      # Serial Gnu g++ (no mpi)
+      CXX=g++
+      CXXFLAGS= -O3 -ffast-math -Wall -Winline -std=c++98 -pedantic
+      LDFLAGS=
+      TESTFLAGS= -Wall -std=c++98 -pedantic
+      AR=ar
+      ARFLAGS=rcs
+   else
+      ifeq ($(MPI_LIB),mpicxx)
+         # Gnu g++ using a module and mpicxx macro
+         CXX=mpicxx
+         CXXFLAGS= -O3 -ffast-math -Wall -Winline -std=c++98
+         LDFLAGS=
+         TESTFLAGS= -O3 -ffast-math -Wall -std=c++98 -pedantic
+         AR=ar
+         ARFLAGS=rcs
+      endif
+      ifeq ($(MPI_LIB),openmpi)
+         # Gnu g++ using the openmpi library explicitly
+         CXX=g++
+         CXXFLAGS= -O3 -ffast-math -Wall -Winline -std=c++98 -I/opt/local/include/openmpi
+         LDFLAGS= -L/opt/local/lib -lmpi_cxx -lmpi
+         TESTFLAGS= -O3 -ffast-math -Wall -std=c++98 -pedantic
+         AR=ar
+         ARFLAGS=rcs
+      endif
+   endif
 endif
 
-# -- Gnu GCC compiler, MPI via mpicxx script -----
-ifeq ($(COMPILER),gcc_mpicxx)
-  CXX=mpicxx
-  CXXFLAGS= -O3 -ffast-math -Wall -Winline -std=c++98
-  LDFLAGS=
-  TESTFLAGS= -O3 -ffast-math -Wall -std=c++98 -pedantic
-  AR=ar
-  ARFLAGS=rcs
-  UTIL_MPI=1
-endif
 
-# -- Gnu GCC compiler, OpenMPI - explicit headers and libs) -----
-ifeq ($(COMPILER),gcc_openmpi)
-  CXX=g++
-  CXXFLAGS= -O3 -ffast-math -Wall -Winline -std=c++98 -I/opt/local/include/openmpi
-  LDFLAGS= -L/opt/local/lib -lmpi_cxx -lmpi
-  TESTFLAGS= -O3 -ffast-math -Wall -std=c++98 -pedantic
-  AR=ar
-  ARFLAGS=rcs
-  UTIL_MPI=1
-endif
-
-# -- Intel ICC compiler (serial) ---
+# -- Intel ICC compiler ---
 ifeq ($(COMPILER),intel)
-  CXX=icpc
-  CXXFLAGS= -fast -ansi
-  LDFLAGS= -fast
-  TESTFLAGS= -ansi
-  AR=xiar
-  ARFLAGS=rcs
+   ifneq ($(UTIL_MPI),1)
+      # Serial intel icpc compiler (no mpi)
+      CXX=icpc
+      CXXFLAGS= -fast -ansi
+      LDFLAGS= -fast
+      TESTFLAGS= -ansi
+      AR=xiar
+      ARFLAGS=rcs
+   else
+      ifeq ($(MPI_LIB),mpicxx)
+         # Intel icpc compiler using a module and mpicxx macro
+         CXX=mpicxx
+         CXXFLAGS= -ansi
+         LDFLAGS=
+         TESTFLAGS= -ansi
+         AR=xiar
+         ARFLAGS=rcs
+      endif
+   endif
 endif
 
-# -- Intel ICC compiler (MPI) ------
-ifeq ($(COMPILER),intel_mpicxx)
-  CXX=mpicxx
-  CXXFLAGS= -ansi
-  LDFLAGS=
-  TESTFLAGS= -ansi
-  AR=xiar
-  ARFLAGS=rcs
-  UTIL_MPI=1
-endif
 
 # -- PathScale compiler ------------
 ifeq ($(COMPILER),pathscale)
-  CXX=pathCXX
-  CXXFLAGS= -Ofast
-  LDFLAGS= -Ofast
-  TESTFLAGS=
-  AR=ar
-  ARFLAGS=rcs
+   ifneq ($(UTIL_MPI),1)
+      CXX=pathCXX
+      CXXFLAGS= -Ofast
+      LDFLAGS= -Ofast
+      TESTFLAGS=
+      AR=ar
+      ARFLAGS=rcs
+   else
+      ifeq ($(MPI_LIB),mpicxx)
+         CXX=mpicxx
+         CXXFLAGS= -Ofast
+         LDFLAGS= -Ofast
+         TESTFLAGS=
+         AR=ar
+         ARFLAGS=rcs
+      endif
+   endif
 endif
-
-# -- PathScale compiler (MPI) ------
-ifeq ($(COMPILER),pathscale_mpi)
-  CXX=mpicxx
-  CXXFLAGS= -Ofast
-  LDFLAGS= -Ofast
-  TESTFLAGS=
-  AR=ar
-  ARFLAGS=rcs
-  UTIL_MPI=1
-endif
-

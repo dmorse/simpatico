@@ -3,9 +3,13 @@ namespace McMd
 
 /*! \page user_commands_page 2.4 Command File
 
-After the main simulation object is initialized by the readParam() method, the progress of a simulation is controlled by a command file that is read by the readCommand() method. The name of the command file is specified by the commandFileName parameter in the FileMaster block of the parameter file. If the value of commandFileName is given by the special string "paramfile", however, readCommand() will assume that command file has been appended to the end of the param file, after the closing bracket of the main McSimulation or MdSimulation block, and will attempt to continue reading from the parameter file. 
+ \ref user_param_page   (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_cfgfile_page (Next) 
+ <BR>
 
-The command file contains a sequence of one-line commands that are read and executed in sequence. Each command begins with an all upper case label. Some commands take one or more required parameters after the upper case label. The script stops execution when it encounters the command string 'FINISH' on a line by itself. 
+For any Simpatico simulation program, after the main simulation object is initialized by the readParam() method, the progress of a simulation is controlled by a command file, which is read by a readCommand() method. The name of the command file is specified by the commandFileName parameter in the FileMaster block of the parameter file. If the value of commandFileName is given by the special string "paramfile", however, readCommand() will assume that command file has been appended to the end of the param file, after the closing bracket of the main McSimulation or MdSimulation block, and will attempt to continue reading from the parameter file. 
+
+The command file contains a sequence of one-line commands that are read and executed in sequence. Each command begins with an all upper case label. Some commands take one or more parameters, which must appear after the upper case label, separated by spaces. The script stops execution when it encounters the command string 'FINISH' on a line by itself. 
 
 \section example_sec Example
 
@@ -185,6 +189,14 @@ The following table shows a list of available commands for all three programs.  
     <td> <b>X</b> </td>
   </tr>
   <tr>
+    <td> OUTPUT_DIAGNOSTICS </td>
+    <td>  </td>
+    <td> Call output() function of each Diagnostic </td>
+    <td> <b>-</b> </td>
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+  </tr>
+  <tr>
     <td> OUTPUT_INTEGRATOR_STATS </td>
     <td>  </td>
     <td> Output timing statistics </td>
@@ -209,15 +221,12 @@ The following table shows a list of available commands for all three programs.  
     <td> <b>X</b> </td>
   </tr>
 </table>
-The SET_ANGLE and SET_DIHEDRAL commands are only available in programs compiled with angle and dihedral potentials enabled.
+The SET_ANGLE and SET_DIHEDRAL commands are only available in programs compiled with angle and dihedral potentials enabled, respectively.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref user_param_page        (Previous) </li>
- <li> \ref user_page        (Up)   </li>
- <li> \ref user_cfgfile_page      (Next) </li>
-</ul>
-
+ <BR>
+ \ref user_param_page   (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_page        (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_cfgfile_page (Next) 
 */
 
 }

@@ -1,8 +1,12 @@
 namespace McMd
 {
 
-/*! \page extend_potential_page 5.4 Potential Energy Classes
+/*! \page extend_potential_page 4.4 Potential Energy Classes
 
+\ref extend_factory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_subfactory_page  (Next)
+<BR>
+ 
 \section potentials_base_sec Potential Energy Base Classes
 The mcSim and mdSim programs use the following set of abstract base classes for different types of potential energy:
 <ul style="list-style: none;">
@@ -13,7 +17,7 @@ The mcSim and mdSim programs use the following set of abstract base classes for 
  <li> McMd::DihedralPotential </li>
  <li> McMd::ExternalPotential </li>
 </ul>
-Most of the names are self-explanatory: Bond, Angle, and Dihedral potentials represent 2-body bond, 3-body angle, and 4-body dihedral covalent interactions.  An ExternalPotential represents a one-body potential in which the energy depends upon the position and type of a single atom. The McPairPotential and MdPairPotential classes both represent nonbonded pair interactions, but define slightly different interfaces for MC and MD simulations. For all other potential energy types (i.e., for bond, angle, dihedral, and external potentials) the same base class is used in both MC and MD simulations.
+The names are self-explanatory: Bond, Angle, and Dihedral potentials represent 2-body bond, 3-body angle, and 4-body dihedral covalent interactions.  An ExternalPotential represents a one-body potential in which the energy depends upon the position and type of a single atom. The McPairPotential and MdPairPotential classes both represent nonbonded pair interactions, but define slightly different interfaces for MC and MD simulations. For all other potential energy types (i.e., for bond, angle, dihedral, and external potentials) the same base class is used in both MC and MD simulations.
 
 The ddSim program uses an analogous set of base classes defined in the DdMd namespace:
 <ul style="list-style: none;">
@@ -23,16 +27,21 @@ The ddSim program uses an analogous set of base classes defined in the DdMd name
  <li> DdMd::DihedralPotential </li>
  <li> DdMd::ExternalPotential </li>
 </ul>
-with names similar or identical to those of the corresponding McMd classes.
+with names similar to those of the corresponding McMd classes.
 
-All of the above potential energy base classes declare methods to calculate the contribution from a particular type of potential to the total energy and total stress of an associated system, as well as methods to calculate energies and forces arising from single groups of atoms, such as a single pair of nonbonded atoms.  All of the classes that are intended for us in MD simualtion (i.e., all the DdMd potentials and all of the McMd potentials except MdPairPotential) provide a method to calculate the corresponding contribution to the forces exerted on all atoms in a System (e.g., all nonbonded pair forces).  All of the McMd potential classes that are intended for us in MC simulations (i.e,. all except MdPairPotential) also provide methods to calculate a corresponding energy contribution for a specific atom.
+Each of the above potential energy base classes declare two different types of methods to calculate energies and forces:
+
+  - Global methods, which calculate the contribution from a particular type of potential to the total energy and total stress of an associated system, 
+
+  - Group methods, which calculate energies and forces arising from single groups of atoms, such as a single pair of nonbonded atoms.  
+
+Every classes that is intended for use in MD simualtion (i.e., all the DdMd potentials and all of the McMd potentials except McPairPotential) provides a method to calculate the the forces exerted on all atoms in a System by a particular type of potential energy (e.g., all nonbonded pair forces).  All of the McMd potential classes that are intended for us in MC simulations (i.e,. all except MdPairPotential) provide methods to calculate a corresponding energy contribution for a specific atom.
 
 \section potentials_interaction_sec Interaction Classes and Potential Energy Class Templates
 
-Subclassses of these potential energy abstract base classes are implemented using a simpler set of "interaction" classes. Each interaction class represents a specific function form for a potential energy function, and implements only the core calculations of energies and forces for small groups of 1, 2, 3 or 4 atoms. The interaction classes are simple, non-polymorphic classes, which provide non-virtual methods to calculate the energy and forces for a single group of interacting atoms, such as a single pair of nonbonded or bonded atoms, or the angle forces among a group of three bonded atoms. For example, LJPair is a pair interaction class that represents the Lennard-Jones pair interaction, while HarmonicBond is a bond interaction class that represents a harmonic bond potential.  Unlike the polymorphic potential energy classes, interaction classes do not provide methods to do calculations that involve, e.g., looping over atoms or covalent groups of an associated system.
+Subclasses of these abstract potential energy classes are constructed using a simpler set of "interaction" classes. The interaction classes are defined in the Inter namespace. Each interaction class represents a specific functional form for a specific type of potential energy contribution that involves only a small group of 2, 3, or 4 atoms. For example, Inter::LJPair is a pair interaction class the implements a Lennard-Jones part potential, while Inter::HarmonicBond is a covalent bond interaction that implements a harmonic bond potential. The interaction classes are simple, non-polymorphic classes, which provide non-virtual methods to calculate the energy and forces for a single group of interacting atoms, such as a single pair of nonbonded or bonded atoms, or a group of three atoms that interact via an angle potential. Unlike the polymorphic potential energy classes discussed above, interaction classes do not provide global methods to do calculations that involve, e.g., looping over atoms or covalent groups of an associated system.
 
-Subclasses of the potential energy base classes that use particular interaction functions are implemented by class templates. Each such potential energy class template takes an interaction class as a template
-argument, and is derived from an associated potential class. The name of each such class templates is given in all but a few cases by the name of the associated base class followed by the suffix "Impl" (for implementation). For example, the template that implements the McMd::BondPotential interface is called McMd::BondPotentialImpl. The template instantiation McMd::BondPotentialImpl<Inter::HarmonicBond> is a subclass of BondPotential that represents a harmonic bond potential.  The template McMd::BondPotentialImpl defines methods that implement a loop over all bonds in a system, as required to calculate the total bond energy of a System and to calculate bond forces for all atoms in a system, and that calls the methods of the associated interaction class within that loop to calculate forces and/or energies for individual bonds.  Analogous templates are provided in both the McMd and DdMd namespaces for angle, dihedral, link and external forces. 
+Subclasses of the potential energy base classes that use particular interaction functions are implemented by class templates. Each such class template takes an interaction class as a template argument, and is derived from an associated abstract potential class. The name of each class template is given in all but a few cases by the name of the associated base class followed by the suffix "Impl" (for implementation). For example, the template that implements the McMd::BondPotential interface is called McMd::BondPotentialImpl. The template instantiation McMd::BondPotentialImpl<Inter::HarmonicBond> is a subclass of BondPotential that represents a harmonic bond potential.  The template McMd::BondPotentialImpl defines methods that implement a loop over all bonds in a system, as required to calculate the total bond energy of a System and to calculate bond forces for all atoms in a system, and that calls the methods of the associated interaction class within that loop to calculate forces and/or energies for individual bonds.  Analogous templates are provided in both the McMd and DdMd namespaces for angle, dihedral, link and external forces. 
 
 In the special case of non-bonded pair potentials, the McMd namespace contains two different implementation templates, named McMd::McPairPotentialImpl and McMd::MdPairPotentialImpl, which are designed for MC and MD simulations, respectively. These use different algorithms to do the energy and force calculations required in MC and MD simulations, and implement slightly different interfaces: The McPairPotentialImpl uses a cell list that is optimized for use in MC simulations. The MdPairPotentialImpl uses a Verlet pair list to implement the force loop required in MD simulations. 
 
@@ -53,12 +62,10 @@ Because McMd::PairFactory does not implement the interface defined by the standa
 
 The implementations of the potential energy factory classes are generally very similar to those of other factory classes.  Developers should consult the implementations of the default factory classes for different types of potential in the src/mcMd/potential/ and/or src/ddMd/potentials/ directories for further guidance. 
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref extend_factory_page   (Previous)  </li>
- <li> \ref extend_page    (Up)        </li>
- <li> \ref extend_subfactory_page    (Next)      </li>
-</ul>
+<BR>
+\ref extend_factory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_subfactory_page  (Next)
  
 */
 }

@@ -1,0 +1,39 @@
+
+
+------------------------------------------------------------
+Loop over atoms to make ghost plans, using position alone.
+
+Send all ghosts that are ghosts by position.
+
+------------------------------------------------------------
+Identify incomplete groups and missing ghosts.
+
+- Loop over all groups
+  If the group is incomplete:
+
+      Add group to list of incomplete groups
+      Add ghost, but mark somehow as incomplete
+      Add each missing atom id to request list for all directions
+
+------------------------------------------------------------
+Send requests:
+
+For each of 26 directions:
+
+   Send requestList
+
+   Receive requestList
+
+   for each atom in received requestList:
+
+      if local, pack position and id for sending
+
+
+   send back to requester.
+
+   Receive ghostlist
+   
+   Unpack, add to storage. 
+
+After all directions, iterate through incomplete groups.
+

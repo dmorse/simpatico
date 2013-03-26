@@ -15,6 +15,8 @@
 
 #include <algorithm>
 
+#define DDMD_ATOM_DISTRIBUTOR_DEBUG
+
 namespace DdMd
 {
 
@@ -209,8 +211,13 @@ namespace DdMd
       }
       #endif
 
-      // Return pointer to new atom.
+      if (reservoir_.size() == 0) {
+         UTIL_THROW("Empty cache reservoir (This should not happen)");
+      }
+ 
+      // Pop pointer to new atom from reservoir and return that pointer.
       newPtr_ = &reservoir_.pop();
+      newPtr_->clear();
       return newPtr_;
    }
 
@@ -253,6 +260,7 @@ namespace DdMd
       int rank = 0;
       #endif
 
+      // If owned by the master, add this atom to storage.
       // If not owned by the master, queue this atom for sending.
       if (rank == 0) {
 
@@ -262,6 +270,8 @@ namespace DdMd
 
          reservoir_.push(*newPtr_); 
 
+         // Note: Atom is returned to reservoir in a dirty state.
+         // Atoms must thus be cleared when popped from reservoir.
       }
       #ifdef UTIL_MPI
       else { // if rank !=0
@@ -283,8 +293,11 @@ namespace DdMd
          if (sendSizes_[rank] == sendCapacity_) {
 
             // Pack atoms into buffer, and return pointers for reuse.
+            Atom* ptr;
             for (int i = 0; i < sendCapacity_; ++i) {
-               bufferPtr_->packAtom(*sendArrays_(rank, i));
+               ptr = sendArrays_(rank, i);
+               bufferPtr_->packAtom(*ptr);
+               //bufferPtr_->packAtom(*sendArrays_(rank, i));
 
                // Push pointer onto reservoir and remove it from sendArrays_.
                reservoir_.push(*sendArrays_(rank, i));
@@ -308,6 +321,18 @@ namespace DdMd
 
       // Nullify newPtr_ to release for reuse.
       newPtr_ = 0;
+
+      #ifdef DDMD_ATOM_DISTRIBUTOR_DEBUG
+      // Check allocation of cache atoms
+      int sendSizeSum = 0;
+      int gridSize  = domainPtr_->grid().size();
+      for (int i = 0; i < gridSize; ++i) {
+         sendSizeSum += sendSizes_[i]; 
+      }
+      if (sendSizeSum + reservoir_.size() != cacheCapacity_) {
+         UTIL_THROW("Error: Inconsistent cache atom count");
+      }
+      #endif
 
       // Return rank of processor that owns this atom.
       return rank;
@@ -346,12 +371,14 @@ namespace DdMd
       for (i = 1; i < gridSize; ++i) {
 
          // Pack all remaining atoms for this processor
+         Atom* ptr;
          for (j = 0; j < sendSizes_[i]; ++j) {
-            bufferPtr_->packAtom(*sendArrays_(i, j));
+            ptr = sendArrays_(i, j);
+            bufferPtr_->packAtom(*ptr);
+            //bufferPtr_->packAtom(*sendArrays_(i, j));
 
             // Return pointer to atom to the reservoir.
             reservoir_.push(*sendArrays_(i, j));
-
          }
          bufferPtr_->endSendBlock(isComplete);
          nSentTotal_ += sendSizes_[i];
@@ -373,6 +400,7 @@ namespace DdMd
       }
 
       // Compute total number of atoms on all processors.
+      // Note: Matching call at end of AtomDistributor::receive()
       storagePtr_->computeNAtomTotal(domainPtr_->communicator());
 
       // Postconditions
@@ -435,6 +463,7 @@ namespace DdMd
       }
 
       // Compute total number of atoms on all processors.
+      // Note: Matching call at end of AtomDistributor::send()
       storagePtr_->computeNAtomTotal(domainPtr_->communicator());
    }
    #endif

@@ -8,11 +8,19 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Atom.h"
+//#include "Atom.h"
 #include <util/containers/Array.h>
+
+namespace Util {
+   class Vector;
+}
 
 namespace DdMd
 {
+
+   class Atom;
+   class Mask;
+   class Plan;
 
    using namespace Util;
 
@@ -55,16 +63,23 @@ namespace DdMd
  
       using Array<Atom>::data_;
       using Array<Atom>::capacity_;
-   
+
+      Vector *velocities_;
+      Mask   *masks_;
+      Plan   *plans_; 
+      int    *ids_;
+
       /**
-      * Copy ctor (private and not implemented to prevent copying).
+      * Copy ctor (prohibited - private and not implemented).
       */
       AtomArray(const AtomArray& other);
    
       /**
-      * Assignment (private and not implemented to prevent assignment).
+      * Assignment (prohibited - private and not implemented).
       */
       AtomArray& operator = (const AtomArray& other); 
+
+      friend class Atom;
 
    }; 
 

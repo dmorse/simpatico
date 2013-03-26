@@ -8,21 +8,25 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Mask.h"
-#include <ddMd/communicate/Plan.h>
+//#define UTIL_32BIT
+
 #include <util/space/Vector.h>
+#include <ddMd/chemistry/Mask.h>
+#include <ddMd/communicate/Plan.h>
+#include "AtomArray.h"
 
 namespace DdMd
 {
+
 
    using namespace Util;
 
    /**
    * A point particle.
    *
-   * Each Atom has position, vector, and force Vector objects, an integer 
+   * Each Atom has position, vector, and force Vector objects, an integer
    * atom type Id, and a global integer id.
-   * Each Atom has an associated Mask object. 
+   * Each Atom has an associated Mask object.
    *
    * \ingroup DdMd_Chemistry_Module
    */
@@ -31,15 +35,13 @@ namespace DdMd
 
    public:
 
-      /**
-      * Constructor.
-      */
-      Atom();
-     
-      // Use default destructor.
- 
       /// \name Mutators
       //@{
+
+      /**
+      * Assignment.
+      */
+      Atom& operator= (const Atom& other);
 
       /**
       * Reset integer members to initial null values.
@@ -48,21 +50,21 @@ namespace DdMd
 
       /**
       * Set unique id for this Atom.
-      *  
+      *
       * \param Id unique atom id.
       */
       void setId(int Id);
 
       /**
       * Set the atom type index.
-      *  
+      *
       * \param Id integer index that identifies atom type
       */
       void setTypeId(int Id);
 
       /**
       * Mark as ghost or local atom.
-      *  
+      *
       * \param isGhost true if this is a ghost, or false if local.
       */
       void setIsGhost(bool isGhost);
@@ -95,7 +97,7 @@ namespace DdMd
       Plan& plan();
 
       //@}
-      /// \name Accessors 
+      /// \name Accessors
       //@{
 
       /// Get unique global index.
@@ -136,74 +138,62 @@ namespace DdMd
    private:
 
       /// Position of atom.
-      Vector position_;                       
+      Vector position_;
 
       /// Integer index of atom type.
-      int typeId_;                         
+      int typeId_;
 
-      // Is this Atom a ghost? (0=false, 1=true)
-      int isGhost_;
+      /// Least signicant bit: Is this Atom a ghost? (0=false, 1=true)
+      /// Remaining bits: Local id in Atom Array, set by AtomArray.
+      unsigned int localId_;
 
       /// Force on atom.
-      Vector force_;                       
+      Vector force_;
 
-      /// Integer index for Atom within Simulation.
-      int id_;                      
+      /// Pointer to atom array
+      AtomArray* arrayPtr_;
 
-      // Mask (listed of bonded pairs)
-      Mask mask_;   
+      #ifdef UTIL_32BIT
+      int pad_;
+      #endif
 
-      /// Atomic velocity.
-      Vector velocity_;                       
+      // IntVector shift_;
 
-      // Communication plan.
-      Plan plan_;
+      /**
+      * Constructor (called by AtomArray).
+      */
+      Atom();
 
-      // IntVector shift_;  
+      /**
+      * Copy constructor (not implemented).
+      */
+      Atom(const Atom& other);
+
+      friend class AtomArray;
 
    };
 
    // Inline methods
 
-   // Constructor.
-   inline Atom::Atom() :
-     position_(0.0),
-     typeId_(-1),
-     isGhost_(0),
-     force_(0.0),
-     id_(-1),
-     mask_(),
-     velocity_(0.0),
-     plan_()
-   {}
-
-   /**
-   * Reset integer members to null values.
+   /*
+   * Set type Id for Atom.
    */
-   inline void Atom::clear()
-   {
-      typeId_ = -1;
-      id_ = -1;
-      isGhost_ = 0;
-      mask_.clear();
-      plan_.setFlags(0);
-   }
-
-   // Set unique global index for Atom.
-   inline void Atom::setId(int id) 
-   {  id_ = id; }
-
-   // Set type Id for Atom.
-   inline void Atom::setTypeId(int typeId) 
+   inline void Atom::setTypeId(int typeId)
    {  typeId_ = typeId; }
 
-   // Set type Id for Atom.
-   inline void Atom::setIsGhost(bool isGhost) 
-   {  isGhost_ = isGhost ? 1 : 0; }
-
-   // Get global id for Atom.
-   inline int  Atom::id() const
-   {  return id_; }
+   /*
+   * Set isGhost flag.
+   */
+   inline void Atom::setIsGhost(bool isGhost)
+   {
+      if (isGhost) {
+         // Set least significant bit to 1
+         localId_ = localId_ | 1;
+      } else {
+         // Set least significant bit to 0
+         localId_ = localId_ & ~1;
+      }
+   }
 
    // Get type Id.
    inline int Atom::typeId() const
@@ -211,47 +201,84 @@ namespace DdMd
 
    // Is this a ghost atom?
    inline bool Atom::isGhost() const
-   {  return bool(isGhost_); }
-
-   // Get reference to communication plan.
-   inline Plan& Atom::plan()
-   {  return plan_; }
+   {
+      // Return least significant bit
+      return bool(localId_ & 1);
+   }
 
    // Get reference to position.
    inline Vector& Atom::position()
    {  return position_; }
 
-   // Get reference to velocity.
-   inline Vector& Atom::velocity()
-   {  return velocity_; }
+   // Get const reference to position.
+   inline const Vector& Atom::position() const
+   {  return position_; }
 
    // Get reference to force.
    inline Vector& Atom::force()
    {  return force_; }
 
-   // Get const reference to position.
-   inline const Vector& Atom::position() const
-   {  return position_; }
-
-   // Get const reference to velocity.
-   inline const Vector& Atom::velocity() const
-   {  return velocity_; }
-
    // Get const reference to force.
    inline const Vector& Atom::force() const
    {  return force_; }
 
-   // Get const reference to communication plan.
-   inline const Plan& Atom::plan() const
-   {  return plan_; }
+   // Indirect access via other arrays
+   
+   // Get const reference to velocity.
+   inline const Vector& Atom::velocity() const
+   {
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->velocities_[localId_ >> 1]; 
+   }
+
+   // Get reference to velocity.
+   inline Vector& Atom::velocity()
+   {  
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->velocities_[localId_ >> 1]; 
+   }
 
    // Get the associated mask.
-   inline Mask& Atom::mask() 
-   {  return mask_; }
+   inline Mask& Atom::mask()
+   {  
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->masks_[localId_ >> 1]; 
+   }
 
    // Get a const reference to the mask.
    inline const Mask& Atom::mask() const
-   {  return mask_; }
+   {  
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->masks_[localId_ >> 1]; 
+   }
+
+   // Get reference to communication plan.
+   inline Plan& Atom::plan()
+   {  
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->plans_[localId_ >> 1]; 
+   }
+
+   // Get const reference to communication plan.
+   inline const Plan& Atom::plan() const
+   {  
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->plans_[localId_ >> 1]; 
+   }
+
+   // Get global id for Atom.
+   inline int  Atom::id() const
+   {  
+      //int j = (int)(localId_ >> 1);  
+      return arrayPtr_->ids_[localId_ >> 1]; 
+   }
+
+   // Set unique global index for Atom.
+   inline void Atom::setId(int id)
+   {  
+      //int j = (int)(localId_ >> 1);  
+      arrayPtr_->ids_[localId_ >> 1] = id; 
+   }
 
 }
 #endif

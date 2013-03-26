@@ -1,0 +1,43 @@
+/*! \page inter_page 2.7 Interactions
+
+\ref user_examples_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_analysis_page (Next)
+<BR>
+ 
+<h3> Contents: </h3>
+<ul style="list-style: none;">
+  <li> \subpage inter_pair_page 
+     <ul style="list-style: none;">
+       <li> \ref inter_pair_LJPair_page </li>
+       <li> \ref inter_pair_WcaPair_page </li>
+       <li> \ref inter_pair_DpdPair_page </li>
+     </ul>
+  </li>
+  <li> \subpage inter_bond_page 
+     <ul style="list-style: none;">
+       <li> \ref inter_bond_HarmonicBond_page </li>
+       <li> \ref inter_bond_HarmonicL0Bond_page </li>
+       <li> \ref inter_bond_FeneBond_page </li>
+     </ul>
+  </li>
+  <li> \subpage inter_angle_page 
+     <ul style="list-style: none;">
+       <li> \ref inter_angle_CosineAngle_page </li>
+       <li> \ref inter_angle_CosineSqAngle_page </li>
+       <li> \ref inter_angle_HarmonicAngle_page </li>
+     </ul>
+  </li>
+  <li> \subpage inter_dihedral_page 
+     <ul style="list-style: none;">
+       <li> \ref inter_dihedral_CosineDihedral_page </li>
+       <li> \ref inter_dihedral_MultiHarmonicDihedral_page </li>
+     </ul>
+  </li>
+</ul>
+ 
+<BR>
+\ref user_examples_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_analysis_page (Next)
+
+*/

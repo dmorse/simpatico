@@ -1,8 +1,12 @@
 namespace McMd
 {
 
-/*! \page extend_module_page 5.6 Modules
+/*! \page extend_module_page 4.6 Modules
 
+\ref extend_subfactory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref hoomd_page  (Next)
+<BR>
+ 
 A module is a class that encapsulates a set of classes that were designed for a 
 specific application area, along with a set of factory classes that are required
 to allow the new classes to be used within the parameter files. The classes 
@@ -149,12 +153,10 @@ and destruction of several closely related factory objects, and allows a
 user to add these factories to a simulation with a single line of code.
 The creation of a module class can be convenient, but is not necessary.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref extend_subfactory_page   (Previous)    </li>
- <li> \ref extend_page       (Up)    </li>
- <li> \ref hoomd_page        (Next)    </li>
-</ul>
+<BR>
+\ref extend_subfactory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref hoomd_page  (Next)
  
 */
 }

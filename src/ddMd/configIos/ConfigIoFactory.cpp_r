@@ -13,7 +13,7 @@
 // Subclasses of ConfigIo 
 #include "DdMdConfigIo.h"
 #include "DdMdOrderedConfigIo.h"
-#include "LammpsOrderedConfigIo.h"
+#include "LammpsConfigIo.h"
 
 namespace DdMd
 {
@@ -44,8 +44,8 @@ namespace DdMd
       if (className == "DdMdOrderedConfigIo") {
          ptr = new DdMdOrderedConfigIo(*simulationPtr_);
       }
-      if (className == "LammpsOrderedConfigIo") {
-         ptr = new LammpsOrderedConfigIo(*simulationPtr_);
+      if (className == "LammpsConfigIo") {
+         ptr = new LammpsConfigIo(*simulationPtr_);
       }
  
       return ptr;

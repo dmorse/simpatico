@@ -9,6 +9,9 @@
 */
 
 #include "AtomArray.h"
+#include "Atom.h"
+
+#include <stdlib.h>
 
 namespace DdMd
 {
@@ -19,7 +22,11 @@ namespace DdMd
    * The data_ and capacity_ are nullified in Array<Atom> constructor.
    */
    AtomArray::AtomArray() 
-    : Array<Atom>()
+    : Array<Atom>(),
+      velocities_(0),
+      plans_(0),
+      masks_(0),
+      ids_(0)
    {}
 
    /*
@@ -29,6 +36,11 @@ namespace DdMd
    {
       if (data_) {
          delete [] data_;
+         //free(data_);
+         delete [] velocities_;
+         delete [] masks_;
+         delete [] plans_;
+         delete [] ids_;
       }
    }
 
@@ -43,8 +55,32 @@ namespace DdMd
       if (capacity <= 0) {
          UTIL_THROW("Cannot allocate with capacity <= 0");
       }
-      data_     = new Atom[capacity];
-      capacity_ = capacity;
+      if (sizeof(Atom) != 64) {
+         std::cout << "Warning: sizeof(Atom) != 64" << std::endl;
+         std::cout << "Size of Atom  = " << sizeof(Atom)  << std::endl;
+         std::cout << "Size of Atom* = " << sizeof(Atom*) << std::endl;
+      }
+
+      // Allocate memory
+      //posix_memalign((void**) &data_, 64, capacity*sizeof(Atom));
+      data_        = new Atom[capacity];
+      velocities_  = new Vector[capacity];
+      masks_       = new Mask[capacity];
+      plans_       = new Plan[capacity];
+      ids_         = new int[capacity];
+      capacity_    = capacity;
+
+      // Initialize values.
+      unsigned int localId;
+      for (int i=0; i < capacity; ++i) {
+        data_[i].localId_ = (i << 1);
+        data_[i].arrayPtr_ = this;
+        localId = (data_[i].localId_ >> 1);
+        ids_[i] = -1;
+        masks_[i].clear();
+        plans_[i].clearFlags();
+      }
+
    }
 
    /*

@@ -36,7 +36,7 @@ source files will be extracted into a directory with the same
 name, dmorse-simpatico-id/.  To recreate the same directory 
 structure as that used in the repository, in which the root 
 directory is named simpatico/, you may want to rename this root 
-directory to simpatico/, before running the ./configure script.
+directory to simpatico/, before running the ./setup script.
 To unpack the tar file and move the directory, enter:
 
    > tar -xvf dmorse-simpatico-id.tar
@@ -44,7 +44,7 @@ To unpack the tar file and move the directory, enter:
 
 from the directory that will contain the simpatico root
 directory. If you mv the root directory after running the 
-configure script (see below), you must rerun the script. 
+setup script (see below), you must rerun the script. 
 
 Documentation:
 --------------
@@ -81,8 +81,8 @@ Compiling:
 ----------
 
 The code is standard C++ and must be compiled from source. 
-Multi-processor programs (ddSim and multi-processor versions 
-of mcSim and mdSim) require an MPI library.  Complete instructions 
+Multi-processor programs (ddSim and multi-processor versions of 
+mcSim and mdSim) require an MPI library.  Complete instructions 
 for compiling various versions of Simpatico are given in the text 
 file simpatico/doc/manual/user/compile.dox, or in the corresponding 
 html web page in the doc/html directory.
@@ -92,9 +92,7 @@ versions of mcSim and mdSim (for the impatient) are:
 
 - cd to the simpatico root directory
 
-- Enter "./configure" to run a configure script
-
-- cd to the src/ directory
+- Enter "./setup" to run a setup script
 
 - Enter "make mcMd".
 

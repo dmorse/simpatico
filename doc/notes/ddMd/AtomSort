@@ -1,0 +1,24 @@
+Possible ways to sort atoms:
+----------------------------
+
+1) Sort by cells, in conventional order.
+
+2) Sort by cells, in order cells are accessed during pairlist 
+   construction
+
+3) Sort by order atoms are accessed when reading the pairlist.
+
+Ways to improve sequencing of cells
+-----------------------------------
+
+1) Hilbert curve
+
+2) Blocks of cells, each explored exhaustively.
+
+3) Layers (does it already do this?)
+
+   Question: Can three layers fit in L1 cache simultaneously?
+
+   Example: 32,000 particles over 8 processors, 4k each.
+
+   4000*64 = 256k - larger than typical L1 data cache.

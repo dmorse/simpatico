@@ -374,7 +374,8 @@ inline void SimulationTest::testIntegrate1()
    }
 
    // Setup the integrator
-   simulation_.integrator().setup();
+   //simulation_.integrator().setup();
+   
    TEST_ASSERT(simulation_.isValid());
 
    double kinetic;
@@ -394,7 +395,9 @@ inline void SimulationTest::testIntegrate1()
       simulation_.integrator().run(200);
       TEST_ASSERT(simulation_.isValid());
    }
-   simulation_.integrator().outputStatistics(std::cout);
+   if (myRank == 0) {
+      simulation_.integrator().outputStatistics(std::cout);
+   }
 
 }
 

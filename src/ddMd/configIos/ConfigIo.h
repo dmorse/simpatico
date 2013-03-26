@@ -83,6 +83,8 @@ namespace DdMd
       *
       * \param atomCacheCapacity size of internal atom cache. 
       * \param bondCacheCapacity size of internal bond cache. 
+      * \param angleCacheCapacity size of internal angle cache. 
+      * \param dihedralCacheCapacity size of internal dihedral cache. 
       */
       virtual void initialize(int atomCacheCapacity = 100,
                               int bondCacheCapacity = 100

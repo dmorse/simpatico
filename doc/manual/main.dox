@@ -7,22 +7,24 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
 <ul style="list-style: none;">
  <li> \subpage about_page "1. About"
    <ul style="list-style: none;">
-   <li> \subpage about_goals_page  </li> 
-   <li> \subpage about_capabilities_page </li> 
-   <li> \subpage about_contributors_page </li>
+   <li> \ref about_goals_page  </li> 
+   <li> \ref about_capabilities_page </li> 
+   <li> \ref about_contributors_page </li>
    </ul>
  </li>
  <li> \subpage user_page "2. User Guide"
    <ul style="list-style: none;">
-   <li> \subpage user_compile_page  </li>
-   <li> \subpage user_usage_page    </li>
-   <li> \subpage user_param_page    </li>
-   <li> \subpage user_commands_page </li>
-   <li> \subpage user_cfgfile_page  </li>
-   <li> \subpage user_examples_page </li>
-   <li> \subpage user_analysis_page </li>
-   <li> \subpage user_restart_page  </li>
-   <li> \subpage user_multi_page    </li>
+   <li> \ref user_compile_page  </li>
+   <li> \ref user_usage_page    </li>
+   <li> \ref user_param_page    </li>
+   <li> \ref user_commands_page </li>
+   <li> \ref user_cfgfile_page  </li>
+   <li> \ref user_examples_page </li>
+   <li> \ref inter_page </li>
+   <li> \ref user_analysis_page </li>
+   <li> \ref user_restart_page  </li>
+   <li> \ref user_multi_page    </li>
+   <li> \ref user_options_page  </li>
    </ul>
  </li>
  <li> \subpage source_page "3. Source Code Overview"
@@ -30,38 +32,33 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \subpage source_directory_page </li>
    <li> \subpage source_namespace_page    
      <ul style="list-style: none;">
-     <li> \subpage Util_NS_page  </li>
-     <li> \subpage Inter_NS_page </li>
-     <li> \subpage McMd_NS_page  </li>
-     <li> \subpage DdMd_NS_page  </li>
+     <li> \ref Util_NS_page  </li>
+     <li> \ref Inter_NS_page </li>
+     <li> \ref McMd_NS_page  </li>
+     <li> \ref DdMd_NS_page  </li>
      </ul>
    </li>
    </ul>
  </li>
- <li> \subpage custom_page "4. Compile-Time Options"
+ <li> \subpage extend_page  "4. Extending Simpatico" </li>
    <ul style="list-style: none;">
-   <li> \subpage preprocessor_page </li>
-   <li> \subpage boundary_page </li>
-   </ul>
- <li> \subpage extend_page  "5. Extending Simpatico" </li>
-   <ul style="list-style: none;">
-   <li> \subpage extend_base_page  </li>
-   <li> \subpage extend_build_page </li>
-   <li> \subpage extend_factory_page      </li>
-   <li> \subpage extend_potential_page   </li>
-   <li> \subpage extend_subfactory_page  </li>
-   <li> \subpage extend_module_page   </li>
+   <li> \ref extend_base_page  </li>
+   <li> \ref extend_build_page </li>
+   <li> \ref extend_factory_page      </li>
+   <li> \ref extend_potential_page   </li>
+   <li> \ref extend_subfactory_page  </li>
+   <li> \ref extend_module_page   </li>
    </ul>
  </li>
- <li> \subpage hoomd_page     "6. Hoomd-blue integration" </li>
- <li> \subpage developer_page "7. Developer Information"
+ <li> \subpage hoomd_page     "5. Hoomd-blue integration" </li>
+ <li> \subpage developer_page "6. Developer Information"
    <ul style="list-style: none;">
-   <li> \subpage developer_build_page </li>
-   <li> \subpage developer_standards_page </li>
-   <li> \subpage developer_param_page  </li>
-   <li> \subpage developer_iterator_page  </li>
-   <li> \subpage developer_mcMdData_page </li>
-   <li> \subpage developer_test_page </li>
+   <li> \ref developer_build_page </li>
+   <li> \ref developer_standards_page </li>
+   <li> \ref developer_param_page  </li>
+   <li> \ref developer_iterator_page  </li>
+   <li> \ref developer_mcMdData_page </li>
+   <li> \ref developer_test_page </li>
    </ul>
  </li>
 </ul>

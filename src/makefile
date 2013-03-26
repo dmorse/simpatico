@@ -4,11 +4,18 @@
 include compiler.mk
 
 mcMd: 
+	cd $(ROOT_DIR); ./configure -m0
 	cd util;  make all
 	cd inter; make all
 	cd mcMd;  make all
 
+mcMd_mpi: 
+	cd $(ROOT_DIR); ./configure -m1
+	cd util;  make all
+	cd inter; make all
+	cd mcMd;  make all
 ddMd:
+	cd $(ROOT_DIR); ./configure -m1
 	cd util;  make all
 	cd inter; make all
 	cd ddMd;  make all
@@ -30,10 +37,10 @@ clean:
 	cd ddMd;  make clean
 
 clean-bin:
-	-rm -f ../lib/*
-	-rm -f ../bin/mcSim*
-	-rm -f ../bin/mdSim*
-	-rm -f ../bin/ddSim*
+	-rm -f $(ROOT_DIR)/lib/*
+	-rm -f $(ROOT_DIR)/bin/mcSim*
+	-rm -f $(ROOT_DIR)/bin/mdSim*
+	-rm -f $(ROOT_DIR)/bin/ddSim*
  
 veryclean:
 	make clean

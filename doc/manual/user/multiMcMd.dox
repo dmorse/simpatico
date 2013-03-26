@@ -1,7 +1,10 @@
 namespace McMd
 {
 
-/*! \page user_multi_McMd_page 2.9.1 Multi-system simulations: mcSim and mdSim
+/*! \page user_multi_McMd_page 2.10.1 Multi-system simulations: mcSim and mdSim
+
+\ref user_multi_DdMd_page  (Next) &nbsp; &nbsp; &nbsp; &nbsp; 
+<BR>
 
 The mcSim and mdSim programs can be compiled for use on multiple
 processors. The resulting multi-processor versions of these programs
@@ -354,11 +357,9 @@ McSimulation{
 }
 \endcode
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref user_multi_page      (Up)    </li>
- <li> \ref user_multi_DdMd_page  (Next)  </li>
-</ul>
-
+<BR>
+\ref user_multi_page       (Up)   &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_multi_DdMd_page  (Next) &nbsp; &nbsp; &nbsp; &nbsp; 
 */
+
 }

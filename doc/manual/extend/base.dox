@@ -1,7 +1,10 @@
 namespace McMd
 {
 
-/*! \page extend_base_page 5.1 Base Classes
+/*! \page extend_base_page 4.1 Base Classes
+
+\ref extend_build_page  (Next)
+<BR> 
 
 The mcSim and mdSim programs use several base classes that can be extended by users to implement new algorithms, molecular species, and file formats, which are all defined in the McMd namespace. Among these are:
 <ul style="list-style: none;">
@@ -42,11 +45,9 @@ Implementation of subclasses of these DdMd base classes generally require interp
 
 Subclasses of the McMd and DdMd potential energy classes are implemented differently than the other base classes discussed above. Each subclass of these "potential" classes is implemented as an instantiations of a class template that takes a simpler "interaction" class as an argument. An "interaction" class is a non-polymorphic class that defines a potential energy function (e.g., a Lennard-Jones pair interaction) and is responsible for the core calculations of forces and energies for a small group of atoms (e.g., for a single nonbonded pair). The interaction classes are all defined in the Inter namespace, and are located in the src/inter directory. The potential energy classes listed above use an associated interaction class for the core calculations, but can also calculate energies and (in MD simulations) forces for an entire system, and (in MC simulations) energies for individual atoms and molecules. Because the potential energy classes are implemented using templates, the procedure for extending the potential classes so as to implement new interactions is somewhat different than the procedure for extending the other base classes. These peculiarities of the potential energy classes are discussed in more detail \ref extend_potential_page "here".
 
-Navigation: 
-<ul style="list-style: none;">
- <li> \ref extend_page     (Up)       </li>
- <li> \ref extend_build_page    (Next)     </li>
-</ul>
+<BR> 
+\ref extend_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_build_page  (Next)
 
 */
 }

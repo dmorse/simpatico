@@ -1,4 +1,4 @@
-#include "AtomArrayTest.h"
+#include "AtomTest.h"
 int main()
 {
    #ifdef UTIL_MPI 
@@ -6,7 +6,7 @@ int main()
    Vector::commitMpiType();
    #endif
 
-   TEST_RUNNER(AtomArrayTest) runner;
+   TEST_RUNNER(AtomTest) runner;
    runner.run();
 
    #ifdef UTIL_MPI 

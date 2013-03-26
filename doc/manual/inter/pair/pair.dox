@@ -1,0 +1,67 @@
+/*! \page inter_pair_page 2.7.1 Pair Interactions
+
+Each of the pair potential interaction classes calculates the nonbonded
+interaction energy and force for pairs of particles. Each class defines
+a functional form for the potential function \f$V(r)\f$ of a particle 
+pair as a function of the distance \f$r\f$ between the two particles,
+using parameters that depend upon the type ids of the two atoms.  This 
+function is always set to zero for $r$ greater than some cutoff distance. 
+
+\section inter_pair_interactions_section Pair Interaction Classes
+
+<ul style="list-style: none;">
+   <li> \subpage inter_pair_LJPair_page </li>
+   <li> \subpage inter_pair_WcaPair_page </li>
+   <li> \subpage inter_pair_DpdPair_page </li>
+</ul>
+ 
+The pair interaction classes are not derived from a common base class, 
+but all implement a common interface that is described 
+\subpage inter_pair_interface_page "here". 
+
+\section inter_pair_parameters_section Matrix-Valued Parameters
+
+The parameters used in any pair potential between atoms of atom type 
+ids i and j depend on the atom types.  Values for each variable that appears 
+in the mathematical description of a pair potential function are thus stored 
+in matrix containers (i.e., 2D arrays) containing nAtomType rows and nAtomType 
+columns, in which the i, j element gives the value of the parameter for 
+interactions between atoms of type i and j. Each such matrix is symmetric,
+because the order in which two atoms are passed to such a function (which
+is atom 1 and which is atom 2) is arbitrary.
+
+When values for the elements of such matrix-valued parameters are read from 
+a parameter file, the elements of the matrix are formatted in a lower-diagonal 
+form. For example, a matrix-valued parameter named "epsilon" for a system 
+with 3 types of atoms (nAtomType =3) would be input in the format
+\code
+   epsilon  epsilon(0, 0)
+            epsilon(1, 0)  epsilon(1, 1)
+            epsilon(2, 0)  epsilon(2, 1)  epsilon(2, 2)
+\endcode
+where the word epsilon in the first row represents a literal string label, 
+but epsilon(i, j) represents a numerical value for interactions between
+atoms of types i and j.  Only the lower diagonal part of the matrix is
+required because the matrix is symmetric. 
+
+For example, the Lennard-Jones potential LJPair has three parameters
+\f$\epsilon\f$, \f$\sigma\f$ and \f$r_{c}\f$. These are represented 
+in the code by matrix-valued variables named "epsilon", "sigma", and
+"cutoff", which appear sequentially in the parameter file.  A parameter 
+file block for this potential in a system with two types of atoms 
+might thus look something like
+\code
+   epsilon    1.0
+              1.5    1.0
+   sigma      1.0
+              1.2    1.0
+   cutoff     2.5   
+              3.0    2.5 
+\endcode
+In this example, a larger epsilon energy parameter and a larger van 
+der Waals diameter sigma is used for interactions between unlike atoms 
+of types 0 and 1 than between pairs of atoms of type 0 or type 1. The
+cutoff for each pair of types has been chosen to be 2.5 times the 
+corresponding sigma parameter.
+
+*/

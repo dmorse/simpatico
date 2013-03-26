@@ -68,12 +68,20 @@ inline void AtomStorageTest::testAddAtoms()
 {
    printMethod(TEST_FUNC);
 
+   TEST_ASSERT(storage_.atomReservoir_.size() == storage_.atomCapacity());
+   TEST_ASSERT(storage_.atomSet_.size() == 0);
+   TEST_ASSERT(storage_.nAtom() == 0);
+
    Atom* ptr53 = storage_.addAtom(53);
    TEST_ASSERT(storage_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
    TEST_ASSERT(storage_.nAtom() == 1);
    TEST_ASSERT(storage_.nGhost() == 0);
    TEST_ASSERT(storage_.isValid());
+   TEST_ASSERT(storage_.nAtom() == 1);
+   TEST_ASSERT(storage_.atomReservoir_.size() == storage_.atomCapacity()-1);
+   TEST_ASSERT(&storage_.atomSet_[0] == ptr53);
+   TEST_ASSERT(ptr53 = &storage_.atoms_[0]);
 
    Atom* ptr18 = storage_.addAtom(18);
    TEST_ASSERT(storage_.find(18) == ptr18);
@@ -81,6 +89,11 @@ inline void AtomStorageTest::testAddAtoms()
    TEST_ASSERT(storage_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
    TEST_ASSERT(storage_.nAtom() == 2);
+   TEST_ASSERT(storage_.atomReservoir_.size() == storage_.atomCapacity()-2);
+   TEST_ASSERT(&storage_.atomSet_[0] == ptr53);
+   TEST_ASSERT(&storage_.atomSet_[1] == ptr18);
+   TEST_ASSERT(ptr53 = &storage_.atoms_[0]);
+   TEST_ASSERT(ptr18 = &storage_.atoms_[1]);
    TEST_ASSERT(storage_.nGhost() == 0);
    TEST_ASSERT(storage_.isValid());
 
@@ -164,40 +177,81 @@ void AtomStorageTest::testAddRemoveAtoms()
    TEST_ASSERT(storage_.nAtom() == 3);
    TEST_ASSERT(storage_.nGhost() == 1);
    TEST_ASSERT(storage_.isValid());
-
 }
 
 void AtomStorageTest::testClearGhosts()
 {
    printMethod(TEST_FUNC);
 
-   DPArray<Atom> localAtoms;
+   //DPArray<Atom> localAtoms;
    DPArray<Atom> ghostAtoms;
-
-   localAtoms.allocate(storage_.atomCapacity());
+   //localAtoms.allocate(storage_.atomCapacity());
    ghostAtoms.allocate(storage_.ghostCapacity());
 
    // Add atoms
-   localAtoms.append(*storage_.addAtom(53));
-   localAtoms.append(*storage_.addAtom(18));
-   localAtoms.append(*storage_.addAtom(39));
-   localAtoms.append(*storage_.addAtom(44));
-   localAtoms.append(*storage_.addAtom(82));
+   Atom* ptr53 = storage_.addAtom(53);
+   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(ptr53->id() == 53);
+
+   Atom* ptr18 = storage_.addAtom(18);
+   TEST_ASSERT(ptr18 != ptr53);
+   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(ptr53->id() == 53);
+   TEST_ASSERT(storage_.find(18) == ptr18);
+   TEST_ASSERT(ptr18->id() == 18);
+
+   Atom* ptr39 = storage_.addAtom(39);
+   TEST_ASSERT(ptr39 != ptr53);
+   TEST_ASSERT(ptr39 != ptr18);
+   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(ptr53->id() == 53);
+   TEST_ASSERT(storage_.find(18) == ptr18);
+   TEST_ASSERT(ptr18->id() == 18);
+   TEST_ASSERT(storage_.find(39) == ptr39);
+   TEST_ASSERT(ptr39->id() == 39);
+
+   Atom* ptr44 = storage_.addAtom(44);
+   TEST_ASSERT(ptr44 != ptr53);
+   TEST_ASSERT(ptr44 != ptr18);
+   TEST_ASSERT(ptr44 != ptr39);
+   TEST_ASSERT(ptr39 != ptr53);
+   TEST_ASSERT(ptr39 != ptr18);
+   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(ptr53->id() == 53);
+
+   Atom* ptr82 = storage_.addAtom(82);
+   TEST_ASSERT(ptr82 != ptr53);
+   TEST_ASSERT(ptr82 != ptr44);
+   TEST_ASSERT(ptr82 != ptr18);
+   TEST_ASSERT(ptr82 != ptr39);
+   TEST_ASSERT(storage_.find(82) == ptr82);
+   TEST_ASSERT(ptr82->id() == 82);
+   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(ptr53->id() == 53);
+   
+   //localAtoms.append(*(storage_.addAtom(53)));
+   //localAtoms.append(*(storage_.addAtom(18)));
+   //localAtoms.append(*(storage_.addAtom(39)));
+   //localAtoms.append(*(storage_.addAtom(44)));
+   //localAtoms.append(*(storage_.addAtom(82)));
+   
+   TEST_ASSERT(storage_.isValid());
+   TEST_ASSERT(storage_.nAtom() == 5);
+   TEST_ASSERT(storage_.nGhost() == 0);
 
    // Add ghosts
    ghostAtoms.append(*storage_.addGhost(35));
    ghostAtoms.append(*storage_.addGhost(84));
    ghostAtoms.append(*storage_.addGhost(17));
    ghostAtoms.append(*storage_.addGhost(94));
-
+   TEST_ASSERT(storage_.isValid());
    TEST_ASSERT(storage_.nAtom() == 5);
    TEST_ASSERT(storage_.nGhost() == 4);
-   TEST_ASSERT(storage_.isValid());
 
    storage_.clearGhosts();
+   TEST_ASSERT(storage_.isValid());
    TEST_ASSERT(storage_.nAtom() == 5);
    TEST_ASSERT(storage_.nGhost() == 0);
-   TEST_ASSERT(storage_.isValid());
 }
  
 void AtomStorageTest::testIterators()

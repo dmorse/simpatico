@@ -1,7 +1,11 @@
 namespace McMd
 {
 
-/*! \page hoomd_page 6 Integration with Hoomd-blue
+/*! \page hoomd_page 5 Integration with Hoomd-blue
+
+\ref extend_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref developer_page  (Next)
+<BR>
 
 Simpatico supports the use of the Hoomd-blue code for MD on the GPU 
 as a simulation engine for hybrid Monte Carlo simulations.  
@@ -80,7 +84,7 @@ cd src/modules/hoomd
 \endcode
 and type
 \code
-./configure
+./setup
 \endcode
 This copies the file defines.mk_r to <b>defines.mk</b>. You can now change this
 file to make it reflect the installation paths of Hoomd, CUDA,  Python
@@ -211,13 +215,11 @@ FINISH
 \endcode
 
 
-<ul style="list-style: none;">
- <li> \ref extend_page      (Previous section)  </li>
- <li> \ref index "Main Page"  (Up)    </li>
- <li> \ref developer_page   (Next)  </li>
-</ul>
+<BR>
+\ref extend_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref index "Main Page"  (Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref developer_page  (Next)
 
 */
 
-// <li> \ref extend_module_page      (Previous)  </li>
 }

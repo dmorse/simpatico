@@ -1,65 +1,188 @@
 #!/bin/bash
 
-#------------------------------------------------------------------------
-# Configuration script:
+#-----------------------------------------------------------------------
+# Name: configure
 #
-# This script should be run once before the first time the program is
-# compiled. It must be run from the root simpatico/ directory, in which
-# this script is located.
-# 
-# This script:
+# Purpose: Sets macros that control conditional compilation of features
 #
-# 1) Copies default or repository versions of several configuration files, 
-# marked with a suffix _r, to modifiable user versions. 
+# Synopsis:
 #
-# 2) Sets the makefile variable $(ROOT_DIR) in the file src/compiler.mk 
-# to the absolute path of the current working directory, as given by the 
-# shell variable $PWD.
-# 
-#------------------------------------------------------------------------
+#      configure [options]
+#
+#      The script must be called from the Simpatico root directory
+#
+# Enabling / Disabling Features: 
+#   
+# Each of the following option enables or disables a feature. Each such
+# options takes 0 or 1 as a required argument, using 1 to denote "enable"
+# and 0 to denote "disable".
+#
+#   -m (0|1)   mpi parallelization      (defines/undefines UTIL_MPI)
+#   -g (0|1)   debugging                (defines/undefines UTIL_DEBUG)
+#   -a (0|1)   angle potentials         (defines/undefines INTER_ANGLE)
+#   -d (0|1)   dihedral potentials      (defines/undefines INTER_DIHEDRAL)
+#   -e (0|1)   external potentials      (defines/undefines INTER_EXTERNAL)
+#   -f (0|1)   free energy perturbation (defines/undefines MCMD_PERTURB)
+#   -l (0|1)   links (mutable bonds)    (defines/undefines MCMD_LINK)
+#   -s (0|1)   shift                    (defines/undefines MCMD_SHIFT)
+#   -k (0|1)   dependency generation    (defines/undefines MAKEDEP)
+#
+# Other Command Line Options:
+#
+#   -c compiler  Chooses a compiler, set COMPILER=compiler in src/compiler.mk
+#   -q           query: prints report of options that are enabled / disabled.
+#
+# Examples:
+#
+# To disable debugging, but enable angle and dihedral potentials:
+#
+#   >  ./configure -g0 -a1 -d1
+#
+# To set COMPILER=intel in src/compiler.mk
+#
+#   >  ./configure -c intel
+#
+#-----------------------------------------------------------------------
+while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
 
-# Copy repository (_r) versions of defines.mk makefile fragments.
-# The defines.mk makefile fragments can be used to enable/disable options.
+  if [ -n "$MACRO" ]; then 
+    MACRO=""
+  fi
+  if [ -n "$FILE" ]; then 
+    FILE=""
+  fi
+  
+  case $opt in
+    m)
+      MACRO=UTIL_MPI
+      VALUE=1
+      FILE=src/compiler.mk
+      ;;
+    g)
+      MACRO=UTIL_DEBUG
+      VALUE=1
+      FILE=src/util/defines.mk
+      ;;
+    a)
+      MACRO=INTER_ANGLE
+      VALUE=1
+      FILE=src/inter/defines.mk
+      ;;
+    d)
+      MACRO=INTER_DIHEDRAL
+      VALUE=1
+      FILE=src/inter/defines.mk
+      ;;
+    e)
+      MACRO=INTER_EXTERNAL
+      VALUE=1
+      FILE=src/inter/defines.mk
+      ;;
+    l)
+      MACRO=MCMD_LINK
+      VALUE=1
+      FILE=src/mcMd/defines.mk
+      ;;
+    f)
+      MACRO=MCMD_PERTURB
+      VALUE=1
+      FILE=src/mcMd/defines.mk
+      ;;
+    s)
+      MACRO=MCMD_SHIFT
+      VALUE=1
+      FILE=src/mcMd/defines.mk
+      ;;
+    k)
+      cp src/compiler.mk temp
+      case $OPTARG in
+      0)
+        echo "Disabling automatic dependency generation" >&2
+        sed "s/^ *MAKEDEP *=/#MAKEDEP=/" temp > src/compiler.mk
+        rm temp
+        ;;
+      1)
+        echo "Enabling automatic dependency generation" 
+        sed "s/^ *# *MAKEDEP *=/MAKEDEP=/" temp > src/compiler.mk
+        rm temp
+        ;;
+      esac
+      ;;
+    c)
+      FILE=src/compiler.mk
+      cp "$FILE" temp
+      sed "s/COMPILER:=.*$/COMPILER:=$OPTARG/" temp > "$FILE"
+      echo "Setting COMPILER = $OPTARG in file $FILE" >&2
+      rm temp
+      ;;
+    q)
+      if [ `grep "^ *UTIL_MPI *= *1" src/compiler.mk` ]; then
+         echo "-m ON  - MPI" >&2
+         MPI=1
+      else
+         echo "-m OFF - MPI" >&2
+         MPI=
+      fi
+      if [ `grep "^ *UTIL_DEBUG *= *1" src/util/defines.mk` ]; then
+         echo "-g ON  - debugging" >&2
+      else
+         echo "-g OFF - debugging" >&2
+      fi
+      if [ `grep "^ *INTER_ANGLE *= *1" src/inter/defines.mk` ]; then
+         echo "-a ON  - angle potential" >&2
+      else
+         echo "-a OFF - angle potential" >&2
+      fi
+      if [ `grep "^ *INTER_DIHEDRAL *= *1" src/inter/defines.mk` ]; then
+         echo "-d ON  - dihedral potential" >&2
+      else
+         echo "-d OFF - dihedral potential" >&2
+      fi
+      if [ `grep "^ *INTER_EXTERNAL *= *1" src/inter/defines.mk` ]; then
+         echo "-e ON  - external potential" >&2
+      else
+         echo "-e OFF - external potential" >&2
+      fi
+      if [ `grep "^ *MCMD_LINK *= *1" src/mcMd/defines.mk` ]; then
+         echo "-l ON  - links (mutable bonds)" >&2
+      else
+         echo "-l OFF - links (mutable bonds)" >&2
+      fi
+      if [ -n "$MPI" ]; then
+         if [ `grep "^ *MCMD_PERTURB *= *1" src/mcMd/defines.mk` ]; then
+            echo "-f ON  - free energy perturbation" >&2
+         else
+            echo "-f OFF - free energy perturbation" >&2
+         fi
+      fi
+      ;;
+  esac
 
-cp  src/util/defines.mk_r src/util/defines.mk
-cp  src/inter/defines.mk_r src/inter/defines.mk
-cp  src/mcMd/defines.mk_r src/mcMd/defines.mk
-cp  src/ddMd/defines.mk_r src/ddMd/defines.mk
+  if [ -n "$MACRO" ]; then
+    
+    case $OPTARG in
+    0)  # Disable (comment out) the macro=1 definition
+      if [ `grep "^ *$MACRO *= *1" "$FILE"` ]; then
+         echo "Disabling $MACRO in file $FILE" >&2
+         sed "s/$MACRO *=.*$/$MACRO=1/" "$FILE" > temp
+         sed "s/^ *$MACRO=/#$MACRO=/" temp > "$FILE"
+         rm temp
+      else
+         echo "$MACRO already disabled in file $FILE" >&2
+      fi
+      ;;
+    1) # Enable (uncomment) the macro=1 definition
+      if [ `grep "^ *$MACRO *= *1" "$FILE"` ]; then
+         echo "$MACRO already enabled in file $FILE" >&2
+      else
+         echo "Enabling $MACRO in file $FILE" >&2
+         sed "s/$MACRO *=.*$/$MACRO=1/" "$FILE" > temp
+         sed "s/^ *# *$MACRO=/$MACRO=/" temp > "$FILE"
+         rm temp
+      fi
+      ;;
+    esac
+  fi
 
-# Copy repository versions of sources.mk files in user directories.
-# These file list user-contributed classes.
-cp  src/inter/user/sources.mk_r src/inter/user/sources.mk
-cp  src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
-cp  src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
-
-# Copy repository version of Factory implementation files to user versions.
-cp  src/mcMd/configIos/ConfigIoFactory.cpp_r src/mcMd/configIos/ConfigIoFactory.cpp
-cp  src/mcMd/diagnostics/mcSystem/McDiagnosticFactory.cpp_r src/mcMd/diagnostics/mcSystem/McDiagnosticFactory.cpp
-cp  src/mcMd/diagnostics/mdSystem/MdDiagnosticFactory.cpp_r src/mcMd/diagnostics/mdSystem/MdDiagnosticFactory.cpp
-cp  src/mcMd/diagnostics/system/SystemDiagnosticFactory.cpp_r src/mcMd/diagnostics/system/SystemDiagnosticFactory.cpp
-cp  src/mcMd/mcMoves/McMoveFactory.cpp_r src/mcMd/mcMoves/McMoveFactory.cpp
-cp  src/mcMd/mdIntegrators/MdIntegratorFactory.cpp_r src/mcMd/mdIntegrators/MdIntegratorFactory.cpp
-cp  src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp_r src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp
-cp  src/mcMd/potentials/angle/AngleFactory.cpp_r src/mcMd/potentials/angle/AngleFactory.cpp
-cp  src/mcMd/potentials/bond/BondFactory.cpp_r src/mcMd/potentials/bond/BondFactory.cpp
-cp  src/mcMd/potentials/dihedral/DihedralFactory.cpp_r src/mcMd/potentials/dihedral/DihedralFactory.cpp
-cp  src/mcMd/potentials/external/ExternalFactory.cpp_r src/mcMd/potentials/external/ExternalFactory.cpp
-cp  src/mcMd/potentials/link/LinkFactory.cpp_r src/mcMd/potentials/link/LinkFactory.cpp
-cp  src/mcMd/potentials/pair/PairFactory.cpp_r src/mcMd/potentials/pair/PairFactory.cpp
-cp  src/mcMd/species/SpeciesFactory.cpp_r src/mcMd/species/SpeciesFactory.cpp
-cp  src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp_r src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp
-cp  src/ddMd/configIos/ConfigIoFactory.cpp_r src/ddMd/configIos/ConfigIoFactory.cpp
-cp  src/ddMd/diagnostics/DiagnosticFactory.cpp_r src/ddMd/diagnostics/DiagnosticFactory.cpp
-cp  src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/IntegratorFactory.cpp
-cp  src/ddMd/potentials/angle/AngleFactory.cpp_r src/ddMd/potentials/angle/AngleFactory.cpp
-cp  src/ddMd/potentials/bond/BondFactory.cpp_r src/ddMd/potentials/bond/BondFactory.cpp
-cp  src/ddMd/potentials/dihedral/DihedralFactory.cpp_r src/ddMd/potentials/dihedral/DihedralFactory.cpp
-cp  src/ddMd/potentials/external/ExternalFactory.cpp_r src/ddMd/potentials/external/ExternalFactory.cpp
-cp  src/ddMd/potentials/pair/PairFactory.cpp_r src/ddMd/potentials/pair/PairFactory.cpp
-
-# Copy typedef for the class that defines boundary conditions
-cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
-
-# Copy the compiler.mk file and set the value of $(ROOT_DIR) to $PWD.
-sed "s|=PWD|=$PWD|" src/compiler.mk_r > src/compiler.mk
+done
 

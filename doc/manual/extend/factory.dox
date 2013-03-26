@@ -1,8 +1,12 @@
 namespace McMd
 {
 
-/*! \page extend_factory_page 5.3 Factory Classes
+/*! \page extend_factory_page 4.3 Factory Classes
 
+\ref extend_build_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_potential_page  (Next)
+<BR>
+ 
 \section factory_purpose Why Factory Classes Exist
 
 Simpatico defines a set of base classes to represent modifiable elements of a simulation, such as molecular species and simulation algorithms. The parameter file format allows users to choose at run time from among various subclasses of these bases classes, and thereby choose particular elements to use in a simulation. This is done primarily by the use of polymorhpic blocks in the parameter file. A polymorphic block is a parameter file block that may contain the file format for any known subclass of a particular base class. The desired subclass is identified by the class name in the opening line of such a block. 
@@ -13,7 +17,7 @@ The implementation of a Factory class associated with a base class defines the s
 
 To allow a user-defined subclass to be included in the parameter file, the developer must thus add the new class to the list of classes that are recognized by the associated Factory. This can be done by adding a few lines to the Factory implementation (*.cpp) file, as discussed below.
 
-In order to allow users to modify the factory implementation files, but to avoid changing files that are under version control, their are two versions of the implementation file for each factory. The file whose name ends with the file extension ".cpp_r" (for example, MdIntegratorFactory.cpp_r)is a default version that is stored in the git repository, but that is never actually compiled. The file whose name ends with ".cpp" (e.g., MdIntegrator.cpp) is a user version that is actually compiled and linked, but that is not stored in the repository. The initial version of each such *.cpp file is created by the "configure" script by simply copying the *.cpp_r file, when Simpatico is first configured. Users should modify the *Factory.cpp files in order to add new subclasses that are intended for their own use, and should avoid modifying the *Factory.cpp_r files. The *.cpp_r files should be modified only to add new classes that are intended to be distributed with Simpatico. After modifying one or more Factory implementation files, users must also be careful to not rerun the configure script, since this would overwrite their changes.
+In order to allow users to modify the factory implementation files, but to avoid changing files that are under version control, their are two versions of the implementation file for each factory. The file whose name ends with the file extension ".cpp_r" (for example, MdIntegratorFactory.cpp_r)is a default version that is stored in the git repository, but that is never actually compiled. The file whose name ends with ".cpp" (e.g., MdIntegrator.cpp) is a user version that is actually compiled and linked, but that is not stored in the repository. The initial version of each such *.cpp file is created by the "setup" script by simply copying the *.cpp_r file, when Simpatico is first setup. Users should modify the *Factory.cpp files in order to add new subclasses that are intended for their own use, and should avoid modifying the *Factory.cpp_r files. The *.cpp_r files should be modified only to add new classes that are intended to be distributed with Simpatico. After modifying one or more Factory implementation files, users must also be careful to not rerun the setup script, since this would overwrite their changes.
 
 \section factory_structure_sec factory() Methods
 
@@ -79,12 +83,10 @@ that is described here. By default, none of the factories have any subfactories.
 subfactories, the trySubfactories() method returns a null pointer, and this pair of lines does nothing. 
 The use of subfactories is discussed \ref extend_subfactory_page "here".
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref extend_build_page     (Previous)    </li>
- <li> \ref extend_page      (Up)    </li>
- <li> \ref extend_potential_page  (Next)    </li>
-</ul>
+<BR>
+\ref extend_build_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_potential_page  (Next)
  
 */
 }

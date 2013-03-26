@@ -26,12 +26,12 @@ Inner nonbonded force loop:    Position, typeId, isGhost, force
 
 Inner bonded force loop:       Position, isGhost (to distribute forces and energies) force
 
-Building nonbonded pairlist:   Position, Mask, isGhost(optional?) id (optional)
+Building nonbonded pairlist:   Position, Mask, id, isGhost(optional)
 
                                Notes:
 
-                               1) Id is used only to avoid double counting local pairs in 
-                                  same cell. We could also use pointers or local counters.
+                               1) Id is used as an argument to Mask for atom2, in the inner 
+                                  loop.  Mask is found only for the primary atom, once per atom.
 
                                2) isGhost bool could be encoded in pairlist, using cells
                                   to identify ghosts. Better yet, perhaps return two iterators.
@@ -45,12 +45,12 @@ Integration:                   position, force, velocity
 
 Notes: 
 
-1) Atom Id is currently used only during exchange, to locate an atom in a storage
-   and to set pointers in associated groups.
+1) Atom Id is currently used only during pair list building (to identify bonded neighbors),
+   and during exchange, to locate an atom in a storage and to set pointers in associated groups.
 
-2) Id could be used quite heavily, if we break up an array of atoms into many arrays.
+2) isGhost is absolutely essential only in inner bonded force loop.
 
-3) isGhost is absolutely essential only in inner bonded force loop.
+3) Different
 
 
 Proposal 1 - Many arrays indexed by a common array index
@@ -63,16 +63,12 @@ Atom (64 bytes object):
     force              24 bytes
     arrayPtr          4-8 bytes
 
-Mask:        (Only used when building pair list)
+Mask:        (Only used when for primary atom when building pair list)
 Velocity:    (Only used in integration)
 
-AtomComm:
-id           (Only used in exchange, when adding an atom to a storage)
+id           (Only used in pairlist and exchange, when adding an atom to a storage)
 plan         (Only used in exchange, when constructing plan, upon receipt)
 shift        (Only used in exchange, upon receipt)
-bonds        (Only used in exchange, to identify bonds to send)
-angles       (Only used in exchange, ...)
-dihedrals    (Only used in exchange, ...)
 
 Combine isGhost with:
 1) typeId  -> required in inner nonbonded force loop (bad, but perhaps not really)
@@ -100,12 +96,7 @@ Required changes:
    -> isGhost = (arrayId_ & 00000001) to get isGhost
    -> index   = (arrayId_ >> 1)
 
-   If isGhost is the most significant bit:
-   -> isGhost = (arrayId_ & 10000000) to get isGhost
-   -> index   = (arrayId_ << 1)
-
-2) Rebuild Atom and AtomArray, making plan and id separate arrays. Test effect 
-   on speed. Later provide access to AtomContext.
+2) Rebuild Atom and AtomArray, making plan, id, velocity, and Mask separate arrays. 
 
 3) Create internal AtomContext, initially as member of Atom. Modify Distributor,
    Collector and Exchanger code to keep track of bonds_ ids.
@@ -129,9 +120,12 @@ communicate/Exchanger.cpp:   atomPtr->setId(sendPtr->id());
 communicate/Exchanger.cpp:   atomPtr->setId(sendPtr->id());
 
 configIo/ConfigIo.cpp:       file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6)
+
+During pairlist build, to identify masked secondary atoms:
 neighbor/PairList.cpp:       atom2Id  = atom2Ptr->id();
 neighbor/PairList.cpp:       atom2Id  = atom2Ptr->id();
 
+When and atom is added to a storage:
 storage/AtomStorage.cpp:     int atomId = newAtomPtr_->id();
 storage/AtomStorage.cpp:     int atomId = atomPtr->id();
 storage/AtomStorage.cpp:     int atomId = newGhostPtr_->id();
@@ -148,8 +142,3 @@ Unavoidable uses of atom id:
   - When a ghost is received (packing and unpacking id, adding to storage).
   - When a group is received ? No, uses storage array index to find the atom.
 
-Removable uses:
-
-  - Nullifying of id in storage (let it contain junk)
-  - Use of atom ids in pairlist (use pointers for atoms in same cell)
-  - Packing of ids with ghosts ? (Actually, needed for bonded interactions)

@@ -1,5 +1,9 @@
 /*! \page user_param_mcmd_page 2.3.2 mdSim and mcSim Parameter Files
 
+\ref user_param_syntax_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_param_ddmd_page (Next)
+<BR>
+
 The parameter file formats for mdSim and mcSim simulations are similar in many respects, and so will be discussed together.  
 
 \section user_param_mcmd_mcExample_section Example (for mcSim):
@@ -168,6 +172,7 @@ MdSimulation{
   SpeciesManager{ ... }
   Random{ ... }
   MdSystem{ ... }
+  DiagnosticManager{ ... }
   writeRestartInterval    [int]
   writeRestartFileName    [string]
 }
@@ -185,8 +190,8 @@ The two formats are similar in most respects. The most important differences are
 The following parameters appear in the main block in the format for either type of simulation:
 <ul>
 <li> nAtomType: The number of atom types, which are indexed by an integer index with values 0, ...,  nAtomType - 1. </li>
-<li> nAtomType: The number of bond types, which are indexed by an integer index with values 0, ...,  nBondType - 1. </li>
-<li> atomTypes: atomTypes is an array of values of type McMd::AtomType. The string representation of each atom type consists of a string label (e.g., "A" or "B") followed by a floating point mass. </li>
+<li> nBondType: The number of bond types, which are indexed by an integer index with values 0, ...,  nBondType - 1. </li>
+<li> atomTypes: atomTypes is an array of values of type McMd::AtomType. The string representation of each atom type consists of a string label (e.g., "A" or "B") followed by a floating point value for the atom mass. </li>
 <li> maskedPairPolicy: Determines if nonbonded pair interactions between bonded atoms are "masked" (i.e., suppressed), or included. See below for further discussion.
 <li> writeRestartInterval: The interval, in MD time steps or attempted MC moves, between time steps when a restart file is written.
 <li> writeRestartFileName: The base name used for the restart file.
@@ -273,11 +278,9 @@ The pair list in an MD simulation is rebuilt whenever one or more atoms in the s
 \section user_param_mcmd_ensemble_section Energy and Boundary Ensembles
 The EnergyEnsemble and BoundaryEnsemble blocks are associated with instances of Util::EnergyEnsemble and Util::BoundaryEnsemble respectively. The EnergyEnsemble block specifies the type of statistical ensemble for energy fluctuations, which can be "adiabatic" (i.e., constant energy) or "isothermal". If the ensemble type is isothermal (as in the above example for mcSim), this this block must also contains a "temperature" parameter. Only "isothermal" makes sense for an MC simulation, but "adiabatic" ensemble is used for MD integrators that conserve energy or (for constant pressure ensembles) enthalpy. For isothermal simulations, temperature is specified as a value for kT, in units of energy. The BoundaryEnsemble block has a type parameter that can be either "rigid" (i.e., constant volume) or "isobaric". If this type is isobaric, the type parameter must be followed by a "pressure" parameter whose value specifies the target pressure in units of energy per volume.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref user_param_syntax_page  (Previous) </li>
- <li> \ref user_param_page  (Up) </li>
- <li> \ref user_param_ddmd_page (Next) </li>
-</ul>
+<BR>
+\ref user_param_syntax_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_param_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_param_ddmd_page (Next)
 
 */

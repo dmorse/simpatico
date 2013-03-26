@@ -1,7 +1,11 @@
 namespace McMd
 {
 
-/*! \page user_restart_page 2.8 Restarting
+/*! \page user_restart_page 2.9 Restarting
+
+\ref user_analysis_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_multi_page (Next)
+<BR>
 
 The -r command line option can be used to restart an mcSim or mdSim simulation from a binary restart file. This allows a user to either recover from a failure (caused, e.g., by a hardware failure or a wall-clock limit on a queue) or to continue a simulation that complete successfully. 
 
@@ -75,12 +79,10 @@ The command to restart a multi-processor simulation is similar to that for a sin
 \endcode
 Information about whether the original simulation was a simulation of independent or replicated systems is stored within all restart files, and does not need to be specified by a command line option when the simulation is restarted. Invoking an mcSim or mdSim executable with both the "-r" and "-p" options is thus illegal, and will cause execution to halt with an error message.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref user_analysis_page (Previous) </li>
- <li> \ref user_page      (Up)   </li>
- <li> \ref user_multi_page   (Next) </li>
-</ul>
+<BR>
+\ref user_analysis_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_multi_page (Next)
 
 */
 

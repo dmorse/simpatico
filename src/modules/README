@@ -1,11 +1,11 @@
-Each subdirectory of src/modules contains code that was  developed 
+Each subdirectory of src/modules contains code that was developed 
 to allow Simpatico to be used for a specific application, and that 
 was deemed too specialized to include in the main mcMd namespace.
-Each such directory may have subdirectories containing 
-subclasses of Diagnostic, McMove or other base classes defined in 
-Simpatico, along with associated factory classes. Each may also
-define a module class or classes for Mc and/or Md simulation
-(which are subclasses of MdModule and/or McModule), and should 
-provide main program(s) for MC and/or MD simulation that add these
-relevant module to the main simulation object before reading the 
-parameter file. 
+Each such directory may have subdirectories containing subclasses 
+of Diagnostic, McMove or other base classes defined in Simpatico, 
+along with associated factory classes. Each may also define a 
+module class or classes for Mc and/or Md simulation (which are 
+subclasses of MdModule and/or McModule), and should provide main 
+program(s) for MC and/or MD simulation that add these relevant 
+module to the main simulation object before reading the parameter 
+file. 

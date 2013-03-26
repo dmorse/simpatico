@@ -1,0 +1,100 @@
+Simulation{
+  Domain{
+    gridDimensions    2    1    3
+  }
+  FileMaster{
+    commandFileName   commands
+    inputPrefix        ../in/
+    outputPrefix      out/
+  }
+  nAtomType          1
+  nBondType          1
+  nAngleType         1
+  nDihedralType      1
+  atomTypes          A    1.0
+  AtomStorage{
+    atomCapacity      20000
+    ghostCapacity     20000
+    totalAtomCapacity 20000
+  }
+  BondStorage{
+    capacity          10000
+    totalCapacity     20000
+  }
+  AngleStorage{
+    capacity          10000
+    totalCapacity     20000
+  }
+  DihedralStorage{
+    capacity          10000
+    totalCapacity     20000
+  }
+  Buffer{
+    atomCapacity       10000
+    ghostCapacity      10000
+  }
+  pairStyle           LJPair
+  bondStyle           HarmonicBond
+  angleStyle          HarmonicAngle
+  dihedralStyle       CosineDihedral
+  maskedPairPolicy    maskBonded
+  reverseUpdateFlag   0
+  PairPotential{
+    epsilon           1.0
+    sigma             1.0
+    cutoff            1.122462048
+    skin              0.4
+    pairCapacity      40000
+    maxBoundary       orthorhombic   30.0   30.0   30.0
+  }
+  BondPotential{
+    kappa             400.0
+    length            1.000
+  }
+  AnglePotential{
+    kappa             40.0
+    theta0            60.0
+  }
+  DihedralPotential{
+    kappa              1.0
+  }
+  EnergyEnsemble{
+    type              isothermal
+    temperature       1.0
+  }
+  BoundaryEnsemble{
+    type              rigid
+  }
+  NvtIntegrator{
+    dt                0.005
+    tauT              1.000
+  }
+  Random{
+    seed              8012457890
+  }
+  DiagnosticManager{
+     baseInterval     100
+
+     OutputEnergy{
+        interval         1000
+        outputFileName   energy
+     }
+
+     OutputPressure{
+        interval         200
+        outputFileName   pressure
+     }
+
+  }
+}
+
+
+
+
+     WriteConfig{
+        interval         2000
+        outputFileName   config
+     }
+
+  nAngleType         0
+  hasExternal        0

@@ -1,7 +1,10 @@
 namespace McMd
 {
 
-/*! \page developer_test_page 7.6 Unit Tests
+/*! \page developer_test_page 6.6 Unit Tests
+
+\ref developer_mcMdData_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+<BR>
 
 The tests/ directory contains a set of unit tests of individual classes. The directory structure is as follows:
 \code
@@ -18,11 +21,9 @@ as classes that can be tested on single processors.
 
 The unit tests are not compiled by the set of makefiles that compiles the classes in the src/ directory.  Unit tests may instead be compiled separately by invoking "make all" from the subdirectory containing a particular test. This generally creates an executable, of named named "Test", that runs all of the tests in that directory. Some directories contain a separate makefile target to build an executable for tests that require MPI, often called MpiTest.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref developer_mcMdData_page        (Previous)    </li>
- <li> \ref developer_page   (Up)    </li>
-</ul>
+<BR>
+\ref developer_mcMdData_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref developer_page  (Up)  
 
 */
 }

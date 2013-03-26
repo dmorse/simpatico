@@ -1,7 +1,11 @@
 namespace McMd
 {
 
-/*! \page developer_param_page 7.3 Parameter File I/O
+/*! \page developer_param_page 6.3 Parameter File I/O
+
+\ref developer_standards_page   (Prev)   &nbsp; &nbsp; &nbsp; &nbsp;
+\ref developer_iterator_page  (Next)
+<BR>
 
 The format of the parameter file (discussed in \ref user_param_page) 
 consists of a set of nested blocks, in which each block contains 
@@ -117,12 +121,10 @@ the expected class name, or compares this name to a list of
 possible names in the case of a polymorphic parameter file 
 block.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref developer_standards_page   (Previous) </li>
- <li> \ref developer_page  (Up)   </li>
- <li> \ref developer_iterator_page   (Next) </li>
-</ul>
+<BR>
+\ref developer_standards_page   (Prev)   &nbsp; &nbsp; &nbsp; &nbsp;
+\ref developer_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref developer_iterator_page  (Next)
 
 */
 

@@ -1,7 +1,11 @@
 namespace McMd
 {
 
-/*! \page user_multi_page 2.9 Multi-System Simulations
+/*! \page user_multi_page 2.10 Multi-System Simulations
+
+\ref user_restart_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_options_page   (Next) 
+<BR>
 
 These pages discuss how to run simultaneous simulations of more than one system with various programs. The discussion of multi-system simulations in mcSim and mdSim also discusses the use of free energy perturbations and replica exchange simulations.
 
@@ -11,14 +15,11 @@ Contents:
    <li> \subpage user_multi_DdMd_page  </li> 
    </ul>
 
-Navigation: 
- <ul style="list-style: none;">
- <li> \ref user_restart_page   (Previous)   </li>
- <li> \ref user_page     (Up)  </li>
- <li> \ref source_page  (Next Section)  </li>
-</ul>
- 
+<BR>
+\ref user_restart_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_options_page   (Next) 
+
 */
 
-// <li> \ref user_multi_McMd_page (Next / Down) </li>
 }

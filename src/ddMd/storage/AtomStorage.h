@@ -9,8 +9,9 @@
 */
 
 #include <util/param/ParamComposite.h>   // base class
-#include <ddMd/chemistry/Atom.h>         // member template parameter
-#include <ddMd/chemistry/Group.h>        // Used in template methods
+#include <ddMd/chemistry/AtomArray.h>    // member
+#include <ddMd/chemistry/Atom.h>         // member template argument
+#include <ddMd/chemistry/Group.h>        // used in template methods
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
@@ -18,12 +19,13 @@
 #include <util/boundary/Boundary.h>      // typedef
 #include <util/global.h>
 
+class AtomStorageTest;
+
 namespace DdMd
 {
 
    using namespace Util;
 
-   class Atom;
    class AtomIterator;
    class ConstAtomIterator;
    class GhostIterator;
@@ -78,10 +80,15 @@ namespace DdMd
       * Returns pointer an address available for a new Atom.
       *
       * This method returns the address of an Atom object that can 
-      * be used for a new local Atom. It does not add the Atom the
-      * the atom set, and so must be followed by a call to
-      * addNewAtom() to do this. 
+      * be used for a new local Atom. The Atom::clear() method is
+      * applied to the new atom before it is returned, so that the
+      * id, typeId, isGhost flag, mask, and plan have default values.
+      * After this method is called, the storage retains the address
+      * of the new atom.  This new atom pointer remains ``active"
+      * until a matching call to addNewAtom(), as discussed below.
       *
+      * This method does not add the new Atom to the atom set, and so 
+      * must be followed by a matching call to addNewAtom() to do so.
       * Usage:
       * \code
       * 
@@ -94,8 +101,10 @@ namespace DdMd
       * storage.addNewAtom();
       *
       * \endcode
+      * The matching call to addNewAtom() adds the new atom to the
+      * storage and deactivates the internal new atom pointer.
       *
-      * \return address for new atom.
+      * \return address for a new atom
       */
       Atom* newAtomPtr(); 
 
@@ -103,25 +112,28 @@ namespace DdMd
       * Finalize addition of the most recent new atom.
       *
       * This method adds the atom that was returned by the most 
-      * recent call to newAtomPtr to the atom set. The global atom 
+      * recent call to newAtomPtr to the atom set. Upon return
+      * there is no active new atom pointer. The global atom 
       * id must be set before calling this function, by calling 
       * Atom::setId(int), because the algorithm uses the global
-      * id returned by Atom::id(). 
+      * id returned by Atom::id().
       */
       void addNewAtom(); 
 
       /**
       * Add atom with specified global id.
       * 
-      * This method adds a new atom to the atom set and returns
-      * a pointer to the address of the new atom. It is equivalent to
-      * the following, in which storage is an instance of AtomStorage
-      * and ptr is an Atom pointer:
+      * This method adds a new atom to the atom set with a specified
+      * atom id, and returns a pointer to the address of the new atom. 
+      * It is equivalent to the following, in which storage is an 
+      * instance of AtomStorage and ptr is an Atom pointer:
       * \code
       * ptr = storage.newAtomPtr;
       * ptr->setId(id);
       * storage.addNewAtom();
       * \endcode
+      * The pointer returned by this method can then be used to set
+      * other properties of the new atom. 
       *
       * \param id global index for the new Atom.
       * \return address for new atom.
@@ -478,18 +490,25 @@ namespace DdMd
       void outputStatistics(std::ostream& out);
 
       /**
-      * Get the maximum number of primary atoms encountered thus far.
+      * Get the maximum number of local atoms encountered thus far.
       *
       * Call only on master.
       */
       int maxNAtom() const;
+
+      /**
+      * Get the maximum number of ghost atoms encountered thus far.
+      *
+      * Call only on master.
+      */
+      int maxNGhost() const;
 
       //@}
 
    private:
 
       // Array that holds all available local Atom objects.
-      DArray<Atom>     atoms_;
+      AtomArray        atoms_;
 
       // Set of pointers to local atoms.
       ArraySet<Atom>   atomSet_;
@@ -498,7 +517,7 @@ namespace DdMd
       ArrayStack<Atom> atomReservoir_;
 
       // Array that holds all available local Atom objects.
-      DArray<Atom>     ghosts_;
+      AtomArray        ghosts_;
 
       // Set of pointers to ghost atoms.
       ArraySet<Atom>   ghostSet_;
@@ -531,12 +550,18 @@ namespace DdMd
       /// Maximum number of atoms on this proc since stats cleared.
       int maxNAtomLocal_; 
    
+      /// Maximum number of ghosts on this proc since stats cleared.
+      int maxNGhostLocal_; 
+   
       #ifdef UTIL_MPI
       // Total number of local atoms on all processors.
       Setable<int> nAtomTotal_;
 
-      /// Maximum of nAtom1_ on all procs (defined only on master).
+      /// Maximum of maxNAtomLocal_ on all procs (defined on master).
       Setable<int>  maxNAtom_;     
+
+      /// Maximum of maxNGhostLocal_ on all procs (defined on master).
+      Setable<int>  maxNGhost_;     
       #endif
 
       // Is addition or removal of atoms forbidden?
@@ -552,6 +577,8 @@ namespace DdMd
       * Allocate and initialize all private containers.
       */
       void allocate();
+
+      friend class ::AtomStorageTest;
     
    };
 

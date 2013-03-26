@@ -1,4 +1,8 @@
-/*! \page developer_standards_page 7.2 Coding Standards
+/*! \page developer_standards_page 6.2 Coding Standards
+
+\ref developer_build_page   (Prev)   &nbsp; &nbsp; &nbsp; &nbsp;
+\ref developer_param_page  (Next)
+<BR>
 
 This file documents programming and formatting conventions that should be used
 in the source code of Simpatico:
@@ -357,11 +361,9 @@ The lack of resizability is essential for algorithms that store pointers to part
 
   - Do not Exceptions for control flow. Exceptions should be used only for errors, and should normally cause the program to terminate.
 
-Navigation:
-<ul style="list-style: none;">
- <li> \ref developer_build_page       (Previous)  </li>
- <li> \ref developer_page  (Up)        </li>
- <li> \ref developer_param_page (Next)  </li>
-</ul>
+<BR>
+\ref developer_build_page   (Prev)   &nbsp; &nbsp; &nbsp; &nbsp;
+\ref developer_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref developer_param_page  (Next)
 
 */

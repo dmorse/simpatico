@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "LammpsOrderedConfigIo.h"
+#include "LammpsConfigIo.h"
 
 #include <ddMd/simulation/Simulation.h>                 
 #include <ddMd/communicate/Domain.h>   
@@ -42,41 +42,51 @@ namespace DdMd
    /*
    * Constructor.
    */
-   LammpsOrderedConfigIo::LammpsOrderedConfigIo()
+   LammpsConfigIo::LammpsConfigIo()
     : ConfigIo()
    {}
 
    /*
    * Constructor.
    */
-   LammpsOrderedConfigIo::LammpsOrderedConfigIo(Simulation& simulation)
+   LammpsConfigIo::LammpsConfigIo(Simulation& simulation)
     : ConfigIo(simulation)
    {
-      nAtomType_ =  simulation.nAtomType();
-      nBondType_ =  simulation.nBondType();
+      nAtomType_ = simulation.nAtomType();
+      nBondType_ = simulation.nBondType();
+      nAngleType_ = 0;
+      nDihedralType_ = 0;
+      nImproperType_ = 0;
+      #ifdef INTER_ANGLE
+      nAngleType_ = simulation.nAngleType();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      nDihedralType_ = simulation.nDihedralType();
+      #endif
    }
 
    /*
    * Private method to read Group<N> objects.
    */
    template <int N>
-   int LammpsOrderedConfigIo::readGroups(std::istream& file, 
-                  const char* sectionLabel,
-                  const char* nGroupLabel,
+   void LammpsConfigIo::readGroups(std::istream& file, 
+                  const char* sectionLabel, int nGroup,
                   GroupDistributor<N>& distributor) 
    {
-      int nGroup;  // Total number of groups in file
       if (domain().isMaster()) {  
          file >> Label(sectionLabel);
-         file >> Label(nGroupLabel) >> nGroup;
          Group<N>* groupPtr;
          int i, j, k;
          distributor.setup();
          for (i = 0; i < nGroup; ++i) {
             groupPtr = distributor.newPtr();
-            file >> *groupPtr;
-            for (j = 0; j < 2; ++j) {
-               k = groupPtr->atomId(j);
+            file >> k;
+            groupPtr->setId(k-1);
+            file >> k;
+            groupPtr->setTypeId(k-1);
+            for (j = 0; j < N; ++j) {
+               file >> k;
+               groupPtr->setAtomId(j, k-1);
             }
             distributor.add();
          }
@@ -86,13 +96,12 @@ namespace DdMd
          // Receive all groups into BondStorage
          distributor.receive();
       }
-      return nGroup;
    }
 
    /*
    * Read a configuration file.
    */
-   void LammpsOrderedConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
+   void LammpsConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
    {
       // Precondition
       if (atomStorage().nAtom()) {
@@ -135,22 +144,7 @@ namespace DdMd
          file >> nDihedral >> Label("dihedrals");
          file >> nImproper >> Label("impropers");
 
-         /*
-         * Validate nAtom and nBond
-         * Lammps files can be read only if the number of atoms and bonds
-         * in the lammps file exactly matches the corresponding capacities.
-         */
-         if (nAtom != atomStorage().totalAtomCapacity()) {
-            UTIL_THROW("nAtom != atomCapacity");
-         }
-         
-         if (nBond != bondStorage().totalCapacity()) {
-            UTIL_THROW("nBond != bondCapacity");
-         }
-         
-
          // Read numbers of atom types, bond types, etc.
-
          file >> nAtomType >> Label("atom") >> Label("types");
          file >> nBondType >> Label("bond") >> Label("types");
          file >> nAngleType >> Label("angle") >> Label("types");
@@ -160,6 +154,19 @@ namespace DdMd
          if (nAtomType > nAtomType_) {
             UTIL_THROW("nAtomType > simulation().nAtomType()");
          }
+         if (nBondType > nBondType_) {
+            UTIL_THROW("nAtomType > simulation().nBondType()");
+         }
+         #ifdef INTER_ANGLE
+         if (nAngleType > nAngleType_) {
+            UTIL_THROW("nAngleype > simulation().nAngleType()");
+         }
+         #endif
+         #ifdef INTER_DIHEDRAL
+         if (nDihedralType > nDihedralType_) {
+            UTIL_THROW("nDihedralType > simulation().nDihedralType()");
+         }
+         #endif
       }
 
       // Read and broadcast boundary
@@ -211,7 +218,7 @@ namespace DdMd
          int rank;
          IntVector shift;
 
-         for(int i = 0; i < nAtom; ++i) {
+         for (int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
@@ -223,7 +230,7 @@ namespace DdMd
             atomPtr->setId(id-1);
             atomPtr->setTypeId(typeId-1);
             file >> r;
-            atomPtr->position() += min;
+            atomPtr->position() += min; // Shift corner of Boundary to (0, 0, 0)
             if (UTIL_ORTHOGONAL) {
                atomPtr->position() = r;
             } else {
@@ -263,15 +270,13 @@ namespace DdMd
       bool hasGhosts = false;
 
       if (bondStorage().capacity()) {
-         readGroups<2>(file, "BONDS", "nBond", bondDistributor());
+         readGroups<2>(file, "Bonds", nBond, bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
          //Set atom "mask" values
          if (maskPolicy == MaskBonded) {
             setAtomMasks();
          }
       }
-        
-
        
    }
 
@@ -279,9 +284,8 @@ namespace DdMd
    * Private method to write Group<N> objects.
    */
    template <int N>
-   int LammpsOrderedConfigIo::writeGroups(std::ostream& file, 
+   void LammpsConfigIo::writeGroups(std::ostream& file, 
                   const char* sectionLabel,
-                  const char* nGroupLabel,
                   GroupStorage<N>& storage,
                   GroupCollector<N>& collector) 
    {
@@ -290,16 +294,14 @@ namespace DdMd
       storage.computeNTotal(domain().communicator());
       nGroup = storage.nTotal();
       if (domain().isMaster()) { 
-         file << std::endl;
-         file << sectionLabel << std::endl;
-         file << nGroupLabel << Int(nGroup, 10) << std::endl;
 
          IoGroup<N> ioGroup;
          std::vector<IoGroup <N> > groups;
+
+         // Collect and sort groups
          groups.reserve(nGroup);
          groups.clear();
          groups.insert(groups.end(), nGroup, ioGroup);
-
          collector.setup();
          groupPtr = collector.nextPtr();
          int id;
@@ -312,25 +314,38 @@ namespace DdMd
             ++n;
          }
          if (n != nGroup) {
-            UTIL_THROW("Something is rotten in Denmark");
+            UTIL_THROW("Inconsistency in total number of groups");
          }
+
+         // Write groups
+         file << std::endl;
+         file << sectionLabel << std::endl;
+         file << std::endl;
+         int j, k;
          for (id = 0; id < nGroup; ++id) {
             if (id != groups[id].id) {
-               UTIL_THROW("Something is rotten in Denmark");
+               UTIL_THROW("Incorrect group id in ordered output");
             }
-            file << groups[id].group << std::endl;
+            k = groups[id].id + 1;
+            file << k;
+            k = groups[id].group.typeId() + 1;
+            file << " " << k;
+            for (j = 0; j < N; ++j) {
+               k = groups[id].group.atomId(j) + 1;
+               file << " " << k ;
+            }
+            file << std::endl;
          }
          file << std::endl;
       } else { 
          collector.send();
       }
-      return nGroup;
    }
 
    /* 
    * Write the configuration file.
    */
-   void LammpsOrderedConfigIo::writeConfig(std::ostream& file)
+   void LammpsConfigIo::writeConfig(std::ostream& file)
    {
       using std::endl;
 
@@ -341,6 +356,16 @@ namespace DdMd
       if (bondStorage().capacity()) {
          bondStorage().computeNTotal(domain().communicator());
       }
+      #ifdef INTER_ANGLE
+      if (angleStorage().capacity()) {
+         angleStorage().computeNTotal(domain().communicator());
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (dihedralStorage().capacity()) {
+         dihedralStorage().computeNTotal(domain().communicator());
+      }
+      #endif
 
       if (domain().isMaster()) {
       
@@ -349,111 +374,129 @@ namespace DdMd
          file << endl;
       
          int nAtom = atomStorage().nAtomTotal();
+         int nBond = bondStorage().nTotal();
+         int nAngle  = 0;
+         int nDihedral= 0;
+         int nImproper = 0;
+         #ifdef INTER_ANGLE
+         nAngle = angleStorage().nTotal();
+         #endif
+         #ifdef INTER_DIHEDRAL
+         nDihedral = dihedralStorage().nTotal();
+         #endif
 
          // Write numbers of atoms, bonds, etc.
-         file << Int(nAtom, 10) << " atoms    " << endl;
-         file << Int(bondStorage().nTotal(), 10) << " bonds    " << endl;
-         file << Int(0)     << " angles   " << endl;
-         file << Int(0)     << " dihedrals" << endl;
-         file << Int(0)     << " impropers" << endl;
-         file << endl;
+         file << nAtom << " atoms     "      << endl;
+         file << nBond << " bonds     " << endl;
+         file << nAngle << " angles    " << endl;
+         file << nDihedral << " dihedrals " << endl;
+         file << nImproper << " impropers" << endl;
 
          // Write numbers of atom types, bond types, etc.
-         file << Int(nAtomType_) << " atom types" << endl;
-         file << Int(nBondType_) << " bond types" << endl;
-         file << Int(0) << " angle types" << endl;
-         file << Int(0) << " dihedral types" << endl;
-         file << Int(0) << " improper types" << endl;
          file << endl;
+         file << nAtomType_     << " atom types" << endl;
+         file << nBondType_     << " bond types" << endl;
+         file << nAngleType_    << " angle types" << endl;
+         file << nDihedralType_ << " dihedral types" << endl;
+         file << nImproperType_ << " improper types" << endl;
 
          // Write Boundary dimensions
+         file << endl;
          Vector lengths = boundary().lengths();
          file << Dbl(0.0) << Dbl(lengths[0]) << "  xlo xhi" << endl;
          file << Dbl(0.0) << Dbl(lengths[1]) << "  ylo yhi" << endl;
          file << Dbl(0.0) << Dbl(lengths[2]) << "  zlo zhi" << endl;
-         file << endl;
 
          // Write masses (all set to 1.0 for now)
          // lammps atom type = Simpatico atom type + 1
+         file << endl;
          file << "Masses" << endl;
          file << endl;
          for (int iType = 0; iType < nAtomType_; ++iType) {
-            file << Int(iType+1, 5) << Dbl(1.0) << endl;
+            file << iType+1 << " " << 1.0 << endl;
          }
-         file << endl;
-
-         // Write atomic positions
-         // lammps atom     tag = Simpatico atom id + 1
-         // lammps molecule id  = Simpatico molecule id + 1
-         file << "Atoms" << endl;
-         file << endl;
 
          IoAtom atom;
          atoms_.reserve(nAtom);
          atoms_.clear();
          atoms_.insert(atoms_.end(), nAtom, atom);
 
+         // Collect atoms
          atomCollector().setup();
          Atom* atomPtr = atomCollector().nextPtr();
          int id;
          int n = 0;
          Vector r;
-         int shift;
          while (atomPtr) {
             id = atomPtr->id();
+            atoms_[id].id = id;
+            atoms_[id].typeId = atomPtr->typeId();
             if (UTIL_ORTHOGONAL) {
                atoms_[id].position = atomPtr->position();
             } else {
                boundary().transformGenToCart(atomPtr->position(), r);
                atoms_[id].position = r;
             }
-            atoms_[id].typeId = atomPtr->typeId();
-            atoms_[id].id = id;
+            atoms_[id].velocity = atomPtr->velocity();
             atomPtr = atomCollector().nextPtr();
             ++n;
          }
          if (n != nAtom) {
-            UTIL_THROW("Something is rotten in Denmark");
+            UTIL_THROW("Inconsistency in number of atoms");
          }
+
+         // Write atomic positions
+         // lammps atom     tag = Simpatico atom id + 1
+         // lammps molecule id  = Simpatico molecule id + 1
+         file << endl;
+         file << "Atoms" << endl;
+         file << endl;
+         int shift = 0;
          for (id = 0; id < nAtom; ++id) {
             if (id != atoms_[id].id) {
-               UTIL_THROW("Something is rotten in Denmark");
+               UTIL_THROW("Incorrect atom id in ordered output");
             }
-            file << Int(id+1, 10) << Int(0,6) << Int(atoms_[id].typeId + 1, 6)
-                 << atoms_[id].position;
+            file << id+1 << " " << "1 " << atoms_[id].typeId + 1 
+                 << " " << atoms_[id].position;
             for (int i = 0; i < Dimension; ++i) {
-               file << Int(shift, 4);
+               file << " " << shift;
             }
             file << std::endl;
          }
+
+         // Write atomic velocities
+         // lammps atom     tag = Simpatico atom id + 1
+         // lammps molecule id  = Simpatico molecule id + 1
+         file << endl;
+         file << "Velocities" << endl;
+         file << endl;
+         for (id = 0; id < nAtom; ++id) {
+            if (id != atoms_[id].id) {
+               UTIL_THROW("Incorrect atom id in ordered output");
+            }
+            file << id+1 << " " << atoms_[id].velocity;
+            file << std::endl;
+         }
+
       } else {
          atomCollector().send();
       }
 
       // Write the groups
       if (bondStorage().capacity()) {
-         writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector());
+         writeGroups<2>(file, "Bonds", bondStorage(), bondCollector());
       }
+      #ifdef INTER_ANGLE
+      if (angleStorage().capacity()) {
+         writeGroups<3>(file, "Angles", angleStorage(), angleCollector());
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (dihedralStorage().capacity()) {
+         writeGroups<4>(file, "Dihedrals", dihedralStorage(), dihedralCollector());
+      }
+      #endif
 
-      /*
-      // Write bond topology
-      file << "Bonds" << endl;
-      file << endl;
-      Molecule::BondIterator bondIter;
-      int                    iBond = 1;
-      for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
-            for (molIter->begin(bondIter); bondIter.notEnd(); ++bondIter) {
-               file << Int(iBond, 8 ) << Int(bondIter->typeId() + 1, 5);
-               file << Int(bondIter->atom(0).id() + 1, 8);
-               file << Int(bondIter->atom(1).id() + 1, 8);
-               file << endl;
-               ++iBond;
-            }
-         }
-      }
-      file << endl;
-      */
    }
  
 }

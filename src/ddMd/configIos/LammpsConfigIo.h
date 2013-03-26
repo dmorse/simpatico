@@ -1,5 +1,5 @@
-#ifndef DDMD_LAMMPS_ORDERED_CONFIG_IO_H
-#define DDMD_LAMMPS_ORDERED_CONFIG_IO_H
+#ifndef DDMD_LAMMPS_CONFIG_IO_H
+#define DDMD_LAMMPS_CONFIG_IO_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -24,12 +24,12 @@ namespace DdMd
    /**
    * Native / default format for configuration files.
    *
-   * LammpsOrderedConfigIo is a ConfigIo that implements the default
+   * LammpsConfigIo is a ConfigIo that implements the default
    * configuration file format for ddSim.
    *
    * \ingroup DdMd_ConfigIo_Module
    */
-   class LammpsOrderedConfigIo  : public ConfigIo
+   class LammpsConfigIo  : public ConfigIo
    {
 
    public:
@@ -37,14 +37,14 @@ namespace DdMd
       /**
       * Default constructor.
       */
-      LammpsOrderedConfigIo();
+      LammpsConfigIo();
 
       /**
       * Constructor.
       *
       * \param simulation parent Simulation object.
       */
-      LammpsOrderedConfigIo(Simulation& simulation);
+      LammpsConfigIo(Simulation& simulation);
 
       /**
       * Read configuration file.
@@ -72,6 +72,12 @@ namespace DdMd
       int nAtomType_;
 
       int nBondType_;
+
+      int nAngleType_;
+
+      int nDihedralType_;
+
+      int nImproperType_;
 
       struct IoAtom {
          Vector position;
@@ -101,17 +107,15 @@ namespace DdMd
       * Read Group<N> objects from file. 
       */
       template <int N>
-      int readGroups(std::istream& file, 
-                     const char* sectionLabel, const char* nGroupLabel,
-                     GroupDistributor<N>& distributor);
+      void readGroups(std::istream& file, const char* sectionLabel, 
+                      int nGroup, GroupDistributor<N>& distributor);
 
       /**
       * Write Group<N> objects to file. 
       */
       template <int N>
-      int writeGroups(std::ostream& file, 
-                      const char* sectionLabel, const char* nGroupLabel,
-                      GroupStorage<N>& storage, GroupCollector<N>& collector);
+      void writeGroups(std::ostream& file, const char* sectionLabel,
+                       GroupStorage<N>& storage, GroupCollector<N>& collector);
    
    };
 

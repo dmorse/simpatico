@@ -30,15 +30,15 @@ A Simulation has:
 
 Proposed Smaller Classes:
 
-    1) Storage -> composite of storage classes 
+    1) Storage / Configuration -> composite of storage classes 
 
        -> Only requires nType values for validity checking. 
-       -> Configuraiton needs parameters only for allocation.
+       -> Configuration needs parameters only for allocation.
        -> Add Configuration::isEmpty member to check if initialized.
 
     2) ForceField:
 
-       nAtomType              
+       nAtomType           
        AtomTypes  (Note: includes charge, which is part of force field)
        nBondType, nAngleType  
        potential style strings

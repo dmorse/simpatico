@@ -27,37 +27,38 @@ class AtomDistributorTest: public ParamFileTest
 {
 private:
    
-    AtomDistributor distributor_;
+   AtomDistributor distributor_;
+   Boundary boundary_;
+   Domain domain_;
+   Buffer buffer_;
+   AtomStorage storage_;
 
 public:
 
    virtual void setUp()
-   {}
+   {
+
+      // Set connections between objects
+      domain_.setBoundary(boundary_);
+      distributor_.associate(domain_, boundary_, storage_, buffer_);
+
+      #ifdef UTIL_MPI
+      // Set communicators
+      domain_.setGridCommunicator(communicator());
+      domain_.setParamCommunicator(communicator());
+      storage_.setParamCommunicator(communicator());
+      buffer_.setParamCommunicator(communicator());
+      distributor_.setParamCommunicator(communicator());
+      #else
+      domain_.setRank(0);
+      #endif
+
+   }
 
    void testDistribute()
    {
       printMethod(TEST_FUNC);
-
-      Boundary boundary;
-      Domain   domain;
-      Buffer   buffer;
-      AtomStorage  storage;
       std::ifstream atomposfile;
-
-      // Set connections between objects
-      domain.setBoundary(boundary);
-      distributor_.associate(domain, boundary, storage, buffer);
-
-      #ifdef UTIL_MPI
-      // Set communicators
-      domain.setGridCommunicator(communicator());
-      domain.setParamCommunicator(communicator());
-      storage.setParamCommunicator(communicator());
-      buffer.setParamCommunicator(communicator());
-      distributor_.setParamCommunicator(communicator());
-      #else
-      domain.setRank(0);
-      #endif
 
       // Open parameter file
       #ifdef UTIL_MPI
@@ -66,18 +67,18 @@ public:
       openFile("in/AtomDistributor.111");
       #endif
 
-      domain.readParam(file());
+      domain_.readParam(file());
 
       // Allocate memory for received atoms on the local processor
       // Maximum total number of atoms received on one processor
       // int atomCapacity = 100; 
-      // storage.initialize(atomCapacity, atomCapacity, 200);
-      storage.readParam(file());
+      // storage_.initialize(atomCapacity, atomCapacity, 200);
+      storage_.readParam(file());
 
       // Initialize buffer
       //int sendsize = 10;      
-      //buffer.allocate(sendsize , sendsize);
-      buffer.readParam(file());
+      //buffer_.allocate(sendsize , sendsize);
+      buffer_.readParam(file());
 
       // Initialize AtomDistributor object
       // int cacheCapacity = 35; 
@@ -88,10 +89,10 @@ public:
       closeFile();
 
       Vector boundarylength(6.0, 3.0, 9.0);
-      boundary.setOrthorhombic(boundarylength);
+      boundary_.setOrthorhombic(boundarylength);
 
       int atomCount = 0; // Number to be distributed by master
-      int myRank    = domain.gridRank();
+      int myRank    = domain_.gridRank();
 
       // If I am the master processor.
       if (myRank == 0) {
@@ -125,7 +126,7 @@ public:
             } else {
                Vector r;
                atomposfile >> r;
-               boundary.transformCartToGen(r, ptr->position());
+               boundary_.transformCartToGen(r, ptr->position());
             }
 
             //Use position vector for velocity for now
@@ -145,22 +146,12 @@ public:
 
       }
 
-      int recvCount = storage.nAtom();
+      int recvCount = storage_.nAtom();
       AtomIterator iter;
-      storage.begin(iter);
+      storage_.begin(iter);
       for ( ; iter.notEnd(); ++iter) {
-         TEST_ASSERT(domain.isInDomain(iter->position()));
+         TEST_ASSERT(domain_.isInDomain(iter->position()));
       }
-
-      #if 0
-      #ifdef UTIL_MPI
-      MpiLogger logger;
-      logger.begin();
-      //std::cout << "Processor: " << myRank
-      //          << ", recvCount = " << recvCount << std::endl;
-      logger.end();
-      #endif 
-      #endif
 
       // Check that all atoms are accounted for after distribution.
       #ifdef UTIL_MPI

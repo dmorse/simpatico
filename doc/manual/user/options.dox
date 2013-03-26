@@ -1,0 +1,173 @@
+namespace McMd
+{
+
+/*! \page user_options_page 2.11 Compile Time Options
+
+\ref user_multi_page      (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_page          (Next) 
+<BR>
+
+Many features of the Simpatico programs can be enabled or disabled when the program is 
+compiled, via conditional compilation of some parts of the code. This page lists briefly
+explains these optional features, and how they may be enabled or disabled.
+
+\section user_options_configure Enabling or Disabling Features
+
+The easiest way to enable or disable features is by using the configure script. This script 
+is located in the root simpatico/ directory, and must always be invoked from the root directory. 
+Each optional feature of Simpatico is associated with a specific unix single character command 
+line option for the configure program.  Each such command line option takes a 1 or 0 as an 
+argument to indicate that the associated feature should be enabled (1) or disabled (0). Thus 
+for example, to disable debugging (option -g) and enable 3-body angle potentials (option -a)
+one would invoke
+\code
+  > ./configure -g0 -a1
+\endcode
+from the root directory.  As shown by this example, more than one reature may be enabled or
+disabled in a single command. 
+
+Each such option of the command script causes the script to edit a configuration file by 
+either uncommenting (to enable) or commenting out (to disable) the definition of an associated
+makefile macro in one of several configuration files. It is also possible to enable or disable 
+features by directly editing the relevant lines of these files.  Each of these makefile macros
+has the same name as a corresponding C++ preprocessor macro that is used to control conditional
+compilation in the actual C++ source code. 
+
+\section user_options_options Optional Features
+
+The following table lists the most important compile time options for the Simaptico programs. The table lists (in order) the associated option of the configure script, the suffix that is added to the name of executables and libraries in which this option is enabled, a brief description of the feature, the name of the associated makefile and preprocessor macros, and the file containing the definition of the makefile macro.
+<table>
+  <tr> 
+    <td> <b>option </b> </td>
+    <td> <b>suffix </b> </td>
+    <td> <b>description</b> </td>
+    <td> <b>macro</b> </td>
+    <td> <b>file  </b> </td>
+    <td> <b>notes </b> </td>
+  </tr>
+  <tr>
+    <td> -m </td>
+    <td> _m </td>
+    <td> Message Passing Interface (MPI) </td>
+    <td> UTIL_MPI </td>
+    <td> src/compiler.mk </td>
+    <td> (1) (2) </td>
+  </tr>
+  <tr> 
+    <td> -g </td>
+    <td> _g </td>
+    <td> Debugging - enables additional error checks </td>
+    <td> UTIL_DEBUG </td>
+    <td> src/util/defines.mk </td>
+    <td>  </td>
+  </tr>
+  <tr> 
+    <td> -a </td>
+    <td> _a </td>
+    <td> Angle potentials </td>
+    <td> INTER_ANGLE </td>
+    <td> src/inter/defines.mk </td>
+    <td>  </td>
+  </tr>
+  <tr> 
+    <td> -d </td>
+    <td> _d </td>
+    <td> Dihedral potentials </td>
+    <td> INTER_DIHEDRAL </td>
+    <td> src/inter/defines.mk </td>
+    <td>  </td>
+  </tr>
+  <tr> 
+    <td> -e </td>
+    <td> _e </td>
+    <td> External potentials </td>
+    <td> INTER_DIHEDRAL </td>
+    <td> src/inter/defines.mk </td>
+    <td>  </td>
+  </tr>
+  <tr> 
+    <td> -l </td>
+    <td> _l </td>
+    <td> Links (mutable bonds) </td>
+    <td> MCMD_LINKS </td>
+    <td> src/mcMd/defines.mk </td>
+    <td>  </td>
+  </tr>
+  <tr> 
+    <td> -f </td>
+    <td> _f </td>
+    <td> Free energy perturbation </td>
+    <td> MCMD_PERTURB </td>
+    <td> src/mcMd/defines.mk </td>
+    <td> (3), (4) </td>
+  </tr>
+</table>
+Notes:
+<ol>
+  <li> 
+    The makefile targets mcMd, mcMd_mpi, and ddMd that build the various programs all 
+    call configure -m0 (for mcdMd) or configure -m1 (for mcMd_mpi or ddMd) before
+    compiling any code, to ensure that the MPI option is set correctly. When compiling
+    using these targets, it should thus not be necessary to set this option explicitly.
+  </li>
+  <li> 
+    The suffix _m is added the names of MPI-enabled versions of the mcSim and mdSim 
+    executables, and to MPI-enabled versions of the libutil.a, libinter.a and libmcMd.a
+    libraries. The suffix _m is not added to the name of the ddSim executable or the 
+    libddMd.a library, because MPI is not an optional feature of ddSim, but is required
+    for ddSim to function.
+  </li>
+  <li>
+    The -f free energy perturbation option is not available in ddSim. 
+  </li>
+  <li>
+    The -f free energy perturbation option can only be unabled if MPI is enabled. 
+    If MPI is enabled, free energy perturbation is enabled by default, but may be
+    explicitly disabled. 
+  </li>
+</ol>
+
+The source code for Simpatico is divided into four namespaces named Util, Inter, McMd and DdMd. Classes in these namespaces are located in corresponding directories src/util, src/inter, src/mcMd and src/ddMd, respectively. There is a strict hierarchy of dependencies among the namespaces. The code in the Util namespace does not use names defined in any other space. Code in the Inter namespace may use names defined in Util, but not names defined in the McMd and DdMd. Code in McMd may use Util and Inter, but not DdMd. Codein DdMd may use Util and Inter, but McMd.
+
+The names of the macro names associated with different compile time options reflect which namespaces they effect.  Those whose names begin with UTIL_, which are defined in the files src/compiler.mk and src/util/defines.mk, can appear in source files in any of the Simpatico namespaces (i.e., in the Util, Inter, McMd or DdMd namespaces, corresponding to the src/util, src/inter, src/ddMd, and src/ddMd directories).  Macros with names that begin with INTER_, which are defined in src/inter/defines.mk, are not used in the Util namespace (the src/util directory), but can appear in the Inter, McMd and DdMd namespaces (or the src/inter/, src/mcMd/ and src/dMd/ directories). Macros with names that begin with MCMD_, which are defined in src/mcMd/defines.mk, are used only in the McMd namespace (the src/mcMd directory).  Macros whose names begin with DDMD_, which are defined in src/dMd/defines.mk, are used only in the DdMd namespace (the src/ddMd directory).
+
+\section user_option_suffix File Name Suffixes 
+
+When an executable is built with one or more of these optional features enabled, the makefile system appends a set of suffixes to the names of the executable file that identify which features are enabled in that executable.  This convention is intended to make it easy for users to maintain different executables with different features enabled.  The suffix for each optional feature is listed in the above table. Each file name suffix consists of an underscore followed by a one or two character code.  In most cases, the suffix character is the same as the name of the command line option used by the configure script to enable or disable the feature.  
+
+For example, the suffix associated with the debugging feature is "_g".  A development version of the mcSim executable, which was compiled with debugging enabled, but no other optional features, would thus be named "mdSim_g". The default name version of a multi-processor MPI-enabled version of mcSim with angle and
+dihedral potentials would be "mcSim_m_a_d". 
+
+The same file name suffixes are also appended to the base names of libraries that contain code with particular features enabled. Thus, for example, a version of the libutil library that was compiled with MPI and debugging enabled would be called libutil_m_g.a by default. 
+
+Suffixes are added to executable and library names only for non-default features that affect code in that executable or library. Thus, for example, when MPI is enabled, no "_m" suffix is added to the name of the ddSim executable or the libddMd.a library, because MPI is a default, required feature of ddSim. Because the only optional features of the classes in the Util namespace are those enabled by UTIL_MPI and 
+UTIL_DEBUG, the only suffixes added to the name of this library are those associated with these features.
+
+\section user_options_macro How C++ Preprocessor Macros are Defined
+
+Conditional compilation of each of optional feature of Simpatico is controlled by a C++ preprocessor macro. The name of the preprocessor macro associated with each feature is given in the above table. Blocks of code associated with each feature are surrounded with preprocessor lines of the form
+\code
+#ifdef MACRO
+   // Code to be conditionally compiled.
+#endif
+\endcode
+in which MACRO represents the name of the relevant preprocessor macro (e.g., UTIL_DEBUG).
+
+Each C++ preprocessor macros is defined if and only if the makefile variable of the same name is defined is enabled in the relevant makefile fragment (i.e., in src/compiler.mk, src/util/defines.mk, src/inter/defines.mk, src/mcMd/defines.mk or src/ddMd/defines.mk).  For example, to define the C++ preprocessorer macro UTIL_DEBUG throughout the source code, and thus compile a debugging version with extra error checking, the makefile fragment src/util/defines.mk must contain a line that defines "UTIL_DEBUG=1$. Conversely, to disable this feature, this definition must be commented out, by adding a hash ('#') at the beginning of the line.  
+
+When the makefile variable associated with a feature is defined, the makefile system uses the "-D" compiler option to define the corresponding preprocessor macro.  For example, if the file src/util/defines.mk contains a line defining UTIL_DEBUG=1, another part of the same file adds a string "-DUTIL_DEBUG" to the list of options that will be passed to the compiler, thus causing the C++ UTIL_DEBUG macro to be defined throughout the source code. The makefile block that conditionally adds a "-D" option to list of compiler options is always near the bottom of the makefile fragment that defines the associated makefile variable.  Each such block also contains code to add an associated file name suffix to any relevant libraries and executables. 
+ 
+\section user_options_boundary Boundary Type
+
+The choice of lattice system for the periodic unit cell (i.e., cubic, tetragonal, or orthorombic) is defined in Simpatico by a C++ typedef named Util::Boundary.  This typedef is defined in the file src/mcMd/boundary/Boundary.h. By default, Util::Boundary is defined to be a synonym for the class Util::OrthorhombicBoundary, which defines a unit cell with three orthogonal axes of arbitrary length. Throughout the source code, however, the class that represents the periodic boundary conditions is referred to only via the typedef Util::Boundary, rather than by an explict class name, such as Util::OrthorhombicBoundary.  This is designed to make it easy for users to change the unit cell type at compile time by changing this typedef to refer to, for example, Util::MonoclinicBoundary, and recompiling the program. 
+
+We have chosen to use a typedef rather than a polymorphic classes for the boundary conditions because of concerns about efficiency.  The Boundary class provides methods that calculate separations using the minimum image convention, which are called repeatedly in the inner loops of both MD and MC simulations. The use of a polymorphic class with virtual functions would be the most flexible solution. This would allow the user to choose a boundary type at run time, but would also prevent inlining of the minimum image separation calculations. This is one case where we chose to favor efficiency over run-time flexibility.
+
+<BR>
+\ref user_multi_page      (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_page            (Up)   &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_page          (Next) 
+
+*/
+
+}
