@@ -269,7 +269,7 @@ namespace Inter
       } else
       if (name == "sigma") {
          sigma_[i][j] = value;
-         sigmaSq_[i][j] = sigma_[i][j]*sigma_[i][j];
+         sigmaSq_[i][j] = value*value;
          if (j != i) {
             sigma_[j][i] = sigma_[i][j];
             sigmaSq_[j][i] = sigmaSq_[i][j];
