@@ -16,8 +16,9 @@
 #include <ddMd/potentials/pair/PairPotentialImpl.h>
 
 // Pair interaction classes
-#include <inter/pair/DpdPair.h>
 #include <inter/pair/LJPair.h>
+#include <inter/pair/WcaPair.h>
+#include <inter/pair/DpdPair.h>
 
 namespace DdMd
 {
@@ -46,6 +47,9 @@ namespace DdMd
 
       if (name == "LJPair") {
          ptr = new PairPotentialImpl<LJPair>(*simulationPtr_);
+      } else
+      if (name == "WcaPair") {
+         ptr = new PairPotentialImpl<WcaPair>(*simulationPtr_);
       } else
       if (name == "DpdPair") {
          ptr = new PairPotentialImpl<DpdPair>(*simulationPtr_);

@@ -1,0 +1,21 @@
+namespace Inter
+{
+
+/*! \page inter_pair_WcaPair_page WcaPair 
+
+The WcaPair interaction implements a Weeks-Chandler-Anderson (WCA)
+potential. This is a cutoff and shifted Lennard-Jones interaction 
+that is cutoff at the minimum of the LJ potential, which occurs at
+\f$ r = \sigma 2^{1/6}\f$. The WcaPair class is a public subclass 
+of LJPair with a cutoff \f$r_{c}\f$ given by
+\f[
+  r_{c} \equiv 2^{1/6} \sigma
+\f]
+The format for inputing data is similar as that for an LJPair,
+except that no input value is required for the cutoff variable.
+
+\sa \ref inter_pair_LJPair_page
+
+*/
+
+}

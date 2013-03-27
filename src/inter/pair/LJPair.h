@@ -192,7 +192,7 @@ namespace Inter
 
       //@}
 
-   private:
+   protected:
    
       /// Maximum allowed value for nAtomType (# of particle types)
       static const int MaxAtomType = 2;

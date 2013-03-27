@@ -9,6 +9,7 @@
   <li> \subpage inter_pair_page 
      <ul style="list-style: none;">
        <li> \ref inter_pair_LJPair_page </li>
+       <li> \ref inter_pair_WcaPair_page </li>
        <li> \ref inter_pair_DpdPair_page </li>
      </ul>
   </li>

@@ -11,6 +11,7 @@ function is always set to zero for $r$ greater than some cutoff distance.
 
 <ul style="list-style: none;">
    <li> \subpage inter_pair_LJPair_page </li>
+   <li> \subpage inter_pair_WcaPair_page </li>
    <li> \subpage inter_pair_DpdPair_page </li>
 </ul>
  
