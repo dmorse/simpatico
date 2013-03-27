@@ -1,6 +1,13 @@
 #ifndef DDMD_INTEGRATOR_CPP
 #define DDMD_INTEGRATOR_CPP
 
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
 #include "Integrator.h"
 #include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomStorage.h>
@@ -24,14 +31,6 @@
 #include <util/format/Bool.h>
 #include <util/global.h>
 
-
-/*
-* Simpatico - Simulation Package for Polymeric and Molecular Liquids
-*
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
-* Distributed under the terms of the GNU General Public License.
-*/
-
 namespace DdMd
 {
 
@@ -52,6 +51,9 @@ namespace DdMd
    Integrator::~Integrator()
    {}
 
+   /*
+   * Initialize atom distribution, AtomStorage, PairList and forces.
+   */
    void Integrator::setupAtoms()
    {
       atomStorage().clearSnapshot();
@@ -144,6 +146,75 @@ namespace DdMd
    }
 
    /*
+   * Determine whether an atom exchange and reneighboring is needed.
+   */
+   bool Integrator::isExchangeNeeded(double skin) 
+   {
+     
+      if (!atomStorage().isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian in isExchangeNeeded");
+      } 
+
+      // Calculate maximum square displacment on this node
+      double maxSqDisp = atomStorage().maxSqDisplacement(); 
+      int    needed = 0;
+      if (sqrt(maxSqDisp) > 0.5*skin) {
+         needed = 1; 
+      }
+      timer_.stamp(CHECK);
+
+      #if UTIL_MPI
+      int neededAll;
+      domain().communicator().Allreduce(&needed, &neededAll, 
+                                        1, MPI::INT, MPI::MAX);
+      timer_.stamp(ALLREDUCE);
+      return bool(neededAll);
+      #else
+      return bool(needed);
+      #endif
+   }
+
+   #if 0
+   /*
+   * Determine whether an atom exchange and reneighboring is needed.
+   */
+   bool Integrator::isExchangeNeeded(double skin) 
+   {
+     
+      if (!atomStorage().isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian in isExchangeNeeded");
+      } 
+
+      // Calculate maximum square displacment on this node
+      double maxSqDisp = atomStorage().maxSqDisplacement(); 
+      timer_.stamp(CHECK);
+
+      // Decide on master node if maximum exceeds threshhold.
+      int needed;
+
+      #if UTIL_MPI
+      double maxSqDispAll;                    // global maximum
+      domain().communicator().Reduce(&maxSqDisp, &maxSqDispAll, 1, 
+                          MPI::DOUBLE, MPI::MAX, 0);
+      if (domain().communicator().Get_rank() == 0) {
+         needed = 0;
+         if (sqrt(maxSqDispAll) > 0.5*skin) {
+            needed = 1; 
+         }
+      }
+      domain().communicator().Bcast(&needed, 1, MPI::INT, 0);
+      timer_.stamp(ALLREDUCE);
+      #else
+      if (sqrt(maxSqDisp) > 0.5*skin) {
+         needed = 1; 
+      }
+      #endif
+
+      return bool(needed);
+   }
+   #endif
+
+   /*
    * Return time per processor for last run.
    */
    double Integrator::time() const
@@ -183,81 +254,137 @@ namespace DdMd
       out << "time / nStep         " << time/double(iStep_) 
           << " sec" << std::endl;
 
-      double ratio = double(nProc)/double(iStep_*nAtomTot);
+
+      double factor1 = 1.0/double(iStep_);
+      double factor2 = double(nProc)/double(iStep_*nAtomTot);
       double totalT = 0.0;
 
-
       out << std::endl;
-      out << "Times below are time per step per atom per processor, time * nproc / (nStep*nAtom)"
+      out << "T = Time per processor, M = nstep = # steps" << std::endl
+          << "P = # procs, N = # atoms (total, all processors)"
           << std::endl << std::endl;
-      out << "                     " << " Time [sec] "
-          << "       " << " Percent (%)" << std::endl;
-      out << "Total                " << Dbl(time*ratio, 12, 6)
-          << " sec   " << 100.0 << std::endl;
+      out << "                     " 
+          << "   T/M [sec]   "
+          << "   T*P/(N*M)   "
+          << " Percent (%)" << std::endl;
+      out << "Total                " 
+          << Dbl(time*factor1, 12, 6)
+          << "   "
+          << Dbl(time*factor2, 12, 6)
+          << "   " << Dbl(100.0, 12, 6, true) << std::endl;
       double diagnosticT = timer().time(DIAGNOSTIC);
       totalT += diagnosticT;
-      out << "Diagnostics          " << Dbl(diagnosticT*ratio, 12, 6)
-          << " sec   " << Dbl(100.0*diagnosticT/time, 12, 6, true) << std::endl;
+      out << "Diagnostics          " 
+          << Dbl(diagnosticT*factor1, 12, 6)
+          << "   "
+          << Dbl(diagnosticT*factor2, 12, 6)
+          << "   " << Dbl(100.0*diagnosticT/time, 12, 6, true) << std::endl;
       double integrate1T = timer().time(INTEGRATE1);
       totalT += integrate1T;
-      out << "Integrate1           " << Dbl(integrate1T*ratio, 12, 6) 
-          << " sec   " << Dbl(100.0*integrate1T/time, 12, 6, true) << std::endl;
+      out << "Integrate1           " 
+          << Dbl(integrate1T*factor1, 12, 6) 
+          << "   "
+          << Dbl(integrate1T*factor2, 12, 6) 
+          << "   " << Dbl(100.0*integrate1T/time, 12, 6, true) << std::endl;
       double checkT =  timer().time(CHECK);
       totalT += checkT;
-      out << "Check                " << Dbl(checkT*ratio, 12, 6)
-          << " sec   " << Dbl(100.0*checkT/time, 12, 6, true) << std::endl;
+      out << "Check                " 
+          << Dbl(checkT*factor1, 12, 6)
+          << "   "
+          << Dbl(checkT*factor2, 12, 6)
+          << "   " << Dbl(100.0*checkT/time, 12, 6, true) << std::endl;
+      double allReduceT =  timer().time(ALLREDUCE);
+      totalT += allReduceT;
+      out << "AllReduce            " 
+          << Dbl(allReduceT*factor1, 12, 6)
+          << "   "
+          << Dbl(allReduceT*factor2, 12, 6)
+          << "   " << Dbl(100.0*allReduceT/time, 12, 6, true) << std::endl;
       if (!UTIL_ORTHOGONAL) {
          double transformFT = timer().time(TRANSFORM_F);
          totalT += transformFT;
-         out << "Transform (forward)  " << Dbl(transformFT*ratio, 12, 6)
-             << " sec   " << Dbl(100.0*transformFT/time, 12, 6, true) << std::endl;
+         out << "Transform (forward)  " 
+             << Dbl(transformFT*factor1, 12, 6)
+          << "   "
+             << Dbl(transformFT*factor2, 12, 6)
+             << "   " << Dbl(100.0*transformFT/time, 12, 6, true) << std::endl;
       }
       double exchangeT = timer().time(EXCHANGE);
       totalT += exchangeT;
-      out << "Exchange             " << Dbl(exchangeT*ratio, 12, 6)
-          << " sec   " << Dbl(100.0*exchangeT/time, 12, 6, true) << std::endl;
+      out << "Exchange             " 
+          << Dbl(exchangeT*factor1, 12, 6)
+          << "   "
+          << Dbl(exchangeT*factor2, 12, 6)
+          << "   " << Dbl(100.0*exchangeT/time, 12, 6, true) << std::endl;
       double cellListT = timer().time(CELLLIST);
       totalT += cellListT;
-      out << "CellList             " << Dbl(cellListT*ratio, 12, 6)
-          << " sec   " << Dbl(100.0*cellListT/time, 12, 6, true) << std::endl;
+      out << "CellList             " 
+          << Dbl(cellListT*factor1, 12, 6)
+          << "   "
+          << Dbl(cellListT*factor2, 12, 6)
+          << "   " << Dbl(100.0*cellListT/time, 12, 6, true) << std::endl;
       if (!UTIL_ORTHOGONAL) {
          double transformRT = timer().time(TRANSFORM_R);
          totalT += transformRT;
-         out << "Transform (reverse)  " << Dbl(transformRT*ratio, 12, 6)
-             << " sec   " << Dbl(100.0*transformRT/time, 12, 6, true) << std::endl;
+         out << "Transform (reverse)  " 
+             << Dbl(transformRT*factor1, 12, 6)
+             << "   "
+             << Dbl(transformRT*factor2, 12, 6)
+             << "   " << Dbl(100.0*transformRT/time, 12, 6, true) << std::endl;
       }
       double pairListT = timer().time(PAIRLIST);
       totalT += pairListT;
-      out << "PairList             " << Dbl(pairListT*ratio, 12, 6)
-          << " sec   " << Dbl(100.0*pairListT/time, 12, 6, true) << std::endl;
+      out << "PairList             " 
+          << Dbl(pairListT*factor1, 12, 6)
+          << "   "
+          << Dbl(pairListT*factor2, 12, 6)
+          << "   " << Dbl(100.0*pairListT/time, 12, 6, true) << std::endl;
       double updateT = timer().time(UPDATE);
       totalT += updateT;
-      out << "Update               " << Dbl(updateT*ratio, 12, 6)
-          << " sec   " << Dbl(100.0*updateT/time, 12, 6, true) << std::endl;
+      out << "Update               " 
+          << Dbl(updateT*factor1, 12, 6)
+          << "   "
+          << Dbl(updateT*factor2, 12, 6)
+          << "   " << Dbl(100.0*updateT/time, 12, 6, true) << std::endl;
       double pairForceT = timer().time(PAIR_FORCE);
       totalT += pairForceT;
-      out << "Pair Forces          " << Dbl(pairForceT*ratio, 12, 6)
-          << " sec   " << Dbl(100.0*pairForceT/time, 12 , 6, true) << std::endl;
+      out << "Pair Forces          " 
+          << Dbl(pairForceT*factor1, 12, 6)
+          << "   "
+          << Dbl(pairForceT*factor2, 12, 6)
+          << "   " << Dbl(100.0*pairForceT/time, 12 , 6, true) << std::endl;
       double bondForceT = timer().time(BOND_FORCE);
       totalT += bondForceT;
-      out << "Bond Forces          " << Dbl(bondForceT*ratio, 12, 6)
-          << " sec   " << Dbl(100.0*bondForceT/time, 12 , 6, true) << std::endl;
+      out << "Bond Forces          " 
+          << Dbl(bondForceT, 12, 6)
+          << "   "
+          << Dbl(bondForceT*factor2, 12, 6)
+          << "   " << Dbl(100.0*bondForceT/time, 12 , 6, true) << std::endl;
       #ifdef INTER_ANGLE
       double angleForceT = timer().time(ANGLE_FORCE);
       totalT += angleForceT;
-      out << "Angle Forces         " << Dbl(angleForceT*ratio, 12, 6)
-          << " sec   " << Dbl(100.0*angleForceT/time, 12 , 6, true) << std::endl;
+      out << "Angle Forces         " 
+          << Dbl(angleForceT, 12, 6)
+          << "   "
+          << Dbl(angleForceT*factor2, 12, 6)
+          << "   " << Dbl(100.0*angleForceT/time, 12 , 6, true) << std::endl;
       #endif
       #ifdef INTER_DIHEDRAL
       double dihedralForceT = timer().time(DIHEDRAL_FORCE);
       totalT += dihedralForceT;
-      out << "Dihedral Forces      " << Dbl(dihedralForceT*ratio, 12, 6)
-          << " sec   " << Dbl(100.0*dihedralForceT/time, 12 , 6, true) << std::endl;
+      out << "Dihedral Forces      " 
+          << Dbl(dihedralForceT, 12, 6) 
+          << "   "
+          << Dbl(dihedralForceT*factor2, 12, 6)
+          << "   " << Dbl(100.0*dihedralForceT/time, 12 , 6, true) << std::endl;
       #endif
       double integrate2T = timer().time(INTEGRATE2);
       totalT += integrate2T;
-      out << "Integrate2           " << Dbl(integrate2T*ratio, 12, 6) 
-          << " sec   " << Dbl(100.0*integrate2T/time, 12, 6, true) << std::endl;
+      out << "Integrate2           " 
+          << Dbl(integrate2T, 12, 6) 
+          << "   "
+          << Dbl(integrate2T*factor2, 12, 6) 
+          << "   " << Dbl(100.0*integrate2T/time, 12, 6, true) << std::endl;
       //out << "Sum of above         " << Dbl(totalT*ratio, 12, 6) 
       //    << " sec   " << Dbl(100.0*totalT/time, 12, 6, true) << std::endl;
       out << std::endl;

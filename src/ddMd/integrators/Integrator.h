@@ -93,9 +93,9 @@ namespace DdMd
    protected:
 
       /// Timestamps for loop timing.
-      enum TimeId {DIAGNOSTIC, INTEGRATE1, CHECK, TRANSFORM_F, EXCHANGE,
-                   CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, PAIR_FORCE,
-                   BOND_FORCE, ANGLE_FORCE, DIHEDRAL_FORCE,
+      enum TimeId {DIAGNOSTIC, INTEGRATE1, CHECK, ALLREDUCE, TRANSFORM_F, 
+                   EXCHANGE, CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, 
+                   PAIR_FORCE, BOND_FORCE, ANGLE_FORCE, DIHEDRAL_FORCE,
                    INTEGRATE2, NTime};
 
       /**
@@ -154,6 +154,14 @@ namespace DdMd
       * communication if needed, and emits Simulation::forceSignal().
       */
       void computeForcesAndVirial();
+
+      /**
+      * Determine whether an atom exchange and reneighboring is needed.
+      *
+      * \param skin Verlet list skin length
+      * \return true iff exchange is needed
+      */
+      bool isExchangeNeeded(double skin);
 
       /*
       * Return the timer by reference.

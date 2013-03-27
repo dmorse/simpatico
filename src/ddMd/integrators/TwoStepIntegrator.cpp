@@ -80,9 +80,7 @@ namespace DdMd
          #endif
 
          // Check if exchange and reneighboring is necessary
-         needExchange = atomStorage().needExchange(domain().communicator(), 
-                                                   pairPotential().skin());
-         timer().stamp(Integrator::CHECK);
+         needExchange = isExchangeNeeded(pairPotential().skin());
 
          // Exchange atoms if necessary
          if (needExchange) {

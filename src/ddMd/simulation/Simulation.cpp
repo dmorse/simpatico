@@ -461,7 +461,7 @@ namespace DdMd
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
 
-      // Set signal observers (i.e., call-back functions called by Signal::notify)
+      // Set signal observers (i.e., call-back functions for Signal::notify)
       modifySignal().addObserver(*this, &Simulation::unsetKineticEnergy );
       modifySignal().addObserver(*this, &Simulation::unsetKineticStress );
       modifySignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
@@ -493,12 +493,10 @@ namespace DdMd
    }
 
    /*
-   * If no FileMaster exists, create and initialize one. 
+   * Read the FileMaster parameters.
    */
    void Simulation::readFileMaster(std::istream &in)
-   {
-      readParamComposite(in, *fileMasterPtr_);
-   }
+   {  readParamComposite(in, *fileMasterPtr_); }
 
    /*
    * Read potential style strings and maskedPairPolicy.
@@ -861,7 +859,7 @@ namespace DdMd
       integratorPtr_->run(nStep);
    }
 
-   // Kinetic Energy methods ------------------------------------------------------
+   // Kinetic Energy methods -------------------------------------------------
 
    /*
    * Calculate total kinetic energy (call on all processors).
@@ -913,7 +911,7 @@ namespace DdMd
    void Simulation::unsetKineticEnergy()
    {  kineticEnergy_.unset(); }
 
-   // Kinetic Stress methods ------------------------------------------------------
+   // Kinetic Stress methods -------------------------------------------------
    
    /*
    * Compute total kinetic stress, store on master proc.
@@ -989,7 +987,7 @@ namespace DdMd
    void Simulation::unsetKineticStress()
    {  kineticStress_.unset(); }
 
-   // Potential Energy Methods ------------------------------------------------------
+   // Potential Energy Methods -----------------------------------------------
    
    #ifdef UTIL_MPI
 
@@ -1106,7 +1104,7 @@ namespace DdMd
       #endif
    }
 
-   // Virial Stress Methods ------------------------------------------------------
+   // Virial Stress Methods --------------------------------------------------
    
    #ifdef UTIL_MPI
    /*
@@ -1242,7 +1240,7 @@ namespace DdMd
       #endif
    }
 
-   // Config File Read and Write -------------------------------------
+   // Config File Read and Write ---------------------------------------------
 
    /*
    * Read configuration file on master and distribute atoms.
@@ -1301,7 +1299,7 @@ namespace DdMd
       }
    }
 
-   // Potential Factories and Styles -------------------------------------
+   // Potential Factories and Styles ----------------------------------------
    
    #ifndef DDMD_NOPAIR
    /*
@@ -1401,7 +1399,7 @@ namespace DdMd
    {  return externalStyle_;  }
    #endif
 
-   // Integrator and ConfigIo Management -------------------------------
+   // Integrator and ConfigIo Management ------------------------------------
    
    /*
    * Return the IntegratorFactory by reference.
@@ -1452,7 +1450,7 @@ namespace DdMd
       configIoPtr_->initialize();
    }
 
-   // Validation ------------------------------------------------------
+   // Validation ------------------------------------------------------------
    
    /*
    * Return true if this Simulation is valid, or throw an Exception.
