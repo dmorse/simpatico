@@ -483,6 +483,7 @@ namespace DdMd
 
             n = std::min(PAIR_BLOCK_SIZE, j);
 
+            // Calculate separation for each pair in block
             for (i = 0; i < n; ++i) {
                pairPtr = &pairs_[i];
                iter.getPair(atom0Ptr, atom1Ptr);
@@ -494,6 +495,7 @@ namespace DdMd
                ++iter;
             }
 
+            // Identify pairs with rsq < cutoff
             m = 0; // Number of pairs with rsq < cutoff
             for (i = 0; i < n; ++i) {
                pairPtr = &pairs_[i];
@@ -506,7 +508,8 @@ namespace DdMd
                   ++m;
                }
             }
-               
+              
+            // Calculate and increment forces for pairs with rsq < cutoff 
             for (i = 0; i < m; ++i) {
                pairPtr =  inPairs_[i];
                atom0Ptr = pairPtr->ptr0;
@@ -561,15 +564,14 @@ namespace DdMd
    template <class Interaction>
    double PairPotentialImpl<Interaction>::energyCell()
    {
-      // Find all neighbors (cell list)
-      Cell::NeighborArray neighbors;
-      Vector f;
-      double rsq;
-      double energy = 0.0;
+      Cell::NeighborArray  neighbors; 
+      Vector  f;
+      double  rsq;
+      double  energy = 0.0;
       Atom*  atomPtr0;
       Atom*  atomPtr1;
       const Cell*  cellPtr;
-      int    type0, type1, na, nn, i, j;
+      int  type0, type1, na, nn, i, j;
 
       // Iterate over linked list of local cells.
       cellPtr = cellList_.begin();
