@@ -12,9 +12,9 @@
 #include <util/space/Tensor.h>
 #include <util/global.h>
 
-//namespace Util {
-//   class Vector;
-//}
+#include <algorithm>
+
+#define  PAIR_BLOCK_SIZE 16
 
 namespace DdMd
 {
@@ -197,6 +197,13 @@ namespace DdMd
 
    private:
 
+      struct PairForce {
+         Vector f;
+         double rsq;
+         Atom*  ptr0;
+         Atom*  ptr1;
+      };
+
       /**
       * Pointer to pair interaction object.
       */ 
@@ -236,6 +243,11 @@ namespace DdMd
       * Calculate atomic pair forces, using N^2 loop.
       */
       void computeForcesNSq();
+
+      #ifdef PAIR_BLOCK_SIZE
+      PairForce  pairs_[PAIR_BLOCK_SIZE];
+      PairForce* inPairs_[PAIR_BLOCK_SIZE];
+      #endif
 
    };
 
@@ -436,7 +448,6 @@ namespace DdMd
    template <class Interaction>
    void PairPotentialImpl<Interaction>::computeForcesList()
    {
-      Vector f;
       double rsq;
       PairIterator iter;
       Atom*  atom0Ptr;
@@ -445,6 +456,7 @@ namespace DdMd
 
       if (reverseUpdateFlag()) {
 
+         Vector f;
          for (pairList_.begin(iter); iter.notEnd(); ++iter) {
             iter.getPair(atom0Ptr, atom1Ptr);
             f.subtract(atom0Ptr->position(), atom1Ptr->position());
@@ -460,6 +472,70 @@ namespace DdMd
 
       } else {
 
+         #ifdef PAIR_BLOCK_SIZE
+         PairForce* pairPtr;
+         Vector*    forcePtr;
+         int i, j, m, n;
+
+         pairList_.begin(iter);
+         j = pairList_.nPair();  // j = # of remaining unprocessed pairs
+         while (j) {
+
+            n = std::min(PAIR_BLOCK_SIZE, j);
+
+            for (i = 0; i < n; ++i) {
+               pairPtr = &pairs_[i];
+               iter.getPair(atom0Ptr, atom1Ptr);
+               forcePtr = &(pairPtr->f);
+               forcePtr->subtract(atom0Ptr->position(), atom1Ptr->position());
+               pairPtr->ptr0 = atom0Ptr;
+               pairPtr->ptr1 = atom1Ptr;
+               pairPtr->rsq  = forcePtr->square();
+               ++iter;
+            }
+
+            m = 0; // Number of pairs with rsq < cutoff
+            for (i = 0; i < n; ++i) {
+               pairPtr = &pairs_[i];
+               atom0Ptr = pairPtr->ptr0;
+               atom1Ptr = pairPtr->ptr1; 
+               type0 = atom0Ptr->typeId();
+               type1 = atom1Ptr->typeId();
+               inPairs_[m] = pairPtr;
+               if (pairPtr->rsq < interactionPtr_->cutoffSq(type0, type1)) {
+                  ++m;
+               }
+            }
+               
+            for (i = 0; i < m; ++i) {
+               pairPtr =  inPairs_[i];
+               atom0Ptr = pairPtr->ptr0;
+               atom1Ptr = pairPtr->ptr1; 
+               forcePtr = &(pairPtr->f);
+               type0 = atom0Ptr->typeId();
+               type1 = atom1Ptr->typeId();
+               rsq   = pairPtr->rsq;
+               *forcePtr *= interactionPtr_->forceOverR(rsq, type0, type1);
+               atom0Ptr->force() += *forcePtr;
+               if (!atom1Ptr->isGhost()) {
+                  atom1Ptr->force() -= *forcePtr;
+               }
+            }
+
+            j = j - n;
+         }
+         #ifdef UTIL_DEBUG
+         if (j != 0) {
+            UTIL_THROW("Error in counting");
+         }
+         if (iter.notEnd()) {
+            UTIL_THROW("Error in iterator");
+         }
+         #endif // UTIL_DEBUG
+         #endif
+
+         #ifndef PAIR_BLOCK_SIZE
+         Vector f;
          for (pairList_.begin(iter); iter.notEnd(); ++iter) {
             iter.getPair(atom0Ptr, atom1Ptr);
             f.subtract(atom0Ptr->position(), atom1Ptr->position());
@@ -474,6 +550,7 @@ namespace DdMd
                }
             }
          }
+         #endif
 
       }
    }
