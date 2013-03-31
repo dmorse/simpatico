@@ -1,0 +1,33 @@
+
+->  Define a Cell:OffsetStrip : pair of (signed) integers.
+    Redefine Cell::OffsetArray -> array of OffsetStrip objects.
+
+->  In makeGrid, when choosing a cell size, take a minimum 
+    (cutoff + skin)/(mCell) where mCell = # of microcells per cell.
+
+->  In building Cell::OffSetArray, include all cells for which the
+    closest corner is within the Verlet pair list cutoff.
+
+->  In findNeighbors, loop over strips rather than looping over cells.
+
+Later
+-----
+
+->  Create different instances of Cell::OffsetArray for different
+    relationships between cell and boundaries. 
+
+->  For cells near a boundary, make separate Cell:OffsetArray objects
+    for local and ghost atoms. 
+
+->  In Cell::findNeighbors, pass separate localNeighbors and ghostNeighbors
+    arrays.
+
+->  In PairList, optimize to process empty cells quickly, to allow use
+    of smaller cells.
+
+->  When building CellList, should we construct an array of pointers to
+    occupied cells?  This is only potentially useful if it can be done 
+    more quickly while building the CellList then it could be done when 
+    scanning through cells to build the pair list.  Even then, it is 
+    only useful for very small cells, when most cells are empty.
+  
