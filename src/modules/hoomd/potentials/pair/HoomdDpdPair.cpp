@@ -99,6 +99,16 @@ namespace McMd
       return epsilon_[i][j];
    }
 
+   /* 
+   * Get cutoff distance squared.
+   */
+   double HoomdDpdPair::cutoffSq(int i, int j) const
+   {
+      assert(i >= 0 && i < nAtomType_);
+      assert(j >= 0 && j < nAtomType_);
+      return cutoffSq_[i][j];
+   }
+
    /*
    * Modify a parameter, identified by a string.
    */
