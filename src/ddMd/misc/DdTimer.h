@@ -47,12 +47,12 @@ namespace DdMd {
       void stop();
 
       /**
-      * Get accumulated time for interval i.
+      * Get accumulated time for interval i, average per processor.
       */ 
       double time(int id) const;
 
       /**
-      * Get total time since start time.
+      * Get total time since start time, average per processor.
       */ 
       double time() const;
 

@@ -276,35 +276,6 @@ namespace DdMd
       */
       double maxSqDisplacement();
 
-      #ifdef UTIL_MPI
-      /**
-      * Is exchange of atoms among processors needed?
-      *
-      * This method returns true if any atom in the AtomStorage has moved
-      * a distance skin/2 or greater since the last snapshot was built.
-      * It is a reduce-to-all operation: Must be called on all nodes and 
-      * returns same result on all nodes.
-      *
-      * \param  communicator domain communicator
-      * \param  skin         pair potential skin for pair list
-      * \return true if exchange / reneighboring is needed, false otherwise.
-      */
-      bool needExchange(MPI::Intracomm& communicator, double skin);
-
-      #else
-
-      /**
-      * Determine whether an atom exchange and reneighboring is needed.
-      *
-      * This method returns true if any atom in the AtomStorage has moved
-      * a distance skin/2 or greater since the last snapshot was built.
-      *
-      * \param skin  pair potential skin for pair list
-      * \return true if reneighboring is necessary
-      */
-      bool needExchange(double skin);
-      #endif
-
       //@}
       /// \name Iterator interface
       //@{

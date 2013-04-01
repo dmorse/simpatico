@@ -10,9 +10,9 @@ Testing
 Initial Ghost Exchange
 ----------------------
 
-- Add exchangeGhosts method to AtomDistributor that distributes
-  the groups among neighboring processors without sending many
-  unnecessary ghosts (to decrease memory requirements).
+- Add exchangeGhosts method to AtomDistributor that distributes the 
+  groups among neighboring processors without sending many unnecessary 
+  ghosts (to decrease memory requirements).
 
 Dynamic Resizing
 ----------------

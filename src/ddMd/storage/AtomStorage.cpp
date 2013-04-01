@@ -374,50 +374,6 @@ namespace DdMd
       return max;
    }
 
-   #ifdef UTIL_MPI
-
-   /*
-   * Determine whether an atom exchange and reneighboring is needed.
-   */
-   bool AtomStorage::needExchange(MPI::Intracomm& communicator, double skin) 
-   {
-     
-      if (!isCartesian()) {
-         UTIL_THROW("Error: Coordinates not Cartesian in needExchange");
-      } 
-
-      // Calculate maximum square displacment among along nodes
-      double maxSqDisp = maxSqDisplacement(); // maximum on node
-      double maxSqDispAll;                    // global maximum
-      communicator.Reduce(&maxSqDisp, &maxSqDispAll, 1, 
-                          MPI::DOUBLE, MPI::MAX, 0);
-
-      // Decide on master node if maximum exceeds threshhold.
-      int needed;
-      if (communicator.Get_rank() == 0) {
-         needed = 0;
-         if (sqrt(maxSqDispAll) > 0.5*skin) {
-            needed = 1; 
-         }
-      }
-      communicator.Bcast(&needed, 1, MPI::INT, 0);
-
-      return bool(needed);
-   }
-
-   #else
-
-   bool AtomStorage::needExchange(double skin) 
-   {
-      int needed = 0;
-      if (sqrt(maxSqDisplacement()) > 0.5*skin) {
-         needed = 1; 
-      }
-      return bool(needed);
-   }
-
-   #endif
-
    // Accessors
 
    /*
