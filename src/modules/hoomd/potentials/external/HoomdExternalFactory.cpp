@@ -18,9 +18,9 @@
 #include <mcMd/potentials/external/ExternalPotentialImpl.h>
 
 // External Potential evaluator classes
-#include <inter/external/TanhCosineExternal.h>
+#include <inter/external/LamellarOrderingExternal.h>
 
-#include <modules/hoomd/potentials/external/HoomdPeriodicExternal.h>
+#include <modules/hoomd/potentials/external/HoomdLamellarOrderingExternal.h>
 
 #include <hoomd/HOOMDMath.h>
 #include <hoomd/EvaluatorExternalPeriodic.h>
@@ -45,8 +45,8 @@ namespace McMd
    HoomdExternalFactory::factory(const std::string& name) const
    {
       ExternalPotential* ptr = 0;
-      if (name == classNameHoomdPeriodic) {
-         ptr = new ExternalPotentialImpl<HoomdPeriodicExternal> (*systemPtr_);
+      if (name == classNameHoomdLamellarOrdering) {
+         ptr = new ExternalPotentialImpl<HoomdLamellarOrderingExternal> (*systemPtr_);
       }
       return ptr;
    }
@@ -60,10 +60,10 @@ namespace McMd
       std::string name = potential.interactionClassName();
       HoomdExternalPotential* ptr = 0;
 
-      if (name == classNameHoomdPeriodic) {
+      if (name == classNameHoomdLamellarOrdering) {
          ptr = dynamic_cast< HoomdExternalPotential *>(
-            dynamic_cast< HoomdPeriodicExternal * >(
-            &(dynamic_cast< ExternalPotentialImpl< HoomdPeriodicExternal > * >
+            dynamic_cast< HoomdLamellarOrderingExternal * >(
+            &(dynamic_cast< ExternalPotentialImpl< HoomdLamellarOrderingExternal > * >
             (&potential))->interaction()));
       }
       return ptr;
@@ -83,9 +83,9 @@ namespace McMd
       std::string className = potential.interactionClassName();
       boost::shared_ptr<ForceCompute> externalSPtr;
 
-      if (className == classNameHoomdPeriodic) {
+      if (className == classNameHoomdLamellarOrdering) {
          externalSPtr = hoomdFactoryImpl<EvaluatorExternalPeriodic, gpu_compute_periodic_forces, 
-                                         classNameHoomdPeriodic >(ptr, system, systemDefinitionSPtr );
+                                         classNameHoomdLamellarOrdering >(ptr, system, systemDefinitionSPtr );
       } else 
          UTIL_THROW("Unsupported Hoomd potential." );
       
