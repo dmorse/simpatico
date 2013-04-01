@@ -87,7 +87,7 @@ namespace McMd
       virtual double atomEnergy(const Atom& atom) const = 0;
 
       /**
-      * Return name of external interaction class (e.g., "TanhCosineExternal").
+      * Return name of external interaction class (e.g., "LamellarOrderingExternal").
       */
       virtual std::string interactionClassName() const = 0;
    

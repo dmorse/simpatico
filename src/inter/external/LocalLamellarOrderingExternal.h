@@ -145,7 +145,7 @@ namespace Inter
       void getForce(const Vector& position, int type, Vector& force) const;
  
       /**
-      * Return name string "TanhCosineExternal".
+      * Return name string "LocalLamellarOrderingExternal".
       */
       std::string className() const;
  
