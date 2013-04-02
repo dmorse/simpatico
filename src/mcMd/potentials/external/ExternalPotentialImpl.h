@@ -96,7 +96,7 @@ namespace McMd
       virtual void getForce(const Vector& position, int typeId, Vector& force) const;
 
       /**
-      * Return external interaction class name (e.g., "TanhCosineExternal").
+      * Return external interaction class name (e.g., "LamellarOrderingExternal").
       */
       virtual std::string interactionClassName() const;
 

@@ -9,27 +9,27 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "HoomdPeriodicExternal.h"
+#include "HoomdLamellarOrderingExternal.h"
 
 
 namespace McMd
 {
-   char classNameHoomdPeriodic[] = "HoomdPeriodicExternal";
+   char classNameHoomdLamellarOrdering[] = "HoomdLamellarOrderingExternal";
 
    /**
    * Default constructor.
    */
-   HoomdPeriodicExternal::HoomdPeriodicExternal()   
-    : HoomdExternal< EvaluatorExternalPeriodic, gpu_compute_periodic_forces, classNameHoomdPeriodic >()
+   HoomdLamellarOrderingExternal::HoomdLamellarOrderingExternal()   
+    : HoomdExternal< EvaluatorExternalPeriodic, gpu_compute_periodic_forces, classNameHoomdLamellarOrdering >()
    {
    }
 
    /**
    * Copy constructor
    */
-   HoomdPeriodicExternal::HoomdPeriodicExternal(const HoomdPeriodicExternal& other)
+   HoomdLamellarOrderingExternal::HoomdLamellarOrderingExternal(const HoomdLamellarOrderingExternal& other)
     : HoomdExternal< EvaluatorExternalPeriodic, gpu_compute_periodic_forces, 
-          classNameHoomdPeriodic >(other)
+          classNameHoomdLamellarOrdering >(other)
    {
       externalParameter_ = other.externalParameter_;
    }
@@ -37,7 +37,7 @@ namespace McMd
    /**
    * read parameters from file
    */
-   void HoomdPeriodicExternal::readParameters(std::istream &in)
+   void HoomdLamellarOrderingExternal::readParameters(std::istream &in)
    {
       // Read parameters
       read<int>(in, "perpDirection", perpDirection_);
@@ -61,7 +61,7 @@ namespace McMd
    /*
    * set external potential parameter
    */
-   void HoomdPeriodicExternal::setExternalParameter(double externalParameter)
+   void HoomdLamellarOrderingExternal::setExternalParameter(double externalParameter)
    {
       externalParameter_ = externalParameter;
       for (int i = 0; i < nAtomType_; ++i) {
@@ -72,7 +72,7 @@ namespace McMd
    /* 
    * Get external potential interaction strength.
    */
-   double HoomdPeriodicExternal::externalParameter() const
+   double HoomdLamellarOrderingExternal::externalParameter() const
    {
       return externalParameter_;
    }
@@ -80,9 +80,9 @@ namespace McMd
    /*
    * return the class name
    */
-   std::string HoomdPeriodicExternal::className() const
+   std::string HoomdLamellarOrderingExternal::className() const
    {
-      return "HoomdPeriodicExternal";
+      return "HoomdLamellarOrderingExternal";
    }
 
 }

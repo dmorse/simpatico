@@ -67,6 +67,15 @@ namespace McMd
       double epsilon(int i, int j) const;
 
       /**
+      * Get LJ interaction cutoff distance squared for a specific pair of Atom types.
+      *
+      * \param i   type of Atom 1
+      * \param j   type of Atom 2
+      * \return    epsilon_[i][j]
+      */
+      double cutoffSq(int i, int j) const;
+
+      /**
       * Modify a parameter, identified by a string.
       *
       * \param name   parameter name
