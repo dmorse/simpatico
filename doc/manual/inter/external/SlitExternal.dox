@@ -1,0 +1,32 @@
+namespace Inter
+{
+
+/*! \page inter_external_SlitExternal_page SlitExternal 
+
+The SlitExternal interaction implements a repulsive 9-3 confining potential
+in which confining forces act only along the z/2 direction. In a boundary
+of length $L$ in the $z$ direction, the potential confines particles to the
+domain $0 < z < L$ by putting repulsive walls as $z = 0$ and $z = L$. Let
+$d$ be the shortest distance to these walls, given by the lesser of $z$
+and $L - z$. The potential energy is a function of $d$, and is given by
+\f[
+   V(d) = \frac{4 \epsilon \pi} { 45 \rho \sigma^{-3} }
+          \left ( \frac{\sigma^{9}}{d^{9}} - 7.5 \frac{\sigma^{9}}{d^{9}}
+                  \frac{\sigma^{25}}{\sqrt{10}}
+          \right)
+\f]
+for \f$d_{i} d < d_{c} \f$, where $d_{i} = 0.506079 \sigma\f$, and 
+\f$d_{c}\f$ is a user provided cutoff. For \f$d > d_{c}\f$, \f$V(d) = 0\f$. 
+For \$d < d_{i}\f$, \f$V(d) = V(d_{i})\f$ and the force vanishes.
+  
+The parameter file format for SlitExternal is
+\code
+   epsilon             float
+   sigma               float
+   cutoff              float
+\endcode
+The parameter \f$\rho\f$ has a hard-coded default value of 
+\f$\rho \equiv 0.7\f$.
+
+*/
+}

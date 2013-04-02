@@ -33,6 +33,14 @@
        <li> \ref inter_dihedral_MultiHarmonicDihedral_page </li>
      </ul>
   </li>
+  <li> \subpage inter_external_page 
+     <ul style="list-style: none;">
+       <li> \ref inter_external_TanhCosineExternal_page </li>
+       <li> \ref inter_external_SlitExternal_page </li>
+       <li> \ref inter_external_BoxExternal_page </li>
+       <li> \ref inter_external_OrthoBoxExternal_page </li>
+     </ul>
+  </li>
 </ul>
  
 <BR>
