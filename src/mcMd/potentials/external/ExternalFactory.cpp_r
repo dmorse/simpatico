@@ -21,7 +21,9 @@
 #include <inter/external/BoxExternal.h>
 #include <inter/external/OrthoBoxExternal.h>
 #include <inter/external/SlitExternal.h>
-#include <inter/external/TanhCosineExternal.h>
+#include <inter/external/LamellarOrderingExternal.h>
+#include <inter/external/LocalLamellarOrderingExternal.h>
+#include <inter/external/OrderingExternal.h>
 
 namespace McMd
 {
@@ -54,8 +56,14 @@ namespace McMd
       if (name == "SlitExternal") {
          ptr = new ExternalPotentialImpl<SlitExternal>(*systemPtr_);
       } else
-      if (name == "TanhCosineExternal") {
-         ptr = new ExternalPotentialImpl<TanhCosineExternal>(*systemPtr_);
+      if (name == "LamellarOrderingExternal") {
+         ptr = new ExternalPotentialImpl<LamellarOrderingExternal>(*systemPtr_);
+      } else
+      if (name == "LocalLamellarOrderingExternal") {
+         ptr = new ExternalPotentialImpl<LocalLamellarOrderingExternal>(*systemPtr_);
+      } else
+      if (name == "OrderingExternal") {
+         ptr = new ExternalPotentialImpl<OrderingExternal>(*systemPtr_);
       }
       return ptr;
    }

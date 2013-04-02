@@ -17,15 +17,15 @@
 
 namespace McMd
 {
-   extern char classNameHoomdPeriodic[];
+   extern char classNameHoomdLamellarOrdering[];
 
    /**
    * A potential encapsulating the HOOMD Periodic evaluator
    *
    * \ingroup External_Module
    */
-   class HoomdPeriodicExternal : public HoomdExternal< EvaluatorExternalPeriodic,
-      gpu_compute_periodic_forces, classNameHoomdPeriodic >
+   class HoomdLamellarOrderingExternal : public HoomdExternal< EvaluatorExternalPeriodic,
+      gpu_compute_periodic_forces, classNameHoomdLamellarOrdering >
    {
    
    public:
@@ -33,12 +33,12 @@ namespace McMd
       /**
       * Default constructor.
       */
-      HoomdPeriodicExternal();
+      HoomdLamellarOrderingExternal();
 
       /**
       * Copy constructor
       */
-      HoomdPeriodicExternal(const HoomdPeriodicExternal& other);
+      HoomdLamellarOrderingExternal(const HoomdLamellarOrderingExternal& other);
 
       /**
       * read parameters from file

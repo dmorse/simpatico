@@ -25,7 +25,9 @@
 #include "McExternalPerturbation.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/external/ExternalPotential.h>
-#include <inter/external/TanhCosineExternal.h>
+#include <inter/external/LamellarOrderingExternal.h>
+#include <inter/external/LocalLamellarOrderingExternal.h>
+#include <inter/external/OrderingExternal.h>
 #ifndef INTER_NOPAIR
 #include "McPairExternalPerturbation.h"
 #include <mcMd/potentials/pair/McPairPotential.h>
@@ -82,14 +84,22 @@ namespace McMd
          const std::string& externalInteractionClassName 
                      = systemPtr_->externalPotential().interactionClassName();
          if (pairInteractionClassName == "LJPair") {
-            if (externalInteractionClassName == "TanhCosineExternal") {
-               ptr = new McPairExternalPerturbation<LJPair,TanhCosineExternal> (*systemPtr_, size rank);
+            if (externalInteractionClassName == "LamellarOrderingExternal") {
+               ptr = new McPairExternalPerturbation<LJPair,LamellarOrderingExternal> (*systemPtr_, size, rank);
+            } else if (externalInteractionClassName == "LocalLamellarOrderingExternal") {
+               ptr = new McPairExternalPerturbation<LJPair,LocalLamellarOrderingExternal> (*systemPtr_, size, rank);
+            } else if (externalInteractionClassName == "OrderingExternal") {
+               ptr = new McPairExternalPerturbation<LJPair,OrderingExternal> (*systemPtr_, size, rank);
             } else {
                UTIL_THROW("Unsupported external potential.");
             }
          } else if (pairInteractionClassName == "DpdPair") {
-            if (externalInteractionClassName == "TanhCosineExternal") {
-               ptr = new McPairExternalPerturbation<DpdPair,TanhCosineExternal> (*systemPtr_, size, rank);
+            if (externalInteractionClassName == "LamellarOrderingExternal") {
+               ptr = new McPairExternalPerturbation<DpdPair,LamellarOrderingExternal> (*systemPtr_, size, rank);
+            } else if (externalInteractionClassName == "LocalLamellarOrderingExternal") {
+               ptr = new McPairExternalPerturbation<DpdPair,LocalLamellarOrderingExternal> (*systemPtr_, size, rank);
+            } else if (externalInteractionClassName == "OrderingExternal") {
+               ptr = new McPairExternalPerturbation<DpdPair,OrderingExternal> (*systemPtr_, size, rank);
             } else {
                UTIL_THROW("Unsupported external potential.");
             }
@@ -101,10 +111,14 @@ namespace McMd
       #endif
       #ifdef INTER_EXTERNAL
       else if (className == "McExternalPerturbation") {
-         const std::string& interactionClassName 
+         const std::string& interactionClassName
                             = systemPtr_->externalPotential().interactionClassName();
-         if (interactionClassName == "TanhCosineExternal") {
-            ptr = new McExternalPerturbation<TanhCosineExternal>(*systemPtr_, size, rank);
+         if (interactionClassName == "LamellarOrderingExternal") {
+            ptr = new McExternalPerturbation<LamellarOrderingExternal>(*systemPtr_, size, rank);
+         } else if (interactionClassName == "LocalLamellarOrderingExternal") {
+            ptr = new McExternalPerturbation<LocalLamellarOrderingExternal> (*systemPtr_, size, rank);
+         } else if (interactionClassName == "OrderingExternal") {
+            ptr = new McExternalPerturbation<OrderingExternal> (*systemPtr_, size, rank);
          } else {
             UTIL_THROW("Unsupported external potential.");
          }
