@@ -10,17 +10,17 @@ Testing
 Initial Ghost Exchange
 ----------------------
 
-- Add exchangeGhosts method to AtomDistributor that distributes the 
-  groups among neighboring processors without sending many unnecessary 
-  ghosts (to decrease memory requirements).
+- Add initExchangeGhosts method to DdMd::Exchanger that distributes 
+  the groups among neighboring processors without sending many 
+  unnecessary ghosts (to decrease memory requirements).
 
 Dynamic Resizing
 ----------------
 
+- Allow for dynamic resizing of Buffer class.
+
 - Allow for dynamic resizing of Storage classes.
   For AtomStorage, must emit signal to reset pointers to atoms.
-
-- Allow for dynamic resizing of Buffer class.
 
 Flexible Unit Cells:
 --------------------
@@ -32,23 +32,6 @@ Restart
 -------
 
 - Add ddMd restart capability, based on save / load methods. 
-
-Hybrid MD
----------
-
-- Finish and test transactions in AtomStorage (in transactions branch).
-
-- Add transactions to GroupStorage (in transactions branch).
-
-Distributor and Collector:
---------------------------
-
-- Remove association with Domain, remove explicit use of domain communicator.
-
-- Require that setup method be called on all processors, and that it take
-  as a parameters a communicator, a rank for the root processor, and ranks
-  begin and end for processors that represent spatial domains, which lie 
-  in the range begin <= rank < end.
 
 Buffer:
 -------
@@ -78,15 +61,21 @@ Buffer:
 
 - Add values INT, DOUBLE, VECTOR to enumeration of types.
 
+Hybrid MD
+---------
+
+- Finish and test transactions in AtomStorage (in transactions branch).
+
+- Add transactions to GroupStorage (in transactions branch).
+
 Cell List and Pair List:
 ------------------------
 
-- Make AtomTag struct a public class, add an IntVector of micro-cell 
-  indices to CellTag, to allow fast rejection of most pairs.
+- Modify Cell::OffsetArray object to use strips of cells, to allow 
+  efficient use of smaller cells.
 
-- Modify Cell::getNeighbors method to pass back a list of AtomTag objects, 
-  rather than an array of pointers. Provide a CellList method to decide if 
-  a particular pair is within the cutoff.
+- Modify OffsetArray to include all cells for which the closest corner
+  is within the pair list cutoff.
 
 Single Processor Operation
 --------------------------
@@ -95,8 +84,14 @@ Single Processor Operation
   to work ifndef UTIL_MPI, continue with other classes, to enable 
   single processor operation with no MPI.
 
+Atom
+----
+
+- Add speciesId, moleculeId, localId to each atom.
+
 Files
 -----
 
-- Think about separating topology and configuration files. 
+- Modify default file format to store molecule and species indices.
 
+- Think about separating topology and configuration files. 

@@ -1,23 +1,16 @@
 An atom currently has:
 
 24 24   Position
- 4 28   typeId
- 4 32   isGhost
------
+4  28   typeId
+4  32   localId / isGhost
 24 56   force
-4  60   id
-4  64   plan
------
-24 88   velocity
-20 108  Mask
+8  64   arrayPtr
 
-To be added:
-12      shift
-
-5       bonds
-?       angles
-?       dihedrals
-?       impropers
+Separate arrays
+ velocity
+ Mask
+ plan
+ id
 
 
 Different parts of this are used in different operations.
@@ -26,17 +19,7 @@ Inner nonbonded force loop:    Position, typeId, isGhost, force
 
 Inner bonded force loop:       Position, isGhost (to distribute forces and energies) force
 
-Building nonbonded pairlist:   Position, Mask, id, isGhost(optional)
-
-                               Notes:
-
-                               1) Id is used as an argument to Mask for atom2, in the inner 
-                                  loop.  Mask is found only for the primary atom, once per atom.
-
-                               2) isGhost bool could be encoded in pairlist, using cells
-                                  to identify ghosts. Better yet, perhaps return two iterators.
-                                  This would remove all if statements from the inner loop.
-
+Building nonbonded pairlist:   Position, Mask, isGhost(optional)
 
 Communication:                 plan, bonds, angles, dihedrals, everything upon packing and unpacking.
 
@@ -141,4 +124,3 @@ Unavoidable uses of atom id:
   - When an exchanged atom is received (packing and unpacking, adding to storage).
   - When a ghost is received (packing and unpacking id, adding to storage).
   - When a group is received ? No, uses storage array index to find the atom.
-
