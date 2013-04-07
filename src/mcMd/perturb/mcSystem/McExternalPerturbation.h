@@ -100,8 +100,9 @@ namespace McMd
    * Constructor.
    */
    template < class Interaction >
-   McExternalPerturbation<Interaction>::McExternalPerturbation(McSystem& system)
-    : LinearPerturbation<McSystem>(system),
+   McExternalPerturbation<Interaction>::McExternalPerturbation(McSystem& system,
+                                                               int size, int rank)
+    : LinearPerturbation<McSystem>(system, size, rank),
       interactionPtr_(0)
    {  setClassName("McExternalPerturbation"); }
 

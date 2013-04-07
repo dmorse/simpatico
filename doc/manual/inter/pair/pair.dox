@@ -26,23 +26,28 @@ ids i and j depend on the atom types.  Values for each variable that appears
 in the mathematical description of a pair potential function are thus stored 
 in matrix containers (i.e., 2D arrays) containing nAtomType rows and nAtomType 
 columns, in which the i, j element gives the value of the parameter for 
-interactions between atoms of type i and j. Each such matrix is symmetric,
-because the order in which two atoms are passed to such a function (which
-is atom 1 and which is atom 2) is arbitrary.
-
-When values for the elements of such matrix-valued parameters are read from 
-a parameter file, the elements of the matrix are formatted in a lower-diagonal 
-form. For example, a matrix-valued parameter named "epsilon" for a system 
-with 3 types of atoms (nAtomType =3) would be input in the format
+interactions between atoms of type i and j.  In parameter file, the values
+for the elements of such a matrix appear in matrix format, in which each
+row of the matrix appears as one line of the file, with a string label at
+the beginning of the first row.  For example, a matrix-valued parameter 
+named "epsilon" for a system with 3 types of atoms (nAtomType =3) would 
+be input in the format
 \code
-   epsilon  epsilon(0, 0)
-            epsilon(1, 0)  epsilon(1, 1)
+   epsilon  epsilon(0, 0)  epsilon(0, 1)  epsilon(0, 2)
+            epsilon(1, 0)  epsilon(1, 1)  epsilon(1, 2)
             epsilon(2, 0)  epsilon(2, 1)  epsilon(2, 2)
 \endcode
-where the word epsilon in the first row represents a literal string label, 
-but epsilon(i, j) represents a numerical value for interactions between
-atoms of types i and j.  Only the lower diagonal part of the matrix is
-required because the matrix is symmetric. 
+Here, the word "epsilon" at the beginning of first row represents a literal 
+string label, but epsilon(i, j) represents a numerical value for interactions 
+between atoms of types i and j.  
+
+The parameters that describe pair interactions are all represented by 
+symmetric matrices, because the order in which the atom type indices
+are listed is arbitrary. At the moment, the parameter file uses an 
+input format that was designed for a general matrix and that thus does 
+not enforce this requirement. It is thus up to the user to enter the 
+same values for the (i, j) and (j, i) off-diagonal elements of each 
+such matrix. 
 
 For example, the Lennard-Jones potential LJPair has three parameters
 \f$\epsilon\f$, \f$\sigma\f$ and \f$r_{c}\f$. These are represented 
@@ -51,17 +56,19 @@ in the code by matrix-valued variables named "epsilon", "sigma", and
 file block for this potential in a system with two types of atoms 
 might thus look something like
 \code
-   epsilon    1.0
+   epsilon    1.0    1.5
               1.5    1.0
-   sigma      1.0
+   sigma      1.0    1.2
               1.2    1.0
-   cutoff     2.5   
+   cutoff     2.5    3.0
               3.0    2.5 
 \endcode
 In this example, a larger epsilon energy parameter and a larger van 
 der Waals diameter sigma is used for interactions between unlike atoms 
-of types 0 and 1 than between pairs of atoms of type 0 or type 1. The
-cutoff for each pair of types has been chosen to be 2.5 times the 
-corresponding sigma parameter.
+of types 0 and 1 than between pairs of atoms of type 0 or type 1.  The
+cutoff for each pair of types has been chosen to be 2.5 times the sigma 
+parameter for that pair (i.e., cutoff = 2.5 for 00 and 11 interactions,
+for which sigma = 1.0, and cutoff = 3.0 for 10 and 01 interactions,
+for which sigma = 1.2).
 
 */

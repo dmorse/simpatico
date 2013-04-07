@@ -1,5 +1,5 @@
-#ifndef INTER_TANH_COSINE_EXTERNAL_H
-#define INTER_TANH_COSINE_EXTERNAL_H
+#ifndef INTER_LAMELLAR_ORDERING_EXTERNAL_H
+#define INTER_LAMELLAR_ORDERING_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -36,7 +36,7 @@ namespace Inter
    *
    * \ingroup Inter_External_Module
    */
-   class TanhCosineExternal : public ParamComposite 
+   class LamellarOrderingExternal : public ParamComposite 
    {
    
    public:
@@ -44,17 +44,17 @@ namespace Inter
       /**
       * Default constructor.
       */
-      TanhCosineExternal();
+      LamellarOrderingExternal();
 
       /**
       * Copy constructor.
       */
-      TanhCosineExternal(const TanhCosineExternal& other);
+      LamellarOrderingExternal(const LamellarOrderingExternal& other);
 
       /**
       * Assignment.
       */
-      TanhCosineExternal& operator = (const TanhCosineExternal& other);
+      LamellarOrderingExternal& operator = (const LamellarOrderingExternal& other);
 
       /**  
       * Set nAtomType value.
@@ -145,7 +145,7 @@ namespace Inter
       void getForce(const Vector& position, int type, Vector& force) const;
  
       /**
-      * Return name string "TanhCosineExternal".
+      * Return name string "LamellarOrderingExternal".
       */
       std::string className() const;
  
@@ -183,17 +183,17 @@ namespace Inter
    // inline methods 
  
     
-   inline double TanhCosineExternal::energy(double d, int type) const
+   inline double LamellarOrderingExternal::energy(double d, int type) const
    {
-      double perpLength_, q_, clipParameter_, arg, clipcos;
-      Vector lengths_;
-      lengths_ = boundaryPtr_->lengths();
-      perpLength_ = lengths_[perpDirection_];
-      q_ = (2.0*M_PI*periodicity_)/perpLength_;
-      clipParameter_   = 1.0/(q_*width_*perpLength_);
+      double perpLength, q, clipParameter, arg, clipcos;
+      Vector lengths;
+      lengths = boundaryPtr_->lengths();
+      perpLength = lengths[perpDirection_];
+      q = (2.0*M_PI*periodicity_)/perpLength;
+      clipParameter   = 1.0/(q*width_*perpLength);
 
-      arg = q_*d;
-      clipcos = clipParameter_*cos(arg);
+      arg = q*d;
+      clipcos = clipParameter*cos(arg);
       
       return prefactor_[type]*externalParameter_*tanh(clipcos);
    }
@@ -202,7 +202,7 @@ namespace Inter
    * Calculate external potential energy for a single atom.
    */
    inline 
-   double TanhCosineExternal::energy(const Vector& position, int type) const
+   double LamellarOrderingExternal::energy(const Vector& position, int type) const
    {
       double d, totalEnergy;
       totalEnergy = 0.0;
@@ -215,26 +215,26 @@ namespace Inter
    /* 
    * Calculate force for a particle as a function of distance to boundary.
    */
-   inline double TanhCosineExternal::forceScalar(double d, int type) const
+   inline double LamellarOrderingExternal::forceScalar(double d, int type) const
    {
-      double perpLength_, q_, clipParameter_, arg, clipcos, tanH, sechSq;
-      Vector lengths_;
-      lengths_ = boundaryPtr_->lengths();
-      perpLength_ = lengths_[perpDirection_];
-      q_ = (2.0*M_PI*periodicity_)/perpLength_;
-      clipParameter_   = 1.0/(q_*width_*perpLength_);
-      arg = q_*d;
-      clipcos = clipParameter_*cos(arg);
+      double perpLength, q, clipParameter, arg, clipcos, tanH, sechSq;
+      Vector lengths;
+      lengths = boundaryPtr_->lengths();
+      perpLength = lengths[perpDirection_];
+      q = (2.0*M_PI*periodicity_)/perpLength;
+      clipParameter   = 1.0/(q*width_*perpLength);
+      arg = q*d;
+      clipcos = clipParameter*cos(arg);
       tanH = tanh(clipcos);
       sechSq = (1.0 - tanH*tanH);
-      return prefactor_[type]*externalParameter_*sechSq*clipParameter_*sin(arg)*q_;
+      return prefactor_[type]*externalParameter_*sechSq*clipParameter*sin(arg)*q;
    }
 
    /* 
    * Calculate external force for a single atom.
    */
    inline 
-   void TanhCosineExternal::getForce(const Vector& position, int type, 
+   void LamellarOrderingExternal::getForce(const Vector& position, int type, 
                                      Vector& force) const
    {
       double d = position[perpDirection_];

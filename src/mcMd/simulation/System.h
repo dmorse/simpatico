@@ -341,6 +341,10 @@ namespace McMd
       * in the range 0 <= moleculeId < nMolecule(speciesId). This is 
       * the index required as the second argument of molecule(int, int).
       *
+      * Note: The id returned by this function is not the same as the
+      * id returned by Molecule::id(), which is a permanent identifier
+      * for each molecule that is set immediately after allocation.
+      *
       * \param molecule Molecule object of interest.
       * \return index for molecule within its Species and System.
       */
@@ -350,8 +354,9 @@ namespace McMd
       * Get a specific Molecule in this System, by integer index.
       *
       * The moleculeId must be in range 0 <= moleculeId < nMolecule(speciesId).
-      * The index associated with a molecule is volatile, and can change when
-      * another molecule of the same Species is removed from this System. 
+      * The index associated with a molecule is mutable, and can change when
+      * another molecule of the same Species is removed from this System. The
+      * value of this index is returned by System::moleculeId().
       * 
       * \param speciesId  integer id of the desired Species
       * \param moleculeId integer id of molecule within Species and System
