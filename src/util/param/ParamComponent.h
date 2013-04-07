@@ -33,7 +33,9 @@ namespace Util
 
    public:
 
-      /// Destructor.
+      /*
+      * Destructor.
+      */
       virtual ~ParamComponent();
 
       /**
@@ -50,16 +52,29 @@ namespace Util
       */
       virtual void writeParam(std::ostream& out) = 0;
 
-      virtual void save(Serializable::OArchive &ar)
+      /**
+      * Load internal state from an archive.
+      *
+      * The default implementation is empty. This default is used by
+      * the Begin, End, and Blank subclasses.
+      */ 
+      virtual void load(Serializable::IArchive &ar)
       {}
 
-      virtual void load(Serializable::IArchive &ar)
+      /**
+      * Save internal state to an archive.
+      *
+      * The default implementation is empty. This default is used by
+      * the Begin, End, and Blank subclasses.
+      */ 
+      virtual void save(Serializable::OArchive &ar)
       {}
 
       /**
       * Nontrivial implementation provided by ParamComposite subclass.
       *
-      * This empty default implementation is used by all leaf nodes.
+      * The default implementation is empty. This default is used by
+      * all leaf nodes (all other than ParamComposite and subclasses).
       */
       virtual void resetParam()
       {}
@@ -67,8 +82,8 @@ namespace Util
       /**
       * Set indent level.
       *
-      * If next=true (default) set indent level one higher than
-      * that of parent. If next=false, set the same as parent.
+      * If next=true (default) set indent level one higher than that
+      * of parent. If next=false, set indent level the same as parent.
       *
       * \param parent parent ParamComponent object
       * \param next   If true, set level one higher than for parent.
@@ -104,12 +119,21 @@ namespace Util
       static void initStatic();
 
       /**
-      * Set echo parameter to true enable echoing, or false to disable.
+      * Enable or disable echoing for all subclasses of ParamComponent.
+      *
+      * When echoing is enabled, all parameters are echoed to a log
+      * file immediately after being read. This is useful as an aid
+      * to debugging the parameter file, by showing where the error
+      * occurred.
+      *
+      * \param echo set true to enable echoing, false to disable. 
       */
       static void setEcho(bool echo = true);
 
       /**
-      * Get echo parameter. true = echoing enabled, false = disable.
+      * Get echo parameter. 
+      *
+      * \return true if echoing is enabled, false if disabled.
       */
       static bool echo();
 

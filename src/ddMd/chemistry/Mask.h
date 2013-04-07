@@ -16,14 +16,15 @@ namespace DdMd
    class Atom;
 
    /**
-   * Set of Atoms for which pair interactions with a target Atom are "masked".
+   * Set of Atoms for which pair interactions with a parent Atom are "masked".
    *
-   * A Mask stores int identifiers for a set of Atoms for which the non-bonded
-   * pair interactions with a single target atom are suppressed, or "masked".
-   * Each Mask object is associated with one target Atom. 
-   *
-   * A Mask could, for example, contain all atoms that are directly connected 
-   * to the target atom by 2-body covalent bonds.
+   * Each Mask object is associated with one parent Atom. The Mask stores 
+   * the integer identifiers for a set of Atoms for which non-bonded pair 
+   * interactions with the parent atom are suppressed, or "masked". These are
+   * generally atoms that are directly bonded to the parent Atom, or part of
+   * the same Angle or Dihedral group. The Mask is used during construction 
+   * of a Velet pair list to identify nearby atoms for which pair interactions 
+   * are suppressed.
    *
    * \ingroup DdMd_Chemistry_Module
    */
@@ -32,7 +33,9 @@ namespace DdMd
 
    public:
 
-      /// Maximum number of masked atoms per target atom.
+      /*
+      * Maximum number of masked atoms per parent atom.
+      */
       static const int Capacity  = 4;
 
       /**
@@ -53,7 +56,7 @@ namespace DdMd
       void append(int id);
 
       /**
-      * True if the atom is in the masked set for the target Atom.
+      * True if the atom is in the masked set for the parent Atom.
       *
       * \param  id integer id of atom to be tested
       * \return true if atom is masked, false otherwise
@@ -78,13 +81,15 @@ namespace DdMd
       int atomIds_[Capacity];      
 
       /// Number of masked Atoms.
-      int  size_;                 
+      int  size_;
 
    }; 
 
    // Inline methods
 
-   // Check if an Atom is in the masked set.
+   /*
+   * Check if an Atom is masked.
+   */
    inline bool Mask::isMasked(int id) const
    {
       for (int i=0; i < size_ ; ++i) {
@@ -94,13 +99,13 @@ namespace DdMd
    }
 
    /*
-   * Return the number of masked atoms.
+   * Return the number of masked atoms for this parent Atom.
    */
    inline int Mask::size() const
    { return size_; }
 
    /*
-   * Return value of index
+   * Return value of atom index.
    */
    inline int Mask::operator[] (int i) const
    {

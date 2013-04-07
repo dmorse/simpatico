@@ -42,3 +42,5 @@ In the implementation of MeanSqDispArray, the square difference of two Data
 values is a double precision number that is defined for floating point, 
 complex, and Vector Data types by the explicit specializations of the 
 sqDiff() method.
+
+See also: Accumulators module in the doxygen documentation.
