@@ -449,7 +449,7 @@ namespace McMd
       // Allocate other global arrays (members of Simulation).
       molecules_.allocate(moleculeCapacity_);
 
-      // Initialize all Atoms and Groups
+      // Initialize all Atoms and Molecule objects.
       for (iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
          speciesPtr = &species(iSpecies);
          initializeSpecies(iSpecies);
@@ -468,6 +468,7 @@ namespace McMd
       }
 
       #ifdef INTER_ANGLE
+      // Initialize angles.
       if (nAngleType_ > 0) {
          if (angleCapacity_ > 0) {
             angles_.allocate(angleCapacity_);
@@ -481,6 +482,7 @@ namespace McMd
       #endif
 
       #ifdef INTER_DIHEDRAL
+      // Initialize dihedrals.
       if (nDihedralType_ > 0) {
          if (dihedralCapacity_ > 0) {
             dihedrals_.allocate(dihedralCapacity_);
@@ -500,11 +502,14 @@ namespace McMd
    *
    * This function creates associations between Species, Molecule, and
    * Atom objects for all molecules of one species, and sets atom typeIds.
-   * For each molecule, it sets id, species, nAtom, and firstAtom.
-   * For each atom, it sets the molecule and typeId.
+   *
+   * For each molecule, it sets the id, species pointer, nAtom, and the 
+   * firstAtom pointer. The molecule id is only unique within each species.
+   *
+   * For each atom, it sets the molecule pointer and an integer typeId.
    *
    * This method also pushes all molecules of the species onto the
-   * reservoir.
+   * reservoir, pushing them in order of decreasing molecule id.
    */
    void Simulation::initializeSpecies(int iSpecies)
    {

@@ -6,9 +6,10 @@ depends only on the atomic position and atom type index.
 \section inter_external_interactions_section External Interaction Classes 
 
 <ul style="list-style: none;">
-   <li> \subpage inter_external_TanhCosineExternal_page </li>
+   <li> \subpage inter_external_LamellarOrderExternal_page </li>
    <li> \subpage inter_external_SlitExternal_page </li>
    <li> \subpage inter_external_BoxExternal_page </li>
+   <li> \subpage inter_external_OrthoBoxExternal_page </li>
 </ul>
  
 All of the angle interaction classes implement a common interface,

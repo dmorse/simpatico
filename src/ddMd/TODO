@@ -10,9 +10,9 @@ Testing
 Initial Ghost Exchange
 ----------------------
 
-- Add initExchangeGhosts method to DdMd::Exchanger that distributes 
-  the groups among neighboring processors without sending many 
-  unnecessary ghosts (to decrease memory requirements).
+- Add initExchangeGhosts method to DdMd::Exchanger that distributes the 
+  groups among neighboring processors without sending many unnecessary 
+  ghosts (to decrease memory requirements).
 
 Dynamic Resizing
 ----------------
@@ -80,9 +80,9 @@ Cell List and Pair List:
 Single Processor Operation
 --------------------------
 
-- Modify Distributor, Collector, ConfigIo, and Exchanger classes 
-  to work ifndef UTIL_MPI, continue with other classes, to enable 
-  single processor operation with no MPI.
+- Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
+  work ifndef UTIL_MPI, continue with other classes, to enable single 
+  processor operation with no MPI.
 
 Atom
 ----
@@ -92,6 +92,6 @@ Atom
 Files
 -----
 
-- Modify default file format to store molecule and species indices.
+- Modify default file format to store speciesId, moleculeId, molAtomId indices.
 
 - Think about separating topology and configuration files. 
