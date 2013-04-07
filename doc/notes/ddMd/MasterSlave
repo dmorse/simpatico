@@ -1,0 +1,42 @@
+
+We could have either of two types of master class:
+
+1) Subclasses of McMd::Simulation and McMd::System
+
+   -> Advantages: Allow use of diagnostics, MC moves, species, etc.
+   -> Disadvantages: Integration is harder
+
+2) New class similar in structure to DdMd::Simulation, called DdMd::Simulation
+
+    -> Advantages: Integration is easier, all data structures can be the same.
+    -> All single processor diagnostics, etc. need to be rewritten.
+
+
+-----------------------------------------------------------------------------
+Consider option (1), using new namespace DdMs:
+
+namespace DdMs{
+
+   class MasterSimulation : public McMd::Simulation 
+   {
+      -> Very similiar to McSimulation.
+      -> Loop is simpler: Just sends packets to slaves
+   }
+ 
+   class MasterSystem : public McMd::System {
+      -> Similar to McSystem
+      -> Has potential energies similiar to McSystem
+      -> Differences?
+   }
+
+   class SlaveSimulation {
+
+      SlaveSimulation();
+      void execute();
+   
+   private:
+   
+      DdMd::Simulation simulation_;
+   }
+
+}

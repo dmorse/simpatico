@@ -85,7 +85,7 @@ namespace DdMd
                                     Vector& force) const = 0;
 
       /**
-      * Return name of interaction class (e.g., "TanhCosineExternal").
+      * Return name of interaction class (e.g., "LamellarOrderingExternal").
       */
       virtual std::string interactionClassName() const = 0;
    
