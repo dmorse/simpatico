@@ -35,7 +35,7 @@ public:
       // buffer_.allocate(4, 4);
 
       #ifdef UTIL_MPI
-      buffer_.setParamCommunicator(communicator());
+      buffer_.setIoCommunicator(communicator());
       #endif
 
       // Read parameter file

@@ -178,7 +178,7 @@ namespace McMd
          #ifdef UTIL_MPI
          Util::Log::file() << "Set to use single parameter and command files" 
                            << std::endl;
-         setParamCommunicator();
+         setIoCommunicator();
          #endif
    
       }
@@ -260,7 +260,7 @@ namespace McMd
          UTIL_THROW("Error: Called readParam when already initialized");
       }
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
+      if (hasIoCommunicator()) {
          UTIL_THROW("Error: Has a param communicator in loadParameters");
       }
       #endif
@@ -313,7 +313,7 @@ namespace McMd
          // Read one command file, after reading multiple restart files.
          Util::Log::file() << "Set to use a single command file" 
                            << std::endl;
-         setParamCommunicator();
+         setIoCommunicator();
       }
       #endif
       #endif
@@ -362,10 +362,10 @@ namespace McMd
 
          #ifdef UTIL_MPI
          // Read a command line, and broadcast if necessary.
-         if (!hasParamCommunicator() || isParamIoProcessor()) {
+         if (!hasIoCommunicator() || isIoProcessor()) {
             getNextLine(in, line);
          }
-         if (hasParamCommunicator()) {
+         if (hasIoCommunicator()) {
             bcast<std::string>(communicator(), line, 0);
          }
 

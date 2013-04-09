@@ -26,7 +26,7 @@ namespace Util
    */
    void Begin::readParam(std::istream &in)
    {
-      if (isParamIoProcessor()) {
+      if (isIoProcessor()) {
          // Read label
          std::string actual;
          in >> actual;

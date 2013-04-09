@@ -58,7 +58,7 @@ namespace Util
    }
 
    #ifdef UTIL_MPI
-   void ParamComponent::setParamCommunicator(MPI::Intracomm& communicator)
+   void ParamComponent::setIoCommunicator(MPI::Intracomm& communicator)
    {  io_.setCommunicator(communicator); }
    #endif
 

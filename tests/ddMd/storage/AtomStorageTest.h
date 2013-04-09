@@ -33,7 +33,7 @@ public:
    virtual void setUp()
    { 
       #ifdef UTIL_MPI 
-      storage_.setParamCommunicator(communicator());
+      storage_.setIoCommunicator(communicator());
       #endif
 
       openFile("in/AtomStorage"); 

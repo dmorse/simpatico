@@ -91,7 +91,7 @@ namespace McMd
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
  
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
+      if (hasIoCommunicator()) {
          shifts_.allocate(nProcs_);
          shifts_[nProcs_-1]=0.0;
          readDArray<double>(in, "shifts", shifts_, nProcs_-1);
@@ -124,7 +124,7 @@ namespace McMd
       loadParameter<int>(ar,"nSamplePerBlock", nSamplePerBlock_);
  
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
+      if (hasIoCommunicator()) {
          shifts_.allocate(nProcs_);
          shifts_[nProcs_-1] = 0.0;
          loadDArray<double>(ar, "shifts", shifts_, nProcs_-1);

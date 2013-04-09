@@ -83,12 +83,12 @@ namespace Util
    /*
    * Set an MPI communicator for this ParamComposite and all descendants.
    */
-   void ParamComposite::setParamCommunicator(MPI::Intracomm& communicator)
+   void ParamComposite::setIoCommunicator(MPI::Intracomm& communicator)
    {
-      ParamComponent::setParamCommunicator(communicator);
+      ParamComponent::setIoCommunicator(communicator);
       if (size_ > 0) {
          for (int i=0; i < size_; ++i) {
-            list_[i]->setParamCommunicator(communicator);
+            list_[i]->setIoCommunicator(communicator);
          }
       }
    }
@@ -167,8 +167,8 @@ namespace Util
       isLeaf_.push_back(false);
       ++size_;
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         child.setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         child.setIoCommunicator(ioCommunicator());
       }
       #endif
    }
@@ -208,8 +208,8 @@ namespace Util
       ptr->setIndent(*this, false);
       ++size_;
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -238,8 +238,8 @@ namespace Util
       ptr->setIndent(*this, false);
       ++size_;
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -267,8 +267,8 @@ namespace Util
       isLeaf_.push_back(true);
       ++size_;
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;

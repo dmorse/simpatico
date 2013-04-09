@@ -98,7 +98,7 @@ namespace Util
    template <class Type>
    void DMatrixParam<Type>::readParam(std::istream &in)
    {
-      if (isParamIoProcessor()) {
+      if (isIoProcessor()) {
          int i, j;
          int m = matrixPtr_->capacity1();
          int n = matrixPtr_->capacity2();
@@ -113,10 +113,10 @@ namespace Util
          }
       }
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
+      if (hasIoCommunicator()) {
          int m = matrixPtr_->capacity1();
          int n = matrixPtr_->capacity2();
-         bcast<Type>(paramCommunicator(), *matrixPtr_, m, n, 0); 
+         bcast<Type>(ioCommunicator(), *matrixPtr_, m, n, 0); 
       }
       #endif
    }
@@ -152,17 +152,17 @@ namespace Util
    template <class Type>
    void DMatrixParam<Type>::load(Serializable::IArchive& ar)
    {
-      if (isParamIoProcessor()) {
+      if (isIoProcessor()) {
          ar >> *matrixPtr_;
          if (ParamComponent::echo()) {
             writeParam(Log::file());
          }
       }
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
+      if (hasIoCommunicator()) {
          int m = matrixPtr_->capacity1();
          int n = matrixPtr_->capacity2();
-         bcast<Type>(paramCommunicator(), *matrixPtr_, m, n, 0); 
+         bcast<Type>(ioCommunicator(), *matrixPtr_, m, n, 0); 
       }
       #endif
    }

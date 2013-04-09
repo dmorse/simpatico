@@ -140,12 +140,12 @@ namespace Util
       *
       * \param communicator MPI Intra-communicator to use for input
       */
-      void setParamCommunicator(MPI::Intracomm& communicator);
+      void setIoCommunicator(MPI::Intracomm& communicator);
 
       /**
       * Does this factory have a param communicator?
       */
-      bool hasParamCommunicator() const;
+      bool hasIoCommunicator() const;
       #endif
 
    private:
@@ -178,7 +178,7 @@ namespace Util
    * Set the param communicator.
    */
    template <typename Data>
-   void Factory<Data>::setParamCommunicator(MPI::Intracomm& communicator)
+   void Factory<Data>::setIoCommunicator(MPI::Intracomm& communicator)
    {
       if (paramFileIo_.hasCommunicator()) {
          if (&paramFileIo_.communicator() != &communicator) {
@@ -193,7 +193,7 @@ namespace Util
    * Does thus factory have a param communicator?
    */
    template <typename Data>
-   bool Factory<Data>::hasParamCommunicator() const
+   bool Factory<Data>::hasIoCommunicator() const
    {  return paramFileIo_.hasCommunicator(); }
    #endif
 
@@ -220,9 +220,9 @@ namespace Util
       bool         hasData = false; // initialized to avoid compiler warning
 
       #ifdef UTIL_MPI
-      // Set paramCommunicator to that of parent, if any.
-      if (parent.hasParamCommunicator()) {
-         setParamCommunicator(parent.paramCommunicator());
+      // Set ioCommunicator to that of parent, if any.
+      if (parent.hasIoCommunicator()) {
+         setIoCommunicator(parent.ioCommunicator());
       }
       #endif
 
@@ -304,9 +304,9 @@ namespace Util
                                    std::string& className)
    {
       #ifdef UTIL_MPI
-      // Set paramCommunicator to that of parent, if any.
-      if (parent.hasParamCommunicator()) {
-         setParamCommunicator(parent.paramCommunicator());
+      // Set ioCommunicator to that of parent, if any.
+      if (parent.hasIoCommunicator()) {
+         setIoCommunicator(parent.ioCommunicator());
       }
       #endif
 

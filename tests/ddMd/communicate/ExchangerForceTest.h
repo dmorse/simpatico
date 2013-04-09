@@ -155,31 +155,31 @@ public:
       #ifdef UTIL_MPI
       // Set communicators
       domain.setGridCommunicator(communicator());
-      domain.setParamCommunicator(communicator());
-      buffer.setParamCommunicator(communicator());
-      configIo.setParamCommunicator(communicator());
-      random.setParamCommunicator(communicator());
-      atomStorage.setParamCommunicator(communicator());
-      pairPotential.setParamCommunicator(communicator());
-      bondStorage.setParamCommunicator(communicator());
+      domain.setIoCommunicator(communicator());
+      buffer.setIoCommunicator(communicator());
+      configIo.setIoCommunicator(communicator());
+      random.setIoCommunicator(communicator());
+      atomStorage.setIoCommunicator(communicator());
+      pairPotential.setIoCommunicator(communicator());
+      bondStorage.setIoCommunicator(communicator());
       #ifdef INTER_ANGLE
-      angleStorage.setParamCommunicator(communicator());
+      angleStorage.setIoCommunicator(communicator());
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralStorage.setParamCommunicator(communicator());
+      dihedralStorage.setIoCommunicator(communicator());
       #endif
       #ifdef TEST_EXCHANGER_FORCE_BOND
       if (hasBondPotential) {
-         bondPotential.setParamCommunicator(communicator());
+         bondPotential.setIoCommunicator(communicator());
       }
       #ifdef INTER_ANGLE
       if (hasAnglePotential) {
-         anglePotential.setParamCommunicator(communicator());
+         anglePotential.setIoCommunicator(communicator());
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (hasDihedralPotential) {
-         dihedralPotential.setParamCommunicator(communicator());
+         dihedralPotential.setIoCommunicator(communicator());
       }
       #endif
       #endif // TEST_EXCHANGER_FORCE_BOND

@@ -35,7 +35,7 @@ public:
       int value;
 
       ScalarParam<int> param("MyLabel", value);
-      param.setParamCommunicator(communicator());
+      param.setIoCommunicator(communicator());
       if (mpiRank() == 0)
          in.open("in/ScalarParamInt");
       param.readParam(in);

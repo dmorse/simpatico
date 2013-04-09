@@ -191,7 +191,7 @@ namespace McMd
       Diagnostic::serialize(ar, version);
       ar & nSamplePerBlock_;
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
+      if (hasIoCommunicator()) {
          ar & shifts_;
       } else {
          ar & shift_;

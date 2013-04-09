@@ -61,6 +61,20 @@ namespace DdMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+  
       /// \name Interaction interface
       //@{
 
@@ -305,6 +319,16 @@ namespace DdMd
       }
    }
 
+   /*
+   * Set the maximum number of atom types.
+   */
+   template <class Interaction>
+   void PairPotentialImpl<Interaction>::setNAtomType(int nAtomType)
+   {  interaction().setNAtomType(nAtomType); }
+
+   /*
+   * Read parameters from file
+   */
    template <class Interaction>
    void PairPotentialImpl<Interaction>::readParameters(std::istream& in)
    {
@@ -314,12 +338,28 @@ namespace DdMd
       readPairListParam(in);
    }
 
-   /**
-   * Set the maximum number of atom types.
+   /*
+   * Load internal state from an archive.
    */
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::setNAtomType(int nAtomType)
-   {  interaction().setNAtomType(nAtomType); }
+   void 
+   PairPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
+   {
+      bool nextIndent = false;
+      addParamComposite(interaction(), nextIndent);
+      interaction().loadParameters(ar);
+      // loadPairListParam(ar);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   template <class Interaction>
+   void PairPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
+   {  
+      interaction().save(ar); 
+      // savePairListParam(ar);
+   }
 
    /*
    * Return pair energy for a single pair.
@@ -327,7 +367,7 @@ namespace DdMd
    template <class Interaction> double 
    PairPotentialImpl<Interaction>::pairEnergy(double rsq, 
                                         int iAtomType, int jAtomType) const
-   { return interaction().energy(rsq, iAtomType, jAtomType); }
+   {  return interaction().energy(rsq, iAtomType, jAtomType); }
 
    /*
    * Return force / separation for a single pair.

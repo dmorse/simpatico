@@ -153,7 +153,7 @@ namespace McMd
    /*
    * Set an MPI job to read a single parameter file, from std::cin.
    */
-   void Simulation::setParamCommunicator(MPI::Intracomm& communicator)
+   void Simulation::setIoCommunicator(MPI::Intracomm& communicator)
    {
       if (communicatorPtr_ == 0) {
          UTIL_THROW("No communicator was passed to constructor");
@@ -162,14 +162,14 @@ namespace McMd
          UTIL_THROW("ParamCcommunicator must be the one passed to constructor");
       }
       fileMaster_.setParamFileStdIn();
-      ParamComponent::setParamCommunicator(communicator);
+      ParamComponent::setIoCommunicator(communicator);
    }
 
    /*
    * Set an MPI job to read a single parameter file, from std::cin.
    */
-   void Simulation::setParamCommunicator()
-   {  Simulation::setParamCommunicator(communicator()); }
+   void Simulation::setIoCommunicator()
+   {  Simulation::setIoCommunicator(communicator()); }
    #endif
 
    /*

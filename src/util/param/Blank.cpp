@@ -29,7 +29,7 @@ namespace Util
    */
    void Blank::readParam(std::istream &in)
    {
-      if (isParamIoProcessor()) {
+      if (isIoProcessor()) {
          char buf[255];
          in.getline(buf,255);
          if (ParamComponent::echo()) {

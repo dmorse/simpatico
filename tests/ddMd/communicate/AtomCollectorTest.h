@@ -52,10 +52,10 @@ public:
       #ifdef UTIL_MPI
       // Set communicators
       domain.setGridCommunicator(communicator());
-      domain.setParamCommunicator(communicator());
-      storage.setParamCommunicator(communicator());
-      buffer.setParamCommunicator(communicator());
-      distributor.setParamCommunicator(communicator());
+      domain.setIoCommunicator(communicator());
+      storage.setIoCommunicator(communicator());
+      buffer.setIoCommunicator(communicator());
+      distributor.setIoCommunicator(communicator());
       #else
       domain.setRank(0);
       #endif

@@ -143,19 +143,19 @@ namespace McMd
       * Call this method before readParam() to allow a single parameter
       * and command file to be used in multi-processor free energy 
       * perturbation simulations, and to read the parameter file from
-      * std in. It calls Util::ParamComposite:setParamCommunicator()
+      * std in. It calls Util::ParamComposite:setIoCommunicator()
       * and Util::FileMaster::setParamFileStdIn().
       *
       * \param communicator MPI communicator used for parameter file.
       */
-      virtual void setParamCommunicator(MPI::Intracomm& communicator);
+      virtual void setIoCommunicator(MPI::Intracomm& communicator);
 
       /**
       * Set MPI job to read one parameter file and one command file.
       *
-      * Equivalent to Simulation::setParamCommunicator(communicator()).
+      * Equivalent to Simulation::setIoCommunicator(communicator()).
       */
-      void setParamCommunicator();
+      void setIoCommunicator();
       #endif
 
       /**

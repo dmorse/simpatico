@@ -48,7 +48,19 @@ namespace DdMd
       ~GroupStorage();
 
       /**
+      * Set parameters, allocate memory and initialize.
+      *
+      * Call either this or readParameters to initialize, but not both.
+      *
+      * \param capacity      max number of groups owned by processor.
+      * \param totalCapacity max number of groups on all processors.
+      */
+      void initialize(int capacity, int totalCapacity);
+
+      /**
       * Read parameters, allocate memory and initialize.
+      *
+      * Call either this or initialize, but not both.
       *
       * Parameter file format:
       *  - capacity      [int]  max number of groups owned by processor.
@@ -59,13 +71,19 @@ namespace DdMd
       virtual void readParameters(std::istream& in);
 
       /**
-      * Set parameters, allocate memory and initialize.
+      * Load internal state from an archive.
       *
-      * \param capacity      max number of groups owned by processor.
-      * \param totalCapacity max number of groups on all processors.
+      * \param ar input/loading archive
       */
-      void initialize(int capacity, int totalCapacity);
+      virtual void loadParameters(Serializable::IArchive &ar);
 
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+  
       /// \name Group Management
       //@{
 
@@ -366,6 +384,17 @@ namespace DdMd
    {}
 
    /*
+   * Set parameters and allocate memory.
+   */
+   template <int N>
+   void GroupStorage<N>::initialize(int capacity, int totalCapacity)
+   {
+      capacity_      = capacity;
+      totalCapacity_ = totalCapacity;
+      allocate();
+   }
+
+   /*
    * Read parameters and allocate memory.
    */
    template <int N>
@@ -377,14 +406,24 @@ namespace DdMd
    }
 
    /*
-   * Set parameters and allocate memory.
+   * Load parameters from input archive and allocate memory.
    */
    template <int N>
-   void GroupStorage<N>::initialize(int capacity, int totalCapacity)
+   void GroupStorage<N>::loadParameters(Serializable::IArchive& ar)
    {
-      capacity_      = capacity;
-      totalCapacity_ = totalCapacity;
+      loadParameter<int>(ar, "capacity", capacity_);
+      loadParameter<int>(ar, "totalCapacity", totalCapacity_);
       allocate();
+   }
+
+   /*
+   * Save parameters to output archive.
+   */
+   template <int N>
+   void GroupStorage<N>::save(Serializable::OArchive& ar)
+   {
+      ar & capacity_;
+      ar & totalCapacity_;
    }
 
    /*

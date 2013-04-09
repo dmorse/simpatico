@@ -169,10 +169,10 @@ namespace McMd
 
          #ifdef UTIL_MPI
          // Read a command line, and broadcast if necessary.
-         if (!hasParamCommunicator() || isParamIoProcessor()) {
+         if (!hasIoCommunicator() || isIoProcessor()) {
             getNextLine(in, line);
          }
-         if (hasParamCommunicator()) {
+         if (hasIoCommunicator()) {
             bcast<std::string>(communicator(), line, 0);
          }
 

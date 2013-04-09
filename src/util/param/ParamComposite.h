@@ -204,7 +204,7 @@ namespace Util
       *
       * This method recursively sets the ParamCommunicator for all children.
       */
-      virtual void setParamCommunicator(MPI::Intracomm& communicator);
+      virtual void setIoCommunicator(MPI::Intracomm& communicator);
       #endif
 
       //@}
@@ -576,8 +576,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI 
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -623,8 +623,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -671,8 +671,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -719,8 +719,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -767,8 +767,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -815,8 +815,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;

@@ -51,7 +51,7 @@ public:
       IntVector value8;
       AManager  manager;
 
-      object().setParamCommunicator(communicator()); 
+      object().setIoCommunicator(communicator()); 
       //ParamComponent::setEcho(true);
 
       openFile("in/ParamComposite");
@@ -81,7 +81,7 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      object().setParamCommunicator(communicator()); 
+      object().setIoCommunicator(communicator()); 
       //ParamComponent::setEcho(true);
 
       openFile("in/ParamComposite");

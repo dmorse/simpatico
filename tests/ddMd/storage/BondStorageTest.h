@@ -30,7 +30,7 @@ public:
    virtual void setUp()
    { 
       #ifdef UTIL_MPI 
-      bondStorage_.setParamCommunicator(communicator());
+      bondStorage_.setIoCommunicator(communicator());
       #endif
 
       openFile("in/BondStorage"); 

@@ -108,7 +108,7 @@ int main(int argc, char **argv)
 
       #ifdef UTIL_MPI
       Log::file() << "Set to read parameters from a single file" << std::endl;
-      simulation.setParamCommunicator();
+      simulation.setIoCommunicator();
       #endif
 
    }

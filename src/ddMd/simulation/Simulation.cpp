@@ -166,7 +166,7 @@ namespace DdMd
       Util::IntVector::commitMpiType();
       AtomType::initStatic();
 
-      setParamCommunicator(communicator);
+      setIoCommunicator(communicator);
       domain_.setGridCommunicator(communicator);
       #else
       domain_.setRank(0);
@@ -325,7 +325,7 @@ namespace DdMd
          #endif
     
          // Set param and grid communicators
-         setParamCommunicator(communicator_);
+         setIoCommunicator(communicator_);
          domain_.setGridCommunicator(communicator_);
          fileMaster().setDirectoryId(systemId);
       
@@ -564,11 +564,11 @@ namespace DdMd
 
          #ifdef UTIL_MPI
          // Read and broadcast command line
-         if (!hasParamCommunicator() || isParamIoProcessor()) {
+         if (!hasIoCommunicator() || isIoProcessor()) {
             getNextLine(in, line);
             Log::file() << line << std::endl;
          } 
-         if (hasParamCommunicator()) {
+         if (hasIoCommunicator()) {
             bcast<std::string>(domain_.communicator(), line, 0);
          }
          #else // not UTIL_MPI

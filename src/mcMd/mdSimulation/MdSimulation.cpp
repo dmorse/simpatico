@@ -145,7 +145,7 @@ namespace McMd
          #ifdef UTIL_MPI
          Util::Log::file() << "Set to read parameters from a single file" 
                            << std::endl;
-         setParamCommunicator();
+         setIoCommunicator();
          #endif
    
       }
@@ -255,10 +255,10 @@ namespace McMd
       while (readNext) {
 
          #ifdef UTIL_MPI
-         if (!hasParamCommunicator() || isParamIoProcessor()) {
+         if (!hasIoCommunicator() || isIoProcessor()) {
             getNextLine(in, line);
          } 
-         if (hasParamCommunicator()) {
+         if (hasIoCommunicator()) {
             bcast<std::string>(communicator(), line, 0);
          }
          inBuffer.clear();

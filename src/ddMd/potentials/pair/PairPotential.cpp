@@ -81,6 +81,9 @@ namespace DdMd
    {  reverseUpdateFlag_ = reverseUpdateFlag; }
    #endif
 
+   /*
+   * Read parameters for PairList and allocate memory.  
+   */
    void PairPotential::readPairListParam(std::istream& in)
    {
       read<double>(in, "skin", skin_);
@@ -88,6 +91,9 @@ namespace DdMd
       read<Boundary>(in, "maxBoundary", maxBoundary_);
       cutoff_ = maxPairCutoff() + skin_;
 
+      allocate();
+
+      #if 0
       if (UTIL_ORTHOGONAL) {
          boundary() = maxBoundary_;
          //boundary().setOrthorhombic(maxBoundary_.lengths());
@@ -114,6 +120,63 @@ namespace DdMd
       int totalCapacity = localCapacity + storage().ghostCapacity();
       cellList_.allocate(totalCapacity, lower, upper, cutoffs);
       pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
+      #endif
+   }
+
+   /*
+   * Read parameters for PairList and allocate memory.  
+   */
+   void PairPotential::loadPairListParam(Serializable::IArchive& ar)
+   {
+      loadParameter<double>(ar, "skin", skin_);
+      loadParameter<int>(ar, "pairCapacity", pairCapacity_);
+      loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
+      ar & cutoff_;
+      //cutoff_ = maxPairCutoff() + skin_;
+      ar & methodId_;
+
+      allocate();
+
+      #if 0
+      if (UTIL_ORTHOGONAL) {
+         boundary() = maxBoundary_;
+         //boundary().setOrthorhombic(maxBoundary_.lengths());
+         // Above is necessary because the domain uses a reference to the
+         // boundary to calculate domain bounds, if (UTIL_ORTHOGONAL).
+      }
+
+      // Set cutoffs, and upper and lower bound of the processor domain.
+      Vector lower;
+      Vector upper;
+      Vector cutoffs;
+      for (int i = 0; i < Dimension; ++i) {
+         lower[i] = domain().domainBound(i, 0);
+         upper[i] = domain().domainBound(i, 1);
+         if (UTIL_ORTHOGONAL) {
+            cutoffs[i] = cutoff_;
+         } else {
+            cutoffs[i] = cutoff_/maxBoundary_.length(i);
+         }
+      }
+
+      // Allocate CellList and PairList
+      int localCapacity = storage().atomCapacity();
+      int totalCapacity = localCapacity + storage().ghostCapacity();
+      cellList_.allocate(totalCapacity, lower, upper, cutoffs);
+      pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
+      #endif
+   }
+
+   /*
+   * Save parameters to output/saving Archive.
+   */
+   void PairPotential::savePairListParam(Serializable::OArchive& ar)
+   {
+      ar & skin_;
+      ar & pairCapacity_;
+      ar & maxBoundary_;
+      ar & cutoff_;
+      ar & methodId_;
    }
 
    /*
@@ -127,6 +190,9 @@ namespace DdMd
       cutoff_ = maxPairCutoff() + skin;
       maxBoundary_ = maxBoundary;
 
+      allocate();
+
+      #if 0
       Vector cutoffs;
       Vector lower;
       Vector upper;
@@ -144,6 +210,43 @@ namespace DdMd
       int totalCapacity = localCapacity + storage().ghostCapacity();
       cellList_.allocate(totalCapacity, lower, upper, cutoffs);
       pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
+      #endif
+   }
+
+   /*
+   * Allocate memory for the cell list and pair list.
+   *
+   * On entry, cutoff_, pairCapacity_, and maxBoundary_ must be defined.
+   */
+   void PairPotential::allocate()
+   {
+      // Allocate PairList
+      int localCapacity = storage().atomCapacity();
+      pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
+
+      if (UTIL_ORTHOGONAL) {
+         boundary() = maxBoundary_;
+         // This is necessary because the domain uses a reference to the
+         // boundary to calculate domain bounds, if (UTIL_ORTHOGONAL).
+      }
+
+      // Calculate cell list cutoff lengths
+      Vector cutoffs;
+      Vector lower;
+      Vector upper;
+      for (int i = 0; i < Dimension; ++i) {
+         lower[i] = domain().domainBound(i, 0);
+         upper[i] = domain().domainBound(i, 1);
+         if (UTIL_ORTHOGONAL) {
+            cutoffs[i] = cutoff_;
+         } else {
+            cutoffs[i] = cutoff_/boundary().length(i);
+         }
+      }
+
+      // Allocate CellList
+      int totalCapacity = localCapacity + storage().ghostCapacity();
+      cellList_.allocate(totalCapacity, lower, upper, cutoffs);
    }
 
    /*
@@ -330,7 +433,7 @@ namespace DdMd
       #endif
    }
 
-   /**
+   /*
    * Return twice the number of pairs within the specified cutoff.
    * 
    * This method should only be called on the rank 0 processor. The

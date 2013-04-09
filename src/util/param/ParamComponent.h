@@ -99,7 +99,7 @@ namespace Util
       /**
       * Set an MPI communicator for parameter IO.
       */
-      virtual void setParamCommunicator(MPI::Intracomm& communicator);
+      virtual void setIoCommunicator(MPI::Intracomm& communicator);
       #endif
 
       /**
@@ -160,20 +160,20 @@ namespace Util
       *
       * Always returns true if compiled without UTIL_MPI defined.
       */
-      bool isParamIoProcessor() const
+      bool isIoProcessor() const
       {  return io_.isIoProcessor(); }
 
       #ifdef UTIL_MPI
       /**
       * Has an MPI communicator been set for parameter input?
       */
-      bool hasParamCommunicator() const
+      bool hasIoCommunicator() const
       {  return io_.hasCommunicator(); }
 
       /**
       * Return the parameter communicator.
       */
-      MPI::Intracomm& paramCommunicator() const
+      MPI::Intracomm& ioCommunicator() const
       {  return io_.communicator(); }
       #endif
 
@@ -195,7 +195,7 @@ namespace Util
 
       /*
       * Note: This friend declaration allows the Factory::readObject() 
-      * method to set the Factory paramCommunicator to be that of the 
+      * method to set the Factory ioCommunicator to be that of the 
       * parent ParamComposite. 
       */
       #endif

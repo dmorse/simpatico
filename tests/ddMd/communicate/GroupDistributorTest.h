@@ -72,19 +72,19 @@ public:
       #ifdef UTIL_MPI
       // Set communicators
       domain.setGridCommunicator(communicator());
-      domain.setParamCommunicator(communicator());
-      buffer.setParamCommunicator(communicator());
-      atomStorage.setParamCommunicator(communicator());
-      atomDistributor.setParamCommunicator(communicator());
-      bondStorage.setParamCommunicator(communicator());
-      bondDistributor.setParamCommunicator(communicator());
+      domain.setIoCommunicator(communicator());
+      buffer.setIoCommunicator(communicator());
+      atomStorage.setIoCommunicator(communicator());
+      atomDistributor.setIoCommunicator(communicator());
+      bondStorage.setIoCommunicator(communicator());
+      bondDistributor.setIoCommunicator(communicator());
       #ifdef INTER_ANGLE
-      angleStorage.setParamCommunicator(communicator());
-      angleDistributor.setParamCommunicator(communicator());
+      angleStorage.setIoCommunicator(communicator());
+      angleDistributor.setIoCommunicator(communicator());
       #endif
       #ifdef INTER_DIHEDRAL
-      //dihedralStorage.setParamCommunicator(communicator());
-      //dihedralDistributor.setParamCommunicator(communicator());
+      //dihedralStorage.setIoCommunicator(communicator());
+      //dihedralDistributor.setIoCommunicator(communicator());
       #endif
       #else // ifndef UTIL_MPI
       domain.setRank(0);
@@ -304,19 +304,19 @@ public:
       #ifdef UTIL_MPI
       // Set communicators
       domain.setGridCommunicator(communicator());
-      domain.setParamCommunicator(communicator());
-      buffer.setParamCommunicator(communicator());
-      atomStorage.setParamCommunicator(communicator());
-      atomDistributor.setParamCommunicator(communicator());
-      bondStorage.setParamCommunicator(communicator());
-      bondDistributor.setParamCommunicator(communicator());
+      domain.setIoCommunicator(communicator());
+      buffer.setIoCommunicator(communicator());
+      atomStorage.setIoCommunicator(communicator());
+      atomDistributor.setIoCommunicator(communicator());
+      bondStorage.setIoCommunicator(communicator());
+      bondDistributor.setIoCommunicator(communicator());
       #ifdef INTER_ANGLE
-      angleStorage.setParamCommunicator(communicator());
-      angleDistributor.setParamCommunicator(communicator());
+      angleStorage.setIoCommunicator(communicator());
+      angleDistributor.setIoCommunicator(communicator());
       #endif
       #ifdef INTER_DIHEDRAL
-      //dihedralStorage.setParamCommunicator(communicator());
-      //dihedralDistributor.setParamCommunicator(communicator());
+      //dihedralStorage.setIoCommunicator(communicator());
+      //dihedralDistributor.setIoCommunicator(communicator());
       #endif
       #else // ifndef UTIL_MPI
       domain.setRank(0);
