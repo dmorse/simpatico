@@ -92,6 +92,8 @@ endif
 #-----------------------------------------------------------------------
 # Name of static library for Inter namespace.
 
-inter_LIBNAME=inter$(UTIL_SUFFIX)$(INTER_SUFFIX)
+INTER_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)
+
+inter_LIBNAME=inter$(INTER_ALL_SUFFIX)
 inter_LIB=$(LIB_DIR)/lib$(inter_LIBNAME).a
 #-----------------------------------------------------------------------
