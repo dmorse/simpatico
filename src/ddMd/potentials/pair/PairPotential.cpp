@@ -240,7 +240,7 @@ namespace DdMd
          if (UTIL_ORTHOGONAL) {
             cutoffs[i] = cutoff_;
          } else {
-            cutoffs[i] = cutoff_/boundary().length(i);
+            cutoffs[i] = cutoff_/maxBoundary_.length(i);
          }
       }
 
