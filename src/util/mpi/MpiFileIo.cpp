@@ -36,7 +36,7 @@ namespace Util
    {}
 
    #ifdef UTIL_MPI
-   void MpiFileIo::setCommunicator(MPI::Intracomm& communicator)
+   void MpiFileIo::setIoCommunicator(MPI::Intracomm& communicator)
    {
       communicatorPtr_ = &communicator; 
       if (communicator.Get_rank() == 0) {

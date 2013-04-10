@@ -180,12 +180,12 @@ namespace Util
    template <typename Data>
    void Factory<Data>::setIoCommunicator(MPI::Intracomm& communicator)
    {
-      if (paramFileIo_.hasCommunicator()) {
-         if (&paramFileIo_.communicator() != &communicator) {
+      if (paramFileIo_.hasIoCommunicator()) {
+         if (&paramFileIo_.ioCommunicator() != &communicator) {
             UTIL_THROW("Attempt to modify Factory param communicator");
          }
       } else {
-         paramFileIo_.setCommunicator(communicator);
+         paramFileIo_.setIoCommunicator(communicator);
       }
    }
 
@@ -194,7 +194,7 @@ namespace Util
    */
    template <typename Data>
    bool Factory<Data>::hasIoCommunicator() const
-   {  return paramFileIo_.hasCommunicator(); }
+   {  return paramFileIo_.hasIoCommunicator(); }
    #endif
 
    /*
@@ -232,8 +232,8 @@ namespace Util
       }
       #ifdef UTIL_MPI
       // Broadcast the full string to all processors.
-      if (paramFileIo_.hasCommunicator()) {
-         bcast<std::string>(paramFileIo_.communicator(), commentString, 0);
+      if (paramFileIo_.hasIoCommunicator()) {
+         bcast<std::string>(paramFileIo_.ioCommunicator(), commentString, 0);
       }
       // Hereafter, each processor independently processes the same string.
       #endif
@@ -317,8 +317,8 @@ namespace Util
 
       #ifdef UTIL_MPI
       // Broadcast the full string to all processors.
-      if (paramFileIo_.hasCommunicator()) {
-         bcast<std::string>(paramFileIo_.communicator(), className, 0);
+      if (paramFileIo_.hasIoCommunicator()) {
+         bcast<std::string>(paramFileIo_.ioCommunicator(), className, 0);
       }
       #endif
 

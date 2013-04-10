@@ -54,7 +54,7 @@ namespace Util
       /**
       * Set the  communicator.
       */
-      void setCommunicator(MPI::Intracomm& communicator);
+      void setIoCommunicator(MPI::Intracomm& communicator);
 
       /**
       * Clear (nullify) the  communicator.
@@ -64,12 +64,12 @@ namespace Util
       /**
       * Does this object have a  communicator?
       */
-      bool hasCommunicator() const;
+      bool hasIoCommunicator() const;
 
       /**
       * Get the  communicator.
       */
-      MPI::Intracomm& communicator() const;
+      MPI::Intracomm& ioCommunicator() const;
       #endif
 
    private:
@@ -86,21 +86,17 @@ namespace Util
 
    // Inline methods
 
-   /*
-   * Should this processor do file I/O ?
-   */
+   // Should this processor do file I/O ?
    inline bool MpiFileIo::isIoProcessor() const
    {  return isIoProcessor_; }
 
    #ifdef UTIL_MPI
-
-   inline bool MpiFileIo::hasCommunicator() const
+   // Does this processor have a communicator?
+   inline bool MpiFileIo::hasIoCommunicator() const
    {  return (communicatorPtr_ != 0); }
 
-   /*
-   * Get the  communicator.
-   */
-   inline MPI::Intracomm& MpiFileIo::communicator() const
+   // Get the communicator.
+   inline MPI::Intracomm& MpiFileIo::ioCommunicator() const
    {
       assert(communicatorPtr_);  
       return *communicatorPtr_; 

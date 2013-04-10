@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/mpi/MpiFileIo.h>          // class member
-#include <util/archives/Serializable.h>  // typedef
+#include <util/mpi/MpiFileIo.h>          // base class
+#include <util/archives/Serializable.h>  // base class (typedef)
 #include <util/global.h>
 
 #include <iostream>
@@ -28,10 +28,14 @@ namespace Util
    *
    *  \ingroup Param_Module
    */
-   class ParamComponent : public Serializable
+   class ParamComponent : public Serializable, protected MpiFileIo
    {
 
    public:
+
+      #ifdef UTIL_MPI
+      using MpiFileIo::setIoCommunicator;
+      #endif
 
       /*
       * Destructor.
@@ -95,13 +99,6 @@ namespace Util
       */
       std::string indent() const;
 
-      #ifdef UTIL_MPI
-      /**
-      * Set an MPI communicator for parameter IO.
-      */
-      virtual void setIoCommunicator(MPI::Intracomm& communicator);
-      #endif
-
       /**
       * Serialize this ParamComponent as a string.
       *
@@ -155,35 +152,15 @@ namespace Util
       */
       ParamComponent(const ParamComponent& other);
 
-      /**
-      * Should this processor do parameter file IO?
-      *
-      * Always returns true if compiled without UTIL_MPI defined.
-      */
-      bool isIoProcessor() const
-      {  return io_.isIoProcessor(); }
-
-      #ifdef UTIL_MPI
-      /**
-      * Has an MPI communicator been set for parameter input?
-      */
-      bool hasIoCommunicator() const
-      {  return io_.hasCommunicator(); }
-
-      /**
-      * Return the parameter communicator.
-      */
-      MPI::Intracomm& ioCommunicator() const
-      {  return io_.communicator(); }
-      #endif
-
    private:
 
       /// Indentation string, a string of spaces.
       std::string indent_;
 
+      #if 0
       /// Object to identify if this processor can do file Io.
       MpiFileIo   io_;
+      #endif
 
       /// Parameter to enable (true) or disable (false) echoing.
       static bool echo_;
