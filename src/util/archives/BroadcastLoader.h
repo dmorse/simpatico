@@ -167,7 +167,7 @@ namespace Util
       }
       #ifdef UTIL_MPI
       if (hasIoCommunicator()) {
-         bcast<Type>(ioCommunicator(), array, N, 0); 
+         bcast<Type>(ioCommunicator(), &(array[0]), N, 0); 
       }
       #endif
    }
@@ -189,7 +189,7 @@ namespace Util
       }
       #ifdef UTIL_MPI
       if (hasIoCommunicator()) {
-         bcast<Type>(ioCommunicator(), array, n*m, 0); 
+         bcast<Type>(ioCommunicator(), &(array[0]), n*m, 0); 
       }
       #endif
    }
@@ -206,8 +206,6 @@ namespace Util
       }
       #ifdef UTIL_MPI
       if (hasIoCommunicator()) {
-         int m = matrix.capacity1();
-         int n = matrix.capacity2();
          bcast<Type>(ioCommunicator(), matrix, m, n, 0); 
       }
       #endif

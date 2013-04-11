@@ -89,7 +89,7 @@ namespace Util
    template <class Type>
    void DArrayParam<Type>::readParam(std::istream &in)
    {
-
+      // Preconditions
       if (!(arrayPtr_->isAllocated())) {
          UTIL_THROW("Cannot read unallocated DArray");
       }
@@ -151,6 +151,14 @@ namespace Util
    template <class Type>
    void DArrayParam<Type>::load(Serializable::IArchive& ar)
    {
+      // Preconditions
+      if (!(arrayPtr_->isAllocated())) {
+         UTIL_THROW("Cannot write unallocated DArray");
+      }
+      if (arrayPtr_->capacity() < n_) {
+         UTIL_THROW("Error: DArray capacity < n in writeParam");
+      }
+
       if (isIoProcessor()) {
          ar >> *arrayPtr_;
          if (arrayPtr_->capacity() < n_) {
@@ -180,6 +188,7 @@ namespace Util
       if (arrayPtr_->capacity() < n_) {
          UTIL_THROW("Error: DArray capacity < n");
       }
+
       ar << *arrayPtr_;
    }
 
