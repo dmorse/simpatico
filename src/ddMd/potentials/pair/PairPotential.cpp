@@ -37,7 +37,6 @@ namespace DdMd
       methodId_(0),
       nPair_(0),
       pairEnergies_()
-      //reverseUpdateFlag_(false)
    {  setClassName("PairPotential"); } 
 
    /*
@@ -53,7 +52,6 @@ namespace DdMd
       methodId_(0),
       nPair_(0),
       pairEnergies_()
-      //reverseUpdateFlag_(false)
    {  setClassName("PairPotential"); } 
 
    /*
@@ -73,13 +71,19 @@ namespace DdMd
    PairPotential::~PairPotential()
    {}
 
-   #if 0
    /*
-   * Set flag to specify if reverse communication is enabled.
+   * Allocate memory for the cell list.
    */
-   void PairPotential::setReverseUpdateFlag(bool reverseUpdateFlag)
-   {  reverseUpdateFlag_ = reverseUpdateFlag; }
-   #endif
+   void PairPotential::initialize(const Boundary& maxBoundary, double skin, 
+                                  int pairCapacity)
+   {
+      skin_ = skin;
+      pairCapacity_ = pairCapacity;
+      cutoff_ = maxPairCutoff() + skin;
+      maxBoundary_ = maxBoundary;
+
+      allocate();
+   }
 
    /*
    * Read parameters for PairList and allocate memory.  
@@ -92,37 +96,9 @@ namespace DdMd
       cutoff_ = maxPairCutoff() + skin_;
 
       allocate();
-
-      #if 0
-      if (UTIL_ORTHOGONAL) {
-         boundary() = maxBoundary_;
-         //boundary().setOrthorhombic(maxBoundary_.lengths());
-         // Above is necessary because the domain uses a reference to the
-         // boundary to calculate domain bounds, if (UTIL_ORTHOGONAL).
-      }
-
-      // Set cutoffs, and upper and lower bound of the processor domain.
-      Vector lower;
-      Vector upper;
-      Vector cutoffs;
-      for (int i = 0; i < Dimension; ++i) {
-         lower[i] = domain().domainBound(i, 0);
-         upper[i] = domain().domainBound(i, 1);
-         if (UTIL_ORTHOGONAL) {
-            cutoffs[i] = cutoff_;
-         } else {
-            cutoffs[i] = cutoff_/maxBoundary_.length(i);
-         }
-      }
-
-      // Allocate CellList and PairList
-      int localCapacity = storage().atomCapacity();
-      int totalCapacity = localCapacity + storage().ghostCapacity();
-      cellList_.allocate(totalCapacity, lower, upper, cutoffs);
-      pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
-      #endif
    }
 
+   #if 0
    /*
    * Read parameters for PairList and allocate memory.  
    */
@@ -178,40 +154,7 @@ namespace DdMd
       ar & cutoff_;
       ar & methodId_;
    }
-
-   /*
-   * Allocate memory for the cell list.
-   */
-   void PairPotential::initialize(const Boundary& maxBoundary, double skin, 
-                                  int pairCapacity)
-   {
-      skin_ = skin;
-      pairCapacity_ = pairCapacity;
-      cutoff_ = maxPairCutoff() + skin;
-      maxBoundary_ = maxBoundary;
-
-      allocate();
-
-      #if 0
-      Vector cutoffs;
-      Vector lower;
-      Vector upper;
-      for (int i = 0; i < Dimension; ++i) {
-         lower[i] = domain().domainBound(i, 0);
-         upper[i] = domain().domainBound(i, 1);
-         if (UTIL_ORTHOGONAL) {
-            cutoffs[i] = cutoff_;
-         } else {
-            cutoffs[i] = cutoff_/maxBoundary.length(i);
-         }
-      }
-
-      int localCapacity = storage().atomCapacity();
-      int totalCapacity = localCapacity + storage().ghostCapacity();
-      cellList_.allocate(totalCapacity, lower, upper, cutoffs);
-      pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
-      #endif
-   }
+   #endif
 
    /*
    * Allocate memory for the cell list and pair list.
@@ -304,7 +247,6 @@ namespace DdMd
       if (storage().isCartesian()) {
          UTIL_THROW("Coordinates are Cartesian exiting buildCellList");
       }
-
    }
 
    /*

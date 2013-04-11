@@ -61,6 +61,7 @@ namespace DdMd
       */
       virtual void readParameters(std::istream& in);
 
+      #if 0
       /**
       * Load internal state from an archive.
       *
@@ -74,6 +75,7 @@ namespace DdMd
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
+      #endif
   
       /// \name Interaction interface
       //@{
@@ -338,6 +340,7 @@ namespace DdMd
       readPairListParam(in);
    }
 
+   #if 0
    /*
    * Load internal state from an archive.
    */
@@ -360,6 +363,7 @@ namespace DdMd
       interaction().save(ar); 
       // savePairListParam(ar);
    }
+   #endif
 
    /*
    * Return pair energy for a single pair.
@@ -521,6 +525,7 @@ namespace DdMd
          j = pairList_.nPair();  // j = # of remaining unprocessed pairs
          while (j) {
 
+            // Determine n = number of pairs in this block
             n = std::min(PAIR_BLOCK_SIZE, j);
 
             // Calculate separation for each pair in block
@@ -535,8 +540,9 @@ namespace DdMd
                ++iter;
             }
 
-            // Identify pairs with rsq < cutoff
-            m = 0; // Number of pairs with rsq < cutoff
+            // Identify pairs in this block with rsq < cutoff
+            // Determine m = number of pairs with rsq < cutoff
+            m = 0; 
             for (i = 0; i < n; ++i) {
                pairPtr = &pairs_[i];
                atom0Ptr = pairPtr->ptr0;
@@ -565,8 +571,10 @@ namespace DdMd
                }
             }
 
-            j = j - n;
+            // Decrement number of remaining unprocess pairs
+            j = j - n; 
          }
+
          #ifdef UTIL_DEBUG
          if (j != 0) {
             UTIL_THROW("Error in counting");
@@ -574,10 +582,9 @@ namespace DdMd
          if (iter.notEnd()) {
             UTIL_THROW("Error in iterator");
          }
-         #endif // UTIL_DEBUG
-         #endif
+         #endif // ifdef UTIL_DEBUG
 
-         #ifndef PAIR_BLOCK_SIZE
+         #else  // ifdef PAIR_BLOCK_SIZE
          Vector f;
          for (pairList_.begin(iter); iter.notEnd(); ++iter) {
             iter.getPair(atom0Ptr, atom1Ptr);
@@ -593,7 +600,7 @@ namespace DdMd
                }
             }
          }
-         #endif
+         #endif // ifdef PAIR_BLOCK_SIZE
 
       }
    }

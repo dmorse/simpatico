@@ -282,6 +282,7 @@ namespace DdMd
       */
       void readPairListParam(std::istream& in);
 
+      #if 0
       /**
       * Load parameters for PairList from archive, and allocate memory.
       *
@@ -297,6 +298,7 @@ namespace DdMd
       * \param ar output/saving archive
       */
       virtual void savePairListParam(Serializable::OArchive &ar);
+      #endif
   
       /**
       * Get the PairList by const reference.

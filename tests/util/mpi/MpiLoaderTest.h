@@ -31,34 +31,34 @@ public:
    void testSetCommunicator() 
    {
       printMethod(TEST_FUNC);
-      TEST_ASSERT(!fileIo().hasIoCommunicator());
-      fileIo().setIoCommunicator(communicator());
-      TEST_ASSERT(fileIo().hasIoCommunicator());
-      TEST_ASSERT(&fileIo().ioCommunicator() == &communicator());
-      fileIo().clearCommunicator();
-      TEST_ASSERT(!fileIo().hasIoCommunicator());
+      TEST_ASSERT(!loader().hasIoCommunicator());
+      loader().setIoCommunicator(communicator());
+      TEST_ASSERT(loader().hasIoCommunicator());
+      TEST_ASSERT(&loader().ioCommunicator() == &communicator());
+      loader().clearCommunicator();
+      TEST_ASSERT(!loader().hasIoCommunicator());
    }
 
    void testIsIoProcessor1() 
    {
       printMethod(TEST_FUNC);
       if (mpiRank() == 0) {
-         TEST_ASSERT(fileIo().isIoProcessor());
+         TEST_ASSERT(loader().isIoProcessor());
       } else
       if (mpiRank() == 1) {
-         TEST_ASSERT(fileIo().isIoProcessor());
+         TEST_ASSERT(loader().isIoProcessor());
       }
    }
 
    void testIsIoProcessor2() 
    {
       printMethod(TEST_FUNC);
-      fileIo().setIoCommunicator(communicator());
+      loader().setIoCommunicator(communicator());
       if (mpiRank() == 0) {
-         TEST_ASSERT(fileIo().isIoProcessor());
+         TEST_ASSERT(loader().isIoProcessor());
       } else
       if (mpiRank() == 1) {
-         TEST_ASSERT(!fileIo().isIoProcessor());
+         TEST_ASSERT(!loader().isIoProcessor());
       }
    }
 
@@ -77,8 +77,8 @@ private:
 
 TEST_BEGIN(MpiLoaderTest)
 TEST_ADD(MpiLoaderTest, testSetCommunicator)
-//TEST_ADD(MpiLoaderTest, testIsIoProcessor1)
-//TEST_ADD(MpiLoaderTest, testIsIoProcessor2)
+TEST_ADD(MpiLoaderTest, testIsIoProcessor1)
+TEST_ADD(MpiLoaderTest, testIsIoProcessor2)
 TEST_END(MpiLoaderTest)
 
 #endif
