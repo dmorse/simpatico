@@ -1,5 +1,5 @@
-#ifndef UTIL_BROADCAST_LOADER_H
-#define UTIL_BROADCAST_LOADER_H
+#ifndef UTIL_MPI_LOADER_H
+#define UTIL_MPI_LOADER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,7 +9,9 @@
 */
 
 #include <util/mpi/MpiFileIo.h>          // base class
-#include <util/archives/Serializable.h>  // requires typedef
+#include <util/containers/DArray.h>      // template argument
+#include <util/containers/FArray.h>      // template argument
+#include <util/containers/DMatrix.h>     // template argument
 #include <util/global.h>
 
 
@@ -21,7 +23,8 @@ namespace Util
    *
    *  \ingroup Param_Module
    */
-   class BroadcastLoader : public MpiFileIo
+   template <class IArchive>
+   class MpiLoader : public MpiFileIo
    {
 
    public:
@@ -29,7 +32,7 @@ namespace Util
       /*
       * Constructor
       */
-      BroadcastLoader(MpiFileIo& parent)
+      MpiLoader(MpiFileIo& parent)
        : MpiFileIo(parent)
       {}
 
@@ -40,7 +43,7 @@ namespace Util
       * \param value  reference to a Type
       */
       template <typename Type>
-      void loadParameter(Serializable::IArchive &ar, Type &value);
+      void loadScalar(IArchive &ar, Type &value);
    
       /**  
       * Add a C array parameter, and load its elements.
@@ -51,7 +54,7 @@ namespace Util
       * \return reference to the new CArrayParam<Type> object
       */
       template <typename Type>
-      void loadCArray(Serializable::IArchive &ar, Type *value, int n);
+      void loadCArray(IArchive &ar, Type *value, int n);
    
       /**  
       * Load and broadcast a DArray < Type >.
@@ -61,7 +64,7 @@ namespace Util
       * \param n      number of elements
       */
       template <typename Type>
-      void loadDArray(Serializable::IArchive &ar, DArray<Type>& array, int n);
+      void loadDArray(IArchive &ar, DArray<Type>& array, int n);
    
       /**  
       * Load and broadcast a DArray < Type >.
@@ -70,7 +73,7 @@ namespace Util
       * \param array  FArray object
       */
       template <typename Type, int N>
-      void loadFArray(Serializable::IArchive &ar, FArray<Type, N >& array);
+      void loadFArray(IArchive &ar, FArray<Type, N >& array);
    
       /**  
       * Load and broadcast a 2D CArray of Type objects.
@@ -81,7 +84,7 @@ namespace Util
       * \param n      number of columns (2nd dimension)
       */
       template <typename Type> void 
-      loadCArray2D(Serializable::IArchive &ar, Type *value, int m, int n);
+      loadCArray2D(IArchive &ar, Type *value, int m, int n);
   
       /**  
       * Load and broadcast a DMatrix<Type> object.
@@ -92,16 +95,16 @@ namespace Util
       * \param n      number of columns (2nd dimension)
       */
       template <typename Type> 
-      void loadDMatrix(Serializable::IArchive &ar, DMatrix<Type>& matrix, 
-                       int m, int n);
+      void loadDMatrix(IArchive &ar, DMatrix<Type>& matrix, int m, int n);
  
    };
  
    /*  
    * Add a new ScalarParam< Type > object, and load its value.
    */
-   template <typename Type> void 
-   ParamComposite::loadScalar(Serializable::IArchive &ar, Type &value)
+   template <typename IArchive> 
+   template <typename Type> 
+   void MpiLoader<IArchive>::loadScalar(IArchive &ar, Type &value)
    {
       if (isIoProcessor()) {
          ar & value;
@@ -116,9 +119,9 @@ namespace Util
    /*  
    * Add a C array parameter, and load its elements.
    */
+   template <typename IArchive> 
    template <typename Type>
-   void
-   ParamComposite::loadCArray(Serializable::IArchive &ar, Type* value, int n)
+   void MpiLoader<IArchive>::loadCArray(IArchive &ar, Type* value, int n)
    {
       if (isIoProcessor()) {
          for (int i = 0; i < n; ++i) {
@@ -135,10 +138,10 @@ namespace Util
    /*
    * Add a DArray < Type > parameter, and load its elements.
    */
+   template <typename IArchive> 
    template <typename Type>
    void 
-   ParamComposite::loadDArray(Serializable::IArchive &ar, 
-                              DArray<Type>& array, int n)
+   MpiLoader<IArchive>::loadDArray(IArchive &ar, DArray<Type>& array, int n)
    {
       if (isIoProcessor()) {
          ar >> array;
@@ -156,9 +159,9 @@ namespace Util
    /*
    * Add and load an FArray < Type, N > fixed-size array parameter.
    */
+   template <typename IArchive> 
    template <typename Type, int N>
-   void ParamComposite::loadFArray(Serializable::IArchive &ar, 
-                                   FArray<Type, N >& array)
+   void MpiLoader<IArchive>::loadFArray(IArchive &ar, FArray<Type, N >& array)
    {
       if (isIoProcessor()) {
          for (int i = 0; i < N; ++i) {
@@ -175,9 +178,10 @@ namespace Util
    /*
    * Add and load a CArray2DParam < Type > C two-dimensional array parameter.
    */
+   template <typename IArchive> 
    template <typename Type> 
-   void ParamComposite::loadCArray2D(Serializable::IArchive &ar, 
-                                     Type *array, int m, int n)
+   void 
+   MpiLoader<IArchive>::loadCArray2D(IArchive &ar, Type *array, int m, int n)
    {
       if (isIoProcessor()) {
          int i, j; 
@@ -197,9 +201,10 @@ namespace Util
    /*
    * Add and load a DMatrix < Type > C two-dimensional matrix parameter.
    */
+   template <typename IArchive> 
    template <typename Type> 
-   void ParamComposite::loadDMatrix(Serializable::IArchive &ar, 
-                                    DMatrix<Type>& matrix, int m, int n)
+   void MpiLoader<IArchive>::loadDMatrix(IArchive &ar, DMatrix<Type>& matrix, 
+                                         int m, int n)
    {
       if (isIoProcessor()) {
          ar >> matrix;
