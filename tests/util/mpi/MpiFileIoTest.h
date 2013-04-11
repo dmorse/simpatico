@@ -28,12 +28,12 @@ public:
    void testSetCommunicator() 
    {
       printMethod(TEST_FUNC);
-      TEST_ASSERT(!fileIo().hasCommunicator());
-      fileIo().setCommunicator(communicator());
-      TEST_ASSERT(fileIo().hasCommunicator());
-      TEST_ASSERT(&fileIo().communicator() == &communicator());
+      TEST_ASSERT(!fileIo().hasIoCommunicator());
+      fileIo().setIoCommunicator(communicator());
+      TEST_ASSERT(fileIo().hasIoCommunicator());
+      TEST_ASSERT(&fileIo().ioCommunicator() == &communicator());
       fileIo().clearCommunicator();
-      TEST_ASSERT(!fileIo().hasCommunicator());
+      TEST_ASSERT(!fileIo().hasIoCommunicator());
    }
 
    void testIsIoProcessor1() 
@@ -50,7 +50,7 @@ public:
    void testIsIoProcessor2() 
    {
       printMethod(TEST_FUNC);
-      fileIo().setCommunicator(communicator());
+      fileIo().setIoCommunicator(communicator());
       if (mpiRank() == 0) {
          TEST_ASSERT(fileIo().isIoProcessor());
       } else
