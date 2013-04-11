@@ -16,8 +16,8 @@ int main()
    TEST_RUNNER(MpiFileIoTest) test2;
    test2.run();
 
-   TEST_RUNNER(MpiLoggerTest) test3;
-   test3.run();
+   //TEST_RUNNER(MpiLoggerTest) test3;
+   //test3.run();
 
    MPI::Finalize();
 }

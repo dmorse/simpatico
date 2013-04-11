@@ -8,13 +8,14 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <cstdio>
-#include <cstring>
-
 #include "ParamComposite.h"   // class header
 #include "Begin.h"
 #include "End.h"
 #include "Blank.h"
+#include <util/global.h>
+
+#include <cstdio>
+#include <cstring>
 
 namespace Util
 {
@@ -79,6 +80,7 @@ namespace Util
       }
    }
 
+   #if 0
    #ifdef UTIL_MPI
    /*
    * Set an MPI communicator for this ParamComposite and all descendants.
@@ -92,6 +94,7 @@ namespace Util
          }
       }
    }
+   #endif
    #endif
 
    /*
@@ -289,7 +292,6 @@ namespace Util
    */
    void ParamComposite::setClassName(const char * className)
    {  className_ = className; }
-
 
 }
 #endif

@@ -15,15 +15,6 @@ int main()
    Vector::commitMpiType();
    IntVector::commitMpiType();
 
-   //TEST_RUNNER(MpiParamTest) test1;
-   //test1.run();
-
-   //TEST_RUNNER(MpiParamCompositeTest) test2;
-   //test2.run();
-
-   //TEST_RUNNER(MpiManagerTest) test3;
-   //test3.run();
-
    MpiParamTestComposite runner;
    runner.run();
 

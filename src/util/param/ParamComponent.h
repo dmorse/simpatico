@@ -28,16 +28,12 @@ namespace Util
    *
    *  \ingroup Param_Module
    */
-   class ParamComponent : public Serializable, protected MpiFileIo
+   class ParamComponent : public Serializable, public MpiFileIo
    {
 
    public:
 
-      #ifdef UTIL_MPI
-      using MpiFileIo::setIoCommunicator;
-      #endif
-
-      /*
+      /**
       * Destructor.
       */
       virtual ~ParamComponent();

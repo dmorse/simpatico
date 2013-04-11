@@ -235,7 +235,7 @@ public:
          value = 5;
          bcast<int>(communicator(), value, 1);
       } else
-      if (mpiRank() == 0) {
+      if (mpiRank() != 1) {
          value = 0;
          bcast<int>(communicator(), value, 1);
          TEST_ASSERT(eq(value, 5));
@@ -252,7 +252,7 @@ public:
          value[2] = 3.0;
       } 
       bcast<Vector>(communicator(), value, 1);
-      if (mpiRank() == 0) {
+      if (mpiRank() != 1) {
          TEST_ASSERT(eq(value[0], 1.0));
          TEST_ASSERT(eq(value[1], 2.1));
          TEST_ASSERT(eq(value[2], 3.0));
@@ -269,7 +269,7 @@ public:
          value[2] = 3;
       } 
       bcast<IntVector>(communicator(), value, 1);
-      if (mpiRank() == 0) {
+      if (mpiRank() != 1) {
          TEST_ASSERT(value[0] == 35);
          TEST_ASSERT(value[1] == -29);
          TEST_ASSERT(value[2] == 3);
@@ -289,7 +289,7 @@ public:
          TEST_ASSERT(eq(value[1], 7));
          TEST_ASSERT(eq(value[2], 4));
       } else
-      if (mpiRank() == 0) {
+      if (mpiRank() != 1) {
          bcast<int>(communicator(), value, 3, 1);
          TEST_ASSERT(eq(value[0], 1));
          TEST_ASSERT(eq(value[1], 7));
@@ -309,7 +309,7 @@ public:
          value[1][1] = 1;
          bcast<int>(communicator(), value[0], 4, 1);
       } else
-      if (mpiRank() == 0) {
+      if (mpiRank() != 1) {
          bcast<int>(communicator(), value[0], 4, 1);
          TEST_ASSERT(eq(value[0][0], 4));
          TEST_ASSERT(eq(value[0][1], 3));
@@ -332,7 +332,7 @@ public:
          TEST_ASSERT(eq(value[1], 2));
          TEST_ASSERT(eq(value[2], 3));
       } else
-      if (mpiRank() == 0) {
+      if (mpiRank() != 1) {
          bcast<int>(communicator(), value, 3, 1);
          TEST_ASSERT(eq(value[0], 1));
          TEST_ASSERT(eq(value[1], 2));
@@ -380,7 +380,7 @@ public:
          bcast<std::string>(communicator(), value, 1);
          TEST_ASSERT(!value.compare("thingy"));
       } else
-      if (mpiRank() == 0) {
+      if (mpiRank() != 1) {
          bcast<std::string>(communicator(), value, 1);
          printEndl();
          std::cout << value << std::endl;
@@ -399,7 +399,7 @@ public:
          value[2] = true;
          bcast<bool>(communicator(), value, 3, 1);
       } else
-      if (mpiRank() == 0) {
+      if (mpiRank() != 1) {
          bcast<bool>(communicator(), value, 3, 1);
          TEST_ASSERT(!value[0]);
          TEST_ASSERT(value[1]);
