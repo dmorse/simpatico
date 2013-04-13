@@ -11,8 +11,6 @@ Boundary classes
 ParamComponent Classes:
 -----------------------
 
-- Test parallel read/broadcast ability of Parameter and ParamComposite classes.
-
 - Add ability to have optional Parameters and ParamComposite. To do this:
 
   * Add buffer to Label class, and method to read label for optional element

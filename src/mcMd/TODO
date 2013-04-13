@@ -1,7 +1,6 @@
 Serialization
 -------------
 
-- Test save / load with independent multi-processor
 - Test save / load with perturbation
 - Test save /load with replica move
 - Test MD serialization after forcing pair list rebuild upon restart output
@@ -55,19 +54,11 @@ SystemAccess base classes
 -------------------------
 
 - Rename SubSystem SystemAccess
-
 - Define McSystemAccess and MdSystemAccess classes with potential energy accessors.
-
 - Derive diagnostics from a public Diagnostic and a protected (Mc|Md)SystemAccess.
-
-- Remove replace system().typePotential() by typePotential() in diagnostics that are
-  derived from a SystemAccess class.
-
+- Remove replace system().typePotential() by typePotential() in diagnostics
 - Derive SystemMcMove from a protected McSystemAccess.
-
 - Remove replace system().typePotential() by typePotential() in mcMoves.
-
 - Derive MdIntegrator from a protected MdSystemAccess.
-
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
 
