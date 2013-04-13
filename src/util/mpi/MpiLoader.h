@@ -12,6 +12,8 @@
 #include <util/containers/DArray.h>      // template argument
 #include <util/containers/FArray.h>      // template argument
 #include <util/containers/DMatrix.h>     // template argument
+#include <util/mpi/MpiTraits.h>          // Needed for implementation
+#include <util/mpi/MpiSendRecv.h>        // Needed for implementation
 #include <util/global.h>
 
 
@@ -19,9 +21,13 @@ namespace Util
 {
 
    /**
-   * Class to load data from input archive and broadcast to other processors.
+   * Methods to load data from input archive and broadcast to other processors.
    *
-   *  \ingroup Param_Module
+   * Each of the "load" method templates causes the ioProcessor to load a
+   * variable from the archive ar and then broadcast it to all other 
+   * processors in the communicator. 
+   *
+   *  \ingroup Mpi_Module
    */
    template <class IArchive>
    class MpiLoader : public MpiFileIo
@@ -37,16 +43,16 @@ namespace Util
       {}
 
       /**  
-      * Load and broadcast a Type value.
+      * Load and broadcast a single Type value.
       *
       * \param ar     archive for loading
       * \param value  reference to a Type
       */
       template <typename Type>
-      void loadScalar(IArchive &ar, Type &value);
+      void load(IArchive &ar, Type &value);
    
       /**  
-      * Add a C array parameter, and load its elements.
+      * Load and broadcat a C array.
       *
       * \param ar     archive for loading
       * \param value  pointer to array
@@ -54,26 +60,26 @@ namespace Util
       * \return reference to the new CArrayParam<Type> object
       */
       template <typename Type>
-      void loadCArray(IArchive &ar, Type *value, int n);
+      void load(IArchive &ar, Type *value, int n);
    
       /**  
-      * Load and broadcast a DArray < Type >.
+      * Load and broadcast a DArray < Type > container.
       *
       * \param ar     archive for loading
       * \param array  DArray object
       * \param n      number of elements
       */
       template <typename Type>
-      void loadDArray(IArchive &ar, DArray<Type>& array, int n);
+      void load(IArchive &ar, DArray<Type>& array, int n);
    
       /**  
-      * Load and broadcast a DArray < Type >.
+      * Load and broadcast an FArray < Type >.
       *
       * \param ar     archive for loading
-      * \param array  FArray object
+      * \param array  FArray object to be loaded
       */
       template <typename Type, int N>
-      void loadFArray(IArchive &ar, FArray<Type, N >& array);
+      void load(IArchive &ar, FArray<Type, N >& array);
    
       /**  
       * Load and broadcast a 2D CArray of Type objects.
@@ -84,7 +90,7 @@ namespace Util
       * \param n      number of columns (2nd dimension)
       */
       template <typename Type> void 
-      loadCArray2D(IArchive &ar, Type *value, int m, int n);
+      load(IArchive &ar, Type *value, int m, int n);
   
       /**  
       * Load and broadcast a DMatrix<Type> object.
@@ -95,19 +101,19 @@ namespace Util
       * \param n      number of columns (2nd dimension)
       */
       template <typename Type> 
-      void loadDMatrix(IArchive &ar, DMatrix<Type>& matrix, int m, int n);
+      void load(IArchive &ar, DMatrix<Type>& matrix, int m, int n);
  
    };
  
    /*  
-   * Add a new ScalarParam< Type > object, and load its value.
+   * Load and broadcast a single Type value.
    */
    template <typename IArchive> 
    template <typename Type> 
-   void MpiLoader<IArchive>::loadScalar(IArchive &ar, Type &value)
+   void MpiLoader<IArchive>::load(IArchive &ar, Type &value)
    {
       if (isIoProcessor()) {
-         ar & value;
+         ar >> value;
       }
       #ifdef UTIL_MPI
       if (hasIoCommunicator()) {
@@ -121,7 +127,7 @@ namespace Util
    */
    template <typename IArchive> 
    template <typename Type>
-   void MpiLoader<IArchive>::loadCArray(IArchive &ar, Type* value, int n)
+   void MpiLoader<IArchive>::load(IArchive &ar, Type* value, int n)
    {
       if (isIoProcessor()) {
          for (int i = 0; i < n; ++i) {
@@ -136,12 +142,12 @@ namespace Util
    }
 
    /*
-   * Add a DArray < Type > parameter, and load its elements.
+   * Load a DArray < Type > container.
    */
    template <typename IArchive> 
    template <typename Type>
    void 
-   MpiLoader<IArchive>::loadDArray(IArchive &ar, DArray<Type>& array, int n)
+   MpiLoader<IArchive>::load(IArchive &ar, DArray<Type>& array, int n)
    {
       if (isIoProcessor()) {
          ar >> array;
@@ -157,11 +163,11 @@ namespace Util
    }
 
    /*
-   * Add and load an FArray < Type, N > fixed-size array parameter.
+   * Load an FArray < Type, N > fixed-size array container.
    */
    template <typename IArchive> 
    template <typename Type, int N>
-   void MpiLoader<IArchive>::loadFArray(IArchive &ar, FArray<Type, N >& array)
+   void MpiLoader<IArchive>::load(IArchive &ar, FArray<Type, N >& array)
    {
       if (isIoProcessor()) {
          for (int i = 0; i < N; ++i) {
@@ -176,12 +182,12 @@ namespace Util
    }
 
    /*
-   * Add and load a CArray2DParam < Type > C two-dimensional array parameter.
+   * Load a CArray2DParam < Type > C two-dimensional array parameter.
    */
    template <typename IArchive> 
    template <typename Type> 
    void 
-   MpiLoader<IArchive>::loadCArray2D(IArchive &ar, Type *array, int m, int n)
+   MpiLoader<IArchive>::load(IArchive &ar, Type *array, int m, int n)
    {
       if (isIoProcessor()) {
          int i, j; 
@@ -203,8 +209,8 @@ namespace Util
    */
    template <typename IArchive> 
    template <typename Type> 
-   void MpiLoader<IArchive>::loadDMatrix(IArchive &ar, DMatrix<Type>& matrix, 
-                                         int m, int n)
+   void MpiLoader<IArchive>::load(IArchive &ar, DMatrix<Type>& matrix, 
+                                  int m, int n)
    {
       if (isIoProcessor()) {
          ar >> matrix;

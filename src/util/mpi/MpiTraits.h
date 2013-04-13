@@ -9,11 +9,24 @@
 */
 
 #include <util/global.h>
+#include <complex>
 
 #ifdef UTIL_MPI
 
 namespace Util 
 {
+
+   /**
+   * Base class for MpiTraits with no type.
+   */
+   class MpiTraitsNoType
+   {
+   protected:
+      MpiTraitsNoType(){};
+      ~MpiTraitsNoType(){}; 
+      static const MPI::Datatype type;   ///< MPI Datatype (dummy - unused)
+      static const bool hasType;         ///< Is the MPI type initialized?
+   };
 
    /**
    * Default MpiTraits class.
@@ -23,8 +36,12 @@ namespace Util
    * type associated with the C++ template type parameter.
    */
    template <typename T>
-   class MpiTraits
-   { };
+   class MpiTraits : public MpiTraitsNoType
+   {
+   public: 
+      using MpiTraitsNoType::hasType;
+      using MpiTraitsNoType::type;
+   };
 
    /**
    * MpiTraits<char> explicit specialization.
@@ -160,17 +177,6 @@ namespace Util
 
    #if 0
    /**
-   * MpiTraits<wchar_t> explicit specialization.
-   */
-   template <>
-   class MpiTraits<wchar_t>
-   {  
-   public: 
-      static const MPI::Datatype type;  ///< MPI Datatype
-      static const bool hasType;        ///< Is the MPI type initialized?
-   };
-
-   /**
    * MpiTraits< std::complex<float> > explicit specialization.
    */
    template <>
@@ -201,6 +207,19 @@ namespace Util
    public: 
       static const MPI::Datatype type; ///< MPI Datatype
       static const bool hasType;       ///< Is the MPI type initialized?
+   };
+   #endif
+
+   #if 0
+   /**
+   * MpiTraits<wchar_t> explicit specialization.
+   */
+   template <>
+   class MpiTraits<wchar_t>
+   {  
+   public: 
+      static const MPI::Datatype type;  ///< MPI Datatype
+      static const bool hasType;        ///< Is the MPI type initialized?
    };
    #endif
 

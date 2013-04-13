@@ -14,6 +14,9 @@
 namespace Util 
 {
 
+   const MPI::Datatype MpiTraitsNoType::type = MPI::CHAR; 
+   const bool MpiTraitsNoType::hasType = false;
+
    const MPI::Datatype MpiTraits<char>::type = MPI::CHAR; 
    const bool MpiTraits<char>::hasType = true;
 
@@ -51,9 +54,6 @@ namespace Util
    const bool MpiTraits<bool>::hasType = false;
 
    #if 0
-   const MPI::Datatype MpiTraits<wchar_t>::type = MPI::WCHAR; 
-   const bool MpiTraits<wchar_t>::hasType = true;
-
    const MPI::Datatype MpiTraits<std::complex<float> >::type = MPI::COMPLEX; 
    const bool MpiTraits<std::complex<float> >::hasType = true;
 
@@ -64,6 +64,10 @@ namespace Util
    const bool MpiTraits<std::complex<long double> >::hasType = true;
    #endif
 
+   #if 0
+   const MPI::Datatype MpiTraits<wchar_t>::type = MPI::WCHAR; 
+   const bool MpiTraits<wchar_t>::hasType = true;
+   #endif
 }
 #endif
 #endif

@@ -13,9 +13,13 @@ clean:
 clean-deps:
 	rm -f $(tests_util_mpi_OBJS:.o=.d)
 
-Test: Test.o $(util_LIB)
+Test: Test.o $(util_LIB) setMpi
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
 	       $(util_LIB)
+
+setMpi:
+	cd $(ROOT_DIR); ./configure -m1
+
 
 -include $(tests_util_mpi_OBJS:.o=.d)
 
