@@ -67,32 +67,39 @@ Each of the allowed values of the COMPILER variable selects a block in the compi
 An initial default version of the src/compiler.mk file is created by the setup script. The initial version is created by copying a file named src/compiler.mk_r, which contains the version stored in the repository. As a user, you may modify src/compiler.mk as needed, but should generally not modify the file src/compiler.mk_r.
 
 \section compile_mpi_section Compiling MPI programs
-The ddSim program and the multi-processor versions of mcSim and mdSim all require an MPI library for parallelization. The makefile targets that compile these programs (which are named ddSim and mcMd_mpi, respectively) use the configure script to set the value of a makefile variable named UTIL_MPI to 1 to enable linking to an MPI library. 
+The ddSim program and the multi-processor versions of mcSim and mdSim all require an MPI library for parallelization. 
 
-The file src/compiler.mk also defines a variable named MPI_LIB that, for some compilers, allows you to choose from among different implementations of the MPI library. The default value is MPI_LIB=mpicxx. This is designed for use with systems that use linux kernel modules, which allow the choice of compiler and mpi library to be chosen by loading an appropriate modulue or modules before compiling any code. The module system typically uses wrapper script named "mpcixx" to invoke the compiler that was selected by loading a module, and to link to the chosen MPI implementation. This is the system used on the machiines of the University of Minnesota Supercomputing Institute that were used for development.
+For MPI to work correctly, you may need to edit the makefile variables in the file src/compiler.mk that specify the compiler name (CXX) and the options passed to the compiler (CXXFLAGS) and to the linker (LDFLAGS). The makefile variable COMPILER is an identifier that may be changed to choose from among several compilers. All development was done with either the gnu compiler (COMPILER=gcc) or the intel compiler (COMPILER=intel). The variable MPI_LIB is second identifier whose value can be changed in order can be used to choose from among different sets of compiler settings that are designed for use with different MPI library implementations.
 
-The compiler setting selected by setting COMPILER=gcc and MPI_LIB=openmpi reflect the paths that we used to compile simpatico on a multi-core Mac laptop, after compiling the openmpi library from source. In this case, the required mpi header and library files were installed in subdirectories of /opt/local/include and /opt/local/bin. If you have an openmpi library installed, but the header and library files are installed in different locations, you may need to edit the CXXFLAGS and LDFLAGS variables to reflect the correct locations.
+The default value of MPI_LIB for use with either the gcc or intel compiler is MPI_LIB=mpicxx. This value selects settings designed for use with systems that use linux kernel modules. Kernel modules allow the choice of compiler and mpi library to be chosen by loading appropriate modules before attempting to compile. This system is used on the machines of the University of Minnesota Supercomputing Institute that were used for development. The kernel module system normally provides a wrapper script named "mpcixx" to invoke the compiler that was chosen by loading a module, and to link to the chosen MPI implementation. With either the gcc or intel compiler, setting MPI_LIB=mpicxx selects settings in which CXX=mpicxx, thus invoking the compiler via this script wrapper, and sets values of CXXFLAGS and LDFLAGS appropriate for the specified compiler, which must be selected by loading the appropriate model before attempting to compile.
 
-The file src/compiler.mk defines a makefile variable UTIL_MPI. If UTIL_MPI=1, then settings for a mpi-enabled will be chosen fo the selected compiler, and a corresponding C++ preprocessor, also named UTIL_MPI, will be defined in order to enable conditional compilation of part of the code that require MPI. The makefile targets that build the simpatico programs that require MPI (ddSim and the multi-processor versions of mcSim and ddSim) use the configure script to set UTIL_MPI=1 before compiling any code, in order to guarantee that MPI is enabled. It is also possible for the user to enable MPI explicitly, either by editing the src/compiler.mk file or by cd'ing to the root directory and using the -m option of the configure script. Calling "./configure -m1" enables mpi (by setting UTIL_MPI=1) and "./configure -m0" disables MPI (by commenting out the definition).
+The compiler options selected by setting COMPILER=gcc and MPI_LIB=openmpi reflect the paths that we used to compile simpatico on a multi-core Mac laptop, after compiling the openmpi library from source. In this case, the required mpi header and library files were installed in subdirectories of /opt/local/include and /opt/local/bin. If you have an openmpi library installed, but the header and library files are installed in different locations, you may need to edit the CXXFLAGS and LDFLAGS variables to reflect the correct locations.
+
+If none of setting in the file compiler.mk are appropriate for your machine, you will need to add a block of makefile variable definitions that can be selected by new values for either the MPI_LIB and/or COMPILER identifier. If you do not use a module system, this will require that you identify the locations of the header and library files for the MPI library on your machine. 
+
+In order for MPI to be enabled when a program is compiled, the makefile variable UTIL_MPI must be defined in the file src/compiler.mk. This is done automatically by the makefile targets in the simpatico root directory and the src directory that compile these programs. A user may also use the configure srcipt to manually enable MPI by invoking
+\code
+  ./configure -m1
+\endcode
+from the root simpatico directory, or disable MPI by calling "./configure -m0" from the same directory. This should not be necessary for users who build executables by using the makefile targets in the simpatico/ or simpatico/src directories, following the instructions given below, because these makefile targets use the configure script to enable or disable MPI, as needed, before compiling any code. 
 
 \section compile_ddMd_section Compiling ddSim
 To compile the multi-processor ddMd program, one should check the compiler settings in the file src/compiler.mk (as discussed above) and then enter 
 \code
 > make ddMd
 \endcode
-from either the root or src directory. The makefile in the root directory simply invokes the makefile in the src/ directory. When invoked from either of these directories, the ddMd makefile target automatically edits the compiler.mk file to enable MPI before compiling any code, so there is usually no need to do this explicitly.
+from either the root or src directory. (The makefile in the root directory simply invokes the makefile in the src/ directory recursively). 
   
 If successful, invoking "make ddMd" will install an executable named ddMd in the simpatico/bin/ directory. To do this, the commands associated with this makefile target will:
 
-   - set UTIL_MPI=1 in the file src/compiler.mk to enable the MPI library, 
-   - Compile mpi-enabled versions of all of the classes in the src/util/ and src/inter/ directories
-   - Create new MPI-enabled versions of the libraries containing objects from these directories.
-   - Compile all of the code in the src/ddMd/ directory and create an associated library
+   - Call "./configure -m1" from the root directory, to enable MPI
+   - Compile mpi-enabled versions of all of the classes in the src/util/, src/inter/, and src/ddMd directories
+   - Create MPI-enabled versions of the libraries containing objects from these three directories
    - Build the ddSim executable.
 
-The MPI-enabled versions of the libraries containing objects from the src/util/ and src/inter directories are named lib/libutil_m.a lib/libinter_m.a, in which the suffix "_m" stands for mpi. The library containing objects from the ddMd/ directory will be named lib/libddMd.a 
+The MPI-enabled versions of the libraries containing objects from the src/util/ and src/inter directories are named lib/libutil_m.a lib/libinter_m.a, in which the suffix "_m" stands for mpi. The library containing objects from the ddMd/ directory will be named lib/libddMd.a. If you have previously compiled the single processor programs mcSim and mdSim, you should also find non-MPI libraries named (by default) lib/libutil.a and lib/libinter.a in the lib/ directory.
 
-By default, the parallel MD executable is named ddSim, and is installed in the simpatico/bin directory. The executable name is defined by the variable DDSIM_EXE, which is defined in the src/ddMd/defines.mk file. The executable is placed in the BIN_DIR directory.  The name and/or location of the executable may be changed by changing values of these variables before compiling.
+By default, the parallel MD executable is named ddSim, and is installed in the simpatico/bin directory. The executable name is defined by the variable DDSIM_EXE, which is defined in the src/ddMd/defines.mk file. The executable is placed in the BIN_DIR directory.  The name and/or location of the executable may be changed by changing values of these variables before compiling, or by simply moving the executable after it is compiled. 
 
 Entering 
 \code
@@ -105,9 +112,9 @@ Multi-processor versions of mcSim and mdSim can be used to run:
 
   - Multiple completely independent simulations as an MPI job, with separate parameter files
 
-  - Multiple simulations with a sequence of parameter values specified in a single parameter file.
+  - Multiple simulations with a sequence of parameter values specified in a single parameter file
 
-  - Replica exchange simulations, which also rely on the free energy perturbation theory feature.
+  - Replica exchange simulations, which also rely on the free energy perturbation theory feature
 
 The last two applications require the use of the free energy perturbation feature, which is discussed in more 
 detail \ref user_multi_McMd_page "here". The free energy perturbation feature is enabled by default when MPI is 
@@ -119,13 +126,12 @@ If automatic \ref dependency_doc_section "dependency generation" is not enabled,
 \endcode
 from the root or src/ directory before before compiling the multi-processor versions of mcSim and mdSim. This is necessary in order to remove object files and code that were compiled without MPI by a previous compilation of the single-processor versions mcSim and mdSim.  This step is not necessary if automatic dependency generation is enabled. 
 
-After this, you simply enter
+After this, simply enter
 \code
 > make mcMd
 \endcode
 from either the root or src/ directory.
-
-If successful, this should re-compile all of the classes in the src/mcMd directory, creating new mpi-enabled versions of the *.o object files, and create a corresponding mpi-enabled library named lib/libmcMd_m.a. If you have not previously compiled ddMd, or entered "make clean" before "make mcMd", this also create MPI-enabled versions of all of the code in the src/util and src/inter directories, and create corresponding MPI-enabled static libraries, named lib/libutil_m.a and lib/libinter_m.a.
+This should re-compile all of the classes in the src/mcMd directory, creating new mpi-enabled versions of the *.o object files, and create a corresponding mpi-enabled library named lib/libmcMd_m.a. If you have not previously compiled ddMd, or entered "make clean" before "make mcMd", this also compile MPI-enabled versions of all of the code in the src/util and src/inter directories, and create corresponding MPI-enabled static libraries named (by default) lib/libutil_m.a and lib/libinter_m.a.
  
 \section dependency_doc_section Dependency Generation 
 
@@ -133,7 +139,7 @@ The Simpatico makefile system is set up to allow automatic generation and updati
 
 Automatic dependency generation uses a executable python script named makeDep in the bin/ directory. This script imports several python modules from the tools/python directory.  The system uses the -MM option of the gnu g++ C++ compiler to do the actual analysis of dependencies, and uses a python scripts to edit the output produced by g++. To function, this set of scripts requires that:
  
-  - The g++ gnu C++ compiler executable (or a link to it with this name) must exist in a directory in the shell PATH variable.
+  - The g++ compiler executable (or a link with this name) must exist in a directory in the shell PATH variable.
 
   - A python interpreter must be accessible.
 
@@ -141,17 +147,17 @@ Automatic dependency generation uses a executable python script named makeDep in
 
   - The makefile variable MAKEDEP must be defined in the file src/compiler.mk. (The definition is commented out by default).
 
-The gcc compiler and a python interpreter are installed by default on modern linux installations, and on Mac OS X with developer and command line tools installed.  To enable automatic dependency generation (after running the setup script) one must thus normally: 
+The gcc compiler and a python interpreter are installed by default on modern linux installations, and on Mac OS X with developer and command line tools installed.  To enable automatic dependency generation (after running the setup script), it is thus normally sufficient to add the simpatico tools/python directory to the PYTHONPATH, and then invoke
+\code
+  ./configure -k1
+\endcode
+from the root directory. This option of the configure script uncomments the definition of MAKEDEP in the src/compiler.mk file. 
 
-  - Uncomment the line that defines the variable MAKEDEP in the file src/compiler.mk, and
-
-  - Add the Simpatico tools/python directory to the PYTHONPATH unix shell variable. 
-
-After making these changes, enter "make clean" once more from the src/ directory, and then recompile any programs you wish to use.  After compilation is complete, a new dependency file with a suffix *.d will be created alongside each *.cpp source file, in addition to a new *.o object file.  The *.d dependency file associated with an object file will also be regenerated whenever the object file is regenerated.
+After making these changes, enter "make clean" once more from the src/ directory, and then recompile any programs you wish to use.  When dependency generation is enabled, a new file with a suffix *.d will be created alongside each *.cpp source file when the source file is compiled, in addition to a new *.o object file.  The *.d dependency file associated with a source file will also be regenerated whenever the source file is compiled.
 
 Dependency generation is disabled by default in order to allow inexperienced users to easily compile the single processor versions of mcSim and mdSim, using the simplified instructions given above ("./setup; cd src; make mcMd"). Dependency generation is not necessary for users who want to try out the code, but who do not immediately need to add or modify any source files.
 
-Automatic dependency generation works by applying the script bin/makeDep to each *.cpp source file whenever that file is compiled, as a side effect of compilation.  This behavior is dictated by the pattern rules defined in the patterns.mk files in the src/util/, src/inter/, src/mcMd/, and src/ddMd/ directories.  Whenever a *.cpp file is compiled, the makeDep script generates a corresponding *.d file with the same base name.  Each *.d dependency file defines a makefile rule for the corresponding *.o object makefile file target. This rule contains a list of all the files upon which that object file depends.  This dependency list contains the associated *.cpp file and all of the *.h header files that this source file includes, including headers that are included indirectly.  Once such a dependency file exists, it will be used the next time "make" is invoked in order to determine if the corresponding object file target needs to be recreated as a result of changes in any of its dependencies. 
+Automatic dependency generation works by applying the script bin/makeDep to each *.cpp source file whenever that file is compiled, as a side effect of compilation.  This behavior is dictated by the pattern rules defined in the patterns.mk files in the src/util/, src/inter/, src/mcMd/, and src/ddMd/ directories.  Whenever a *.cpp file is compiled, the makeDep script generates a corresponding *.d file with the same base name.  Each *.d dependency file defines a makefile rule for the corresponding *.o object makefile file target. This rule contains a list of all the files upon which that object file depends.  This dependency list contains the associated *.cpp file and all of the *.h header files that this source file includes, including header files that are included indirectly.  Once such a dependency file exists, the makefile target it defines will be used the next time "make" is invoked in order to determine if the corresponding object file needs to be recreated as a result of changes in any of its dependencies. 
 
 The dependency list for every *.o file contains the files src/compiler.mk and one or more of the defines.mk files, in addition to C++ source and header files.  This is because these makefile fragments contain definitions of compiler options and C++ preprocessor macros that can effect the object code produced by compilation. Modifying any of these makefile fragments will thus force recompilation of a large number of C++ source files. Modifying src/compiler.mk or src/util/defines.mk forces recompilation of every source file in Simpatico.  Modifying src/util/defines.mk force recompilation of all of the source files in src/inter, src/mcMd, and src/ddMd.  Modifying src/mcMd/defines.mk forces recompilation of all files in src/mcMd.  Modifying src/ddMd/defines.mk forces recompilation of all files in src/ddMd.
 

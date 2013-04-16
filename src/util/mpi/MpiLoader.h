@@ -75,7 +75,6 @@ namespace Util
       /**  
       * Load and broadcast an FArray < Type >.
       *
-      * \param ar     archive for loading
       * \param array  FArray object to be loaded
       */
       template <typename Type, int N>
@@ -94,7 +93,6 @@ namespace Util
       /**  
       * Load and broadcast a DMatrix<Type> object.
       *
-      * \param ar     archive for loading
       * \param matrix DMatrix object
       * \param m      number of rows (1st dimension)
       * \param n      number of columns (2nd dimension)
