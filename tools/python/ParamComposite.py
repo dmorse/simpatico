@@ -137,6 +137,11 @@ class ParamComposite:
             done = True
       return i 
 
+   def write(self, filename):
+       file  = open(filename, 'w')
+       lines = self.__str__()
+       file.write(lines);
+
    def __str__(self):
        list = []
        list.append(self.indent_ + self.label_ + '{\n')
@@ -144,8 +149,6 @@ class ParamComposite:
           list.append(str(child))
        list.append(self.indent_ + '}\n')
        return ''.join(list)
-
-
 
 class Blank:
 
