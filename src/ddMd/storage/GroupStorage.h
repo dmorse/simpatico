@@ -18,6 +18,7 @@
 #include "GroupIterator.h"
 #include "ConstGroupIterator.h"
 #include <util/format/Int.h>
+#include <util/mpi/MpiLoader.h>  
 #include <util/global.h>
 
 
@@ -50,7 +51,8 @@ namespace DdMd
       /**
       * Set parameters, allocate memory and initialize.
       *
-      * Call either this or readParameters to initialize, but not both.
+      * Call on all processors. Call either this or initialize, but not 
+      * both. The initialize function is provided for unit testing.
       *
       * \param capacity      max number of groups owned by processor.
       * \param totalCapacity max number of groups on all processors.
@@ -60,7 +62,7 @@ namespace DdMd
       /**
       * Read parameters, allocate memory and initialize.
       *
-      * Call either this or initialize, but not both.
+      * Call on all processors. Call either this or initialize, but not both.
       *
       * Parameter file format:
       *  - capacity      [int]  max number of groups owned by processor.
@@ -73,12 +75,16 @@ namespace DdMd
       /**
       * Load internal state from an archive.
       *
+      * Call on all processors.
+      *
       * \param ar input/loading archive
       */
       virtual void loadParameters(Serializable::IArchive &ar);
 
       /**
       * Save internal state to an archive.
+      *
+      * Call only on ioProcessor (master).
       *
       * \param ar output/saving archive
       */
@@ -389,7 +395,7 @@ namespace DdMd
    template <int N>
    void GroupStorage<N>::initialize(int capacity, int totalCapacity)
    {
-      capacity_      = capacity;
+      capacity_  = capacity;
       totalCapacity_ = totalCapacity;
       allocate();
    }
@@ -414,6 +420,10 @@ namespace DdMd
       loadParameter<int>(ar, "capacity", capacity_);
       loadParameter<int>(ar, "totalCapacity", totalCapacity_);
       allocate();
+
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(maxNGroupLocal_);
+      maxNGroup_.set(maxNGroupLocal_);
    }
 
    /*
@@ -424,6 +434,8 @@ namespace DdMd
    {
       ar & capacity_;
       ar & totalCapacity_;
+      int max = maxNGroup_.value();
+      ar & max;
    }
 
    /*
@@ -446,7 +458,6 @@ namespace DdMd
       for (int i = 0; i < totalCapacity_; ++i) {
          groupPtrs_[i] = 0;
       }
-
    }
 
    // Local group mutators

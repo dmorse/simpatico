@@ -61,7 +61,6 @@ namespace DdMd
       */
       virtual void readParameters(std::istream& in);
 
-      #if 0
       /**
       * Load internal state from an archive.
       *
@@ -75,7 +74,6 @@ namespace DdMd
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
-      #endif
   
       /// \name Interaction interface
       //@{
@@ -340,7 +338,6 @@ namespace DdMd
       readPairListParam(in);
    }
 
-   #if 0
    /*
    * Load internal state from an archive.
    */
@@ -351,7 +348,7 @@ namespace DdMd
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
-      // loadPairListParam(ar);
+      loadPairListParam(ar);
    }
 
    /*
@@ -361,9 +358,8 @@ namespace DdMd
    void PairPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
    {  
       interaction().save(ar); 
-      // savePairListParam(ar);
+      savePairListParam(ar);
    }
-   #endif
 
    /*
    * Return pair energy for a single pair.

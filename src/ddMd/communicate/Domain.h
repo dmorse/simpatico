@@ -73,6 +73,20 @@ namespace DdMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+  
       // Accessors
 
       /**
@@ -224,6 +238,13 @@ namespace DdMd
 
       // Is this object initialized (Has a grid been set?)
       bool isInitialized_;
+
+      /*
+      * Initialize after reading/loading gridDimensions.
+      *
+      * Used in implementation of readParameters and loadParameters.
+      */
+      void initialize();
 
    };
 

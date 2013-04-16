@@ -79,12 +79,48 @@ namespace DdMd
          UTIL_THROW("Boundary not set before readParam");
       }
       if (isInitialized_) {
-         UTIL_THROW("readParam can only be called once");
+         UTIL_THROW("Already initialized");
       }
 
       // Read parameter file 
       read<IntVector>(in, "gridDimensions", gridDimensions_);
+   }
+   
+   /*
+   * Read parameters and initialize.
+   */
+   void Domain::loadParameters(Serializable::IArchive& ar)
+   {
+      #ifdef UTIL_MPI
+      if (intracommPtr_ == 0) {
+         UTIL_THROW("Intra-communicator not set before readParam");
+      } 
+      #endif
+      if (gridRank_ < 0) {
+         UTIL_THROW("grid rank not set before readParam");
+      }
+      if (!hasBoundary()) {
+         UTIL_THROW("Boundary not set before readParam");
+      }
+      if (isInitialized_) {
+         UTIL_THROW("Already initialized");
+      }
 
+      loadParameter<IntVector>(ar, "gridDimensions", gridDimensions_);
+      initialize();
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void Domain::save(Serializable::OArchive &ar)
+   {  ar << gridDimensions_; }
+  
+   /*
+   * Initialize data - called by readParameters and loadParameters (private).
+   */
+   void Domain::initialize() 
+   {
       // Validate gridDimensions
       int nproc = 1;
       for (int i = 0; i < Dimension; i++) {

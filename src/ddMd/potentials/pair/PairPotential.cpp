@@ -98,7 +98,6 @@ namespace DdMd
       allocate();
    }
 
-   #if 0
    /*
    * Read parameters for PairList and allocate memory.  
    */
@@ -154,7 +153,6 @@ namespace DdMd
       ar & cutoff_;
       ar & methodId_;
    }
-   #endif
 
    /*
    * Allocate memory for the cell list and pair list.
@@ -173,7 +171,7 @@ namespace DdMd
          // boundary to calculate domain bounds, if (UTIL_ORTHOGONAL).
       }
 
-      // Calculate cell list cutoff lengths
+      // Calculate cell list cutoff lengths for all directions
       Vector cutoffs;
       Vector lower;
       Vector upper;
@@ -257,77 +255,8 @@ namespace DdMd
       if (!storage().isCartesian()) {
          UTIL_THROW("Coordinates not Cartesian entering buildPairList");
       }
-
       pairList_.build(cellList_, reverseUpdateFlag());
    }
-
-   #if 0
-   /*
-   * Build the cell list (i.e., fill with atoms).
-   */
-   void PairPotential::findNeighbors(const Vector& lower, const Vector& upper)
-   {
- 
-      if (UTIL_ORTHOGONAL) {
-         if (!storage().isCartesian()) {
-            UTIL_THROW("Coordinates not Cartesian entering findNeighbors");
-         }
-      } else {
-         if (storage().isCartesian()) {
-            UTIL_THROW("Coordinates are Cartesian entering findNeighbors");
-         }
-      }
-
-      Vector cutoffs;
-      for (int i = 0; i < Dimension; ++i) {
-         if (UTIL_ORTHOGONAL) {
-            cutoffs[i] = cutoff_;
-         } else {
-            cutoffs[i] = cutoff_/boundaryPtr_->length(i);
-         }
-      }
-      cellList_.makeGrid(lower, upper, cutoffs);
-      cellList_.clear();
-     
-      // Add all atoms to the cell list. 
-      AtomIterator atomIter;
-      storage().begin(atomIter);
-      for ( ; atomIter.notEnd(); ++atomIter) {
-         cellList_.placeAtom(*atomIter);
-      }
-
-      // Add all ghosts to the cell list. 
-      GhostIterator ghostIter;
-      storage().begin(ghostIter);
-      for ( ; ghostIter.notEnd(); ++ghostIter) {
-         cellList_.placeAtom(*ghostIter);
-      }
-
-      cellList_.build();
-      assert(cellList_.isValid());
-      assert(cellList_.nAtom() + cellList_.nReject() == storage().nAtom() + storage().nGhost());
-
-      if (!UTIL_ORTHOGONAL) {
-         storage().transformGenToCart(*boundaryPtr_);
-      }
-      pairList_.build(cellList_, reverseUpdateFlag());
-   }
-
-   /*
-   * Build the cell list (i.e., fill with atoms).
-   */
-   void PairPotential::findNeighbors()
-   {
-      // Make the cell list grid.
-      Vector lower;
-      Vector upper;
-      for (int i = 0; i < Dimension; ++i) {
-         lower[i] = domain().domainBound(i, 0);
-         upper[i] = domain().domainBound(i, 1);
-      }
-      findNeighbors(lower, upper);
-   }
-   #endif
 
    /*
    * Return value of pair energies.

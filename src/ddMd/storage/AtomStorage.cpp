@@ -15,6 +15,7 @@
 #include "ConstGhostIterator.h"
 #include <ddMd/chemistry/Group.h>
 #include <util/format/Int.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/global.h>
 
 namespace DdMd
@@ -84,28 +85,29 @@ namespace DdMd
    }
 
    /*
-   * Load parameters and allocate memory.
+   * Load parameters and allocate memory (call on all processors)
    */
    void AtomStorage::loadParameters(Serializable::IArchive& ar)
    {
       loadParameter<int>(ar, "atomCapacity", atomCapacity_);
       loadParameter<int>(ar, "ghostCapacity", ghostCapacity_);
       loadParameter<int>(ar, "totalAtomCapacity", totalAtomCapacity_);
-      ar & maxNAtomLocal_;
-      ar & maxNGhostLocal_;
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(maxNAtomLocal_);
+      loader.load(maxNGhostLocal_);
       allocate();
    }
 
    /*
-   * Save parameters.
+   * Save parameters (call only on ioProcessor).
    */
    void AtomStorage::save(Serializable::OArchive& ar)
    {
-      ar & atomCapacity_;
-      ar & ghostCapacity_;
-      ar & totalAtomCapacity_;
-      ar & maxNAtomLocal_;
-      ar & maxNGhostLocal_;
+      ar << atomCapacity_;
+      ar << ghostCapacity_;
+      ar << totalAtomCapacity_;
+      ar << maxNAtomLocal_;
+      ar << maxNGhostLocal_;
    }
 
    /*

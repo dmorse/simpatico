@@ -473,7 +473,7 @@ namespace DdMd
       positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
       positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
 
-      // Add observerse to exchangeSignal
+      // Add observers to exchangeSignal
       if (nBondType_) {
          void (BondStorage::*memberPtr)() = &BondStorage::unsetNTotal;
          exchangeSignal().addObserver(bondStorage_, memberPtr);
@@ -493,10 +493,259 @@ namespace DdMd
    }
 
    /*
+   * Read parameters, allocate memory and initialize.
+   */
+   void Simulation::loadParameters(Serializable::IArchive& ar)
+   {
+      loadParamComposite(ar, domain_);
+      loadFileMaster(ar);
+
+      // Load types
+      loadParameter<int>(ar, "nAtomType", nAtomType_);
+      loadParameter<int>(ar, "nBondType", nBondType_);
+      #ifdef INTER_ANGLE
+      loadParameter<int>(ar, "nAngleType", nAngleType_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      loadParameter<int>(ar, "nDihedralType", nDihedralType_);
+      #endif
+      #ifdef INTER_EXTERNAL
+      loadParameter<bool>(ar, "hasExternal", hasExternal_);
+      #endif
+      atomTypes_.allocate(nAtomType_);
+      for (int i = 0; i < nAtomType_; ++i) {
+         atomTypes_[i].setId(i);
+      }
+      loadDArray<AtomType>(ar, "atomTypes", atomTypes_, nAtomType_);
+
+      // Load storage capacities
+      loadParamComposite(ar, atomStorage_);
+      loadParamComposite(ar, bondStorage_);
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         loadParamComposite(ar, angleStorage_);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         loadParamComposite(ar, dihedralStorage_);
+      }
+      #endif
+
+      loadParamComposite(ar, buffer_);
+      loadPotentialStyles(ar);
+
+      #ifndef DDMD_NOPAIR
+      // Pair Potential
+      assert(pairPotentialPtr_ == 0);
+      pairPotentialPtr_ = pairFactory().factory(pairStyle());
+      if (!pairPotentialPtr_) {
+         UTIL_THROW("Unknown pairStyle");
+      }
+      pairPotentialPtr_->setNAtomType(nAtomType_);
+      loadParamComposite(ar, *pairPotentialPtr_);
+      pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag_);
+      #endif
+
+      // Bond Potential
+      assert(bondPotentialPtr_ == 0);
+      bondPotentialPtr_ = bondFactory().factory(bondStyle());
+      if (!bondPotentialPtr_) {
+         UTIL_THROW("Unknown bondStyle");
+      }
+      bondPotentialPtr_->setNBondType(nBondType_);
+      loadParamComposite(ar, *bondPotentialPtr_);
+
+      #ifdef INTER_ANGLE
+      // Angle potential
+      assert(anglePotentialPtr_ == 0);
+      if (nAngleType_) {
+         anglePotentialPtr_ = angleFactory().factory(angleStyle());
+         if (!anglePotentialPtr_) {
+            UTIL_THROW("Unknown angleStyle");
+         }
+         anglePotentialPtr_->setNAngleType(nAngleType_);
+         loadParamComposite(ar, *anglePotentialPtr_);
+      }
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      // Dihedral potential
+      assert(dihedralPotentialPtr_ == 0);
+      if (nDihedralType_) {
+         dihedralPotentialPtr_ = dihedralFactory().factory(dihedralStyle());
+         if (!dihedralPotentialPtr_) {
+            UTIL_THROW("Unknown dihedralStyle");
+         }
+         dihedralPotentialPtr_->setNDihedralType(nDihedralType_);
+         loadParamComposite(ar, *dihedralPotentialPtr_);
+      }
+      #endif
+
+      #ifdef INTER_EXTERNAL
+      // External potential
+      if (hasExternal_) {
+         externalPotentialPtr_ = externalFactory().factory(externalStyle());
+         externalPotentialPtr_->setNAtomType(nAtomType_);
+         loadParamComposite(ar, *externalPotentialPtr_);
+      }
+      #endif
+
+      loadEnsembles(ar);
+
+      #if 0
+      // Integrator
+      assert(integratorPtr_ == 0);
+      std::string className;
+      bool isEnd;
+      integratorPtr_ = 
+         integratorFactory().loadObject(ar, *this, className, isEnd);
+      if (!integratorPtr_) {
+         std::string msg("Unknown Integrator subclass name: ");
+         msg += className;
+         UTIL_THROW("msg.c_str()");
+      }
+
+      loadParamComposite(ar, random_);
+      loadParamComposite(ar, *diagnosticManagerPtr_);
+
+      exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
+      exchanger_.allocate();
+
+      // Set signal observers (i.e., call-back functions for Signal::notify)
+      modifySignal().addObserver(*this, &Simulation::unsetKineticEnergy );
+      modifySignal().addObserver(*this, &Simulation::unsetKineticStress );
+      modifySignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
+      modifySignal().addObserver(*this, &Simulation::unsetVirialStress );
+
+      velocitySignal().addObserver(*this, &Simulation::unsetKineticEnergy );
+      velocitySignal().addObserver(*this, &Simulation::unsetKineticStress );
+
+      positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
+      positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
+
+      // Add observers to exchangeSignal
+      if (nBondType_) {
+         void (BondStorage::*memberPtr)() = &BondStorage::unsetNTotal;
+         exchangeSignal().addObserver(bondStorage_, memberPtr);
+      }
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         void (AngleStorage::*memberPtr)() = &AngleStorage::unsetNTotal;
+         exchangeSignal().addObserver(angleStorage_, memberPtr);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         void (DihedralStorage::*memberPtr)() = &DihedralStorage::unsetNTotal;
+         exchangeSignal().addObserver(dihedralStorage_, memberPtr);
+      }
+      #endif
+      #endif // if 0
+   }
+
+   /*
+   * Serialize internal state to an archive.
+   */
+   void Simulation::save(Serializable::OArchive& ar)
+   {
+      domain_.save(ar);
+      saveFileMaster(ar);
+
+      // Read types
+      ar << nAtomType_;
+      ar << nBondType_;
+      #ifdef INTER_ANGLE
+      ar << nAngleType_;
+      #endif
+      #ifdef INTER_DIHEDRAL
+      ar << nDihedralType_;
+      #endif
+      #ifdef INTER_EXTERNAL
+      ar << hasExternal_; 
+      #endif
+      ar << atomTypes_;
+
+      // Read storage capacities
+      atomStorage_.save(ar);
+      bondStorage_.save(ar);
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         angleStorage_.save(ar);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         dihedralStorage_.save(ar);
+      }
+      #endif
+      buffer_.save(ar);
+      savePotentialStyles(ar);
+
+      #ifndef DDMD_NOPAIR
+      assert(pairPotentialPtr_);
+      pairPotentialPtr_->save(ar);
+      #endif
+
+      if (bondPotentialPtr_) {
+         assert(bondPotentialPtr_);
+         bondPotentialPtr_->save(ar);
+      }
+
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         assert(anglePotentialPtr_);
+         anglePotentialPtr_->save(ar);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         assert(dihedralPotentialPtr_);
+         dihedralPotentialPtr_->save(ar);
+      }
+      #endif
+
+      #ifdef INTER_EXTERNAL
+      // External potential
+      if (hasExternal_) {
+         assert(externalPotentialPtr_);
+         externalPotentialPtr_->save(ar);
+      }
+      #endif
+
+      saveEnsembles(ar);
+
+      #if 0
+      ar << integratorPtr_->className();
+      integratorPtr_->save(ar);
+
+      random_.save(ar);
+      diagnosticManagerPtr_->save(ar);
+      #endif // if 0
+   }
+
+   /*
    * Read the FileMaster parameters.
    */
    void Simulation::readFileMaster(std::istream &in)
    {  readParamComposite(in, *fileMasterPtr_); }
+
+   /*
+   * If no FileMaster exists, create and load one. 
+   */
+   void Simulation::loadFileMaster(Serializable::IArchive& ar)
+   {  loadParamComposite(ar, *fileMasterPtr_); }
+
+   /*
+   * If createdFileMaster_, save to archive.
+   *
+   * A Simulation normally creates its own FileMaster only in unit tests.
+   * In a simulation, the FileMaster is normally set to that of either
+   * a parent Simulation or that of another Simulation from which this was
+   * copied.
+   */
+   void Simulation::saveFileMaster(Serializable::OArchive& ar)
+   {  fileMasterPtr_->save(ar); }
 
    /*
    * Read potential style strings and maskedPairPolicy.
@@ -534,12 +783,90 @@ namespace DdMd
    }
 
    /*
+   * Load potential style strings.
+   */
+   void Simulation::loadPotentialStyles(Serializable::IArchive& ar)
+   {
+      #ifndef INTER_NOPAIR
+      loadParameter<std::string>(ar, "pairStyle", pairStyle_);
+      #endif
+      if (nBondType()) {
+         loadParameter<std::string>(ar, "bondStyle", bondStyle_);
+      }
+      #ifdef INTER_ANGLE
+      if (nAngleType()) {
+         loadParameter<std::string>(ar, "angleStyle", angleStyle_);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType()) {
+         loadParameter<std::string>(ar, "dihedralStyle", dihedralStyle_);
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      if (hasExternal()) {
+         loadParameter<std::string>(ar, "externalStyle", externalStyle_);
+      }
+      #endif
+      loadParameter<MaskPolicy>(ar, "maskedPairPolicy", maskedPairPolicy_);
+      loadParameter<bool>(ar, "reverseUpdateFlag", reverseUpdateFlag_);
+   }
+
+   /*
+   * Save potential style strings.
+   */
+   void Simulation::savePotentialStyles(Serializable::OArchive& ar)
+   {
+      #ifndef INTER_NOPAIR
+      ar << pairStyle_;
+      #endif
+      if (nBondType()) {
+         ar << bondStyle_;
+      }
+      #ifdef INTER_ANGLE
+      if (nAngleType()) {
+         ar << angleStyle_;
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType()) {
+         ar << dihedralStyle_;
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      if (hasExternal()) {
+         ar << externalStyle_;
+      }
+      #endif
+      ar << maskedPairPolicy_;
+      ar << reverseUpdateFlag_;
+   }
+
+   /*
    * Read EnergyEnsemble and BoundaryEnsemble
    */
    void Simulation::readEnsembles(std::istream &in)
    {
       readParamComposite(in, *energyEnsemblePtr_);
       readParamComposite(in, *boundaryEnsemblePtr_);
+   }
+
+   /*
+   * Load EnergyEnsemble and BoundaryEnsemble.
+   */
+   void Simulation::loadEnsembles(Serializable::IArchive& ar)
+   {
+      loadParamComposite(ar, *energyEnsemblePtr_);
+      loadParamComposite(ar, *boundaryEnsemblePtr_);
+   }
+
+   /*
+   * Save EnergyEnsemble and BoundaryEnsemble.
+   */
+   void Simulation::saveEnsembles(Serializable::OArchive& ar)
+   {
+      energyEnsemblePtr_->save(ar);
+      boundaryEnsemblePtr_->save(ar);
    }
 
    /*
@@ -646,7 +973,7 @@ namespace DdMd
             angleStorage().clearStatistics();
             #endif
             #ifdef INTER_DIHEDRAL
-            dihedralStorage().clear(domain_.communicator());
+            dihedralStorage().clearStatistics();
             #endif
             buffer().clearStatistics();
             pairPotential().pairList().clearStatistics();

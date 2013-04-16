@@ -100,6 +100,41 @@ namespace DdMd
       isInitialized_ = true;
    }
 
+   /**
+   * Load internal state from an archive.
+   */
+   void Buffer::loadParameters(Serializable::IArchive &ar)
+   {
+      // Read parameters
+      loadParameter<int>(ar, "atomCapacity",  atomCapacity_);
+      loadParameter<int>(ar, "ghostCapacity", ghostCapacity_);
+
+      // Validate data
+      if (atomCapacity_ < 0) {
+         UTIL_THROW("Negative atomCapacity");
+      }
+      if (ghostCapacity_ < 0) {
+         UTIL_THROW("Negative ghostCapacity");
+      }
+
+      #ifdef UTIL_MPI
+      // Do actual allocation
+      allocate();
+      #endif
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void Buffer::save(Serializable::OArchive &ar)
+   {
+      ar << atomCapacity_;
+      ar << ghostCapacity_;
+   }
+
+  
    /*
    * Maximum number of atoms for which space is available.
    */

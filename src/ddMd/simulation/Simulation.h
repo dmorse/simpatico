@@ -23,9 +23,10 @@
 #include <util/boundary/Boundary.h>              // member 
 #include <util/space/Tensor.h>                   // member (template param)
 #include <util/containers/DArray.h>              // member (template)
-#include <util/containers/DMatrix.h>              // member (template)
+#include <util/containers/DMatrix.h>             // member (template)
 #include <util/misc/Setable.h>                   // member (template)
 #include <util/signal/Signal.h>                  // members
+#include <util/archives/Serializable.h>          // typedef in function interface
 
 #include <fstream>
 
@@ -124,6 +125,15 @@ namespace DdMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load parameters from a restart file, allocate memory and initialize.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save internal state to restart file.
+      */
+      virtual void save(Serializable::OArchive& ar);
 
       /*
       * Read and execute commands from a command file.
@@ -623,6 +633,20 @@ namespace DdMd
       void readFileMaster(std::istream& in);
 
       /**
+      * Load FileMaster from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      void loadFileMaster(Serializable::IArchive& ar);
+
+      /**
+      * Save FileMaster to archive.
+      *
+      * \param ar output/saving archive
+      */
+      void saveFileMaster(Serializable::OArchive& ar);
+
+      /**
       * Read potential styles and maskedPairPolicy.
       *
       * \param in input parameter stream
@@ -630,11 +654,39 @@ namespace DdMd
       void readPotentialStyles(std::istream& in);
 
       /**
+      * Load potential styles.
+      *
+      * \param ar input/loading archive
+      */
+      void loadPotentialStyles(Serializable::IArchive& ar);
+
+      /**
+      * Save potential styles to archive.
+      *
+      * \param ar output/saving archive
+      */
+      void savePotentialStyles(Serializable::OArchive& ar);
+
+      /**
       * Read energy and boundary ensembles.
       *
       * \param in input parameter stream
       */
       void readEnsembles(std::istream& in);
+
+      /**
+      * Load energy and boundary ensembles from an input archive.
+      *
+      * \param ar input/loading archive
+      */
+      void loadEnsembles(Serializable::IArchive& ar);
+
+      /**
+      * Save energy and boundary ensembles to archive.
+      *
+      * \param ar output/saving archive
+      */
+      void saveEnsembles(Serializable::OArchive& ar);
 
    private:
 

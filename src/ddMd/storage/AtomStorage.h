@@ -87,6 +87,8 @@ namespace DdMd
       /**
       * Save internal state to an archive.
       *
+      * Call only on ioProcessor (master).
+      *
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
