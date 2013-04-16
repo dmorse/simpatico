@@ -84,6 +84,7 @@ namespace DdMd
 
       // Read parameter file 
       read<IntVector>(in, "gridDimensions", gridDimensions_);
+      initialize();
    }
    
    /*
