@@ -593,13 +593,12 @@ namespace DdMd
 
       loadEnsembles(ar);
 
-      #if 0
       // Integrator
       assert(integratorPtr_ == 0);
       std::string className;
       bool isEnd;
       integratorPtr_ = 
-         integratorFactory().loadObject(ar, *this, className, isEnd);
+         integratorFactory().loadObject(ar, *this, className);
       if (!integratorPtr_) {
          std::string msg("Unknown Integrator subclass name: ");
          msg += className;
@@ -641,6 +640,8 @@ namespace DdMd
          exchangeSignal().addObserver(dihedralStorage_, memberPtr);
       }
       #endif
+
+      #if 0
       #endif // if 0
    }
 
@@ -715,12 +716,14 @@ namespace DdMd
 
       saveEnsembles(ar);
 
-      #if 0
-      ar << integratorPtr_->className();
+      std::string name = integratorPtr_->className();
+      ar << name;
       integratorPtr_->save(ar);
 
       random_.save(ar);
       diagnosticManagerPtr_->save(ar);
+
+      #if 0
       #endif // if 0
    }
 

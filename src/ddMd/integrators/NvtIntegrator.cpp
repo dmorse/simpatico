@@ -68,7 +68,30 @@ namespace DdMd
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
       }
+   }
 
+   /**
+   * Load internal state from an archive.
+   */
+   void NvtIntegrator::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<double>(ar, "dt", dt_);
+      loadParameter<double>(ar, "tauT", tauT_);
+
+      nuT_ = 1.0/tauT_;
+      int nAtomType = simulation().nAtomType();
+      if (!prefactors_.isAllocated()) {
+         prefactors_.allocate(nAtomType);
+      }
+   }
+
+   /*
+   * Read time step dt.
+   */
+   void NvtIntegrator::save(Serializable::OArchive &ar)
+   {
+      ar << dt_;
+      ar << tauT_;
    }
 
    /*

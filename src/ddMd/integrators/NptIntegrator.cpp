@@ -57,6 +57,33 @@ namespace DdMd
 
    }
 
+   /**
+   * Load internal state from an archive.
+   */
+   void NptIntegrator::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<double>(ar, "dt", dt_);
+      loadParameter<double>(ar, "tauT", tauT_);
+      loadParameter<double>(ar, "tauP", tauP_);
+      loadParameter<LatticeSystem>(ar, "mode", mode_);
+
+      int nAtomType = simulation().nAtomType();
+      if (!prefactors_.isAllocated()) {
+         prefactors_.allocate(nAtomType);
+      }
+   }
+
+   /*
+   * Read time step dt.
+   */
+   void NptIntegrator::save(Serializable::OArchive &ar)
+   {
+      ar << dt_;
+      ar << tauT_;
+      ar << tauP_;
+      ar << mode_;
+   }
+
    /*
    * Initialize dynamical state variables to zero.
    */

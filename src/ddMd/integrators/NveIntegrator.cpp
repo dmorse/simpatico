@@ -49,6 +49,26 @@ namespace DdMd
       }
    }
 
+   /**
+   * Load internal state from an archive.
+   */
+   void NveIntegrator::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<double>(ar, "dt", dt_);
+      int nAtomType = simulation().nAtomType();
+      if (!prefactors_.isAllocated()) {
+         prefactors_.allocate(nAtomType);
+      }
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void NveIntegrator::save(Serializable::OArchive &ar)
+   {
+      ar << dt_;
+   }
+  
    void NveIntegrator::setup()
    {
 
