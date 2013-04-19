@@ -40,9 +40,6 @@
 #include <ddMd/potentials/external/ExternalFactory.h>
 #endif
 
-// namespace McMd
-//#include <mcMd/mcSimulation/McSimulation.h>
-
 // namespace Util
 #include <util/ensembles/EnergyEnsemble.h>
 #include <util/ensembles/BoundaryEnsemble.h>
@@ -150,10 +147,12 @@ namespace DdMd
       hasExternal_(false),
       #endif
       maskedPairPolicy_(MaskBonded),
-      reverseUpdateFlag_(false)
+      reverseUpdateFlag_(false),
       #ifdef UTIL_MPI
-      , communicator_(communicator)
+      communicator_(communicator),
       #endif
+      isInitialized_(false),
+      isRestarting_(false)
    {
       Util::initStatic();
       setClassName("Simulation");
@@ -275,18 +274,24 @@ namespace DdMd
    */
    void Simulation::setOptions(int argc, char **argv)
    {
-      bool   eFlag = false;
-      bool   sFlag = false;
-      char*  sArg;
-      int    nSystem = 1;
+      bool  eFlag = false;
+      bool  rFlag = false;
+      bool  sFlag = false;
+      char* sArg;
+      char* rArg;
+      int  nSystem = 1;
    
       // Read command-line arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "es:")) != -1) {
+      while ((c = getopt(argc, argv, "ers:")) != -1) {
          switch (c) {
          case 'e':
            eFlag = true;
+           break;
+         case 'r':
+           rFlag = true;
+           rArg  = optarg;
            break;
          case 's':
            sFlag = true;
@@ -303,7 +308,7 @@ namespace DdMd
          Util::ParamComponent::setEcho(true);
       }
 
-      // Split communicator
+      // Split the communicator
       if (sFlag) {
          if (nSystem <= 1) {
             UTIL_THROW("nSystem must be greater than 1");
@@ -311,7 +316,7 @@ namespace DdMd
          int worldRank = communicator_.Get_rank();
          int worldSize = communicator_.Get_size();
          if (worldSize % nSystem != 0) {
-            UTIL_THROW("World communicator size is not a multiple of nSystem");
+            UTIL_THROW("World communicator size not a multiple of nSystem");
          }
 
          // Split the communicator
@@ -319,11 +324,6 @@ namespace DdMd
          int systemId  = worldRank/systemSize;
          communicator_ = communicator_.Split(systemId, worldRank);
 
-         #if 0
-         std::cout << worldRank << "  " << systemId << "  " 
-                   << communicator_.Get_rank() << std::endl;
-         #endif
-    
          // Set param and grid communicators
          setIoCommunicator(communicator_);
          domain_.setGridCommunicator(communicator_);
@@ -334,6 +334,20 @@ namespace DdMd
          fileMaster().openOutputFile("log", logFile_);
          Log::setFile(logFile_);
       }
+
+      // Read a restart file.
+      if (rFlag) {
+         if (isIoProcessor()) {
+            Log::file() << "Begin reading restart, base file name " 
+                        << std::string(rArg) << std::endl;
+         }
+         isRestarting_ = true; 
+         readRestart(std::string(rArg));
+         if (isIoProcessor()) {
+            Util::Log::file() << std::endl;
+         }
+      }
+
    }
 
    /*
@@ -462,16 +476,16 @@ namespace DdMd
       exchanger_.allocate();
 
       // Set signal observers (i.e., call-back functions for Signal::notify)
-      modifySignal().addObserver(*this, &Simulation::unsetKineticEnergy );
-      modifySignal().addObserver(*this, &Simulation::unsetKineticStress );
-      modifySignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
-      modifySignal().addObserver(*this, &Simulation::unsetVirialStress );
+      modifySignal().addObserver(*this, &Simulation::unsetKineticEnergy);
+      modifySignal().addObserver(*this, &Simulation::unsetKineticStress);
+      modifySignal().addObserver(*this, &Simulation::unsetPotentialEnergies);
+      modifySignal().addObserver(*this, &Simulation::unsetVirialStress);
 
-      velocitySignal().addObserver(*this, &Simulation::unsetKineticEnergy );
-      velocitySignal().addObserver(*this, &Simulation::unsetKineticStress );
+      velocitySignal().addObserver(*this, &Simulation::unsetKineticEnergy);
+      velocitySignal().addObserver(*this, &Simulation::unsetKineticStress);
 
-      positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
-      positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
+      positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies);
+      positionSignal().addObserver(*this, &Simulation::unsetVirialStress);
 
       // Add observers to exchangeSignal
       if (nBondType_) {
@@ -612,16 +626,16 @@ namespace DdMd
       exchanger_.allocate();
 
       // Set signal observers (i.e., call-back functions for Signal::notify)
-      modifySignal().addObserver(*this, &Simulation::unsetKineticEnergy );
-      modifySignal().addObserver(*this, &Simulation::unsetKineticStress );
-      modifySignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
-      modifySignal().addObserver(*this, &Simulation::unsetVirialStress );
+      modifySignal().addObserver(*this, &Simulation::unsetKineticEnergy);
+      modifySignal().addObserver(*this, &Simulation::unsetKineticStress);
+      modifySignal().addObserver(*this, &Simulation::unsetPotentialEnergies);
+      modifySignal().addObserver(*this, &Simulation::unsetVirialStress);
 
-      velocitySignal().addObserver(*this, &Simulation::unsetKineticEnergy );
-      velocitySignal().addObserver(*this, &Simulation::unsetKineticStress );
+      velocitySignal().addObserver(*this, &Simulation::unsetKineticEnergy);
+      velocitySignal().addObserver(*this, &Simulation::unsetKineticStress);
 
-      positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
-      positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
+      positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies);
+      positionSignal().addObserver(*this, &Simulation::unsetVirialStress);
 
       // Add observers to exchangeSignal
       if (nBondType_) {
@@ -783,6 +797,8 @@ namespace DdMd
 
       // Reverse communication (true) or not (false)?
       read<bool>(in, "reverseUpdateFlag", reverseUpdateFlag_);
+
+      isInitialized_ = true;
    }
 
    /*
@@ -813,6 +829,8 @@ namespace DdMd
       #endif
       loadParameter<MaskPolicy>(ar, "maskedPairPolicy", maskedPairPolicy_);
       loadParameter<bool>(ar, "reverseUpdateFlag", reverseUpdateFlag_);
+
+      isInitialized_ = true;
    }
 
    /*
@@ -1059,6 +1077,50 @@ namespace DdMd
    */
    void Simulation::readCommands()
    {  readCommands(fileMaster().commandFile()); }
+
+   /*
+   * Read the restart file.
+   */  
+   void Simulation::readRestart(const std::string& filename)
+   {
+      if (isInitialized_) {
+         UTIL_THROW("Error: Called readRestart when already initialized");
+      }
+      if (!isRestarting_) {
+         UTIL_THROW("Error: Called readRestart without restart option");
+      }
+
+      // Load from archive
+      Serializable::IArchive ar;
+      if (isIoProcessor()) {
+         fileMaster().openRestartIFile(filename, ".rst", ar.file());
+      }
+      load(ar);
+      if (isIoProcessor()) {
+         ar.file().close();
+      }
+
+      // Set command (*.cmd) file
+      std::string commandFileName = filename + ".cmd";
+      fileMaster().setCommandFileName(commandFileName);
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Write a restart file (called inside the main loop).
+   */  
+   void Simulation::writeRestart(const std::string& filename)
+   {
+      Serializable::OArchive ar;
+      if (isIoProcessor()) {
+         fileMaster().openRestartOFile(filename, ".rst", ar.file());
+      }
+      save(ar);
+      if (isIoProcessor()) {
+         ar.file().close();
+      }
+   }
 
    /*
    * Set flag to specify if reverse communication is enabled.

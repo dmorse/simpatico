@@ -145,6 +145,16 @@ namespace DdMd
       */
       void readCommands();
 
+      /**
+      * Read a restart file.
+      */
+      void readRestart(const std::string& filename);
+
+      /**
+      * Write a restart file.
+      */
+      void writeRestart(const std::string& filename);
+
       // Mutators
 
       /**
@@ -877,6 +887,12 @@ namespace DdMd
 
       /// Log output file (if not standard out)
       std::ofstream logFile_;
+
+      /// Has readParam been called?
+      bool isInitialized_;
+
+      /// Is this McSimulation in the process of restarting?
+      bool isRestarting_;
 
    // friends:
 

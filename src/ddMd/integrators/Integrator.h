@@ -99,6 +99,13 @@ namespace DdMd
                    INTEGRATE2, NTime};
 
       /**
+      * Read writeRestartInterval and writeRestartFileName.
+      *
+      * \param in input parameter stream
+      */   
+      void readRestartParameters(std::istream& in);
+
+      /**
       * Set any internal dynamical to default initial values.
       *
       * This method should be called before the main loop the first time the 
@@ -163,6 +170,16 @@ namespace DdMd
       */
       bool isExchangeNeeded(double skin);
 
+      /**
+      * Get restart file base name. 
+      */
+      const std::string& writeRestartFileName() const;
+
+      /**
+      * Get interval for writing a restart file.
+      */
+      int writeRestartInterval() const;
+
       /*
       * Return the timer by reference.
       */
@@ -178,6 +195,12 @@ namespace DdMd
 
       // Has setup been called at least once?
       bool isSetup_;
+
+      /// Restart output file name
+      std::string writeRestartFileName_;
+
+      /// Interval for writing restart files (no output if 0)
+      int writeRestartInterval_;
 
    };
 
@@ -211,6 +234,18 @@ namespace DdMd
    */
    inline DdTimer& Integrator::timer()
    {  return timer_; }
+
+   /*
+   * Get restart file base name. 
+   */
+   inline const std::string& Integrator::writeRestartFileName() const
+   { return writeRestartFileName_; }
+
+   /*
+   * Get interval for writing a restart file.
+   */
+   inline int Integrator::writeRestartInterval() const
+   { return writeRestartInterval_; }
 
 }
 #endif

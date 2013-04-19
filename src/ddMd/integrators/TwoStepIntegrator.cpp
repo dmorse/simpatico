@@ -61,8 +61,14 @@ namespace DdMd
       int endStep = iStep_ + nStep;
       for ( ; iStep_ < endStep; ++iStep_) {
 
+         // Sample scheduled diagnostics
          if (Diagnostic::baseInterval > 0) {
             if (iStep_ % Diagnostic::baseInterval == 0) {
+               if (writeRestartInterval() > 0) {
+                  if (iStep_ % writeRestartInterval() == 0) {
+                     simulation().writeRestart(writeRestartFileName());
+                  }
+               }
                simulation().diagnosticManager().sample(iStep_);
             }
          }
@@ -130,6 +136,17 @@ namespace DdMd
       }
       exchanger().timer().stop();
       timer().stop();
+
+      // Final restart file (possibly)
+      if (Diagnostic::baseInterval > 0) {
+         if (iStep_ % Diagnostic::baseInterval == 0) {
+            if (writeRestartInterval() > 0) {
+               if (iStep_ % writeRestartInterval() == 0) {
+                  simulation().writeRestart(writeRestartFileName());
+               }
+            }
+         }
+      }
 
       // Transform to coordinates expected for beginning of next run.
       if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {

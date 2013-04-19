@@ -42,7 +42,9 @@ namespace DdMd
    Integrator::Integrator(Simulation& simulation)
      : SimulationAccess(simulation),
        timer_(Integrator::NTime),
-       isSetup_(false)
+       isSetup_(false),
+       writeRestartFileName_(),
+       writeRestartInterval_(0)
    {}
 
    /*
@@ -50,6 +52,17 @@ namespace DdMd
    */
    Integrator::~Integrator()
    {}
+
+   /*
+   * Initialize atom distribution, AtomStorage, PairList and forces.
+   */
+   void Integrator::readRestartParameters(std::istream& in)
+   {
+      read<int>(in, "writeRestartInterval", writeRestartInterval_);
+      if (writeRestartInterval_ > 0) {
+         read<std::string>(in, "writeRestartFileName", writeRestartFileName_);
+      }
+   }
 
    /*
    * Initialize atom distribution, AtomStorage, PairList and forces.
