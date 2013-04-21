@@ -65,9 +65,9 @@ namespace DdMd
          // Also write restart file, if scheduled.
          if (Diagnostic::baseInterval > 0) {
             if (iStep_ % Diagnostic::baseInterval == 0) {
-               if (writeRestartInterval() > 0) {
-                  if (iStep_ % writeRestartInterval() == 0) {
-                     simulation().save(writeRestartFileName());
+               if (saveInterval() > 0) {
+                  if (iStep_ % saveInterval() == 0) {
+                     simulation().save(saveFileName());
                   }
                }
                simulation().diagnosticManager().sample(iStep_);
@@ -144,9 +144,9 @@ namespace DdMd
       // Final restart write, if final iStep_ is multiple of interval.
       if (Diagnostic::baseInterval > 0) {
          if (iStep_ % Diagnostic::baseInterval == 0) {
-            if (writeRestartInterval() > 0) {
-               if (iStep_ % writeRestartInterval() == 0) {
-                  simulation().save(writeRestartFileName());
+            if (saveInterval() > 0) {
+               if (iStep_ % saveInterval() == 0) {
+                  simulation().save(saveFileName());
                }
             }
          }

@@ -40,13 +40,14 @@ namespace DdMd
    {}
 
    /*
-   * Read time step dt.
+   * Read parameters and initialize.
    */
    void NphIntegrator::readParameters(std::istream& in)
    {
       read<double>(in, "dt", dt_);
       read<double>(in, "W", W_);
       read<LatticeSystem>(in, "mode", mode_);
+      readSaveParameters(in);
 
       // Allocate memory
       int nAtomType = simulation().nAtomType();
@@ -55,6 +56,33 @@ namespace DdMd
       }
    }
 
+   /*
+   * Load parameters from restart archive.
+   */
+   void NphIntegrator::loadParameters(Serializable::IArchive& ar)
+   {
+      loadParameter<double>(ar, "dt", dt_);
+      loadParameter<double>(ar, "W", W_);
+      loadParameter<LatticeSystem>(ar, "mode", mode_);
+      loadSaveParameters(ar);
+
+      // Allocate memory
+      int nAtomType = simulation().nAtomType();
+      if (!prefactors_.isAllocated()) {
+         prefactors_.allocate(nAtomType);
+      }
+   }
+
+   /*
+   * Save parameters from restart archive.
+   */
+   void NphIntegrator::save(Serializable::OArchive& ar)
+   {
+      ar << dt_;
+      ar << W_;
+      ar << mode_;
+      saveSaveParameters(ar);
+   }
    void NphIntegrator::initDynamicalState()
    {  nu_ = Vector(0.0,0.0,0.0); }
 

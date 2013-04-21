@@ -2,7 +2,7 @@ TODO:
 
  - Add loadParameters / save serialization to MigratingVanHove
 
-  - Test serialization diagnostics in perturb/ in multi-processor run.
+ - Test serialization diagnostics in perturb/ in multi-processor run.
 
 Note: Checked 1/4/2013 with grep that all other diagnostics have 
     save / loadParameters functions. Many have not been well tested.

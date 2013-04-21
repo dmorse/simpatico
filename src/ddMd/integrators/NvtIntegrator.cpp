@@ -62,6 +62,7 @@ namespace DdMd
    {
       read<double>(in, "dt",   dt_);
       read<double>(in, "tauT", tauT_);
+      readSaveParameters(in);
 
       nuT_ = 1.0/tauT_;
       int nAtomType = simulation().nAtomType();
@@ -77,6 +78,7 @@ namespace DdMd
    {
       loadParameter<double>(ar, "dt", dt_);
       loadParameter<double>(ar, "tauT", tauT_);
+      loadSaveParameters(ar);
 
       nuT_ = 1.0/tauT_;
       int nAtomType = simulation().nAtomType();
@@ -92,6 +94,7 @@ namespace DdMd
    {
       ar << dt_;
       ar << tauT_;
+      saveSaveParameters(ar);
    }
 
    /*

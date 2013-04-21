@@ -1,0 +1,36 @@
+  BoundaryEnsemble{
+    type              isobaric
+    pressure          2.4
+  }
+  NptIntegrator{
+    dt                0.005
+    tauT              0.5
+    tauP              0.5
+    mode              cubic
+  }
+  Random{
+    seed              8012457890
+  }
+  DiagnosticManager{
+     baseInterval     100
+
+     OutputEnergy{
+        interval         1000
+        outputFileName   energy
+     }
+
+     OutputPressure{
+        interval         1000
+        outputFileName   pressure
+     }
+     OutputBoxdim{
+        interval         1000
+        outputFileName   boxdim
+     }
+     OutputTemperature{
+        interval         1000
+        outputFileName   temperature
+      }
+  }
+}
+

@@ -48,8 +48,8 @@ namespace McMd
     : Simulation(communicator),
       system_(),
       mdDiagnosticManagerPtr_(0),
-      writeRestartFileName_(),
-      writeRestartInterval_(0),
+      saveFileName_(),
+      saveInterval_(0),
       isInitialized_(false),
       isRestarting_(false)
    {
@@ -70,8 +70,8 @@ namespace McMd
     : Simulation(),
       system_(),
       mdDiagnosticManagerPtr_(0),
-      writeRestartFileName_(),
-      writeRestartInterval_(0),
+      saveFileName_(),
+      saveInterval_(0),
       isInitialized_(false),
       isRestarting_(false)
    {
@@ -154,7 +154,7 @@ namespace McMd
          std::cout << "Reading restart" << std::endl;
          std::cout << "Base file name " << std::string(rarg) << std::endl;
          isRestarting_ = true; 
-         readRestart(std::string(rarg));
+         load(std::string(rarg));
       }
    }
 
@@ -173,9 +173,9 @@ namespace McMd
       readParamComposite(in, diagnosticManager());
 
       // Parameters for writing restart files
-      read<int>(in, "writeRestartInterval", writeRestartInterval_);
-      if (writeRestartInterval_ > 0) {
-         read<std::string>(in, "writeRestartFileName", writeRestartFileName_);
+      read<int>(in, "saveInterval", saveInterval_);
+      if (saveInterval_ > 0) {
+         read<std::string>(in, "saveFileName", saveFileName_);
       }
 
       isValid();
@@ -483,7 +483,7 @@ namespace McMd
          if (Diagnostic::baseInterval > 0) {
             if (iStep_ % Diagnostic::baseInterval == 0) {
                system().shiftAtoms();
-               writeRestart(writeRestartFileName_);
+               save(saveFileName_);
                diagnosticManager().sample(iStep_);
             }
          }
@@ -511,7 +511,7 @@ namespace McMd
       // Final restart / diagnostics
       if (Diagnostic::baseInterval > 0) {
          if (iStep_ % Diagnostic::baseInterval == 0) {
-            writeRestart(writeRestartFileName_);
+            save(saveFileName_);
             diagnosticManager().sample(iStep_);
          }
       }
@@ -716,11 +716,14 @@ namespace McMd
 
    }
 
-   void MdSimulation::readRestart(const std::string& filename)
+   /**
+   * Open, load, and close binary restart file. 
+   */
+   void MdSimulation::load(const std::string& filename)
    {
       // Precondition
       if (isInitialized_) {
-         UTIL_THROW("Error: Called readRestart when already initialized");
+         UTIL_THROW("Error: Called load when already initialized");
       }
 
       // Load state from archive
@@ -740,11 +743,11 @@ namespace McMd
    /*
    * Write a restart file with specified filename, if at interval.
    */
-   void MdSimulation::writeRestart(const std::string& filename)
+   void MdSimulation::save(const std::string& filename)
    {
       // Write restart file
-      if (writeRestartInterval_ > 0) {
-         if (iStep_ % writeRestartInterval_ == 0) {
+      if (saveInterval_ > 0) {
+         if (iStep_ % saveInterval_ == 0) {
             Serializable::OArchive ar;
             fileMaster().openRestartOFile(filename, ".rst", ar.file());
             save(ar);

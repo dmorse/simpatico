@@ -124,7 +124,7 @@ McSimulation{
     }
 
   }
-  writeRestartInterval                0
+  saveInterval                0
 }
 
     RDF{

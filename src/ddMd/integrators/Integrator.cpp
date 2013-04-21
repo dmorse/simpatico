@@ -43,8 +43,8 @@ namespace DdMd
      : SimulationAccess(simulation),
        timer_(Integrator::NTime),
        isSetup_(false),
-       writeRestartFileName_(),
-       writeRestartInterval_(0)
+       saveFileName_(),
+       saveInterval_(0)
    {}
 
    /*
@@ -54,13 +54,35 @@ namespace DdMd
    {}
 
    /*
-   * Initialize atom distribution, AtomStorage, PairList and forces.
+   * Read saveInterval and saveFileName.
    */
-   void Integrator::readRestartParameters(std::istream& in)
+   void Integrator::readSaveParameters(std::istream& in)
    {
-      read<int>(in, "writeRestartInterval", writeRestartInterval_);
-      if (writeRestartInterval_ > 0) {
-         read<std::string>(in, "writeRestartFileName", writeRestartFileName_);
+      read<int>(in, "saveInterval", saveInterval_);
+      if (saveInterval_ > 0) {
+         read<std::string>(in, "saveFileName", saveFileName_);
+      }
+   }
+
+   /*
+   * Load saveInterval and saveFileName from restart archive.
+   */
+   void Integrator::loadSaveParameters(Serializable::IArchive& ar)
+   {
+      loadParameter<int>(ar, "saveInterval", saveInterval_);
+      if (saveInterval_ > 0) {
+         loadParameter<std::string>(ar, "saveFileName", saveFileName_);
+      }
+   }
+
+   /*
+   * Save saveInterval and saveFileName to restart archive.
+   */
+   void Integrator::saveSaveParameters(Serializable::OArchive& ar)
+   {
+      ar << saveInterval_;
+      if (saveInterval_ > 0) {
+         ar << saveFileName_;
       }
    }
 

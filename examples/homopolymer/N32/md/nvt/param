@@ -97,8 +97,8 @@ MdSimulation{
     }
 
   }
-  writeRestartInterval                  500
-  writeRestartFileName              restart
+  saveInterval                  500
+  saveFileName              restart
 }
 
     DumpConfig{

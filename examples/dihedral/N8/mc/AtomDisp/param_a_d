@@ -101,8 +101,8 @@ McSimulation{
       capacity                            500
     }
   }
-  writeRestartInterval        10000000
-  writeRestartFileName         restart
+  saveInterval        10000000
+  saveFileName         restart
 }
 
     HybridMdMove{

@@ -77,7 +77,7 @@ MdSimulation{
     }
 
   }
-  writeRestartInterval                 0
+  saveInterval                 0
 }
 
     NvtNhIntegrator{

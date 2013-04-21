@@ -99,11 +99,25 @@ namespace DdMd
                    INTEGRATE2, NTime};
 
       /**
-      * Read writeRestartInterval and writeRestartFileName.
+      * Read saveInterval and saveFileName.
       *
       * \param in input parameter stream
       */   
-      void readRestartParameters(std::istream& in);
+      void readSaveParameters(std::istream& in);
+
+      /**
+      * Load saveInterval and saveFileName from restart archive.
+      *
+      * \param ar input archive
+      */   
+      void loadSaveParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save saveInterval and saveFileName from restart archive.
+      *
+      * \param ar input archive
+      */   
+      void saveSaveParameters(Serializable::OArchive& ar);
 
       /**
       * Set any internal dynamical to default initial values.
@@ -173,12 +187,12 @@ namespace DdMd
       /**
       * Get restart file base name. 
       */
-      const std::string& writeRestartFileName() const;
+      const std::string& saveFileName() const;
 
       /**
       * Get interval for writing a restart file.
       */
-      int writeRestartInterval() const;
+      int saveInterval() const;
 
       /*
       * Return the timer by reference.
@@ -197,10 +211,10 @@ namespace DdMd
       bool isSetup_;
 
       /// Restart output file name
-      std::string writeRestartFileName_;
+      std::string saveFileName_;
 
       /// Interval for writing restart files (no output if 0)
-      int writeRestartInterval_;
+      int saveInterval_;
 
    };
 
@@ -238,14 +252,14 @@ namespace DdMd
    /*
    * Get restart file base name. 
    */
-   inline const std::string& Integrator::writeRestartFileName() const
-   { return writeRestartFileName_; }
+   inline const std::string& Integrator::saveFileName() const
+   { return saveFileName_; }
 
    /*
    * Get interval for writing a restart file.
    */
-   inline int Integrator::writeRestartInterval() const
-   { return writeRestartInterval_; }
+   inline int Integrator::saveInterval() const
+   { return saveInterval_; }
 
 }
 #endif

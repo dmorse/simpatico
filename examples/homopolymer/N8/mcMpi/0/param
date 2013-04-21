@@ -171,8 +171,8 @@ McSimulation{
     }
 
   }
-  writeRestartInterval            10000
-  writeRestartFileName          restart
+  saveInterval            10000
+  saveFileName          restart
 }
 WRITE_PARAM      param
 READ_CONFIG      config

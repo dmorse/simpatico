@@ -8,10 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/global.h>
-
 #include <mcMd/simulation/System.h>     // base class
 #include <mcMd/neighbor/CellList.h>     // member
+#include <util/global.h>
 
 namespace McMd
 {

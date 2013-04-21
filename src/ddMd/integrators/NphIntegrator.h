@@ -41,10 +41,18 @@ namespace DdMd
 
       /**
       * Read required parameters.
-      *
-      * For velocity-verlet algorithm, reads the time step dt.
       */
       void readParameters(std::istream& in);
+
+      /**
+      * Load parameters from an input restart archive.
+      */
+      void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to an input restart archive.
+      */
+      void save(Serializable::OArchive& ar);
 
    protected:
 
