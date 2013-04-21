@@ -61,12 +61,13 @@ namespace DdMd
       int endStep = iStep_ + nStep;
       for ( ; iStep_ < endStep; ++iStep_) {
 
-         // Sample scheduled diagnostics
+         // Sample scheduled diagnostics.
+         // Also write restart file, if scheduled.
          if (Diagnostic::baseInterval > 0) {
             if (iStep_ % Diagnostic::baseInterval == 0) {
                if (writeRestartInterval() > 0) {
                   if (iStep_ % writeRestartInterval() == 0) {
-                     simulation().writeRestart(writeRestartFileName());
+                     simulation().save(writeRestartFileName());
                   }
                }
                simulation().diagnosticManager().sample(iStep_);
@@ -82,6 +83,7 @@ namespace DdMd
          simulation().modifySignal().notify();
 
          #ifdef DDMD_INTEGRATOR_DEBUG
+         // Sanity check
          simulation().isValid();
          #endif
 
@@ -113,6 +115,7 @@ namespace DdMd
          simulation().exchangeSignal().notify();
    
          #ifdef DDMD_INTEGRATOR_DEBUG
+         // Sanity check
          simulation().isValid();
          #endif
 
@@ -130,6 +133,7 @@ namespace DdMd
          timer().stamp(INTEGRATE2);
    
          #ifdef DDMD_INTEGRATOR_DEBUG
+         // Sanity check
          simulation().isValid();
          #endif
 
@@ -137,12 +141,12 @@ namespace DdMd
       exchanger().timer().stop();
       timer().stop();
 
-      // Final restart file (possibly)
+      // Final restart write, if final iStep_ is multiple of interval.
       if (Diagnostic::baseInterval > 0) {
          if (iStep_ % Diagnostic::baseInterval == 0) {
             if (writeRestartInterval() > 0) {
                if (iStep_ % writeRestartInterval() == 0) {
-                  simulation().writeRestart(writeRestartFileName());
+                  simulation().save(writeRestartFileName());
                }
             }
          }

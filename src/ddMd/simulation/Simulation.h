@@ -74,8 +74,12 @@ namespace DdMd
 
    public:
 
-      #ifdef UTIL_MPI
+      using ParamComposite::readParam;
+      using ParamComposite::load;
 
+      // Lifetime
+      
+      #ifdef UTIL_MPI
       /**
       * Default constructor.
       *
@@ -93,6 +97,9 @@ namespace DdMd
       * Destructor.
       */
       ~Simulation();
+
+      /// \name Initialize
+      //@{
 
       /**
       * Process command line options.
@@ -113,8 +120,6 @@ namespace DdMd
       */
       void setOptions(int argc, char **argv);
 
-      using ParamComposite::readParam;
-
       /**
       * Read parameters from default parameter file.
       */
@@ -126,14 +131,52 @@ namespace DdMd
       virtual void readParameters(std::istream& in);
 
       /**
-      * Load parameters from a restart file, allocate memory and initialize.
+      * Set flag to identify if reverse communication is enabled.
+      *
+      * \param reverseUpdateFlag true if reverse communication is enabled.
+      */
+      void setReverseUpdateFlag(bool reverseUpdateFlag);
+
+      //@}
+      /// \name Serialization (Restart files)
+      //@{
+  
+      /**
+      * Load state from a restart file.
+      *
+      * Call on all processors.
+      */
+      void load(const std::string& filename);
+
+      /**
+      * Load state from a restart archive.
+      *
+      * Used to implement load(std::string). Do not call directly.
       */
       virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
-      * Save internal state to restart file.
+      * Save state to a restart file.
+      *
+      * Call on all processors. Only writes from master ioProcessor.
+      */
+      void save(const std::string& filename);
+
+      /**
+      * Save internal state to restart archive.
+      *
+      * Used to implement save(std::string). Do not call directly.
       */
       virtual void save(Serializable::OArchive& ar);
+
+      //@}
+      /// \name Run Time Actions
+      //@{
+
+      /**
+      * Read and execute commands from the default command file.
+      */
+      void readCommands();
 
       /*
       * Read and execute commands from a command file.
@@ -141,24 +184,9 @@ namespace DdMd
       void readCommands(std::istream &in);
    
       /**
-      * Read and execute commands from the default command file.
-      */
-      void readCommands();
-
-      /**
-      * Read a restart file.
-      */
-      void readRestart(const std::string& filename);
-
-      /**
-      * Write a restart file.
-      */
-      void writeRestart(const std::string& filename);
-
-      // Mutators
-
-      /**
       * Integrate equations of motion. 
+      *
+      * \param nStep number of time steps to integrate.
       */
       void simulate(int nStep);
 
@@ -174,13 +202,7 @@ namespace DdMd
       */
       void zeroForces();
 
-      /**
-      * Set flag to identify if reverse communication is enabled.
-      *
-      * \param reverseUpdateFlag true if reverse communication is enabled.
-      */
-      void setReverseUpdateFlag(bool reverseUpdateFlag);
-
+      //@}
       /// \name Config File IO
       //@{
 

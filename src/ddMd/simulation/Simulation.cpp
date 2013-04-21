@@ -303,13 +303,13 @@ namespace DdMd
          }
       }
    
-      // Enable echoing of parameters to log file as they are read
+      // If option -e, enable echoing of parameters as they are read
       if (eFlag) {
          Util::ParamComponent::setEcho(true);
       }
-
-      // Split the communicator
-      if (sFlag) {
+      
+      // If option -s, split the communicator
+      if (sFlag) {  
          if (nSystem <= 1) {
             UTIL_THROW("nSystem must be greater than 1");
          }
@@ -335,17 +335,17 @@ namespace DdMd
          Log::setFile(logFile_);
       }
 
-      // Read a restart file.
-      if (rFlag) {
+      // If option -r, load state from a restart file.
+      if (rFlag) { 
          if (isIoProcessor()) {
             Log::file() << "Begin reading restart, base file name " 
                         << std::string(rArg) << std::endl;
          }
-         isRestarting_ = true; 
-         readRestart(std::string(rArg));
+         load(std::string(rArg));
          if (isIoProcessor()) {
             Util::Log::file() << std::endl;
          }
+         isInitialized_ = true;
       }
 
    }
@@ -361,16 +361,11 @@ namespace DdMd
    */
    void Simulation::readParameters(std::istream& in)
    {
-      // Preconditions
-      assert(pairPotentialPtr_ == 0);
-      assert(bondPotentialPtr_ == 0);
-      assert(integratorPtr_ == 0);
-      assert(configIoPtr_ == 0);
-
+      // Read Domain and FileMaster
       readParamComposite(in, domain_);
       readFileMaster(in);
 
-      // Read types
+      // Read numbers of types
       read<int>(in, "nAtomType", nAtomType_);
       read<int>(in, "nBondType", nBondType_);
       #ifdef INTER_ANGLE
@@ -382,6 +377,8 @@ namespace DdMd
       #ifdef INTER_EXTERNAL
       read<bool>(in, "hasExternal", hasExternal_);
       #endif
+
+      // Read array of atom type descriptors
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
@@ -401,11 +398,15 @@ namespace DdMd
          readParamComposite(in, dihedralStorage_);
       }
       #endif
+
       readParamComposite(in, buffer_);
       readPotentialStyles(in);
 
+      // Create and read potential energy classes
+      
       #ifndef DDMD_NOPAIR
       // Pair Potential
+      assert(pairPotentialPtr_ == 0);
       pairPotentialPtr_ = pairFactory().factory(pairStyle());
       if (!pairPotentialPtr_) {
          UTIL_THROW("Unknown pairStyle");
@@ -416,6 +417,7 @@ namespace DdMd
       #endif
 
       // Bond Potential
+      assert(bondPotentialPtr_ == 0);
       bondPotentialPtr_ = bondFactory().factory(bondStyle());
       if (!bondPotentialPtr_) {
          UTIL_THROW("Unknown bondStyle");
@@ -426,6 +428,7 @@ namespace DdMd
       #ifdef INTER_ANGLE
       // Angle potential
       if (nAngleType_) {
+         assert(anglePotentialPtr_ == 0);
          anglePotentialPtr_ = angleFactory().factory(angleStyle());
          if (!anglePotentialPtr_) {
             UTIL_THROW("Unknown angleStyle");
@@ -438,6 +441,7 @@ namespace DdMd
       #ifdef INTER_DIHEDRAL
       // Dihedral potential
       if (nDihedralType_) {
+         assert(dihedralPotentialPtr_ == 0);
          dihedralPotentialPtr_ = dihedralFactory().factory(dihedralStyle());
          if (!dihedralPotentialPtr_) {
             UTIL_THROW("Unknown dihedralStyle");
@@ -450,6 +454,7 @@ namespace DdMd
       #ifdef INTER_EXTERNAL
       // External potential
       if (hasExternal_) {
+         assert(externalPotentialPtr_ == 0);
          externalPotentialPtr_ = externalFactory().factory(externalStyle());
          externalPotentialPtr_->setNAtomType(nAtomType_);
          readParamComposite(in, *externalPotentialPtr_);
@@ -461,6 +466,7 @@ namespace DdMd
       // Integrator
       std::string className;
       bool isEnd;
+      assert(integratorPtr_ == 0);
       integratorPtr_ = 
          integratorFactory().readObject(in, *this, className, isEnd);
       if (!integratorPtr_) {
@@ -472,6 +478,8 @@ namespace DdMd
       readParamComposite(in, random_);
       readParamComposite(in, *diagnosticManagerPtr_);
 
+      // Finished reading paramer file. Now finish initialization.
+      
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
 
@@ -486,8 +494,6 @@ namespace DdMd
 
       positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies);
       positionSignal().addObserver(*this, &Simulation::unsetVirialStress);
-
-      // Add observers to exchangeSignal
       if (nBondType_) {
          void (BondStorage::*memberPtr)() = &BondStorage::unsetNTotal;
          exchangeSignal().addObserver(bondStorage_, memberPtr);
@@ -511,6 +517,11 @@ namespace DdMd
    */
    void Simulation::loadParameters(Serializable::IArchive& ar)
    {
+      if (isInitialized_) {
+         UTIL_THROW("Error: Called loadParameters when already initialized");
+      }
+      isRestarting_ = true; 
+
       loadParamComposite(ar, domain_);
       loadFileMaster(ar);
 
@@ -660,6 +671,32 @@ namespace DdMd
    }
 
    /*
+   * Load state from a restart file (open file, call load, close file)
+   */  
+   void Simulation::load(const std::string& filename)
+   {
+      if (isInitialized_) {
+         UTIL_THROW("Error: Called load when already initialized");
+      }
+
+      // Open archive file, load state, close file.
+      Serializable::IArchive ar;
+      if (isIoProcessor()) {
+         fileMaster().openRestartIFile(filename, ".rst", ar.file());
+      }
+      load(ar);
+      if (isIoProcessor()) {
+         ar.file().close();
+      }
+
+      // Set command (*.cmd) file
+      std::string commandFileName = filename + ".cmd";
+      fileMaster().setCommandFileName(commandFileName);
+
+      isInitialized_ = true;
+   }
+
+   /*
    * Serialize internal state to an archive.
    */
    void Simulation::save(Serializable::OArchive& ar)
@@ -736,9 +773,19 @@ namespace DdMd
 
       random_.save(ar);
       diagnosticManagerPtr_->save(ar);
+   }
 
-      #if 0
-      #endif // if 0
+   /*
+   * Save state to file (open file, call save(), close file).
+   */  
+   void Simulation::save(const std::string& filename)
+   {
+      if (isIoProcessor()) {
+         Serializable::OArchive ar;
+         fileMaster().openRestartOFile(filename, ".rst", ar.file());
+         save(ar);
+         ar.file().close();
+      }
    }
 
    /*
@@ -1078,49 +1125,13 @@ namespace DdMd
    void Simulation::readCommands()
    {  readCommands(fileMaster().commandFile()); }
 
-   /*
-   * Read the restart file.
-   */  
-   void Simulation::readRestart(const std::string& filename)
-   {
-      if (isInitialized_) {
-         UTIL_THROW("Error: Called readRestart when already initialized");
-      }
-      if (!isRestarting_) {
-         UTIL_THROW("Error: Called readRestart without restart option");
-      }
 
-      // Load from archive
-      Serializable::IArchive ar;
-      if (isIoProcessor()) {
-         fileMaster().openRestartIFile(filename, ".rst", ar.file());
-      }
-      load(ar);
-      if (isIoProcessor()) {
-         ar.file().close();
-      }
 
-      // Set command (*.cmd) file
-      std::string commandFileName = filename + ".cmd";
-      fileMaster().setCommandFileName(commandFileName);
 
-      isInitialized_ = true;
-   }
 
-   /*
-   * Write a restart file (called inside the main loop).
-   */  
-   void Simulation::writeRestart(const std::string& filename)
-   {
-      Serializable::OArchive ar;
-      if (isIoProcessor()) {
-         fileMaster().openRestartOFile(filename, ".rst", ar.file());
-      }
-      save(ar);
-      if (isIoProcessor()) {
-         ar.file().close();
-      }
-   }
+
+
+
 
    /*
    * Set flag to specify if reverse communication is enabled.
