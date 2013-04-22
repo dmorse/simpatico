@@ -126,6 +126,14 @@ namespace DdMd
       virtual void readParam();
 
       /**
+      * Read parameters.
+      *
+      * This version includes the opening and closing blocks.
+      * Does nothing and returns if load() was called previously.
+      */
+      virtual void readParam(std::istream& in);
+
+      /**
       * Read parameters, allocate memory and initialize.
       */
       virtual void readParameters(std::istream& in);

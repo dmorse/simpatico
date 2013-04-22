@@ -124,12 +124,16 @@ namespace Util
    {
       Begin* beginPtr = &addBegin(className().c_str());
       if (ParamComponent::echo()) {
-         beginPtr->writeParam(Log::file());
+         if (isIoProcessor()) {
+            beginPtr->writeParam(Log::file());
+         }
       }
       loadParameters(ar);
       End* endPtr = &addEnd();
       if (ParamComponent::echo()) {
-         endPtr->writeParam(Log::file());
+         if (isIoProcessor()) {
+            endPtr->writeParam(Log::file());
+         }
       }
    }
 

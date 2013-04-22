@@ -284,7 +284,7 @@ namespace DdMd
       // Read command-line arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "ers:")) != -1) {
+      while ((c = getopt(argc, argv, "er:s:")) != -1) {
          switch (c) {
          case 'e':
            eFlag = true;
@@ -354,7 +354,22 @@ namespace DdMd
    *  Read parameters from default parameter file. 
    */
    void Simulation::readParam()
-   {   ParamComposite::readParam(fileMaster().paramFile()); }
+   {  readParam(fileMaster().paramFile()); }
+
+   /*
+   * Read parameter block, including begin and end.
+   */
+   void Simulation::readParam(std::istream& in)
+   {
+      if (isRestarting_) {
+         if (isInitialized_) {
+            return;
+         }
+      }
+      readBegin(in, className().c_str());
+      readParameters(in);
+      readEnd(in);
+   }
 
    /*
    * Read parameters, allocate memory and initialize.
@@ -520,6 +535,9 @@ namespace DdMd
       if (isInitialized_) {
          UTIL_THROW("Error: Called loadParameters when already initialized");
       }
+      if (!hasIoCommunicator()) {
+         UTIL_THROW("Error: No IoCommunicator is set");
+      }
       isRestarting_ = true; 
 
       loadParamComposite(ar, domain_);
@@ -631,7 +649,7 @@ namespace DdMd
       }
 
       loadParamComposite(ar, random_);
-      loadParamComposite(ar, *diagnosticManagerPtr_);
+      //loadParamComposite(ar, *diagnosticManagerPtr_);
 
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
@@ -666,8 +684,6 @@ namespace DdMd
       }
       #endif
 
-      #if 0
-      #endif // if 0
    }
 
    /*
@@ -677,6 +693,9 @@ namespace DdMd
    {
       if (isInitialized_) {
          UTIL_THROW("Error: Called load when already initialized");
+      }
+      if (!hasIoCommunicator()) {
+         UTIL_THROW("Error: No IoCommunicator is set");
       }
 
       // Open archive file, load state, close file.
@@ -780,6 +799,21 @@ namespace DdMd
    */  
    void Simulation::save(const std::string& filename)
    {
+      // Update statistics (call on all processors).
+      atomStorage_.computeStatistics(domain_.communicator());
+      bondStorage_.computeStatistics(domain_.communicator());
+      #ifdef INTER_ANGLE
+      angleStorage_.computeStatistics(domain_.communicator());
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage_.computeStatistics(domain_.communicator());
+      #endif
+      buffer_.computeStatistics(domain_.communicator());
+      if (integratorPtr_) {
+         integratorPtr_->computeStatistics();
+      }
+     
+      // Save data on ioProcessor 
       if (isIoProcessor()) {
          Serializable::OArchive ar;
          fileMaster().openRestartOFile(filename, ".rst", ar.file());
@@ -947,11 +981,11 @@ namespace DdMd
       std::ifstream inputFile;
       std::ofstream outputFile;
 
-      #ifndef UTIL_MPI
-      std::istream&     inBuffer = in;
-      #else
+      #ifdef UTIL_MPI
       std::stringstream inBuffer;
       std::string       line;
+      #else
+      std::istream&     inBuffer = in;
       #endif
 
       bool readNext = true;
@@ -976,144 +1010,167 @@ namespace DdMd
          }
 
          inBuffer >> command;
-         if (command == "READ_CONFIG") {
-            // Read configuration from file (boundary + positions + topology).
-            // Uses current ConfigIo, if set, or creates instance of default.
-            inBuffer >> filename;
-            readConfig(filename);
-         } else
-         if (command == "THERMALIZE") {
-            double temperature;
-            inBuffer >> temperature;
-            setBoltzmannVelocities(temperature);
-         } else
-         if (command == "SIMULATE") {
-            int endStep;
-            inBuffer >> endStep;
-            simulate(endStep);
-         } else
-         if (command == "OUTPUT_DIAGNOSTICS") {
-            diagnosticManager().output();
-         } else
-         if (command == "OUTPUT_INTEGRATOR_STATS") {
-            // Output statistics about time usage during simulation.
-            integratorPtr_->computeStatistics();
-            if (domain_.isMaster()) {
-               integratorPtr_->outputStatistics(Log::file());
-            }
-         } else
-         if (command == "OUTPUT_EXCHANGER_STATS") {
-            // Output detailed statistics about time usage by Exchanger.
-            integratorPtr_->computeStatistics();
-            #ifdef UTIL_MPI
-            exchanger().timer().reduce(domain().communicator());
-            #endif
-            if (domain_.isMaster()) {
-               int iStep = integratorPtr_->iStep();
-               double time  = integratorPtr_->time();
-               exchanger_.outputStatistics(Log::file(), time, iStep);
-            }
-         } else
-         if (command == "OUTPUT_MEMORY_STATS") {
-            // Output statistics about memory usage during simulation.
-            // Also clears statistics after printing output
-            atomStorage().computeStatistics(domain_.communicator());
-            bondStorage().computeStatistics(domain_.communicator());
-            #ifdef INTER_ANGLE
-            angleStorage().computeStatistics(domain_.communicator());
-            #endif
-            #ifdef INTER_DIHEDRAL
-            dihedralStorage().computeStatistics(domain_.communicator());
-            #endif
-            buffer().computeStatistics(domain_.communicator());
-            pairPotential().pairList().computeStatistics(domain_.communicator());
-            if (domain_.isMaster()) {
-               atomStorage().outputStatistics(Log::file());
-               bondStorage().outputStatistics(Log::file());
-               buffer().outputStatistics(Log::file());
-               pairPotential().pairList().outputStatistics(Log::file());
-               Log::file() << std::endl;
+         if (isRestarting_) {
+
+            if (command == "RESTART") {
+               int endStep;
+               //inBuffer >> endStep;
+               //Log::file() << "  " << iStep_ << " to " 
+               //            << endStep << std::endl;
+               //simulate(endStep, isRestarting_);
+               isRestarting_ = false;
+            } else 
+            if (command == "FINISH") {
+               // Terminate loop over commands.
+               readNext = false;
+               isRestarting_ = false;
+            } else {
+               UTIL_THROW("Missing RESTART or FINISH command");
             }
 
-            atomStorage().clearStatistics();
-            bondStorage().clearStatistics();
+         } else {
+
+            if (command == "READ_CONFIG") {
+               // Read configuration (boundary + positions + topology).
+               // Use current ConfigIo, if set, or create default.
+               inBuffer >> filename;
+               readConfig(filename);
+            } else
+            if (command == "THERMALIZE") {
+               double temperature;
+               inBuffer >> temperature;
+               setBoltzmannVelocities(temperature);
+            } else
+            if (command == "SIMULATE") {
+               int endStep;
+               inBuffer >> endStep;
+               simulate(endStep);
+            } else
+            if (command == "OUTPUT_DIAGNOSTICS") {
+               diagnosticManager().output();
+            } else
+            if (command == "OUTPUT_INTEGRATOR_STATS") {
+               // Output statistics about time usage during simulation.
+               integratorPtr_->computeStatistics();
+               if (domain_.isMaster()) {
+                  integratorPtr_->outputStatistics(Log::file());
+               }
+            } else
+            if (command == "OUTPUT_EXCHANGER_STATS") {
+               // Output detailed statistics about time usage by Exchanger.
+               integratorPtr_->computeStatistics();
+               #ifdef UTIL_MPI
+               exchanger().timer().reduce(domain().communicator());
+               #endif
+               if (domain_.isMaster()) {
+                  int iStep = integratorPtr_->iStep();
+                  double time  = integratorPtr_->time();
+                  exchanger_.outputStatistics(Log::file(), time, iStep);
+               }
+            } else
+            if (command == "OUTPUT_MEMORY_STATS") {
+               // Output statistics about memory usage during simulation.
+               // Also clears statistics after printing output
+               atomStorage().computeStatistics(domain_.communicator());
+               bondStorage().computeStatistics(domain_.communicator());
+               #ifdef INTER_ANGLE
+               angleStorage().computeStatistics(domain_.communicator());
+               #endif
+               #ifdef INTER_DIHEDRAL
+               dihedralStorage().computeStatistics(domain_.communicator());
+               #endif
+               buffer().computeStatistics(domain_.communicator());
+               pairPotential().pairList()
+                              .computeStatistics(domain_.communicator());
+               if (domain_.isMaster()) {
+                  atomStorage().outputStatistics(Log::file());
+                  bondStorage().outputStatistics(Log::file());
+                  buffer().outputStatistics(Log::file());
+                  pairPotential().pairList().outputStatistics(Log::file());
+                  Log::file() << std::endl;
+               }
+   
+               atomStorage().clearStatistics();
+               bondStorage().clearStatistics();
+               #ifdef INTER_ANGLE
+               angleStorage().clearStatistics();
+               #endif
+               #ifdef INTER_DIHEDRAL
+               dihedralStorage().clearStatistics();
+               #endif
+               buffer().clearStatistics();
+               pairPotential().pairList().clearStatistics();
+               
+            } else
+            if (command == "CLEAR_INTEGRATOR") {
+               // Clear timing, memory statistics, diagnostic accumulators.
+               // Also resets integrator iStep() to zero
+               integratorPtr_->clear();
+            } else
+            if (command == "WRITE_CONFIG") {
+               // Write current configuration to file.
+               // Use current ConfigIo, if set.
+               // Otherwise, create instance of default ConfigIo class.
+               inBuffer >> filename;
+               writeConfig(filename);
+            } else
+            if (command == "WRITE_PARAM") {
+               // Write params file, using current variable values.
+               inBuffer >> filename;
+               fileMaster().openOutputFile(filename, outputFile);
+               writeParam(outputFile);
+               outputFile.close();
+            } else
+            if (command == "SET_CONFIG_IO") {
+               // Create a ConfigIo object of specified subclass.
+               // This gives file format for later reads and writes.
+               std::string classname;
+               inBuffer >> classname;
+               setConfigIo(classname);
+            } else
+            if (command == "SET_PAIR") {
+               // Modify one parameter of a pair interaction.
+               std::string paramName;
+               int typeId1, typeId2; 
+               double value;
+               inBuffer >> paramName >> typeId1 >> typeId2 >> value;
+               pairPotential().set(paramName, typeId1, typeId2, value);
+            } else 
+            if (command == "SET_BOND") {
+               // Modify one parameter of a bond interaction.
+               std::string paramName;
+               int typeId; 
+               double value;
+               inBuffer >> paramName >> typeId >> value;
+               bondPotential().set(paramName, typeId, value);
+            } else 
             #ifdef INTER_ANGLE
-            angleStorage().clearStatistics();
+            if (command == "SET_ANGLE" && nAngleType_) {
+               // Modify one parameter of an angle interaction.
+               std::string paramName;
+               int typeId; 
+               double value;
+               inBuffer >> paramName >> typeId >> value;
+               anglePotential().set(paramName, typeId, value);
+            } else 
             #endif
             #ifdef INTER_DIHEDRAL
-            dihedralStorage().clearStatistics();
+            if (command == "SET_DIHEDRAL" && nDihedralType_) {
+               // Modify one parameter of a dihedral interaction.
+               std::string paramName;
+               int typeId; 
+               double value;
+               inBuffer >> paramName >> typeId >> value;
+               dihedralPotential().set(paramName, typeId, value);
+            } else
             #endif
-            buffer().clearStatistics();
-            pairPotential().pairList().clearStatistics();
-            
-         } else
-         if (command == "CLEAR_INTEGRATOR") {
-            // Clear timing, memory statistics and diagnostic accumulators.
-            // Also resets integrator iStep() to zero
-            integratorPtr_->clear();
-         } else
-         if (command == "WRITE_CONFIG") {
-            // Write current configuration to file.
-            // Uses current ConfigIo, if set, or creates instance of default.
-            inBuffer >> filename;
-            writeConfig(filename);
-         } else
-         if (command == "WRITE_PARAM") {
-            // Write parameter file to file, using current variable values.
-            inBuffer >> filename;
-            fileMaster().openOutputFile(filename, outputFile);
-            writeParam(outputFile);
-            outputFile.close();
-         } else
-         if (command == "SET_CONFIG_IO") {
-            // Create an associated ConfigIo object of specified class.
-            // This determines file format for subsequent reads and writes.
-            std::string classname;
-            inBuffer >> classname;
-            setConfigIo(classname);
-         } else
-         if (command == "SET_PAIR") {
-            // Modify one parameter of a pair interaction.
-            std::string paramName;
-            int typeId1, typeId2; 
-            double value;
-            inBuffer >> paramName >> typeId1 >> typeId2 >> value;
-            pairPotential().set(paramName, typeId1, typeId2, value);
-         } else 
-         if (command == "SET_BOND") {
-            // Modify one parameter of a bond interaction.
-            std::string paramName;
-            int typeId; 
-            double value;
-            inBuffer >> paramName >> typeId >> value;
-            bondPotential().set(paramName, typeId, value);
-         } else 
-         #ifdef INTER_ANGLE
-         if (command == "SET_ANGLE" && nAngleType_) {
-            // Modify one parameter of an angle interaction.
-            std::string paramName;
-            int typeId; 
-            double value;
-            inBuffer >> paramName >> typeId >> value;
-            anglePotential().set(paramName, typeId, value);
-         } else 
-         #endif
-         #ifdef INTER_DIHEDRAL
-         if (command == "SET_DIHEDRAL" && nDihedralType_) {
-            // Modify one parameter of a dihedral interaction.
-            std::string paramName;
-            int typeId; 
-            double value;
-            inBuffer >> paramName >> typeId >> value;
-            dihedralPotential().set(paramName, typeId, value);
-         } else
-         #endif
-         if (command == "FINISH") {
-            // Terminate loop over commands.
-            readNext = false;
-         } else {
-            Log::file() << "Error: Unknown command  " << std::endl;
-            readNext = false;
+            if (command == "FINISH") {
+               // Terminate loop over commands.
+               readNext = false;
+            } else {
+               Log::file() << "Error: Unknown command  " << std::endl;
+               readNext = false;
+            }
          }
 
       }
