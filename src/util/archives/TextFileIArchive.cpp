@@ -20,7 +20,8 @@ namespace Util
    */
    TextFileIArchive::TextFileIArchive()
     : filePtr_(0),
-      version_(0)
+      version_(0),
+      createdFile_(true)
    {  filePtr_ = new std::ifstream(); }
 
    /*
@@ -28,14 +29,34 @@ namespace Util
    */
    TextFileIArchive::TextFileIArchive(std::string filename)
     : filePtr_(0),
-      version_(0)
+      version_(0),
+      createdFile_(true)
    {  filePtr_ = new std::ifstream(filename.c_str()); }
+
+
+   /*
+   * Constructor.
+   */
+   TextFileIArchive::TextFileIArchive(std::ifstream& file)
+    : filePtr_(&file),
+      version_(0),
+      createdFile_(false)
+   {  
+      if (!file.is_open()) {
+         UTIL_THROW("File not open");
+      }  
+   }
+
 
    /*
    * Destructor.
    */
    TextFileIArchive::~TextFileIArchive()
-   {  delete filePtr_; }  
+   {  
+      if (filePtr_ && createdFile_) {  
+         delete filePtr_; 
+      }
+   }
 
    /*
    * Return underlying file by reference.

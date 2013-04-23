@@ -51,6 +51,13 @@ namespace Util
       TextFileOArchive(std::string filename);
 
       /**
+      * Constructor.
+      *
+      * \param file output file
+      */
+      TextFileOArchive(std::ofstream& file);
+
+      /**
       * Destructor.
       */
       virtual ~TextFileOArchive();
@@ -106,6 +113,9 @@ namespace Util
 
       /// Archive version id.
       unsigned int  version_;
+
+      /// Did this object instantiated the associated file?
+      bool createdFile_;
 
    };
 

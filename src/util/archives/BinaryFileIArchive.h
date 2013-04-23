@@ -51,6 +51,13 @@ namespace Util
       BinaryFileIArchive(std::string filename);
 
       /**
+      * Constructor.
+      *
+      * \param file output file
+      */
+      BinaryFileIArchive(std::ifstream& file);
+
+      /**
       * Destructor.
       */
       virtual ~BinaryFileIArchive();
@@ -104,6 +111,9 @@ namespace Util
 
       /// Archive version id.
       unsigned int  version_;
+
+      /// Was the associated file created by this object?
+      bool createdFile_;
 
    };
 
