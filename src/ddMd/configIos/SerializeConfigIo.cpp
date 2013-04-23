@@ -213,10 +213,7 @@ namespace DdMd
    */
    template <int N>
    int SerializeConfigIo::saveGroups(Serializable::OArchive& ar,
-                  const char* sectionLabel,
-                  const char* nGroupLabel,
-                  GroupStorage<N>& storage,
-                  GroupCollector<N>& collector) 
+                  GroupStorage<N>& storage, GroupCollector<N>& collector) 
    {
       Group<N>* groupPtr;
       int       nGroup;
@@ -299,5 +296,29 @@ namespace DdMd
 
    }
  
+   /*
+   * Read configuration file.
+   *
+   * This routine opens and reads a file on the master, and distributes
+   * atom data among the processors.
+   */
+   void SerializeConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
+   {
+       Serializable::IArchive ar(file);
+       loadConfig(ar, maskPolicy);
+   }
+
+   /*
+   * Write configuration file.
+   *
+   * This routine opens and writes a file on the master,
+   * collecting atom data from all processors.
+   */
+   void SerializeConfigIo::writeConfig(std::ostream& file)
+   {
+       Serializable::OArchive ar(file);
+       saveConfig(ar);
+   }
+   
 }
 #endif
