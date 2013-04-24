@@ -47,7 +47,7 @@ namespace DdMd
       } else
       if (className == "LammpsConfigIo") {
          ptr = new LammpsConfigIo(*simulationPtr_);
-      }
+      } else
       if (className == "SerializeConfigIo") {
          ptr = new SerializeConfigIo(*simulationPtr_);
       }

@@ -168,6 +168,11 @@ namespace DdMd
       */
       void remove(Group<N>* groupPtr); 
 
+      /**
+      * Remove all groups.
+      */
+      void clearGroups(); 
+
       //@}
       /// \name Iterator Interface
       //@{
@@ -555,6 +560,27 @@ namespace DdMd
       groupSet_.remove(*groupPtr);
       groupPtrs_[groupId] = 0;
       groupPtr->setId(-1);
+   }
+
+   /*
+   * Remove all groups.
+   */
+   template <int N>
+   void GroupStorage<N>::clearGroups()
+   {
+      Group<N>* groupPtr;
+      int  groupId;
+      while (groupSet_.size() > 0) {
+         groupPtr = &groupSet_.pop();
+         groupId = groupPtr->id();
+         groupPtrs_[groupId] = 0;
+         groupPtr->setId(-1);
+         reservoir_.push(*groupPtr);
+      }
+
+      if (groupSet_.size() != 0) {
+         UTIL_THROW("Nonzero ghostSet size at end of clearGhosts");
+      }
    }
 
    // Accessors

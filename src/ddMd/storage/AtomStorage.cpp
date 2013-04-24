@@ -230,6 +230,43 @@ namespace DdMd
       atomPtr->setIsGhost(false);
    }
 
+   /*
+   * Remove all local atoms.
+   */
+   void AtomStorage::clearAtoms()
+   {
+      // Precondition
+      if (locked_) {
+         UTIL_THROW("AtomStorage is locked");
+      }
+
+      Atom* atomPtr;
+      int   atomId;
+      while (atomSet_.size() > 0) {
+         atomPtr = &atomSet_.pop();
+         atomId = atomPtr->id();
+         if (atomPtrs_[atomId] == atomPtr) { 
+            atomPtrs_[atomId] = 0;
+         } else {
+            if (atomPtrs_[atomId] == 0) {
+               UTIL_THROW("Error: Unexpected null in atomPtrs_");
+            } else {
+               if (atomPtrs_[atomId]->id() != atomId) {
+                  UTIL_THROW("Error: Inconsistent id in atomPtrs_");
+               }
+            }
+         }
+         // atomPtr->setId(-1);
+         // atomPtr->clear();
+         atomReservoir_.push(*atomPtr);
+      }
+
+      // Sanity check.
+      if (atomSet_.size() != 0) {
+         UTIL_THROW("Nonzero atomSet size at end of clearAtoms");
+      }
+   }
+
    // Ghost atom mutators
 
    /*
@@ -311,7 +348,7 @@ namespace DdMd
    }
 
    /*
-   * Remove a specific ghost Atom.
+   * Remove all ghosts.
    */
    void AtomStorage::clearGhosts()
    {

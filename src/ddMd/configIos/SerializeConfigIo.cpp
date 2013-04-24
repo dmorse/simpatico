@@ -302,8 +302,17 @@ namespace DdMd
    * This routine opens and reads a file on the master, and distributes
    * atom data among the processors.
    */
-   void SerializeConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
+   void SerializeConfigIo::readConfig(std::ifstream& file, MaskPolicy maskPolicy)
    {
+       #if 0
+       std::ifstream* ptr = dynamic_cast<std::ifstream*>(&file);
+       if (!ptr) {
+          UTIL_THROW("Failed dynamic cast: Input istream in not a std::ifstream");
+       }
+       if (!ptr->is_open()) {
+          UTIL_THROW("File not open for reading");
+       }
+       #endif
        Serializable::IArchive ar(file);
        loadConfig(ar, maskPolicy);
    }
@@ -314,8 +323,17 @@ namespace DdMd
    * This routine opens and writes a file on the master,
    * collecting atom data from all processors.
    */
-   void SerializeConfigIo::writeConfig(std::ostream& file)
+   void SerializeConfigIo::writeConfig(std::ofstream& file)
    {
+       #if 0
+       std::ofstream* ptr = dynamic_cast<std::ofstream*>(&file);
+       if (!ptr) {
+          UTIL_THROW("Failed dynamic cast: Output ostream in not a std::ofstream");
+       }
+       if (!ptr->is_open()) {
+          UTIL_THROW("File not open for writing");
+       }
+       #endif
        Serializable::OArchive ar(file);
        saveConfig(ar);
    }

@@ -49,7 +49,7 @@ namespace DdMd
       * \param file input file stream
       * \param maskPolicy MaskPolicy to be used in setting atom masks
       */
-      virtual void readConfig(std::istream& file, MaskPolicy maskPolicy);
+      virtual void readConfig(std::ifstream& file, MaskPolicy maskPolicy);
 
       /**
       * Write configuration file.
@@ -59,7 +59,7 @@ namespace DdMd
       *
       * \param file output file stream
       */
-      virtual void writeConfig(std::ostream& file);
+      virtual void writeConfig(std::ofstream& file);
    
       /**
       * Load configuration.

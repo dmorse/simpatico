@@ -169,6 +169,11 @@ namespace DdMd
       */
       void removeAtom(Atom* atomPtr); 
 
+      /**
+      * Clear all local and ghost atoms.
+      */
+      void clearAtoms(); 
+
       //@}
       /// \name Ghost Atom Management
       //@{

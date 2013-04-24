@@ -15,6 +15,7 @@
 #include <ddMd/configIos/ConfigIo.h>
 #include <ddMd/configIos/ConfigIoFactory.h>
 #include <ddMd/configIos/DdMdConfigIo.h>
+#include <ddMd/configIos/SerializeConfigIo.h>
 #include <util/misc/FileMaster.h>
 #include <ddMd/diagnostics/DiagnosticManager.h>
 
@@ -651,6 +652,11 @@ namespace DdMd
       loadParamComposite(ar, random_);
       //loadParamComposite(ar, *diagnosticManagerPtr_);
 
+      SerializeConfigIo configIo;
+      configIo.loadConfig(ar, maskedPairPolicy_); 
+
+      // Now loading data from archive. Finish initialization:
+      
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
 
@@ -683,7 +689,6 @@ namespace DdMd
          exchangeSignal().addObserver(dihedralStorage_, memberPtr);
       }
       #endif
-
    }
 
    /*
@@ -791,7 +796,10 @@ namespace DdMd
       integratorPtr_->save(ar);
 
       random_.save(ar);
-      diagnosticManagerPtr_->save(ar);
+      //diagnosticManagerPtr_->save(ar);
+      
+      SerializeConfigIo configIo;
+      configIo.saveConfig(ar); 
    }
 
    /*

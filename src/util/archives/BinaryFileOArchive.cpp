@@ -38,11 +38,7 @@ namespace Util
     : filePtr_(&file),
       version_(0),
       createdFile_(false)
-   {  
-      if (!file.is_open()) {
-         UTIL_THROW("File not open for writing");
-      }  
-   }
+   {}
 
    /*
    * Destructor.

@@ -241,7 +241,7 @@ namespace DdMd
    * Private method to read Group<N> objects.
    */
    template <int N>
-   int ConfigIo::readGroups(std::istream& file, 
+   int ConfigIo::readGroups(std::ifstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupDistributor<N>& distributor) 
@@ -274,7 +274,7 @@ namespace DdMd
    * Private method to write Group<N> objects.
    */
    template <int N>
-   int ConfigIo::writeGroups(std::ostream& file, 
+   int ConfigIo::writeGroups(std::ofstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupStorage<N>& storage,
