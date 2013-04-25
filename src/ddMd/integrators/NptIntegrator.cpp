@@ -48,7 +48,7 @@ namespace DdMd
       read<double>(in, "tauT", tauT_);
       read<double>(in, "tauP", tauP_);
       read<LatticeSystem>(in, "mode", mode_);
-      readSaveParameters(in);
+      Integrator::readParameters(in);
 
       // Allocate memory
       int nAtomType = simulation().nAtomType();
@@ -67,7 +67,7 @@ namespace DdMd
       loadParameter<double>(ar, "tauT", tauT_);
       loadParameter<double>(ar, "tauP", tauP_);
       loadParameter<LatticeSystem>(ar, "mode", mode_);
-      loadSaveParameters(ar);
+      Integrator::loadParameters(ar);
 
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {
@@ -84,7 +84,7 @@ namespace DdMd
       ar << tauT_;
       ar << tauP_;
       ar << mode_;
-      saveSaveParameters(ar);
+      Integrator::save(ar);
    }
 
    /*

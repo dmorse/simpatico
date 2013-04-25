@@ -80,8 +80,10 @@ namespace DdMd
 
    private:
 
+      // Time step
       double  dt_;
-   
+  
+      // Factors of 0.5*dt_/mass, calculated in setup() 
       DArray<double> prefactors_;      
 
    };

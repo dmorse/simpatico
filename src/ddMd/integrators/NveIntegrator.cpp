@@ -42,7 +42,7 @@ namespace DdMd
    void NveIntegrator::readParameters(std::istream& in)
    {
       read<double>(in, "dt", dt_);
-      readSaveParameters(in);
+      Integrator::readParameters(in);
 
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {
@@ -56,12 +56,13 @@ namespace DdMd
    void NveIntegrator::loadParameters(Serializable::IArchive &ar)
    {
       loadParameter<double>(ar, "dt", dt_);
-      loadSaveParameters(ar);
+      Integrator::loadParameters(ar);
 
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
       }
+      //  Note: Values of prefactors_ calculated in setup()
    }
 
    /*
@@ -70,7 +71,7 @@ namespace DdMd
    void NveIntegrator::save(Serializable::OArchive &ar)
    {
       ar << dt_;
-      saveSaveParameters(ar);
+      Integrator::save(ar);
    }
   
    void NveIntegrator::setup()

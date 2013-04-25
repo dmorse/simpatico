@@ -42,7 +42,30 @@ namespace DdMd
       ~Integrator();
 
       /**
+      * Read saveInterval and saveFileName.
+      *
+      * \param in input parameter stream
+      */   
+      void readParameters(std::istream& in);
+
+      /**
+      * Load saveInterval and saveFileName from restart archive.
+      *
+      * \param ar input archive
+      */   
+      void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save saveInterval and saveFileName from restart archive.
+      *
+      * \param ar input archive
+      */   
+      void save(Serializable::OArchive& ar);
+
+      /**
       * Run a simulation of iStep steps.
+      *
+      * \param nStep number of steps to run.
       */
       virtual void run(int nStep) = 0;
 
@@ -99,27 +122,6 @@ namespace DdMd
                    INTEGRATE2, NTime};
 
       /**
-      * Read saveInterval and saveFileName.
-      *
-      * \param in input parameter stream
-      */   
-      void readSaveParameters(std::istream& in);
-
-      /**
-      * Load saveInterval and saveFileName from restart archive.
-      *
-      * \param ar input archive
-      */   
-      void loadSaveParameters(Serializable::IArchive& ar);
-
-      /**
-      * Save saveInterval and saveFileName from restart archive.
-      *
-      * \param ar input archive
-      */   
-      void saveSaveParameters(Serializable::OArchive& ar);
-
-      /**
       * Set any internal dynamical to default initial values.
       *
       * This method should be called before the main loop the first time the 
@@ -152,6 +154,7 @@ namespace DdMd
       /**
       * Setup state of atoms just before integration.
       *
+      * Exchange atoms, build PairList and compute Forces.
       * Should be called in all subclass setup methods.
       */
       void setupAtoms();
@@ -239,7 +242,7 @@ namespace DdMd
    /*
    * Set any internal dynamical state variables to default initial values.
    *  
-   * Default implementation does nothing. This method must be called by clear().
+   * Empty default implementation. This virtual method is called by clear().
    */
    inline void Integrator::initDynamicalState(){}
 

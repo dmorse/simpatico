@@ -16,7 +16,6 @@
 #include <ddMd/configIos/ConfigIoFactory.h>
 #include <ddMd/configIos/DdMdConfigIo.h>
 #include <ddMd/configIos/SerializeConfigIo.h>
-#include <util/misc/FileMaster.h>
 #include <ddMd/diagnostics/DiagnosticManager.h>
 
 #ifndef DDMD_NOPAIR
@@ -42,6 +41,7 @@
 #endif
 
 // namespace Util
+#include <util/misc/FileMaster.h>
 #include <util/ensembles/EnergyEnsemble.h>
 #include <util/ensembles/BoundaryEnsemble.h>
 #include <util/space/Vector.h>
@@ -58,6 +58,7 @@
 #include <util/misc/ioUtil.h>
 #include <util/misc/initStatic.h>
 
+// std headers
 #include <fstream>
 #include <unistd.h>
 #include <stdlib.h>
@@ -73,7 +74,7 @@ namespace DdMd
    #ifdef UTIL_MPI
    Simulation::Simulation(MPI::Intracomm& communicator)
    #else
-   Simulation::Simulation() 
+   Simulation::Simulation()
    #endif
     : atomStorage_(),
       bondStorage_(),
@@ -107,6 +108,7 @@ namespace DdMd
       boundaryEnsemblePtr_(0),
       fileMasterPtr_(0),
       configIoPtr_(0),
+      serializeConfigIoPtr_(0),
       diagnosticManagerPtr_(0),
       #ifndef DDMD_NOPAIR
       pairFactoryPtr_(0),
@@ -175,7 +177,7 @@ namespace DdMd
       // Set connections between member objects
       domain_.setBoundary(boundary_);
       exchanger_.associate(domain_, boundary_,
-                           atomStorage_, bondStorage_, 
+                           atomStorage_, bondStorage_,
                            #ifdef INTER_ANGLE
                            angleStorage_,
                            #endif
@@ -187,7 +189,7 @@ namespace DdMd
       fileMasterPtr_ = new FileMaster;
       energyEnsemblePtr_  = new EnergyEnsemble;
       boundaryEnsemblePtr_ = new BoundaryEnsemble;
-     
+
       diagnosticManagerPtr_ = new DiagnosticManager(*this);
    }
 
@@ -231,6 +233,9 @@ namespace DdMd
       }
       if (configIoPtr_) {
          delete configIoPtr_;
+      }
+      if (serializeConfigIoPtr_) {
+         delete serializeConfigIoPtr_;
       }
       if (diagnosticManagerPtr_) {
          delete diagnosticManagerPtr_;
@@ -281,7 +286,7 @@ namespace DdMd
       char* sArg;
       char* rArg;
       int  nSystem = 1;
-   
+
       // Read command-line arguments
       int c;
       opterr = 0;
@@ -303,14 +308,9 @@ namespace DdMd
            std::cout << "Unknown option -" << optopt << std::endl;
          }
       }
-   
-      // If option -e, enable echoing of parameters as they are read
-      if (eFlag) {
-         Util::ParamComponent::setEcho(true);
-      }
-      
+
       // If option -s, split the communicator
-      if (sFlag) {  
+      if (sFlag) {
          if (nSystem <= 1) {
             UTIL_THROW("nSystem must be greater than 1");
          }
@@ -329,17 +329,22 @@ namespace DdMd
          setIoCommunicator(communicator_);
          domain_.setGridCommunicator(communicator_);
          fileMaster().setDirectoryId(systemId);
-      
+
          // Set log file for processor n to a new file named "n/log".
          // Relies on initialization of outputPrefix to empty string "".
          fileMaster().openOutputFile("log", logFile_);
          Log::setFile(logFile_);
       }
 
+      // If option -e, enable echoing of parameters as they are read
+      if (eFlag) {
+         Util::ParamComponent::setEcho(true);
+      }
+
       // If option -r, load state from a restart file.
-      if (rFlag) { 
+      if (rFlag) {
          if (isIoProcessor()) {
-            Log::file() << "Begin reading restart, base file name " 
+            Log::file() << "Begin reading restart, base file name "
                         << std::string(rArg) << std::endl;
          }
          load(std::string(rArg));
@@ -352,7 +357,7 @@ namespace DdMd
    }
 
    /*
-   *  Read parameters from default parameter file. 
+   *  Read parameters from default parameter file.
    */
    void Simulation::readParam()
    {  readParam(fileMaster().paramFile()); }
@@ -419,7 +424,7 @@ namespace DdMd
       readPotentialStyles(in);
 
       // Create and read potential energy classes
-      
+
       #ifndef DDMD_NOPAIR
       // Pair Potential
       assert(pairPotentialPtr_ == 0);
@@ -483,7 +488,7 @@ namespace DdMd
       std::string className;
       bool isEnd;
       assert(integratorPtr_ == 0);
-      integratorPtr_ = 
+      integratorPtr_ =
          integratorFactory().readObject(in, *this, className, isEnd);
       if (!integratorPtr_) {
          std::string msg("Unknown Integrator subclass name: ");
@@ -495,7 +500,7 @@ namespace DdMd
       readParamComposite(in, *diagnosticManagerPtr_);
 
       // Finished reading paramer file. Now finish initialization.
-      
+
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
 
@@ -539,7 +544,7 @@ namespace DdMd
       if (!hasIoCommunicator()) {
          UTIL_THROW("Error: No IoCommunicator is set");
       }
-      isRestarting_ = true; 
+      isRestarting_ = true;
 
       loadParamComposite(ar, domain_);
       loadFileMaster(ar);
@@ -641,7 +646,7 @@ namespace DdMd
       assert(integratorPtr_ == 0);
       std::string className;
       bool isEnd;
-      integratorPtr_ = 
+      integratorPtr_ =
          integratorFactory().loadObject(ar, *this, className);
       if (!integratorPtr_) {
          std::string msg("Unknown Integrator subclass name: ");
@@ -652,11 +657,8 @@ namespace DdMd
       loadParamComposite(ar, random_);
       //loadParamComposite(ar, *diagnosticManagerPtr_);
 
-      SerializeConfigIo configIo;
-      configIo.loadConfig(ar, maskedPairPolicy_); 
+      // Finished loading data from archive. Finish initialization:
 
-      // Now loading data from archive. Finish initialization:
-      
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
 
@@ -671,8 +673,6 @@ namespace DdMd
 
       positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies);
       positionSignal().addObserver(*this, &Simulation::unsetVirialStress);
-
-      // Add observers to exchangeSignal
       if (nBondType_) {
          void (BondStorage::*memberPtr)() = &BondStorage::unsetNTotal;
          exchangeSignal().addObserver(bondStorage_, memberPtr);
@@ -689,11 +689,12 @@ namespace DdMd
          exchangeSignal().addObserver(dihedralStorage_, memberPtr);
       }
       #endif
+      isInitialized_ = true;
    }
 
    /*
    * Load state from a restart file (open file, call load, close file)
-   */  
+   */
    void Simulation::load(const std::string& filename)
    {
       if (isInitialized_) {
@@ -709,6 +710,7 @@ namespace DdMd
          fileMaster().openRestartIFile(filename, ".rst", ar.file());
       }
       load(ar);
+      //serializeConfigIo().loadConfig(ar, maskedPairPolicy_);
       if (isIoProcessor()) {
          ar.file().close();
       }
@@ -716,8 +718,6 @@ namespace DdMd
       // Set command (*.cmd) file
       std::string commandFileName = filename + ".cmd";
       fileMaster().setCommandFileName(commandFileName);
-
-      isInitialized_ = true;
    }
 
    /*
@@ -738,7 +738,7 @@ namespace DdMd
       ar << nDihedralType_;
       #endif
       #ifdef INTER_EXTERNAL
-      ar << hasExternal_; 
+      ar << hasExternal_;
       #endif
       ar << atomTypes_;
 
@@ -755,19 +755,18 @@ namespace DdMd
          dihedralStorage_.save(ar);
       }
       #endif
-      buffer_.save(ar);
-      savePotentialStyles(ar);
 
+      buffer_.save(ar);
+
+      savePotentialStyles(ar);
       #ifndef DDMD_NOPAIR
       assert(pairPotentialPtr_);
       pairPotentialPtr_->save(ar);
       #endif
-
       if (bondPotentialPtr_) {
          assert(bondPotentialPtr_);
          bondPotentialPtr_->save(ar);
       }
-
       #ifdef INTER_ANGLE
       if (nAngleType_) {
          assert(anglePotentialPtr_);
@@ -780,7 +779,6 @@ namespace DdMd
          dihedralPotentialPtr_->save(ar);
       }
       #endif
-
       #ifdef INTER_EXTERNAL
       // External potential
       if (hasExternal_) {
@@ -791,20 +789,18 @@ namespace DdMd
 
       saveEnsembles(ar);
 
-      std::string name = integratorPtr_->className();
+      std::string name = integrator().className();
       ar << name;
-      integratorPtr_->save(ar);
+      integrator().save(ar);
 
       random_.save(ar);
       //diagnosticManagerPtr_->save(ar);
-      
-      SerializeConfigIo configIo;
-      configIo.saveConfig(ar); 
+
    }
 
    /*
    * Save state to file (open file, call save(), close file).
-   */  
+   */
    void Simulation::save(const std::string& filename)
    {
       // Update statistics (call on all processors).
@@ -818,14 +814,20 @@ namespace DdMd
       #endif
       buffer_.computeStatistics(domain_.communicator());
       if (integratorPtr_) {
-         integratorPtr_->computeStatistics();
+         integrator().computeStatistics();
       }
-     
-      // Save data on ioProcessor 
+
+      // Save data on ioProcessor
+      Serializable::OArchive ar;
       if (isIoProcessor()) {
-         Serializable::OArchive ar;
          fileMaster().openRestartOFile(filename, ".rst", ar.file());
          save(ar);
+      }
+
+      // Read configuration
+      serializeConfigIo().saveConfig(ar);
+
+      if (isIoProcessor()) {
          ar.file().close();
       }
    }
@@ -837,7 +839,7 @@ namespace DdMd
    {  readParamComposite(in, *fileMasterPtr_); }
 
    /*
-   * If no FileMaster exists, create and load one. 
+   * If no FileMaster exists, create and load one.
    */
    void Simulation::loadFileMaster(Serializable::IArchive& ar)
    {  loadParamComposite(ar, *fileMasterPtr_); }
@@ -1004,14 +1006,14 @@ namespace DdMd
          if (!hasIoCommunicator() || isIoProcessor()) {
             getNextLine(in, line);
             Log::file() << line << std::endl;
-         } 
+         }
          if (hasIoCommunicator()) {
             bcast<std::string>(domain_.communicator(), line, 0);
          }
          #else // not UTIL_MPI
          getNextLine(in, line);
          Log::file() << line << std::endl;
-         #endif // not UTIL_MPI 
+         #endif // not UTIL_MPI
          inBuffer.clear();
          for (unsigned i=0; i < line.size(); ++i) {
             inBuffer.put(line[i]);
@@ -1022,12 +1024,15 @@ namespace DdMd
 
             if (command == "RESTART") {
                int endStep;
-               //inBuffer >> endStep;
-               //Log::file() << "  " << iStep_ << " to " 
-               //            << endStep << std::endl;
-               //simulate(endStep, isRestarting_);
+               inBuffer >> endStep;
+               if (isIoProcessor()) {
+                  int iStep = integrator().iStep();
+                  Log::file() << "  " << iStep << " to "
+                              << endStep << std::endl;
+               }
+               integrator().run(endStep);
                isRestarting_ = false;
-            } else 
+            } else
             if (command == "FINISH") {
                // Terminate loop over commands.
                readNext = false;
@@ -1052,27 +1057,30 @@ namespace DdMd
             if (command == "SIMULATE") {
                int endStep;
                inBuffer >> endStep;
-               simulate(endStep);
+               if (domain_.isMaster()) {
+                  Log::file() << std::endl;
+               }
+               integrator().run(endStep);
             } else
             if (command == "OUTPUT_DIAGNOSTICS") {
                diagnosticManager().output();
             } else
             if (command == "OUTPUT_INTEGRATOR_STATS") {
                // Output statistics about time usage during simulation.
-               integratorPtr_->computeStatistics();
+               integrator().computeStatistics();
                if (domain_.isMaster()) {
-                  integratorPtr_->outputStatistics(Log::file());
+                  integrator().outputStatistics(Log::file());
                }
             } else
             if (command == "OUTPUT_EXCHANGER_STATS") {
                // Output detailed statistics about time usage by Exchanger.
-               integratorPtr_->computeStatistics();
+               integrator().computeStatistics();
                #ifdef UTIL_MPI
                exchanger().timer().reduce(domain().communicator());
                #endif
                if (domain_.isMaster()) {
-                  int iStep = integratorPtr_->iStep();
-                  double time  = integratorPtr_->time();
+                  int iStep = integrator().iStep();
+                  double time  = integrator().time();
                   exchanger_.outputStatistics(Log::file(), time, iStep);
                }
             } else
@@ -1097,7 +1105,7 @@ namespace DdMd
                   pairPotential().pairList().outputStatistics(Log::file());
                   Log::file() << std::endl;
                }
-   
+
                atomStorage().clearStatistics();
                bondStorage().clearStatistics();
                #ifdef INTER_ANGLE
@@ -1108,12 +1116,12 @@ namespace DdMd
                #endif
                buffer().clearStatistics();
                pairPotential().pairList().clearStatistics();
-               
+
             } else
             if (command == "CLEAR_INTEGRATOR") {
                // Clear timing, memory statistics, diagnostic accumulators.
                // Also resets integrator iStep() to zero
-               integratorPtr_->clear();
+               integrator().clear();
             } else
             if (command == "WRITE_CONFIG") {
                // Write current configuration to file.
@@ -1139,34 +1147,34 @@ namespace DdMd
             if (command == "SET_PAIR") {
                // Modify one parameter of a pair interaction.
                std::string paramName;
-               int typeId1, typeId2; 
+               int typeId1, typeId2;
                double value;
                inBuffer >> paramName >> typeId1 >> typeId2 >> value;
                pairPotential().set(paramName, typeId1, typeId2, value);
-            } else 
+            } else
             if (command == "SET_BOND") {
                // Modify one parameter of a bond interaction.
                std::string paramName;
-               int typeId; 
+               int typeId;
                double value;
                inBuffer >> paramName >> typeId >> value;
                bondPotential().set(paramName, typeId, value);
-            } else 
+            } else
             #ifdef INTER_ANGLE
             if (command == "SET_ANGLE" && nAngleType_) {
                // Modify one parameter of an angle interaction.
                std::string paramName;
-               int typeId; 
+               int typeId;
                double value;
                inBuffer >> paramName >> typeId >> value;
                anglePotential().set(paramName, typeId, value);
-            } else 
+            } else
             #endif
             #ifdef INTER_DIHEDRAL
             if (command == "SET_DIHEDRAL" && nDihedralType_) {
                // Modify one parameter of a dihedral interaction.
                std::string paramName;
-               int typeId; 
+               int typeId;
                double value;
                inBuffer >> paramName >> typeId >> value;
                dihedralPotential().set(paramName, typeId, value);
@@ -1202,8 +1210,8 @@ namespace DdMd
    * Set flag to specify if reverse communication is enabled.
    */
    void Simulation::setReverseUpdateFlag(bool reverseUpdateFlag)
-   {  
-      reverseUpdateFlag_ = reverseUpdateFlag; 
+   {
+      reverseUpdateFlag_ = reverseUpdateFlag;
       if (pairPotentialPtr_) {
          pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag);
       }
@@ -1218,7 +1226,7 @@ namespace DdMd
       AtomIterator atomIter;
       int i;
 
-      atomStorage_.begin(atomIter); 
+      atomStorage_.begin(atomIter);
       for( ; atomIter.notEnd(); ++atomIter){
          for (i = 0; i < Dimension; ++i) {
             atomIter->velocity()[i] = scale*random_.gaussian();
@@ -1235,7 +1243,7 @@ namespace DdMd
    {
       // Zero local atoms
       AtomIterator atomIter;
-      atomStorage_.begin(atomIter); 
+      atomStorage_.begin(atomIter);
       for( ; atomIter.notEnd(); ++atomIter){
          atomIter->force().zero();
       }
@@ -1243,7 +1251,7 @@ namespace DdMd
       // If using reverse communication, zero ghost atoms
       if (reverseUpdateFlag_) {
          GhostIterator ghostIter;
-         atomStorage_.begin(ghostIter); 
+         atomStorage_.begin(ghostIter);
          for( ; ghostIter.notEnd(); ++ghostIter){
             ghostIter->force().zero();
          }
@@ -1316,18 +1324,13 @@ namespace DdMd
    */
    void Simulation::simulate(int nStep)
    {
-      // Preconditions
-      assert(integratorPtr_);
-
       if (domain_.isMaster()) {
          Log::file() << std::endl;
       }
-
-      // integratorPtr_->setup();
-      integratorPtr_->run(nStep);
+      integrator().run(nStep);
    }
 
-   // Kinetic Energy methods -------------------------------------------------
+   // Kinetic Energy methods ----------------------------------------------
 
    /*
    * Calculate total kinetic energy (call on all processors).
@@ -1343,7 +1346,7 @@ namespace DdMd
 
       // Add kinetic energies of local atoms on this processor
       AtomIterator atomIter;
-      atomStorage_.begin(atomIter); 
+      atomStorage_.begin(atomIter);
       for( ; atomIter.notEnd(); ++atomIter){
          typeId = atomIter->typeId();
          mass   = atomTypes_[typeId].mass();
@@ -1354,7 +1357,7 @@ namespace DdMd
       #ifdef UTIL_MPI
       // Sum values from all processors.
       double totalEnergy = 0.0;
-      domain_.communicator().Reduce(&localEnergy, &totalEnergy, 1, 
+      domain_.communicator().Reduce(&localEnergy, &totalEnergy, 1,
                                     MPI::DOUBLE, MPI::SUM, 0);
       if (domain_.communicator().Get_rank() != 0) {
          totalEnergy = 0.0;
@@ -1367,7 +1370,7 @@ namespace DdMd
 
    /*
    * Return total kinetic energy (on master processor).
-   * 
+   *
    * Call only on master processor.
    */
    double Simulation::kineticEnergy()
@@ -1379,12 +1382,12 @@ namespace DdMd
    void Simulation::unsetKineticEnergy()
    {  kineticEnergy_.unset(); }
 
-   // Kinetic Stress methods -------------------------------------------------
-   
+   // Kinetic Stress methods ----------------------------------------------
+
    /*
    * Compute total kinetic stress, store on master proc.
    *
-   * Call on all processors. 
+   * Call on all processors.
    */
    void Simulation::computeKineticStress()
    {
@@ -1401,7 +1404,7 @@ namespace DdMd
 
       // For each local atoms on this processor, stress(i, j) += m*v[i]*v[j]
       AtomIterator atomIter;
-      atomStorage_.begin(atomIter); 
+      atomStorage_.begin(atomIter);
       for( ; atomIter.notEnd(); ++atomIter){
          typeId = atomIter->typeId();
          velocity = atomIter->velocity();
@@ -1419,7 +1422,7 @@ namespace DdMd
       #ifdef UTIL_MPI
       // Sum values from all processors
       Tensor totalStress;
-      domain_.communicator().Reduce(&localStress(0, 0), &totalStress(0, 0), 
+      domain_.communicator().Reduce(&localStress(0, 0), &totalStress(0, 0),
                                     Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
       if (domain_.communicator().Get_rank() != 0) {
          totalStress.zero();
@@ -1455,14 +1458,14 @@ namespace DdMd
    void Simulation::unsetKineticStress()
    {  kineticStress_.unset(); }
 
-   // Potential Energy Methods -----------------------------------------------
-   
+   // Potential Energy Methods --------------------------------------------
+
    #ifdef UTIL_MPI
 
    /*
    * Compute all potential energy contributions.
    */
-   void Simulation::computePotentialEnergies() 
+   void Simulation::computePotentialEnergies()
    {
       pairPotential().computeEnergy(domain_.communicator());
       bondPotential().computeEnergy(domain_.communicator());
@@ -1488,7 +1491,7 @@ namespace DdMd
    /*
    * Compute all potential energy contributions.
    */
-   void Simulation::computePotentialEnergies() 
+   void Simulation::computePotentialEnergies()
    {
       pairPotential().computeEnergy();
       bondPotential().computeEnergy();
@@ -1513,13 +1516,13 @@ namespace DdMd
 
    /*
    * Methods computePotentialEnergies and computeStress rely on use
-   * of lazy (as-needed) evaluation within the compute methods of 
+   * of lazy (as-needed) evaluation within the compute methods of
    * each of the potential energy classes: Each potential energy or
    * virial contribution is actually computed only if it has been
    * unset since the last evaluation. Lazy evaluation is implemented
    * explicitly in the Simulation class only for the kinetic energy
    * and kinetic stress, which are stored as members of Simulation.
-   */ 
+   */
 
    /*
    * Return sum of potential energy contributions.
@@ -1546,7 +1549,7 @@ namespace DdMd
       #endif
       return energy;
 
-      // Note: Pointers used above because ...Potential()) accessors 
+      // Note: Pointers used above because ...Potential()) accessors
       // return non-const references, which violate the method const.
    }
 
@@ -1572,13 +1575,13 @@ namespace DdMd
       #endif
    }
 
-   // Virial Stress Methods --------------------------------------------------
-   
+   // Virial Stress Methods -----------------------------------------------
+
    #ifdef UTIL_MPI
    /*
    * Compute all virial stress contributions.
    */
-   void Simulation::computeVirialStress() 
+   void Simulation::computeVirialStress()
    {
       pairPotential().computeStress(domain_.communicator());
       bondPotential().computeStress(domain_.communicator());
@@ -1599,7 +1602,7 @@ namespace DdMd
    /*
    * Return stored value of virial stress (call only on master).
    */
-   void Simulation::computeVirialStress() 
+   void Simulation::computeVirialStress()
    {
       pairPotential().computeStress();
       bondPotential().computeStress();
@@ -1708,7 +1711,51 @@ namespace DdMd
       #endif
    }
 
-   // Config File Read and Write ---------------------------------------------
+   // ConfigIo Accessors -------------------------------------------------
+   
+   /**
+   * Return the ConfigIo (create default if necessary).
+   */
+   ConfigIo& Simulation::configIo() 
+   {
+      if (configIoPtr_ == 0) {
+         configIoPtr_ = new DdMdConfigIo(*this);
+         configIoPtr_->associate(domain_, boundary_,
+                                 atomStorage_, bondStorage_,
+                                 #ifdef INTER_ANGLE
+                                 angleStorage_,
+                                 #endif
+                                 #ifdef INTER_DIHEDRAL
+                                 dihedralStorage_,
+                                 #endif
+                                 buffer_);
+         configIoPtr_->initialize();
+      }
+      return *configIoPtr_;
+   }
+
+   /**
+   * Return a SerialConfigIo (create if necessary).
+   */
+   SerializeConfigIo& Simulation::serializeConfigIo() 
+   {
+      if (serializeConfigIoPtr_ == 0) {
+         serializeConfigIoPtr_ = new SerializeConfigIo(*this);
+         serializeConfigIoPtr_->associate(domain_, boundary_,
+                                 atomStorage_, bondStorage_,
+                                 #ifdef INTER_ANGLE
+                                 angleStorage_,
+                                 #endif
+                                 #ifdef INTER_DIHEDRAL
+                                 dihedralStorage_,
+                                 #endif
+                                 buffer_);
+         serializeConfigIoPtr_->initialize();
+      }
+      return * serializeConfigIoPtr_;
+   }
+
+   // Config File Read and Write ------------------------------------------
 
    /*
    * Read configuration file on master and distribute atoms.
@@ -1719,20 +1766,7 @@ namespace DdMd
       if (domain_.isMaster()) {
          fileMaster().openInputFile(filename, inputFile);
       }
-      if (configIoPtr_ == 0) {
-         configIoPtr_ = new DdMdConfigIo(*this);
-         configIoPtr_->associate(domain_, boundary_,
-                                 atomStorage_, bondStorage_, 
-                                 #ifdef INTER_ANGLE
-                                 angleStorage_,
-                                 #endif
-                                 #ifdef INTER_DIHEDRAL
-                                 dihedralStorage_,
-                                 #endif
-                                 buffer_);
-         configIoPtr_->initialize();
-      }
-      configIoPtr_->readConfig(inputFile, maskedPairPolicy_);
+      configIo().readConfig(inputFile, maskedPairPolicy_);
       exchanger_.exchange();
       if (domain_.isMaster()) {
          inputFile.close();
@@ -1748,27 +1782,14 @@ namespace DdMd
       if (domain_.isMaster()) {
          fileMaster().openOutputFile(filename, outputFile);
       }
-      if (configIoPtr_ == 0) {
-         configIoPtr_ = new DdMdConfigIo(*this);
-         configIoPtr_->associate(domain_, boundary_,
-                                 atomStorage_, bondStorage_, 
-                                 #ifdef INTER_ANGLE
-                                 angleStorage_,
-                                 #endif
-                                 #ifdef INTER_DIHEDRAL
-                                 dihedralStorage_,
-                                 #endif
-                                 buffer_);
-         configIoPtr_->initialize();
-      }
-      configIoPtr_->writeConfig(outputFile);
+      configIo().writeConfig(outputFile);
       if (domain_.isMaster()) {
          outputFile.close();
       }
    }
 
-   // Potential Factories and Styles ----------------------------------------
-   
+   // Potential Factories and Styles --------------------------------------
+
    #ifndef DDMD_NOPAIR
    /*
    * Return the PairFactory by reference.
@@ -1868,7 +1889,7 @@ namespace DdMd
    #endif
 
    // Integrator and ConfigIo Management ------------------------------------
-   
+
    /*
    * Return the IntegratorFactory by reference.
    */
@@ -1901,13 +1922,13 @@ namespace DdMd
       ConfigIo* ptr = configIoFactory().factory(classname);
       if (!ptr) {
          UTIL_THROW("Unrecognized ConfigIo subclass name");
-      } 
+      }
       if (configIoPtr_) {
          delete configIoPtr_;
       }
       configIoPtr_ = ptr;
       configIoPtr_->associate(domain_, boundary_,
-                              atomStorage_, bondStorage_, 
+                              atomStorage_, bondStorage_,
                               #ifdef INTER_ANGLE
                               angleStorage_,
                               #endif
@@ -1918,8 +1939,8 @@ namespace DdMd
       configIoPtr_->initialize();
    }
 
-   // Validation ------------------------------------------------------------
-   
+   // Validation ----------------------------------------------------------
+
    /*
    * Return true if this Simulation is valid, or throw an Exception.
    */
@@ -1935,7 +1956,7 @@ namespace DdMd
       int nGhost = atomStorage_.nGhost();
       int nGhostAll = 0;
       #ifdef UTIL_MPI
-      domain_.communicator().Reduce(&nGhost, &nGhostAll, 1, 
+      domain_.communicator().Reduce(&nGhost, &nGhostAll, 1,
                                     MPI::INT, MPI::SUM, 0);
       bcast(domain_.communicator(), nGhostAll, 0);
       #else
@@ -1953,7 +1974,7 @@ namespace DdMd
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         dihedralStorage_.isValid(atomStorage_, domain_.communicator(), 
+         dihedralStorage_.isValid(atomStorage_, domain_.communicator(),
                                   hasGhosts);
       }
       #endif
@@ -1983,7 +2004,7 @@ namespace DdMd
       #endif
       #endif // ifdef UTIL_MPI
 
-      return true; 
+      return true;
    }
 
 }

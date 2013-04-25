@@ -37,16 +37,14 @@ namespace Util {
    class BoundaryEnsemble;
    class Tensor;
 }
-namespace McMd { 
-   class McSimulation; 
-}
 
 namespace DdMd
 {
 
-   class ConfigIo;
-   class DiagnosticManager;
    class Integrator;
+   class ConfigIo;
+   class SerializeConfigIo;
+   class DiagnosticManager;
    class PairPotential;
    class BondPotential;
    #ifdef INTER_ANGLE
@@ -809,6 +807,9 @@ namespace DdMd
       /// Pointer to a configuration reader/writer.
       ConfigIo* configIoPtr_;
    
+      /// Pointer to a configuration reader/writer for restart.
+      SerializeConfigIo* serializeConfigIoPtr_;
+   
       /// DiagnosticManager
       DiagnosticManager* diagnosticManagerPtr_;
 
@@ -921,8 +922,14 @@ namespace DdMd
       /// Has readParam been called?
       bool isInitialized_;
 
-      /// Is this McSimulation in the process of restarting?
+      /// Is this Simulation in the process of restarting?
       bool isRestarting_;
+
+      /// Return the current ConfigIo (create if necessary)
+      ConfigIo& configIo();
+
+      /// Return a SerializeConfigIo (create if necessary)
+      SerializeConfigIo& serializeConfigIo();
 
    // friends:
 

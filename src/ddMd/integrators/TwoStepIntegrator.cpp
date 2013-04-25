@@ -58,6 +58,7 @@ namespace DdMd
       // Main MD loop
       timer().start();
       exchanger().timer().start();
+      int beginStep = iStep_;
       int endStep = iStep_ + nStep;
       for ( ; iStep_ < endStep; ++iStep_) {
 
@@ -67,7 +68,9 @@ namespace DdMd
             if (iStep_ % Diagnostic::baseInterval == 0) {
                if (saveInterval() > 0) {
                   if (iStep_ % saveInterval() == 0) {
-                     simulation().save(saveFileName());
+                     if (iStep_ > beginStep) {
+                        simulation().save(saveFileName());
+                     }
                   }
                }
                simulation().diagnosticManager().sample(iStep_);

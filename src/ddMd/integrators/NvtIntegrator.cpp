@@ -62,7 +62,7 @@ namespace DdMd
    {
       read<double>(in, "dt",   dt_);
       read<double>(in, "tauT", tauT_);
-      readSaveParameters(in);
+      Integrator::readParameters(in);
 
       nuT_ = 1.0/tauT_;
       int nAtomType = simulation().nAtomType();
@@ -78,9 +78,10 @@ namespace DdMd
    {
       loadParameter<double>(ar, "dt", dt_);
       loadParameter<double>(ar, "tauT", tauT_);
-      loadSaveParameters(ar);
+      Integrator::loadParameters(ar);
+      ar >> nuT_;
+      ar >> xi_;
 
-      nuT_ = 1.0/tauT_;
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
@@ -94,7 +95,9 @@ namespace DdMd
    {
       ar << dt_;
       ar << tauT_;
-      saveSaveParameters(ar);
+      Integrator::save(ar);
+      ar << nuT_;
+      ar << xi_;
    }
 
    /*
@@ -103,6 +106,10 @@ namespace DdMd
    void NvtIntegrator::initDynamicalState()
    {  xi_ = 0.0; }
 
+
+   /*
+   * Setup parameters before beginning of run. 
+   */
    void NvtIntegrator::setup()
    {
 

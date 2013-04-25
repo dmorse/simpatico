@@ -56,7 +56,7 @@ namespace DdMd
    /*
    * Read saveInterval and saveFileName.
    */
-   void Integrator::readSaveParameters(std::istream& in)
+   void Integrator::readParameters(std::istream& in)
    {
       read<int>(in, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
@@ -67,27 +67,31 @@ namespace DdMd
    /*
    * Load saveInterval and saveFileName from restart archive.
    */
-   void Integrator::loadSaveParameters(Serializable::IArchive& ar)
+   void Integrator::loadParameters(Serializable::IArchive& ar)
    {
       loadParameter<int>(ar, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
          loadParameter<std::string>(ar, "saveFileName", saveFileName_);
       }
+      ar >> iStep_;
+      ar >> isSetup_;
    }
 
    /*
    * Save saveInterval and saveFileName to restart archive.
    */
-   void Integrator::saveSaveParameters(Serializable::OArchive& ar)
+   void Integrator::save(Serializable::OArchive& ar)
    {
       ar << saveInterval_;
       if (saveInterval_ > 0) {
          ar << saveFileName_;
       }
+      ar << iStep_;
+      ar << isSetup_;
    }
 
    /*
-   * Initialize atom distribution, AtomStorage, PairList and forces.
+   * Exchange atoms, build PairList and compute forces.
    */
    void Integrator::setupAtoms()
    {
@@ -435,7 +439,7 @@ namespace DdMd
 
    }
 
-   /**
+   /*
    * Clear timing, dynamical state, statistics, and diagnostic accumulators.
    */
    void Integrator::clear()
