@@ -60,6 +60,13 @@ namespace DdMd
    {
       read<int>(in, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
+         if (Diagnostic::baseInterval > 0) {
+            if (saveInterval_ % Diagnostic::baseInterval != 0) {
+               UTIL_THROW("saveInterval is not a multiple of baseInterval");
+            }
+         } else {
+            UTIL_THROW("Diagnostic::baseInterval is not positive");
+         }
          read<std::string>(in, "saveFileName", saveFileName_);
       }
    }
@@ -71,6 +78,13 @@ namespace DdMd
    {
       loadParameter<int>(ar, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
+         if (Diagnostic::baseInterval > 0) {
+            if (saveInterval_ % Diagnostic::baseInterval != 0) {
+               UTIL_THROW("saveInterval is not a multiple of baseInterval");
+            }
+         } else {
+            UTIL_THROW("Diagnostic::baseInterval is not positive");
+         }
          loadParameter<std::string>(ar, "saveFileName", saveFileName_);
       }
       ar >> iStep_;

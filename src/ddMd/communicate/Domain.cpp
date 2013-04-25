@@ -82,7 +82,7 @@ namespace DdMd
          UTIL_THROW("Already initialized");
       }
 
-      // Read parameter file 
+      // Read processor grid dimensions and initialize
       read<IntVector>(in, "gridDimensions", gridDimensions_);
       initialize();
    }
@@ -107,6 +107,7 @@ namespace DdMd
          UTIL_THROW("Already initialized");
       }
 
+      // Read processor grid dimensions and initialize
       loadParameter<IntVector>(ar, "gridDimensions", gridDimensions_);
       initialize();
    }

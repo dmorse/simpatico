@@ -113,14 +113,26 @@ namespace DdMd
       /**
       * Read a configuration file.
       *
-      * This reads a configuration file from the master processor, and 
-      * distributes atoms and groups among the processors. Upon entry,
-      * the file must be open for reading. 
+      * This method reads a configuration file from the master processor, and 
+      * distributes atoms and groups among the processors. It is implemented
+      * using an AtomDistributor object. Atomic positions in the configuration
+      * file that lie outside the primary cell will automatically be shifted 
+      * into the primary cell by the AtomDistributor::addAtom() method before 
+      * being assigned to processors or distributed.
+      *
+      * Upon entry (preconditions):
+      *
+      *   - The configuration file must be open for reading.
+      *
+      *   - The configuration file may contain atomic positions that lie 
+      *     slightly outside the primary simulation.
       *
       * Upon return (postconditions):
       *
       *   - Each processor owns all atoms in its domain, and no others.
       *     Each atom is owned by one and only one processor.
+      *
+      *   - Each atom position is in the primary simulation cell.
       *
       *   - Each processor owns every group that contains one or more
       *     of the atoms that it owns, and no others. Each group may
@@ -142,10 +154,12 @@ namespace DdMd
       * Write configuration file.
       *
       * This routine opens and writes a file on the master, collecting atom
-      * and group data from all processors. Many file formats allow atom and
-      * groups to be written in arbitrary order. Atomic positions may be 
+      * and group data from all processors. Many file formats allow atom 
+      * and groups to be written in arbitrary order. Atomic positions may be 
       * written in Cartesian or generalized coordinates, depending on the
-      * file format.
+      * file format. Atomic positions may be written "as is", and may lie 
+      * slightly outside the primary cell, because they will be shifted back 
+      * by the readConfig() method.
       *
       * \param file output file stream
       */
@@ -238,46 +252,38 @@ namespace DdMd
    
    private:
 
+      // Distributors and collectors
       AtomDistributor atomDistributor_;
       AtomCollector atomCollector_;
-
       GroupDistributor<2> bondDistributor_;
       GroupCollector<2> bondCollector_;
-
       #ifdef INTER_ANGLE
       GroupDistributor<3> angleDistributor_;
       GroupCollector<3> angleCollector_;
       #endif
-
       #ifdef INTER_DIHEDRAL
       GroupDistributor<4> dihedralDistributor_;
       GroupCollector<4> dihedralCollector_;
       #endif
 
+      // Pointers to associated objects.
       Domain* domainPtr_;
-
       Boundary* boundaryPtr_;
-
       AtomStorage* atomStoragePtr_;
-
       BondStorage* bondStoragePtr_;
-
       #ifdef INTER_ANGLE
       AngleStorage* angleStoragePtr_;
       #endif
-
       #ifdef INTER_DIHEDRAL
       DihedralStorage* dihedralStoragePtr_;
       #endif
 
+      // Cache capacities
       int  atomCacheCapacity_;
-
       int  bondCacheCapacity_;
-
       #ifdef INTER_ANGLE
       int  angleCacheCapacity_;
       #endif
-
       #ifdef INTER_DIHEDRAL
       int  dihedralCacheCapacity_;
       #endif

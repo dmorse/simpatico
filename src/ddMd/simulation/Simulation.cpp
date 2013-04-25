@@ -499,7 +499,7 @@ namespace DdMd
       readParamComposite(in, random_);
       readParamComposite(in, *diagnosticManagerPtr_);
 
-      // Finished reading paramer file. Now finish initialization.
+      // Finished reading parameter file. Now finish initialization:
 
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
@@ -531,6 +531,8 @@ namespace DdMd
          exchangeSignal().addObserver(dihedralStorage_, memberPtr);
       }
       #endif
+
+      isInitialized_ = true;
    }
 
    /*
@@ -689,6 +691,7 @@ namespace DdMd
          exchangeSignal().addObserver(dihedralStorage_, memberPtr);
       }
       #endif
+
       isInitialized_ = true;
    }
 
@@ -710,7 +713,10 @@ namespace DdMd
          fileMaster().openRestartIFile(filename, ".rst", ar.file());
       }
       load(ar);
-      //serializeConfigIo().loadConfig(ar, maskedPairPolicy_);
+      std::cout << "Finishing load parameters" << std::endl;
+      serializeConfigIo().loadConfig(ar, maskedPairPolicy_);
+      std::cout << "Finishing loading configuration" << std::endl;
+      exchanger_.exchange();
       if (isIoProcessor()) {
          ar.file().close();
       }
@@ -722,6 +728,8 @@ namespace DdMd
 
    /*
    * Serialize internal state to an archive.
+   *
+   * Call only on IoProcessor of IoCommunicator.
    */
    void Simulation::save(Serializable::OArchive& ar)
    {
@@ -889,7 +897,6 @@ namespace DdMd
       // Reverse communication (true) or not (false)?
       read<bool>(in, "reverseUpdateFlag", reverseUpdateFlag_);
 
-      isInitialized_ = true;
    }
 
    /*
@@ -1720,15 +1727,6 @@ namespace DdMd
    {
       if (configIoPtr_ == 0) {
          configIoPtr_ = new DdMdConfigIo(*this);
-         configIoPtr_->associate(domain_, boundary_,
-                                 atomStorage_, bondStorage_,
-                                 #ifdef INTER_ANGLE
-                                 angleStorage_,
-                                 #endif
-                                 #ifdef INTER_DIHEDRAL
-                                 dihedralStorage_,
-                                 #endif
-                                 buffer_);
          configIoPtr_->initialize();
       }
       return *configIoPtr_;
@@ -1741,18 +1739,9 @@ namespace DdMd
    {
       if (serializeConfigIoPtr_ == 0) {
          serializeConfigIoPtr_ = new SerializeConfigIo(*this);
-         serializeConfigIoPtr_->associate(domain_, boundary_,
-                                 atomStorage_, bondStorage_,
-                                 #ifdef INTER_ANGLE
-                                 angleStorage_,
-                                 #endif
-                                 #ifdef INTER_DIHEDRAL
-                                 dihedralStorage_,
-                                 #endif
-                                 buffer_);
          serializeConfigIoPtr_->initialize();
       }
-      return * serializeConfigIoPtr_;
+      return *serializeConfigIoPtr_;
    }
 
    // Config File Read and Write ------------------------------------------
@@ -1927,15 +1916,6 @@ namespace DdMd
          delete configIoPtr_;
       }
       configIoPtr_ = ptr;
-      configIoPtr_->associate(domain_, boundary_,
-                              atomStorage_, bondStorage_,
-                              #ifdef INTER_ANGLE
-                              angleStorage_,
-                              #endif
-                              #ifdef INTER_DIHEDRAL
-                              dihedralStorage_,
-                              #endif
-                              buffer_);
       configIoPtr_->initialize();
    }
 
