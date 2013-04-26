@@ -109,6 +109,17 @@ namespace DdMd
    */
    void Integrator::setupAtoms()
    {
+      // Precondition
+      if (UTIL_ORTHOGONAL) {
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are not Cartesian");
+         }
+      } else {
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are Cartesian");
+         }
+      }
+
       atomStorage().clearSnapshot();
       exchanger().exchange();
       pairPotential().buildCellList();
@@ -122,6 +133,11 @@ namespace DdMd
       } else {
          simulation().computeForcesAndVirial();
       }
+
+      // Postcondition - coordinates are Cartesian
+      if (!atomStorage().isCartesian()) {
+         UTIL_THROW("Atom coordinates are not Cartesian");
+      }
    }
 
    /*
@@ -129,6 +145,11 @@ namespace DdMd
    */
    void Integrator::computeForces()
    {
+      // Precondition
+      if (!atomStorage().isCartesian()) {
+         UTIL_THROW("Atom coordinates are not Cartesian");
+      }
+
       simulation().zeroForces();
       pairPotential().computeForces();
       timer_.stamp(PAIR_FORCE);
@@ -166,6 +187,11 @@ namespace DdMd
    */
    void Integrator::computeForcesAndVirial()
    {
+      // Precondition
+      if (!atomStorage().isCartesian()) {
+         UTIL_THROW("Atom coordinates are not Cartesian");
+      }
+
       simulation().zeroForces();
       pairPotential().computeForcesAndStress(domain().communicator());
       timer_.stamp(PAIR_FORCE);

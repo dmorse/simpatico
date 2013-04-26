@@ -54,14 +54,14 @@ namespace DdMd
       /**
       * Set parameters, allocate memory and initialize.
       *
-      * Call either this or readParameters to initialize, but not both.
+      * Call this or (read|load)Parameters to initialize, but not both.
       *
       * \param atomCapacity      max number of atoms owned by processor.
       * \param ghostCapacity     max number of ghosts on this processor.
       * \param totalAtomCapacity max number of atoms on all processors.
       */
       void initialize(int atomCapacity, int ghostCapacity,
-                    int totalAtomCapacity);
+                      int totalAtomCapacity);
 
       /**
       * Read parameters, allocate memory and initialize.

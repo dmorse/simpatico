@@ -134,12 +134,13 @@ namespace DdMd
       *
       *   - Each atom position is in the primary simulation cell.
       *
-      *   - Each processor owns every group that contains one or more
-      *     of the atoms that it owns, and no others. Each group may
-      *     be owned by more than one processor.
-      *
       *   - If UTIL_ORTHOGONAL is true (see Boundary class), all Atom 
-      *     positions are expressed in generalized coordinates.
+      *     positions are expressed in scaled dimensionless coordinates,
+      *     between 0.0 and 1.0. Otherwise, atomic positions are Cartesian.
+      *
+      *   - Each processor owns every group that contains one or more of 
+      *     the atoms that it owns, and no others. Each group may be owned
+      *     by more than one processor.
       *
       *   - All Atom Mask data is set correctly for specified maskPolicy.
       *
@@ -160,6 +161,11 @@ namespace DdMd
       * file format. Atomic positions may be written "as is", and may lie 
       * slightly outside the primary cell, because they will be shifted back 
       * by the readConfig() method.
+      *
+      * This method must function correctly when atomic coordinates are in the
+      * format used between commands (Cartesian if UTIL_ORTHOGONAL, or scaled
+      * otherwise). The SerializeConfigIo subclass is designed to detect the
+      * coordinate system and function correctly in either case. 
       *
       * \param file output file stream
       */

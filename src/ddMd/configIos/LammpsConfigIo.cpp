@@ -112,11 +112,11 @@ namespace DdMd
       }
       if (UTIL_ORTHOGONAL) {
          if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage must use Cartesian coordinates");
+            UTIL_THROW("Atom storage not set for Cartesian coordinates");
          }
       } else {
          if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage must use generalized coordinates");
+            UTIL_THROW("Atom storage is set for Cartesian coordinates");
          }
       }
 
@@ -347,6 +347,17 @@ namespace DdMd
    */
    void LammpsConfigIo::writeConfig(std::ofstream& file)
    {
+      // Preconditions
+      if (UTIL_ORTHOGONAL) {
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are not Cartesian");
+         }
+      } else {
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are Cartesian");
+         }
+      }
+
       using std::endl;
 
       // Atoms

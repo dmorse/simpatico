@@ -582,10 +582,10 @@ namespace DdMd
          loadParamComposite(ar, dihedralStorage_);
       }
       #endif
-
       loadParamComposite(ar, buffer_);
-      loadPotentialStyles(ar);
 
+      // Load potentials styles and parameters
+      loadPotentialStyles(ar);
       #ifndef DDMD_NOPAIR
       // Pair Potential
       assert(pairPotentialPtr_ == 0);
@@ -597,7 +597,6 @@ namespace DdMd
       loadParamComposite(ar, *pairPotentialPtr_);
       pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag_);
       #endif
-
       // Bond Potential
       assert(bondPotentialPtr_ == 0);
       bondPotentialPtr_ = bondFactory().factory(bondStyle());
@@ -606,7 +605,6 @@ namespace DdMd
       }
       bondPotentialPtr_->setNBondType(nBondType_);
       loadParamComposite(ar, *bondPotentialPtr_);
-
       #ifdef INTER_ANGLE
       // Angle potential
       assert(anglePotentialPtr_ == 0);
@@ -619,7 +617,6 @@ namespace DdMd
          loadParamComposite(ar, *anglePotentialPtr_);
       }
       #endif
-
       #ifdef INTER_DIHEDRAL
       // Dihedral potential
       assert(dihedralPotentialPtr_ == 0);
@@ -632,7 +629,6 @@ namespace DdMd
          loadParamComposite(ar, *dihedralPotentialPtr_);
       }
       #endif
-
       #ifdef INTER_EXTERNAL
       // External potential
       if (hasExternal_) {
@@ -713,10 +709,9 @@ namespace DdMd
          fileMaster().openRestartIFile(filename, ".rst", ar.file());
       }
       load(ar);
-      std::cout << "Finishing load parameters" << std::endl;
       serializeConfigIo().loadConfig(ar, maskedPairPolicy_);
-      std::cout << "Finishing loading configuration" << std::endl;
       exchanger_.exchange();
+      isValid();
       if (isIoProcessor()) {
          ar.file().close();
       }
@@ -766,6 +761,7 @@ namespace DdMd
 
       buffer_.save(ar);
 
+      // Potentials energy styles and parameters
       savePotentialStyles(ar);
       #ifndef DDMD_NOPAIR
       assert(pairPotentialPtr_);
@@ -795,15 +791,14 @@ namespace DdMd
       }
       #endif
 
+      // Save ensembles and integrator
       saveEnsembles(ar);
-
       std::string name = integrator().className();
       ar << name;
       integrator().save(ar);
 
       random_.save(ar);
       //diagnosticManagerPtr_->save(ar);
-
    }
 
    /*
@@ -825,14 +820,14 @@ namespace DdMd
          integrator().computeStatistics();
       }
 
-      // Save data on ioProcessor
+      // Save parameters (only on ioProcessor)
       Serializable::OArchive ar;
       if (isIoProcessor()) {
          fileMaster().openRestartOFile(filename, ".rst", ar.file());
          save(ar);
       }
 
-      // Read configuration
+      // Save configuration (call on all processors)
       serializeConfigIo().saveConfig(ar);
 
       if (isIoProcessor()) {
@@ -1008,6 +1003,17 @@ namespace DdMd
       bool readNext = true;
       while (readNext) {
 
+         // Precondition: Check atomic coordinate system
+         if (UTIL_ORTHOGONAL) {
+            if (!atomStorage().isCartesian()) {
+               UTIL_THROW("Error: atom coordinates are not Cartesian");
+            } 
+         } else {
+            if (atomStorage().isCartesian()) {
+               UTIL_THROW("Error: atom coordinates are Cartesian");
+            }
+         }
+
          #ifdef UTIL_MPI
          // Read and broadcast command line
          if (!hasIoCommunicator() || isIoProcessor()) {
@@ -1034,7 +1040,7 @@ namespace DdMd
                inBuffer >> endStep;
                if (isIoProcessor()) {
                   int iStep = integrator().iStep();
-                  Log::file() << "  " << iStep << " to "
+                  Log::file() << "Running from  iStep =" << iStep << " to "
                               << endStep << std::endl;
                }
                integrator().run(endStep);
@@ -1205,14 +1211,6 @@ namespace DdMd
    void Simulation::readCommands()
    {  readCommands(fileMaster().commandFile()); }
 
-
-
-
-
-
-
-
-
    /*
    * Set flag to specify if reverse communication is enabled.
    */
@@ -1293,7 +1291,6 @@ namespace DdMd
       if (reverseUpdateFlag_) {
          exchanger_.reverseUpdate();
       }
-
    }
 
    /*
@@ -1536,6 +1533,8 @@ namespace DdMd
    */
    double Simulation::potentialEnergy() const
    {
+      // Note: Pointers used here because ...Potential() accessors
+      // return non-const references, which violate the method const.
       double energy = 0.0;
       energy += pairPotentialPtr_->energy();
       energy += bondPotentialPtr_->energy();
@@ -1555,9 +1554,6 @@ namespace DdMd
       }
       #endif
       return energy;
-
-      // Note: Pointers used above because ...Potential()) accessors
-      // return non-const references, which violate the method const.
    }
 
    /*
@@ -1603,9 +1599,7 @@ namespace DdMd
       }
       #endif
    }
-
    #else
-
    /*
    * Return stored value of virial stress (call only on master).
    */
@@ -1631,6 +1625,8 @@ namespace DdMd
    */
    Tensor Simulation::virialStress() const
    {
+      // Note: Pointers used here because ...Potential() accessors
+      // return non-const references, which violate the method const.
       Tensor stress;
       stress.zero();
       stress += pairPotentialPtr_->stress();
@@ -1675,17 +1671,13 @@ namespace DdMd
    * Compute all pair energy contributions.
    */
    void Simulation::computePairEnergies()
-   {
-      pairPotential().computePairEnergies(domain_.communicator());
-   }
+   {  pairPotential().computePairEnergies(domain_.communicator()); }
    #else
    /*
    * Compute all pair energy contributions.
    */
    void Simulation::computePairEnergies()
-   {
-      pairPotential().computePairEnergies();
-   }
+   {  pairPotential().computePairEnergies(); }
    #endif
 
    /*

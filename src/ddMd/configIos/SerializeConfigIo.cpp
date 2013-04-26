@@ -88,7 +88,7 @@ namespace DdMd
    */
    void SerializeConfigIo::loadConfig(Serializable::IArchive& ar, MaskPolicy maskPolicy)
    {
-      // Precondition
+      // Preconditions
       if (atomStorage().nAtom()) {
          UTIL_THROW("Atom storage is not empty (has local atoms)");
       }
@@ -101,7 +101,7 @@ namespace DdMd
          }
       } else {
          if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not scaled");
+            UTIL_THROW("Atom coordinates are Cartesian");
          }
       }
 
@@ -120,39 +120,44 @@ namespace DdMd
          ar >> nAtom;
          int totalAtomCapacity = atomStorage().totalAtomCapacity();
 
-         #if UTIL_MPI
+         #ifdef UTIL_MPI
          //Initialize the send buffer.
          atomDistributor().setup();
          #endif
 
          // Read atoms
-         Vector r;
+         Vector  r;
          Atom*  atomPtr;
-         int id;
-         int typeId;
-         int rank;
+         int  id;
+         int  typeId;
+         int  rank;
          for (int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
 
-            ar >> id >> typeId;
+            ar >> id;
+            ar >> typeId;
             if (id < 0 || id >= totalAtomCapacity) {
                UTIL_THROW("Invalid atom id");
+            }
+            if (typeId < 0) {
+               UTIL_THROW("Negative atom type id");
             }
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
             ar >> r;
+            std::cout << r;
             if (UTIL_ORTHOGONAL) {
                atomPtr->position() = r;
             } else {
                boundary().transformCartToGen(r, atomPtr->position());
             }
+            std::cout << "   " << atomPtr->position() << std::endl;
             ar >> atomPtr->velocity();
 
             // Add atom to list for sending.
             rank = atomDistributor().addAtom();
-
          }
 
          // Send any atoms not sent previously.
@@ -179,8 +184,8 @@ namespace DdMd
          }
       }
 
+      // Load groups
       bool hasGhosts = false;
-
       if (bondStorage().capacity()) {
          loadGroups<2>(ar, bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
@@ -189,7 +194,6 @@ namespace DdMd
             setAtomMasks();
          }
       }
-
       #ifdef INTER_ANGLE
       if (angleStorage().capacity()) {
          loadGroups<3>(ar, angleDistributor());
@@ -197,7 +201,6 @@ namespace DdMd
                                 hasGhosts);
       }
       #endif
-
       #ifdef INTER_DIHEDRAL
       if (dihedralStorage().capacity()) {
          loadGroups<4>(ar, dihedralDistributor());
@@ -238,13 +241,13 @@ namespace DdMd
    */
    void SerializeConfigIo::saveConfig(Serializable::OArchive& ar)
    {
-
       // Write Boundary dimensions
       if (domain().isMaster()) {
          ar << boundary();
       }
 
       // Atoms
+      bool isCartesian = atomStorage().isCartesian();
       atomStorage().computeNAtomTotal(domain().communicator());
       if (domain().isMaster()) {  
 
@@ -259,15 +262,15 @@ namespace DdMd
          while (atomPtr) {
             id = atomPtr->id();
             typeId = atomPtr->typeId();
-            ar << id << typeId;
-            if (UTIL_ORTHOGONAL) {
+            ar << id;
+            ar << typeId;
+            if (isCartesian) {
                ar << atomPtr->position();
-               ar << atomPtr->velocity();
             } else {
                boundary().transformGenToCart(atomPtr->position(), r);
                ar << r;
-               ar << atomPtr->velocity();
             }
+            ar << atomPtr->velocity();
             #if 0
             for (int j=0; j < atomPtr->mask().size(); ++j) {
                ar << atomPtr->mask()

@@ -53,7 +53,7 @@ namespace DdMd
       #else
       isCartesian_(false)
       #endif
-   { setClassName("AtomStorage"); }
+   {  setClassName("AtomStorage"); }
  
    /*
    * Destructor.

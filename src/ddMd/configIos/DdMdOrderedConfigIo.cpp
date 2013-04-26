@@ -101,11 +101,11 @@ namespace DdMd
       }
       if (UTIL_ORTHOGONAL) {
          if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage must use Cartesian coordinates");
+            UTIL_THROW("Atom storage is not set for Cartesian coordinates");
          }
       } else {
          if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage must use generalized coordinates");
+            UTIL_THROW("Atom storage is set for Cartesian coordinates");
          }
       }
 
@@ -275,6 +275,16 @@ namespace DdMd
    */
    void DdMdOrderedConfigIo::writeConfig(std::ofstream& file)
    {
+      // Precondition
+      if (UTIL_ORTHOGONAL) {
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are not Cartesian");
+         }
+      } else {
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are Cartesian");
+         }
+      }
 
       // Write Boundary dimensions
       if (domain().isMaster()) {

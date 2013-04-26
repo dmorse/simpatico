@@ -228,6 +228,11 @@ namespace DdMd
          }
          r[i] = int(position[i] / dL);
          if (r[i] < 0 || r[i] >= gridDimensions_[i]) {
+            std::cout << "Cart i   = " << i << std::endl;
+            std::cout << "position = " << position[i] << std::endl;
+            std::cout << "dL       = " << dL << std::endl;
+            std::cout << "r        = " << r[i] << std::endl;
+            std::cout << "gridDim  = " << gridDimensions_[i] << std::endl;
             UTIL_THROW("Invalid grid coordinate");
          }
       }

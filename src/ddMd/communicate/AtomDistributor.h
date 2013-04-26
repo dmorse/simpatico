@@ -156,7 +156,7 @@ namespace DdMd
       * a matching call to newAtomPtr(). It identifies which processor
       * owns the active atom, i.e., the atom returned by the most recent
       * call to newAtomPtr. After shifting the position of this atom to
-      * lie within the primary cell, it identifies the rankd of the
+      * lie within the primary cell, it identifies the rank of the
       * processor that owns this atom, based on its position.  If this
       * atom is owned by the master (rank == 0), the atom is added to
       * the AtomStorage on the master node. Otherwise, the atom is added
@@ -169,6 +169,10 @@ namespace DdMd
       * processor, this method sends a buffer to the processor with the
       * the largest sendList, before caching the current atom and marking
       * it for later sending.
+      *
+      * On entry, the coordinates of the active atom must be expressed in:
+      *    - Cartesian coordinates, if UTIL_ORTHOGONAL is true
+      *    - Generalized / scaled coordinates, otherwise
       *
       * \return rank of processor that owns the active atom.
       */
@@ -186,7 +190,11 @@ namespace DdMd
       /**
       * Receive all atoms sent by master processor.
       *
-      * This should be called by all processes except the master.
+      * This should be called by all processes except the master. 
+      *
+      * Upon return, all processors should have correct atoms, with
+      * coordinates in the same coordinates system as that used on
+      * entry to addAtom() (Cartesian iff UTIL_ORTHOGONAL).
       */
       void receive();
       #endif
