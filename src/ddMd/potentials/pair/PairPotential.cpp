@@ -79,8 +79,8 @@ namespace DdMd
    {
       skin_ = skin;
       pairCapacity_ = pairCapacity;
-      cutoff_ = maxPairCutoff() + skin;
       maxBoundary_ = maxBoundary;
+      cutoff_ = maxPairCutoff() + skin;
 
       allocate();
    }
@@ -88,7 +88,7 @@ namespace DdMd
    /*
    * Read parameters for PairList and allocate memory.  
    */
-   void PairPotential::readPairListParam(std::istream& in)
+   void PairPotential::readParameters(std::istream& in)
    {
       read<double>(in, "skin", skin_);
       read<int>(in, "pairCapacity", pairCapacity_);
@@ -101,7 +101,7 @@ namespace DdMd
    /*
    * Read parameters for PairList and allocate memory.  
    */
-   void PairPotential::loadPairListParam(Serializable::IArchive& ar)
+   void PairPotential::loadParameters(Serializable::IArchive& ar)
    {
       loadParameter<double>(ar, "skin", skin_);
       loadParameter<int>(ar, "pairCapacity", pairCapacity_);
@@ -111,41 +111,12 @@ namespace DdMd
       ar & methodId_;
 
       allocate();
-
-      #if 0
-      if (UTIL_ORTHOGONAL) {
-         boundary() = maxBoundary_;
-         //boundary().setOrthorhombic(maxBoundary_.lengths());
-         // Above is necessary because the domain uses a reference to the
-         // boundary to calculate domain bounds, if (UTIL_ORTHOGONAL).
-      }
-
-      // Set cutoffs, and upper and lower bound of the processor domain.
-      Vector lower;
-      Vector upper;
-      Vector cutoffs;
-      for (int i = 0; i < Dimension; ++i) {
-         lower[i] = domain().domainBound(i, 0);
-         upper[i] = domain().domainBound(i, 1);
-         if (UTIL_ORTHOGONAL) {
-            cutoffs[i] = cutoff_;
-         } else {
-            cutoffs[i] = cutoff_/maxBoundary_.length(i);
-         }
-      }
-
-      // Allocate CellList and PairList
-      int localCapacity = storage().atomCapacity();
-      int totalCapacity = localCapacity + storage().ghostCapacity();
-      cellList_.allocate(totalCapacity, lower, upper, cutoffs);
-      pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
-      #endif
    }
 
    /*
    * Save parameters to output/saving Archive.
    */
-   void PairPotential::savePairListParam(Serializable::OArchive& ar)
+   void PairPotential::save(Serializable::OArchive& ar)
    {
       ar & skin_;
       ar & pairCapacity_;

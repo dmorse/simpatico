@@ -335,7 +335,7 @@ namespace DdMd
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
-      readPairListParam(in);
+      PairPotential::readParameters(in);
    }
 
    /*
@@ -348,7 +348,7 @@ namespace DdMd
       bool nextIndent = false;
       addParamComposite(interaction(), nextIndent);
       interaction().loadParameters(ar);
-      loadPairListParam(ar);
+      PairPotential::loadParameters(ar);
    }
 
    /*
@@ -358,7 +358,7 @@ namespace DdMd
    void PairPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
    {  
       interaction().save(ar); 
-      savePairListParam(ar);
+      PairPotential::save(ar);
    }
 
    /*
