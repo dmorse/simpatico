@@ -84,7 +84,7 @@ namespace Util
    template <class Type>
    void CArrayParam<Type>::readParam(std::istream &in)
    {
-      if (isParamIoProcessor()) {
+      if (isIoProcessor()) {
          in >> label_;
          in >> value_[0];
          for (int i = 1; i < n_; ++i) {
@@ -95,8 +95,8 @@ namespace Util
          }
       }
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         bcast<Type>(paramCommunicator(), value_, n_, 0); 
+      if (hasIoCommunicator()) {
+         bcast<Type>(ioCommunicator(), value_, n_, 0); 
       }
       #endif
    }
@@ -145,7 +145,7 @@ namespace Util
    template <class Type>
    void CArrayParam<Type>::load(Serializable::IArchive& ar)
    {
-      if (isParamIoProcessor()) {
+      if (isIoProcessor()) {
          for (int i = 0; i < n_; ++i) {
             ar >> value_[i];
          }
@@ -154,8 +154,8 @@ namespace Util
          }
       }
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         bcast<Type>(paramCommunicator(), value_, n_, 0); 
+      if (hasIoCommunicator()) {
+         bcast<Type>(ioCommunicator(), value_, n_, 0); 
       }
       #endif
    }

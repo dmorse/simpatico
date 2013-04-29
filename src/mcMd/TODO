@@ -1,7 +1,6 @@
 Serialization
 -------------
 
-- Test save / load with independent multi-processor
 - Test save / load with perturbation
 - Test save /load with replica move
 - Test MD serialization after forcing pair list rebuild upon restart output
@@ -14,8 +13,8 @@ Perturbation
 - Modify so that perturbation can be used without MPI, or change conditional 
   compilation so that a perturbation can only be compiled ifdef UTIL_MPI.
 
-Constant Pressure MD (Jens)
----------------------------
+Constant Pressure MD 
+--------------------
 
 - Port and test NptIntegrator subclass from DdMd.
 
@@ -41,44 +40,25 @@ Deformable Boundaries
 - Generalize snapshot and obsolete pair list methods to use 
    miniminumDeformRatio to deal optimally with MD in deforming boundaries.
 
-Interface changes
-------------------
-
-- If possible, remove moleculeId() and molecule(speciesId, moleculeId)
-  methods of McMd::System.
-
 Interactions (Design change):
 -----------------------------
 
 - Make Interaction classes apply to only one choice of type index / indices.
-  Potential class would then hold an array of Interactions.
+  PotentialImpl class templates would then hold an array of Interactions.
 
 - Create << and >> operators for each Interaction class. 
 
-- Create PairInteractionMaster to hold an array of interactions
-
 - Change file format to read typeId (ids) << Interaction.
-
-- Make each potential take an InteractionMaster as an argument
-  (How can we avoid the need for an additional Factory?)
 
 SystemAccess base classes
 -------------------------
 
 - Rename SubSystem SystemAccess
-
 - Define McSystemAccess and MdSystemAccess classes with potential energy accessors.
-
 - Derive diagnostics from a public Diagnostic and a protected (Mc|Md)SystemAccess.
-
-- Remove replace system().typePotential() by typePotential() in diagnostics that are
-  derived from a SystemAccess class.
-
+- Remove replace system().typePotential() by typePotential() in diagnostics
 - Derive SystemMcMove from a protected McSystemAccess.
-
 - Remove replace system().typePotential() by typePotential() in mcMoves.
-
 - Derive MdIntegrator from a protected MdSystemAccess.
-
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
 

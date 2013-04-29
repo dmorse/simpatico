@@ -342,7 +342,7 @@ namespace Util
    void Manager<Data>::endReadManager()
    {
       End* endPtr = &addEnd();
-      if (ParamComponent::echo() && isParamIoProcessor()) {
+      if (ParamComponent::echo() && isIoProcessor()) {
          endPtr->writeParam(Log::file());
       }
    }

@@ -98,13 +98,25 @@ namespace Util
    template <class Type>
    void DMatrixParam<Type>::readParam(std::istream &in)
    {
-      if (isParamIoProcessor()) {
+      // Preconditions
+      if (!(matrixPtr_->isAllocated())) {
+         UTIL_THROW("Cannot read unallocated DMatrix");
+      }
+      if (m_ > matrixPtr_->capacity1()) {
+         UTIL_THROW("Error: Logical size m_ > DMatrix<Type>::capacity1()");
+      }
+      if (n_ > matrixPtr_->capacity2()) {
+         UTIL_THROW("Error: Logical size n_ > DMatrix<Type>::capacity2()");
+      }
+
+      // Read from file
+      if (isIoProcessor()) {
          int i, j;
-         int m = matrixPtr_->capacity1();
-         int n = matrixPtr_->capacity2();
+         //int m = matrixPtr_->capacity1();
+         //int n = matrixPtr_->capacity2();
          in >> label_;
-         for (i = 0; i < m; ++i) {
-            for (j = 0; j < n; ++j) {
+         for (i = 0; i < m_; ++i) {
+            for (j = 0; j < n_; ++j) {
                in >> (*matrixPtr_)(i, j);
             }
          }
@@ -112,11 +124,13 @@ namespace Util
             writeParam(Log::file());
          }
       }
+
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         int m = matrixPtr_->capacity1();
-         int n = matrixPtr_->capacity2();
-         bcast<Type>(paramCommunicator(), *matrixPtr_, m, n, 0); 
+      // Broadcast
+      if (hasIoCommunicator()) {
+         //int m = matrixPtr_->capacity1();
+         //int n = matrixPtr_->capacity2();
+         bcast<Type>(ioCommunicator(), *matrixPtr_, m_, n_, 0); 
       }
       #endif
    }
@@ -127,9 +141,19 @@ namespace Util
    template <class Type>
    void DMatrixParam<Type>::writeParam(std::ostream &out)
    {
+      // Preconditions
+      if (!(matrixPtr_->isAllocated())) {
+         UTIL_THROW("Cannot read unallocated DMatrix");
+      }
+      if (m_ > matrixPtr_->capacity1()) {
+         UTIL_THROW("Error: Logical size m_ > DMatrix<Type>::capacity1()");
+      }
+      if (n_ > matrixPtr_->capacity2()) {
+         UTIL_THROW("Error: Logical size n_ > DMatrix<Type>::capacity2()");
+      }
+
       Label space("");
       int i, j;
-
       for (i = 0; i < m_; ++i) {
          if (i == 0) {
             out << indent() << label_;
@@ -152,17 +176,31 @@ namespace Util
    template <class Type>
    void DMatrixParam<Type>::load(Serializable::IArchive& ar)
    {
-      if (isParamIoProcessor()) {
+      // Preconditions
+      if (!(matrixPtr_->isAllocated())) {
+         UTIL_THROW("Cannot read unallocated DMatrix");
+      }
+      if (m_ > matrixPtr_->capacity1()) {
+         UTIL_THROW("Error: Logical size m_ > DMatrix<Type>::capacity1()");
+      }
+      if (n_ > matrixPtr_->capacity2()) {
+         UTIL_THROW("Error: Logical size n_ > DMatrix<Type>::capacity2()");
+      }
+
+      // Load from archive on ioProcessor
+      if (isIoProcessor()) {
          ar >> *matrixPtr_;
          if (ParamComponent::echo()) {
             writeParam(Log::file());
          }
       }
+
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
+      // Broadcast
+      if (hasIoCommunicator()) {
          int m = matrixPtr_->capacity1();
          int n = matrixPtr_->capacity2();
-         bcast<Type>(paramCommunicator(), *matrixPtr_, m, n, 0); 
+         bcast<Type>(ioCommunicator(), *matrixPtr_, m, n, 0); 
       }
       #endif
    }

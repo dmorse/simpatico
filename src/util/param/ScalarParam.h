@@ -113,7 +113,7 @@ namespace Util
    template <class Type>
    void ScalarParam<Type>::readParam(std::istream &in)
    {
-      if (isParamIoProcessor()) {
+      if (isIoProcessor()) {
          in >> label_;
          in >> *valuePtr_;
          if (ParamComponent::echo()) {
@@ -121,8 +121,8 @@ namespace Util
          }
       }
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         bcast<Type>(paramCommunicator(), *valuePtr_, 0); 
+      if (hasIoCommunicator()) {
+         bcast<Type>(ioCommunicator(), *valuePtr_, 0); 
       }
       #endif
    }
@@ -146,15 +146,15 @@ namespace Util
    template <class Type>
    void ScalarParam<Type>::load(Serializable::IArchive& ar)
    {
-      if (isParamIoProcessor()) {
+      if (isIoProcessor()) {
          ar & *valuePtr_;
          if (ParamComponent::echo()) {
             writeParam(Log::file());
          }
       }
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         bcast<Type>(paramCommunicator(), *valuePtr_, 0); 
+      if (hasIoCommunicator()) {
+         bcast<Type>(ioCommunicator(), *valuePtr_, 0); 
       }
       #endif
    }

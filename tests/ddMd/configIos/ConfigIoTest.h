@@ -62,17 +62,17 @@ public:
       #ifdef UTIL_MPI
       // Set communicators
       domain.setGridCommunicator(communicator());
-      domain.setParamCommunicator(communicator());
-      atomStorage.setParamCommunicator(communicator());
-      bondStorage.setParamCommunicator(communicator());
+      domain.setIoCommunicator(communicator());
+      atomStorage.setIoCommunicator(communicator());
+      bondStorage.setIoCommunicator(communicator());
       #ifdef INTER_ANGLE
-      angleStorage.setParamCommunicator(communicator());
+      angleStorage.setIoCommunicator(communicator());
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralStorage.setParamCommunicator(communicator());
+      dihedralStorage.setIoCommunicator(communicator());
       #endif
-      buffer.setParamCommunicator(communicator());
-      configIo.setParamCommunicator(communicator());
+      buffer.setIoCommunicator(communicator());
+      configIo.setIoCommunicator(communicator());
       #else
       domain.setRank(0);
       #endif
@@ -138,17 +138,17 @@ public:
       #ifdef UTIL_MPI
       // Set communicators
       domain.setGridCommunicator(communicator());
-      domain.setParamCommunicator(communicator());
-      atomStorage.setParamCommunicator(communicator());
-      bondStorage.setParamCommunicator(communicator());
+      domain.setIoCommunicator(communicator());
+      atomStorage.setIoCommunicator(communicator());
+      bondStorage.setIoCommunicator(communicator());
       #ifdef INTER_ANGLE
-      angleStorage.setParamCommunicator(communicator());
+      angleStorage.setIoCommunicator(communicator());
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralStorage.setParamCommunicator(communicator());
+      dihedralStorage.setIoCommunicator(communicator());
       #endif
-      buffer.setParamCommunicator(communicator());
-      configIo.setParamCommunicator(communicator());
+      buffer.setIoCommunicator(communicator());
+      configIo.setIoCommunicator(communicator());
       #else
       domain.setRank(0);
       #endif

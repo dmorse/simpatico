@@ -871,8 +871,8 @@ namespace McMd
    */
    void System::loadPerturbation(Serializable::IArchive& ar) 
    {
-      if (hasParamCommunicator()) {
-         UTIL_THROW("System has paramCommunicator in loadPerturbation");
+      if (hasIoCommunicator()) {
+         UTIL_THROW("System has ioCommunicator in loadPerturbation");
       }
 
       bool savedPerturbation;

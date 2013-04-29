@@ -61,6 +61,18 @@ namespace DdMd
    {}
 
    /*
+   * Set parameters and allocate memory.
+   */
+   void AtomStorage::initialize(int atomCapacity, int ghostCapacity, 
+      int totalAtomCapacity)
+   {
+      atomCapacity_ = atomCapacity;
+      ghostCapacity_ = ghostCapacity;
+      totalAtomCapacity_ = totalAtomCapacity;
+      allocate();
+   }
+
+   /*
    * Read parameters and allocate memory.
    */
    void AtomStorage::readParameters(std::istream& in)
@@ -72,15 +84,28 @@ namespace DdMd
    }
 
    /*
-   * Set parameters and allocate memory.
+   * Load parameters and allocate memory.
    */
-   void AtomStorage::initialize(int atomCapacity, int ghostCapacity, 
-      int totalAtomCapacity)
+   void AtomStorage::loadParameters(Serializable::IArchive& ar)
    {
-      atomCapacity_ = atomCapacity;
-      ghostCapacity_ = ghostCapacity;
-      totalAtomCapacity_ = totalAtomCapacity;
+      loadParameter<int>(ar, "atomCapacity", atomCapacity_);
+      loadParameter<int>(ar, "ghostCapacity", ghostCapacity_);
+      loadParameter<int>(ar, "totalAtomCapacity", totalAtomCapacity_);
+      ar & maxNAtomLocal_;
+      ar & maxNGhostLocal_;
       allocate();
+   }
+
+   /*
+   * Save parameters.
+   */
+   void AtomStorage::save(Serializable::OArchive& ar)
+   {
+      ar & atomCapacity_;
+      ar & ghostCapacity_;
+      ar & totalAtomCapacity_;
+      ar & maxNAtomLocal_;
+      ar & maxNGhostLocal_;
    }
 
    /*

@@ -37,7 +37,6 @@ namespace DdMd
       methodId_(0),
       nPair_(0),
       pairEnergies_()
-      //reverseUpdateFlag_(false)
    {  setClassName("PairPotential"); } 
 
    /*
@@ -53,7 +52,6 @@ namespace DdMd
       methodId_(0),
       nPair_(0),
       pairEnergies_()
-      //reverseUpdateFlag_(false)
    {  setClassName("PairPotential"); } 
 
    /*
@@ -73,14 +71,23 @@ namespace DdMd
    PairPotential::~PairPotential()
    {}
 
-   #if 0
    /*
-   * Set flag to specify if reverse communication is enabled.
+   * Allocate memory for the cell list.
    */
-   void PairPotential::setReverseUpdateFlag(bool reverseUpdateFlag)
-   {  reverseUpdateFlag_ = reverseUpdateFlag; }
-   #endif
+   void PairPotential::initialize(const Boundary& maxBoundary, double skin, 
+                                  int pairCapacity)
+   {
+      skin_ = skin;
+      pairCapacity_ = pairCapacity;
+      cutoff_ = maxPairCutoff() + skin;
+      maxBoundary_ = maxBoundary;
 
+      allocate();
+   }
+
+   /*
+   * Read parameters for PairList and allocate memory.  
+   */
    void PairPotential::readPairListParam(std::istream& in)
    {
       read<double>(in, "skin", skin_);
@@ -88,6 +95,25 @@ namespace DdMd
       read<Boundary>(in, "maxBoundary", maxBoundary_);
       cutoff_ = maxPairCutoff() + skin_;
 
+      allocate();
+   }
+
+   #if 0
+   /*
+   * Read parameters for PairList and allocate memory.  
+   */
+   void PairPotential::loadPairListParam(Serializable::IArchive& ar)
+   {
+      loadParameter<double>(ar, "skin", skin_);
+      loadParameter<int>(ar, "pairCapacity", pairCapacity_);
+      loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
+      ar & cutoff_;
+      //cutoff_ = maxPairCutoff() + skin_;
+      ar & methodId_;
+
+      allocate();
+
+      #if 0
       if (UTIL_ORTHOGONAL) {
          boundary() = maxBoundary_;
          //boundary().setOrthorhombic(maxBoundary_.lengths());
@@ -114,19 +140,40 @@ namespace DdMd
       int totalCapacity = localCapacity + storage().ghostCapacity();
       cellList_.allocate(totalCapacity, lower, upper, cutoffs);
       pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
+      #endif
    }
 
    /*
-   * Allocate memory for the cell list.
+   * Save parameters to output/saving Archive.
    */
-   void PairPotential::initialize(const Boundary& maxBoundary, double skin, 
-                                  int pairCapacity)
+   void PairPotential::savePairListParam(Serializable::OArchive& ar)
    {
-      skin_ = skin;
-      pairCapacity_ = pairCapacity;
-      cutoff_ = maxPairCutoff() + skin;
-      maxBoundary_ = maxBoundary;
+      ar & skin_;
+      ar & pairCapacity_;
+      ar & maxBoundary_;
+      ar & cutoff_;
+      ar & methodId_;
+   }
+   #endif
 
+   /*
+   * Allocate memory for the cell list and pair list.
+   *
+   * On entry, cutoff_, pairCapacity_, and maxBoundary_ must be defined.
+   */
+   void PairPotential::allocate()
+   {
+      // Allocate PairList
+      int localCapacity = storage().atomCapacity();
+      pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
+
+      if (UTIL_ORTHOGONAL) {
+         boundary() = maxBoundary_;
+         // This is necessary because the domain uses a reference to the
+         // boundary to calculate domain bounds, if (UTIL_ORTHOGONAL).
+      }
+
+      // Calculate cell list cutoff lengths
       Vector cutoffs;
       Vector lower;
       Vector upper;
@@ -136,14 +183,13 @@ namespace DdMd
          if (UTIL_ORTHOGONAL) {
             cutoffs[i] = cutoff_;
          } else {
-            cutoffs[i] = cutoff_/maxBoundary.length(i);
+            cutoffs[i] = cutoff_/maxBoundary_.length(i);
          }
       }
 
-      int localCapacity = storage().atomCapacity();
+      // Allocate CellList
       int totalCapacity = localCapacity + storage().ghostCapacity();
       cellList_.allocate(totalCapacity, lower, upper, cutoffs);
-      pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
    }
 
    /*
@@ -201,7 +247,6 @@ namespace DdMd
       if (storage().isCartesian()) {
          UTIL_THROW("Coordinates are Cartesian exiting buildCellList");
       }
-
    }
 
    /*
@@ -330,7 +375,7 @@ namespace DdMd
       #endif
    }
 
-   /**
+   /*
    * Return twice the number of pairs within the specified cutoff.
    * 
    * This method should only be called on the rank 0 processor. The

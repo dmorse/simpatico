@@ -46,9 +46,9 @@ public:
 
       #ifdef UTIL_MPI
       domain.setGridCommunicator(communicator());
-      domain.setParamCommunicator(communicator());
-      storage.setParamCommunicator(communicator());
-      pairPotential.setParamCommunicator(communicator());
+      domain.setIoCommunicator(communicator());
+      storage.setIoCommunicator(communicator());
+      pairPotential.setIoCommunicator(communicator());
       #endif
 
       // Read parameter file

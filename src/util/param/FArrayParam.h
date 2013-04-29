@@ -88,7 +88,7 @@ namespace Util
    template <class Type, int N>
    void FArrayParam<Type, N>::readParam(std::istream &in)
    {
-      if (isParamIoProcessor()) {
+      if (isIoProcessor()) {
          in >> label_;
          for (int i = 0; i < N; ++i) {
             in >> (*arrayPtr_)[i];
@@ -98,8 +98,8 @@ namespace Util
          }
       }
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         bcast<Type>(paramCommunicator(), &((*arrayPtr_)[0]), N, 0); 
+      if (hasIoCommunicator()) {
+         bcast<Type>(ioCommunicator(), &((*arrayPtr_)[0]), N, 0); 
       }
       #endif
    }
@@ -131,14 +131,14 @@ namespace Util
    template <class Type, int N>
    void FArrayParam<Type, N>::load(Serializable::IArchive& ar)
    {
-      if (isParamIoProcessor()) {
+      if (isIoProcessor()) {
          for (int i = 0; i < N; ++i) {
             ar >> (*arrayPtr_)[i];
          }
       }
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         bcast<Type>(paramCommunicator(), *arrayPtr_, N, 0); 
+      if (hasIoCommunicator()) {
+         bcast<Type>(ioCommunicator(), &((*arrayPtr_)[0]), N, 0); 
       }
       #endif
    }

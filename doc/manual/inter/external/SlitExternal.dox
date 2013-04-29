@@ -5,19 +5,21 @@ namespace Inter
 
 The SlitExternal interaction implements a repulsive 9-3 confining potential
 in which confining forces act only along the z/2 direction. In a boundary
-of length $L$ in the $z$ direction, the potential confines particles to the
-domain $0 < z < L$ by putting repulsive walls as $z = 0$ and $z = L$. Let
-$d$ be the shortest distance to these walls, given by the lesser of $z$
-and $L - z$. The potential energy is a function of $d$, and is given by
+of length \f$L\f$ in the \f$z\f$ direction, the potential confines particles 
+to the domain \f$0 < z < L\f$ by putting repulsive walls as \f$z = 0\f$ and 
+\f$z = L\f$. Let d be the shortest distance to these walls, given by 
+the lesser of z and L - z. The potential energy is a function of d, and is
+given by
 \f[
-   V(d) = \frac{4 \epsilon \pi} { 45 \rho \sigma^{-3} }
+   V(d) = \frac{4\pi \epsilon \rho\sigma^{3}} {45}
           \left ( \frac{\sigma^{9}}{d^{9}} - 7.5 \frac{\sigma^{9}}{d^{9}}
-                  \frac{\sigma^{25}}{\sqrt{10}}
+                  + \frac{25}{\sqrt{10}}
           \right)
 \f]
-for \f$d_{i} d < d_{c} \f$, where $d_{i} = 0.506079 \sigma\f$, and 
-\f$d_{c}\f$ is a user provided cutoff. For \f$d > d_{c}\f$, \f$V(d) = 0\f$. 
-For \$d < d_{i}\f$, \f$V(d) = V(d_{i})\f$ and the force vanishes.
+for \f$ d_{i} < d < d_{c} \f$, where \f$ d_{i} = 0.506079 \sigma \f$, and 
+where \f$ d_{c} \f$ is a user provided cutoff. For \f$ d > d_{c} \f$, the
+potential and force both vanish: \f$ V(d) = 0 \f$. 
+For \f$ d < d_{i} \f$, \f$ V(d) = V(d_{i}) \f$, and the force vanishes.
   
 The parameter file format for SlitExternal is
 \code

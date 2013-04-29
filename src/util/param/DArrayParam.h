@@ -89,7 +89,7 @@ namespace Util
    template <class Type>
    void DArrayParam<Type>::readParam(std::istream &in)
    {
-
+      // Preconditions
       if (!(arrayPtr_->isAllocated())) {
          UTIL_THROW("Cannot read unallocated DArray");
       }
@@ -97,7 +97,7 @@ namespace Util
          UTIL_THROW("Error: DArray capacity < n");
       }
 
-      if (isParamIoProcessor()) {
+      if (isIoProcessor()) {
          in >> label_;
          for (int i = 0; i < n_; ++i) {
             in >> (*arrayPtr_)[i];
@@ -107,8 +107,8 @@ namespace Util
          }
       }
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         bcast<Type>(paramCommunicator(), *arrayPtr_, n_, 0); 
+      if (hasIoCommunicator()) {
+         bcast<Type>(ioCommunicator(), *arrayPtr_, n_, 0); 
       }
       #endif
 
@@ -151,7 +151,15 @@ namespace Util
    template <class Type>
    void DArrayParam<Type>::load(Serializable::IArchive& ar)
    {
-      if (isParamIoProcessor()) {
+      // Preconditions
+      if (!(arrayPtr_->isAllocated())) {
+         UTIL_THROW("Cannot write unallocated DArray");
+      }
+      if (arrayPtr_->capacity() < n_) {
+         UTIL_THROW("Error: DArray capacity < n in writeParam");
+      }
+
+      if (isIoProcessor()) {
          ar >> *arrayPtr_;
          if (arrayPtr_->capacity() < n_) {
             UTIL_THROW("Error: DArray capacity < n");
@@ -161,8 +169,8 @@ namespace Util
          }
       }
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         bcast<Type>(paramCommunicator(), *arrayPtr_, n_, 0); 
+      if (hasIoCommunicator()) {
+         bcast<Type>(ioCommunicator(), *arrayPtr_, n_, 0); 
       }
       #endif
    }
@@ -180,6 +188,7 @@ namespace Util
       if (arrayPtr_->capacity() < n_) {
          UTIL_THROW("Error: DArray capacity < n");
       }
+
       ar << *arrayPtr_;
    }
 

@@ -197,14 +197,16 @@ namespace Util
       * resets the number of items in the array to 0. 
       */
       void resetParam();
-   
+  
+      #if 0 
       #ifdef UTIL_MPI
       /**
       * Set an MPI communicator for parameter IO.
       *
       * This method recursively sets the ParamCommunicator for all children.
       */
-      virtual void setParamCommunicator(MPI::Intracomm& communicator);
+      virtual void setIoCommunicator(MPI::Intracomm& communicator);
+      #endif
       #endif
 
       //@}
@@ -224,7 +226,7 @@ namespace Util
       */
       void 
       readParamComposite(std::istream &in, ParamComposite &child, 
-                                           bool next = true);
+                         bool next = true);
    
       /**  
       * Add a new Param < Type > object, and read its value.
@@ -352,10 +354,12 @@ namespace Util
       *
       * \param ar     archive for loading
       * \param label  Label string 
-      * \param value  reference to new ScalarParam< Type >
+      * \param value  reference to the Type variable
+      * \return reference to the new CArrayParam<Type> object
       */
       template <typename Type>
-      ScalarParam<Type>& loadParameter(Serializable::IArchive &ar, const char *label, Type &value);
+      ScalarParam<Type>& loadParameter(Serializable::IArchive &ar, 
+                                       const char *label, Type &value);
    
       /**  
       * Add a C array parameter, and load its elements.
@@ -469,7 +473,8 @@ namespace Util
       * \return reference to the new DArrayParam<Type> object
       */
       template <typename Type>
-      DArrayParam<Type>& addDArray(const char *label, DArray<Type>& array, int n);
+      DArrayParam<Type>& addDArray(const char *label, DArray<Type>& array, 
+                                   int n);
    
       /**  
       * Add a FArray<Type> parameter.
@@ -562,7 +567,7 @@ namespace Util
 
    };
 
-   // add and read method templates for scalar parameters
+   // Method templates for scalar parameters
  
    /* 
    * Add a ScalarParam to the format array.
@@ -576,8 +581,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI 
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -623,8 +628,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -671,8 +676,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -719,8 +724,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -731,8 +736,8 @@ namespace Util
    */
    template <typename Type, int N>   
    FArrayParam<Type, N>&
-   ParamComposite::readFArray(std::istream &in, 
-                   const char *label, FArray<Type, N>& array) 
+   ParamComposite::readFArray(std::istream &in, const char *label, 
+                              FArray<Type, N>& array) 
    {
       FArrayParam<Type, N>* ptr = &addFArray<Type, N>(label, array);
       ptr->readParam(in);
@@ -767,8 +772,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;
@@ -793,7 +798,7 @@ namespace Util
    template <typename Type> 
    CArray2DParam<Type>&
    ParamComposite::loadCArray2D(Serializable::IArchive &ar, const char *label, 
-                Type *value, int m, int n)
+                                Type *value, int m, int n)
    {
       CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n);
       ptr->load(ar);
@@ -815,8 +820,8 @@ namespace Util
       ++size_;
       ptr->setIndent(*this);
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) {
-         ptr->setParamCommunicator(paramCommunicator());
+      if (hasIoCommunicator()) {
+         ptr->setIoCommunicator(ioCommunicator());
       }
       #endif
       return *ptr;

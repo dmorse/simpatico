@@ -5,17 +5,21 @@ include $(TESTS_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include sources.mk
 
-all: $(util_mpi_tests_OBJS) Test
+all: $(tests_util_mpi_OBJS) Test
 
 clean:
-	rm -f $(util_mpi_tests_OBJS) Test $(util_mpi_tests_OBJS:.o=.d)
+	rm -f $(tests_util_mpi_OBJS) Test $(tests_util_mpi_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(util_mpi_tests_OBJS:.o=.d)
+	rm -f $(tests_util_mpi_OBJS:.o=.d)
 
-Test: Test.o $(util_LIB)
+Test: Test.o $(util_LIB) setMpi
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
 	       $(util_LIB)
 
--include $(util_mpi_tests_OBJS:.o=.d)
+setMpi:
+	cd $(ROOT_DIR); ./configure -m1
+
+
+-include $(tests_util_mpi_OBJS:.o=.d)
 

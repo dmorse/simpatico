@@ -58,7 +58,7 @@ namespace Util
 
       /**
       * Load from an archive.
-
+      *
       * \param ar binary loading (input) archive.
       */
       virtual void load(IArchive& ar) = 0;

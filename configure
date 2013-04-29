@@ -94,17 +94,26 @@ while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
       FILE=src/mcMd/defines.mk
       ;;
     k)
-      cp src/compiler.mk temp
       case $OPTARG in
-      0)
-        echo "Disabling automatic dependency generation" >&2
-        sed "s/^ *MAKEDEP *=/#MAKEDEP=/" temp > src/compiler.mk
-        rm temp
+      0)  # Disable (comment out) the definition of MAKEDEP
+        if [ `grep "^ *MAKEDEP" src/compiler.mk` ]; then
+           echo "Disabling MAKEDEP in file src/compiler.mk" >&2
+           sed "s/^ *MAKEDEP/#MAKEDEP/" src/compiler.mk > temp
+           cp temp src/compiler.mk
+           rm temp
+        else
+           echo "MAKEDEP already disabled in file src/compiler.mk" >&2
+        fi
         ;;
-      1)
-        echo "Enabling automatic dependency generation" 
-        sed "s/^ *# *MAKEDEP *=/MAKEDEP=/" temp > src/compiler.mk
-        rm temp
+      1) # Enable (uncomment) the definition of MAKEDEP
+        if [ `grep "^ *MAKEDEP" src/compiler.mk` ]; then
+           echo "MAKEDEP already enabled in file src/compiler.mk" >&2
+        else
+           echo "Enabling MAKEDEP in file src/compiler.mk" >&2
+           sed "s/^ *# *MAKEDEP/MAKEDEP/" src/compiler.mk > temp
+           cp temp src/compiler.mk
+           rm temp
+        fi
         ;;
       esac
       ;;
@@ -154,6 +163,13 @@ while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
          else
             echo "-f OFF - free energy perturbation" >&2
          fi
+      fi
+      if [ `grep "^ *MAKEDEP" src/compiler.mk` ]; then
+         echo "-k ON  - automatic dependency tracking" >&2
+         MPI=1
+      else
+         echo "-k OFF - automatic dependency tracking" >&2
+         MPI=
       fi
       ;;
   esac

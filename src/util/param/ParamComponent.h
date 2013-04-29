@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/mpi/MpiFileIo.h>          // class member
-#include <util/archives/Serializable.h>  // typedef
+#include <util/mpi/MpiFileIo.h>          // base class
+#include <util/archives/Serializable.h>  // base class (typedef)
 #include <util/global.h>
 
 #include <iostream>
@@ -28,12 +28,14 @@ namespace Util
    *
    *  \ingroup Param_Module
    */
-   class ParamComponent : public Serializable
+   class ParamComponent : public Serializable, public MpiFileIo
    {
 
    public:
 
-      /// Destructor.
+      /**
+      * Destructor.
+      */
       virtual ~ParamComponent();
 
       /**
@@ -50,16 +52,29 @@ namespace Util
       */
       virtual void writeParam(std::ostream& out) = 0;
 
-      virtual void save(Serializable::OArchive &ar)
+      /**
+      * Load internal state from an archive.
+      *
+      * The default implementation is empty. This default is used by
+      * the Begin, End, and Blank subclasses.
+      */ 
+      virtual void load(Serializable::IArchive &ar)
       {}
 
-      virtual void load(Serializable::IArchive &ar)
+      /**
+      * Save internal state to an archive.
+      *
+      * The default implementation is empty. This default is used by
+      * the Begin, End, and Blank subclasses.
+      */ 
+      virtual void save(Serializable::OArchive &ar)
       {}
 
       /**
       * Nontrivial implementation provided by ParamComposite subclass.
       *
-      * This empty default implementation is used by all leaf nodes.
+      * The default implementation is empty. This default is used by
+      * all leaf nodes (all other than ParamComposite and subclasses).
       */
       virtual void resetParam()
       {}
@@ -67,8 +82,8 @@ namespace Util
       /**
       * Set indent level.
       *
-      * If next=true (default) set indent level one higher than
-      * that of parent. If next=false, set the same as parent.
+      * If next=true (default) set indent level one higher than that
+      * of parent. If next=false, set indent level the same as parent.
       *
       * \param parent parent ParamComponent object
       * \param next   If true, set level one higher than for parent.
@@ -79,13 +94,6 @@ namespace Util
       * Return indent string for this object (string of spaces).
       */
       std::string indent() const;
-
-      #ifdef UTIL_MPI
-      /**
-      * Set an MPI communicator for parameter IO.
-      */
-      virtual void setParamCommunicator(MPI::Intracomm& communicator);
-      #endif
 
       /**
       * Serialize this ParamComponent as a string.
@@ -104,12 +112,21 @@ namespace Util
       static void initStatic();
 
       /**
-      * Set echo parameter to true enable echoing, or false to disable.
+      * Enable or disable echoing for all subclasses of ParamComponent.
+      *
+      * When echoing is enabled, all parameters are echoed to a log
+      * file immediately after being read. This is useful as an aid
+      * to debugging the parameter file, by showing where the error
+      * occurred.
+      *
+      * \param echo set true to enable echoing, false to disable. 
       */
       static void setEcho(bool echo = true);
 
       /**
-      * Get echo parameter. true = echoing enabled, false = disable.
+      * Get echo parameter. 
+      *
+      * \return true if echoing is enabled, false if disabled.
       */
       static bool echo();
 
@@ -131,35 +148,15 @@ namespace Util
       */
       ParamComponent(const ParamComponent& other);
 
-      /**
-      * Should this processor do parameter file IO?
-      *
-      * Always returns true if compiled without UTIL_MPI defined.
-      */
-      bool isParamIoProcessor() const
-      {  return io_.isIoProcessor(); }
-
-      #ifdef UTIL_MPI
-      /**
-      * Has an MPI communicator been set for parameter input?
-      */
-      bool hasParamCommunicator() const
-      {  return io_.hasCommunicator(); }
-
-      /**
-      * Return the parameter communicator.
-      */
-      MPI::Intracomm& paramCommunicator() const
-      {  return io_.communicator(); }
-      #endif
-
    private:
 
       /// Indentation string, a string of spaces.
       std::string indent_;
 
+      #if 0
       /// Object to identify if this processor can do file Io.
       MpiFileIo   io_;
+      #endif
 
       /// Parameter to enable (true) or disable (false) echoing.
       static bool echo_;
@@ -171,7 +168,7 @@ namespace Util
 
       /*
       * Note: This friend declaration allows the Factory::readObject() 
-      * method to set the Factory paramCommunicator to be that of the 
+      * method to set the Factory ioCommunicator to be that of the 
       * parent ParamComposite. 
       */
       #endif

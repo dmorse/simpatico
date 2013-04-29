@@ -60,7 +60,7 @@ public:
       A*          ptr;
       bool        isEnd;
 
-      manager.setParamCommunicator(communicator());
+      manager.setIoCommunicator(communicator());
 
       std::ifstream in("in/Factory");
       ptr = factory.readObject(in, manager, className, isEnd);
@@ -81,7 +81,7 @@ public:
       printMethod(TEST_FUNC);
       AManager       manager;
       CustomAFactory factory;
-      manager.setParamCommunicator(communicator());
+      manager.setIoCommunicator(communicator());
       manager.addSubfactory(factory);
 
       std::ifstream in;

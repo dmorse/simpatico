@@ -282,6 +282,24 @@ namespace DdMd
       */
       void readPairListParam(std::istream& in);
 
+      #if 0
+      /**
+      * Load parameters for PairList from archive, and allocate memory.
+      *
+      * Use iff this was instantiated with PairPotential(Simulation&).
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadPairListParam(Serializable::IArchive &ar);
+
+      /**
+      * Save parameters for PairList to output archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void savePairListParam(Serializable::OArchive &ar);
+      #endif
+  
       /**
       * Get the PairList by const reference.
       */
@@ -326,6 +344,11 @@ namespace DdMd
       int nPairList(double cutoffSq);
       int nPairCell(double cutoffSq);
       int nPairNSq(double cutoffSq);
+
+      /*
+      * Allocate memory for the cell list and pair list.
+      */
+      void allocate();
 
    };
 

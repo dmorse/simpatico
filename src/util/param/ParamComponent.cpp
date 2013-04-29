@@ -21,16 +21,16 @@ namespace Util
    * Note: Default constructor for _indent string creates an empty string.
    */
    ParamComponent::ParamComponent() 
-    : indent_(),
-      io_()
+    : MpiFileIo(),
+      indent_()
    {}
 
    /*
    * Copy constructor.
    */
    ParamComponent::ParamComponent(const ParamComponent& other) 
-    : indent_(other.indent_),
-      io_()
+    : MpiFileIo(other),
+      indent_(other.indent_)
    {}
 
    /*
@@ -56,11 +56,6 @@ namespace Util
          indent_ += space; 
       }
    }
-
-   #ifdef UTIL_MPI
-   void ParamComponent::setParamCommunicator(MPI::Intracomm& communicator)
-   {  io_.setCommunicator(communicator); }
-   #endif
 
    // Static functions
 

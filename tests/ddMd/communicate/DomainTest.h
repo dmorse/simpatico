@@ -36,7 +36,7 @@ public:
    {
       #ifdef UTIL_MPI  
       domain_.setGridCommunicator(communicator()); 
-      domain_.setParamCommunicator(communicator()); 
+      domain_.setIoCommunicator(communicator()); 
       #endif
    }
 

@@ -62,12 +62,13 @@
 * are defined for these three functions, or (ii) an associated MpiTraits 
 * class and MPI data type are defined.
 *
-* Overloaded forms of send<T>, recv<T>, and bcast<T> are provided 
-* to transmit entire C arrays of data and DArray<T> containers. These
-* functions send the data in one transmission, as a contiguous buffer, 
-* if an MPI type is available, but send each element in a separate 
-* transmission if no MpiType exists but an explicit specialization 
-* exists for the required scalar form of send, recv, or bcast.
+* Overloaded forms of send<T>, recv<T>, and bcast<T> are provided to
+* transmit 1D and 2D C arrays of data and DArray<T> and DMatrix<T> 
+* containers. These functions send the data in one transmission, as 
+* a contiguous buffer, if an MPI type is available, but send each 
+* element in a separate transmission if no MpiType exists but an 
+* explicit specialization exists for the required scalar form of 
+* send, recv, or bcast.
 */
 
 #include <util/global.h>
@@ -221,22 +222,30 @@ namespace Util
    /**
    * Send a DArray<T> container.
    *
-   * Throws an exception if their exists neither an associated MPI
-   * data type nor an explicit specialization of the scalar send<T>.
+   * Throws an exception if their exists neither an associated MPI data 
+   * type nor an explicit specialization of the scalar send<T> method.
    *
    * \param comm   MPI communicator
-   * \param array  address of first element in array
-   * \param count  number of elements in array
+   * \param array  DArray object
+   * \param count  logical number of elements in array
    * \param dest   MPI rank of destination (receiving) processor in comm
    * \param tag    user-defined integer identifier for this message
    */
    template <typename T>
    void send(MPI::Comm& comm, DArray<T>& array, int count, int dest, int tag)
    {  
+      // Preconditions
+      if (!(array.isAllocated())) {
+         UTIL_THROW("Cannot read unallocated DArray");
+      }
+      if (count > array.capacity()) {
+         UTIL_THROW("Error: Logical size count > DArray capacity");
+      }
+
       if (MpiTraits<T>::hasType) {
          comm.Send(&array[0], count, MpiTraits<T>::type, dest, tag); 
       } else {
-         // try send<T> by element, in case of explicit specialization.
+         // Try send<T> by element, in case of explicit specialization.
          // If there is no specialization or type, send<T> throws.
          for (int i = 0; i < count; ++i) {
             send<T>(comm, array[i], dest, tag); 
@@ -247,22 +256,30 @@ namespace Util
    /**
    * Receive a DArray<T> container.
    *
-   * Throws an exception if their exists neither an associated MPI
-   * data type nor an explicit specialization of the scalar recv<T>.
+   * Throws an exception if their exists neither an associated MPI data
+   * type nor an explicit specialization of the scalar recv<T> method.
    *
    * \param comm   MPI communicator
-   * \param array  address of first element in array
-   * \param count  number of elements in array
+   * \param array  DArray object
+   * \param count  logical number of elements in array
    * \param source MPI rank of source (sending) processor in comm
    * \param tag    user-defined integer identifier for this message
    */
    template <typename T>
    void recv(MPI::Comm& comm, DArray<T>& array, int count, int source, int tag)
    {  
+      // Preconditions
+      if (!(array.isAllocated())) {
+         UTIL_THROW("Cannot read unallocated DArray");
+      }
+      if (count > array.capacity()) {
+         UTIL_THROW("Error: Logical size count > DArray capacity");
+      }
+
       if (MpiTraits<T>::hasType) {
          comm.Recv(&array[0], count, MpiTraits<T>::type, source, tag); 
       } else {
-         // try recv<T> by element, in case of explicit specialization.
+         // Try recv<T> by element, in case of explicit specialization.
          // If there is no specialization or type, recv<T> throws.
          for (int i = 0; i < count; ++i) {
             recv<T>(comm, array[i], source, tag); 
@@ -284,6 +301,14 @@ namespace Util
    template <typename T>
    void bcast(MPI::Intracomm& comm, DArray<T>& array, int count, int root)
    {  
+      // Preconditions
+      if (!(array.isAllocated())) {
+         UTIL_THROW("Cannot read unallocated DArray");
+      }
+      if (count > array.capacity()) {
+         UTIL_THROW("Error: Logical size count > DArray capacity");
+      }
+
       if (MpiTraits<T>::hasType) {
          comm.Bcast(&array[0], count, MpiTraits<T>::type, root); 
       } else {
@@ -303,18 +328,32 @@ namespace Util
    * Throws an exception if their exists neither an associated MPI
    * data type nor an explicit specialization of the scalar send<T>.
    *
-   * \param comm   MPI communicator
-   * \param matrix address of first element in matrix
-   * \param m      number of rows in matrix
-   * \param n      number of columns in matrix
-   * \param dest   MPI rank of destination (receiving) processor in comm
-   * \param tag    user-defined integer identifier for this message
+   * \param comm    MPI communicator
+   * \param matrix  DMatrix object to send
+   * \param m       logical number of rows in matrix
+   * \param n       logical number of columns in matrix
+   * \param dest    MPI rank of destination (receiving) processor in comm
+   * \param tag     user-defined integer identifier for this message
    */
    template <typename T>
    void send(MPI::Comm& comm, DMatrix<T>& matrix, int m, int n, int dest, int tag)
    {  
+      // Preconditions
+      if (!(matrix.isAllocated())) {
+         UTIL_THROW("Cannot read unallocated DMatrix");
+      }
+      if (m > matrix.capacity1()) {
+         UTIL_THROW("Error: Logical size m > DMatrix<T>::capacity1()");
+      }
+      if (n > matrix.capacity2()) {
+         UTIL_THROW("Error: Logical size n > DMatrix<T>::capacity2()");
+      }
+
       if (MpiTraits<T>::hasType) {
-         comm.Send(&matrix(0, 0), m*n, MpiTraits<T>::type, dest, tag); 
+         int mp = matrix.capacity1();
+         int np = matrix.capacity2();
+         comm.Send(&matrix(0, 0), mp*np, MpiTraits<T>::type, dest, tag); 
+         // Note: This method sends the entire physical memory block.
       } else {
          // try send<T> by element, in case of explicit specialization.
          // If there is no specialization or type, send<T> throws.
@@ -333,19 +372,33 @@ namespace Util
    * Throws an exception if their exists neither an associated MPI
    * data type nor an explicit specialization of the scalar recv<T>.
    *
-   * \param comm   MPI communicator
-   * \param matrix  address of first element in matrix
-   * \param m      number of rows in matrix
-   * \param n      number of columns in matrix
-   * \param source MPI rank of source (sending) processor in comm
-   * \param tag    user-defined integer identifier for this message
+   * \param comm    MPI communicator
+   * \param matrix  DMatrix object to receive
+   * \param m       logical number of rows in matrix
+   * \param n       logical number of columns in matrix
+   * \param source  MPI rank of source (sending) processor in comm
+   * \param tag     user-defined integer identifier for this message
    */
    template <typename T>
    void recv(MPI::Comm& comm, DMatrix<T>& matrix, int m, int n, 
              int source, int tag)
    {  
+      // Preconditions
+      if (!(matrix.isAllocated())) {
+         UTIL_THROW("Cannot recv unallocated DMatrix");
+      }
+      if (m > matrix.capacity1()) {
+         UTIL_THROW("Error: Logical size m > DMatrix<T>::capacity1()");
+      }
+      if (n > matrix.capacity2()) {
+         UTIL_THROW("Error: Logical size n > DMatrix<T>::capacity2()");
+      }
+
       if (MpiTraits<T>::hasType) {
-         comm.Recv(&matrix(0, 0), m*n, MpiTraits<T>::type, source, tag); 
+         int mp = matrix.capacity1();
+         int np = matrix.capacity2();
+         comm.Recv(&matrix(0, 0), mp*np, MpiTraits<T>::type, source, tag); 
+         // Note: This method receives the entire physical memory block.
       } else {
          // try recv<T> by element, in case of explicit specialization.
          // If there is no specialization or type, recv<T> throws.
@@ -365,18 +418,32 @@ namespace Util
    * data type nor an explicit specialization of the scalar bcast<T>.
    *
    * \param comm    MPI communicator
-   * \param matrix  address of first element in matrix
-   * \param m       number of rows in matrix
-   * \param n       number of columns in matrix
+   * \param matrix  DMatrix object
+   * \param m       logical number of rows in matrix
+   * \param n       logical number of columns in matrix
    * \param root    MPI rank of root (sending) processor in comm
    */
    template <typename T>
    void bcast(MPI::Intracomm& comm, DMatrix<T>& matrix, int m, int n, int root)
    {  
+      // Preconditions
+      if (!(matrix.isAllocated())) {
+         UTIL_THROW("Cannot bcast unallocated DMatrix");
+      }
+      if (m > matrix.capacity1()) {
+         UTIL_THROW("Error: Logical size m > DMatrix<T>::capacity1()");
+      }
+      if (n > matrix.capacity2()) {
+         UTIL_THROW("Error: Logical size n > DMatrix<T>::capacity2()");
+      }
+
       if (MpiTraits<T>::hasType) {
-         comm.Bcast(&matrix(0, 0), m*n, MpiTraits<T>::type, root); 
+         int mp = matrix.capacity1();
+         int np = matrix.capacity2();
+         comm.Bcast(&matrix(0, 0), mp*np, MpiTraits<T>::type, root); 
+         // Note: This method receives the entire physical memory block.
       } else {
-         // try bcast<T> by element, in case of explicit specialization.
+         // Try bcast<T> by element, in case of explicit specialization.
          // If there is no specialization or type, bcast<T> throws.
          int i, j;
          for (i = 0; i < m; ++i) {

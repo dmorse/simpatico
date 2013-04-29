@@ -52,9 +52,12 @@ MCMD_SUFFIX:=
 #
 
 # Enable free energy perturbation (_f for "free energy")
+ifdef UTIL_MPI
 ifdef MCMD_PERTURB
 MCMD_DEFS+= -DMCMD_PERTURB
-MCMD_SUFFIX:=$(MCMD_SUFFIX)_f
+else
+MCMD_SUFFIX:=$(MCMD_SUFFIX)_nf
+endif
 endif
 
 # Enable Link (mutable bond) potentials

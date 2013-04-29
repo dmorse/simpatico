@@ -140,12 +140,12 @@ namespace Util
       *
       * \param communicator MPI Intra-communicator to use for input
       */
-      void setParamCommunicator(MPI::Intracomm& communicator);
+      void setIoCommunicator(MPI::Intracomm& communicator);
 
       /**
       * Does this factory have a param communicator?
       */
-      bool hasParamCommunicator() const;
+      bool hasIoCommunicator() const;
       #endif
 
    private:
@@ -178,14 +178,14 @@ namespace Util
    * Set the param communicator.
    */
    template <typename Data>
-   void Factory<Data>::setParamCommunicator(MPI::Intracomm& communicator)
+   void Factory<Data>::setIoCommunicator(MPI::Intracomm& communicator)
    {
-      if (paramFileIo_.hasCommunicator()) {
-         if (&paramFileIo_.communicator() != &communicator) {
+      if (paramFileIo_.hasIoCommunicator()) {
+         if (&paramFileIo_.ioCommunicator() != &communicator) {
             UTIL_THROW("Attempt to modify Factory param communicator");
          }
       } else {
-         paramFileIo_.setCommunicator(communicator);
+         paramFileIo_.setIoCommunicator(communicator);
       }
    }
 
@@ -193,8 +193,8 @@ namespace Util
    * Does thus factory have a param communicator?
    */
    template <typename Data>
-   bool Factory<Data>::hasParamCommunicator() const
-   {  return paramFileIo_.hasCommunicator(); }
+   bool Factory<Data>::hasIoCommunicator() const
+   {  return paramFileIo_.hasIoCommunicator(); }
    #endif
 
    /*
@@ -220,9 +220,9 @@ namespace Util
       bool         hasData = false; // initialized to avoid compiler warning
 
       #ifdef UTIL_MPI
-      // Set paramCommunicator to that of parent, if any.
-      if (parent.hasParamCommunicator()) {
-         setParamCommunicator(parent.paramCommunicator());
+      // Set ioCommunicator to that of parent, if any.
+      if (parent.hasIoCommunicator()) {
+         setIoCommunicator(parent.ioCommunicator());
       }
       #endif
 
@@ -232,8 +232,8 @@ namespace Util
       }
       #ifdef UTIL_MPI
       // Broadcast the full string to all processors.
-      if (paramFileIo_.hasCommunicator()) {
-         bcast<std::string>(paramFileIo_.communicator(), commentString, 0);
+      if (paramFileIo_.hasIoCommunicator()) {
+         bcast<std::string>(paramFileIo_.ioCommunicator(), commentString, 0);
       }
       // Hereafter, each processor independently processes the same string.
       #endif
@@ -304,9 +304,9 @@ namespace Util
                                    std::string& className)
    {
       #ifdef UTIL_MPI
-      // Set paramCommunicator to that of parent, if any.
-      if (parent.hasParamCommunicator()) {
-         setParamCommunicator(parent.paramCommunicator());
+      // Set ioCommunicator to that of parent, if any.
+      if (parent.hasIoCommunicator()) {
+         setIoCommunicator(parent.ioCommunicator());
       }
       #endif
 
@@ -317,8 +317,8 @@ namespace Util
 
       #ifdef UTIL_MPI
       // Broadcast the full string to all processors.
-      if (paramFileIo_.hasCommunicator()) {
-         bcast<std::string>(paramFileIo_.communicator(), className, 0);
+      if (paramFileIo_.hasIoCommunicator()) {
+         bcast<std::string>(paramFileIo_.ioCommunicator(), className, 0);
       }
       #endif
 
