@@ -269,6 +269,11 @@ namespace McMd
       loadParamComposite(ar, system());
       loadParamComposite(ar, *mcMoveManagerPtr_);
       loadParamComposite(ar, diagnosticManager());
+      loadParameter<int>(ar, "saveInterval", saveInterval_);
+      if (saveInterval_ > 0) {
+         loadParameter<std::string>(ar, "saveFileName", saveFileName_);
+      }
+
       system().loadConfig(ar);
       ar >> iStep_;
       isValid();
@@ -284,6 +289,11 @@ namespace McMd
       system().saveParameters(ar);
       mcMoveManagerPtr_->save(ar);
       diagnosticManager().save(ar);
+      ar << saveInterval_;
+      if (saveInterval_ > 0) {
+         ar << saveFileName_;
+      }
+
       system().saveConfig(ar);
       ar << iStep_;
    }

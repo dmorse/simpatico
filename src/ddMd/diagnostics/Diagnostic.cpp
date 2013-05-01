@@ -72,10 +72,59 @@ namespace DdMd
    }
 
    /*
+   * Load parameter interval from input archive.
+   */
+   void Diagnostic::loadInterval(Serializable::IArchive &ar)
+   {
+      // Check that baseInterval has a nonzero, positive value
+      if (baseInterval == 0) {
+         UTIL_THROW("baseInterval == 0");
+      }
+      if (baseInterval < 0) {
+         UTIL_THROW("baseInterval < 0");
+      }
+
+      loadParameter<long>(ar, "interval", interval_);
+
+      // Check that interval has a nonzero, positive value
+      if (interval_ == 0) {
+         UTIL_THROW("interval_ == 0");
+      }
+      if (interval_ < 0) {
+         UTIL_THROW("interval_ < 0");
+      }
+
+      // Check that interval is a multiple of baseInterval
+      if (interval_ % baseInterval != 0) {
+         UTIL_THROW("interval is not a multiple of baseInterval");
+      }
+   }
+
+   /*
+   * Save interval parameter to an archive.
+   */
+   void Diagnostic::saveInterval(Serializable::OArchive &ar)
+   {  ar << interval_; }
+
+   /*
    * Read output file name and open output file.
    */
    void Diagnostic::readOutputFileName(std::istream &in)
    {  read<std::string>(in, "outputFileName", outputFileName_); }
+
+   /*
+   * Load output file name to an archive.
+   */
+   void Diagnostic::loadOutputFileName(Serializable::IArchive &ar)
+   {
+      loadParameter<std::string>(ar, "outputFileName", outputFileName_);
+   }
+
+   /*
+   * Save output file name to an archive.
+   */
+   void Diagnostic::saveOutputFileName(Serializable::OArchive &ar)
+   {  ar << outputFileName_; }
 
    /*
    * Get the outputFileName string with an added suffix

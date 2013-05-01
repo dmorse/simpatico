@@ -653,7 +653,7 @@ namespace DdMd
       }
 
       loadParamComposite(ar, random_);
-      //loadParamComposite(ar, *diagnosticManagerPtr_);
+      loadParamComposite(ar, *diagnosticManagerPtr_);
 
       // Finished loading data from archive. Finish initialization:
 
@@ -798,7 +798,7 @@ namespace DdMd
       integrator().save(ar);
 
       random_.save(ar);
-      //diagnosticManagerPtr_->save(ar);
+      diagnosticManagerPtr_->save(ar);
    }
 
    /*
