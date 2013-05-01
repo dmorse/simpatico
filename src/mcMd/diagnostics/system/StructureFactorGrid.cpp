@@ -198,8 +198,11 @@ namespace McMd
       Diagnostic::loadParameters(ar);
       ar & nAtomType_;
       loadParameter<int>(ar, "nMode", nMode_);
+      modes_.allocate(nMode_, nAtomType_);
       loadDMatrix<double>(ar, "modes", modes_, nMode_, nAtomType_);
       ar & nWave_;
+      waveIntVectors_.allocate(nWave_);
+      structureFactors_.allocate(nWave_, nMode_);
       ar & waveIntVectors_;
       ar & structureFactors_;
       ar & nSample_;
@@ -208,6 +211,8 @@ namespace McMd
       loadParameter<int>(ar, "hMax", hMax_);
       loadParameter<Util::LatticeSystem>(ar, "lattice", lattice_);
       ar & nStar_;
+      starIds_.allocate(nStar_);
+      starSizes_.allocate(nStar_);
       ar & starIds_;
       ar & starSizes_;
 

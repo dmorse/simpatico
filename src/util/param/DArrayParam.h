@@ -153,7 +153,7 @@ namespace Util
    {
       // Preconditions
       if (!(arrayPtr_->isAllocated())) {
-         UTIL_THROW("Cannot write unallocated DArray");
+         UTIL_THROW("Cannot load unallocated DArray");
       }
       if (arrayPtr_->capacity() < n_) {
          UTIL_THROW("Error: DArray capacity < n in writeParam");
