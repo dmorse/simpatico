@@ -24,8 +24,9 @@
 #ifdef INTER_EXTERNAL
 #include <ddMd/potentials/external/ExternalPotential.h>
 #endif
-#include <util/ensembles/BoundaryEnsemble.h>
 
+#include <util/ensembles/BoundaryEnsemble.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
 #include <util/format/Bool.h>
@@ -87,8 +88,10 @@ namespace DdMd
          }
          loadParameter<std::string>(ar, "saveFileName", saveFileName_);
       }
-      ar >> iStep_;
-      ar >> isSetup_;
+
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(iStep_);
+      loader.load(isSetup_);
    }
 
    /*

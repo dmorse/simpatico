@@ -1036,14 +1036,15 @@ namespace DdMd
          if (isRestarting_) {
 
             if (command == "RESTART") {
-               int endStep;
-               inBuffer >> endStep;
+               int nStep;
+               inBuffer >> nStep;
                if (isIoProcessor()) {
-                  int iStep = integrator().iStep();
+                  int iStep   = integrator().iStep();
+                  int endStep = iStep + nStep;
                   Log::file() << "Running from  iStep =" << iStep << " to "
                               << endStep << std::endl;
                }
-               integrator().run(endStep);
+               integrator().run(nStep);
                isRestarting_ = false;
             } else
             if (command == "FINISH") {

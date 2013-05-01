@@ -147,13 +147,11 @@ namespace DdMd
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
             ar >> r;
-            std::cout << r;
             if (UTIL_ORTHOGONAL) {
                atomPtr->position() = r;
             } else {
                boundary().transformCartToGen(r, atomPtr->position());
             }
-            std::cout << "   " << atomPtr->position() << std::endl;
             ar >> atomPtr->velocity();
 
             // Add atom to list for sending.

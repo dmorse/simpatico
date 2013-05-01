@@ -14,11 +14,12 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
-#include <util/space/Vector.h>
-#include <util/global.h>
 #include <util/ensembles/EnergyEnsemble.h>
 #include <util/ensembles/BoundaryEnsemble.h>
+#include <util/mpi/MpiLoader.h>
+#include <util/space/Vector.h>
 #include <util/format/Dbl.h>
+#include <util/global.h>
 
 #include <iostream>
 
@@ -69,6 +70,11 @@ namespace DdMd
       loadParameter<LatticeSystem>(ar, "mode", mode_);
       Integrator::loadParameters(ar);
 
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(xi_);
+      loader.load(eta_);
+      loader.load(nu_);
+
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
@@ -85,6 +91,9 @@ namespace DdMd
       ar << tauP_;
       ar << mode_;
       Integrator::save(ar);
+      ar << xi_;
+      ar << eta_;
+      ar << nu_;
    }
 
    /*
@@ -183,9 +192,9 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
-      bcast(domain().communicator(), xi_,0);
-      bcast(domain().communicator(), xi_prime,0);
-      bcast(domain().communicator(), nu_,0);
+      bcast(domain().communicator(), xi_, 0);
+      bcast(domain().communicator(), xi_prime, 0);
+      bcast(domain().communicator(), nu_, 0);
       #endif
 
       // Precompute loop invariant quantities

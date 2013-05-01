@@ -15,10 +15,11 @@
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/space/Vector.h>
-#include <util/global.h>
 #include <util/ensembles/EnergyEnsemble.h>
 #include <util/ensembles/BoundaryEnsemble.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/format/Dbl.h>
+#include <util/global.h>
 
 #include <iostream>
 
@@ -65,7 +66,9 @@ namespace DdMd
       loadParameter<double>(ar, "W", W_);
       loadParameter<LatticeSystem>(ar, "mode", mode_);
       Integrator::loadParameters(ar);
-      ar >> nu_;
+
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nu_);
 
       // Allocate memory
       int nAtomType = simulation().nAtomType();

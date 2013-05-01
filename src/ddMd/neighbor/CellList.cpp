@@ -23,6 +23,10 @@ namespace DdMd
    */
    CellList::CellList()
     : nAtom_(0),
+      nReject_(0),
+      #ifdef UTIL_DEBUG
+      maxNAtomCell_(0),
+      #endif
       isBuilt_(false)
    {
       for (int i = 0; i < Dimension; ++i) {
@@ -210,15 +214,8 @@ namespace DdMd
 
       nAtom_ = 0;
       nReject_ = 0;
-
-      #if 0
-      // Clear all CellTag objects
-      if (tags_.capacity() > 0) {
-         for (i = 0; i < tags_.capacity(); ++i) {
-            tags_[i].handle   =  0;
-            tags_[i].cellRank = -1;
-         }
-      }
+      #ifdef UTIL_DEBUG
+      maxNAtomCell_ = 0;
       #endif
 
       isBuilt_ = false;
@@ -242,6 +239,18 @@ namespace DdMd
          cells_[tags_[i].cellRank].append(tags_[i].handle);
       }
 
+      #ifdef UTIL_DEBUG
+      // Calculate maxNAtomCell_
+      int nAtomCell;
+      maxNAtomCell_ = 0;
+      for (int i = 0; i < grid_.size(); ++i) {
+         nAtomCell = cells_[i].nAtom();
+         if (nAtomCell > maxNAtomCell_) {
+            maxNAtomCell_ = nAtomCell;
+         }
+      }
+      #endif
+
       isBuilt_ = true;
    }
 
@@ -256,6 +265,14 @@ namespace DdMd
    */
    int CellList::nReject() const
    {  return nReject_; }
+
+   #ifdef UTIL_DEBUG
+   /*
+   * Get number of atoms that were rejected (not added to cells).
+   */
+   int CellList::maxNAtomCell() const
+   {  return maxNAtomCell_; }
+   #endif
 
    /*
    * Get the maximum number of atoms for which space is allocated.

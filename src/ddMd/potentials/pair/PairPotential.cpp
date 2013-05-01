@@ -17,6 +17,7 @@
 #include <ddMd/neighbor/PairList.h>
 #include <ddMd/neighbor/CellList.h>
 #include <ddMd/communicate/Domain.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/space/Vector.h>
 #include <util/global.h>
 
@@ -94,7 +95,6 @@ namespace DdMd
       read<int>(in, "pairCapacity", pairCapacity_);
       read<Boundary>(in, "maxBoundary", maxBoundary_);
       cutoff_ = maxPairCutoff() + skin_;
-
       allocate();
    }
 
@@ -103,13 +103,14 @@ namespace DdMd
    */
    void PairPotential::loadParameters(Serializable::IArchive& ar)
    {
+  
       loadParameter<double>(ar, "skin", skin_);
       loadParameter<int>(ar, "pairCapacity", pairCapacity_);
       loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
-      ar & cutoff_;
-      //cutoff_ = maxPairCutoff() + skin_;
-      ar & methodId_;
 
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(cutoff_);
+      loader.load(methodId_);
       allocate();
    }
 
@@ -118,11 +119,11 @@ namespace DdMd
    */
    void PairPotential::save(Serializable::OArchive& ar)
    {
-      ar & skin_;
-      ar & pairCapacity_;
-      ar & maxBoundary_;
-      ar & cutoff_;
-      ar & methodId_;
+      ar << skin_;
+      ar << pairCapacity_;
+      ar << maxBoundary_;
+      ar << cutoff_;
+      ar << methodId_;
    }
 
    /*
@@ -191,7 +192,7 @@ namespace DdMd
       }
       cellList_.makeGrid(lower, upper, cutoffs);
       cellList_.clear();
-     
+
       // Add all atoms to the cell list. 
       AtomIterator atomIter;
       storage().begin(atomIter);
@@ -208,7 +209,7 @@ namespace DdMd
 
       // Finalize cell list
       cellList_.build();
-
+     
       // Postconditions
       assert(cellList_.isValid());
       assert(cellList_.nAtom() + cellList_.nReject() 
