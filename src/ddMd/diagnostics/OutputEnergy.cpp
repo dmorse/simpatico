@@ -54,6 +54,8 @@ namespace DdMd
    {
       loadInterval(ar);
       loadOutputFileName(ar);
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nSample_);
       isInitialized_ = true;
    }
 
@@ -64,6 +66,7 @@ namespace DdMd
    {
       saveInterval(ar);
       saveOutputFileName(ar);
+      ar << nSample_;
    }
 
   

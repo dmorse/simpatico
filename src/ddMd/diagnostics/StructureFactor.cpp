@@ -39,24 +39,20 @@ namespace DdMd
    /// Read parameters from file, and allocate data array.
    void StructureFactor::readParameters(std::istream& in) 
    {
-
-      // Read interval and parameters for AutoCorrArray
-      readInterval(in);
-      readOutputFileName(in);
-
       nAtomType_ = simulation().nAtomType();
 
+      readInterval(in);
+      readOutputFileName(in);
       read<int>(in, "nMode", nMode_);
       modes_.allocate(nMode_, nAtomType_);
       readDMatrix<double>(in, "modes", modes_, nMode_, nAtomType_);
-
       read<int>(in, "nWave", nWave_);
       waveIntVectors_.allocate(nWave_);
       readDArray<IntVector>(in, "waveIntVectors", waveIntVectors_, nWave_);
-
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
       totalFourierModes_.allocate(nWave_, nMode_);
+
       structureFactors_.allocate(nWave_, nMode_);
       
       if (simulation().domain().isMaster()) {
@@ -78,39 +74,36 @@ namespace DdMd
    */
    void StructureFactor::loadParameters(Serializable::IArchive &ar)
    {
-      // Read interval and parameters for AutoCorrArray
       loadInterval(ar);
       loadOutputFileName(ar);
-
       nAtomType_ = simulation().nAtomType();
-
       loadParameter<int>(ar, "nMode", nMode_);
       modes_.allocate(nMode_, nAtomType_);
       loadDMatrix<double>(ar, "modes", modes_, nMode_, nAtomType_);
-
       loadParameter<int>(ar, "nWave", nWave_);
       waveIntVectors_.allocate(nWave_);
       loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
 
-      structureFactors_.allocate(nWave_, nMode_);
       MpiLoader<Serializable::IArchive> loader(*this, ar);
+      structureFactors_.allocate(nWave_, nMode_);
       loader.load(structureFactors_);
+      loader.load(nSample_);
 
-      // Allocate work space
-      waveVectors_.allocate(nWave_);
-      fourierModes_.allocate(nWave_, nMode_);
-      totalFourierModes_.allocate(nWave_, nMode_);
-      
       if (simulation().domain().isMaster()) {
          maximumValue_.allocate(nMode_);
          maximumWaveIntVector_.allocate(nMode_);
          maximumQ_.allocate(nMode_);
          for (int j = 0; j < nMode_; ++j) {
-            maximumValue_[j].reserve(Samples);
-            maximumWaveIntVector_[j].reserve(Samples);
-            maximumQ_[j].reserve(Samples);
+            ar >> maximumValue_[j];
+            ar >> maximumWaveIntVector_[j];
+            ar >> maximumQ_[j];
          }
       }
+
+      // Allocate work space
+      waveVectors_.allocate(nWave_);
+      fourierModes_.allocate(nWave_, nMode_);
+      totalFourierModes_.allocate(nWave_, nMode_);
 
       isInitialized_ = true;
    }
@@ -122,12 +115,19 @@ namespace DdMd
    {
       saveInterval(ar);
       saveOutputFileName(ar);
-
       ar << nMode_;
       ar << modes_;
       ar << nWave_;
       ar << waveIntVectors_;
+
       ar << structureFactors_;
+      ar << nSample_;
+
+      for (int j = 0; j < nMode_; ++j) {
+         ar << maximumValue_[j];
+         ar << maximumWaveIntVector_[j];
+         ar << maximumQ_[j];
+      }
    }
   
    /*
@@ -141,18 +141,27 @@ namespace DdMd
       assert (nWave_ > 0);
       assert (nMode_ > 0);
 
-      // Clear accumulators
+      // Clear accumulators on all processors
       int i, j;
       for (i = 0; i < nWave_; ++i) {
          for (j = 0; j < nMode_; ++j) {
             structureFactors_(i, j) = 0.0;
          }
       }
-
       nSample_ = 0;
+
+      if (simulation().domain().isMaster()) {
+         for (int j = 0; j < nMode_; ++j) {
+            maximumValue_[j].clear();
+            maximumWaveIntVector_[j].clear();
+            maximumQ_[j].clear();
+         }
+      }
    }
- 
-   /// Increment Structure Factor
+
+   /*
+   * Increment structure factor.
+   */
    void StructureFactor::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
@@ -199,8 +208,9 @@ namespace DdMd
          for (int i = 0; i < nWave_; ++i) {
             for (int j = 0; j < nMode_; ++j) {
             //Sum values from all processors.
-            simulation().domain().communicator().Reduce(&fourierModes_(i, j), &totalFourierModes_(i, j), 1,
-                                                         MPI::DOUBLE_COMPLEX, MPI::SUM, 0);
+            simulation().domain().communicator().
+                         Reduce(&fourierModes_(i, j), &totalFourierModes_(i, j),
+                                1, MPI::DOUBLE_COMPLEX, MPI::SUM, 0);
             }
          }
          #else
@@ -212,7 +222,6 @@ namespace DdMd
          #endif
 
          if (simulation().domain().isMaster()) {
-
             // Increment structure factors
             double volume = simulation().boundary().volume();
             double norm;
@@ -230,10 +239,10 @@ namespace DdMd
                   structureFactors_(i, j) += norm/volume;
                }
                maximumValue_[j].insert(maximumValue_[j].end(), 1, maxValue);
-               maximumWaveIntVector_[j].insert(maximumWaveIntVector_[j].end(), 1, maxIntVector);
+               maximumWaveIntVector_[j].insert(maximumWaveIntVector_[j].end(), 
+                                               1, maxIntVector);
                maximumQ_[j].insert(maximumQ_[j].end(), 1, maxQ);
             }
-
          }
 
          ++nSample_;
@@ -268,12 +277,14 @@ namespace DdMd
    {
       if (simulation().domain().isMaster()) {
          // Echo parameters to a  log file 
-         simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
+         simulation().fileMaster().openOutputFile(outputFileName(".prm"), 
+                                                  outputFile_);
          writeParam(outputFile_);
          outputFile_.close();
 
          // Output structure factors to one file
-         simulation().fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+         simulation().fileMaster().openOutputFile(outputFileName(".dat"), 
+                                                  outputFile_);
          double      value;
          int         i, j, k;
          for (i = 0; i < nWave_; ++i) {
@@ -290,7 +301,8 @@ namespace DdMd
          outputFile_.close();
 
          // Output maximum structure factors to one file
-         simulation().fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_);
+         simulation().fileMaster().openOutputFile(outputFileName("_max.dat"), 
+                                                  outputFile_);
          for (j = 0; j < nMode_; ++j) {
             for (int i = 0; i < nSample_; ++i) {
                outputFile_ << maximumWaveIntVector_[j][i];

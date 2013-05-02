@@ -23,7 +23,9 @@ namespace DdMd
 
    using namespace Util;
 
-   /// Constructor.
+   /*
+   * Constructor.
+   */
    StructureFactorGrid::StructureFactorGrid(Simulation& simulation) 
     : StructureFactor(simulation),
       hMax_(0),
@@ -31,10 +33,11 @@ namespace DdMd
       lattice_(Triclinic)
    {}
 
-   /// Read parameters from file, and allocate data array.
+   /*
+   * Read parameters from file, and allocate data array.
+   */
    void StructureFactorGrid::readParameters(std::istream& in) 
    {
-
       nAtomType_ = simulation().nAtomType();
 
       // Read parameters
@@ -180,6 +183,82 @@ namespace DdMd
       nSample_ = 0;
 
       isInitialized_ = true;
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void StructureFactorGrid::loadParameters(Serializable::IArchive &ar)
+   {
+      nAtomType_ = simulation().nAtomType();
+
+      // Load parameter file parameters
+      loadInterval(ar);
+      loadOutputFileName(ar);
+      loadParameter<int>(ar, "nMode", nMode_);
+      modes_.allocate(nMode_, nAtomType_);
+      loadDMatrix<double>(ar, "modes", modes_, nMode_, nAtomType_);
+      loadParameter<int>(ar, "hMax", hMax_);
+      loadParameter<Util::LatticeSystem>(ar, "lattice", lattice_);
+
+      // Load and broadcast other distributed members
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nWave_);
+      waveIntVectors_.allocate(nWave_);
+      loader.load(waveIntVectors_);
+      structureFactors_.allocate(nWave_, nMode_);
+      loader.load(structureFactors_);
+      loader.load(nStar_);
+      starIds_.allocate(nStar_);
+      loader.load(starIds_);
+      starSizes_.allocate(nStar_);
+      loader.load(starSizes_);
+      loader.load(nSample_);
+
+      if (simulation().domain().isMaster()) {
+         maximumValue_.allocate(nMode_);
+         maximumWaveIntVector_.allocate(nMode_);
+         maximumQ_.allocate(nMode_);
+         for (int j = 0; j < nMode_; ++j) {
+            ar >> maximumValue_[j];
+            ar >> maximumWaveIntVector_[j];
+            ar >> maximumQ_[j];
+         }
+      }
+
+      // Allocate work space
+      waveVectors_.allocate(nWave_);
+      fourierModes_.allocate(nWave_, nMode_);
+      totalFourierModes_.allocate(nWave_, nMode_);
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void StructureFactorGrid::save(Serializable::OArchive &ar)
+   {
+      saveInterval(ar);
+      saveOutputFileName(ar);
+      ar << nMode_;
+      ar << modes_;
+      ar << hMax_;
+      ar << lattice_;
+
+      ar << nWave_;
+      ar << waveIntVectors_;
+      ar << structureFactors_;
+      ar << nStar_;
+      ar << starIds_;
+      ar << starSizes_;
+      ar << nSample_;
+
+      for (int j = 0; j < nMode_; ++j) {
+         ar << maximumValue_[j];
+         ar << maximumWaveIntVector_[j];
+         ar << maximumQ_[j];
+      }
    }
 
    void StructureFactorGrid::output()

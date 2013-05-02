@@ -52,8 +52,13 @@ namespace DdMd
    */
    void OutputTemperature::loadParameters(Serializable::IArchive &ar)
    {
+      // Load parameter file parameters
       loadInterval(ar);
       loadOutputFileName(ar);
+
+      // Load other data
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nSample_);
 
       // Open output file
       std::string filename;
@@ -70,6 +75,7 @@ namespace DdMd
    {
       saveInterval(ar);
       saveOutputFileName(ar);
+      ar << nSample_;
    }
 
    /*
