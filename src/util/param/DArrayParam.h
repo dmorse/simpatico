@@ -27,7 +27,7 @@ namespace Util
    template <class Type>
    class DArrayParam : public Parameter
    {
-   
+
    public:
 
       /*   
@@ -70,7 +70,7 @@ namespace Util
    
       /// Logical array dimension
       int n_;
-   
+
    };
 
    /*
@@ -151,14 +151,9 @@ namespace Util
    template <class Type>
    void DArrayParam<Type>::load(Serializable::IArchive& ar)
    {
-      // Preconditions
       if (!(arrayPtr_->isAllocated())) {
-         UTIL_THROW("Cannot write unallocated DArray");
+         arrayPtr_->allocate(n_);
       }
-      if (arrayPtr_->capacity() < n_) {
-         UTIL_THROW("Error: DArray capacity < n in writeParam");
-      }
-
       if (isIoProcessor()) {
          ar >> *arrayPtr_;
          if (arrayPtr_->capacity() < n_) {
