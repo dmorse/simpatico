@@ -1,4 +1,4 @@
-/*! \page user_param_page 2.3 Parameter File
+/*! \page user_param_page 2.3 Parameter Files
 
 \ref user_usage_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_commands_page (Next) 
@@ -8,9 +8,9 @@ All of the Simpatico programs use parameter files with a heirarchical file forma
 
 Contents:
    <ul style="list-style: none;">
-   <li> \subpage user_param_syntax_page  </li>
-   <li> \subpage user_param_mcmd_page </li>
-   <li> \subpage user_param_ddmd_page </li>
+   <li> \subpage user_param_syntax_page  "2.3.1 Syntax" </li>
+   <li> \subpage user_param_mcmd_page    "2.3.2 mdSim and mcSim" </li>
+   <li> \subpage user_param_ddmd_page    "2.3.3. ddSim" </li>
    </ul>
 
 <BR>
