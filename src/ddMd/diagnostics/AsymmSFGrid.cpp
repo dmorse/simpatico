@@ -1,5 +1,5 @@
-#ifndef DDMD_STRUCTURE_FACTOR_GRID_CPP
-#define DDMD_STRUCTURE_FACTOR_GRID_CPP
+#ifndef DDMD_ASYMM_SF_GRID_CPP
+#define DDMD_ASYMM_SF_GRID_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "StructureFactorGrid.h"
+#include "AsymmSFGrid.h"
 #include <ddMd/simulation/Simulation.h>
 #include <util/crystal/PointGroup.h>
 #include <util/crystal/PointSymmetry.h>
@@ -24,15 +24,15 @@ namespace DdMd
    using namespace Util;
 
    /// Constructor.
-   StructureFactorGrid::StructureFactorGrid(Simulation& simulation) 
-    : StructureFactor(simulation),
+   AsymmSFGrid::AsymmSFGrid(Simulation& simulation) 
+    : AsymmSF(simulation),
       hMax_(0),
       nStar_(0),
       lattice_(Triclinic)
    {}
 
    /// Read parameters from file, and allocate data array.
-   void StructureFactorGrid::readParameters(std::istream& in) 
+   void AsymmSFGrid::readParameters(std::istream& in) 
    {
 
       nAtomType_ = simulation().nAtomType();
@@ -198,7 +198,7 @@ namespace DdMd
             g[0] = h;
             for (k = 0; k <= hMax_; ++k) {
                g[1] = k;
-               for (l = 0; l <= k; ++l) {
+               for (l = 0; l <= hMax_; ++l) {
                   g[2] = l;
                   starIds_[i] = j;
                   group.makeStar(g, star);
@@ -212,9 +212,13 @@ namespace DdMd
             }
          }
          if (i != nStar_) {
-            UTIL_THROW("Error");
+            std::cout << "no of stars is" << " " <<  i << std::endl;
+            std::cout << "nStar is " <<  nStar_ << std::endl;
+            //UTIL_THROW("Error");
          }
          if (j != nWave_) {
+            std::cout << "no of waves is" << " " <<  j << std::endl;
+            std::cout << "nWave is " <<  nWave_ << std::endl;
             UTIL_THROW("Error");
          }
       }
@@ -235,7 +239,7 @@ namespace DdMd
       isInitialized_ = true;
    }
 
-   void StructureFactorGrid::output()
+   void AsymmSFGrid::output()
    {
       if (simulation().domain().isMaster()) {
             
