@@ -19,11 +19,15 @@
 
 // External Potential evaluator classes
 #include <inter/external/LamellarOrderingExternal.h>
+#include <inter/external/LocalLamellarOrderingExternal.h>
 
 #include <modules/hoomd/potentials/external/HoomdLamellarOrderingExternal.h>
+#include <modules/hoomd/potentials/external/HoomdLocalLamellarOrderingExternal.h>
 
 #include <hoomd/HOOMDMath.h>
+#include <hoomd/LocalExternalParams.h>
 #include <hoomd/EvaluatorExternalPeriodic.h>
+#include <hoomd/EvaluatorLocalExternal.h>
 #include <hoomd/AllDriverPotentialExternalGPU.cuh>
 
 #include "HoomdExternalFactory.h"
@@ -47,6 +51,9 @@ namespace McMd
       ExternalPotential* ptr = 0;
       if (name == classNameHoomdLamellarOrdering) {
          ptr = new ExternalPotentialImpl<HoomdLamellarOrderingExternal> (*systemPtr_);
+      } else
+      if (name == classNameHoomdLocalLamellarOrdering) {
+         ptr = new ExternalPotentialImpl<HoomdLocalLamellarOrderingExternal> (*systemPtr_);
       }
       return ptr;
    }
@@ -64,6 +71,12 @@ namespace McMd
          ptr = dynamic_cast< HoomdExternalPotential *>(
             dynamic_cast< HoomdLamellarOrderingExternal * >(
             &(dynamic_cast< ExternalPotentialImpl< HoomdLamellarOrderingExternal > * >
+            (&potential))->interaction()));
+      } else
+      if (name == classNameHoomdLocalLamellarOrdering) {
+         ptr = dynamic_cast< HoomdExternalPotential *>(
+            dynamic_cast< HoomdLocalLamellarOrderingExternal * >(
+            &(dynamic_cast< ExternalPotentialImpl< HoomdLocalLamellarOrderingExternal > * >
             (&potential))->interaction()));
       }
       return ptr;
@@ -86,6 +99,10 @@ namespace McMd
       if (className == classNameHoomdLamellarOrdering) {
          externalSPtr = hoomdFactoryImpl<EvaluatorExternalPeriodic, gpu_compute_periodic_forces, 
                                          classNameHoomdLamellarOrdering >(ptr, system, systemDefinitionSPtr );
+      } else 
+      if (className == classNameHoomdLocalLamellarOrdering) {
+         externalSPtr = hoomdFactoryImpl<EvaluatorLocalExternal, gpu_compute_local_forces, 
+                                         classNameHoomdLocalLamellarOrdering >(ptr, system, systemDefinitionSPtr );
       } else 
          UTIL_THROW("Unsupported Hoomd potential." );
       
