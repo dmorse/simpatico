@@ -45,6 +45,32 @@ namespace DdMd
       isInitialized_ = true;
    }
 
+
+   /*
+   * Load internal state from an archive.
+   */
+   void OutputPressure::loadParameters(Serializable::IArchive &ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
+
+      std::string filename;
+      filename  = outputFileName();
+      simulation().fileMaster().openOutputFile(filename, outputFile_);
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void OutputPressure::save(Serializable::OArchive &ar)
+   {
+      saveInterval(ar);
+      saveOutputFileName(ar);
+   }
+
+  
    /*
    * Read interval and outputFileName. 
    */

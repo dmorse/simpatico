@@ -41,7 +41,6 @@ namespace DdMd
    {
 
       // Read interval and parameters for AutoCorrArray
-      //SystemDiagnostic<System>::readParameters(in);
       readInterval(in);
       readOutputFileName(in);
 
@@ -74,6 +73,63 @@ namespace DdMd
       isInitialized_ = true;
    }
 
+   /*
+   * Load internal state from an archive.
+   */
+   void StructureFactor::loadParameters(Serializable::IArchive &ar)
+   {
+      // Read interval and parameters for AutoCorrArray
+      loadInterval(ar);
+      loadOutputFileName(ar);
+
+      nAtomType_ = simulation().nAtomType();
+
+      loadParameter<int>(ar, "nMode", nMode_);
+      modes_.allocate(nMode_, nAtomType_);
+      loadDMatrix<double>(ar, "modes", modes_, nMode_, nAtomType_);
+
+      loadParameter<int>(ar, "nWave", nWave_);
+      waveIntVectors_.allocate(nWave_);
+      loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
+
+      structureFactors_.allocate(nWave_, nMode_);
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(structureFactors_);
+
+      // Allocate work space
+      waveVectors_.allocate(nWave_);
+      fourierModes_.allocate(nWave_, nMode_);
+      totalFourierModes_.allocate(nWave_, nMode_);
+      
+      if (simulation().domain().isMaster()) {
+         maximumValue_.allocate(nMode_);
+         maximumWaveIntVector_.allocate(nMode_);
+         maximumQ_.allocate(nMode_);
+         for (int j = 0; j < nMode_; ++j) {
+            maximumValue_[j].reserve(Samples);
+            maximumWaveIntVector_[j].reserve(Samples);
+            maximumQ_[j].reserve(Samples);
+         }
+      }
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void StructureFactor::save(Serializable::OArchive &ar)
+   {
+      saveInterval(ar);
+      saveOutputFileName(ar);
+
+      ar << nMode_;
+      ar << modes_;
+      ar << nWave_;
+      ar << waveIntVectors_;
+      ar << structureFactors_;
+   }
+  
    /*
    * Clear accumulators.
    */

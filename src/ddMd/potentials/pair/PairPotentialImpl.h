@@ -388,7 +388,7 @@ namespace DdMd
    */
    template <class Interaction>
    double PairPotentialImpl<Interaction>::maxPairCutoff() const
-   { return interaction().maxPairCutoff(); }
+   {  return interaction().maxPairCutoff(); }
 
    /*
    * Return pair interaction class name.

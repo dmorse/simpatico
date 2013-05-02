@@ -342,8 +342,8 @@ namespace DdMd
              .Reduce(&nAtomRecv_, &nAtomRecvTot, 1, MPI::INT, MPI::SUM, source);
       if (domainPtr_->gridRank() == 0) {
          if (nAtomRecvTot != nSentTotal_*N) {
-             std::cout << "nSentTotal_*N = " << nSentTotal_*N << std::endl;
-             std::cout << "nAtomRecvTot  = " << nAtomRecvTot  << std::endl;
+             Log::file() << "nSentTotal_*N = " << nSentTotal_*N << std::endl;
+             Log::file() << "nAtomRecvTot  = " << nAtomRecvTot  << std::endl;
              UTIL_THROW("Discrepancy in number of local atoms in groups");
          }
       }

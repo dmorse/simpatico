@@ -28,8 +28,7 @@ namespace DdMd
     : Diagnostic(simulation),
       nSample_(0),
       isInitialized_(false)
-   {
-   }
+   {  setClassName("OutputTemperature"); }
 
    /*
    * Read interval and outputFileName.
@@ -45,6 +44,32 @@ namespace DdMd
       simulation().fileMaster().openOutputFile(filename, outputFile_);
 
       isInitialized_ = true;
+   }
+
+
+   /*
+   * Load internal state from an archive.
+   */
+   void OutputTemperature::loadParameters(Serializable::IArchive &ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
+
+      // Open output file
+      std::string filename;
+      filename  = outputFileName();
+      simulation().fileMaster().openOutputFile(filename, outputFile_);
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void OutputTemperature::save(Serializable::OArchive &ar)
+   {
+      saveInterval(ar);
+      saveOutputFileName(ar);
    }
 
    /*

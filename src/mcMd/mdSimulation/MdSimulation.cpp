@@ -215,6 +215,11 @@ namespace McMd
       Simulation::loadParameters(ar); 
       loadParamComposite(ar, system_); 
       loadParamComposite(ar, diagnosticManager());
+      loadParameter<int>(ar, "saveInterval", saveInterval_);
+      if (saveInterval_ > 0) {
+         loadParameter<std::string>(ar, "saveFileName", saveFileName_);
+      }
+
       system_.loadConfig(ar);
       ar & iStep_;
 
@@ -230,6 +235,10 @@ namespace McMd
       Simulation::save(ar); 
       system_.saveParameters(ar);
       diagnosticManager().save(ar);
+      ar << saveInterval_;
+      if (saveInterval_ > 0) {
+         ar << saveFileName_;
+      }
       system_.saveConfig(ar);
       ar & iStep_;
    }

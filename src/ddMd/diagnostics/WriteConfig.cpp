@@ -26,7 +26,7 @@ namespace DdMd
     : Diagnostic(simulation),
       nSample_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("WriteConfig"); }
 
    /*
    * Read interval and outputFileName. 
@@ -36,6 +36,25 @@ namespace DdMd
       readInterval(in);
       readOutputFileName(in);
       isInitialized_ = true;
+   }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void WriteConfig::loadParameters(Serializable::IArchive &ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void WriteConfig::save(Serializable::OArchive &ar)
+   {
+      saveInterval(ar);
+      saveOutputFileName(ar);
    }
 
    /*

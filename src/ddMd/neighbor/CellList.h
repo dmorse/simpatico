@@ -263,6 +263,13 @@ namespace DdMd
       */
       int nReject() const;
 
+      #ifdef UTIL_DEBUG
+      /**
+      * Get maximum number of atoms in one cell.
+      */
+      int maxNAtomCell() const;
+      #endif
+
       /**
       * Maximum number of atoms for which space is allocated.
       */
@@ -349,6 +356,11 @@ namespace DdMd
       /// Number of atoms that were not placed in cells.
       int nReject_;
 
+      #ifdef UTIL_DEBUG
+      /// Maximum number of atoms in one cell. 
+      int maxNAtomCell_;
+      #endif
+
       /// Has this CellList been built?
       bool isBuilt_;
 
@@ -368,8 +380,7 @@ namespace DdMd
       /**
       * Return true if atomId is valid, i.e., if 0 <= 0 < atomCapacity.
       */
-      bool isValidAtomId(int atomId)
-      { return ( (0 <= atomId) && (atomId < tags_.capacity()) ); }
+      bool isValidAtomId(int atomId);
 
    }; 
 
@@ -417,18 +428,39 @@ namespace DdMd
       }
    }
 
+   /*
+   * Return true iff atomId is valid, i.e., if 0 <= 0 < atomCapacity.
+   */
+   inline bool CellList::isValidAtomId(int atomId)
+   { return ( (0 <= atomId) && (atomId < tags_.capacity()) ); }
+
+   /*
+   * Return associated Grid object.
+   */
    inline const Grid& CellList::grid() const
    {  return grid_; }
 
+   /*
+   * Return length of each cell in direction i.
+   */
    inline double CellList::cellLength(int i) const
    {  return cellLengths_[i]; }
 
+   /*
+   * Return reference to cell number i.
+   */
    inline const Cell& CellList::cell(int i) const
    {  return cells_[i]; }
 
+   /*
+   * Return pointer to first Cell.
+   */
    inline const Cell* CellList::begin() const
    {  return begin_; }
 
+   /*
+   * Is this CellList allocated?
+   */
    inline bool CellList::isAllocated() const
    {  return (cells_.capacity() > 0); }
 

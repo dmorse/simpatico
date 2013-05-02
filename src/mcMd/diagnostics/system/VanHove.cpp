@@ -74,10 +74,13 @@ namespace McMd
    {  
       Diagnostic::loadParameters(ar);
       ar & nAtomType_;
+      atomTypeCoeffs_.allocate(nAtomType_);
       loadDArray<double>(ar, "atomTypeCoeffs", atomTypeCoeffs_, nAtomType_);
       loadParameter<int>(ar, "nBuffer", nBuffer_);
       loadParameter<int>(ar, "nWave", nWave_);
+      waveIntVectors_.allocate(nWave_);
       loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
+      accumulators_.allocate(nWave_);
       ar & accumulators_;
       ar & nSample_;
 
@@ -92,7 +95,7 @@ namespace McMd
          UTIL_THROW("Inconsistent capacity for waveIntVectors");
       }
 
-      // Allocate
+      // Allocate work arrays.
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_);
 

@@ -16,6 +16,7 @@
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/space/Vector.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/misc/Timer.h>
 #include <util/global.h>
 
@@ -79,8 +80,10 @@ namespace DdMd
       loadParameter<double>(ar, "dt", dt_);
       loadParameter<double>(ar, "tauT", tauT_);
       Integrator::loadParameters(ar);
-      ar >> nuT_;
-      ar >> xi_;
+
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nuT_);
+      loader.load(xi_);
 
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {

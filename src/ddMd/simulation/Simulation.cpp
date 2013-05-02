@@ -653,7 +653,7 @@ namespace DdMd
       }
 
       loadParamComposite(ar, random_);
-      //loadParamComposite(ar, *diagnosticManagerPtr_);
+      loadParamComposite(ar, *diagnosticManagerPtr_);
 
       // Finished loading data from archive. Finish initialization:
 
@@ -798,7 +798,7 @@ namespace DdMd
       integrator().save(ar);
 
       random_.save(ar);
-      //diagnosticManagerPtr_->save(ar);
+      diagnosticManagerPtr_->save(ar);
    }
 
    /*
@@ -1036,14 +1036,15 @@ namespace DdMd
          if (isRestarting_) {
 
             if (command == "RESTART") {
-               int endStep;
-               inBuffer >> endStep;
+               int nStep;
+               inBuffer >> nStep;
                if (isIoProcessor()) {
-                  int iStep = integrator().iStep();
+                  int iStep   = integrator().iStep();
+                  int endStep = iStep + nStep;
                   Log::file() << "Running from  iStep =" << iStep << " to "
                               << endStep << std::endl;
                }
-               integrator().run(endStep);
+               integrator().run(nStep);
                isRestarting_ = false;
             } else
             if (command == "FINISH") {

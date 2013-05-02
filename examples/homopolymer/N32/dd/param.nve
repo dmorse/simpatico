@@ -61,17 +61,12 @@ Simulation{
         outputFileName  energy
      }
 
-     OutputPressure{
-        interval        1000
-        outputFileName  pressure
-     }
-
   }
 }
 
-     WriteConfig{
-        interval          2000
-        outputFileName  config
+     OutputPressure{
+        interval        1000
+        outputFileName  pressure
      }
 
   nAngleType         0
