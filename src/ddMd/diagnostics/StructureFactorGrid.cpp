@@ -31,7 +31,7 @@ namespace DdMd
       hMax_(0),
       nStar_(0),
       lattice_(Triclinic)
-   {}
+   {  setClassName("StructureFactorGrid"); }
 
    /*
    * Read parameters from file, and allocate data array.
@@ -55,7 +55,6 @@ namespace DdMd
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
       totalFourierModes_.allocate(nWave_, nMode_);
-      structureFactors_.allocate(nWave_, nMode_);
 
       int i, j, h, k, l, m;
       IntVector g;
@@ -170,6 +169,15 @@ namespace DdMd
       }
 
       if (simulation().domain().isMaster()) {
+
+         structureFactors_.allocate(nWave_, nMode_);
+         int i, j;
+         for (i = 0; i < nWave_; ++i) {
+            for (j = 0; j < nMode_; ++j) {
+               structureFactors_(i, j) = 0.0;
+            }
+         }
+
          maximumValue_.allocate(nMode_);
          maximumWaveIntVector_.allocate(nMode_);
          maximumQ_.allocate(nMode_);
@@ -178,8 +186,8 @@ namespace DdMd
             maximumWaveIntVector_[j].reserve(Samples);
             maximumQ_[j].reserve(Samples);
          }
-      }
 
+      }
       nSample_ = 0;
 
       isInitialized_ = true;
@@ -206,8 +214,6 @@ namespace DdMd
       loader.load(nWave_);
       waveIntVectors_.allocate(nWave_);
       loader.load(waveIntVectors_);
-      structureFactors_.allocate(nWave_, nMode_);
-      loader.load(structureFactors_);
       loader.load(nStar_);
       starIds_.allocate(nStar_);
       loader.load(starIds_);
@@ -216,6 +222,10 @@ namespace DdMd
       loader.load(nSample_);
 
       if (simulation().domain().isMaster()) {
+
+         structureFactors_.allocate(nWave_, nMode_);
+         ar >> structureFactors_;
+
          maximumValue_.allocate(nMode_);
          maximumWaveIntVector_.allocate(nMode_);
          maximumQ_.allocate(nMode_);
@@ -248,12 +258,12 @@ namespace DdMd
 
       ar << nWave_;
       ar << waveIntVectors_;
-      ar << structureFactors_;
       ar << nStar_;
       ar << starIds_;
       ar << starSizes_;
       ar << nSample_;
 
+      ar << structureFactors_;
       for (int j = 0; j < nMode_; ++j) {
          ar << maximumValue_[j];
          ar << maximumWaveIntVector_[j];
@@ -268,18 +278,15 @@ namespace DdMd
          double  value, average, size;
          int     i, j, k, m, n;
 
-         // Echo parameters to a log file
+         // Write parameters to a *.prm file
          simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
          writeParam(outputFile_);
          outputFile_.close();
 
-         // Output structure factors to one file
+         // Output all structure factors to one file
          simulation().fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
-
-         // Loop over waves to output structure factor
          for (i = 0; i < nStar_; ++i) {
             size = starSizes_[i];
-
             k = starIds_[i];
             for (n = 0; n < Dimension; ++n) {
                outputFile_ << Int(waveIntVectors_[k][n], 5);
@@ -300,8 +307,9 @@ namespace DdMd
          }
          outputFile_.close();
 
-         // Outputs history of maximum structure factors
-         simulation().fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_);
+         // Output history of maximum structure factors to *_max.dat file
+         simulation().fileMaster().openOutputFile(outputFileName("_max.dat"), 
+                                                  outputFile_);
          for (j = 0; j < nMode_; ++j) {
             for (i = 0; i < nSample_; ++i) {
                for (n = 0; n < Dimension; ++n) {

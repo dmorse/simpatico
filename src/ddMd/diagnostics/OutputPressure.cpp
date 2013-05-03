@@ -28,7 +28,7 @@ namespace DdMd
     : Diagnostic(simulation),
       nSample_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("OutputPressure"); }
 
    /*
    * Read interval and outputFileName. 
