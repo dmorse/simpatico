@@ -9,7 +9,7 @@ mcMd:
 	cd inter; make all
 	cd mcMd;  make all
 
-mcMd_mpi: 
+mcMd-mpi: 
 	cd $(ROOT_DIR); ./configure -m1
 	cd util;  make all
 	cd inter; make all
