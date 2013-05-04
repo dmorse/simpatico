@@ -61,13 +61,13 @@ Simulation{
         outputFileName  energy
      }
 
-  }
-}
-
      OutputPressure{
         interval        1000
         outputFileName  pressure
      }
+
+  }
+}
 
   nAngleType         0
   hasExternal        0

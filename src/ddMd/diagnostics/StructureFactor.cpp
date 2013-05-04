@@ -31,7 +31,7 @@ namespace DdMd
    StructureFactor::StructureFactor(Simulation& simulation) 
     : Diagnostic(simulation),
       isInitialized_(false)
-   {}
+   {  setClassName("StructureFactor"); }
 
    StructureFactor::~StructureFactor() 
    {}
@@ -49,23 +49,31 @@ namespace DdMd
       read<int>(in, "nWave", nWave_);
       waveIntVectors_.allocate(nWave_);
       readDArray<IntVector>(in, "waveIntVectors", waveIntVectors_, nWave_);
+
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
       totalFourierModes_.allocate(nWave_, nMode_);
 
-      structureFactors_.allocate(nWave_, nMode_);
-      
       if (simulation().domain().isMaster()) {
+
+         structureFactors_.allocate(nWave_, nMode_);
+         int i, j;
+         for (i = 0; i < nWave_; ++i) {
+            for (j = 0; j < nMode_; ++j) {
+               structureFactors_(i, j) = 0.0;
+            }
+         }
+
          maximumValue_.allocate(nMode_);
          maximumWaveIntVector_.allocate(nMode_);
          maximumQ_.allocate(nMode_);
-         for (int j = 0; j < nMode_; ++j) {
+         for (j = 0; j < nMode_; ++j) {
             maximumValue_[j].reserve(Samples);
             maximumWaveIntVector_[j].reserve(Samples);
             maximumQ_[j].reserve(Samples);
          }
-      }
 
+      }
       isInitialized_ = true;
    }
 
@@ -74,9 +82,11 @@ namespace DdMd
    */
    void StructureFactor::loadParameters(Serializable::IArchive &ar)
    {
+      nAtomType_ = simulation().nAtomType();
+
+      // Load and broadcast parameter file parameters
       loadInterval(ar);
       loadOutputFileName(ar);
-      nAtomType_ = simulation().nAtomType();
       loadParameter<int>(ar, "nMode", nMode_);
       modes_.allocate(nMode_, nAtomType_);
       loadDMatrix<double>(ar, "modes", modes_, nMode_, nAtomType_);
@@ -84,12 +94,15 @@ namespace DdMd
       waveIntVectors_.allocate(nWave_);
       loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWave_);
 
+      // Load and broadcast nSample_
       MpiLoader<Serializable::IArchive> loader(*this, ar);
-      structureFactors_.allocate(nWave_, nMode_);
-      loader.load(structureFactors_);
       loader.load(nSample_);
 
+      // Allocate and load accumulators that exist only on master.
       if (simulation().domain().isMaster()) {
+         structureFactors_.allocate(nWave_, nMode_);
+         ar >> structureFactors_;
+
          maximumValue_.allocate(nMode_);
          maximumWaveIntVector_.allocate(nMode_);
          maximumQ_.allocate(nMode_);
@@ -100,7 +113,7 @@ namespace DdMd
          }
       }
 
-      // Allocate work space
+      // Allocate work space (all processors).
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
       totalFourierModes_.allocate(nWave_, nMode_);
@@ -120,9 +133,9 @@ namespace DdMd
       ar << nWave_;
       ar << waveIntVectors_;
 
-      ar << structureFactors_;
       ar << nSample_;
 
+      ar << structureFactors_;
       for (int j = 0; j < nMode_; ++j) {
          ar << maximumValue_[j];
          ar << maximumWaveIntVector_[j];
@@ -141,16 +154,15 @@ namespace DdMd
       assert (nWave_ > 0);
       assert (nMode_ > 0);
 
-      // Clear accumulators on all processors
-      int i, j;
-      for (i = 0; i < nWave_; ++i) {
-         for (j = 0; j < nMode_; ++j) {
-            structureFactors_(i, j) = 0.0;
-         }
-      }
       nSample_ = 0;
-
       if (simulation().domain().isMaster()) {
+
+         int i, j;
+         for (i = 0; i < nWave_; ++i) {
+            for (j = 0; j < nMode_; ++j) {
+               structureFactors_(i, j) = 0.0;
+            }
+         }
          for (int j = 0; j < nMode_; ++j) {
             maximumValue_[j].clear();
             maximumWaveIntVector_[j].clear();
@@ -250,7 +262,7 @@ namespace DdMd
 
    }
 
-   /**
+   /*
    * Calculate floating point wavevectors.
    */
    void StructureFactor::makeWaveVectors() 
@@ -270,19 +282,20 @@ namespace DdMd
       }
    }
 
-   /**
-   *
+   /*
+   * Write data to three output files.
    */
    void StructureFactor::output()
    {
       if (simulation().domain().isMaster()) {
-         // Echo parameters to a  log file 
+
+         // Write parameters to a *.prm file
          simulation().fileMaster().openOutputFile(outputFileName(".prm"), 
                                                   outputFile_);
          writeParam(outputFile_);
          outputFile_.close();
 
-         // Output structure factors to one file
+         // Output structure factors to one *.dat file
          simulation().fileMaster().openOutputFile(outputFileName(".dat"), 
                                                   outputFile_);
          double      value;
@@ -300,7 +313,7 @@ namespace DdMd
          }
          outputFile_.close();
 
-         // Output maximum structure factors to one file
+         // Output maximum structure factors to *_max.dat file
          simulation().fileMaster().openOutputFile(outputFileName("_max.dat"), 
                                                   outputFile_);
          for (j = 0; j < nMode_; ++j) {

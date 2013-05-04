@@ -1036,23 +1036,18 @@ namespace DdMd
          if (isRestarting_) {
 
             if (command == "RESTART") {
-               int nStep;
-               inBuffer >> nStep;
+               int endStep;
+               inBuffer >> endStep;
+               int iStep = integrator().iStep();
+               int nStep = endStep - iStep;
                if (isIoProcessor()) {
-                  int iStep   = integrator().iStep();
-                  int endStep = iStep + nStep;
                   Log::file() << "Running from  iStep =" << iStep << " to "
                               << endStep << std::endl;
                }
                integrator().run(nStep);
                isRestarting_ = false;
-            } else
-            if (command == "FINISH") {
-               // Terminate loop over commands.
-               readNext = false;
-               isRestarting_ = false;
             } else {
-               UTIL_THROW("Missing RESTART or FINISH command");
+               UTIL_THROW("Missing RESTART command when restarting");
             }
 
          } else {
