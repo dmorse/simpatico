@@ -4,41 +4,40 @@ McMd namespace.
 Subdirectories:
 ----------------------
 
-chemistry      classes for atoms, molecules, and covalent groups (bonds, etc.)
+chemistry      atoms, molecules, and covalent groups (bonds, etc.)
 species        molecular species (i.e., molecular structures)
-potentials     classes that evaluate potential energies and forces
+potentials     classes to evaluate potential energies and forces
   pair         nonbonded pair potentials
   bond         covalent bond potentials 
   angle        covalent three-body angle potentials
   dihedral     covalent four-body dihedral potentials
   link         mutable covalent bond potentials (e.g., crosslinks)
   external     external one-body potentials.
-neighbor       classes that implement a cell list and a Verlet pair list
-links          classes to manage crosslinks (mutable covalent bonds).
-tethers        classes to manage tethers that constrain specific atoms
+neighbor       cell list and Verlet pair list classes
+links          management of crosslinks (mutable covalent bonds).
 ensembles      classes that define statistical ensembles
 simulation     main classes for constructing simulations
 mcSimulation   Monte Carlo (MC) Simulation and System subclasses
 mcMoves        classes for specific MC moves (derived from McMove)
 mdSimulation   molecular dynamics (MD) Simulation and System subclasses
-mdIntegrators  classes for specific MD integrators (derived from MdIntegrator)
-diagnostics    classes for data analysis (derived from Diagnostic)
-configIos      classes for configuration file IO in non-default formats
-trajectoryIos  classes for MD trajectory (multi-configuration) file IO.
-perturb        class for free energy perturbation theory
+mdIntegrators  specific MD integrators (derived from MdIntegrator)
+diagnostics    data analysis (classes derived from Diagnostic)
+configIos      configuration file IO 
+trajectoryIos  MD trajectory (multi-configuration) file IO.
+perturb        free energy perturbation theory
 misc           miscellaneous utilities
 
 Makefile targets 
 ----------------
 
-The mcMd directory contains a makefile that can be used to compile all of the 
-classes in the directory tree rooted at mcMd. This includes all of the classes 
-in the McMd namespace.  The most important targets are available:
+The mcMd directory contains a makefile that can be used to compile all of 
+the classes in the directory tree rooted at mcMd. This includes all of the
+classes in the McMd namespace.  The most important targets are:
 
 make all      make all *.o files in src/mcMd and its subdirectories, 
               a static library mcMd<suffix>.a in lib/, and the two
               executables mdSim<suffix> and mcSim<suffix> in bin/.
 
-make clean    remove all *.o files in src/mcMd and its subdirectories,
+make clean    remove all *.o files in src/mcMd and its subdirectories, 
               the static library file, and the two executables.
 

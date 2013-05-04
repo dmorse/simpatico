@@ -4,25 +4,26 @@ scientific programming in C++.
 Subdirectories:
 ----------------------
 
-misc           Exception, Log, FileMaster and other miscellaneous utilities
-format         classes for formatted output of primitive types in ostreams
+misc           Exception, Log, FileMaster and other utilities
+format         formatted output of primitive types in ostreams
 memory         class for managing dynamically allocated memory
 containers     container template classes and associated iterators
-mpi            utility classes for MPI programming
-param          classes for parameter file input and output
+mpi            utilities for MPI programming
+param          parameter file input and output
 math           mathematical constants and operations
-space          classes to describe Cartesian vectors, tensors, and grids
-boundary       classes to define periodic boundary conditions
-crystal        classes related to crystallographic symmetry
-ensembles      classes that define statistical mechanical ensembles
-archives       serialization classes (compatible with Boost serialization)
-random         random number generators and processes
+space          Cartesian vectors, tensors, and grids
+boundary       periodic boundary conditions
+crystal        crystallographic symmetry
+ensembles      statistical mechanical ensembles
+archives       serialization (similar to Boost serialization)
+random         random number generator
 accumulators   statistical accumulator classes
 
 Makefile targets 
 ----------------
 
 The makefile in src/util may be used to compile the classes in src/util.
+The most important targets are:
 
 make all       make all *.o files in src/util
 make clean     remove all *.o files in src/util
