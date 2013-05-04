@@ -4,8 +4,8 @@
 mcMd: 
 	cd src; make mcMd
 
-mcMd_mpi: 
-	cd src; make mcMd_mpi
+mcMd-mpi: 
+	cd src; make mcMd-mpi
 
 ddMd:
 	cd src; make ddMd
