@@ -8,11 +8,11 @@
 
 All of the Simpatico programs use a potential energy that can contain:
 
-- nonbonded pair interactions
+- nonbonded \ref inter_pair_page "pair" interactions
 
-- covalent bond (2 body), angle (3 body) and dihedral (4 body) potentials
+- covalent \ref inter_bond_page "bond" (2 body), \ref inter_angle_page "angle" (3 body) and \ref inter_dihedral_page "dihedral" (4 body) potentials
 
-- external one-body potentials  
+- \ref inter_external_page "external" one-particle potentials  
 
 Several different choices of potential energy function are provided for the nonbonded pair interaction and for each type of covalent interactions. Others are easily added. To simplify integration of MC and MD algorithms, all programs are currently restricted to models with differentiable potentials (i.e., not hard spheres), with no constraints on bond lengths or bond angles. The default version of each program currently includes only non-bonded pair interactions and covalent bond interactions. Other types of interactions can be enabled by setting appropriate flags and recompiling.
 
