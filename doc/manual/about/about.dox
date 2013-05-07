@@ -12,7 +12,7 @@ Simpatico is a library of C++ classes and programs for Monte Carlo (MC), molecul
 
 The single-processor programs mcSim and mdSim can also execute multi-processor algorithms, such as replica-exchange, in which each processor simulates a different system.
 
-<h3> Contents: </h3>
+<h2> Contents: </h2>
 <ul style="list-style: none;">
   <li> \subpage about_goals_page  </li> 
   <li> \subpage about_capabilities_page </li> 

@@ -6,7 +6,7 @@
 
 \section features_potential_sec Potential Energy
 
-All of the Simpatico programs use a potential energy that can contain:
+All simpatico programs use a potential energy that can contain:
 
 - nonbonded \ref inter_pair_page "pair" interactions
 
@@ -16,7 +16,7 @@ All of the Simpatico programs use a potential energy that can contain:
 
 Several different choices of potential energy function are provided for the nonbonded pair interaction and for each type of covalent interactions. Others are easily added. To simplify integration of MC and MD algorithms, all programs are currently restricted to models with differentiable potentials (i.e., not hard spheres), with no constraints on bond lengths or bond angles. The default version of each program currently includes only non-bonded pair interactions and covalent bond interactions. Other types of interactions can be enabled by setting appropriate flags and recompiling.
 
-Classes that represent particular potential energy functions, such as a Lennard-Jones pair potential, are referred to in Simpatico as "interactions". The source files for all interaction classes are in src/inter directory, and all such classes are defined in the "Inter" C++ namespace.  The same set of interaction classes is available for use in the mcSim, mdSim, and ddSim programs.  
+Classes that represent particular potential energy functions, such as a Lennard-Jones pair potential, are referred to in simpatico as "interactions". The source files for all interaction classes are in src/inter directory, and all such classes are defined in the "Inter" C++ namespace.  The same set of interaction classes is available for use in the mcSim, mdSim, and ddSim programs.  
 
 Long-range electrostatic potentials have not yet been implemented in any of the simpatico programs. This is now the most important missing feature that would be required to make the package suitable for atomistic models.
 
@@ -40,7 +40,7 @@ All of the MD integrators except the mdSim DPD integrator use reversible, symple
 
 \section features_mcmoves_sec Monte Carlo Moves 
 
-For single-processor Monte-Carlo simulation, mcSim currently provides the following MC moves, and a few others:
+For single-processor Monte-Carlo simulation, mcSim currently provides the following MC moves:
 <ul>
    <li> Single atom displacement </li>
    <li> Rigid molecule displacement </li>
@@ -48,7 +48,7 @@ For single-processor Monte-Carlo simulation, mcSim currently provides the follow
         in NVT and NPT ensembles. </li>
    <li> Reptation move for linear chains </li>
    <li> Configuration bias regrowth of all or part of a linear chain. </li>
-   <li> Double rebridging for linear chains. </li>
+   <li> Double (two-chain) rebridging for linear chains. </li>
    <li> Double rebridging moves for ring polymers. </li>
    <li> End-swap move for linear heteropolymers (e.g., diblock copolymers) </li>
    <li> Semi-grand canonical move (for, e.g., homopolymer blends) </li>
@@ -61,7 +61,7 @@ Simpatico provides an optional module that allows the use of the <a href=http://
 
 \section features_analysis_sec Data Analysis
 
-Simpatico is distributed with a collection of classes for statistical analysis, referred to as "diagnostics".  The diagnostic classes available for use with the single-processor mcSim and mdSim programs include classes to evaluate:
+Simpatico is distributed with a collection of classes for statistical analysis, referred to as "diagnostics".  The classes available for use with the single-processor mcSim and mdSim programs include classes that evaluate:
 <ul>
   <li> Thermodynamic properties (energy and stress components) </li>
   <li> Full and partial radial distribution functions (in coordinate space). </li>

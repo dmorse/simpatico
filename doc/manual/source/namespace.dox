@@ -43,7 +43,7 @@ link above and browsing a hierarchy of modules, each of which contains
 a sets of functionally related classes, with links to the documentation
 for individual classes.
 
-Contents:
+<h2> Contents:</h2>
 <ul style="list-style: none;">
  <li> \subpage Util_NS_page  </li>
  <li> \subpage Inter_NS_page </li>

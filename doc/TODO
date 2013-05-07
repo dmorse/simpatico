@@ -1,6 +1,5 @@
 TODO:
 
-
 1) Document all of the diagnostics, with one *.dox file per interaction in new
    directories doc/diagnostics/ddMd and doc/diagnostics/mcMd.
 
