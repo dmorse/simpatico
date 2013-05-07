@@ -35,7 +35,7 @@ namespace DdMd
     : Diagnostic(simulation),
       nSample_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("OutputEnergy"); }
 
    /*
    * Read interval and outputFileName. 
@@ -48,7 +48,30 @@ namespace DdMd
    }
 
    /*
-   * Read interval and outputFileName. 
+   * Load internal state from an archive.
+   */
+   void OutputEnergy::loadParameters(Serializable::IArchive &ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nSample_);
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void OutputEnergy::save(Serializable::OArchive &ar)
+   {
+      saveInterval(ar);
+      saveOutputFileName(ar);
+      ar << nSample_;
+   }
+
+  
+   /*
+   * Reset nSample.
    */
    void OutputEnergy::clear() 
    {  nSample_ = 0;  }

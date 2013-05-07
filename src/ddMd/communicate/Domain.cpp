@@ -79,12 +79,50 @@ namespace DdMd
          UTIL_THROW("Boundary not set before readParam");
       }
       if (isInitialized_) {
-         UTIL_THROW("readParam can only be called once");
+         UTIL_THROW("Already initialized");
       }
 
-      // Read parameter file 
+      // Read processor grid dimensions and initialize
       read<IntVector>(in, "gridDimensions", gridDimensions_);
+      initialize();
+   }
+   
+   /*
+   * Read parameters and initialize.
+   */
+   void Domain::loadParameters(Serializable::IArchive& ar)
+   {
+      #ifdef UTIL_MPI
+      if (intracommPtr_ == 0) {
+         UTIL_THROW("Intra-communicator not set before readParam");
+      } 
+      #endif
+      if (gridRank_ < 0) {
+         UTIL_THROW("grid rank not set before readParam");
+      }
+      if (!hasBoundary()) {
+         UTIL_THROW("Boundary not set before readParam");
+      }
+      if (isInitialized_) {
+         UTIL_THROW("Already initialized");
+      }
 
+      // Read processor grid dimensions and initialize
+      loadParameter<IntVector>(ar, "gridDimensions", gridDimensions_);
+      initialize();
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void Domain::save(Serializable::OArchive &ar)
+   {  ar << gridDimensions_; }
+  
+   /*
+   * Initialize data - called by readParameters and loadParameters (private).
+   */
+   void Domain::initialize() 
+   {
       // Validate gridDimensions
       int nproc = 1;
       for (int i = 0; i < Dimension; i++) {
@@ -190,6 +228,11 @@ namespace DdMd
          }
          r[i] = int(position[i] / dL);
          if (r[i] < 0 || r[i] >= gridDimensions_[i]) {
+            Log::file() << "Cart i   = " << i << std::endl;
+            Log::file() << "position = " << position[i] << std::endl;
+            Log::file() << "dL       = " << dL << std::endl;
+            Log::file() << "r        = " << r[i] << std::endl;
+            Log::file() << "gridDim  = " << gridDimensions_[i] << std::endl;
             UTIL_THROW("Invalid grid coordinate");
          }
       }

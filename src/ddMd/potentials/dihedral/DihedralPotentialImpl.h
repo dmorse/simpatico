@@ -60,6 +60,22 @@ namespace DdMd
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Load internal state from an archive.
+      *
+      * Precondition: setNDihedralType must have been called before this.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
       /// \name Interaction interface
       //@{
 
@@ -245,6 +261,25 @@ namespace DdMd
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
    }
+
+   /*
+   * Load internal state from an archive.
+   */
+   template <class Interaction>
+   void 
+   DihedralPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
+   {
+      bool nextIndent = false;
+      addParamComposite(interaction(), nextIndent);
+      interaction().loadParameters(ar);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   template <class Interaction>
+   void DihedralPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
+   {  interaction().save(ar); }
 
    /*
    * Modify an dihedral parameter, identified by a string.

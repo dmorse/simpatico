@@ -5,6 +5,8 @@
 #include <ddMd/chemistry/AtomArray.h>
 #include <ddMd/chemistry/Atom.h>
 #include <util/space/Vector.h>
+#include <util/archives/BinaryFileOArchive.h>
+#include <util/archives/BinaryFileIArchive.h>
 
 #ifdef UTIL_MPI
 #ifndef TEST_MPI
@@ -20,19 +22,15 @@ using namespace DdMd;
 
 class GroupTest : public UnitTest 
 {
-
 public:
 
    void setUp() {}
-
    void tearDown() {}
- 
+
    void testConstructor();
-
    void testSetGet();
-
    void testFileIo();
-
+   void testSerialize();
 };
 
 
@@ -98,10 +96,55 @@ void GroupTest::testFileIo()
 
 }
 
+void GroupTest::testSerialize() 
+{
+   printMethod(TEST_FUNC);
+   Group<2> v;
+   int i1 = 35;
+   int i2 = 43;
+
+   // Read from input file
+   std::ifstream in;
+   openInputFile("in/Group", in);
+   in >> v;
+
+   // Write to binary file archive
+   BinaryFileOArchive oa;
+   openOutputFile("binary", oa.file());
+   oa << i1;
+   oa << v;
+   oa << i2;
+   oa.file().close();
+
+   // Write to binary file archive
+   Group<2> u;
+   int j1, j2;
+   BinaryFileIArchive ia;
+   openInputFile("binary", ia.file());
+   ia >> j1;
+   ia >> u;
+   ia >> j2;
+   
+   TEST_ASSERT(j1 == i1);
+   TEST_ASSERT(u.typeId() == v.typeId());
+   for (int i = 0; i < 2; ++i) {
+      TEST_ASSERT(u.atomId(i) == v.atomId(i));
+   }
+   TEST_ASSERT(j2 == i2);
+
+   if (isIoProcessor()) {
+      std::cout << std::endl;
+      std::cout << u;
+      std::cout << std::endl;
+   }
+
+}
+
 TEST_BEGIN(GroupTest)
 TEST_ADD(GroupTest, testConstructor)
 TEST_ADD(GroupTest, testSetGet)
 TEST_ADD(GroupTest, testFileIo)
+TEST_ADD(GroupTest, testSerialize)
 TEST_END(GroupTest)
 
 #endif

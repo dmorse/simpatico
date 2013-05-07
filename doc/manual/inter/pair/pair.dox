@@ -5,7 +5,12 @@ interaction energy and force for pairs of particles. Each class defines
 a functional form for the potential function \f$V(r)\f$ of a particle 
 pair as a function of the distance \f$r\f$ between the two particles,
 using parameters that depend upon the type ids of the two atoms.  This 
-function is always set to zero for $r$ greater than some cutoff distance. 
+function is always set to zero for \f$r\f$ greater than some cutoff 
+distance. 
+
+The pair interaction classes are not derived from a common base class, 
+but all implement a common interface that is described 
+\subpage inter_pair_interface_page "here". 
 
 \section inter_pair_interactions_section Pair Interaction Classes
 
@@ -15,9 +20,6 @@ function is always set to zero for $r$ greater than some cutoff distance.
    <li> \subpage inter_pair_DpdPair_page </li>
 </ul>
  
-The pair interaction classes are not derived from a common base class, 
-but all implement a common interface that is described 
-\subpage inter_pair_interface_page "here". 
 
 \section inter_pair_parameters_section Matrix-Valued Parameters
 

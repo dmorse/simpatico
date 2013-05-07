@@ -104,6 +104,22 @@ namespace DdMd
       {}
 
       /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar)
+      {}
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar)
+      {}
+  
+      /**
       * Get interval value.
       */
       int interval() const;
@@ -141,11 +157,43 @@ namespace DdMd
       void readInterval(std::istream &in);
 
       /**
+      * Load parameter interval from input archive.
+      *
+      * This function throws an exception if the value of interval
+      * is not a multiple of Diagnostic::baseInterval, or if
+      * baseInterval has not been set to a nonzero positive value.
+      *
+      * \param ar input archive
+      */
+      void loadInterval(Serializable::IArchive &ar);
+
+      /**
+      * Save interval parameter to an archive.
+      *
+      * \param ar output archive
+      */
+      void saveInterval(Serializable::OArchive &ar);
+
+      /**
       * Read outputFileName from file.
       *
-      * \param in input parameter file stream.
+      * \param in input parameter file
       */
       void readOutputFileName(std::istream &in);
+
+      /**
+      * Load output file name to an archive.
+      *
+      * \param ar input archive
+      */
+      void loadOutputFileName(Serializable::IArchive &ar);
+
+      /**
+      * Save output file name to an archive.
+      *
+      * \param ar output archive
+      */
+      void saveOutputFileName(Serializable::OArchive &ar);
 
       /**
       * Get the parent Simulation by reference.

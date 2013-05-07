@@ -106,8 +106,8 @@ MdSimulation{
       capacity  	              1000
     }
   }
-  writeRestartInterval             10000
-  writeRestartFileName           restart
+  saveInterval             10000
+  saveFileName           restart
 }
 
     CosineSqAngle{

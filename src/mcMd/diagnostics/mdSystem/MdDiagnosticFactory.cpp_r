@@ -10,8 +10,6 @@
 
 #include "MdDiagnosticFactory.h" // Class header
 
-#include <mcMd/mdSimulation/MdSimulation.h>
-
 // Diagnostics for MdSystem only
 #include "MdEnergyOutput.h"
 #include "MdPotentialEnergyAverage.h"
@@ -20,7 +18,8 @@
 #include "MdIntraBondStressAutoCorr.h"
 #include "MdIntraBondTensorAutoCorr.h"
 #include "MdPairEnergyCoefficients.h"
-#include "MdWriteRestart.h"
+
+#include <mcMd/mdSimulation/MdSimulation.h>
 
 namespace McMd
 {
@@ -66,9 +65,6 @@ namespace McMd
       } else 
       if (className == "MdIntraBondTensorAutoCorr") {
          ptr = new MdIntraBondTensorAutoCorr(system());
-      } else 
-      if (className == "MdWriteRestart") {
-         ptr = new MdWriteRestart(simulation());
       } 
       #ifndef INTER_NOPAIR
       else

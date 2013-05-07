@@ -49,6 +49,7 @@ Simulation{
   NvtIntegrator{
     dt                0.005
     tauT              1.000
+    saveInterval      0
   }
   Random{
     seed              8012457890

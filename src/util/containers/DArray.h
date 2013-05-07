@@ -242,8 +242,10 @@ namespace Util
             }
          }
       }
-      for (int i = 0; i < capacity_; ++i) {
-         ar & data_[i];
+      if (isAllocated()) {
+         for (int i = 0; i < capacity_; ++i) {
+            ar & data_[i];
+         }
       }
    }
 

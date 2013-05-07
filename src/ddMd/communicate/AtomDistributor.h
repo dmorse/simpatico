@@ -33,7 +33,7 @@ namespace DdMd
    *
    * Usage:
    * \code
-   * 
+   *
    *    AtomDistributor   distributor;
    *    AtomStorage   storage;
    *    Atom*         ptr;
@@ -47,7 +47,7 @@ namespace DdMd
    *       for (i = 0; i < nAtom; ++i) {
    *
    *           ptr = distributor.newAtomPtr();
-   *  
+   *
    *           // Read properties of Atom *ptr from file
    *           file >> ptr->position();
    *           // ...
@@ -91,26 +91,26 @@ namespace DdMd
       * Set pointers to boundary, domain, and buffer.
       *
       * This method must be called on all nodes, before any other.
-      * 
+      *
       * \param boundary      Boundary object (periodic boundary conditions)
       * \param domain        Domain object (processor grid)
       * \param storage       AtomStorage object (processor grid)
       * \param buffer        Buffer used for communication
       */
-      void associate(Domain& domain, Boundary& boundary, 
+      void associate(Domain& domain, Boundary& boundary,
                      AtomStorage& storage, Buffer& buffer);
 
       /**
       * Set cacheCapacity, allocate memory and initialize object.
       *
-      * This method and readParameters both allocate all required memory 
-      * and initialize the AtomDistributor. Memory for a temporary read 
+      * This method and readParameters both allocate all required memory
+      * and initialize the AtomDistributor. Memory for a temporary read
       * cache is alocated only on the master.
       *
-      * If cacheCapacity < 0, this sets a default value large enough to 
+      * If cacheCapacity < 0, this sets a default value large enough to
       * accomodate full send buffers for all processors simultaneously.
-      * 
-      * Preconditions: The initialize method must have been called, the 
+      *
+      * Preconditions: The initialize method must have been called, the
       * Buffer must be allocated, and the Domain must be initialized.
       *
       * \param cacheCapacity max number of atoms cached for sending
@@ -132,7 +132,7 @@ namespace DdMd
       * Initialize buffer before the loop over atoms.
       *
       * This method should be called only by the master processor,
-      * just before entering the loop to read atoms from file. 
+      * just before entering the loop to read atoms from file.
       */
       void setup();
       #endif
@@ -141,30 +141,38 @@ namespace DdMd
       * Returns pointer an address available for a new Atom.
       *
       * This method should be called only by the master processor. It
-      * returns the address within the internal cache for a new Atom 
-      * object.  Each call to newAtomPtr() must be followed by a matching
-      * call to addAtom(). 
+      * returns the address within the internal cache for a new Atom
+      * object. Every call to newAtomPtr() must be followed by a 
+      * matching call to addAtom().
       *
       * \return address for a new Atom.
       */
-      Atom* newAtomPtr(); 
-     
+      Atom* newAtomPtr();
+
       /**
       * Process the active atom for sending.
       *
       * This method may be called only by the master processor, after
-      * a matching call to newAtomPtr(). It identifies and returns the
-      * rank of the processor that owns the active atom (i.e., the atom 
-      * returned by the recent call to newAtomPtr), based on its position. 
-      * If this atom is owned by the master (rank == 0), it adds it to the
-      * AtomStorage on the master node. Otherwise, it adds the atom to the
-      * cache of stored atoms, and adds a pointer to this atom to the 
-      * sendList for the relevant processor.
+      * a matching call to newAtomPtr(). It identifies which processor
+      * owns the active atom, i.e., the atom returned by the most recent
+      * call to newAtomPtr. After shifting the position of this atom to
+      * lie within the primary cell, it identifies the rank of the
+      * processor that owns this atom, based on its position.  If this
+      * atom is owned by the master (rank == 0), the atom is added to
+      * the AtomStorage on the master node. Otherwise, the atom is added
+      * to a cache of stored atoms, and a pointer to this atom is added
+      * to a sendList for the relevant processor.
       *
-      * Whenever addition of an atom to the cache would exceed the cache
-      * capacity, or exceed the capacity of the sendlist for the owner
+      * Atoms are actually transmitted to other processors as needed:
+      * Whenever addition of an atom to the cache would exceed either
+      * the cache capacity or the capacity of the sendlist for the owner
       * processor, this method sends a buffer to the processor with the
-      * the largest sendList, before caching and marking the current atom.
+      * the largest sendList, before caching the current atom and marking
+      * it for later sending.
+      *
+      * On entry, the coordinates of the active atom must be expressed in:
+      *    - Cartesian coordinates, if UTIL_ORTHOGONAL is true
+      *    - Generalized / scaled coordinates, otherwise
       *
       * \return rank of processor that owns the active atom.
       */
@@ -182,22 +190,26 @@ namespace DdMd
       /**
       * Receive all atoms sent by master processor.
       *
-      * This should be called by all processes except the master.
-      */ 
+      * This should be called by all processes except the master. 
+      *
+      * Upon return, all processors should have correct atoms, with
+      * coordinates in the same coordinates system as that used on
+      * entry to addAtom() (Cartesian iff UTIL_ORTHOGONAL).
+      */
       void receive();
-      #endif 
+      #endif
 
    private:
 
       /// Array that holds cached Atom objects to be sent to other processors.
       /// Allocated only on the master processor.
-      AtomArray   cache_;
+      AtomArray  cache_;
 
       /// Stack of pointers to unused elements of cache_ array.
       /// Allocated only on the master processor.
-      ArrayStack<Atom> reservoir_;
-     
-      #ifdef UTIL_MPI 
+      ArrayStack<Atom>  reservoir_;
+
+      #ifdef UTIL_MPI
       /// Matrix of ptrs to elements of cache_ array. Each row contains
       /// pointers to atoms to be sent to one processor.
       /// Allocated only on the master processor.
@@ -205,43 +217,43 @@ namespace DdMd
 
       /// Array of sendArrays_ row sizes.
       /// Allocated only on the master processor.
-      DArray<int> sendSizes_;
+      DArray<int>  sendSizes_;
       #endif
 
       /// Pointer to associated Boundary object.
-      Boundary*   boundaryPtr_;
+      Boundary*  boundaryPtr_;
 
       /// Pointer to associated Domain object.
-      Domain*     domainPtr_;
+      Domain*  domainPtr_;
 
       /// Pointer to associated Domain object.
-      AtomStorage* storagePtr_;
+      AtomStorage*  storagePtr_;
 
       #ifdef UTIL_MPI
       /// Pointer to associated Buffer object.
-      Buffer*     bufferPtr_;
+      Buffer*  bufferPtr_;
       #endif
 
       /// Pointer to space for a new local Atom. Null when inactive.
-      Atom*       newPtr_;
-      
+      Atom*  newPtr_;
+
       /// Maximum number of items that can be cached on master.
-      int         cacheCapacity_;
+      int  cacheCapacity_;
 
       /// Maximum allowed number of items per transmission to one processor.
-      int         sendCapacity_;
+      int  sendCapacity_;
 
       /// Rank of processor with the maximum current buffer size.
       /// Used only on the master processor.
-      int         rankMaxSendSize_;
+      int  rankMaxSendSize_;
 
       /// Total number of items cached for sending in addAtom()
       /// Used only on the master processor.
-      int          nCachedTotal_;
+      int  nCachedTotal_;
 
       /// Total number of items actually sent.
       /// Used only on the master processor.
-      int          nSentTotal_;
+      int  nSentTotal_;
 
       /**
       * Allocate memory and initialize object.

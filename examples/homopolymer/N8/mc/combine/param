@@ -108,7 +108,7 @@ McSimulation{
     baseInterval                        1000
 
     LogProgress{
-      interval                         10000
+      interval                         20000
     }
 
     McEnergyOutput{
@@ -160,8 +160,8 @@ McSimulation{
     }
 
   }
-  writeRestartInterval             2000
-  writeRestartFileName          restart
+  saveInterval            50000
+  saveFileName          restart
 
 }
 

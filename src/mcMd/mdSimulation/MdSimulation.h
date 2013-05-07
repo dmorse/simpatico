@@ -28,6 +28,8 @@ namespace McMd
 
    public:
 
+      using ParamComposite::load;
+
       #ifdef UTIL_MPI
       /**
       * Constructor.
@@ -180,14 +182,14 @@ namespace McMd
       *
       * \param filename base file name for all restart files.
       */
-      void readRestart(const std::string& filename);
+      void load(const std::string& filename);
 
       /**
       * Write a restart file.
       *
       * \param filename base file name for all restart files.
       */
-      void writeRestart(const std::string& filename);
+      void save(const std::string& filename);
 
       /**
       * Get the MdSystem being simulated by const reference.
@@ -213,10 +215,10 @@ namespace McMd
       MdDiagnosticManager*  mdDiagnosticManagerPtr_;
 
       /// Restart output file name
-      std::string writeRestartFileName_;
+      std::string saveFileName_;
 
       /// Interval for writing restart files (no output if 0)
-      int writeRestartInterval_;
+      int saveInterval_;
 
       /// Has readParam been called?
       bool isInitialized_;

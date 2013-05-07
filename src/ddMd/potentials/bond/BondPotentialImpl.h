@@ -61,7 +61,6 @@ namespace DdMd
       */
       virtual void readParameters(std::istream& in);
 
-      #if 0
       /**
       * Load internal state from an archive.
       *
@@ -77,7 +76,6 @@ namespace DdMd
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
-      #endif
   
       /// \name Interaction interface
       //@{
@@ -262,7 +260,6 @@ namespace DdMd
       interaction().readParameters(in);
    }
 
-   #if 0
    /*
    * Load internal state from an archive.
    */
@@ -281,7 +278,6 @@ namespace DdMd
    template <class Interaction>
    void BondPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
    {  interaction().save(ar); }
-   #endif
 
    /*
    * Return bond energy for a single pair.

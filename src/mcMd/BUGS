@@ -5,7 +5,6 @@ This file should only list outstanding unresolved bugs. Bug descriptions should 
 removed after they are resolved
 
 -------------------------------------------------------------------------------------
-
 Error restarting mcSim semigrand example, with HomopolymerSG species.
 
 Problem with example/chain/semigrand/N8/
@@ -14,5 +13,10 @@ Output:
 Begin reading restart, base file name restart
    Function: void Util::ArrayStack<Data>::allocate(int) [with Data = McMd::Molecule]
    Message : Cannot allocate ArrayStack with capacity <= 0
+
+-------------------------------------------------------------------------------------
+After restarting mcSim: 
+
+   HybridMd moves are not accepted after restart.
 
 -------------------------------------------------------------------------------------

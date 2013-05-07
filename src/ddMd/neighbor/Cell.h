@@ -124,6 +124,14 @@ namespace DdMd
       // Mutators 
 
       /**
+      * Set id for this Cell.
+      *
+      * \param id integer identifier for this Cell
+      */
+      void setId(int id) 
+      {  id_ = id; }
+
+      /**
       * Set the pointer to an array of integer offsets.
       */
       void setOffsetArray(OffsetArray& offsets);
@@ -169,12 +177,12 @@ namespace DdMd
 
       // Accessors
 
+      /**
+      * Get identifier for this Cell.
+      */
       int id() const
       {  return id_; }
-   
-      void setId(int id) 
-      {  id_ = id; }
-
+  
       /**
       * Number of atoms in cell.
       */

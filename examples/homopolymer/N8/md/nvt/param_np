@@ -71,8 +71,8 @@ MdSimulation{
     }
 
   }
-  writeRestartInterval              2000
-  writeRestartFileName           restart
+  saveInterval              2000
+  saveFileName           restart
 }
 
 

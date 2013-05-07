@@ -1,0 +1,16 @@
+SerializeConfigIo{
+  atomCacheCapacity      100
+  bondCacheCapacity      100
+}
+
+
+AngleStorage{
+  capacity            50
+  totalCapacity      100
+}
+DihedralStorage{
+  capacity            50
+  totalCapacity      100
+}
+  angleCacheCapacity     100
+  dihedralCacheCapacity  100

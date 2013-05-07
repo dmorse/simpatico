@@ -57,7 +57,7 @@ namespace DdMd
    * Private method to read Group<N> objects.
    */
    template <int N>
-   int DdMdConfigIo::readGroups(std::istream& file, 
+   int DdMdConfigIo::readGroups(std::ifstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupDistributor<N>& distributor) 
@@ -89,7 +89,7 @@ namespace DdMd
    /*
    * Read a configuration file.
    */
-   void DdMdConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
+   void DdMdConfigIo::readConfig(std::ifstream& file, MaskPolicy maskPolicy)
    {
       // Precondition
       if (atomStorage().nAtom()) {
@@ -100,11 +100,11 @@ namespace DdMd
       }
       if (UTIL_ORTHOGONAL) {
          if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage must use Cartesian coordinates");
+            UTIL_THROW("Atom coordinates are not set for Cartesian");
          }
       } else {
          if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage must use generalized coordinates");
+            UTIL_THROW("Atom coordinates are set for Cartesian");
          }
       }
 
@@ -221,7 +221,7 @@ namespace DdMd
    * Private method to write Group<N> objects.
    */
    template <int N>
-   int DdMdConfigIo::writeGroups(std::ostream& file, 
+   int DdMdConfigIo::writeGroups(std::ofstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupStorage<N>& storage,
@@ -250,8 +250,18 @@ namespace DdMd
    /* 
    * Write the configuration file.
    */
-   void DdMdConfigIo::writeConfig(std::ostream& file)
+   void DdMdConfigIo::writeConfig(std::ofstream& file)
    {
+      // Precondition
+      if (UTIL_ORTHOGONAL) {
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are Cartesian");
+         }
+      } else {
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are not Cartesian");
+         }
+      }
 
       // Write Boundary dimensions
       if (domain().isMaster()) {
@@ -270,7 +280,7 @@ namespace DdMd
          Vector r;
          while (atomPtr) {
             file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6);
-            if (UTIL_ORTHOGONAL) {
+            if (UTIL_ORTHOGONAL || atomStorage().isCartesian()) {
                file << atomPtr->position() << std::endl
                     << "                " << atomPtr->velocity();
             } else {

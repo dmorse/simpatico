@@ -122,8 +122,8 @@ MdSimulation{
     }
 
   }
-  writeRestartInterval           1000
-  writeRestartFileName        restart
+  saveInterval           1000
+  saveFileName        restart
 }
 
     RDF{

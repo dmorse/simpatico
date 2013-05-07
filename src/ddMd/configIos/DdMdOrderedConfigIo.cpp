@@ -57,7 +57,7 @@ namespace DdMd
    * Private method to read Group<N> objects.
    */
    template <int N>
-   int DdMdOrderedConfigIo::readGroups(std::istream& file, 
+   int DdMdOrderedConfigIo::readGroups(std::ifstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupDistributor<N>& distributor) 
@@ -90,7 +90,7 @@ namespace DdMd
    /*
    * Read a configuration file.
    */
-   void DdMdOrderedConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
+   void DdMdOrderedConfigIo::readConfig(std::ifstream& file, MaskPolicy maskPolicy)
    {
       // Precondition
       if (atomStorage().nAtom()) {
@@ -101,11 +101,11 @@ namespace DdMd
       }
       if (UTIL_ORTHOGONAL) {
          if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage must use Cartesian coordinates");
+            UTIL_THROW("Atom storage is not set for Cartesian coordinates");
          }
       } else {
          if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage must use generalized coordinates");
+            UTIL_THROW("Atom storage is set for Cartesian coordinates");
          }
       }
 
@@ -222,7 +222,7 @@ namespace DdMd
    * Private method to write Group<N> objects.
    */
    template <int N>
-   int DdMdOrderedConfigIo::writeGroups(std::ostream& file, 
+   int DdMdOrderedConfigIo::writeGroups(std::ofstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupStorage<N>& storage,
@@ -273,8 +273,18 @@ namespace DdMd
    /* 
    * Write the configuration file.
    */
-   void DdMdOrderedConfigIo::writeConfig(std::ostream& file)
+   void DdMdOrderedConfigIo::writeConfig(std::ofstream& file)
    {
+      // Precondition
+      if (UTIL_ORTHOGONAL) {
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are not Cartesian");
+         }
+      } else {
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are Cartesian");
+         }
+      }
 
       // Write Boundary dimensions
       if (domain().isMaster()) {

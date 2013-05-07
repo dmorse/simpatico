@@ -44,6 +44,25 @@ namespace DdMd
    }
 
    /*
+   * Load internal state from an archive.
+   */
+   void DiagnosticManager::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<long>(ar, "baseInterval", Diagnostic::baseInterval);
+      Manager<Diagnostic>::loadParameters(ar);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void DiagnosticManager::save(Serializable::OArchive &ar)
+   {
+      ar << Diagnostic::baseInterval;
+      Manager<Diagnostic>::save(ar);
+   }
+
+  
+   /*
    * Call setup method of each diagnostic.
    */
    void DiagnosticManager::setup() 

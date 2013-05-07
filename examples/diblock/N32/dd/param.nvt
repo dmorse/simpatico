@@ -3,13 +3,14 @@ Simulation{
     gridDimensions    2    1    3
   }
   FileMaster{
-    commandFileName commands
-    inputPrefix     in/
-    outputPrefix    out/
+    commandFileName   commands
+    inputPrefix       in/
+    outputPrefix      out/
   }
-  nAtomType          1
-  nBondType          1
-  atomTypes          A    1.0
+  nAtomType           2
+  nBondType           1
+  atomTypes           A    1.0
+                      B    1.0
   AtomStorage{
     atomCapacity      12000
     ghostCapacity     12000
@@ -20,17 +21,20 @@ Simulation{
     totalCapacity     20000
   }
   Buffer{
-    atomCapacity      10000
-    ghostCapacity     10000
+    atomCapacity       2000
+    ghostCapacity      2000
   }
   pairStyle           LJPair
   bondStyle           HarmonicBond
   maskedPairPolicy    maskBonded
   reverseUpdateFlag   0
   PairPotential{
-    epsilon           1.0
-    sigma             1.0
-    cutoff            1.122462048
+    epsilon           1.0  1.6
+                      1.6  1.0
+    sigma             1.0  1.0
+                      1.0  1.0
+    cutoff            1.122462048 1.122462048
+                      1.122462048 1.122462048
     skin              0.4
     pairCapacity      40000
     maxBoundary       orthorhombic   30.0   30.0   30.0
@@ -48,33 +52,31 @@ Simulation{
   }
   NvtIntegrator{
     dt                0.005
-    tauT              1.000
+    tauT              0.500
+    saveInterval      0
   }
   Random{
     seed              8012457890
   }
   DiagnosticManager{
-     baseInterval     100
+     baseInterval     1000
 
      OutputEnergy{
-        interval         1000
-        outputFileName   energy
+        interval        2000
+        outputFileName  energy
      }
 
      OutputPressure{
-        interval         200
-        outputFileName   pressure
+        interval        4000
+        outputFileName  pressure
      }
 
   }
 }
 
-
-
-
      WriteConfig{
-        interval         2000
-        outputFileName   config
+        interval          2000
+        outputFileName  config
      }
 
   nAngleType         0

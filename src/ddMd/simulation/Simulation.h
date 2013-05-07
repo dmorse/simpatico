@@ -23,9 +23,10 @@
 #include <util/boundary/Boundary.h>              // member 
 #include <util/space/Tensor.h>                   // member (template param)
 #include <util/containers/DArray.h>              // member (template)
-#include <util/containers/DMatrix.h>              // member (template)
+#include <util/containers/DMatrix.h>             // member (template)
 #include <util/misc/Setable.h>                   // member (template)
 #include <util/signal/Signal.h>                  // members
+#include <util/archives/Serializable.h>          // typedef in function interface
 
 #include <fstream>
 
@@ -36,16 +37,14 @@ namespace Util {
    class BoundaryEnsemble;
    class Tensor;
 }
-namespace McMd { 
-   class McSimulation; 
-}
 
 namespace DdMd
 {
 
-   class ConfigIo;
-   class DiagnosticManager;
    class Integrator;
+   class ConfigIo;
+   class SerializeConfigIo;
+   class DiagnosticManager;
    class PairPotential;
    class BondPotential;
    #ifdef INTER_ANGLE
@@ -73,8 +72,12 @@ namespace DdMd
 
    public:
 
-      #ifdef UTIL_MPI
+      using ParamComposite::readParam;
+      using ParamComposite::load;
 
+      // Lifetime
+      
+      #ifdef UTIL_MPI
       /**
       * Default constructor.
       *
@@ -92,6 +95,9 @@ namespace DdMd
       * Destructor.
       */
       ~Simulation();
+
+      /// \name Initialize
+      //@{
 
       /**
       * Process command line options.
@@ -112,18 +118,71 @@ namespace DdMd
       */
       void setOptions(int argc, char **argv);
 
-      using ParamComposite::readParam;
-
       /**
       * Read parameters from default parameter file.
       */
       virtual void readParam();
 
       /**
+      * Read parameters.
+      *
+      * This version includes the opening and closing blocks.
+      * Does nothing and returns if load() was called previously.
+      */
+      virtual void readParam(std::istream& in);
+
+      /**
       * Read parameters, allocate memory and initialize.
       */
       virtual void readParameters(std::istream& in);
 
+      /**
+      * Set flag to identify if reverse communication is enabled.
+      *
+      * \param reverseUpdateFlag true if reverse communication is enabled.
+      */
+      void setReverseUpdateFlag(bool reverseUpdateFlag);
+
+      //@}
+      /// \name Serialization (Restart files)
+      //@{
+  
+      /**
+      * Load state from a restart file.
+      *
+      * Call on all processors.
+      */
+      void load(const std::string& filename);
+
+      /**
+      * Load state from a restart archive.
+      *
+      * Used to implement load(std::string). Do not call directly.
+      */
+      virtual void loadParameters(Serializable::IArchive& ar);
+
+      /**
+      * Save state to a restart file.
+      *
+      * Call on all processors. Only writes from master ioProcessor.
+      */
+      void save(const std::string& filename);
+
+      /**
+      * Save internal state to restart archive.
+      *
+      * Used to implement save(std::string). Do not call directly.
+      */
+      virtual void save(Serializable::OArchive& ar);
+
+      //@}
+      /// \name Run Time Actions
+      //@{
+
+      /**
+      * Read and execute commands from the default command file.
+      */
+      void readCommands();
 
       /*
       * Read and execute commands from a command file.
@@ -131,14 +190,9 @@ namespace DdMd
       void readCommands(std::istream &in);
    
       /**
-      * Read and execute commands from the default command file.
-      */
-      void readCommands();
-
-      // Mutators
-
-      /**
       * Integrate equations of motion. 
+      *
+      * \param nStep number of time steps to integrate.
       */
       void simulate(int nStep);
 
@@ -154,13 +208,7 @@ namespace DdMd
       */
       void zeroForces();
 
-      /**
-      * Set flag to identify if reverse communication is enabled.
-      *
-      * \param reverseUpdateFlag true if reverse communication is enabled.
-      */
-      void setReverseUpdateFlag(bool reverseUpdateFlag);
-
+      //@}
       /// \name Config File IO
       //@{
 
@@ -623,6 +671,20 @@ namespace DdMd
       void readFileMaster(std::istream& in);
 
       /**
+      * Load FileMaster from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      void loadFileMaster(Serializable::IArchive& ar);
+
+      /**
+      * Save FileMaster to archive.
+      *
+      * \param ar output/saving archive
+      */
+      void saveFileMaster(Serializable::OArchive& ar);
+
+      /**
       * Read potential styles and maskedPairPolicy.
       *
       * \param in input parameter stream
@@ -630,11 +692,39 @@ namespace DdMd
       void readPotentialStyles(std::istream& in);
 
       /**
+      * Load potential styles.
+      *
+      * \param ar input/loading archive
+      */
+      void loadPotentialStyles(Serializable::IArchive& ar);
+
+      /**
+      * Save potential styles to archive.
+      *
+      * \param ar output/saving archive
+      */
+      void savePotentialStyles(Serializable::OArchive& ar);
+
+      /**
       * Read energy and boundary ensembles.
       *
       * \param in input parameter stream
       */
       void readEnsembles(std::istream& in);
+
+      /**
+      * Load energy and boundary ensembles from an input archive.
+      *
+      * \param ar input/loading archive
+      */
+      void loadEnsembles(Serializable::IArchive& ar);
+
+      /**
+      * Save energy and boundary ensembles to archive.
+      *
+      * \param ar output/saving archive
+      */
+      void saveEnsembles(Serializable::OArchive& ar);
 
    private:
 
@@ -716,6 +806,9 @@ namespace DdMd
 
       /// Pointer to a configuration reader/writer.
       ConfigIo* configIoPtr_;
+   
+      /// Pointer to a configuration reader/writer for restart.
+      SerializeConfigIo* serializeConfigIoPtr_;
    
       /// DiagnosticManager
       DiagnosticManager* diagnosticManagerPtr_;
@@ -825,6 +918,18 @@ namespace DdMd
 
       /// Log output file (if not standard out)
       std::ofstream logFile_;
+
+      /// Has readParam been called?
+      bool isInitialized_;
+
+      /// Is this Simulation in the process of restarting?
+      bool isRestarting_;
+
+      /// Return the current ConfigIo (create if necessary)
+      ConfigIo& configIo();
+
+      /// Return a SerializeConfigIo (create if necessary)
+      SerializeConfigIo& serializeConfigIo();
 
    // friends:
 

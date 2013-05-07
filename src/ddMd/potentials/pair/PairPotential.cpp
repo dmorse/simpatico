@@ -17,6 +17,7 @@
 #include <ddMd/neighbor/PairList.h>
 #include <ddMd/neighbor/CellList.h>
 #include <ddMd/communicate/Domain.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/space/Vector.h>
 #include <util/global.h>
 
@@ -79,8 +80,8 @@ namespace DdMd
    {
       skin_ = skin;
       pairCapacity_ = pairCapacity;
-      cutoff_ = maxPairCutoff() + skin;
       maxBoundary_ = maxBoundary;
+      cutoff_ = maxPairCutoff() + skin;
 
       allocate();
    }
@@ -88,73 +89,42 @@ namespace DdMd
    /*
    * Read parameters for PairList and allocate memory.  
    */
-   void PairPotential::readPairListParam(std::istream& in)
+   void PairPotential::readParameters(std::istream& in)
    {
       read<double>(in, "skin", skin_);
       read<int>(in, "pairCapacity", pairCapacity_);
       read<Boundary>(in, "maxBoundary", maxBoundary_);
       cutoff_ = maxPairCutoff() + skin_;
-
       allocate();
    }
 
-   #if 0
    /*
    * Read parameters for PairList and allocate memory.  
    */
-   void PairPotential::loadPairListParam(Serializable::IArchive& ar)
+   void PairPotential::loadParameters(Serializable::IArchive& ar)
    {
+  
       loadParameter<double>(ar, "skin", skin_);
       loadParameter<int>(ar, "pairCapacity", pairCapacity_);
       loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
-      ar & cutoff_;
-      //cutoff_ = maxPairCutoff() + skin_;
-      ar & methodId_;
 
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(cutoff_);
+      loader.load(methodId_);
       allocate();
-
-      #if 0
-      if (UTIL_ORTHOGONAL) {
-         boundary() = maxBoundary_;
-         //boundary().setOrthorhombic(maxBoundary_.lengths());
-         // Above is necessary because the domain uses a reference to the
-         // boundary to calculate domain bounds, if (UTIL_ORTHOGONAL).
-      }
-
-      // Set cutoffs, and upper and lower bound of the processor domain.
-      Vector lower;
-      Vector upper;
-      Vector cutoffs;
-      for (int i = 0; i < Dimension; ++i) {
-         lower[i] = domain().domainBound(i, 0);
-         upper[i] = domain().domainBound(i, 1);
-         if (UTIL_ORTHOGONAL) {
-            cutoffs[i] = cutoff_;
-         } else {
-            cutoffs[i] = cutoff_/maxBoundary_.length(i);
-         }
-      }
-
-      // Allocate CellList and PairList
-      int localCapacity = storage().atomCapacity();
-      int totalCapacity = localCapacity + storage().ghostCapacity();
-      cellList_.allocate(totalCapacity, lower, upper, cutoffs);
-      pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
-      #endif
    }
 
    /*
    * Save parameters to output/saving Archive.
    */
-   void PairPotential::savePairListParam(Serializable::OArchive& ar)
+   void PairPotential::save(Serializable::OArchive& ar)
    {
-      ar & skin_;
-      ar & pairCapacity_;
-      ar & maxBoundary_;
-      ar & cutoff_;
-      ar & methodId_;
+      ar << skin_;
+      ar << pairCapacity_;
+      ar << maxBoundary_;
+      ar << cutoff_;
+      ar << methodId_;
    }
-   #endif
 
    /*
    * Allocate memory for the cell list and pair list.
@@ -173,7 +143,7 @@ namespace DdMd
          // boundary to calculate domain bounds, if (UTIL_ORTHOGONAL).
       }
 
-      // Calculate cell list cutoff lengths
+      // Calculate cell list cutoff lengths for all directions
       Vector cutoffs;
       Vector lower;
       Vector upper;
@@ -222,7 +192,7 @@ namespace DdMd
       }
       cellList_.makeGrid(lower, upper, cutoffs);
       cellList_.clear();
-     
+
       // Add all atoms to the cell list. 
       AtomIterator atomIter;
       storage().begin(atomIter);
@@ -239,7 +209,7 @@ namespace DdMd
 
       // Finalize cell list
       cellList_.build();
-
+     
       // Postconditions
       assert(cellList_.isValid());
       assert(cellList_.nAtom() + cellList_.nReject() 
@@ -257,77 +227,8 @@ namespace DdMd
       if (!storage().isCartesian()) {
          UTIL_THROW("Coordinates not Cartesian entering buildPairList");
       }
-
       pairList_.build(cellList_, reverseUpdateFlag());
    }
-
-   #if 0
-   /*
-   * Build the cell list (i.e., fill with atoms).
-   */
-   void PairPotential::findNeighbors(const Vector& lower, const Vector& upper)
-   {
- 
-      if (UTIL_ORTHOGONAL) {
-         if (!storage().isCartesian()) {
-            UTIL_THROW("Coordinates not Cartesian entering findNeighbors");
-         }
-      } else {
-         if (storage().isCartesian()) {
-            UTIL_THROW("Coordinates are Cartesian entering findNeighbors");
-         }
-      }
-
-      Vector cutoffs;
-      for (int i = 0; i < Dimension; ++i) {
-         if (UTIL_ORTHOGONAL) {
-            cutoffs[i] = cutoff_;
-         } else {
-            cutoffs[i] = cutoff_/boundaryPtr_->length(i);
-         }
-      }
-      cellList_.makeGrid(lower, upper, cutoffs);
-      cellList_.clear();
-     
-      // Add all atoms to the cell list. 
-      AtomIterator atomIter;
-      storage().begin(atomIter);
-      for ( ; atomIter.notEnd(); ++atomIter) {
-         cellList_.placeAtom(*atomIter);
-      }
-
-      // Add all ghosts to the cell list. 
-      GhostIterator ghostIter;
-      storage().begin(ghostIter);
-      for ( ; ghostIter.notEnd(); ++ghostIter) {
-         cellList_.placeAtom(*ghostIter);
-      }
-
-      cellList_.build();
-      assert(cellList_.isValid());
-      assert(cellList_.nAtom() + cellList_.nReject() == storage().nAtom() + storage().nGhost());
-
-      if (!UTIL_ORTHOGONAL) {
-         storage().transformGenToCart(*boundaryPtr_);
-      }
-      pairList_.build(cellList_, reverseUpdateFlag());
-   }
-
-   /*
-   * Build the cell list (i.e., fill with atoms).
-   */
-   void PairPotential::findNeighbors()
-   {
-      // Make the cell list grid.
-      Vector lower;
-      Vector upper;
-      for (int i = 0; i < Dimension; ++i) {
-         lower[i] = domain().domainBound(i, 0);
-         upper[i] = domain().domainBound(i, 1);
-      }
-      findNeighbors(lower, upper);
-   }
-   #endif
 
    /*
    * Return value of pair energies.

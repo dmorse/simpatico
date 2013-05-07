@@ -46,7 +46,7 @@ public:
 
    void testAddRemoveAtoms();
 
-   void testClearGhosts();
+   void testClear();
 
    void testIterators();
 
@@ -179,7 +179,7 @@ void AtomStorageTest::testAddRemoveAtoms()
    TEST_ASSERT(storage_.isValid());
 }
 
-void AtomStorageTest::testClearGhosts()
+void AtomStorageTest::testClear()
 {
    printMethod(TEST_FUNC);
 
@@ -252,6 +252,12 @@ void AtomStorageTest::testClearGhosts()
    TEST_ASSERT(storage_.isValid());
    TEST_ASSERT(storage_.nAtom() == 5);
    TEST_ASSERT(storage_.nGhost() == 0);
+
+   storage_.clearAtoms();
+   TEST_ASSERT(storage_.isValid());
+   TEST_ASSERT(storage_.nAtom() == 0);
+   TEST_ASSERT(storage_.nGhost() == 0);
+
 }
  
 void AtomStorageTest::testIterators()
@@ -493,7 +499,7 @@ TEST_BEGIN(AtomStorageTest)
 TEST_ADD(AtomStorageTest, testReadParam)
 TEST_ADD(AtomStorageTest, testAddAtoms)
 TEST_ADD(AtomStorageTest, testAddRemoveAtoms)
-TEST_ADD(AtomStorageTest, testClearGhosts)
+TEST_ADD(AtomStorageTest, testClear)
 TEST_ADD(AtomStorageTest, testIterators)
 TEST_ADD(AtomStorageTest, testSnapshot)
 TEST_ADD(AtomStorageTest, testTransforms)

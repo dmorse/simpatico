@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/Factory.h>            // base class template
+#include <util/param/Factory.h>     // base class template
 #include <mcMd/diagnostics/Diagnostic.h>    // base class template parameter
 #include <mcMd/diagnostics/system/SystemDiagnosticFactory.h>    // member
 

@@ -42,7 +42,16 @@ namespace DdMd
    */
    void TwoStepIntegrator::run(int nStep)
    {
-      bool needExchange;
+      // Precondition
+      if (UTIL_ORTHOGONAL) {
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are not Cartesian");
+         }
+      } else {
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are Cartesian");
+         }
+      }
 
       // Unset all stored computations.
       simulation().modifySignal().notify();
@@ -51,18 +60,35 @@ namespace DdMd
       atomStorage().unsetNAtomTotal();
       atomStorage().computeNAtomTotal(domain().communicator());
 
-      // Setup this Integrator before main loop
+      // Setup required before main loop (ghosts, forces, etc)
+      // Atomic coordinates are Cartesian on exit from setup.
       setup();
       simulation().diagnosticManager().setup();
 
       // Main MD loop
       timer().start();
       exchanger().timer().start();
-      int endStep = iStep_ + nStep;
+      int  beginStep = iStep_;
+      int  endStep = iStep_ + nStep;
+      bool needExchange;
       for ( ; iStep_ < endStep; ++iStep_) {
 
+         // Atomic coordinates must be Cartesian on entry to loop body.
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atomic coordinates are not Cartesian");
+         }
+
+         // Sample scheduled diagnostics.
+         // Also write restart file, if scheduled.
          if (Diagnostic::baseInterval > 0) {
             if (iStep_ % Diagnostic::baseInterval == 0) {
+               if (saveInterval() > 0) {
+                  if (iStep_ % saveInterval() == 0) {
+                     if (iStep_ > beginStep) {
+                        simulation().save(saveFileName());
+                     }
+                  }
+               }
                simulation().diagnosticManager().sample(iStep_);
             }
          }
@@ -76,6 +102,7 @@ namespace DdMd
          simulation().modifySignal().notify();
 
          #ifdef DDMD_INTEGRATOR_DEBUG
+         // Sanity check
          simulation().isValid();
          #endif
 
@@ -107,6 +134,7 @@ namespace DdMd
          simulation().exchangeSignal().notify();
    
          #ifdef DDMD_INTEGRATOR_DEBUG
+         // Sanity check
          simulation().isValid();
          #endif
 
@@ -124,6 +152,7 @@ namespace DdMd
          timer().stamp(INTEGRATE2);
    
          #ifdef DDMD_INTEGRATOR_DEBUG
+         // Sanity check
          simulation().isValid();
          #endif
 
@@ -131,7 +160,19 @@ namespace DdMd
       exchanger().timer().stop();
       timer().stop();
 
-      // Transform to coordinates expected for beginning of next run.
+      // Final restart write, if final iStep_ is multiple of interval.
+      if (Diagnostic::baseInterval > 0) {
+         if (iStep_ % Diagnostic::baseInterval == 0) {
+            if (saveInterval() > 0) {
+               if (iStep_ % saveInterval() == 0) {
+                  simulation().save(saveFileName());
+               }
+            }
+         }
+      }
+
+      // If !UTIL_ORTHOGONAL, transform to scaled coordinates,
+      // in preparation for beginning of the next run.
       if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {
          atomStorage().transformCartToGen(boundary());
       }

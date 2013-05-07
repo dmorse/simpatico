@@ -268,7 +268,7 @@ namespace Util
    */
    template <class Data, int Capacity>
    inline void FSArray<Data, Capacity>::clear() 
-   { size_ = 0; }
+   {  size_ = 0; }
 
    /*
    * Serialize a FSArray to/from an Archive.
@@ -279,7 +279,9 @@ namespace Util
                                           const unsigned int version)
    {
       ar & size_;
-      if (size_ > Capacity) UTIL_THROW("Size > Capacity");
+      if (size_ > Capacity) {
+         UTIL_THROW("size > Capacity");
+      }
       for (int i = 0; i < size_; ++i) {
          ar & data_[i];
       }

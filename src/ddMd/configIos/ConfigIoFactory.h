@@ -31,9 +31,19 @@ namespace DdMd
       ConfigIoFactory(Simulation& simulation);
 
       /**
-      * Method to create any species supplied with Simpatico.
+      * Create an instance of a specified subclass of ConfigIo.
       *
-      * \param  subclassName  name of the ConfigIo subclass
+      * If the subclassName is recognized, this method returns a
+      * pointer to new object. If the name is not recognized, it
+      * returns a null pointer.
+      *
+      * The new object is created using a constructor that takes
+      * the parent DdMd::Simulation as a parameter. The calling
+      * function must invoke DdMd::ConfigIo::initialize() before
+      * using the new ConfigIo to read or write configuration
+      * files.
+      *
+      * \param  subclassName  name of a subclass of ConfigIo 
       * \return ConfigIo*     pointer to new instance of subclassName
       */
       ConfigIo* factory(const std::string &subclassName) const;

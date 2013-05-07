@@ -16,6 +16,7 @@
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/space/Vector.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/misc/Timer.h>
 #include <util/global.h>
 
@@ -62,13 +63,44 @@ namespace DdMd
    {
       read<double>(in, "dt",   dt_);
       read<double>(in, "tauT", tauT_);
+      Integrator::readParameters(in);
 
       nuT_ = 1.0/tauT_;
       int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
       }
+   }
 
+   /**
+   * Load internal state from an archive.
+   */
+   void NvtIntegrator::loadParameters(Serializable::IArchive &ar)
+   {
+      loadParameter<double>(ar, "dt", dt_);
+      loadParameter<double>(ar, "tauT", tauT_);
+      Integrator::loadParameters(ar);
+
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nuT_);
+      loader.load(xi_);
+
+      int nAtomType = simulation().nAtomType();
+      if (!prefactors_.isAllocated()) {
+         prefactors_.allocate(nAtomType);
+      }
+   }
+
+   /*
+   * Read time step dt.
+   */
+   void NvtIntegrator::save(Serializable::OArchive &ar)
+   {
+      ar << dt_;
+      ar << tauT_;
+      Integrator::save(ar);
+      ar << nuT_;
+      ar << xi_;
    }
 
    /*
@@ -77,6 +109,10 @@ namespace DdMd
    void NvtIntegrator::initDynamicalState()
    {  xi_ = 0.0; }
 
+
+   /*
+   * Setup parameters before beginning of run. 
+   */
    void NvtIntegrator::setup()
    {
 

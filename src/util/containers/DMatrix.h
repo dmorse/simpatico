@@ -194,7 +194,9 @@ namespace Util
             if (capacity1 > 0 && capacity2 > 0) {
                allocate(capacity1, capacity2);
             } else {
-               UTIL_THROW("Attempt to load empty DMatrix");
+               if (capacity1 > 0 || capacity2 > 0) {
+                  UTIL_THROW("Inconsistent input capacities for DMatrix");
+               }
             }
          } else {
             if (capacity1 != capacity1_) {

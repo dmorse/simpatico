@@ -18,7 +18,8 @@ namespace Util
    */
    TextFileOArchive::TextFileOArchive()
     : filePtr_(0),
-      version_(0)
+      version_(0),
+      createdFile_(true)
    {  filePtr_ = new std::ofstream(); }
 
    /*
@@ -26,14 +27,33 @@ namespace Util
    */
    TextFileOArchive::TextFileOArchive(std::string filename)
     : filePtr_(0),
-      version_(0)
+      version_(0),
+      createdFile_(true)
    {  filePtr_ = new std::ofstream(filename.c_str()); }
+
+
+   /*
+   * Constructor.
+   */
+   TextFileOArchive::TextFileOArchive(std::ofstream& file)
+    : filePtr_(&file),
+      version_(0),
+      createdFile_(false)
+   {  
+      if (!file.is_open()) {
+         UTIL_THROW("File not open");
+      }  
+   }
 
    /*
    * Destructor.
    */
    TextFileOArchive::~TextFileOArchive()
-   {  delete filePtr_; }  
+   {
+      if (filePtr_ && createdFile_) {  
+         delete filePtr_; 
+      }
+   }
 
    /*
    * Return underlying file by reference.
