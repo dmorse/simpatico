@@ -89,6 +89,14 @@ namespace McMd
       // Allocate an array of number of atoms in blocks of different types
       iTypeNAtom_.allocate(nAtomType_); 
 
+      dRSq_.allocate(nAtomType_);
+      dRSqPair_.allocate(nAtomTypePairs_);
+
+      for (int i = 0; i < nAtomType_+nAtomTypePairs_; ++i) {
+         accumulators_[i].setNSamplePerBlock(nSamplePerBlock_);
+      }
+
+ 
       isInitialized_ = true;
    }
 
