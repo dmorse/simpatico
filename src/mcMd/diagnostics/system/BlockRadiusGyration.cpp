@@ -91,11 +91,6 @@ namespace McMd
 
       dRSq_.allocate(nAtomType_);
       dRSqPair_.allocate(nAtomTypePairs_);
-
-      for (int i = 0; i < nAtomType_+nAtomTypePairs_; ++i) {
-         accumulators_[i].setNSamplePerBlock(nSamplePerBlock_);
-      }
-
  
       isInitialized_ = true;
    }
