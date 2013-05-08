@@ -89,6 +89,9 @@ namespace McMd
       // Allocate an array of number of atoms in blocks of different types
       iTypeNAtom_.allocate(nAtomType_); 
 
+      dRSq_.allocate(nAtomType_);
+      dRSqPair_.allocate(nAtomTypePairs_);
+ 
       isInitialized_ = true;
    }
 
