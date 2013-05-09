@@ -9,22 +9,33 @@ namespace McMd
  
 \section potentials_base_sec Potential Energy Base Classes
 The mcSim and mdSim programs use the following set of abstract base classes for different types of potential energy:
-<ul style="list-style: none;">
+<ul>
+
  <li> McMd::McPairPotential </li>
+
  <li> McMd::MdPairPotential </li>
+
  <li> McMd::BondPotential </li>
+
  <li> McMd::AnglePotential </li>
+
  <li> McMd::DihedralPotential </li>
+
  <li> McMd::ExternalPotential </li>
+
 </ul>
 The names are self-explanatory: Bond, Angle, and Dihedral potentials represent 2-body bond, 3-body angle, and 4-body dihedral covalent interactions.  An ExternalPotential represents a one-body potential in which the energy depends upon the position and type of a single atom. The McPairPotential and MdPairPotential classes both represent nonbonded pair interactions, but define slightly different interfaces for MC and MD simulations. For all other potential energy types (i.e., for bond, angle, dihedral, and external potentials) the same base class is used in both MC and MD simulations.
 
 The ddSim program uses an analogous set of base classes defined in the DdMd namespace:
-<ul style="list-style: none;">
+<ul>
  <li> DdMd::PairPotential </li>
+
  <li> DdMd::BondPotential </li>
+
  <li> DdMd::AnglePotential </li>
+
  <li> DdMd::DihedralPotential </li>
+
  <li> DdMd::ExternalPotential </li>
 </ul>
 with names similar to those of the corresponding McMd classes.

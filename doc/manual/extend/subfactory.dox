@@ -90,21 +90,33 @@ The addSubfactory() method must be invoked before MdSimulation::readParam() in o
 \section custom_factory_accessor_sec Access to Factory Classes
 
 The default Factory object for each of the polymorphic base classes in an mcSim or mdSim simulation can be accessed by reference via a method of either the Simulation or McMd::System classes, or of the McSimulation, MdSimulation, McSystem or MdSystem subclasses. The required accessor methods for the factory classes used by mcSim and mdSim are: 
-<ul style="list-style: none;">
-  <li> McMd::Factory<Species>&            McMd::Simulation::speciesFactory(); </li>
-  <li> McMd::Factory<Diagnostic>&         McMd::Simulation::diagnosticFactory(); </li>
-  <li> McMd::Factory<McMove>&             McMd::McSimulation::mcMoveFactory(); </li>
-  <li> McMd::Factory<MdIntegrator>&       McMd::MdSystem::mdIntegratorFactory(); </li>
-  <li> McMd::Factory<ConfigIo>&           McMd::System::configIoFactory(); </li>
-  <li> McMd::Factory<TrajectoryIo>&       McMd::MdSystem::trajectoryIoFactory(); </li>
-  <li> McMd::Factory<Perturbation>&       McMd::System::perturbationFactory(); </li>
-  <li> McMd::PairFactory&                 McMd::System::pairFactory(); </li>
-  <li> McMd::Factory<BondPotential>&      McMd::System::bondFactory(); </li>
-  <li> McMd::Factory<AnglePotential>&     McMd::System::angleFactory(); </li>
-  <li> McMd::Factory<DihedralPotential>&  McMd::System::dihedralFactory(); </li>
-  <li> McMd::Factory<BondPotential>&      McMd::System::linkFactory(); </li>
-  <li> McMd::Factory<ExternalPotential>&  McMd::System::externalFactory(); </li>
-</ul>
+
+  - McMd::Factory<Species>&            McMd::Simulation::speciesFactory() 
+
+  - McMd::Factory<Diagnostic>&         McMd::Simulation::diagnosticFactory() 
+
+  - McMd::Factory<McMove>&             McMd::McSimulation::mcMoveFactory() 
+
+  - McMd::Factory<MdIntegrator>&       McMd::MdSystem::mdIntegratorFactory() 
+
+  - McMd::Factory<ConfigIo>&           McMd::System::configIoFactory() 
+
+  - McMd::Factory<TrajectoryIo>&       McMd::MdSystem::trajectoryIoFactory() 
+
+  - McMd::Factory<Perturbation>&       McMd::System::perturbationFactory() 
+
+  - McMd::PairFactory&                 McMd::System::pairFactory() 
+
+  - McMd::Factory<BondPotential>&      McMd::System::bondFactory() 
+
+  - McMd::Factory<AnglePotential>&     McMd::System::angleFactory() 
+
+  - McMd::Factory<DihedralPotential>&  McMd::System::dihedralFactory() 
+
+  - McMd::Factory<BondPotential>&      McMd::System::linkFactory() 
+
+  - McMd::Factory<ExternalPotential>&  McMd::System::externalFactory() 
+
 Methods of Simulation and System are also available in the MC and MD subclasses of these classes, and so can be used in either MC or MD simulations. See the page about \ref extend_potential_page for a more detailed discussion of the potential energy and potential energy factory classes.
 
 When a factory must be accessed via an instance of System or one of its subclasesses, a reference to the required McSystem or MdSystem object can be obtained using the system() method of the parent McSimulation or MdSimulation object. This is done in the above example, in which the MdIntegratorFactory is accessed via the line 

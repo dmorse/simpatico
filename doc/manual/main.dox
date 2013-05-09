@@ -3,7 +3,7 @@
 Simpatico is a C++ package for Monte Carlo (MC), Molecular Dynamics (MD) and 
 hybrid MD/MC simulations of polymeric and molecular liquids.
 
-<h3> Contents: </h3>
+<h2>Contents:</h2>
 <ul style="list-style: none;">
  <li> \subpage about_page "1. About"
    <ul style="list-style: none;">
@@ -30,14 +30,11 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
  <li> \subpage source_page "3. Source Code Overview"
    <ul style="list-style: none;">
    <li> \subpage source_directory_page </li>
-   <li> \subpage source_namespace_page    
-     <ul style="list-style: none;">
-     <li> \ref Util_NS_page  </li>
-     <li> \ref Inter_NS_page </li>
-     <li> \ref McMd_NS_page  </li>
-     <li> \ref DdMd_NS_page  </li>
-     </ul>
-   </li>
+   <li> \subpage source_namespace_page </li>
+   <li> \subpage Util_NS_page  </li>
+   <li> \subpage Inter_NS_page </li>
+   <li> \subpage McMd_NS_page  </li>
+   <li> \subpage DdMd_NS_page  </li>
    </ul>
  </li>
  <li> \subpage extend_page  "4. Extending Simpatico" </li>

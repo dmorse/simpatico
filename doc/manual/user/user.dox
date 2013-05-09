@@ -1,6 +1,3 @@
-namespace McMd
-{
-
 /*! \page user_page 2 User Guide
 
 \ref about_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
@@ -28,5 +25,3 @@ namespace McMd
 \ref source_page (Next)
 
 */
- 
-}

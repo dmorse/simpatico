@@ -265,7 +265,7 @@ namespace DdMd
       */
       void transformGenToCart(const Boundary& boundary);
 
-      /*
+      /**
       * Are atomic coordinates Cartesian (true) or generalized (false)?
       */
       bool isCartesian() const;
