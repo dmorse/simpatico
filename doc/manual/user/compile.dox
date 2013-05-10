@@ -13,13 +13,13 @@ The build system uses unix makefiles, and was developed using the gnu version of
 
 The source code for simpatico is hosted on <a href=http://github.com>github</a>, as project dmorse/simpatico.  The source files may be obtained either by downloading a tar file from the (very simple) <a href=http://dmorse.github.com/simpatico/index.html>home page</a> or by using a git client to clone the public <a href=https://github.com/dmorse/simpatico>git repository</a>. 
 
-To clone the git repository, after installing a git client on your home machine, enter:
+To clone the git repository, after installing a git client on your home machine, cd to the directory you wish to contain the simpatico root directory, and enter:
 \code
 > git clone git://github.com/dmorse/simpatico.git
 \endcode
 This should create a copy of the repository in a new subdirectory of the working directory, which will be named simpatico.
 
-If you download a compressed tar file from the download page, extracting the tar file (tar -xvf tarball) from within the directory that you want to contain the simpatico root directory. This will install the simpatico directory tree in a subdirectory named dmorse-simpatico-ID/, where "ID" represents a hexadecimal identifier for the most recent commit in the git repository. We recommend that you immediately rename this directory "simpatico/", which is the name of the corresponding directory in the git repository. 
+To extract the code from a tar file that you have downloaded from the home page, move the tar file to the directory that should contain the simpatico root directory, and then enter "tar -xvf filename" from this directory, where "filename" denotes the name of the gzipped tar file. This will create a subdirectory named dmorse-simpatico-ID/, where "ID" represents a hexadecimal identifier for the most recent commit in the git repository. We recommend that you immediately rename this directory "simpatico/", which is the name of the corresponding directory in the repository. 
 
 Throughout this documentation, we assume that the root project directory is named simpatico/.  References to paths that do not start explicitly with "simpatico/" should be understood to be relative paths, relative to this root directory. The directory structure is explained \ref source_directory_page "here".
 
@@ -64,7 +64,7 @@ The value of SIMPATICO_DIR should be the path to the simpatico root directory. A
 The simpatico/bin directory is the default location of executable files. The simpatico/tools/python directory must be added to the
 PYTHONPATH to enable the system that generates information about dependencies among C++ files during compilation, which uses a python module from this directory. The automatic dependency generation system is enabled by default, but is not strictly necessary in order to compile the code, and can be disabled. It is really necessary only for developers. If you do not have a python interpreter, or run into trouble during compilation and suspect that a python script is causing trouble, you may disable dependency generation by entering
 \code
-  > ./configure -k0
+> ./configure -k0
 \endcode
 from the simpatico/ root directory. We recommend trying to compile with dependency generation enabled (the default), and disabling it only if necesary. Automatic dependency generation is discussed in more detail \ref compile_dependency_section "below".
 
@@ -80,7 +80,7 @@ Purpose: The setup script creates initial versions of several makefile fragments
 
 After running the setup script, inspect the file src/compiler.mk. This is a makefile fragment that is created by the setup script. The value of the makefile variable ROOT_DIR should be set to the absolute path to the simpatico/ root directory on your machine. (If this variable is not set correctly, nothing else will work). If you move the simpatico/ root directory after running "setup", you will need to either manually edit this makefile variable, or rerun the setup script.
 
-\section compile_mcMd_section Compiling mcSim and mdSim (single-processor versions)
+\section compile_mcMd_section Compiling mcSim and mdSim
 
 To compile single-processor versions of the mcSim and mdSim programs, using the default gcc compiler, with a default set of features enabled, you must first run the setup script (see above), and then enter:
 \code
@@ -105,7 +105,7 @@ The above instructions should compile the default version of the program, using 
 
 As an introduction to the ./configure script, cd to the root directory, and enter
 \code
-   > ./configure -q
+> ./configure -q
 \endcode
 Invoking the configure script with the -q option prints a list of which features are currently enabled, and what compiler is being used. Immediately after running the setup script, it should produce an output that looks like this:
 \code
@@ -137,7 +137,7 @@ The file src/compiler.mk defines a string variable COMPILER, whose value is a la
 
 To choose a different compiler, one may reset the value of the COMPILER string either by directly editing the src/compiler.mk file , or by using the -c option of configure script. The -c option takes the desired value of the COMPILER string as an argument. To choose the intel C++ compiler, on could thus cd to the root directory and then enter:
 \code
-  ./configure -c intel
+> ./configure -c intel
 \endcode
 Each allowed values of the COMPILER string selects a block in the compiler.mk file that contains appropriate compiler settings for use with a particular compiler. The user is free to modify any of these settings, as needed, or to add other blocks that can be selected with other values of the COMPILER variable. 
 
@@ -191,24 +191,20 @@ Multi-processor versions of mcSim and mdSim can be used to run:
 
 The last two applications require the use of the free energy perturbation feature, which is discussed in more detail \ref user_multi_McMd_page "here". The free energy perturbation feature is enabled by default when MPI is enabled. 
 
-If automatic \ref dependency_doc_section "dependency generation" is not enabled, then you must enter
-\code
- > make clean-McMd
-\endcode
-from the root or src/ directory before before compiling the multi-processor versions of mcSim and mdSim. This is necessary in order to remove object files and code that were compiled without MPI by a previous compilation of the single-processor versions mcSim and mdSim.  This step is not necessary if automatic dependency generation is enabled before compiling these programs.
-
-After completing any necessary cleanup, simply enter
+To compile multi-processor versions of mcSim and mdSim, if automatic dependency generation is enabled (the default) enter:
 \code
 > make mcMd-mpi
 \endcode
-from the simpatico/ root directory. This should create mpi-enabled versions of all of the source files in the util/ and inter/ directories, if needed, and compile mpi-entabled versions of all files in the src/mcMd directory, create mpi-enabled versions of corresponding library file(s), and build mpi-enabled executables.
-
-By default, the resulting executable files are named mcSim_m and mdSim_m, using a suffix "_m" to distinguish the multi-processor from single processor versions of mcSim and mdSim. 
+from the simpatico/ root directory.  By default, the resulting executable files are named mcSim_m and mdSim_m, using a suffix "_m" to distinguish the multi-processor from single processor versions of mcSim and mdSim. To build these executables, this command will compile mpi-enabled versions of all of the source files in the mcMd/ directory and (if needed) the util/ and inter/ directories, and create mpi-enabled versions of corresponding library file(s).
  
-\section compile_doc_section Documentation
-The html documentation you are reading was generated using the <a href=http://www.doxygen.org> doxygen </a> documentation utility.  
-The directory tree that you obtain from a tarball or by cloning the repository will not contain a copy of the html files. If desired, you may use doxygen to generate a local copy of the documentation.  If dOxygen is installed on your machine, you can regenerate 
-all of the html documentation by entering 
+If (and only if) automatic \ref compile_dependency_section "dependency generation" is disabled, then you must enter
+\code
+ > make clean-McMd
+\endcode
+from the root directory before before compiling the multi-processor versions of mcSim and mdSim, in order to remove object files that may have been created without MPI and thus force recompilation of these files. 
+
+\section compile_doc_section Generating html documentation
+The html documentation you are reading was generated using the <a href=http://www.doxygen.org> doxygen </a> documentation utility. The simpatico directory will initially not contain a copy of the html files. If desired, you may use doxygen to generate a local copy of the web documentation.  If dOxygen is installed on your machine, you can regenerate all of the html documentation by entering 
 \code
 > make html 
 \endcode
@@ -216,7 +212,7 @@ from the simpatico root directory. The resulting html documentation is deposited
 
 The text of the page you are reading now, along with others that are not extracted from C++ files, is in a set of files in the doc/dox directory. These are written in plain text, and can also be read with any text editor.  Documentation for each C++ class is extracted by doxygen from documentation blocks in the class header file. 
 
-Entering 
+Entering
 \code
 > make clean-html
 \endcode
