@@ -1,14 +1,14 @@
 #-----------------------------------------------------------------------
 # This makefile file defines:
 #
-#   - A variable $(MCMD_DEFS) that is passed to the processor to define
-#     preprocessor flags that effect only code in the mcMd/ directory.
+#  - A variable $(MCMD_DEFS) that is passed to the processor to define
+#    preprocessor flags that effect only code in the mcMd/ directory.
 #
-#   - A variable $(MCMD_SUFFIX) that is appended to the name of the mcMd
-#     library and (by default) to the mcSim and mdSim executables.
+#  - A variable $(MCMD_SUFFIX) that is appended to the name of the mcMd
+#    library and (by default) to the mcSim and mdSim executables.
 #
-#   - Variables that define file names for the mcMd library and the mcSim
-#     and mdSim executables.
+#  - Variables that define file names for the mcMd library and the mcSim
+#    and mdSim executables.
 #
 # This file is included by every makefile in the mcMd directory.  It
 # should be included after the file src/compiler.mk, after the files
