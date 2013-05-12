@@ -176,15 +176,8 @@ namespace Util
    template <class Type>
    void DMatrixParam<Type>::load(Serializable::IArchive& ar)
    {
-      // Preconditions
       if (!(matrixPtr_->isAllocated())) {
-         UTIL_THROW("Cannot read unallocated DMatrix");
-      }
-      if (m_ > matrixPtr_->capacity1()) {
-         UTIL_THROW("Error: Logical size m_ > DMatrix<Type>::capacity1()");
-      }
-      if (n_ > matrixPtr_->capacity2()) {
-         UTIL_THROW("Error: Logical size n_ > DMatrix<Type>::capacity2()");
+         matrixPtr_->allocate(m_, n_);
       }
 
       // Load from archive on ioProcessor
@@ -196,7 +189,7 @@ namespace Util
       }
 
       #ifdef UTIL_MPI
-      // Broadcast
+      // Broadcast to all processors
       if (hasIoCommunicator()) {
          int m = matrixPtr_->capacity1();
          int n = matrixPtr_->capacity2();

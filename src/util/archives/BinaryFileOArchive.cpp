@@ -18,7 +18,8 @@ namespace Util
    */
    BinaryFileOArchive::BinaryFileOArchive()
     : filePtr_(0),
-      version_(0)
+      version_(0),
+      createdFile_(true)
    {  filePtr_ = new std::ofstream(); }
 
    /*
@@ -26,14 +27,28 @@ namespace Util
    */
    BinaryFileOArchive::BinaryFileOArchive(std::string filename)
     : filePtr_(0),
-      version_(0)
+      version_(0),
+      createdFile_(true)
    {  filePtr_ = new std::ofstream(filename.c_str()); }
+
+   /*
+   * Constructor.
+   */
+   BinaryFileOArchive::BinaryFileOArchive(std::ofstream& file)
+    : filePtr_(&file),
+      version_(0),
+      createdFile_(false)
+   {}
 
    /*
    * Destructor.
    */
    BinaryFileOArchive::~BinaryFileOArchive()
-   {  delete filePtr_; }  
+   {
+      if (filePtr_ && createdFile_) {  
+         delete filePtr_; 
+      }
+   }  
 
    /*
    * Return underlying file by reference.

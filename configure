@@ -171,6 +171,7 @@ while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
          echo "-k OFF - automatic dependency tracking" >&2
          MPI=
       fi
+      echo `grep "^ *COMPILER *:=" src/compiler.mk` >&2
       ;;
   esac
 

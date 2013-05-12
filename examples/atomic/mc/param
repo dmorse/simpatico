@@ -103,8 +103,8 @@ McSimulation{
     }
 
   }
-  writeRestartInterval               500000
-  writeRestartFileName              restart
+  saveInterval               500000
+  saveFileName              restart
 }
 
 ---------------------------------------------------------

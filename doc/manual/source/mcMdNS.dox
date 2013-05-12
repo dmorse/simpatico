@@ -3,34 +3,33 @@ namespace McMd
 
    using namespace Util;
 
-/*! \page McMd_NS_page 3.2.3 McMd namespace
+/*! \page McMd_NS_page 3.5 McMd namespace
 
-\ref Inter_NS_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref source_namespace_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref DdMd_NS_page (Next) 
+\ref Inter_NS_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref DdMd_NS_page  (Next) 
 <BR>
 
-The McMd namespace contains most of the classes used to construct Monte Carlo and molecular dynamics simulations.
+The McMd namespace contains most of the classes used to construct Monte Carlo and molecular dynamics simulations. All class names mentioned on this web page that are not explicitly qualified by namespace identifier are defined in the McMd namespace. In many cases, analogous classes with identical names are defined in the DdMd namespace (e.g., McMd::Atom vs. DdMd::Atom).
 
 See also: \ref McMd_Module "McMd Module"
 
 \section chemistry_sec Chemical Structure
 
-An McMd::Atom object represents a point particle that is part of an McMd::Molecule.  Each Atom has a position, velocity and force, each of which is represented by a Util::Vector object. The velocity and force vectors are not used in many MC move algorithms, but are provided even in MC simulations for use in hybrid MC/MD algorithms. An Atom has an integer atom type index, and an integer id that is unique within the simulation. The atom type ids are used to identify atom types within the calculation of non-bonded pair interactions. Each Atom is associated with a parent Molecule object, and can return a reference to its parent Molecule.  
+An Atom object represents a point particle that is part of an Molecule.  Each Atom has a position, velocity and force, each of which is represented by a Util::Vector object. The velocity and force vectors are not used in many MC move algorithms, but are provided even in MC simulations for use in hybrid MC/MD algorithms. An Atom has an integer atom type index, and an integer id that is unique within the simulation. The atom type ids are used to identify atom types within the calculation of non-bonded pair interactions. Each Atom is associated with a parent Molecule object, and can return a reference to its parent Molecule.  
 
-Each Atom is also associated with a McMd::Mask object that contains a list of other atoms for which the nonbonded pair interaction with the target atom is suppressed (i.e., "masked").
+Each Atom is also associated with a Mask object that contains a list of other atoms for which the nonbonded pair interaction with the target atom is suppressed (i.e., "masked").
 
-The McMd::Group < int N > class template is a template class for objects that represent a small group of N covalently interacting atoms.  Specializations with N=2, 3, and 4 are used to represent 2-body covalent bonds, 3-body angle interaction groups, and 4-body dihedral interaction groups, respectively. These are referred to throughout the code as Bond, Angle, and Torsion objects, but these names are typedefs for Group<2>, Group<3>, and Group<4>. A Group < N > object has an array of N pointers to N Atom objects that interact via an N-body covalent interaction. It also has an integer group type id, which is used to associate different sets of interaction parameters to groups with different group type id values.
+The Group < int N > class template is a template class for objects that represent a small group of N covalently interacting atoms.  Specializations with N=2, 3, and 4 are used to represent 2-body covalent bonds, 3-body angle interaction groups, and 4-body dihedral interaction groups, respectively. These are referred to throughout the code as Bond, Angle, and Torsion objects, but these names are typedefs for Group<2>, Group<3>, and Group<4>. A Group < N > object has an array of N pointers to N Atom objects that interact via an N-body covalent interaction. It also has an integer group type id, which is used to associate different sets of interaction parameters to groups with different group type id values.
  
-An McMd::Molecule object represents a chemical molecule, i.e., a specific set of atoms that are connected by covalent bonds. Each Molecule is associated with a list of constituent Atom objects. Each Molecule is also associated with lists of Bond, Angle, and Torsion objects. The Molecule class provides methods to access its constituent Atom and Group < N > objects, using a local indexing scheme in which Atom and Group < N > objects are indexed from zero within each molecule of a species. For example, the method Atom& Molecule::atom(i) returns a reference to Atom number i of the invoking molecule, where i ranges from 0 up to one less than the number of atoms in the molecule. Each Molecule belongs to a Species, and holds a pointer to its parent Species.
+An Molecule object represents a chemical molecule, i.e., a specific set of atoms that are connected by covalent bonds. Each Molecule is associated with a list of constituent Atom objects. Each Molecule is also associated with lists of Bond, Angle, and Torsion objects. The Molecule class provides methods to access its constituent Atom and Group < N > objects, using a local indexing scheme in which Atom and Group < N > objects are indexed from zero within each molecule of a species. For example, the method Atom& Molecule::atom(i) returns a reference to Atom number i of the invoking molecule, where i ranges from 0 up to one less than the number of atoms in the molecule. Each Molecule belongs to a Species, and holds a pointer to its parent Species.
  
-An McMd::Species object contains a description of the chemical structure (connectivity) of a set of similiar molecules within a mixture.  Species is a polymorphic base class. The default implementation of Species simply reads all of the information needed to describe an arbitary molecule from file, i.e., it reads a list of atom types, and information about which atoms are connected by bonds or other 3- and 4- body groups. Subclasses of Species can be used to describe either unique structures (e.g., water or methane) or categories of molecule (e.g., linear bead-spring polymers) for which the structure is partly determined in part by parameters that must be read from an input file (e.g., the chain length and monomer types for a linear homopolymer). Each subclass of Species is responsible for defining its own input parameter format and for reading and writing the information it needs to fully specify a chemical structure. Several simple subclasses of Species are distributed with Simpatico, and users can write others.
+An Species object contains a description of the chemical structure (connectivity) of a set of similiar molecules within a mixture.  Species is a polymorphic base class. The default implementation of Species simply reads all of the information needed to describe an arbitary molecule from file, i.e., it reads a list of atom types, and information about which atoms are connected by bonds or other 3- and 4- body groups. Subclasses of Species can be used to describe either unique structures (e.g., water or methane) or categories of molecule (e.g., linear bead-spring polymers) for which the structure is partly determined in part by parameters that must be read from an input file (e.g., the chain length and monomer types for a linear homopolymer). Each subclass of Species is responsible for defining its own input parameter format and for reading and writing the information it needs to fully specify a chemical structure. Several simple subclasses of Species are distributed with Simpatico, and users can write others.
 
 See also: \ref McMd_Chemistry_Module "Chemistry Module"
 
 \section system_sec Systems 
 
-An McMd::System object represents a set of interacting molecules within a region of space. McMd::McSystem and McMd::MdSystem are subclasses of McMd::System that are specialized for MD and MC simulations, respectively.
+An System object represents a set of interacting molecules within a region of space. McSystem and MdSystem are subclasses of System that are specialized for MD and MC simulations, respectively.
 
 An instance of the System base class has: 
 
@@ -56,7 +55,7 @@ See also: \ref McMd_System_Module "System Module"
 
 The McMd "potential" classes in the mcMd/potentials/ directory are polymorphic classes that provide virtual methods to calculate specific contributions to energies and atomic forces for an entire System, as well as for small groups (e.g., pairs) of interacting atoms.  The classes BondPotential, AnglePotential, DihedralPotential provide interfaces for bond, angle, and dihedral potentials, respectively, which are used in both MD and MC simulations. The classes McPairPotential and MdPairPotential provide slightly different interfaces for nonbonded pair interactions for use in MC and MD simulations, respectively. Every potential class provides an energy() method that returns the associated energy for the entire system. The covalent potential energy classes (BondPotential, AnglePotential, and DihedralPotential) and the MdPairPotential class all provide an addForces() method that adds the contribution of the associated type of interaction to the atomic forces for every atom in the system.  The covalent potential energy classes and McPairPotential all provide an atomEnergy() method that returns the value of a particular energy contribution (i.e., the nonbonded pair energy or covalent bond energy) for a specific atom, for use in MC algorithms. 
 
-The "potential" classes discussed above are abstract base classes. An implementation of each of the potential energy classes is provided by an associated class template. Each such potential energy template takes one of the Interaction classes defined in the Inter namespace as a template argument, and has a instance of that Interaction class as a private member. The name of each template is obtained by adding the suffix "Impl" (for "implementation") to the name of the parent abstract potential class. Thus, for example, McMd::MdPairPotentialImpl<LJPair> is a concrete subclass of McMd::MdPairPotential for Lennard-Jones pair interactions, which uses an instance of the Inter::LJPair interaction class to calculate pair energies and forces for individual nonbonded pairs of atoms. 
+The "potential" classes discussed above are abstract base classes. An implementation of each of the potential energy classes is provided by an associated class template. Each such potential energy template takes one of the Interaction classes defined in the Inter namespace as a template argument, and has a instance of that Interaction class as a private member. The name of each template is obtained by adding the suffix "Impl" (for "implementation") to the name of the parent abstract potential class. Thus, for example, MdPairPotentialImpl<LJPair> is a concrete subclass of MdPairPotential for Lennard-Jones pair interactions, which uses an instance of the Inter::LJPair interaction class to calculate pair energies and forces for individual nonbonded pairs of atoms. 
 
 This use of templates to implement potential energies was chosen in order to allow the user to choose a form of each potential energy at run time without sacrificing efficiency, and without redundant code.  Because the interaction class methods are not virtual, this design allows each template to implement an inner loop for force or energy calculations that is free of virtual function calls, and allows the compiler to inline many force and energy interaction functions. 
 
@@ -66,18 +65,18 @@ See also: \ref McMd_Potential_Module "Potential Module"
 
 \section MdIntegrator_sec Molecular Dynamics Integrators
 
-Molecular dynamics integration algorithms are represented by subclasses of McMd::MdIntegrator. Each MdIntegrator is associated with a parent MdSystem.  Each MdIntegrator implements a step() method that applies one complete MD step to the molecules of the associated System.  An MdIntegrator may store internal state variables that are specific to the algorithm and that must be retained between steps. 
+Molecular dynamics integration algorithms are represented by subclasses of MdIntegrator. Each MdIntegrator is associated with a parent MdSystem.  Each MdIntegrator implements a step() method that applies one complete MD step to the molecules of the associated System.  An MdIntegrator may store internal state variables that are specific to the algorithm and that must be retained between steps. 
   
 See also: \ref McMd_MdIntegrator_Module "MdIntegrator Module"
 
 \section McMove_sec Monte Carlo Moves
-Monte Carlo move algorithms are represented by subclasses of McMd::McMove.  Each McMove implements a move() method that attempts a Markov move, decides whether to accept or reject it, and then updates or restores the state of the associated McSystem or (in Gibbs ensemble) McSystems.  
+Monte Carlo move algorithms are represented by subclasses of McMove.  Each McMove implements a move() method that attempts a Markov move, decides whether to accept or reject it, and then updates or restores the state of the associated McSystem or (in Gibbs ensemble) McSystems.  
 
 See also: \ref McMd_McMove_Module "McMove Module"
 
 \section Diagnostic_sec Diagnostics and Accumulators
 
-McMd::Diagnostic is an abstract base class for objects that represent data analysis or data output operations that must be carried out periodically during a simulation.  Each Diagnostic has a sample() method that is called to implement the desired operation, and an integer "interval" member that specifies the number of MD steps or MC moves that should elapse between subsequent invocations of sample(). The simplest subclasses of Diagnostic periodically output values of specific variables for later analysis. Other diagnostics evaluate statistical properties of particular physical quantities, e.g., they may evaluate the average, variance, distribution, and/or autocorrelation of a sequence of values. The DumpConfig class outputs a sequence of complete configuration files for postprocessing
+Diagnostic is an abstract base class for objects that represent data analysis or data output operations that must be carried out periodically during a simulation.  Each Diagnostic has a sample() method that is called to implement the desired operation, and an integer "interval" member that specifies the number of MD steps or MC moves that should elapse between subsequent invocations of sample(). The simplest subclasses of Diagnostic periodically output values of specific variables for later analysis. Other diagnostics evaluate statistical properties of particular physical quantities, e.g., they may evaluate the average, variance, distribution, and/or autocorrelation of a sequence of values. The DumpConfig class outputs a sequence of complete configuration files for postprocessing
 
 Diagnostics that execute a statistical analysis are usually implemented using one of the accumulator classes from the src/util/accumulators directory. Each accumulator class models an abstract mathematical operations, such as evaluation of an average, a histogram, or an autorcorrelation function. 
 
@@ -87,7 +86,7 @@ See also: \ref Accumulators_Module "Accumulators Module"
 
 \section simulation_sec Simulations
 
-A complete MC or MD simulation is represented by a McMd::Simulation object.  McMd::MdSimulation and McMd::McSimulation subclasses of McMd::Simulation are used for MD and MC simulations of a single system, respectively. Each Simulation object has:
+A complete MC or MD simulation is represented by a Simulation object.  MdSimulation and McSimulation subclasses of Simulation are used for MD and MC simulations of a single system, respectively. Each Simulation object has:
 
  - One or more McSystem or MdSystem objects.
 
@@ -114,7 +113,7 @@ See also: \ref McMd_Simulation_Module "Simulation Module"
 
 <BR>
 \ref Inter_NS_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref source_namespace_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref DdMd_NS_page (Next) 
 
 */

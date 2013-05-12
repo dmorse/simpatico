@@ -28,7 +28,7 @@ namespace DdMd
     : Diagnostic(simulation),
       nSample_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("OutputPairEnergies"); }
 
    /*
    * Read interval and outputFileName. 
@@ -43,6 +43,31 @@ namespace DdMd
       simulation().fileMaster().openOutputFile(filename, outputFile_);
       isInitialized_ = true;
    }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void OutputPairEnergies::loadParameters(Serializable::IArchive &ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
+
+      std::string filename;
+      filename  = outputFileName();
+      simulation().fileMaster().openOutputFile(filename, outputFile_);
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void OutputPairEnergies::save(Serializable::OArchive &ar)
+   {
+      saveInterval(ar);
+      saveOutputFileName(ar);
+   }
+
+  
 
    /*
    * Reset nSample_ counter.

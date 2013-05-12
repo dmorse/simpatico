@@ -6,7 +6,7 @@ The design of Simpatico was motivated by the following goals:
 
 - Integrated MC, MD and hybrid MC simulations: The single-processor mcSim and mdSim programs use similar data structures to provide efficient implementations of molecular Monte Carlo (MC), molecular dynamics (MD), and hybrid Monte Carlo (HMC) algorithms. Simpatico also provides a module that allows the HOOMD-blue code for MD on graphical processing units (GPUs) to be used as an engine for very fast HMC simulations.
 
-- Integrated data analysis: All programs come bundled with a set of data analysis ("Diagnostic") classes that can be used "on-the-fly" analysis, during a simulation. The mcSim and mdSim programs can also be used for post-processing of trajectory files, using the same set of data analysis classes.
+- Integrated data analysis: All programs come bundled with a set of data analysis ("Diagnostic") classes that can be used for "on-the-fly" analysis, during a simulation. The mcSim and mdSim programs can also be used for post-processing of trajectory files, using the same set of data analysis classes.
 
 - Efficiency: Both single-processor (mcSim and mdSim) and parallel (ddSim) programs are competitive as tools for computationally demanding research projects. 
 

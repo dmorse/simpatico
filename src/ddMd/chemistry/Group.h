@@ -20,10 +20,13 @@ namespace DdMd
    template <int N> class Group;
 
    template <int N>
-   std::istream& operator>>(std::istream& in, Group<N> &group);
+   std::istream& operator >> (std::istream& in, Group<N> &group);
 
    template <int N>
-   std::ostream& operator<<(std::ostream& out, const Group<N> &group);
+   std::ostream& operator << (std::ostream& out, const Group<N> &group);
+
+   template <class Archive, int N>
+   void serialize(Archive& ar, Group<N>& group, const unsigned int version);
 
    /**
    * A group of covalently interacting atoms.
@@ -201,11 +204,16 @@ namespace DdMd
    //friends:
 
       friend std::istream& operator >> <> (std::istream& in, Group<N> &group);
+
       friend std::ostream& operator << <> (std::ostream& out, const Group<N> &group);
+
+      template <class Archive> friend
+      void serialize(Archive& ar, Group<N>& group, const unsigned int version);
+
 
    };
 
-   // Friend operator declarations
+   // Friend declarations
 
    /**
    * istream extractor (>>) for a Group.
@@ -231,7 +239,21 @@ namespace DdMd
    template <int N>
    std::ostream& operator<<(std::ostream& out, const Group<N> &group);
 
-   // Friend operator implementations.
+   /**
+   * Serialize one Group<N>.
+   *
+   * Default implementation calls serialize method of data object.
+   * Can be overridden by any explicit specialization.
+   *
+   * \param ar            archive object
+   * \param group  object to be serialized
+   * \param version       archive version id
+   */
+   template <class Archive, int N>
+   void serialize(Archive& ar, Group<N>& group, 
+                  const unsigned int version);
+
+   // Friend implementations.
 
    /* 
    * Input a Goup<N> from an istream, without line breaks.
@@ -262,6 +284,36 @@ namespace DdMd
          out << group.atomIds_[i];
       }
       return out;
+   }
+
+   template <class Archive>
+   void serialize(Archive& ar, Group<2>& group, const unsigned int version)
+   {
+      ar & group.id_;
+      ar & group.typeId_;
+      for (int i = 0; i < 2; ++i) {
+         ar & group.atomIds_[i];
+      }
+   }
+
+   template <class Archive>
+   void serialize(Archive& ar, Group<3>& group, const unsigned int version)
+   {
+      ar & group.id_;
+      ar & group.typeId_;
+      for (int i = 0; i < 3; ++i) {
+         ar & group.atomIds_[i];
+      }
+   }
+
+   template <class Archive>
+   void serialize(Archive& ar, Group<4>& group, const unsigned int version)
+   {
+      ar & group.id_;
+      ar & group.typeId_;
+      for (int i = 0; i < 4; ++i) {
+         ar & group.atomIds_[i];
+      }
    }
 
 } 

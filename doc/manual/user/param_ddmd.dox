@@ -1,4 +1,4 @@
-/*! \page user_param_ddmd_page 2.3.3 ddSim Parameter Files
+/*! \page user_param_ddmd_page 2.3.3 Parameter Files: ddSim
 
 \ref user_param_mcmd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_commands_page (Next) 
@@ -57,6 +57,7 @@ Simulation{
   }
   NveIntegrator{
     dt                0.005
+    saveInterval      0
   }
   Random{
     seed              8012457890
@@ -135,7 +136,9 @@ The Buffer block is associated with a DdMd::Buffer object that provides memory t
 When setting up a first simulation for a particular system, one can be conservative and set these values larger than is expected to be necessary, e.g., by setting both parameters greater than or equal to the average total number of atoms per processor. If needed, values output in the log file for the maximum values of these parameters actually encountered during an initial simulation can then be used to adjust parameter values used in subsequent runs.
 
 \section user_param_DdMdIntegrator_section MD Integrator
-The NveIntegrator block in the above example is a polymorphic block that must contain the file format for a subclass of DdMd::Integrator. Each subclass of DdMd::Integrator implements a parallel MD integrator. The DdMd::NveIntegrator class used in the above example implements a simple NVE velocity-Verlet algorithm. The only parameter required for this integrator is a value for the time step size dt. The required parameters are different for different integrators, but always include a value for dt.
+The NveIntegrator block in the above example is a polymorphic block that must contain the file format for a subclass of DdMd::Integrator. Each subclass of DdMd::Integrator implements a parallel MD integrator. The DdMd::NveIntegrator class used in the above example implements a simple NVE velocity-Verlet algorithm. The most important parameter required for this integrator is a value for the time step size dt. The required parameters are different for different integrators, but always include a value for dt.
+
+The Integrator block also contains a parameter saveInterval, which controls the frequency with which a restart (or checkpoint) file is rewritten. Setting saveInterval = 0, as in the above example, suppresses writing of the checkpoint file. The restart system is discussed in more detail in Sec. \ref user_restart_page.
 
 <BR>
 \ref user_param_mcmd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 

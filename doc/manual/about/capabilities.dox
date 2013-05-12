@@ -1,45 +1,46 @@
 /*! \page about_capabilities_page 1.2 Capabilities
 
+\ref about_goals_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref about_contributors_page (Next)
+<BR>
+
 \section features_potential_sec Potential Energy
 
-All of the Simpatico programs use a potential energy that can contain:
+All simpatico programs use a potential energy that can contain:
 
-- nonbonded pair interactions
+- nonbonded \ref inter_pair_page "pair" interactions
 
-- covalent bond (2 body), angle (3 body) and dihedral (4 body) potentials
+- covalent \ref inter_bond_page "bond" (2 body), \ref inter_angle_page "angle" (3 body) and \ref inter_dihedral_page "dihedral" (4 body) potentials
 
-- external one-body potentials  
+- \ref inter_external_page "external" one-particle potentials  
 
-Several different choices of potential energy function are provided for the nonbonded pair interaction and for each type of covalent interactions. Others are easily added. To simplify integration of MC and MD simulations, all programs are currently restricted to models with differentiable potentials (i.e., not hard spheres), with no constraints on bond lengths or bond angles. The default version of each program currently includes only non-bonded pair interactions and covalent bond interactions. Other types of interactions can be enabled by setting appropriate flags and recompiling.
+Several different choices of potential energy function are provided for the nonbonded pair interaction and for each type of covalent interactions. Others are easily added. To simplify integration of MC and MD algorithms, all programs are currently restricted to models with differentiable potentials (i.e., not hard spheres), with no constraints on bond lengths or bond angles. The default version of each program currently includes only non-bonded pair interactions and covalent bond interactions. Other types of interactions can be enabled by setting appropriate flags and recompiling.
 
-Classes that represent particular potential energy functions, such as a Lennard-Jones pair potential, are referred to in Simpatico as "interactions". The source files for all interactions are in src/inter directory, and they are all defined in the "Inter" C++ namespace.  The same set of interaction classes is available in the mcSim, mdSim, and ddSim programs.  
+Classes that represent particular potential energy functions, such as a Lennard-Jones pair potential, are referred to in simpatico as "interactions". The source files for all interaction classes are in src/inter directory, and all such classes are defined in the "Inter" C++ namespace.  The same set of interaction classes is available for use in the mcSim, mdSim, and ddSim programs.  
 
-Long-range electrostatic potentials have not yet been implemented in any of the programs. This is one of the most important missing feature that would be required to make the package suitable for more atomistic models.
+Long-range electrostatic potentials have not yet been implemented in any of the simpatico programs. This is now the most important missing feature that would be required to make the package suitable for atomistic models.
 
-\section features_algorithms_sec Simulation Algorithms
+\section features_integrators_sec Molecular Dynamics Integrators
 
-For single-processor MD simulations, mdSim currently provides the 
-following integrators:
+For single-processor MD simulations, mdSim currently provides the following integrators:
 <ul>
   <li> NVE velocity Verlet </li>
   <li> NVT Nose-Hoover </li>
-  <li> NVT dissipative particle dynamics (DPD) </li>
   <li> NPH Anderson barostat </li>
+  <li> NVT dissipative particle dynamics (DPD) </li>
 </ul>
-For parallel domain-decomposition Md simulations, DdSim currently 
-provides:
+For parallel domain-decomposition Md simulations, ddSim currently provides:
 <ul>
   <li> NVE velocity Verlet </li>
   <li> NVT Nose-Hoover thermostate </li>
   <li> NPH Anderson barostat </li>
-  <li> NPT Nose-Hoover thermostat, Anderson barostat </li>
+  <li> NPT Nose-Hoover thermostat, Anderson / Martina-Tobias-Klein barostat </li>
 </ul>
-All of the MD integrators except the mdSim DPD integrator use reversible,
-symplectic algorithms. The ddSim NPT integrator allows constant pressure
-simulations in cubic, tetragonal or orthorhombic simulation cells. 
+All of the MD integrators except the mdSim DPD integrator use reversible, symplectic algorithms.  The ddSim NPT integrator allows constant pressure simulations to be carried out in cubic, tetragonal or orthorhombic simulation cells, with one, two, or three independent cell dimensions.
 
-For single-processor Monte-Carlo simulation, mcSim currently provides the 
-following MC moves, and a few others:
+\section features_mcmoves_sec Monte Carlo Moves 
+
+For single-processor Monte-Carlo simulation, mcSim currently provides the following MC moves:
 <ul>
    <li> Single atom displacement </li>
    <li> Rigid molecule displacement </li>
@@ -47,14 +48,12 @@ following MC moves, and a few others:
         in NVT and NPT ensembles. </li>
    <li> Reptation move for linear chains </li>
    <li> Configuration bias regrowth of all or part of a linear chain. </li>
-   <li> Double rebridging for linear chains. </li>
+   <li> Double (two-chain) rebridging for linear chains. </li>
    <li> Double rebridging moves for ring polymers. </li>
    <li> End-swap move for linear heteropolymers (e.g., diblock copolymers) </li>
    <li> Semi-grand canonical move (for, e.g., homopolymer blends) </li>
 </ul>
-The configuration bias and rebridging move algorithms were all designed for 
-use with flexible bead-spring models of polymers, and have been not modified
-for use with models with strong angle potentials.
+The configuration bias and rebridging move algorithms were all designed for use with flexible bead-spring models of polymers, and have been not modified for use with models with strong angle potentials.
 
 \section features_hoomd_sec GPU Acceleration: Integration with Hoomd-blue
 
@@ -62,9 +61,7 @@ Simpatico provides an optional module that allows the use of the <a href=http://
 
 \section features_analysis_sec Data Analysis
 
-Simpatico is distributed with a collection of classes for statistical analysis, referred to as "diagnostics". 
-
-The diagnostic classes available for use with the single-processor mcSim and mdSim programs include classes to evaluate:
+Simpatico is distributed with a collection of classes for statistical analysis, referred to as "diagnostics".  The classes available for use with the single-processor mcSim and mdSim programs include classes that evaluate:
 <ul>
   <li> Thermodynamic properties (energy and stress components) </li>
   <li> Full and partial radial distribution functions (in coordinate space). </li>

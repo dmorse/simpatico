@@ -10,18 +10,14 @@ namespace McMd
 These pages present an overview of the organization of the source
 code, and of the class library design.
 
-Contents: 
+<h2> Contents:</h2> 
    <ul style="list-style: none;">
    <li> \subpage source_directory_page   </li>
-   <li> \subpage source_namespace_page 
-   <ul style="list-style: none;">
-     <li> \ref Util_NS_page  </li>
-     <li> \ref Inter_NS_page </li>
-     <li> \ref McMd_NS_page  </li>
-     <li> \ref DdMd_NS_page  </li>
-   </ul>
-   </li>
-   
+   <li> \subpage source_namespace_page </li>
+   <li> \subpage Util_NS_page  </li>
+   <li> \subpage Inter_NS_page </li>
+   <li> \subpage McMd_NS_page  </li>
+   <li> \subpage DdMd_NS_page  </li>
    </ul>
 
 <BR> 

@@ -1,13 +1,10 @@
-namespace McMd
-{
-
 /*! \page user_page 2 User Guide
 
 \ref about_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_page (Next)
 <BR>
 
-Contents:
+<h2> Contents:</h2>
    <ul style="list-style: none;">
    <li> \subpage user_compile_page   </li>
    <li> \subpage user_usage_page     </li>
@@ -28,5 +25,3 @@ Contents:
 \ref source_page (Next)
 
 */
- 
-}

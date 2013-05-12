@@ -41,11 +41,12 @@ TESTS_DIR=$(ROOT_DIR)/tests
 #-----------------------------------------------------------------------
 # Automatic dependency generation:
 #
-# To enable automatic dependency generation: (1) uncomment the line below
-# that defines MAKEDEP, and (2) Modify the PYTHONPATH unix environment
-# variable to include the $(ROOT_DIR)/tools/python directory. 
+# To disable automatic dependency generation, comment out the definition
+# of MAKEDEP. To enable it: (1) uncomment the definition of MAKEDEP, and
+# (2) Add the simpatico/tools/python directory to the PYTHONPATH unix
+# environment variable. 
  
-#MAKEDEP=$(ROOT_DIR)/bin/makeDep
+MAKEDEP=$(ROOT_DIR)/bin/makeDep
 
 #-----------------------------------------------------------------------
 # COMPILER and MPI_LIB identifiers:

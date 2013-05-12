@@ -15,10 +15,11 @@
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/space/Vector.h>
-#include <util/global.h>
 #include <util/ensembles/EnergyEnsemble.h>
 #include <util/ensembles/BoundaryEnsemble.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/format/Dbl.h>
+#include <util/global.h>
 
 #include <iostream>
 
@@ -40,13 +41,14 @@ namespace DdMd
    {}
 
    /*
-   * Read time step dt.
+   * Read parameters and initialize.
    */
    void NphIntegrator::readParameters(std::istream& in)
    {
       read<double>(in, "dt", dt_);
       read<double>(in, "W", W_);
       read<LatticeSystem>(in, "mode", mode_);
+      Integrator::readParameters(in);
 
       // Allocate memory
       int nAtomType = simulation().nAtomType();
@@ -55,6 +57,41 @@ namespace DdMd
       }
    }
 
+   /*
+   * Load state from restart archive.
+   */
+   void NphIntegrator::loadParameters(Serializable::IArchive& ar)
+   {
+      loadParameter<double>(ar, "dt", dt_);
+      loadParameter<double>(ar, "W", W_);
+      loadParameter<LatticeSystem>(ar, "mode", mode_);
+      Integrator::loadParameters(ar);
+
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nu_);
+
+      // Allocate memory
+      int nAtomType = simulation().nAtomType();
+      if (!prefactors_.isAllocated()) {
+         prefactors_.allocate(nAtomType);
+      }
+   }
+
+   /*
+   * Save state to output archive.
+   */
+   void NphIntegrator::save(Serializable::OArchive& ar)
+   {
+      ar << dt_;
+      ar << W_;
+      ar << mode_;
+      Integrator::save(ar);
+      ar << nu_;
+   }
+
+   /*
+   * Initialize extended ensemble state variables.
+   */
    void NphIntegrator::initDynamicalState()
    {  nu_ = Vector(0.0,0.0,0.0); }
 
@@ -91,6 +128,9 @@ namespace DdMd
       #endif
    }
 
+   /*
+   *  First half of two-step velocity-Verlet integrator. 
+   */
    void NphIntegrator::integrateStep1()
    {
       Vector dv;
@@ -220,6 +260,9 @@ namespace DdMd
       sys.boundary().setOrthorhombic(L);
    }
 
+   /*
+   *  Second half of two-step velocity-Verlet integrator. 
+   */
    void NphIntegrator::integrateStep2()
    {
       Vector dv;

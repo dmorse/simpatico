@@ -42,11 +42,15 @@ namespace Inter
 
       /**
       * Copy constructor.
+      *
+      * \param other LJPair to be copied
       */
       LJPair(const LJPair& other);
 
       /**
       * Assignment.
+      *
+      * \param other LJPair to be assigned.
       */
       LJPair& operator = (const LJPair& other);
 
@@ -65,7 +69,7 @@ namespace Inter
       *
       * \pre nAtomType must have been set, by calling setNAtomType().
       *
-      * \param in  input stream 
+      * \param in  input parameter stream 
       */
       void readParameters(std::istream &in);
 
@@ -95,8 +99,8 @@ namespace Inter
       /**
       * Get LJ range for a specific pair of Atom types.
       *
-      * \param i      atom type index 1
-      * \param j      atom type index 2
+      * \param i      atom type index (1st atom)
+      * \param j      atom type index (2nd atom)
       * \param sigma  LJ range parameter
       */
       void setSigma(int i, int j, double sigma);
@@ -116,11 +120,11 @@ namespace Inter
       //@{ 
 
       /**
-      * Returns interaction energy for a single pair of particles. 
+      * Returns interaction energy for a single pair of atoms. 
       *
-      * \param rsq square of distance between particles
-      * \param i   type of particle 1
-      * \param j   type of particle 2
+      * \param rsq square of distance between atoms
+      * \param i   type of atom 1
+      * \param j   type of atom 2
       * \return    pair interaction energy
       */
       double energy(double rsq, int i, int j) const;
@@ -130,10 +134,10 @@ namespace Inter
       *
       * Multiply this quantity by the components of the separation vector
       * to obtain the force vector. A positive value for the return value
-      * represents a repulsive force between a pair of particles.
+      * represents a repulsive force between a pair of atoms.
       *
       * Precondition: The distance squared rsq must be less than cutoffSq.
-      * If rsq > cutoffSq, the return value is undefined (i.e., wrong).
+      * If rsq > cutoffSq, the return value is undefined (i.e., invalid).
       * Usage: Test for rsq < cutoffSq before calling this function
       * \code
       * if (rsq < interaction.cutoffSq(i, j)) {
@@ -142,9 +146,9 @@ namespace Inter
       * }
       * \endcode
       *
-      * \param rsq square of distance between particles
-      * \param i   type of particle 1
-      * \param j   type of particle 2
+      * \param rsq square of distance between atoms
+      * \param i   type of atom 1
+      * \param j   type of atom 2
       * \return    force divided by distance 
       */
       double forceOverR(double rsq, int i, int j) const;
@@ -152,8 +156,8 @@ namespace Inter
       /**
       * Get square of cutoff distance for specific type pair.
       *
-      * \param i   type of Atom 1
-      * \param j   type of Atom 2
+      * \param i   type of atom 1
+      * \param j   type of atom 2
       * \return    cutoffSq_[i][j]
       */
       double cutoffSq(int i, int j) const;
@@ -194,17 +198,17 @@ namespace Inter
 
    protected:
    
-      /// Maximum allowed value for nAtomType (# of particle types)
+      /// Maximum allowed value for nAtomType (# of atom types)
       static const int MaxAtomType = 2;
    
-      // Lennard-Jones parameters for different types of particle pairs
-      double epsilon_[MaxAtomType][MaxAtomType];   ///< LJ interaction energies.
-      double sigma_[MaxAtomType][MaxAtomType];     ///< LJ range parameters.
-      double sigmaSq_[MaxAtomType][MaxAtomType];   ///< square of sigma[][].
-      double cutoff_[MaxAtomType][MaxAtomType];    ///< LJ cutoff distance.
-      double cutoffSq_[MaxAtomType][MaxAtomType];  ///< square of cutoff[][].
-      double ljShift_[MaxAtomType][MaxAtomType];   ///< shift in LJ potential.
-      double eps48_[MaxAtomType][MaxAtomType];     ///< 48*epsilon
+      // Lennard-Jones parameters for different types of atom pairs
+      double epsilon_[MaxAtomType][MaxAtomType];  ///< LJ interaction energies.
+      double sigma_[MaxAtomType][MaxAtomType];    ///< LJ range parameters.
+      double sigmaSq_[MaxAtomType][MaxAtomType];  ///< square of sigma[][].
+      double cutoff_[MaxAtomType][MaxAtomType];   ///< LJ cutoff distance.
+      double cutoffSq_[MaxAtomType][MaxAtomType]; ///< square of cutoff[][].
+      double ljShift_[MaxAtomType][MaxAtomType];  ///< shift in LJ potential.
+      double eps48_[MaxAtomType][MaxAtomType];    ///< 48*epsilon
  
       /**
       * Maximum pair potential cutoff radius, for all monomer type pairs.
@@ -213,15 +217,19 @@ namespace Inter
       */
       double maxPairCutoff_;
 
-      /// Number of possible atom types.
+      /**
+      * Total number of atom types.
+      */
       int    nAtomType_; 
 
-      /// Are all parameters and pointers initialized?
+      /**
+      * Was this object initialized by calling (read|load)Parameters ?
+      */
       bool  isInitialized_;
 
    };
   
-   // inline methods 
+   // Inline methods 
  
    /* 
    * Calculate interaction energy for a pair, as function of squared distance.
@@ -254,7 +262,7 @@ namespace Inter
    }
 
    /* 
-   * Calculate force/distance for a pair as function of squared distance.
+   * Return cutoff parameter for a specific atom type pair.
    */
    inline double LJPair::cutoffSq(int i, int j) const
    {  return cutoffSq_[i][j]; }

@@ -308,6 +308,11 @@ namespace Util
       */
       LatticeSystem lattice_;
 
+      /**
+      * Copy constructor (Private and not implemented).
+      */
+      OrthorhombicBoundary(const OrthorhombicBoundary& );
+
    // friends:
 
       /// Unit test
@@ -580,7 +585,6 @@ namespace Util
       ar & minLength_;
       serializeEnum(ar, lattice_, version);
       if (Archive::is_loading()) {
-         reset();
          isValid();
       }
    }

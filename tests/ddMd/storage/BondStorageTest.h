@@ -38,14 +38,11 @@ public:
    }
 
    void testReadParam();
-
    void testAdd();
-
    void testAddRemove();
-
    void testIterator();
-
    void testFindBonds();
+   void testClear();
 
 };
 
@@ -111,7 +108,6 @@ void BondStorageTest::testAddRemove()
    TEST_ASSERT(ptr18->id() == 18);
    TEST_ASSERT(bondStorage_.size() == 3);
    TEST_ASSERT(bondStorage_.isValid());
-
 
    bondStorage_.remove(ptr53);
    TEST_ASSERT(bondStorage_.find(53) == 0);
@@ -234,12 +230,35 @@ inline void BondStorageTest::testFindBonds()
 
 }
 
+inline void BondStorageTest::testClear()
+{
+   printMethod(TEST_FUNC);
+
+   // Add bonds
+   Bond* ptr53 = bondStorage_.add(53); // 0
+   Bond* ptr35 = bondStorage_.add(35); // 1
+   Bond* ptr18 = bondStorage_.add(18); // 2
+   Bond* ptr44 = bondStorage_.add(44); // 3
+   Bond* ptr17 = bondStorage_.add(17); // 4
+   Bond* ptr82 = bondStorage_.add(82); // 5
+   Bond* ptr39 = bondStorage_.add(39); // 6
+  
+   TEST_ASSERT(bondStorage_.size() == 7);
+   bondStorage_.remove(ptr82);
+   TEST_ASSERT(bondStorage_.size() == 6);
+   bondStorage_.clearGroups();
+   TEST_ASSERT(bondStorage_.isValid());
+   TEST_ASSERT(bondStorage_.size() == 0);
+
+}
+
 TEST_BEGIN(BondStorageTest)
 TEST_ADD(BondStorageTest, testReadParam)
 TEST_ADD(BondStorageTest, testAdd)
 TEST_ADD(BondStorageTest, testAddRemove)
 TEST_ADD(BondStorageTest, testIterator)
 TEST_ADD(BondStorageTest, testFindBonds)
+TEST_ADD(BondStorageTest, testClear)
 TEST_END(BondStorageTest)
 
 #endif

@@ -1,4 +1,4 @@
-/*! \page user_param_page 2.3 Parameter File
+/*! \page user_param_page 2.3 Parameter Files
 
 \ref user_usage_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_commands_page (Next) 
@@ -6,11 +6,11 @@
 
 All of the Simpatico programs use parameter files with a heirarchical file format. Each parameter file contains a set of nested blocks that begin and end with matched curly brackets, like blocks in a C program.  The parameter files required by the three programs mcSim, mdSim and ddSim use a similar syntax, but differ in some details. The following three sections discuss elements of the parameter file syntax that are common to all three types of simulation, the formats for mcSim and mdSim (which are quite similar), and the format for ddSim simulations.
 
-Contents:
+<h2> Contents:</h2>
    <ul style="list-style: none;">
-   <li> \subpage user_param_syntax_page  </li>
-   <li> \subpage user_param_mcmd_page </li>
-   <li> \subpage user_param_ddmd_page </li>
+   <li> \subpage user_param_syntax_page  "2.3.1 Syntax" </li>
+   <li> \subpage user_param_mcmd_page    "2.3.2 mdSim and mcSim" </li>
+   <li> \subpage user_param_ddmd_page    "2.3.3. ddSim" </li>
    </ul>
 
 <BR>

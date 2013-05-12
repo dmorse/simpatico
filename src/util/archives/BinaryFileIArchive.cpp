@@ -20,7 +20,8 @@ namespace Util
    */
    BinaryFileIArchive::BinaryFileIArchive()
     : filePtr_(0),
-      version_(0)
+      version_(0),
+      createdFile_(true)
    {  filePtr_ = new std::ifstream(); }
 
    /*
@@ -28,14 +29,28 @@ namespace Util
    */
    BinaryFileIArchive::BinaryFileIArchive(std::string filename)
     : filePtr_(0),
-      version_(0)
+      version_(0),
+      createdFile_(true)
    {  filePtr_ = new std::ifstream(filename.c_str()); }
+
+   /*
+   * Constructor.
+   */
+   BinaryFileIArchive::BinaryFileIArchive(std::ifstream& file)
+    : filePtr_(&file),
+      version_(0),
+      createdFile_(false)
+   {}
 
    /*
    * Destructor.
    */
    BinaryFileIArchive::~BinaryFileIArchive()
-   {  delete filePtr_; }  
+   {
+      if (filePtr_ && createdFile_) {  
+         delete filePtr_; 
+      }
+   }
 
    /*
    * Return underlying file by reference.

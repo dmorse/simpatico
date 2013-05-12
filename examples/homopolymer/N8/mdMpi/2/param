@@ -117,8 +117,8 @@ MdSimulation{
     }
 
   }
-  writeRestartInterval             10000
-  writeRestartFileName           restart
+  saveInterval             10000
+  saveFileName           restart
 }
 SET_CONFIG_IO  McConfigIo
 READ_CONFIG        config

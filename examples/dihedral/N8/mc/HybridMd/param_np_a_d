@@ -98,8 +98,8 @@ McSimulation{
       capacity                     100
     }
   }
-  writeRestartInterval          1000
-  writeRestartFileName       restart
+  saveInterval          1000
+  saveFileName       restart
 }
 
     AtomDisplaceMove{

@@ -7,12 +7,6 @@ Serialization
 - Move restart interval and file name, and isInitialized_  to Simulation 
   base classs.
 
-Perturbation
-------------
-
-- Modify so that perturbation can be used without MPI, or change conditional 
-  compilation so that a perturbation can only be compiled ifdef UTIL_MPI.
-
 Constant Pressure MD 
 --------------------
 
@@ -39,6 +33,12 @@ Deformable Boundaries
 
 - Generalize snapshot and obsolete pair list methods to use 
    miniminumDeformRatio to deal optimally with MD in deforming boundaries.
+
+Perturbation
+------------
+
+- Modify so that perturbation can be used without MPI, or change conditional 
+  compilation so that a perturbation can only be compiled ifdef UTIL_MPI.
 
 Interactions (Design change):
 -----------------------------

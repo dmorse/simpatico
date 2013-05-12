@@ -31,6 +31,7 @@
 #include <ddMd/chemistry/MaskPolicy.h>
 #include <util/space/Vector.h>
 #include <util/mpi/MpiSendRecv.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 
@@ -201,22 +202,24 @@ namespace DdMd
    */
    void ConfigIo::load(Serializable::IArchive& ar)
    {
-      ar & atomCacheCapacity_;
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+
+      loader.load(atomCacheCapacity_);
       atomDistributor_.initialize(atomCacheCapacity_);
       atomCollector_.allocate(atomCacheCapacity_);
 
-      ar & bondCacheCapacity_;
+      loader.load(bondCacheCapacity_);
       bondDistributor_.initialize(bondCacheCapacity_);
       bondCollector_.allocate(bondCacheCapacity_);
 
       #ifdef INTER_ANGLE
-      ar & angleCacheCapacity_;
+      loader.load(angleCacheCapacity_);
       angleDistributor_.initialize(angleCacheCapacity_);
       angleCollector_.allocate(angleCacheCapacity_);
       #endif
 
       #ifdef INTER_DIHEDRAL
-      ar & dihedralCacheCapacity_;
+      loader.load(dihedralCacheCapacity_);
       dihedralDistributor_.initialize(dihedralCacheCapacity_);
       dihedralCollector_.allocate(dihedralCacheCapacity_);
       #endif
@@ -241,7 +244,7 @@ namespace DdMd
    * Private method to read Group<N> objects.
    */
    template <int N>
-   int ConfigIo::readGroups(std::istream& file, 
+   int ConfigIo::readGroups(std::ifstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupDistributor<N>& distributor) 
@@ -274,7 +277,7 @@ namespace DdMd
    * Private method to write Group<N> objects.
    */
    template <int N>
-   int ConfigIo::writeGroups(std::ostream& file, 
+   int ConfigIo::writeGroups(std::ofstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupStorage<N>& storage,

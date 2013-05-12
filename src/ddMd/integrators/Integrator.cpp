@@ -24,8 +24,9 @@
 #ifdef INTER_EXTERNAL
 #include <ddMd/potentials/external/ExternalPotential.h>
 #endif
-#include <util/ensembles/BoundaryEnsemble.h>
 
+#include <util/ensembles/BoundaryEnsemble.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
 #include <util/format/Bool.h>
@@ -42,7 +43,9 @@ namespace DdMd
    Integrator::Integrator(Simulation& simulation)
      : SimulationAccess(simulation),
        timer_(Integrator::NTime),
-       isSetup_(false)
+       isSetup_(false),
+       saveFileName_(),
+       saveInterval_(0)
    {}
 
    /*
@@ -52,10 +55,74 @@ namespace DdMd
    {}
 
    /*
-   * Initialize atom distribution, AtomStorage, PairList and forces.
+   * Read saveInterval and saveFileName.
+   */
+   void Integrator::readParameters(std::istream& in)
+   {
+      read<int>(in, "saveInterval", saveInterval_);
+      if (saveInterval_ > 0) {
+         if (Diagnostic::baseInterval > 0) {
+            if (saveInterval_ % Diagnostic::baseInterval != 0) {
+               UTIL_THROW("saveInterval is not a multiple of baseInterval");
+            }
+         } else {
+            UTIL_THROW("Diagnostic::baseInterval is not positive");
+         }
+         read<std::string>(in, "saveFileName", saveFileName_);
+      }
+   }
+
+   /*
+   * Load saveInterval and saveFileName from restart archive.
+   */
+   void Integrator::loadParameters(Serializable::IArchive& ar)
+   {
+      loadParameter<int>(ar, "saveInterval", saveInterval_);
+      if (saveInterval_ > 0) {
+         if (Diagnostic::baseInterval > 0) {
+            if (saveInterval_ % Diagnostic::baseInterval != 0) {
+               UTIL_THROW("saveInterval is not a multiple of baseInterval");
+            }
+         } else {
+            UTIL_THROW("Diagnostic::baseInterval is not positive");
+         }
+         loadParameter<std::string>(ar, "saveFileName", saveFileName_);
+      }
+
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(iStep_);
+      loader.load(isSetup_);
+   }
+
+   /*
+   * Save saveInterval and saveFileName to restart archive.
+   */
+   void Integrator::save(Serializable::OArchive& ar)
+   {
+      ar << saveInterval_;
+      if (saveInterval_ > 0) {
+         ar << saveFileName_;
+      }
+      ar << iStep_;
+      ar << isSetup_;
+   }
+
+   /*
+   * Exchange atoms, build PairList and compute forces.
    */
    void Integrator::setupAtoms()
    {
+      // Precondition
+      if (UTIL_ORTHOGONAL) {
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are not Cartesian");
+         }
+      } else {
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are Cartesian");
+         }
+      }
+
       atomStorage().clearSnapshot();
       exchanger().exchange();
       pairPotential().buildCellList();
@@ -69,6 +136,11 @@ namespace DdMd
       } else {
          simulation().computeForcesAndVirial();
       }
+
+      // Postcondition - coordinates are Cartesian
+      if (!atomStorage().isCartesian()) {
+         UTIL_THROW("Atom coordinates are not Cartesian");
+      }
    }
 
    /*
@@ -76,6 +148,11 @@ namespace DdMd
    */
    void Integrator::computeForces()
    {
+      // Precondition
+      if (!atomStorage().isCartesian()) {
+         UTIL_THROW("Atom coordinates are not Cartesian");
+      }
+
       simulation().zeroForces();
       pairPotential().computeForces();
       timer_.stamp(PAIR_FORCE);
@@ -113,6 +190,11 @@ namespace DdMd
    */
    void Integrator::computeForcesAndVirial()
    {
+      // Precondition
+      if (!atomStorage().isCartesian()) {
+         UTIL_THROW("Atom coordinates are not Cartesian");
+      }
+
       simulation().zeroForces();
       pairPotential().computeForcesAndStress(domain().communicator());
       timer_.stamp(PAIR_FORCE);
@@ -400,7 +482,7 @@ namespace DdMd
 
    }
 
-   /**
+   /*
    * Clear timing, dynamical state, statistics, and diagnostic accumulators.
    */
    void Integrator::clear()

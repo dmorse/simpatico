@@ -1,6 +1,3 @@
-namespace McMd
-{
-
 /*! \page user_options_page 2.11 Compile Time Options
 
 \ref user_multi_page      (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
@@ -105,8 +102,8 @@ The following table lists the most important compile time options for the Simapt
 Notes:
 <ol>
   <li> 
-    The makefile targets mcMd, mcMd_mpi, and ddMd that build the various programs all 
-    call configure -m0 (for mcdMd) or configure -m1 (for mcMd_mpi or ddMd) before
+    The makefile targets mcMd, mcMd-mpi, and ddMd that build the various programs all 
+    call configure -m0 (for mcdMd) or configure -m1 (for mcMd-mpi or ddMd) before
     compiling any code, to ensure that the MPI option is set correctly. When compiling
     using these targets, it should thus not be necessary to set this option explicitly.
   </li>
@@ -169,5 +166,3 @@ We have chosen to use a typedef rather than a polymorphic classes for the bounda
 \ref source_page          (Next) 
 
 */
-
-}

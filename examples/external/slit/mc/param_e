@@ -111,5 +111,5 @@ McSimulation{
       speciesId                          0
     }
   }
-  writeRestartInterval        0
+  saveInterval        0
 }

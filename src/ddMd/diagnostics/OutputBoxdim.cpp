@@ -28,7 +28,7 @@ namespace DdMd
     : Diagnostic(simulation),
       nSample_(0),
       isInitialized_(false)
-   {}
+   {  setClassName("OutputBoxdim"); }
 
    /*
    * Read interval and outputFileName.
@@ -43,6 +43,36 @@ namespace DdMd
       simulation().fileMaster().openOutputFile(filename, outputFile_);
       isInitialized_ = true;
    }
+
+   /*
+   * Load internal state from an archive.
+   */
+   void OutputBoxdim::loadParameters(Serializable::IArchive &ar)
+   {
+      loadInterval(ar);
+      loadOutputFileName(ar);
+
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nSample_);
+
+      std::string filename;
+      filename  = outputFileName();
+      simulation().fileMaster().openOutputFile(filename, outputFile_);
+
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void OutputBoxdim::save(Serializable::OArchive &ar)
+   {
+      saveInterval(ar);
+      saveOutputFileName(ar);
+      ar << nSample_;
+   }
+
+  
 
    /*
    * Reset nSample_

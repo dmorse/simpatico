@@ -6,7 +6,7 @@ namespace McMd
 \ref hoomd_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 <BR>
  
-   Contents: 
+<h2> Contents:</h2> 
    <ul style="list-style: none;">
    <li> \subpage developer_build_page </li>
    <li> \subpage developer_standards_page </li>

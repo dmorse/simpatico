@@ -125,8 +125,8 @@ McSimulation{
     }
 
   }
-  writeRestartInterval                200
-  writeRestartFileName            restart
+  saveInterval                200
+  saveFileName            restart
 }
 
     DumpConfig{

@@ -15,7 +15,7 @@ Users may extend the capabilities of Simpatico by writing new subclasses of a se
 </ul>
 For larger projects, one can also  organize a set several related subclasses into a separate Module class that can be registered with the main program. Each of the these procedures is discussed in greater greater detail in the following subpages.
 
-Contents:
+<h2> Contents:</h2>
 <ul style="list-style: none;">
   <li> \subpage extend_base_page </li>
   <li> \subpage extend_build_page </li>

@@ -55,7 +55,7 @@ namespace DdMd
       * \param file input file stream
       * \param maskPolicy MaskPolicy to be used in setting atom masks
       */
-      virtual void readConfig(std::istream& file, MaskPolicy maskPolicy);
+      virtual void readConfig(std::ifstream& file, MaskPolicy maskPolicy);
 
       /**
       * Write configuration file.
@@ -65,7 +65,7 @@ namespace DdMd
       *
       * \param file output file stream
       */
-      virtual void writeConfig(std::ostream& file);
+      virtual void writeConfig(std::ofstream& file);
    
    private:
 
@@ -107,14 +107,14 @@ namespace DdMd
       * Read Group<N> objects from file. 
       */
       template <int N>
-      void readGroups(std::istream& file, const char* sectionLabel, 
+      void readGroups(std::ifstream& file, const char* sectionLabel, 
                       int nGroup, GroupDistributor<N>& distributor);
 
       /**
       * Write Group<N> objects to file. 
       */
       template <int N>
-      void writeGroups(std::ostream& file, const char* sectionLabel,
+      void writeGroups(std::ofstream& file, const char* sectionLabel,
                        GroupStorage<N>& storage, GroupCollector<N>& collector);
    
    };

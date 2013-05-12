@@ -1,21 +1,20 @@
 /*! \page source_namespace_page 3.2 Namespaces
 
 \ref source_directory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref extend_page  (Next) 
+\ref Util_NS_page  (Next) 
 <BR>
 
-The classes used in the current version of Simpatico are divided into four
-namespaces. The source code for each namespace is in a corresponding 
-subdirectories of the src/directory: 
+The classes used in simpatico are divided into four namespaces. The source 
+code for each namespace is in a corresponding subdirectories of the src/directory: 
 
- - namespace Util (in directory src/util) contains general utilities for 
+ - namespace Util (directory src/util) contains general utilities for 
    C++ programming and scientific computation. 
 
- - namespace Inter (in directory src/inter) contains classes that define 
+ - namespace Inter (directory src/inter) contains classes that define 
    specific potential energy functions, such as the Lennard-Jones pair 
    potential. 
 
- - namespace McMd namespace (in directory src/mcMd) contains classes 
+ - namespace McMd (directory src/mcMd) contains classes 
    required to construct single-processor Monte Carlo and molecular 
    dynamics simulations, and the main programs for mcSim and mdSim.  
 
@@ -23,39 +22,26 @@ subdirectories of the src/directory:
    domain-decomposition molecular dynamics code, and the main program for 
    the ddSim executable. 
 
+The code in some namespaces depends on symbols defined in others. A namespace
+named D is said to "depend" on another namespace C if any class in namespace D 
+uses any classes or other symbols defined in C. The Inter, McMd and DdMd
+namespaces all depend on the Util namespace, in this sense. The dependencies 
+are:
 
-The code in some namespaces depend on sybmols defined in others. A namespace
-named D will be said to "depend" on another namespace C if any class in 
-namespace D uses any symbols that are defined in C. These relationships are:
+ - Util does not depend on any other namespace
 
- - namespace Util does not depend on any other namespace
+ - Inter depends only on Util
 
- - namespace Inter depends only on Util
+ - McMd depends on Util and Inter, but not on DdMd
 
- - namespace McMd depends on Util and Inter, but not on DdMd
+ - DdMd depends on Util and Inter, but not on McMd
 
- - namespace DdMd depends on Util and Inter, but not on McMd
-
-A few of the most important classes in each namespace are introduced in
-the pages listed below. An alternate, and more complete, view of all of 
-the classes in each namespace may be obtained clicking on the "Modules" 
-link above and browsing a hierarchy of modules, each of which contains 
-a sets of functionally related classes, with links to the documentation
-for individual classes.
-
-Contents:
-<ul style="list-style: none;">
- <li> \subpage Util_NS_page  </li>
- <li> \subpage Inter_NS_page </li>
- <li> \subpage McMd_NS_page  </li>
- <li> \subpage DdMd_NS_page  </li>
-</ul>
+A few of the most important classes in each namespace are introduced in the following pages. An alternate, and more complete, view of all of the classes in each namespace may be obtained clicking on the "Modules" link above and browsing a hierarchy of modules. Each module contain a sets of functionally related classes.
 
 <BR>
 \ref source_directory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref source_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref extend_page  (Next) 
+\ref source_page   (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref Util_NS_page  (Next) 
 
 */
  
-// <li> \ref Util_NS_page   (Next / Down)   </li>

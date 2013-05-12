@@ -19,10 +19,12 @@
 #include "McStressAutoCorr.h"
 #include "McIntraBondStressAutoCorr.h"
 #include "McIntraBondTensorAutoCorr.h"
-#include "McWriteRestart.h"
 
 #include <mcMd/diagnostics/mutable/TypeDistribution.h>
 #include <mcMd/diagnostics/mutable/SemiGrandDistribution.h>
+
+#include <mcMd/mcSimulation/McSimulation.h>
+#include <mcMd/mcSimulation/McSystem.h>
 
 namespace McMd
 {
@@ -86,9 +88,6 @@ namespace McMd
       } else 
       if (className == "SemiGrandDistribution") {
          ptr = new SemiGrandDistribution(system());
-      } else
-      if (className == "McWriteRestart") {
-         ptr = new McWriteRestart(simulation());
       } 
 
       // If none of the above are matched, try SystemDiagnosticFactory

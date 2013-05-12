@@ -242,11 +242,20 @@ namespace DdMd
       if (domainPtr_->gridRank() != 0) {
          UTIL_THROW("This is not the master processor");
       }
+      if (UTIL_ORTHOGONAL) {
+         if (!storagePtr_->isCartesian()) {
+            UTIL_THROW("Atom coordinates are not Cartesian");
+         }
+      } else {
+         if (storagePtr_->isCartesian()) {
+            UTIL_THROW("Atom coordinates are Cartesian");
+         }
+      }
       if (newPtr_ == 0) {
          UTIL_THROW("No active newPtr_");
       }
 
-      // Shift position to lie within boundary.
+      // Shift position to lie within primary unit cell.
       if (UTIL_ORTHOGONAL) {
          boundaryPtr_->shift(newPtr_->position());
       } else {
@@ -267,8 +276,7 @@ namespace DdMd
          Atom* ptr = storagePtr_->newAtomPtr();
          *ptr = *newPtr_;
          storagePtr_->addNewAtom();
-
-         reservoir_.push(*newPtr_); 
+         reservoir_.push(*newPtr_);
 
          // Note: Atom is returned to reservoir in a dirty state.
          // Atoms must thus be cleared when popped from reservoir.
@@ -336,7 +344,6 @@ namespace DdMd
 
       // Return rank of processor that owns this atom.
       return rank;
-
    }
 
    #ifdef UTIL_MPI
@@ -375,7 +382,6 @@ namespace DdMd
          for (j = 0; j < sendSizes_[i]; ++j) {
             ptr = sendArrays_(i, j);
             bufferPtr_->packAtom(*ptr);
-            //bufferPtr_->packAtom(*sendArrays_(i, j));
 
             // Return pointer to atom to the reservoir.
             reservoir_.push(*sendArrays_(i, j));

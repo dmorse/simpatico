@@ -69,7 +69,7 @@ namespace DdMd
    * Private method to read Group<N> objects.
    */
    template <int N>
-   void LammpsConfigIo::readGroups(std::istream& file, 
+   void LammpsConfigIo::readGroups(std::ifstream& file, 
                   const char* sectionLabel, int nGroup,
                   GroupDistributor<N>& distributor) 
    {
@@ -101,7 +101,7 @@ namespace DdMd
    /*
    * Read a configuration file.
    */
-   void LammpsConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
+   void LammpsConfigIo::readConfig(std::ifstream& file, MaskPolicy maskPolicy)
    {
       // Precondition
       if (atomStorage().nAtom()) {
@@ -112,11 +112,11 @@ namespace DdMd
       }
       if (UTIL_ORTHOGONAL) {
          if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage must use Cartesian coordinates");
+            UTIL_THROW("Atom storage not set for Cartesian coordinates");
          }
       } else {
          if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage must use generalized coordinates");
+            UTIL_THROW("Atom storage is set for Cartesian coordinates");
          }
       }
 
@@ -284,7 +284,7 @@ namespace DdMd
    * Private method to write Group<N> objects.
    */
    template <int N>
-   void LammpsConfigIo::writeGroups(std::ostream& file, 
+   void LammpsConfigIo::writeGroups(std::ofstream& file, 
                   const char* sectionLabel,
                   GroupStorage<N>& storage,
                   GroupCollector<N>& collector) 
@@ -345,8 +345,19 @@ namespace DdMd
    /* 
    * Write the configuration file.
    */
-   void LammpsConfigIo::writeConfig(std::ostream& file)
+   void LammpsConfigIo::writeConfig(std::ofstream& file)
    {
+      // Preconditions
+      if (UTIL_ORTHOGONAL) {
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are not Cartesian");
+         }
+      } else {
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Atom coordinates are Cartesian");
+         }
+      }
+
       using std::endl;
 
       // Atoms
