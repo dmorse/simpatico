@@ -118,6 +118,15 @@ namespace Inter
       double externalParameter() const;
 
       /**
+      * Returns external potential energy of a particle of type i.
+      *
+      * \param d  component of position along the perpendicular direction
+      * \param i  type of particle (prefactor depends on atomtype)
+      * \return   external potential energy
+      */
+      //double energy(double dPerp, double dParallel, int i) const;
+ 
+      /**
       * Returns external potential energy of a single particle. 
       *
       * \param position atomic position Vector
