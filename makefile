@@ -1,5 +1,6 @@
 # ==============================================================================
-.PHONY: mcMd ddMd mcMd-clean ddMd-clean clean veryclean
+.PHONY: mcMd ddMd mcMd-mpi clean-mcMd clean-ddMd clean clean-bin \
+        html clean-html veryclean
 
 mcMd: 
 	cd src; make mcMd

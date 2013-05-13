@@ -135,26 +135,26 @@ The default configuration created by the setup script uses gnu gcc compiler. It 
 
 The file src/compiler.mk defines a string variable COMPILER, whose value is a label for one of several different compilers. By default, COMPILER=gcc, which selects the gnu compiler. The repository version of this file also contains settings appropriate for the intel compiler, which may be selected by setting COMPILER=intel.
 
-To choose a different compiler, one may reset the value of the COMPILER string either by directly editing the src/compiler.mk file , or by using the -c option of configure script. The -c option takes the desired value of the COMPILER string as an argument. To choose the intel C++ compiler, on could thus cd to the root directory and then enter:
+The configure script may be used to reset the value of the COMPILER string, by using the -c option.  This option takes the desired value of the COMPILER string as an argument. To choose the intel C++ compiler, rather than the gcc compiler, one would thus enter: 
 \code
 > ./configure -c intel
 \endcode
-Each allowed values of the COMPILER string selects a block in the compiler.mk file that contains appropriate compiler settings for use with a particular compiler. The user is free to modify any of these settings, as needed, or to add other blocks that can be selected with other values of the COMPILER variable. 
+from the root directory.
 
 The file src/compiler.mk file can be modified by the user as needed. The setup script creates an initial version of this file is created by copying a file named src/compiler.mk_r, which contains the default version that is stored in the repository. As a user, you may thus modify src/compiler.mk, but should generally not modify src/compiler.mk_r.
 
+In addition to changing the value of COMPILER, to select among different compilers, the user may thus also modify the options passed to particular compilers by modifying makefile macros such CXXFLAGS.  Users may also blocks of definitions for compilers other than the gcc and intel compilers.  
+
 \section compile_mpi_section Enabling MPI 
-The ddSim program and the multi-processor versions of mcSim and mdSim all require an MPI library for parallelization. 
+The ddSim program and the multi-processor versions of mcSim and mdSim all require an MPI library for interprocessor communication. MPI is enabled only when the variable UTIL_MPI is defined to equal 1. To compile these multi-processor programs, users should inspect and may need to edit the makefile variables in the file src/compiler.mk that specify the options passed to the compiler. The variable MPI_LIB is an identifier that can be used to choose from among different sets of compiler settings that, for each choice of compiler, allow use with different MPI library implementations.
 
-For MPI to work correctly, you may need to edit the makefile variables in the file src/compiler.mk that specify the options passed to the compiler. The makefile variable MPI_LIB is an identifier that can be used to choose from among different sets of compiler settings that, for each choice of compiler, allow use with different MPI library implementations.
+The default value of MPI_LIB for use with either the gcc or intel compiler is MPI_LIB=mpicxx. This value selects settings designed for use with systems that use linux kernel modules. Kernel modules allow the choice of compiler and mpi library to be chosen by loading appropriate modules, before attempting to compile. This system is used on the machines of the University of Minnesota Supercomputing Institute that were used for development. The kernel module system normally provides a wrapper script named "mpcixx" to invoke the compiler that was chosen by loading a module. With either the gcc or intel compiler, setting MPI_LIB=mpicxx selects settings in which CXX=mpicxx, thus invoking the compiler via this script wrapper, and sets values of CXXFLAGS and LDFLAGS appropriate for the specified compiler.
 
-The default value of MPI_LIB for use with either the gcc or intel compiler is MPI_LIB=mpicxx. This value selects settings designed for use with systems that use linux kernel modules. Kernel modules allow the choice of compiler and mpi library to be chosen by loading appropriate modules before attempting to compile. This system is used on the machines of the University of Minnesota Supercomputing Institute that were used for development. The kernel module system normally provides a wrapper script named "mpcixx" to invoke the compiler that was chosen by loading a module, and to link to the chosen MPI implementation. With either the gcc or intel compiler, setting MPI_LIB=mpicxx selects settings in which CXX=mpicxx, thus invoking the compiler via this script wrapper, and sets values of CXXFLAGS and LDFLAGS appropriate for the specified compiler.
+The compiler options obtained setting COMPILER=gcc and MPI_LIB=openmpi are those which we use to compile simpatico on a multi-core Mac laptop, using a copy of the <a http::/www.open-mpi.org>openmpi</a> library that was compiled from source. In this case, the required mpi header and library files were installed in subdirectories of /opt/local/include and /opt/local/bin, respectively. If you have an openmpi library installed, but the header and library files are installed in different locations, you may need to edit the CXXFLAGS and LDFLAGS variables to reflect the correct locations.
 
-The compiler options obtained setting COMPILER=gcc and MPI_LIB=openmpi are those which we used to compile simpatico on a multi-core Mac laptop, after compiling the <a http::/www.open-mpi.org>openmpi</a> library from source. In this case, the required mpi header and library files were installed in subdirectories of /opt/local/include and /opt/local/bin, respectively. If you have an openmpi library installed, but the header and library files are installed in different locations, you may need to edit the CXXFLAGS and LDFLAGS variables to reflect the correct locations.
+If you do not use a module system, and the settings given for gcc with openmpi do not work, you will have to identify the locations of the header and library files for the MPI library on your machine. If you have not compiled an MPI program on a particular machine, you may need to do a bit of searching to identify the appropriate paths, or ask for help from a local guru.
 
-If none of setting in the file compiler.mk are appropriate for your machine, you will need to add a new block of makefile definitions that is enabled by a choosing a new value for the MPI_LIB and/or COMPILER identifier. If you do not use a module system, this will require that you identify the locations of the header and library files for the MPI library on your machine. If this is necessary, and you have not compiled an MPI program on a particular machine, you may need to do a bit of searching to identify the appropriate paths and/or for ask for help from a local guru.
-
-For MPI to be enabled when a program is compiled, the makefile variable UTIL_MPI must be defined in the file src/compiler.mk. This is done automatically by the makefile targets in the simpatico/ root directory that compile the ddSim parallel program and the parallel versions of mcSim and mdSim (which are discussed below).
+To enable MPI when a program is compiled, the makefile variable UTIL_MPI must be defined in the file src/compiler.mk. This variable is defined automatically by the ddMd and mcmd-mpi makefile targets that compile programs that required MPI.
 
 \section compile_ddMd_section Compiling ddSim
 To compile the multi-processor ddMd program, one should check the compiler settings in the file src/compiler.mk (as discussed above) and then enter 
@@ -178,7 +178,7 @@ To clean up files created by compiling ddSim, enter
 \code
 > make clean-ddMd
 \endcode
-from the root or src directory. This will remove all files created by calling "make ddMd", including *.o object files, mpi-enabled libraries, and the ddSim executable, but leave any non-mpi enabled libraries untouched.
+from the root directory. This will remove all files created by calling "make ddMd", including *.o object files, mpi-enabled libraries, and the ddSim executable, but leave any non-mpi enabled libraries untouched.
 
 \section compile_multi_section Compiling mcSim and mdSim (multi-processor versions)
 Multi-processor versions of mcSim and mdSim can be used to run:
@@ -197,12 +197,12 @@ To compile multi-processor versions of mcSim and mdSim, if automatic dependency 
 \endcode
 from the simpatico/ root directory.  By default, the resulting executable files are named mcSim_m and mdSim_m, using a suffix "_m" to distinguish the multi-processor from single processor versions of mcSim and mdSim. To build these executables, this command will compile mpi-enabled versions of all of the source files in the mcMd/ directory and (if needed) the util/ and inter/ directories, and create mpi-enabled versions of corresponding library file(s).
  
-If (and only if) automatic \ref compile_dependency_section "dependency generation" is disabled, then you must enter
+If automatic automatic dependency generation is disabled, then you must enter
+you must enter
 \code
  > make clean-McMd
 \endcode
-from the root directory before before compiling the multi-processor versions of mcSim and mdSim, in order to remove object files that may have been created without MPI and thus force recompilation of these files. 
-
+from the root directory before entering "make mcMd-mpi", in order to remove object files and libraries that may have been created with MPI disabled, and force recompilation of these files. 
 \section compile_doc_section Generating html documentation
 The html documentation you are reading was generated using the <a href=http://www.doxygen.org> doxygen </a> documentation utility. The simpatico directory will initially not contain a copy of the html files. If desired, you may use doxygen to generate a local copy of the web documentation.  If dOxygen is installed on your machine, you can regenerate all of the html documentation by entering 
 \code
