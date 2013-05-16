@@ -3,10 +3,9 @@ namespace Inter
 
    using namespace Util;
 
-/*! \page Inter_NS_page 3.2.2 Inter namespace
+/*! \page Inter_NS_page 3.4 Inter namespace
 
 \ref Util_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref source_namespace_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref McMd_NS_page (Next) 
 <BR>
 
@@ -26,7 +25,7 @@ See also:
 
 <BR>
 \ref Util_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref source_namespace_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref McMd_NS_page (Next) 
 
 */

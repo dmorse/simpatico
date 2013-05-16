@@ -1,21 +1,19 @@
 namespace DdMd
 {
 
-   using namespace Util;
-   using namespace Inter;
-
-/*! \page DdMd_NS_page 3.2.4 DdMd namespace
+/*! \page DdMd_NS_page 3.6 DdMd namespace
 
 \ref McMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref extend_page  (Next)    
 <BR>
 
 The DdMd namespace contains classes used to construct parallel domain
-decomposition molecular dynamics simulations. Some classes in the DdMd 
-namespace have names and serve purposes similar to those of corresponding 
-classes in the McMd namespace. We recommend that you at least skim the 
-documentation for the McMd namespace before reading this discussion of 
-the code in the DdMd namespace. 
+decomposition molecular dynamics simulations.  All class names mentioned 
+on this web page that are not explicitly qualified by a namespace identifier 
+are defined in the McMd namespace.  Some classes in the DdMd namespace have 
+names that are similar or identical to those of analogous classes in the
+McMd namespace. We recommend that you at least skim the documentation for 
+the McMd namespace before reading this discussion of the DdMd namespace. 
 
 See also: \ref DdMd_Module "DdMd Module"
 
@@ -33,7 +31,7 @@ Atom is also associated with a Mask object that contains a list of
 integer ids of other atoms for which the nonbonded pair interaction 
 with the target atom is suppressed (i.e., "masked"). 
 
-In a parallel DD simulation, an Atom on a particular processor may 
+In a parallel MD simulation, an Atom on a particular processor may 
 either be a "local" atom, which is owned by that processor, or it 
 may be "ghost". A ghost is an atom that is slightly outside the
 domain of atoms owned by this processor, and which is thus owned 
@@ -42,7 +40,7 @@ this processor in order to calculate forces for local atoms with
 which it interacts. The "Atom::isGhost()" method returns a boolean 
 true if an atom is a ghost and false if it is a local atom.
 
-The Group < int N > class template is a class template for objects that represent a small group of N covalently interacting atoms.  Specializations with N=2, 3, and 4 are used to represent 2-body covalent bonds, 3-body angle interaction groups, and 4-body dihedral interaction groups, respectively. A DdMd::Group < N > object has an array of N integer ids for N interacting Atom objects, a corresponding array of N pointers to these objects, for a set of atoms that interact via an N-body covalent interaction. A group also has an integer group type id for the group.
+The Group < int N > class template is a class template for objects that represent a small group of N covalently interacting atoms.  Specializations with N=2, 3, and 4 are used to represent 2-body covalent bonds, 3-body angle interaction groups, and 4-body dihedral interaction groups, respectively. A Group < N > object has an array of N integer ids for N interacting Atom objects, a corresponding array of N pointers to these objects, for a set of atoms that interact via an N-body covalent interaction. A group also has an integer group type id for the group.
 
 In a domain decomposition algorithm, atoms may migrate between processors as a result of changes in position. When ownwership of an atom is transferred from one processor to another, all of the Group < N > objects to which the atom belongs are also sent to the new owner. The atom ids and group type id that are stored in a Group < N > are permanent identifiers, which are sent between processors when the Group migrates. The pointers to atoms must be reset after each Group is received.
 
@@ -88,20 +86,20 @@ analogous to those in the McMd namespace: Each potential class
 is a polymorphic classes that provide virtual methods to 
 calculate specific contributions to energies and atomic forces 
 for an entire System. The classes PairPotential, BondPotential, 
-AnglePotential, DihedralPotential in the DdMd namespace provide 
-interfaces for nonbonded pair, bond, angle, and dihedral 
-potentials, respectively. Each potential energy class provides 
-an addForces() method that adds forces arising from the 
-corresponding potential energy to every local atom on this 
-processor. 
+AnglePotential, DihedralPotential and ExternalPotential in the 
+DdMd namespace provide interfaces for nonbonded pair, bond, angle, 
+dihedral, and external potentials, respectively. Each potential 
+energy class provides an addForces() method that adds forces 
+arising from the corresponding potential energy to every local 
+atom on this processor. 
 
-The "potential" classes discussed above are abstract base 
-classes. The implementation of each such potential energy 
-classes is provided by an associated class template, which
-takes one of the Interaction classes defined in the Inter 
-namespace as a template argument. Thus, for example, the
-template instantiation PairPotentialImpl<LJPair> is a concrete 
-subclass of PairPotential for Lennard-Jones pair interactions.
+The potential classes discussed above are abstract base classes. 
+The implementation of each such potential energy classes is 
+provided by an associated class template, which takes one of the 
+Interaction classes defined in the Inter namespace as a template 
+argument. Thus, for example, the template instantiation 
+PairPotentialImpl<LJPair> is a concrete subclass of PairPotential 
+for Lennard-Jones pair interactions.
 The template uses uses an instance of the LJPair interaction 
 class to calculate pair energies and forces for individual 
 nonbonded pairs of atoms in the inner loop of the addForces() 
@@ -127,7 +125,7 @@ See also: \ref DdMd_Potential_Module "Potential Module"
 \section Integrator_sec Molecular Dynamics Integrators
 
 DdMd molecular dynamics integration algorithms are represented by 
-subclasses of DdMd::Integrator.  Each Integrator implements a method
+subclasses of Integrator.  Each Integrator implements a method
 run(int nStep) method that runs a simulation of a prescribed number of
 steps.  An Integrator may store internal state variables that are 
 specific to the algorithm and that must be retained between steps. 
@@ -147,39 +145,37 @@ The Buffer class provides an interface to blocks of memory that are used for MPI
 
 \section simulation_sec Simulation
 
-A DdMd::Simulation object is the top level object in a DdMd simulation.  There is no distinction in the DdMd namespace between a "System" and a "Simulation". Every Simulation has:
+A Simulation object is the top level object in a DdMd simulation.  There is no distinction in the DdMd namespace between a "System" and a "Simulation". Every Simulation has:
  
-   - An DdMd::AtomStorage.
+   - An AtomStorage that stores both local and ghost atoms
     
-   - A set of DdMd::GroupStorage < N > objects with N=2 and (optionally) N=3 and 4 for bond,
-     angle and dihedral objects. 
+   - GroupStorage < N > objects that can store bonds, angles and dihedrals
 
-   - A set of potential energy classes for pair and bond potentials, and (optionally) 
-     angle, dihedral, and external potentials.
+   - A set of potential energy classes for nonbonded and bonded potentials
 
-   - a Util::Boundary object, which defines periodic boundary conditions.
+   - a Util::Boundary object, which defines periodic boundary conditions
 
-   - a Util::EnergyEnsemble object.
+   - a Util::EnergyEnsemble object
 
-   - a Util::BoundaryEnsemble object.
+   - a Util::BoundaryEnsemble object
 
-   - A DdMd::Integrator to integrate the equations of motion.
+   - An Integrator to integrate the equations of motion
 
-   - A DdMd::Domain object that defines the spatial decomposition.
+   - A Domain, which defines the spatial decomposition
 
-   - A DdMd::Exchanger object to manage interprocessor communication.
+   - A Exchanger, to manage interprocessor communication
 
-   - A DdMd::ConfigIo to read and write configuration files.
+   - A ConfigIo, to read and write configuration files
 
-   - A DdMd::Buffer to provide memory for communication.
+   - A Buffer to provide memory for communication
 
-   - A Util::Random random number generator object.
+   - A Util::Random random number generator object
 
 See also: \ref DdMd_Simulation_Module "Simulation Module"
 
 <BR>
 \ref McMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref source_namespace_page  (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_page  (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref extend_page  (Next)    
 
 */

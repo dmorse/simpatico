@@ -1,43 +1,50 @@
-namespace McMd
-{
-
 /*! \page user_usage_page 2.2 Usage
 
 \ref user_compile_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_param_page (Next) 
 <BR>
 
-This section describes how to use the programs mcSim, mdSim and ddSim.  The discussion assumes that the executables have been installed in a directory that is in the users command search $PATH variable. 
+This section describes how to execute the simpatico programs mcSim, mdSim and ddSim.  
 
-\section usage_running Running a Simulation 
+\section usage_inputs Input Files 
+Each simpatico simulation normally requires three input files: 
+<ul>
+   <li> a \ref usage_parameter_section "parameter" file </li>
+   <li> a \ref usage_command_section "command" file </li>
+   <li> a \ref usage_cfgfile_section "configuration" file </li>
+</ul>
+The contents and formats of these different types of file are discussed briefly below and in more detail in several separate pages (see \ref user_param_page , \ref user_commands_page and \ref user_cfgfile_page).
 
-The syntax for running a simulation is very similar for the mcSim, mdSim and ddSim programs.  In each case, the program is initialized by reading a parameter file.  To run a single-processor MD simulation interactively, using a parameter file named "param" in the current working directory, one would enter:
+When a program is executed, the parameter file is usually read from standard input. After the parameter file has been read, the program is ready for use. The parameter file normally contains the name of the command file, which is read next.  The command file contains a list of commands that are interpreted and executed in sequence. Among these is normally a command that instructs the program to read a specific input configuration file, and a command that runs a simulation of a specified number of steps, and a command to write a final configuration file. 
+
+\section usage_running_section Running a Simulation 
+To run a simulation, one invokes the executable name and reads the parameter file from standard input. For example, to run a single-processor mdSim MD simulation, using a parameter file named "param" in the current working directory, one would enter:
 \code
    mdSim < param
 \endcode
-To run a single-processor MC simulation, one would instead enter "mcSim < param" instead, or "ddSim < param" for a parallel MD simulation.
+To run a single-processor MC simulation, one would instead enter "mcSim < param".  
 
-During execution, a log output is sent to standard output (i.e., the screen). This log output can be directed to a file using, e.g., 
+The syntax for executing the parallel ddSim program is similar, except for the need to run the program as an MPI program. The syntax for starting an MPI job depends on the system configuration and choice of library, but often involves a script called "mpirun". To use mpirun to start a ddSim program on 32 processors, using a parameter file named param in the working directory, one would enter
+\code
+   mpirun -np 32 ddSim < param > log
+\endcode
+For a ddSim job, the number of processors declared in the command line (e.g., 32 in this example) must be consistent with the number of processors in the processor grid defined in the Domain block of the parameter file (e.g., a 4 x 4 x 2 processor grid).
+
+During execution, some log output is sent to standard output (i.e., the screen). This log output can be directed to a file using, for example, 
 \code
   mdSim < param > log
 \endcode
-This is the command normally used when a job is run in background, or in a queue.
+Standard output should always be redirected to a file when a job is run in background or in a queue. 
 
-Each simulation normally requires three input files: 
-<ul>
-   <li> a parameter file </li>
-   <li> a command file </li>
-   <li> a configuration file </li>
-</ul>
-The parameter file is read from standard input in order to initialize a simulation. After the parameter file has been read, the program is ready for use. The parameter file normally contains the name of the command file, which is read next.  The command file contains a sequence of commands that are interpreted and executed in sequence. Among these is normally a command that instructs the program to read a specific input configuration file, and a command that runs a simulation of a specified number of steps.
+The available command line options for each program are discussed \ref section_options "below". The most commonly used option is the "-e" (echo) option, as in 
+\code
+mdSim -e < param > log
+\endcode 
+This option causes each line of the parameter file to be echoed to standard output as it is read. It is useful for locating errors in the parameter file syntax, because the echoed output ends immediately before an error is detected, and is followed by a message explaining the nature of the error. The first line that does not appear is usually the one that causing trouble. 
 
-The contents and formats of these different types of file are discussed briefly below and in more detail in several separate pages (see \ref user_param_page , \ref user_commands_page and \ref user_cfgfile_page).
+\section usage_program_section Program structure
 
-The available command line options are discussed \ref section_options "below". The most commonly used option is the "-e" (echo) option, as in "mdSim -e < param > log", which causes each line of the parameter file to be echoed to standard output as it is read. This is useful for debugging errors in the parameter file syntax, since the echoed output ends immediately before an error is detected, and is followed by a message explaining the nature of the error. 
-
-\section section_program Main Program
-
-The main program files for single processor MC and MD simulations are src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp. The main program for parallel MD simulation is src/ddMd/mdSim.cpp. All three programs have a similar structure.  Shown below is a slightly simplified version of the main program src/mcMd/mcSim.cpp for MC simulations:
+The understand the program flow, it helps to look briefly at the structure of the main program. The main program files for single processor MC and MD simulations are src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp. The main program for parallel MD simulation is src/ddMd/mdSim.cpp. All three programs have a similar structure.  Shown below is a slightly simplified version of the main program src/mcMd/mcSim.cpp for MC simulations:
 \code
 
 int main(int argc, char** argv)
@@ -56,17 +63,17 @@ int main(int argc, char** argv)
 }
 
 \endcode
-The first line within the program creates an object named simulation that is an instance of the class McSimulation in namespace McMd.  An McSimulation object represents a complete  Monte Carlo simulation. 
+The first executable line creates an object named simulation that is an instance of the class McMd::McSimulation.  An McSimulation object represents a complete Monte Carlo simulation. 
 
 The setOptions() method, which is invoked in the second executable line, processes any command line options that are passed to the program.  The available command line options are discussed \ref section_options "below".
 
 The readParam() method reads a parameter file and initializes the simulation.  Invoking readParam() with no argument (as here) reads the parameter file from standard input. Despite its name, the readParam() method does not merely read parameters: It allocates any required memory, initializes the simulation, and leaves the main simulation object ready for use.
 
-The readCommands() method read the command file, executes each command before reading the next. The name of the command file is specified in the param file.  A typical command file contains commands to read an input configuration from file, run a simulation, and write a final configuration to file. 
+The readCommands() method read the command file, executes each command before reading the next. The name of the command file is specified in the param file. 
 
-The analogous code for the single-processor MD (mdSim) and parallel MD (ddSim) programs are almost identical. The only difference is that the main object in mdSim.cpp is an instance of McMd::MdSimulation, and the main object in ddSim.ccpp is an instance of DdMd::Simulation.
+The analogous code for the single-processor MD (mdSim) and parallel MD (ddSim) programs are almost identical. The main difference is that the main object in mdSim.cpp is an instance of McMd::MdSimulation, and the main object in ddSim.ccpp is an instance of DdMd::Simulation.
 
-\section io_Parameter Parameter File
+\section usage_parameter_section Parameter File
 
 The parameter file contains all the data required to initialize a simulation, i.e., to allocate all required memory and initialize all variables to valid values. This data includes: 
 
@@ -77,7 +84,7 @@ The parameter file contains all the data required to initialize a simulation, i.
 
 The parameter file also contains the filename for the command file that should be read by the readCommands() method.  Examples of parameter file formats for different types of simulation are shown and discussed \ref user_param_page "here".
 
-\section io_Command Command File
+\section usage_command_section Command File
 
 The command file contains a sequence of commands that are read and executed in the order they appear. Each line of the command file starts with a capitalized command name, followed by zero or more arguments. The minimal command file for an mcSim simulation looks like this:
 \code
@@ -90,7 +97,7 @@ This file instructs the program to read a configuration file named "config", run
 
 Paths for the input and output files specified in the command file are constructed by concatenating input and output prefix strings that are specified in the parameter file (named inputPrefix and outputPrefix) to file names specified in the command file.  The values of these prefix strings are often set to directory name strings, which end with a directory separator symbol "/", in order to place all input files and output files in different directories. The fact that the above example command script uses the same name "config" for both the input and output configuration files thus does not necessarily mean that the script would cause the input configuration file to be overwritten, sinceinput and output files are normally placed in different directories.
 
-\section io_Config Configuration File
+\section usage_cfgfile_section Configuration File
 
 A configuration file specifies atomic positions and other characteristics of a system that can change during the course of a simulation. Slightly different information is required by mcSim, mdSim, and ddSim.  A default configuration file format exists for each of the three programs, each of which can also read and write files using a several other file formats.
   
@@ -100,7 +107,7 @@ The default configuration file format for ddSim contains box dimensions, atomic 
 
 Configuration file formats for all programs are described in more detail \ref user_cfgfile_page "here".
 
-\section io_Output Output Files
+\section usage_output_section Output Files
 
 Each simulation writes a limited amount of information to report the progress of the simulation. In simulations of single system (i.e., using ddSim or the single-processor versions of mdSim and mcSim), this is written to standard output, but can redirected 
 to a log file. 
@@ -111,26 +118,19 @@ A variety of other output files may also be written by classes that implement on
 
 \section section_options Command Line Options
 
-The single processor mdSim and mcSim programs can each be invoked with either or both of the following two command line options:
+All simpatico programs can be invoked with either or both of the following two command line options:
 <ul>
   <li> -e: Activates echoing of the parameter file to standard output.</li>
   <li> -r filename: Restarts and continues a previous simulation. </li>
   </li>
 </ul>
-The -e (echo) option causes each parameter in the parameter file to be echoed to standard output immediately after it is read. This is very useful for locating errors in the parameter file: The first parameter that is not echoed to standard output is usually the one that is causing trouble. 
+The -e (echo) option causes each parameter in the parameter file to be echoed to standard output immediately after it is read. This is very useful for locating the position of an error in the parameter file.
 
-The -r (restart) option takes a required parameter "filename". This is the base name of two input files required to restart a simulation, which have filename suffixes *.rst, (restart file) and *.cmd (restart command file). This option is discussed in more detail \ref user_restart_page "here".
+The -r (restart) option takes a required parameter "filename". This is the base name of two input files required to restart a simulation, which have filename suffixes *.rst, (restart file) and *.cmd (restart command file). Restarting is discussed in more detail \ref user_restart_page "here".
 
-Multi-processor versions of mcSim and mdSim can also be invoked with an option "-p" that enables the use of a free energy perturbation, for use with thermodynamic integration or replica exchange algorithms. This option causes all of the processors to read data from a single parameter file that contains information about how to set a series of different values on different processors. This option is discussed in more detail \ref user_multi_McMd_page "here".  
+Multi-processor versions of mcSim and mdSim can also be invoked with an option "-f" that enables the use of a free energy perturbation, for use with thermodynamic integration or replica exchange algorithms. This option causes all of the processors to read data from a single parameter file that contains information about how to set a series of different parameter values on different processors. This option is discussed in more detail \ref user_multi_McMd_page "here".  
 
-The ddSim domain-decomposition MD program can be invoked with the following two options:
-<ul>
-  <li> -e: Activates echoing of the parameter file to standard output.</li>
-  <li> -s  p: Enables simulation of p independent systems. </li>
-  </li>
-</ul>
-The -e (echo) option causing echoing of the parameter file to the log file as it is read, as in mcSim and mdSim.
-
+The ddSim parallel MD program can be invoked with an option "-s" (split) that enables simulation of several independent systems. 
 The -s (split) option takes a required parameter p, whose value is the number of independent systems that should be simulated. Invoking ddSim with this option causes the MPI communicator to be split into p subcommunicators, each of which is used to run a separate parallel MD simulation. The total number of processors requested for a job must thus be a multiple of p. This option is discussed in more detail \ref user_multi_DdMd_page "here". 
 
 <BR>
@@ -139,4 +139,3 @@ The -s (split) option takes a required parameter p, whose value is the number of
 \ref user_param_page (Next) 
 
 */
-}
