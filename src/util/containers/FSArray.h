@@ -27,8 +27,8 @@ namespace Util
    * adds a new element to the end of the array.  
    *
    * When bounds checking is on (i.e., when NDEBUG is defined) the 
-   * operator [] checks that the index is less than the size, and not
-   * only less than the capacity.
+   * operator [] checks that the index is less than the logical size, and 
+   * not merely less than the capacity.
    *
    * \ingroup Array_Module
    */
@@ -75,14 +75,14 @@ namespace Util
       int size() const;
 
       /**
-      * Set an ArrayIterator to the beginning of this Array.
+      * Set an ArrayIterator to the beginning of this container.
       *
       * \param iterator ArrayIterator, initialized on output. 
       */
       void begin(ArrayIterator<Data> &iterator);
 
       /**
-      * Set a ConstArrayIterator to the beginning of this Array.
+      * Set a ConstArrayIterator to the beginning of this container.
       *
       * \param iterator ConstArrayIterator, initialized on output. 
       */
@@ -117,7 +117,7 @@ namespace Util
       void clear();
 
       /**
-      * Serialize to/from an Archive.
+      * Serialize to/from an archive.
       *
       * \param ar       archive 
       * \param version  archive version id
@@ -140,7 +140,7 @@ namespace Util
 
    };
 
-   /**
+   /*
    * Constructor.
    */
    template <class Data, int Capacity>
@@ -148,7 +148,7 @@ namespace Util
     : size_(0)
    {}
 
-   /**
+   /*
    * Copy constructor.
    *
    *\param other the FSArray to be copied.
@@ -162,7 +162,7 @@ namespace Util
       }
    }
 
-   /**
+   /*
    * Assignment, element by element.
    *
    * Capacity of LHS FSArray must be >= size of RHS FSArray.
@@ -185,7 +185,7 @@ namespace Util
       return *this;
    }
 
-   /**
+   /*
    * Destructor.
    */
    template <class Data, int Capacity>
@@ -199,14 +199,14 @@ namespace Util
    int FSArray<Data, Capacity>::capacity() const
    { return Capacity; }
 
-   /**
+   /*
    * Return logical size of this array (i.e., number of elements).
    */
    template <class Data, int Capacity>
    int FSArray<Data, Capacity>::size() const
    { return size_; }
 
-   /**
+   /*
    * Set an ArrayIterator to the beginning of this Array.
    *
    * \param iterator ArrayIterator, initialized on output. 
@@ -263,7 +263,7 @@ namespace Util
       ++size_;
    }
 
-   /**
+   /*
    * Set logical size to zero.
    */
    template <class Data, int Capacity>
