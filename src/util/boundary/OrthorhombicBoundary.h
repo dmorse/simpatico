@@ -45,6 +45,8 @@ namespace Util
       */
       OrthorhombicBoundary();
 
+      // Use default copy constructor.
+
       /**
       * Set unit cell dimensions for orthorhombic boundary.
       *
@@ -307,11 +309,6 @@ namespace Util
       * Actual lattice system (Orthorhombic, Tetragonal, or Cubic)
       */
       LatticeSystem lattice_;
-
-      /**
-      * Copy constructor (Private and not implemented).
-      */
-      OrthorhombicBoundary(const OrthorhombicBoundary& );
 
    // friends:
 
