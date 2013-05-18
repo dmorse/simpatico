@@ -1,0 +1,84 @@
+Observations: 
+
+1) Each GroupStorage containers is used only to calculate an associated
+   potential contribution.
+
+2) Additional specialized potential might require additional data 
+   structures (e.g., impropers, angle-dependent H bonding forces, etc.)
+
+3) It would be preferable to have each potential responsible for 
+   controlling communication of group-like data structures it requires.
+
+------------------------------------------------------------------------
+Ideas:
+
+1) Make each GroupStorage a member of the associated potential.
+
+2) Abstract communication of groups in a manner that can be generalized
+   to other potentials. This requires an analysis of how the groups 
+   storage containers are currently used in exchanges, distribution,
+   and collection.
+
+3) Make changes to Buffer first, to first move (pack|unpack)Group methods
+   to Group<N> template, where they belong.
+
+------------------------------------------------------------------------
+class Exchanger:
+
+  Exchanger::exchange() cals several functions that use GroupStorage<N>:
+
+  1) Before clearing ghosts:   initGroupGhostPlan<N>(GroupStorage<N>& )
+
+  2) After packing atoms:      packGroups<N>(i, j, GroupStorage<N>, emptyGroups)
+
+  3) After removing atoms:     removeEmptyGroups(GroupStorage<N>, emptyGroups)
+
+  4) Upon receipt:             unpackGroups(GroupStorage<N>)
+
+  5) After all exchanges :     finishGroupGhostPlan<N>(GroupStorage<N>)
+
+  6 After ghost exchange :     findGroupGhosts
+
+  Questions:
+
+  1) Can these functions be made methods of the GroupStorage<N> class ?
+
+  2) Can packGroups and removeEmpty groups be combined?
+
+  Analysis:
+
+  1) initGroupGhostPlan uses:
+
+     multiProcessorDirection_, inner_, bound_, outer_
+
+     Solution: Pass required information as argument(s) (in what form?)
+
+  2) packGroups uses
+
+     bufferPtr_, Groups are identified by which atoms are marked for sending.
+
+     Solution: Pass Buffer& as an arguments.
+
+  3) removeEmptyGroups only uses:
+
+     APArray< Group<N> > emptyGroups. 
+
+     Reconsider: Why are groups removed after atoms? If groups were removed
+     immediately after packing, we could combine this and previous function?
+
+  4) unpackGroups uses bufferPtr_ and atomStorage. 
+
+     Solution: Pass Buffer& and AtomStorage& as arguments.
+
+  5) finishGroupGhostPlan uses:
+
+     atomStorage, sendArray_(i, j)
+
+     -> Use of sendArray_ is potentially problematic. I need to figure out 
+     why it is used, and if it is necessary.
+
+     AtomStorage can be passed as argument.
+
+  6) findGroupGhosts uses:
+
+     atomStorage (Can be passed as argument)
