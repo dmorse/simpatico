@@ -8,8 +8,6 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/chemistry/Atom.h>
-#include <ddMd/chemistry/Group.h>
 #include <ddMd/misc/DdTimer.h>
 #include <util/space/IntVector.h>
 #include <util/boundary/Boundary.h>
@@ -21,8 +19,10 @@ namespace DdMd
 {
 
    class Domain;
+   class Atom;
    class AtomStorage;
    class Buffer;
+   template <int N> class Group;
    template <int N> class GroupStorage;
 
    using namespace Util;

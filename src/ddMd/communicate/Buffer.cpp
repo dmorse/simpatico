@@ -292,7 +292,6 @@ namespace DdMd
       return isComplete;
    }
 
-   #if 0
    /*
    * Pack a local Atom for exchange of ownership.
    */
@@ -366,7 +365,6 @@ namespace DdMd
       recvSize_--;
 
    }
-   #endif
 
    /*
    * Return size of packed Atom, in bytes.
@@ -382,7 +380,6 @@ namespace DdMd
       return size;
    }
 
-   #if 0
    /*
    * Pack data required for a ghost Atom for sending.
    */
@@ -433,7 +430,6 @@ namespace DdMd
       //Decrement number of atoms in recv buffer to be unpacked by 1
       recvSize_--;
    }
-   #endif
 
    /*
    * Return size of one packed Ghost atom, in bytes (static method).
@@ -464,7 +460,6 @@ namespace DdMd
       return (dataCapacity_/groupSize(N)); 
    }
 
-   #if 0
    /*
    * Pack updates ghost atom position.
    */
@@ -499,7 +494,6 @@ namespace DdMd
       //Decrement number of atoms in recv buffer to be unpacked by 1
       recvSize_--;
    }
-   #endif
 
    /*
    * Pack ghost atom force.

@@ -11,12 +11,13 @@
 #include "Exchanger.h"
 #include "Domain.h"
 #include "Buffer.h"
+#include <ddMd/chemistry/Atom.h>
+#include <ddMd/chemistry/Group.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/storage/GroupStorage.h>
 #include <ddMd/storage/GroupIterator.h>
-#include <util/mpi/MpiLogger.h>
 #include <util/format/Dbl.h>
 #include <util/global.h>
 
