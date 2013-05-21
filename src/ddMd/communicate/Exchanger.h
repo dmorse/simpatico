@@ -11,6 +11,7 @@
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Group.h>
 #include <ddMd/misc/DdTimer.h>
+#include <util/space/IntVector.h>
 #include <util/boundary/Boundary.h>
 #include <util/containers/FMatrix.h>
 #include <util/containers/APArray.h>
@@ -187,16 +188,16 @@ namespace DdMd
       #endif // UTIL_MPI
 
       /// Processor boundaries (minima j=0, maxima j=1)
-      FMatrix< double, Dimension, 2>  bound_;
+      Util::FMatrix< double, Dimension, 2>  bound_;
 
       /// Inner boundaries of nonbonded slabs
-      FMatrix< double, Dimension, 2>  inner_;
+      Util::FMatrix< double, Dimension, 2>  inner_;
 
       /// Outer boundaries of nonbonded slabs
-      FMatrix< double, Dimension, 2>  outer_;
+      Util::FMatrix< double, Dimension, 2>  outer_;
 
       /// Elements are 1 if grid dimension > 1, 0 otherwise.
-      IntVector multiProcessorDirection_;
+      Util::IntVector multiProcessorDirection_;
 
       /// Pointer to associated const Boundary object.
       const Boundary*  boundaryPtr_;

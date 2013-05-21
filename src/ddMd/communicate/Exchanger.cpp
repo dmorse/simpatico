@@ -752,7 +752,8 @@ namespace DdMd
                   if (multiProcessorDirection_[i]) {
 
                      sentAtoms_.append(*atomIter);
-                     bufferPtr_->packAtom(*atomIter);
+                     atomIter->packAtom(*bufferPtr_);
+                     //bufferPtr_->packAtom(*atomIter);
 
                   } else 
                   #endif
@@ -847,7 +848,8 @@ namespace DdMd
 
                   atomPtr = atomStoragePtr_->newAtomPtr();
                   planPtr = &atomPtr->plan();
-                  bufferPtr_->unpackAtom(*atomPtr);
+                  //bufferPtr_->unpackAtom(*atomPtr);
+                  atomPtr->unpackAtom(*bufferPtr_);
                   atomStoragePtr_->addNewAtom();
 
                   if (shift) {
@@ -1084,7 +1086,8 @@ namespace DdMd
                if (multiProcessorDirection_[i]) {
 
                   // If grid dimension > 1, pack atom for sending 
-                  bufferPtr_->packGhost(*sendPtr);
+                  //bufferPtr_->packGhost(*sendPtr);
+                  sendPtr->packGhost(*bufferPtr_);
 
                } else 
                #endif
@@ -1144,7 +1147,8 @@ namespace DdMd
                while (bufferPtr_->recvSize() > 0) {
 
                   atomPtr = atomStoragePtr_->newGhostPtr();
-                  bufferPtr_->unpackGhost(*atomPtr);
+                  //bufferPtr_->unpackGhost(*atomPtr);
+                  atomPtr->unpackGhost(*bufferPtr_);
                   if (shift) {
                      atomPtr->position()[i] += rshift;
                   }
@@ -1237,7 +1241,9 @@ namespace DdMd
                bufferPtr_->beginSendBlock(Buffer::UPDATE);
                size = sendArray_(i, j).size();
                for (k = 0; k < size; ++k) {
-                  bufferPtr_->packUpdate(sendArray_(i, j)[k]);
+                  //bufferPtr_->packUpdate(sendArray_(i, j)[k]);
+                  atomPtr = &sendArray_(i, j)[k];
+                  atomPtr->packUpdate(*bufferPtr_);
                }
                bufferPtr_->endSendBlock();
                stamp(PACK_UPDATE);
@@ -1253,7 +1259,8 @@ namespace DdMd
                size = recvArray_(i, j).size();
                for (k = 0; k < size; ++k) {
                   atomPtr = &recvArray_(i, j)[k];
-                  bufferPtr_->unpackUpdate(*atomPtr);
+                  //bufferPtr_->unpackUpdate(*atomPtr);
+                  atomPtr->packUpdate(*bufferPtr_);
                   if (shift) {
                      boundaryPtr_->applyShift(atomPtr->position(), i, shift);
                   }

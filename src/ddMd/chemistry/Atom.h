@@ -19,6 +19,7 @@ namespace DdMd
 {
 
    using namespace Util;
+   class Buffer;
 
    /**
    * A point particle.
@@ -42,6 +43,14 @@ namespace DdMd
    {
 
    public:
+
+      #ifdef UTIL_MPI
+      /// Return packed size of Atom, in bytes.
+      static int packedAtomSize();
+
+      /// Return packed size of Ghost, in bytes.
+      static int packedGhostSize();
+      #endif
 
       /// \name Mutators
       //@{
@@ -147,37 +156,105 @@ namespace DdMd
       const IntVector& shift() const;
       #endif
 
+      #ifdef UTIL_MPI
+      /// \name Pack and Unpack Methods (Interprocessor Communication)
+      //@{
+
+      /**
+      * Pack an Atom to send buffer, for exchange of ownership.
+      *
+      * \param buffer communication buffer
+      */
+      void packAtom(Buffer& buffer);
+
+      /**
+      * Unpack an atom from recv buffer, receive ownership.
+      *
+      * \param buffer communication buffer
+      */
+      void unpackAtom(Buffer& buffer);
+
+      /**
+      * Pack ghost Atom into send buffer.
+      *
+      * \param buffer communication buffer
+      */
+      void packGhost(Buffer& buffer);
+
+      /**
+      * Unpack a ghost Atom from recv buffer.
+      *
+      * Unpacks required data from recv buffer into atom, decrements
+      * recvSize().
+      *
+      * \param buffer communication buffer
+      */
+      void unpackGhost(Buffer& buffer);
+
+      /**
+      * Pack updated ghost position into send buffer.
+      *
+      * \param buffer communication buffer
+      */
+      void packUpdate(Buffer& buffer);
+
+      /**
+      * Unpack updated ghost position from recv buffer.
+      *
+      * \param buffer communication buffer
+      */
+      void unpackUpdate(Buffer& buffer);
+
+      /**
+      * Pack update of ghost Atom force into send buffer.
+      *
+      * \param buffer communication buffer
+      */
+      void packForce(Buffer& buffer);
+
+      /**
+      * Unpack updated position of ghost Atom from recv buffer.
+      *
+      * Increments the atomic force (rather than overwriting).
+      *
+      * \param buffer communication buffer
+      */
+      void unpackForce(Buffer& buffer);
+
+      //@}
+      #endif
+
    private:
 
-      /*
+      /**
       * Position of atom.
       */
       Vector position_;
 
-      /*
+      /**
       * Integer index of atom type.
       */
       int typeId_;
 
-      /*
+      /**
       * Local id in Atom Array, set by AtomArray.
       * Least signicant bit: Is this Atom a ghost? (0=false, 1=true).
       * Only the ghost bit may be changed after allocation of AtomArray
       */
       unsigned int localId_;
 
-      /*
+      /**
       * Force on atom.
       */
       Vector force_;
 
-      /*
+      /**
       * Pointer to parent AtomArray.
       */
       AtomArray* arrayPtr_;
 
       #ifdef UTIL_32BIT
-      /*
+      /**
       * On machines with 4 byte pointer, this pads the size to 64 bytes.
       */
       int pad_;
@@ -274,8 +351,8 @@ namespace DdMd
    * Atom is indexed by the localId_ of this atom, without the isGhost
    * flag. The bit shift operation "localId_ >> 1" in each of the following
    * functions strips off the least signficant bit, which is used to store
-   * the isGhost flag, and returns the relevant array index. This array index
-   * is set for each atom when AtomArray is allocated, and is not changed
+   * the isGhost flag, and returns the relevant array index. The array index
+   * is set for each atom when AtomArray is allocated, and is never changed
    * thereafter.
    */
    

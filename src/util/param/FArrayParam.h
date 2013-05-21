@@ -14,8 +14,6 @@
 
 #include <iomanip> 
 
-class ParamTest;
-
 namespace Util
 {
 

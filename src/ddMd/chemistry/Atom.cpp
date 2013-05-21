@@ -11,6 +11,9 @@
 #include "Atom.h"
 #include <ddMd/chemistry/Mask.h>
 #include <ddMd/communicate/Plan.h>
+#ifdef UTIL_MPI
+#include <ddMd/communicate/Buffer.h>
+#endif
 
 namespace DdMd
 {
@@ -58,6 +61,152 @@ namespace DdMd
       plan().clearFlags();
       setId(-1);
    }
+
+   #ifdef UTIL_MPI
+   /*
+   * Pack a local Atom for exchange of ownership.
+   */
+   void Atom::packAtom(Buffer& buffer)
+   {
+      buffer.pack<int>(id());
+      buffer.pack<int>(typeId());
+      buffer.pack<Vector>(position());
+      buffer.pack<Vector>(velocity());
+      buffer.pack<unsigned int>(plan().flags());
+
+      // Pack Mask
+      Mask& m = mask();
+      int size = m.size();
+      buffer.pack<int>(size);
+      for (int j = 0; j < size; ++j) {
+         buffer.pack<int>(m[j]);
+      }
+
+      buffer.incrementSendSize();
+   }
+
+   /*
+   * Receive ownership of an Atom.
+   */
+   void Atom::unpackAtom(Buffer& buffer)
+   {
+      int i;
+      buffer.unpack<int>(i);
+      setId(i);
+      buffer.unpack<int>(i);
+      setTypeId(i);
+      buffer.unpack<Vector>(position());
+      buffer.unpack<Vector>(velocity());
+      unsigned int ui;
+      buffer.unpack<unsigned int>(ui);
+      plan().setFlags(ui);
+
+      Mask& m = mask();
+      m.clear();
+      int size;
+      buffer.unpack<int>(size);
+      for (int j = 0; j < size; ++j) {
+         buffer.unpack<int>(i);
+         m.append(i);
+      }
+      assert(m.size() == size);
+      buffer.decrementRecvSize();
+   }
+
+   /*
+   * Return size of packed Atom, in bytes.
+   */
+   int Atom::packedAtomSize()
+   {  
+      int size = 0;
+      size += 2*sizeof(int); 
+      size += 2*sizeof(Vector); 
+      size += sizeof(unsigned int);
+      size += sizeof(int);
+      size += Mask::Capacity*sizeof(int); 
+      return size;
+   }
+
+   /*
+   * Pack data required for a ghost Atom for sending.
+   */
+   void Atom::packGhost(Buffer& buffer)
+   {
+      Vector pos;
+      buffer.pack<int>(id());
+      buffer.pack<int>(typeId());
+      buffer.pack<Vector>(position());
+      buffer.pack<unsigned int>(plan().flags());
+      buffer.incrementSendSize();
+   }
+
+   /*
+   * Unpack data required for a ghost Atom.
+   */
+   void Atom::unpackGhost(Buffer& buffer)
+   {
+      int i;
+      buffer.unpack<int>(i);
+      setId(i);
+      buffer.unpack<int>(i);
+      setTypeId(i);
+      buffer.unpack<Vector>(position());
+      unsigned int ui;
+      buffer.unpack<unsigned int>(ui);
+      plan().setFlags(ui);
+      buffer.decrementRecvSize();
+   }
+
+   /*
+   * Return size of one packed Ghost  in bytes (static method).
+   */
+   int Atom::packedGhostSize()
+   {  
+      int size = 0;
+      size += 2*sizeof(int); 
+      size += sizeof(Vector); 
+      size += sizeof(unsigned int);
+      return size;
+   }
+
+   /*
+   * Pack updates ghost position.
+   */
+   void Atom::packUpdate(Buffer& buffer)
+   {
+      buffer.pack<Vector>(position());
+      buffer.incrementSendSize();
+   }
+
+   /*
+   * Pack updated ghost position.
+   */
+   void Atom::unpackUpdate(Buffer& buffer)
+   {
+      buffer.unpack<Vector>(position());
+      buffer.decrementRecvSize();
+   }
+
+   /*
+   * Pack ghost force.
+   */
+   void Atom::packForce(Buffer& buffer)
+   {
+      buffer.pack<Vector>(force());
+      buffer.incrementSendSize();
+   }
+
+   /*
+   * Unpack data ghost Atom force, and add to on this processor.
+   */
+   void Atom::unpackForce(Buffer& buffer)
+   {
+      Vector f;
+      buffer.unpack<Vector>(f);
+      force() += f;
+      buffer.decrementRecvSize();
+   }
+   #endif
 
 }
 #endif

@@ -17,7 +17,7 @@ namespace DdMd
 
    using namespace Util;
 
-   class Atom;
+   //class Atom;
    template <int N> class Group;
 
    /**
@@ -73,10 +73,9 @@ namespace DdMd
       */
       void allocate(int atomCapacity, int ghostCapacity);
 
-      /// \name Data Block Management
+      /// \name Send Block Management
       //@{
       
-      #ifdef UTIL_MPI
       /**
       * Clear the send buffer and sendType.
       */
@@ -92,18 +91,52 @@ namespace DdMd
       void beginSendBlock(BlockDataType sendType, int sendGroupSize = 0);
 
       /**
+      * Template method for packing a variable
+      *
+      * \param data variable to be packed.
+      */
+      template <typename T>
+      void pack(const T& data);
+
+      /**
+      * Increment send counter for this block.
+      *
+      * This must be called after packing each item in a block.
+      */
+      void incrementSendSize();
+
+      /**
       * Finalize a block in the send buffer.
       *
       * \param isComplete false if data block is incomplete, true otherwise.
       */
       void endSendBlock(bool isComplete = true);
 
+      //@}
+      /// \name Recv Block Management
+      //@{
+      
       /**
       * Begin to receive a block from the recv buffer.
       *
       * \return false if an incomplete block was received, true otherwise.
       */
       bool beginRecvBlock();
+
+      /**
+      * Template method for unpacking a variable
+      *
+      * \param data variable to be unpacked.
+      */
+      template <typename T>
+      void unpack(T& data);
+
+      /**
+      * Decrement recv counter for this block.
+      *
+      * This must be called after unpacking each item in a block.
+      */
+      void decrementRecvSize();
 
       //@}
       /// \name Interprocessor Communication
@@ -155,7 +188,8 @@ namespace DdMd
       //@}
       /// \name Pack and Unpack Methods
       //@{
-      
+     
+      #if 0
       /**
       * Pack an Atom for exchange of ownership.
       *
@@ -209,6 +243,7 @@ namespace DdMd
       * \param atom ghost Atom object.
       */
       void unpackUpdate(Atom& atom);
+      #endif
 
       /**
       * Pack update of ghost Atom force into send buffer.
@@ -284,7 +319,6 @@ namespace DdMd
       * Number of unread items in current recv block.
       */
       int recvSize() const;
-      #endif
 
       /**
       * Has memory been allocated for this Buffer?
@@ -315,7 +349,6 @@ namespace DdMd
 
    private:
 
-      #ifdef UTIL_MPI
       /// Pointer to send buffer.
       char* sendBufferBegin_;
 
@@ -363,7 +396,6 @@ namespace DdMd
 
       /// Number of atoms in a Group type (or 0 if not a Group).
       int recvGroupSize_;
-      #endif
 
       /// Maximum number of local atoms in buffer.
       int atomCapacity_;
@@ -380,7 +412,6 @@ namespace DdMd
       /// Maximum size used for send buffers on any processor, in bytes.
       Setable<int> maxSend_;
 
-      #ifdef UTIL_MPI
       /// Return packed size of Atom, in bytes.
       static int atomSize();
 
@@ -390,31 +421,13 @@ namespace DdMd
       /// Return packed size of Group<N>, in bytes.
       static int groupSize(int N);
 
-      /**
-      * Template method for packing a variable
-      *
-      * \param data variable to be packed.
-      */
-      template <typename T>
-      void pack(const T& data);
-
-      /**
-      * Template method for unpacking a variable
-      *
-      * \param data variable to be unpacked.
-      */
-      template <typename T>
-      void unpack(T& data);
-
       /*
       * Allocate send and recv buffers, using preset capacities.
       */
       void allocate();
-      #endif
 
    };
 
-   #if UTIL_MPI
    /*
    * Pack an object of type T into send buffer.
    */
@@ -501,7 +514,18 @@ namespace DdMd
       // Decrement number of groups in recv buffer by 1
       recvSize_--;
    }
-   #endif
+
+   /*
+   * Increment send counter for this block.
+   */
+   inline void Buffer::incrementSendSize()
+   { ++sendSize_; }
+
+   /*
+   * Decrement recv counter for this block.
+   */
+   inline void Buffer::decrementRecvSize()
+   { --recvSize_; }
 
 }
 #endif

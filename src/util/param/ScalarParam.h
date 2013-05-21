@@ -16,8 +16,6 @@
 #include <util/mpi/MpiSendRecv.h>
 #endif
 
-class ParamTest;
-
 #include <iomanip> 
 
 namespace Util

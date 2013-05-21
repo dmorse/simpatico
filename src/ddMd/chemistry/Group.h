@@ -15,6 +15,8 @@ namespace DdMd
 
    using namespace Util;
 
+   class Buffer;
+
    // Forward declarations required for friend declarations
 
    template <int N> class Group;
@@ -45,8 +47,12 @@ namespace DdMd
    template <int N>
    class Group
    {
-
    public: 
+
+      #ifdef UTIL_MPI
+      /// Return packed size of Group<N>, in bytes.
+      static int packedSize();
+      #endif
 
       /**
       * Constructor 
@@ -180,6 +186,22 @@ namespace DdMd
       */
       const Plan& plan() const
       {  return plan_; }
+
+      #ifdef UTIL_MPI
+      /**
+      * Pack a Group into a send buffer.
+      *
+      * \param group Group<N> object to be sent.
+      */
+      void pack(Buffer& buffer);
+
+      /**
+      * Unpack a Group from the recv buffer.
+      *
+      * \param group Group<N> object into which data is received.
+      */
+      void unpack(Buffer& buffer);
+      #endif
 
    private:
       
@@ -315,6 +337,52 @@ namespace DdMd
          ar & group.atomIds_[i];
       }
    }
+
+   #ifdef UTIL_MPI
+   #include <ddMd/communicate/Buffer.h>
+
+   /*
+   * Pack a Group into a send buffer.
+   */
+   template <int N>
+   void Group<N>::pack(Buffer& buffer)
+   {
+      buffer.pack<int>(id());
+      buffer.pack<int>(typeId());
+      for (int j = 0; j < N; ++j) {
+         buffer.pack<int>(atomId(j));
+      }
+      buffer.pack<unsigned int>(plan().flags());
+
+      incrementSendSize();
+   }
+
+   /*
+   * Unpack the next Group in the recieve buffer.
+   */
+   template <int N>
+   void Group<N>::unpack(Buffer& buffer)
+   {
+      int i;
+      buffer.unpack<int>(i);
+      setId(i);
+      buffer.unpack<int>(i);
+      setTypeId(i);
+      for (int j = 0; j < N; ++j) {
+         buffer.unpack<int>(i);
+         setAtomId(j, i);
+         clearAtomPtr(j);
+      }
+
+      // Unpack communication plan
+      unsigned int ui;
+      buffer.unpack<unsigned int>(ui);
+      plan().setFlags(ui);
+
+      decrementRecvSize();
+   }
+   #endif
+
 
 } 
 #endif
