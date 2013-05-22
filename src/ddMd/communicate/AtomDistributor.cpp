@@ -192,7 +192,6 @@ namespace DdMd
 
          // Pack atoms into buffer, and return pointers for reuse.
          for (int i = begin; i < size; ++i) {
-            //bufferPtr_->packAtom(*sendArrays_(rank, i));
             ptr = sendArrays_(rank, i);
             ptr->packAtom(*bufferPtr_);
 
@@ -307,7 +306,6 @@ namespace DdMd
             Atom* ptr;
             for (int i = 0; i < sendCapacity_; ++i) {
                ptr = sendArrays_(rank, i);
-               //bufferPtr_->packAtom(*ptr);
                ptr->packAtom(*bufferPtr_);
 
                // Push pointer onto reservoir and remove it from sendArrays_.
@@ -384,7 +382,6 @@ namespace DdMd
          Atom* ptr;
          for (j = 0; j < sendSizes_[i]; ++j) {
             ptr = sendArrays_(i, j);
-            //bufferPtr_->packAtom(*ptr);
             ptr->packAtom(*bufferPtr_);
 
             // Return pointer to atom to the reservoir.
@@ -463,7 +460,6 @@ namespace DdMd
          isComplete = bufferPtr_->beginRecvBlock();
          while (bufferPtr_->recvSize() > 0) {
             ptr = storagePtr_->newAtomPtr();
-            //bufferPtr_->unpackAtom(*ptr);
             ptr->unpackAtom(*bufferPtr_);
             storagePtr_->addNewAtom();
             if (domainPtr_->ownerRank(ptr->position()) != rank) {

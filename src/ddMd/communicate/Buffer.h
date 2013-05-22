@@ -190,97 +190,6 @@ namespace DdMd
       void bcast(MPI::Intracomm& comm, int source);
 
       //@}
-      #if 0
-      /// \name Pack and Unpack Methods
-      //@{
-      
-      /**
-      * Pack an Atom for exchange of ownership.
-      *
-      * Appends an atom to the send buffer, and increments sendSize().
-      *
-      * Throws an Exception if sendType != ATOM.
-      *
-      * \param atom Atom object to be sent.
-      */
-      void packAtom(Atom& atom);
-
-      /**
-      * Receive ownership of an Atom.
-      *
-      * Unpacks an atom from recv buffer into atom, and decrements 
-      * recvSize().
-      *
-      * \param atom Atom object into which data is received.
-      */
-      void unpackAtom(Atom& atom);
-
-      /**
-      * Pack ghost Atom into send buffer.
-      *
-      * Copies required data into send buffer, and increments sendSize().
-      *
-      * \param atom ghost Atom to be sent.
-      */
-      void packGhost(Atom& atom);
-
-      /**
-      * Unpack a ghost Atom from recv buffer.
-      *
-      * Unpacks required data from recv buffer into atom, decrements
-      * recvSize().
-      *
-      * \param atom ghost Atom object.
-      */
-      void unpackGhost(Atom& atom);
-
-      /**
-      * Pack update of ghost position Atom into send buffer.
-      *
-      * \param atom ghost Atom to be sent.
-      */
-      void packUpdate(Atom& atom);
-
-      /**
-      * Unpack updated position of ghost Atom from recv buffer.
-      *
-      * \param atom ghost Atom object.
-      */
-      void unpackUpdate(Atom& atom);
-
-      /**
-      * Pack update of ghost Atom force into send buffer.
-      *
-      * \param atom ghost Atom for which force should be sent.
-      */
-      void packForce(Atom& atom);
-
-      /**
-      * Unpack updated position of ghost Atom from recv buffer.
-      *
-      * \param atom ghost Atom object.
-      */
-      void unpackForce(Atom& atom);
-
-      /**
-      * Pack a Group for sending.
-      *
-      * \param group Group<N> object to be sent.
-      */
-      template <int N>
-      void packGroup(const Group<N>& group);
-
-      /**
-      * Receive the next Group in the recv buffer.
-      *
-      * \param group Group<N> object into which data is received.
-      */
-      template <int N>
-      void unpackGroup(Group<N>& group);
-
-      //@}
-      #endif
-
       /// \name Statistics
       //@{
     
@@ -298,11 +207,6 @@ namespace DdMd
       #endif
 
       /**
-      * Clear any accumulated usage statistics.
-      */
-      void clearStatistics();
-      
-      /**
       * Output statistics.
       *
       * Call on master, after calling computeStatistics on all procs.
@@ -311,12 +215,17 @@ namespace DdMd
       */
       void outputStatistics(std::ostream& out);
 
+      /**
+      * Clear any accumulated usage statistics.
+      */
+      void clearStatistics();
+      
       //@}
       /// \name Accessors
       //@{
       
       /**
-      * Number of items written to current send block.
+      * Number of items in current send block.
       */
       int sendSize() const;
 
@@ -418,17 +327,6 @@ namespace DdMd
       /// Maximum size used for send buffers on any processor, in bytes.
       Setable<int> maxSend_;
 
-      #if 0
-      /// Return packed size of Atom, in bytes.
-      static int atomSize();
-
-      /// Return packed size of Group, in bytes.
-      static int ghostSize();
-
-      /// Return packed size of Group<N>, in bytes.
-      static int groupSize(int N);
-      #endif
-
       /*
       * Allocate send and recv buffers, using preset capacities.
       */
@@ -465,65 +363,6 @@ namespace DdMd
       ++ptr;
       recvPtr_ = (char *)ptr;
    }
-
-   #if 0
-   /*
-   * Pack a Group.
-   */
-   template <int N>
-   void Buffer::packGroup(const Group<N>& group)
-   {
-      // Preconditions
-      if (sendType_ != GROUP) {
-         UTIL_THROW("SendType is not GROUP");
-      }
-      if (sendGroupSize_ != N) {
-         UTIL_THROW("Wrong sendGroupSize");
-      }
-      pack<int>(group.id());
-      pack<int>(group.typeId());
-      for (int j = 0; j < N; ++j) {
-         pack<int>(group.atomId(j));
-      }
-      pack<unsigned int>(group.plan().flags());
-
-      //Increment number of groups in send buffer by 1
-      ++sendSize_;
-   }
-
-   /*
-   * Unpack the next Group in the recieve buffer.
-   */
-   template <int N>
-   void Buffer::unpackGroup(Group<N>& group)
-   {
-      // Preconditions
-      if (recvType_ != GROUP) {
-         UTIL_THROW("SendType is not GROUP");
-      }
-      if (recvGroupSize_ != N) {
-         UTIL_THROW("Wrong recvGroupSize");
-      }
-      int i;
-      unpack(i);
-      group.setId(i);
-      unpack(i);
-      group.setTypeId(i);
-      for (int j = 0; j < N; ++j) {
-         unpack(i);
-         group.setAtomId(j, i);
-         group.clearAtomPtr(j);
-      }
-
-      // Unpack communication plan
-      unsigned int ui;
-      unpack(ui);
-      group.plan().setFlags(ui);
-
-      // Decrement number of groups in recv buffer by 1
-      recvSize_--;
-   }
-   #endif
 
    /*
    * Maximum number of Group<N> objects that can fit buffer.

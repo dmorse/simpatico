@@ -178,7 +178,6 @@ namespace DdMd
             while (bufferPtr_->recvSize() > 0 
                    && recvArraySize_ < recvArray_.capacity()) 
             {
-               //bufferPtr_->unpackGroup<N>(recvArray_[recvArraySize_]);
                recvArray_[recvArraySize_].unpack(*bufferPtr_);
                ++recvArraySize_;
                --recvBufferSize_;
@@ -254,7 +253,6 @@ namespace DdMd
             atomPtr = iterator_->atomPtr(0);
             if (atomPtr) {
                if (!atomPtr->isGhost()) {
-                  //bufferPtr_->packGroup<N>(*iterator_);
                   iterator_->pack(*bufferPtr_);
                   ++recvArraySize_;
                }

@@ -316,7 +316,6 @@ namespace DdMd
             emptyGroups.append(*groupIter);
          }
          if (choose) {
-            //bufferPtr_->packGroup<N>(*groupIter);
             groupIter->pack(*bufferPtr_);
          }
       }
@@ -364,7 +363,6 @@ namespace DdMd
       bufferPtr_->beginRecvBlock();
       while (bufferPtr_->recvSize() > 0) {
          newGroupPtr = storage.newPtr();
-         //bufferPtr_->unpackGroup<N>(*newGroupPtr);
          newGroupPtr->unpack(*bufferPtr_);
          groupId = newGroupPtr->id();
          oldGroupPtr = storage.find(groupId);
@@ -753,11 +751,8 @@ namespace DdMd
 
                   #ifdef UTIL_MPI
                   if (multiProcessorDirection_[i]) {
-
                      sentAtoms_.append(*atomIter);
                      atomIter->packAtom(*bufferPtr_);
-                     //bufferPtr_->packAtom(*atomIter);
-
                   } else 
                   #endif
                   {
@@ -851,7 +846,6 @@ namespace DdMd
 
                   atomPtr = atomStoragePtr_->newAtomPtr();
                   planPtr = &atomPtr->plan();
-                  //bufferPtr_->unpackAtom(*atomPtr);
                   atomPtr->unpackAtom(*bufferPtr_);
                   atomStoragePtr_->addNewAtom();
 
@@ -1087,11 +1081,8 @@ namespace DdMd
 
                #ifdef UTIL_MPI
                if (multiProcessorDirection_[i]) {
-
                   // If grid dimension > 1, pack atom for sending 
-                  //bufferPtr_->packGhost(*sendPtr);
                   sendPtr->packGhost(*bufferPtr_);
-
                } else 
                #endif
                {  // if grid dimension == 1
@@ -1150,7 +1141,6 @@ namespace DdMd
                while (bufferPtr_->recvSize() > 0) {
 
                   atomPtr = atomStoragePtr_->newGhostPtr();
-                  //bufferPtr_->unpackGhost(*atomPtr);
                   atomPtr->unpackGhost(*bufferPtr_);
                   if (shift) {
                      atomPtr->position()[i] += rshift;
@@ -1244,7 +1234,6 @@ namespace DdMd
                bufferPtr_->beginSendBlock(Buffer::UPDATE);
                size = sendArray_(i, j).size();
                for (k = 0; k < size; ++k) {
-                  //bufferPtr_->packUpdate(sendArray_(i, j)[k]);
                   atomPtr = &sendArray_(i, j)[k];
                   atomPtr->packUpdate(*bufferPtr_);
                }
@@ -1262,7 +1251,6 @@ namespace DdMd
                size = recvArray_(i, j).size();
                for (k = 0; k < size; ++k) {
                   atomPtr = &recvArray_(i, j)[k];
-                  //bufferPtr_->unpackUpdate(*atomPtr);
                   atomPtr->unpackUpdate(*bufferPtr_);
                   if (shift) {
                      boundaryPtr_->applyShift(atomPtr->position(), i, shift);
@@ -1318,7 +1306,6 @@ namespace DdMd
                bufferPtr_->beginSendBlock(Buffer::FORCE);
                size = recvArray_(i, j).size();
                for (k = 0; k < size; ++k) {
-                  //bufferPtr_->packForce(recvArray_(i, j)[k]);
                   atomPtr = &recvArray_(i, j)[k];
                   atomPtr->packForce(*bufferPtr_);
                }
@@ -1337,7 +1324,6 @@ namespace DdMd
                size = sendArray_(i, j).size();
                for (k = 0; k < size; ++k) {
                   atomPtr = &sendArray_(i, j)[k];
-                  //bufferPtr_->unpackForce(*atomPtr);
                   atomPtr->unpackForce(*bufferPtr_);
                }
                stamp(UNPACK_FORCE);
