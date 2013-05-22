@@ -147,6 +147,19 @@ namespace DdMd
    int Buffer::ghostCapacity() const
    {  return ghostCapacity_; }
 
+   #if 0
+   /*
+   * Maximum number of Group<N> objects that can fit buffer.
+   */
+   int Buffer::groupCapacity(int N) const
+   {
+      if (dataCapacity_ <= 0) {
+         UTIL_THROW("Buffer not allocated");
+      }
+      return (dataCapacity_/Group<N>::packedSize()); 
+   }
+   #endif
+
    /*
    * Has this buffer been initialized?
    */
@@ -177,14 +190,14 @@ namespace DdMd
 
       // Capacity in bytes send and receive buffers. This is maximum of
       // the buffer space required by the local atoms and ghost atoms.
-      int atomDataSize  = atomCapacity_*atomSize();
-      int ghostDataSize = ghostCapacity_*ghostSize();
+      int atomDataSize  = atomCapacity_*Atom::packedAtomSize();
+      int ghostDataSize = ghostCapacity_*Atom::packedGhostSize();
       if (atomDataSize > ghostDataSize) {
           dataCapacity_ = atomDataSize;
-          ghostCapacity_ = dataCapacity_/ghostSize();
+          ghostCapacity_ = dataCapacity_/Atom::packedGhostSize();
       } else {
           dataCapacity_ = ghostDataSize;
-          atomCapacity_ = dataCapacity_/atomSize();
+          atomCapacity_ = dataCapacity_/Atom::packedAtomSize();
       }
 
       // Leave space for a 4 byte header
@@ -292,6 +305,7 @@ namespace DdMd
       return isComplete;
    }
 
+   #if 0
    /*
    * Pack a local Atom for exchange of ownership.
    */
@@ -450,17 +464,6 @@ namespace DdMd
    {  return (2 + N)*sizeof(int) + sizeof(unsigned int); }
 
    /*
-   * Maximum number of Group<N> objects that can fit buffer.
-   */
-   int Buffer::groupCapacity(int N) const
-   {
-      if (dataCapacity_ <= 0) {
-         UTIL_THROW("Buffer not allocated");
-      }
-      return (dataCapacity_/groupSize(N)); 
-   }
-
-   /*
    * Pack updates ghost atom position.
    */
    void Buffer::packUpdate(Atom& atom)
@@ -531,6 +534,7 @@ namespace DdMd
       //Decrement number of atoms in recv buffer to be unpacked by 1
       recvSize_--;
    }
+   #endif
 
    /*
    * Send and receive buffer.

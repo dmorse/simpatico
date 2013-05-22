@@ -159,7 +159,8 @@ namespace DdMd
             while (bufferPtr_->recvSize() > 0 
                    && recvArraySize_ < recvArray_.capacity()) 
             {
-               bufferPtr_->unpackAtom(recvArray_[recvArraySize_]);
+               //bufferPtr_->unpackAtom(recvArray_[recvArraySize_]);
+               recvArray_[recvArraySize_].unpackAtom(*bufferPtr_);
                ++recvArraySize_;
                --recvBufferSize_;
                if (recvBufferSize_ != bufferPtr_->recvSize()) {
@@ -213,7 +214,8 @@ namespace DdMd
          bufferPtr_->clearSendBuffer();
          bufferPtr_->beginSendBlock(Buffer::ATOM);
          while (recvArraySize_ < bufferPtr_->atomCapacity() && !isComplete_) {
-            bufferPtr_->packAtom(*iterator_);
+            //bufferPtr_->packAtom(*iterator_);
+            iterator_->packAtom(*bufferPtr_);
             ++recvArraySize_;
             ++iterator_;
             isComplete_ = iterator_.isEnd();

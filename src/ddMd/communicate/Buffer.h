@@ -190,6 +190,7 @@ namespace DdMd
       void bcast(MPI::Intracomm& comm, int source);
 
       //@}
+      #if 0
       /// \name Pack and Unpack Methods
       //@{
       
@@ -278,6 +279,8 @@ namespace DdMd
       void unpackGroup(Group<N>& group);
 
       //@}
+      #endif
+
       /// \name Statistics
       //@{
     
@@ -345,7 +348,8 @@ namespace DdMd
       /**
       * Maximum number of group<N> objects for which space is available.
       */
-      int groupCapacity(int N) const;
+      template <int N>
+      int groupCapacity() const;
 
       //@}
 
@@ -414,6 +418,7 @@ namespace DdMd
       /// Maximum size used for send buffers on any processor, in bytes.
       Setable<int> maxSend_;
 
+      #if 0
       /// Return packed size of Atom, in bytes.
       static int atomSize();
 
@@ -422,6 +427,7 @@ namespace DdMd
 
       /// Return packed size of Group<N>, in bytes.
       static int groupSize(int N);
+      #endif
 
       /*
       * Allocate send and recv buffers, using preset capacities.
@@ -460,6 +466,7 @@ namespace DdMd
       recvPtr_ = (char *)ptr;
    }
 
+   #if 0
    /*
    * Pack a Group.
    */
@@ -515,6 +522,19 @@ namespace DdMd
 
       // Decrement number of groups in recv buffer by 1
       recvSize_--;
+   }
+   #endif
+
+   /*
+   * Maximum number of Group<N> objects that can fit buffer.
+   */
+   template <int N>
+   int Buffer::groupCapacity() const
+   {
+      if (dataCapacity_ <= 0) {
+         UTIL_THROW("Buffer not allocated");
+      }
+      return (dataCapacity_/Group<N>::packedSize()); 
    }
 
    /*

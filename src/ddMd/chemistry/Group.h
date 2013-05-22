@@ -15,8 +15,6 @@
 namespace DdMd
 {
 
-   using namespace Util;
-
    class Atom;
 
    // Forward declarations required for friend declarations
@@ -31,6 +29,8 @@ namespace DdMd
 
    template <class Archive, int N>
    void serialize(Archive& ar, Group<N>& group, const unsigned int version);
+
+   using namespace Util;
 
    /**
    * A group of covalently interacting atoms.
@@ -51,7 +51,9 @@ namespace DdMd
    {
    public: 
 
-      /// Return packed size of Group<N>, in bytes.
+      /**
+      * Return packed size of Group<N>, in bytes.
+      */
       static int packedSize();
 
       /**
@@ -190,14 +192,14 @@ namespace DdMd
       /**
       * Pack a Group into a send buffer.
       *
-      * \param group Group<N> object to be sent.
+      * \param group Group<N> object to be packed and sent
       */
       void pack(Buffer& buffer);
 
       /**
       * Unpack a Group from the recv buffer.
       *
-      * \param group Group<N> object into which data is received.
+      * \param group Group<N> object into which data is unpacked
       */
       void unpack(Buffer& buffer);
 
@@ -349,7 +351,7 @@ namespace DdMd
       }
       buffer.pack<unsigned int>(plan().flags());
 
-      incrementSendSize();
+      buffer.incrementSendSize();
    }
 
    /*
@@ -368,14 +370,19 @@ namespace DdMd
          setAtomId(j, i);
          clearAtomPtr(j);
       }
-
-      // Unpack communication plan
       unsigned int ui;
       buffer.unpack<unsigned int>(ui);
       plan().setFlags(ui);
 
-      decrementRecvSize();
+      buffer.decrementRecvSize();
    }
+
+   /*
+   * Packed size of one Group<N> object.
+   */
+   template <int N>
+   int Group<N>::packedSize()
+   {  return (2 + N)*sizeof(int) + sizeof(unsigned int); }
 
 } 
 #endif

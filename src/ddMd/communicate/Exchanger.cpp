@@ -316,7 +316,8 @@ namespace DdMd
             emptyGroups.append(*groupIter);
          }
          if (choose) {
-            bufferPtr_->packGroup<N>(*groupIter);
+            //bufferPtr_->packGroup<N>(*groupIter);
+            groupIter->pack(*bufferPtr_);
          }
       }
       bufferPtr_->endSendBlock();
@@ -363,7 +364,8 @@ namespace DdMd
       bufferPtr_->beginRecvBlock();
       while (bufferPtr_->recvSize() > 0) {
          newGroupPtr = storage.newPtr();
-         bufferPtr_->unpackGroup<N>(*newGroupPtr);
+         //bufferPtr_->unpackGroup<N>(*newGroupPtr);
+         newGroupPtr->unpack(*bufferPtr_);
          groupId = newGroupPtr->id();
          oldGroupPtr = storage.find(groupId);
          if (oldGroupPtr) {

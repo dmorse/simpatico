@@ -188,7 +188,8 @@ namespace DdMd
          groupStoragePtr_->add();
          nAtomRecv_ += nAtom;
       }
-      bufferPtr_->packGroup(*newPtr_);
+      //bufferPtr_->packGroup(*newPtr_);
+      newPtr_->pack(*bufferPtr_);
  
       // Nullify newPtr_ to release for reuse.
       newPtr_ = 0;
@@ -303,7 +304,8 @@ namespace DdMd
          isComplete = bufferPtr_->beginRecvBlock();
          while (bufferPtr_->recvSize() > 0) {
             ptr = groupStoragePtr_->newPtr();
-            bufferPtr_->unpackGroup(*ptr);
+            //bufferPtr_->unpackGroup(*ptr);
+            ptr->unpack(*bufferPtr_);
             nAtom = atomStoragePtr_->findGroupAtoms(*ptr);
             if (nAtom > 0) {
                groupStoragePtr_->add();

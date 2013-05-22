@@ -178,7 +178,8 @@ namespace DdMd
             while (bufferPtr_->recvSize() > 0 
                    && recvArraySize_ < recvArray_.capacity()) 
             {
-               bufferPtr_->unpackGroup<N>(recvArray_[recvArraySize_]);
+               //bufferPtr_->unpackGroup<N>(recvArray_[recvArraySize_]);
+               recvArray_[recvArraySize_].unpack(*bufferPtr_);
                ++recvArraySize_;
                --recvBufferSize_;
                if (recvBufferSize_ != bufferPtr_->recvSize()) {
@@ -230,7 +231,7 @@ namespace DdMd
       Atom* atomPtr = 0;
       int message;
       int tag;
-      int bufferCapacity = bufferPtr_->groupCapacity(N);
+      int bufferCapacity = bufferPtr_->groupCapacity<N>();
 
       // Initialize group iterator
       storagePtr_->begin(iterator_);
@@ -253,7 +254,8 @@ namespace DdMd
             atomPtr = iterator_->atomPtr(0);
             if (atomPtr) {
                if (!atomPtr->isGhost()) {
-                  bufferPtr_->packGroup<N>(*iterator_);
+                  //bufferPtr_->packGroup<N>(*iterator_);
+                  iterator_->pack(*bufferPtr_);
                   ++recvArraySize_;
                }
             }
