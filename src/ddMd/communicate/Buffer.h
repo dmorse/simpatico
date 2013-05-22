@@ -7,8 +7,8 @@
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
+
 #include <util/param/ParamComposite.h>  // base class
-#include <ddMd/chemistry/Bond.h>        // typedef
 #include <util/misc/Setable.h>
 #include <util/global.h>
 
@@ -73,10 +73,9 @@ namespace DdMd
       */
       void allocate(int atomCapacity, int ghostCapacity);
 
-      /// \name Data Block Management
+      /// \name Send Buffer Management
       //@{
       
-      #ifdef UTIL_MPI
       /**
       * Clear the send buffer and sendType.
       */
@@ -92,18 +91,56 @@ namespace DdMd
       void beginSendBlock(BlockDataType sendType, int sendGroupSize = 0);
 
       /**
+      * Function template for packing one variable into the send buffer.
+      *
+      * This is designed for primitive C variables. It will work on any
+      * plain old data type T for which the assignment (=) operator does
+      * a straight bitwise copy from the variable to the buffer.
+      *
+      * \param data variable to be packed
+      */
+      template <typename T>
+      void pack(const T& data);
+
+      /**
+      * Increment sendSize counter after packing an item.
+      */
+      void incrementSendSize();
+
+      /**
       * Finalize a block in the send buffer.
       *
-      * \param isComplete false if data block is incomplete, true otherwise.
+      * \param isComplete false if data block is incomplete, true otherwise
       */
       void endSendBlock(bool isComplete = true);
 
+      //@}
+      /// \name Receive Buffer Management
+      //@{
+      
       /**
-      * Begin to receive a block from the recv buffer.
+      * Begin to receive a block from the recv buffer, read envelope.
       *
-      * \return false if an incomplete block was received, true otherwise.
+      * \return false if an incomplete block was received, true otherwise
       */
       bool beginRecvBlock();
+
+      /**
+      * Function template unpacking one variable from the receive buffer.
+      *
+      * This is designed for primitive C variables. It will work on any
+      * plain old data type T for which the assignment (=) operator does
+      * a straight bitwise copy from the buffer to the variable.
+      *
+      * \param data variable to be unpacked
+      */
+      template <typename T>
+      void unpack(T& data);
+
+      /**
+      * Decrement recvSize counter after unpacking an item.
+      */
+      void decrementRecvSize();
 
       //@}
       /// \name Interprocessor Communication
@@ -284,7 +321,6 @@ namespace DdMd
       * Number of unread items in current recv block.
       */
       int recvSize() const;
-      #endif
 
       /**
       * Has memory been allocated for this Buffer?
@@ -315,7 +351,6 @@ namespace DdMd
 
    private:
 
-      #ifdef UTIL_MPI
       /// Pointer to send buffer.
       char* sendBufferBegin_;
 
@@ -363,7 +398,6 @@ namespace DdMd
 
       /// Number of atoms in a Group type (or 0 if not a Group).
       int recvGroupSize_;
-      #endif
 
       /// Maximum number of local atoms in buffer.
       int atomCapacity_;
@@ -380,7 +414,6 @@ namespace DdMd
       /// Maximum size used for send buffers on any processor, in bytes.
       Setable<int> maxSend_;
 
-      #ifdef UTIL_MPI
       /// Return packed size of Atom, in bytes.
       static int atomSize();
 
@@ -390,36 +423,18 @@ namespace DdMd
       /// Return packed size of Group<N>, in bytes.
       static int groupSize(int N);
 
-      /**
-      * Template method for packing a variable
-      *
-      * \param data variable to be packed.
-      */
-      template <typename T>
-      void pack(const T& data);
-
-      /**
-      * Template method for unpacking a variable
-      *
-      * \param data variable to be unpacked.
-      */
-      template <typename T>
-      void unpack(T& data);
-
       /*
       * Allocate send and recv buffers, using preset capacities.
       */
       void allocate();
-      #endif
 
    };
 
-   #if UTIL_MPI
    /*
    * Pack an object of type T into send buffer.
    */
    template <typename T>
-   void Buffer::pack(const T& data)
+   inline void Buffer::pack(const T& data)
    {
       if (sendPtr_ + sizeof(data) > sendBufferEnd_) {
          UTIL_THROW("Attempted write past end of send buffer");
@@ -434,7 +449,7 @@ namespace DdMd
    * Unpack an object of type T from recvBuffer.
    */
    template <typename T>
-   void Buffer::unpack(T& data)
+   inline void Buffer::unpack(T& data)
    {
       if (recvPtr_ + sizeof(data) > recvBufferEnd_) {
          UTIL_THROW("Attempted read past end of recv buffer");
@@ -501,7 +516,18 @@ namespace DdMd
       // Decrement number of groups in recv buffer by 1
       recvSize_--;
    }
-   #endif
+
+   /*
+   * Increment sendSize counter after packing an item.
+   */
+   inline void Buffer::incrementSendSize()
+   { ++sendSize_; }
+
+   /*
+   * Decrement sendSize counter after receiving an item.
+   */
+   inline void Buffer::decrementRecvSize()
+   { --recvSize_; }
 
 }
 #endif

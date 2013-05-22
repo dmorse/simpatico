@@ -9,7 +9,6 @@
 */
 
 #include "GroupDistributor.h"
-//#include "Buffer.h"
 #include "Domain.h"
 #include <ddMd/storage/GroupStorage.h>
 #include <ddMd/storage/GroupIterator.h>

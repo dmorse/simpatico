@@ -164,8 +164,8 @@ namespace DdMd
       if (!MPI::Is_initialized()) {
          UTIL_THROW("MPI is not initialized");
       }
-      Util::Vector::commitMpiType();
-      Util::IntVector::commitMpiType();
+      Vector::commitMpiType();
+      IntVector::commitMpiType();
       AtomType::initStatic();
 
       setIoCommunicator(communicator);
@@ -338,7 +338,7 @@ namespace DdMd
 
       // If option -e, enable echoing of parameters as they are read
       if (eFlag) {
-         Util::ParamComponent::setEcho(true);
+         ParamComponent::setEcho(true);
       }
 
       // If option -r, load state from a restart file.
@@ -349,7 +349,7 @@ namespace DdMd
          }
          load(std::string(rArg));
          if (isIoProcessor()) {
-            Util::Log::file() << std::endl;
+            Log::file() << std::endl;
          }
          isInitialized_ = true;
       }

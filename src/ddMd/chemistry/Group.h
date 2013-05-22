@@ -8,14 +8,16 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Atom.h"
+#include <ddMd/communicate/Plan.h>     // member
+#include <ddMd/communicate/Buffer.h>   // method implementation
+
 
 namespace DdMd
 {
 
    using namespace Util;
 
-   class Buffer;
+   class Atom;
 
    // Forward declarations required for friend declarations
 
@@ -49,10 +51,8 @@ namespace DdMd
    {
    public: 
 
-      #ifdef UTIL_MPI
       /// Return packed size of Group<N>, in bytes.
       static int packedSize();
-      #endif
 
       /**
       * Constructor 
@@ -187,7 +187,6 @@ namespace DdMd
       const Plan& plan() const
       {  return plan_; }
 
-      #ifdef UTIL_MPI
       /**
       * Pack a Group into a send buffer.
       *
@@ -201,7 +200,6 @@ namespace DdMd
       * \param group Group<N> object into which data is received.
       */
       void unpack(Buffer& buffer);
-      #endif
 
    private:
       
@@ -338,9 +336,6 @@ namespace DdMd
       }
    }
 
-   #ifdef UTIL_MPI
-   #include <ddMd/communicate/Buffer.h>
-
    /*
    * Pack a Group into a send buffer.
    */
@@ -381,8 +376,6 @@ namespace DdMd
 
       decrementRecvSize();
    }
-   #endif
-
 
 } 
 #endif

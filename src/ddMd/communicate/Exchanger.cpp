@@ -1261,7 +1261,7 @@ namespace DdMd
                for (k = 0; k < size; ++k) {
                   atomPtr = &recvArray_(i, j)[k];
                   //bufferPtr_->unpackUpdate(*atomPtr);
-                  atomPtr->packUpdate(*bufferPtr_);
+                  atomPtr->unpackUpdate(*bufferPtr_);
                   if (shift) {
                      boundaryPtr_->applyShift(atomPtr->position(), i, shift);
                   }
@@ -1308,6 +1308,7 @@ namespace DdMd
       for (i = Dimension - 1; i >= 0; --i) {
          for (j = 1; j >= 0; --j) {
 
+            #if 1
             if (multiProcessorDirection_[i]) {
 
                // Pack ghost forces for sending
@@ -1315,7 +1316,9 @@ namespace DdMd
                bufferPtr_->beginSendBlock(Buffer::FORCE);
                size = recvArray_(i, j).size();
                for (k = 0; k < size; ++k) {
-                  bufferPtr_->packForce(recvArray_(i, j)[k]);
+                  //bufferPtr_->packForce(recvArray_(i, j)[k]);
+                  atomPtr = &recvArray_(i, j)[k];
+                  atomPtr->packForce(*bufferPtr_);
                }
                bufferPtr_->endSendBlock();
                stamp(PACK_FORCE);
@@ -1326,13 +1329,14 @@ namespace DdMd
                bufferPtr_->sendRecv(domainPtr_->communicator(), 
                                     source, dest);
                stamp(SEND_RECV_FORCE);
-   
+
                // Unpack ghost forces
                bufferPtr_->beginRecvBlock();
                size = sendArray_(i, j).size();
                for (k = 0; k < size; ++k) {
                   atomPtr = &sendArray_(i, j)[k];
-                  bufferPtr_->unpackForce(*atomPtr);
+                  //bufferPtr_->unpackForce(*atomPtr);
+                  atomPtr->unpackForce(*bufferPtr_);
                }
                stamp(UNPACK_FORCE);
 
@@ -1350,6 +1354,7 @@ namespace DdMd
                stamp(LOCAL_FORCE);
 
             }
+            #endif
 
          } // transmit direction j = 1 or 0 
 

@@ -10,16 +10,16 @@
 
 //#define UTIL_32BIT
 
-#include <util/space/Vector.h>
-#include <ddMd/chemistry/Mask.h>
-#include <ddMd/communicate/Plan.h>
-#include "AtomArray.h"
+#include <util/space/Vector.h>            // members
+#include <ddMd/chemistry/Mask.h>          // member
+#include <ddMd/communicate/Plan.h>        // member 
+#include "AtomArray.h"                    // inline methods
 
 namespace DdMd
 {
 
-   using namespace Util;
    class Buffer;
+   using namespace Util;
 
    /**
    * A point particle.
@@ -27,13 +27,13 @@ namespace DdMd
    * Each Atom has:
    *
    *   - a position Vector
-   *   - a force  Vector
+   *   - a force Vector
    *   - a velocity Vector
    *   - an integer atom type Id
    *   - a boolean isGhost flag
    *   - a global integer id
    *   - a Mask (list of other atoms with masked pair interactions)
-   *   - a communication plan
+   *   - a communication Plan
    *
    * An Atom may only be constructed as an element of an AtomArray.
    *
@@ -45,10 +45,14 @@ namespace DdMd
    public:
 
       #ifdef UTIL_MPI
-      /// Return packed size of Atom, in bytes.
+      /**
+      * Return size of an atom packed into buffer for exchange, in bytes.
+      */
       static int packedAtomSize();
 
-      /// Return packed size of Ghost, in bytes.
+      /**
+      * Return size of ghost atom packed for communication, in bytes.
+      */
       static int packedGhostSize();
       #endif
 
@@ -58,7 +62,7 @@ namespace DdMd
       /**
       * Assignment.
       */
-      Atom& operator= (const Atom& other);
+      Atom& operator = (const Atom& other);
 
       /**
       * Reset integer members to initial null values.
@@ -161,31 +165,34 @@ namespace DdMd
       //@{
 
       /**
-      * Pack an Atom to send buffer, for exchange of ownership.
+      * Pack an Atom into a send buffer, for exchange of ownership.
+      *
+      * Packs required data, increments buffer sendSize counter.
       *
       * \param buffer communication buffer
       */
       void packAtom(Buffer& buffer);
 
       /**
-      * Unpack an atom from recv buffer, receive ownership.
+      * Unpack an atom from a recv buffer and receive ownership.
       *
       * \param buffer communication buffer
       */
       void unpackAtom(Buffer& buffer);
 
       /**
-      * Pack ghost Atom into send buffer.
+      * Pack a ghost Atom into a send buffer.
+      *
+      * Packs required data, increments buffer sendSize counter.
       *
       * \param buffer communication buffer
       */
       void packGhost(Buffer& buffer);
 
       /**
-      * Unpack a ghost Atom from recv buffer.
+      * Unpack a ghost Atom from a recv buffer.
       *
-      * Unpacks required data from recv buffer into atom, decrements
-      * recvSize().
+      * Unpacks required data, decrements buffer recvSize counter.
       *
       * \param buffer communication buffer
       */
@@ -194,12 +201,16 @@ namespace DdMd
       /**
       * Pack updated ghost position into send buffer.
       *
+      * Packs position Vector, increments buffer sendSize counter.
+      *
       * \param buffer communication buffer
       */
       void packUpdate(Buffer& buffer);
 
       /**
       * Unpack updated ghost position from recv buffer.
+      *
+      * Unpacks position Vector, decrements buffer recvSize counter.
       *
       * \param buffer communication buffer
       */
@@ -208,6 +219,8 @@ namespace DdMd
       /**
       * Pack update of ghost Atom force into send buffer.
       *
+      * Packs force Vector, increments buffer sendSize counter.
+      *
       * \param buffer communication buffer
       */
       void packForce(Buffer& buffer);
@@ -215,7 +228,8 @@ namespace DdMd
       /**
       * Unpack updated position of ghost Atom from recv buffer.
       *
-      * Increments the atomic force (rather than overwriting).
+      * Reads force from buffer and increments the atomic force
+      * (rather than overwriting), then decrements recvSize counter.
       *
       * \param buffer communication buffer
       */

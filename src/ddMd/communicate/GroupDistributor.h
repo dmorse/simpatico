@@ -19,7 +19,6 @@ namespace DdMd
    class AtomStorage;
    template <int N> class GroupStorage;
    class Domain;
-   class Buffer;
 
    using namespace Util;
 
@@ -193,7 +192,7 @@ namespace DdMd
       Buffer* bufferPtr_;
 
       /// Type of object to send.
-      Buffer::BlockDataType sendType_;
+      enum Buffer::BlockDataType sendType_;
 
       /// Total number of atoms in groups recieved (defined on all)
       int nAtomRecv_;

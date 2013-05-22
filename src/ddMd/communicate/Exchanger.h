@@ -188,16 +188,16 @@ namespace DdMd
       #endif // UTIL_MPI
 
       /// Processor boundaries (minima j=0, maxima j=1)
-      Util::FMatrix< double, Dimension, 2>  bound_;
+      FMatrix< double, Dimension, 2>  bound_;
 
       /// Inner boundaries of nonbonded slabs
-      Util::FMatrix< double, Dimension, 2>  inner_;
+      FMatrix< double, Dimension, 2>  inner_;
 
       /// Outer boundaries of nonbonded slabs
-      Util::FMatrix< double, Dimension, 2>  outer_;
+      FMatrix< double, Dimension, 2>  outer_;
 
       /// Elements are 1 if grid dimension > 1, 0 otherwise.
-      Util::IntVector multiProcessorDirection_;
+      IntVector multiProcessorDirection_;
 
       /// Pointer to associated const Boundary object.
       const Boundary*  boundaryPtr_;

@@ -20,7 +20,7 @@ namespace DdMd
    * Constructor.
    */
    Domain::Domain()
-    : Util::ParamComposite(),
+    : ParamComposite(),
       sourceRanks_(),
       destRanks_(),
       shift_(),

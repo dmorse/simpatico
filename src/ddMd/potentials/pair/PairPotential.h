@@ -221,7 +221,7 @@ namespace DdMd
       * This method should only be called on the master (rank 0) 
       * processor, after a previous call to computePairEnergies.
       */
-      Util::DMatrix<double> pairEnergies() const;
+      DMatrix<double> pairEnergies() const;
 
       /**
       * Mark pair energy as unknown (nullify).

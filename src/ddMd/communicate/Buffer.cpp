@@ -23,7 +23,7 @@ namespace DdMd
    * Constructor.
    */
    Buffer::Buffer() 
-    : Util::ParamComposite(),
+    : ParamComposite(),
       #ifdef UTIL_MPI
       sendBufferBegin_(0),
       recvBufferBegin_(0),
