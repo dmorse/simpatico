@@ -17,7 +17,6 @@ namespace DdMd
 
    using namespace Util;
 
-   class Atom;
    template <int N> class Group;
 
    /**
@@ -37,13 +36,15 @@ namespace DdMd
       */
       Buffer();
 
+      /**
+      * Destructor.
+      */
       virtual ~Buffer();
 
       /**
-      * Read capacities and allocate buffers.
+      * Read capacity and allocate buffers.
       *
-      * Read parameters atomCapacity and ghostCapacity (see allocate)
-      * and allocate buffers.
+      * \param in input parameter stream
       */
       void readParameters(std::istream& in);
 
@@ -276,10 +277,10 @@ namespace DdMd
       /// End of allocated send Buffer (one char past end).
       char* recvBufferEnd_;
 
-      /// Address one past end of the packed portion of the send buffer.
+      /// Pointer to beginning of current block in send buffer.
       char* sendBlockBegin_;
 
-      /// Address one past end of the unpacked portion of the send buffer.
+      /// Pointer to beginning of current block in recv buffer.
       char* recvBlockBegin_;
 
       /// Address one past end of the packed portion of the send buffer.
@@ -294,16 +295,16 @@ namespace DdMd
       /// Capacity of buffers, in bytes, without 4 int envelope.
       int dataCapacity_;
 
-      /// Number of atoms or ghosts currently in send buffer.
+      /// Number of items packed thus far into current block of send buffer.
       int sendSize_;
 
-      /// Number of unread atoms or ghosts currently in receive buffer.
+      /// Number of unread items remaining in this block of receive buffer.
       int recvSize_;
 
       /// Number of atoms in group (or 0 if not a Group).
       int sendGroupSize_;
 
-      /// Type of atom being sent = NONE, ATOM, GHOST, GROUP
+      /// Type of item being sent in this block = NONE, ATOM, GHOST, GROUP
       BlockDataType sendType_;
 
       /// Type of atom being received (BlockDataType cast to int)
@@ -321,11 +322,11 @@ namespace DdMd
       /// Maximum size used for send buffer on this processor, in bytes.
       int maxSendLocal_;
 
-      /// Has this buffer been initialized ?
-      bool isInitialized_;
-
       /// Maximum size used for send buffers on any processor, in bytes.
       Setable<int> maxSend_;
+
+      /// Has this buffer been initialized ?
+      bool isInitialized_;
 
       /*
       * Allocate send and recv buffers, using preset capacities.

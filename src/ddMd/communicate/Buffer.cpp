@@ -42,7 +42,7 @@ namespace DdMd
       ghostCapacity_(-1),
       maxSendLocal_(0),
       isInitialized_(false)
-   { setClassName("Buffer"); }
+   {  setClassName("Buffer"); }
 
    /*
    * Destructor.
