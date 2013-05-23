@@ -1,47 +1,34 @@
-Plans for changing Buffer and dependent classes (May 2, 2011).
+Proposal for changing Buffer (May 17, 2013).
 
 class Buffer:
 
-1) Add private pointers to contain more complete description of buffer.
+1) Make pack and unpack method templates public.
 
-   change private members:
+2) Add public endItem() method to increment sendSize_.
 
-       void* sendBuffer_ to sendBufferBegin_
-       void* recvBuffer_ to sendBufferBegin_
+3) Make these functions members of Atom or Group:
+   (pack|unpack)Atom(), (pack|unpack)Ghost,
+   (pack|unpack)Force(), (pack|unpack)Group,
+   atomSize(), ghostSize(), groupSize()
 
-   add private members:
+4) Remove atomCapacity and group Capacity - these quantities
+   can be calculated outside the class.
 
-       void* sendBufferEnd_
-       void* recvBufferEnd_
+5) Allocate explicitly in terms of bytes.
 
-2) Change pack() template so as to check for the end of the buffer.
+6) Add int groupId(int N) to calculate enum for Group<N>
 
-3) Change send() and sendRecv() so as to calculate buffer size from 
-   sendPtr_.
+7) Change block prefix. Currently contains:
 
-4) Add private pointers that refer to the current block, if any.
+   - sendSize_
+   - sendType_
+   - sendGroupSize_ (often unused)
+   - isComplete_
 
-       void* sendBlockBegin_
-       void* recvBlockBegin_
+   Make it instead:
 
-5) Change names of type enumeration and type variables
+   - sendSize_    = number of items.
+   - sendBytes_   = length of data block in bytes.
+   - sendType_    = integer value
+   - isComplete_  = used by distributor and collector
 
-       Rename: AtomTypeName  -> BlockTypeName
-       Rename: atomSendType_ -> blockSendType_
-       Rename: atomRecvType_ -> blockRecvType_
-
-6) Rename initSendBuffer(AtomTypeName) -> beginSendBlock(BlockTypeName)
-
-   Change function calls in Distributor, Exchanger, and Collector.
-
-7) Add method endSendBlock(). This should:
-
-      set blockSendSize_ and blockSendType_ values in buffer.
-      set sendBlockBegin_ = 0
-      set BlockTypeName = NONE
-
-      Remove these operations from send()
-      Add function calls in Distributor, before send calls.
-
-      Remove these operations from sendRecv()
-      Add function calls in Exchanger, before sendRecv() calls.
