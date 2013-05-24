@@ -19,13 +19,24 @@ Ideas:
    storage containers are currently used in exchanges, distribution,
    and collection.
 
-3) Make changes to Buffer first, to first move (pack|unpack)Group methods
-   to Group<N> template, where they belong.
+------------------------------------------------------------------------
+Plan (order of changes):
+
+1) Make changes to Buffer first, to first move (pack|unpack)Group
+   methods to Group<N> template, where they belong (Done).
+
+2) Change all methods of Exchanger that involve GroupStorage 
+   to methods of GroupStorage<N> (see discussion below).
+
+3) Move GroupStorage to be a member of corresponding Potential.
+
+4) Create PotentialMaster. This can read PairPotential, etc., then
+   read the pair style. 
 
 ------------------------------------------------------------------------
 class Exchanger:
 
-  Exchanger::exchange() cals several functions that use GroupStorage<N>:
+  Exchanger::exchange() calls several functions that use GroupStorage<N>:
 
   1) Before clearing ghosts:   initGroupGhostPlan<N>(GroupStorage<N>& )
 

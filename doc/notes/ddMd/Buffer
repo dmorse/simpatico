@@ -2,23 +2,7 @@ Proposal for changing Buffer (May 17, 2013).
 
 class Buffer:
 
-1) Make pack and unpack method templates public.
-
-2) Add public endItem() method to increment sendSize_.
-
-3) Make these functions members of Atom or Group:
-   (pack|unpack)Atom(), (pack|unpack)Ghost,
-   (pack|unpack)Force(), (pack|unpack)Group,
-   atomSize(), ghostSize(), groupSize()
-
-4) Remove atomCapacity and group Capacity - these quantities
-   can be calculated outside the class.
-
-5) Allocate explicitly in terms of bytes.
-
-6) Add int groupId(int N) to calculate enum for Group<N>
-
-7) Change block prefix. Currently contains:
+1) Change block prefix. Currently contains:
 
    - sendSize_
    - sendType_
@@ -28,7 +12,20 @@ class Buffer:
    Make it instead:
 
    - sendSize_    = number of items.
-   - sendBytes_   = length of data block in bytes.
-   - sendType_    = integer value
+   - sendBytes_   = length of data block in bytes (including prefix block)
+   - sendType_    = integer value (distinct for GROUP2, GROUP3, GROUP4)
    - isComplete_  = used by distributor and collector
+
+2) Add endRecvBlock() method to check that recvPtr_ = blockRecvPtr + recvBytes
+
+3) Add enumeration values INT, DOUBLE, VECTOR, GROUP2, GROUP3, GROUP4
+
+4) Remove groupSize argument from some functions.
+
+5) Add int groupId(int N) to calculate enum for Group<N>
+
+6) Remove atomCapacity and group Capacity - these quantities
+   can be calculated outside the class.
+
+7) Allocate explicitly in terms of bytes.
 
