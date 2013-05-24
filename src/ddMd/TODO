@@ -10,9 +10,9 @@ Testing
 Initial Ghost Exchange
 ----------------------
 
-- Add initExchangeGhosts method to DdMd::Exchanger that distributes the 
-  groups among neighboring processors without sending many unnecessary 
-  ghosts (to decrease memory requirements).
+- Reduce memory requirements during initial ghost exchange.
+
+- See doc/notes/ddMd/initGhosts
 
 Cell List and Pair List:
 ------------------------
@@ -26,36 +26,26 @@ Cell List and Pair List:
 Flexible Unit Cells:
 --------------------
 
-- Generalize makeSnapShot and needsExchange methods in AtomStorage to allow 
-  for deforming boundaries (requires further changes to Boundary).
+- Generalize makeSnapShot and needsExchange methods in AtomStorage to
+  allow for deforming boundaries (requires further changes to Boundary).
 
 Buffer:
 -------
 
-- Test use of pack/unpack methods defined in Atom and Group.
+- see doc/notes/ddMd/Buffer
 
-- Change envelope sent with block to contain:
+Moving GroupStorage to Potential class:
+---------------------------------------
 
-  sendSize_
-  sendItemSize_
-  sendItemType_
-  isComplete_
-
-  For groups, add enumerations BOND, ANGLE, DIHEDRAL and
-  use Type = Buffer::BOND + N - 2 in templates for Group<N>. 
-
-- In beginSendBlock() method, add parameter itemSize and remove 
-  parameter groupSize.
-
-- Add values INT, DOUBLE, VECTOR to enumeration of types.
+- see doc/notes/ddMd/GroupStorage
 
 Dynamic Resizing
 ----------------
 
+- Allow for dynamic resizing of PairList class during creation.
+
 - Allow for dynamic resizing of Storage classes.
   For AtomStorage, must emit signal to reset pointers to atoms.
-
-- Allow for dynamic resizing of PairList class during creation.
 
 Hybrid MD
 ---------
