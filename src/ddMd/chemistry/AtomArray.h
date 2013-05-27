@@ -8,8 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-//#include "Atom.h"
-#include <util/containers/Array.h>
+#include <util/containers/Array.h>   // base class template
 
 namespace Util {
    class Vector;
@@ -27,8 +26,15 @@ namespace DdMd
    /**
    * An array of Atom objects.
    *
-   * The current implementation of this class is almost identical to
-   * DArray<Atom>, except for a prohibition on copying and assignment.
+   * Access to atoms provided by an overloaded subscript ([]) operator,
+   * which is inherited from Array<Atom> base class. The interface is
+   * similar to that of a DArray, except that copy construction and
+   * assignment (=) are prohibited (i.e., private and not implemented).
+   *
+   * The current implementation places data for some "pseudo-members" of 
+   * each Atom in separate arrays. The interface of an Atom hides this, 
+   * allowing pseudo-members to be accessed as if they were true class
+   * members. See file Atom.h for further implementation details.
    */
    class AtomArray : public Array<Atom>
    { 
@@ -64,10 +70,31 @@ namespace DdMd
       using Array<Atom>::data_;
       using Array<Atom>::capacity_;
 
-      Vector *velocities_;
-      Mask   *masks_;
-      Plan   *plans_; 
-      int    *ids_;
+      /*
+      * The following C-arrays store data for Atom "psuedo-members".
+      * Data associated with the Atom in element i of the main data_
+      * array is stored in element i in each of these arrays.
+      */
+
+      /**
+      * C-array of Atom velocities.
+      */
+      Vector*  velocities_;
+
+      /**
+      * C-array of Atom Mask objects.
+      */
+      Mask*  masks_;
+
+      /**
+      * C-array of communication Plan data.
+      */
+      Plan*  plans_; 
+
+      /**
+      * C-array Atom global ids (tags).
+      */
+      int*  ids_;
 
       /**
       * Copy ctor (prohibited - private and not implemented).
@@ -79,9 +106,11 @@ namespace DdMd
       */
       AtomArray& operator = (const AtomArray& other); 
 
+   //friends:
+
       friend class Atom;
 
-   }; 
+   };
 
 }
 #endif

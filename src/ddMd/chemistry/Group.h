@@ -35,14 +35,14 @@ namespace DdMd
    /**
    * A group of covalently interacting atoms.
    *
-   * A group of atoms that interact via a permanent (covalent) 
-   * N Atom potential.  Specializations of Group with N=2, 3,
-   * 4 are used to represent groups that interact via covalent
-   * bond, angle and torsion interaction potentials, respectively.
+   * A group of atoms that interact via a permanent (covalent) N Atom 
+   * potential.  Specializations of Group with N=2, 3, 4 are used to 
+   * represent groups that interact via covalent bond, angle and torsion
+   * interaction potentials, respectively.  
    *
-   * A Group<N> contains both an array of integer ids for Atoms 
-   * in the group, and an array of pointers to these atoms. It
-   * also has an integer type Id for the group and a global id. 
+   * A Group<N> contains both: (1) an array of integer ids for atoms in 
+   * the group, and (2) an array of pointers to these atoms. Each Group<N> 
+   * also has an integer type id and a unique global id for the group.
    *
    * \ingroup DdMd_Chemistry_Module
    */
@@ -52,7 +52,7 @@ namespace DdMd
    public: 
 
       /**
-      * Return packed size of Group<N>, in bytes.
+      * Return packed size of a Group<N> object in a send buffer, in bytes.
       */
       static int packedSize();
 
@@ -192,14 +192,20 @@ namespace DdMd
       /**
       * Pack a Group into a send buffer.
       *
-      * \param group Group<N> object to be packed and sent
+      * \param buffer Buffer object into which data should be packed.
       */
       void pack(Buffer& buffer);
 
       /**
       * Unpack a Group from the recv buffer.
       *
-      * \param group Group<N> object into which data is unpacked
+      * Upon return:
+      *
+      *  - all atom ids are set
+      *  - group type id and global id are set
+      *  - all atom pointers are null.
+      *
+      * \param buffer Buffer object from which data should be unpacked.
       */
       void unpack(Buffer& buffer);
 
@@ -217,30 +223,30 @@ namespace DdMd
       /// Global id for this group.
       int  id_;
 
-      /// Number of non-null atom pointers in this Group.
+      /// Number of non-null atom pointers currently in this Group.
       int  nPtr_;
 
-      // Communication plan.
+      // Communication Plan.
       Plan plan_;
 
    //friends:
 
-      friend std::istream& operator >> <> (std::istream& in, Group<N> &group);
+      friend 
+      std::istream& operator >> <> (std::istream& in, Group<N> &group);
 
-      friend std::ostream& operator << <> (std::ostream& out, const Group<N> &group);
+      friend 
+      std::ostream& operator << <> (std::ostream& out, const Group<N> &group);
 
-      template <class Archive> friend
+      template <class Archive> 
+      friend
       void serialize(Archive& ar, Group<N>& group, const unsigned int version);
-
 
    };
 
-   // Friend declarations
+   // Friend function declarations
 
    /**
    * istream extractor (>>) for a Group.
-   *
-   * Format:
    *
    * \param in        input stream
    * \param group  Group to be read from stream
@@ -252,7 +258,7 @@ namespace DdMd
    /**
    * ostream inserter (<<) for a Group.
    *
-   * Format, one one line with no line break:
+   * Format on one line with no line break:
    *
    * \param  out   output stream
    * \param  group Group to be written to stream
@@ -275,7 +281,8 @@ namespace DdMd
    void serialize(Archive& ar, Group<N>& group, 
                   const unsigned int version);
 
-   // Friend implementations.
+
+   // Friend function definitions.
 
    /* 
    * Input a Goup<N> from an istream, without line breaks.
@@ -308,6 +315,8 @@ namespace DdMd
       return out;
    }
 
+   // Partial specializations of serialize template
+
    template <class Archive>
    void serialize(Archive& ar, Group<2>& group, const unsigned int version)
    {
@@ -339,6 +348,13 @@ namespace DdMd
    }
 
    /*
+   * Packed size of one Group<N> object.
+   */
+   template <int N>
+   int Group<N>::packedSize()
+   {  return (2 + N)*sizeof(int) + sizeof(unsigned int); }
+
+   /*
    * Pack a Group into a send buffer.
    */
    template <int N>
@@ -350,12 +366,11 @@ namespace DdMd
          buffer.pack<int>(atomId(j));
       }
       buffer.pack<unsigned int>(plan().flags());
-
       buffer.incrementSendSize();
    }
 
    /*
-   * Unpack the next Group in the recieve buffer.
+   * Unpack the next Group in the receive buffer.
    */
    template <int N>
    void Group<N>::unpack(Buffer& buffer)
@@ -373,16 +388,8 @@ namespace DdMd
       unsigned int ui;
       buffer.unpack<unsigned int>(ui);
       plan().setFlags(ui);
-
       buffer.decrementRecvSize();
    }
-
-   /*
-   * Packed size of one Group<N> object.
-   */
-   template <int N>
-   int Group<N>::packedSize()
-   {  return (2 + N)*sizeof(int) + sizeof(unsigned int); }
 
 } 
 #endif
