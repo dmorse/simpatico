@@ -181,11 +181,16 @@ namespace DdMd
 
       /**
       * Read and execute commands from the default command file.
+      *
+      * The default command file is defined by the FileMaster. The file
+      * name is normally input in the parameter file. 
       */
       void readCommands();
 
-      /*
-      * Read and execute commands from a command file.
+      /**
+      * Read and execute commands from a specific command file.
+      *
+      * \param in command file
       */
       void readCommands(std::istream &in);
    
@@ -219,14 +224,14 @@ namespace DdMd
       * groups, and a full set of ghost atoms, but values for
       * the atomic forces are undefined.
       *
-      * \param filename name of configuration file.
+      * \param filename name of input configuration file.
       */
       void readConfig(const std::string& filename);
 
       /**
       * Write configuration file.
       *
-      * \param filename name of configuration file.
+      * \param filename name of output configuration file.
       */
       void writeConfig(const std::string& filename);
 
@@ -241,7 +246,7 @@ namespace DdMd
       * This method creates a new instance of the specified subclass
       * of ConfigIo, and retains a pointer to the new object.
       *
-      * \param classname name of desired ConfigIo subclass.
+      * \param classname name of ConfigIo subclass.
       */
       void setConfigIo(std::string& classname);
 

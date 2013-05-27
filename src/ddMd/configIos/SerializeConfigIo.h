@@ -19,7 +19,12 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Save / load configuration to archives.
+   * Save / load configuration from / to an archive.
+   *
+   * The virtual readConfig and writeConfig, which take file objects
+   * as arguments, read from or write to files that stores archives 
+   * of type Serializable::IArchive or Serializable::OArchive. The 
+   * loadConfig and saveConfig methods take archive object arguments.
    *
    * \ingroup DdMd_ConfigIo_Module
    */
@@ -54,8 +59,8 @@ namespace DdMd
       /**
       * Write configuration file.
       *
-      * This routine opens and writes a file on the master,
-      * collecting atom data from all processors.
+      * This routine opens and writes a file on the master, collecting
+      * atom data from all processors.
       *
       * \param file output file stream
       */

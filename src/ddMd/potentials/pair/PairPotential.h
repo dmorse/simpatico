@@ -31,7 +31,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * A PairPotential calculates forces for a parent Simulation.
+   * Calculates nonbonded pair forces and energies for a parent Simulation.
    *
    * A PairPotential has a private CellList and PairList which it
    * uses to calculate nonbonded pair forces. 

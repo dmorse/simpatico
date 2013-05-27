@@ -17,7 +17,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically write simulation energies to file.
+   * Periodically write (scalar) pressure to file.
    *
    * \ingroup DdMd_Diagnostic_Module
    */
@@ -59,7 +59,6 @@ namespace DdMd
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
-
   
       /**
       * Clear nSample counter.
@@ -75,7 +74,7 @@ namespace DdMd
 
    private:
  
-      // Output file stream
+      /// Output file stream
       std::ofstream outputFile_;
 
       /// Number of configurations dumped thus far (first dump is zero).

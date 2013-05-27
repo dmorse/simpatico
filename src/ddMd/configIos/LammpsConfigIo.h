@@ -22,10 +22,11 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Native / default format for configuration files.
+   * Lammps data file format for configuration files.
    *
-   * LammpsConfigIo is a ConfigIo that implements the default
-   * configuration file format for ddSim.
+   * LammpsConfigIo is a ConfigIo that reads and writes the LAMMPS data file
+   * format for configuration files. Atoms are output with ids in sequential
+   * order.
    *
    * \ingroup DdMd_ConfigIo_Module
    */
