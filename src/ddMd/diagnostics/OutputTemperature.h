@@ -17,7 +17,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically write simulation energies to file.
+   * Periodically output kinetic temperature to file.
    *
    * \ingroup DdMd_Diagnostic_Module
    */

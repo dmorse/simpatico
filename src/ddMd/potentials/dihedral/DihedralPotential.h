@@ -22,7 +22,7 @@ namespace DdMd
    template <int N> class GroupStorage;
 
    /**
-   * An DihedralPotential calculates dihedral forces and energies for a parent Simulation.
+   * Calculates dihedral forces and energies for a parent Simulation.
    *
    * \ingroup DdMd_Dihedral_Module
    */

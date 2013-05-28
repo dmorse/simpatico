@@ -17,7 +17,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically dump simulation configuration to a new file.
+   * Periodically write simulation configuration to a new file.
    *
    * This class uses the Simulation::writeConfig() method to write the entire
    * simulation configuration periodically, at interval read from file. Names 
