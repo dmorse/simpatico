@@ -14,7 +14,11 @@ namespace DdMd
 {
 
    /**
-   * Container for angles objects.
+   * Container for Group<3> (angle) objects.
+   *
+   * Only differences from GroupStorage<3> is the className,
+   * which is set in the constructor and effects the param 
+   * file format.
    *
    * \ingroup DdMd_Storage_Module
    */
