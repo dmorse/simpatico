@@ -188,14 +188,7 @@ namespace DdMd
       * Read and execute commands from a command file.
       */
       void readCommands(std::istream &in);
-   
-      /**
-      * Integrate equations of motion. 
-      *
-      * \param nStep number of time steps to integrate.
-      */
-      void simulate(int nStep);
-
+  
       /**
       * Set random velocities chosen from Boltzmann distribution.
       *  
@@ -368,17 +361,17 @@ namespace DdMd
       /**
       * Calculate and store all virial stress contributions.
       *
-      * Reduce operation: Must be called on all nodes. This
-      * calls computeStress() method of each potential class.
+      * Reduce operation: Must be called on all nodes. This calls
+      * the computeStress() method of each potential class.
       */
       void computeVirialStress();
 
       /**
       * Return total virial stress.
       *
-      * Call only on master processor, after computeVirialStress.
-      * This method calls the stress() method of each potential
-      * class (pair, bond, etc.) and adds the result. 
+      * Call only on master processor, after computeVirialStress. This
+      * method calls the stress() method of each potential class (pair,
+      * bond, etc.) and adds and returns the sum.
       * 
       * \return total virial stress (only correct on master node).
       */
@@ -403,76 +396,96 @@ namespace DdMd
       void unsetVirialStress();
 
       //@}
-      /// \name Potential Energy Factories and Styles
+      /// \name Potential Energy Classes (Objects, Style Strings and Factories)
       //@{
 
-      #ifndef INTER_NOPAIR
       /**
-      * Get the Factory<PairPotential> by reference.
+      * Get the PairPotential by reference.
       */
-      Factory<PairPotential>& pairFactory();
-
+      PairPotential& pairPotential();
+   
+      #ifndef INTER_NOPAIR
       /**
       * Return nonbonded pair style string.
       */
       std::string pairStyle() const;
+
+      /**
+      * Get the Factory<PairPotential> by reference.
+      */
+      Factory<PairPotential>& pairFactory();
       #endif
 
       /**
-      * Get the associated Factory<BondPotential> by reference.
+      * Get the PairPotential by reference.
       */
-      Factory<BondPotential>& bondFactory();
+      BondPotential& bondPotential();
 
       /**
       * Return covalent bond style string.
       */
       std::string bondStyle() const;
 
-      #ifdef INTER_ANGLE
       /**
-      * Get the associated AngleFactory by reference.
+      * Get the associated Factory<BondPotential> by reference.
       */
-      Factory<AnglePotential>& angleFactory();
+      Factory<BondPotential>& bondFactory();
+  
+      #ifdef INTER_ANGLE 
+      /**
+      * Get the AnglePotential by reference.
+      */
+      AnglePotential& anglePotential();
 
       /**
       * Return angle potential style string.
       */
       std::string angleStyle() const;
+   
+      /**
+      * Get the associated AngleFactory by reference.
+      */
+      Factory<AnglePotential>& angleFactory();
       #endif
 
       #ifdef INTER_DIHEDRAL
       /**
-      * Get the associated Dihedral Factory by reference.
+      * Get the DihedralPotential by reference.
       */
-      Factory<DihedralPotential>& dihedralFactory();
+      DihedralPotential& dihedralPotential();
 
       /**
       * Return dihedral potential style string.
       */
       std::string dihedralStyle() const;
+   
+      /**
+      * Get the associated Dihedral Factory by reference.
+      */
+      Factory<DihedralPotential>& dihedralFactory();
       #endif
 
       #ifdef INTER_EXTERNAL
       /**
-      * Get the associated External Factory by reference.
+      * Get the ExternalPotential by reference.
       */
-      Factory<ExternalPotential>& externalFactory();
+      ExternalPotential& externalPotential();
 
       /**
       * Return external potential style string.
       */
       std::string externalStyle() const;
+
+      /**
+      * Get the associated External Factory by reference.
+      */
+      Factory<ExternalPotential>& externalFactory();
       #endif
 
       //@}
-      /// \name Accessors (return members by reference)
+      /// \name Atom and Group Containers
       //@{
-
-      /**
-      * Get the Domain by reference.
-      */
-      Domain& domain();
-
+      
       /**
       * Get the AtomStorage by reference.
       */
@@ -497,41 +510,19 @@ namespace DdMd
       DihedralStorage& dihedralStorage();
       #endif
    
+      //@}
+      /// \name Miscellaneous Accessors (return members by reference)
+      //@{
+
+      /**
+      * Get the Domain by reference.
+      */
+      Domain& domain();
+
       /**
       * Get the Boundary by reference.
       */
       Boundary& boundary();
-   
-      /**
-      * Get the PairPotential by reference.
-      */
-      PairPotential& pairPotential();
-   
-      /**
-      * Get the PairPotential by reference.
-      */
-      BondPotential& bondPotential();
-  
-      #ifdef INTER_ANGLE 
-      /**
-      * Get the AnglePotential by reference.
-      */
-      AnglePotential& anglePotential();
-      #endif
-   
-      #ifdef INTER_DIHEDRAL
-      /**
-      * Get the DihedralPotential by reference.
-      */
-      DihedralPotential& dihedralPotential();
-      #endif
-   
-      #ifdef INTER_EXTERNAL
-      /**
-      * Get the ExternalPotential by reference.
-      */
-      ExternalPotential& externalPotential();
-      #endif
    
       /**
       * Get an AtomType descriptor by reference.
@@ -561,11 +552,6 @@ namespace DdMd
       FileMaster& fileMaster();
 
       /**
-      * Get the Md  integrator factory by reference.
-      */
-      Factory<Integrator>& integratorFactory();
-
-      /**
       * Get the Random number generator by reference.
       */
       Random& random();
@@ -584,6 +570,11 @@ namespace DdMd
       * Return associated DiagnosticManager by reference.
       */
       DiagnosticManager& diagnosticManager();
+
+      /**
+      * Get the Md  integrator factory by reference.
+      */
+      Factory<Integrator>& integratorFactory();
 
       //@}
       /// \name Accessors (return by value)

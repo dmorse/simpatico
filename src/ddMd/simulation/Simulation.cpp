@@ -988,16 +988,16 @@ namespace DdMd
    */
    void Simulation::readCommands(std::istream &in)
    {
-      std::string   command;
-      std::string   filename;
-      std::ifstream inputFile;
-      std::ofstream outputFile;
+      std::string  command;
+      std::string  filename;
+      std::ifstream  inputFile;
+      std::ofstream  outputFile;
 
       #ifdef UTIL_MPI
-      std::stringstream inBuffer;
-      std::string       line;
+      std::stringstream  inBuffer;
+      std::string  line;
       #else
-      std::istream&     inBuffer = in;
+      std::istream&  inBuffer = in;
       #endif
 
       bool readNext = true;
@@ -1064,12 +1064,12 @@ namespace DdMd
                setBoltzmannVelocities(temperature);
             } else
             if (command == "SIMULATE") {
-               int endStep;
-               inBuffer >> endStep;
+               int nStep;
+               inBuffer >> nStep;
                if (domain_.isMaster()) {
                   Log::file() << std::endl;
                }
-               integrator().run(endStep);
+               integrator().run(nStep);
             } else
             if (command == "OUTPUT_DIAGNOSTICS") {
                diagnosticManager().output();
@@ -1319,6 +1319,7 @@ namespace DdMd
       }
    }
 
+   #if 0
    /*
    * Integrate.
    */
@@ -1329,6 +1330,7 @@ namespace DdMd
       }
       integrator().run(nStep);
    }
+   #endif
 
    // Kinetic Energy methods ----------------------------------------------
 
