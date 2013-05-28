@@ -1319,19 +1319,6 @@ namespace DdMd
       }
    }
 
-   #if 0
-   /*
-   * Integrate.
-   */
-   void Simulation::simulate(int nStep)
-   {
-      if (domain_.isMaster()) {
-         Log::file() << std::endl;
-      }
-      integrator().run(nStep);
-   }
-   #endif
-
    // Kinetic Energy methods ----------------------------------------------
 
    /*
