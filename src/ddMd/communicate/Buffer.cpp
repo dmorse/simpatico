@@ -264,7 +264,6 @@ namespace DdMd
       sendSize_ = 0;
       sendType_ = NONE;
       sendGroupSize_ = 0;
-
    }
 
    /*
@@ -289,6 +288,19 @@ namespace DdMd
       recvPtr_ = (char *)recvBuffPtr;
 
       return isComplete;
+   }
+
+   /*
+   * Finalize receiving block, check consistency.
+   */
+   void Buffer::endRecvBlock()
+   {
+      if (recvSize_ != 0) {
+         UTIL_THROW("Error: Recv counter != 0 at end of block");
+      }
+      recvBlockBegin_ = 0;
+      recvType_ = NONE;
+      recvGroupSize_ = 0;
    }
 
    /*
@@ -387,7 +399,6 @@ namespace DdMd
       request.Wait();
       recvType_ = NONE;
       recvPtr_ = recvBufferBegin_;
-
    }
 
    /*

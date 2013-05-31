@@ -374,6 +374,7 @@ namespace DdMd
             atomStoragePtr_->findGroupAtoms(*newGroupPtr);
          }
       }
+      bufferPtr_->endRecvBlock();
       assert(bufferPtr_->recvSize() == 0);
    }
    #endif // endif ifdef UTIL_MPI
@@ -894,6 +895,7 @@ namespace DdMd
                   }
 
                }
+               bufferPtr_->endRecvBlock();
                assert(bufferPtr_->recvSize() == 0);
                stamp(UNPACK_ATOMS);
 
@@ -1175,6 +1177,7 @@ namespace DdMd
                   #endif
 
                }
+               bufferPtr_->endRecvBlock();
                stamp(UNPACK_GHOSTS);
 
             }
@@ -1255,7 +1258,8 @@ namespace DdMd
                   if (shift) {
                      boundaryPtr_->applyShift(atomPtr->position(), i, shift);
                   }
-               }
+               } 
+               bufferPtr_->endRecvBlock();
                stamp(UNPACK_UPDATE);
 
             } else {
@@ -1326,6 +1330,7 @@ namespace DdMd
                   atomPtr = &sendArray_(i, j)[k];
                   atomPtr->unpackForce(*bufferPtr_);
                }
+               bufferPtr_->endRecvBlock();
                stamp(UNPACK_FORCE);
 
             } else {

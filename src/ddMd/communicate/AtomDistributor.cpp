@@ -466,6 +466,7 @@ namespace DdMd
                UTIL_THROW("Error: Atom on wrong processor");
             }
          }
+         bufferPtr_->endRecvBlock();
 
       }
 

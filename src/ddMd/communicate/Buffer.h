@@ -143,6 +143,11 @@ namespace DdMd
       */
       void decrementRecvSize();
 
+      /**
+      * Finish processing a block in the recv buffer.
+      */
+      void endRecvBlock();
+
       //@}
       /// \name Interprocessor Communication
       //@{
