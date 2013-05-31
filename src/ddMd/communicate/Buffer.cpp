@@ -31,12 +31,14 @@ namespace DdMd
       recvBufferEnd_(0),
       sendBlockBegin_(0),
       recvBlockBegin_(0),
+      recvBlockEnd_(0),
       sendPtr_(0),
       recvPtr_(0),
       bufferCapacity_(-1),
       dataCapacity_(-1),
       sendSize_(0),
       recvSize_(0),
+      recvType_(NONE),
       #endif
       atomCapacity_(-1),
       ghostCapacity_(-1),
@@ -220,7 +222,7 @@ namespace DdMd
    /*
    * Clear the send buffer prior to packing, and set the sendType.
    */
-   void Buffer::beginSendBlock(BlockDataType sendType, int sendGroupSize)
+   void Buffer::beginSendBlock(int sendType)
    {
       if (sendSize_ != 0) {
          UTIL_THROW("Error: previous send block not finalized");
@@ -231,7 +233,6 @@ namespace DdMd
 
       // Data type to be sent.
       sendType_ = sendType;
-      sendGroupSize_ = sendGroupSize; // 0 by default, for atom or ghost.
 
       // Mark beginning of block.
       sendBlockBegin_ = sendPtr_;
@@ -240,7 +241,6 @@ namespace DdMd
       int* sendBuffPtr = (int *)sendPtr_;
       sendBuffPtr += 4;
       sendPtr_ = (char *)sendBuffPtr;
-
    }
 
    /*
@@ -248,14 +248,16 @@ namespace DdMd
    */
    void Buffer::endSendBlock(bool isComplete)
    {
+      int sendBytes = (int)(sendPtr_ - sendBlockBegin_);
+
       // Add passport to the beginning of the block:
-      // Pack sendSize_, sendType_ and isComplete.
+      // Pack sendSize_, sendBytes, sendType_ and isComplete.
       int* sendBuffPtr = (int *)sendBlockBegin_;
       *sendBuffPtr = sendSize_;
       ++sendBuffPtr;
-      *sendBuffPtr = (int) sendType_;
+      *sendBuffPtr = sendBytes;
       ++sendBuffPtr;
-      *sendBuffPtr = sendGroupSize_;
+      *sendBuffPtr = sendType_;
       ++sendBuffPtr;
       *sendBuffPtr = (int) isComplete;
 
@@ -263,7 +265,6 @@ namespace DdMd
       sendBlockBegin_ = 0;
       sendSize_ = 0;
       sendType_ = NONE;
-      sendGroupSize_ = 0;
    }
 
    /*
@@ -276,15 +277,21 @@ namespace DdMd
          UTIL_THROW("Error: Previous receive block not completely unpacked");
       }
 
-      // Extract the number packed items and item type from the receive buffer
+      // Store address of begining of block
+      recvBlockBegin_ = recvPtr_;
+
+      // Extract passport data
       int* recvBuffPtr = (int *)recvPtr_;
       recvSize_  = *recvBuffPtr;
-      recvType_  = *(recvBuffPtr + 1);
-      recvGroupSize_ = *(recvBuffPtr + 2);
+      int recvBytes = *(recvBuffPtr + 1);
+      recvType_  = *(recvBuffPtr + 2);
       bool isComplete = (bool) *(recvBuffPtr + 3);
-      recvBuffPtr += 4;
+    
+      // Calculate address of expected end of recv block
+      recvBlockEnd_ = recvBlockBegin_ + recvBytes;
 
       // Set recvPtr to beginning of first item to be unpacked
+      recvBuffPtr += 4;
       recvPtr_ = (char *)recvBuffPtr;
 
       return isComplete;
@@ -298,9 +305,13 @@ namespace DdMd
       if (recvSize_ != 0) {
          UTIL_THROW("Error: Recv counter != 0 at end of block");
       }
+      if (recvPtr_ != recvBlockEnd_) {
+         UTIL_THROW("Error: Inconsistent recv cursor at end of block");
+      }
       recvBlockBegin_ = 0;
+      recvBlockEnd_ = 0;
+      recvSize_ = 0;
       recvType_ = NONE;
-      recvGroupSize_ = 0;
    }
 
    /*

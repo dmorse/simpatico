@@ -3,8 +3,6 @@ Testing
 
 - Fix CellTest
 
-- Fix obsolete PairPotentialTest (change interface for PairPotential)
-
 - Test angle and dihedral stress calculations.
 
 Initial Ghost Exchange
@@ -32,7 +30,8 @@ Flexible Unit Cells:
 Buffer:
 -------
 
-- see doc/notes/ddMd/Buffer
+- Allocate in bytes, remove atomCapacity and ghostCapacity 
+  (see doc/notes/ddMd/Buffer)
 
 Moving GroupStorage to Potential class:
 ---------------------------------------

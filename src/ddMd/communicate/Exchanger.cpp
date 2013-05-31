@@ -295,7 +295,7 @@ namespace DdMd
       int k, nAtom;
       bool choose;
 
-      bufferPtr_->beginSendBlock(Buffer::GROUP, N);
+      bufferPtr_->beginSendBlock(Buffer::GROUP2 + N - 2);
       emptyGroups.clear();
       storage.begin(groupIter);
       for ( ; groupIter.notEnd(); ++groupIter) {

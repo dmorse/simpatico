@@ -196,11 +196,10 @@ public:
       // Unpack atoms
       buffer_.beginRecvBlock();
       TEST_ASSERT(buffer_.recvSize() == 2);
-      //buffer_.unpackAtom(atoms[2]);
-      //buffer_.unpackAtom(atoms[3]);
       atoms[2].unpackAtom(buffer_);
       atoms[3].unpackAtom(buffer_);
       TEST_ASSERT(buffer_.recvSize() == 0);
+      buffer_.endRecvBlock();
 
       TEST_ASSERT(atoms[2].id() == 0);
       TEST_ASSERT(atoms[2].typeId() == 0);
@@ -318,12 +317,11 @@ public:
       // Unpack ghost atoms
       buffer_.beginRecvBlock();
       TEST_ASSERT(buffer_.recvSize() == 2);
-      //buffer_.unpackGhost(atoms[2]);
       atoms[2].unpackGhost(buffer_);
       TEST_ASSERT(buffer_.recvSize() == 1);
-      //buffer_.unpackGhost(atoms[3]);
       atoms[3].unpackGhost(buffer_);
       TEST_ASSERT(buffer_.recvSize() == 0);
+      buffer_.endRecvBlock();
 
       TEST_ASSERT(atoms[2].id() == 0);
       TEST_ASSERT(atoms[2].typeId() == 0);
@@ -355,8 +353,8 @@ public:
       myrank   = MPI::COMM_WORLD.Get_rank();
       commsize = MPI::COMM_WORLD.Get_size();
 
-      // Fill one local atom object. Add processor's rank to the position
-      // and velocity vectors.
+      // Fill one local atom object. Add processor's rank to the
+      // position and velocity vectors.
       atoms[0].setId(0);
       atoms[0].setTypeId(0);
       pos[0] = myrank  + 1.0;
@@ -386,8 +384,6 @@ public:
       // Pack 2 local atoms into the send buffer
       // Set isComplete parameter false.
       buffer_.beginSendBlock(Buffer::ATOM);
-      //buffer_.packAtom(atoms[0]);
-      //buffer_.packAtom(atoms[1]);
       atoms[0].packAtom(buffer_);
       atoms[1].packAtom(buffer_);
       buffer_.endSendBlock(false);
@@ -399,15 +395,14 @@ public:
       // Receive from the processor on the left.
       int  source = (myrank + commsize - 1) % commsize;
       buffer_.recv(MPI::COMM_WORLD, source);
-      bool isComplete = buffer_.beginRecvBlock();
-
-      TEST_ASSERT(!isComplete);
 
       // Unpack 2 atoms from receive buffer
-      //buffer_.unpackAtom(atoms[2]);
-      //buffer_.unpackAtom(atoms[3]);
+      bool isComplete = buffer_.beginRecvBlock();
+      TEST_ASSERT(!isComplete);
       atoms[2].unpackAtom(buffer_);
       atoms[3].unpackAtom(buffer_);
+      TEST_ASSERT(buffer_.recvSize() == 0);
+      buffer_.endRecvBlock();
 
       TEST_ASSERT(atoms[2].id() == 0);
       TEST_ASSERT(atoms[2].typeId() == 0);
@@ -520,18 +515,16 @@ public:
       // Receive from the processor on the left.
       int  source = (myrank + commsize - 1) % commsize;
       buffer_.recv(MPI::COMM_WORLD, source);
-      bool isComplete = buffer_.beginRecvBlock();
-
-      TEST_ASSERT(isComplete);
 
       // Unpack ghost atoms
+      bool isComplete = buffer_.beginRecvBlock();
+      TEST_ASSERT(isComplete);
       TEST_ASSERT(buffer_.recvSize() == 2);
-      //buffer_.unpackGhost(atoms[2]);
       atoms[2].unpackGhost(buffer_);
       TEST_ASSERT(buffer_.recvSize() == 1);
-      //buffer_.unpackGhost(atoms[3]);
       atoms[3].unpackGhost(buffer_);
       TEST_ASSERT(buffer_.recvSize() == 0);
+      buffer_.endRecvBlock();
 
       TEST_ASSERT(atoms[2].id() == 0);
       TEST_ASSERT(atoms[2].typeId() == 0);
@@ -616,18 +609,14 @@ public:
       // Set isComplete parameter false.
       TEST_ASSERT(buffer_.sendSize() == 0);
       buffer_.beginSendBlock(Buffer::ATOM);
-      //buffer_.packAtom(atoms[0]);
       atoms[0].packAtom(buffer_);
       TEST_ASSERT(buffer_.sendSize() == 1);
-      //buffer_.packAtom(atoms[1]);
       atoms[1].packAtom(buffer_);
       TEST_ASSERT(buffer_.sendSize() == 2);
       buffer_.endSendBlock(false);
 
       // Pack block 2 ghost atoms into the send buffer
       buffer_.beginSendBlock(Buffer::GHOST);
-      //buffer_.packGhost(atoms[2]);
-      //buffer_.packGhost(atoms[3]);
       atoms[2].packGhost(buffer_);
       atoms[3].packGhost(buffer_);
       buffer_.endSendBlock(true); // set isComplete = true
@@ -646,12 +635,11 @@ public:
       isComplete = buffer_.beginRecvBlock();
       TEST_ASSERT(!isComplete);
       TEST_ASSERT(buffer_.recvSize() == 2);
-      //buffer_.unpackAtom(atoms[4]);
       atoms[4].unpackAtom(buffer_);
       TEST_ASSERT(buffer_.recvSize() == 1);
-      //buffer_.unpackAtom(atoms[5]);
       atoms[5].unpackAtom(buffer_);
       TEST_ASSERT(buffer_.recvSize() == 0);
+      buffer_.endRecvBlock();
 
       TEST_ASSERT(atoms[4].id() == 0);
       TEST_ASSERT(atoms[4].typeId() == 0);
@@ -675,10 +663,10 @@ public:
       TEST_ASSERT(buffer_.recvSize() == 0);
       isComplete = buffer_.beginRecvBlock();
       TEST_ASSERT(isComplete);
-      //buffer_.unpackGhost(atoms[6]);
-      //buffer_.unpackGhost(atoms[7]);
       atoms[6].unpackGhost(buffer_);
       atoms[7].unpackGhost(buffer_);
+      TEST_ASSERT(buffer_.recvSize() == 0);
+      buffer_.endRecvBlock();
 
       TEST_ASSERT(atoms[6].id() == 0);
       TEST_ASSERT(atoms[6].typeId() == 0);
@@ -691,48 +679,6 @@ public:
       TEST_ASSERT(feq(atoms[7].position()[0], 12.3 + double(source)));
       TEST_ASSERT(feq(atoms[7].position()[1], 22.3 + double(source)));
       TEST_ASSERT(feq(atoms[7].position()[2], 32.3 + double(source)));
-
-      #if 0
-      MpiLogger logger;
-      logger.begin();
-      int id, typeId;
-      id     = atoms[2].id();
-      typeId = atoms[2].typeId();
-      pos = atoms[2].position();
-      vel = atoms[2].velocity();
-
-      std::cout << std::endl;
-      std::cout << "proc: " << myrank 
-                << ", source " << source << ", dest   " <<  dest
-                << ", comm size " << commsize << std::endl
-                << "proc: " << myrank << ": " 
-                << ", id " << id << ", typeId " << typeId << std::endl
-                << "proc: " << myrank << ": " 
-                << ", position = "
-                << pos[0] << " " << pos[1] << " " << pos[2] << std::endl
-                << "proc " << myrank << ": " 
-                << "velocity = "
-                <<  vel[0] << ", " << vel[1] << ", " << vel[2] << std::endl;
-
-      id     = atoms[3].id();
-      typeId = atoms[3].typeId();
-      pos = atoms[3].position();
-      vel = atoms[3].velocity();
-
-      std::cout << "proc: " << myrank 
-                << ", source " << source << ", dest   " <<  dest
-                << ", comm size " << commsize << std::endl
-                << "proc: " << myrank << ": " 
-                << ", id " << id << ", typeId " << typeId << std::endl
-                << "proc " << myrank << ": " 
-                << ", position = "
-                << pos[0] << " " << pos[1] << " " << pos[2] << std::endl
-                << "proc " << myrank << ": " 
-                << "velocity = "
-                <<  vel[0] << ", " << vel[1] << ", " << vel[2] << std::endl;
-
-      logger.end();
-      #endif
 
    }
 
@@ -763,7 +709,7 @@ public:
 
       //Initialize the sendbuffer, set atomtype to ATOM
       buffer_.clearSendBuffer();
-      buffer_.beginSendBlock(Buffer::GROUP, 2);
+      buffer_.beginSendBlock(Buffer::GROUP2);
 
       // Pack 2 bonds into the send buffer
       //buffer_.packGroup(bonds[0]);
@@ -781,11 +727,10 @@ public:
       // Unpack bonds
       buffer_.beginRecvBlock();
       TEST_ASSERT(buffer_.recvSize() == 2);
-      //buffer_.unpackGroup(bonds[2]);
-      //buffer_.unpackGroup(bonds[3]);
       bonds[2].unpack(buffer_);
       bonds[3].unpack(buffer_);
       TEST_ASSERT(buffer_.recvSize() == 0);
+      buffer_.endRecvBlock();
 
       TEST_ASSERT(bonds[2].id() == 0);
       TEST_ASSERT(bonds[2].typeId() == 0);
@@ -870,7 +815,7 @@ public:
    
          //Initialize the sendbuffer, set atomtype to GROUP
          buffer_.clearSendBuffer();
-         buffer_.beginSendBlock(Buffer::GROUP, 2);
+         buffer_.beginSendBlock(Buffer::GROUP2);
    
          // Pack 2 bonds into the send buffer
          //buffer_.packGroup(bonds[0]);
@@ -888,11 +833,10 @@ public:
          // Unpack bonds
          buffer_.beginRecvBlock();
          TEST_ASSERT(buffer_.recvSize() == 2);
-         //buffer_.unpackGroup(bonds[2]);
-         //buffer_.unpackGroup(bonds[3]);
          bonds[2].unpack(buffer_);
          bonds[3].unpack(buffer_);
          TEST_ASSERT(buffer_.recvSize() == 0);
+         buffer_.endRecvBlock();
    
          TEST_ASSERT(bonds[2].id() == 0);
          TEST_ASSERT(bonds[2].typeId() == 0);

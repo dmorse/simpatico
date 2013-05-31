@@ -246,7 +246,7 @@ namespace DdMd
          int recvArraySize_ = 0;
          isComplete_ = iterator_.isEnd();
          bufferPtr_->clearSendBuffer();
-         bufferPtr_->beginSendBlock(Buffer::GROUP, N);
+         bufferPtr_->beginSendBlock(Buffer::GROUP2 +  N - 2);
          while (recvArraySize_ < bufferCapacity && !isComplete_) {
             // Get pointer to first atom in Group
             // Send group only if this is a local atom.

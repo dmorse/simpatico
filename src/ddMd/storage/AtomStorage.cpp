@@ -153,14 +153,15 @@ namespace DdMd
    Atom* AtomStorage::newAtomPtr()
    {
       // Preconditions
-      if (newAtomPtr_ != 0) 
+      if (newAtomPtr_ != 0) {
          UTIL_THROW("Unregistered newAtomPtr_ still active");
-      if (locked_ ) 
+      }
+      if (locked_ ) {
          UTIL_THROW("AtomStorage is locked");
-      if (ghostSet_.size() > 0)
-         UTIL_THROW("Ghosts are not cleared");
-      if (atomReservoir_.size() == 0) 
-         UTIL_THROW("Atom to pop from empty atomReservoir");
+      }
+      if (atomReservoir_.size() == 0) {
+         UTIL_THROW("Cannot pop from empty atomReservoir");
+      }
 
       newAtomPtr_ = &atomReservoir_.pop();
       newAtomPtr_->clear();

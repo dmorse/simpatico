@@ -29,7 +29,11 @@ namespace DdMd
 
    public:
 
-      enum BlockDataType {NONE, ATOM, GHOST, UPDATE, FORCE, GROUP};
+      /**
+      * Enumeration of types of data to be sent in blocks. 
+      */
+      enum BlockDataType 
+           {NONE, ATOM, GHOST, UPDATE, FORCE, GROUP2, GROUP3, GROUP4};
 
       /**
       * Constructor.
@@ -87,9 +91,10 @@ namespace DdMd
       *
       * Sets sendSize() to zero, the send pointer to the beginning of
       * the send buffer, and sendType to the type of data to be sent.
-      * If sendType = Group, also set sendGroupSize.
+      *
+      * \param sendType BlockDataType value for type of data to be sent
       */
-      void beginSendBlock(BlockDataType sendType, int sendGroupSize = 0);
+      void beginSendBlock(int sendType);
 
       /**
       * Function template for packing one variable into the send buffer.
@@ -288,6 +293,9 @@ namespace DdMd
       /// Pointer to beginning of current block in recv buffer.
       char* recvBlockBegin_;
 
+      /// Pointer to end of current block in recv buffer.
+      char* recvBlockEnd_;
+
       /// Address one past end of the packed portion of the send buffer.
       char* sendPtr_;
 
@@ -306,11 +314,8 @@ namespace DdMd
       /// Number of unread items remaining in this block of receive buffer.
       int recvSize_;
 
-      /// Number of atoms in group (or 0 if not a Group).
-      int sendGroupSize_;
-
       /// Type of item being sent in this block = NONE, ATOM, GHOST, GROUP
-      BlockDataType sendType_;
+      int sendType_;
 
       /// Type of atom being received (BlockDataType cast to int)
       int recvType_;

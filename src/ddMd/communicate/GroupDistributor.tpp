@@ -104,7 +104,7 @@ namespace DdMd
    void GroupDistributor<N>::setup()
    {
       bufferPtr_->clearSendBuffer();
-      bufferPtr_->beginSendBlock(Buffer::GROUP, N);
+      bufferPtr_->beginSendBlock(Buffer::GROUP2 + N - 2);
       nAtomRecv_ = 0;
       newPtr_ = 0;
    }
@@ -140,7 +140,7 @@ namespace DdMd
           bufferPtr_->bcast(domainPtr_->communicator(), source);
           nSentTotal_ += cacheSize_;
           bufferPtr_->clearSendBuffer();
-          bufferPtr_->beginSendBlock(Buffer::GROUP, N);
+          bufferPtr_->beginSendBlock(Buffer::GROUP2 + N - 2);
           cacheSize_ = 0;
       }
       #endif
