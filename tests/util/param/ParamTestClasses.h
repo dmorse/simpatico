@@ -25,19 +25,27 @@
    public:
 
       B()
-      { setClassName("B"); }
+      {  setClassName("B"); }
 
       virtual ~B()
-      { } // std::cout << "B destructor" << std::endl; 
+      { } 
 
-      virtual void readParameters(std::istream& in) {
+      virtual void readParameters(std::istream& in) 
+      {
          read<double>(in, "x", x_);
          read<int>(in, "m", m_);
       }
 
-      virtual void loadParameters(Serializable::IArchive& in) {
-         loadParameter<double>(in, "x", x_);
-         loadParameter<int>(in, "m", m_);
+      virtual void loadParameters(Serializable::IArchive& ar) 
+      {
+         loadParameter<double>(ar, "x", x_);
+         loadParameter<int>(ar, "m", m_);
+      }
+
+      virtual void save(Serializable::OArchive& ar) 
+      {
+         ar << x_;
+         ar << m_;
       }
 
    private:
@@ -55,18 +63,19 @@
    public:
 
       C()
-      { setClassName("C"); }
+      {  setClassName("C"); }
 
       virtual ~C()
-      { } // std::cout << "C destructor" << std::endl; 
+      { } 
 
-      virtual void readParameters(std::istream& in) {
-         read<int>(in, "m", m_);
-      }
+      virtual void readParameters(std::istream& in) 
+      {  read<int>(in, "m", m_); }
 
-      virtual void loadParameters(Serializable::IArchive& in) {
-         loadParameter<int>(in, "m", m_);
-      }
+      virtual void loadParameters(Serializable::IArchive& in) 
+      {  loadParameter<int>(in, "m", m_); }
+
+      virtual void save(Serializable::OArchive& ar) 
+      {  ar << m_; }
 
    private:
 
@@ -84,15 +93,16 @@
       { setClassName("D"); }
 
       virtual ~D()
-      { } // std::cout << "D destructor" << std::endl; 
+      { } 
 
-      virtual void readParameters(std::istream& in) {
-         read<double>(in, "d", d_);
-      }
+      virtual void readParameters(std::istream& in) 
+      {  read<double>(in, "d", d_); }
 
-      virtual void loadParameters(Serializable::IArchive& in) {
-         loadParameter<double>(in, "d", d_);
-      }
+      virtual void loadParameters(Serializable::IArchive& in) 
+      {  loadParameter<double>(in, "d", d_); }
+
+      virtual void save(Serializable::OArchive& ar) 
+      {  ar << d_; }
 
    private:
 
@@ -113,16 +123,17 @@
       virtual ~E()
       { } // std::cout << "D destructor" << std::endl; 
 
-      virtual void readParameters(std::istream& in) {
-         read<double>(in, "e", e_);
-      }
+      virtual void readParameters(std::istream& in) 
+      {  read<double>(in, "e", e_); }
 
-      virtual void loadParameters(Serializable::IArchive& in) {
-         loadParameter<double>(in, "e", e_);
-      }
+      virtual void loadParameters(Serializable::IArchive& in) 
+      {  loadParameter<double>(in, "e", e_); }
+
+      virtual void save(Serializable::OArchive& ar) 
+      {  ar << e_; }
 
       double e()
-      { return e_; }
+      {  return e_; }
 
    private:
 
@@ -243,7 +254,24 @@
          loadParameter<IntVector>(ar, "value8", value8_);
          loadDMatrix<double>(ar, "value9", value9_, 2, 2);
          loadParamComposite(ar, e_);
-         loadParamComposite(ar, manager_);
+         //loadParamComposite(ar, manager_);
+      }
+
+      virtual void save(Serializable::OArchive& ar) 
+      {
+         ar & value0_;
+         ar & value1_;
+         ar & value2_;
+         ar & str_;
+         ar.pack(value3_, 3);
+         ar.pack(value4_, 3);
+         ar.pack(value5_[0], 2, 2);
+         ar & value6_;
+         ar & value7_;
+         ar & value8_;
+         ar & value9_;
+         e_.save(ar);
+         //manager_.save(ar);
       }
 
    private:

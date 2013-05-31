@@ -389,7 +389,7 @@ TEST_ADD(ParamCompositeTest, testAddWrite)
 TEST_ADD(ParamCompositeTest, testReadWrite)
 TEST_ADD(ParamCompositeTest, testSaveLoadWrite)
 TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite1)
-//TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite2)
+TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite2)
 //TEST_ADD(ParamCompositeTest, testMemoryArchiveSerialize)
 TEST_END(ParamCompositeTest)
 
