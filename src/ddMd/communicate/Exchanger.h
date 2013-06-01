@@ -102,8 +102,10 @@ namespace DdMd
       * 
       * This method reverse the communication pattern used to communicate
       * ghost atom positions in update() to reverse communicate forces
-      * acting on ghost atoms. It should be called iff reverse force
-      * communication on every time step for which update() is called.
+      * acting on ghost atoms. It should be called only if reverse force
+      * communication is enabled, in which case it should be called after
+      * all force calculation on every time step for which update() is 
+      * called.
       */
       void reverseUpdate();
 
@@ -115,14 +117,13 @@ namespace DdMd
       /**
       * Return internal timer by reference
       */
-      DdTimer& timer()
-      {  return timer_; }
+      DdTimer& timer();
 
       /**
       * Enumeration of time stamp identifiers.
       */
       enum timeId {START, ATOM_PLAN, INIT_GROUP_PLAN, CLEAR_GHOSTS,
-                   PACK_ATOMS, PACK_GROUPS, REMOVE_ATOMS, REMOVE_GROUPS,
+                   PACK_ATOMS, PACK_GROUPS, REMOVE_ATOMS, 
                    SEND_RECV_ATOMS, UNPACK_ATOMS, UNPACK_GROUPS, 
                    FINISH_GROUP_PLAN, INIT_SEND_ARRAYS, PACK_GHOSTS, 
                    SEND_RECV_GHOSTS, UNPACK_GHOSTS, FIND_GROUP_GHOSTS, 
@@ -258,10 +259,6 @@ namespace DdMd
                                     APArray< Group<N> >& emptyGroups);
 
       template <int N>
-      void removeEmptyGroups(GroupStorage<N>& storage,
-                             APArray< Group<N> >& emptyGroups);
-
-      template <int N>
       void unpackGroups(GroupStorage<N>& storage);
       #endif
 
@@ -271,10 +268,19 @@ namespace DdMd
       template <int N>
       void findGroupGhosts(GroupStorage<N>& storage);
 
-      void stamp(unsigned int timeId) 
-      {  timer_.stamp(timeId); }
+      void stamp(unsigned int timeId);
 
    };
+
+   // Inline methods.
+
+   // Return internal timer by reference (public).
+   inline DdTimer& Exchanger::timer()
+   {  return timer_; }
+
+   // Stamp internal timer (private)
+   inline void Exchanger::stamp(unsigned int timeId) 
+   {  timer_.stamp(timeId); }
 
 }
 #endif

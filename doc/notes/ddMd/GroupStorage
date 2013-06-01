@@ -42,13 +42,11 @@ class Exchanger:
 
   2) After packing atoms:      packGroups<N>(i, j, GroupStorage<N>, emptyGroups)
 
-  3) After removing atoms:     removeEmptyGroups(GroupStorage<N>, emptyGroups)
+  3) Upon receipt:             unpackGroups(GroupStorage<N>)
 
-  4) Upon receipt:             unpackGroups(GroupStorage<N>)
+  4) After all exchanges :     finishGroupGhostPlan<N>(GroupStorage<N>)
 
-  5) After all exchanges :     finishGroupGhostPlan<N>(GroupStorage<N>)
-
-  6 After ghost exchange :     findGroupGhosts
+  5) After ghost exchange :    findGroupGhosts
 
   Questions:
 
@@ -64,32 +62,35 @@ class Exchanger:
 
      Solution: Pass required information as argument(s) (in what form?)
 
+     GroupStorage<N>::initGhostPlan(multiProcessorDirection_, bound, inner_, outer_);
+
   2) packGroups uses
 
      bufferPtr_, Groups are identified by which atoms are marked for sending.
 
      Solution: Pass Buffer& as an arguments.
 
-  3) removeEmptyGroups only uses:
+     GroupStorage<N>::pack(i, j, Buffer& );
 
-     APArray< Group<N> > emptyGroups. 
-
-     Reconsider: Why are groups removed after atoms? If groups were removed
-     immediately after packing, we could combine this and previous function?
-
-  4) unpackGroups uses bufferPtr_ and atomStorage. 
+  3) unpackGroups uses bufferPtr_ and atomStorage. 
 
      Solution: Pass Buffer& and AtomStorage& as arguments.
 
-  5) finishGroupGhostPlan uses:
+     GroupStorage<N>::unpackCleanUp(i, j, Buffer&, AtomStorage& );
 
-     atomStorage, sendArray_(i, j)
+  4) finishGroupGhostPlan uses:
 
-     -> Use of sendArray_ is potentially problematic. I need to figure out 
-     why it is used, and if it is necessary.
+     Includes a loop of i, j directions.
 
-     AtomStorage can be passed as argument.
+     Uses: atomStorage, sendArray_, multiProcessorDirection_,
+     All can be passed as arguments. 
 
-  6) findGroupGhosts uses:
+     sendArray_(i, j) is used so that ghosts can be added to it. 
+
+     GroupStorage<N>::finishGhostPlan(AtomStorage&, FMatrix<APArray<Atom>, 3, 2>&)
+
+  5) findGroupGhosts uses:
 
      atomStorage (Can be passed as argument)
+
+     FinishGhostExchange(AtomStorage& );

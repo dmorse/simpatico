@@ -129,7 +129,7 @@ namespace DdMd
       #ifdef INTER_DIHEDRAL
       emptyDihedrals_.reserve(sendRecvCapacity);
       #endif
-      #endif
+      #endif // UTIL_MPI
    }
 
    /*
@@ -172,7 +172,7 @@ namespace DdMd
    * boundary, it is marked for sending in the associated communication 
    * step.
    *
-   * After calculating ghost communication plan for each group, clear 
+   * After calculating a ghost communication plan for each group, clear 
    * the pointers to all ghost atoms in the group. The exchangeAtoms 
    * method will clear the actual ghost atoms from the AtomStorage.
    */
@@ -278,12 +278,12 @@ namespace DdMd
    #ifdef UTIL_MPI
    /*
    * Pack groups that contain atoms marked for exchange in this 
-   * direction (direction i, j).
+   * direction (direction i, j), and remove empty groups.
    *
    * Algorithm: Loop over groups. If the group contains one or
    * more atoms that are marked for exchange in direction i, j, 
-   * pack the group for sending along. If the group is empty,
-   * add it to emptyGroups, to mark it for later removal.
+   * pack the group for sending along. Remove empty groups in
+   * a separate loop.
    */
    template <int N>
    void Exchanger::packGroups(int i, int j, 
@@ -294,9 +294,10 @@ namespace DdMd
       Atom* atomPtr;
       int k, nAtom;
       bool choose;
-
-      bufferPtr_->beginSendBlock(Buffer::GROUP2 + N - 2);
       emptyGroups.clear();
+
+      // Pack Groups
+      bufferPtr_->beginSendBlock(Buffer::GROUP2 + N - 2);
       storage.begin(groupIter);
       for ( ; groupIter.notEnd(); ++groupIter) {
          choose = false;
@@ -320,38 +321,16 @@ namespace DdMd
          }
       }
       bufferPtr_->endSendBlock();
-   }
 
-   /*
-   * Remove empty groups from GroupStorage<N>.
-   */
-   template <int N>
-   void Exchanger::removeEmptyGroups(GroupStorage<N>& storage,
-                                     APArray< Group<N> >& emptyGroups)
-   {
+      // Remove empty groups
       int nEmpty = emptyGroups.size();
-      #ifdef UTIL_DEBUG
-      #ifdef DDMD_EXCHANGER_DEBUG
-      // Confirm that groups are actually empty
-      Atom* atomPtr;
-      int   atomId;
-      for (int k = 0; k < nEmpty; ++k) {
-         for (int m = 0; m < N; ++m) {
-            atomId = emptyGroups[k].atomId(m);
-            atomPtr = emptyGroups[k].atomPtr(m);
-            assert(atomPtr == 0);
-            assert(atomStoragePtr_->find(atomId) == 0);
-         }
-      }
-      #endif
-      #endif
       for (int k = 0; k < nEmpty; ++k) {
          storage.remove(&(emptyGroups[k]));
       }
    }
 
    /*
-   * Unpack groups into bondStorage.
+   * Unpack groups into GroupStorage.
    */
    template <int N>
    void Exchanger::unpackGroups(GroupStorage<N>& storage)
@@ -383,7 +362,8 @@ namespace DdMd
    * Set ghost communication flags for all atoms in incomplete groups.
    *
    * Precondition: This is called by exchangeAtoms after exchanging atoms 
-   * and groups between neighboring processors. All ghosts are cleared.
+   * and groups between neighboring processors. At this point, there are
+   * no ghosts atoms.
    *
    * Algorithm: Loop over all Group<N> objects in the group storage. 
    * For each group, check if the group is incomplete, implying that one or
@@ -391,11 +371,12 @@ namespace DdMd
    * is incomplete, loop over 6 transfer directions. For each direction,
    * if the group is marked for sending in that direction, set the ghost
    * ghost communication flag for transfer in that direction for every 
-   * local atom in the group. 
+   * local atom in the group. Also add each such atom to sendArray_(i, j).
    *
-   * Note: The algorithm assumes that the ghost communication flag for each
-   * atom within a group whose atoms are divided among two or more processors 
-   * will be set on the processor that owns the atom.
+   * Note: If a group is incomplete on this processor, and thus
+   * contains atoms owned by other processors, the algorithm assumes
+   * that the ghost communication flag for each atom will be set by
+   * the processor that owns the atom.
    */
    template <int N>
    void Exchanger::finishGroupGhostPlan(GroupStorage<N>& storage)
@@ -456,7 +437,7 @@ namespace DdMd
                               planPtr = &atomPtr->plan();
                               if (!planPtr->ghost(i, j)) { 
                                  planPtr->setGhost(i, j);
-                                 sendArray_(i,j).append(*atomPtr);
+                                 sendArray_(i, j).append(*atomPtr);
                               }
                            }
                         }
@@ -522,7 +503,7 @@ namespace DdMd
    *            - Call unpackGroups for each group type.
    *         }
    * 
-   *      } 
+   *      }
    *
    *    - Call finishGroupPlan<N> each type of group (bond, angle, dihedral).
    *      finishGroupPlan<N> {
@@ -797,6 +778,18 @@ namespace DdMd
             } // end atom loop
             stamp(PACK_ATOMS);
 
+            /*
+            * Notes:
+            *
+            * (1) Removal of atoms cannot be done within the atom packing
+            * loop because element removal invalidates the atom iterator.
+            *
+            * (2) Groups must be packed for sending before atoms are removed 
+            * because the algorithm for identifying groups to send invokes
+            * pointers to associated atoms.
+            */
+
+
             #ifdef UTIL_MPI
             // Send and receive only if processor grid dimension(i) > 1
             if (multiProcessorDirection_[i]) {
@@ -804,7 +797,8 @@ namespace DdMd
                // End atom send block
                bufferPtr_->endSendBlock();
 
-               // Pack groups that contain postmarked atoms.
+               // Pack groups that contain atoms marked for exchange.
+               // Remove empty groups from GroupStorage.
                packGroups<2>(i, j, *bondStoragePtr_, emptyBonds_);
                #ifdef INTER_ANGLE
                packGroups<3>(i, j, *angleStoragePtr_, emptyAngles_);
@@ -814,28 +808,13 @@ namespace DdMd
                #endif
                stamp(PACK_GROUPS);
 
-               /*
-               * Note: Removal cannot be done within above loops over atoms
-               * and groups because element removal invalidates the iterators.
-               */
-
-               // Remove chosen atoms (listed in recvArray) from atomStorage
+               // Remove chosen atoms (from sentAtoms) from atomStorage
                nSend = sentAtoms_.size();
                for (k = 0; k < nSend; ++k) {
                   atomStoragePtr_->removeAtom(&sentAtoms_[k]);
                }
                stamp(REMOVE_ATOMS);
      
-               // Remove empty groups
-               removeEmptyGroups<2>(*bondStoragePtr_, emptyBonds_);
-               #ifdef INTER_ANGLE
-               removeEmptyGroups<3>(*angleStoragePtr_, emptyAngles_);
-               #endif
-               #ifdef INTER_DIHEDRAL
-               removeEmptyGroups<4>(*dihedralStoragePtr_, emptyDihedrals_);
-               #endif
-               stamp(REMOVE_GROUPS);
-
                // Send to processor dest and receive from processor source
                bufferPtr_->sendRecv(domainPtr_->communicator(), 
                                     source, dest);
@@ -1392,9 +1371,6 @@ namespace DdMd
       double RemoveAtomsT =  timer_.time(Exchanger::REMOVE_ATOMS);
       out << "RemoveAtoms           " << Dbl(RemoveAtomsT*ratio, 12, 6)
           << " sec   " << Dbl(RemoveAtomsT/time, 12, 6, true) << std::endl;
-      double RemoveGroupsT =  timer_.time(Exchanger::REMOVE_GROUPS);
-      out << "RemoveGroups          " << Dbl(RemoveGroupsT*ratio, 12, 6)
-          << " sec   " << Dbl(RemoveGroupsT/time, 12, 6, true) << std::endl;
       double SendRecvAtomsT =  timer_.time(Exchanger::SEND_RECV_ATOMS);
       out << "SendRecvAtoms         " << Dbl(SendRecvAtomsT*ratio, 12, 6)
           << " sec   " << Dbl(SendRecvAtomsT/time, 12, 6, true) << std::endl;
