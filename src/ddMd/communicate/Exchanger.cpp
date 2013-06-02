@@ -16,7 +16,7 @@
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
-#include <ddMd/storage/GroupStorage.h>
+#include <ddMd/storage/GroupStorage.tpp>
 #include <ddMd/storage/GroupIterator.h>
 #include <util/format/Dbl.h>
 #include <util/global.h>
@@ -458,8 +458,8 @@ namespace DdMd
    *    - Add local atoms that will be retained by this processor but 
    *      sent as ghosts to appropriate send arrays.
    *
-   *    - Call initGroupPlan each type of group (bond, angle, dihedral).
-   *      initGroupPlan<N>{
+   *    - Call initGroupGhostPlan each type of group (bond, angle, dihedral).
+   *      initGroupGhostPlan<N>{
    *
    *         For each group{
    *            - Set ghost communication flags for groups that span 
@@ -647,12 +647,15 @@ namespace DdMd
       * after atom migration, are marked for sending as ghosts in the
       * finishGroupGhostPlan<N> function, further below.
       */
-      initGroupGhostPlan<2>(*bondStoragePtr_);      // bonds
+      //initGroupGhostPlan<2>(*bondStoragePtr_);      // bonds
+      bondStoragePtr_->markSpanningGroups(bound_, inner_, outer_, gridFlags_);
       #ifdef INTER_ANGLE
-      initGroupGhostPlan<3>(*angleStoragePtr_);     // angles
+      //initGroupGhostPlan<3>(*angleStoragePtr_);     // angles
+      angleStoragePtr_->markSpanningGroups(bound_, inner_, outer_, gridFlags_);
       #endif
       #ifdef INTER_DIHEDRAL
-      initGroupGhostPlan<4>(*dihedralStoragePtr_);  // dihedrals
+      //initGroupGhostPlan<4>(*dihedralStoragePtr_);  // dihedrals
+      dihedralStoragePtr_->markSpanningGroups(bound_, inner_, outer_, gridFlags_);
       #endif
       stamp(INIT_GROUP_PLAN);
 
@@ -793,12 +796,15 @@ namespace DdMd
 
                // Pack groups that contain atoms marked for exchange.
                // Remove empty groups from GroupStorage.
-               packGroups<2>(i, j, *bondStoragePtr_, emptyBonds_);
+               //packGroups<2>(i, j, *bondStoragePtr_, emptyBonds_);
+               bondStoragePtr_->pack(i, j, *bufferPtr_);
                #ifdef INTER_ANGLE
-               packGroups<3>(i, j, *angleStoragePtr_, emptyAngles_);
+               //packGroups<3>(i, j, *angleStoragePtr_, emptyAngles_);
+               angleStoragePtr_->pack(i, j, *bufferPtr_);
                #endif
                #ifdef INTER_DIHEDRAL
-               packGroups<4>(i, j, *dihedralStoragePtr_, emptyDihedrals_);
+               //packGroups<4>(i, j, *dihedralStoragePtr_, emptyDihedrals_);
+               dihedralStoragePtr_->pack(i, j, *bufferPtr_);
                #endif
                stamp(PACK_GROUPS);
 
@@ -873,12 +879,15 @@ namespace DdMd
                stamp(UNPACK_ATOMS);
 
                // Unpack groups
-               unpackGroups<2>(*bondStoragePtr_);
+               //unpackGroups<2>(*bondStoragePtr_);
+               bondStoragePtr_->unpack(*bufferPtr_, *atomStoragePtr_);
                #ifdef INTER_ANGLE
-               unpackGroups<3>(*angleStoragePtr_);
+               //unpackGroups<3>(*angleStoragePtr_);
+               angleStoragePtr_->unpack(*bufferPtr_, *atomStoragePtr_);
                #endif
                #ifdef INTER_DIHEDRAL
-               unpackGroups<4>(*dihedralStoragePtr_);
+               //unpackGroups<4>(*dihedralStoragePtr_);
+               dihedralStoragePtr_->unpack(*bufferPtr_, *atomStoragePtr_);
                #endif
                stamp(UNPACK_GROUPS);
 
@@ -919,12 +928,15 @@ namespace DdMd
       #endif // ifdef UTIL_DEBUG
 
       // Set ghost communication flags for atoms in incomplete groups
-      finishGroupGhostPlan<2>(*bondStoragePtr_);
+      //finishGroupGhostPlan<2>(*bondStoragePtr_);
+      bondStoragePtr_->markGhosts(*atomStoragePtr_, sendArray_, gridFlags_);
       #ifdef INTER_ANGLE
-      finishGroupGhostPlan<3>(*angleStoragePtr_);
+      //finishGroupGhostPlan<3>(*angleStoragePtr_);
+      angleStoragePtr_->markGhosts(*atomStoragePtr_, sendArray_, gridFlags_);
       #endif
       #ifdef INTER_DIHEDRAL
-      finishGroupGhostPlan<4>(*dihedralStoragePtr_);
+      //finishGroupGhostPlan<4>(*dihedralStoragePtr_);
+      dihedralStoragePtr_->markGhosts(*atomStoragePtr_, sendArray_, gridFlags_);
       #endif
 
       stamp(FINISH_GROUP_PLAN);
@@ -1162,12 +1174,15 @@ namespace DdMd
 
 
       // Find ghost atoms for all incomplete bonds
-      findGroupGhosts<2>(*bondStoragePtr_);
+      //findGroupGhosts<2>(*bondStoragePtr_);
+      bondStoragePtr_->findGhosts(*atomStoragePtr_);
       #ifdef INTER_ANGLE
-      findGroupGhosts<3>(*angleStoragePtr_);
+      //findGroupGhosts<3>(*angleStoragePtr_);
+      angleStoragePtr_->findGhosts(*atomStoragePtr_);
       #endif
       #ifdef INTER_DIHEDRAL
-      findGroupGhosts<4>(*dihedralStoragePtr_);
+      //findGroupGhosts<4>(*dihedralStoragePtr_);
+      angleStoragePtr_->findGhosts(*atomStoragePtr_);
       #endif
 
       #ifdef UTIL_DEBUG

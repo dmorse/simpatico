@@ -164,7 +164,7 @@ namespace DdMd
             emptyGroups_.append(*groupIter);
          }
          if (choose) {
-            groupIter->pack(*bufferPtr_);
+            groupIter->pack(buffer);
          }
       }
       buffer.endSendBlock();
@@ -189,7 +189,7 @@ namespace DdMd
       buffer.beginRecvBlock();
       while (buffer.recvSize() > 0) {
          newGroupPtr = newPtr();
-         newGroupPtr->unpack(*bufferPtr_);
+         newGroupPtr->unpack(buffer);
          groupId = newGroupPtr->id();
          oldGroupPtr = find(groupId);
          if (oldGroupPtr) {
