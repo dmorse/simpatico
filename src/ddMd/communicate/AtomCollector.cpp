@@ -144,7 +144,7 @@ namespace DdMd
             }
 
             assert(recvBufferSize_ == 0); // recv buffer is empty
-            assert(!isComplete);          // source_ is not completed
+            assert(!isComplete_);         // source_ is not completed
             
             // Send request to processor source_ .
             int message = source_;
