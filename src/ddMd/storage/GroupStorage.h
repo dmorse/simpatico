@@ -8,23 +8,23 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <util/param/ParamComposite.h>   // base class
 #include <ddMd/chemistry/Group.h>        // member template parameter
 #include <util/containers/DArray.h>      // member template
+#include <util/containers/APArray.h>     // member template
+#include <util/containers/FMatrix.h>     // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
+#include <util/space/IntVector.h>        // member template parameter
 
-#include "AtomStorage.h"
-#include "GroupIterator.h"
-#include "ConstGroupIterator.h"
-#include <util/format/Int.h>
-#include <util/mpi/MpiLoader.h>  
-#include <util/global.h>
-
+#include "GroupIterator.h"               // inline methods
+#include "ConstGroupIterator.h"          // inline methods
 
 namespace DdMd
 {
 
+   class AtomStorage;
    using namespace Util;
 
    /**
@@ -442,7 +442,41 @@ namespace DdMd
    inline int GroupStorage<N>::nTotal() const
    {  return nTotal_.value(); }
 
-   // Non-inline method templates.
+   /*
+   * Return pointer to Group with specified id.
+   */
+   template <int N>
+   inline Group<N>* GroupStorage<N>::find(int id) const
+   {  return groupPtrs_[id]; }
+
+   /*
+   * Set iterator to beginning of the set of local groups.
+   */
+   template <int N>
+   inline void GroupStorage<N>::begin(GroupIterator<N>& iterator)
+   {  groupSet_.begin(iterator); }
+ 
+   /*
+   * Set const iterator to beginning of the set of local groups.
+   */
+   template <int N>
+   inline 
+   void GroupStorage<N>::begin(ConstGroupIterator<N>& iterator) const
+   {  groupSet_.begin(iterator); }
+
+} // namespace DdMd
+
+// ------------------------------------------------------------------------------
+// Implementation: Non-inline method templates.
+
+#include "AtomStorage.h"
+#include <util/format/Int.h>
+#include <util/mpi/MpiLoader.h>  
+
+namespace DdMd
+{
+ 
+   using namespace Util;
 
    /*
    * Default constructor.
@@ -655,27 +689,6 @@ namespace DdMd
    }
 
    // Accessors
-
-   /*
-   * Return pointer to Group with specified id.
-   */
-   template <int N>
-   Group<N>* GroupStorage<N>::find(int id) const
-   {  return groupPtrs_[id]; }
-
-   /*
-   * Set iterator to beginning of the set of local groups.
-   */
-   template <int N>
-   void GroupStorage<N>::begin(GroupIterator<N>& iterator)
-   {  groupSet_.begin(iterator); }
- 
-   /*
-   * Set const iterator to beginning of the set of local groups.
-   */
-   template <int N>
-   void GroupStorage<N>::begin(ConstGroupIterator<N>& iterator) const
-   {  groupSet_.begin(iterator); }
 
    /*
    * Check validity of this GroupStorage.
