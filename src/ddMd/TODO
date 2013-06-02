@@ -5,12 +5,21 @@ Testing
 
 - Test angle and dihedral stress calculations.
 
-Initial Ghost Exchange
-----------------------
+Exchanger
+---------
 
-- Reduce memory requirements during initial ghost exchange.
+- Add memory usage statistics, to see which exchanges use
+  the most memory.
 
-- See doc/notes/ddMd/initGhosts
+- Write separate algorithm for initial ghost exchange, to
+  reduce memory requirements See doc/notes/ddMd/initGhosts
+
+- Consider moving allocation of Buffer to Exchanger.
+
+GroupStorage
+------------
+
+- Move more methods from GroupStorage.h to tpp file. 
 
 Cell List and Pair List:
 ------------------------
@@ -35,8 +44,6 @@ Buffer:
 
 Moving GroupStorage to Potential class:
 ---------------------------------------
-
-- Move Exchanger methods to methods of GroupStorage.
 
 - Make each GroupStorage a member of associated potential.
 

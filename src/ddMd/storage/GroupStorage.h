@@ -490,7 +490,7 @@ namespace DdMd
       capacity_(0),
       totalCapacity_(0),
       nTotal_(0)
-   {}
+   {  emptyGroups_.reserve(128); }
  
    /*
    * Destructor.

@@ -164,28 +164,6 @@ namespace DdMd
       * Used to mark missing atoms for subsequent removal.
       */
       APArray<Atom> sentAtoms_;
-
-      /**
-      * Array of pointers to empty bonds on this processor.
-      * 
-      * Used to mark bonds for later removal.
-      */
-      APArray< Group<2> > emptyBonds_;
-
-      #ifdef INTER_ANGLE
-      /**
-      * Array of pointers to empty angles on this processor.
-      */
-      APArray< Group<3> > emptyAngles_;
-      #endif
-
-      #ifdef INTER_DIHEDRAL
-      /**
-      * Array of pointers to empty dihedrals on this processor.
-      */
-      APArray< Group<4> > emptyDihedrals_;
-      #endif
-
       #endif // UTIL_MPI
 
       /// Processor boundaries (minima j=0, maxima j=1)
@@ -250,24 +228,9 @@ namespace DdMd
       */
       void exchangeGhosts();
 
-      template <int N>
-      void initGroupGhostPlan(GroupStorage<N>& storage);
-
-      #ifdef UTIL_MPI
-      template <int N>
-      void packGroups(int i, int j, GroupStorage<N>& storage, 
-                                    APArray< Group<N> >& emptyGroups);
-
-      template <int N>
-      void unpackGroups(GroupStorage<N>& storage);
-      #endif
-
-      template <int N>
-      void finishGroupGhostPlan(GroupStorage<N>& storage);
-
-      template <int N>
-      void findGroupGhosts(GroupStorage<N>& storage);
-
+      /**
+      * Stamp internal timer.
+      */
       void stamp(unsigned int timeId);
 
    };

@@ -9,6 +9,7 @@
 */
 
 #include "AngleStorage.h"
+#include "GroupStorage.tpp"
 #include <ddMd/chemistry/Angle.h>
 
 namespace DdMd

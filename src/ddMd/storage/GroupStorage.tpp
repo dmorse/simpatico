@@ -249,10 +249,10 @@ namespace DdMd
             atomId  = groupIter->atomId(k);
             if (atomPtr != 0) {
                if (atomPtr != atomStorage.find(atomId)) {
-                  UTIL_THROW("Error in atom pointer in bond");
+                  UTIL_THROW("Error in atom pointer in group");
                }
                if (atomPtr->isGhost()) {
-                  UTIL_THROW("Pointer to ghost atom in bond");
+                  UTIL_THROW("Pointer to ghost atom in group");
                } else {
                   ++nAtom;
                }
@@ -260,7 +260,7 @@ namespace DdMd
                atomPtr = atomStorage.find(atomId);
                if (atomPtr) {
                   if (!atomPtr->isGhost()) {
-                     UTIL_THROW("Missing pointer to local atom in bond");
+                     UTIL_THROW("Missing pointer to local atom in group");
                   }
                }
             }

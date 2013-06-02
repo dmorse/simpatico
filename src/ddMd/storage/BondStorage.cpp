@@ -9,6 +9,7 @@
 */
 
 #include "BondStorage.h"
+#include "GroupStorage.tpp"
 #include <ddMd/chemistry/Bond.h>
 
 namespace DdMd
