@@ -50,7 +50,7 @@ namespace DdMd
       bound_(),
       inner_(),
       outer_(),
-      multiProcessorDirection_(),
+      gridFlags_(),
       boundaryPtr_(0),
       domainPtr_(0),
       atomStoragePtr_(0),
@@ -195,7 +195,8 @@ namespace DdMd
          // Compute ghost communication plan for group
          groupIter->plan().clearFlags();
          for (i = 0; i < Dimension; ++i) {
-            if (multiProcessorDirection_[i]) {
+            // If grid dimension > 1 for Cartesian direction i
+            if (gridFlags_[i]) {
                for (j = 0; j < 2; ++j) {
                   choose = false;
                   nIn = 0;
@@ -252,14 +253,7 @@ namespace DdMd
                      groupIter->plan().clearGhost(i, j);
                   }
                } // end for j = 0, 1
-
-               #if 0
-               if (nEx[0] > 0 && nEx[1] > 0) {
-                  UTIL_THROW("Group spanning 3 nodes");  
-               }
-               #endif
-
-            } // end if multiProcessorDirection
+            } // end if gridFlags_[i]
          } // end for i (Cartesian axes)
 
          // Clear pointers to all ghost atoms in this group
@@ -427,7 +421,7 @@ namespace DdMd
          nAtom = groupIter->nPtr();
          if (nAtom < N) {
             for (i = 0; i < Dimension; ++i) {
-               if (multiProcessorDirection_[i]) {
+               if (gridFlags_[i]) {
                   for (j = 0; j < 2; ++j) {
                      if (groupIter->plan().ghost(i, j)) {
                         for (k = 0; k < N; ++k) {
@@ -563,9 +557,9 @@ namespace DdMd
             sendArray_(i, j).clear();
          }
          if (domainPtr_->grid().dimension(i) > 1) {
-            multiProcessorDirection_[i] = 1;
+            gridFlags_[i] = 1;
          } else {
-            multiProcessorDirection_[i] = 0;
+            gridFlags_[i] = 0;
          }
       }
 
@@ -596,7 +590,7 @@ namespace DdMd
                if (j == 0) { // Communicate with lower index
                   if (coordinate < bound_(i, j)) {
                      planPtr->setExchange(i, j);
-                     if (multiProcessorDirection_[i]) {
+                     if (gridFlags_[i]) {
                         isHome = false;
                      }
                      if (coordinate > outer_(i, j)) {
@@ -612,7 +606,7 @@ namespace DdMd
                } else { // j == 1, communicate with upper index
                   if (coordinate > bound_(i, j)) {
                      planPtr->setExchange(i, j);
-                     if (multiProcessorDirection_[i]) {
+                     if (gridFlags_[i]) {
                         isHome = false;
                      }
                      if (coordinate < outer_(i, j)) {
@@ -703,7 +697,7 @@ namespace DdMd
             }
 
             #ifdef UTIL_MPI
-            if (multiProcessorDirection_[i]) {
+            if (gridFlags_[i]) {
                bufferPtr_->clearSendBuffer();
                bufferPtr_->beginSendBlock(Buffer::ATOM);
             }
@@ -732,7 +726,7 @@ namespace DdMd
                if (atomIter->plan().exchange(i, j)) {
 
                   #ifdef UTIL_MPI
-                  if (multiProcessorDirection_[i]) {
+                  if (gridFlags_[i]) {
                      sentAtoms_.append(*atomIter);
                      atomIter->packAtom(*bufferPtr_);
                   } else 
@@ -792,7 +786,7 @@ namespace DdMd
 
             #ifdef UTIL_MPI
             // Send and receive only if processor grid dimension(i) > 1
-            if (multiProcessorDirection_[i]) {
+            if (gridFlags_[i]) {
 
                // End atom send block
                bufferPtr_->endSendBlock();
@@ -852,7 +846,7 @@ namespace DdMd
                   isHome = true;
                   if (i < Dimension - 1) {
                      for (ip = i + 1; ip < Dimension; ++ip) {
-                        if (multiProcessorDirection_[ip]) {
+                        if (gridFlags_[ip]) {
                            for (jp = 0; jp < 2; ++jp) {
                               if (planPtr->exchange(ip, jp)) {
                                  isHome = false;
@@ -1048,7 +1042,7 @@ namespace DdMd
             }
 
             #ifdef UTIL_MPI
-            if (multiProcessorDirection_[i]) {
+            if (gridFlags_[i]) {
                bufferPtr_->clearSendBuffer();
                bufferPtr_->beginSendBlock(Buffer::GHOST);
             }
@@ -1061,7 +1055,7 @@ namespace DdMd
                sendPtr = &sendArray_(i, j)[k];
 
                #ifdef UTIL_MPI
-               if (multiProcessorDirection_[i]) {
+               if (gridFlags_[i]) {
                   // If grid dimension > 1, pack atom for sending 
                   sendPtr->packGhost(*bufferPtr_);
                } else 
@@ -1108,7 +1102,7 @@ namespace DdMd
 
             #ifdef UTIL_MPI
             // Send and receive buffers
-            if (multiProcessorDirection_[i]) {
+            if (gridFlags_[i]) {
 
                bufferPtr_->endSendBlock();
 
@@ -1209,7 +1203,7 @@ namespace DdMd
             // Shift on receiving processor for periodic boundary conditions
             shift = domainPtr_->shift(i, j);
 
-            if (multiProcessorDirection_[i]) {
+            if (gridFlags_[i]) {
 
                // Pack ghost positions for sending
                bufferPtr_->clearSendBuffer();
@@ -1281,8 +1275,7 @@ namespace DdMd
       for (i = Dimension - 1; i >= 0; --i) {
          for (j = 1; j >= 0; --j) {
 
-            #if 1
-            if (multiProcessorDirection_[i]) {
+            if (gridFlags_[i]) {
 
                // Pack ghost forces for sending
                bufferPtr_->clearSendBuffer();
@@ -1326,7 +1319,6 @@ namespace DdMd
                stamp(LOCAL_FORCE);
 
             }
-            #endif
 
          } // transmit direction j = 1 or 0 
 

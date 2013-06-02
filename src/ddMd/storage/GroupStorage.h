@@ -48,6 +48,9 @@ namespace DdMd
       */
       ~GroupStorage();
 
+      /// \name Initialization
+      //@{
+      
       /**
       * Set parameters, allocate memory and initialize.
       *
@@ -90,6 +93,7 @@ namespace DdMd
       */
       virtual void save(Serializable::OArchive &ar);
   
+      //@}
       /// \name Group Management
       //@{
 
@@ -276,6 +280,70 @@ namespace DdMd
       #endif
 
       //@}
+      /// \name Interprocessor Communication
+      //@{
+      
+      /**
+      * Find and mark groups that span boundaries.
+      *
+      * \param bound  boundaries of domain for this processor
+      * \param inner  inner slab boundaries (extended domain of neighbors)
+      * \param outer  outer slab boundaries (extended domain of this processor)
+      * \param gridFlags  element i is 0 iff gridDimension[i] == 1, 1 otherwise
+      */
+      void markSpanningGroups(FMatrix<double, Dimension, 2>& bound, 
+                              FMatrix<double, Dimension, 2>& inner, 
+                              FMatrix<double, Dimension, 2>& outer, 
+                              IntVector& gridFlags);
+   
+      #ifdef UTIL_MPI
+      /**
+      * Pack groups for exchange.
+      *
+      * Usage: This is called after atom exchange plans are set, 
+      * but before atoms makred for exchange in direction i, j
+      * have been cleared or removed from the atomStorage.
+      *
+      * \param i  index of Cartesian communication direction
+      * \param j  index for sign of direction
+      * \param buffer  Buffer object into which groups are packed
+      */
+      void pack(int i, int j, Buffer& buffer);
+   
+      /**
+      * Unpack groups from buffer.
+      *
+      * \param buffer  Buffer object from which groups are unpacked
+      * \param atomStorage  AtomStorage used to find atoms pointers
+      */
+      void unpack(Buffer& buffer, AtomStorage& atomStorage);
+      #endif // endif ifdef UTIL_MPI
+   
+      /**
+      * Set ghost communication flags for all atoms in incomplete groups.
+      *
+      * Usage: This is called after exchanging all atoms and groups between 
+      * processors, but before exchanging ghosts. At this point, atom
+      * ownership is finalized, but there are no ghosts.
+      *
+      * \param atomStorage AtomStorage object
+      * \param sendArray   Matrix of arrays of pointers to ghosts to send
+      * \param gridFlags   element i is 0 iff gridDimension[i] == 1, 1 otherwise
+      */
+      void markGhosts(AtomStorage& atomStorage, 
+                      FMatrix<APArray<Atom>, Dimension, 2>&  sendArray,
+                      IntVector& gridFlags);
+   
+      /**
+      * Find all ghost members of groups.
+      *
+      * Usage: This called after all ghosts have been exchanged.
+      *
+      * \param atomStorage AtomStorage object used to find atom pointers
+      */
+      void findGhosts(AtomStorage& atomStorage);
+   
+      //@}
       /// \name Statistics
       //@{
  
@@ -315,18 +383,21 @@ namespace DdMd
 
    private:
 
-      // Array that holds all available group objects.
-      DArray< Group<N> >     groups_;
+      // Memory pool that holds all available group objects.
+      DArray< Group<N> >  groups_;
 
       // Set of pointers to local groups.
-      ArraySet< Group<N> >   groupSet_;
+      ArraySet< Group<N> >  groupSet_;
 
       // Stack of pointers to unused local Group objects.
-      ArrayStack< Group<N> > reservoir_;
+      ArrayStack< Group<N> >  reservoir_;
 
-      // Array of pointers to groups, indexed by Id.
+      // Array of pointers to groups, indexed by global group Id.
       // Elements corresponding to absent groups hold null pointers.
-      DArray< Group<N>* >    groupPtrs_;
+      DArray< Group<N>* >  groupPtrs_;
+
+      // Array identifying empty groups, marked for later removal 
+      APArray< Group<N> > emptyGroups_;
 
       // Pointer to space for a new local Group
       Group<N>* newPtr_;

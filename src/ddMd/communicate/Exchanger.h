@@ -198,7 +198,7 @@ namespace DdMd
       FMatrix< double, Dimension, 2>  outer_;
 
       /// Elements are 1 if grid dimension > 1, 0 otherwise.
-      IntVector multiProcessorDirection_;
+      IntVector gridFlags_;
 
       /// Pointer to associated const Boundary object.
       const Boundary*  boundaryPtr_;
