@@ -10,6 +10,8 @@
 
 #include <util/global.h>
 #include <util/param/ParamComposite.h>   // base class
+#include <ddMd/storage/GroupExchanger.h> // base class
+#include <ddMd/chemistry/Atom.h>        // member template parameter
 #include <ddMd/chemistry/Group.h>        // member template parameter
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/APArray.h>     // member template
@@ -33,7 +35,7 @@ namespace DdMd
    * \ingroup DdMd_Storage_Module
    */
    template <int N>
-   class GroupStorage : public ParamComposite
+   class GroupStorage : public ParamComposite, public GroupExchanger
    {
 
    public:
@@ -260,27 +262,8 @@ namespace DdMd
       */
       bool isValid();
 
-      /**
-      * Return true if the container is valid, or throw an Exception.
-      *
-      * Calls overloaded isValid() method, then checks consistency of atom 
-      * pointers with those in an asociated AtomStorage. If hasGhosts is
-      * false, the method requires that no group contain a pointer to a ghost 
-      * atom. If hasGhosts is true, requires that every Group be complete.
-      *
-      * \param atomStorage  associated AtomStorage object
-      * \param hasGhosts    true if the atomStorage has ghosts, false otherwise
-      * \param communicator domain communicator 
-      */
-      #ifdef UTIL_MPI
-      bool isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator, 
-                   bool hasGhosts);
-      #else
-      bool isValid(AtomStorage& atomStorage, bool hasGhosts);
-      #endif
-
       //@}
-      /// \name Interprocessor Communication
+      /// \name GroupExchanger Intervace (Interprocessor Communication)
       //@{
       
       /**
@@ -291,6 +274,7 @@ namespace DdMd
       * \param outer  outer slab boundaries (extended domain of this processor)
       * \param gridFlags  element i is 0 iff gridDimension[i] == 1, 1 otherwise
       */
+      virtual
       void markSpanningGroups(FMatrix<double, Dimension, 2>& bound, 
                               FMatrix<double, Dimension, 2>& inner, 
                               FMatrix<double, Dimension, 2>& outer, 
@@ -308,6 +292,7 @@ namespace DdMd
       * \param j  index for sign of direction
       * \param buffer  Buffer object into which groups are packed
       */
+      virtual
       void pack(int i, int j, Buffer& buffer);
    
       /**
@@ -316,6 +301,7 @@ namespace DdMd
       * \param buffer  Buffer object from which groups are unpacked
       * \param atomStorage  AtomStorage used to find atoms pointers
       */
+      virtual
       void unpack(Buffer& buffer, AtomStorage& atomStorage);
       #endif // endif ifdef UTIL_MPI
    
@@ -330,6 +316,7 @@ namespace DdMd
       * \param sendArray   Matrix of arrays of pointers to ghosts to send
       * \param gridFlags   element i is 0 iff gridDimension[i] == 1, 1 otherwise
       */
+      virtual
       void markGhosts(AtomStorage& atomStorage, 
                       FMatrix<APArray<Atom>, Dimension, 2>&  sendArray,
                       IntVector& gridFlags);
@@ -341,8 +328,30 @@ namespace DdMd
       *
       * \param atomStorage AtomStorage object used to find atom pointers
       */
+      virtual
       void findGhosts(AtomStorage& atomStorage);
    
+      /**
+      * Return true if the container is valid, or throw an Exception.
+      *
+      * Calls overloaded isValid() method, then checks consistency of atom 
+      * pointers with those in an asociated AtomStorage. If hasGhosts is
+      * false, the method requires that no group contain a pointer to a ghost 
+      * atom. If hasGhosts is true, requires that every Group be complete.
+      *
+      * \param atomStorage  associated AtomStorage object
+      * \param hasGhosts    true if the atomStorage has ghosts, false otherwise
+      * \param communicator domain communicator 
+      */
+      #ifdef UTIL_MPI
+      virtual
+      bool isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator, 
+                   bool hasGhosts);
+      #else
+      virtual
+      bool isValid(AtomStorage& atomStorage, bool hasGhosts);
+      #endif
+
       //@}
       /// \name Statistics
       //@{

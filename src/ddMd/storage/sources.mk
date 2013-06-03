@@ -1,6 +1,7 @@
 
 ddMd_storage_SRCS=$(SRC_DIR)/ddMd/storage/AtomStorage.cpp \
-                  $(SRC_DIR)/ddMd/storage/BondStorage.cpp
+                  $(SRC_DIR)/ddMd/storage/GroupExchanger.cpp \
+                  $(SRC_DIR)/ddMd/storage/BondStorage.cpp \
 
 ifdef INTER_ANGLE
 ddMd_storage_SRCS+=$(SRC_DIR)/ddMd/storage/AngleStorage.cpp

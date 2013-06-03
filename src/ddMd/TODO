@@ -45,11 +45,9 @@ Buffer:
 Moving GroupStorage to Potential class:
 ---------------------------------------
 
-- Make each GroupStorage a member of associated potential.
-
-- Create a GroupExchanger abstract base class for GroupStorage<N>
-
 - Add registry of GroupExchanger objects to Exchanger.
+
+- Make each GroupStorage a member of associated potential.
 
 - see doc/notes/ddMd/GroupStorage
 
