@@ -45,17 +45,11 @@ namespace DdMd
       boundaryPtr_(0),
       domainPtr_(0),
       atomStoragePtr_(0),
-      bondStoragePtr_(0),
-      #ifdef INTER_ANGLE 
-      angleStoragePtr_(0),
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_(0),
-      #endif
+      groupExchangers_(),
       bufferPtr_(0),
       pairCutoff_(-1.0),
       timer_(Exchanger::NTime)
-   {}
+   {  groupExchangers_.reserve(8); }
 
    /*
    * Destructor.
@@ -81,13 +75,15 @@ namespace DdMd
       domainPtr_ = &domain;
       boundaryPtr_ = &boundary;
       atomStoragePtr_ = &atomStorage;
-      bondStoragePtr_ = &bondStorage;
+
+      groupExchangers_.append(bondStorage);
       #ifdef INTER_ANGLE
-      angleStoragePtr_ = &angleStorage;
+      groupExchangers_.append(angleStorage);
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_ = &dihedralStorage;
+      groupExchangers_.append(dihedralStorage);
       #endif
+
       bufferPtr_ = &buffer;
    }
 
@@ -338,13 +334,10 @@ namespace DdMd
       * after atom migration, are marked for sending as ghosts in the
       * finishGroupGhostPlan<N> function, further below.
       */
-      bondStoragePtr_->markSpanningGroups(bound_, inner_, outer_, gridFlags_);
-      #ifdef INTER_ANGLE
-      angleStoragePtr_->markSpanningGroups(bound_, inner_, outer_, gridFlags_);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_->markSpanningGroups(bound_, inner_, outer_, gridFlags_);
-      #endif
+      for (k = 0; k < groupExchangers_.size(); ++k) {
+         groupExchangers_[k].markSpanningGroups(bound_, inner_, outer_, 
+                                               gridFlags_);
+      }
       stamp(INIT_GROUP_PLAN);
 
       // Clear all ghost atoms from AtomStorage
@@ -359,8 +352,10 @@ namespace DdMd
       if (myRank == 0) {
          nAtomTotal = atomStoragePtr_->nAtomTotal();
       }
-      bondStoragePtr_->isValid(*atomStoragePtr_, 
-                               domainPtr_->communicator(), false);
+      for (k = 0; k < groupExchangers_.size(); ++k) {
+         groupExchangers_[k].isValid(*atomStoragePtr_, 
+                                     domainPtr_->communicator(), false);
+      }
       #endif
       #endif
 
@@ -484,13 +479,9 @@ namespace DdMd
 
                // Pack groups that contain atoms marked for exchange.
                // Remove empty groups from GroupStorage.
-               bondStoragePtr_->pack(i, j, *bufferPtr_);
-               #ifdef INTER_ANGLE
-               angleStoragePtr_->pack(i, j, *bufferPtr_);
-               #endif
-               #ifdef INTER_DIHEDRAL
-               dihedralStoragePtr_->pack(i, j, *bufferPtr_);
-               #endif
+               for (k = 0; k < groupExchangers_.size(); ++k) {
+                  groupExchangers_[k].pack(i, j, *bufferPtr_);
+               }
                stamp(PACK_GROUPS);
 
                // Remove chosen atoms (from sentAtoms) from atomStorage
@@ -564,16 +555,9 @@ namespace DdMd
                stamp(UNPACK_ATOMS);
 
                // Unpack groups
-               //unpackGroups<2>(*bondStoragePtr_);
-               bondStoragePtr_->unpack(*bufferPtr_, *atomStoragePtr_);
-               #ifdef INTER_ANGLE
-               //unpackGroups<3>(*angleStoragePtr_);
-               angleStoragePtr_->unpack(*bufferPtr_, *atomStoragePtr_);
-               #endif
-               #ifdef INTER_DIHEDRAL
-               //unpackGroups<4>(*dihedralStoragePtr_);
-               dihedralStoragePtr_->unpack(*bufferPtr_, *atomStoragePtr_);
-               #endif
+               for (k = 0; k < groupExchangers_.size(); ++k) {
+                  groupExchangers_[k].unpack(*bufferPtr_, *atomStoragePtr_);
+               }
                stamp(UNPACK_GROUPS);
 
             } // end if gridDimension > 1
@@ -599,28 +583,18 @@ namespace DdMd
          assert(nAtomTotal = atomStoragePtr_->nAtomTotal());
       }
       atomStoragePtr_->isValid();
-      bondStoragePtr_->isValid(*atomStoragePtr_, 
-                               domainPtr_->communicator(), false);
-      #ifdef INTER_ANGLE
-      angleStoragePtr_->isValid(*atomStoragePtr_, 
-                                domainPtr_->communicator(), false);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_->isValid(*atomStoragePtr_, 
-                                   domainPtr_->communicator(), false);
-      #endif
+      for (k = 0; k < groupExchangers_.size(); ++k) {
+         groupExchangers_[k].isValid(*atomStoragePtr_, 
+                                      domainPtr_->communicator(), false);
+      }
       #endif // ifdef DDMD_EXCHANGER_DEBUG
       #endif // ifdef UTIL_DEBUG
 
       // Set ghost communication flags for atoms in incomplete groups
-      bondStoragePtr_->markGhosts(*atomStoragePtr_, sendArray_, gridFlags_);
-      #ifdef INTER_ANGLE
-      angleStoragePtr_->markGhosts(*atomStoragePtr_, sendArray_, gridFlags_);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_->markGhosts(*atomStoragePtr_, sendArray_, gridFlags_);
-      #endif
-
+      for (k = 0; k < groupExchangers_.size(); ++k) {
+         groupExchangers_[k].markGhosts(*atomStoragePtr_, sendArray_, 
+                                        gridFlags_);
+      }
       stamp(FINISH_GROUP_PLAN);
    }
 
@@ -836,21 +810,19 @@ namespace DdMd
 
 
       // Find ghost atoms for all incomplete groups
-      bondStoragePtr_->findGhosts(*atomStoragePtr_);
-      #ifdef INTER_ANGLE
-      angleStoragePtr_->findGhosts(*atomStoragePtr_);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      angleStoragePtr_->findGhosts(*atomStoragePtr_);
-      #endif
+      for (k = 0; k < groupExchangers_.size(); ++k) {
+         groupExchangers_[k].findGhosts(*atomStoragePtr_);
+      }
 
       #ifdef UTIL_DEBUG
       #ifdef DDMD_EXCHANGER_DEBUG
       atomStoragePtr_->isValid();
-      bondStoragePtr_->isValid(*atomStoragePtr_, 
-                               domainPtr_->communicator(), true);
-      #endif
-      #endif
+      for (k = 0; k < groupExchangers_.size(); ++k) {
+         groupExchangers_[k].isValid(*atomStoragePtr_, 
+                                     domainPtr_->communicator(), true);
+      }
+      #endif // ifdef DDMD_EXCHANGER_DEBUG
+      #endif // ifdef UTIL_DEBUG
 
       stamp(FIND_GROUP_GHOSTS);
    }

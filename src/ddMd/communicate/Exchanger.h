@@ -186,18 +186,8 @@ namespace DdMd
       /// Pointer to associated AtomStorage object.
       AtomStorage* atomStoragePtr_;
 
-      /// Pointer to associated bond storage object.
-      GroupExchanger* bondStoragePtr_;
-
-      #ifdef INTER_ANGLE 
-      /// Pointer to associated angle storage object.
-      GroupExchanger* angleStoragePtr_;
-      #endif
-
-      #ifdef INTER_DIHEDRAL
-      /// Pointer to associated dihedral storage object.
-      GroupExchanger* dihedralStoragePtr_;
-      #endif
+      /// Array of GroupExchanger's (i.e,. GroupStorage<N>'s)
+      APArray<GroupExchanger> groupExchangers_;
 
       /// Pointer to associated buffer object.
       Buffer*  bufferPtr_;
