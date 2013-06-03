@@ -336,7 +336,7 @@ namespace DdMd
       */
       for (k = 0; k < groupExchangers_.size(); ++k) {
          groupExchangers_[k].markSpanningGroups(bound_, inner_, outer_, 
-                                               gridFlags_);
+                                                gridFlags_);
       }
       stamp(INIT_GROUP_PLAN);
 
@@ -478,7 +478,7 @@ namespace DdMd
                bufferPtr_->endSendBlock();
 
                // Pack groups that contain atoms marked for exchange.
-               // Remove empty groups from GroupStorage.
+               // Remove empty groups from each GroupStorage.
                for (k = 0; k < groupExchangers_.size(); ++k) {
                   groupExchangers_[k].pack(i, j, *bufferPtr_);
                }
