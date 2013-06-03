@@ -16,7 +16,7 @@
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
-#include <ddMd/storage/GroupStorage.tpp>
+#include <ddMd/storage/GroupExchanger.h>
 #include <ddMd/storage/GroupIterator.h>
 #include <util/format/Dbl.h>
 #include <util/global.h>
@@ -69,12 +69,12 @@ namespace DdMd
    void Exchanger::associate(const Domain& domain, 
                              const Boundary& boundary, 
                              AtomStorage& atomStorage, 
-                             GroupStorage<2>& bondStorage, 
+                             GroupExchanger& bondStorage, 
                              #ifdef INTER_ANGLE
-                             GroupStorage<3>& angleStorage, 
+                             GroupExchanger& angleStorage, 
                              #endif
                              #ifdef INTER_DIHEDRAL
-                             GroupStorage<4>& dihedralStorage, 
+                             GroupExchanger& dihedralStorage, 
                              #endif
                              Buffer& buffer)
    {

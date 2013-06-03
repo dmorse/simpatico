@@ -8,10 +8,14 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/global.h>
-#include <util/containers/FMatrix.h>     // argument template
-#include <util/containers/APArray.h>     // argument template
-#include <util/space/IntVector.h>        // includes Dimension
+#include <util/global.h>             
+#include <util/space/Dimension.h> 
+
+namespace Util {
+   class IntVector;
+   template <typename T, int M, int N> class FMatrix;
+   template <typename T> class APArray; 
+}
 
 namespace DdMd
 {
@@ -22,7 +26,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * A container for all the Group<N> objects on this processor.
+   * Interface for a GroupStorage<N> for use in Exchanger.
    *
    * \ingroup DdMd_Storage_Module
    */
@@ -60,8 +64,8 @@ namespace DdMd
       * Pack groups for exchange.
       *
       * Usage: This is called after atom exchange plans are set, 
-      * but before atoms makred for exchange in direction i, j
-      * have been cleared or removed from the atomStorage.
+      * but before atoms marked for exchange in direction i, j
+      * have been removed from the atomStorage.
       *
       * \param i  index of Cartesian communication direction
       * \param j  index for sign of direction
@@ -76,7 +80,7 @@ namespace DdMd
       * \param atomStorage  AtomStorage used to find atoms pointers
       */
       virtual void unpack(Buffer& buffer, AtomStorage& atomStorage) = 0;
-      #endif // endif ifdef UTIL_MPI
+      #endif // ifdef UTIL_MPI
    
       /**
       * Set ghost communication flags for all atoms in incomplete groups.

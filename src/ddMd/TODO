@@ -1,15 +1,8 @@
-Testing
--------
-
-- Fix CellTest
-
-- Test angle and dihedral stress calculations.
-
 Exchanger
 ---------
 
-- Add memory usage statistics, to see which exchanges use
-  the most memory.
+- Add memory usage statistics, to see which step (atom
+  exchange or ghost exchange) uses the most memory.
 
 - Write separate algorithm for initial ghost exchange, to
   reduce memory requirements See doc/notes/ddMd/initGhosts
@@ -45,9 +38,9 @@ Buffer:
 Moving GroupStorage to Potential class:
 ---------------------------------------
 
-- Add registry of GroupExchanger objects to Exchanger.
+- Add registry (APArray) of GroupExchanger objects to Exchanger.
 
-- Make each GroupStorage a member of associated potential.
+- Make each GroupStorage a member of the associated potential.
 
 - see doc/notes/ddMd/GroupStorage
 
@@ -84,3 +77,9 @@ Files
 - Modify default file format to store speciesId, moleculeId, molAtomId indices.
 
 - Think about separating topology and configuration files. 
+
+Testing
+-------
+
+- Test angle and dihedral stress calculations more thoroughly.
+

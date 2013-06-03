@@ -22,8 +22,7 @@ namespace DdMd
    class Atom;
    class AtomStorage;
    class Buffer;
-   template <int N> class Group;
-   template <int N> class GroupStorage;
+   class GroupExchanger;
 
    using namespace Util;
 
@@ -53,12 +52,12 @@ namespace DdMd
       void associate(const Domain& domain, 
                      const Boundary& boundary, 
                      AtomStorage& atomStorage, 
-                     GroupStorage<2>& bondStorage, 
+                     GroupExchanger& bondStorage, 
                      #ifdef INTER_ANGLE
-                     GroupStorage<3>& angleStorage, 
+                     GroupExchanger& angleStorage, 
                      #endif
                      #ifdef INTER_DIHEDRAL
-                     GroupStorage<4>& dihedralStorage, 
+                     GroupExchanger& dihedralStorage, 
                      #endif
                      Buffer& buffer);
 
@@ -188,16 +187,16 @@ namespace DdMd
       AtomStorage* atomStoragePtr_;
 
       /// Pointer to associated bond storage object.
-      GroupStorage<2>* bondStoragePtr_;
+      GroupExchanger* bondStoragePtr_;
 
       #ifdef INTER_ANGLE 
       /// Pointer to associated angle storage object.
-      GroupStorage<3>* angleStoragePtr_;
+      GroupExchanger* angleStoragePtr_;
       #endif
 
       #ifdef INTER_DIHEDRAL
       /// Pointer to associated dihedral storage object.
-      GroupStorage<4>* dihedralStoragePtr_;
+      GroupExchanger* dihedralStoragePtr_;
       #endif
 
       /// Pointer to associated buffer object.

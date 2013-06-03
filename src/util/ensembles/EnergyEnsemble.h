@@ -24,6 +24,8 @@ namespace Util
    * An energy ensemble has a type, which can be adiabatic or isothermal,
    * and stores a temperature and inverse temperature beta if the type is 
    * isothermal.
+   *
+   * \ingroup Ensemble_Module
    */
    class EnergyEnsemble : public ParamComposite
    {
