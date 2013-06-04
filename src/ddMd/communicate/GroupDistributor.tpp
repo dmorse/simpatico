@@ -1,5 +1,5 @@
-#ifndef DDMD_GROUP_DISTRIBUTOR_CPP
-#define DDMD_GROUP_DISTRIBUTOR_CPP
+#ifndef DDMD_GROUP_DISTRIBUTOR_TPP
+#define DDMD_GROUP_DISTRIBUTOR_TPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -10,10 +10,10 @@
 
 #include "GroupDistributor.h"
 #include "Domain.h"
-#include <ddMd/storage/GroupStorage.h>
+#include <ddMd/storage/AtomStorage.h>
+#include <ddMd/storage/GroupStorage.tpp>
 #include <ddMd/storage/GroupIterator.h>
 #include <ddMd/storage/ConstGroupIterator.h>
-#include <ddMd/storage/AtomStorage.h>
 
 #include <algorithm>
 

@@ -10,6 +10,7 @@
 
 #include "Simulation.h"
 #include <ddMd/storage/AtomIterator.h>
+#include <ddMd/storage/GroupStorage.tpp>
 #include <ddMd/integrators/Integrator.h>
 #include <ddMd/integrators/IntegratorFactory.h>
 #include <ddMd/configIos/ConfigIo.h>

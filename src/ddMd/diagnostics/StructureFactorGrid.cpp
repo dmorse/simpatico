@@ -13,6 +13,7 @@
 #include <util/crystal/PointGroup.h>
 #include <util/crystal/PointSymmetry.h>
 #include <util/archives/Serializable_includes.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 

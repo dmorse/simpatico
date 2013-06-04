@@ -16,9 +16,9 @@
 namespace DdMd
 {
 
+   class Domain;
    class AtomStorage;
    template <int N> class GroupStorage;
-   class Domain;
 
    using namespace Util;
 

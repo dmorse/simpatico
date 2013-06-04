@@ -1,5 +1,5 @@
-#ifndef DDMD_GROUP_COLLECTOR_INC_H
-#define DDMD_GROUP_COLLECTOR_INC_H
+#ifndef DDMD_GROUP_COLLECTOR_TPP
+#define DDMD_GROUP_COLLECTOR_TPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -11,7 +11,7 @@
 #include "GroupCollector.h"
 #include "Domain.h"
 #include "Buffer.h"
-#include <ddMd/storage/GroupStorage.h>
+#include <ddMd/storage/GroupStorage.tpp>
 
 namespace DdMd
 {
@@ -271,4 +271,4 @@ namespace DdMd
    #endif
 
 }
-#endif
+#endif // ifndef DDMD_GROUP_COLLECTOR_TPP

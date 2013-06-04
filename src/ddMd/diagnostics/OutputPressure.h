@@ -10,6 +10,7 @@
 
 #include <ddMd/diagnostics/Diagnostic.h>
 #include <ddMd/simulation/Simulation.h>
+#include <util/mpi/MpiLoader.h>
 
 namespace DdMd
 {

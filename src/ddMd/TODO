@@ -9,11 +9,6 @@ Exchanger
 
 - Consider moving allocation of Buffer to Exchanger.
 
-GroupStorage
-------------
-
-- Move more methods from GroupStorage.h to tpp file. 
-
 Cell List and Pair List:
 ------------------------
 

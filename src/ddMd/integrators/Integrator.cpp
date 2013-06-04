@@ -12,6 +12,7 @@
 #include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
+#include <ddMd/storage/GroupStorage.tpp>
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <ddMd/potentials/bond/BondPotential.h>
