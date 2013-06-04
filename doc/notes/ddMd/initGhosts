@@ -8,7 +8,7 @@ to exchange atoms and covalent ghosts with less memory usage.
 
 Add bool initial argument to private exchangeAtoms function 
 to distinguish initial exchange from later. Initial exchange 
-would not mark ghosts for sendinging based on group 
+would not mark ghosts for sending based on group 
 incompleteness.
 
 The public initialExchange method would call private methods 
