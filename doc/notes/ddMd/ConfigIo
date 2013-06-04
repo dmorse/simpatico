@@ -1,0 +1,52 @@
+Currently:
+
+  ConfigIo::associate takes 
+    - GroupStorage<N>, save pointer
+    - Associates storage with GroupDistributor<N> member
+    - Associates storage with GroupCollector<N>   member
+
+  Required interface:
+
+  ConfigIo:
+
+    - GroupDistributor<N>::initialize()
+    - GroupCollector<N>::allocate()
+
+  DdMdConfigiIo:
+
+   - void GroupDistributor<N>::setup()
+   - Group<N>* GroupDistributor<N>::newPtr()
+   - void      GroupDistributor<N>::add()
+   - void      GroupDistributor<N>::send()
+   - void      GroupDistributor<N>::receive()
+
+Comments:
+
+   - Interface is generic except for newPtr.
+
+   - Create base classes GroupDistributor and GroupCollector
+     that implement the interaface:
+
+     Distributor:
+     void setup();
+     virtual void read(std::istream& );
+     void send();
+     void receive();
+  
+     Collector:   
+     void setup();
+     virtual void write(std::ostream& );
+     void send();
+
+   - Add virtual factory methods to GroupExchanger that return instances 
+     of associated Collector and Distributor classes. Specialized storage
+     classes can create specialized Distributors and Collectors.
+
+   - This solution works for classes that can define their own file format.
+
+   - If we use a base class interace, with no newPtr method, how can we
+     change file format for the standard Group<N> types?
+
+   - This requires a function read(std::istream, T*) with e.g., T= Group<N>.
+     Where can this be defined? This is getting complicated. For the
+     moment, I'm flummoxed. 
