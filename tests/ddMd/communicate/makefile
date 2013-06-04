@@ -48,11 +48,11 @@ GroupDistributorTest: GroupDistributorTest.o $(ddMd_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) \
                -o GroupDistributorTest GroupDistributorTest.o $(ddMd_LIB) $(util_LIB)
 
-ExchangerTest: ExchangerTest.o $(ddMd_LIB) $(util_LIB)
+ExchangerTest: ExchangerTest.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) \
-               -o ExchangerTest ExchangerTest.o $(ddMd_LIB) $(util_LIB)
+               -o ExchangerTest ExchangerTest.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 
-ExchangerForceTest: ExchangerForceTest.o $(ddMd_LIB) $(util_LIB)
+ExchangerForceTest: ExchangerForceTest.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) \
                -o ExchangerForceTest ExchangerForceTest.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 
@@ -64,7 +64,7 @@ BondCollectorTest: BondCollectorTest.o $(ddMd_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) \
         -o BondCollectorTest BondCollectorTest.o $(ddMd_LIB) $(util_LIB)
 
-Test: Test.o $(ddMd_LIB) $(util_LIB)
+Test: Test.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(INTER_DEFS) $(DDMD_DEFS) \
         -o Test Test.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 
