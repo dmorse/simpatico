@@ -145,14 +145,14 @@ void ExchangerForceTest::initialize()
                       dihedralStorage,
                       #endif
                       buffer);
-   exchanger.associate(domain, boundary, atomStorage, bondStorage, 
-                      #ifdef INTER_ANGLE
-                      angleStorage,
-                      #endif
-                      #ifdef INTER_DIHEDRAL
-                      dihedralStorage,
-                      #endif
-                      buffer);
+   exchanger.associate(domain, boundary, atomStorage, buffer);
+   exchanger.addGroupExchanger(bondStorage);
+   #ifdef INTERANGLE
+   exchanger.addGroupExchanger(angleStorage);
+   #endif
+   #ifdef INTERDIHEDRAL
+   exchanger.addGroupExchanger(dihedralStorage);
+   #endif
 
    pairPotential.setNAtomType(1);
    pairPotential.associate(domain, boundary, atomStorage);

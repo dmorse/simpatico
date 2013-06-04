@@ -48,18 +48,21 @@ namespace DdMd
 
       /**
       * Set pointers to associated objects.
+      *
+      * \param domain      associated Domain object
+      * \param boundary    associated Boundary object
+      * \param atomStorage associated AtomStorage object
+      * \param buffer      associated Buffer object
       */
-      void associate(const Domain& domain, 
-                     const Boundary& boundary, 
-                     AtomStorage& atomStorage, 
-                     GroupExchanger& bondStorage, 
-                     #ifdef INTER_ANGLE
-                     GroupExchanger& angleStorage, 
-                     #endif
-                     #ifdef INTER_DIHEDRAL
-                     GroupExchanger& dihedralStorage, 
-                     #endif
-                     Buffer& buffer);
+      void associate(const Domain& domain, const Boundary& boundary, 
+                     AtomStorage& atomStorage, Buffer& buffer);
+
+      /**
+      * Add a GroupExchanger to an internal list.
+      *
+      * \param groupExchanger GroupExchanger object to add to list.
+      */
+      void addGroupExchanger(GroupExchanger& groupExchanger);
 
       /**
       * Allocate all required memory.

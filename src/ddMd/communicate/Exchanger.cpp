@@ -60,32 +60,20 @@ namespace DdMd
    /*
    * Set pointers to associated objects.
    */
-   void Exchanger::associate(const Domain& domain, 
-                             const Boundary& boundary, 
-                             AtomStorage& atomStorage, 
-                             GroupExchanger& bondStorage, 
-                             #ifdef INTER_ANGLE
-                             GroupExchanger& angleStorage, 
-                             #endif
-                             #ifdef INTER_DIHEDRAL
-                             GroupExchanger& dihedralStorage, 
-                             #endif
-                             Buffer& buffer)
+   void Exchanger::associate(const Domain& domain, const Boundary& boundary,
+                             AtomStorage& atomStorage, Buffer& buffer)
    {
       domainPtr_ = &domain;
       boundaryPtr_ = &boundary;
       atomStoragePtr_ = &atomStorage;
-
-      groupExchangers_.append(bondStorage);
-      #ifdef INTER_ANGLE
-      groupExchangers_.append(angleStorage);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      groupExchangers_.append(dihedralStorage);
-      #endif
-
       bufferPtr_ = &buffer;
    }
+
+   /*
+   * Add a GroupExchanger to an internal list.
+   */
+   void Exchanger::addGroupExchanger(GroupExchanger& groupExchanger)
+   {  groupExchangers_.append(groupExchanger); }
 
    /*
    * Allocate memory.
@@ -123,10 +111,10 @@ namespace DdMd
    {
       if (UTIL_ORTHOGONAL && !atomStoragePtr_->isCartesian()) {
          UTIL_THROW("Error: Coordinates not Cartesian on entry to exchange");
-      } 
+      }
       if (!UTIL_ORTHOGONAL && atomStoragePtr_->isCartesian()) {
          UTIL_THROW("Error: Coordinates are Cartesian on entry to exchange");
-      } 
+      }
       exchangeAtoms();
       exchangeGhosts();
    }
@@ -134,22 +122,22 @@ namespace DdMd
    /*
    * Exchange ownership of local atoms and groups, set ghost plan.
    *
-   * Atomic coordinates must be in generalized coordinates on entry and 
+   * Atomic coordinates must be in generalized coordinates on entry and
    * exit if not UTIL_ORTHOGONAL, and Cartesian if UTIL_ORTHOGONAL.
    *
    * Algorithm:
    *
    *    - Loop over local atoms, set exchange and ghost communication
-   *      flags for those beyond or near processor domain boundaries. 
+   *      flags for those beyond or near processor domain boundaries.
    *
-   *    - Add local atoms that will be retained by this processor but 
+   *    - Add local atoms that will be retained by this processor but
    *      sent as ghosts to appropriate send arrays.
    *
    *    - Call initGroupGhostPlan each type of group (bond, angle, dihedral).
    *      initGroupGhostPlan<N>{
    *
    *         For each group{
-   *            - Set ghost communication flags for groups that span 
+   *            - Set ghost communication flags for groups that span
    *              or may span boundaries.
    *            - Clear pointers to ghost atoms in the group.
    *         }
@@ -158,7 +146,7 @@ namespace DdMd
    *      Clear all ghosts from the AtomStorage
    *
    *      For each transfer directions (i and j) {
-   *  
+   *
    *         For each local atom {
    *            if marked for exchange(i, j) {
    *               if gridDimension[i] > 1 {
@@ -171,7 +159,7 @@ namespace DdMd
    *         }
    *
    *         if gridDimension[i] > 1 {
-   *            - Call packGroups for each group type. 
+   *            - Call packGroups for each group type.
    *              This packs groups containing atoms that are sent.
    *            - Remove exchanged atoms and empty groups
    *            - Send and receive data buffers
@@ -183,7 +171,7 @@ namespace DdMd
    *            }
    *            - Call unpackGroups for each group type.
    *         }
-   * 
+   *
    *      }
    *
    *    - Call finishGroupPlan<N> each type of group (bond, angle, dihedral).
@@ -261,19 +249,19 @@ namespace DdMd
 
          // Cartesian directions
          for (i = 0; i < Dimension; ++i) {
-  
+
             coordinate = atomIter->position()[i];
- 
+
             // Transmission direction
             for (j = 0; j < 2; ++j) {
-   
+
                // j = 0 sends to lower coordinate i
                // j = 1 sends to higher coordinate i
 
                // Index for conjugate (reverse) direction
                if (j == 0) jc = 1;
                if (j == 1) jc = 0;
-   
+
                if (j == 0) { // Communicate with lower index
                   if (coordinate < bound_(i, j)) {
                      planPtr->setExchange(i, j);
@@ -307,7 +295,7 @@ namespace DdMd
                      }
                   }
                }
-   
+
             } // end for j
          } // end for i
 
@@ -335,7 +323,7 @@ namespace DdMd
       * finishGroupGhostPlan<N> function, further below.
       */
       for (k = 0; k < groupExchangers_.size(); ++k) {
-         groupExchangers_[k].markSpanningGroups(bound_, inner_, outer_, 
+         groupExchangers_[k].markSpanningGroups(bound_, inner_, outer_,
                                                 gridFlags_);
       }
       stamp(INIT_GROUP_PLAN);
@@ -353,7 +341,7 @@ namespace DdMd
          nAtomTotal = atomStoragePtr_->nAtomTotal();
       }
       for (k = 0; k < groupExchangers_.size(); ++k) {
-         groupExchangers_[k].isValid(*atomStoragePtr_, 
+         groupExchangers_[k].isValid(*atomStoragePtr_,
                                      domainPtr_->communicator(), false);
       }
       #endif
@@ -374,7 +362,7 @@ namespace DdMd
             source = domainPtr_->sourceRank(i, j); // rank to receive from
             dest = domainPtr_->destRank(i, j);     // rank to send to
             bound = domainPtr_->domainBound(i, j); // bound for send
-            inner = inner_(i, jc);                 // inner bound upon receipt 
+            inner = inner_(i, jc);                 // inner bound upon receipt
             shift = domainPtr_->shift(i, j);       // shift for periodic b.c.
             if (UTIL_ORTHOGONAL) {
                rshift = lengths[i]*double(shift);
@@ -415,12 +403,12 @@ namespace DdMd
                   if (gridFlags_[i]) {
                      sentAtoms_.append(*atomIter);
                      atomIter->packAtom(*bufferPtr_);
-                  } else 
+                  } else
                   #endif
                   {
 
                      #ifdef UTIL_DEBUG
-                     #ifdef DDMD_EXCHANGER_DEBUG 
+                     #ifdef DDMD_EXCHANGER_DEBUG
                      assert(shift);
                      assert(coordinate > -1.0*fabs(rshift));
                      assert(coordinate <  2.0*fabs(rshift));
@@ -444,9 +432,9 @@ namespace DdMd
 
                      #if UTIL_DEBUG
                      // Check ghost communication plan
-                     if (j == 0 && atomIter->position()[i] > inner) { 
+                     if (j == 0 && atomIter->position()[i] > inner) {
                         assert(atomIter->plan().ghost(i, 1));
-                     } else 
+                     } else
                      if (j == 1 && atomIter->position()[i] < inner) {
                         assert(atomIter->plan().ghost(i, 0));
                      }
@@ -464,7 +452,7 @@ namespace DdMd
             * (1) Removal of atoms cannot be done within the atom packing
             * loop because element removal invalidates the atom iterator.
             *
-            * (2) Groups must be packed for sending before atoms are removed 
+            * (2) Groups must be packed for sending before atoms are removed
             * because the algorithm for identifying groups to send invokes
             * pointers to associated atoms.
             */
@@ -490,9 +478,9 @@ namespace DdMd
                   atomStoragePtr_->removeAtom(&sentAtoms_[k]);
                }
                stamp(REMOVE_ATOMS);
-     
+
                // Send to processor dest and receive from processor source
-               bufferPtr_->sendRecv(domainPtr_->communicator(), 
+               bufferPtr_->sendRecv(domainPtr_->communicator(),
                                     source, dest);
                stamp(SEND_RECV_ATOMS);
 
@@ -584,7 +572,7 @@ namespace DdMd
       }
       atomStoragePtr_->isValid();
       for (k = 0; k < groupExchangers_.size(); ++k) {
-         groupExchangers_[k].isValid(*atomStoragePtr_, 
+         groupExchangers_[k].isValid(*atomStoragePtr_,
                                       domainPtr_->communicator(), false);
       }
       #endif // ifdef DDMD_EXCHANGER_DEBUG
@@ -592,7 +580,7 @@ namespace DdMd
 
       // Set ghost communication flags for atoms in incomplete groups
       for (k = 0; k < groupExchangers_.size(); ++k) {
-         groupExchangers_[k].markGhosts(*atomStoragePtr_, sendArray_, 
+         groupExchangers_[k].markGhosts(*atomStoragePtr_, sendArray_,
                                         gridFlags_);
       }
       stamp(FINISH_GROUP_PLAN);
@@ -601,7 +589,7 @@ namespace DdMd
    /*
    * Exchange ghost atoms.
    *
-   * Call immediately after exchangeAtoms and before rebuilding the 
+   * Call immediately after exchangeAtoms and before rebuilding the
    * neighbor list on time steps that require reneighboring. Uses
    * ghost communication plans computed in exchangeAtoms.
    */
@@ -704,9 +692,9 @@ namespace DdMd
 
                #ifdef UTIL_MPI
                if (gridFlags_[i]) {
-                  // If grid dimension > 1, pack atom for sending 
+                  // If grid dimension > 1, pack atom for sending
                   sendPtr->packGhost(*bufferPtr_);
-               } else 
+               } else
                #endif
                {  // if grid dimension == 1
 
@@ -723,7 +711,7 @@ namespace DdMd
                   atomStoragePtr_->addNewGhost();
 
                   #ifdef UTIL_DEBUG
-                  // Validate shifted ghost coordinate 
+                  // Validate shifted ghost coordinate
                   coordinate = atomPtr->position()[i];
                   if (j == 0) {
                      assert(coordinate > bound_(i, 1));
@@ -818,7 +806,7 @@ namespace DdMd
       #ifdef DDMD_EXCHANGER_DEBUG
       atomStoragePtr_->isValid();
       for (k = 0; k < groupExchangers_.size(); ++k) {
-         groupExchangers_[k].isValid(*atomStoragePtr_, 
+         groupExchangers_[k].isValid(*atomStoragePtr_,
                                      domainPtr_->communicator(), true);
       }
       #endif // ifdef DDMD_EXCHANGER_DEBUG
@@ -830,14 +818,14 @@ namespace DdMd
    /*
    * Update ghost atom coordinates.
    *
-   * Call on time steps for which no reneighboring is required. 
+   * Call on time steps for which no reneighboring is required.
    */
    void Exchanger::update()
    {
       stamp(START);
       if (!atomStoragePtr_->isCartesian()) {
          UTIL_THROW("Error: Coordinates not Cartesian on entry to update");
-      } 
+      }
 
       Vector lengths = boundaryPtr_->lengths();
       Atom*  atomPtr;
@@ -861,13 +849,13 @@ namespace DdMd
                }
                bufferPtr_->endSendBlock();
                stamp(PACK_UPDATE);
-  
+
                // Send and receive buffers
                source = domainPtr_->sourceRank(i, j);
                dest   = domainPtr_->destRank(i, j);
                bufferPtr_->sendRecv(domainPtr_->communicator(), source, dest);
                stamp(SEND_RECV_UPDATE);
-   
+
                // Unpack ghost positions
                bufferPtr_->beginRecvBlock();
                size = recvArray_(i, j).size();
@@ -877,7 +865,7 @@ namespace DdMd
                   if (shift) {
                      boundaryPtr_->applyShift(atomPtr->position(), i, shift);
                   }
-               } 
+               }
                bufferPtr_->endRecvBlock();
                stamp(UNPACK_UPDATE);
 
@@ -933,11 +921,11 @@ namespace DdMd
                }
                bufferPtr_->endSendBlock();
                stamp(PACK_FORCE);
-  
+
                // Send and receive buffers (reverse direction)
                source  = domainPtr_->destRank(i, j);
                dest    = domainPtr_->sourceRank(i, j);
-               bufferPtr_->sendRecv(domainPtr_->communicator(), 
+               bufferPtr_->sendRecv(domainPtr_->communicator(),
                                     source, dest);
                stamp(SEND_RECV_FORCE);
 
@@ -966,9 +954,9 @@ namespace DdMd
 
             }
 
-         } // transmit direction j = 1 or 0 
+         } // transmit direction j = 1 or 0
 
-      } // Cartesian direction i 
+      } // Cartesian direction i
 
    }
 

@@ -38,10 +38,6 @@ Buffer:
 Moving GroupStorage to Potential class:
 ---------------------------------------
 
-- Add method to register GroupExchangers with Exchanger.
-
-- Remove GroupStorage arguments from Exchanger::associate().
-
 - Make each GroupStorage a member of the associated potential.
 
 - see doc/notes/ddMd/GroupStorage

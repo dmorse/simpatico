@@ -176,6 +176,7 @@ namespace DdMd
 
       // Set connections between member objects
       domain_.setBoundary(boundary_);
+      #if 0
       exchanger_.associate(domain_, boundary_,
                            atomStorage_, bondStorage_,
                            #ifdef INTER_ANGLE
@@ -185,6 +186,15 @@ namespace DdMd
                            dihedralStorage_,
                            #endif
                            buffer_);
+      #endif
+      exchanger_.associate(domain_, boundary_, atomStorage_, buffer_);
+      exchanger_.addGroupExchanger(bondStorage_);
+      #ifdef INTER_ANGLE
+      exchanger_.addGroupExchanger(angleStorage_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      exchanger_.addGroupExchanger(dihedralStorage_);
+      #endif
 
       fileMasterPtr_ = new FileMaster;
       energyEnsemblePtr_  = new EnergyEnsemble;
