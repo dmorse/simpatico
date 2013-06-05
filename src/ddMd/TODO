@@ -37,14 +37,6 @@ Moving GroupStorage to Potential class:
 
 - see doc/notes/ddMd/GroupStorage
 
-Dynamic Resizing
-----------------
-
-- Allow for dynamic resizing of PairList class during creation.
-
-- Allow for dynamic resizing of Storage classes.
-  For AtomStorage, must emit signal to reset pointers to atoms.
-
 Hybrid MD
 ---------
 
