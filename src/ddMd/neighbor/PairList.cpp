@@ -151,6 +151,7 @@ namespace DdMd
                            assert(nAtom1_ >= 0);
    
                            atom1Ptrs_[nAtom1_] = atom1Ptr;
+                           ++nAtom1_;
                            foundNeighbor = true;
                         }
       
@@ -186,6 +187,7 @@ namespace DdMd
                         assert(nAtom1_ >= 0);
    
                         atom1Ptrs_[nAtom1_] = atom1Ptr;
+                        ++nAtom1_;
                         foundNeighbor = true;
                      }
    
@@ -199,7 +201,7 @@ namespace DdMd
   
             // When finished with atom1, set next element of first_ array.
             if (foundNeighbor) {
-               ++nAtom1_;
+               //++nAtom1_;
                first_[nAtom1_] = nAtom2_;
             }
          }

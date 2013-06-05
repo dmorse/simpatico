@@ -15,7 +15,7 @@
 #include <ddMd/chemistry/Group.h>        // member template parameter
 #include <util/space/IntVector.h>        // member template parameter
 #include <util/containers/DArray.h>      // member template
-#include <util/containers/APArray.h>     // member template
+#include <util/containers/GPArray.h>     // member template
 #include <util/containers/FMatrix.h>     // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
@@ -320,7 +320,7 @@ namespace DdMd
       */
       virtual
       void markGhosts(AtomStorage& atomStorage, 
-                      FMatrix<APArray<Atom>, Dimension, 2>&  sendArray,
+                      FMatrix<GPArray<Atom>, Dimension, 2>&  sendArray,
                       IntVector& gridFlags);
    
       /**
@@ -408,7 +408,7 @@ namespace DdMd
       DArray< Group<N>* >  groupPtrs_;
 
       // Array identifying empty groups, marked for later removal 
-      APArray< Group<N> > emptyGroups_;
+      GPArray< Group<N> > emptyGroups_;
 
       // Pointer to space for a new local Group
       Group<N>* newPtr_;

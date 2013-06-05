@@ -672,7 +672,7 @@ namespace DdMd
    */
    template <int N> void 
    GroupStorage<N>::markGhosts(AtomStorage& atomStorage, 
-                               FMatrix<APArray<Atom>, Dimension, 2>&  sendArray, 
+                               FMatrix<GPArray<Atom>, Dimension, 2>& sendArray,
                                IntVector& gridFlags)
    {
       GroupIterator<N> groupIter;

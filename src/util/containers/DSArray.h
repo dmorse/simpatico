@@ -176,12 +176,10 @@ namespace Util
       }
    }
    
-   /**
+   /*
    * Assignment, element by element.
    *
    * Capacity of LHS DSArray must be >= size of RHS DSArray.
-   *
-   * \param other the RHS DSArray 
    */
    template <class Data>
    DSArray<Data>& DSArray<Data>::operator=(const DSArray<Data>& other) 
@@ -311,10 +309,8 @@ namespace Util
       return data_[i];
    }
 
-   /**
+   /*
    * Append data to the end of the array.
-   *
-   * \param data Data to add to end of array.
    */
    template <class Data>
    inline void DSArray<Data>::append(const Data &data) 
@@ -326,26 +322,26 @@ namespace Util
       ++size_;
    }
 
-   /**
+   /*
    * Set logical size to zero.
    */
    template <class Data>
    inline void DSArray<Data>::clear() 
-   { size_ = 0; }
+   {  size_ = 0; }
 
    /*
    * Return physical capacity of array.
    */
    template <class Data>
    inline int DSArray<Data>::capacity() const
-   { return capacity_; }
+   {  return capacity_; }
 
    /*
    * Return logical size of this array (i.e., number of elements).
    */
    template <class Data>
    inline int DSArray<Data>::size() const
-   { return size_; }
+   {  return size_; }
 
    /*
    * Return true if the DSArray has been allocated, false otherwise.

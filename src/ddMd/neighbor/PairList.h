@@ -267,7 +267,7 @@ namespace DdMd
    * Get the current number of primary atoms in the pairlist.
    */ 
    inline int PairList::nAtom() const
-   { return nAtom1_; }
+   {  return nAtom1_; }
 
    /*
    * Get the current number of pairs.

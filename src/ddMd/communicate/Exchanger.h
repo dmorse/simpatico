@@ -12,7 +12,7 @@
 #include <util/space/IntVector.h>
 #include <util/boundary/Boundary.h>
 #include <util/containers/FMatrix.h>
-#include <util/containers/APArray.h>
+#include <util/containers/GPArray.h>
 
 
 namespace DdMd
@@ -138,26 +138,26 @@ namespace DdMd
       /**
       * Arrays of pointers to ghosts to be sent in each direction.
       *
-      * Element sendArray_(i, j) is a APArray that stores pointers to the
+      * Element sendArray_(i, j) is a GPArray that stores pointers to the
       * ghost atoms whose positions are sent during the send along cartesian 
       * axis i (i=0/x, 1/y or 2/z) in direction j (j=0/lower or 1/higher).
       * These 6 arrays are filled by the exchangeGhosts() method and used 
       * by subsequent calls of the update() method, until the next
       * call of exchangeGhosts().
       */
-      FMatrix< APArray<Atom>, Dimension, 2>  sendArray_;
+      FMatrix< GPArray<Atom>, Dimension, 2>  sendArray_;
 
       /**
       * Arrays of pointers to ghosts received in each direction.
       *
-      * Element recvArray_(i, j) is a APArray that stores pointers to the 
+      * Element recvArray_(i, j) is a GPArray that stores pointers to the 
       * ghost atoms that are received during the send along cartesian axis
       * i (for i=0/x, 1/y or 2/z) in direction j (for j=0/lower or 1/higher).
       * These 6 arrays are filled by the exchangeGhosts() method and used 
       * by subsequent calls of the update() method, until the next
       * call of exchangeGhosts().
       */
-      FMatrix< APArray<Atom>, Dimension, 2>  recvArray_;
+      FMatrix< GPArray<Atom>, Dimension, 2>  recvArray_;
 
       #ifdef UTIL_MPI
       /**
@@ -165,7 +165,7 @@ namespace DdMd
       * 
       * Used to mark missing atoms for subsequent removal.
       */
-      APArray<Atom> sentAtoms_;
+      GPArray<Atom> sentAtoms_;
       #endif // UTIL_MPI
 
       /// Processor boundaries (minima j=0, maxima j=1)
@@ -190,7 +190,7 @@ namespace DdMd
       AtomStorage* atomStoragePtr_;
 
       /// Array of GroupExchanger's (i.e,. GroupStorage<N>'s)
-      APArray<GroupExchanger> groupExchangers_;
+      GPArray<GroupExchanger> groupExchangers_;
 
       /// Pointer to associated buffer object.
       Buffer*  bufferPtr_;

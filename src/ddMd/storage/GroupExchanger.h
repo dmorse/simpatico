@@ -14,7 +14,7 @@
 namespace Util {
    class IntVector;
    template <typename T, int M, int N> class FMatrix;
-   template <typename T> class APArray; 
+   template <typename T> class GPArray; 
 }
 
 namespace DdMd
@@ -95,7 +95,7 @@ namespace DdMd
       */
       virtual
       void markGhosts(AtomStorage& atomStorage, 
-                      FMatrix<APArray<Atom>, Dimension, 2>&  sendArray,
+                      FMatrix< GPArray<Atom>, Dimension, 2 >&  sendArray,
                       IntVector& gridFlags) = 0;
    
       /**
