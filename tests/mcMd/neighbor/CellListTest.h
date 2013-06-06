@@ -123,21 +123,9 @@ public:
       TEST_ASSERT(cellList.gridDimension(0) == 1);
       TEST_ASSERT(cellList.gridDimension(1) == 2);
       TEST_ASSERT(cellList.gridDimension(2) == 3);
-      if (UTIL_ORTHOGONAL) {
-         TEST_ASSERT(eq(cellList.invCellWidths_[0], (1.0/2.0)));
-         TEST_ASSERT(eq(cellList.invCellWidths_[1], (2.0/3.0)));
-         TEST_ASSERT(eq(cellList.invCellWidths_[2], (3.0/4.0)));
-      } else {
-         // std::cout << std::endl;
-         // std::cout << "UTIL_ORTHOGONAL is note defined" << std::endl;
-         TEST_ASSERT(eq(cellList.invCellWidths_[0], 1.0));
-         TEST_ASSERT(eq(cellList.invCellWidths_[1], 2.0));
-         TEST_ASSERT(eq(cellList.invCellWidths_[2], 3.0));
-      }
-
-      //printf("\n");
-      //printf("CellList.numCells: %i %i %i \n", 
-      //cellList.gridDimension(0),cellList.gridDimension(1),cellList.gridDimension(2));
+      TEST_ASSERT(eq(cellList.invCellWidths_[0], 1.0));
+      TEST_ASSERT(eq(cellList.invCellWidths_[1], 2.0));
+      TEST_ASSERT(eq(cellList.invCellWidths_[2], 3.0));
 
    }
 

@@ -61,14 +61,8 @@ inline void SimulationTest::displaceAtoms(AtomStorage& atomStorage,
 {
    Vector ranges;
    double min, max;
-   if (UTIL_ORTHOGONAL) {
-      for (int i = 0; i < Dimension; ++i) {
-         ranges[i] = range;
-      }
-   } else {
-      for (int i = 0; i < Dimension; ++i) {
-         ranges[i] = range/boundary.length(i);
-      }
+   for (int i = 0; i < Dimension; ++i) {
+      ranges[i] = range/boundary.length(i);
    }
    AtomIterator atomIter;
    for(int i = 0; i < Dimension; ++i) {
@@ -292,10 +286,7 @@ inline void SimulationTest::testUpdate()
    for ( ; ghostIter.notEnd(); ++ghostIter) {
       TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
    }
-
-   if (!UTIL_ORTHOGONAL) {
-       atomStorage.transformGenToCart(boundary);
-   }
+   atomStorage.transformGenToCart(boundary);
 
    displaceAtoms(atomStorage, boundary, random, 0.1);
    simulation_.exchanger().update();
@@ -319,9 +310,7 @@ inline void SimulationTest::testCalculateForces()
 
    // Compute forces.
    simulation_.pairPotential().buildCellList();
-   if (!UTIL_ORTHOGONAL) {
-      atomStorage.transformGenToCart(simulation_.boundary());
-   }
+   atomStorage.transformGenToCart(simulation_.boundary());
    simulation_.pairPotential().buildPairList();
    simulation_.computeForces();
 

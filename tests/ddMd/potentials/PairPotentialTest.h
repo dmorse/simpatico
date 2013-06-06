@@ -106,13 +106,8 @@ public:
       int    i, j;
       for (i = 0; i < Dimension; ++i) {
           length[i] = upper[i] - lower[i];
-          if (UTIL_ORTHOGONAL) {
-             lowerGhost[i] = lower[i] - cutoff;
-             upperGhost[i] = upper[i] + cutoff;
-          } else {
-             lowerGhost[i] = (lower[i] - cutoff)/length[i];
-             upperGhost[i] = (upper[i] + cutoff)/length[i];
-          }
+          lowerGhost[i] = (lower[i] - cutoff)/length[i];
+          upperGhost[i] = (upper[i] + cutoff)/length[i];
       }
 
       // Create new random number generator
@@ -148,11 +143,7 @@ public:
          }
          std::cout << pos << "   " << ghost << std::endl;
       }
-      if (UTIL_ORTHOGONAL) {
-         TEST_ASSERT(storage.isCartesian());
-      } else {
-         TEST_ASSERT(!storage.isCartesian());
-      }
+      TEST_ASSERT(!storage.isCartesian());
    }
 
    void zeroForces()
@@ -247,16 +238,9 @@ public:
       boundary.setOrthorhombic(upper);
       randomAtoms(nAtom, lower, upper, cutoff);
 
-      if (UTIL_ORTHOGONAL) {
-         TEST_ASSERT(storage.isCartesian());
-      } else {
-         TEST_ASSERT(!storage.isCartesian());
-         //storage.transformCartToGen(boundary);
-      }
+      TEST_ASSERT(!storage.isCartesian());
       pairPotential.buildCellList();
-      if (!UTIL_ORTHOGONAL) {
-         storage.transformGenToCart(boundary);
-      }
+      storage.transformGenToCart(boundary);
       pairPotential.buildPairList();
 
       zeroForces();

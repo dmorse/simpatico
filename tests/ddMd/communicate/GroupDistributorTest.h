@@ -157,9 +157,7 @@ public:
             ptr->setTypeId(typeId);
 
             // Read a position from file.
-            if (UTIL_ORTHOGONAL) {
-               configFile >> ptr->position();
-            } else {
+            { 
                Vector r;
                configFile >> r;
                boundary.transformCartToGen(r, ptr->position());
@@ -389,9 +387,7 @@ public:
             ptr->setTypeId(typeId);
 
             // Read a position from file.
-            if (UTIL_ORTHOGONAL) {
-               configFile >> ptr->position();
-            } else {
+            { 
                Vector r;
                configFile >> r;
                boundary.transformCartToGen(r, ptr->position());
