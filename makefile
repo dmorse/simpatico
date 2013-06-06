@@ -1,17 +1,39 @@
 # ==============================================================================
 .PHONY: mcMd ddMd mcMd-mpi \
-        test-mcMd test-ddMd clean clean-bin \
+        test-mcMd test-mcMd-mpi test-ddMd clean clean-bin \
         clean-mcMd clean-ddMd clean clean-bin \
         html clean-html veryclean
+
+all:
+	-rm -f log
+	cd src; make mcMd
+	make test-mcMd
+	cd src; make mcMd-mpi
+	cd src; make ddMd
+	make test-ddMd
+	cat log
 
 mcMd:
 	cd src; make mcMd
 	-rm -f log
 	make test-mcMd
 	cat log
-	rm log
 
+mcMd-mpi: 
+	cd src; make mcMd-mpi
+	-rm -f log
+	make test-mcMd-mpi
+	cat log
+
+ddMd:
+	cd src; make ddMd
+	-rm -f log
+	make test-ddMd
+	cat log
+
+# ==============================================================================
 test-mcMd:
+	./configure -m0
 	cd tests/util; make all; ./Test > log;
 	echo `grep failed tests/util/log` \
              `grep successful tests/util/log` "in tests/util/log" >> log
@@ -22,12 +44,21 @@ test-mcMd:
 	echo `grep failed tests/mcMd/log` \
              `grep successful tests/mcMd/log` "in tests/mcMd/log" >> log
 
-mcMd-mpi: 
-	cd src; make mcMd-mpi
+test-mcMd-mpi:
+	./configure -m1
+	cd tests/util/mpi; make all; mpirun -np 2 ./Test > log
+	echo `grep failed tests/util/mpi/log` \
+             `grep successful tests/util/mpi/log` "in tests/util/mpi/log" >> log
+	cd tests/util/param/mpi; make all; mpirun -np 2 ./MpiTest > log
+	echo `grep failed tests/util/param/mpi/log` \
+             `grep successful tests/util/param/mpi/log` "in tests/util/param/mpi/log" >> log
 
-ddMd:
-	cd src; make ddMd
-
+test-ddMd:
+	./configure -m1
+	cd tests/ddMd; make all; mpirun -np 6 ./Test > log;
+	echo `grep failed tests/ddMd/log` \
+             `grep successful tests/ddMd/log` "in tests/ddMd/log" >> log
+# ==============================================================================
 clean-mcMd:
 	cd src; make clean-mcMd
 
@@ -36,11 +67,12 @@ clean-ddMd:
 
 clean:
 	cd src; make clean
+	cd tests; make clean
 
 clean-bin:
 	cd src; make clean-bin
- 
 # ==============================================================================
+ 
 html:
 	cd doc; make html
 

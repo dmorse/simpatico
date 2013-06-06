@@ -13,10 +13,10 @@ mcMd:
 	cd ..; ./configure -m0
 	cd mcMd; make all; ./Test > log; grep failed log
 
-mcMd_mpi:
+mcMd-mpi:
 	cd ..; ./configure -m1
-	cd mcMd/param/mpi; make all; mpirun -np 2 ./Test > log; grep failed log
-	cd mcMd/param/mpi; make all; mpirun -np 2 ./MpiTest > log; grep failed log
+	cd util/mpi; make all; mpirun -np 2 ./Test > log; grep failed log
+	cd util/param/mpi; make all; mpirun -np 2 ./MpiTest > log; grep failed log
 
 ddMd:
 	cd ..; ./configure -m1
@@ -27,6 +27,7 @@ clean:
 	cd inter; make clean
 	cd mcMd;  make clean
 	cd ddMd;  make clean
+	-rm -f log
 
 veryclean: 
 	make clean;

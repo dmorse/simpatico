@@ -26,6 +26,7 @@ clean:
 	-rm -f */*.o */*/*.o 
 	-rm -f */*.d */*/*.d
 	-rm -f *.cfg
+	-rm -f log
 
 Test: $(mcMd_LIB) $(inter_LIB) $(util_LIB) Test.o
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
