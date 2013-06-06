@@ -48,11 +48,7 @@ namespace DdMd
       #endif
       locked_(false),
       isInitialized_(false),
-      #if UTIL_ORTHOGONAL
-      isCartesian_(true)
-      #else
       isCartesian_(false)
-      #endif
    {  setClassName("AtomStorage"); }
  
    /*

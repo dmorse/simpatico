@@ -297,12 +297,12 @@ void McSimulationTest::testSimulate()
    std::cout << std::endl;
 
    std::string baseFileName("simulate.0");
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
    simulation_.simulate(20);
 
    baseFileName = "simulate.20";
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
 }
 
@@ -318,16 +318,16 @@ void McSimulationTest::testWriteRestart()
    std::cout << std::endl;
 
    std::string baseFileName("writeRestart.0");
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
    simulation_.simulate(10);
    baseFileName = "writeRestart.10";
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
    bool isContinuation = true;
    simulation_.simulate(20, isContinuation);
    baseFileName = "writeRestart.20";
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 }
 
 void McSimulationTest::testReadRestart()
@@ -336,10 +336,10 @@ void McSimulationTest::testReadRestart()
    std::cout << std::endl;
 
    std::string baseFileName("writeRestart.10");
-   simulation_.readRestart(baseFileName);
+   simulation_.load(baseFileName);
 
    baseFileName = "readRestart";
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 }
 
 TEST_BEGIN(McSimulationTest)

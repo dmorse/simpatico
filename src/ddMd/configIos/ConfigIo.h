@@ -134,9 +134,7 @@ namespace DdMd
       *
       *   - Each atom position is in the primary simulation cell.
       *
-      *   - If UTIL_ORTHOGONAL is true (see Boundary class), all Atom 
-      *     positions are expressed in scaled dimensionless coordinates,
-      *     between 0.0 and 1.0. Otherwise, atomic positions are Cartesian.
+      *   - Atom atomic positions are in scaled form, between 0.0 and 1.0. 
       *
       *   - Each processor owns every group that contains one or more of 
       *     the atoms that it owns, and no others. Each group may be owned
@@ -162,10 +160,7 @@ namespace DdMd
       * slightly outside the primary cell, because they will be shifted back 
       * by the readConfig() method.
       *
-      * This method must function correctly when atomic coordinates are in the
-      * format used between commands (Cartesian if UTIL_ORTHOGONAL, or scaled
-      * otherwise). The SerializeConfigIo subclass is designed to detect the
-      * coordinate system and function correctly in either case. 
+      * Upon entry to this function, atomic coordinates are generalized/scaled.
       *
       * \param file output file stream
       */

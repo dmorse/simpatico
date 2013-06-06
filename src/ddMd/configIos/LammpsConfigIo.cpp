@@ -110,14 +110,8 @@ namespace DdMd
       if (atomStorage().nGhost()) {
          UTIL_THROW("Atom storage is not empty (has ghost atoms)");
       }
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage not set for Cartesian coordinates");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage is set for Cartesian coordinates");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Atom storage is set for Cartesian coordinates");
       }
 
       int nAtom;
@@ -231,11 +225,7 @@ namespace DdMd
             atomPtr->setTypeId(typeId-1);
             file >> r;
             atomPtr->position() += min; // Shift corner of Boundary to (0, 0, 0)
-            if (UTIL_ORTHOGONAL) {
-               atomPtr->position() = r;
-            } else {
-               boundary().transformCartToGen(r, atomPtr->position());
-            }
+            boundary().transformCartToGen(r, atomPtr->position());
             file >> shift;
 
             // Add atom to list for sending.
@@ -348,14 +338,8 @@ namespace DdMd
    void LammpsConfigIo::writeConfig(std::ofstream& file)
    {
       // Preconditions
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Atom storage is set for Cartesian coordinates");
       }
 
       using std::endl;
@@ -442,12 +426,8 @@ namespace DdMd
             id = atomPtr->id();
             atoms_[id].id = id;
             atoms_[id].typeId = atomPtr->typeId();
-            if (UTIL_ORTHOGONAL) {
-               atoms_[id].position = atomPtr->position();
-            } else {
-               boundary().transformGenToCart(atomPtr->position(), r);
-               atoms_[id].position = r;
-            }
+            boundary().transformGenToCart(atomPtr->position(), r);
+            atoms_[id].position = r;
             atoms_[id].velocity = atomPtr->velocity();
             atomPtr = atomCollector().nextPtr();
             ++n;

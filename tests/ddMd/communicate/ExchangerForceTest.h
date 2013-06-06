@@ -285,14 +285,8 @@ void ExchangerForceTest::displaceAtoms(double range)
 
    // Set displacement ranges in appropriate coordinate system
    Vector ranges;
-   if (UTIL_ORTHOGONAL || atomStorage.isCartesian()) {
-      for (int i = 0; i < Dimension; ++i) {
-         ranges[i] = range;
-      }
-   } else {
-      for (int i = 0; i < Dimension; ++i) {
-         ranges[i] = range/boundary.length(i);
-      }
+   for (int i = 0; i < Dimension; ++i) {
+      ranges[i] = range/boundary.length(i);
    }
   
    // Displace local atoms
@@ -434,9 +428,7 @@ void ExchangerForceTest::testGhostUpdate()
    nGhost = atomStorage.nGhost();
 
    // Transform to Cartesian coordinates
-   if (!UTIL_ORTHOGONAL) {
-      atomStorage.transformGenToCart(boundary);
-   }
+   atomStorage.transformGenToCart(boundary);
 
    // Update ghost positions
    exchanger.update();
@@ -455,9 +447,7 @@ void ExchangerForceTest::testGhostUpdate()
    }
 
    // Transform to generalized coordinates
-   if (!UTIL_ORTHOGONAL) {
-      atomStorage.transformCartToGen(boundary);
-   }
+   atomStorage.transformCartToGen(boundary);
 
    // Check that all atoms are within the processor domain.
    AtomIterator   atomIter;
@@ -534,9 +524,7 @@ void ExchangerForceTest::testGhostUpdateCycle()
                true));
 
    // Transform to Cartesian coordinates
-   if (!UTIL_ORTHOGONAL) {
-      atomStorage.transformGenToCart(boundary);
-   }
+   atomStorage.transformGenToCart(boundary);
 
    range = 0.05;
    for (int i=0; i < 4; ++i) {
@@ -552,9 +540,7 @@ void ExchangerForceTest::testGhostUpdateCycle()
       }
 
       // Transform to generalized coordinates
-      if (!UTIL_ORTHOGONAL) {
-         atomStorage.transformCartToGen(boundary);
-      }
+      atomStorage.transformCartToGen(boundary);
 
       atomStorage.clearSnapshot();
       exchanger.exchange();
@@ -588,9 +574,7 @@ void ExchangerForceTest::testGhostUpdateCycle()
       #endif
 
       // Transform to Cartesian coordinates
-      if (!UTIL_ORTHOGONAL) {
-         atomStorage.transformGenToCart(boundary);
-      }
+      atomStorage.transformGenToCart(boundary);
 
    }
 
@@ -639,9 +623,7 @@ void ExchangerForceTest::testInitialForces()
 
    // Build Cell and Pair lists
    pairPotential.buildCellList();
-   if (!UTIL_ORTHOGONAL) {
-      atomStorage.transformGenToCart(boundary);
-   }
+   atomStorage.transformGenToCart(boundary);
    pairPotential.buildPairList();
    atomStorage.makeSnapshot();
 
@@ -867,9 +849,7 @@ void ExchangerForceTest::testForceCycle()
    // displaceAtoms(range);
 
    atomStorage.clearSnapshot();
-   if (!UTIL_ORTHOGONAL) {
-      TEST_ASSERT(!atomStorage.isCartesian());
-   }
+   TEST_ASSERT(!atomStorage.isCartesian());
    exchanger.exchange();
    exchangeNotify();
 
@@ -898,9 +878,7 @@ void ExchangerForceTest::testForceCycle()
    TEST_ASSERT(!atomStorage.isCartesian());
    //pairPotential.findNeighbors();
    pairPotential.buildCellList();
-   if (!UTIL_ORTHOGONAL) {
-      atomStorage.transformGenToCart(boundary);
-   }
+   atomStorage.transformGenToCart(boundary);
    TEST_ASSERT(atomStorage.isCartesian());
    pairPotential.buildPairList();
    atomStorage.makeSnapshot();
@@ -936,10 +914,8 @@ void ExchangerForceTest::testForceCycle()
          //}
          atomStorage.clearSnapshot();
          TEST_ASSERT(atomStorage.isCartesian());
-         if (!UTIL_ORTHOGONAL) {
-            atomStorage.transformCartToGen(boundary);
-            TEST_ASSERT(!atomStorage.isCartesian());
-         }
+         atomStorage.transformCartToGen(boundary);
+         TEST_ASSERT(!atomStorage.isCartesian());
 
          exchanger.exchange();
          exchangeNotify();
@@ -956,13 +932,10 @@ void ExchangerForceTest::testForceCycle()
             TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
          }
 
+         // Build cell and pair lists
          pairPotential.buildCellList();
-         if (!UTIL_ORTHOGONAL) {
-            TEST_ASSERT(!atomStorage.isCartesian());
-            atomStorage.transformGenToCart(boundary);
-         } else {
-            TEST_ASSERT(atomStorage.isCartesian());
-         }
+         TEST_ASSERT(!atomStorage.isCartesian());
+         atomStorage.transformGenToCart(boundary);
          pairPotential.buildPairList();
          atomStorage.makeSnapshot();
          TEST_ASSERT(atomStorage.isCartesian());
@@ -1048,14 +1021,10 @@ void ExchangerForceTest::testForceCycle()
          zeroForces();
          pairPotential.setReverseUpdateFlag(false); 
          TEST_ASSERT(atomStorage.isCartesian());
-         if (!UTIL_ORTHOGONAL) {
-            atomStorage.transformCartToGen(boundary);
-         }
+         atomStorage.transformCartToGen(boundary);
          TEST_ASSERT(!atomStorage.isCartesian());
          pairPotential.buildCellList();
-         if (!UTIL_ORTHOGONAL) {
-            atomStorage.transformGenToCart(boundary);
-         }
+         atomStorage.transformGenToCart(boundary);
          pairPotential.buildPairList();
          TEST_ASSERT(atomStorage.isCartesian());
          pairPotential.setMethodId(0);    
@@ -1092,9 +1061,7 @@ void ExchangerForceTest::testForceCycle()
          TEST_ASSERT(!atomStorage.isCartesian());
          //pairPotential.findNeighbors(); 
          pairPotential.buildCellList();
-         if (!UTIL_ORTHOGONAL) {
-            atomStorage.transformGenToCart(boundary);
-         }
+         atomStorage.transformGenToCart(boundary);
          pairPotential.buildPairList();
 
       }

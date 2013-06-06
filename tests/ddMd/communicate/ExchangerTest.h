@@ -161,14 +161,8 @@ void ExchangerTest::displaceAtoms(double range)
    Vector ranges;
 
    // Set ranges for random diplacements in each direction.
-   if (UTIL_ORTHOGONAL || atomStorage.isCartesian()) {
-      for (int i = 0; i < Dimension; ++i) {
-         ranges[i] = range;
-      }
-   } else {
-      for (int i = 0; i < Dimension; ++i) {
-         ranges[i] = range/boundary.length(i);
-      }
+   for (int i = 0; i < Dimension; ++i) {
+      ranges[i] = range/boundary.length(i);
    }
 
    // Iterate over atoms, adding random displacements.
@@ -301,9 +295,7 @@ void ExchangerTest::testGhostUpdate()
    nGhost = atomStorage.nGhost();
 
    // Transform to Cartesian coordinates
-   if (!UTIL_ORTHOGONAL) {
-      atomStorage.transformGenToCart(boundary);
-   }
+   atomStorage.transformGenToCart(boundary);
    atomStorage.makeSnapshot();
 
    //displaceAtoms(range);
@@ -324,9 +316,7 @@ void ExchangerTest::testGhostUpdate()
    }
 
    // Transform back to generalized coordinates
-   if (!UTIL_ORTHOGONAL) {
-      atomStorage.transformCartToGen(boundary);
-   }
+   atomStorage.transformCartToGen(boundary);
 
    // Check that all atoms are within the processor domain.
    atomStorage.begin(atomIter);
@@ -390,9 +380,7 @@ void ExchangerTest::testGhostUpdateCycle()
                true));
 
    // Transform to Cartesian coordinates
-   if (!UTIL_ORTHOGONAL) {
-      atomStorage.transformGenToCart(boundary);
-   }
+   atomStorage.transformGenToCart(boundary);
 
    range = 0.1;
    for (int i=0; i < 3; ++i) {
@@ -407,9 +395,7 @@ void ExchangerTest::testGhostUpdateCycle()
       }
 
       // Transform to Cartesian coordinates
-      if (!UTIL_ORTHOGONAL) {
-         atomStorage.transformCartToGen(boundary);
-      }
+      atomStorage.transformCartToGen(boundary);
 
       exchanger.exchange();
       exchangeNotify();
@@ -441,9 +427,7 @@ void ExchangerTest::testGhostUpdateCycle()
       #endif
 
       // Transform to Cartesian coordinates
-      if (!UTIL_ORTHOGONAL) {
-         atomStorage.transformGenToCart(boundary);
-      }
+      atomStorage.transformGenToCart(boundary);
 
    }
 
@@ -498,10 +482,8 @@ void ExchangerTest::testExchangeUpdateCycle()
                domain.communicator(), true));
    #endif
 
-   if (!UTIL_ORTHOGONAL) {
-      TEST_ASSERT(!atomStorage.isCartesian());
-      atomStorage.transformGenToCart(boundary);
-   }
+   TEST_ASSERT(!atomStorage.isCartesian());
+   atomStorage.transformGenToCart(boundary);
    TEST_ASSERT(atomStorage.isCartesian());
    atomStorage.makeSnapshot();
 
@@ -535,9 +517,7 @@ void ExchangerTest::testExchangeUpdateCycle()
          #endif
 
          atomStorage.clearSnapshot();
-         if (!UTIL_ORTHOGONAL) {
-            atomStorage.transformCartToGen(boundary);
-         }
+         atomStorage.transformCartToGen(boundary);
          exchanger.exchange();
          exchangeNotify();
 
@@ -556,9 +536,7 @@ void ExchangerTest::testExchangeUpdateCycle()
             TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
          }
 
-         if (!UTIL_ORTHOGONAL) {
-            atomStorage.transformGenToCart(boundary);
-         }
+         atomStorage.transformGenToCart(boundary);
          atomStorage.makeSnapshot();
          ++nExchange;
          j = 0;

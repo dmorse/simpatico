@@ -95,14 +95,8 @@ namespace DdMd
       if (atomStorage().nGhost()) {
          UTIL_THROW("Atom storage is not empty (has ghost atoms)");
       }
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Atom storage set for Cartesian coordinates");
       }
 
       // Read and broadcast boundary
@@ -147,11 +141,7 @@ namespace DdMd
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
             ar >> r;
-            if (UTIL_ORTHOGONAL) {
-               atomPtr->position() = r;
-            } else {
-               boundary().transformCartToGen(r, atomPtr->position());
-            }
+            boundary().transformCartToGen(r, atomPtr->position());
             ar >> atomPtr->velocity();
 
             // Add atom to list for sending.

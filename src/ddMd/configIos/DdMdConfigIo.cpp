@@ -98,14 +98,8 @@ namespace DdMd
       if (atomStorage().nGhost()) {
          UTIL_THROW("Atom storage is not empty (has ghost atoms)");
       }
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not set for Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are set for Cartesian");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Error: Atom storage is set for Cartesian coordinates");
       }
 
       // Read and broadcast boundary
@@ -152,11 +146,7 @@ namespace DdMd
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
             file >> r;
-            if (UTIL_ORTHOGONAL) {
-               atomPtr->position() = r;
-            } else {
-               boundary().transformCartToGen(r, atomPtr->position());
-            }
+            boundary().transformCartToGen(r, atomPtr->position());
             file >> atomPtr->velocity();
 
             // Add atom to list for sending.
@@ -253,14 +243,8 @@ namespace DdMd
    void DdMdConfigIo::writeConfig(std::ofstream& file)
    {
       // Precondition
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Atom storage set for Cartesian coordinates");
       }
 
       // Write Boundary dimensions
@@ -280,19 +264,9 @@ namespace DdMd
          Vector r;
          while (atomPtr) {
             file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6);
-            if (UTIL_ORTHOGONAL || atomStorage().isCartesian()) {
-               file << atomPtr->position() << std::endl
-                    << "                " << atomPtr->velocity();
-            } else {
-               boundary().transformGenToCart(atomPtr->position(), r);
-               file << r << std::endl
-                    << "                " << atomPtr->velocity();
-            }
-            #if 0
-            for (int j=0; j < atomPtr->mask().size(); ++j) {
-               file << Int(atomPtr->mask()[j], 8);
-            }
-            #endif
+            boundary().transformGenToCart(atomPtr->position(), r);
+            file << r << std::endl
+                 << "                " << atomPtr->velocity();
             file << std::endl;
             atomPtr = atomCollector().nextPtr();
          }

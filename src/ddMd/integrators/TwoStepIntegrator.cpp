@@ -43,14 +43,8 @@ namespace DdMd
    void TwoStepIntegrator::run(int nStep)
    {
       // Precondition
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Atom coordinates are Cartesian");
       }
 
       // Unset all stored computations.
@@ -112,7 +106,7 @@ namespace DdMd
          // Exchange atoms if necessary
          if (needExchange) {
             atomStorage().clearSnapshot();
-            if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {
+            if (atomStorage().isCartesian()) {
                atomStorage().transformCartToGen(boundary());
                timer().stamp(Integrator::TRANSFORM_F);
             }
@@ -120,10 +114,8 @@ namespace DdMd
             timer().stamp(Integrator::EXCHANGE);
             pairPotential().buildCellList();
             timer().stamp(Integrator::CELLLIST);
-            if (!UTIL_ORTHOGONAL) {
-               atomStorage().transformGenToCart(boundary());
-               timer().stamp(Integrator::TRANSFORM_R);
-            }
+            atomStorage().transformGenToCart(boundary());
+            timer().stamp(Integrator::TRANSFORM_R);
             atomStorage().makeSnapshot();
             pairPotential().buildPairList();
             timer().stamp(Integrator::PAIRLIST);
@@ -171,11 +163,8 @@ namespace DdMd
          }
       }
 
-      // If !UTIL_ORTHOGONAL, transform to scaled coordinates,
-      // in preparation for beginning of the next run.
-      if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {
-         atomStorage().transformCartToGen(boundary());
-      }
+      // Transform to scaled coordinates, in preparation for the next run.
+      atomStorage().transformCartToGen(boundary());
 
       if (domain().isMaster()) {
          Log::file() << std::endl;

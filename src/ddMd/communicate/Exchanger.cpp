@@ -109,10 +109,7 @@ namespace DdMd
    */
    void Exchanger::exchange()
    {
-      if (UTIL_ORTHOGONAL && !atomStoragePtr_->isCartesian()) {
-         UTIL_THROW("Error: Coordinates not Cartesian on entry to exchange");
-      }
-      if (!UTIL_ORTHOGONAL && atomStoragePtr_->isCartesian()) {
+      if (atomStoragePtr_->isCartesian()) {
          UTIL_THROW("Error: Coordinates are Cartesian on entry to exchange");
       }
       exchangeAtoms();
@@ -122,8 +119,7 @@ namespace DdMd
    /*
    * Exchange ownership of local atoms and groups, set ghost plan.
    *
-   * Atomic coordinates must be in generalized coordinates on entry and
-   * exit if not UTIL_ORTHOGONAL, and Cartesian if UTIL_ORTHOGONAL.
+   * Atomic coordinates must be in scaled / generalized form on entry.
    *
    * Algorithm:
    *
@@ -212,11 +208,7 @@ namespace DdMd
 
       // Set domain and slab boundaries
       for (i = 0; i < Dimension; ++i) {
-         if (UTIL_ORTHOGONAL) {
-            slabWidth = pairCutoff_;
-         } else {
-            slabWidth = pairCutoff_/lengths[i];
-         }
+         slabWidth = pairCutoff_/lengths[i];
          for (j = 0; j < 2; ++j) {
             // j = 0 sends to lower coordinate i, bound is minimum
             // j = 1 sends to higher coordinate i, bound is maximum
@@ -364,11 +356,7 @@ namespace DdMd
             bound = domainPtr_->domainBound(i, j); // bound for send
             inner = inner_(i, jc);                 // inner bound upon receipt
             shift = domainPtr_->shift(i, j);       // shift for periodic b.c.
-            if (UTIL_ORTHOGONAL) {
-               rshift = lengths[i]*double(shift);
-            } else {
-               rshift = double(shift);
-            }
+            rshift = double(shift);
 
             #ifdef UTIL_MPI
             if (gridFlags_[i]) {
@@ -671,11 +659,7 @@ namespace DdMd
 
             // Shift on receiving node for periodic b.c.s
             shift = domainPtr_->shift(i, j);
-            if (UTIL_ORTHOGONAL) {
-               rshift = lengths[i]*shift;
-            } else {
-               rshift = 1.0*shift;
-            }
+            rshift = 1.0*shift;
 
             #ifdef UTIL_MPI
             if (gridFlags_[i]) {

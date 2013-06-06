@@ -114,22 +114,14 @@ namespace DdMd
    void Integrator::setupAtoms()
    {
       // Precondition
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Atom coordinates are Cartesian");
       }
 
       atomStorage().clearSnapshot();
       exchanger().exchange();
       pairPotential().buildCellList();
-      if (!UTIL_ORTHOGONAL) {
-         atomStorage().transformGenToCart(boundary());
-      }
+      atomStorage().transformGenToCart(boundary());
       atomStorage().makeSnapshot();
       pairPotential().buildPairList();
       if (simulation().boundaryEnsemble().isRigid()) {
@@ -383,15 +375,13 @@ namespace DdMd
           << "   "
           << Dbl(allReduceT*factor2, 12, 6)
           << "   " << Dbl(100.0*allReduceT/time, 12, 6, true) << std::endl;
-      if (!UTIL_ORTHOGONAL) {
-         double transformFT = timer().time(TRANSFORM_F);
-         totalT += transformFT;
-         out << "Transform (forward)  " 
-             << Dbl(transformFT*factor1, 12, 6)
+      double transformFT = timer().time(TRANSFORM_F);
+      totalT += transformFT;
+      out << "Transform (forward)  " 
+          << Dbl(transformFT*factor1, 12, 6)
           << "   "
-             << Dbl(transformFT*factor2, 12, 6)
-             << "   " << Dbl(100.0*transformFT/time, 12, 6, true) << std::endl;
-      }
+          << Dbl(transformFT*factor2, 12, 6)
+          << "   " << Dbl(100.0*transformFT/time, 12, 6, true) << std::endl;
       double exchangeT = timer().time(EXCHANGE);
       totalT += exchangeT;
       out << "Exchange             " 
@@ -406,15 +396,13 @@ namespace DdMd
           << "   "
           << Dbl(cellListT*factor2, 12, 6)
           << "   " << Dbl(100.0*cellListT/time, 12, 6, true) << std::endl;
-      if (!UTIL_ORTHOGONAL) {
-         double transformRT = timer().time(TRANSFORM_R);
-         totalT += transformRT;
-         out << "Transform (reverse)  " 
-             << Dbl(transformRT*factor1, 12, 6)
-             << "   "
-             << Dbl(transformRT*factor2, 12, 6)
-             << "   " << Dbl(100.0*transformRT/time, 12, 6, true) << std::endl;
-      }
+      double transformRT = timer().time(TRANSFORM_R);
+      totalT += transformRT;
+      out << "Transform (reverse)  " 
+          << Dbl(transformRT*factor1, 12, 6)
+          << "   "
+          << Dbl(transformRT*factor2, 12, 6)
+          << "   " << Dbl(100.0*transformRT/time, 12, 6, true) << std::endl;
       double pairListT = timer().time(PAIRLIST);
       totalT += pairListT;
       out << "PairList             " 

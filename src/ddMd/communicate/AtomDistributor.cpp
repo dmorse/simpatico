@@ -244,25 +244,15 @@ namespace DdMd
       if (domainPtr_->gridRank() != 0) {
          UTIL_THROW("This is not the master processor");
       }
-      if (UTIL_ORTHOGONAL) {
-         if (!storagePtr_->isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
-      } else {
-         if (storagePtr_->isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
+      if (storagePtr_->isCartesian()) {
+         UTIL_THROW("Atom coordinates are Cartesian");
       }
       if (newPtr_ == 0) {
          UTIL_THROW("No active newPtr_");
       }
 
       // Shift position to lie within primary unit cell.
-      if (UTIL_ORTHOGONAL) {
-         boundaryPtr_->shift(newPtr_->position());
-      } else {
-         boundaryPtr_->shiftGen(newPtr_->position());
-      }
+      boundaryPtr_->shiftGen(newPtr_->position());
 
       #ifdef UTIL_MPI
       // Identify rank of processor that owns this atom.

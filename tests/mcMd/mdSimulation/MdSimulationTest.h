@@ -284,12 +284,12 @@ void MdSimulationTest::testSimulate()
    std::cout << std::endl;
 
    std::string baseFileName("simulate.0");
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
    simulation_.simulate(20);
 
    baseFileName = "simulate.20";
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
 }
 
@@ -306,12 +306,12 @@ void MdSimulationTest::testWriteRestart()
    std::cout << std::endl;
 
    std::string baseFileName("begin");
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
    simulation_.simulate(100000);
 
    baseFileName = "middle";
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
    std::ofstream configFile("middle.cfg");
    simulation_.system().writeConfig(configFile);
@@ -332,10 +332,10 @@ void MdSimulationTest::testReadRestart()
    std::cout << std::endl;
 
    std::string baseFileName("middle");
-   simulation_.readRestart(baseFileName);
+   simulation_.load(baseFileName);
 
    baseFileName = "middle2";
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
    std::ofstream configFile("middle2.cfg");
    simulation_.system().writeConfig(configFile);
@@ -394,8 +394,8 @@ TEST_ADD(MdSimulationTest, testCalculateForces)
 TEST_ADD(MdSimulationTest, testStep)
    //TEST_ADD(MdSimulationTest, testIntegrator);
 TEST_ADD(MdSimulationTest, testSimulate)
-TEST_ADD(MdSimulationTest, testWriteRestart)
-TEST_ADD(MdSimulationTest, testReadRestart)
+//TEST_ADD(MdSimulationTest, testWriteRestart)
+//TEST_ADD(MdSimulationTest, testReadRestart)
 TEST_END(MdSimulationTest)
 
 #endif

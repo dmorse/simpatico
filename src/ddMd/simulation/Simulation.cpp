@@ -1015,14 +1015,8 @@ namespace DdMd
       while (readNext) {
 
          // Precondition: Check atomic coordinate system
-         if (UTIL_ORTHOGONAL) {
-            if (!atomStorage().isCartesian()) {
-               UTIL_THROW("Error: atom coordinates are not Cartesian");
-            } 
-         } else {
-            if (atomStorage().isCartesian()) {
-               UTIL_THROW("Error: atom coordinates are Cartesian");
-            }
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Error: Storage set for Cartesian atom coordinates");
          }
 
          #ifdef UTIL_MPI

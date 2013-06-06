@@ -99,14 +99,8 @@ namespace DdMd
       if (atomStorage().nGhost()) {
          UTIL_THROW("Atom storage is not empty (has ghost atoms)");
       }
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage is not set for Cartesian coordinates");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage is set for Cartesian coordinates");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Atom storage is set for Cartesian coordinates");
       }
 
       // Read and broadcast boundary
@@ -153,11 +147,7 @@ namespace DdMd
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
             file >> r;
-            if (UTIL_ORTHOGONAL) {
-               atomPtr->position() = r;
-            } else {
-               boundary().transformCartToGen(r, atomPtr->position());
-            }
+            boundary().transformCartToGen(r, atomPtr->position());
             file >> atomPtr->velocity();
 
             // Add atom to list for sending.
@@ -276,14 +266,8 @@ namespace DdMd
    void DdMdOrderedConfigIo::writeConfig(std::ofstream& file)
    {
       // Precondition
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Atom storage set for Cartesian coordinates");
       }
 
       // Write Boundary dimensions
@@ -314,11 +298,7 @@ namespace DdMd
          int n = 0;
          while (atomPtr) {
             id = atomPtr->id();
-            if (UTIL_ORTHOGONAL) {
-               atoms_[id].position = atomPtr->position();
-            } else {
-               boundary().transformGenToCart(atomPtr->position(), atoms_[id].position);
-            }
+            boundary().transformGenToCart(atomPtr->position(), atoms_[id].position);
             atoms_[id].velocity = atomPtr->velocity();
             atoms_[id].typeId = atomPtr->typeId();
             atoms_[id].id = id;

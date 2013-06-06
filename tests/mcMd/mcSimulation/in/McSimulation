@@ -65,14 +65,14 @@ McSimulation{
   DiagnosticManager{
     baseInterval           10
 
+  }
+  saveInterval 0
+}
+
     McWriteRestart{
       interval               10
       outputFileName    restart
     }
-
-  }
-}
-
 
 
     HybridMdMove{

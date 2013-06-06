@@ -185,11 +185,9 @@ namespace DdMd
       *
       * This method adds all local and ghost atoms to a cell list that is
       * used in buildPairList() to build a Verlet pair list. On entry to
-      * this method, atomic positions must Cartesian if UTIL_ORTHOGONAL
-      * is true and generalized coordinates if UTIL_ORTHOGONAL is false.
-      * If UTIL_ORTHOGONAL is false, this method should be followed by a 
-      * call to AtomStorage::transformGenToCart(Boundary& ) to transform
-      * all positions back to Cartesian coordinates.
+      * this method, atomic positions must be generalized. This method 
+      * should be followed by  AtomStorage::transformGenToCart(Boundary& ) 
+      * to transform all positions back to Cartesian coordinates.
       */
       void buildCellList();
 
