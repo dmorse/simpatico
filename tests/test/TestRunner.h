@@ -134,8 +134,8 @@ public:
    { 
       if (!hasParent() && isIoProcessor()) {
          std::cout << std::endl;
-         std::cout << nSuccess_ << "  succesful tests" << std::endl;
-         std::cout << nFailure_ << "  failed tests"    << std::endl;
+         std::cout << nSuccess_ << "  successful tests  " << std::endl;
+         std::cout << nFailure_ << "  failed tests  "    << std::endl;
          std::cout << std::endl;
       }
    }

@@ -103,19 +103,13 @@ public:
       rsq_ = 1.25992105;
       f = forceOverR();
       TEST_ASSERT(testForce());
+      std::cout << "f = " << f << std::endl;
       if (verbose() > 0) {
          std::cout << "forceOverR(1.25992105, 0, 1) = " <<  f << std::endl;
       }
-      TEST_ASSERT(eq(f, 0.0));
+      TEST_ASSERT(std::abs(f) < eps_);
 
-      rsq_ = 1.5;
-      f = forceOverR();
-      TEST_ASSERT(testForce());
-      if (verbose() > 0) {
-         std::cout << "forceOverR(1.5, 0, 1) = " <<  f << std::endl;
-      }
-      TEST_ASSERT(eq(f, 0.0));
-
+      //Note: Do not test beyond cutoff: result is undefined.
    }
 
    void testGetSet() {
@@ -216,7 +210,7 @@ public:
       openOutputFile("out/serial", oar.file());
       interaction_.save(oar);
       oar.file().close();
-      
+
       Serializable::IArchive iar;
       openInputFile("out/serial", iar.file());
 
