@@ -1,3 +1,4 @@
+include src/compiler.mk
 # ==============================================================================
 .PHONY: mcMd ddMd mcMd-mpi \
         test-mcMd test-mcMd-mpi test-ddMd clean clean-bin \
@@ -9,6 +10,7 @@ all:
 	cd src; make mcMd
 	make test-mcMd
 	cd src; make mcMd-mpi
+	make test-mcMd-mpi
 	cd src; make ddMd
 	make test-ddMd
 	cat log
@@ -46,16 +48,16 @@ test-mcMd:
 
 test-mcMd-mpi:
 	./configure -m1
-	cd tests/util/mpi; make all; mpirun -np 2 ./Test > log
+	cd tests/util/mpi; make all; $(MPIRUN) 2 ./Test > log
 	echo `grep failed tests/util/mpi/log` ", "\
              `grep successful tests/util/mpi/log` "in tests/util/mpi/log" >> log
-	cd tests/util/param/mpi; make all; mpirun -np 2 ./MpiTest > log
+	cd tests/util/param/mpi; make all; $(MPIRUN) 2 ./MpiTest > log
 	echo `grep failed tests/util/param/mpi/log` ", "\
              `grep successful tests/util/param/mpi/log` "in tests/util/param/mpi/log" >> log
 
 test-ddMd:
 	./configure -m1
-	cd tests/ddMd; make all; mpirun -np 6 ./Test > log;
+	cd tests/ddMd; make all; $(MPIRUN) 6 ./Test > log;
 	echo `grep failed tests/ddMd/log` ", "\
              `grep successful tests/ddMd/log` "in tests/ddMd/log" >> log
 # ==============================================================================
@@ -68,6 +70,7 @@ clean-ddMd:
 clean:
 	cd src; make clean
 	cd tests; make clean
+	-rm -f log
 
 clean-bin:
 	cd src; make clean-bin
@@ -83,5 +86,6 @@ clean-html:
 veryclean:
 	cd html; make clean
 	cd src; make veryclean
+	-rm -f log
 
 # ==============================================================================

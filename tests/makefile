@@ -1,3 +1,4 @@
+include ../src/compiler.mk
 # ==============================================================================
 .PHONY: clean veryclean util inter mcMd mcMd_mpi
 
@@ -15,12 +16,12 @@ mcMd:
 
 mcMd-mpi:
 	cd ..; ./configure -m1
-	cd util/mpi; make all; mpirun -np 2 ./Test > log; grep failed log
-	cd util/param/mpi; make all; mpirun -np 2 ./MpiTest > log; grep failed log
+	cd util/mpi; make all; $(MPIRUN) 2 ./Test > log; grep failed log
+	cd util/param/mpi; make all; $(MPIRUN) 2 ./MpiTest > log; grep failed log
 
 ddMd:
 	cd ..; ./configure -m1
-	cd ddMd; make all; mpirun -np 6 ./Test > log; grep failed log
+	cd ddMd; make all; $(MPIRUN) 6 ./Test > log; grep failed log
 
 clean: 
 	cd util;  make clean

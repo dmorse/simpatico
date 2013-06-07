@@ -97,6 +97,7 @@ ifeq ($(COMPILER),gcc)
    endif
    AR=ar
    ARFLAGS=rcs
+   MPIRUN=mpirun -np
 endif
 
 
@@ -119,5 +120,6 @@ ifeq ($(COMPILER),intel)
    endif
    AR=xiar
    ARFLAGS=rcs
+   MPIRUN=mpirun -np
 endif
 
