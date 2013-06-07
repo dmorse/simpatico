@@ -209,6 +209,7 @@ namespace Inter
       ar.unpack(sigmaSq_[0], nAtomType_, nAtomType_);
       ar.unpack(cutoffSq_[0], nAtomType_, nAtomType_);
       ar.unpack(ljShift_[0], nAtomType_, nAtomType_);
+      ar.unpack(eps48_[0], nAtomType_, nAtomType_);
       ar >> maxPairCutoff_;
       isInitialized_ = true;
    }
@@ -225,6 +226,7 @@ namespace Inter
       ar.pack(sigmaSq_[0], nAtomType_, nAtomType_);
       ar.pack(cutoffSq_[0], nAtomType_, nAtomType_);
       ar.pack(ljShift_[0], nAtomType_, nAtomType_);
+      ar.pack(eps48_[0], nAtomType_, nAtomType_);
       ar << maxPairCutoff_;
    }
 

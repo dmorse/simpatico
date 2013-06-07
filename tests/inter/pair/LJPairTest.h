@@ -103,7 +103,6 @@ public:
       rsq_ = 1.25992105;
       f = forceOverR();
       TEST_ASSERT(testForce());
-      std::cout << "f = " << f << std::endl;
       if (verbose() > 0) {
          std::cout << "forceOverR(1.25992105, 0, 1) = " <<  f << std::endl;
       }
@@ -215,7 +214,8 @@ public:
       openInputFile("out/serial", iar.file());
 
       LJPair clone;
-      clone.load(iar);
+      setNAtomType(2);
+      clone.loadParameters(iar);
 
       TEST_ASSERT(eq(interaction_.epsilon(0, 0), clone.epsilon(0,0)));
       TEST_ASSERT(eq(interaction_.epsilon(1, 0), clone.epsilon(1,0)));

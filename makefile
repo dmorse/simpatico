@@ -35,28 +35,28 @@ ddMd:
 test-mcMd:
 	./configure -m0
 	cd tests/util; make all; ./Test > log;
-	echo `grep failed tests/util/log` \
+	echo `grep failed tests/util/log` ", "\
              `grep successful tests/util/log` "in tests/util/log" >> log
 	cd tests/inter; make all; ./Test > log;
-	echo `grep failed tests/inter/log` \
+	echo `grep failed tests/inter/log` ", "\
              `grep successful tests/inter/log` "in tests/inter/log" >> log
 	cd tests/mcMd; make all; ./Test > log;
-	echo `grep failed tests/mcMd/log` \
+	echo `grep failed tests/mcMd/log` ", "\
              `grep successful tests/mcMd/log` "in tests/mcMd/log" >> log
 
 test-mcMd-mpi:
 	./configure -m1
 	cd tests/util/mpi; make all; mpirun -np 2 ./Test > log
-	echo `grep failed tests/util/mpi/log` \
+	echo `grep failed tests/util/mpi/log` ", "\
              `grep successful tests/util/mpi/log` "in tests/util/mpi/log" >> log
 	cd tests/util/param/mpi; make all; mpirun -np 2 ./MpiTest > log
-	echo `grep failed tests/util/param/mpi/log` \
+	echo `grep failed tests/util/param/mpi/log` ", "\
              `grep successful tests/util/param/mpi/log` "in tests/util/param/mpi/log" >> log
 
 test-ddMd:
 	./configure -m1
 	cd tests/ddMd; make all; mpirun -np 6 ./Test > log;
-	echo `grep failed tests/ddMd/log` \
+	echo `grep failed tests/ddMd/log` ", "\
              `grep successful tests/ddMd/log` "in tests/ddMd/log" >> log
 # ==============================================================================
 clean-mcMd:
