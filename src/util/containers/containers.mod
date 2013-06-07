@@ -13,6 +13,8 @@ namespace Util
    * safety) or off (for speed) by defining or not defining the UTIL_DEBUG 
    * preprocessor macro.
    *
+   * \section container_array_matrix_sec Array and Matrix Containers
+   * 
    * Containers templates whose name contains the string 'Array' are one 
    * dimensional array containers, much like C arrays. All such containers
    * overload the subscript [] operator so as to return an object by 
@@ -22,60 +24,89 @@ namespace Util
    * Container templates whose name contains the string 'Matrix' are two 
    * dimensional arrays. These overload the (int, int) operator to access
    * elements: If M is a Matrix, then M(i, j) is a reference to the element 
-   * in column j of row i of A.
+   * in column j of row i of A. 
    *
-   * Containers templates whose name begins with a letter 'D' (such as
+   * \section container_prefix_sec Container Name Prefixes
+   *
+   * The names of many containers have prefixes before the word Array or
+   * Matrix that indicates policies for memory allocation and management.
+   *
+   * Containers templates whose name begins with the letter 'D' (such as
    * DArray, DSArray, DPArray, and DMatrix) use dynamically allocated memory. 
    * The declaration "DArray<int> A" declares a dynamically allocated array
    * of integers.  Memory must be explicitly allocated for these containers 
-   * by calling the "allocate" method after the array is instantiated. 
-   * Dynamically allocated containers can only be allocated once, and (unlike 
-   * std::vector) are not resizable. Attempting to allocate a container more 
-   * than once is as an error. 
+   * by calling the "allocate" method after the container is instantiated
+   * and before it is used. Dynamically allocated containers can only be 
+   * allocated once and are not resizable. Attempting to allocate a 
+   * container more than once is as an error, and causes an Exception to
+   * be thrown.
    * 
-   * Containers templates whose name begins with a letter 'D' (such as
-   * FArray, FSArray, FPArray, and FMatrix) are statistically allocated
-   * fixed capacity container. The capacity of each such container is 
-   * determined at compile time by a template parameter or parameters. Thus, 
-   * for example, "FArray<int, 4> A;" declares a fixed size array of four 
-   * integers, much like declaration "int V[4]" of a fixed size C array.
+   * Containers templates whose name begins with a letter 'F' (such as
+   * FArray, FSArray, FPArray, and FMatrix) are fixed size containers.
+   * The capacity of each such container is determined at compile time 
+   * by a template parameter or parameters. Thus, for example, 
+   * \code
+   *    FArray<int, 4> A;
+   * \endcode
+   * declares a fixed size array of four integers, much like the 
+   * declaration "int V[4]" of a fixed size C array.
    *
-   * Container templates DSArray and FSArray are "sized" arrays in which all 
-   * elements are stored contiguously, and which store a logical size that is 
-   * less than or equal to it physical capacity.  The capacity of an array is 
-   * the number of elements for which memory has been allocated, or the maximum 
-   * allowable size. The valid elements of a DSArray or an FSArray are stored 
-   * contiguously from index 0 to size - 1. The size of such an array is initially 
-   * set to zero, and elements may be added to the end of the array by the 
-   * append() method, which increments the size. 
+   * The letter "S" in the names of DSArray and FSArray indicate that these
+   * are "sized" arrays. These arrays have a variable logical size that is 
+   * less than or equal to the physical capacity. The logical size is the 
+   * current number of elements, which are always stored contiguously from
+   * index 0 to index size - 1. Accessing an element with index greater than
+   * or equal to size is an error, and will cause an Exception to be thrown
+   * if debugging is enabled. The capacity of an array is the number of 
+   * elements for which memory has been allocated. The size of such an array
+   * is initially set to zero, and elements are added sequentially by the 
+   * append() method, which adds a new element at the end of the array and 
+   * increments the size counter. Once the size reaches the array capacity, 
+   * attempting to append another element will cause an Exception to be 
+   * thrown.
    *
-   * The container templates DPArray and FPArray are dynamically and statically
-   * allocated "pointer" arrays. A pointer array is a container that stores 
-   * pointers to objects that exist outside of the array, rather than actual
-   * objects. The pointer arrays are similar to the "sized" arrays in that 
-   * they have a logical size that is less than or equal to there capacity,
-   * and that elements must be added to the end of the array by an "append"
-   * method. A pointer array DPArray< T > is different from an array of pointers
-   * DArray<T*>, however, because DPArray< T > overloads the [] to return a
-   * reference to an object of type T, rather than the T* pointer that points
-   * to that object. The pointer arrays thus use the same syntax for element
-   * access as the other arrays. 
+   * Array containers whose name includes the prefix G are sized arrays
+   * with a capacity that can grow (G="growable") as needed as elements 
+   * are appended. The "GArray" template thus implements a dynamic array 
+   * very similiar to the standard library std::vector. Automatic 
+   * resizing changes the address of the beginning of the array, and
+   * invalidates all iterators and pointers to elements. 
+   *
+   * \section container_pointer_sec Pointer Arrays
+   *
+   * Container templates whose name contains the prefix "P" are pointer
+   * arrays. A pointer array is a container that stores pointers to objects 
+   * that are instantiated outside of the array, rather than storing actual 
+   * objects.  The containers DPArray and FPArray are dynamically allocated 
+   * fixed size pointer arrays, respectively.  The GPArray array is a growable
+   * pointer array, which can grow without bound. The pointer arrays are 
+   * all similar to "sized" arrays in that they have a logical size that 
+   * must be less than or equal to their capacity, and in that elements 
+   * must can be added to the end of an initially empty array by function
+   * "append(T& )". Pointer arrays use the same interface for the 
+   * subscript operator (which returns a reference) and the append function 
+   * (which takes a reference parameter) as that used by the sized and 
+   * object arrays.  A pointer array of type DPArray< T > is thus different 
+   * from a sized array of pointers, of type DSArray<T*>, because DPArray< T > 
+   * overloads the [] operator to return a reference to an object of type T 
+   * that is referenced by a private pointer, whereas the subscript operator
+   * for a DSArray<T*> returns an actual pointer. 
    */
 
    /**
    * \defgroup Array_Module Object Arrays
    *
-   * One-dimensional array containers that store objects by value, and associated 
-   * iterators.
+   * The Array containers that do not have a P prefix are one-dimensional 
+   * array containers that store objects by value. These all overload the
+   * subscript [] operator to provide access to elements as references.
    *
    * The DArray and FArray containers are simple wrappers for dynamically
-   * allocated and fixed-size C arrays, respectively. Both DArray < T > and
-   * FArray <T, N> overload the [] subscript operator to provide a reference
-   * to a specific element of an underlying C array of T objects.
-   *
-   * The DSArray and FSArray containers are dynamically and statically
-   * allocated arrays, respectively, that have both a fixed capacity but
-   * a variable logical size, with contiguous elements.
+   * allocated and fixed-size C arrays, respectively.  The DSArray and 
+   * FSArray containers are dynamically and statically allocated arrays, 
+   * respectively, that have both a fixed capacity but a variable logical 
+   * size, with contiguous elements. The GArray container is a growable
+   * sized array, similar to a std::vector. Destructors for these arrays
+   * all delete the associated C array of objects.
    *
    * An RArray < T > is an Array that is intended to be used as an alias
    * for, or a shallow copy of, a target DArray, FArray or C array. An RArray
@@ -83,7 +114,7 @@ namespace Util
    * where are copied by the RArray::associate() method. Like other array
    * containers, an RArray overloads the [] operator to provide access to 
    * elements as references. The destructor of an RArray does not delete 
-   * the associated C array, while the destructor of a DArray does.
+   * the associated C array.
    *
    * A RingBuffer is a cylic buffer array for which the append() method
    * adds elements to the end of a sequence if the buffer is not full, and
@@ -99,28 +130,28 @@ namespace Util
    * iterators.
    *
    * The DPArray and SPArray class templates are dynamically and statically
-   * allocated pointer arrays, respectively. Each DPArray < T > and
-   * SPArray <T, N> containers contains a C array of T* pointers, rather
-   * than an actual array of T objects. Both DPArray and SPArray overload
-   * the [] operator so as to return a T& reference to an associated object,
-   * rather than a T* pointer. An element can be added to the end of a
-   * DPArray or a SPArray by the append(T&) method.  The destructor for
-   * a DPArray < T > deletes the underlying array of T* pointers, but
-   * not the objects to which they point.
-   *
+   * allocated pointer arrays, respectively. A GPArray is a growable SPArray.
+   * Each DPArray < T >, SPArray <T, N>, or GPArray<T> container has a private
+   * C array of T* pointers. These containers all overload the the [] operator 
+   * so as to return a T& reference, rather than a T* pointer. The append
+   * method takes a T& reference as a parameter. The destructor for a pointer 
+   * array deletes the underlying array of T* pointers, but not the T objects 
+   * to which they point.
+   * 
    * An ArrayStack < T > container is a finite capacity stack that is
    * implemented as a dynamically allocated array of T* pointers. Objects
    * can be pushed onto or popped off the top of the stack using the 
-   * push(T&) and pop() methods. An ArrayStack can be allocated only 
-   * once, and cannot be resized.
+   * push(T&) and pop() methods. An ArrayStack can be allocated only once, 
+   * and cannot be resized.
    *
    * An SSet< T > is a container that holds pointers to an unordered
    * set of T objects. It provides fast addition and removal of single
-   * elements, and iteration through all elements.
+   * elements, and iteration through all elements. The indexing of elements
+   * is arbitrary and mutable, and may change when an element is deleted.
    *
    * An ArraySet < T > is a container that holds pointers to a subset of
    * the elements of an associated array of T objects. The indexing of
-   * elements within the container is arbitrary.
+   * elements within an ArraySet container is arbitrary and mutable.
    *
    * \ingroup Container_Module
    */
