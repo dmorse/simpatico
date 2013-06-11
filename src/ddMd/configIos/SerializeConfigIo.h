@@ -60,7 +60,9 @@ namespace DdMd
       * Write configuration file.
       *
       * This routine opens and writes a file on the master, collecting
-      * atom data from all processors.
+      * atom data from all processors. Unlike for other configIos, this
+      * function allows AtomStorage::isCartesian to be true or false,
+      * and always writes Cartesian atom coordinates to file.
       *
       * \param file output file stream
       */
@@ -76,6 +78,9 @@ namespace DdMd
 
       /**
       * Save configuration.
+      *
+      * This function functions if the AtomStorage isCartesian or not, 
+      * but always saves Cartesian atom coordinates to the archive.
       *
       * \param ar output archive
       */

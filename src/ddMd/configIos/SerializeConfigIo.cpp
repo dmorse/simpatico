@@ -155,24 +155,17 @@ namespace DdMd
          atomDistributor().receive();
       }
 
-      // Check that all atoms are accounted for after distribution.
-      {
-         int nAtomLocal = atomStorage().nAtom();
-         int nAtomAll;
-         #ifdef UTIL_MPI
-         domain().communicator().Reduce(&nAtomLocal, &nAtomAll, 1, 
-                                        MPI::INT, MPI::SUM, 0);
-         #else
-         nAtomAll = nAtomLocal;
-         #endif
-         if (domain().isMaster()) {
-            if (nAtomAll != nAtom) {
-               UTIL_THROW("nAtomAll != nAtom after distribution");
-            }
+      // Validate atom distribution
+      // Checks that all are accounted for and on correct processor
+      int nAtomAll;
+      nAtomAll = atomDistributor().validate();
+      if (domain().isMaster()) {
+         if (nAtomAll != nAtom) {
+            UTIL_THROW("nAtomAll != nAtom after distribution");
          }
       }
 
-      // Load groups
+      // Load covalent groups
       bool hasGhosts = false;
       if (bondStorage().capacity()) {
          loadGroups<2>(ar, bondDistributor());
@@ -259,11 +252,6 @@ namespace DdMd
                ar << r;
             }
             ar << atomPtr->velocity();
-            #if 0
-            for (int j=0; j < atomPtr->mask().size(); ++j) {
-               ar << atomPtr->mask()
-            }
-            #endif
             atomPtr = atomCollector().nextPtr();
          }
       } else { 
@@ -284,50 +272,25 @@ namespace DdMd
          saveGroups<4>(ar, dihedralStorage(), dihedralCollector());
       }
       #endif
-
    }
  
    /*
-   * Read configuration file.
-   *
-   * This routine opens and reads a file on the master, and distributes
-   * atom data among the processors.
+   * Read configuration file, using an input archive.
    */
    void SerializeConfigIo::readConfig(std::ifstream& file, MaskPolicy maskPolicy)
    {
-       #if 0
-       std::ifstream* ptr = dynamic_cast<std::ifstream*>(&file);
-       if (!ptr) {
-          UTIL_THROW("Failed dynamic cast: Input istream in not a std::ifstream");
-       }
-       if (!ptr->is_open()) {
-          UTIL_THROW("File not open for reading");
-       }
-       #endif
-       Serializable::IArchive ar(file);
-       loadConfig(ar, maskPolicy);
+      Serializable::IArchive ar(file);
+      loadConfig(ar, maskPolicy);
    }
 
    /*
-   * Write configuration file.
-   *
-   * This routine opens and writes a file on the master,
-   * collecting atom data from all processors.
+   * Write configuration file, using an output file archive.
    */
    void SerializeConfigIo::writeConfig(std::ofstream& file)
    {
-       #if 0
-       std::ofstream* ptr = dynamic_cast<std::ofstream*>(&file);
-       if (!ptr) {
-          UTIL_THROW("Failed dynamic cast: Output ostream in not a std::ofstream");
-       }
-       if (!ptr->is_open()) {
-          UTIL_THROW("File not open for writing");
-       }
-       #endif
-       Serializable::OArchive ar(file);
-       saveConfig(ar);
+      Serializable::OArchive ar(file);
+      saveConfig(ar);
    }
-   
+
 }
 #endif

@@ -25,7 +25,7 @@
 #include <string>
 
 #ifdef UTIL_DEBUG
-//#define DDMD_EXCHANGER_DEBUG
+#define DDMD_EXCHANGER_DEBUG
 #endif
 
 namespace DdMd

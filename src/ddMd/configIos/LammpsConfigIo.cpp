@@ -198,10 +198,8 @@ namespace DdMd
 
          int totalAtomCapacity = atomStorage().totalAtomCapacity();
 
-         #if UTIL_MPI
          //Initialize the send buffer.
          atomDistributor().setup();
-         #endif
          
          // Read atoms
          Vector r;
@@ -240,25 +238,17 @@ namespace DdMd
          atomDistributor().receive();
       }
 
-      // Check that all atoms are accounted for after distribution.
-      { 
-      int nAtomLocal = atomStorage().nAtom();
+      // Validate atom distribution
+      // Check that all atoms are accounted for and on correct processor
       int nAtomAll;
-      #ifdef UTIL_MPI
-      domain().communicator().Reduce(&nAtomLocal, &nAtomAll, 1, 
-                                        MPI::INT, MPI::SUM, 0);
-      #else
-      nAtomAll = nAtomLocal;
-      #endif
+      nAtomAll = atomDistributor().validate();
       if (domain().isMaster()) {
          if (nAtomAll != nAtom) {
             UTIL_THROW("nAtomAll != nAtom after distribution");
          }
       }
-      }
 
       bool hasGhosts = false;
-
       if (bondStorage().capacity()) {
          readGroups<2>(file, "Bonds", nBond, bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);

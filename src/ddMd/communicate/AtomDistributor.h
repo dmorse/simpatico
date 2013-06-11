@@ -197,6 +197,18 @@ namespace DdMd
       void receive();
       #endif
 
+      /**
+      * Validate distribution of atoms after completion.
+      *
+      * This method checks call AtomStorage::isValid(), checks that
+      * the total number of atoms on all processors is equal to nAtom,
+      * and checks that every atom is in the correct processor domain.
+      *
+      * On the master processor
+      * \return total number of atoms distributed on master, 0 on slaves.
+      */
+      int validate();
+
    private:
 
       /// Array that holds cached Atom objects to be sent to other processors.

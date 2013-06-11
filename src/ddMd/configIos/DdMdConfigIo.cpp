@@ -161,25 +161,18 @@ namespace DdMd
          atomDistributor().receive();
       }
 
-      // Check that all atoms are accounted for after distribution.
-      {
-         int nAtomLocal = atomStorage().nAtom();
-         int nAtomAll;
-         #ifdef UTIL_MPI
-         domain().communicator().Reduce(&nAtomLocal, &nAtomAll, 1, 
-                                        MPI::INT, MPI::SUM, 0);
-         #else
-         nAtomAll = nAtomLocal;
-         #endif
-         if (domain().isMaster()) {
-            if (nAtomAll != nAtom) {
-               UTIL_THROW("nAtomAll != nAtom after distribution");
-            }
+      // Validate atom distribution
+      // Checks that all are account for and on correct processor
+      int nAtomAll;
+      nAtomAll = atomDistributor().validate();
+      if (domain().isMaster()) {
+         if (nAtomAll != nAtom) {
+            UTIL_THROW("nAtomAll != nAtom after distribution");
          }
       }
 
+      // Read Covalent Groups
       bool hasGhosts = false;
-
       if (bondStorage().capacity()) {
          readGroups<2>(file, "BONDS", "nBond", bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
@@ -188,7 +181,6 @@ namespace DdMd
             setAtomMasks();
          }
       }
-
       #ifdef INTER_ANGLE
       if (angleStorage().capacity()) {
          readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
@@ -196,7 +188,6 @@ namespace DdMd
                                 hasGhosts);
       }
       #endif
-
       #ifdef INTER_DIHEDRAL
       if (dihedralStorage().capacity()) {
          readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
@@ -204,7 +195,6 @@ namespace DdMd
                                    hasGhosts);
       }
       #endif
-
    }
 
    /*

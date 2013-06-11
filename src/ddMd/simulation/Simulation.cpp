@@ -719,8 +719,12 @@ namespace DdMd
       if (isIoProcessor()) {
          fileMaster().openRestartIFile(filename, ".rst", ar.file());
       }
+      // Load parameters, without configuration. This calls the default
+      // ParamComposite::load(ar&), which calls Simulation::loadParameters.
       load(ar);
+      // Load the configuration (boundary + positions + groups)
       serializeConfigIo().loadConfig(ar, maskedPairPolicy_);
+      // There are no ghosts yet, so exchange.
       exchanger_.exchange();
       isValid();
       if (isIoProcessor()) {

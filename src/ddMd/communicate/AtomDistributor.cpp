@@ -12,6 +12,7 @@
 #include "Domain.h"
 #include "Buffer.h"
 #include <ddMd/storage/AtomStorage.h>
+#include <ddMd/storage/ConstAtomIterator.h>
 
 #include <algorithm>
 
@@ -150,6 +151,8 @@ namespace DdMd
    {  
       bufferPtr_->clearSendBuffer(); 
       bufferPtr_->beginSendBlock(Buffer::ATOM); 
+      nCachedTotal_ = 0;
+      nSentTotal_   = 0;
    }
    #endif
 
@@ -398,6 +401,7 @@ namespace DdMd
 
       // Compute total number of atoms on all processors.
       // Note: Matching call at end of AtomDistributor::receive()
+      storagePtr_->unsetNAtomTotal();
       storagePtr_->computeNAtomTotal(domainPtr_->communicator());
 
       // Postconditions
@@ -411,8 +415,6 @@ namespace DdMd
          UTIL_THROW("Number atoms received != number sent + nAtom on master");
       }
 
-      nCachedTotal_ = 0;
-      nSentTotal_   = 0;
    }
    #endif
 
@@ -462,9 +464,48 @@ namespace DdMd
 
       // Compute total number of atoms on all processors.
       // Note: Matching call at end of AtomDistributor::send()
+      storagePtr_->unsetNAtomTotal();
       storagePtr_->computeNAtomTotal(domainPtr_->communicator());
    }
    #endif
 
-}
+   /*
+   * Validate distribution of atoms, return total number of atoms.
+   */
+   int AtomDistributor::validate()
+   {
+      storagePtr_->isValid(domainPtr_->communicator());
+
+      // Check that number of atoms = nSentTotal
+      int nAtomTotal = 0;
+      storagePtr_->computeNAtomTotal(domainPtr_->communicator());
+      if (domainPtr_->isMaster()) {
+         nAtomTotal = storagePtr_->nAtomTotal();
+         if (nAtomTotal != nSentTotal_ + storagePtr_->nAtom()) {
+            UTIL_THROW("nAtomTotal != nAtom after distribution");
+         }
+      }
+
+      // Check that every atom is in correct processor domain.
+      // Coordinates must scaled / generalized, rather than Cartesian.
+      double coordinate;
+      ConstAtomIterator atomIter;
+      int i;
+      storagePtr_->begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         for (i=0; i < Dimension; ++i) {
+            coordinate = atomIter->position()[i];
+            if (coordinate < domainPtr_->domainBound(i, 0)) {
+               UTIL_THROW("coordinate < domainBound(i, 0)");
+            }
+            if (coordinate >= domainPtr_->domainBound(i, 1)) {
+               UTIL_THROW("coordinate >= domainBound(i, 1)");
+            }
+         }
+      } 
+
+      return nAtomTotal; // Only valid on master, returns 0 otherwise.
+   }
+
+} // namespace DdMd
 #endif

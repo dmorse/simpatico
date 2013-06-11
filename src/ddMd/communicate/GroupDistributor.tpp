@@ -316,9 +316,9 @@ namespace DdMd
          }
 
       }
-      validate();
 
-      // Validate Group Storage
+      // Validate Data
+      validate(); // Check number of local atoms in groups
       groupStoragePtr_->unsetNTotal();
       groupStoragePtr_->computeNTotal(domainPtr_->communicator());
       groupStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(),
@@ -330,7 +330,7 @@ namespace DdMd
 
    #ifdef UTIL_MPI
    /**
-   * Check number of atoms sent and recieved.
+   * Check number of groups sent and received.
    */
    template <int N>
    void GroupDistributor<N>::validate() 

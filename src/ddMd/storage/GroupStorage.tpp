@@ -242,6 +242,7 @@ namespace DdMd
       if (size() + reservoir_.size() != capacity_) 
          UTIL_THROW("nGroup + reservoir size != local capacity"); 
 
+      // Check consitency of pointers to atoms and atom ids
       Group<N>* ptr;
       int       i, j;
       j = 0;
@@ -365,7 +366,8 @@ namespace DdMd
    */
    template <int N>
    #ifdef UTIL_MPI
-   bool GroupStorage<N>::isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator,
+   bool GroupStorage<N>::isValid(AtomStorage& atomStorage, 
+                                 MPI::Intracomm& communicator,
                                  bool hasGhosts)
    #else
    bool GroupStorage<N>::isValid(AtomStorage& atomStorage, bool hasGhosts)
