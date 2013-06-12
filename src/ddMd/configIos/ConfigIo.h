@@ -113,20 +113,21 @@ namespace DdMd
       /**
       * Read a configuration file.
       *
-      * This method reads a configuration file from the master processor, and 
-      * distributes atoms and groups among the processors. It is implemented
-      * using an AtomDistributor object. Atomic positions in the configuration
-      * file that lie outside the primary cell will automatically be shifted 
-      * into the primary cell by the AtomDistributor::addAtom() method before 
-      * being assigned to processors or distributed.
+      * This method reads a configuration file from the master processor, 
+      * and distributes atoms and groups among the processors. It should
+      * be implemented using an AtomDistributor object. When Atoms are 
+      * added to the AtomDistributor on the master processor, the atomic
+      * coordinates should be in generalized / scaled coordinates, such 
+      * that 0 <= position[i] < 1.0 for i =0,..,2. Atomic positions that
+      * lie slightly outside the domain [0.0 ,1.0]  will automatically 
+      * be shifted into this domain by the AtomDistributor::addAtom() 
+      * method before being assigned to processors or distributed.
       *
       * Upon entry (preconditions):
       *
-      *   - The configuration file must be open for reading.
+      *  - The configuration file must be open for reading.
       *
-      *   - The configuration file may contain atomic positions that lie 
-      *     slightly outside the primary simulation. These will be shifted
-      *     to the primary unit cell by the AtomDistributor.
+      *  - The AtomStorage must be set for generalized / scaled coordinates.
       *
       * Upon return (postconditions):
       *
@@ -135,17 +136,17 @@ namespace DdMd
       *
       *   - Each atom position is in the primary simulation cell.
       *
-      *   - Atomic coordinates are in scaled form, between 0.0 and 1.0.
+      *   - Atom coordinates are in scaled form, between 0.0 and 1.0.
       *
       *   - Each processor owns every group that contains one or more of 
-      *     the atoms that it owns, and no others. Each group may be owned
-      *     by more than one processor.
+      *     the atoms that it owns, and no empty groups. A group may be
+      *     ``owned" by more than one processor.
       *
       *   - All Atom Mask data is set correctly for specified maskPolicy.
       *
       *   - There are no ghost atoms on any processor.
       *
-      * \param file input file stream
+      * \param file input file stream (must be open on master).
       * \param maskPolicy MaskPolicy to be used in setting atom masks
       */
       virtual void readConfig(std::ifstream& file, MaskPolicy maskPolicy) = 0;
@@ -153,23 +154,31 @@ namespace DdMd
       /**
       * Write configuration file.
       *
-      * This routine opens and writes a file on the master, collecting atom
-      * and group data from all processors. Many file formats allow atom 
-      * and groups to be written in arbitrary order. Atomic positions may be 
+      * This function writes a file on the master processor by collecting 
+      * atom and group data from all processors. Implementations must 
+      * work correctly when atom positions stored in either Cartesian 
+      * or scaled / generalized coordinates on entry and exit, by testing 
+      * AtomStorage::isCartesian(), and converting coordinate systems as 
+      * needed before writing each position file. Atomic positions may be
       * written in Cartesian or generalized coordinates, depending on the
-      * file format. Atomic positions may be written "as is", and may lie 
-      * slightly outside the primary cell, because they must be shifted 
-      * back by the readConfig() method.
+      * file format, but the same convention should be used in writeConfig() 
+      * and readConfig() in each class. Some file formats may allow atom and 
+      * groups to be written in arbitrary order. Atomic positions may be 
+      * written "as is", and may lie slightly outside the primary cell, 
+      * because they will be shifted back by the AtomDistributor used to 
+      * implement readConfig(). This function may not modify actual Atom
+      * positions or change the AtomStorage isCartesian() flag.
       *
-      * This function must operate correctly when AtomStorage is set for
-      * generalized/scaled atomic coordiantes, and may throw an exception 
-      * if they are Cartesian. The implementation in the SerializeConfigIo 
-      * class allows atomic coordinates to be in either coordinate system
-      * on input, but always write Cartesian coordinates to file. This
-      * allows this class to be used by an Integrator to write restart 
-      * files.
+      * Usage:
       *
-      * \param file output file stream
+      *   - When used within Simulation::readCommands() to implement the 
+      *     WRITE_CONFIG command, atomic coordinates will be scaled / 
+      *     generalized on both entry and exit. 
+      *
+      *   - When used within a Diagnostic, to dump configuration files, 
+      *     atomic coordinates will be Cartesian on entry and exit.
+      *
+      * \param file output file stream (must be open on master processor).
       */
       virtual void writeConfig(std::ofstream& file) = 0;
 

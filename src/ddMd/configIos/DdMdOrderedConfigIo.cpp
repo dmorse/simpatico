@@ -102,6 +102,9 @@ namespace DdMd
       if (atomStorage().isCartesian()) {
          UTIL_THROW("Atom storage is set for Cartesian coordinates");
       }
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
+      }
 
       // Read and broadcast boundary
       if (domain().isMaster()) {  
@@ -258,8 +261,8 @@ namespace DdMd
    void DdMdOrderedConfigIo::writeConfig(std::ofstream& file)
    {
       // Precondition
-      if (atomStorage().isCartesian()) {
-         UTIL_THROW("Atom storage set for Cartesian coordinates");
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
       }
 
       // Write Boundary dimensions
@@ -273,6 +276,7 @@ namespace DdMd
       atomStorage().computeNAtomTotal(domain().communicator());
       if (domain().isMaster()) { 
          int nAtom = atomStorage().nAtomTotal();
+         atomCollector().setup();
 
          file << "ATOMS" << std::endl;
          file << "nAtom" << Int(nAtom, 10) << std::endl;
@@ -284,13 +288,19 @@ namespace DdMd
          atoms_.insert(atoms_.end(), nAtom, atom);
 
          // Collect unordered atoms and store in order in atoms_ .
-         atomCollector().setup();
-         Atom* atomPtr = atomCollector().nextPtr();
+         Vector r;
          int id;
          int n = 0;
+         bool isCartesian = atomStorage().isCartesian();
+         Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
             id = atomPtr->id();
-            boundary().transformGenToCart(atomPtr->position(), atoms_[id].position);
+            if (isCartesian) {
+               r = atomPtr->position();
+            } else {
+               boundary().transformGenToCart(atomPtr->position(), r);
+            }
+            atoms_[id].position = r;
             atoms_[id].velocity = atomPtr->velocity();
             atoms_[id].typeId = atomPtr->typeId();
             atoms_[id].id = id;

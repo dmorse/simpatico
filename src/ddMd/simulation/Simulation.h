@@ -116,7 +116,7 @@ namespace DdMd
       * \param argc number of arguments
       * \param argv vector of C-string argument strings
       */
-      void setOptions(int argc, char **argv);
+      void setOptions(int argc, char* const * argv);
 
       /**
       * Read parameters from default parameter file.
@@ -182,13 +182,19 @@ namespace DdMd
       /**
       * Read and execute commands from the default command file.
       *
-      * The default command file is defined by the FileMaster. The file
-      * name is normally input in the parameter file. 
+      * This function calls readCommands(std::istream&) internally. The
+      * default command file is defined by the FileMaster. The file name
+      * is normally input in the parameter file.  
+      *
+      * \pre Same as readCommands(std::istream&)
       */
       void readCommands();
 
       /**
       * Read and execute commands from a specific command file.
+      *
+      * \pre Simulation must be initialized, by call to (read|load)Parameters.
+      * \pre AtomStorage coordinates are scaled / generalized (not Cartesian)
       *
       * \param in command file
       */
@@ -217,12 +223,17 @@ namespace DdMd
       * groups, and a full set of ghost atoms, but values for
       * the atomic forces are undefined.
       *
+      * \pre  AtomStorage is set for scaled / generalized coordinates.
+      * \post AtomStorage is set for scaled / generalized coordinates.
+      *
       * \param filename name of input configuration file.
       */
       void readConfig(const std::string& filename);
 
       /**
       * Write configuration file.
+      *
+      * \pre AtomStorage coordinates are generalized / scaled 
       *
       * \param filename name of output configuration file.
       */

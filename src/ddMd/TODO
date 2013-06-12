@@ -1,11 +1,11 @@
 Exchanger
 ---------
 
-- Add memory usage statistics, to see which step (atom
+- Add memory usage statistics, to see which communication step (atom
   exchange or ghost exchange) uses the most memory.
 
-- Write separate algorithm for initial ghost exchange, to
-  reduce memory requirements See doc/notes/ddMd/initGhosts
+- Write separate algorithm for initial ghost exchange, to reduce memory 
+  requirements See doc/notes/ddMd/initGhosts
 
 - Consider moving allocation of Buffer to Exchanger.
 

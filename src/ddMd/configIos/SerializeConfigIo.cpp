@@ -54,13 +54,13 @@ namespace DdMd
    {  setClassName("SerializeConfigIo"); }
 
    /*
-   * Private method to load Group<N> objects.
+   * Private method to load Group<N> objects. (Call on all processors).
    */
    template <int N>
    int SerializeConfigIo::loadGroups(Serializable::IArchive& ar,
                                      GroupDistributor<N>& distributor) 
    {
-      int nGroup;  // Total number of groups in archive
+      int nGroup = 0;  // Total number of groups in archive
       if (domain().isMaster()) {  
          ar >> nGroup;
          Group<N>* groupPtr;
@@ -80,7 +80,7 @@ namespace DdMd
          // Receive all groups into BondStorage
          distributor.receive();
       }
-      return nGroup;
+      return nGroup; // Valid only on master
    }
 
    /*
@@ -99,7 +99,7 @@ namespace DdMd
          UTIL_THROW("Atom storage set for Cartesian coordinates");
       }
 
-      // Read and broadcast boundary
+      // Load and broadcast boundary
       if (domain().isMaster()) {  
          ar >> boundary();
       }
@@ -107,7 +107,7 @@ namespace DdMd
       bcast(domain().communicator(), boundary(), 0);
       #endif
 
-      // Atoms 
+      // Load atoms 
       int nAtom;  // Total number of atoms in archive
       if (domain().isMaster()) {  
 
@@ -155,8 +155,8 @@ namespace DdMd
          atomDistributor().receive();
       }
 
-      // Validate atom distribution
-      // Checks that all are accounted for and on correct processor
+      // Validate atom distribution:
+      // Check that all are accounted for and on correct processor
       int nAtomAll;
       nAtomAll = atomDistributor().validate();
       if (domain().isMaster()) {
@@ -165,7 +165,7 @@ namespace DdMd
          }
       }
 
-      // Load covalent groups
+      // Load groups
       bool hasGhosts = false;
       if (bondStorage().capacity()) {
          loadGroups<2>(ar, bondDistributor());
@@ -218,7 +218,7 @@ namespace DdMd
    }
 
    /* 
-   * Write the configuration to archive.
+   * Save the configuration to an archive.
    */
    void SerializeConfigIo::saveConfig(Serializable::OArchive& ar)
    {
@@ -227,7 +227,7 @@ namespace DdMd
          ar << boundary();
       }
 
-      // Atoms
+      // Save atoms
       bool isCartesian = atomStorage().isCartesian();
       atomStorage().computeNAtomTotal(domain().communicator());
       if (domain().isMaster()) {  
@@ -254,11 +254,12 @@ namespace DdMd
             ar << atomPtr->velocity();
             atomPtr = atomCollector().nextPtr();
          }
+
       } else { 
          atomCollector().send();
       }
 
-      // Write the groups
+      // Save groups
       if (bondStorage().capacity()) {
          saveGroups<2>(ar, bondStorage(), bondCollector());
       }
@@ -279,6 +280,12 @@ namespace DdMd
    */
    void SerializeConfigIo::readConfig(std::ifstream& file, MaskPolicy maskPolicy)
    {
+      // Precondition
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
+      }
+      // Other preconditions are enforced by loadConfig
+      
       Serializable::IArchive ar(file);
       loadConfig(ar, maskPolicy);
    }
@@ -288,6 +295,11 @@ namespace DdMd
    */
    void SerializeConfigIo::writeConfig(std::ofstream& file)
    {
+      // Preconditions
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
+      }
+      
       Serializable::OArchive ar(file);
       saveConfig(ar);
    }

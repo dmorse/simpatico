@@ -289,7 +289,7 @@ namespace DdMd
    /*
    * Process command line options.
    */
-   void Simulation::setOptions(int argc, char **argv)
+   void Simulation::setOptions(int argc, char * const * argv)
    {
       bool  eFlag = false;
       bool  rFlag = false;

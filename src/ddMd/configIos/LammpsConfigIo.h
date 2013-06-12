@@ -50,8 +50,15 @@ namespace DdMd
       /**
       * Read configuration file.
       *
+      * Call on all processors. File is used and must be open only on master.
       * This routine opens and reads a file on the master, and distributes
       * atom data among the processors.
+      *
+      * \pre  There are no atoms, ghosts, or groups.
+      * \pre  AtomStorage is set for scaled / generalized coordinates
+      *
+      * \post atomic coordinates are scaled / generalized
+      * \post there are no ghosts
       *
       * \param file input file stream
       * \param maskPolicy MaskPolicy to be used in setting atom masks
@@ -61,10 +68,11 @@ namespace DdMd
       /**
       * Write configuration file.
       *
-      * This routine opens and writes a file on the master,
-      * collecting atom data from all processors.
+      * Call on all processors. File is used and must be open only on master.
+      * This routine writes a file on the master, collecting atom and group
+      * data from all processors.
       *
-      * \param file output file stream
+      * \param file output file stream (must be open on master)
       */
       virtual void writeConfig(std::ofstream& file);
    
@@ -98,12 +106,6 @@ namespace DdMd
          Group<N> group;
       };
   
-      /**
-      * Array of atoms, ordered by global index.
-      */
-      //int N;
-      //std::vector<IoGroup <N> > groups_;
-
       /**
       * Read Group<N> objects from file. 
       */

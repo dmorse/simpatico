@@ -56,20 +56,20 @@ MAKEDEP=$(ROOT_DIR)/bin/makeDep
 COMPILER:=gcc
 MPI_LIB=mpicxx
 
-# ------------------------------------------------------------------
+# ------------------------------------------------------------------------
 # Compiler settings:
 #
-# Each of the following blocks sets values for the following set
-# of makefile variables, using values appropriate to a particular
-# compiler:
+# Each of the following blocks sets values appropriate for a particular
+# compiler and mpi library for the following set of makefile variables:
 #
-# CXX        - path to C++ compiler
+# CXX        - C++ compiler command (must be in PATH or an absolute path)
 # CXXFLAGS   - flags used to compile source files, without linking
 # LDFLAGS    - flags used to compile and link a main program
 # TESTFLAGS  - flags usd to compile unit test programs
 # AR         - path to archiver, to create library (*.a) files
 # ARFLAGS    - flags used by archiver
-# ------------------------------------------------------------------
+# MPIRUN     - command to start mpi, with np option, e.g. "mpirun -np"
+# ------------------------------------------------------------------------
 
 #-- Gnu GCC compiler ------
 ifeq ($(COMPILER),gcc)

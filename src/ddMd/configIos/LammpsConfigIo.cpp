@@ -113,6 +113,9 @@ namespace DdMd
       if (atomStorage().isCartesian()) {
          UTIL_THROW("Atom storage is set for Cartesian coordinates");
       }
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
+      }
 
       int nAtom;
       int nBond;
@@ -328,8 +331,8 @@ namespace DdMd
    void LammpsConfigIo::writeConfig(std::ofstream& file)
    {
       // Preconditions
-      if (atomStorage().isCartesian()) {
-         UTIL_THROW("Atom storage is set for Cartesian coordinates");
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
       }
 
       using std::endl;
@@ -406,17 +409,23 @@ namespace DdMd
          atoms_.clear();
          atoms_.insert(atoms_.end(), nAtom, atom);
 
+
          // Collect atoms
          atomCollector().setup();
-         Atom* atomPtr = atomCollector().nextPtr();
+         Vector r;
          int id;
          int n = 0;
-         Vector r;
+         bool isCartesian = atomStorage().isCartesian();
+         Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
             id = atomPtr->id();
             atoms_[id].id = id;
             atoms_[id].typeId = atomPtr->typeId();
-            boundary().transformGenToCart(atomPtr->position(), r);
+            if (isCartesian) {
+               r = atomPtr->position();
+            } else {
+               boundary().transformGenToCart(atomPtr->position(), r);
+            }
             atoms_[id].position = r;
             atoms_[id].velocity = atomPtr->velocity();
             atomPtr = atomCollector().nextPtr();
@@ -426,7 +435,7 @@ namespace DdMd
             UTIL_THROW("Inconsistency in number of atoms");
          }
 
-         // Write atomic positions
+         // Write atom positions
          // lammps atom     tag = Simpatico atom id + 1
          // lammps molecule id  = Simpatico molecule id + 1
          file << endl;

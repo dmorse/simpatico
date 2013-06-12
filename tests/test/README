@@ -37,3 +37,10 @@ More information about each class is given in the class documentation
 for the UnitTest, TestRunner, UnitTestRunner, and CompositeTestRunner. 
 Three programs that illustrate usage are given in the examples/ 
 subdirectory.
+
+CommandLine class
+-----------------
+
+CommandLine is a utility class to simplify programmatic construction 
+of C command line arguments argc and argv. It is useful for unit
+testing of functions that parse command line arguments.

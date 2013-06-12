@@ -18,6 +18,7 @@
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
+#include <test/CommandLine.h>
 
 using namespace Util;
 using namespace DdMd;
@@ -28,15 +29,13 @@ private:
 
     Simulation simulation_;
 
+   void displaceAtoms(AtomStorage& atomStorage, const Boundary& boundary, 
+                      Random& random, double range);
+
 public:
 
    virtual void setUp()
-   {
-      simulation_.fileMaster().setRootPrefix(filePrefix());
-   }
-
-   void displaceAtoms(AtomStorage& atomStorage, const Boundary& boundary, 
-                      Random& random, double range);
+   {  simulation_.fileMaster().setRootPrefix(filePrefix()); }
 
    void testReadParam();
 
@@ -55,9 +54,10 @@ public:
 };
 
 
-inline void SimulationTest::displaceAtoms(AtomStorage& atomStorage, 
-                                          const Boundary& boundary, 
-                                          Random& random, double range)
+inline void 
+SimulationTest::displaceAtoms(AtomStorage& atomStorage, 
+                              const Boundary& boundary, 
+                              Random& random, double range)
 {
    Vector ranges;
    double min, max;
@@ -122,7 +122,6 @@ inline void SimulationTest::testReadConfig()
       TEST_ASSERT( domain.isInDomain( atomIter->position() ) );
    }
    TEST_ASSERT(j == atomStorage.nAtom());
-
 }
 
 inline void SimulationTest::testExchangeAtoms()
@@ -341,6 +340,10 @@ inline void SimulationTest::testCalculateForces()
 inline void SimulationTest::testIntegrate1()
 {
    printMethod(TEST_FUNC); 
+
+   CommandLine opts;
+   opts.append("-e");
+   simulation_.setOptions(opts.argc(), opts.argv());
 
    openFile("in/param2"); 
    simulation_.readParam(file()); 

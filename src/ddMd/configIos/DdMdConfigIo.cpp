@@ -101,6 +101,9 @@ namespace DdMd
       if (atomStorage().isCartesian()) {
          UTIL_THROW("Error: Atom storage is set for Cartesian coordinates");
       }
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
+      }
 
       // Read and broadcast boundary
       if (domain().isMaster()) {  
@@ -131,9 +134,9 @@ namespace DdMd
          // Read atoms
          Vector r;
          Atom*  atomPtr;
-         int id;
-         int typeId;
-         int rank;
+         int  id;
+         int  typeId;
+         int  rank;
          for(int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
@@ -233,8 +236,8 @@ namespace DdMd
    void DdMdConfigIo::writeConfig(std::ofstream& file)
    {
       // Precondition
-      if (atomStorage().isCartesian()) {
-         UTIL_THROW("Atom storage set for Cartesian coordinates");
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
       }
 
       // Write Boundary dimensions
@@ -247,19 +250,28 @@ namespace DdMd
       // Atoms
       atomStorage().computeNAtomTotal(domain().communicator());
       if (domain().isMaster()) {  
+
          file << "ATOMS" << std::endl;
          file << "nAtom" << Int(atomStorage().nAtomTotal(), 10) << std::endl;
          atomCollector().setup();
-         Atom* atomPtr = atomCollector().nextPtr();
+
+         // Collect and write atoms
          Vector r;
+         bool isCartesian = atomStorage().isCartesian();
+         Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
             file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6);
-            boundary().transformGenToCart(atomPtr->position(), r);
+            if (isCartesian) {
+               r = atomPtr->position();
+            } else {
+               boundary().transformGenToCart(atomPtr->position(), r);
+            }
             file << r << std::endl
                  << "                " << atomPtr->velocity();
             file << std::endl;
             atomPtr = atomCollector().nextPtr();
          }
+
       } else { 
          atomCollector().send();
       }
