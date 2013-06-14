@@ -362,7 +362,6 @@ namespace DdMd
          if (isIoProcessor()) {
             Log::file() << std::endl;
          }
-         isInitialized_ = true;
       }
 
    }
@@ -700,7 +699,16 @@ namespace DdMd
       #endif
 
       isInitialized_ = true;
+
+      // Load the configuration (boundary + positions + groups)
+      serializeConfigIo().loadConfig(ar, maskedPairPolicy_);
+
+      // There are no ghosts yet, so exchange.
+      exchanger_.exchange();
+      isValid();
    }
+
+   // ---- Serialization -----------------------------------------------
 
    /*
    * Load state from a restart file (open file, call load, close file)
@@ -714,24 +722,18 @@ namespace DdMd
          UTIL_THROW("Error: No IoCommunicator is set");
       }
 
-      // Open archive file, load state, close file.
       Serializable::IArchive ar;
       if (isIoProcessor()) {
          fileMaster().openRestartIFile(filename, ".rst", ar.file());
       }
-      // Load parameters, without configuration. This calls the default
-      // ParamComposite::load(ar&), which calls Simulation::loadParameters.
-      load(ar);
-      // Load the configuration (boundary + positions + groups)
-      serializeConfigIo().loadConfig(ar, maskedPairPolicy_);
-      // There are no ghosts yet, so exchange.
-      exchanger_.exchange();
-      isValid();
+      // Call ParamComposite::load(), which calls Simulation::loadParameters()
+      load(ar); 
       if (isIoProcessor()) {
          ar.file().close();
       }
 
-      // Set command (*.cmd) file
+      // Set default command (*.cmd) file name = filename + ".cmd".
+      // This will be used by Simulation::readCommands().
       std::string commandFileName = filename + ".cmd";
       fileMaster().setCommandFileName(commandFileName);
    }
@@ -849,6 +851,8 @@ namespace DdMd
          ar.file().close();
       }
    }
+
+   // --- Protected read, load and save methods ------------------------
 
    /*
    * Read the FileMaster parameters.
@@ -997,6 +1001,8 @@ namespace DdMd
       energyEnsemblePtr_->save(ar);
       boundaryEnsemblePtr_->save(ar);
    }
+
+   // --- readCommands and run-time actions  ---------------------------
 
    /*
    * Read and implement commands in an input script.
@@ -1328,7 +1334,7 @@ namespace DdMd
       }
    }
 
-   // Kinetic Energy methods ----------------------------------------------
+   // --- Kinetic Energy methods ---------------------------------------
 
    /*
    * Calculate total kinetic energy (call on all processors).
@@ -1380,7 +1386,7 @@ namespace DdMd
    void Simulation::unsetKineticEnergy()
    {  kineticEnergy_.unset(); }
 
-   // Kinetic Stress methods ----------------------------------------------
+   // --- Kinetic Stress methods ---------------------------------------
 
    /*
    * Compute total kinetic stress, store on master proc.
@@ -1456,10 +1462,9 @@ namespace DdMd
    void Simulation::unsetKineticStress()
    {  kineticStress_.unset(); }
 
-   // Potential Energy Methods --------------------------------------------
+   // --- Potential Energy Methods -------------------------------------
 
    #ifdef UTIL_MPI
-
    /*
    * Compute all potential energy contributions.
    */
@@ -1485,7 +1490,6 @@ namespace DdMd
    }
 
    #else
-
    /*
    * Compute all potential energy contributions.
    */
@@ -1509,7 +1513,6 @@ namespace DdMd
       }
       #endif
    }
-
    #endif
 
    /*
@@ -1572,7 +1575,7 @@ namespace DdMd
       #endif
    }
 
-   // Virial Stress Methods -----------------------------------------------
+   // --- Virial Stress Methods ----------------------------------------
 
    #ifdef UTIL_MPI
    /*
@@ -1704,7 +1707,7 @@ namespace DdMd
       #endif
    }
 
-   // ConfigIo Accessors -------------------------------------------------
+   // --- ConfigIo Accessors -------------------------------------------
    
    /**
    * Return the ConfigIo (create default if necessary).
@@ -1730,7 +1733,7 @@ namespace DdMd
       return *serializeConfigIoPtr_;
    }
 
-   // Config File Read and Write ------------------------------------------
+   // --- Config File Read and Write -----------------------------------
 
    /*
    * Read configuration file on master and distribute atoms.
@@ -1763,7 +1766,7 @@ namespace DdMd
       }
    }
 
-   // Potential Factories and Styles --------------------------------------
+   // --- Potential Factories and Styles -------------------------------
 
    #ifndef DDMD_NOPAIR
    /*
@@ -1863,7 +1866,7 @@ namespace DdMd
    {  return externalStyle_;  }
    #endif
 
-   // Integrator and ConfigIo Management ------------------------------------
+   // --- Integrator and ConfigIo Management ---------------------------
 
    /*
    * Return the IntegratorFactory by reference.
@@ -1905,7 +1908,7 @@ namespace DdMd
       configIoPtr_->initialize();
    }
 
-   // Validation ----------------------------------------------------------
+   // --- Validation ---------------------------------------------------
 
    /*
    * Return true if this Simulation is valid, or throw an Exception.

@@ -35,7 +35,6 @@ namespace Util {
    template <typename T> class Factory; 
    class EnergyEnsemble;
    class BoundaryEnsemble;
-   class Tensor;
 }
 
 namespace DdMd
@@ -79,14 +78,14 @@ namespace DdMd
       
       #ifdef UTIL_MPI
       /**
-      * Default constructor.
+      * Constructor.
       *
       * \param communicator MPI communicator for MD processors.
       */
       Simulation(MPI::Intracomm& communicator = MPI::COMM_WORLD);
       #else
       /**
-      * Default constructor.
+      * Constructor.
       */
       Simulation();
       #endif
@@ -109,12 +108,21 @@ namespace DdMd
       *
       *   -s  nSystem [int]
       *       Enable multi system simulation, using different groups of 
-      *       processors for different systems. Int argument nSystem is the 
-      *       number of systems. Rank of world communicator must be an 
-      *       integer multiple of nSystem.
+      *       processors for different systems. Integer argument nSystem 
+      *       is the number of systems. The rank of the communicator passed
+      *       to the constructor must be an integer multiple of nSystem.
       *
-      * \param argc number of arguments
-      * \param argv vector of C-string argument strings
+      *   -r  filename [string]
+      *       Restarts a simulation from a checkpoint file. The name of
+      *       the checkpoint file is filename + ".rst", i..e., it is 
+      *       obtained by adding a suffix ".rst" to the filename argument.
+      *       Also sets the default command file name to filename + ".cmd".
+      *
+      * The parameters are the same as those passed to any C/C++ main
+      * program, which contain the command line arguments:
+      *
+      * \param argc number of command line arguments
+      * \param argv C-array of C-string argument strings
       */
       void setOptions(int argc, char* const * argv);
 
@@ -148,30 +156,45 @@ namespace DdMd
       //@{
   
       /**
-      * Load state from a restart file.
+      * Load internal state from a restart file.
       *
-      * Call on all processors.
+      * Call on all processors. This function opens an archive file with 
+      * a name given by concatentaing filename + ".rst" on the ioProcessor, 
+      * calls load(Serializable::OArchive& ), and closes the file. It also 
+      * sets the default command file name to filename + ".cmd".
+      *
+      * \param filename base filename (add suffixes ".rst" and ".cmd")
       */
       void load(const std::string& filename);
 
       /**
-      * Load state from a restart archive.
+      * Load parameters from a restart archive.
       *
-      * Used to implement load(std::string). Do not call directly.
+      * Call on all processors, but loads from archive only on ioProcessor.
+      * This function loads both parameter information and the system
+      * configuration. 
+      *  
+      * Do not call this directly. Instead call load(const std::string&) 
+      * or load(Serializable::IArchive& ).
+      *
+      * \param ar input archive (open for reading on ioProcessor).
       */
       virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
       * Save state to a restart file.
       *
-      * Call on all processors. Only writes from master ioProcessor.
+      * Call on all processors. Only writes from communicator ioProcessor.
+      * This function opens an archive file with a name given by filename 
+      * + ".rst" on the ioProcessor, calls save(Serializable::OArchive& ), 
+      * and closes the file.
       */
       void save(const std::string& filename);
 
       /**
       * Save internal state to restart archive.
       *
-      * Used to implement save(std::string). Do not call directly.
+      * Used to implement save(std::string).
       */
       virtual void save(Serializable::OArchive& ar);
 
@@ -443,7 +466,7 @@ namespace DdMd
       std::string bondStyle() const;
 
       /**
-      * Get the associated Factory<BondPotential> by reference.
+      * Get the Factory<BondPotential> by reference.
       */
       Factory<BondPotential>& bondFactory();
   
@@ -459,7 +482,7 @@ namespace DdMd
       std::string angleStyle() const;
    
       /**
-      * Get the associated AngleFactory by reference.
+      * Get the AngleFactory by reference.
       */
       Factory<AnglePotential>& angleFactory();
       #endif
@@ -583,12 +606,12 @@ namespace DdMd
       Buffer& buffer();
   
       /**
-      * Return associated DiagnosticManager by reference.
+      * Return the DiagnosticManager by reference.
       */
       DiagnosticManager& diagnosticManager();
 
       /**
-      * Get the Md  integrator factory by reference.
+      * Get the Integrator factory by reference.
       */
       Factory<Integrator>& integratorFactory();
 
@@ -926,7 +949,7 @@ namespace DdMd
       /// Log output file (if not standard out)
       std::ofstream logFile_;
 
-      /// Has readParam been called?
+      /// Has readParam or load been called?
       bool isInitialized_;
 
       /// Is this Simulation in the process of restarting?

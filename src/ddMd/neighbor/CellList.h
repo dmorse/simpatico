@@ -301,7 +301,7 @@ namespace DdMd
 
    private:
 
-      /*
+      /**
       * Struct containing an Atom* pointer and cell id for that atom.
       *
       * The CellList::placeAtom(&Atom) method calculates the cell rank
@@ -364,7 +364,7 @@ namespace DdMd
       /// Has this CellList been built?
       bool isBuilt_;
 
-      /*
+      /**
       * Calculate required dimensions for cell grid.
       *
       * Called internally by allocate and makeGrid. Does not link cells or
