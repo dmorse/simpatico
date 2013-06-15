@@ -39,6 +39,11 @@ namespace McMd
       */
       PressureAverage(SystemType& system);
 
+      /**   
+      * Destructor.
+      */
+      ~PressureAverage();
+
       /**
       * Read parameters and initialize.
       */
@@ -118,6 +123,13 @@ namespace McMd
       accumulator_(),
       nSamplePerBlock_(-1),
       isInitialized_(false)
+   {}
+
+   /*
+   * Destructor.
+   */
+   template <class SystemType>
+   PressureAverage<SystemType>::~PressureAverage()
    {}
 
    /*

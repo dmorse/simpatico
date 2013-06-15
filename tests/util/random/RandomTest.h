@@ -169,10 +169,9 @@ public:
       openInputFile("in/Random", in);
       random->readParam(in);
 
-      int x;
+      // Pull random number to change state
       for (int i=0; i < 20; i++) {
-         x = random->uniformInt(0, 255);
-         // std::cout << x << std::endl;
+         random->uniformInt(0, 255);
       }
       BinaryFileOArchive oar;
       openOutputFile("binary", oar.file());
@@ -188,11 +187,6 @@ public:
 
    void testBinaryUnSerialize() {
       printMethod(TEST_FUNC);
-
-      //int x;
-      //for (int i=0; i < 20; i++) {
-      //   x = random->uniformInt(0, 255);
-      //}
 
       BinaryFileIArchive iar;
       openInputFile("binary", iar.file());

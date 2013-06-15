@@ -33,6 +33,11 @@ namespace McMd
       */
       AverageDiagnostic(SystemType& system);
 
+      /**   
+      * Destructor.
+      */
+      ~AverageDiagnostic();
+
       /**
       * Read parameters and initialize.
       */
@@ -93,6 +98,13 @@ namespace McMd
       outputFile_(),
       accumulator_(),
       nSamplePerBlock_(1)
+   {}
+
+   /* 
+   * Constructor.
+   */
+   template <class SystemType>
+   AverageDiagnostic<SystemType>::~AverageDiagnostic()
    {}
 
    /*

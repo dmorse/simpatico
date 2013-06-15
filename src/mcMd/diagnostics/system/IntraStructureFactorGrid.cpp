@@ -32,6 +32,12 @@ namespace McMd
    {  setClassName("IntraStructureFactorGrid"); }
 
    /*
+   * Destructor.
+   */
+   IntraStructureFactorGrid::~IntraStructureFactorGrid() 
+   {}
+
+   /*
    * Read parameters from file, and allocate data array.
    */
    void IntraStructureFactorGrid::readParameters(std::istream& in) 

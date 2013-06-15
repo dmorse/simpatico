@@ -23,8 +23,8 @@ namespace Util
    * is always less than or equal to the current physical capacity. If
    * an object is added when the size is already equal to the capacity,
    * the array will be resized and copied to a new location in memory.
-   * The elements of a GArray destroyed when the GArray is destroyed or
-   * de-allocated.
+   * The elements of a GArray are deleted when the GArray is destroyed
+   * or deallocated.
    *
    * \ingroup Array_Module
    */

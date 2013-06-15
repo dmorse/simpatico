@@ -42,6 +42,11 @@ namespace Util
       SpeciesEnsemble(Type type = UNKNOWN);
 
       /**
+      * Destructor.
+      */
+      ~SpeciesEnsemble();
+
+      /**
       * Set the chemical potential mu.
       */
       void  setMu(double mu);

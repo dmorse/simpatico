@@ -27,6 +27,12 @@ namespace Util{
    {  setClassName("EnergyEnsemble"); }
 
    /*
+   * Destructor.
+   */
+   EnergyEnsemble::~EnergyEnsemble()
+   {}
+
+   /*
    * Set the temperature.
    */
    void EnergyEnsemble::setTemperature(double temperature)

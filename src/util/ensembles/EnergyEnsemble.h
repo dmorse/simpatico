@@ -43,6 +43,11 @@ namespace Util
       EnergyEnsemble(Type type = UNKNOWN);
 
       /**
+      * Destructor.
+      */
+      ~EnergyEnsemble();
+
+      /**
       * Set the temperature.
       */
       void  setTemperature(double temperature);

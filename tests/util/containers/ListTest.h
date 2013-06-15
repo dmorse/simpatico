@@ -437,11 +437,9 @@ void ListTest::dumpList()
 {
    if (verbose() > 1 && list.front_ != 0) {
 
-      Node<Data>* prev = 0;
       Node<Data>* node = list.front_;
       while (node->next() != 0) {
          std::cout << int(node - list.nodes_) << std::endl;
-         prev = node;
          node = node->next();
       }
       std::cout << int(node - list.nodes_) << std::endl;

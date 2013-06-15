@@ -42,6 +42,11 @@ namespace Util
       BoundaryEnsemble(Type type = UNKNOWN);
 
       /**
+      * Destructor.
+      */
+      ~BoundaryEnsemble();
+
+      /**
       * Set the pressure.
       */
       void  setPressure(double pressure);
