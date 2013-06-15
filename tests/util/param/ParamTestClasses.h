@@ -229,7 +229,7 @@
          read<std::string>(in, "str", str_);
          readCArray<int>(in, "value3", value3_, 3);
          readCArray<double>(in, "value4", value4_, 3);
-         readCArray2D<double>(in, "value5", value5_[0], 2, 2);
+         readCArray2D<double>(in, "value5", value5_[0], 2, 2, 2);
          readDArray<double>(in, "value6", value6_, 4);
          readBlank(in);
          read<Vector>(in, "value7", value7_);
@@ -247,7 +247,7 @@
          loadParameter<std::string>(ar, "str", str_);
          loadCArray<int>(ar, "value3", value3_, 3);
          loadCArray<double>(ar, "value4", value4_, 3);
-         loadCArray2D<double>(ar, "value5", value5_[0], 2, 2);
+         loadCArray2D<double>(ar, "value5", value5_[0], 2, 2, 2);
          loadDArray<double>(ar, "value6", value6_, 4);
          addBlank();
          loadParameter<Vector>(ar, "value7", value7_);
@@ -265,7 +265,7 @@
          ar & str_;
          ar.pack(value3_, 3);
          ar.pack(value4_, 3);
-         ar.pack(value5_[0], 2, 2);
+         ar.pack(value5_[0], 2, 2, 2);
          ar & value6_;
          ar & value7_;
          ar & value8_;

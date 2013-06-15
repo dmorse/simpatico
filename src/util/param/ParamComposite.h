@@ -279,17 +279,20 @@ namespace Util
       /**
       * Add and read a CArray2DParam < Type > C two-dimensional array parameter.
       *
+      * This reads m rows of n elements into an array of type array[][np].
+      *
       * \param in     input stream for reading
       * \param label  Label string for new array
       * \param value  pointer to array
       * \param m      number of rows (1st dimension)
-      * \param n      number of columns (2nd dimension)
+      * \param n      logical number of columns (2nd dimension)
+      * \param np     physical number of columns (elements allocated per row)
       * \return reference to the CArray2DParam<Type> object
       */
       template <typename Type>
       CArray2DParam<Type>&
       readCArray2D(std::istream &in, const char *label,
-                        Type *value, int m, int n);
+                   Type *value, int m, int n, int np);
 
       /**
       * Add and read a DMatrix < Type > C two-dimensional matrix parameter.
@@ -406,13 +409,14 @@ namespace Util
       * \param label  Label string for new array
       * \param value  pointer to array
       * \param m      number of rows (1st dimension)
-      * \param n      number of columns (2nd dimension)
+      * \param n      logical number of columns (2nd dimension)
+      * \param np     physical number of columns (elements allocated per row)
       * \return reference to the CArray2DParam<Type> object
       */
       template <typename Type>
       CArray2DParam<Type>&
       loadCArray2D(Serializable::IArchive &ar, const char *label,
-                   Type *value, int m, int n);
+                   Type *value, int m, int n, int np);
 
       /**
       * Add and load a DMatrix < Type > C two-dimensional matrix parameter.
@@ -493,12 +497,13 @@ namespace Util
       * \param label  Label string for new array
       * \param value  pointer to 2D array
       * \param m      number of rows (1st dimension)
-      * \param n      number of columns (2nd dimension)
+      * \param n      logical number of columns (2nd dimension)
+      * \param np     physical number of columns (2nd dimension)
       * \return reference to the new CArray2DParam<Type> object
       */
       template <typename Type>
       CArray2DParam<Type>&
-      addCArray2D(const char *label, Type *value, int m, int n);
+      addCArray2D(const char *label, Type *value, int m, int n, int np);
 
       /**
       * Add a C two-dimensional array parameter.
@@ -764,9 +769,11 @@ namespace Util
    */
    template <typename Type>
    CArray2DParam<Type>&
-   ParamComposite::addCArray2D(const char *label, Type *value, int m, int n)
+   ParamComposite::addCArray2D(const char *label, Type *value, 
+                               int m, int n, int np)
    {
-      CArray2DParam<Type>* ptr = new CArray2DParam<Type>(label, value, m, n);
+      CArray2DParam<Type>* ptr = 
+                           new CArray2DParam<Type>(label, value, m, n, np);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
       ++size_;
@@ -785,9 +792,9 @@ namespace Util
    template <typename Type>
    CArray2DParam<Type>&
    ParamComposite::readCArray2D(std::istream &in,
-                   const char *label, Type *value, int m, int n)
+                   const char *label, Type *value, int m, int n, int np)
    {
-      CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n);
+      CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n, np);
       ptr->readParam(in);
       return *ptr;
    }
@@ -798,9 +805,9 @@ namespace Util
    template <typename Type>
    CArray2DParam<Type>&
    ParamComposite::loadCArray2D(Serializable::IArchive &ar, const char *label,
-                                Type *value, int m, int n)
+                                Type *value, int m, int n, int np)
    {
-      CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n);
+      CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n, np);
       ptr->load(ar);
       return *ptr;
    }

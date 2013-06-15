@@ -8,9 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <iostream>
 #include "DpdPair.h"
+#include <util/mpi/MpiLoader.h>
 
+#include <iostream>
 namespace Inter
 {
 
@@ -77,10 +78,10 @@ namespace Inter
       }
    
       // Read parameters
-      readCArray2D<double> (
-                  in, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
-      readCArray2D<double>(
-                  in, "sigma", sigma_[0], nAtomType_, nAtomType_);
+      readCArray2D<double> (in, "epsilon", epsilon_[0], 
+                            nAtomType_, nAtomType_, MaxAtomType);
+      readCArray2D<double>(in, "sigma", sigma_[0], 
+                           nAtomType_, nAtomType_, MaxAtomType);
    
       // Calculate sigmaSq_, ce_, cf_, and maxPairCutoff_
       int i, j;
@@ -104,19 +105,32 @@ namespace Inter
    */
    void DpdPair::loadParameters(Serializable::IArchive &ar)
    {
+      #ifdef UTIL_MPI
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nAtomType_);
+      loader.load(maxPairCutoff_);
+      #else
       ar >> nAtomType_; 
+      ar >> maxPairCutoff_;
+      #endif
       if (nAtomType_ == 0) {
          UTIL_THROW( "nAtomType must be positive");
       }
       // Read parameters
-      loadCArray2D<double> (
-                  ar, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
-      loadCArray2D<double>(
-                  ar, "sigma", sigma_[0], nAtomType_, nAtomType_);
-      ar.unpack(sigmaSq_[0], nAtomType_, nAtomType_);
-      ar.unpack(cf_[0], nAtomType_, nAtomType_);
-      ar.unpack(ce_[0], nAtomType_, nAtomType_);
-      ar >> maxPairCutoff_;
+      loadCArray2D<double> (ar, "epsilon", epsilon_[0], 
+                            nAtomType_, nAtomType_, MaxAtomType);
+      loadCArray2D<double>(ar, "sigma", sigma_[0], 
+                            nAtomType_, nAtomType_, MaxAtomType);
+      
+      #ifdef UTIL_MPI
+      loader.load(sigmaSq_[0], nAtomType_, nAtomType_, MaxAtomType);
+      loader.load(cf_[0], nAtomType_, nAtomType_, MaxAtomType);
+      loader.load(ce_[0], nAtomType_, nAtomType_, MaxAtomType);
+      #else
+      ar.unpack(sigmaSq_[0], nAtomType_, nAtomType_, MaxAtomType);
+      ar.unpack(cf_[0], nAtomType_, nAtomType_, MaxAtomType);
+      ar.unpack(ce_[0], nAtomType_, nAtomType_, MaxAtomType);
+      #endif
       isInitialized_ = true;
    }
 
@@ -126,12 +140,12 @@ namespace Inter
    void DpdPair::save(Serializable::OArchive &ar)
    {
       ar << nAtomType_;
-      ar.pack(epsilon_[0], nAtomType_, nAtomType_);
-      ar.pack(sigma_[0], nAtomType_, nAtomType_);
-      ar.pack(sigmaSq_[0], nAtomType_, nAtomType_);
-      ar.pack(cf_[0], nAtomType_, nAtomType_);
-      ar.pack(ce_[0], nAtomType_, nAtomType_);
       ar << maxPairCutoff_;
+      ar.pack(epsilon_[0], nAtomType_, nAtomType_, MaxAtomType);
+      ar.pack(sigma_[0], nAtomType_, nAtomType_, MaxAtomType);
+      ar.pack(sigmaSq_[0], nAtomType_, nAtomType_, MaxAtomType);
+      ar.pack(cf_[0], nAtomType_, nAtomType_, MaxAtomType);
+      ar.pack(ce_[0], nAtomType_, nAtomType_, MaxAtomType);
    }
 
    /* 

@@ -55,8 +55,8 @@ void MpiLoaderTest::testPack()
    Vector a1, a2;
    double b1[4];
    double b2[4];
-   double m1[2][2];
-   double m2[2][2];
+   double m1[3][3]; // Physically 3 x 3, logically 2 x 2
+   double m2[3][3]; // Physically 3 x 3, logically 2 x 2
    DArray<double> e1;
    DArray<double> e2;
    e1.allocate(4);
@@ -112,7 +112,7 @@ void MpiLoaderTest::testPack()
       v << s1;
       v << a1;
       v.pack(b1, 4);
-      v.pack(m1[0], 2, 2);
+      v.pack(m1[0], 2, 2, 3);
       v << e1;
       v << f1;
       v << g1;
@@ -151,7 +151,7 @@ void MpiLoaderTest::testPack()
       TEST_ASSERT(b1[j] == b2[j]);
    }
 
-   loader.load(m2[0], 2, 2); // double 2D C array 
+   loader.load(m2[0], 2, 2, 3); // double 2D C array 
    int i, j;
    for (i = 0; i < 2; ++i) {
       for (j = 0; j < 2; ++j) {

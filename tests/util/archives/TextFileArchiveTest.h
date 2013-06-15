@@ -59,8 +59,8 @@ void TextFileArchiveTest::testPack()
    SerializeTestClass o1, o2;
    double b1[4];
    double b2[4];
-   double m1[2][2];
-   double m2[2][2];
+   double m1[3][3]; // intentionally oversized
+   double m2[3][3]; // intentionally oversized
 
    // Initialize variables
    i1 = 3;
@@ -91,7 +91,7 @@ void TextFileArchiveTest::testPack()
    v << a1;
    v << o1;
    v.pack(b1, 4);
-   v.pack(m1[0], 2, 2);
+   v.pack(m1[0], 2, 2, 3);
    v.file().close();
 
    TextFileIArchive u;
@@ -124,7 +124,7 @@ void TextFileArchiveTest::testPack()
       TEST_ASSERT(b1[j] == b2[j]);
    }
 
-   u.unpack(m2[0], 2, 2);
+   u.unpack(m2[0], 2, 2, 3);
    int i, j;
    for (i = 0; i < 2; ++i) {
       for (j = 0; j < 2; ++j) {

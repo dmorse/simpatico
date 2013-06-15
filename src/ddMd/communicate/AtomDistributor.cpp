@@ -16,7 +16,7 @@
 
 #include <algorithm>
 
-#define DDMD_ATOM_DISTRIBUTOR_DEBUG
+//#define DDMD_ATOM_DISTRIBUTOR_DEBUG
 
 namespace DdMd
 {

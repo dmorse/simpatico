@@ -61,11 +61,19 @@ test-ddMd:
 	echo `grep failed tests/ddMd/log` ", "\
              `grep successful tests/ddMd/log` "in tests/ddMd/log" >> log
 # ==============================================================================
+# Clean targets
+
 clean-mcMd:
 	cd src; make clean-mcMd
+	cd tests/util; make clean;
+	cd tests/inter; make clean;
+	cd tests/mcMd; make clean;
 
 clean-ddMd:
 	cd src; make clean-ddMd
+	cd tests/util; make clean;
+	cd tests/inter; make clean;
+	cd tests/ddMd; make clean;
 
 clean:
 	cd src; make clean
@@ -75,6 +83,7 @@ clean:
 clean-bin:
 	cd src; make clean-bin
 # ==============================================================================
+# HTML Documentation
  
 html:
 	cd doc; make html
@@ -83,9 +92,12 @@ clean-html:
 	cd doc; make clean
 
 # ==============================================================================
+# Remove all generated files
+
 veryclean:
-	cd html; make clean
 	cd src; make veryclean
+	cd tests; make clean
+	cd html; make clean
 	-rm -f log
 
 # ==============================================================================

@@ -5,13 +5,4 @@ This file should only list outstanding unresolved bugs. Bug descriptions should 
 removed after they are resolved
 
 -------------------------------------------------------------------------------------
-Error restarting ddSim
-
-After initial step, it outputs with the following before aborting:
-
-Bon: void DdMd::GroupStorage<N>::findGhosts(DdMd::AtomStorage &) [with N = 2]
-   Message : Incomplete group after search for ghosts
-   File    : /home/morsedc/morse/itasca/simpatico/src/ddMd/storage/GroupStorage.tpp
-   Line    : 760
-
 -------------------------------------------------------------------------------------

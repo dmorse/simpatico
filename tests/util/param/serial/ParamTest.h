@@ -243,7 +243,7 @@ public:
       value[1][0] = 8.97296;
       value[1][1] = 27.54;
       Parameter *param;
-      param = new CArray2DParam<double>("MyLabel", &value[0][0], 2, 2);
+      param = new CArray2DParam<double>("MyLabel", &value[0][0], 2, 2, 2);
       if (verbose() > 0) {
          printEndl();
          param->writeParam(std::cout);

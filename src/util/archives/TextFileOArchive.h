@@ -90,8 +90,8 @@ namespace Util
       /**
       * Save a C-array of T objects to this archive.
       *
-      * \param array C-array of T objects
-      * \param n     number of elements
+      * \param array  C array of T objects (pointer to first element)
+      * \param n  number of elements
       */
       template <typename T> 
       void pack(const T* array, int n);
@@ -99,12 +99,13 @@ namespace Util
       /**
       * Save a 2D C array to this archive.
       *
-      * \param array address of first row (or element) of 2D array
-      * \param m     number of rows
-      * \param n     number of columns
+      * \param array address of first element array[0][0] of 2D array
+      * \param m  logical number of rows
+      * \param n  logical number of columns
+      * \param np physical number of columns
       */
       template <typename T> 
-      void pack(const T* array, int m, int n);
+      void pack(const T* array, int m, int n, int np);
 
    private:
 
@@ -183,28 +184,28 @@ namespace Util
    }
 
    /*
-   * Pack a 2D C-array of objects of type T.
+   * Pack a 2D C-array of objects of type T, from array type T array[][np].
    */
    template <typename T>
-   inline void TextFileOArchive::pack(const T* array, int m, int n)
+   inline void TextFileOArchive::pack(const T* array, int m, int n, int np)
    {
       int i, j;
       for (i=0; i < m; ++i) {
          for (j=0; j < n; ++j) {
-            *filePtr_ << array[i*n + j] << "  ";
+            *filePtr_ << array[i*np + j] << "  ";
          }
          *filePtr_ << std::endl;
       }
    }
 
    /*
-   * Save a C-array of double values.
+   * Pack a C-array of double values.
    */
    template <>
    inline void TextFileOArchive::pack(const double* array, int n)
    {
       filePtr_->setf(std::ios::scientific);
-      filePtr_->precision(17);
+      filePtr_->precision(16);
       for (int i=0; i < n; ++i) {
         filePtr_->width(25);
         *filePtr_ << array[i] << "  ";
