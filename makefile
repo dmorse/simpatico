@@ -95,9 +95,9 @@ clean-html:
 # Remove all generated files
 
 veryclean:
-	cd src; make veryclean
-	cd tests; make clean
-	cd html; make clean
 	-rm -f log
+	cd html; make clean
+	cd tests; make clean
+	cd src; make veryclean
 
 # ==============================================================================
