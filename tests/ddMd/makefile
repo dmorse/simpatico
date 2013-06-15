@@ -22,7 +22,8 @@ clean:
 	cd potentials; make clean
 	cd configIos; make clean
 	cd simulation; make clean
-	-rm Test.o Test.d Test
+	-rm -f Test.o Test.d Test
+	-rm -f log
 
 Test: $(ddMd_LIB) $(inter_LIB) $(util_LIB) $(TESTS_DIR)/ddMd/Test.o
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test $(TESTS_DIR)/ddMd/Test.o \

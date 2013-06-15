@@ -14,7 +14,11 @@ namespace DdMd
 {
 
    /**
-   * AtomStorage for bonds.
+   * Container for for Group<2> (bond) objects.
+   *
+   * Only differences from GroupStorage<2> is the className,
+   * which is set in the constructor and effects the param 
+   * file format.
    *
    * \ingroup DdMd_Storage_Module
    */

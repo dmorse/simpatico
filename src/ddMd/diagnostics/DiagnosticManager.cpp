@@ -87,10 +87,12 @@ namespace DdMd
    */
    void DiagnosticManager::sample(long iStep) 
    {
-      if (iStep % Diagnostic::baseInterval == 0) { 
-         for (int i=0; i < size(); ++i) {
-            if ((*this)[i].isAtInterval(iStep)) {
-               (*this)[i].sample(iStep);
+      if (Diagnostic::baseInterval > 0) {
+         if (iStep % Diagnostic::baseInterval == 0) { 
+            for (int i=0; i < size(); ++i) {
+               if ((*this)[i].isAtInterval(iStep)) {
+                  (*this)[i].sample(iStep);
+               }
             }
          }
       }

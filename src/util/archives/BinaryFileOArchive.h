@@ -97,12 +97,16 @@ namespace Util
       /**
       * Pack a 2D C array.
       *
+      * This packs m rows of length n within a 2D C array allocated
+      * as array[][np], where np is the physical length of one row.
+      *
       * \param array pointer to [0][0] element in 2D array
       * \param m     number of rows
-      * \param n     number of columns
+      * \param n     logical number of columns
+      * \param np    physical number of columns
       */
       template <typename T> 
-      void pack(const T* array, int m, int n);
+      void pack(const T* array, int m, int n, int np);
 
    private:
 
@@ -171,12 +175,12 @@ namespace Util
    * Bitwise pack a 2D C-array of objects of type T.
    */
    template <typename T>
-   inline void BinaryFileOArchive::pack(const T* array, int m, int n)
+   inline void BinaryFileOArchive::pack(const T* array, int m, int n, int np)
    {
       int i, j;
       for (i=0; i < m; ++i) {
          for (j=0; j < n; ++j) {
-            filePtr_->write( (char*)(&array[i*n + j]), sizeof(T));
+            filePtr_->write( (char*)(&array[i*np + j]), sizeof(T));
          }
       }
    }

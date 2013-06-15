@@ -30,8 +30,6 @@ namespace DdMd
       cutoff_(0.0),
       atomCapacity_(0),
       pairCapacity_(0),
-      nAtom1_(0),
-      nAtom2_(0),
       maxNAtomLocal_(0),
       maxNPairLocal_(0),
       buildCounter_(0),
@@ -57,10 +55,11 @@ namespace DdMd
       pairCapacity_ = pairCapacity;
       cutoff_       = cutoff;
 
-      atom1Ptrs_.allocate(atomCapacity_);
-      atom2Ptrs_.allocate(pairCapacity_);
-      first_.allocate(atomCapacity_ + 1);
-   
+      atom1Ptrs_.reserve(atomCapacity_);
+      atom2Ptrs_.reserve(pairCapacity_);
+      first_.reserve(atomCapacity_ + 1);
+  
+      #if 0 
       // Initialize array elements to null values
       for (i=0; i < atomCapacity_; ++i) {
          atom1Ptrs_[i] = 0;
@@ -70,9 +69,9 @@ namespace DdMd
       for (i=0; i < pairCapacity_; ++i) {
          atom2Ptrs_[i] = 0;
       }
+      #endif
 
       isAllocated_ = true;
-   
    }
 
    /*
@@ -80,9 +79,9 @@ namespace DdMd
    */
    void PairList::clear()
    { 
-      nAtom1_   = 0; 
-      nAtom2_   = 0; 
-      first_[0] = PairList::NullIndex;
+      atom1Ptrs_.clear();
+      atom2Ptrs_.clear();
+      first_.clear();
    }
  
    /*
@@ -110,9 +109,10 @@ namespace DdMd
       cutoffSq = cutoff_*cutoff_;
    
       // Initialize counters for primary atoms and neighbors
-      nAtom1_   = 0; // Number of primary atoms with neighbors
-      nAtom2_   = 0; // Number of secondary atoms (2nd in pair), or pairs
-      first_[0] = 0;
+      atom1Ptrs_.clear();
+      atom2Ptrs_.clear();
+      first_.clear();
+      first_.append(0);
    
       // Find all neighbors (cell list)
       cellPtr = cellList.begin();
@@ -130,34 +130,19 @@ namespace DdMd
             // Loop over secondary atoms (atom2) in primary cell
             for (j = 0; j < na; ++j) {
                atom2Ptr = neighbors[j];
-
                if (atom2Ptr > atom1Ptr) {
                   atom2Id  = atom2Ptr->id();
                   if (!maskPtr->isMasked(atom2Id)) {
                      dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
                      dRSq = dr.square();
                      if (dRSq < cutoffSq) {
-      
-                        if (nAtom2_ >= pairCapacity_) {
-                           UTIL_THROW("Overflow: # pairs > pairCapacity_");
-                        }
-      
                         // If first neighbor of atom1, add atom1 to atom1Ptrs_
                         if (!foundNeighbor) {
-   
-                           if (nAtom1_ >= atomCapacity_) {
-                              UTIL_THROW("Overflow: # pairs > pairCapacity_");
-                           }
-                           assert(nAtom1_ >= 0);
-   
-                           atom1Ptrs_[nAtom1_] = atom1Ptr;
+                           atom1Ptrs_.append(atom1Ptr);
                            foundNeighbor = true;
                         }
-      
                         // Append 2nd atom to atom2Ptrs_[]
-                        atom2Ptrs_[nAtom2_] = atom2Ptr;
-                        ++nAtom2_;
-      
+                        atom2Ptrs_.append(atom2Ptr);
                      }
                   }
                }
@@ -171,27 +156,13 @@ namespace DdMd
                   dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
                   dRSq = dr.square();
                   if (dRSq < cutoffSq) {
-   
-                     // Check for overflow of atom2Ptrs_
-                     if (nAtom2_ >= pairCapacity_) {
-                        UTIL_THROW("Overflow: # pairs > pairCapacity_");
-                     }
-   
                      // If first_ neighbor, record iAtomId in atom1Ptrs_
                      if (!foundNeighbor) {
-   
-                        if (nAtom1_ >= atomCapacity_) {
-                           UTIL_THROW("Overflow: # pairs > pairCapacity_");
-                        }
-                        assert(nAtom1_ >= 0);
-   
-                        atom1Ptrs_[nAtom1_] = atom1Ptr;
+                        atom1Ptrs_.append(atom1Ptr);
                         foundNeighbor = true;
                      }
-   
                      // Append Id of 2nd atom in pair to atom2Ptrs_[]
-                     atom2Ptrs_[nAtom2_] = atom2Ptr;
-                     ++nAtom2_;
+                     atom2Ptrs_.append(atom2Ptr);
                  }
               }
    
@@ -199,8 +170,7 @@ namespace DdMd
   
             // When finished with atom1, set next element of first_ array.
             if (foundNeighbor) {
-               ++nAtom1_;
-               first_[nAtom1_] = nAtom2_;
+               first_.append(atom2Ptrs_.size());
             }
          }
 
@@ -208,12 +178,29 @@ namespace DdMd
          cellPtr = cellPtr->nextCellPtr();
       }
 
+      // Postconditions
+      if (atom1Ptrs_.size()) {
+         if (first_.size() != atom1Ptrs_.size() + 1) {
+            UTIL_THROW("Array size problem");
+         }
+         if (first_[0] != 0) {
+            UTIL_THROW("Incorrect first element of first_");
+         }
+         if (first_[atom1Ptrs_.size()] != atom2Ptrs_.size()) {
+            UTIL_THROW("Incorrect last element of first_");
+         }
+      }
+
       // Increment buildCounter_= number of times the list has been built.
       ++buildCounter_;
  
       // Increment maxima
-      if (nAtom1_ > maxNAtomLocal_) maxNAtomLocal_ = nAtom1_;
-      if (nAtom2_ > maxNPairLocal_) maxNPairLocal_ = nAtom2_;
+      if (atom1Ptrs_.size() > maxNAtomLocal_) {
+         maxNAtomLocal_ = atom1Ptrs_.size();
+      }
+      if (atom2Ptrs_.size() > maxNPairLocal_) {
+         maxNPairLocal_ = atom2Ptrs_.size();
+      }
    }
 
    /*
@@ -221,13 +208,15 @@ namespace DdMd
    */
    void PairList::begin(PairIterator& iterator) const
    {
-      iterator.atom1Ptrs_ = &atom1Ptrs_[0];
-      iterator.atom2Ptrs_ = &atom2Ptrs_[0];
-      iterator.first_     = &first_[0];
-      iterator.nAtom1_    = nAtom1_;
-      iterator.nAtom2_    = nAtom2_;
-      iterator.atom1Id_   = 0;
-      iterator.atom2Id_   = 0;
+      if (atom1Ptrs_.size()) {
+         iterator.atom1Ptrs_ = &atom1Ptrs_[0];
+         iterator.atom2Ptrs_ = &atom2Ptrs_[0];
+         iterator.first_     = &first_[0];
+         iterator.nAtom1_    = atom1Ptrs_.size();
+         iterator.nAtom2_    = atom2Ptrs_.size();
+         iterator.atom1Id_   = 0;
+         iterator.atom2Id_   = 0;
+      }
    }
 
    /*
@@ -285,32 +274,6 @@ namespace DdMd
                   << Int(atomCapacity_, 10)
                   << std::endl;
    }
-
-   #if 0
-   /*
-   * Return true if valid, or throw Exception.
-   */
-   bool PairList::isValid() const
-   {
-      if (isAllocated()) {
-
-         // Check for null pointers to allocated arrays
-
-         if (atomCapacity_ <= 0) UTIL_THROW("atomCapacity_ <= 0"); 
-         if (pairCapacity_ <= 0) UTIL_THROW("pairCapacity_ <= 0"); 
-
-         //if (atom1Ptrs_ == 0)    UTIL_THROW("Null atom1Ptrs_"); 
-         //if (atom2Ptrs_ == 0)    UTIL_THROW("Null atom2Ptrs_"); 
-         //if (first_ == 0)        UTIL_THROW("Null first_"); 
-
-         if (nAtom1_ < 0) {
-            UTIL_THROW("nAtom1_ < 0");
-         }
-      }
-
-      return true;
-   }
-   #endif
 
 } 
 #endif

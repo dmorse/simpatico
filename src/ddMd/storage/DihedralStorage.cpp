@@ -9,6 +9,7 @@
 */
 
 #include "DihedralStorage.h"
+#include "GroupStorage.tpp"
 #include <ddMd/chemistry/Dihedral.h>
 
 namespace DdMd

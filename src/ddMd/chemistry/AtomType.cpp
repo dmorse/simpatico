@@ -16,14 +16,18 @@ namespace DdMd
 
    using namespace Util;
 
-   // Constructor
+   /*
+   * Constructor
+   */
    AtomType::AtomType()
     : mass_(1.0),
       name_(),
       id_(-1) 
    {}
 
-   // Set the index.
+   /*
+   * Set the index.
+   */
    void AtomType::setId(int id)
    {  id_ = id; }
 
@@ -57,8 +61,8 @@ namespace DdMd
    */
    void AtomType::initStatic()
    {
-      Util::MpiTraits<DdMd::AtomType>::type = MPI::BYTE;
-      Util::MpiTraits<DdMd::AtomType>::hasType = false;
+      MpiTraits<DdMd::AtomType>::type = MPI::BYTE;
+      MpiTraits<DdMd::AtomType>::hasType = false;
    }
    #endif
 

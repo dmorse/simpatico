@@ -11,7 +11,10 @@
 #include <util/containers/DArray.h>
 #include <util/global.h>
 
-namespace DdMd {
+namespace DdMd 
+{
+
+   using namespace Util;
 
    /**
    * Class for measuring time intervals.
@@ -65,7 +68,7 @@ namespace DdMd {
    
    private:
    
-      Util::DArray<double> times_;
+      DArray<double> times_;
       double previous_;
       double begin_;
       double time_;

@@ -201,7 +201,7 @@ public:
       }
       //std::cout << "Total number of pairs = " << np << std::endl;
 
-      // Count neighbors (N^2 loop)
+      // Count neighbor pairs (N^2 loop)
       int nq = 0;
       for (i = 0; i < locals.size(); ++i) {
          atom1Ptr = &locals[i];

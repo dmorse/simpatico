@@ -10,7 +10,7 @@
 #   - The name $(INTER_LIB) of the McMd library. 
 #
 # This file is included by every makefile in the mcMd directory. 
-# It must be included after $(SRC_DIR)/makefile.mk and before
+# It must be included after $(SRC_DIR)/compiler.mk and before
 # $(SRC_DIR)/mcmd/patterns.mk.
 #-----------------------------------------------------------------------
 # Makefile variables to define preprocessor macros that enable/disable

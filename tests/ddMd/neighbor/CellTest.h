@@ -35,9 +35,6 @@ public:
    {
       atoms.allocate(nAtom);
       handles.allocate(nAtom);
-      //for (int i = 0; i < nAtom; ++i) {
-      //   handles[i] = &(atoms[i]);
-      //}
    }
 
    void tearDown()
@@ -61,27 +58,23 @@ public:
    {
       printMethod(TEST_FUNC);
 
+      cell.clear();
       for (int i = 0; i < nAtom; ++i) {
          cell.incrementCapacity();
       }
       cell.initialize(&(handles[0]));
       TEST_ASSERT(cell.nAtom() == 0);
       TEST_ASSERT(cell.atomCapacity() == nAtom);
-      //for (int i = 0; i < nAtom; ++i) {
-      //   TEST_ASSERT(handles[i] == &(atoms[i]));
-      //}
       for (int i = 0; i < nAtom; ++i) {
+         TEST_ASSERT(cell.nAtom() == i);
          cell.append(&(atoms[i]));
+         TEST_ASSERT(cell.atomPtr(i) == &(atoms[i]));
       }
-      //for (int i = 0; i < nAtom; ++i) {
-      //   TEST_ASSERT(handles[i] == &(atoms[i]));
-      //}
       TEST_ASSERT(cell.nAtom() == nAtom);
       TEST_ASSERT(cell.atomCapacity() == nAtom);
       for (int i = 0; i < nAtom; ++i) {
          TEST_ASSERT(cell.atomPtr(i) == &(atoms[i]));
-         //TEST_ASSERT(cell.atomPtr(i) == handles[i]);
-         //TEST_ASSERT(handles[i] == &(atoms[i]));
+         TEST_ASSERT(handles[i] == &(atoms[i]));
       }
       
    }

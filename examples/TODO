@@ -1,4 +1,4 @@
-Make sure all examples have writeRestartInterval
+Make sure all examples have saveInterval
 
 Recheck all ideal gas _np and _np_a_d examples
 Recheck all external  _e examples

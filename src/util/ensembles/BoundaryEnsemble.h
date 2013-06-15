@@ -23,6 +23,8 @@ namespace Util
    *
    * A boundary ensemble has a type, which can be rigid or isobaric,
    * and stores a pressure if it is isobaric.
+   *
+   * \ingroup Ensemble_Module
    */
    class BoundaryEnsemble : public ParamComposite
    {

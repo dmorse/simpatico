@@ -139,8 +139,6 @@ namespace Util
 
    /*
    * Return allocated size.
-   *
-   * \return Number of elements allocated in array.
    */
    template <typename Data>
    inline int Array<Data>::capacity() const
@@ -148,8 +146,6 @@ namespace Util
 
    /*
    * Set an ArrayIterator to the beginning of this Array.
-   *
-   * \param iterator ArrayIterator, initialized on output. 
    */
    template <typename Data>
    inline void Array<Data>::begin(ArrayIterator<Data> &iterator)
@@ -162,8 +158,6 @@ namespace Util
 
    /*
    * Set a ConstArrayIterator to the beginning of this Array.
-   *
-   * \param iterator ArrayIterator, initialized on output. 
    */
    template <typename Data>
    inline void Array<Data>::begin(ConstArrayIterator<Data> &iterator) const
@@ -176,9 +170,6 @@ namespace Util
 
    /*
    * Mimic C array subscripting.
-   *
-   * \param  i array index
-   * \return reference to element i
    */
    template <typename Data>
    inline Data& Array<Data>::operator[] (int i)
@@ -191,9 +182,6 @@ namespace Util
 
    /*
    * Mimic C array subscripting.
-   *
-   * \param i array index
-   * \return const reference to element i
    */
    template <typename Data>
    inline const Data& Array<Data>::operator[] (int i) const
@@ -204,19 +192,19 @@ namespace Util
       return *(data_ + i);
    }
 
-    /**
-    * Return pointer to underlying C array.
-    */
-    template <typename Data>
-    inline Data* Array<Data>::cArray()
-    {  return data_; }
+   /*
+   * Return pointer to underlying C array.
+   */
+   template <typename Data>
+   inline Data* Array<Data>::cArray()
+   {  return data_; }
 
-    /**
-    * Return pointer to const to underlying C array.
-    */
-    template <typename Data>
-    const Data* Array<Data>::cArray() const
-    {  return data_; }
+   /*
+   * Return pointer to const to underlying C array.
+   */
+   template <typename Data>
+   const Data* Array<Data>::cArray() const
+   {  return data_; }
 
-} 
+}
 #endif

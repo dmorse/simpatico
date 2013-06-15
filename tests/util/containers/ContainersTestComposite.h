@@ -9,10 +9,11 @@
 
 #include "DSArrayTest.h"
 #include "FSArrayTest.h"
+#include "GArrayTest.h"
 
 #include "DPArrayTest.h"
 #include "FPArrayTest.h"
-#include "APArrayTest.h"
+#include "GPArrayTest.h"
 #include "ArraySetTest.h"
 #include "ArrayStackTest.h"
 #include "RingBufferTest.h"
@@ -29,13 +30,13 @@ TEST_COMPOSITE_BEGIN(ContainersTestComposite)
 TEST_COMPOSITE_ADD_UNIT(DArrayTest)
 TEST_COMPOSITE_ADD_UNIT(FArrayTest)
 TEST_COMPOSITE_ADD_UNIT(RArrayTest)
-
 TEST_COMPOSITE_ADD_UNIT(DSArrayTest)
 TEST_COMPOSITE_ADD_UNIT(FSArrayTest)
+TEST_COMPOSITE_ADD_UNIT(GArrayTest)
 
 TEST_COMPOSITE_ADD_UNIT(FPArrayTest)
 TEST_COMPOSITE_ADD_UNIT(DPArrayTest)
-TEST_COMPOSITE_ADD_UNIT(APArrayTest)
+TEST_COMPOSITE_ADD_UNIT(GPArrayTest)
 TEST_COMPOSITE_ADD_UNIT(ArraySetTest)
 TEST_COMPOSITE_ADD_UNIT(ArrayStackTest)
 TEST_COMPOSITE_ADD_UNIT(RingBufferTest)

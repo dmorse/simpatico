@@ -1,8 +1,6 @@
 #ifndef DDMD_CELL_H
 #define DDMD_CELL_H
 
-// THIS CLASS IS UNFINISHED, UNTESTED, AND UNUSED
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -10,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <ddMd/chemistry/Atom.h>
 #include <util/containers/FSArray.h>
-#include <util/global.h>
 
 namespace DdMd
 {
@@ -300,6 +298,7 @@ namespace DdMd
    */
    inline Atom* Cell::atomPtr(int i) const
    {
+      assert(i >= 0);
       assert(i < nAtom_);
       return begin_[i];
    }

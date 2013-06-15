@@ -8,23 +8,25 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <util/param/ParamComposite.h>   // base class
+#include <ddMd/storage/GroupExchanger.h> // base class
+#include <ddMd/chemistry/Atom.h>         // member template parameter
 #include <ddMd/chemistry/Group.h>        // member template parameter
+#include <util/space/IntVector.h>        // member template parameter
 #include <util/containers/DArray.h>      // member template
+#include <util/containers/GPArray.h>     // member template
+#include <util/containers/FMatrix.h>     // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
 
-#include "AtomStorage.h"
-#include "GroupIterator.h"
-#include "ConstGroupIterator.h"
-#include <util/format/Int.h>
-#include <util/mpi/MpiLoader.h>  
-#include <util/global.h>
-
+#include "GroupIterator.h"               // inline methods
+#include "ConstGroupIterator.h"          // inline methods
 
 namespace DdMd
 {
 
+   class AtomStorage;
    using namespace Util;
 
    /**
@@ -33,7 +35,7 @@ namespace DdMd
    * \ingroup DdMd_Storage_Module
    */
    template <int N>
-   class GroupStorage : public ParamComposite
+   class GroupStorage : public ParamComposite, public GroupExchanger
    {
 
    public:
@@ -48,6 +50,9 @@ namespace DdMd
       */
       ~GroupStorage();
 
+      /// \name Initialization
+      //@{
+      
       /**
       * Set parameters, allocate memory and initialize.
       *
@@ -90,6 +95,7 @@ namespace DdMd
       */
       virtual void save(Serializable::OArchive &ar);
   
+      //@}
       /// \name Group Management
       //@{
 
@@ -241,13 +247,15 @@ namespace DdMd
       /**
       * Return total number of distinct groups on all processors.
       *
-      * This function should be called only on the master processors, after
-      * a subsequent call to computeNTotal().
+      * This function should be called only on the master processor, 
+      * after a previous call to computeNTotal() on all processors.
       */
       int nTotal() const;
 
       /**
       *  Mark nTotal as unknown.
+      *
+      *  Call on all processors.
       */
       void unsetNTotal();
 
@@ -256,6 +264,75 @@ namespace DdMd
       */
       bool isValid();
 
+      //@}
+      /// \name GroupExchanger Intervace (Interprocessor Communication)
+      //@{
+      
+      /**
+      * Find and mark groups that span boundaries.
+      *
+      * \param bound  boundaries of domain for this processor
+      * \param inner  inner slab boundaries (extended domain of neighbors)
+      * \param outer  outer slab boundaries (extended domain of this processor)
+      * \param gridFlags  element i is 0 iff gridDimension[i] == 1, 1 otherwise
+      */
+      virtual
+      void markSpanningGroups(FMatrix<double, Dimension, 2>& bound, 
+                              FMatrix<double, Dimension, 2>& inner, 
+                              FMatrix<double, Dimension, 2>& outer, 
+                              IntVector& gridFlags);
+   
+      #ifdef UTIL_MPI
+      /**
+      * Pack groups for exchange.
+      *
+      * Usage: This is called after atom exchange plans are set, 
+      * but before atoms makred for exchange in direction i, j
+      * have been cleared or removed from the atomStorage.
+      *
+      * \param i  index of Cartesian communication direction
+      * \param j  index for sign of direction
+      * \param buffer  Buffer object into which groups are packed
+      */
+      virtual
+      void pack(int i, int j, Buffer& buffer);
+   
+      /**
+      * Unpack groups from buffer.
+      *
+      * \param buffer  Buffer object from which groups are unpacked
+      * \param atomStorage  AtomStorage used to find atoms pointers
+      */
+      virtual
+      void unpack(Buffer& buffer, AtomStorage& atomStorage);
+      #endif // endif ifdef UTIL_MPI
+   
+      /**
+      * Set ghost communication flags for all atoms in incomplete groups.
+      *
+      * Usage: This is called after exchanging all atoms and groups between 
+      * processors, but before exchanging ghosts. At this point, atom
+      * ownership is finalized, but there are no ghosts.
+      *
+      * \param atomStorage AtomStorage object
+      * \param sendArray   Matrix of arrays of pointers to ghosts to send
+      * \param gridFlags   element i is 0 iff gridDimension[i] == 1, 1 otherwise
+      */
+      virtual
+      void markGhosts(AtomStorage& atomStorage, 
+                      FMatrix<GPArray<Atom>, Dimension, 2>&  sendArray,
+                      IntVector& gridFlags);
+   
+      /**
+      * Find all ghost members of groups.
+      *
+      * Usage: This called after all ghosts have been exchanged.
+      *
+      * \param atomStorage AtomStorage object used to find atom pointers
+      */
+      virtual
+      void findGhosts(AtomStorage& atomStorage);
+   
       /**
       * Return true if the container is valid, or throw an Exception.
       *
@@ -269,9 +346,11 @@ namespace DdMd
       * \param communicator domain communicator 
       */
       #ifdef UTIL_MPI
+      virtual
       bool isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator, 
                    bool hasGhosts);
       #else
+      virtual
       bool isValid(AtomStorage& atomStorage, bool hasGhosts);
       #endif
 
@@ -315,18 +394,21 @@ namespace DdMd
 
    private:
 
-      // Array that holds all available group objects.
-      DArray< Group<N> >     groups_;
+      // Memory pool that holds all available group objects.
+      DArray< Group<N> >  groups_;
 
       // Set of pointers to local groups.
-      ArraySet< Group<N> >   groupSet_;
+      ArraySet< Group<N> >  groupSet_;
 
       // Stack of pointers to unused local Group objects.
-      ArrayStack< Group<N> > reservoir_;
+      ArrayStack< Group<N> >  reservoir_;
 
-      // Array of pointers to groups, indexed by Id.
+      // Array of pointers to groups, indexed by global group Id.
       // Elements corresponding to absent groups hold null pointers.
-      DArray< Group<N>* >    groupPtrs_;
+      DArray< Group<N>* >  groupPtrs_;
+
+      // Array identifying empty groups, marked for later removal 
+      GPArray< Group<N> > emptyGroups_;
 
       // Pointer to space for a new local Group
       Group<N>* newPtr_;
@@ -371,468 +453,27 @@ namespace DdMd
    inline int GroupStorage<N>::nTotal() const
    {  return nTotal_.value(); }
 
-   // Non-inline method templates.
-
-   /*
-   * Default constructor.
-   */
-   template <int N>
-   GroupStorage<N>::GroupStorage()
-    : groups_(),
-      groupSet_(),
-      reservoir_(),
-      newPtr_(0),
-      capacity_(0),
-      totalCapacity_(0),
-      nTotal_(0)
-   {}
- 
-   /*
-   * Destructor.
-   */
-   template <int N>
-   GroupStorage<N>::~GroupStorage()
-   {}
-
-   /*
-   * Set parameters and allocate memory.
-   */
-   template <int N>
-   void GroupStorage<N>::initialize(int capacity, int totalCapacity)
-   {
-      capacity_  = capacity;
-      totalCapacity_ = totalCapacity;
-      allocate();
-   }
-
-   /*
-   * Read parameters and allocate memory.
-   */
-   template <int N>
-   void GroupStorage<N>::readParameters(std::istream& in)
-   {
-      read<int>(in, "capacity", capacity_);
-      read<int>(in, "totalCapacity", totalCapacity_);
-      allocate();
-   }
-
-   /*
-   * Load parameters from input archive and allocate memory.
-   */
-   template <int N>
-   void GroupStorage<N>::loadParameters(Serializable::IArchive& ar)
-   {
-      loadParameter<int>(ar, "capacity", capacity_);
-      loadParameter<int>(ar, "totalCapacity", totalCapacity_);
-      allocate();
-
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(maxNGroupLocal_);
-      maxNGroup_.set(maxNGroupLocal_);
-   }
-
-   /*
-   * Save parameters to output archive.
-   */
-   template <int N>
-   void GroupStorage<N>::save(Serializable::OArchive& ar)
-   {
-      ar & capacity_;
-      ar & totalCapacity_;
-      int max = maxNGroup_.value();
-      ar & max;
-   }
-
-   /*
-   * Allocate and initialize all containers (private).
-   */
-   template <int N>
-   void GroupStorage<N>::allocate()
-   {
-      groups_.allocate(capacity_);
-      reservoir_.allocate(capacity_);
-      groupSet_.allocate(groups_);
-      groupPtrs_.allocate(totalCapacity_);
-
-      // Push all groups onto reservoir stack, in reverse order.
-      for (int i = capacity_ - 1; i >=0; --i) {
-          reservoir_.push(groups_[i]);
-      }
-
-      // Nullify all pointers in groupPtrs_ array.
-      for (int i = 0; i < totalCapacity_; ++i) {
-         groupPtrs_[i] = 0;
-      }
-   }
-
-   // Local group mutators
-
-   /*
-   * Returns address for a new local Group.
-   */ 
-   template <int N>
-   Group<N>* GroupStorage<N>::newPtr()
-   {
-      // Precondition
-      if (newPtr_ != 0) 
-         UTIL_THROW("Unregistered newPtr_ still active");
-      newPtr_ = &reservoir_.pop();
-      newPtr_->clear();
-      return newPtr_;
-   }
-
-   /*
-   * Pushes unused pointer back onto reservoir.
-   */ 
-   template <int N>
-   void GroupStorage<N>::returnPtr()
-   {
-      // Preconditions
-      if (newPtr_ == 0) 
-         UTIL_THROW("No active newPtr_");
-      newPtr_->setId(-1);
-      reservoir_.push(*newPtr_);
-      newPtr_ = 0;
-   }
-
-   /*
-   * Register new local Group in internal data structures.
-   */ 
-   template <int N>
-   Group<N>* GroupStorage<N>::add()
-   {
-
-      // Preconditions
-      if (newPtr_ == 0) {
-         UTIL_THROW("No active newPtr_");
-      }
-      int groupId = newPtr_->id();
-      if (groupId < 0 || groupId >= totalCapacity_) {
-         std::cout << "groupId = " << groupId << std::endl;
-         UTIL_THROW("Invalid group id");
-      }
-      if (groupPtrs_[groupId] != 0) {
-         UTIL_THROW("Group with specified id is already present");
-      }
-
-      // Add Group<N> object to container
-      groupSet_.append(*newPtr_);
-      groupPtrs_[groupId] = newPtr_;
-
-      // Release newPtr_ for reuse.
-      Group<N>* ptr = newPtr_;
-      newPtr_ = 0;
-
-      // Check maximum.
-      if (groupSet_.size() > maxNGroupLocal_) {
-         maxNGroupLocal_ = groupSet_.size();
-      }
-
-      return ptr;
-   }
-
-   /*
-   * Add a new Group with a specified id, return pointer to new Group.
-   */
-   template <int N>
-   Group<N>* GroupStorage<N>::add(int id)
-   {
-      Group<N>* ptr = newPtr();
-      ptr->setId(id);
-      add();
-      return ptr;
-   }
-
-   /*
-   * Remove a specific local Group.
-   */
-   template <int N>
-   void GroupStorage<N>::remove(Group<N>* groupPtr)
-   {
-      int groupId = groupPtr->id();
-      if (groupId < 0 || groupId >= totalCapacity_) {
-         std::cout << "Group id = " << groupId << std::endl;
-         UTIL_THROW("Invalid group id, out of range");
-      } else if (groupPtrs_[groupId] == 0) {
-         UTIL_THROW("Group does not exist on this processor");
-      }
-      reservoir_.push(*groupPtr);
-      groupSet_.remove(*groupPtr);
-      groupPtrs_[groupId] = 0;
-      groupPtr->setId(-1);
-   }
-
-   /*
-   * Remove all groups.
-   */
-   template <int N>
-   void GroupStorage<N>::clearGroups()
-   {
-      Group<N>* groupPtr;
-      int  groupId;
-      while (groupSet_.size() > 0) {
-         groupPtr = &groupSet_.pop();
-         groupId = groupPtr->id();
-         groupPtrs_[groupId] = 0;
-         groupPtr->setId(-1);
-         reservoir_.push(*groupPtr);
-      }
-
-      if (groupSet_.size() != 0) {
-         UTIL_THROW("Nonzero ghostSet size at end of clearGhosts");
-      }
-   }
-
-   // Accessors
-
    /*
    * Return pointer to Group with specified id.
    */
    template <int N>
-   Group<N>* GroupStorage<N>::find(int id) const
+   inline Group<N>* GroupStorage<N>::find(int id) const
    {  return groupPtrs_[id]; }
 
    /*
    * Set iterator to beginning of the set of local groups.
    */
    template <int N>
-   void GroupStorage<N>::begin(GroupIterator<N>& iterator)
+   inline void GroupStorage<N>::begin(GroupIterator<N>& iterator)
    {  groupSet_.begin(iterator); }
  
    /*
    * Set const iterator to beginning of the set of local groups.
    */
    template <int N>
+   inline 
    void GroupStorage<N>::begin(ConstGroupIterator<N>& iterator) const
    {  groupSet_.begin(iterator); }
 
-   /*
-   * Check validity of this GroupStorage.
-   *
-   * Returns true if all is ok, or throws an Exception.
-   */
-   template <int N>
-   bool GroupStorage<N>::isValid()
-   {
-      
-      if (size() + reservoir_.size() != capacity_) 
-         UTIL_THROW("nGroup + reservoir size != local capacity"); 
-
-      Group<N>* ptr;
-      int       i, j;
-      j = 0;
-      for (i = 0; i < totalCapacity_ ; ++i) {
-         ptr = groupPtrs_[i];
-         if (ptr != 0) {
-            ++j;
-            if (ptr->id() != i) {
-               UTIL_THROW("ptr->id() != i"); 
-            }
-         }
-      }
-
-      // Count local groups
-      GroupIterator<N> iter;
-      j = 0;
-      for (begin(iter); iter.notEnd(); ++iter) {
-         ++j;
-         ptr = find(iter->id());
-         if (ptr == 0)
-            UTIL_THROW("Unable to find local group returned by iterator"); 
-         if (ptr != iter.get())
-            UTIL_THROW("Inconsistent find(iter->id()"); 
-      }
-      if (j != size())
-         UTIL_THROW("Number from iterator != size()"); 
-
-      return true;
-   }
-
-   /**
-   * Compute and store total number of atoms on all processors.
-   */
-   template <int N>
-   #ifdef UTIL_MPI
-   void GroupStorage<N>::computeNTotal(MPI::Intracomm& communicator)
-   #else
-   void GroupStorage<N>::computeNTotal()
-   #endif
-   {
-      // If nTotal is already known, return and do nothing.
-      if (nTotal_.isSet()) return;
-
-      // Loop over groups on this processor. 
-      // Increment nLocal only if atom 0 is owned by this processor
-      GroupIterator<N> iterator;
-      Atom* atomPtr;
-      int nLocal = 0;
-      begin(iterator);
-      for ( ; iterator.notEnd(); ++iterator) {
-         atomPtr = iterator->atomPtr(0);
-         if (atomPtr) {
-            if (!atomPtr->isGhost()) {
-               ++nLocal;
-            }
-         }
-      }
-
-      // Reduce data on all processors and set nTotal_ on master.
-      int nTot;
-      #ifdef UTIL_MPI
-      communicator.Reduce(&nLocal, &nTot, 1, 
-                          MPI::INT, MPI::SUM, 0);
-      if (communicator.Get_rank() !=0) {
-         nTot = -1;
-      }
-      nTotal_.set(nTot);
-      #else
-      nTotal_.set(nLocal);
-      #endif
-   }
-
-   /*
-   * Compute memory usage statistics (call on all processors).
-   */
-   template <int N>
-   #ifdef UTIL_MPI
-   void GroupStorage<N>::computeStatistics(MPI::Intracomm& communicator)
-   #else
-   void GroupStorage<N>::computeStatistics()
-   #endif
-   { 
-      #ifdef UTIL_MPI
-      int maxNGroupGlobal;
-      communicator.Allreduce(&maxNGroupLocal_, &maxNGroupGlobal, 1, 
-                             MPI::INT, MPI::MAX);
-      maxNGroup_.set(maxNGroupGlobal);
-      maxNGroupLocal_ = maxNGroupGlobal;
-      #else
-      maxNGroup_.set(maxNGroupLocal_);
-      #endif
-   }
-
-   /*
-   * Clear all statistics.
-   */
-   template <int N>
-   void GroupStorage<N>::clearStatistics() 
-   {
-      maxNGroupLocal_ = 0;
-      maxNGroup_.unset();
-   }
-
-   /*
-   * Output statistics.
-   */
-   template <int N>
-   void GroupStorage<N>::outputStatistics(std::ostream& out)
-   {
-
-      out << std::endl;
-      out << "GroupStorage<" << N << ">" << std::endl;
-      out << "NGroup: max, capacity    " 
-                  << Int(maxNGroup_.value(), 10)
-                  << Int(capacity_, 10)
-                  << std::endl;
-   }
-
-   /*
-   * Check validity of all groups on this processor.
-   */
-   template <int N>
-   #ifdef UTIL_MPI
-   bool GroupStorage<N>::isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator,
-                                 bool hasGhosts)
-   #else
-   bool GroupStorage<N>::isValid(AtomStorage& atomStorage, bool hasGhosts)
-   #endif
-   {
-      int i;
-      int atomId;
-      int nAtom;  // Number of local atoms in particular group.
-      int nGhost; // Number of local atoms in particular group.
-      int nAtomGroup = 0; // Number of local atoms in all groups on processor
-      Atom* atomPtr;
-      ConstGroupIterator<N> groupIter;
-
-      // Call simpler function that only checks storage data structures.
-      isValid();
-
-      // Loop over groups.
-      begin(groupIter);
-      for ( ; groupIter.notEnd(); ++groupIter) {
-         nAtom = 0;
-         nGhost = 0;
-         for (i = 0; i < N; ++i) {
-            atomId  = groupIter->atomId(i);
-            if (atomId < 0 || atomId >= atomStorage.totalAtomCapacity()) {
-               UTIL_THROW("Invalid atom id in Group");
-            }
-            atomPtr = groupIter->atomPtr(i);
-            if (atomPtr) {
-               if (atomPtr != atomStorage.find(atomId)) {
-                  UTIL_THROW("Inconsistent non-null atom pointer in Group");
-               }
-               if (atomPtr->isGhost()) {
-                  ++nGhost;
-               } else {
-                  ++nAtom;
-               }
-            } else {
-               atomPtr = atomStorage.find(atomId);
-               if (atomPtr != 0) {
-                  if (atomPtr->isGhost()) {
-                     if (hasGhosts) {
-                          UTIL_THROW("Missing ghost atom");
-                     }
-                  } else {
-                     UTIL_THROW("Missing local atom");
-                  }
-               }
-            }
-         }
-         if (nAtom == 0) {
-            UTIL_THROW("Empty group");
-         }
-         if (hasGhosts && (nAtom + nGhost) < N) {
-            UTIL_THROW("Incomplete group");
-         }
-         nAtomGroup += nAtom;
-      }
-
-      // Count number distinct groups.
-      #ifdef UTIL_MPI
-      unsetNTotal();
-      computeNTotal(communicator);
-      #endif
-
-      #ifdef UTIL_MPI
-      // Count & return number of local atoms in groups on all processors.
-      int nAtomGroupTotal;
-      const int source = 0;
-      communicator.Reduce(&nAtomGroup, &nAtomGroupTotal, 1, 
-                          MPI::INT, MPI::SUM, source);
-      if (communicator.Get_rank() == source) {
-         if (!nTotal_.isSet()) {
-            UTIL_THROW("nTotal not set");
-         }
-         if (nAtomGroupTotal != N*nTotal()) {
-            std::cout << "nAtomGroupTotal = " << nAtomGroupTotal << std::endl;
-            std::cout << "nTotal*N        = " << N*nTotal() << std::endl;
-            UTIL_THROW("Discrepancy in number of local atoms in Group objects");
-         }
-      }
-      #endif
-
-      return true;
-   }
-
-   /*
-   *  Mark nTotal as unknown.
-   */
-   template <int N>
-   void GroupStorage<N>::unsetNTotal()
-   {  nTotal_.unset(); }
-
-}
-#endif
+} // namespace DdMd
+#endif // ifndef DDMD_GROUP_STORAGE_H

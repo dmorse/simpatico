@@ -126,7 +126,7 @@ namespace DdMd
       * This method should only be called on the master (rank 0) 
       * processor, after a previous call to computeStress.
       */
-      Util::Tensor stress() const;
+      Tensor stress() const;
 
       /**
       * Return the pressure. 

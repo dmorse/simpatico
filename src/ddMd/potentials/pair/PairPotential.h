@@ -31,7 +31,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * A PairPotential calculates forces for a parent Simulation.
+   * Calculates nonbonded pair forces and energies for a parent Simulation.
    *
    * A PairPotential has a private CellList and PairList which it
    * uses to calculate nonbonded pair forces. 
@@ -185,11 +185,9 @@ namespace DdMd
       *
       * This method adds all local and ghost atoms to a cell list that is
       * used in buildPairList() to build a Verlet pair list. On entry to
-      * this method, atomic positions must Cartesian if UTIL_ORTHOGONAL
-      * is true and generalized coordinates if UTIL_ORTHOGONAL is false.
-      * If UTIL_ORTHOGONAL is false, this method should be followed by a 
-      * call to AtomStorage::transformGenToCart(Boundary& ) to transform
-      * all positions back to Cartesian coordinates.
+      * this method, atomic positions must be generalized. This method 
+      * should be followed by  AtomStorage::transformGenToCart(Boundary& ) 
+      * to transform all positions back to Cartesian coordinates.
       */
       void buildCellList();
 
@@ -221,7 +219,7 @@ namespace DdMd
       * This method should only be called on the master (rank 0) 
       * processor, after a previous call to computePairEnergies.
       */
-      Util::DMatrix<double> pairEnergies() const;
+      DMatrix<double> pairEnergies() const;
 
       /**
       * Mark pair energy as unknown (nullify).

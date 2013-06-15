@@ -100,11 +100,12 @@ namespace Util
       * Load a 2D C array.
       *
       * \param array pointer to first row or element
-      * \param m     number of rows
-      * \param n     number of columns
+      * \param m  logical number of rows
+      * \param n  logical number of columns
+      * \param np physical number of columns (elements allocated per row)
       */
       template <typename T> 
-      void unpack(T* array, int m, int n);
+      void unpack(T* array, int m, int n, int np);
 
    private:
 
@@ -173,12 +174,12 @@ namespace Util
    * Bitwise pack a 2D C-array of objects of type T.
    */
    template <typename T>
-   void TextFileIArchive::unpack(T* array, int m, int n)
+   void TextFileIArchive::unpack(T* array, int m, int n, int np)
    {
       int i, j;
       for (i = 0; i < m; ++i) {
          for (j = 0; j < n; ++j) {
-            *filePtr_ >> array[i*n + j];
+            *filePtr_ >> array[i*np + j];
          }
       }
    }

@@ -265,16 +265,8 @@ namespace McMd
       /**
       * Inverse dimensions of each cell in a grid, in each direction.
       *
-      * When the boundary is orthogonal and UTIL_ORTHOGONAL is true (1),
-      * the inverse lengths are expressed in Cartesian coordinates, and 
-      * invCellWidth_[i] = numCells_[i]/lengths_[i].
-      * 
-      * When UTIL_ORTHOGONAL is false (0), the inverse cell widths are 
-      * expressed in generalized coordinates, with 0.0 <= x, y, z < 1.0,
+      * The inverse cell widths are expressed in generalized coordinates, 
       * for which invCellWidth_[i] = numCells_[i].
-      *
-      * The value of UTIL_ORTHOGONAL is defined in the header file for
-      * the Boundary class.
       */
       Vector invCellWidths_;   
 
@@ -372,44 +364,13 @@ namespace McMd
    {
       int cx, cy, cz;
 
-      /* 
-      * Elements of invCellWidths_ are inverses of the widths of a single
-      * cell. They are defined in makeGrid. If (UTIL_ORTHOGONAL), these
-      * are given in Cartesian coordinates, or otherwise in dimensionless
-      * generalized coordinates.
-      */
-
-      if (UTIL_ORTHOGONAL) {
-         cx = int(pos[0]*invCellWidths_[0]);
-         cy = int(pos[1]*invCellWidths_[1]);
-         cz = int(pos[2]*invCellWidths_[2]);
-      } else {
+      {
          Vector posG;
          boundaryPtr_->transformCartToGen(pos, posG);
          cx = int(posG[0]*invCellWidths_[0]);
          cy = int(posG[1]*invCellWidths_[1]);
          cz = int(posG[2]*invCellWidths_[2]);
       }
-
-      #if 0
-      // need to handle case where wrong particle bin is assigned
-      // to particles close to the boundary due to roundoff error
-      if (cx == numCells_[0]) {
-         if (pos[0] >= lengths_[0])
-            UTIL_THROW("Particle left boundary.");
-         cx = numCells_[0] - 1;
-      }
-      if (cy == numCells_[1]) {
-         if (pos[1] >= lengths_[1])
-            UTIL_THROW("Particle left boundary.");
-         cy = numCells_[1] - 1;
-      }
-      if (cz == numCells_[2]) {
-         if (pos[2] >= lengths_[2])
-            UTIL_THROW("Particle left boundary.");
-         cz = numCells_[2] - 1;
-      }
-      #endif
 
       assert(cx >= 0);
       assert(cx < numCells_[0]);

@@ -28,10 +28,10 @@ namespace Inter
       }
    
       // Read parameters epsilon and sigma
-      readCArray2D<double> (
-                  in, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
-      readCArray2D<double>(
-                  in, "sigma", sigma_[0], nAtomType_, nAtomType_);
+      readCArray2D<double>(in, "epsilon", epsilon_[0], 
+                           nAtomType_, nAtomType_, MaxAtomType);
+      readCArray2D<double>(in, "sigma", sigma_[0], 
+                           nAtomType_, nAtomType_, MaxAtomType);
    
       // Initialize all other parameters
       double r6i;

@@ -47,6 +47,7 @@ Simulation{
   }
   NveIntegrator{
     dt           0.001
+    saveInterval 0
   }
   Random{
     seed        8012457890

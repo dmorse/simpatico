@@ -8,7 +8,7 @@
 #include <fstream>
 
 /**
-* A UnitTest with a built-in parameter file.
+* A UnitTest with a built-in input file.
  **/
 class ParamFileTest : public UnitTest 
 {
@@ -38,7 +38,7 @@ public:
    * Open the input file.
    */
    void openFile(const char *fileName)
-   { 
+   {
       if (isIoProcessor()) {
          openInputFile(std::string(fileName), file_);
       }

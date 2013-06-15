@@ -98,14 +98,11 @@ namespace DdMd
       if (atomStorage().nGhost()) {
          UTIL_THROW("Atom storage is not empty (has ghost atoms)");
       }
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not set for Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are set for Cartesian");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Error: Atom storage is set for Cartesian coordinates");
+      }
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
       }
 
       // Read and broadcast boundary
@@ -137,9 +134,9 @@ namespace DdMd
          // Read atoms
          Vector r;
          Atom*  atomPtr;
-         int id;
-         int typeId;
-         int rank;
+         int  id;
+         int  typeId;
+         int  rank;
          for(int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
@@ -152,11 +149,7 @@ namespace DdMd
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
             file >> r;
-            if (UTIL_ORTHOGONAL) {
-               atomPtr->position() = r;
-            } else {
-               boundary().transformCartToGen(r, atomPtr->position());
-            }
+            boundary().transformCartToGen(r, atomPtr->position());
             file >> atomPtr->velocity();
 
             // Add atom to list for sending.
@@ -171,25 +164,18 @@ namespace DdMd
          atomDistributor().receive();
       }
 
-      // Check that all atoms are accounted for after distribution.
-      {
-         int nAtomLocal = atomStorage().nAtom();
-         int nAtomAll;
-         #ifdef UTIL_MPI
-         domain().communicator().Reduce(&nAtomLocal, &nAtomAll, 1, 
-                                        MPI::INT, MPI::SUM, 0);
-         #else
-         nAtomAll = nAtomLocal;
-         #endif
-         if (domain().isMaster()) {
-            if (nAtomAll != nAtom) {
-               UTIL_THROW("nAtomAll != nAtom after distribution");
-            }
+      // Validate atom distribution
+      // Checks that all are account for and on correct processor
+      int nAtomAll;
+      nAtomAll = atomDistributor().validate();
+      if (domain().isMaster()) {
+         if (nAtomAll != nAtom) {
+            UTIL_THROW("nAtomAll != nAtom after distribution");
          }
       }
 
+      // Read Covalent Groups
       bool hasGhosts = false;
-
       if (bondStorage().capacity()) {
          readGroups<2>(file, "BONDS", "nBond", bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
@@ -198,7 +184,6 @@ namespace DdMd
             setAtomMasks();
          }
       }
-
       #ifdef INTER_ANGLE
       if (angleStorage().capacity()) {
          readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
@@ -206,7 +191,6 @@ namespace DdMd
                                 hasGhosts);
       }
       #endif
-
       #ifdef INTER_DIHEDRAL
       if (dihedralStorage().capacity()) {
          readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
@@ -214,7 +198,6 @@ namespace DdMd
                                    hasGhosts);
       }
       #endif
-
    }
 
    /*
@@ -253,14 +236,8 @@ namespace DdMd
    void DdMdConfigIo::writeConfig(std::ofstream& file)
    {
       // Precondition
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
       }
 
       // Write Boundary dimensions
@@ -273,29 +250,28 @@ namespace DdMd
       // Atoms
       atomStorage().computeNAtomTotal(domain().communicator());
       if (domain().isMaster()) {  
+
          file << "ATOMS" << std::endl;
          file << "nAtom" << Int(atomStorage().nAtomTotal(), 10) << std::endl;
          atomCollector().setup();
-         Atom* atomPtr = atomCollector().nextPtr();
+
+         // Collect and write atoms
          Vector r;
+         bool isCartesian = atomStorage().isCartesian();
+         Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
             file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6);
-            if (UTIL_ORTHOGONAL || atomStorage().isCartesian()) {
-               file << atomPtr->position() << std::endl
-                    << "                " << atomPtr->velocity();
+            if (isCartesian) {
+               r = atomPtr->position();
             } else {
                boundary().transformGenToCart(atomPtr->position(), r);
-               file << r << std::endl
-                    << "                " << atomPtr->velocity();
             }
-            #if 0
-            for (int j=0; j < atomPtr->mask().size(); ++j) {
-               file << Int(atomPtr->mask()[j], 8);
-            }
-            #endif
+            file << r << std::endl
+                 << "                " << atomPtr->velocity();
             file << std::endl;
             atomPtr = atomCollector().nextPtr();
          }
+
       } else { 
          atomCollector().send();
       }

@@ -171,18 +171,15 @@ protected:
    */
    void openInputFile(const std::string& name, std::ifstream& in) const
    {   
-      //if (isIoProcessor()) {
-         std::string filename = filePrefix_;
-         filename += name;
-         //std::cout << std::endl;
-         //std::cout << "Opening file  " << filename << std::endl;
-         in.open(filename.c_str());
-         if (in.fail()) {
-            std::cout << std::endl;
-            std::cout << "Failure to open file " << filename << std::endl;
-            TEST_THROW("Failure to open file");
-         }
-      //}
+      std::string filename = filePrefix_;
+      filename += name;
+      in.open(filename.c_str());
+      if (in.fail()) {
+         std::cout << std::endl;
+         std::cout << "Failure to open input file " 
+                   << filename << std::endl;
+         TEST_THROW("Failure to open file");
+      }
    }
 
    /**
@@ -196,8 +193,17 @@ protected:
       std::string filename = filePrefix_;
       filename += name;
       out.open(filename.c_str());
+      if (out.fail()) {
+         std::cout << std::endl;
+         std::cout << "Failure to open output file " 
+                   << filename << std::endl;
+         TEST_THROW("Failure to open file");
+      }
    }
 
+   /**
+   * Return integer verbosity level  (0 == silent).
+   */
    int verbose() const
    {  return verbose_; }
  
@@ -218,21 +224,22 @@ protected:
 
 private:
 
-   /**
-   * Prefix added to file names
-   */
+   /// Prefix string prepended to file names
    std::string  filePrefix_;
 
    #ifdef TEST_MPI
+   /// Communicator for MPI jobs.
    MPI::Intracomm* communicatorPtr_;
 
+   /// Mpi rank of this processor within communicator.
    int  mpiRank_;
    #endif
 
+   /// Verbosity index
    int  verbose_;
 
+   /// Is this an IoProcessor?
    bool isIoProcessor_;
 
 };
-
 #endif

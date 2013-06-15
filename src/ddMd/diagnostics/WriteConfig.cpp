@@ -9,7 +9,7 @@
 */
 
 #include "WriteConfig.h"
-//#include <util/misc/FileMaster.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/misc/ioUtil.h>
 
 #include <sstream>

@@ -93,6 +93,8 @@ namespace DdMd
    #ifdef UTIL_MPI
    /*
    * Returns address for a new Atom.
+   *
+   * Called only on master.
    */ 
    Atom* AtomCollector::nextPtr()
    {
@@ -107,7 +109,7 @@ namespace DdMd
          UTIL_THROW("Not the master processor");
       }
 
-      // If master processor
+      // If still processing atoms from master processor
       Atom* ptr;
       if (source_ == 0) {
          if (iterator_.notEnd()) {
@@ -141,7 +143,10 @@ namespace DdMd
                }
             }
 
-            // Send request to processor source_ 
+            assert(recvBufferSize_ == 0); // recv buffer is empty
+            assert(!isComplete_);         // source_ is not completed
+            
+            // Send request to processor source_ .
             int message = source_;
             domainPtr_->communicator().Send(&message, 1, MPI::INT, 
                                                source_, message);
@@ -152,19 +157,25 @@ namespace DdMd
             recvBufferSize_ = bufferPtr_->recvSize();
          }
 
-         // Unpack atoms from buffer into recvArray_.
+         // Unpack atoms from recv buffer into recvArray_.
          if (recvBufferSize_ > 0) {
             recvArraySize_ = 0;
             recvArrayId_ = 0;
+            if (recvBufferSize_ != bufferPtr_->recvSize()) {
+               UTIL_THROW("Inconsistent buffer receive counters");
+            }
             while (bufferPtr_->recvSize() > 0 
                    && recvArraySize_ < recvArray_.capacity()) 
             {
-               bufferPtr_->unpackAtom(recvArray_[recvArraySize_]);
+               recvArray_[recvArraySize_].unpackAtom(*bufferPtr_);
                ++recvArraySize_;
                --recvBufferSize_;
                if (recvBufferSize_ != bufferPtr_->recvSize()) {
                   UTIL_THROW("Inconsistent buffer receive counters");
                }
+            }
+            if (bufferPtr_->recvSize() == 0) {
+               bufferPtr_->endRecvBlock();
             }
          }
 
@@ -213,7 +224,7 @@ namespace DdMd
          bufferPtr_->clearSendBuffer();
          bufferPtr_->beginSendBlock(Buffer::ATOM);
          while (recvArraySize_ < bufferPtr_->atomCapacity() && !isComplete_) {
-            bufferPtr_->packAtom(*iterator_);
+            iterator_->packAtom(*bufferPtr_);
             ++recvArraySize_;
             ++iterator_;
             isComplete_ = iterator_.isEnd();

@@ -1,67 +1,41 @@
-Testing
--------
+Exchanger
+---------
 
-- Fix CellTest 
+- Add memory usage statistics, to see which communication step (atom
+  exchange or ghost exchange) uses the most memory.
 
-- Fix obsolete PairPotentialTest (change interface for PairPotential)
+- Write separate algorithm for initial ghost exchange, to reduce memory 
+  requirements See doc/notes/ddMd/initGhosts
 
-- Test angle and dihedral stress calculations.
-
-Initial Ghost Exchange
-----------------------
-
-- Add initExchangeGhosts method to DdMd::Exchanger that distributes the 
-  groups among neighboring processors without sending many unnecessary 
-  ghosts (to decrease memory requirements).
+- Consider moving allocation of Buffer to Exchanger.
 
 Cell List and Pair List:
 ------------------------
 
-- Modify Cell::OffsetArray object to use strips of cells, to allow 
-  efficient use of smaller cells.
+- Modify Cell::OffsetArray object to use strips of cells, to allow efficient 
+  use of smaller cells.
 
-- Modify OffsetArray to include all cells for which the closest corner
-  is within the pair list cutoff.
+- Modify OffsetArray to include all cells for which the closest corner is 
+  within the pair list cutoff.
 
 Flexible Unit Cells:
 --------------------
 
-- Generalize makeSnapShot and needsExchange methods in AtomStorage to 
+- Generalize makeSnapShot and needsExchange methods in AtomStorage to
   allow for deforming boundaries (requires further changes to Boundary).
 
 Buffer:
 -------
 
-- Change envelope sent with block to contain:
+- Allocate in bytes, remove atomCapacity and ghostCapacity 
+  (see doc/notes/ddMd/Buffer)
 
-  sendSize_
-  sendTimeSize_
-  sendItemType_
-  isComplete_
+Moving GroupStorage to Potential class:
+---------------------------------------
 
-  For groups, add enumerations BOND, ANGLE, DIHEDRAL and
-  use Type = Buffer::BOND + N - 2 in templates for Group<N>. 
+- Make each GroupStorage a member of the associated potential.
 
-- In beginSendBlock() method, add parametr itemSize and remove 
-  parameter groupSize.
-
-- Make pack/unpack methods public. 
-
-- Add public methods to endPackItem() and endUnpackItem(), to
-  increment counters. These can check cursor against expected 
-  position, based on itemSize and item counters.
-
-- Check cursor against end of block in unpack method template.
-
-- Move pack/unpack methods to methods of Atom and Group classes.
-
-- Add values INT, DOUBLE, VECTOR to enumeration of types.
-
-Dynamic Resizing
-----------------
-
-- Allow for dynamic resizing of Storage classes.
-  For AtomStorage, must emit signal to reset pointers to atoms.
+- see doc/notes/ddMd/GroupStorage
 
 Hybrid MD
 ---------
@@ -88,3 +62,9 @@ Files
 - Modify default file format to store speciesId, moleculeId, molAtomId indices.
 
 - Think about separating topology and configuration files. 
+
+Testing
+-------
+
+- Test angle and dihedral stress calculations more thoroughly.
+

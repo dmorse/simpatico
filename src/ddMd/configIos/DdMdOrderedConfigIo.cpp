@@ -99,14 +99,11 @@ namespace DdMd
       if (atomStorage().nGhost()) {
          UTIL_THROW("Atom storage is not empty (has ghost atoms)");
       }
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage is not set for Cartesian coordinates");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage is set for Cartesian coordinates");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Atom storage is set for Cartesian coordinates");
+      }
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
       }
 
       // Read and broadcast boundary
@@ -153,11 +150,7 @@ namespace DdMd
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
             file >> r;
-            if (UTIL_ORTHOGONAL) {
-               atomPtr->position() = r;
-            } else {
-               boundary().transformCartToGen(r, atomPtr->position());
-            }
+            boundary().transformCartToGen(r, atomPtr->position());
             file >> atomPtr->velocity();
 
             // Add atom to list for sending.
@@ -172,16 +165,10 @@ namespace DdMd
          atomDistributor().receive();
       }
 
-      // Check that all atoms are accounted for after distribution.
+      // Validate atom distribution
+      // Check that all atoms are accounted for and on correct processor
       {
-         int nAtomLocal = atomStorage().nAtom();
-         int nAtomAll;
-         #ifdef UTIL_MPI
-         domain().communicator().Reduce(&nAtomLocal, &nAtomAll, 1, 
-                                        MPI::INT, MPI::SUM, 0);
-         #else
-         nAtomAll = nAtomLocal;
-         #endif
+         int nAtomAll = atomDistributor().validate();
          if (domain().isMaster()) {
             if (nAtomAll != nAtom) {
                UTIL_THROW("nAtomAll != nAtom after distribution");
@@ -189,8 +176,8 @@ namespace DdMd
          }
       }
 
+      // Read covalent groups
       bool hasGhosts = false;
-
       if (bondStorage().capacity()) {
          readGroups<2>(file, "BONDS", "nBond", bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
@@ -199,7 +186,6 @@ namespace DdMd
             setAtomMasks();
          }
       }
-
       #ifdef INTER_ANGLE
       if (angleStorage().capacity()) {
          readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
@@ -207,7 +193,6 @@ namespace DdMd
                                 hasGhosts);
       }
       #endif
-
       #ifdef INTER_DIHEDRAL
       if (dihedralStorage().capacity()) {
          readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
@@ -276,14 +261,8 @@ namespace DdMd
    void DdMdOrderedConfigIo::writeConfig(std::ofstream& file)
    {
       // Precondition
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
       }
 
       // Write Boundary dimensions
@@ -297,6 +276,7 @@ namespace DdMd
       atomStorage().computeNAtomTotal(domain().communicator());
       if (domain().isMaster()) { 
          int nAtom = atomStorage().nAtomTotal();
+         atomCollector().setup();
 
          file << "ATOMS" << std::endl;
          file << "nAtom" << Int(nAtom, 10) << std::endl;
@@ -308,17 +288,19 @@ namespace DdMd
          atoms_.insert(atoms_.end(), nAtom, atom);
 
          // Collect unordered atoms and store in order in atoms_ .
-         atomCollector().setup();
-         Atom* atomPtr = atomCollector().nextPtr();
+         Vector r;
          int id;
          int n = 0;
+         bool isCartesian = atomStorage().isCartesian();
+         Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
             id = atomPtr->id();
-            if (UTIL_ORTHOGONAL) {
-               atoms_[id].position = atomPtr->position();
+            if (isCartesian) {
+               r = atomPtr->position();
             } else {
-               boundary().transformGenToCart(atomPtr->position(), atoms_[id].position);
+               boundary().transformGenToCart(atomPtr->position(), r);
             }
+            atoms_[id].position = r;
             atoms_[id].velocity = atomPtr->velocity();
             atoms_[id].typeId = atomPtr->typeId();
             atoms_[id].id = id;

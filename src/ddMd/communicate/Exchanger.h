@@ -8,21 +8,21 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/chemistry/Atom.h>
-#include <ddMd/chemistry/Group.h>
 #include <ddMd/misc/DdTimer.h>
+#include <util/space/IntVector.h>
 #include <util/boundary/Boundary.h>
 #include <util/containers/FMatrix.h>
-#include <util/containers/APArray.h>
+#include <util/containers/GPArray.h>
 
 
 namespace DdMd
 {
 
    class Domain;
+   class Atom;
    class AtomStorage;
    class Buffer;
-   template <int N> class GroupStorage;
+   class GroupExchanger;
 
    using namespace Util;
 
@@ -48,18 +48,21 @@ namespace DdMd
 
       /**
       * Set pointers to associated objects.
+      *
+      * \param domain      associated Domain object
+      * \param boundary    associated Boundary object
+      * \param atomStorage associated AtomStorage object
+      * \param buffer      associated Buffer object
       */
-      void associate(const Domain& domain, 
-                     const Boundary& boundary, 
-                     AtomStorage& atomStorage, 
-                     GroupStorage<2>& bondStorage, 
-                     #ifdef INTER_ANGLE
-                     GroupStorage<3>& angleStorage, 
-                     #endif
-                     #ifdef INTER_DIHEDRAL
-                     GroupStorage<4>& dihedralStorage, 
-                     #endif
-                     Buffer& buffer);
+      void associate(const Domain& domain, const Boundary& boundary, 
+                     AtomStorage& atomStorage, Buffer& buffer);
+
+      /**
+      * Add a GroupExchanger to an internal list.
+      *
+      * \param groupExchanger GroupExchanger object to add to list.
+      */
+      void addGroupExchanger(GroupExchanger& groupExchanger);
 
       /**
       * Allocate all required memory.
@@ -101,8 +104,10 @@ namespace DdMd
       * 
       * This method reverse the communication pattern used to communicate
       * ghost atom positions in update() to reverse communicate forces
-      * acting on ghost atoms. It should be called iff reverse force
-      * communication on every time step for which update() is called.
+      * acting on ghost atoms. It should be called only if reverse force
+      * communication is enabled, in which case it should be called after
+      * all force calculation on every time step for which update() is 
+      * called.
       */
       void reverseUpdate();
 
@@ -114,14 +119,13 @@ namespace DdMd
       /**
       * Return internal timer by reference
       */
-      DdTimer& timer()
-      {  return timer_; }
+      DdTimer& timer();
 
       /**
       * Enumeration of time stamp identifiers.
       */
       enum timeId {START, ATOM_PLAN, INIT_GROUP_PLAN, CLEAR_GHOSTS,
-                   PACK_ATOMS, PACK_GROUPS, REMOVE_ATOMS, REMOVE_GROUPS,
+                   PACK_ATOMS, PACK_GROUPS, REMOVE_ATOMS, 
                    SEND_RECV_ATOMS, UNPACK_ATOMS, UNPACK_GROUPS, 
                    FINISH_GROUP_PLAN, INIT_SEND_ARRAYS, PACK_GHOSTS, 
                    SEND_RECV_GHOSTS, UNPACK_GHOSTS, FIND_GROUP_GHOSTS, 
@@ -134,26 +138,26 @@ namespace DdMd
       /**
       * Arrays of pointers to ghosts to be sent in each direction.
       *
-      * Element sendArray_(i, j) is a APArray that stores pointers to the
+      * Element sendArray_(i, j) is a GPArray that stores pointers to the
       * ghost atoms whose positions are sent during the send along cartesian 
       * axis i (i=0/x, 1/y or 2/z) in direction j (j=0/lower or 1/higher).
       * These 6 arrays are filled by the exchangeGhosts() method and used 
       * by subsequent calls of the update() method, until the next
       * call of exchangeGhosts().
       */
-      FMatrix< APArray<Atom>, Dimension, 2>  sendArray_;
+      FMatrix< GPArray<Atom>, Dimension, 2>  sendArray_;
 
       /**
       * Arrays of pointers to ghosts received in each direction.
       *
-      * Element recvArray_(i, j) is a APArray that stores pointers to the 
+      * Element recvArray_(i, j) is a GPArray that stores pointers to the 
       * ghost atoms that are received during the send along cartesian axis
       * i (for i=0/x, 1/y or 2/z) in direction j (for j=0/lower or 1/higher).
       * These 6 arrays are filled by the exchangeGhosts() method and used 
       * by subsequent calls of the update() method, until the next
       * call of exchangeGhosts().
       */
-      FMatrix< APArray<Atom>, Dimension, 2>  recvArray_;
+      FMatrix< GPArray<Atom>, Dimension, 2>  recvArray_;
 
       #ifdef UTIL_MPI
       /**
@@ -161,29 +165,7 @@ namespace DdMd
       * 
       * Used to mark missing atoms for subsequent removal.
       */
-      APArray<Atom> sentAtoms_;
-
-      /**
-      * Array of pointers to empty bonds on this processor.
-      * 
-      * Used to mark bonds for later removal.
-      */
-      APArray< Group<2> > emptyBonds_;
-
-      #ifdef INTER_ANGLE
-      /**
-      * Array of pointers to empty angles on this processor.
-      */
-      APArray< Group<3> > emptyAngles_;
-      #endif
-
-      #ifdef INTER_DIHEDRAL
-      /**
-      * Array of pointers to empty dihedrals on this processor.
-      */
-      APArray< Group<4> > emptyDihedrals_;
-      #endif
-
+      GPArray<Atom> sentAtoms_;
       #endif // UTIL_MPI
 
       /// Processor boundaries (minima j=0, maxima j=1)
@@ -196,7 +178,7 @@ namespace DdMd
       FMatrix< double, Dimension, 2>  outer_;
 
       /// Elements are 1 if grid dimension > 1, 0 otherwise.
-      IntVector multiProcessorDirection_;
+      IntVector gridFlags_;
 
       /// Pointer to associated const Boundary object.
       const Boundary*  boundaryPtr_;
@@ -207,18 +189,8 @@ namespace DdMd
       /// Pointer to associated AtomStorage object.
       AtomStorage* atomStoragePtr_;
 
-      /// Pointer to associated bond storage object.
-      GroupStorage<2>* bondStoragePtr_;
-
-      #ifdef INTER_ANGLE 
-      /// Pointer to associated angle storage object.
-      GroupStorage<3>* angleStoragePtr_;
-      #endif
-
-      #ifdef INTER_DIHEDRAL
-      /// Pointer to associated dihedral storage object.
-      GroupStorage<4>* dihedralStoragePtr_;
-      #endif
+      /// Array of GroupExchanger's (i.e,. GroupStorage<N>'s)
+      GPArray<GroupExchanger> groupExchangers_;
 
       /// Pointer to associated buffer object.
       Buffer*  bufferPtr_;
@@ -248,32 +220,22 @@ namespace DdMd
       */
       void exchangeGhosts();
 
-      template <int N>
-      void initGroupGhostPlan(GroupStorage<N>& storage);
-
-      #ifdef UTIL_MPI
-      template <int N>
-      void packGroups(int i, int j, GroupStorage<N>& storage, 
-                                    APArray< Group<N> >& emptyGroups);
-
-      template <int N>
-      void removeEmptyGroups(GroupStorage<N>& storage,
-                             APArray< Group<N> >& emptyGroups);
-
-      template <int N>
-      void unpackGroups(GroupStorage<N>& storage);
-      #endif
-
-      template <int N>
-      void finishGroupGhostPlan(GroupStorage<N>& storage);
-
-      template <int N>
-      void findGroupGhosts(GroupStorage<N>& storage);
-
-      void stamp(unsigned int timeId) 
-      {  timer_.stamp(timeId); }
+      /**
+      * Stamp internal timer.
+      */
+      void stamp(unsigned int timeId);
 
    };
+
+   // Inline methods.
+
+   // Return internal timer by reference (public).
+   inline DdTimer& Exchanger::timer()
+   {  return timer_; }
+
+   // Stamp internal timer (private)
+   inline void Exchanger::stamp(unsigned int timeId) 
+   {  timer_.stamp(timeId); }
 
 }
 #endif

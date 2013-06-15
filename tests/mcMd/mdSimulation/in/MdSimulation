@@ -64,4 +64,5 @@ MdSimulation{
     baseInterval                  10
 
   }
+  saveInterval 0
 } 

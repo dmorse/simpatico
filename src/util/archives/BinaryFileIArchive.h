@@ -97,12 +97,18 @@ namespace Util
       /**
       * Unpack a 2D C array.
       *
+      * This unpacks the elements of an m x n logical array into
+      * a physical 2D C array of type array[][np], where np is 
+      * the physical length of a row, i.e., the amount of memory 
+      * allocated per row.
+      *
       * \param array pointer to first row
       * \param m number of rows
-      * \param n number of columns
+      * \param n logical number of columns
+      * \param np physical number of columns
       */
       template <typename T> 
-      void unpack(T* array, int m, int n);
+      void unpack(T* array, int m, int n, int np);
 
    private:
 
@@ -171,12 +177,12 @@ namespace Util
    * Unpack a 2D C-array of objects of type T.
    */
    template <typename T>
-   inline void BinaryFileIArchive::unpack(T* array, int m, int n)
+   inline void BinaryFileIArchive::unpack(T* array, int m, int n, int np)
    {
       int i, j;
       for (i = 0; i < m; ++i) {
          for (j = 0; j < n; ++j) {
-            filePtr_->read( (char*)(&array[i*n + j]), sizeof(T));
+            filePtr_->read( (char*)(&array[i*np + j]), sizeof(T));
          }
       }
    }

@@ -1,5 +1,5 @@
-#ifndef UTIL_A_P_ARRAY_H
-#define UTIL_A_P_ARRAY_H
+#ifndef UTIL_G_P_ARRAY_H
+#define UTIL_G_P_ARRAY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -15,9 +15,9 @@ namespace Util
 {
 
    /**
-   * Automatically resizable PArray.
+   * An automatically growable PArray.
    *
-   * An APArray is a PArray that grows as needed as objects are appended.
+   * An GPArray is a PArray that grows as needed as objects are appended.
    * Like any PArray, it holds pointers to objects, rather than objects.
    * The associated objects are not destroyed when a PArray is deallocated
    * or destroyed.
@@ -25,7 +25,7 @@ namespace Util
    * \ingroup Pointer_Array_Module
    */
    template <typename Data>
-   class APArray : public PArray<Data>
+   class GPArray : public PArray<Data>
    {
 
    public:
@@ -33,27 +33,27 @@ namespace Util
       /**
       * Constructor.
       */
-      APArray();
+      GPArray();
 
       /**
       * Copy constructor, copy pointers.
       *
       * Allocates new Data* array and copies pointers to Data objects.
       *
-      *\param other the APArray to be copied.
+      *\param other the GPArray to be copied.
       */
-      APArray(const APArray<Data>& other);
+      GPArray(const GPArray<Data>& other);
    
       /**
       * Assignment, element by element.
       *
       * Preconditions: 
-      * - Both this and other APArrays must be allocated.
-      * - Capacity of this APArray must be >= size of RHS APArray.
+      * - Both this and other GPArrays must be allocated.
+      * - Capacity of this GPArray must be >= size of RHS GPArray.
       *
-      * \param other the rhs APArray 
+      * \param other the rhs GPArray 
       */
-      APArray<Data>& operator=(const APArray<Data>& other);
+      GPArray<Data>& operator=(const GPArray<Data>& other);
 
       /**
       * Destructor.
@@ -61,7 +61,7 @@ namespace Util
       * Deletes array of pointers, if allocated previously.
       * Does not delete the associated Data objects.
       */
-      virtual ~APArray();
+      virtual ~GPArray();
 
       /**
       * Append an element to the end of the sequence.
@@ -105,7 +105,7 @@ namespace Util
    * Default constructor.
    */
    template <typename Data>
-   inline APArray<Data>::APArray()
+   inline GPArray<Data>::GPArray()
     : PArray<Data>()
    {}
 
@@ -114,10 +114,10 @@ namespace Util
    *
    * Allocates a new Data* array and copies all pointer values.
    *
-   *\param other the APArray to be copied.
+   *\param other the GPArray to be copied.
    */
    template <typename Data>
-   APArray<Data>::APArray(const APArray<Data>& other) 
+   GPArray<Data>::GPArray(const GPArray<Data>& other) 
     : PArray<Data>()
    {
       if (other.ptrs_ == 0) {
@@ -153,7 +153,7 @@ namespace Util
    * Assignment, element by element.
    */
    template <typename Data>
-   APArray<Data>& APArray<Data>::operator=(const APArray<Data>& other) 
+   GPArray<Data>& GPArray<Data>::operator=(const GPArray<Data>& other) 
    {
       // Check for self assignment
       if (this == &other) return *this;
@@ -167,7 +167,7 @@ namespace Util
 
    // Destructor.
    template <typename Data>
-   inline APArray<Data>::~APArray()
+   inline GPArray<Data>::~GPArray()
    {
       if (ptrs_) {
          delete [] ptrs_;
@@ -178,7 +178,7 @@ namespace Util
    * Reserve space for the underlying array of Data* pointers.
    */
    template <typename Data>
-   void APArray<Data>::reserve(int capacity) 
+   void GPArray<Data>::reserve(int capacity) 
    {
       if (capacity <= 0) {
          UTIL_THROW("Cannot reserve with capacity <=0");
@@ -201,7 +201,7 @@ namespace Util
    * Deallocate associated memory.
    */
    template <typename Data>
-   void APArray<Data>::deallocate() 
+   void GPArray<Data>::deallocate() 
    {  
       if (ptrs_) {
          delete [] ptrs_;
@@ -214,7 +214,7 @@ namespace Util
    * Append an element to the end of the PArray.
    */
    template <typename Data>
-   void APArray<Data>::append(Data& data) 
+   void GPArray<Data>::append(Data& data) 
    {
       if (ptrs_ == 0) {
          ptrs_ = new Data*[64];
@@ -237,12 +237,8 @@ namespace Util
    * Reset to empty state, without deallocating.
    */
    template <typename Data>
-   void APArray<Data>::clear()
-   {
-      size_ = 0;
-   }
-
-
+   void GPArray<Data>::clear()
+   {  size_ = 0; }
 
 } 
 #endif

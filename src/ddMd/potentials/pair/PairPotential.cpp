@@ -137,12 +137,6 @@ namespace DdMd
       int localCapacity = storage().atomCapacity();
       pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
 
-      if (UTIL_ORTHOGONAL) {
-         boundary() = maxBoundary_;
-         // This is necessary because the domain uses a reference to the
-         // boundary to calculate domain bounds, if (UTIL_ORTHOGONAL).
-      }
-
       // Calculate cell list cutoff lengths for all directions
       Vector cutoffs;
       Vector lower;
@@ -150,11 +144,7 @@ namespace DdMd
       for (int i = 0; i < Dimension; ++i) {
          lower[i] = domain().domainBound(i, 0);
          upper[i] = domain().domainBound(i, 1);
-         if (UTIL_ORTHOGONAL) {
-            cutoffs[i] = cutoff_;
-         } else {
-            cutoffs[i] = cutoff_/maxBoundary_.length(i);
-         }
+         cutoffs[i] = cutoff_/maxBoundary_.length(i);
       }
 
       // Allocate CellList
@@ -167,14 +157,8 @@ namespace DdMd
    */
    void PairPotential::buildCellList()
    {
-      if (UTIL_ORTHOGONAL) {
-         if (!storage().isCartesian()) {
-            UTIL_THROW("Coordinates not Cartesian entering buildCellList");
-         }
-      } else {
-         if (storage().isCartesian()) {
-            UTIL_THROW("Coordinates are Cartesian entering buildCellList");
-         }
+      if (storage().isCartesian()) {
+         UTIL_THROW("Coordinates are Cartesian entering buildCellList");
       }
 
       // Set cutoff and domain bounds.
@@ -182,11 +166,7 @@ namespace DdMd
       Vector lower;
       Vector upper;
       for (int i = 0; i < Dimension; ++i) {
-         if (UTIL_ORTHOGONAL) {
-            cutoffs[i] = cutoff_;
-         } else {
-            cutoffs[i] = cutoff_/boundaryPtr_->length(i);
-         }
+         cutoffs[i] = cutoff_/boundaryPtr_->length(i);
          lower[i] = domain().domainBound(i, 0);
          upper[i] = domain().domainBound(i, 1);
       }

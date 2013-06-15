@@ -110,14 +110,11 @@ namespace DdMd
       if (atomStorage().nGhost()) {
          UTIL_THROW("Atom storage is not empty (has ghost atoms)");
       }
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage not set for Cartesian coordinates");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom storage is set for Cartesian coordinates");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Atom storage is set for Cartesian coordinates");
+      }
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
       }
 
       int nAtom;
@@ -204,10 +201,8 @@ namespace DdMd
 
          int totalAtomCapacity = atomStorage().totalAtomCapacity();
 
-         #if UTIL_MPI
          //Initialize the send buffer.
          atomDistributor().setup();
-         #endif
          
          // Read atoms
          Vector r;
@@ -231,11 +226,7 @@ namespace DdMd
             atomPtr->setTypeId(typeId-1);
             file >> r;
             atomPtr->position() += min; // Shift corner of Boundary to (0, 0, 0)
-            if (UTIL_ORTHOGONAL) {
-               atomPtr->position() = r;
-            } else {
-               boundary().transformCartToGen(r, atomPtr->position());
-            }
+            boundary().transformCartToGen(r, atomPtr->position());
             file >> shift;
 
             // Add atom to list for sending.
@@ -250,25 +241,17 @@ namespace DdMd
          atomDistributor().receive();
       }
 
-      // Check that all atoms are accounted for after distribution.
-      { 
-      int nAtomLocal = atomStorage().nAtom();
+      // Validate atom distribution
+      // Check that all atoms are accounted for and on correct processor
       int nAtomAll;
-      #ifdef UTIL_MPI
-      domain().communicator().Reduce(&nAtomLocal, &nAtomAll, 1, 
-                                        MPI::INT, MPI::SUM, 0);
-      #else
-      nAtomAll = nAtomLocal;
-      #endif
+      nAtomAll = atomDistributor().validate();
       if (domain().isMaster()) {
          if (nAtomAll != nAtom) {
             UTIL_THROW("nAtomAll != nAtom after distribution");
          }
       }
-      }
 
       bool hasGhosts = false;
-
       if (bondStorage().capacity()) {
          readGroups<2>(file, "Bonds", nBond, bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
@@ -348,14 +331,8 @@ namespace DdMd
    void LammpsConfigIo::writeConfig(std::ofstream& file)
    {
       // Preconditions
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
+      if (domain().isMaster() && !file.is_open()) {  
+            UTIL_THROW("Error: File is not open on master"); 
       }
 
       using std::endl;
@@ -432,22 +409,24 @@ namespace DdMd
          atoms_.clear();
          atoms_.insert(atoms_.end(), nAtom, atom);
 
+
          // Collect atoms
          atomCollector().setup();
-         Atom* atomPtr = atomCollector().nextPtr();
+         Vector r;
          int id;
          int n = 0;
-         Vector r;
+         bool isCartesian = atomStorage().isCartesian();
+         Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
             id = atomPtr->id();
             atoms_[id].id = id;
             atoms_[id].typeId = atomPtr->typeId();
-            if (UTIL_ORTHOGONAL) {
-               atoms_[id].position = atomPtr->position();
+            if (isCartesian) {
+               r = atomPtr->position();
             } else {
                boundary().transformGenToCart(atomPtr->position(), r);
-               atoms_[id].position = r;
             }
+            atoms_[id].position = r;
             atoms_[id].velocity = atomPtr->velocity();
             atomPtr = atomCollector().nextPtr();
             ++n;
@@ -456,7 +435,7 @@ namespace DdMd
             UTIL_THROW("Inconsistency in number of atoms");
          }
 
-         // Write atomic positions
+         // Write atom positions
          // lammps atom     tag = Simpatico atom id + 1
          // lammps molecule id  = Simpatico molecule id + 1
          file << endl;

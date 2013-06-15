@@ -91,12 +91,16 @@ namespace Util
       /**
       * Pack a 2D C array.
       *
+      * Pack m rows of n elements from array of type T array[mp][np],
+      * with n <= np and m <= mp.
+      *
       * \param array poiner to [0][0] element of 2D array 
-      * \param m     number of rows
-      * \param n     number of columns
+      * \param m  logical number of rows
+      * \param n  logical number of columns
+      * \param np physical number of columns
       */
       template <typename T> 
-      void pack(const T* array, int m, int n);
+      void pack(const T* array, int m, int n, int np);
 
       #ifdef UTIL_MPI
       /**
@@ -274,7 +278,7 @@ namespace Util
    * Bitwise pack a 2D C-array of objects of type T.
    */
    template <typename T>
-   inline void MemoryOArchive::pack(const T* array, int m, int n)
+   inline void MemoryOArchive::pack(const T* array, int m, int n, int np)
    {
       if (isLocked_) {
          UTIL_THROW("Locked archive");
@@ -286,7 +290,7 @@ namespace Util
       T* ptr = (T *)cursor_;
       for (i=0; i < m; ++i) {
          for (j=0; j < n; ++j) {
-            *ptr = array[i*n + j];
+            *ptr = array[i*np + j];
             ++ptr;
          }
       }

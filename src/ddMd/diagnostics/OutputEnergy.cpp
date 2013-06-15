@@ -19,6 +19,7 @@
 #endif
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/misc/ioUtil.h>
 
 #include <sstream>

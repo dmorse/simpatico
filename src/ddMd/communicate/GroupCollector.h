@@ -25,8 +25,8 @@ namespace DdMd
    /**
    * Class for collecting Groups from processors to master processor.
    *
-   * An GroupCollector collects Group objects from all processors to the
-   * master processor in order to output a configuration file. 
+   * An GroupCollector collects Group objects from all processors to
+   * the master processor in order to output a configuration file. 
    *
    * Usage:
    * \code
@@ -43,10 +43,10 @@ namespace DdMd
    *    if (domain.gridRank() == 0) {  // if master processor
    *       collector.allocate(100);
    *       collector.setup();
-   *       Atom* atomPtr = collector.nextPtr();
-   *       while (atomPtr) {
-   *          // Write *atomPtr to file; 
-   *          atomPtr = collector.nextPtr();
+   *       Group<N>* groupPtr = collector.nextPtr();
+   *       while (groupPtr) {
+   *          // Write *groupPtr to file; 
+   *          groupPtr = collector.nextPtr();
    *       }
    *    } else { // if not master
    *       collector.send();
@@ -83,38 +83,48 @@ namespace DdMd
       * Allocate cache on master processor.
       *
       * Call only on the master processor, only once.
+      *
+      * \param cacheSize number of groups cached on master.
       */
       void allocate(int cacheSize);
 
       /**
       * Setup master processor for receiving.
       *
-      * Call only on the master processor, just before each receive loop.
+      * Call only on the master processor, just before receive loop.
       */
       void setup();
 
       /**
       * Return a pointer to the next available atom, or null. 
       *
-      * Call only on the master processor, within loop over groups.
+      * Call only on the master processor, within loop over groups. This
+      * function return the address of the next available Group, or null
+      * if no more are available. Groups are returned in order of 
+      * processor rank, starting with those on the master processor, 
+      * then processor 1, etc. 
       *
-      * \return address of next atom, or null if no more are available.
+      * The address returned is an address within an internal cache, 
+      * which is then freed for reuse. All Group data must thus be 
+      * copied to a permanent location before calling nextPtr() again.
+      *
+      * \return address of next group, or null if no more are available.
       */
       Group<N>* nextPtr();
      
       /**
-      * Send all groups to the master.
+      * Send all groups on this processor to the master processor.
       *
-      * Call on all processors except the master.
+      * Call on all processors except the master (rank = 0) processor.
       */
       void send();
 
    private:
 
-      /// Temporary array of groups, allocated only on master.
+      /// Temporary array of groups. Allocated only on master.
       DArray< Group<N> > recvArray_;
 
-      /// Iterator for groups in a GroupStorage<N> (master and slaves).
+      /// Iterator for groups in a GroupStorage<N> (on all procs).
       GroupIterator<N> iterator_;
 
       /// Pointer to associated Domain object (on master).
@@ -129,7 +139,7 @@ namespace DdMd
       /// Rank of processor from which groups are being received (on master).
       int source_;
 
-      /// Number of items in receive buffer (on master).
+      /// Number of unread groups in MPI receive buffer (on master).
       int recvBufferSize_;
 
       /// Number of items in recvArray_ (on master).

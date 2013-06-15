@@ -16,8 +16,6 @@
 #include <util/mpi/MpiSendRecv.h>
 #endif
 
-class ParamTest;
-
 #include <iomanip> 
 
 namespace Util
@@ -147,7 +145,11 @@ namespace Util
    void ScalarParam<Type>::load(Serializable::IArchive& ar)
    {
       if (isIoProcessor()) {
-         ar & *valuePtr_;
+         if (valuePtr_) {  
+            ar & *valuePtr_; 
+         } else {
+            UTIL_THROW("Attempt to load into null valuePtr_");
+         }
          if (ParamComponent::echo()) {
             writeParam(Log::file());
          }
@@ -164,7 +166,13 @@ namespace Util
    */
    template <class Type>
    void ScalarParam<Type>::save(Serializable::OArchive& ar)
-   {  ar & *valuePtr_; }
+   {
+      if (valuePtr_) {  
+         ar & *valuePtr_; 
+      } else {
+         UTIL_THROW("Attempt to write from null valuePtr_");
+      }
+   }
 
    /*
    * Set the pointer to the parameter value.

@@ -1,11 +1,35 @@
-
-
 ------------------------------------------------------------
+Goal: 
+
+Functions:
+
+Add a new public member function Exchanger::initialExchange
+to exchange atoms and covalent ghosts with less memory usage.
+
+Add bool initial argument to private exchangeAtoms function 
+to distinguish initial exchange from later. Initial exchange 
+would not mark ghosts for sending based on group 
+incompleteness.
+
+The public initialExchange method would call private methods 
+exchangeAtoms(bool initial = true) and a new method named
+initialGhostExchange();
+
+New function initialGhostExchange that would exchange covalent
+ghosts with less memory usage, as described below:
+
+Algorithm for initialGhostExchange::
+------------------------------------------------------------
+Step #1:
+
 Loop over atoms to make ghost plans, using position alone.
 
 Send all ghosts that are ghosts by position.
 
+This could be copied from current exchange
 ------------------------------------------------------------
+Step #2:
+
 Identify incomplete groups and missing ghosts.
 
 - Loop over all groups
@@ -16,6 +40,8 @@ Identify incomplete groups and missing ghosts.
       Add each missing atom id to request list for all directions
 
 ------------------------------------------------------------
+Step #3:
+
 Send requests:
 
 For each of 26 directions:
@@ -28,12 +54,23 @@ For each of 26 directions:
 
       if local, pack position and id for sending
 
+   send buffer of ghosts to requester.
 
-   send back to requester.
-
-   Receive ghostlist
+   Receive buffer of ghosts.
    
-   Unpack, add to storage. 
+   Unpack, add ghosts to storage.
 
-After all directions, iterate through incomplete groups.
+After all directions, iterate through incomplete groups,
+confirm completion.
 
+------------------------------------------------------------
+Modification of Domain:
+
+   Add member function to Domain that return const arrays 
+   of ranks of neighbors to send to and to receive from for 
+   communication over all neighbors:
+
+   const FArray<int, 26>& neighborSendRanks();
+   const FArray<int, 26>& neighborRecvRanks();
+
+   Test loop over 26 communication directions (simple ping).

@@ -9,7 +9,7 @@
 */
 
 #include "CellList.h"
-#include <util/containers/DArray.h>
+#include <util/containers/GArray.h>
 #include <util/misc/Setable.h>
 #include <util/global.h>
 
@@ -117,13 +117,6 @@ namespace DdMd
       */
       bool isAllocated() const;
  
-      #if 0 
-      /** 
-      * Return true if valid, or throw Exception.
-      */
-      bool isValid() const;
-      #endif
-  
       //@}
       /// \name Statistics
       //@{
@@ -177,13 +170,13 @@ namespace DdMd
    private:
   
       /// Array of pointers to 1st (or primary) atom in each pair.
-      DArray<Atom*>  atom1Ptrs_;  
+      GArray<Atom*>  atom1Ptrs_;  
 
       /// Array of pointers to neighbor (or secondary) atom in each pair.
-      DArray<Atom*>  atom2Ptrs_;  
+      GArray<Atom*>  atom2Ptrs_;  
 
       /// Array of indices in atom2Ptrs_ of first neighbor of an Atom.
-      DArray<int>    first_; 
+      GArray<int>    first_; 
 
       /// Pair list cutoff radius (pair potential cutoff + skin_).
       double cutoff_;
@@ -194,25 +187,19 @@ namespace DdMd
       /// Maximum number of distinct pairs (dimension of atom2Ptrs_).
       int    pairCapacity_;     
    
-      /// Number of primary atoms in atom1Ptrs_.
-      int    nAtom1_;      
-
-      /// Number of secondary atoms in atom2Ptrs_, or number of pairs.
-      int    nAtom2_; 
-   
-      /// Maximum of nAtom1_ on this proc since stats cleared.
+      /// Maximum number of primary atoms on this proc since stats cleared.
       int    maxNAtomLocal_;     
    
-      /// Maximum of nAtom2_ (# of pairs) on this proc since stats cleared.
+      /// Maximum # of pairs on this proc since stats cleared.
       int    maxNPairLocal_;     
    
       /// The number of times this list has been built since stats cleared.
       int    buildCounter_;
 
-      /// Maximum of nAtom1_ on all procs (defined only on master).
+      /// Maximum number of primary atoms on all procs (defined only on master).
       Setable<int>  maxNAtom_;     
    
-      /// Maximum of nAtom2_ on all procs (defined only on master).
+      /// Maximum of number of pairs on all procs (defined only on master).
       Setable<int>  maxNPair_;     
    
       /// Has memory been allocated?
@@ -243,7 +230,7 @@ namespace DdMd
       *    Atom* atom2Ptr;
       *
       *    \\ Loop over primary Atoms
-      *    for (i = 0; i < nAtom1_; ++i) {
+      *    for (i = 0; i < atom1Ptrs_.size(); ++i) {
       *       atom1Ptr = atom1Ptrs_[i];
       *
       *       // Loop over secondary atoms
@@ -255,10 +242,9 @@ namespace DdMd
       *       }
       *    }
       *
-      * Note that DArray<int> first_ contains nAtom1_ + 1 elements. The first
-      * element, element first_[0] is equal to 0, and the last element,
-      * first_[nAtom1_], is always equal to nAtom2_, the total number of 
-      * pairs.
+      * Note that GArray<int> first_ contains one more elements than 
+      * atom1Ptrs_. The element first_[0] is equal to 0, and the last 
+      * element is always equal to the total number of pairs.
       */
 
    }; 
@@ -267,13 +253,13 @@ namespace DdMd
    * Get the current number of primary atoms in the pairlist.
    */ 
    inline int PairList::nAtom() const
-   { return nAtom1_; }
+   {  return atom1Ptrs_.size(); }
 
    /*
    * Get the current number of pairs.
    */ 
    inline int PairList::nPair() const
-   { return nAtom2_; }
+   {  return atom2Ptrs_.size(); }
 
    /**
    * Get the maximum number of pairs. 

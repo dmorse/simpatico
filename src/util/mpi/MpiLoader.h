@@ -83,12 +83,15 @@ namespace Util
       /**  
       * Load and broadcast a 2D CArray of Type objects.
       *
+      * Loads m rows of n elements into array declared as Type array[][np].
+      *
       * \param value  pointer to array
-      * \param m      number of rows (1st dimension)
-      * \param n      number of columns (2nd dimension)
+      * \param m  logical number of rows (1st dimension)
+      * \param n  logical number of columns (2nd dimension)
+      * \param np physcial number of columns (elements allocate per row)
       */
       template <typename Type> void 
-      load(Type *value, int m, int n);
+      load(Type *value, int m, int n, int np);
   
       /**  
       * Load and broadcast a DMatrix<Type> object.
@@ -192,19 +195,20 @@ namespace Util
    template <typename IArchive> 
    template <typename Type> 
    void 
-   MpiLoader<IArchive>::load(Type *array, int m, int n)
+   MpiLoader<IArchive>::load(Type *array, int m, int n, int np)
    {
       if (mpiFileIoPtr_->isIoProcessor()) {
          int i, j; 
          for (i = 0; i < m; ++i) {
             for (j = 0; j < n; ++j) {
-               *archivePtr_ >> array[i*n + j];
+               *archivePtr_ >> array[i*np + j];
             }
          }
       }
       #ifdef UTIL_MPI
       if (mpiFileIoPtr_->hasIoCommunicator()) {
-         bcast<Type>(mpiFileIoPtr_->ioCommunicator(), &(array[0]), n*m, 0); 
+         // Broadcast block of m rows of np elements each.
+         bcast<Type>(mpiFileIoPtr_->ioCommunicator(), &(array[0]), m*np, 0); 
       }
       #endif
    }

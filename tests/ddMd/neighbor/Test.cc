@@ -11,9 +11,6 @@ int main()
    Vector::commitMpiType();
    #endif
 
-   //TEST_RUNNER(CellListTest) runner;
-   //runner.run();
-
    NeighborTestComposite runner;
    runner.run();
 

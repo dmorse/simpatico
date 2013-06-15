@@ -1,5 +1,5 @@
-#ifndef DDMD_DOMAIN_TEST_H
-#define DDMD_DOMAIN_TEST_H
+#ifndef DDMD_PLAN_TEST_H
+#define DDMD_PLAN_TEST_H
 
 #include <ddMd/communicate/Plan.h>
 
@@ -24,12 +24,10 @@ public:
    virtual void setUp()
    {}
 
-
-
-
-
-   void ghostPlan()
+   void testGhostPlan()
    {
+      printMethod(TEST_FUNC);
+
       Plan plan;
       plan.setGhost(0, 0);
       plan.setGhost(1, 0);
@@ -62,8 +60,10 @@ public:
 
    }
 
-   void exchangePlan()
+   void testExchangePlan()
    {
+      printMethod(TEST_FUNC);
+
       Plan plan;
       plan.setExchange(0, 0);
       plan.setExchange(1, 0);
@@ -98,6 +98,8 @@ public:
 
    void testClear()
    {
+      printMethod(TEST_FUNC);
+
       Plan plan;
       plan.setExchange(0, 0);
       plan.setExchange(1, 0);
@@ -137,6 +139,7 @@ public:
 
    void testInserter()
    {
+      printMethod(TEST_FUNC);
       Plan plan;
       plan.clearFlags();
 
@@ -149,13 +152,13 @@ public:
       plan.setGhost(2, 0);
       plan.setGhost(2, 1);
 
-      std::cout << plan;
+      //std::cout << plan;
    }
 };
 
 TEST_BEGIN(PlanTest)
-TEST_ADD(PlanTest, ghostPlan)
-TEST_ADD(PlanTest, exchangePlan)
+TEST_ADD(PlanTest, testGhostPlan)
+TEST_ADD(PlanTest, testExchangePlan)
 TEST_ADD(PlanTest, testClear)
 TEST_ADD(PlanTest, testInserter)
 TEST_END(PlanTest)

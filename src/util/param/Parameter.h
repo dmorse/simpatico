@@ -11,8 +11,6 @@
 #include <util/param/ParamComponent.h>
 #include <util/param/Label.h>
 
-class ParamTest;
-
 namespace Util
 {
 
@@ -55,10 +53,6 @@ namespace Util
 
       /// Label object that contains parameter label string.
       Label label_;
-
-   //friends:
-
-      friend class ::ParamTest;
 
    };
 

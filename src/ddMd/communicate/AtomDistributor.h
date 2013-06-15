@@ -170,9 +170,8 @@ namespace DdMd
       * the largest sendList, before caching the current atom and marking
       * it for later sending.
       *
-      * On entry, the coordinates of the active atom must be expressed in:
-      *    - Cartesian coordinates, if UTIL_ORTHOGONAL is true
-      *    - Generalized / scaled coordinates, otherwise
+      * The coordinates of the active atom must be expressed in 
+      * scaled / generalized [0, 1] coordinates when it is added.
       *
       * \return rank of processor that owns the active atom.
       */
@@ -192,12 +191,23 @@ namespace DdMd
       *
       * This should be called by all processes except the master. 
       *
-      * Upon return, all processors should have correct atoms, with
-      * coordinates in the same coordinates system as that used on
-      * entry to addAtom() (Cartesian iff UTIL_ORTHOGONAL).
+      * Upon return, all processors should have the correct atoms, 
+      * with scaled / generalized atom coordinates set correctly.
       */
       void receive();
       #endif
+
+      /**
+      * Validate distribution of atoms after completion.
+      *
+      * This method checks call AtomStorage::isValid(), checks that
+      * the total number of atoms on all processors is equal to nAtom,
+      * and checks that every atom is in the correct processor domain.
+      *
+      * On the master processor
+      * \return total number of atoms distributed on master, 0 on slaves.
+      */
+      int validate();
 
    private:
 

@@ -13,6 +13,7 @@
 #include <util/crystal/PointGroup.h>
 #include <util/crystal/PointSymmetry.h>
 #include <util/archives/Serializable_includes.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 
@@ -47,7 +48,7 @@ namespace DdMd
       modes_.allocate(nMode_, nAtomType_);
       readDMatrix<double>(in, "modes", modes_, nMode_, nAtomType_);
       read<int>(in, "hMax", hMax_);
-      read<Util::LatticeSystem>(in, "lattice", lattice_);
+      read<LatticeSystem>(in, "lattice", lattice_);
 
       // Allocate wavevectors arrays
       nWave_     = (2*hMax_ +1 )*(2*hMax_ + 1)*(2*hMax_ + 1);
@@ -207,7 +208,7 @@ namespace DdMd
       modes_.allocate(nMode_, nAtomType_);
       loadDMatrix<double>(ar, "modes", modes_, nMode_, nAtomType_);
       loadParameter<int>(ar, "hMax", hMax_);
-      loadParameter<Util::LatticeSystem>(ar, "lattice", lattice_);
+      loadParameter<LatticeSystem>(ar, "lattice", lattice_);
 
       // Load and broadcast other distributed members
       MpiLoader<Serializable::IArchive> loader(*this, ar);

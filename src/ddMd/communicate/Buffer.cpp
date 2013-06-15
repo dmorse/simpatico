@@ -23,7 +23,7 @@ namespace DdMd
    * Constructor.
    */
    Buffer::Buffer() 
-    : Util::ParamComposite(),
+    : ParamComposite(),
       #ifdef UTIL_MPI
       sendBufferBegin_(0),
       recvBufferBegin_(0),
@@ -31,18 +31,20 @@ namespace DdMd
       recvBufferEnd_(0),
       sendBlockBegin_(0),
       recvBlockBegin_(0),
+      recvBlockEnd_(0),
       sendPtr_(0),
       recvPtr_(0),
       bufferCapacity_(-1),
       dataCapacity_(-1),
       sendSize_(0),
       recvSize_(0),
+      recvType_(NONE),
       #endif
       atomCapacity_(-1),
       ghostCapacity_(-1),
       maxSendLocal_(0),
       isInitialized_(false)
-   { setClassName("Buffer"); }
+   {  setClassName("Buffer"); }
 
    /*
    * Destructor.
@@ -133,7 +135,6 @@ namespace DdMd
       ar << atomCapacity_;
       ar << ghostCapacity_;
    }
-
   
    /*
    * Maximum number of atoms for which space is available.
@@ -177,14 +178,14 @@ namespace DdMd
 
       // Capacity in bytes send and receive buffers. This is maximum of
       // the buffer space required by the local atoms and ghost atoms.
-      int atomDataSize  = atomCapacity_*atomSize();
-      int ghostDataSize = ghostCapacity_*ghostSize();
+      int atomDataSize  = atomCapacity_*Atom::packedAtomSize();
+      int ghostDataSize = ghostCapacity_*Atom::packedGhostSize();
       if (atomDataSize > ghostDataSize) {
           dataCapacity_ = atomDataSize;
-          ghostCapacity_ = dataCapacity_/ghostSize();
+          ghostCapacity_ = dataCapacity_/Atom::packedGhostSize();
       } else {
           dataCapacity_ = ghostDataSize;
-          atomCapacity_ = dataCapacity_/atomSize();
+          atomCapacity_ = dataCapacity_/Atom::packedAtomSize();
       }
 
       // Leave space for a 4 byte header
@@ -221,7 +222,7 @@ namespace DdMd
    /*
    * Clear the send buffer prior to packing, and set the sendType.
    */
-   void Buffer::beginSendBlock(BlockDataType sendType, int sendGroupSize)
+   void Buffer::beginSendBlock(int sendType)
    {
       if (sendSize_ != 0) {
          UTIL_THROW("Error: previous send block not finalized");
@@ -232,7 +233,6 @@ namespace DdMd
 
       // Data type to be sent.
       sendType_ = sendType;
-      sendGroupSize_ = sendGroupSize; // 0 by default, for atom or ghost.
 
       // Mark beginning of block.
       sendBlockBegin_ = sendPtr_;
@@ -241,7 +241,6 @@ namespace DdMd
       int* sendBuffPtr = (int *)sendPtr_;
       sendBuffPtr += 4;
       sendPtr_ = (char *)sendBuffPtr;
-
    }
 
    /*
@@ -249,14 +248,16 @@ namespace DdMd
    */
    void Buffer::endSendBlock(bool isComplete)
    {
+      int sendBytes = (int)(sendPtr_ - sendBlockBegin_);
+
       // Add passport to the beginning of the block:
-      // Pack sendSize_, sendType_ and isComplete.
+      // Pack sendSize_, sendBytes, sendType_ and isComplete.
       int* sendBuffPtr = (int *)sendBlockBegin_;
       *sendBuffPtr = sendSize_;
       ++sendBuffPtr;
-      *sendBuffPtr = (int) sendType_;
+      *sendBuffPtr = sendBytes;
       ++sendBuffPtr;
-      *sendBuffPtr = sendGroupSize_;
+      *sendBuffPtr = sendType_;
       ++sendBuffPtr;
       *sendBuffPtr = (int) isComplete;
 
@@ -264,8 +265,6 @@ namespace DdMd
       sendBlockBegin_ = 0;
       sendSize_ = 0;
       sendType_ = NONE;
-      sendGroupSize_ = 0;
-
    }
 
    /*
@@ -278,258 +277,41 @@ namespace DdMd
          UTIL_THROW("Error: Previous receive block not completely unpacked");
       }
 
-      // Extract the number packed items and item type from the receive buffer
+      // Store address of begining of block
+      recvBlockBegin_ = recvPtr_;
+
+      // Extract passport data
       int* recvBuffPtr = (int *)recvPtr_;
       recvSize_  = *recvBuffPtr;
-      recvType_  = *(recvBuffPtr + 1);
-      recvGroupSize_ = *(recvBuffPtr + 2);
+      int recvBytes = *(recvBuffPtr + 1);
+      recvType_  = *(recvBuffPtr + 2);
       bool isComplete = (bool) *(recvBuffPtr + 3);
-      recvBuffPtr += 4;
+    
+      // Calculate address of expected end of recv block
+      recvBlockEnd_ = recvBlockBegin_ + recvBytes;
 
       // Set recvPtr to beginning of first item to be unpacked
+      recvBuffPtr += 4;
       recvPtr_ = (char *)recvBuffPtr;
 
       return isComplete;
    }
 
    /*
-   * Pack a local Atom for exchange of ownership.
+   * Finalize receiving block, check consistency.
    */
-   void Buffer::packAtom(Atom& atom)
+   void Buffer::endRecvBlock()
    {
-      if (sendType_ != ATOM) {
-         UTIL_THROW("Send type is not ATOM");
+      if (recvSize_ != 0) {
+         UTIL_THROW("Error: Recv counter != 0 at end of block");
       }
-      if (sendSize_ >= atomCapacity_) {
-         UTIL_THROW("Attempt to overpack send buffer");
+      if (recvPtr_ != recvBlockEnd_) {
+         UTIL_THROW("Error: Inconsistent recv cursor at end of block");
       }
-
-      pack<int>(atom.id());
-      pack<int>(atom.typeId());
-      pack<Vector>(atom.position());
-      pack<Vector>(atom.velocity());
-      pack<unsigned int>(atom.plan().flags());
-
-      // Pack Mask
-      Mask& mask = atom.mask();
-      int size = mask.size();
-      pack<int>(size);
-      for (int j = 0; j < size; ++j) {
-         pack<int>(mask[j]);
-      }
-
-      //Increment number of atoms in send buffer by 1
-      ++sendSize_;
-   }
-
-   /*
-   * Receive ownership of an Atom.
-   */
-   void Buffer::unpackAtom(Atom& atom)
-   {
-      if (recvType_ != (int)ATOM) {
-         UTIL_THROW("Receive type is not ATOM");
-      }
-      if (recvSize_ <= 0) {
-         UTIL_THROW("Attempt to unpack empty receive buffer");
-      }
-
-      int i;
-
-      unpack(i);
-      atom.setId(i);
-
-      unpack(i);
-      atom.setTypeId(i);
-
-      unpack<Vector>(atom.position());
-      unpack<Vector>(atom.velocity());
-
-      // Unpack communication plan
-      unsigned int ui;
-      unpack(ui);
-      atom.plan().setFlags(ui);
-
-      // Unpack atom Mask
-      Mask& mask = atom.mask();
-      mask.clear();
-      int size;
-      unpack(size);
-      for (int j = 0; j < size; ++j) {
-         unpack(i);
-         mask.append(i);
-      }
-      assert(mask.size() == size);
-
-      // Decrement number of atoms in recv buffer by 1
-      recvSize_--;
-
-   }
-
-   /*
-   * Return size of packed Atom, in bytes.
-   */
-   int Buffer::atomSize()
-   {  
-      int size = 0;
-      size += 2*sizeof(int); 
-      size += 2*sizeof(Vector); 
-      size += sizeof(unsigned int);
-      size += sizeof(int);
-      size += Mask::Capacity*sizeof(int); 
-      return size;
-   }
-
-   /*
-   * Pack data required for a ghost Atom for sending.
-   */
-   void Buffer::packGhost(Atom& atom)
-   {
-      // Preconditions
-      if (sendType_ != GHOST) {
-         UTIL_THROW("Send type is not GHOST");
-      }
-      if (sendSize_ >= ghostCapacity_) {
-         UTIL_THROW("Attempt to overpack send buffer");
-      }
-
-      Vector pos;
-      pack<int>(atom.id());
-      pack<int>(atom.typeId());
-      pack<Vector>(atom.position());
-      pack<unsigned int>(atom.plan().flags());
-
-      //Increment number of atoms in send buffer by 1
-      sendSize_++;
-
-   }
-
-   /*
-   * Unpack data required for a ghost Atom.
-   */
-   void Buffer::unpackGhost(Atom& atom)
-   {
-      if (recvType_ != (int)GHOST) {
-         UTIL_THROW("Receive type is not GHOST");
-      }
-      if (recvSize_ <= 0) {
-         UTIL_THROW("Attempt to unpack empty receive buffer");
-      }
-
-      int i;
-      unpack(i);
-      atom.setId(i);
-      unpack(i);
-      atom.setTypeId(i);
-      unpack<Vector>(atom.position());
-
-      unsigned int ui;
-      unpack(ui);
-      atom.plan().setFlags(ui);
-      
-      //Decrement number of atoms in recv buffer to be unpacked by 1
-      recvSize_--;
-   }
-
-   /*
-   * Return size of one packed Ghost atom, in bytes (static method).
-   */
-   int Buffer::ghostSize()
-   {  
-      int size = 0;
-      size += 2*sizeof(int); 
-      size += sizeof(Vector); 
-      size += sizeof(unsigned int);
-      return size;
-   }
-
-   /*
-   * Packed size of one Group<N> object.
-   */
-   int Buffer::groupSize(int N)
-   {  return (2 + N)*sizeof(int) + sizeof(unsigned int); }
-
-   /*
-   * Maximum number of Group<N> objects that can fit buffer.
-   */
-   int Buffer::groupCapacity(int N) const
-   {
-      if (dataCapacity_ <= 0) {
-         UTIL_THROW("Buffer not allocated");
-      }
-      return (dataCapacity_/groupSize(N)); 
-   }
-
-   /*
-   * Pack updates ghost atom position.
-   */
-   void Buffer::packUpdate(Atom& atom)
-   {
-      // Preconditions
-      if (sendType_ != UPDATE) {
-         UTIL_THROW("Send type is not UPDATE");
-      }
-      if (sendSize_ >= ghostCapacity_) {
-         UTIL_THROW("Attempt to overpack buffer: sendSize> >= ghostCapacity_");
-      }
-      pack<Vector>(atom.position());
-
-      //Increment number of atoms in send buffer by 1
-      sendSize_++;
-   }
-
-   /**
-   * Pack updated ghost atom position.
-   */
-   void Buffer::unpackUpdate(Atom& atom)
-   {
-      if (recvType_ != (int)UPDATE) {
-         UTIL_THROW("Receive type is not UPDATE");
-      }
-      if (recvSize_ <= 0) {
-         UTIL_THROW("Attempt to unpack empty receive buffer");
-      }
-      unpack<Vector>(atom.position());
-      
-      //Decrement number of atoms in recv buffer to be unpacked by 1
-      recvSize_--;
-   }
-
-   /*
-   * Pack ghost atom force.
-   */
-   void Buffer::packForce(Atom& atom)
-   {
-      // Preconditions
-      if (sendType_ != FORCE) {
-         UTIL_THROW("Send type is not FORCE");
-      }
-      if (sendSize_ >= ghostCapacity_) {
-         UTIL_THROW("Attempt to overpack buffer: sendSize> >= ghostCapacity_");
-      }
-      pack<Vector>(atom.force());
-
-      //Increment number of atom forces in send buffer by 1
-      sendSize_++;
-   }
-
-   /**
-   * Unpack data ghost Atom force, and add to atom on this processor.
-   */
-   void Buffer::unpackForce(Atom& atom)
-   {
-      if (recvType_ != (int)FORCE) {
-         UTIL_THROW("Receive type is not FORCE");
-      }
-      if (recvSize_ <= 0) {
-         UTIL_THROW("Attempt to unpack empty receive buffer");
-      }
-      Vector f;
-      unpack<Vector>(f);
-      atom.force() += f;
-      
-      //Decrement number of atoms in recv buffer to be unpacked by 1
-      recvSize_--;
+      recvBlockBegin_ = 0;
+      recvBlockEnd_ = 0;
+      recvSize_ = 0;
+      recvType_ = NONE;
    }
 
    /*
@@ -628,7 +410,6 @@ namespace DdMd
       request.Wait();
       recvType_ = NONE;
       recvPtr_ = recvBufferBegin_;
-
    }
 
    /*
