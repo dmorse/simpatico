@@ -13,6 +13,7 @@
 #include <util/boundary/Boundary.h>
 #include <util/space/Grid.h>
 #include <util/containers/DArray.h>
+#include <util/containers/GArray.h>
 #include <util/global.h>
 
 namespace DdMd
@@ -330,7 +331,7 @@ namespace DdMd
       DArray<Atom*>   handles_;
 
       /// Array of Cell objects.
-      DArray<Cell>  cells_;
+      GArray<Cell>  cells_;
 
       /// Lower coordinate bounds (local atoms).
       Vector  lower_; 
@@ -450,7 +451,10 @@ namespace DdMd
    * Return reference to cell number i.
    */
    inline const Cell& CellList::cell(int i) const
-   {  return cells_[i]; }
+   {
+      assert(i < cells_.size());  
+      return cells_[i]; 
+   }
 
    /*
    * Return pointer to first Cell.

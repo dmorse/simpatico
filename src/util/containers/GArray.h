@@ -51,13 +51,9 @@ namespace Util
       /**
       * Assignment, element by element.
       *
-      * Preconditions: 
-      * - Both this and other GArrays must be allocated.
-      * - Capacity of this GArray must be >= size of RHS GArray.
-      *
       * \param other the rhs GArray 
       */
-      GArray<Data>& operator=(const GArray<Data>& other);
+      GArray<Data>& operator = (const GArray<Data>& other);
 
       /**
       * Destructor.
@@ -123,6 +119,20 @@ namespace Util
       * \param data Data object to be appended
       */
       void append(const Data& data);
+
+      /**
+      * Resizes array so that it contains n elements.
+      *
+      * If n is greater or less than the current size, but less than
+      * the current capacity, it simply sets the size to n, without
+      * initializing or modifying the values of any elements of the 
+      * underlying array.  If n is greater than the current capacity, 
+      * it allocates a new block of memory and copies the current 
+      * elements. 
+      *
+      * \param n desired number of elements
+      */
+      void resize(int n);
 
       /**
       * Mimic C array subscripting.
@@ -215,7 +225,7 @@ namespace Util
    * Assignment, element by element.
    */
    template <typename Data>
-   GArray<Data>& GArray<Data>::operator=(const GArray<Data>& other) 
+   GArray<Data>& GArray<Data>::operator = (const GArray<Data>& other) 
    {
       // Check for self assignment
       if (this == &other) return *this;
@@ -293,6 +303,34 @@ namespace Util
       }
       data_[size_] = data;
       ++size_;
+   }
+
+   /*
+   * Resize the array.
+   */
+   template <typename Data>
+   void GArray<Data>::resize(int n) 
+   {
+      if (n > capacity_) {
+         int m = capacity_;
+         if (m == 0) {
+            m = n;
+         } else {
+            while (n > m) {
+               m *= 2;
+            }
+         }
+         Data* newPtr = new Data[m];
+         if (data_) {
+            for (int i = 0; i < size_; ++i) {
+               newPtr[i] = data_[i];
+            }
+            delete [] data_;
+         }
+         data_ = newPtr;
+         capacity_ = m;
+      }
+      size_ = n;
    }
 
    /*

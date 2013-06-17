@@ -20,7 +20,9 @@ public:
    void testConstructor();
    void testSubscript();
    void testDefaultReserve();
-   void testResize();
+   void testAppendResize();
+   void testResize1();
+   void testResize2();
    void testCopyConstructor();
    void testSerialize1File();
 
@@ -75,7 +77,7 @@ void GArrayTest::testDefaultReserve()
    TEST_ASSERT(v.capacity() == 64);
 } 
 
-void GArrayTest::testResize()
+void GArrayTest::testAppendResize()
 {
    printMethod(TEST_FUNC);
    GArray<int> v;
@@ -92,6 +94,46 @@ void GArrayTest::testResize()
    v.append(7);
    TEST_ASSERT(v.size() == 5);
    TEST_ASSERT(v.capacity() == 6);
+} 
+
+void GArrayTest::testResize1()
+{
+   printMethod(TEST_FUNC);
+   GArray<int> v;
+   v.reserve(3);
+   v.append(3);
+   v.append(4);
+   TEST_ASSERT(v.size() == 2);
+   TEST_ASSERT(v.capacity() == 3);
+   v.resize(7);
+   TEST_ASSERT(v.size() == 7);
+   TEST_ASSERT(v.capacity() == 12);
+   TEST_ASSERT(v[0] == 3);
+   TEST_ASSERT(v[1] == 4);
+} 
+
+void GArrayTest::testResize2()
+{
+   printMethod(TEST_FUNC);
+   GArray<int> v;
+   v.resize(3);
+   v[0]=3;
+   v[1]=4;
+   v[2]=5;
+   TEST_ASSERT(v.size() == 3);
+   TEST_ASSERT(v.capacity() == 3);
+   v.resize(8);
+   TEST_ASSERT(v.size() == 8);
+   TEST_ASSERT(v.capacity() == 12);
+   TEST_ASSERT(v[0] == 3);
+   TEST_ASSERT(v[1] == 4);
+   TEST_ASSERT(v[2] == 5);
+   v[7]=7;
+   v.append(8);
+   TEST_ASSERT(v.size() == 9);
+   TEST_ASSERT(v.capacity() == 12);
+   TEST_ASSERT(v[8] == 8);
+   
 } 
 
 void GArrayTest::testCopyConstructor()
@@ -177,7 +219,9 @@ TEST_ADD(GArrayTest, testReserve)
 TEST_ADD(GArrayTest, testConstructor)
 TEST_ADD(GArrayTest, testSubscript)
 TEST_ADD(GArrayTest, testDefaultReserve)
-TEST_ADD(GArrayTest, testResize)
+TEST_ADD(GArrayTest, testAppendResize)
+TEST_ADD(GArrayTest, testResize1)
+TEST_ADD(GArrayTest, testResize2)
 TEST_ADD(GArrayTest, testCopyConstructor)
 TEST_ADD(GArrayTest, testSerialize1File)
 TEST_END(GArrayTest)
