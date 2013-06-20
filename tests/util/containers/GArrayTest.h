@@ -128,11 +128,29 @@ void GArrayTest::testResize2()
    TEST_ASSERT(v[0] == 3);
    TEST_ASSERT(v[1] == 4);
    TEST_ASSERT(v[2] == 5);
-   v[7]=7;
-   v.append(8);
+   v[3]=6;
+   v[4]=7;
+   v[5]=8;
+   v[6]=9;
+   v[7]=10;
+   v.append(11);
    TEST_ASSERT(v.size() == 9);
    TEST_ASSERT(v.capacity() == 12);
-   TEST_ASSERT(v[8] == 8);
+   TEST_ASSERT(v[3] == 6);
+   TEST_ASSERT(v[4] == 7);
+   TEST_ASSERT(v[5] == 8);
+   TEST_ASSERT(v[6] == 9);
+   TEST_ASSERT(v[7] == 10);
+   TEST_ASSERT(v[8] == 11);
+   v.resize(2);
+   TEST_ASSERT(v.size() == 2);
+   TEST_ASSERT(v.capacity() == 12);
+   v.resize(5);
+   TEST_ASSERT(v.size() == 5);
+   TEST_ASSERT(v.capacity() == 12);
+   TEST_ASSERT(v[2] == 0);
+   TEST_ASSERT(v[3] == 0);
+   TEST_ASSERT(v[4] == 0);
    
 } 
 

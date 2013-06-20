@@ -333,7 +333,7 @@ public:
       Vector Rc;
       Vector Rg2;
       int i, j;
-      random.setSeed(279346718238937);
+      random.setSeed(1793467182);
       for (i = 0; i < 1000; ++i) {
          for (j=0; j < Dimension; ++j) {
             Rg[j] = random.uniform(-0.5, 1.5);

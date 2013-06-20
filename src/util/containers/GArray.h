@@ -85,6 +85,7 @@ namespace Util
       * Reset to empty state.
       *
       * Sets size to zero, but leaves capacity unchanged.
+      * Does not call destructor for deleted elements.
       */ 
       void clear();
 
@@ -123,12 +124,14 @@ namespace Util
       /**
       * Resizes array so that it contains n elements.
       *
-      * If n is greater or less than the current size, but less than
-      * the current capacity, it simply sets the size to n, without
-      * initializing or modifying the values of any elements of the 
-      * underlying array.  If n is greater than the current capacity, 
-      * it allocates a new block of memory and copies the current 
-      * elements. 
+      * This function changes the size of the array to n, and changes 
+      * the capacity iff necesary to accomodate the change in size. 
+      * Upon return, size is set to n. In what follows, "size" and 
+      * "capacity" refer to values on entry:
+      *
+      * If n < size, size is reset, but no destructors are called
+      * If n > size, all added elements are value initialized
+      * If n > capacity, new memory is allocated and the array is moved 
       *
       * \param n desired number of elements
       */
@@ -311,24 +314,34 @@ namespace Util
    template <typename Data>
    void GArray<Data>::resize(int n) 
    {
-      if (n > capacity_) {
-         int m = capacity_;
-         if (m == 0) {
-            m = n;
-         } else {
-            while (n > m) {
-               m *= 2;
+      if (n < 0) {
+         UTIL_THROW("Cannot resize to n < 0");
+      }
+      assert(capacity_ >= size_);
+      if (n > size_) {
+         if (n > capacity_) {
+            int m = capacity_;
+            if (m == 0) {
+               m = n;
+            } else {
+               while (n > m) {
+                  m *= 2;
+               }
             }
-         }
-         Data* newPtr = new Data[m];
-         if (data_) {
-            for (int i = 0; i < size_; ++i) {
-               newPtr[i] = data_[i];
+            Data* newPtr = new Data[m];
+            if (data_) {
+               for (int i = 0; i < size_; ++i) {
+                  newPtr[i] = data_[i];
+               }
+               delete [] data_;
             }
-            delete [] data_;
+            data_ = newPtr;
+            capacity_ = m;
          }
-         data_ = newPtr;
-         capacity_ = m;
+         // Initialize added elements, using placement new
+         for (int i = size_; i < n;  ++i) {
+            new(data_ + i) Data();
+         }
       }
       size_ = n;
    }
