@@ -19,7 +19,7 @@ addChild(new ChemistryTestComposite, "chemistry/");
 addChild(new NeighborTestComposite, "neighbor/");
 addChild(new SimulationTestComposite, "simulation/");
 addChild(new TEST_RUNNER(McSimulationTest), "mcSimulation/");
-//addChild(new TEST_RUNNER(MdSimulationTest), "mdSimulation/");
+addChild(new TEST_RUNNER(MdSimulationTest), "mdSimulation/");
 TEST_COMPOSITE_END
 
 int main() {

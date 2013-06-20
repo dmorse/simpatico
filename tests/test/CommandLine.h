@@ -60,7 +60,7 @@ public:
    char** argv()
    {
       argv_.clear();
-      for (int i = 0; i< strings_.size(); ++i) {
+      for (unsigned int i = 0; i < strings_.size(); ++i) {
          argv_.push_back(const_cast<char*>(strings_[i].c_str()));
       }
       return &(argv_[0]);

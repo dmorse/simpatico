@@ -33,7 +33,8 @@ namespace McMd
    *
    * \ingroup McMd_Pair_Module
    */
-   class MdPairPotential : public ParamComposite, public SubSystem, public PairPotential
+   class MdPairPotential : public ParamComposite, public SubSystem, 
+                           public PairPotential
    {
 
    public:
@@ -51,10 +52,10 @@ namespace McMd
       /**
       * Calculate non-bonded pair forces for all atoms in this System.
       *
-      * Adds non-bonded pair forces to the current values of the
-      * forces for all atoms in this system. Before calculating 
-      * forces, the method checks if the pair list is current, 
-      * and rebuilds it if necessary.
+      * Adds non-bonded pair forces to the current values of the forces
+      * for all atoms in this system. Before calculating forces, this
+      * function checks if the pair list is current, and rebuilds it if 
+      * necessary.
       */
       virtual void addForces() = 0;
 
@@ -64,17 +65,17 @@ namespace McMd
       /**
       * Build the internal PairList.
       *
-      * As part of building the PairList, this method also shifts all atom
-      * positions into the primary image of the periodic boundary. In an
-      * MD simulation, the positions are allowed to wander out of the
-      * primary image between calls to this function.
+      * Before building the PairList, this method also shifts all atom
+      * positions into the primary image of the periodic boundary. In 
+      * an MD simulation, the positions are allowed to wander out of 
+      * the primary image between calls to this function.
       */
       void buildPairList();
 
       /**
       * Return true if PairList is current, false if obsolete.
       *
-      * A PairList is considered current iff it has been built
+      * A PairList is considered current iff it has been built 
       * previously, and no particle has moved by a distance 
       * greater than skin/2 since the PairList was last built.
       */

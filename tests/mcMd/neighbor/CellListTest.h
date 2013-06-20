@@ -258,7 +258,6 @@ public:
                              Vector(1.0, 1.6, 1.0), 
                              Vector(0.5, 1.8, 1.2) 
                           };
-      int atomId[N_PART] = {0, 1};
       int cellId[N_PART];
       int i,k;
       int j=0; // Index of atom to be removed
@@ -306,7 +305,6 @@ public:
       // Put back atom j, with modified position and label
       r[j] = Vector(0.9, 2.4, 1.1);
       atoms[j].position() = r[j];
-      atomId[j] = j;
       i = cellList.cellIndexFromPosition(atoms[j].position());
       TEST_ASSERT(i == cellId[j]);  // Check that its the same cell
       cellList.addAtom(atoms[j]);

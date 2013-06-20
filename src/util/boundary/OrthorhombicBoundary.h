@@ -481,8 +481,8 @@ namespace Util
       double norm = 0.0;
       for (int i = 0; i < Dimension; ++i) {
          dr = r1[i] - r2[i];
-         if ( fabs(dr) > halfLengths_[i] ) {
-            if ( dr > 0.0 ) {
+         if (fabs(dr) > halfLengths_[i]) {
+            if (dr > 0.0) {
                dr -= lengths_[i];
             } else {
                dr += lengths_[i];
@@ -500,7 +500,7 @@ namespace Util
    */
    inline 
    double OrthorhombicBoundary::distanceSq(const Vector &r1, const Vector &r2, 
-                                          Vector &dr) const
+                                           Vector &dr) const
    {
       for (int i = 0; i < Dimension; ++i) {
          dr[i] = r1[i] - r2[i];
