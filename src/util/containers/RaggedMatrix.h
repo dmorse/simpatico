@@ -17,7 +17,9 @@ namespace Util
    * A 2D array in which different rows can have different lengths.
    *
    * A RaggedMatrix object A is a two-dimensional array in which the 
-   * operator A(i,j) returns a reference to element j of row i.
+   * operator A(i,j) returns a reference to element j of row i, and in
+   * which different rows have different lengths. Class RaggedMatrix
+   * cannot be instantiated, and functions like an abstract base class.
    *
    * The memory for a RaggedMatrix is stored in a one-dimensional C array.
    *
@@ -73,17 +75,17 @@ namespace Util
 
    protected:
 
-      /// Pointer to 1D C array of all elements.
+      /// One-dimensional C array of all elements.
       Data*  data_;
 
-      /// Array of pointer to rows
-      Data** rows_;
+      /// Array of pointers to rows.
+      Data**  rows_;
 
       /// Array containing number of elements in each row.
-      int*   capacity2_;
+      int*  capacity2_;
 
       /// Number of rows (range of first index).
-      int    capacity1_;
+      int  capacity1_;
 
       /**
       * Default constructor. 
@@ -135,7 +137,7 @@ namespace Util
    */
    template <typename Data>
    inline int RaggedMatrix<Data>::capacity2(int i)
-   { return capacity2_[i]; }
+   {  return capacity2_[i]; }
 
    /*
    * Return element (i,j) of matrix by const reference.
@@ -164,7 +166,6 @@ namespace Util
       assert(j < capacity2_[i]);
       return *(rows_[i] + j);
    }
-
 
 }
 #endif

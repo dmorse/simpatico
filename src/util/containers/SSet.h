@@ -163,7 +163,7 @@ namespace Util
       /// Array of pointers to Data objects.
       Data* ptrs_[Capacity];
 
-      /// Logical size of array (number of elements used).
+      /// Logical size of array (number of elements in array).
       int  size_;
 
    };
