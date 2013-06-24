@@ -1,0 +1,422 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Simple Sectioned Essay Template
+% LaTeX Template
+%
+% This template has been downloaded from:
+% http://www.latextemplates.com
+%
+% Note:
+% The \lipsum[#] commands throughout this template generate dummy text
+% to fill the template out. These commands should all be removed when 
+% writing essay content.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article} % Default font size is 12pt, it can be changed here
+
+%\usepackage{geometry} % Required to change the page size to A4
+%\geometry{a4paper} % Set the page size to be A4 as opposed to the default US Letter
+
+\usepackage{graphicx} % Required for including pictures
+\usepackage{float} % Allows putting an [H] in \begin{figure} to specify exact location of figure
+\usepackage{wrapfig} % Allows in-line images such as the example fish picture
+
+%\linespread{1.2} % Line spacing
+%\setlength\parindent{0pt} % Uncomment to remove all indentation from paragraphs
+%\graphicspath{{./Pictures/}} % Specifies the directory where pictures are stored
+
+\newcommand{\vv}[1]{\mathbf{#1}}
+\newcommand\system{\Gamma_{0}}
+\newcommand\chain{\Gamma}
+
+\newcommand\Utot{U_{1}}
+\newcommand\Usys{U_{0}}
+\newcommand\delU{\Delta U}
+\newcommand\Uid{U^{({\rm id})}}
+\newcommand\Uext{U^{({\rm ext})}}
+
+\newcommand\Ztot{Z_{1}}
+\newcommand\Zsystem{Z_{0}}
+\newcommand\Zid{Z_{\rm id}}
+
+\newcommand\Ftot{F_{1}}
+\newcommand\Fsystem{F_{0}}
+\newcommand\Fid{F_{\rm id}}
+
+\newcommand\muex{\mu_{\rm ex}}
+
+\newcommand\vbead{\vv{r}}
+\newcommand\qbead{\vv{r}_{1}}
+\newcommand\nbead{l}
+
+\newcommand\vbond{\vv{b}}
+\newcommand\ubond{\vv{u}}
+\newcommand\rbond{b}
+\newcommand\nbond{l-1}
+
+\newcommand\ntrial{k}
+\newcommand\rtrial{\tilde{b}}
+\newcommand\vtrial{\tilde{\vv{b}}}
+\newcommand\utrial{\tilde{\vv{u}}}
+
+\newcommand\Ubond{U^{({\rm bond})}}
+\newcommand\Uornt{U^{({\rm ornt})}}
+\newcommand\Pbond{P_{{\rm bond}}}
+\newcommand\Pornt{P_{{\rm ornt}}}
+\newcommand\zid{z^{({\rm id})}}
+
+\newcommand\rconfig{\tilde{\chain}}
+\begin{document}
+
+%-------------------------------------------------------------------------------
+%	TITLE PAGE
+%-------------------------------------------------------------------------------
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+
+\textsc{\LARGE University of Minnesota}\\[1.5cm] % Name of your university/college
+\textsc{\Large Simpatico}\\[0.5cm] % Major heading such as course name
+\textsc{\large Algorithm Notes}\\[0.5cm] % Minor heading such as course title
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Bias Insertion and Sampling Algorithms}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+Taher \textsc{Ghasimakabri} % Your name
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Supervisor:} \\
+Dr. David \textsc{Morse} % Supervisor's Name
+\end{flushright}
+\end{minipage}\\[4cm]
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+%\tableofcontents % Include a table of contents
+
+%\newpage % Begins the essay on a new page instead of on the same page as the table of contents 
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\section{Chemical Potentials and Molecule Insertion}
+Consider a system that initially contains some set of molecules, to which we will try to add an additional linear polymer.  Let $\system$ denote the coordinates of the molecules that are present before insertion. Let $\chain$ denote the set of coordinates required to specify spatial configuration of the added chain. The potential energy $U$ of a system with the added chain can be written as a sum 
+\begin{equation}
+    \Utot(\system, \chain) = \Usys(\system) + \delU (\chain, \system)
+\end{equation}
+The potential energy change $\Delta U$ generally includes both nonbonded pair interactions and 
+bonded interactions (bond, angle, and torsion potentials) that are internal to the added 
+molecule. It is sometimes useful to further divide $\delU$ into a sum
+\begin{equation}
+   \delU(\system, \chain) = \Uid(\chain) + \Uext (\chain, \system)
+\end{equation}
+of a "ideal" bonded contribution $\Uid(\chain)$ that depends only on the conformation
+of the added chain and an "external" contribution $\Uext(\chain,\system)$ that depends upon the
+configuration of both the added chain and the neighboring chains. Their is some flexibility in 
+how this division is defined. The only strict requirement is that the "ideal" contribution 
+cannot depend on the positions of the other molecules, and that nonbonded pair interactions be 
+included within the "external" part.
+
+Let $\Zsystem$ and $\Ztot$ denote the partition functions of a system without the added 
+molecule and with the added molecule, respectively. These are given by
+\begin{eqnarray}
+    \Zsystem & \equiv & \int d\system e^{-\beta \Usys(\system)} \\
+    \Ztot  & \equiv & \int d\system e^{-\beta \Usys(\system)} 
+                       \int d\chain e^{-\beta \delU(\chain, \system)}
+    \quad.
+\end{eqnarray}
+Here and herafter $\beta = 1/(k_{B}T$, where $k_{B}$ is Boltzmann's constant.  Let 
+\begin{equation}
+    \Zid \equiv \int d\chain e^{-\beta \Uid(\chain) }
+\end{equation}
+be the partition function for a single chain with potential energy $\Uid$. Let 
+$\Fsystem = -k_{B}T\ln \Zsystem$,
+$\Ftot = -k_{B}T\ln \Ztot$, and
+$\Fid = -k_{B}T\ln \Zid$ denote the corresponding free energies.  We define an 
+excess chemical potential as a free energy difference
+\begin{eqnarray}
+   \muex & = & \Ftot - \Fsystem - \Fid  \nonumber \\
+         & = & -k_{B}T \ln \left ( \frac{\Ztot}{\Zsystem \Zid} \right )
+\end{eqnarray}
+The required ration is given by
+\begin{equation}
+  \frac{\Ztot}{\Zsystem \Zid} =  
+  \frac{ \int d\system e^{-\beta \Usys(\system)} \int d\chain e^{-\beta \delU(\chain, \system)} }
+       { \int d\system e^{-\beta \Usys(\system)} \int d\chain e^{-\beta \Uid(\chain)} }
+\end{equation}
+This can be rewritten as an ratio
+\begin{equation}
+  \frac{\Ztot}{\Zsystem \Zid} = 
+  \frac{\left \langle \int d\chain e^{-\beta \delU(\chain, \system)} \right \rangle_{\system}}
+       {\Zid}
+\end{equation}
+in which $\langle \cdots \rangle_{\system}$ indicates an average over the thermal equilibrium
+distribution of the system without the add molecule. The ratio on the r.h.s. is thus the
+quantity that must be calculated to calculate $\muex$.
+
+\section{Rosenbluth Sampling} % Sub-section
+Rosenbluth sampling is a method of generating conformations for linear chains that is the basis of several closely related algorithms for measuring chemical potentials, and for conformational sampling. The method generates an ensemble of conformations that is not (quite) the equilibrium ensemble, but that can be reweighted in order to reproduce an equilibrium ensemble. The method was originally developed on a lattice and then generalized to continuum. The version we describe here is for linear bead-spring chains.
+
+Consider addition of a chain of $\nbead$ point like particles with positions 
+$\vbead_{1},\ldots,\vbead_{\nbead}$ connected by $\nbond$ bonds. Let 
+\begin{equation}
+   \vbond_{i} = \rbond_{i} \ubond_{i} = \vbead_{i} - \vbead_{i-1}
+\end{equation}
+denote the bond vector between beads $i$ and $i-1$, in which $\rbond_{i} \equiv |\vbond_{i}|$
+is the bond length and and $\ubond_{i}$ is a unit vector.  
+
+In the Rosenbluth algorithm, we consider a process in which a chain is grown sequentially 
+by first choosing the position of the first bead, and then 2 bead (or first bond), and so 
+on, until the chain is complete. The rules for how each added bead position is chosen are 
+specified below. For a given choice of the configurations $\system$ and $\chain$, we can
+express each of the quantities $\delU$, $\Uid$ and $\Uext$ as a sum of changes due to
+the addition of each bead. Thus for example $\delU_{i}$ is the change in $\delU$ due to
+addition of bead $i$, after addition of beads $1, \ldots, i-1$. This change includes all
+contributions to $\delU$ arising from interactions involving bead $i$ and beads $1,\ldots,
+i-1$, but obviously does not depend on the positions of the beads that have not yet been 
+inserted. By definition
+\begin{equation}
+   \delU = \sum_{i=1}^{\nbead} \delU_{i} \quad.
+\end{equation}
+The quantities $\Uid_{i}$ and $\Uext_{i}$ are defined similarly. 
+The ideal contribution $\Uid_{i}$ can depend only on the positions of beads $1,\ldots,i$
+of the added chain. For a completely flexible chain, if $\Uid$ is taken to be the bonding
+energy, it depends only on the length of the last bond. More generally, if $\Uid$ includes
+angle and torsional components, $\Uid_{i}$ may depend on the orientations of the previous
+one or two bonds. 
+
+In the Rosenbluth algorithm, a chain is generated as follows:
+\begin{itemize}
+\item The first bead position, $\qbead$, is chosen at random within the system volume.
+\item For each subsequent bead $i=2,\ldots, \nbead$, we choose $\ntrial$ trial positions 
+or, equivalently, $\ntrial$ trial values of $\vbond_{i}$. Let $\vtrial_{i}^{j}$ denote 
+the $j$th trial bond vector for bond $i$. One of these bonds is then selected with a 
+probability criterion that tends to favor trials with low values of $\delU^{ext}_{i}$, which
+is discussed below. 
+\end{itemize}
+After the position of bead $i$ is selected, the procedure is repeated until the chain
+is complete. 
+
+The are many possible variants of the procedure outlined above, which differ in 
+details of how trial bond vectors are generated, and the rules for accepting them. 
+For specificity, we will assume in what follows that $\Uid_{i}$ be written as a sum
+\begin{equation}
+   \Uid_{i} = \Ubond_{i}(\rbond_{i}) + \Uornt_{i}(\ubond, \rbond)
+\end{equation}
+of a bond contribution $\Ubond_{i}(\rbond_{i})$ that depends only on the length of bond 
+$i$ and a remaining orientational contribution $\Uornt_{i}$ that could depend on the
+orientation of the added bond, the orientation of several previous bonds, and perhaps
+even the length of bond $i$, but not on the position of other molecules. We will later
+reconsider the case in which $\Uornt$ depends only on $\ubond$, but the restriction
+doesn't seem to be necessary at this point. We consider a family of algorithms in 
+which a set of $\ntrial$ positions is generated by first generating a single value 
+for the bond length $\rbond_{i}$, then generating a set of $\ntrial$ unit vectors 
+in order to generate a set of trials with the same bond length but different 
+orientations.  The bond length $\rbond_{i}$ is chosen from a normalized 1D trial
+distribution
+\begin{equation}
+    \Pbond(\rbond) \propto \rbond^{2} \exp( -\beta \Ubond_{i}(\rbond) )
+    \quad.
+\end{equation}
+The factor of $\rbond^{2}$ is required to account for the volume element in polar
+coordinates. Orientations are then generated from a conditional trial distribution 
+$\Pornt(\utrial)$ that must be defined such that
+\begin{equation}
+    \Pornt(\utrial)
+    \propto \exp( -\beta \Uornt_{i}(\utrial, \rbond))
+    \quad.
+\end{equation}
+In the usual case in which $\Uornt$ depends only on $\utrial_{i}$, independent of 
+the bond length $\rbond_{i}$, the orientational trials can be chosen independently 
+of the bond length. 
+
+After $\ntrial$ bond vectors of the same length are generated by the above procedure, 
+one of them is selected with a probability
+\begin{equation}
+    P_{j} = \frac{e^{-\beta\Uext_{i}(\vtrial^{j}_{i})}}{w_{i}}
+\end{equation}
+in which 
+\begin{equation}
+     w_{i} \equiv \sum_{j=1}^{\ntrial} e^{ -\beta \Uext_{i}(\vtrial^{j}_{i})}
+     \label{RosenbluthBond}
+\end{equation}
+is the Rosenbluth weight associated with bond $i$.
+
+In what follows we will refer to a Rosenbluth configuration as the overall result of
+a Rosenbluth sampling process: A Rosenbluth configuration is defined by a choice for
+the position of the first bead, a choice of a bond length for each bond, set of 
+$\ntrial$ trial orientations for each bond, and specification of which trial orientation 
+was chosen for each bond. Let $s_{i}$ denote the index of the chosen trial orientation
+for bond $i$.  Let $\rconfig$ denote the Rosenbluth configuration generated in the 
+process of generating a chain configuration $\chain$, which is given by the variables
+\begin{equation}
+   \rconfig = \left \{ \vbead_{1},\rbond_{i},\utrial_{i}^{j},s_{i} \right \}
+\end{equation}
+for all $i=2,\ldots,\nbead$ and $j=1,\ldots,\ntrial$. The relationship between the 
+$\rconfig$ and $\chain$ is many-to-one: Each Rosenbluth configuration contains a 
+single final chain configuration, but there are many possible Rosenbluth configurations
+that could lead to the same chain configuration. Let $d\rconfig$ denote the probability
+measure for a Rosenbluth configuration, which implicity involves summation over possible choices of
+trial bond orientations as well as an integration over bond lengths and trial
+orientations. The probability for a Rosenbluth configuration is given by a product of
+\begin{equation}
+   P(\rconfig) = \frac{1}{V}
+                 \prod_{i=2}^{\nbead} \left (
+                 \frac{e^{-\Uext_{i}(\vbond_{i})}}{w_{i}}
+                 \Pbond(\rbond_{i})
+                 \prod_{k=1}^{\ntrial}
+                 \Pornt(\utrial_{i}^{k}) \right )
+   \quad,
+\end{equation}
+The factor of $1/V$ arises from the choice of the position $\vbead_{1}$ of the first
+bead. Here, $\vbond_{i} = \vtrial_{i}^{s_{i}}$ is the selected bond orientation.
+
+The Rosenbluth weight associated with a Rosenbluth configuration is given by the product
+\begin{equation}
+   W(\rconfig) = w_{1} \prod_{i=2}^{\nbead} \frac{w_{i}}{k}
+\end{equation}
+where $w_{i}$ is Rosenbluth weight for bond $i$, defined in Eq. (\ref{RosenbluthBond}),
+and where we define a Rosenbluth factor
+\begin{equation}
+   w_{1} = e^{-\Uext_{1}(\vbead_{1})} 
+\end{equation}
+for the first bead. It is straightforward to show that: 
+\begin{equation}
+   P(\rconfig)W(\rconfig) 
+   = \frac{1}{V} e^{-\beta\Uext(\chain)}
+                 \prod_{i=2}^{\nbead} \left (
+                 \frac{1}{k}
+                 \Pbond(\rbond_{i})
+                 \prod_{k=1}^{\ntrial}
+                 \Pornt(\utrial_{i}^{k}) \right )
+\end{equation}
+where $\Uext(\chain)$ is the total external potential of the added chain.
+
+{\it Theorem}: Let $A(\Gamma)$ be any function that depends only on the final 
+configuration, and not on the trials. We may show that for any such function,
+\begin{equation}
+    \int d\rconfig P(\rconfig)W(\rconfig) A(\chain) = 
+    \int d\chain \frac{1}{V} e^{-\beta\Uext(\chain)}
+                 \prod_{i=2}^{\nbead} \left ( \Pbond(\rbond_{i}) \Pornt(\ubond_{i}) \right )
+                 A(\chain) \quad.
+\end{equation}
+Proof: The proof is constructed by doing the integral iteratively starting with
+the last bond. The integral over Rosenbluth configurations implicitly involves a
+sum over possible values of chosen value $s_{i}$ of the trial index for each bond.
+This sum over possible choices of $k$ for the last bond generates $k$ equivalent 
+integrals. Each such integral involves one integral over the chosen trial orientation
+and $k-1$ integrals over the remaining trials, in which $\Uext$ and $A$ are taken
+to depend only on the chosen trial orientation. Each of the trial orientations that 
+are not chosen enters the integrand only through the associated factor of 
+$\Pornt$. Because $\Pornt$ is a normalized distribution, integration over each
+such trial orientation yields a factor of unity. The fact that sum over possible
+choices for the index yields $k$ equivalent integrals is then cancelled by the
+factor of $k$ associated with the last bond. This process of integrating over
+trial orientations associated with the last bond thus removes the factor of
+$\Pornt$ associated with the orientations that were not selected. Repeating
+the process for each bond in sequence then removes all such factors, except
+those associated with the selected orientations. The result is the above integral
+over the coordinates of the final chain configuration.
+
+The above result can be put in a more useful form by explicitly normalizing the
+bond and orientational probabilities for each bond, by writing
+\begin{equation}
+   \Pbond(\rbond)\Pornt(\ubond) = \frac{e^{-\beta\Uid_{i}(\vbond) }} {\zid_{i}}
+   \label{PtrialNormalized}
+\end{equation}
+where
+\begin{equation}
+    \zid_{i} \equiv 
+    \int d\rbond \; \rbond^{2} \int d\ubond 
+    \exp( -\beta \Uid_{i}(\rbond, \ubond) )
+\end{equation}
+is an ideal partition function factor associated with addition of bond $i$. To 
+simplify 
+things further, we must restrict the form of the ideal Hamiltonian. For the most
+commonly used forms, we may show that $\zid_{i}$ for bond $i$ is independent of
+the choices made for bonds $1$ to $i-1$. This is obvious for the case of a freely
+jointed chain with $\Uornt=0$.
+Consider the case in which $\Uornt$ contains angle and torsion contributions, 
+but in which the angle contributions depend only on the angle between bond
+$i$ and $i-1$, and in which the torsional contribution depends only on the
+dihedral angle formed by bonds $i-2$, $i-1$ and $i$. In this case also, the
+previous bonds just provide a frame of reference, but the value of the 
+integral that defines $\zid_{i}$ is independent of the frame of reference,
+and thus of the orientation or lengths of previous bonds. In both of these
+cases, we also write the overall ideal gas partition function $\Zid$ as a 
+product
+\begin{equation}
+    \Zid = V \prod_{i=2}^{\nbead} \zid_{i} 
+    \label{ZidProduct}
+\end{equation}
+in which $V$ is the volume of the system.
+
+Using Eq. (\ref{PtrialNormalized}), we find that
+\begin{equation}
+    \int d\rconfig P(\rconfig)W(\rconfig) A(\chain) = 
+    \int d\chain \frac{e^{-\beta\delU(\chain)}A(\chain)}{ V\prod_{i=2}^{\nbead}\zid_{i}}
+\end{equation}
+for any function $A(\chain)$ of the chain conformation.  In the common 
+cases in which Eq. (\ref{ZidProduct}) applies, this yields
+\begin{equation}
+    \int d\rconfig P(\rconfig)W(\rconfig) A(\chain) = 
+    \frac{\int d\chain e^{-\beta\delU(\chain)}A(\chain)}
+         {\Zid} 
+\end{equation}
+
+In order to relate the Rosenbluth factor to the chemical potential, we set $A(\Gamma)=1$
+in the above theorem to show that
+\begin{equation}
+    \langle W \rangle_{\rconfig} = \int d\rconfig P(\rconfig)W(\rconfig) = 
+    \frac{\int d\chain e^{-\beta\delU(\chain)}}{\Zid} 
+    \quad,
+\end{equation}
+where $\langle \cdots \rangle_{\rconfig}$ denotes an average over Rosenbluth configurations.
+Taking the average of this quantity respect to configuration $\Gamma$ of the system without 
+an added chain then yields an expression for the excess activity $e^{\beta\muex}$ as an 
+average of the Rosenbluth weight
+\begin{equation}
+   e^{\beta \muex} = 
+   \frac{\Ztot}{\Zsystem\Zid} = 
+   \langle \langle W \rangle_{\rconfig} \rangle
+\end{equation}
+over both Rosenbluth configurations and equilibrium solvent chain configurations. 
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
+
+[1] D. Frenkel, B. Smit. Understanding Molecular Simulation. 
+ 
+\end{thebibliography}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
