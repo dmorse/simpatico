@@ -12,7 +12,6 @@
 #include <util/misc/FileMaster.h>  
 #include <util/archives/Serializable_includes.h>
 
-//#include <mcMd/mcMoves/base/CfbEndBase.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mcSimulation/mc_potentials.h>
 
@@ -36,11 +35,10 @@ namespace McMd
    */
    McChemicalPotential::McChemicalPotential(McSystem& system)
     : SystemDiagnostic<McSystem>(system),
-      // SystemMove(system),
       outputFile_(),
       accumulator_(),
-      nSamplePerBlock_(1),
       nTrial_(-1),
+      nSamplePerBlock_(1),
       isInitialized_(false)
    {}
 
@@ -75,15 +73,17 @@ namespace McMd
    void McChemicalPotential::setup() 
    {  accumulator_.clear(); }
  
+   #if 0
    /* 
-   * Evaluate energy, and add to accumulator.
+   * Evaluate Rosenbluth weight, and add to accumulator.
    */
    void McChemicalPotential::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
-         accumulator_.sample(McChemicalPotential().chemicalPotential(), outputFile_);
+         accumulator_.sample(chemicalPotential(), outputFile_);
       }     
    }
+   #endif
 
    /*
    * Output results to file after simulation is completed.
@@ -104,18 +104,21 @@ namespace McMd
       outputFile_.close();
    }
    
+   #if 0
    /*
    * Save state to binary file archive.
    */
    void McChemicalPotential::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
+   {  ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
    void McChemicalPotential::load(Serializable::IArchiveType& ar)
    { ar & *this; }
+   #endif
 
+   #if 0
    /*
    * Configuration bias algorithm for adding one atom to a chain end.
    */
@@ -389,6 +392,7 @@ namespace McMd
 
       return rosenbluth; 
    }
+   #endif
 
 }
 #endif 

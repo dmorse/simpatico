@@ -21,7 +21,6 @@ namespace McMd
    using namespace Util;
 
    class Atom;
-   class McSystem;
 
    /**
    * McEnergyAverage averages of total potential energy.
@@ -146,30 +145,28 @@ namespace McMd
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
 
-   protected:
-   
+   private:
+
       /// Maximum allowed number of trial positions for a regrown atom.
       static const int MaxTrial_ = 20; 
    
-      /// Actual number of trial positions for each regrown atom.
-      int  nTrial_; 
-   
-      /// Grant friend access to unit test class
-      //  friend class CbEndBaseTest;
-
-   private:
-
       /// Output file stream
       std::ofstream outputFile_;
 
       /// Average object - statistical accumulator
       Average  accumulator_;
 
+      /// Actual number of trial positions for each regrown atom.
+      int  nTrial_; 
+   
       /// Number of samples per block average output.
       int nSamplePerBlock_;
    
       /// Has readParam been called?
       bool isInitialized_;
+
+      /// Grant friend access to unit test class
+      //  friend class CbEndBaseTest;
    };
 
    /*
