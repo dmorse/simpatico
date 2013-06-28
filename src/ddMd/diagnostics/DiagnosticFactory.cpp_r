@@ -21,6 +21,7 @@
 #include "OutputPairEnergies.h"
 #include "StructureFactor.h"
 #include "StructureFactorGrid.h"
+#include "OrderParamNucleation.h"
 
 namespace DdMd
 {
@@ -69,6 +70,9 @@ namespace DdMd
       } else
       if (className == "StructureFactorGrid") {
          ptr = new StructureFactorGrid(simulation());
+      } else
+      if (className == "OrderParamNucleation") {
+         ptr = new OrderParamNucleation(simulation());
       }
       return ptr;
    }
