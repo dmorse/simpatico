@@ -212,6 +212,7 @@ namespace DdMd
          int moleculeId;
          int rank;
          IntVector shift;
+         Vector vel;
 
          for (int i = 0; i < nAtom; ++i) {
 
@@ -457,6 +458,7 @@ namespace DdMd
          // Write atomic velocities
          // lammps atom     tag = Simpatico atom id + 1
          // lammps molecule id  = Simpatico molecule id + 1
+         /*
          file << endl;
          file << "Velocities" << endl;
          file << endl;
@@ -467,7 +469,7 @@ namespace DdMd
             file << id+1 << " " << atoms_[id].velocity;
             file << std::endl;
          }
-
+         */
       } else {
          atomCollector().send();
       }
