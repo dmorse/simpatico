@@ -48,7 +48,7 @@ namespace Util
       *
       * \param dimensions IntVector containing dimensions
       */
-      void allocate(IntVector& dimensions);
+      void allocate(const IntVector& dimensions);
 
       /**
       * Serialize a GridArray to/from an Archive.
@@ -160,7 +160,7 @@ namespace Util
       *
       * \param rank 1D rank of element
       */
-      const Data& operator[] (int rank) const;
+      Data& operator[] (int rank);
 
       /**
       * Return element by const reference, indexed by IntVector position.
@@ -285,6 +285,7 @@ namespace Util
    /*
    * Set dimensions and allocate memory.
    */
+   template <typename Data>
    void GridArray<Data>::allocate(const IntVector& dimensions)
    { 
       int i;
@@ -335,14 +336,14 @@ namespace Util
    * Get dimension in direction i.
    */
    template <class Data>
-   inline int Grid::dimension(int i) const
+   inline int GridArray<Data>::dimension(int i) const
    {  return dimensions_[i]; }
 
    /*
    * Get total number of grid points.
    */
    template <class Data>
-   inline int Grid::size() const
+   inline int GridArray<Data>::size() const
    {  return size_; }
 
    /*
@@ -452,24 +453,24 @@ namespace Util
    {  return *(data_ + rank); }
 
    /*
-   * Return element by const reference, indexed by 1D rank.
+   * Return element by reference, indexed by 1D rank.
    */
    template <typename Data>
-   inline const Data& GridArray<Data>::operator[] (int id) const
+   inline Data& GridArray<Data>::operator[] (int rank) 
    {  return *(data_ + rank); }
-
-   /*
-   * Return element by reference, indexed by IntVector of coordinates
-   */
-   template <typename Data>
-   inline Data& GridArray<Data>::operator() (const IntVector& position)
-   {  return *(data_ + rank(position)); }
 
    /*
    * Return element by const reference, indexed by IntVector of coordinates
    */
    template <typename Data>
    inline const Data& GridArray<Data>::operator() (const IntVector& position) const
+   {  return *(data_ + rank(position)); }
+
+   /*
+   * Return element by reference, indexed by IntVector of coordinates
+   */
+   template <typename Data>
+   inline Data& GridArray<Data>::operator() (const IntVector& position)
    {  return *(data_ + rank(position)); }
 
    /*
