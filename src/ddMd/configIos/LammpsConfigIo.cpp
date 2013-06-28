@@ -212,7 +212,6 @@ namespace DdMd
          int moleculeId;
          int rank;
          IntVector shift;
-         Vector vel;
 
          for (int i = 0; i < nAtom; ++i) {
 
@@ -428,7 +427,6 @@ namespace DdMd
                boundary().transformGenToCart(atomPtr->position(), r);
             }
             atoms_[id].position = r;
-            atoms_[id].velocity = atomPtr->velocity();
             atomPtr = atomCollector().nextPtr();
             ++n;
          }

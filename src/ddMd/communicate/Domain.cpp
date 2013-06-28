@@ -135,7 +135,6 @@ namespace DdMd
       #ifdef UTIL_MPI
       commSize = intracommPtr_->Get_size();
       #endif
-      std::cout << "nProc and commSize is " << nproc << " " << commSize << std::endl;
       if (nproc != commSize) {
          UTIL_THROW("Grid dimensions inconsistent with communicator size");
       }
