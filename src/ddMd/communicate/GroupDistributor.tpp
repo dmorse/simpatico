@@ -1,5 +1,5 @@
-#ifndef DDMD_GROUP_DISTRIBUTOR_CPP
-#define DDMD_GROUP_DISTRIBUTOR_CPP
+#ifndef DDMD_GROUP_DISTRIBUTOR_TPP
+#define DDMD_GROUP_DISTRIBUTOR_TPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,12 +9,11 @@
 */
 
 #include "GroupDistributor.h"
-//#include "Buffer.h"
 #include "Domain.h"
-#include <ddMd/storage/GroupStorage.h>
+#include <ddMd/storage/AtomStorage.h>
+#include <ddMd/storage/GroupStorage.tpp>
 #include <ddMd/storage/GroupIterator.h>
 #include <ddMd/storage/ConstGroupIterator.h>
-#include <ddMd/storage/AtomStorage.h>
 
 #include <algorithm>
 
@@ -105,7 +104,7 @@ namespace DdMd
    void GroupDistributor<N>::setup()
    {
       bufferPtr_->clearSendBuffer();
-      bufferPtr_->beginSendBlock(Buffer::GROUP, N);
+      bufferPtr_->beginSendBlock(Buffer::GROUP2 + N - 2);
       nAtomRecv_ = 0;
       newPtr_ = 0;
    }
@@ -141,7 +140,7 @@ namespace DdMd
           bufferPtr_->bcast(domainPtr_->communicator(), source);
           nSentTotal_ += cacheSize_;
           bufferPtr_->clearSendBuffer();
-          bufferPtr_->beginSendBlock(Buffer::GROUP, N);
+          bufferPtr_->beginSendBlock(Buffer::GROUP2 + N - 2);
           cacheSize_ = 0;
       }
       #endif
@@ -189,7 +188,7 @@ namespace DdMd
          groupStoragePtr_->add();
          nAtomRecv_ += nAtom;
       }
-      bufferPtr_->packGroup(*newPtr_);
+      newPtr_->pack(*bufferPtr_);
  
       // Nullify newPtr_ to release for reuse.
       newPtr_ = 0;
@@ -304,7 +303,7 @@ namespace DdMd
          isComplete = bufferPtr_->beginRecvBlock();
          while (bufferPtr_->recvSize() > 0) {
             ptr = groupStoragePtr_->newPtr();
-            bufferPtr_->unpackGroup(*ptr);
+            ptr->unpack(*bufferPtr_);
             nAtom = atomStoragePtr_->findGroupAtoms(*ptr);
             if (nAtom > 0) {
                groupStoragePtr_->add();
@@ -317,9 +316,9 @@ namespace DdMd
          }
 
       }
-      validate();
 
-      // Validate Group Storage
+      // Validate Data
+      validate(); // Check number of local atoms in groups
       groupStoragePtr_->unsetNTotal();
       groupStoragePtr_->computeNTotal(domainPtr_->communicator());
       groupStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(),
@@ -331,7 +330,7 @@ namespace DdMd
 
    #ifdef UTIL_MPI
    /**
-   * Check number of atoms sent and recieved.
+   * Check number of groups sent and received.
    */
    template <int N>
    void GroupDistributor<N>::validate() 

@@ -46,7 +46,7 @@ public:
       std::string  str;
       int     value3[3];
       double  value4[3];
-      double  value5[2][2];
+      double  value5[3][3];
       DArray<double> value6;
       value6.allocate(4);
       Vector    value7;
@@ -68,7 +68,7 @@ public:
       object.read<std::string>(file(), "str", str);
       object.readCArray<int>(file(), "value3", value3, 3);
       object.readCArray<double>(file(), "value4", value4, 3);
-      object.readCArray2D<double>(file(), "value5", value5[0], 2, 2);
+      object.readCArray2D<double>(file(), "value5", value5[0], 2, 2, 3);
       object.readDArray<double>(file(), "value6", value6, 4);
       object.readBlank(file());
       object.read<Vector>(file(), "value7", value7);

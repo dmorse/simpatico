@@ -22,7 +22,7 @@ namespace DdMd
    template <int N> class GroupStorage;
 
    /**
-   * An BondPotential calculates bond forces and energies for a parent Simulation.
+   * Calculates bond forces and energies for a parent Simulation.
    *
    * \ingroup DdMd_Bond_Module
    */

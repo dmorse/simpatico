@@ -13,9 +13,10 @@
 #include <util/archives/MemoryOArchive.h>
 #include <util/archives/MemoryIArchive.h>
 
+#include <util/archives/Serializable.h>
 #include <util/archives/Serializable_includes.h>
 
-#include <test/ParamFileTest.h>
+#include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 
 #include <iostream>
@@ -26,10 +27,11 @@ using namespace Util;
 
 #include "../ParamTestClasses.h"
 
-class ParamCompositeTest : public ParamFileTest
+class ParamCompositeTest : public UnitTest
 {
 
   ParamComposite paramComposite_;
+  std::ifstream  file_;
 
 public:
 
@@ -55,7 +57,7 @@ public:
       value4[0] = 4.0;
       value4[1] = 5.0;
       value4[2] = 6.0;
-      double value5[2][2];
+      double value5[3][3]; // Physically 3 x 3, logicall 2 x 2
       value5[0][0] = 4.0;
       value5[0][1] = 5.0;
       value5[1][0] = 6.0;
@@ -79,7 +81,7 @@ public:
       paramComposite_.add<std::string>("str", str);
       paramComposite_.addCArray<int>("value3", value3, 3);
       paramComposite_.addCArray<double>("value4", value4, 3);
-      paramComposite_.addCArray2D<double>("value5", &value5[0][0], 2, 2);
+      paramComposite_.addCArray2D<double>("value5", &value5[0][0], 2, 2, 3);
       paramComposite_.addDArray<double>("value6", value6, 4);
       paramComposite_.addFArray<double, 4>("value7", value7);
       paramComposite_.addEnd();
@@ -97,7 +99,7 @@ public:
       std::string str;
       int     value3[3];
       double  value4[3];
-      double  value5[2][2];
+      double  value5[3][3]; // Physically 3 x 3, logically 2 x 2
       DArray<double> value6;
       value6.allocate(4);
       Vector    value7;
@@ -107,31 +109,31 @@ public:
       E e;
       AManager  manager;
 
-      openFile("in/ParamComposite");
+      openInputFile("in/ParamComposite", file_);
 
       //paramComposite_.setEcho();
-      paramComposite_.readBegin(file(), "ClassName");
-      paramComposite_.read<int>(file(), "value0", value0);
-      paramComposite_.read<long>(file(), "value1", value1);
-      paramComposite_.read<double>(file(), "value2", value2);
-      paramComposite_.read<std::string>(file(), "str", str);
-      paramComposite_.readBlank(file());
-      paramComposite_.readCArray<int>(file(), "value3", value3, 3);
-      paramComposite_.readCArray<double>(file(), "value4", value4, 3);
-      paramComposite_.readCArray2D<double>(file(), "value5", &value5[0][0], 2, 2);
-      paramComposite_.readDArray<double>(file(), "value6", value6, 4);
-      paramComposite_.read<Vector>(file(), "value7", value7);
-      paramComposite_.read<IntVector>(file(), "value8", value8);
-      paramComposite_.readDMatrix<double>(file(), "value9", value9, 2, 2);
-      paramComposite_.readParamComposite(file(), e);
-      paramComposite_.readParamComposite(file(), manager);
-      paramComposite_.readEnd(file());
+      paramComposite_.readBegin(file_, "ClassName");
+      paramComposite_.read<int>(file_, "value0", value0);
+      paramComposite_.read<long>(file_, "value1", value1);
+      paramComposite_.read<double>(file_, "value2", value2);
+      paramComposite_.read<std::string>(file_, "str", str);
+      paramComposite_.readBlank(file_);
+      paramComposite_.readCArray<int>(file_, "value3", value3, 3);
+      paramComposite_.readCArray<double>(file_, "value4", value4, 3);
+      paramComposite_.readCArray2D<double>(file_, "value5", &value5[0][0], 2, 2, 3);
+      paramComposite_.readDArray<double>(file_, "value6", value6, 4);
+      paramComposite_.read<Vector>(file_, "value7", value7);
+      paramComposite_.read<IntVector>(file_, "value8", value8);
+      paramComposite_.readDMatrix<double>(file_, "value9", value9, 2, 2);
+      paramComposite_.readParamComposite(file_, e);
+      paramComposite_.readParamComposite(file_, manager);
+      paramComposite_.readEnd(file_);
 
       printEndl();
       paramComposite_.writeParam(std::cout);
    }
 
-   void testAddSaveLoadWrite() 
+   void testSaveLoadWrite() 
    {
       printMethod(TEST_FUNC);
 
@@ -146,7 +148,7 @@ public:
       value4[0] = 4.0;
       value4[1] = 5.0;
       value4[2] = 6.0;
-      double value5[2][2];
+      double value5[3][3]; // Physically 3 x 3, logically 2 x 2
       value5[0][0] = 4.0;
       value5[0][1] = 5.0;
       value5[1][0] = 6.0;
@@ -163,22 +165,18 @@ public:
       value7[2] = 15.3;
       value7[3] = 15.2;
 
-      paramComposite_.addBegin("ClassName");
-      paramComposite_.add<int>("value0", value0);
-      paramComposite_.add<long>("value1", value1);
-      paramComposite_.add<double>("value2", value2);
-      paramComposite_.addCArray<int>("value3", value3, 3);
-      paramComposite_.addCArray<double>("value4", value4, 3);
-      paramComposite_.addCArray2D<double>("value5", &value5[0][0], 2, 2);
-      paramComposite_.addDArray<double>("value6", value6, 4);
-      paramComposite_.addFArray<double, 4>("value7", value7);
-      paramComposite_.addEnd();
-
       printEndl();
 
       Serializable::OArchive oar;
       openOutputFile("out/save.bin", oar.file());
-      paramComposite_.save(oar);
+      oar << value0;
+      oar << value1;
+      oar << value2;
+      oar.pack(value3, 3);
+      oar.pack(value4, 3);
+      oar.pack(value5[0], 2, 2, 3);
+      oar << value6;
+      oar << value7;
       oar.file().close();
 
       Serializable::IArchive iar;
@@ -201,7 +199,7 @@ public:
       clone.loadParameter<double>(iar, "value2", cValue2);
       clone.loadCArray<int>(iar, "value3", cValue3, 3);
       clone.loadCArray<double>(iar, "value4", cValue4, 3);
-      clone.loadCArray2D<double>(iar, "value5", &cValue5[0][0], 2, 2);
+      clone.loadCArray2D<double>(iar, "value5", &cValue5[0][0], 2, 2, 3);
       clone.loadDArray<double>(iar, "value6", cValue6, 4);
       clone.loadFArray<double, 4>(iar, "value7", cValue7);
       clone.addEnd();
@@ -241,7 +239,7 @@ public:
       std::string str;
       int     value3[3];
       double  value4[3];
-      double  value5[2][2];
+      double  value5[3][3]; // Physically 3 x 3, logicall 2 x 2
       DArray<double> value6;
       value6.allocate(4);
       Vector    value7;
@@ -251,29 +249,40 @@ public:
       E e;
       AManager  manager;
 
-      openFile("in/ParamComposite");
+      openInputFile("in/ParamComposite", file_);
 
       //paramComposite_.setEcho();
-      paramComposite_.readBegin(file(), "ClassName");
-      paramComposite_.read<int>(file(), "value0", value0);
-      paramComposite_.read<long>(file(), "value1", value1);
-      paramComposite_.read<double>(file(), "value2", value2);
-      paramComposite_.read<std::string>(file(), "str", str);
-      paramComposite_.readBlank(file());
-      paramComposite_.readCArray<int>(file(), "value3", value3, 3);
-      paramComposite_.readCArray<double>(file(), "value4", value4, 3);
-      paramComposite_.readCArray2D<double>(file(), "value5", &value5[0][0], 2, 2);
-      paramComposite_.readDArray<double>(file(), "value6", value6, 4);
-      paramComposite_.read<Vector>(file(), "value7", value7);
-      paramComposite_.read<IntVector>(file(), "value8", value8);
-      paramComposite_.readDMatrix<double>(file(), "value9", value9, 2, 2);
-      paramComposite_.readParamComposite(file(), e);
-      paramComposite_.readParamComposite(file(), manager);
-      paramComposite_.readEnd(file());
+      paramComposite_.readBegin(file_, "ClassName");
+      paramComposite_.read<int>(file_, "value0", value0);
+      paramComposite_.read<long>(file_, "value1", value1);
+      paramComposite_.read<double>(file_, "value2", value2);
+      paramComposite_.read<std::string>(file_, "str", str);
+      paramComposite_.readBlank(file_);
+      paramComposite_.readCArray<int>(file_, "value3", value3, 3);
+      paramComposite_.readCArray<double>(file_, "value4", value4, 3);
+      paramComposite_.readCArray2D<double>(file_, "value5", &value5[0][0], 2, 2, 3);
+      paramComposite_.readDArray<double>(file_, "value6", value6, 4);
+      paramComposite_.read<Vector>(file_, "value7", value7);
+      paramComposite_.read<IntVector>(file_, "value8", value8);
+      paramComposite_.readDMatrix<double>(file_, "value9", value9, 2, 2);
+      paramComposite_.readParamComposite(file_, e);
+      paramComposite_.readParamComposite(file_, manager);
+      paramComposite_.readEnd(file_);
 
       Serializable::OArchive oar;
       openOutputFile("out/save2.bin", oar.file());
-      paramComposite_.save(oar);
+      //paramComposite_.save(oar);
+      oar << value0;
+      oar << value1;
+      oar << value2;
+      oar << str;
+      oar.pack(value3, 3);
+      oar.pack(value4, 3);
+      oar.pack(value5[0], 2, 2, 3);
+      oar << value6;
+      oar << value7;
+      oar << value8;
+      oar << value9;
       oar.file().close();
 
       int     cValue0;
@@ -304,13 +313,13 @@ public:
       clone.addBlank();
       clone.loadCArray<int>(iar, "value3", cValue3, 3);
       clone.loadCArray<double>(iar, "value4", cValue4, 3);
-      clone.loadCArray2D<double>(iar, "value5", &cValue5[0][0], 2, 2);
+      clone.loadCArray2D<double>(iar, "value5", &cValue5[0][0], 2, 2, 3);
       clone.loadDArray<double>(iar, "value6", cValue6, 4);
       clone.loadParameter<Vector>(iar, "value7", cValue7);
       clone.loadParameter<IntVector>(iar, "value8", cValue8);
       clone.loadDMatrix<double>(iar, "value9", cValue9, 2, 2);
-      clone.loadParamComposite(iar, cE);
-      clone.loadParamComposite(iar, cManager);
+      //clone.loadParamComposite(iar, cE);
+      //clone.loadParamComposite(iar, cManager);
       clone.addEnd();
 
       printEndl();
@@ -321,10 +330,10 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      openFile("in/ParamComposite");
+      openInputFile("in/ParamComposite", file_);
 
       AComposite original;
-      original.readParam(file());
+      original.readParam(file_);
 
       // printEndl();
       // original.writeParam(std::cout);
@@ -348,10 +357,10 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      openFile("in/ParamComposite");
+      openInputFile("in/ParamComposite", file_);
 
       AComposite original;
-      original.readParam(file());
+      original.readParam(file_);
 
       MemoryCounter  car;
       car << original;
@@ -378,10 +387,10 @@ TEST_BEGIN(ParamCompositeTest)
 TEST_ADD(ParamCompositeTest, testConstructor)
 TEST_ADD(ParamCompositeTest, testAddWrite)
 TEST_ADD(ParamCompositeTest, testReadWrite)
-TEST_ADD(ParamCompositeTest, testAddSaveLoadWrite)
+TEST_ADD(ParamCompositeTest, testSaveLoadWrite)
 TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite1)
 TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite2)
-TEST_ADD(ParamCompositeTest, testMemoryArchiveSerialize)
+//TEST_ADD(ParamCompositeTest, testMemoryArchiveSerialize)
 TEST_END(ParamCompositeTest)
 
 #endif // ifndef PARAM_COMPOSITE_TEST_H

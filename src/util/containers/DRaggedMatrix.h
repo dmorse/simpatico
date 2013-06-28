@@ -36,13 +36,6 @@ namespace Util
       */
       DRaggedMatrix();
 
-      #if 0
-      /**
-      * Copy constructor.
-      */
-      DRaggedMatrix(const DRaggedMatrix<Data>& other);
-      #endif
-
       /**
       * Destructor.
       *
@@ -50,25 +43,15 @@ namespace Util
       */
       ~DRaggedMatrix();
 
-      #if 0
-      /**
-      * Assignment.
-      *
-      * \throw Exception if LHS and RHS dimensions do not match.
-      */
-      DRaggedMatrix<Data>& operator= (const DRaggedMatrix<Data>& other);
-      #endif
-
       /**
       * Allocate memory for a ragged matrix.
       */
       void allocate(const DArray<int>& rowSizes);
 
       /**
-      * Return true if the DRaggedMatrix has been allocated, false otherwise.
+      * Return true iff this DRaggedMatrix has been allocated.
       */
       bool isAllocated() const;
-   
 
    };
 
@@ -82,65 +65,6 @@ namespace Util
       RaggedMatrix<Data>()
    {}
      
-   #if 0 
-   /*
-   * Copy constructor.
-   */
-   template <typename Data>
-   DRaggedMatrix<Data>::DRaggedMatrix(const DRaggedMatrix<Data>& other) 
-     : RaggedMatrix<Data>()
-   {
-
-      // Precondition
-      if (other.data_ == 0) {
-         UTIL_THROW("Other DRaggedMatrix must be allocated");
-      }
-
-      allocate(other.capacity1_, other.capacity2_);
-
-      // Copy elements
-      for (int i = 0; i < capacity1_*capacity2_; ++i) {
-         data_[i] = other.data_[i];
-      }
-   }
-   #endif
-  
-   #if 0 
-   /*
-   * Assignment.
-   */
-   template <typename Data>
-   DRaggedMatrix<Data>& DRaggedMatrix<Data>::operator = (const DRaggedMatrix<Data>& other) 
-   {
-
-      // Check for self assignment.
-      if (this == &other) return *this;
-
-      // Precondition
-      if (other.data_ == 0) {
-         UTIL_THROW("RHS DRaggedMatrix must be allocated in assignment");
-      }
-
-      // If this this DRaggedMatrix if not allocated, allocate now.
-      // If this this DRaggedMatrix is allocated, check that capacities are equal.
-      if (data_ == 0) {
-         allocate(other.capacity1_, other.capacity2_);
-      } else {
-         if (capacity1_ != other.capacity1_ || 
-             capacity2_ != other.capacity2_) {
-            UTIL_THROW("Unequal capacities in assignment");
-         }
-      }
-
-      // Copy elements
-      for (int i = 0; i < capacity1_*capacity2_; ++i) {
-         data_[i] = other.data_[i];
-      }
-
-      return *this;
-   }
-   #endif
-
    /*
    * Destructor.
    */
@@ -198,7 +122,9 @@ namespace Util
       
    }
 
-   /// Return true if the DRaggedMatrix has been allocated, false otherwise.
+   /*
+   * Return true if the DRaggedMatrix has been allocated, false otherwise.
+   */
    template <class Data>
    inline bool DRaggedMatrix<Data>::isAllocated() const 
    {  return !(data_ == 0); }

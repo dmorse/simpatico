@@ -19,28 +19,30 @@
 /**
 * UnitTest is a base class for classes that define unit tests.
 *
-* Each subclasses of UnitTest should define one or more test
-* methods.  The test methods may be given arbitrary names.
-* Individual test within test methods should use the 
-* TEST_ASSERT(expression) macro to assert the truth of logical 
-* expressions.
+* Each subclass of UnitTest should define one or more test
+* methods. Each test method must be a zero parameter function
+* that returns void, and may be given any informative name.
+* Individual test methods should use the preprocessor macro
+* TEST_ASSERT(expression) defined in TextException.h to assert 
+* the truth of logical expressions.
 *
-* The test methods defined by a subclass of UnitTest are run 
-* by an associated subclass of TestRunner. Each of the test
-* methods of a UnitTest must be added to the associated 
-* TestRunner.  The run() method of a TestRunner calls all of 
-* the associated test methods in the order in which they were 
-* added, and counts the number of successful and failed tests. 
+* The test methods defined by a UnitTest are run by an 
+* associated subclass of TestRunner. Each test method of a 
+* UnitTest must be added to the associated TestRunner.  The 
+* run() method of a TestRunner calls all of the associated 
+* test methods in the order in which they were added, and 
+* counts the number of successful and failed tests. 
 *
 * The TestRunner associated with a single UnitTest is defined 
-* by a class template UnitTestRunner that takes the UnitTest 
+* by a class template UnitTestRunner, which takes a UnitTest 
 * subclass as a template argument. For example, the TestRunner 
 * associated with a UnitTest subclass named TestA is a template 
 * instantiation UnitTestRunner<TestA>.
 *
 * Preprocessor macros defined in the file UnitTestRunner.h 
-* can be used to create the boiler-plate code necessary to
-* define a unit test runner and to add test methods to it. 
+* should be used to create the boiler-plate code necessary 
+* to define a unit test runner and to add test methods to 
+* it. 
 */
 class UnitTest
 {
@@ -142,7 +144,7 @@ public:
 protected:
 
    /**
-   * Print name of a class method .
+   * Write name of a class method, iff ioProcessor.
    */
    void printMethod(const char* methodName)
    {  if (isIoProcessor()) {
@@ -151,9 +153,15 @@ protected:
       }
    }
 
+   /**
+   * Write carriage return, iff isIoProcessor.
+   */
    void printEndl()
    {  if (isIoProcessor()) std::cout << std::endl; } 
 
+   /**
+   * Print a line of hashes, iff isIoProcessor.
+   */
    virtual void endMarker()
    {
       if (isIoProcessor()) {
@@ -166,27 +174,30 @@ protected:
    /**
    * Open input file.
    *
+   * This function adds the filePrefix before the name parameter.
+   * It does not check if this node isIoProcessor.
+   *
    * \param name base file name (added to filePrefix).
    * \param in input file (opened on return).
    */
    void openInputFile(const std::string& name, std::ifstream& in) const
    {   
-      //if (isIoProcessor()) {
-         std::string filename = filePrefix_;
-         filename += name;
-         //std::cout << std::endl;
-         //std::cout << "Opening file  " << filename << std::endl;
-         in.open(filename.c_str());
-         if (in.fail()) {
-            std::cout << std::endl;
-            std::cout << "Failure to open file " << filename << std::endl;
-            TEST_THROW("Failure to open file");
-         }
-      //}
+      std::string filename = filePrefix_;
+      filename += name;
+      in.open(filename.c_str());
+      if (in.fail()) {
+         std::cout << std::endl;
+         std::cout << "Failure to open input file " 
+                   << filename << std::endl;
+         TEST_THROW("Failure to open file");
+      }
    }
 
    /**
    * Open output file stream.
+   *
+   * This function adds the filePrefix before the name parameter.
+   * It does not check if this node isIoProcessor.
    *
    * \param name base file name (added to filePrefix).
    * \param out  output file (opened on return).
@@ -196,8 +207,17 @@ protected:
       std::string filename = filePrefix_;
       filename += name;
       out.open(filename.c_str());
+      if (out.fail()) {
+         std::cout << std::endl;
+         std::cout << "Failure to open output file " 
+                   << filename << std::endl;
+         TEST_THROW("Failure to open file");
+      }
    }
 
+   /**
+   * Return integer verbosity level  (0 == silent).
+   */
    int verbose() const
    {  return verbose_; }
  
@@ -218,21 +238,22 @@ protected:
 
 private:
 
-   /**
-   * Prefix added to file names
-   */
+   /// Prefix string prepended to file names
    std::string  filePrefix_;
 
    #ifdef TEST_MPI
+   /// Communicator for MPI jobs.
    MPI::Intracomm* communicatorPtr_;
 
+   /// Mpi rank of this processor within communicator.
    int  mpiRank_;
    #endif
 
+   /// Verbosity index
    int  verbose_;
 
+   /// Is this an IoProcessor?
    bool isIoProcessor_;
 
 };
-
 #endif

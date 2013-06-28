@@ -48,7 +48,13 @@ namespace DdMd
       * This routine opens and reads a file on the master, and distributes
       * atom data among the processors.
       *
-      * \param file input file stream
+      * \pre  There are no atoms, ghosts, or groups.
+      * \pre  AtomStorage is set for scaled / generalized coordinates
+      *
+      * \post atomic coordinates are scaled / generalized
+      * \post there are no ghosts
+      *
+      * \param file input file stream (must be open on master)
       * \param maskPolicy MaskPolicy to be used in setting atom masks
       */
       virtual void readConfig(std::ifstream& file, MaskPolicy maskPolicy);
@@ -56,10 +62,12 @@ namespace DdMd
       /**
       * Write configuration file.
       *
-      * This routine opens and writes a file on the master,
-      * collecting atom data from all processors.
+      * This routine opens and writes a file on the master, collecting 
+      * atom data from all processors. Atomic positions are written in
+      * Cartesian coordinates, independent of the coordinate system used
+      * by the AtomStorage.
       *
-      * \param file output file stream
+      * \param file output file stream (must be open on master)
       */
       virtual void writeConfig(std::ofstream& file);
    

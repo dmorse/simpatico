@@ -24,7 +24,8 @@ namespace DdMd
    * Native / default format for configuration files.
    *
    * DdMdOrderedConfigIo is a ConfigIo that implements the default
-   * configuration file format for ddSim.
+   * configuration file format for ddSim, like DdMdConfigIo, but 
+   * that outputs atoms in sequential order, sorted by atom id.
    *
    * \ingroup DdMd_ConfigIo_Module
    */
@@ -51,6 +52,12 @@ namespace DdMd
       * This routine opens and reads a file on the master, and distributes
       * atom data among the processors.
       *
+      * \pre  There are no atoms, ghosts, or groups.
+      * \pre  AtomStorage is set for scaled / generalized coordinates
+      *
+      * \post atomic coordinates are scaled / generalized
+      * \post there are no ghosts
+      *
       * \param file input file stream
       * \param maskPolicy MaskPolicy to be used in setting atom masks
       */
@@ -59,8 +66,9 @@ namespace DdMd
       /**
       * Write configuration file.
       *
-      * This routine opens and writes a file on the master,
-      * collecting atom data from all processors.
+      * This routine opens and writes a file on the master, collecting
+      * atom and group data from all processors. Atoms and Groups are
+      * output in order, sorted by global id.
       *
       * \param file output file stream
       */

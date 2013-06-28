@@ -7,8 +7,8 @@
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
+
 #include <util/param/ParamComposite.h>  // base class
-#include <ddMd/chemistry/Bond.h>        // typedef
 #include <util/misc/Setable.h>
 #include <util/global.h>
 
@@ -17,11 +17,39 @@ namespace DdMd
 
    using namespace Util;
 
-   class Atom;
    template <int N> class Group;
 
    /**
-   * Buffer for sending atoms and groups between processors.
+   * Buffer for sending blocks of data between processors.
+   *
+   * A Buffer manages two blocks of memory blocks, a send buffer
+   * and a receive buffer, that are used to communicate data
+   * between processors. The class provides a simple interace
+   * for: (1) Packing data into the send buffer on a processor
+   * from which it will be sent, (2) Unpacking data from the 
+   * receive buffer on the processor that receives a buffer, 
+   * and (3) sending, receiving, and broadcasting the data in
+   * these two buffers. The functions that send and receive
+   * data are relatively simple wrappers around MPI functions.
+   *
+   * A send or receive buffer may contain one or more blocks
+   * of data. Each block contains a sequence of items of the 
+   * same type. The expected types of data are enumerated by
+   * the public enum Buffer::BlockDataType. Each item in a 
+   * block may contain an Atom packed for exchange of ownerhsip
+   * (ATOM) of ownership, the position, id and type of a ghost 
+   * (GHOST) atom, an update of a ghost position (UPDATE), a
+   * force vector for use in reverse update (FORCE), or any
+   * of several types of covalent Group (GROUP2, GROUP3, and
+   * GROUP4). 
+   *
+   * The DdMd::Atom  class and DdMd::Group class template
+   * provide functions to pack and unpack individual items
+   * (e.g., atoms or groups). The pack and unpack functions 
+   * in these classes are implemented using the primitive 
+   * pack() and unpack() function templates, which allow the
+   * user to pack and unpack a single primitive C variable 
+   * into a heterogeneous buffer. 
    *
    * \ingroup DdMd_Communicate_Module
    */
@@ -30,20 +58,26 @@ namespace DdMd
 
    public:
 
-      enum BlockDataType {NONE, ATOM, GHOST, UPDATE, FORCE, GROUP};
+      /**
+      * Enumeration of types of data to be sent in blocks. 
+      */
+      enum BlockDataType 
+           {NONE, ATOM, GHOST, UPDATE, FORCE, GROUP2, GROUP3, GROUP4};
 
       /**
       * Constructor.
       */
       Buffer();
 
+      /**
+      * Destructor.
+      */
       virtual ~Buffer();
 
       /**
-      * Read capacities and allocate buffers.
+      * Read capacity and allocate buffers.
       *
-      * Read parameters atomCapacity and ghostCapacity (see allocate)
-      * and allocate buffers.
+      * \param in input parameter stream
       */
       void readParameters(std::istream& in);
 
@@ -73,37 +107,121 @@ namespace DdMd
       */
       void allocate(int atomCapacity, int ghostCapacity);
 
-      /// \name Data Block Management
+      /** \name Send Buffer Management
+      *
+      * To pack a block of data into the send buffer.
+      *
+      * - Call beginSendBlock(int) at the beginning of the block.
+      *
+      * - Call the appropriate method of DdMd::Atom or DdMd::Group
+      *   once for each item to be packed, within a loop over items 
+      *   to be sent.
+      *
+      * - After packing each item, call incrementSendSize() to
+      *   increment a counter of the number of items in the block.
+      *
+      * - Call endSendBlock(bool) at the end of the block, to
+      *   finalize the block. 
+      *
+      * A complete send buffer may contain one or more such blocks
+      * of data, e.g., it may contain a block of atoms followed by
+      * several blocks of groups.
+      */
       //@{
       
-      #ifdef UTIL_MPI
       /**
-      * Clear the send buffer and sendType.
+      * Clear the entire send buffer.
       */
       void clearSendBuffer();
 
       /**
-      * Clear the send buffer prior to packing and set atomtype.
+      * Initialize the block atomtype.
       *
-      * Sets sendSize() to zero, the send pointer to the beginning of
-      * the send buffer, and sendType to the type of data to be sent.
-      * If sendType = Group, also set sendGroupSize.
+      * Sets sendSize() to zero and sets the sendType.
+      *
+      * \param sendType BlockDataType value for type of data to be sent
       */
-      void beginSendBlock(BlockDataType sendType, int sendGroupSize = 0);
+      void beginSendBlock(int sendType);
+
+      /**
+      * Function template for packing one variable into the send buffer.
+      *
+      * This method is used to implement the pack functions provided
+      * by the DdMd::Atom and DdMd::Group classes. It is designed to 
+      * pack a single primitive C variable into the send buffer. It will 
+      * work on any plain old data type T for which the assignment (=) 
+      * operator does a straight bitwise copy.
+      *
+      * \param data variable to be packed
+      */
+      template <typename T>
+      void pack(const T& data);
+
+      /**
+      * Increment sendSize counter after packing an item (an Atom or Group).
+      */
+      void incrementSendSize();
 
       /**
       * Finalize a block in the send buffer.
       *
-      * \param isComplete false if data block is incomplete, true otherwise.
+      * This method writes a "descriptor" section at the beginning of the block,
+      * that describes the associated data block. The descriptor specifies the 
+      * length of the block, the type of data, and whether the block is 
+      * "complete". 
+      *
+      * A block should be marked as incomplete iff all of the required data 
+      * of the relevant sendtype did not fit into the buffer. This tells the
+      * receiving processor to expect one or more other buffers containing 
+      * the remaining data of that type.
+      *
+      * \param isComplete false if data block is incomplete, true otherwise
       */
       void endSendBlock(bool isComplete = true);
 
+      //@}
+      /// \name Receive Buffer Management
+      //@{
+      
       /**
       * Begin to receive a block from the recv buffer.
       *
-      * \return false if an incomplete block was received, true otherwise.
+      * This method reads the descriptor section at the beginning of a
+      * block, and sets the receive cursor to be ready to read the first
+      * item.
+      *
+      * \return false if this block is complete, false otherwise.
       */
       bool beginRecvBlock();
+
+      /**
+      * Function template unpacking one variable from the receive buffer.
+      *
+      * This method is used to implement the unpack functions provided
+      * by the DdMd::Atom and DdMd::Group classes. It is designed to 
+      * unpack a single primitive C variable from the buffer. It will 
+      * work on any plain old data type T for which the assignment (=) 
+      * operator does a straight bitwise copy.
+      *
+      * \param data variable into which data should be copied from buffer.
+      */
+      template <typename T>
+      void unpack(T& data);
+
+      /**
+      * Decrement recvSize counter after unpacking an item.
+      */
+      void decrementRecvSize();
+
+      /**
+      * Finish processing a block in the recv buffer.
+      *
+      * This method checks that the recvSize() is zero at the end
+      * of a block, and that the receive buffer cursor is at the
+      * expected positon, and throws an exception if any suprises
+      * occur. It also nullifies the recvSize counter.
+      */
+      void endRecvBlock();
 
       //@}
       /// \name Interprocessor Communication
@@ -153,94 +271,6 @@ namespace DdMd
       void bcast(MPI::Intracomm& comm, int source);
 
       //@}
-      /// \name Pack and Unpack Methods
-      //@{
-      
-      /**
-      * Pack an Atom for exchange of ownership.
-      *
-      * Appends an atom to the send buffer, and increments sendSize().
-      *
-      * Throws an Exception if sendType != ATOM.
-      *
-      * \param atom Atom object to be sent.
-      */
-      void packAtom(Atom& atom);
-
-      /**
-      * Receive ownership of an Atom.
-      *
-      * Unpacks an atom from recv buffer into atom, and decrements 
-      * recvSize().
-      *
-      * \param atom Atom object into which data is received.
-      */
-      void unpackAtom(Atom& atom);
-
-      /**
-      * Pack ghost Atom into send buffer.
-      *
-      * Copies required data into send buffer, and increments sendSize().
-      *
-      * \param atom ghost Atom to be sent.
-      */
-      void packGhost(Atom& atom);
-
-      /**
-      * Unpack a ghost Atom from recv buffer.
-      *
-      * Unpacks required data from recv buffer into atom, decrements
-      * recvSize().
-      *
-      * \param atom ghost Atom object.
-      */
-      void unpackGhost(Atom& atom);
-
-      /**
-      * Pack update of ghost position Atom into send buffer.
-      *
-      * \param atom ghost Atom to be sent.
-      */
-      void packUpdate(Atom& atom);
-
-      /**
-      * Unpack updated position of ghost Atom from recv buffer.
-      *
-      * \param atom ghost Atom object.
-      */
-      void unpackUpdate(Atom& atom);
-
-      /**
-      * Pack update of ghost Atom force into send buffer.
-      *
-      * \param atom ghost Atom for which force should be sent.
-      */
-      void packForce(Atom& atom);
-
-      /**
-      * Unpack updated position of ghost Atom from recv buffer.
-      *
-      * \param atom ghost Atom object.
-      */
-      void unpackForce(Atom& atom);
-
-      /**
-      * Pack a Group for sending.
-      *
-      * \param group Group<N> object to be sent.
-      */
-      template <int N>
-      void packGroup(const Group<N>& group);
-
-      /**
-      * Receive the next Group in the recv buffer.
-      *
-      * \param group Group<N> object into which data is received.
-      */
-      template <int N>
-      void unpackGroup(Group<N>& group);
-
-      //@}
       /// \name Statistics
       //@{
     
@@ -258,11 +288,6 @@ namespace DdMd
       #endif
 
       /**
-      * Clear any accumulated usage statistics.
-      */
-      void clearStatistics();
-      
-      /**
       * Output statistics.
       *
       * Call on master, after calling computeStatistics on all procs.
@@ -271,12 +296,17 @@ namespace DdMd
       */
       void outputStatistics(std::ostream& out);
 
+      /**
+      * Clear any accumulated usage statistics.
+      */
+      void clearStatistics();
+      
       //@}
       /// \name Accessors
       //@{
       
       /**
-      * Number of items written to current send block.
+      * Number of items in current send block.
       */
       int sendSize() const;
 
@@ -284,7 +314,6 @@ namespace DdMd
       * Number of unread items in current recv block.
       */
       int recvSize() const;
-      #endif
 
       /**
       * Has memory been allocated for this Buffer?
@@ -309,13 +338,13 @@ namespace DdMd
       /**
       * Maximum number of group<N> objects for which space is available.
       */
-      int groupCapacity(int N) const;
+      template <int N>
+      int groupCapacity() const;
 
       //@}
 
    private:
 
-      #ifdef UTIL_MPI
       /// Pointer to send buffer.
       char* sendBufferBegin_;
 
@@ -328,11 +357,14 @@ namespace DdMd
       /// End of allocated send Buffer (one char past end).
       char* recvBufferEnd_;
 
-      /// Address one past end of the packed portion of the send buffer.
+      /// Pointer to beginning of current block in send buffer.
       char* sendBlockBegin_;
 
-      /// Address one past end of the unpacked portion of the send buffer.
+      /// Pointer to beginning of current block in recv buffer.
       char* recvBlockBegin_;
+
+      /// Pointer to end of current block in recv buffer.
+      char* recvBlockEnd_;
 
       /// Address one past end of the packed portion of the send buffer.
       char* sendPtr_;
@@ -346,24 +378,20 @@ namespace DdMd
       /// Capacity of buffers, in bytes, without 4 int envelope.
       int dataCapacity_;
 
-      /// Number of atoms or ghosts currently in send buffer.
+      /// Number of items packed thus far into current block of send buffer.
       int sendSize_;
 
-      /// Number of unread atoms or ghosts currently in receive buffer.
+      /// Number of unread items remaining in this block of receive buffer.
       int recvSize_;
 
-      /// Number of atoms in group (or 0 if not a Group).
-      int sendGroupSize_;
-
-      /// Type of atom being sent = NONE, ATOM, GHOST, GROUP
-      BlockDataType sendType_;
+      /// Type of item being sent in this block = NONE, ATOM, GHOST, GROUP
+      int sendType_;
 
       /// Type of atom being received (BlockDataType cast to int)
       int recvType_;
 
       /// Number of atoms in a Group type (or 0 if not a Group).
       int recvGroupSize_;
-      #endif
 
       /// Maximum number of local atoms in buffer.
       int atomCapacity_;
@@ -374,52 +402,24 @@ namespace DdMd
       /// Maximum size used for send buffer on this processor, in bytes.
       int maxSendLocal_;
 
-      /// Has this buffer been initialized ?
-      bool isInitialized_;
-
       /// Maximum size used for send buffers on any processor, in bytes.
       Setable<int> maxSend_;
 
-      #ifdef UTIL_MPI
-      /// Return packed size of Atom, in bytes.
-      static int atomSize();
-
-      /// Return packed size of Group, in bytes.
-      static int ghostSize();
-
-      /// Return packed size of Group<N>, in bytes.
-      static int groupSize(int N);
-
-      /**
-      * Template method for packing a variable
-      *
-      * \param data variable to be packed.
-      */
-      template <typename T>
-      void pack(const T& data);
-
-      /**
-      * Template method for unpacking a variable
-      *
-      * \param data variable to be unpacked.
-      */
-      template <typename T>
-      void unpack(T& data);
+      /// Has this buffer been initialized ?
+      bool isInitialized_;
 
       /*
       * Allocate send and recv buffers, using preset capacities.
       */
       void allocate();
-      #endif
 
    };
 
-   #if UTIL_MPI
    /*
    * Pack an object of type T into send buffer.
    */
    template <typename T>
-   void Buffer::pack(const T& data)
+   inline void Buffer::pack(const T& data)
    {
       if (sendPtr_ + sizeof(data) > sendBufferEnd_) {
          UTIL_THROW("Attempted write past end of send buffer");
@@ -434,7 +434,7 @@ namespace DdMd
    * Unpack an object of type T from recvBuffer.
    */
    template <typename T>
-   void Buffer::unpack(T& data)
+   inline void Buffer::unpack(T& data)
    {
       if (recvPtr_ + sizeof(data) > recvBufferEnd_) {
          UTIL_THROW("Attempted read past end of recv buffer");
@@ -446,62 +446,28 @@ namespace DdMd
    }
 
    /*
-   * Pack a Group.
+   * Maximum number of Group<N> objects that can fit buffer.
    */
    template <int N>
-   void Buffer::packGroup(const Group<N>& group)
+   int Buffer::groupCapacity() const
    {
-      // Preconditions
-      if (sendType_ != GROUP) {
-         UTIL_THROW("SendType is not GROUP");
+      if (dataCapacity_ <= 0) {
+         UTIL_THROW("Buffer not allocated");
       }
-      if (sendGroupSize_ != N) {
-         UTIL_THROW("Wrong sendGroupSize");
-      }
-      pack<int>(group.id());
-      pack<int>(group.typeId());
-      for (int j = 0; j < N; ++j) {
-         pack<int>(group.atomId(j));
-      }
-      pack<unsigned int>(group.plan().flags());
-
-      //Increment number of groups in send buffer by 1
-      ++sendSize_;
+      return (dataCapacity_/Group<N>::packedSize()); 
    }
 
    /*
-   * Unpack the next Group in the recieve buffer.
+   * Increment sendSize counter after packing an item.
    */
-   template <int N>
-   void Buffer::unpackGroup(Group<N>& group)
-   {
-      // Preconditions
-      if (recvType_ != GROUP) {
-         UTIL_THROW("SendType is not GROUP");
-      }
-      if (recvGroupSize_ != N) {
-         UTIL_THROW("Wrong recvGroupSize");
-      }
-      int i;
-      unpack(i);
-      group.setId(i);
-      unpack(i);
-      group.setTypeId(i);
-      for (int j = 0; j < N; ++j) {
-         unpack(i);
-         group.setAtomId(j, i);
-         group.clearAtomPtr(j);
-      }
+   inline void Buffer::incrementSendSize()
+   { ++sendSize_; }
 
-      // Unpack communication plan
-      unsigned int ui;
-      unpack(ui);
-      group.plan().setFlags(ui);
-
-      // Decrement number of groups in recv buffer by 1
-      recvSize_--;
-   }
-   #endif
+   /*
+   * Decrement sendSize counter after receiving an item.
+   */
+   inline void Buffer::decrementRecvSize()
+   { --recvSize_; }
 
 }
 #endif

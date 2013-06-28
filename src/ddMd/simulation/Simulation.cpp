@@ -10,6 +10,7 @@
 
 #include "Simulation.h"
 #include <ddMd/storage/AtomIterator.h>
+#include <ddMd/storage/GroupStorage.tpp>
 #include <ddMd/integrators/Integrator.h>
 #include <ddMd/integrators/IntegratorFactory.h>
 #include <ddMd/configIos/ConfigIo.h>
@@ -164,8 +165,8 @@ namespace DdMd
       if (!MPI::Is_initialized()) {
          UTIL_THROW("MPI is not initialized");
       }
-      Util::Vector::commitMpiType();
-      Util::IntVector::commitMpiType();
+      Vector::commitMpiType();
+      IntVector::commitMpiType();
       AtomType::initStatic();
 
       setIoCommunicator(communicator);
@@ -176,6 +177,7 @@ namespace DdMd
 
       // Set connections between member objects
       domain_.setBoundary(boundary_);
+      #if 0
       exchanger_.associate(domain_, boundary_,
                            atomStorage_, bondStorage_,
                            #ifdef INTER_ANGLE
@@ -185,6 +187,15 @@ namespace DdMd
                            dihedralStorage_,
                            #endif
                            buffer_);
+      #endif
+      exchanger_.associate(domain_, boundary_, atomStorage_, buffer_);
+      exchanger_.addGroupExchanger(bondStorage_);
+      #ifdef INTER_ANGLE
+      exchanger_.addGroupExchanger(angleStorage_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      exchanger_.addGroupExchanger(dihedralStorage_);
+      #endif
 
       fileMasterPtr_ = new FileMaster;
       energyEnsemblePtr_  = new EnergyEnsemble;
@@ -278,7 +289,7 @@ namespace DdMd
    /*
    * Process command line options.
    */
-   void Simulation::setOptions(int argc, char **argv)
+   void Simulation::setOptions(int argc, char * const * argv)
    {
       bool  eFlag = false;
       bool  rFlag = false;
@@ -338,7 +349,7 @@ namespace DdMd
 
       // If option -e, enable echoing of parameters as they are read
       if (eFlag) {
-         Util::ParamComponent::setEcho(true);
+         ParamComponent::setEcho(true);
       }
 
       // If option -r, load state from a restart file.
@@ -349,9 +360,8 @@ namespace DdMd
          }
          load(std::string(rArg));
          if (isIoProcessor()) {
-            Util::Log::file() << std::endl;
+            Log::file() << std::endl;
          }
-         isInitialized_ = true;
       }
 
    }
@@ -689,7 +699,16 @@ namespace DdMd
       #endif
 
       isInitialized_ = true;
+
+      // Load the configuration (boundary + positions + groups)
+      serializeConfigIo().loadConfig(ar, maskedPairPolicy_);
+
+      // There are no ghosts yet, so exchange.
+      exchanger_.exchange();
+      isValid();
    }
+
+   // ---- Serialization -----------------------------------------------
 
    /*
    * Load state from a restart file (open file, call load, close file)
@@ -703,20 +722,18 @@ namespace DdMd
          UTIL_THROW("Error: No IoCommunicator is set");
       }
 
-      // Open archive file, load state, close file.
       Serializable::IArchive ar;
       if (isIoProcessor()) {
          fileMaster().openRestartIFile(filename, ".rst", ar.file());
       }
-      load(ar);
-      serializeConfigIo().loadConfig(ar, maskedPairPolicy_);
-      exchanger_.exchange();
-      isValid();
+      // Call ParamComposite::load(), which calls Simulation::loadParameters()
+      load(ar); 
       if (isIoProcessor()) {
          ar.file().close();
       }
 
-      // Set command (*.cmd) file
+      // Set default command (*.cmd) file name = filename + ".cmd".
+      // This will be used by Simulation::readCommands().
       std::string commandFileName = filename + ".cmd";
       fileMaster().setCommandFileName(commandFileName);
    }
@@ -834,6 +851,8 @@ namespace DdMd
          ar.file().close();
       }
    }
+
+   // --- Protected read, load and save methods ------------------------
 
    /*
    * Read the FileMaster parameters.
@@ -983,35 +1002,31 @@ namespace DdMd
       boundaryEnsemblePtr_->save(ar);
    }
 
+   // --- readCommands and run-time actions  ---------------------------
+
    /*
    * Read and implement commands in an input script.
    */
    void Simulation::readCommands(std::istream &in)
    {
-      std::string   command;
-      std::string   filename;
-      std::ifstream inputFile;
-      std::ofstream outputFile;
+      std::string  command;
+      std::string  filename;
+      std::ifstream  inputFile;
+      std::ofstream  outputFile;
 
       #ifdef UTIL_MPI
-      std::stringstream inBuffer;
-      std::string       line;
+      std::stringstream  inBuffer;
+      std::string  line;
       #else
-      std::istream&     inBuffer = in;
+      std::istream&  inBuffer = in;
       #endif
 
       bool readNext = true;
       while (readNext) {
 
          // Precondition: Check atomic coordinate system
-         if (UTIL_ORTHOGONAL) {
-            if (!atomStorage().isCartesian()) {
-               UTIL_THROW("Error: atom coordinates are not Cartesian");
-            } 
-         } else {
-            if (atomStorage().isCartesian()) {
-               UTIL_THROW("Error: atom coordinates are Cartesian");
-            }
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Error: Storage set for Cartesian atom coordinates");
          }
 
          #ifdef UTIL_MPI
@@ -1064,12 +1079,12 @@ namespace DdMd
                setBoltzmannVelocities(temperature);
             } else
             if (command == "SIMULATE") {
-               int endStep;
-               inBuffer >> endStep;
+               int nStep;
+               inBuffer >> nStep;
                if (domain_.isMaster()) {
                   Log::file() << std::endl;
                }
-               integrator().run(endStep);
+               integrator().run(nStep);
             } else
             if (command == "OUTPUT_DIAGNOSTICS") {
                diagnosticManager().output();
@@ -1319,18 +1334,7 @@ namespace DdMd
       }
    }
 
-   /*
-   * Integrate.
-   */
-   void Simulation::simulate(int nStep)
-   {
-      if (domain_.isMaster()) {
-         Log::file() << std::endl;
-      }
-      integrator().run(nStep);
-   }
-
-   // Kinetic Energy methods ----------------------------------------------
+   // --- Kinetic Energy methods ---------------------------------------
 
    /*
    * Calculate total kinetic energy (call on all processors).
@@ -1382,7 +1386,7 @@ namespace DdMd
    void Simulation::unsetKineticEnergy()
    {  kineticEnergy_.unset(); }
 
-   // Kinetic Stress methods ----------------------------------------------
+   // --- Kinetic Stress methods ---------------------------------------
 
    /*
    * Compute total kinetic stress, store on master proc.
@@ -1458,10 +1462,9 @@ namespace DdMd
    void Simulation::unsetKineticStress()
    {  kineticStress_.unset(); }
 
-   // Potential Energy Methods --------------------------------------------
+   // --- Potential Energy Methods -------------------------------------
 
    #ifdef UTIL_MPI
-
    /*
    * Compute all potential energy contributions.
    */
@@ -1487,7 +1490,6 @@ namespace DdMd
    }
 
    #else
-
    /*
    * Compute all potential energy contributions.
    */
@@ -1511,7 +1513,6 @@ namespace DdMd
       }
       #endif
    }
-
    #endif
 
    /*
@@ -1574,7 +1575,7 @@ namespace DdMd
       #endif
    }
 
-   // Virial Stress Methods -----------------------------------------------
+   // --- Virial Stress Methods ----------------------------------------
 
    #ifdef UTIL_MPI
    /*
@@ -1706,7 +1707,7 @@ namespace DdMd
       #endif
    }
 
-   // ConfigIo Accessors -------------------------------------------------
+   // --- ConfigIo Accessors -------------------------------------------
    
    /**
    * Return the ConfigIo (create default if necessary).
@@ -1732,7 +1733,7 @@ namespace DdMd
       return *serializeConfigIoPtr_;
    }
 
-   // Config File Read and Write ------------------------------------------
+   // --- Config File Read and Write -----------------------------------
 
    /*
    * Read configuration file on master and distribute atoms.
@@ -1765,7 +1766,7 @@ namespace DdMd
       }
    }
 
-   // Potential Factories and Styles --------------------------------------
+   // --- Potential Factories and Styles -------------------------------
 
    #ifndef DDMD_NOPAIR
    /*
@@ -1865,7 +1866,7 @@ namespace DdMd
    {  return externalStyle_;  }
    #endif
 
-   // Integrator and ConfigIo Management ------------------------------------
+   // --- Integrator and ConfigIo Management ---------------------------
 
    /*
    * Return the IntegratorFactory by reference.
@@ -1907,7 +1908,7 @@ namespace DdMd
       configIoPtr_->initialize();
    }
 
-   // Validation ----------------------------------------------------------
+   // --- Validation ---------------------------------------------------
 
    /*
    * Return true if this Simulation is valid, or throw an Exception.

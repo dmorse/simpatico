@@ -22,7 +22,7 @@ namespace DdMd
    template <int N> class GroupStorage;
 
    /**
-   * An AnglePotential calculates angle forces and energies for a parent Simulation.
+   * Calculates angle forces and energies for a parent Simulation.
    *
    * \ingroup DdMd_Angle_Module
    */

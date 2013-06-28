@@ -117,17 +117,14 @@ namespace Util
    DArray<Data>::DArray(const DArray<Data>& other) 
     : Array<Data>()
    {
-      // Precondition
       if (!other.isAllocated()) {
          UTIL_THROW("Other DArray must be allocated.");
       }
-
       data_     = new Data[other.capacity_];
       capacity_ = other.capacity_;
       for (int i = 0; i < capacity_; ++i) {
          data_[i] = other.data_[i];
       }
-
    }
 
    /*

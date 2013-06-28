@@ -15,6 +15,7 @@ clean:
 	cd bond; make clean;
 	cd angle; make clean;
 	cd dihedral; make clean;
+	-rm -f log
 
 clean-deps:
 	rm -f $(tests_inter_OBJS:.o=.d)

@@ -4,6 +4,7 @@
 #include <ddMd/storage/BondStorage.h>
 #include <ddMd/storage/BondIterator.h>
 #include <ddMd/storage/AtomStorage.h>
+#include <ddMd/storage/GroupStorage.tpp>
 #include <ddMd/chemistry/Bond.h>
 #include <util/containers/DPArray.h>
 

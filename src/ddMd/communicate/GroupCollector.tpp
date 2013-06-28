@@ -1,5 +1,5 @@
-#ifndef DDMD_GROUP_COLLECTOR_INC_H
-#define DDMD_GROUP_COLLECTOR_INC_H
+#ifndef DDMD_GROUP_COLLECTOR_TPP
+#define DDMD_GROUP_COLLECTOR_TPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -11,7 +11,7 @@
 #include "GroupCollector.h"
 #include "Domain.h"
 #include "Buffer.h"
-#include <ddMd/storage/GroupStorage.h>
+#include <ddMd/storage/GroupStorage.tpp>
 
 namespace DdMd
 {
@@ -178,7 +178,7 @@ namespace DdMd
             while (bufferPtr_->recvSize() > 0 
                    && recvArraySize_ < recvArray_.capacity()) 
             {
-               bufferPtr_->unpackGroup<N>(recvArray_[recvArraySize_]);
+               recvArray_[recvArraySize_].unpack(*bufferPtr_);
                ++recvArraySize_;
                --recvBufferSize_;
                if (recvBufferSize_ != bufferPtr_->recvSize()) {
@@ -230,7 +230,7 @@ namespace DdMd
       Atom* atomPtr = 0;
       int message;
       int tag;
-      int bufferCapacity = bufferPtr_->groupCapacity(N);
+      int bufferCapacity = bufferPtr_->groupCapacity<N>();
 
       // Initialize group iterator
       storagePtr_->begin(iterator_);
@@ -246,14 +246,14 @@ namespace DdMd
          int recvArraySize_ = 0;
          isComplete_ = iterator_.isEnd();
          bufferPtr_->clearSendBuffer();
-         bufferPtr_->beginSendBlock(Buffer::GROUP, N);
+         bufferPtr_->beginSendBlock(Buffer::GROUP2 +  N - 2);
          while (recvArraySize_ < bufferCapacity && !isComplete_) {
             // Get pointer to first atom in Group
             // Send group only if this is a local atom.
             atomPtr = iterator_->atomPtr(0);
             if (atomPtr) {
                if (!atomPtr->isGhost()) {
-                  bufferPtr_->packGroup<N>(*iterator_);
+                  iterator_->pack(*bufferPtr_);
                   ++recvArraySize_;
                }
             }
@@ -271,4 +271,4 @@ namespace DdMd
    #endif
 
 }
-#endif
+#endif // ifndef DDMD_GROUP_COLLECTOR_TPP

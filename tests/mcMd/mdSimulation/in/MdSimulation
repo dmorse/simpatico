@@ -27,27 +27,25 @@ MdSimulation{
   
   }
   Random{
-    seed                         123456789
+    seed                         12342579
   }
   MdSystem{
-    pairStyle           LJPair
+    pairStyle          DpdPair
     bondStyle     HarmonicBond
     MdPairPotential{
       epsilon             1.00         2.00  
                           2.00         1.00
       sigma               1.00         1.00
                           1.00         1.00
-      cutoff              1.12246      1.12246
-                          1.12246      1.12246
-      maxBoundary   orthorhombic   2.0   3.0   4.0
+      maxBoundary   orthorhombic   4.0   4.0   4.0
       PairList{
         atomCapacity                30
         pairCapacity              1000
-        skin                       0.2
+        skin                       0.3
       }
     }
     BondPotential{
-      kappa               100.00      
+      kappa                10.00      
       length                1.00     
     }
     EnergyEnsemble{
@@ -57,11 +55,15 @@ MdSimulation{
       type                  rigid
     }
     NveVvIntegrator{
-      dt                         0.00100
+      dt                  0.00100
     }
   }
   DiagnosticManager{
     baseInterval                  10
 
   }
+  saveInterval 0
 } 
+
+      cutoff              1.12246      1.12246
+                          1.12246      1.12246

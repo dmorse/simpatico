@@ -27,13 +27,23 @@ namespace McMd
 
    using namespace Util;
 
-   /// Constructor.
+   /*
+   * Constructor.
+   */
    IntraStructureFactor::IntraStructureFactor(System& system) 
     : SystemDiagnostic<System>(system),
       isInitialized_(false)
    {  setClassName("IntraStructureFactor"); }
 
-   /// Read parameters from file, and allocate data array.
+   /*
+   * Destructor.
+   */
+   IntraStructureFactor::~IntraStructureFactor()
+   {}
+
+   /*
+   * Read parameters from file, and allocate data array.
+   */
    void IntraStructureFactor::readParameters(std::istream& in) 
    {
       readInterval(in);

@@ -35,7 +35,6 @@ namespace Util {
    template <typename T> class Factory; 
    class EnergyEnsemble;
    class BoundaryEnsemble;
-   class Tensor;
 }
 
 namespace DdMd
@@ -79,14 +78,14 @@ namespace DdMd
       
       #ifdef UTIL_MPI
       /**
-      * Default constructor.
+      * Constructor.
       *
       * \param communicator MPI communicator for MD processors.
       */
       Simulation(MPI::Intracomm& communicator = MPI::COMM_WORLD);
       #else
       /**
-      * Default constructor.
+      * Constructor.
       */
       Simulation();
       #endif
@@ -109,14 +108,23 @@ namespace DdMd
       *
       *   -s  nSystem [int]
       *       Enable multi system simulation, using different groups of 
-      *       processors for different systems. Int argument nSystem is the 
-      *       number of systems. Rank of world communicator must be an 
-      *       integer multiple of nSystem.
+      *       processors for different systems. Integer argument nSystem 
+      *       is the number of systems. The rank of the communicator passed
+      *       to the constructor must be an integer multiple of nSystem.
       *
-      * \param argc number of arguments
-      * \param argv vector of C-string argument strings
+      *   -r  filename [string]
+      *       Restarts a simulation from a checkpoint file. The name of
+      *       the checkpoint file is filename + ".rst", i..e., it is 
+      *       obtained by adding a suffix ".rst" to the filename argument.
+      *       Also sets the default command file name to filename + ".cmd".
+      *
+      * The parameters are the same as those passed to any C/C++ main
+      * program, which contain the command line arguments:
+      *
+      * \param argc number of command line arguments
+      * \param argv C-array of C-string argument strings
       */
-      void setOptions(int argc, char **argv);
+      void setOptions(int argc, char* const * argv);
 
       /**
       * Read parameters from default parameter file.
@@ -148,30 +156,45 @@ namespace DdMd
       //@{
   
       /**
-      * Load state from a restart file.
+      * Load internal state from a restart file.
       *
-      * Call on all processors.
+      * Call on all processors. This function opens an archive file with 
+      * a name given by concatentaing filename + ".rst" on the ioProcessor, 
+      * calls load(Serializable::OArchive& ), and closes the file. It also 
+      * sets the default command file name to filename + ".cmd".
+      *
+      * \param filename base filename (add suffixes ".rst" and ".cmd")
       */
       void load(const std::string& filename);
 
       /**
-      * Load state from a restart archive.
+      * Load parameters from a restart archive.
       *
-      * Used to implement load(std::string). Do not call directly.
+      * Call on all processors, but loads from archive only on ioProcessor.
+      * This function loads both parameter information and the system
+      * configuration. 
+      *  
+      * Do not call this directly. Instead call load(const std::string&) 
+      * or load(Serializable::IArchive& ).
+      *
+      * \param ar input archive (open for reading on ioProcessor).
       */
       virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
       * Save state to a restart file.
       *
-      * Call on all processors. Only writes from master ioProcessor.
+      * Call on all processors. Only writes from communicator ioProcessor.
+      * This function opens an archive file with a name given by filename 
+      * + ".rst" on the ioProcessor, calls save(Serializable::OArchive& ), 
+      * and closes the file.
       */
       void save(const std::string& filename);
 
       /**
       * Save internal state to restart archive.
       *
-      * Used to implement save(std::string). Do not call directly.
+      * Used to implement save(std::string).
       */
       virtual void save(Serializable::OArchive& ar);
 
@@ -181,21 +204,25 @@ namespace DdMd
 
       /**
       * Read and execute commands from the default command file.
+      *
+      * This function calls readCommands(std::istream&) internally. The
+      * default command file is defined by the FileMaster. The file name
+      * is normally input in the parameter file.  
+      *
+      * \pre Same as readCommands(std::istream&)
       */
       void readCommands();
 
-      /*
-      * Read and execute commands from a command file.
+      /**
+      * Read and execute commands from a specific command file.
+      *
+      * \pre Simulation must be initialized, by call to (read|load)Parameters.
+      * \pre AtomStorage coordinates are scaled / generalized (not Cartesian)
+      *
+      * \param in command file
       */
       void readCommands(std::istream &in);
-   
-      /**
-      * Integrate equations of motion. 
-      *
-      * \param nStep number of time steps to integrate.
-      */
-      void simulate(int nStep);
-
+  
       /**
       * Set random velocities chosen from Boltzmann distribution.
       *  
@@ -219,14 +246,19 @@ namespace DdMd
       * groups, and a full set of ghost atoms, but values for
       * the atomic forces are undefined.
       *
-      * \param filename name of configuration file.
+      * \pre  AtomStorage is set for scaled / generalized coordinates.
+      * \post AtomStorage is set for scaled / generalized coordinates.
+      *
+      * \param filename name of input configuration file.
       */
       void readConfig(const std::string& filename);
 
       /**
       * Write configuration file.
       *
-      * \param filename name of configuration file.
+      * \pre AtomStorage coordinates are generalized / scaled 
+      *
+      * \param filename name of output configuration file.
       */
       void writeConfig(const std::string& filename);
 
@@ -241,7 +273,7 @@ namespace DdMd
       * This method creates a new instance of the specified subclass
       * of ConfigIo, and retains a pointer to the new object.
       *
-      * \param classname name of desired ConfigIo subclass.
+      * \param classname name of ConfigIo subclass.
       */
       void setConfigIo(std::string& classname);
 
@@ -368,17 +400,17 @@ namespace DdMd
       /**
       * Calculate and store all virial stress contributions.
       *
-      * Reduce operation: Must be called on all nodes. This
-      * calls computeStress() method of each potential class.
+      * Reduce operation: Must be called on all nodes. This calls
+      * the computeStress() method of each potential class.
       */
       void computeVirialStress();
 
       /**
       * Return total virial stress.
       *
-      * Call only on master processor, after computeVirialStress.
-      * This method calls the stress() method of each potential
-      * class (pair, bond, etc.) and adds the result. 
+      * Call only on master processor, after computeVirialStress. This
+      * method calls the stress() method of each potential class (pair,
+      * bond, etc.) and adds and returns the sum.
       * 
       * \return total virial stress (only correct on master node).
       */
@@ -403,76 +435,96 @@ namespace DdMd
       void unsetVirialStress();
 
       //@}
-      /// \name Potential Energy Factories and Styles
+      /// \name Potential Energy Classes (Objects, Style Strings and Factories)
       //@{
 
-      #ifndef INTER_NOPAIR
       /**
-      * Get the Factory<PairPotential> by reference.
+      * Get the PairPotential by reference.
       */
-      Factory<PairPotential>& pairFactory();
-
+      PairPotential& pairPotential();
+   
+      #ifndef INTER_NOPAIR
       /**
       * Return nonbonded pair style string.
       */
       std::string pairStyle() const;
+
+      /**
+      * Get the Factory<PairPotential> by reference.
+      */
+      Factory<PairPotential>& pairFactory();
       #endif
 
       /**
-      * Get the associated Factory<BondPotential> by reference.
+      * Get the PairPotential by reference.
       */
-      Factory<BondPotential>& bondFactory();
+      BondPotential& bondPotential();
 
       /**
       * Return covalent bond style string.
       */
       std::string bondStyle() const;
 
-      #ifdef INTER_ANGLE
       /**
-      * Get the associated AngleFactory by reference.
+      * Get the Factory<BondPotential> by reference.
       */
-      Factory<AnglePotential>& angleFactory();
+      Factory<BondPotential>& bondFactory();
+  
+      #ifdef INTER_ANGLE 
+      /**
+      * Get the AnglePotential by reference.
+      */
+      AnglePotential& anglePotential();
 
       /**
       * Return angle potential style string.
       */
       std::string angleStyle() const;
+   
+      /**
+      * Get the AngleFactory by reference.
+      */
+      Factory<AnglePotential>& angleFactory();
       #endif
 
       #ifdef INTER_DIHEDRAL
       /**
-      * Get the associated Dihedral Factory by reference.
+      * Get the DihedralPotential by reference.
       */
-      Factory<DihedralPotential>& dihedralFactory();
+      DihedralPotential& dihedralPotential();
 
       /**
       * Return dihedral potential style string.
       */
       std::string dihedralStyle() const;
+   
+      /**
+      * Get the associated Dihedral Factory by reference.
+      */
+      Factory<DihedralPotential>& dihedralFactory();
       #endif
 
       #ifdef INTER_EXTERNAL
       /**
-      * Get the associated External Factory by reference.
+      * Get the ExternalPotential by reference.
       */
-      Factory<ExternalPotential>& externalFactory();
+      ExternalPotential& externalPotential();
 
       /**
       * Return external potential style string.
       */
       std::string externalStyle() const;
+
+      /**
+      * Get the associated External Factory by reference.
+      */
+      Factory<ExternalPotential>& externalFactory();
       #endif
 
       //@}
-      /// \name Accessors (return members by reference)
+      /// \name Atom and Group Containers
       //@{
-
-      /**
-      * Get the Domain by reference.
-      */
-      Domain& domain();
-
+      
       /**
       * Get the AtomStorage by reference.
       */
@@ -497,41 +549,19 @@ namespace DdMd
       DihedralStorage& dihedralStorage();
       #endif
    
+      //@}
+      /// \name Miscellaneous Accessors (return members by reference)
+      //@{
+
+      /**
+      * Get the Domain by reference.
+      */
+      Domain& domain();
+
       /**
       * Get the Boundary by reference.
       */
       Boundary& boundary();
-   
-      /**
-      * Get the PairPotential by reference.
-      */
-      PairPotential& pairPotential();
-   
-      /**
-      * Get the PairPotential by reference.
-      */
-      BondPotential& bondPotential();
-  
-      #ifdef INTER_ANGLE 
-      /**
-      * Get the AnglePotential by reference.
-      */
-      AnglePotential& anglePotential();
-      #endif
-   
-      #ifdef INTER_DIHEDRAL
-      /**
-      * Get the DihedralPotential by reference.
-      */
-      DihedralPotential& dihedralPotential();
-      #endif
-   
-      #ifdef INTER_EXTERNAL
-      /**
-      * Get the ExternalPotential by reference.
-      */
-      ExternalPotential& externalPotential();
-      #endif
    
       /**
       * Get an AtomType descriptor by reference.
@@ -561,11 +591,6 @@ namespace DdMd
       FileMaster& fileMaster();
 
       /**
-      * Get the Md  integrator factory by reference.
-      */
-      Factory<Integrator>& integratorFactory();
-
-      /**
       * Get the Random number generator by reference.
       */
       Random& random();
@@ -581,9 +606,14 @@ namespace DdMd
       Buffer& buffer();
   
       /**
-      * Return associated DiagnosticManager by reference.
+      * Return the DiagnosticManager by reference.
       */
       DiagnosticManager& diagnosticManager();
+
+      /**
+      * Get the Integrator factory by reference.
+      */
+      Factory<Integrator>& integratorFactory();
 
       //@}
       /// \name Accessors (return by value)
@@ -919,7 +949,7 @@ namespace DdMd
       /// Log output file (if not standard out)
       std::ofstream logFile_;
 
-      /// Has readParam been called?
+      /// Has readParam or load been called?
       bool isInitialized_;
 
       /// Is this Simulation in the process of restarting?

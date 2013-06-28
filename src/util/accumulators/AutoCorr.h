@@ -52,9 +52,14 @@ namespace Util
    public:
   
       /**
-      * Default constructor
+      * Constructor
       */
       AutoCorr();
+   
+      /**
+      * Destructor
+      */
+      ~AutoCorr();
    
       /**
       * Reset to empty state.
@@ -185,6 +190,13 @@ namespace Util
       setClassName("AutoCorr");
       setToZero(sum_);
    }
+   
+   /*
+   * Destructor
+   */
+   template <typename Data, typename Product>
+   AutoCorr<Data, Product>::~AutoCorr() 
+   {}
    
    /*
    * Read buffer capacity and allocate all required memory.

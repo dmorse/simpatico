@@ -71,31 +71,13 @@ namespace Util
             }
             /* Only delete Param, Begin, End & Blank leaf objects.
             * Do NOT delete node objects here. These are instances of
-            * of subclasses of ParamComposite, which must be deleted
-            * by their parent object, i.e., by the object of which they
-            * are a member or, if created on the heap, the object that
-            * has sole responsibility for deleting them.
+            * of subclasses of ParamComposite that are never created
+            * by this object, and so should not be destroyed by this
+            * object.
             */
          }
       }
    }
-
-   #if 0
-   #ifdef UTIL_MPI
-   /*
-   * Set an MPI communicator for this ParamComposite and all descendants.
-   */
-   void ParamComposite::setIoCommunicator(MPI::Intracomm& communicator)
-   {
-      ParamComponent::setIoCommunicator(communicator);
-      if (size_ > 0) {
-         for (int i=0; i < size_; ++i) {
-            list_[i]->setIoCommunicator(communicator);
-         }
-      }
-   }
-   #endif
-   #endif
 
    /*
    * Read parameter block, including begin and end.

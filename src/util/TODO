@@ -5,8 +5,8 @@ Boundary classes
 
 - Add minimumDeformRatio method to Boundary classes.
 
-- Add bool isOrthogonal() method to Boundary classes. Use to test other classes 
-  that call Boundary::lengths().
+- Add bool isOrthogonal() method to Boundary classes. Use to test other 
+  classes that call Boundary::lengths().
 
 ParamComponent Classes:
 -----------------------

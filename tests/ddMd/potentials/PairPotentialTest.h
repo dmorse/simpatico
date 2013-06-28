@@ -102,10 +102,12 @@ public:
       // Set coordinate bounds
       Vector  lowerGhost;
       Vector  upperGhost;
+      Vector  length;
       int    i, j;
       for (i = 0; i < Dimension; ++i) {
-          lowerGhost[i] = lower[i] - cutoff;
-          upperGhost[i] = upper[i] + cutoff;
+          length[i] = upper[i] - lower[i];
+          lowerGhost[i] = (lower[i] - cutoff)/length[i];
+          upperGhost[i] = (upper[i] + cutoff)/length[i];
       }
 
       // Create new random number generator
@@ -116,14 +118,13 @@ public:
       Vector pos;
       Atom*  ptr;
       bool   ghost;
+      storage.clearAtoms();
       for (i = 0; i < nAtom; ++i) {
          ghost = false;
          for (j = 0; j < Dimension; ++j) {
             pos[j] = random.uniform(lowerGhost[j], upperGhost[j]);
-            if (pos[j] < lower[j]) 
-               ghost = true;
-            if (pos[j] > upper[j]) 
-               ghost = true;
+            if (pos[j] < lower[j]) ghost = true;
+            if (pos[j] > upper[j]) ghost = true;
             TEST_ASSERT(pos[j] >= lowerGhost[j]);
             TEST_ASSERT(pos[j] <= upperGhost[j]);
          }
@@ -142,6 +143,7 @@ public:
          }
          std::cout << pos << "   " << ghost << std::endl;
       }
+      TEST_ASSERT(!storage.isCartesian());
    }
 
    void zeroForces()
@@ -232,21 +234,13 @@ public:
       double cutoff   = 1.2;
       Vector lower(0.0);
       Vector upper(2.0, 3.0, 4.0);
-      Boundary maxBoundary;
 
       boundary.setOrthorhombic(upper);
       randomAtoms(nAtom, lower, upper, cutoff);
-      
-      //pairPotential.initialize(maxBoundary, cutoff, pairCapacity);
-      boundary.setOrthorhombic(upper);
 
-      if (!UTIL_ORTHOGONAL) {
-         storage.transformCartToGen(boundary);
-      }
+      TEST_ASSERT(!storage.isCartesian());
       pairPotential.buildCellList();
-      if (!UTIL_ORTHOGONAL) {
-         storage.transformGenToCart(boundary);
-      }
+      storage.transformGenToCart(boundary);
       pairPotential.buildPairList();
 
       zeroForces();
@@ -270,7 +264,7 @@ public:
 
 TEST_BEGIN(PairPotentialTest)
 TEST_ADD(PairPotentialTest, testRead1)
-//TEST_ADD(PairPotentialTest, testRandom1)
+TEST_ADD(PairPotentialTest, testRandom1)
 TEST_END(PairPotentialTest)
 
 #endif 

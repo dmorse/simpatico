@@ -18,7 +18,7 @@
 #include <util/global.h>
 
 // Uncomment to enable paranoid validity checks.
-//#define  DDMD_INTEGRATOR_DEBUG
+#define DDMD_INTEGRATOR_DEBUG
 
 namespace DdMd
 {
@@ -43,14 +43,8 @@ namespace DdMd
    void TwoStepIntegrator::run(int nStep)
    {
       // Precondition
-      if (UTIL_ORTHOGONAL) {
-         if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
-      } else {
-         if (atomStorage().isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
+      if (atomStorage().isCartesian()) {
+         UTIL_THROW("Error: Atom coordinates are Cartesian");
       }
 
       // Unset all stored computations.
@@ -75,21 +69,18 @@ namespace DdMd
 
          // Atomic coordinates must be Cartesian on entry to loop body.
          if (!atomStorage().isCartesian()) {
-            UTIL_THROW("Atomic coordinates are not Cartesian");
+            UTIL_THROW("Error: Atomic coordinates are not Cartesian");
          }
 
-         // Sample scheduled diagnostics.
-         // Also write restart file, if scheduled.
-         if (Diagnostic::baseInterval > 0) {
-            if (iStep_ % Diagnostic::baseInterval == 0) {
-               if (saveInterval() > 0) {
-                  if (iStep_ % saveInterval() == 0) {
-                     if (iStep_ > beginStep) {
-                        simulation().save(saveFileName());
-                     }
-                  }
+         // Sample diagnostics, if scheduled.
+         simulation().diagnosticManager().sample(iStep_);
+
+         // Write restart file, if scheduled.
+         if (saveInterval() > 0) {
+            if (iStep_ % saveInterval() == 0) {
+               if (iStep_ > beginStep) {
+                  simulation().save(saveFileName());
                }
-               simulation().diagnosticManager().sample(iStep_);
             }
          }
          timer().stamp(DIAGNOSTIC);
@@ -109,21 +100,21 @@ namespace DdMd
          // Check if exchange and reneighboring is necessary
          needExchange = isExchangeNeeded(pairPotential().skin());
 
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Error: atomic coordinates are not Cartesian");
+         }
+
          // Exchange atoms if necessary
          if (needExchange) {
             atomStorage().clearSnapshot();
-            if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {
-               atomStorage().transformCartToGen(boundary());
-               timer().stamp(Integrator::TRANSFORM_F);
-            }
+            atomStorage().transformCartToGen(boundary());
+            timer().stamp(Integrator::TRANSFORM_F);
             exchanger().exchange();
             timer().stamp(Integrator::EXCHANGE);
             pairPotential().buildCellList();
             timer().stamp(Integrator::CELLLIST);
-            if (!UTIL_ORTHOGONAL) {
-               atomStorage().transformGenToCart(boundary());
-               timer().stamp(Integrator::TRANSFORM_R);
-            }
+            atomStorage().transformGenToCart(boundary());
+            timer().stamp(Integrator::TRANSFORM_R);
             atomStorage().makeSnapshot();
             pairPotential().buildPairList();
             timer().stamp(Integrator::PAIRLIST);
@@ -138,15 +129,20 @@ namespace DdMd
          simulation().isValid();
          #endif
 
-         // Calculate new forces for all local atoms. Also calculate virial stresses
-         // for constant pressure ensemble. Both methods send the modifyForce signal.
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Error: Atomic coordinates are not Cartesian");
+         }
+
+         // Calculate new forces for all local atoms. If constant pressure
+         // ensembles (not rigid), calculate virial stress. Both methods 
+         // send the modifyForce signal.
          if (simulation().boundaryEnsemble().isRigid()) {
             computeForces();
          } else {
             computeForcesAndVirial();
          }
 
-         // 2nd step of integration, which finishes the velocity update.
+         // 2nd step of integration. This finishes the velocity update.
          // This method normally calls simulation().velocitySignal().notify()
          integrateStep2();
          timer().stamp(INTEGRATE2);
@@ -160,22 +156,16 @@ namespace DdMd
       exchanger().timer().stop();
       timer().stop();
 
-      // Final restart write, if final iStep_ is multiple of interval.
-      if (Diagnostic::baseInterval > 0) {
-         if (iStep_ % Diagnostic::baseInterval == 0) {
-            if (saveInterval() > 0) {
-               if (iStep_ % saveInterval() == 0) {
-                  simulation().save(saveFileName());
-               }
-            }
+      // Final diagnostics and restart file, if scheduled.
+      simulation().diagnosticManager().sample(iStep_);
+      if (saveInterval() > 0) {
+         if (iStep_ % saveInterval() == 0) {
+            simulation().save(saveFileName());
          }
       }
 
-      // If !UTIL_ORTHOGONAL, transform to scaled coordinates,
-      // in preparation for beginning of the next run.
-      if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {
-         atomStorage().transformCartToGen(boundary());
-      }
+      // Transform to scaled coordinates, in preparation for the next run.
+      atomStorage().transformCartToGen(boundary());
 
       if (domain().isMaster()) {
          Log::file() << std::endl;

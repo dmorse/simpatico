@@ -1,0 +1,96 @@
+Observations: 
+
+1) Each GroupStorage containers is used only to calculate an associated
+   potential contribution.
+
+2) Additional specialized potential might require additional data 
+   structures (e.g., impropers, angle-dependent H bonding forces, etc.)
+
+3) It would be preferable to have each potential responsible for 
+   controlling communication of group-like data structures it requires.
+
+------------------------------------------------------------------------
+Ideas:
+
+1) Make each GroupStorage a member of the associated potential.
+
+2) Abstract communication of groups in a manner that can be generalized
+   to other potentials. This requires an analysis of how the groups 
+   storage containers are currently used in exchanges, distribution,
+   and collection.
+
+------------------------------------------------------------------------
+Plan (order of changes):
+
+1) Make changes to Buffer first, to first move (pack|unpack)Group
+   methods to Group<N> template, where they belong (Done).
+
+2) Change all methods of Exchanger that involve GroupStorage 
+   to methods of GroupStorage<N> (see discussion below).
+
+3) Move GroupStorage to be a member of corresponding Potential.
+
+4) Create PotentialMaster. This can read PairPotential, etc., then
+   read the pair style. 
+
+------------------------------------------------------------------------
+class Exchanger:
+
+  Exchanger::exchange() calls several functions that use GroupStorage<N>:
+
+  1) Before clearing ghosts:   initGroupGhostPlan<N>(GroupStorage<N>& )
+
+  2) After packing atoms:      packGroups<N>(i, j, GroupStorage<N>, emptyGroups)
+
+  3) Upon receipt:             unpackGroups(GroupStorage<N>)
+
+  4) After all exchanges :     finishGroupGhostPlan<N>(GroupStorage<N>)
+
+  5) After ghost exchange :    findGroupGhosts
+
+  Questions:
+
+  1) Can these functions be made methods of the GroupStorage<N> class ?
+
+  2) Can packGroups and removeEmpty groups be combined?
+
+  Analysis:
+
+  1) initGroupGhostPlan uses:
+
+     multiProcessorDirection_, inner_, bound_, outer_
+
+     Solution: Pass required information as argument(s) (in what form?)
+
+     GroupStorage<N>::initGhostPlan(multiProcessorDirection_, bound, inner_, outer_);
+
+  2) packGroups uses
+
+     bufferPtr_, Groups are identified by which atoms are marked for sending.
+
+     Solution: Pass Buffer& as an arguments.
+
+     GroupStorage<N>::pack(i, j, Buffer& );
+
+  3) unpackGroups uses bufferPtr_ and atomStorage. 
+
+     Solution: Pass Buffer& and AtomStorage& as arguments.
+
+     GroupStorage<N>::unpackCleanUp(i, j, Buffer&, AtomStorage& );
+
+  4) finishGroupGhostPlan uses:
+
+     Includes a loop of i, j directions.
+
+     Uses: atomStorage, sendArray_, multiProcessorDirection_,
+     All can be passed as arguments. 
+
+     sendArray_(i, j) is used so that ghosts can be added to it. 
+
+     GroupStorage<N>::finishGhostPlan(AtomStorage&, FMatrix<APArray<Atom>, 3, 2>&)
+
+  5) findGroupGhosts uses:
+
+     atomStorage (Can be passed as argument)
+
+     FinishGhostExchange(AtomStorage& );

@@ -7,10 +7,10 @@
 #   - A variable $(UTIL_SUFFIX) which is added as a suffix to the name
 #     of the util library.
 #
-#   - The name $(UTIL_LIB) of the util library. 
+#   - The name $(UTIL_LIB) of the util library file.
 #
 # This file must be included by every makefile in the util directory. 
-# It must be included after $(SRC_DIR)/makefile.mk and before
+# It must be included after $(SRC_DIR)/compiler.mk and before
 # $(SRC_DIR)/mcmd/patterns.mk.
 #-----------------------------------------------------------------------
 # Flag to define preprocessor macros.

@@ -477,6 +477,8 @@ namespace McMd
                      << iStep_ << std::endl;
       } else {
          iStep_ = 0;
+         system().shiftAtoms();
+         system().calculateForces();
          diagnosticManager().setup();
          system_.mdIntegrator().setup();
       }
@@ -492,8 +494,12 @@ namespace McMd
          if (Diagnostic::baseInterval > 0) {
             if (iStep_ % Diagnostic::baseInterval == 0) {
                system().shiftAtoms();
-               save(saveFileName_);
                diagnosticManager().sample(iStep_);
+            }
+         }
+         if (saveInterval_ > 0) {
+            if (iStep_ % saveInterval_ == 0) {
+               save(saveFileName_);
             }
          }
 
@@ -517,11 +523,15 @@ namespace McMd
       // Shift final atomic positions 
       system().shiftAtoms();
 
-      // Final restart / diagnostics
+      // Final diagnostics and restart
       if (Diagnostic::baseInterval > 0) {
          if (iStep_ % Diagnostic::baseInterval == 0) {
-            save(saveFileName_);
             diagnosticManager().sample(iStep_);
+         }
+      }
+      if (saveInterval_ > 0) {
+         if (iStep_ % saveInterval_ == 0) {
+            save(saveFileName_);
          }
       }
 
@@ -754,15 +764,10 @@ namespace McMd
    */
    void MdSimulation::save(const std::string& filename)
    {
-      // Write restart file
-      if (saveInterval_ > 0) {
-         if (iStep_ % saveInterval_ == 0) {
-            Serializable::OArchive ar;
-            fileMaster().openRestartOFile(filename, ".rst", ar.file());
-            save(ar);
-            ar.file().close();
-         }
-      }
+      Serializable::OArchive ar;
+      fileMaster().openRestartOFile(filename, ".rst", ar.file());
+      save(ar);
+      ar.file().close();
    }
 
    /* 

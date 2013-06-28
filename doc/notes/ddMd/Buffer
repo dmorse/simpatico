@@ -1,47 +1,31 @@
-Plans for changing Buffer and dependent classes (May 2, 2011).
+Proposal for changing Buffer (May 17, 2013).
 
 class Buffer:
 
-1) Add private pointers to contain more complete description of buffer.
+1) Change block prefix. Currently contains:
 
-   change private members:
+   - sendSize_
+   - sendType_
+   - sendGroupSize_ (often unused)
+   - isComplete_
 
-       void* sendBuffer_ to sendBufferBegin_
-       void* recvBuffer_ to sendBufferBegin_
+   Make it instead:
 
-   add private members:
+   - sendSize_    = number of items.
+   - sendBytes_   = length of data block in bytes (including prefix block)
+   - sendType_    = integer value (distinct for GROUP2, GROUP3, GROUP4)
+   - isComplete_  = used by distributor and collector
 
-       void* sendBufferEnd_
-       void* recvBufferEnd_
+2) Add endRecvBlock() method to check that recvPtr_ = blockRecvPtr + recvBytes
 
-2) Change pack() template so as to check for the end of the buffer.
+3) Add enumeration values INT, DOUBLE, VECTOR, GROUP2, GROUP3, GROUP4
 
-3) Change send() and sendRecv() so as to calculate buffer size from 
-   sendPtr_.
+4) Remove groupSize argument from some functions.
 
-4) Add private pointers that refer to the current block, if any.
+5) Add int groupId(int N) to calculate enum for Group<N>
 
-       void* sendBlockBegin_
-       void* recvBlockBegin_
+6) Remove atomCapacity and group Capacity - these quantities
+   can be calculated outside the class.
 
-5) Change names of type enumeration and type variables
+7) Allocate explicitly in terms of bytes.
 
-       Rename: AtomTypeName  -> BlockTypeName
-       Rename: atomSendType_ -> blockSendType_
-       Rename: atomRecvType_ -> blockRecvType_
-
-6) Rename initSendBuffer(AtomTypeName) -> beginSendBlock(BlockTypeName)
-
-   Change function calls in Distributor, Exchanger, and Collector.
-
-7) Add method endSendBlock(). This should:
-
-      set blockSendSize_ and blockSendType_ values in buffer.
-      set sendBlockBegin_ = 0
-      set BlockTypeName = NONE
-
-      Remove these operations from send()
-      Add function calls in Distributor, before send calls.
-
-      Remove these operations from sendRecv()
-      Add function calls in Exchanger, before sendRecv() calls.

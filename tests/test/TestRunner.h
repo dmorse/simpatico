@@ -24,8 +24,12 @@
 * the tests for a sequence of other TestRunner objects, each of 
 * which can be a UnitTestRunner or another CompositeTestRunner.
 *
-* The pure virtual run() method of a TestRunner must run all of the 
-* associated test methods.
+* The pure virtual run() method of a TestRunner must run all of 
+* the associated test methods, and records the number nSuccess() 
+* of tests that succeed and the number nFailure() that fail. A 
+* test fails if it throws a TestException. Must test methods use
+* the TEST_ASSERT(expr) macro to throw a TestException if the
+* logical expression expr is false.
 */
 class TestRunner
 {
@@ -134,8 +138,8 @@ public:
    { 
       if (!hasParent() && isIoProcessor()) {
          std::cout << std::endl;
-         std::cout << nSuccess_ << "  succesful tests" << std::endl;
-         std::cout << nFailure_ << "  failed tests"    << std::endl;
+         std::cout << nSuccess_ << "  successful tests  " << std::endl;
+         std::cout << nFailure_ << "  failed tests  "    << std::endl;
          std::cout << std::endl;
       }
    }

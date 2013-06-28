@@ -123,21 +123,9 @@ public:
       TEST_ASSERT(cellList.gridDimension(0) == 1);
       TEST_ASSERT(cellList.gridDimension(1) == 2);
       TEST_ASSERT(cellList.gridDimension(2) == 3);
-      if (UTIL_ORTHOGONAL) {
-         TEST_ASSERT(eq(cellList.invCellWidths_[0], (1.0/2.0)));
-         TEST_ASSERT(eq(cellList.invCellWidths_[1], (2.0/3.0)));
-         TEST_ASSERT(eq(cellList.invCellWidths_[2], (3.0/4.0)));
-      } else {
-         // std::cout << std::endl;
-         // std::cout << "UTIL_ORTHOGONAL is note defined" << std::endl;
-         TEST_ASSERT(eq(cellList.invCellWidths_[0], 1.0));
-         TEST_ASSERT(eq(cellList.invCellWidths_[1], 2.0));
-         TEST_ASSERT(eq(cellList.invCellWidths_[2], 3.0));
-      }
-
-      //printf("\n");
-      //printf("CellList.numCells: %i %i %i \n", 
-      //cellList.gridDimension(0),cellList.gridDimension(1),cellList.gridDimension(2));
+      TEST_ASSERT(eq(cellList.invCellWidths_[0], 1.0));
+      TEST_ASSERT(eq(cellList.invCellWidths_[1], 2.0));
+      TEST_ASSERT(eq(cellList.invCellWidths_[2], 3.0));
 
    }
 
@@ -270,7 +258,6 @@ public:
                              Vector(1.0, 1.6, 1.0), 
                              Vector(0.5, 1.8, 1.2) 
                           };
-      int atomId[N_PART] = {0, 1};
       int cellId[N_PART];
       int i,k;
       int j=0; // Index of atom to be removed
@@ -318,7 +305,6 @@ public:
       // Put back atom j, with modified position and label
       r[j] = Vector(0.9, 2.4, 1.1);
       atoms[j].position() = r[j];
-      atomId[j] = j;
       i = cellList.cellIndexFromPosition(atoms[j].position());
       TEST_ASSERT(i == cellId[j]);  // Check that its the same cell
       cellList.addAtom(atoms[j]);

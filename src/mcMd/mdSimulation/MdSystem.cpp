@@ -645,6 +645,8 @@ namespace McMd
    {
       setZeroForces();
       #ifndef INTER_NOPAIR
+      // This method builds pair list if needed, and shifts atoms if
+      // it builds the pair list.
       pairPotential().addForces();
       #endif
       if (hasBondPotential()) {

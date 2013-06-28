@@ -23,6 +23,8 @@ namespace Util
    *
    * An SpeciesEnsemble has a type, which can be closed or grand. 
    * If the ensemble type is grand, it stores a chemical potential. 
+   *
+   * \ingroup Ensemble_Module
    */
    class SpeciesEnsemble : public ParamComposite
    {
@@ -38,6 +40,11 @@ namespace Util
       * Constructor.
       */
       SpeciesEnsemble(Type type = UNKNOWN);
+
+      /**
+      * Destructor.
+      */
+      ~SpeciesEnsemble();
 
       /**
       * Set the chemical potential mu.

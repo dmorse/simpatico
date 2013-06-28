@@ -18,6 +18,7 @@
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
+#include <test/CommandLine.h>
 
 using namespace Util;
 using namespace DdMd;
@@ -28,15 +29,13 @@ private:
 
     Simulation simulation_;
 
+   void displaceAtoms(AtomStorage& atomStorage, const Boundary& boundary, 
+                      Random& random, double range);
+
 public:
 
    virtual void setUp()
-   {
-      simulation_.fileMaster().setRootPrefix(filePrefix());
-   }
-
-   void displaceAtoms(AtomStorage& atomStorage, const Boundary& boundary, 
-                      Random& random, double range);
+   {  simulation_.fileMaster().setRootPrefix(filePrefix()); }
 
    void testReadParam();
 
@@ -55,20 +54,15 @@ public:
 };
 
 
-inline void SimulationTest::displaceAtoms(AtomStorage& atomStorage, 
-                                          const Boundary& boundary, 
-                                          Random& random, double range)
+inline void 
+SimulationTest::displaceAtoms(AtomStorage& atomStorage, 
+                              const Boundary& boundary, 
+                              Random& random, double range)
 {
    Vector ranges;
    double min, max;
-   if (UTIL_ORTHOGONAL) {
-      for (int i = 0; i < Dimension; ++i) {
-         ranges[i] = range;
-      }
-   } else {
-      for (int i = 0; i < Dimension; ++i) {
-         ranges[i] = range/boundary.length(i);
-      }
+   for (int i = 0; i < Dimension; ++i) {
+      ranges[i] = range/boundary.length(i);
    }
    AtomIterator atomIter;
    for(int i = 0; i < Dimension; ++i) {
@@ -128,7 +122,6 @@ inline void SimulationTest::testReadConfig()
       TEST_ASSERT( domain.isInDomain( atomIter->position() ) );
    }
    TEST_ASSERT(j == atomStorage.nAtom());
-
 }
 
 inline void SimulationTest::testExchangeAtoms()
@@ -292,10 +285,7 @@ inline void SimulationTest::testUpdate()
    for ( ; ghostIter.notEnd(); ++ghostIter) {
       TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
    }
-
-   if (!UTIL_ORTHOGONAL) {
-       atomStorage.transformGenToCart(boundary);
-   }
+   atomStorage.transformGenToCart(boundary);
 
    displaceAtoms(atomStorage, boundary, random, 0.1);
    simulation_.exchanger().update();
@@ -319,9 +309,7 @@ inline void SimulationTest::testCalculateForces()
 
    // Compute forces.
    simulation_.pairPotential().buildCellList();
-   if (!UTIL_ORTHOGONAL) {
-      atomStorage.transformGenToCart(simulation_.boundary());
-   }
+   atomStorage.transformGenToCart(simulation_.boundary());
    simulation_.pairPotential().buildPairList();
    simulation_.computeForces();
 
@@ -352,6 +340,10 @@ inline void SimulationTest::testCalculateForces()
 inline void SimulationTest::testIntegrate1()
 {
    printMethod(TEST_FUNC); 
+
+   CommandLine opts;
+   opts.append("-e");
+   simulation_.setOptions(opts.argc(), opts.argv());
 
    openFile("in/param2"); 
    simulation_.readParam(file()); 

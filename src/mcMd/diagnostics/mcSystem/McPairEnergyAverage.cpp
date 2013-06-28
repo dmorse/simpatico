@@ -102,7 +102,7 @@ namespace McMd
 
       Atom  *iAtomPtr, *jAtomPtr;
       int    nNeighbor, nInCell;
-      int    ic, nc, i, j, iId, jId, iType, jType;
+      int    ic, nc, i, j;
       double energy;
       double rsq;
 
@@ -118,14 +118,10 @@ namespace McMd
          // Loop over primary atoms in this cell
          for (i = 0; i < nInCell; ++i) {
             iAtomPtr = neighbors_[i];
-            iId      = iAtomPtr->id();
-            iType    = iAtomPtr->typeId();
           
             // Loop over secondary atoms in this and neighboring cells
             for (j = 0; j < nNeighbor; ++j) {
                jAtomPtr = neighbors_[j];
-               jId      = jAtomPtr->id();
-               jType    = jAtomPtr->typeId();
      
                if (selector_.match(*iAtomPtr, *jAtomPtr)) {
 

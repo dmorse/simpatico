@@ -1,9 +1,6 @@
 #ifndef MCMD_MD_SIMULATION_TEST_H
 #define MCMD_MD_SIMULATION_TEST_H
 
-#include <test/UnitTestRunner.h>
-#include <test/UnitTest.h>
-
 #include <mcMd/mdSimulation/MdSimulation.h>
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
@@ -12,6 +9,9 @@
 #include <mcMd/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+
+#include <test/UnitTestRunner.h>
+#include <test/UnitTest.h>
 
 using namespace Util;
 using namespace McMd;
@@ -39,7 +39,6 @@ public:
    void testAddBondForces();
    void testCalculateForces();
    void testStep();
-   //void testIntegrator();
    void testSimulate();
    void testWriteRestart();
    void testReadRestart();
@@ -58,10 +57,14 @@ void MdSimulationTest::testReadParam()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
+
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
+   Util::ParamComponent::setEcho(true);
    simulation_.readParam(paramFile);
+   Util::ParamComponent::setEcho(false);
    simulation_.readCommands();
+   std::cout << std::endl;
 
    try {
       simulation_.isValid();
@@ -81,15 +84,18 @@ void MdSimulationTest::testSetZeroVelocities()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
+   // Read the parameter file
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
+   paramFile.close();
    simulation_.readCommands();
-
    std::cout << std::endl;
-   double energy;
 
-   simulation_.simulate(100);
+   double energy;
+   energy = system_.kineticEnergy();
+   std::cout << "kinetic energy = " << energy << std::endl;
+
    system_.setZeroVelocities();
    energy = system_.kineticEnergy();
    std::cout << "kinetic energy = " << energy << std::endl;
@@ -103,12 +109,18 @@ void MdSimulationTest::testSetBoltzmannVelocities()
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
+   paramFile.close();
    simulation_.readCommands();
-
    std::cout << std::endl;
-   //double temperature = 1.0;
-   //system_.setBoltzmannVelocities(temperature);
-   double energy = system_.kineticEnergy();
+
+   double energy;
+   energy = system_.kineticEnergy();
+   std::cout << "kinetic energy = " << energy << std::endl;
+
+   double temperature = 1.0;
+   system_.setBoltzmannVelocities(temperature);
+
+   energy = system_.kineticEnergy();
    std::cout << "kinetic energy = " << energy << std::endl;
 }
 
@@ -120,13 +132,14 @@ void MdSimulationTest::testBuildPairList()
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
+   paramFile.close();
    simulation_.readCommands();
-
    std::cout << std::endl;
 
-   //double temperature = 1.0;
-   //system_.setBoltzmannVelocities(temperature);
-   simulation_.simulate(10000);
+   system_.pairPotential().buildPairList();
+
+   //bool isContinuation = false;
+   //simulation_.simulate(2, isContinuation);
 
    try {
       simulation_.isValid();
@@ -146,17 +159,13 @@ void MdSimulationTest::testPairEnergy()
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
+   paramFile.close();
    simulation_.readCommands();
-
    std::cout << std::endl;
 
-   //double temperature = 1.0;
-   //system_.setBoltzmannVelocities(temperature);
-   simulation_.simulate(1000);
-
-   double energy;
-   energy = system_.pairPotential().energy();
-   std::cout << energy << std::endl;
+   system_.pairPotential().buildPairList();
+   double energy = system_.pairPotential().energy();
+   std::cout << "Pair energy: " << energy << std::endl;
 }
 
 void MdSimulationTest::testAddPairForces()
@@ -167,13 +176,12 @@ void MdSimulationTest::testAddPairForces()
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
+   paramFile.close();
    simulation_.readCommands();
-
    std::cout << std::endl;
 
-   //double temperature = 1.0;
-   //system_.setBoltzmannVelocities(temperature);
-   simulation_.simulate(1000);
+   system_.pairPotential().buildPairList();
+   system_.setZeroForces();
    system_.pairPotential().addForces();
   
 }
@@ -186,17 +194,12 @@ void MdSimulationTest::testBondEnergy()
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
+   paramFile.close();
    simulation_.readCommands();
-
    std::cout << std::endl;
 
-   //double temperature = 1.0;
-   //system_.setBoltzmannVelocities(temperature);
-   simulation_.simulate(1000);
-
-   system_.pairPotential().buildPairList();
    double energy = system_.bondPotential().energy();
-   std::cout << energy << std::endl;
+   std::cout << "Bond energy = " << energy << std::endl;
 }
 
 void MdSimulationTest::testAddBondForces()
@@ -207,15 +210,15 @@ void MdSimulationTest::testAddBondForces()
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
+   paramFile.close();
    simulation_.readCommands();
-
    std::cout << std::endl;
 
    //double temperature = 1.0;
    //system_.setBoltzmannVelocities(temperature);
-   simulation_.simulate(1000);
+   //simulation_.simulate(1000);
 
-   system_.pairPotential().buildPairList();
+   system_.setZeroForces();
    system_.bondPotential().addForces();
 }
 
@@ -227,12 +230,10 @@ void MdSimulationTest::testCalculateForces()
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
+   paramFile.close();
    simulation_.readCommands();
-
    std::cout << std::endl;
 
-   //double temperature = 1.0;
-   //simulation_.simulate(1000);
    system_.pairPotential().buildPairList();
    system_.calculateForces();
 }
@@ -245,16 +246,15 @@ void MdSimulationTest::testStep()
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
+   paramFile.close();
    simulation_.readCommands();
 
    std::cout << std::endl;
 
    double kinetic, potential;
-   //double temperature = 1.0;
-   simulation_.simulate(100);
-
    system_.pairPotential().buildPairList();
    system_.calculateForces();
+   system_.mdIntegrator().setup();
    for (int i=0; i < 10; ++i) {
 
       kinetic   = system_.kineticEnergy(); 
@@ -279,18 +279,17 @@ void MdSimulationTest::testSimulate()
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
+   paramFile.close();
    simulation_.readCommands();
-
    std::cout << std::endl;
 
-   std::string baseFileName("simulate.0");
-   simulation_.writeRestart(baseFileName);
+   //std::string baseFileName("simulate.0");
+   //simulation_.save(baseFileName);
 
-   simulation_.simulate(20);
+   simulation_.simulate(2000);
 
-   baseFileName = "simulate.20";
-   simulation_.writeRestart(baseFileName);
-
+   //baseFileName = "simulate.20";
+   //simulation_.save(baseFileName);
 }
 
 void MdSimulationTest::testWriteRestart()
@@ -301,17 +300,17 @@ void MdSimulationTest::testWriteRestart()
    std::ifstream paramFile;
    openInputFile("in/MdSimulation", paramFile); 
    simulation_.readParam(paramFile);
+   paramFile.close();
    simulation_.readCommands();
-
    std::cout << std::endl;
 
    std::string baseFileName("begin");
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
    simulation_.simulate(100000);
 
    baseFileName = "middle";
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
    std::ofstream configFile("middle.cfg");
    simulation_.system().writeConfig(configFile);
@@ -332,10 +331,10 @@ void MdSimulationTest::testReadRestart()
    std::cout << std::endl;
 
    std::string baseFileName("middle");
-   simulation_.readRestart(baseFileName);
+   simulation_.load(baseFileName);
 
    baseFileName = "middle2";
-   simulation_.writeRestart(baseFileName);
+   simulation_.save(baseFileName);
 
    std::ofstream configFile("middle2.cfg");
    simulation_.system().writeConfig(configFile);
@@ -349,38 +348,6 @@ void MdSimulationTest::testReadRestart()
    configFile.close();
 }
 
-#if 0
-void MdSimulationTest::testIntegrator()
-{
-   printMethod(TEST_FUNC);
-   std::cout << std::endl;
-
-   double kinetic, potential;
-   double temperature = 1.0;
-   simulation_.simulate(100);
-
-   system_.pairPotential().buildPairList();
-   system_.calculateForces();
-   system_.setBoltzmannVelocities(temperature);
-   NVEIntegrator integrator(system_);
-
-   for (int i=0; i < 10; ++i) {
-
-      kinetic   = system_.kineticEnergy(); 
-      potential = system_.potentialEnergy(); 
-      std::cout << kinetic << "  " << potential 
-                << "  " << kinetic + potential << std::endl;
-
-      integrator.step();
-   }
-
-   kinetic   = system_.kineticEnergy(); 
-   potential = system_.potentialEnergy(); 
-   std::cout << kinetic << "  " << potential << "  " 
-             << kinetic + potential << std::endl;
-}
-#endif
-
 TEST_BEGIN(MdSimulationTest)
 TEST_ADD(MdSimulationTest, testReadParam)
 TEST_ADD(MdSimulationTest, testSetZeroVelocities)
@@ -392,7 +359,6 @@ TEST_ADD(MdSimulationTest, testBondEnergy)
 TEST_ADD(MdSimulationTest, testAddBondForces)
 TEST_ADD(MdSimulationTest, testCalculateForces)
 TEST_ADD(MdSimulationTest, testStep)
-   //TEST_ADD(MdSimulationTest, testIntegrator);
 TEST_ADD(MdSimulationTest, testSimulate)
 TEST_ADD(MdSimulationTest, testWriteRestart)
 TEST_ADD(MdSimulationTest, testReadRestart)

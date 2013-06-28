@@ -59,7 +59,6 @@ namespace DdMd
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
-
   
       /**
       * Call setup method of each Diagnostic.
@@ -72,7 +71,14 @@ namespace DdMd
       void clear();
  
       /**
-      * Call sample method of each Diagnostic.
+      * Call sample method of each Diagnostic, if scheduled.
+      *
+      * Calls sample methods of each diagnostic only if:
+      * - Diagnostic::baseInterval is positive
+      * - iStep is a multiple of Diagnostic::baseInterval
+      * - iStep is a multiple of the diagnostic interval
+      *
+      * \param iStep time step counter
       */
       void sample(long iStep);
  

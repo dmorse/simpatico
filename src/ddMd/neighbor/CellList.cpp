@@ -53,7 +53,7 @@ namespace DdMd
 
       // Allocate array of Cell objects
       setGridDimensions(lower, upper, cutoffs);
-      cells_.allocate(grid_.size());
+      cells_.resize(grid_.size());
 
       for (int i = 0; i < grid_.size(); ++i) {
          cells_[i].setOffsetArray(offsets_);
@@ -119,10 +119,11 @@ namespace DdMd
 
       // Calculate required grid dimensions
       setGridDimensions(lower, upper, cutoffs);
+      cells_.resize(grid_.size());
 
-      if (grid_.size() > cells_.capacity()) {
-         UTIL_THROW("Insufficient memory was allocated for this grid");
-      }
+      //if (grid_.size() > cells_.capacity()) {
+      //   UTIL_THROW("Insufficient memory was allocated for this grid");
+      //}
 
       // Mark all cells to as ghost cells by default.
       int ic;

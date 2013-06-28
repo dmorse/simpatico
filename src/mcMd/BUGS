@@ -15,8 +15,3 @@ Begin reading restart, base file name restart
    Message : Cannot allocate ArrayStack with capacity <= 0
 
 -------------------------------------------------------------------------------------
-After restarting mcSim: 
-
-   HybridMd moves are not accepted after restart.
-
--------------------------------------------------------------------------------------

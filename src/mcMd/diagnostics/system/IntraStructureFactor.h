@@ -100,6 +100,11 @@ namespace McMd
       */
       IntraStructureFactor(System &system);
 
+      /**	
+      * Destructor.
+      */
+      ~IntraStructureFactor();
+
       /**
       * Read parameters from file.
       *

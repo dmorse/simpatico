@@ -19,7 +19,12 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Save / load configuration to archives.
+   * Save / load configuration from / to an archive.
+   *
+   * The virtual functions readConfig and writeConfig, which take file 
+   * objects parameters, read from or write to files that stores archives 
+   * of type Serializable::IArchive or Serializable::OArchive. The 
+   * loadConfig and saveConfig methods take archive object arguments.
    *
    * \ingroup DdMd_ConfigIo_Module
    */
@@ -43,10 +48,13 @@ namespace DdMd
       /**
       * Read configuration file.
       *
-      * This routine opens and reads a file on the master, and distributes
-      * atom data among the processors.
+      * Call on all processors, but reads from file only on master.
       *
-      * \param file input file stream
+      * This function opens and reads a file on the master, and distributes
+      * atom data among the processors. This calls loadConfig() internally,
+      * and thus has all the preconditions of loadConfig().
+      *
+      * \param file input file stream (must be open on master)
       * \param maskPolicy MaskPolicy to be used in setting atom masks
       */
       virtual void readConfig(std::ifstream& file, MaskPolicy maskPolicy);
@@ -54,15 +62,25 @@ namespace DdMd
       /**
       * Write configuration file.
       *
-      * This routine opens and writes a file on the master,
-      * collecting atom data from all processors.
+      * Call on all processors, but file must be open only on master.
       *
-      * \param file output file stream
+      * This function opens and writes a file on the master, collecting
+      * atom data from all processors. It calls saveConfig() internally.
+      *
+      * \param file output file stream (must be open on master)
       */
       virtual void writeConfig(std::ofstream& file);
    
       /**
-      * Load configuration.
+      * Load configuration from an archive.
+      *
+      * Call on all processors, but save from archive only on master.
+      *
+      * \pre  There are no atoms, ghosts, or groups.
+      * \pre  AtomStorage is set for scaled / generalized coordinates
+      *
+      * \post atomic coordinates are scaled / generalized
+      * \post there are no ghosts
       *
       * \param ar input archive
       * \param maskPolicy MaskPolicy to be used in setting atom masks
@@ -71,6 +89,20 @@ namespace DdMd
 
       /**
       * Save configuration.
+      *
+      * Call on all processors, but uses archive only on master.
+      *
+      * This function allows the AtomStorage to be set for either
+      * generalized or Cartesian coordinates, but always saves Cartesian 
+      * atom coordinates to the archive. In either case, it does not 
+      * modify any Atom position values, or change the coordinates 
+      * system setting of the AtomStorage.
+      *
+      * Usage: Atomic coordinates are Cartesian on input and output 
+      * when this function is used by an Integrator to write a restart 
+      * file, but are scaled / generalized on input and ouput when it 
+      * is called by writeConfig() to implement the WRITE_CONFIG command 
+      * within the Simulation::readCommand() function. 
       *
       * \param ar output archive
       */

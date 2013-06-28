@@ -22,10 +22,9 @@
 #include <ddMd/storage/DihedralStorage.h>               
 #endif
 
+#include <ddMd/communicate/Buffer.h> 
 #include <ddMd/communicate/GroupCollector.tpp> 
 #include <ddMd/communicate/GroupDistributor.tpp> 
-
-#include <ddMd/communicate/Buffer.h> 
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Bond.h>
 #include <ddMd/chemistry/MaskPolicy.h>

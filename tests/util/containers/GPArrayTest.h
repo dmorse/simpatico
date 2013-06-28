@@ -1,16 +1,16 @@
-#ifndef AP_ARRAY_TEST_H
-#define AP_ARRAY_TEST_H
+#ifndef GP_ARRAY_TEST_H
+#define GP_ARRAY_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 
 #include <util/containers/DArray.h>
-#include <util/containers/APArray.h>
+#include <util/containers/GPArray.h>
 #include <util/containers/PArrayIterator.h>
 
 using namespace Util;
 
-class APArrayTest : public UnitTest 
+class GPArrayTest : public UnitTest 
 {
 
 private:
@@ -20,7 +20,7 @@ private:
    typedef int Data;
 
    DArray<Data> array; 
-   APArray<Data> parray;
+   GPArray<Data> parray;
    PArrayIterator<Data> iterator;
    
 public:
@@ -35,7 +35,7 @@ public:
 
 };
 
-void APArrayTest::setUp()
+void GPArrayTest::setUp()
 {
    array.allocate(capacity);
    for (int i=0; i < capacity; i++) {
@@ -43,10 +43,10 @@ void APArrayTest::setUp()
    }
 }
 
-void APArrayTest::tearDown()
+void GPArrayTest::tearDown()
 {}
   
-void APArrayTest::testAppend()
+void GPArrayTest::testAppend()
 {
    printMethod(TEST_FUNC);
 
@@ -76,7 +76,7 @@ void APArrayTest::testAppend()
 
 } 
 
-void APArrayTest::testAppendEmpty()
+void GPArrayTest::testAppendEmpty()
 {
    printMethod(TEST_FUNC);
 
@@ -103,7 +103,7 @@ void APArrayTest::testAppendEmpty()
 
 } 
 
-void APArrayTest::testModify()
+void GPArrayTest::testModify()
 {
    printMethod(TEST_FUNC);
 
@@ -132,7 +132,7 @@ void APArrayTest::testModify()
 
 } 
 
-void APArrayTest::testIterator()
+void GPArrayTest::testIterator()
 {
    printMethod(TEST_FUNC);
 
@@ -178,11 +178,11 @@ void APArrayTest::testIterator()
 
 }
 
-TEST_BEGIN(APArrayTest)
-TEST_ADD(APArrayTest, testAppend)
-TEST_ADD(APArrayTest, testAppendEmpty)
-TEST_ADD(APArrayTest, testModify)
-TEST_ADD(APArrayTest, testIterator)
-TEST_END(APArrayTest)
+TEST_BEGIN(GPArrayTest)
+TEST_ADD(GPArrayTest, testAppend)
+TEST_ADD(GPArrayTest, testAppendEmpty)
+TEST_ADD(GPArrayTest, testModify)
+TEST_ADD(GPArrayTest, testIterator)
+TEST_END(GPArrayTest)
 
 #endif

@@ -9,6 +9,7 @@
 #include "ExchangerForceTest.h"
 #include "AtomCollectorTest.h"
 #include "BondCollectorTest.h"
+#include "PlanTest.h"
 
 #include <test/CompositeTestRunner.h>
 
@@ -22,6 +23,7 @@ TEST_COMPOSITE_ADD_UNIT(ExchangerTest)
 TEST_COMPOSITE_ADD_UNIT(ExchangerForceTest)
 TEST_COMPOSITE_ADD_UNIT(AtomCollectorTest)
 TEST_COMPOSITE_ADD_UNIT(BondCollectorTest)
+TEST_COMPOSITE_ADD_UNIT(PlanTest)
 TEST_COMPOSITE_END
 
 #endif

@@ -14,7 +14,11 @@ namespace DdMd
 {
 
    /**
-   * Container for dihedral objects.
+   * Container for Group<4> (dihedral) objects.
+   *
+   * Only differences from GroupStorage<4> is the className,
+   * which is set in the constructor and effects the param 
+   * file format.
    *
    * \ingroup DdMd_Storage_Module
    */

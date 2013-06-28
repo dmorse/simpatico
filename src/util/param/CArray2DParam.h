@@ -17,8 +17,6 @@
 
 #include <iomanip> 
 
-class ParamTest;
-
 namespace Util
 {
 
@@ -36,18 +34,19 @@ namespace Util
       /** 
       * Constructor.
       *
-      * Example: 
+      * Example: A 2 X 2 matrix stored in an oversized 3 x 3 C array.
       * \code
-      *    double                matrix[3][2];
-      *    CArray2DParam<double> param("matrix", matrix[0], 3, 2);
+      *    double                matrix[3][3];
+      *    CArray2DParam<double> param("matrix", matrix[0], 2, 2, 3);
       * \endcode
       *
       * \param label  parameter label (usually a literal C-string)
       * \param value  pointer to first element of associated 1D array
-      * \param m      number of rows
-      * \param n      number of columns
+      * \param m      logical number of rows
+      * \param n      logical number of columns
+      * \param np     physical number of columns (elements per row).
       */
-      CArray2DParam(const char *label, Type* value, int m, int n);
+      CArray2DParam(const char *label, Type* value, int m, int n, int np);
   
       /** 
       * Read 2D array from file.
@@ -78,11 +77,15 @@ namespace Util
       /// Pointer to first element in associated 1D C array
       Type* value_;
    
-      /// Number of rows in array[m][n]
+      /// Number of rows in array[][np]
       int m_; 
 
-      /// Number of columns in array[m][n]
+      /// Logical number of columns in array[][np]
       int n_; 
+
+      /// Physical number of columns in array[][np]
+      int np_; 
+   
    
    };
 
@@ -91,11 +94,12 @@ namespace Util
    * CArray2D constructor.
    */
    template <class Type>
-   CArray2DParam<Type>::CArray2DParam(const char* label, Type* value, int m, int n)
+   CArray2DParam<Type>::CArray2DParam(const char* label, Type* value, int m, int n, int np)
     : Parameter(label),
       value_(value),
       m_(m),
-      n_(n)
+      n_(n),
+      np_(n)
    {}
 
    /*
@@ -109,7 +113,7 @@ namespace Util
          in >> label_;
          for (i = 0; i < m_; ++i) {
             for (j = 0; j < n_; ++j) {
-               in >> value_[i*n_ + j];
+               in >> value_[i*np_ + j];
             }
          }
          if (ParamComponent::echo()) {
@@ -118,7 +122,7 @@ namespace Util
       }
       #ifdef UTIL_MPI
       if (hasIoCommunicator()) {
-         bcast<Type>(ioCommunicator(), value_, m_*n_, 0); 
+         bcast<Type>(ioCommunicator(), value_, m_*np_, 0); 
       }
       #endif
    }
@@ -142,7 +146,7 @@ namespace Util
             out << std::right << std::scientific 
                 << std::setprecision(Parameter::Precision) 
                 << std::setw(Parameter::Width)
-                << value_[i*n_ + j];
+                << value_[i*np_ + j];
          }
          out << std::endl;
       }
@@ -155,10 +159,10 @@ namespace Util
    void CArray2DParam<Type>::load(Serializable::IArchive& ar)
    {
       if (isIoProcessor()) {
-         int i, j; 
+         int i, j;
          for (i = 0; i < m_; ++i) {
             for (j = 0; j < n_; ++j) {
-               ar >> value_[i*n_ + j];
+               ar >> value_[i*np_ + j];
             }
          }
          if (ParamComponent::echo()) {
@@ -167,7 +171,8 @@ namespace Util
       }
       #ifdef UTIL_MPI
       if (hasIoCommunicator()) {
-         bcast<Type>(ioCommunicator(), value_, n_*m_, 0); 
+         // Broadcast block containing m_ rows, each of np_ elements 
+         bcast<Type>(ioCommunicator(), value_, m_*np_, 0); 
       }
       #endif
    }
@@ -181,7 +186,7 @@ namespace Util
       int i, j;
       for (i = 0; i < m_; ++i) {
          for (j = 0; j < n_; ++j) {
-            ar << value_[i*n_ + j];
+            ar << value_[i*np_ + j];
          }
       }
    }

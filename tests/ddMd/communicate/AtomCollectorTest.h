@@ -100,9 +100,7 @@ public:
             ptr->setTypeId(0);
 
             // Read a position from file.
-            if (UTIL_ORTHOGONAL) {
-               atomposfile >> ptr->position();
-            } else {
+            { 
                Vector r;
                atomposfile >> r;
                boundary.transformCartToGen(r, ptr->position());

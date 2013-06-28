@@ -72,6 +72,11 @@ namespace McMd
       */
       IntraStructureFactorGrid(System &system);
 
+      /**	
+      * Destructor.
+      */
+      ~IntraStructureFactorGrid();
+
       /**
       * Read parameters from file.
       *

@@ -14,8 +14,6 @@
 
 #include <iomanip> 
 
-class ParamTest;
-
 namespace Util
 {
 
@@ -183,7 +181,6 @@ namespace Util
       if (arrayPtr_->capacity() < n_) {
          UTIL_THROW("Error: DArray capacity < n");
       }
-
       ar << *arrayPtr_;
    }
 

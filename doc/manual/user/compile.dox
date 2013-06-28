@@ -19,7 +19,7 @@ To clone the git repository, after installing a git client on your home machine,
 \endcode
 This should create a copy of the repository in a new subdirectory of the working directory, which will be named simpatico.
 
-To extract the code from a tar file that you have downloaded from the home page, move the tar file to the directory that should contain the simpatico root directory, and then enter "tar -xvf filename" from this directory, where "filename" denotes the name of the gzipped tar file. This will create a subdirectory named dmorse-simpatico-ID/, where "ID" represents a hexadecimal identifier for the most recent commit in the git repository. We recommend that you immediately rename this directory "simpatico/", which is the name of the corresponding directory in the repository. 
+To extract the code from a tar file that was downloaded from the home page, move the tar file to the directory that should contain the simpatico root directory, and then enter "tar -xvf filename" from this directory, where "filename" denotes the name of the gzipped tar file. This will create a subdirectory named dmorse-simpatico-ID/, where "ID" represents a hexadecimal identifier for the most recent commit in the git repository. We recommend that you immediately rename this directory "simpatico/", which is the name of the corresponding directory in the repository. 
 
 Throughout this documentation, we assume that the root project directory is named simpatico/.  References to paths that do not start explicitly with "simpatico/" should be understood to be relative paths, relative to this root directory. The directory structure is explained \ref source_directory_page "here".
 
@@ -27,7 +27,8 @@ Throughout this documentation, we assume that the root project directory is name
 
 Here is a brief summary of instructions for compiling all of the simpatico programs:
 
-   - Add simpatico/bin to the PATH and add simpatico/tools/python to the PYTHONPATH
+   - Add simpatico/bin to the users PATH, and 
+     add simpatico/tools/python to PYTHONPATH
 
    - cd simpatico/ (i.e., to the simpatico root directory)
 
@@ -41,35 +42,36 @@ Here is a brief summary of instructions for compiling all of the simpatico progr
 
    - make mcMd-mpi 
 
-All of the "make" commands must be executed from the simpatico root directory.
-The "make mcMd" command will build the single-processor programs mcSim and mdSim,
-while "make ddMd" builds ddSim. Each of the above steps is discussed in more detail 
-below. 
+The setup script and all three "make" commands must be executed from the simpatico root directory.
+The command "make mcMd" builds the single-processor programs mcSim and mdSim, "make ddMd" builds ddSim, and "make mcMd-mpi" builds multi-processor versions of mcSim and mdSim. Each of the above steps is discussed in more detail below. 
 
 \section compile_environment_section Setting environment variables
 Before compiling any code, you should:
 
-  - Add the simpatico/bin directory to the PATH shell environment variable (the shell command search path).
+  - Add simpatico/bin to the PATH shell environment variable (the shell command search path)
 
-  - Add the simpatico/tools/python directory to the PYTHONPATH environment variable (the python module search path).
+  - Add simpatico/tools/python to the PYTHONPATH environment variable (the python module search path)
 
-To do this, add some variant of the following lines to your ~/.bash_profile file. 
+To do this, you must add some variant of the following lines to your the .profile or .bash_profile file in your home directory:
 \code
 SIMPATICO_DIR=${HOME}/simpatico
 export PATH=${PATH}:/${SIMPATICO_DIR}/bin
 export PYTHONPATH=${PYTHONPATH}:/${SIMPATICO_DIR}/tools/python
 \endcode
-The value of SIMPATICO_DIR should be the path to the simpatico root directory. Above, this is taken to be a subdirectory of the home directory merely as an example. After adding these lines to your ~./bash_profile, log out, log back in, and enter "echo $PATH" and "echo $PYTHONPATH" to make sure that the variables are set correctly. 
+The value of SIMPATICO_DIR should be set to the path to the simpatico root directory. As an example, this is taken here to be a subdirectory of the home directory. After adding an appropriate variant of these lines to .profile or .bash_profile, log out, log back in, and then enter "echo $PATH" and "echo $PYTHONPATH" to make sure that these variables have been set correctly. 
 
-The simpatico/bin directory is the default location of executable files. The simpatico/tools/python directory must be added to the
-PYTHONPATH to enable the system that generates information about dependencies among C++ files during compilation, which uses a python module from this directory. The automatic dependency generation system is enabled by default, but is not strictly necessary in order to compile the code, and can be disabled. It is really necessary only for developers. If you do not have a python interpreter, or run into trouble during compilation and suspect that a python script is causing trouble, you may disable dependency generation by entering
+Purpose: 
+
+The simpatico/bin directory is the default location of all executable files. It must be added to the users PATH to allow the operating system to find the executables.
+
+The simpatico/tools/python directory must be in the PYTHONPATH to allow the build system to generate information about dependencies among C++ files during compilation, which requires a python module from this directory. Automatic generation of dependency information is enabled by default, but can be disabled without preventing the code from compiling. It is really necessary only users who plan to modify or extend the source code. If you run into trouble during compilation and suspect that a python script is causing trouble, you can try disabling dependency generation by entering
 \code
 > ./configure -k0
 \endcode
-from the simpatico/ root directory. We recommend trying to compile with dependency generation enabled (the default), and disabling it only if necesary. Automatic dependency generation is discussed in more detail \ref compile_dependency_section "below".
+from the simpatico/ root directory. We recommend trying to compile with dependency generation enabled (the default), and to try disabling it only if you run into trouble. Automatic dependency generation is discussed in more detail \ref compile_dependency_section "below".
 
 \section compile_setup_section Setup script
-After obtaining the source code, but before attempting to compile any files, you must also run a bash script named "setup". This script is located in the root simpatico/ directory, and must be executed from within this directory. Thus, starting from the directory that contain the simpatico/ root directory, you would enter:
+After obtaining the source code, but before attempting to compile any files, you must run a bash script named "setup". This script is located in the root simpatico/ directory, and must be executed from within this directory. Thus, starting from the directory that contain the simpatico/ root directory, you would enter:
 \code
 > cd simpatico
 > ./setup
@@ -101,7 +103,7 @@ To remove all of the object files, libraries, and executable files created by "m
 from the root directory. 
 
 \section compile_configure_section Configure script
-The above instructions should compile the default version of the program, using a default set of features, with the default compiler (the gnu g++ compiler). The root directory contains a script named "configure" that can be used to change the choice of compiler and/or the choice of optional features. "Optional features" refers to features of the code that can be enabled or disabled at compile time by conditional compilation, controlled by C++ preprocessor macro variables that can be defined or undefined by the configure script. Unlike the setup script, the configure script can be run repeatedly in order to create different versions of each program in which different features are enabled. Like the setup script, the configure script must always be run from the root simpatico/ directory. The configure script works by editing makefile fragments that are created by the setup script. It is also possible (but less convenient) to edit these files manually.
+The above instructions should compile default versions of mcSim and mdSim, using the gnu g++ compiler as a default compiler. The root directory contains a bash script named "configure" that can be used to change the choice of compiler and/or the choice of optional features. "Optional features" are features of the code that can be enabled or disabled at compile time by conditional compilation, by using the build system to define or undefine C++ preprocessor macro variables. Unlike the setup script, the configure script can be run repeatedly to create different versions of each program, with different features enabled. Like the setup script, the configure script must be run from the root simpatico/ directory. The configure script works by editing makefile fragments that are created by the setup script. These makefile fragments can also be edited manually.
 
 As an introduction to the ./configure script, cd to the root directory, and enter
 \code
@@ -118,9 +120,9 @@ Invoking the configure script with the -q option prints a list of which features
 -k ON  - automatic dependency tracking
 COMPILER:=gcc
 \endcode
-Every line except the last shows whether an optional compile-time feature is currently enabled (ON) or disabled (OFF). The last line gives an identifier for the current compiler (gcc, by default). 
+Every line except the last shows whether an optional feature is currently enabled (ON) or disabled (OFF). The last line gives an identifier for the current compiler (gcc, by default).
 
-Each of the lines in this output that is associated with an optional feature begins with the command line option (a dash followed by a letter) that can be used to enable or disable that feature. For example, debugging is enanbled or disabled using the "-g" option. A feature is enabled by invoking configure using the associated option followed by a "1", or disabled by invoking the option followed by a "0". Thus, for example, to enable debugging (and thus run more exhaustive logic and data consistency checks during execution), you would enter
+Each line in this output that is associated with an optional feature begins with the command line option (a dash followed by a letter) that can be used to enable or disable that feature. For example, debugging is enanbled or disabled using the "-g" option of the configure script. A feature is enabled by invoking configure using the associated option followed by "1", or disabled by invoking the option followed by a "0". Thus, for example, to enable debugging (and thus run more exhaustive logic and data consistency checks during execution), you would enter
 \code 
 > ./configure -g1
 \endcode
@@ -128,57 +130,61 @@ To disable debugging, you would enter
 \code 
 > ./configure -g0
 \endcode
-All of the available user options are discussed in more detail \ref user_options_page "here". Be aware that, when an optional feature is enabled, the makefile system often adds a suffix to the name of the resulting executable or executables to indicate which features are enabled in that executable file. If a user thereby creates several different versions of a program, he or she must thus know the name of each of the resulting executable files. We thus recommend that you read the page \ref user_options_page before using the configure script to manually enable or disable any optional features that are controlled by conditional compilation.
+All available optional features are discussed in more detail \ref user_options_page "here". 
+
+Whenever a non-default feature is enabled, the simpatico build system adds a corresponding suffix to the name of all effected executables. For example, the executable file for a version of mcSim compiled with debugging enabled, but no other optional features, would be called mcSim_g, using a suffix "_g" to indicate that debugging is enabled. This allows user to manage several different versions of a program, with different features enabled, but requires the user to understand the association between file name suffixes and features. We thus recommend that you read the page \ref user_options_page before enabling optional features other than MPI (which is discussed explicitly below).
 
 \section compile_compiler_section Choosing a compiler or compiler options
-The default configuration created by the setup script uses gnu gcc compiler. It is also possible to choose a different compiler, and to change the options passed to the compiler.  
+By default, the build system uses the gnu compiler collection (gcc) g++ compiler. It is also possible to choose a different compiler, and to change the options passed to the compiler.  
 
-The file src/compiler.mk defines a string variable COMPILER, whose value is a label for one of several different compilers. By default, COMPILER=gcc, which selects the gnu compiler. The repository version of this file also contains settings appropriate for the intel compiler, which may be selected by setting COMPILER=intel.
+The file src/compiler.mk defines a string variable COMPILER. This variable holds a label for a compiler. The default value, COMPILER=gcc, selects the gnu compiler. The repository version of the file src/compiler.mk also contains settings for the intel compiler, which may be selected by setting COMPILER=intel.
 
-To choose a different compiler, one may reset the value of the COMPILER string either by directly editing the src/compiler.mk file , or by using the -c option of configure script. The -c option takes the desired value of the COMPILER string as an argument. To choose the intel C++ compiler, on could thus cd to the root directory and then enter:
+The -c option of the configure script may be used to reset the value of the COMPILER string. This option takes the desired value of the COMPILER string as an argument. To choose the intel compiler, rather than gcc, one would thus enter: 
 \code
 > ./configure -c intel
 \endcode
-Each allowed values of the COMPILER string selects a block in the compiler.mk file that contains appropriate compiler settings for use with a particular compiler. The user is free to modify any of these settings, as needed, or to add other blocks that can be selected with other values of the COMPILER variable. 
+from the root directory before compiling.
 
-The file src/compiler.mk file can be modified by the user as needed. The setup script creates an initial version of this file is created by copying a file named src/compiler.mk_r, which contains the default version that is stored in the repository. As a user, you may thus modify src/compiler.mk, but should generally not modify src/compiler.mk_r.
+The file src/compiler.mk file can be modified by the user as needed. The setup script creates an initial version of this file is created by copying a file named src/compiler.mk_r, which contains a default version that is stored in the git repository. As a user, you may thus modify src/compiler.mk as needed, but should avoid modifying src/compiler.mk_r.
+
+Users may also modify the options passed to particular compilers (e.g., gcc or intel) by modifying makefile macros such CXXFLAGS that are also defined in src/compiler.mk. Users may also modify src/compiler.mk to allow compilation with other compilers.  
 
 \section compile_mpi_section Enabling MPI 
-The ddSim program and the multi-processor versions of mcSim and mdSim all require an MPI library for parallelization. 
+The ddSim program and the multi-processor versions of mcSim and mdSim all require an MPI library for interprocessor communication. MPI is enabled only when the variable UTIL_MPI is defined and set equal 1. Before attemting to compile these multi-processor programs, users should inspect the makefile variables in the file src/compiler.mk that specify the options passed to the compiler. 
 
-For MPI to work correctly, you may need to edit the makefile variables in the file src/compiler.mk that specify the options passed to the compiler. The makefile variable MPI_LIB is an identifier that can be used to choose from among different sets of compiler settings that, for each choice of compiler, allow use with different MPI library implementations.
+The variable MPI_LIB in the src/compiler.mk is an identifier that can be used to choose from among different sets of compiler settings for each choice of compiler, to allow compilation with different MPI library implementations. The values of the variables COMPILER and MPI_LIB thus select a block of compiler options appropriate for a particular combination of compiler and MPI implementation. 
 
-The default value of MPI_LIB for use with either the gcc or intel compiler is MPI_LIB=mpicxx. This value selects settings designed for use with systems that use linux kernel modules. Kernel modules allow the choice of compiler and mpi library to be chosen by loading appropriate modules before attempting to compile. This system is used on the machines of the University of Minnesota Supercomputing Institute that were used for development. The kernel module system normally provides a wrapper script named "mpcixx" to invoke the compiler that was chosen by loading a module, and to link to the chosen MPI implementation. With either the gcc or intel compiler, setting MPI_LIB=mpicxx selects settings in which CXX=mpicxx, thus invoking the compiler via this script wrapper, and sets values of CXXFLAGS and LDFLAGS appropriate for the specified compiler.
+The default value of MPI_LIB for both the gcc and intel compiler is MPI_LIB=mpicxx. This value selects settings designed for use with systems that use linux kernel modules to manage a users environment, and in which the C++ compiler is invoked indirectly via a wrapper script named "mpicxx". The modules system allows a user to select a compiler and mpi library loading appropriate modules before compiling any code. The wrapper script "mpicxx" then invokes the selected combination of compiler and mpi library. This system is used on all of the machines of the University of Minnesota Supercomputing Institute that were used for development. 
 
-The compiler options obtained setting COMPILER=gcc and MPI_LIB=openmpi are those which we used to compile simpatico on a multi-core Mac laptop, after compiling the <a http::/www.open-mpi.org>openmpi</a> library from source. In this case, the required mpi header and library files were installed in subdirectories of /opt/local/include and /opt/local/bin, respectively. If you have an openmpi library installed, but the header and library files are installed in different locations, you may need to edit the CXXFLAGS and LDFLAGS variables to reflect the correct locations.
+Setting COMPILER=gcc and MPI_LIB=openmpi instead selects a set of compiler options that we used to compile simpatico on a multi-core Mac laptop, using a copy of the <a http://www.open-mpi.org>openmpi</a> library that was compiled from source. 
 
-If none of setting in the file compiler.mk are appropriate for your machine, you will need to add a new block of makefile definitions that is enabled by a choosing a new value for the MPI_LIB and/or COMPILER identifier. If you do not use a module system, this will require that you identify the locations of the header and library files for the MPI library on your machine. If this is necessary, and you have not compiled an MPI program on a particular machine, you may need to do a bit of searching to identify the appropriate paths and/or for ask for help from a local guru.
+If you do not use a module system, and the settings provided for gcc with openmpi do not work, you may have to edit the CXXFLAGS and/or LDFLAGS variables to reflect the locations of the header and library files for the MPI library on your machine. If you have not compiled an MPI program on a particular machine, you may need to do a bit of searching to identify the appropriate paths and/or ask for help from a local guru.
 
-For MPI to be enabled when a program is compiled, the makefile variable UTIL_MPI must be defined in the file src/compiler.mk. This is done automatically by the makefile targets in the simpatico/ root directory that compile the ddSim parallel program and the parallel versions of mcSim and mdSim (which are discussed below).
+During compilation, MPI is enabled only if the the makefile variable UTIL_MPI has been defined and set equal to 1 in the file src/compiler.mk. This variable is defined automatically by the ddMd and mcmd-mpi makefile targets that compile programs that require MPI, so users should not need to set it explicitly.
 
 \section compile_ddMd_section Compiling ddSim
-To compile the multi-processor ddMd program, one should check the compiler settings in the file src/compiler.mk (as discussed above) and then enter 
+To compile the ddSim parallel MD program, after checking the compiler settings for MPI (as discussed above), simply enter 
 \code
 > make ddMd
 \endcode
 from the simpatico root directory. 
   
-If successful, invoking "make ddMd" will install an executable named ddSim in the simpatico/bin/ directory. To do this, the command associated with this makefile target will:
+If successful, invoking "make ddMd" will install an executable named ddSim in the simpatico/bin/ directory. To accomplish this, this makefile target will:
 
    - Call "./configure -m1" from the root directory, to enable MPI
    - Compile mpi-enabled versions of all of the classes in the src/util/, src/inter/, and src/ddMd directories
-   - Create MPI-enabled versions of the libraries containing objects from these three directories
+   - Create MPI-enabled versions of the libraries that contain objects from these three directories
    - Build the ddSim executable
 
-The resulting MPI-enabled versions of the libraries containing objects from the src/util/ and src/inter directories will be named lib/libutil_m.a and lib/libinter_m.a, where the extra suffix "_m" stands for mpi. The library containing objects from the ddMd/ directory will be named lib/libddMd.a (No "_m" suffix is added to the libddMd.a library, because MPI is always required by the code in the ddMd directory).
+The resulting versions of the libraries containing objects from the src/util/, src/inter and src/ddMd directories will be named lib/libutil_m.a,  lib/libinter_m.a, and lib/libddMd.a, respectively. The addition of a suffix "_m" to the names of the libutil and libinter libraries is used to identify MPI-enabled versions of these libraries.
 
-By default, the parallel MD executable is named ddSim. The executable name is defined by the variable DDSIM_EXE, which is defined in the src/ddMd/defines.mk file. 
+By default, the parallel MD executable is named ddSim. The executable name is defined by the variable DDSIM_EXE, which is defined in file src/ddMd/defines.mk, which users may modify. 
 
 To clean up files created by compiling ddSim, enter
 \code
 > make clean-ddMd
 \endcode
-from the root or src directory. This will remove all files created by calling "make ddMd", including *.o object files, mpi-enabled libraries, and the ddSim executable, but leave any non-mpi enabled libraries untouched.
+from the root directory. This will remove the *.o object files, mpi-enabled libraries, and the ddSim executable that were created by "make ddMd".
 
 \section compile_multi_section Compiling mcSim and mdSim (multi-processor versions)
 Multi-processor versions of mcSim and mdSim can be used to run:
@@ -191,36 +197,38 @@ Multi-processor versions of mcSim and mdSim can be used to run:
 
 The last two applications require the use of the free energy perturbation feature, which is discussed in more detail \ref user_multi_McMd_page "here". The free energy perturbation feature is enabled by default when MPI is enabled. 
 
-To compile multi-processor versions of mcSim and mdSim, if automatic dependency generation is enabled (the default) enter:
+To compile multi-processor versions of mcSim and mdSim, if automatic dependency generation is enabled (the default), simply enter:
 \code
 > make mcMd-mpi
 \endcode
-from the simpatico/ root directory.  By default, the resulting executable files are named mcSim_m and mdSim_m, using a suffix "_m" to distinguish the multi-processor from single processor versions of mcSim and mdSim. To build these executables, this command will compile mpi-enabled versions of all of the source files in the mcMd/ directory and (if needed) the util/ and inter/ directories, and create mpi-enabled versions of corresponding library file(s).
+from the root directory.  By default, the resulting executable files are named mcSim_m and mdSim_m, using a suffix "_m" to distinguish multi-processor executables from the single processor versions of mcSim and mdSim. To build these executables, this command will compile mpi-enabled versions of all of the source files in the mcMd/ directory and (if needed) the util/ and inter/ directories, and create mpi-enabled versions of corresponding library file(s).
  
-If (and only if) automatic \ref compile_dependency_section "dependency generation" is disabled, then you must enter
+If automatic automatic dependency generation has been disabled, then users should enter
 \code
  > make clean-McMd
 \endcode
-from the root directory before before compiling the multi-processor versions of mcSim and mdSim, in order to remove object files that may have been created without MPI and thus force recompilation of these files. 
+from the root directory before entering "make mcMd-mpi", in order to remove object files and libraries that may have been created with MPI disabled, and force recompilation of the corresponding source files.
 
 \section compile_doc_section Generating html documentation
-The html documentation you are reading was generated using the <a href=http://www.doxygen.org> doxygen </a> documentation utility. The simpatico directory will initially not contain a copy of the html files. If desired, you may use doxygen to generate a local copy of the web documentation.  If dOxygen is installed on your machine, you can regenerate all of the html documentation by entering 
+The html documentation you are reading was generated using the <a href=http://www.doxygen.org> doxygen </a> documentation utility. Neither the git repository nor the downoadable version of the source codecontain a copy of the html documentation files. If desired, you may use doxygen to generate a local copy of the web documentation.  If dOxygen is installed on your machine, you can regenerate all of the html documentation by entering 
 \code
 > make html 
 \endcode
-from the simpatico root directory. The resulting html documentation is deposited in the doc/html/ directory. To read the main page of the documentation, open the file doc/html/index.html in a browser. One may also open any other html file in this directory and follow the link to the main page. 
+from the simpatico root directory. The resulting html documentation is deposited in the doc/html/ directory. 
+
+To begin reading the main page of the documentation, open the file simpatico/doc/html/index.html in any web browser, e.g., by entering "firefox doc/html/index.html" on linux or "open doc/html/index.html" on a Mac.
 
 The text of the page you are reading now, along with others that are not extracted from C++ files, is in a set of files in the doc/dox directory. These are written in plain text, and can also be read with any text editor.  Documentation for each C++ class is extracted by doxygen from documentation blocks in the class header file. 
 
-Entering
+To remove all the html documentation in the doc/html directory, enter
 \code
 > make clean-html
 \endcode
-from the root directory will remove all the html documentation in the doc/html directory. 
+from the root directory.
 
 \section compile_config_section Configuration Files
 
-After the ./setup script is run, the src/ directory and its subdirectories contain several configuration files that define makefile variables whose values can be modified to control various aspects of compilation.  These configuration files are:
+The ./setup script creates editable of several makefile fragments that users may need to modify to control various aspects of compilation.  These files are:
  
     - src/compiler.mk
 
@@ -232,38 +240,40 @@ After the ./setup script is run, the src/ directory and its subdirectories conta
 
     - src/ddMd/defines.mk
 
-None of these user configable files are in the git repository, or in the version of the code that is distributed as a tar archive.  Initial versions of each of these files are instead created by the setup script by making copies of default (repository) versions of each file.  The repository version of each such file is a file with the same name as the configurable version plus a suffix "_r" (for repository), in the same directory as the configurable version. Thus, for example, an initial version of the file src/mcMd/defines.mk is created by the setup script by copying the default version src/mcMd/defines.mk_r.  Only the configurable version of each such file is used by the build system. Users should not modify the repository versions of these files.
+None of these files are in the git repository, or in the gzipped tar archive of the source code. Initial versions of each of these files are instead created by the setup script by making copies of default (repository) versions of each file.  The repository version of each such file is a file with the same name as the configuration file plus a suffix "_r" (for repository), and is located in the same directory as the configuration file. Thus, for example, an initial version of the file src/mcMd/defines.mk is created by the setup script by copying src/mcMd/defines.mk_r. 
 
-The most common modifications of these configuration files can be carried out using the configure script, rather than directly editing configuration files.
+The most common modifications of these configuration files can be carried out using the configure script, but some changes require manual editing. Users can modify these *.mk files as needed, but should avoid modifying the corresonding "*.mk_r" repository versions.
 
 Contents of the configuration files:
 
-The file src/compiler.mk defines makefile variables that specify the choice of C++ compiler and compiler options, as discussed above. It defines variables ROOT_DIR, SRC_DIR, BIN_DIR, and LIB_DIR that represent the paths to the simpatico root directory and source directory, and the directories in which executables and libraries should be installed.  This file also contain contains a definition of a variable MAKEDEP that (if not commented out) enables automatic dependency generation, and a variable UTIL_MPI that enables MPI. 
+The file src/compiler.mk defines makefile variables that specify the choice of C++ compiler, MPI library, and compiler options, as discussed above. It also defines variables ROOT_DIR, SRC_DIR, BIN_DIR, and LIB_DIR that represent paths to the simpatico root directory, the source directory, and the directories in which executables and libraries will be installed. This file also contain contains definitions of the variable MAKEDEP that (if not commented out) enables automatic dependency generation, and the variable UTIL_MPI that enables MPI. 
 
-The makefile fragments src/util/defines.mk, src/inter/defines.mk, mcMd/defines.mk, and ddMd/defines.mk can be used to define makefile variables that enable or disable optional features of the code at compile time. Each of these files contains one or more commented out definitions for makefile variables that, when uncommented, cause corresponding C++ macros to be defined during compilation, and thus enable optional various features during compilation. These optional features are discussed in detail \ref user_options_page "here". 
+The makefile fragments src/util/defines.mk, src/inter/defines.mk, mcMd/defines.mk, and ddMd/defines.mk can be used to define makefile variables that enable or disable other optional features of the code at compile time. Each of these files contains one or more commented out definitions for makefile variables that, when uncommented, enable particular features during compilation. All available compile-time options are discussed \ref user_options_page "here". 
 
-The setup script also creates default versions of several C++ files.  The files that are creatd by the setup script are files that users might need to modify in order to customize or extend some aspect of the simulation. Each of these files is created by copying a default version whose name is obtained by adding a suffix _r to the name of the user version.  
+The setup script also creates default versions of several *.cpp C++ source files. These are also files that users may need to modify in order to customize or extend some aspect of a simulation. Each of these files is created by copying a default version whose name is obtained by adding a suffix _r to the name of the user version.  
 
-IMPORTANT: Because the setup script actually copies some C++ files that users may subsequently modify, users should be careful to NOT call the setup script again after modifying any of these files, unless the modified files have been saved under different names. Doing so would cause a users changes to these files to be overwritten by the default version. 
+IMPORTANT: Because the setup script creates some C++ files that users may subsequently modify, users should be careful to NOT call the setup script after modifying any of these files, unless modified files are first saved under different names. It should not be necesary to call ./setup more than once. Doing will cause any modified versions of such files to be overwritten by the default versions.
 
 \section compile_dependency_section Automatic Dependency Generation
-By default, the build system generates and update "dependency" files, as a side-effect of compilation. Each dependency file lists all of the files upon which an *.o object file depends. Generation of dependency files is enabled by default, but may be disabled by using the "k" option of the configure script. Automatic dependency generation is not strictly necessary for users who want to use the code without modifying or adding any C++ files. It is essential, however, for developers, because it makes allows the makefile system to keep track of what files have to recompiled after any file is modified. If dependency generation is disabled, the only safe way to recompile the code after changing any C++ file is to do a clean rebuild, by entering "make clean", "make clean-mcMd" or "make clean-ddMd" and recompiling.
+When automatic dependency generation is enabled (the default), the build system generates a "dependency" file, with a suffix *.d, whenever it compiles *.cpp source file. Each dependency file lists all of the files upon which the resulting *.o object file depends, including the source file an all header files that are included directly or indirectly into the source file. Generation of dependency files may be disabled entering "./configure -k0" from the root directory. Automatic dependency generation is not strictly necessary for users who want to compile the code as is, without modifying or adding any C++ files. It is essential, however, for developers, because it allows make to keep track of what files have to recompiled when any file is modified. 
 
-The system for automatic dependency generation uses both the gnu g++ compiler (which does actual analysis of dependencies) and two python scripts. To function, this system requires that:
+If dependency generation is disabled, the only safe way to recompile the code after changing any C++ file or makefile is to do a clean rebuild, by entering "make clean", "make mcMd", "make ddSim" or "make mcMd-mpi" from the root directory before recompiling.
+
+The system for automatic dependency generation uses both the gnu g++ compiler (which does actual analysis of dependencies) and several python scripts. To function, the system requires that:
  
-  - The g++ compiler executable (or a link with this name) exists in the shell command search PATH. 
+  - A g++ compiler executable (or a link with this name) exists in users PATH
 
-  - A python interpreter is accessible.
+  - A python executable is accessible in the users PATH
 
-  - The simpatico/tools/python/ directory is in the PYTHONPATH environment variable.
+  - The simpatico/tools/python/ directory is in the PYTHONPATH environment variable
 
-  - The makefile variable MAKEDEP is defined in the file src/compiler.mk (it is by default).
+  - The makefile variable MAKEDEP is defined in the file src/compiler.mk (it is defined by default)
 
-The g++ compiler is used for dependency analysis even if another compiler (e.g., intel) is used to compile the code.  
+Note that the g++ compiler is used for dependency analysis even if another compiler (e.g., intel) is used to actually compile the code.
 
-Automatic dependency generation works by applying the script bin/makeDep to each *.cpp source file whenever that file is compiled. This behavior is dictated by the pattern rules defined in the patterns.mk files in the src/util/, src/inter/, src/mcMd/, and src/ddMd/ directories.  Whenever a *.cpp file is compiled, the makeDep script generates a corresponding *.d file with the same base name.  Each *.d dependency file defines a makefile rule for the corresponding *.o object makefile file target. This rule contains a list of all the files upon which that object file depends.  This dependency list contains the associated *.cpp file and all of the *.h header files that this source file includes, including header files that are included indirectly.  Once such a dependency file exists, it will be used the next time "make" is invoked in order to determine if the corresponding *.o object file needs to be recreated as a result of changes in any of the files upon which it depends.
+Automatic dependency generation works by applying the script bin/makeDep to each *.cpp source file whenever that file is compiled. This behavior is dictated by the pattern rules defined in the patterns.mk files in the src/util/, src/inter/, src/mcMd/, and src/ddMd/ directories.  Whenever a *.cpp file is compiled, the makeDep script generates a corresponding *.d file with the same base name.  Each *.d dependency file defines a makefile rule for the corresponding *.o object makefile file target. This rule contains a list of all the files upon which that object file depends.  This dependency list contains the associated *.cpp file and all of the *.h header files that this source file includes, including header files that are included indirectly.  Once such a dependency file exists, it will be used the next time "make" is invoked in order to determine if the corresponding *.o object file needs to be recreated as a result of changes in any files upon which it depends.
 
-The dependency list for every *.o file contains the files src/compiler.mk and one or more of the defines.mk files, in addition to C++ source and header files.  This is because these makefile fragments contain definitions of compiler options and C++ preprocessor macros that can effect the object code produced by compilation. Modifying these makefile fragments can thus force recompilation of a large number C++ source files. Modifying src/compiler.mk or src/util/defines.mk forces recompilation of every simpatico source file.  Modifying src/util/defines.mk force recompilation of all of the source files in src/inter, src/mcMd, and src/ddMd.  Modifying src/mcMd/defines.mk forces recompilation of all files in src/mcMd.  Modifying src/ddMd/defines.mk forces recompilation of all files in src/ddMd.
+The dependency list for every *.o file contains the files src/compiler.mk and one or more of the defines.mk files, in addition to C++ source and header files.  This is because these makefile fragments contain definitions of compiler options and C++ preprocessor macros that control conditional compilation, and can thus effect the result object code. Modification of these makefile fragments can thus force recompilation of a large number C++ source files. Modifying src/compiler.mk or src/util/defines.mk forces recompilation of every file in the src/ directory.  Modifying src/inter/defines.mk force recompilation of all source files in the src/inter, src/mcMd, and src/ddMd directories. Modifying src/mcMd/defines.mk forces recompilation of all files in src/mcMd.  Modifying src/ddMd/defines.mk forces recompilation of all files in src/ddMd.
 
 <BR>
 \ref user_page   (Up) &nbsp; &nbsp; &nbsp; &nbsp; 

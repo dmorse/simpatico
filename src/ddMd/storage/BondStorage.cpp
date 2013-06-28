@@ -9,6 +9,7 @@
 */
 
 #include "BondStorage.h"
+#include "GroupStorage.tpp"
 #include <ddMd/chemistry/Bond.h>
 
 namespace DdMd
@@ -18,15 +19,13 @@ namespace DdMd
    * Read parameters and allocate memory.
    */
    BondStorage::BondStorage()
-   { setClassName("BondStorage"); }
+   {  setClassName("BondStorage"); }
 
    /*
    * Read parameters and allocate memory.
    */
    void BondStorage::readParameters(std::istream& in)
-   {
-      GroupStorage<2>::readParameters(in);
-   }
+   {  GroupStorage<2>::readParameters(in); }
 
 }
 

@@ -23,7 +23,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * An ExternalPotential calculates exteranl forces for a parent Simulation.
+   * Calculates external forces and energies for a parent Simulation.
    *
    * \ingroup DdMd_External_Module
    */

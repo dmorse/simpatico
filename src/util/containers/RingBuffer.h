@@ -8,12 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/containers/DArray.h>
 #include <util/global.h>
-
-#include <complex>
-
-using std::complex;
 
 namespace Util
 {
@@ -115,11 +110,18 @@ namespace Util
       void serialize(Archive& ar, const unsigned int version);
 
    private:
-   
-      Data* data_;     ///< Circular buffer array of previous values.
-      int   capacity_; ///< Size of buffer data array.
-      int   size_;     ///< Number of values in buffer, size_ <= capacity.
-      int   last_;     ///< integer index of most recent value.
+  
+      /// Underlying C-array of Data elements.
+      Data* data_;     
+
+      /// Allocated size of data_ array (zero before allocation).
+      int   capacity_; 
+
+      /// Number of values in buffer, must be <= capacity_.
+      int   size_;     
+
+      /// Integer array index of the most recently added value.
+      int   last_;     
   
    };
 

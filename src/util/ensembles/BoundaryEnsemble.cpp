@@ -25,6 +25,12 @@ namespace Util
    {  setClassName("BoundaryEnsemble"); }
 
    /*
+   * Destructor.
+   */
+   BoundaryEnsemble::~BoundaryEnsemble()
+   {}
+
+   /*
    * Set the target pressure.
    */
    void BoundaryEnsemble::setPressure(double pressure)

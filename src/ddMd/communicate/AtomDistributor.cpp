@@ -12,10 +12,11 @@
 #include "Domain.h"
 #include "Buffer.h"
 #include <ddMd/storage/AtomStorage.h>
+#include <ddMd/storage/ConstAtomIterator.h>
 
 #include <algorithm>
 
-#define DDMD_ATOM_DISTRIBUTOR_DEBUG
+//#define DDMD_ATOM_DISTRIBUTOR_DEBUG
 
 namespace DdMd
 {
@@ -150,6 +151,8 @@ namespace DdMd
    {  
       bufferPtr_->clearSendBuffer(); 
       bufferPtr_->beginSendBlock(Buffer::ATOM); 
+      nCachedTotal_ = 0;
+      nSentTotal_   = 0;
    }
    #endif
 
@@ -184,6 +187,7 @@ namespace DdMd
       // If reservoir is empty, send buffer to processor with maximum sendSize_
       if (reservoir_.size() == 0) {
 
+         Atom* ptr;
          int rank  = rankMaxSendSize_;
          int size  = sendSizes_[rank];
          int nSend = std::min(size, sendCapacity_);
@@ -191,7 +195,8 @@ namespace DdMd
 
          // Pack atoms into buffer, and return pointers for reuse.
          for (int i = begin; i < size; ++i) {
-            bufferPtr_->packAtom(*sendArrays_(rank, i));
+            ptr = sendArrays_(rank, i);
+            ptr->packAtom(*bufferPtr_);
 
             // Return pointer to the reservoir and remove it from sendArrays_.
             reservoir_.push(*sendArrays_(rank, i));
@@ -242,25 +247,15 @@ namespace DdMd
       if (domainPtr_->gridRank() != 0) {
          UTIL_THROW("This is not the master processor");
       }
-      if (UTIL_ORTHOGONAL) {
-         if (!storagePtr_->isCartesian()) {
-            UTIL_THROW("Atom coordinates are not Cartesian");
-         }
-      } else {
-         if (storagePtr_->isCartesian()) {
-            UTIL_THROW("Atom coordinates are Cartesian");
-         }
+      if (storagePtr_->isCartesian()) {
+         UTIL_THROW("Atom coordinates are Cartesian");
       }
       if (newPtr_ == 0) {
          UTIL_THROW("No active newPtr_");
       }
 
       // Shift position to lie within primary unit cell.
-      if (UTIL_ORTHOGONAL) {
-         boundaryPtr_->shift(newPtr_->position());
-      } else {
-         boundaryPtr_->shiftGen(newPtr_->position());
-      }
+      boundaryPtr_->shiftGen(newPtr_->position());
 
       #ifdef UTIL_MPI
       // Identify rank of processor that owns this atom.
@@ -304,8 +299,7 @@ namespace DdMd
             Atom* ptr;
             for (int i = 0; i < sendCapacity_; ++i) {
                ptr = sendArrays_(rank, i);
-               bufferPtr_->packAtom(*ptr);
-               //bufferPtr_->packAtom(*sendArrays_(rank, i));
+               ptr->packAtom(*bufferPtr_);
 
                // Push pointer onto reservoir and remove it from sendArrays_.
                reservoir_.push(*sendArrays_(rank, i));
@@ -381,7 +375,7 @@ namespace DdMd
          Atom* ptr;
          for (j = 0; j < sendSizes_[i]; ++j) {
             ptr = sendArrays_(i, j);
-            bufferPtr_->packAtom(*ptr);
+            ptr->packAtom(*bufferPtr_);
 
             // Return pointer to atom to the reservoir.
             reservoir_.push(*sendArrays_(i, j));
@@ -407,6 +401,7 @@ namespace DdMd
 
       // Compute total number of atoms on all processors.
       // Note: Matching call at end of AtomDistributor::receive()
+      storagePtr_->unsetNAtomTotal();
       storagePtr_->computeNAtomTotal(domainPtr_->communicator());
 
       // Postconditions
@@ -420,8 +415,6 @@ namespace DdMd
          UTIL_THROW("Number atoms received != number sent + nAtom on master");
       }
 
-      nCachedTotal_ = 0;
-      nSentTotal_   = 0;
    }
    #endif
 
@@ -459,20 +452,60 @@ namespace DdMd
          isComplete = bufferPtr_->beginRecvBlock();
          while (bufferPtr_->recvSize() > 0) {
             ptr = storagePtr_->newAtomPtr();
-            bufferPtr_->unpackAtom(*ptr);
+            ptr->unpackAtom(*bufferPtr_);
             storagePtr_->addNewAtom();
             if (domainPtr_->ownerRank(ptr->position()) != rank) {
                UTIL_THROW("Error: Atom on wrong processor");
             }
          }
+         bufferPtr_->endRecvBlock();
 
       }
 
       // Compute total number of atoms on all processors.
       // Note: Matching call at end of AtomDistributor::send()
+      storagePtr_->unsetNAtomTotal();
       storagePtr_->computeNAtomTotal(domainPtr_->communicator());
    }
    #endif
 
-}
+   /*
+   * Validate distribution of atoms, return total number of atoms.
+   */
+   int AtomDistributor::validate()
+   {
+      storagePtr_->isValid(domainPtr_->communicator());
+
+      // Check that number of atoms = nSentTotal
+      int nAtomTotal = 0;
+      storagePtr_->computeNAtomTotal(domainPtr_->communicator());
+      if (domainPtr_->isMaster()) {
+         nAtomTotal = storagePtr_->nAtomTotal();
+         if (nAtomTotal != nSentTotal_ + storagePtr_->nAtom()) {
+            UTIL_THROW("nAtomTotal != nAtom after distribution");
+         }
+      }
+
+      // Check that every atom is in correct processor domain.
+      // Coordinates must scaled / generalized, rather than Cartesian.
+      double coordinate;
+      ConstAtomIterator atomIter;
+      int i;
+      storagePtr_->begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         for (i=0; i < Dimension; ++i) {
+            coordinate = atomIter->position()[i];
+            if (coordinate < domainPtr_->domainBound(i, 0)) {
+               UTIL_THROW("coordinate < domainBound(i, 0)");
+            }
+            if (coordinate >= domainPtr_->domainBound(i, 1)) {
+               UTIL_THROW("coordinate >= domainBound(i, 1)");
+            }
+         }
+      } 
+
+      return nAtomTotal; // Only valid on master, returns 0 otherwise.
+   }
+
+} // namespace DdMd
 #endif

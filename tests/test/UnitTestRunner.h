@@ -13,25 +13,28 @@
 #include <vector>
 
 /**
-* Template for a TestRunner that runs an associated UnitTest.
+* Template for a TestRunner that runs test methods of an associated UnitTest.
 *
-* A instance of UnitTestRunner<MyTest> holds an array of pointers to
-* the test methods of a class MyTest that is derived from UnitTest.
-* Each of the test methods must return void and take no parameters. The
-* addTestMethod() method adds a pointer to such a method to this array. 
-* The run() method runs all of the registered test methods in sequence.
-*
+* A instance of UnitTestRunner<MyTest> holds an array of pointers to all of
+* the test methods of a class MyTest that is a subclass of UnitTest. Each such
+* test method must return void and take zero parameters. The addTestMethod() 
+* method is used to register a test method with the UnitTestRunner instantiation, 
+* by adding a pointer to a test method to this array.  The run() method runs 
+* all of the registered test methods in sequence.
+
 * To run a set of unit tests one must: 
 *
 *  - Define a subclass of UnitTest,
 *  - Define an associated subclass of UnitTestRunner, 
 *  - Construct a UnitTestRunner object and call run().
 *
-* The code to define the UnitTestRunner class may be simplified with
-* a set of preprocessor macros. 
+* The boilerplate code required to define a UnitTestRunner class may be 
+* simplified by using set preprocessor macros that are defined at the end of 
+* this file.
 *
-* Here is an example of the code to run all the methods of a UnitTest,
-* with no preprocessor macros:
+* Here is an example of the code to to define a subclass of UnitTestRunner<MyTest>,
+* associated with a subclass MyTest of UnitTest, and then run all of its test
+* methods, written without using any preprocessor macros:
 * \code
 *
 * // Define a UnitTest class
@@ -62,9 +65,16 @@
 * runner.run();
 *
 * \endcode
-* The following series of preprocessor macros may be used to generate 
-* the definition of the MyTest_Runner class in the above example, and 
-* to create an instance of this class:
+* Note that, by convention:
+*
+*   - We defined a subclass of UnitTestRunner<MyTest>, called MyTest_Runner.
+*   - All test methods of MyTest are registered in the MyTest_Runner constructor.
+*
+* Calling the run() method of MyTest_Runner will then run all of the tests.
+*
+* The following series of preprocessor macros may be used to generate the 
+* definition of the MyTest_Runner class in the above example, and to create 
+* an instance of this class:
 * \code
 * 
 * TEST_BEGIN(MyTest)
@@ -76,17 +86,23 @@
 * runner.run();
 *
 * \endcode
-* The macro TEST_BEGIN(TestClass) generates the beginning of the above
-* class definition for a new subclass of UnitTestRunner<TestClass>. The
-* TEST_ADD(TestClass, Method) adds a specified method of the associated
-* class TestClass to the constructor of the new UnitTestRunner class. 
-* The TEST_END macro closes the class definition. The name of the
-* resulting UnitTestRunner class is given by the preprocessor macro 
-* TEST_RUNNER(TestClass). This macro may thus be used as a class name 
-* to instantiate objects of this class. By convention, the macro
-* TEST_RUNNER(TestClass) expands to the name TestClass_Runner, in which
-* a standard suffix "_Runner" is added to the name of the UnitTest 
-* class.
+* The macro TEST_BEGIN(TestClass) generates the beginning of the class
+* definition for subclass MyTest_Runner of UnitTestRunner<TestClass>. 
+* The TEST_ADD(TestClass, Method) adds a specified method of the associated
+* class TestClass to the constructor of the new UnitTestRunner class. The
+* TEST_END macro closes both the constructor definition and the class 
+* definition. After expansion, the resulting code is completely equivalent
+* to that given in the previous example, after the definition of MyTest.
+* 
+* The name of the UnitTestRunner class created by these preprocessor
+* macros is created by appending the standard suffix "_Runner" to the 
+* name of the unit test class. Thus, in the above example, the TestRunner 
+* subclass is named MyTest_Runner. This TestRunner subclass name may
+* be referred directly, using this name, or by using the preprocessor 
+* macro TEST_RUNNER(TestClass), which expands to the name of the test
+* runner class, e.g., to TestClass_Runner. In the above example, this 
+* macro is used as a class name to instantiate an instance of the of
+* required test runner. 
 */
 template <class UnitTestClass>
 class UnitTestRunner : public TestRunner
@@ -102,7 +118,9 @@ public:
    */
    typedef void (UnitTestClass::*MethodPtr)();
 
-   // Default constructor.
+   /**
+   * Constructor.
+   */
    UnitTestRunner()
     : TestRunner()
    {
@@ -116,16 +134,16 @@ public:
       #endif
    }
 
-   // Default destructor.
+   // Use compiler generated destructor.
 
    /**
-   * Register a test method of associated test case.
+   * Register a test method of the associated unit test class.
    */
    void addTestMethod(MethodPtr methodPtr)
    {  methodPtrs_.push_back(methodPtr); }
 
    /**
-   * Return number of registered test methods.
+   * Return the number of registered test methods.
    */
    int nTestMethod()
    {  return methodPtrs_.size(); } 
@@ -144,13 +162,14 @@ public:
       #endif
 
       testCase.setFilePrefix(filePrefix());
+
+      // Run test method (try / catch)
       try {
          testCase.setUp();
          (testCase.*methodPtrs_[i])();
          #ifndef TEST_MPI
-         if (testCase.isIoProcessor()) {
-            recordSuccess();
-         }
+         std::cout << ".";
+         recordSuccess();
          #else
          result = 1;
          #endif
@@ -159,6 +178,7 @@ public:
          std::cout << std::endl;
          std::cout << " Failure " << std::endl << std::endl;
          std::cout << e.message() << std::endl;
+         std::cout << ".";
          recordFailure();
          #else
          result = 0;
@@ -167,12 +187,11 @@ public:
       }
       testCase.tearDown();
 
-      #ifndef TEST_MPI
-      std::cout << ".";
-      #else
+      #ifdef TEST_MPI
+      // Process MPI Tests from all processors
       MPI::COMM_WORLD.Barrier();
       if (mpiRank() == 0) {
-         results_[0] = result;
+         results_[0] = result; // Result on processor 0
          if (results_[0] == 0) {
             std::cout << std::endl;
             std::cout << " Failure  on Processor 0" 
@@ -181,13 +200,18 @@ public:
             std::cout.flush();
          }
          for (int i=1; i < mpiSize(); ++i) {
+            // Receive result results_[i] of test on processor i.
             MPI::COMM_WORLD.Recv(&(results_[i]), 1, MPI_INT, i, i);
+            // If the test failed on processor i
             if (results_[i] == 0) {
-               result = 0;
+               result = 0; // Overall result fails (==0) if failure on any processor
+               // Send permission to print failure statement on processor i
                MPI::COMM_WORLD.Send(&(results_[i]), 1, MPI_INT, i, mpiSize() + i);
+               // Receive confirmation that processor i completed printing
                MPI::COMM_WORLD.Recv(&(results_[i]), 1, MPI_INT, i, 2*mpiSize() + i);
             }
          }
+         // Record success on master (rank == 0) iff success on all processors
          if (result) {
             recordSuccess();
          } else {
@@ -195,9 +219,12 @@ public:
          }
          std::cout << ".";
          std::cout.flush();
-      } else {
+      } else {   // Slave node
+         // Send result of test on this processor to master, tag = mpiRank().
          MPI::COMM_WORLD.Send(&result, 1, MPI_INT, 0, mpiRank());
+         // If test failed on this processor
          if (result == 0) {
+            // Receive permission to print failure statement
             MPI::COMM_WORLD.Recv(&result, 1, MPI_INT, 0, 
                                  mpiSize() + mpiRank());
             std::cout.flush();
@@ -206,21 +233,23 @@ public:
                       << std::endl << std::endl;
             std::cout << exception.message() << std::endl;
             std::cout.flush();
+            // Confirm completion of print.
             MPI::COMM_WORLD.Send(&result, 1, MPI_INT, 0, 
                                  2*mpiSize() + mpiRank());
          }
       }
       MPI::COMM_WORLD.Barrier();
-      #endif
+      #endif // ifdef TEST_MPI
+
    }
 
    /**
-   * Run all registered test methods sequentially.
+   * Run all registered test methods in the order added.
    */
    virtual int run()
    {
       for (unsigned int i = 0; i < methodPtrs_.size(); ++i) {
-         method(i); 
+         method(i);
       }
       report();
       return nFailure();

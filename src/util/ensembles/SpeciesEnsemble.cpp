@@ -25,6 +25,12 @@ namespace Util
    {}
 
    /*
+   * Destructor.
+   */
+   SpeciesEnsemble::~SpeciesEnsemble()
+   {}
+
+   /*
    * Set the chemical potential mu.
    */
    void  SpeciesEnsemble::setMu(double mu)

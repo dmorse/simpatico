@@ -4,8 +4,8 @@ Serialization
 - Test save / load with perturbation
 - Test save /load with replica move
 - Test MD serialization after forcing pair list rebuild upon restart output
-- Move restart interval and file name, and isInitialized_  to Simulation 
-  base classs.
+- Move restart interval and file name, and isInitialized_  to Simulation base 
+  classs.
 
 Constant Pressure MD 
 --------------------
