@@ -274,10 +274,10 @@ namespace Inter
          UTIL_THROW("Negative base factor");
       } else {
          forceParallelSech1 = (1.0 - (parallelFactor1*parallelFactor1));
-         forceParallelSech1 *= -1.0*M_PI*(1/(fraction_*parallelLength))*parallelFactor2;
+         forceParallelSech1 *= 1.0*M_PI*(1/(fraction_*parallelLength))*parallelFactor2;
          forceParallelSech2 = (1.0 - (parallelFactor2*parallelFactor2));
-         forceParallelSech2 *= 1.0*M_PI*(1/(fraction_*parallelLength))*parallelFactor1;
-         force[parallelDirection_] = prefactor_[type]*externalParameter_*tanh(clipcos);
+         forceParallelSech2 *= -1.0*M_PI*(1/(fraction_*parallelLength))*parallelFactor1;
+         force[parallelDirection_] = -1.0*prefactor_[type]*externalParameter_*tanh(clipcos);
          force[parallelDirection_] *= (forceParallelSech1 + forceParallelSech2);
          force[perpDirection_] = prefactor_[type]*externalParameter_*sechSq*clipParameter*sin(arg)*q*parallelFactor;
       }
