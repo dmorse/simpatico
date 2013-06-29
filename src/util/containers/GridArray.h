@@ -35,11 +35,21 @@ namespace Util
       GridArray();
 
       /**
+      * Copy constructor.
+      */
+      GridArray(const GridArray<Data>& other);
+
+      /**
       * Destructor.
       *
       * Delete dynamically allocated C array.
       */
       ~GridArray();
+
+      /**
+      * Assignment.
+      */
+      GridArray<Data>& operator = (const GridArray<Data>& other);
 
       // Initialization
 
@@ -190,16 +200,6 @@ namespace Util
       /// Total number of grid points
       int size_;
 
-      /**
-      * Copy constructor, private and not implemented.
-      */
-      GridArray(const GridArray<Data>& other);
-
-      /**
-      * Assignment, private and not implemented.
-      */
-      GridArray<Data>& operator = (const GridArray<Data>& other);
-
    }; 
 
    // Method definitions
@@ -229,7 +229,6 @@ namespace Util
       }
    }
 
-   #if 0 
    /*
    * Copy constructor.
    */
@@ -242,6 +241,12 @@ namespace Util
       }
 
       allocate(other.dimensions_);
+      if (offsets_ != other.offsets_ ) {
+         UTIL_THROW("Unequal offsets");
+      }
+      if (size_ != other.size_ ) {
+         UTIL_THROW("Unequal sizes");
+      }
       for (int i = 0; i < size_; ++i) {
          data_[i] = other.data_[i];
       }
@@ -255,22 +260,29 @@ namespace Util
    {
 
       // Check for self assignment.
-      if (this == &other) return *this;
+      if (this == &other) {
+         return *this;
+      }
 
       // Precondition
       if (other.data_ == 0) {
          UTIL_THROW("Other GridArray must be allocated in assignment");
       }
 
-      // If this this GridArray if not allocated, allocate now.
-      // If this this GridArray is allocated, check that capacities are equal.
+      // If this GridArray if not allocated, allocate now.
+      // If it is allocated, check that dimensions are equal.
       if (data_ == 0) {
-         allocate(other.dimensions1_, other.dimensions2_);
+         allocate(other.dimensions_);
       } else {
-         if (dimensions1_ != other.dimensions1_ || 
-             dimensions2_ != other.dimensions2_) {
-            UTIL_THROW("Unequal capacities in assignment");
+         if (dimensions_ != other.dimensions_ ) {
+            UTIL_THROW("Unequal dimensions");
          }
+      }
+      if (offsets_ != other.offsets_ ) {
+         UTIL_THROW("Unequal offsets");
+      }
+      if (size_ != other.size_ ) {
+         UTIL_THROW("Unequal sizes");
       }
 
       // Copy elements
@@ -280,7 +292,6 @@ namespace Util
 
       return *this;
    }
-   #endif // if 0, commented out
 
    /*
    * Set dimensions and allocate memory.
@@ -291,7 +302,7 @@ namespace Util
       int i;
       for (i = 0; i < Dimension; ++i) {
          if (dimensions[i] <= 0) {
-            UTIL_THROW("GridArray dimensions must be positive");
+            UTIL_THROW("Dimension not positive");
          }
       }
       dimensions_ = dimensions;
@@ -350,9 +361,9 @@ namespace Util
    * Calculate 1D rank from grid coordinates.
    */
    template <typename Data>
-   inline int GridArray<Data>::rank(const IntVector& position) const
+   #ifdef UTIL_DEBUG
+   int GridArray<Data>::rank(const IntVector& position) const
    {
-      #ifdef UTIL_DEBUG
       int result = 0;
       for (i = 0; i < Dimension - 1; ++i) {
          assert(position[i] >= 0);
@@ -363,19 +374,22 @@ namespace Util
       assert(position[i] < dimensions_[i]);
       result += position[i];
       return result;
-      #else
-      return (position[0]*offsets_[0] + position[1]*offsets_[1] + position[2]);
-      #endif
    }
+   #else
+   inline int GridArray<Data>::rank(const IntVector& position) const
+   { 
+      return (position[0]*offsets_[0] + position[1]*offsets_[1] + position[2]);
+   }
+   #endif
 
    /*
    * Calculate coordinates from 1D rank.
    */
    template <typename Data>
-   IntVector GridArray<Data>::position(int id) const
+   IntVector GridArray<Data>::position(int rank) const
    {
       IntVector position;
-      int remainder = id;
+      int remainder = rank;
 
       int i;
       for (i = 0; i < Dimension - 1; ++i) {
@@ -463,7 +477,8 @@ namespace Util
    * Return element by const reference, indexed by IntVector of coordinates
    */
    template <typename Data>
-   inline const Data& GridArray<Data>::operator() (const IntVector& position) const
+   inline 
+   const Data& GridArray<Data>::operator() (const IntVector& position) const
    {  return *(data_ + rank(position)); }
 
    /*
