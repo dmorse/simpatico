@@ -24,6 +24,7 @@ namespace Util
 namespace McMd
 {
 
+   class Simulation;
    class System;
 
    using namespace Util;
@@ -98,6 +99,16 @@ namespace McMd
     
       //@}
 
+      /**
+      * Get value of inverse range parameter.
+      */
+      double alpha() const;
+
+      /**
+      * Get value of permittivity parameter.
+      */
+      double epsilon() const;
+
    protected:
 
       /// Fourier modes of charge density
@@ -106,8 +117,11 @@ namespace McMd
       /// Values of square of Fourier wavevector
       GridArray<double> ksq_;
 
-      /// Gaussian damping function 
-      GridArray<double> gamma_;
+      /// Regularized Green's function (Gaussian/ksq)
+      GridArray<double> g_;
+
+      /// Pointer to associated Simulation
+      Simulation* simulationPtr_;
 
       /// Pointer to associated System
       System* systemPtr_;
@@ -124,13 +138,27 @@ namespace McMd
       /// Maximum Miller indices for Fourier modes
       IntVector maxL_;
 
-      /// Dimensions of Fourier mode grid = 2*maxM_ + 1
+      /// Dimensions of Fourier mode grid = 2*maxL_ + 1
       IntVector dimensions_;
 
       /// Has readParam been called?
       bool isInitialized_;
 
    };
+
+   // Inline functions
+
+   /*
+   * Get value of inverse range parameter.
+   */
+   inline double KSpaceCoulombPotential::alpha() const
+   {  return alpha_; }
+
+   /*
+   * Get value of epsilon (dielectric) parameter.
+   */
+   inline double KSpaceCoulombPotential::epsilon() const
+   {  return epsilon_; }
 
 } 
 #endif
