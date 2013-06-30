@@ -23,7 +23,7 @@ include $(SRC_DIR_REL)/modules/hoomd/defines.mk
 # Executable file name macros
 
 BIN_DIR=$(ROOT_DIR)/bin
-BIN_SUFFIX:=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)_aspect_h
+BIN_SUFFIX:=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)_aspect_tric_trialmaster_h
 
 MCSIM_EXE=$(BIN_DIR)/mcSim$(BIN_SUFFIX)
 

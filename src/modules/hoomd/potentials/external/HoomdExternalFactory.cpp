@@ -18,15 +18,16 @@
 #include <mcMd/potentials/external/ExternalPotentialImpl.h>
 
 // External Potential evaluator classes
-#include <inter/external/LamellarOrderingExternal.h>
+#include <inter/external/PeriodicExternal.h>
 #include <inter/external/LocalLamellarOrderingExternal.h>
 
-#include <modules/hoomd/potentials/external/HoomdLamellarOrderingExternal.h>
+#include <modules/hoomd/potentials/external/HoomdPeriodicExternal.h>
 #include <modules/hoomd/potentials/external/HoomdLocalLamellarOrderingExternal.h>
 
 #include <hoomd/HOOMDMath.h>
+#include <hoomd/PeriodicExternalParams.h>
 #include <hoomd/LocalExternalParams.h>
-#include <hoomd/EvaluatorExternalPeriodic.h>
+#include <hoomd/EvaluatorPeriodicExternal.h>
 #include <hoomd/EvaluatorLocalExternal.h>
 #include <hoomd/AllDriverPotentialExternalGPU.cuh>
 
@@ -49,8 +50,8 @@ namespace McMd
    HoomdExternalFactory::factory(const std::string& name) const
    {
       ExternalPotential* ptr = 0;
-      if (name == classNameHoomdLamellarOrdering) {
-         ptr = new ExternalPotentialImpl<HoomdLamellarOrderingExternal> (*systemPtr_);
+      if (name == classNameHoomdPeriodic) {
+         ptr = new ExternalPotentialImpl<HoomdPeriodicExternal> (*systemPtr_);
       } else
       if (name == classNameHoomdLocalLamellarOrdering) {
          ptr = new ExternalPotentialImpl<HoomdLocalLamellarOrderingExternal> (*systemPtr_);
@@ -67,10 +68,10 @@ namespace McMd
       std::string name = potential.interactionClassName();
       HoomdExternalPotential* ptr = 0;
 
-      if (name == classNameHoomdLamellarOrdering) {
+      if (name == classNameHoomdPeriodic) {
          ptr = dynamic_cast< HoomdExternalPotential *>(
-            dynamic_cast< HoomdLamellarOrderingExternal * >(
-            &(dynamic_cast< ExternalPotentialImpl< HoomdLamellarOrderingExternal > * >
+            dynamic_cast< HoomdPeriodicExternal * >(
+            &(dynamic_cast< ExternalPotentialImpl< HoomdPeriodicExternal > * >
             (&potential))->interaction()));
       } else
       if (name == classNameHoomdLocalLamellarOrdering) {
@@ -96,14 +97,14 @@ namespace McMd
       std::string className = potential.interactionClassName();
       boost::shared_ptr<ForceCompute> externalSPtr;
 
-      if (className == classNameHoomdLamellarOrdering) {
-         externalSPtr = hoomdFactoryImpl<EvaluatorExternalPeriodic, gpu_compute_periodic_forces, 
-                                         classNameHoomdLamellarOrdering >(ptr, system, systemDefinitionSPtr );
+      if (className == classNameHoomdPeriodic) {
+         externalSPtr = hoomdFactoryImpl<EvaluatorPeriodicExternal, gpu_compute_periodic_forces, 
+                                         classNameHoomdPeriodic >(ptr, system, systemDefinitionSPtr );
       } else 
       if (className == classNameHoomdLocalLamellarOrdering) {
          externalSPtr = hoomdFactoryImpl<EvaluatorLocalExternal, gpu_compute_local_forces, 
                                          classNameHoomdLocalLamellarOrdering >(ptr, system, systemDefinitionSPtr );
-      } else 
+      } else
          UTIL_THROW("Unsupported Hoomd potential." );
       
       return externalSPtr; 
