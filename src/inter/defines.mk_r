@@ -25,6 +25,9 @@
 # Define INTER_DIHEDRAL, enable 4-body dihedral torsion potentials
 #INTER_DIHEDRAL=1
 
+# Define INTER_COULOMB, enable Coulomb potentials
+#INTER_COULOMB=1
+
 # Define INTER_EXTERNAL, enable external potentials
 #INTER_EXTERNAL=1
 
