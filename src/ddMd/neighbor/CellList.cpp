@@ -51,15 +51,8 @@ namespace DdMd
       tags_.allocate(atomCapacity);
       handles_.allocate(atomCapacity);
 
-      // Allocate array of Cell objects
+      // Set grid dimensions and allocate an array of Cell objects
       setGridDimensions(lower, upper, cutoffs);
-      cells_.resize(grid_.size());
-
-      for (int i = 0; i < grid_.size(); ++i) {
-         cells_[i].setOffsetArray(offsets_);
-         cells_[i].setId(i);
-      }
-
    }
 
    /*
@@ -76,7 +69,7 @@ namespace DdMd
    }
 
    /*
-   * Calculate number of cells in each direction of grid.
+   * Calculate number of cells in each direction of grid, resize cells_ array if needed.
    */
    void CellList::setGridDimensions(const Vector& lower, const Vector& upper, 
                                     const Vector& cutoffs)
@@ -104,9 +97,26 @@ namespace DdMd
       }
       grid_.setDimensions(gridDimensions);
 
-      // Postcondition
       if (grid_.size() < 1) {
          UTIL_THROW("totCells_ must be >= 1");
+      }
+
+      // Allocate or resize cells_ array, if needed
+      // Initialize any added elements, if needed
+      int oldSize = cells_.size();
+      int newSize = grid_.size();
+      if (newSize != oldSize) {
+         cells_.resize(newSize);
+         if (newSize > oldSize) {
+            for (int i = oldSize; i < newSize; ++i) {
+               cells_[i].setOffsetArray(offsets_);
+               cells_[i].setId(i);
+            }
+         }
+      }
+
+      if (grid_.size() != cells_.size()) {
+         UTIL_THROW("grid_.size() != cells_.size()");
       }
 
    }
@@ -117,13 +127,8 @@ namespace DdMd
    void CellList::makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs)
    {
 
-      // Calculate required grid dimensions
+      // Calculate required grid dimensions, resize cells_ array.
       setGridDimensions(lower, upper, cutoffs);
-      cells_.resize(grid_.size());
-
-      //if (grid_.size() > cells_.capacity()) {
-      //   UTIL_THROW("Insufficient memory was allocated for this grid");
-      //}
 
       // Mark all cells to as ghost cells by default.
       int ic;
