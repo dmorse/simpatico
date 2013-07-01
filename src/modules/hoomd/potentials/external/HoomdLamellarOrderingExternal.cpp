@@ -1,6 +1,6 @@
 #ifdef INTER_EXTERNAL
-#ifndef HOOMD_PERIODIC_EXTERNAL_CPP
-#define HOOMD_PERIODIC_EXTERNAL_CPP
+#ifndef HOOMD_LAMELLAR_ORDERING_EXTERNAL_CPP
+#define HOOMD_LAMELLAR_ORDERING_EXTERNAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

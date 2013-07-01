@@ -42,6 +42,9 @@ namespace McMd
    #ifdef HOOMD_DEVEL
    class HoomdBondPotential;
    #endif
+   #ifdef INTER_EXTERNAL
+   class HoomdExternalPotential;
+   #endif
 
    /**
    * HoomdMove is a hybrid Molecular Dynamics MC move that uses HOOMD
@@ -141,6 +144,7 @@ namespace McMd
       boost::shared_ptr< ForceCompute > pairForceSPtr_;
 
       #ifdef INTER_EXTERNAL
+      bool implementExternalPotential_;
       /// HOOMD external potential
       boost::shared_ptr< ForceCompute > externalForceSPtr_;
       #endif 
