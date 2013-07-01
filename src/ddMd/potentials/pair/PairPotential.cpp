@@ -195,7 +195,7 @@ namespace DdMd
       assert(cellList_.nAtom() + cellList_.nReject() 
              == storage().nAtom() + storage().nGhost());
       if (storage().isCartesian()) {
-         UTIL_THROW("Coordinates are Cartesian exiting buildCellList");
+        UTIL_THROW("Coordinates are Cartesian exiting buildCellList");
       }
    }
 

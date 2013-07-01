@@ -1,5 +1,5 @@
-#ifndef INTER_ORDERING_EXTERNAL_CPP
-#define INTER_ORDERING_EXTERNAL_CPP
+#ifndef INTER_PERIODIC_EXTERNAL_CPP
+#define INTER_PERIODIC_EXTERNAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "OrderingExternal.h"
+#include "PeriodicExternal.h"
 
 #include <iostream>
 
@@ -20,7 +20,7 @@ namespace Inter
    /* 
    * Constructor.
    */
-   OrderingExternal::OrderingExternal() 
+   PeriodicExternal::PeriodicExternal() 
     : externalParameter_(),
       nWaveVectors_(),
       periodicity_(),
@@ -28,12 +28,12 @@ namespace Inter
       boundaryPtr_(0),
       nAtomType_(0), 
       isInitialized_(false)
-   { setClassName("OrderingExternal"); }
+   { setClassName("PeriodicExternal"); }
    
    /* 
    * Copy constructor.
    */
-   OrderingExternal::OrderingExternal(const OrderingExternal& other)
+   PeriodicExternal::PeriodicExternal(const PeriodicExternal& other)
     : externalParameter_(other.externalParameter_),
       nWaveVectors_(other.nWaveVectors_),
       periodicity_(other.periodicity_),
@@ -57,7 +57,7 @@ namespace Inter
    /* 
    * Assignment operator.
    */
-   OrderingExternal& OrderingExternal::operator = (const OrderingExternal& other)
+   PeriodicExternal& PeriodicExternal::operator = (const PeriodicExternal& other)
    {
       externalParameter_   = other.externalParameter_;
       nWaveVectors_        = other.nWaveVectors_;
@@ -80,22 +80,22 @@ namespace Inter
    /* 
    * Set nAtomType
    */
-   void OrderingExternal::setNAtomType(int nAtomType) 
+   void PeriodicExternal::setNAtomType(int nAtomType) 
    {  
       if (nAtomType <= 0) {
          UTIL_THROW("nAtomType <= 0");
       }
       if (nAtomType > MaxAtomType) {
-         UTIL_THROW("nAtomType > OrderingExternal::MaxAtomType");
+         UTIL_THROW("nAtomType > PeriodicExternal::MaxAtomType");
       }
       nAtomType_ = nAtomType;
    }
 
-   void OrderingExternal::setExternalParameter(double externalParameter) 
+   void PeriodicExternal::setExternalParameter(double externalParameter) 
    {  
       // Preconditions
       if (!isInitialized_) {
-         UTIL_THROW("OrderingExternal potential is not initialized");
+         UTIL_THROW("PeriodicExternal potential is not initialized");
       }
      
       externalParameter_ = externalParameter;
@@ -105,13 +105,13 @@ namespace Inter
    /* 
    * Set pointer to the Boundary.
    */
-   void OrderingExternal::setBoundary(Boundary &boundary)
+   void PeriodicExternal::setBoundary(Boundary &boundary)
    {  boundaryPtr_ = &boundary; }
    
    /* 
    * Read potential parameters from file.
    */
-   void OrderingExternal::readParameters(std::istream &in) 
+   void PeriodicExternal::readParameters(std::istream &in) 
    {
       if (nAtomType_ == 0) {
          UTIL_THROW("nAtomType must be set before readParam");
@@ -136,16 +136,16 @@ namespace Inter
       isInitialized_ = true;
    }
 
-   double OrderingExternal::externalParameter() const
+   double PeriodicExternal::externalParameter() const
    { 
      return externalParameter_; 
    }
 
    /*
-   * Return name string "OrderingExternal".
+   * Return name string "PeriodicExternal".
    */
-   std::string OrderingExternal::className() const
-   {  return std::string("OrderingExternal"); }
+   std::string PeriodicExternal::className() const
+   {  return std::string("PeriodicExternal"); }
  
 } 
 #endif
