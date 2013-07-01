@@ -105,7 +105,7 @@ namespace McMd
       *
       * \param rosenbluth   rosenbluth factor of the whole grown chain
       */
-      void chemicalPotential(double& rosenbluth, double& energy);
+      double chemicalPotential();
 
       /** 
       * Clear accumulator.
@@ -148,7 +148,10 @@ namespace McMd
    private:
 
       /// Maximum allowed number of trial positions for a regrown atom.
-      static const int MaxTrial_ = 20; 
+      static const int MaxTrial_ = 20;
+
+      /// Maximum allowed number of trial molecules to grow.
+      static const int MaxMoleculeTrial_ = 50;
    
       /// Output file stream
       std::ofstream outputFile_;
@@ -158,6 +161,9 @@ namespace McMd
 
       /// Actual number of trial positions for each regrown atom.
       int  nTrial_; 
+
+      /// Actual number of trial positions for each regrown atom.
+      int  nMoleculeTrial_; 
    
       /// Number of samples per block average output.
       int nSamplePerBlock_;

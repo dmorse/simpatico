@@ -38,6 +38,7 @@ namespace McMd
       outputFile_(),
       accumulator_(),
       nTrial_(-1),
+      nMoleculeTrial_(-1),
       nSamplePerBlock_(1),
       isInitialized_(false)
    {}
@@ -64,6 +65,11 @@ namespace McMd
          UTIL_THROW("Invalid value input for nTrial");
       }
 
+      read<int>(in, "nMoleculeTrial", nMoleculeTrial_);
+      if (nMoleculeTrial_ <=0 || nMoleculeTrial_ > MaxMoleculeTrial_) {
+         UTIL_THROW("Invalid value input for nMoleculeTrial");
+      }
+
       isInitialized_ = true;
    }
 
@@ -73,7 +79,7 @@ namespace McMd
    void McChemicalPotential::setup() 
    {  accumulator_.clear(); }
  
-   #if 0
+   
    /* 
    * Evaluate Rosenbluth weight, and add to accumulator.
    */
@@ -83,7 +89,7 @@ namespace McMd
          accumulator_.sample(chemicalPotential(), outputFile_);
       }     
    }
-   #endif
+
 
    /*
    * Output results to file after simulation is completed.
@@ -110,7 +116,7 @@ namespace McMd
    */
    void McChemicalPotential::save(Serializable::OArchiveType& ar)
    {  ar & *this; }
-
+   
    /*
    * Load state from a binary file archive.
    */
@@ -118,7 +124,6 @@ namespace McMd
    { ar & *this; }
    #endif
 
-   #if 0
    /*
    * Configuration bias algorithm for adding one atom to a chain end.
    */
@@ -214,6 +219,7 @@ namespace McMd
       endPtr->position() = trialPos[iTrial];
 
    }
+
 
    /*
    * Configuration bias algorithm for deleting one atom from chain end.
@@ -392,7 +398,6 @@ namespace McMd
 
       return rosenbluth; 
    }
-   #endif
 
 }
 #endif 
