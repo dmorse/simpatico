@@ -20,7 +20,8 @@ namespace McMd
    * Descriptor for a type of Atom.
    *
    * An AtomTypeType has a mass, a name string, and an integer id.
-   * [It will later acquire a charge.]
+   * If coulomb interactions are enabled (ifdef INTER_COULOMB), it
+   * also has a electrical charge.
    *
    * \ingroup McMd_Chemistry_Module
    */
@@ -56,6 +57,15 @@ namespace McMd
       */
       void setMass(double mass);
 
+      #ifdef INTER_COULOMB
+      /**
+      * Set the charge.
+      *
+      * \param charge atom electrical charge
+      */
+      void setCharge(double charge);
+      #endif
+
       /**
       * Set the name string.
       *
@@ -67,10 +77,21 @@ namespace McMd
       /// \name Accessors
       //@{
 
-      /// Get the mass.
+      /**
+      * Get the mass.
+      */
       double mass() const;
 
-      /// Get the name string.
+      #ifdef INTER_COULOMB
+      /**
+      * Get the electrical charge.
+      */
+      double charge() const;
+      #endif
+
+      /**
+      * Get the name string.
+      */
       const std::string& name() const;
 
       /// Get the index.
@@ -80,44 +101,79 @@ namespace McMd
 
    private:
 
-      /// Name of type.
-      double       mass_;
+      /// Mass of atom type.
+      double  mass_;
+
+      #ifdef INTER_COULOMB
+      /// Electrical charge of atom type.
+      double  charge_;
+      #endif
 
       /// Name of type.
       std::string  name_;
 
       /// Integer index.
-      int          id_;
+      int  id_;
 
    //friends:
 
-      friend std::istream& operator>>(std::istream& in, AtomType &atomType);
-      friend std::ostream& operator<<(std::ostream& out, const AtomType &atomType);
+      friend 
+      std::istream& operator>>(std::istream& in, AtomType &atomType);
 
-      template <class Archive> friend
-      void serialize(Archive& ar, AtomType& atomType, const unsigned int version);
+      friend 
+      std::ostream& operator<<(std::ostream& out, const AtomType &atomType);
+
+      template <class Archive> 
+      friend void 
+      serialize(Archive& ar, AtomType& atomType, const unsigned int version);
 
    };
 
    // Inline methods
 
-   // Set the mass.
+   /*
+   * Set the mass.
+   */
    inline void AtomType::setMass(double mass)
    {  mass_ = mass; }
 
-   // Set the name string.
+   #ifdef INTER_COULOMB
+   /*
+   * Set the electrical charge.
+   */
+   inline void AtomType::setCharge(double charge)
+   {  charge_ = charge; }
+   #endif 
+
+   /*
+   * Set the name string.
+   */
    inline void AtomType::setName(std::string name)
    {  name_ = name; }
 
-   // Get the mass.
+   /*
+   * Get the mass.
+   */
    inline double AtomType::mass() const
    {  return mass_; }
 
-   // Get the name string.
+   #ifdef INTER_COULOMB
+   /*
+   * Get the electrical charge.
+   */
+   inline double AtomType::charge() const
+   {  return charge_; }
+   #endif
+
+   /*
+   * Get the name string.
+   */
    inline const std::string& AtomType::name() const
    {  return name_; }
 
-   // Get the type id.
+   /*
+   * Get the type id.
+   */
    inline int  AtomType::id() const
    {  return id_; }
 
@@ -161,6 +217,9 @@ namespace McMd
    {
       ar & atomType.name_;
       ar & atomType.mass_;
+      #ifdef INTER_COULOMB
+      ar & atomType.charge_;
+      #endif
    }
 
 }

@@ -19,6 +19,9 @@ namespace McMd
    // Constructor
    AtomType::AtomType()
     : mass_(1.0),
+      #ifdef INTER_COULOMB
+      charge_(0.0),
+      #endif
       name_(),
       id_(-1) 
    {}
@@ -38,6 +41,9 @@ namespace McMd
    {
       in >> atomType.name_;
       in >> atomType.mass_;
+      #ifdef INTER_COULOMB
+      in >> atomType.charge_;
+      #endif
       return in;
    }
    
@@ -52,6 +58,10 @@ namespace McMd
       out.width(Parameter::Width);
       out.precision(Parameter::Precision);
       out << atomType.mass_;
+      #ifdef INTER_COULOMB
+      out.width(Parameter::Width);
+      out << atomType.charge_;
+      #endif
       return out;
    }
 
@@ -64,38 +74,63 @@ namespace Util
    template <>
    void send<McMd::AtomType>(MPI::Comm& comm, McMd::AtomType& data, int dest, int tag)
    {
-      std::string name = data.name();
-      double      mass = data.mass();
+      std::string  name = data.name();
       send<std::string>(comm, name, dest, tag);
+
+      double  mass = data.mass();
       send<double>(comm, mass, dest, tag);
+
+      #ifdef INTER_COULOMB
+      double charge = data.charge();
+      send<double>(comm, charge, dest, tag);
+      #endif
    }
 
    template <>
    void recv<McMd::AtomType>(MPI::Comm& comm, McMd::AtomType& data, int source, int tag)
    {
       std::string name;
-      double      mass; 
       recv<std::string>(comm, name, source, tag);
-      recv<double>(comm, mass, source, tag);
       data.setName(name);
+
+      double  mass; 
+      recv<double>(comm, mass, source, tag);
       data.setMass(mass);
+
+      #ifdef INTER_COULOMB
+      double  charge; 
+      recv<double>(comm, charge, source, tag);
+      data.setCharge(charge);
+      #endif
    }
 
    template <>
    void bcast<McMd::AtomType>(MPI::Intracomm& comm, McMd::AtomType& data, int root)
    {
-      std::string name;
-      double      mass; 
-      int         rank = comm.Get_rank();
+      std::string  name;
+      double  mass; 
+      #ifdef INTER_COULOMB
+      double  charge; 
+      #endif
+      int  rank = comm.Get_rank();
       if (rank == root) {
          name = data.name();
          mass = data.mass();
+         #ifdef INTER_COULOMB
+         charge = data.charge();
+         #endif
       }
       bcast<std::string>(comm, name, root);
       bcast<double>(comm, mass, root);
+      #ifdef INTER_COULOMB
+      bcast<double>(comm, charge, root);
+      #endif
       if (rank != root) {
          data.setName(name);
          data.setMass(mass);
+         #ifdef INTER_COULOMB
+         data.setCharge(charge);
+         #endif
       }
    }
 

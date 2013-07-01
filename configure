@@ -21,7 +21,7 @@
 #   -g (0|1)   debugging                (defines/undefines UTIL_DEBUG)
 #   -a (0|1)   angle potentials         (defines/undefines INTER_ANGLE)
 #   -d (0|1)   dihedral potentials      (defines/undefines INTER_DIHEDRAL)
-#   -f (0|1)   coulomb potentials       (defines/undefines INTER_COULOMB)
+#   -c (0|1)   coulomb potentials       (defines/undefines INTER_COULOMB)
 #   -e (0|1)   external potentials      (defines/undefines INTER_EXTERNAL)
 #   -f (0|1)   free energy perturbation (defines/undefines MCMD_PERTURB)
 #   -l (0|1)   links (mutable bonds)    (defines/undefines MCMD_LINK)
@@ -30,7 +30,7 @@
 #
 # Other Command Line Options:
 #
-#   -c compiler  Chooses a compiler, set COMPILER=compiler in src/compiler.mk
+#   -b compiler  Chooses a compiler, set COMPILER=compiler in src/compiler.mk
 #   -q           query: prints report of options that are enabled / disabled.
 #
 # Examples:
@@ -41,10 +41,10 @@
 #
 # To set COMPILER=intel in src/compiler.mk
 #
-#   >  ./configure -c intel
+#   >  ./configure -b intel
 #
 #-----------------------------------------------------------------------
-while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
+while getopts "m:g:a:d:c:e:l:f:s:k:b:q" opt; do
 
   if [ -n "$MACRO" ]; then 
     MACRO=""
@@ -74,7 +74,7 @@ while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
       VALUE=1
       FILE=src/inter/defines.mk
       ;;
-    f)
+    c)
       MACRO=INTER_COULOMB
       VALUE=1
       FILE=src/inter/defines.mk
@@ -123,7 +123,7 @@ while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
         ;;
       esac
       ;;
-    c)
+    b)
       FILE=src/compiler.mk
       cp "$FILE" temp
       sed "s/COMPILER:=.*$/COMPILER:=$OPTARG/" temp > "$FILE"
@@ -152,6 +152,11 @@ while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
          echo "-d ON  - dihedral potential" >&2
       else
          echo "-d OFF - dihedral potential" >&2
+      fi
+      if [ `grep "^ *INTER_COULOMB *= *1" src/inter/defines.mk` ]; then
+         echo "-c ON  - coulomb potential" >&2
+      else
+         echo "-c OFF - coulomb potential" >&2
       fi
       if [ `grep "^ *INTER_EXTERNAL *= *1" src/inter/defines.mk` ]; then
          echo "-e ON  - external potential" >&2

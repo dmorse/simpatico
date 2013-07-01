@@ -86,6 +86,12 @@ INTER_DEFS+= -DINTER_DIHEDRAL
 INTER_SUFFIX:=$(INTER_SUFFIX)_d
 endif
 
+# Enable Coulomb potential
+ifdef INTER_COULOMB
+INTER_DEFS+= -DINTER_COULOMB
+INTER_SUFFIX:=$(INTER_SUFFIX)_c
+endif
+
 # Enable external potential
 ifdef INTER_EXTERNAL
 INTER_DEFS+= -DINTER_EXTERNAL
