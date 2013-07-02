@@ -49,11 +49,11 @@ namespace McMd
       * to obtain the force vector. A positive value for the return value
       * represents a repulsive force between a pair of particles.
       *
-      * Precondition: The square separation rsq must be less than cutoffSq.
-      * If rsq > cutoffSq, the return value is undefined (i.e., wrong).
-      * Usage: Test for rsq < cutoffSq before calling this function
+      * Precondition: The square separation rsq must be less than rCutoffSq.
+      * If rsq > rCutoffSq, the return value is undefined (i.e., wrong).
+      * Usage: Test for rsq < rCutoffSq before calling this function
       * \code
-      * if (rsq < interaction.cutoffSq(i, j)) {
+      * if (rsq < interaction.rCutoffSq(i, j)) {
       *    f = forceOverR(rsq, i, j);
       *    .....
       * }
@@ -76,6 +76,9 @@ namespace McMd
       /// Prefactor of qi*qj/r in Coulomb potential
       double c_;
 
+      /// Prefactor 2*alpha/\sqrt{pi} in derivative of erfc
+      double d_;
+
       /// Ewald inverse range parameter
       double alpha_;  
  
@@ -84,6 +87,11 @@ namespace McMd
 
       /// Pointer to array of AtomTypes
       const Array<AtomType>* atomTypesPtr_;
+
+      /**
+      * Set all private member constants. Called by CoulombPotential.
+      */
+      void set(double epsilon, double alpha, double rCutoff);
 
    //friends:
 
@@ -118,8 +126,7 @@ namespace McMd
       double r = sqrt(rsq);
       double qi = (*atomTypesPtr_)[i].charge();
       double qj = (*atomTypesPtr_)[j].charge();
-      return c_*qi*qj*erfc(alpha_*r)/(r*rsq);
-      // Not correct - I need to work out the derivative of cerf.
+      return c_*qi*qj*( erfc(alpha_*r) + d_*exp(-alpha_*rsq) )/(r*rsq);
    }
 
 }

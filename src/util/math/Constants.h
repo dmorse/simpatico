@@ -31,7 +31,7 @@ namespace Util
       /**
       * Trigonometric constant Pi.
       */
-      static const double               Pi;
+      static const double  Pi;
 
       /**
       * Square root of -1.

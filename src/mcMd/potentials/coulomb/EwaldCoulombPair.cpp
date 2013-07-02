@@ -9,15 +9,28 @@
 */
 
 #include "EwaldCoulombPair.h"
+#include <util/math/Constants.h>
 
 namespace McMd
 {
 
    /*
-   * Set AtomTypes.
+   * Set pointer to array of AtomTypes.
    */
    void EwaldCoulombPair::setAtomTypes(const Array<AtomType> atomTypes)
    {  atomTypesPtr_ = &atomTypes; }
+
+   /*
+   * Set internal constants.
+   */
+   void EwaldCoulombPair::set(double epsilon, double alpha, double rCutoff) 
+   {
+      double pi = Constants::Pi;
+      c_ = 1.0/(epsilon*4.0*pi);
+      d_ = 2.0*alpha/sqrt(pi);
+      alpha_ = alpha;
+      rCutoffSq_ = rCutoff*rCutoff;
+   }
 
 }
 #endif
