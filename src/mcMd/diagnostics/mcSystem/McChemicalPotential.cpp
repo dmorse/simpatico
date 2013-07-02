@@ -368,42 +368,41 @@ namespace McMd
       Molecule* molPtr;
       Molecule::BondIterator bondIter;
       Atom* endPtr;
+      AverageStage aveAccum;
       double rosenbluth;
       double e = 0;
- 
-      int nSpecies; 
-      nSpecies = system().simulation().nSpecies();
-         if (nSpecies != 1) {
-            UTIL_THROW("Error: nSpecies != 1");
+
+      for (int i = 0; i < nMoleculeTrial_; i++) {
+         speciesPtr = &(simulation().species(speciesId_));
+         molPtr = &(speciesPtr->reservoir().pop());
+         system().addMolecule(*molPtr);
+
+         endPtr = &molPtr->atom(0);
+         boundary().randomPosition(random(), endPtr->position());
+      
+         system().pairPotential().addAtom(*endPtr);
+         rosenbluth = boltzmann(system().pairPotential().atomEnergy(*endPtr));
+
+         for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
+             addEndAtom(&(bondIter->atom(1)), &(bondIter->atom(0)), bondIter->typeId(), rosenbluth, e);
+             rosenbluth *= rosenbluth;
+             e += e;
+             system().pairPotential().addAtom(bondIter->atom(1));
          }
 
-      speciesPtr = &(simulation().species(speciesId_));
-      molPtr = &(speciesPtr->reservoir().pop());
-      system().addMolecule(*molPtr);
+         rosenbluth = rosenbluth/pow(nTrial_,molPtr->nAtom());
+         aveAccum.sample(rosenbluth);
 
-      endPtr = &molPtr->atom(0);
-      boundary().randomPosition(random(), endPtr->position());
+         system().pairPotential().deleteAtom(*endPtr);
+         for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
+             system().pairPotential().deleteAtom(bondIter->atom(1));
+         }
       
-      system().pairPotential().addAtom(*endPtr);
-      rosenbluth = boltzmann(system().pairPotential().atomEnergy(*endPtr));
-
-      for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
-          addEndAtom(&(bondIter->atom(1)), &(bondIter->atom(0)), bondIter->typeId(), rosenbluth, e);
-          rosenbluth *= rosenbluth;
-          e += e;
-          system().pairPotential().addAtom(bondIter->atom(1));
+         system().removeMolecule(*molPtr);
       }
 
-      rosenbluth = rosenbluth/pow(nTrial_,molPtr->nAtom());
-
-      for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
-          system().pairPotential().deleteAtom(bondIter->atom(1));
+         return aveAccum.average(); 
       }
-      
-      system().removeMolecule(*molPtr);
-
-      return rosenbluth; 
-   }
-
+ 
 }
-#endif 
+#endif

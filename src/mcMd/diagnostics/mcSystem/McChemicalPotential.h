@@ -181,7 +181,7 @@ namespace McMd
       *
       *   - rosenbluth factor of the whole chain is returned. 
       *
-      * \param speciesid    id of the specie to add the molecule of that to system.
+      * \param speciesid    specie id of the added molecule.
       * \param rosenbluth   rosenbluth factor of the whole grown chain
       */
       double chemicalPotential();
