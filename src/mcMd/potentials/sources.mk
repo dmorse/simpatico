@@ -19,8 +19,8 @@ mcMd_potentials_SRCS+=$(mcMd_potentials_dihedral_SRCS)
 endif
 
 ifdef INTER_COULOMB
-include $(SRC_DIR)/mcMd/potentials/kspace/sources.mk
-mcMd_potentials_SRCS+=$(mcMd_potentials_kspace_SRCS) 
+include $(SRC_DIR)/mcMd/potentials/coulomb/sources.mk
+mcMd_potentials_SRCS+=$(mcMd_potentials_coulomb_SRCS) 
 endif
 
 ifdef MCMD_LINK

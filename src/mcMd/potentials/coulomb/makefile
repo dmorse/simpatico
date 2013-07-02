@@ -7,13 +7,13 @@ include $(SRC_DIR_REL)/mcMd/defines.mk
 include $(SRC_DIR_REL)/mcMd/patterns.mk
 include sources.mk
 
-all: $(mcMd_potentials_kspace_OBJS)
+all: $(mcMd_potentials_coulomb_OBJS)
 
 clean:
-	rm -f $(mcMd_potentials_kspace_OBJS) $(mcMd_potentials_kspace_OBJS:.o=.d)
+	rm -f $(mcMd_potentials_coulomb_OBJS) $(mcMd_potentials_coulomb_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(mcMd_potentials_kspace_OBJS:.o=.d)
+	rm -f $(mcMd_potentials_coulomb_OBJS:.o=.d)
 
--include $(mcMd_potentials_kspace_OBJS:.o=.d)
+-include $(mcMd_potentials_coulomb_OBJS:.o=.d)
 
