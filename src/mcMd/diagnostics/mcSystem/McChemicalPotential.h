@@ -11,6 +11,8 @@
 #include <mcMd/diagnostics/SystemDiagnostic.h>  // base class template
 #include <mcMd/mcSimulation/McSystem.h>         // base template parameter
 #include <util/accumulators/Average.h>          // member
+#include <util/random/Random.h>                 // member
+#include <util/ensembles/EnergyEnsemble.h>      // inline function
 #include <util/archives/Serializable.h>         // typedef used in interface
 
 #include <cstdio> 
@@ -41,6 +43,82 @@ namespace McMd
       * Read parameters and initialize.
       */
       virtual void readParam(std::istream& in);
+
+      /** 
+      * Clear accumulator.
+      */
+      virtual void setup();
+   
+      /* 
+      * Evaluate energy per particle, and add to ensemble. 
+      */
+      virtual void sample(long iStep);
+   
+      /**
+      * Output results at end of simulation.
+      */
+      virtual void output();
+
+      /**
+      * Save state to binary file archive.
+      *
+      * \param ar binary saving (output) archive.
+      */
+      virtual void save(Serializable::OArchive& ar);
+
+      /**
+      * Load state from a binary file archive.
+      *
+      * \param ar binary loading (input) archive.
+      */
+      virtual void load(Serializable::IArchive& ar);
+
+      /**
+      * Serialize to/from an archive. 
+      *
+      * \param ar      saving or loading archive
+      * \param version archive version id
+      */
+
+      /*
+      * Serialize to/from an archive. 
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version)
+      {
+         if (!isInitialized_) {
+            UTIL_THROW("Error: Object not initialized.");
+         }
+
+         ar & accumulator_;
+         ar & nSamplePerBlock_;
+      }
+
+
+   protected:
+
+      /// Get parent McSystem.
+      McSystem& system();
+
+      /// Get EnergyEnsemble object of parent McSystem.
+      Simulation& simulation();
+
+      /// Get Boundary object of parent McSystem.
+      Boundary& boundary();
+
+      /// Get EnergyEnsemble object of parent McSystem.
+      EnergyEnsemble& energyEnsemble();
+
+      /// Get Random number generator of parent Simulation.
+      Random& random();
+
+      /**
+      * Boltzmann weight associated with an energy difference.
+      *
+      * \param energy energy or energy difference.
+      * \return Boltzmann weight exp(-beta*energy)
+      */
+      double boltzmann(double energy);
 
       /**
       * Configuration bias algorithm for adding an atom to a chain end.
@@ -107,44 +185,6 @@ namespace McMd
       */
       double chemicalPotential();
 
-      /** 
-      * Clear accumulator.
-      */
-      virtual void setup();
-   
-      /* 
-      * Evaluate energy per particle, and add to ensemble. 
-      */
-      virtual void sample(long iStep);
-   
-      /**
-      * Output results at end of simulation.
-      */
-      virtual void output();
-
-      /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchive& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchive& ar);
-
-      /**
-      * Serialize to/from an archive. 
-      *
-      * \param ar      saving or loading archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
    private:
 
       /// Maximum allowed number of trial positions for a regrown atom.
@@ -152,6 +192,21 @@ namespace McMd
 
       /// Maximum allowed number of trial molecules to grow.
       static const int MaxMoleculeTrial_ = 50;
+
+      /// Pointer to parent McSystem object.
+      McSystem  *systemPtr_;
+
+      /// Pointer to Simulation of parent System.
+      Simulation  *simulationPtr_;
+
+      /// Pointer to Boundary of parent System.
+      Boundary  *boundaryPtr_;
+
+      /// Pointer to EnergyEnsemble of parent System.
+      EnergyEnsemble  *energyEnsemblePtr_;
+
+      /// Pointer to Random of parent System.
+      Random  *randomPtr_;
    
       /// Output file stream
       std::ofstream outputFile_;
@@ -173,21 +228,45 @@ namespace McMd
 
       /// Grant friend access to unit test class
       //  friend class CbEndBaseTest;
-   };
+      };
 
-   /*
-   * Serialize to/from an archive. 
-   */
-   template <class Archive>
-   void McChemicalPotential::serialize(Archive& ar, const unsigned int version)
-   {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
+      // Inline methods
 
-      ar & accumulator_;
-      ar & nSamplePerBlock_;
-   }
+      /*
+      * Get parent McSystem.
+      */
+      inline McSystem& McChemicalPotential::system()
+      {  return *systemPtr_; }
+
+      /*
+      * Get Simulation object of parent McSystem.
+      */
+      inline Simulation& McChemicalPotential::simulation()
+      {  return *simulationPtr_; }
+
+      /*
+      * Get Boundary object of parent McSystem.
+      */
+      inline Boundary& McChemicalPotential::boundary()
+      {  return *boundaryPtr_; }
+
+      /*
+      * Get EnergyEnsemble object of parent McSystem.
+      */
+      inline EnergyEnsemble& McChemicalPotential::energyEnsemble()
+      {  return *energyEnsemblePtr_; }
+
+      /*
+      * Get random object of parent McSystem.
+      */
+      inline Random& McChemicalPotential::random()
+      {  return *randomPtr_; }
+
+      /*
+      * Boltzmann weight associated with an energy difference.
+      */
+      inline double McChemicalPotential::boltzmann(double energy)
+      {  return exp(-energyEnsemblePtr_->beta()*energy); }
 
 }
 #endif 

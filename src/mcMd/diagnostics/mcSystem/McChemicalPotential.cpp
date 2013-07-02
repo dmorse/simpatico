@@ -13,6 +13,7 @@
 #include <util/archives/Serializable_includes.h>
 
 #include <mcMd/mcSimulation/McSystem.h>
+#include <mcMd/mcMoves/SystemMove.h>
 #include <mcMd/mcSimulation/mc_potentials.h>
 
 #include <util/boundary/Boundary.h>
@@ -35,13 +36,19 @@ namespace McMd
    */
    McChemicalPotential::McChemicalPotential(McSystem& system)
     : SystemDiagnostic<McSystem>(system),
+      systemPtr_(&system),
+      simulationPtr_(&system.simulation()),
+      boundaryPtr_(&system.boundary()),
+      randomPtr_(&system.simulation().random()),
       outputFile_(),
       accumulator_(),
       nTrial_(-1),
       nMoleculeTrial_(-1),
       nSamplePerBlock_(1),
       isInitialized_(false)
-   {}
+   {
+      energyEnsemblePtr_ = &system.energyEnsemble();
+   }
 
    /*
    * Read parameters and initialize.
@@ -110,19 +117,19 @@ namespace McMd
       outputFile_.close();
    }
    
-   #if 0
+   
    /*
    * Save state to binary file archive.
    */
-   void McChemicalPotential::save(Serializable::OArchiveType& ar)
+   void McChemicalPotential::save(Serializable::OArchive& ar)
    {  ar & *this; }
    
    /*
    * Load state from a binary file archive.
    */
-   void McChemicalPotential::load(Serializable::IArchiveType& ar)
+   void McChemicalPotential::load(Serializable::IArchive& ar)
    { ar & *this; }
-   #endif
+   
 
    /*
    * Configuration bias algorithm for adding one atom to a chain end.
@@ -356,42 +363,36 @@ namespace McMd
       Molecule* molPtr;
       Molecule::BondIterator bondIter;
       Atom* endPtr;
-      double w;
+      double rosenbluth;
       double e = 0;
  
       int nSpecies; 
-      nSpecies = simulation().nSpecies();
+      nSpecies = system().simulation().nSpecies();
          if (nSpecies != 1) {
             UTIL_THROW("Error: nSpecies != 1");
          }
 
-      speciesPtr = simulation().species(0);
-      molPtr = &(speciesPtr->reservoi().pop());
+      speciesPtr = &(simulation().species(0));
+      molPtr = &(speciesPtr->reservoir().pop());
       system().addMolecule(*molPtr);
 
       endPtr = &molPtr->atom(0);
-      Random& random;
-      Vector& vector;
-      boundary().randomPosition(random,vector);
+      boundary().randomPosition(random(), endPtr->position());
       
-      endPtr->Position() = vector;
-      system().pairPotential().addAtom(endPtr);
-      rosenbluth = boltzmann(system().pairPotential().atomEnergy(endPtr));
-
-      Molecule::BondIterator bondIter;
+      system().pairPotential().addAtom(*endPtr);
+      rosenbluth = boltzmann(system().pairPotential().atomEnergy(*endPtr));
 
       for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
-          McChemicalPotential::addEndAtom(&(bondIter()->atom(1)), &(bondIter->atom(0)), bondIter->typeId, w, e);
-          rosenbluth *= w;
+          addEndAtom(&(bondIter()->atom(1)), &(bondIter->atom(0)), bondIter->typeId(), rosenbluth, e);
+          rosenbluth *= rosenbluth;
           e += e;
-          system().pairPotential().addAtom(&(bondIter->atom(1)));
+          system().pairPotential().addAtom(bondIter()->atom(1));
       }
 
       rosenbluth = rosenbluth/pow(nTrial_,molPtr->nAtom());
 
-      system().pairPotential().removeAtom(endPtr);
       for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
-          system().pairPotential().removeAtom(&(bondIter->atom(1)));
+          system().pairPotential().deleteAtom(bondIter()->atom(1));
       }
       
       system().removeMolecule(*molPtr);
