@@ -28,7 +28,9 @@ namespace McMd
    public:
    
       /**  
-      * Set AtomTypes.
+      * Create association with an array of AtomType objects.
+      *
+      * \param atomTypes array of AtomType objects.
       */
       void setAtomTypes(Array<AtomType> atomTypes);
 
@@ -70,10 +72,7 @@ namespace McMd
 
    private:
    
-      /// Maximum allowed value for nAtomType (# of particle types)
-      static const int MaxAtomType = 2;
-   
-      /// Prefactor of qi*qj/r in Coulomb potential
+      /// Prefactor 1/(4 pi epsilon) of qi*qj/r in Coulomb potential
       double c_;
 
       /// Prefactor 2*alpha/\sqrt{pi} in derivative of erfc
@@ -89,7 +88,7 @@ namespace McMd
       const Array<AtomType>* atomTypesPtr_;
 
       /**
-      * Set all private member constants. Called by CoulombPotential.
+      * Set all private member parameters. Called by CoulombPotential.
       */
       void set(double epsilon, double alpha, double rCutoff);
 

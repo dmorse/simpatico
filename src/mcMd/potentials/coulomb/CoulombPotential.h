@@ -26,11 +26,40 @@ namespace McMd
 
    class Simulation;
    class System;
+   class EwaldCoulombPair;
 
    using namespace Util;
 
    /**
    * Coulomb potential base class.
+   *
+   * This class manages parameters for an Ewald summation 
+   * algorithm for calculating Coulomb energies and forces.
+   * Functions that compute different contributions to the
+   * energies and forces are divided among several classes.
+   * The short-range pair potential and pair force for a 
+   * single pair can be calculated by member functions of 
+   * an associated instance of the EwaldCoulombPair class.
+   * This class implements the calculation of the k-space 
+   * (Fourier space) contribution to the total energy. 
+   *
+   * An association between this class and an EwaldCoulombPair
+   * is created by the setPairInteraction method, which sets
+   * a private pointer to the EwaldCoulombPair in this class. 
+   * Functions in this class that set or modify the epsilon, 
+   * alpha, and rCutoff member variables also automatically
+   * set or modify all related constants in the associated
+   * EwaldCoulombPair. By design, this is the only possible 
+   * way to set or modify the parameters of the EwaldCoulombPair, 
+   * and is guarantees that the parameters used by these two
+   * classes are always consistent.
+   *
+   * Implementation notes: This class is a friend of the
+   * EwaldCoulombPair class, and calls the private member 
+   * function EwaldCoulombPair::set to set parameters of 
+   * the associated EwaldCoulombPair. The EwaldCoulombPair 
+   * class does not provide any public member functions 
+   * that can set these parameters.
    *
    * \ingroup McMd_Coulomb_Module
    */
@@ -53,6 +82,13 @@ namespace McMd
       //@{
 
       /**
+      * Create association with an EwaldCoulombPair pair interaction.
+      *
+      * \param pairInteraction associated EwaldCoulombPair object
+      */
+      void setPairInteraction(EwaldCoulombPair& pairInteraction);
+
+      /**
       * Read parameters and initialize.
       *
       * \param in input stream
@@ -65,7 +101,6 @@ namespace McMd
       void computeKSq();
 
       //@}
-
       /// \name System energy and stress.
       //@{
 
@@ -98,6 +133,13 @@ namespace McMd
       #endif
     
       //@}
+      /// \name Accessors (const)
+      //@{
+
+      /**
+      * Get value of dielectric constant.
+      */
+      double epsilon() const;
 
       /**
       * Get value of inverse range parameter.
@@ -105,9 +147,16 @@ namespace McMd
       double alpha() const;
 
       /**
-      * Get value of permittivity parameter.
+      * Get cutoff distance for short range interaction.
       */
-      double epsilon() const;
+      double rCutoff() const;
+
+      /**
+      * Get IntVector of maximum k-vector indices.
+      */
+      const IntVector maxK() const;
+
+      //@}
 
    protected:
 
@@ -129,12 +178,18 @@ namespace McMd
       /// Pointer to associated Boundary
       Boundary* boundaryPtr_;
 
-      /// Inverse range parameter
-      double alpha_;
-      
+      /// Pointer to associated short range pair interaction
+      EwaldCoulombPair* pairInteractionPtr_;
+
       /// Dielectric constant / permittivity
       double epsilon_;
 
+      /// Inverse range parameter
+      double alpha_;
+      
+      /// Cutoff distance for short range pair interaction
+      double rCutoff_;
+      
       /// Maximum Miller indices for Fourier modes
       IntVector maxK_;
 
@@ -149,16 +204,28 @@ namespace McMd
    // Inline functions
 
    /*
+   * Get value of epsilon (dielectric) parameter.
+   */
+   inline double CoulombPotential::epsilon() const
+   {  return epsilon_; }
+
+   /*
    * Get value of inverse range parameter.
    */
    inline double CoulombPotential::alpha() const
    {  return alpha_; }
 
    /*
-   * Get value of epsilon (dielectric) parameter.
+   * Get cutoff distance for short range interaction.
    */
-   inline double CoulombPotential::epsilon() const
-   {  return epsilon_; }
+   inline double CoulombPotential::rCutoff() const
+   {  return rCutoff_; }
+
+   /*
+   * Get IntVector of maximum k-vector indices.
+   */
+   inline const IntVector CoulombPotential::maxK() const
+   {  return maxK_; }
 
 } 
 #endif

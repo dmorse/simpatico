@@ -9,6 +9,7 @@
 */
 
 #include "CoulombPotential.h" 
+#include "EwaldCoulombPair.h" 
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
 #include <util/space/Vector.h>
@@ -25,7 +26,12 @@ namespace McMd
    CoulombPotential::CoulombPotential(System& system)
     : simulationPtr_(&system.simulation()),
       systemPtr_(&system),
-      boundaryPtr_(&system.boundary())
+      boundaryPtr_(&system.boundary()),
+      pairInteractionPtr_(0),
+      epsilon_(1.0),
+      alpha_(1.0),
+      rCutoff_(1.0),
+      maxK_()
    {  setClassName("CoulombPotential"); }
 
    /*
@@ -35,12 +41,22 @@ namespace McMd
    {}
 
    /*
+   * Destructor (does nothing)
+   */
+   void CoulombPotential::setPairInteraction(EwaldCoulombPair& pairInteraction)
+   {
+      pairInteractionPtr_ = &pairInteraction;
+      pairInteractionPtr_->set(epsilon_, alpha_, rCutoff_);
+   }
+
+   /*
    * Read parameters and initialize.
    */
    void CoulombPotential::readParam(std::istream& in)
    {
       read<double>(in, "epsilon", epsilon_);
       read<double>(in, "alpha", alpha_);
+      read<double>(in, "rCtuoff", rCutoff_);
       read<IntVector>(in, "maxK", maxK_);
       for (int i=0; i < Dimension; ++i) {
          dimensions_[i] = 2*maxK_[i] + 1;
@@ -48,6 +64,7 @@ namespace McMd
       rho_.allocate(dimensions_);
       ksq_.allocate(dimensions_);
       g_.allocate(dimensions_);
+      pairInteractionPtr_->set(epsilon_, alpha_, rCutoff_);
    }
 
    /*
