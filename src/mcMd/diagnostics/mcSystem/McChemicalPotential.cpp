@@ -77,6 +77,11 @@ namespace McMd
          UTIL_THROW("Invalid value input for nMoleculeTrial");
       }
 
+      read<int>(in, "speciesId", speciesId_);
+      if (speciesId_ <=0 || speciesId_ > system().simulation().nSpecies()) {
+         UTIL_THROW("Invalid value input for nMoleculeTrial");
+      }
+
       isInitialized_ = true;
    }
 
@@ -372,7 +377,7 @@ namespace McMd
             UTIL_THROW("Error: nSpecies != 1");
          }
 
-      speciesPtr = &(simulation().species(0));
+      speciesPtr = &(simulation().species(speciesId_));
       molPtr = &(speciesPtr->reservoir().pop());
       system().addMolecule(*molPtr);
 
@@ -383,16 +388,16 @@ namespace McMd
       rosenbluth = boltzmann(system().pairPotential().atomEnergy(*endPtr));
 
       for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
-          addEndAtom(&(bondIter()->atom(1)), &(bondIter->atom(0)), bondIter->typeId(), rosenbluth, e);
+          addEndAtom(&(bondIter->atom(1)), &(bondIter->atom(0)), bondIter->typeId(), rosenbluth, e);
           rosenbluth *= rosenbluth;
           e += e;
-          system().pairPotential().addAtom(bondIter()->atom(1));
+          system().pairPotential().addAtom(bondIter->atom(1));
       }
 
       rosenbluth = rosenbluth/pow(nTrial_,molPtr->nAtom());
 
       for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
-          system().pairPotential().deleteAtom(bondIter()->atom(1));
+          system().pairPotential().deleteAtom(bondIter->atom(1));
       }
       
       system().removeMolecule(*molPtr);

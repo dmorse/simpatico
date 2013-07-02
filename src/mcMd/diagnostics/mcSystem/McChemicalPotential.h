@@ -181,6 +181,7 @@ namespace McMd
       *
       *   - rosenbluth factor of the whole chain is returned. 
       *
+      * \param speciesid    id of the specie to add the molecule of that to system.
       * \param rosenbluth   rosenbluth factor of the whole grown chain
       */
       double chemicalPotential();
@@ -216,6 +217,9 @@ namespace McMd
 
       /// Actual number of trial positions for each regrown atom.
       int  nTrial_; 
+
+      /// Actual number of trial positions for each regrown atom.
+      int  speciesId_; 
 
       /// Actual number of trial positions for each regrown atom.
       int  nMoleculeTrial_; 
