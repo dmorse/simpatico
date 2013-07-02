@@ -185,8 +185,8 @@ namespace McMd
       double epsilon_;
 
       /// Inverse range parameter
-      double alpha_;
-      
+      double alpha_; 
+
       /// Cutoff distance for short range pair interaction
       double rCutoff_;
       

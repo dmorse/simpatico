@@ -72,19 +72,22 @@ namespace McMd
 
    private:
    
-      /// Prefactor 1/(4 pi epsilon) of qi*qj/r in Coulomb potential
+      /// Prefactor 1/(4 pi epsilon) of qi*qj/r in Coulomb potential.
       double c_;
 
-      /// Prefactor 2*alpha/\sqrt{pi} in derivative of erfc
+      /// Prefactor 2*alpha/\sqrt{pi} in derivative of erfc.
       double d_;
 
-      /// Ewald inverse range parameter
-      double alpha_;  
+      /// Ewald inverse range parameter.
+      double alpha_;
+
+      /// Ewald inverse range parameter.
+      double alphaSq_;
  
-      /// Real space cutoff squared
+      /// Real space cutoff squared.
       double rCutoffSq_;  
 
-      /// Pointer to array of AtomTypes
+      /// Pointer to array of AtomTypes.
       const Array<AtomType>* atomTypesPtr_;
 
       /**
@@ -125,7 +128,7 @@ namespace McMd
       double r = sqrt(rsq);
       double qi = (*atomTypesPtr_)[i].charge();
       double qj = (*atomTypesPtr_)[j].charge();
-      return c_*qi*qj*( erfc(alpha_*r) + d_*exp(-alpha_*rsq) )/(r*rsq);
+      return c_*qi*qj*( erfc(alpha_*r) + d_*r*exp(-alphaSq_*rsq) )/(r*rsq);
    }
 
 }

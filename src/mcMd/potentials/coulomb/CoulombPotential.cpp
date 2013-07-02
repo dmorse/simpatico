@@ -73,10 +73,9 @@ namespace McMd
    void CoulombPotential::computeKSq()
    {
       IntVector p;            // 0,...,dimensions_[i] - 1
-      IntVector k;            // -maxK_[i], ...., maxK_[i]
       Vector    b0, b1, b2;   // recprocal basis vectors
-      Vector    q0, q1, q;   // partial and complete wavevectors
-      double    prefactor = -0.25/alpha_;
+      Vector    q0, q1, q;    // partial and complete wavevectors
+      double    prefactor = -0.25/alpha_/alpha_;
       double    ksq;
       int       rank, zeroRank;
 
@@ -90,20 +89,21 @@ namespace McMd
       p[2] = maxK_[2];
       zeroRank = ksq_.rank(p);
 
-      rank = 0;
-      k[0] = -maxK_[0];
-      for (p[0] = 0; p[0] < dimensions_[0]; ++p[0], k[0]) {
-         q0.multiply(b0, k[0]);
+      rank = -1;
+      q0.multiply(b0, -maxK_[0]-1);
+      for (p[0] = 0; p[0] < dimensions_[0]; ++p[0]) {
+         q0 += b0;
 
-         k[1] = -maxK_[1];
-         for (p[1] = 0; p[1] < dimensions_[1]; ++p[1], ++k[1]) {
-            q1.multiply(b1, k[1]);
-            q1 += q0;
+         q1.multiply(b1, -maxK_[1]-1);
+         q1 += q0;
+         for (p[1] = 0; p[1] < dimensions_[1]; ++p[1]) {
+            q1 += b1;
 
-            q.multiply(b2, -maxK_[2]);
+            q.multiply(b2, -maxK_[2]-1);
             q += q1;
-            k[2] = -maxK_[2];
-            for (p[2] = 0; p[2] < dimensions_[2]; ++p[2], k[2]) {
+            for (p[2] = 0; p[2] < dimensions_[2]; ++p[2]) {
+               q += b2;
+               ++rank;
                if (rank == zeroRank) {
                   ksq_(p) = 0.0;;
                   g_(p) = 0.0;
@@ -112,8 +112,6 @@ namespace McMd
                   ksq_(p) = ksq;
                   g_(p) = exp(prefactor*ksq)/ksq;
                }
-               q += b2;
-               ++rank;
             } // for p[2]
 
          } // for p[1]

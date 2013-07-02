@@ -29,6 +29,7 @@ namespace McMd
       c_ = 1.0/(epsilon*4.0*pi);
       d_ = 2.0*alpha/sqrt(pi);
       alpha_ = alpha;
+      alphaSq_ = alpha*alpha;
       rCutoffSq_ = rCutoff*rCutoff;
    }
 
