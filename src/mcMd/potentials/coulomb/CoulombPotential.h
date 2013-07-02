@@ -1,5 +1,5 @@
-#ifndef MCMD_KSPACE_COULOMB_POTENTIAL_H
-#define MCMD_KSPACE_COULOMB_POTENTIAL_H
+#ifndef MCMD_COULOMB_POTENTIAL_H
+#define MCMD_COULOMB_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -34,7 +34,7 @@ namespace McMd
    *
    * \ingroup McMd_Coulomb_Module
    */
-   class KSpaceCoulombPotential : public ParamComposite
+   class CoulombPotential : public ParamComposite
    {
 
    public:
@@ -42,12 +42,12 @@ namespace McMd
       /**
       * Constructor .
       */
-      KSpaceCoulombPotential(System& system);
+      CoulombPotential(System& system);
 
       /**
       * Destructor (does nothing)
       */
-      virtual ~KSpaceCoulombPotential();
+      virtual ~CoulombPotential();
 
       /// \name Initialization
       //@{
@@ -70,31 +70,31 @@ namespace McMd
       //@{
 
       /**
-      * Calculate the long range part of the Coulomb energy.
+      * Calculate the long range kspace part of Coulomb energy.
       */
-      double energy();
+      double kspaceEnergy();
 
       #if 0
       /**
-      * Compute total nonbonded pressure
+      * Compute kspace part of Coulomb pressure
       *
-      * \param stress (output) pressure.
+      * \param stress (output) pressure
       */
-      virtual void computeStress(double& stress);
+      virtual void computeKSpaceStress(double& stress);
 
       /**
-      * Compute x, y, z nonbonded pressures.
+      * Compute kspace part of Coulomb x, y, z pressures.
       *
-      * \param stress (output) pressures.
+      * \param stress (output) pressures
       */
-      virtual void computeStress(Util::Vector& stress);
+      virtual void computeKSpaceStress(Util::Vector& stress);
 
       /**
-      * Compute stress tensor.
+      * Compute kspace part of Coulomb stress tensor.
       *
-      * \param stress (output) pressures.
+      * \param stress (output) stress tensor
       */
-      virtual void computeStress(Util::Tensor& stress);
+      virtual void computeKSpaceStress(Util::Tensor& stress);
       #endif
     
       //@}
@@ -136,9 +136,9 @@ namespace McMd
       double epsilon_;
 
       /// Maximum Miller indices for Fourier modes
-      IntVector maxL_;
+      IntVector maxK_;
 
-      /// Dimensions of Fourier mode grid = 2*maxL_ + 1
+      /// Dimensions of Fourier mode grid = 2*maxK_ + 1
       IntVector dimensions_;
 
       /// Has readParam been called?
@@ -151,13 +151,13 @@ namespace McMd
    /*
    * Get value of inverse range parameter.
    */
-   inline double KSpaceCoulombPotential::alpha() const
+   inline double CoulombPotential::alpha() const
    {  return alpha_; }
 
    /*
    * Get value of epsilon (dielectric) parameter.
    */
-   inline double KSpaceCoulombPotential::epsilon() const
+   inline double CoulombPotential::epsilon() const
    {  return epsilon_; }
 
 } 

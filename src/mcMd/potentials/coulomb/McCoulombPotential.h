@@ -1,5 +1,5 @@
-#ifndef MCMD_MC_KSPACE_COULOMB_POTENTIAL_H
-#define MCMD_MC_KSPACE_COULOMB_POTENTIAL_H
+#ifndef MCMD_MC_COULOMB_POTENTIAL_H
+#define MCMD_MC_COULOMB_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "McKSpaceCoulombPotential.h"
+#include "McCoulombPotential.h"
 
 namespace McMd
 {
@@ -22,7 +22,7 @@ namespace McMd
    *
    * \ingroup McMd_Coulomb_Module
    */
-   class McKSpaceCoulombPotential : public KSpaceCoulombPotential
+   class McCoulombPotential : public CoulombPotential
    {
 
    public:
@@ -30,12 +30,12 @@ namespace McMd
       /**
       * Constructor .
       */
-      McKSpaceCoulombPotential();
+      McCoulombPotential();
 
       /**
       * Destructor (does nothing)
       */
-      virtual ~McKSpaceCoulombPotential();
+      virtual ~McCoulombPotential();
 
       /**
       * Calculate the covalent bond energy for one Atom.
@@ -43,7 +43,7 @@ namespace McMd
       * \param  atom Atom object of interest
       * \return bond potential energy of atom
       */
-      virtual double atomEnergy(const Atom& atom) const = 0;
+      virtual double kspaceAtomEnergy(const Atom& atom) const = 0;
 
    };
 

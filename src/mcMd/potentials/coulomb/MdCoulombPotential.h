@@ -1,5 +1,5 @@
-#ifndef MCMD_MD_KSPACE_COULOMB_POTENTIAL_H
-#define MCMD_MD_KSPACE_COULOMB_POTENTIAL_H
+#ifndef MCMD_MD_COULOMB_POTENTIAL_H
+#define MCMD_MD_COULOMB_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "MdKSpaceCoulombPotential.h"
+#include "MdCoulombPotential.h"
 
 namespace McMd
 {
@@ -20,7 +20,7 @@ namespace McMd
    *
    * \ingroup McMd_Coulomb_Module
    */
-   class MdKSpaceCoulombPotential : public ParamComposite
+   class MdCoulombPotential : public ParamComposite
    {
 
    public:
@@ -28,17 +28,17 @@ namespace McMd
       /**
       * Constructor .
       */
-      MdKSpaceCoulombPotential();
+      MdCoulombPotential();
 
       /**
       * Destructor (does nothing)
       */
-      virtual ~MdKSpaceCoulombPotential();
+      virtual ~MdCoulombPotential();
 
       /**
-      * Add bond forces to all atomic forces.
+      * Add k-space Coulomb forces for all atoms.
       */
-      void addForces();
+      void addKSpaceForces();
 
    };
 

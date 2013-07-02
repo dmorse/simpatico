@@ -1,5 +1,5 @@
-#ifndef MCMD_KSPACE_COULOMB_POTENTIAL_CPP
-#define MCMD_KSPACE_COULOMB_POTENTIAL_CPP
+#ifndef MCMD_COULOMB_POTENTIAL_CPP
+#define MCMD_COULOMB_POTENTIAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "KSpaceCoulombPotential.h" 
+#include "CoulombPotential.h" 
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
 #include <util/space/Vector.h>
@@ -22,29 +22,28 @@ namespace McMd
    /*
    * Constructor .
    */
-   KSpaceCoulombPotential::KSpaceCoulombPotential(System& system)
-    : 
-      simulationPtr_(&system.simulation()),
+   CoulombPotential::CoulombPotential(System& system)
+    : simulationPtr_(&system.simulation()),
       systemPtr_(&system),
       boundaryPtr_(&system.boundary())
-   {  setClassName("KSpaceCoulombPotential"); }
+   {  setClassName("CoulombPotential"); }
 
    /*
    * Destructor (does nothing)
    */
-   KSpaceCoulombPotential::~KSpaceCoulombPotential()
+   CoulombPotential::~CoulombPotential()
    {}
 
    /*
    * Read parameters and initialize.
    */
-   void KSpaceCoulombPotential::readParam(std::istream& in)
+   void CoulombPotential::readParam(std::istream& in)
    {
       read<double>(in, "epsilon", epsilon_);
       read<double>(in, "alpha", alpha_);
-      read<IntVector>(in, "maxL", maxL_);
+      read<IntVector>(in, "maxK", maxK_);
       for (int i=0; i < Dimension; ++i) {
-         dimensions_[i] = 2*maxL_[i] + 1;
+         dimensions_[i] = 2*maxK_[i] + 1;
       }
       rho_.allocate(dimensions_);
       ksq_.allocate(dimensions_);
@@ -54,10 +53,10 @@ namespace McMd
    /*
    * Compute values of k-squared and damping function
    */
-   void KSpaceCoulombPotential::computeKSq()
+   void CoulombPotential::computeKSq()
    {
       IntVector p;            // 0,...,dimensions_[i] - 1
-      IntVector k;            // -maxL_[i], ...., maxL_[i]
+      IntVector k;            // -maxK_[i], ...., maxK_[i]
       Vector    b0, b1, b2;   // recprocal basis vectors
       Vector    q0, q1, q;   // partial and complete wavevectors
       double    prefactor = -0.25/alpha_;
@@ -69,24 +68,24 @@ namespace McMd
       b2 = boundaryPtr_->reciprocalBasisVector(2);
 
       // Calculate array rank for zero wavevector
-      p[0] = maxL_[0];
-      p[1] = maxL_[1];
-      p[2] = maxL_[2];
+      p[0] = maxK_[0];
+      p[1] = maxK_[1];
+      p[2] = maxK_[2];
       zeroRank = ksq_.rank(p);
 
       rank = 0;
-      k[0] = -maxL_[0];
+      k[0] = -maxK_[0];
       for (p[0] = 0; p[0] < dimensions_[0]; ++p[0], k[0]) {
          q0.multiply(b0, k[0]);
 
-         k[1] = -maxL_[1];
+         k[1] = -maxK_[1];
          for (p[1] = 0; p[1] < dimensions_[1]; ++p[1], ++k[1]) {
             q1.multiply(b1, k[1]);
             q1 += q0;
 
-            q.multiply(b2, -maxL_[2]);
+            q.multiply(b2, -maxK_[2]);
             q += q1;
-            k[2] = -maxL_[2];
+            k[2] = -maxK_[2];
             for (p[2] = 0; p[2] < dimensions_[2]; ++p[2], k[2]) {
                if (rank == zeroRank) {
                   ksq_(p) = 0.0;;
@@ -106,9 +105,9 @@ namespace McMd
    }
 
    /*
-   * Calculate the Fourier space contribution to the Coulomb energy.
+   * Calculate the k-space contribution to the Coulomb energy.
    */
-   double KSpaceCoulombPotential::energy()
+   double CoulombPotential::kspaceEnergy()
    {
       Vector r;
       System::MoleculeIterator molIter;
@@ -131,19 +130,19 @@ namespace McMd
    /*
    * Compute total nonbonded pressure
    */
-   void KSpaceCoulombPotential::computeStress(double& stress) const
+   void CoulombPotential::computeKSpaceStress(double& stress) const
    {}
 
    /*
    * Compute x, y, z nonbonded pressures.
    */
-   void KSpaceCoulombPotential::computeStress(Util::Vector& stress) const 
+   void CoulombPotential::computeKSpaceStress(Util::Vector& stress) const 
    {}
 
    /*
    * Compute stress tensor.
    */
-   void KSpaceCoulombPotential::computeStress(Util::Tensor& stress) const
+   void CoulombPotential::computeKSpaceStress(Util::Tensor& stress) const
    {}
    #endif
  
