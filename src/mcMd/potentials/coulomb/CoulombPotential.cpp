@@ -14,6 +14,7 @@
 #include <mcMd/simulation/Simulation.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
+#include <stdlib.h>
 
 namespace McMd
 {
@@ -31,7 +32,8 @@ namespace McMd
       epsilon_(1.0),
       alpha_(1.0),
       rCutoff_(1.0),
-      maxK_()
+      kCutoff_(1.0),
+      isInitialized_(0)
    {  setClassName("CoulombPotential"); }
 
    /*
@@ -39,6 +41,13 @@ namespace McMd
    */
    CoulombPotential::~CoulombPotential()
    {}
+
+   /*
+   * Set pointer to array of AtomTypes.
+   */
+   void CoulombPotential::setAtomTypes(const Array<AtomType>& atomTypes)
+   {  atomTypesPtr_ = &atomTypes; }
+
 
    /*
    * Destructor (does nothing)
@@ -55,89 +64,152 @@ namespace McMd
    void CoulombPotential::readParam(std::istream& in)
    {
       read<double>(in, "epsilon", epsilon_);
-      read<double>(in, "alpha", alpha_);
-      read<double>(in, "rCtuoff", rCutoff_);
-      read<IntVector>(in, "maxK", maxK_);
-      for (int i=0; i < Dimension; ++i) {
-         dimensions_[i] = 2*maxK_[i] + 1;
-      }
-      rho_.allocate(dimensions_);
-      ksq_.allocate(dimensions_);
-      g_.allocate(dimensions_);
+      read<double>(in, "alpha",   alpha_);
+      read<double>(in, "rCutoff", rCutoff_);
+      read<double>(in, "kCutoff", kCutoff_);
       pairInteractionPtr_->set(epsilon_, alpha_, rCutoff_);
+
+      makeWaves();
+      isInitialized_ = true;
    }
 
    /*
-   * Compute values of k-squared and damping function
+   * Generate waves using kCutoff; allocate memories for associated variables.
+   *
+   * Comments:
+   *   Only half of waves are stored.
+   *   The first index is always non-negative.
+   *
    */
-   void CoulombPotential::computeKSq()
+   void CoulombPotential::makeWaves()
    {
-      IntVector p;            // 0,...,dimensions_[i] - 1
-      Vector    b0, b1, b2;   // recprocal basis vectors
-      Vector    q0, q1, q;    // partial and complete wavevectors
-      double    prefactor = -0.25/alpha_/alpha_;
-      double    ksq;
-      int       rank, zeroRank;
+      Vector    b0, b1, b2;   // Recprocal basis vectors.
+      IntVector maxK, k;      // Wave indices.
+      Vector    q0, q1, q;    // Partial and complete wavevectors.
+      double    prefactor(-0.25/alpha_/alpha_);
+      double    kCutoffSq(kCutoff_*kCutoff_), ksq;
 
       b0 = boundaryPtr_->reciprocalBasisVector(0);
       b1 = boundaryPtr_->reciprocalBasisVector(1);
       b2 = boundaryPtr_->reciprocalBasisVector(2);
 
-      // Calculate array rank for zero wavevector
-      p[0] = maxK_[0];
-      p[1] = maxK_[1];
-      p[2] = maxK_[2];
-      zeroRank = ksq_.rank(p);
+      // Max wave indices. (Need to find a good algorithm to calculate this automatically)
+      maxK = IntVector(10);
 
-      rank = -1;
-      q0.multiply(b0, -maxK_[0]-1);
-      for (p[0] = 0; p[0] < dimensions_[0]; ++p[0]) {
+      // Accumulate waves, and wave-related properties.
+      q0.multiply(b0, -1);
+      for (k[0] = 0; k[0] <= maxK[0]; ++k[0]) { // First index always non-negative.
          q0 += b0;
 
-         q1.multiply(b1, -maxK_[1]-1);
+         q1.multiply(b1, -maxK[1]-1);
          q1 += q0;
-         for (p[1] = 0; p[1] < dimensions_[1]; ++p[1]) {
+         for (k[1] = -maxK[1]; k[1] <= maxK[1]; ++k[1]) {
             q1 += b1;
 
-            q.multiply(b2, -maxK_[2]-1);
+            q.multiply(b2, -maxK[2]-1);
             q += q1;
-            for (p[2] = 0; p[2] < dimensions_[2]; ++p[2]) {
-               q += b2;
-               ++rank;
-               if (rank == zeroRank) {
-                  ksq_(p) = 0.0;;
-                  g_(p) = 0.0;
-               } else {
+            for (k[2] = -maxK[2]; k[2] <= maxK[2]; ++k[2]) {
+
+               if (k[0] + abs(k[1]) + abs(k[2]) > 0) {
                   ksq = q.square();
-                  ksq_(p) = ksq;
-                  g_(p) = exp(prefactor*ksq)/ksq;
+                  if (ksq <= kCutoffSq) {
+                     waves_.append(k);
+                     ksq_.append(ksq);
+                     g_.append(exp(prefactor*ksq)/ksq);
+                  }
+               } else {
+                  waves_.append(k);
+                  ksq_.append(0.0);
+                  g_.append(0.0);
                }
-            } // for p[2]
 
-         } // for p[1]
+            } // for k[2]
+         } // for k[1]
+      } // for k[0]
 
-      } //  for p[0] 
+      // Allocate fourier modes for charge density.
+      rho_.resize(waves_.size());
    }
+
+   /*
+   * Compute values of k-squared and damping function.
+   * Needed when box is reshaped.
+   */
+   void CoulombPotential::computeKSq()
+   {
+      Vector    b0, b1, b2;   // recprocal basis vectors
+      Vector    q, qtmp;     // partial and complete wavevectors
+      double    prefactor = -0.25/alpha_/alpha_;
+      double    ksq;
+
+      b0 = boundaryPtr_->reciprocalBasisVector(0);
+      b1 = boundaryPtr_->reciprocalBasisVector(1);
+      b2 = boundaryPtr_->reciprocalBasisVector(2);
+
+      for (int i = 0; i < waves_.size(); ++i) {
+         q.multiply(b0, waves_[i][0]);
+         qtmp.multiply(b1, waves_[i][1]);
+         q += qtmp;
+         qtmp.multiply(b2, waves_[i][2]);
+         q += qtmp;
+
+         ksq = q.square();
+         ksq_[i] = ksq;
+         g_[i] = exp(prefactor*ksq) / ksq;
+      }
+   }
+
+   /*
+   * Calculate fourier modes of charge density.
+   */
+   void CoulombPotential::computeChargeKMode()
+   {
+      System::MoleculeIterator molIter;
+      Molecule::AtomIterator atomIter;
+      int     nSpecies(simulationPtr_->nSpecies());
+      std::complex<double> img(0.0, 1.0); // Imaginary number unit.
+      Vector  rg;            // Cartesian and general atom position vector.
+      Vector  b0, b1, b2;    // Recprocal basis vectors.
+      Vector  q, qtmp;       // Partial and complete wavevectors.
+      int     i;             // Index for waves.
+      int     type;          // Atom type id.
+      double  dotqr;         // Dot product between q and r.
+
+      b0 = boundaryPtr_->reciprocalBasisVector(0);
+      b1 = boundaryPtr_->reciprocalBasisVector(1);
+      b2 = boundaryPtr_->reciprocalBasisVector(2);
+
+      for (i = 0; i < rho_.size(); ++i)
+         rho_[i] = std::complex<double>(0.0, 0.0);
+
+      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         systemPtr_->begin(iSpecies, molIter); 
+         for ( ; molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+
+               boundaryPtr_->transformCartToGen(atomIter->position(), rg);
+               dotqr = rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2];
+               type = atomIter->typeId();
+               rho_[i] += (*atomTypesPtr_)[type].charge() * exp(img*dotqr);
+
+            } // For atoms.
+         } // For molecules.
+      } // For species.
+
+   }
+
 
    /*
    * Calculate the k-space contribution to the Coulomb energy.
    */
    double CoulombPotential::kspaceEnergy()
    {
-      Vector r;
-      System::MoleculeIterator molIter;
-      Molecule::AtomIterator atomIter;
-      int nSpecies = simulationPtr_->nSpecies();
+      double total(0.0);
 
-      double total = 0.0;
-      for (int iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
-         systemPtr_->begin(iSpecies, molIter); 
-         for ( ; molIter.notEnd(); ++molIter) {
-            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-               // Do something
-            }
-         }
-      }
+      // Compute Fourier modes of charge density.
+      computeChargeKMode();
+
+      // Loop over waves.
       return total;
    }
 

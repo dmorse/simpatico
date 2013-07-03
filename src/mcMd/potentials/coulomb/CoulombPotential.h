@@ -10,7 +10,8 @@
 
 #include <util/param/ParamComposite.h>   // base class
 #include <util/space/IntVector.h>        // members
-#include <util/containers/GridArray.h>   // members
+#include <mcMd/chemistry/AtomType.h>     // Member template parameter
+#include <util/containers/GArray.h>      // members
 #include <util/boundary/Boundary.h>      // typedef
 
 #include <complex>
@@ -81,6 +82,13 @@ namespace McMd
       /// \name Initialization
       //@{
 
+      /**  
+      * Create association with an array of AtomType objects.
+      *
+      * \param atomTypes array of AtomType objects.
+      */
+      void setAtomTypes(const Array<AtomType>& atomTypes);
+
       /**
       * Create association with an EwaldCoulombPair pair interaction.
       *
@@ -96,13 +104,23 @@ namespace McMd
       void readParam(std::istream& in);
 
       /**
-      * Compute values of k-squared and influence function
+      * Generate waves and allocate memory for wave-related parameters.
+      */
+      void makeWaves();
+
+      /**
+      * Compute values of k-squared and influence function.
       */
       void computeKSq();
 
       //@}
       /// \name System energy and stress.
       //@{
+
+      /**
+      * Calculate fourier modes of charge density.
+      */
+      void computeChargeKMode();
 
       /**
       * Calculate the long range kspace part of Coulomb energy.
@@ -115,7 +133,7 @@ namespace McMd
       virtual void addKSpaceForces(){};
 
       /**
-      * Compute kspace part of Coulomb pressure
+      * Compute kspace part of Coulomb pressure.
       *
       * \param stress (output) pressure
       */
@@ -152,25 +170,28 @@ namespace McMd
       /**
       * Get cutoff distance for short range interaction.
       */
-      double rCutoff() const;
+      const double rCutoff() const;
 
       /**
-      * Get IntVector of maximum k-vector indices.
+      * Get cutoff wavenumber for long range interaction.
       */
-      const IntVector maxK() const;
+      const double kCutoff() const;
 
       //@}
 
    protected:
 
-      /// Fourier modes of charge density
-      GridArray< std::complex<double> > rho_;
+      /// Wave vector indices.
+      GArray< IntVector > waves_;
 
-      /// Values of square of Fourier wavevector
-      GridArray<double> ksq_;
+      /// Values of square of Fourier wavevector.
+      GArray<double> ksq_;
 
       /// Regularized Green's function (Gaussian/ksq)
-      GridArray<double> g_;
+      GArray<double> g_;
+
+      /// Fourier modes of charge density.
+      GArray< std::complex<double> > rho_;
 
       /// Pointer to associated Simulation
       Simulation* simulationPtr_;
@@ -181,23 +202,23 @@ namespace McMd
       /// Pointer to associated Boundary
       Boundary* boundaryPtr_;
 
-      /// Pointer to associated short range pair interaction
+      /// Pointer to associated short range pair interaction.
       EwaldCoulombPair* pairInteractionPtr_;
 
-      /// Dielectric constant / permittivity
+      /// Dielectric constant / permittivity.
       double epsilon_;
 
-      /// Inverse range parameter
+      /// Inverse range parameter.
       double alpha_; 
 
-      /// Cutoff distance for short range pair interaction
+      /// Cutoff distance for short range pair interaction.
       double rCutoff_;
-      
-      /// Maximum Miller indices for Fourier modes
-      IntVector maxK_;
 
-      /// Dimensions of Fourier mode grid = 2*maxK_ + 1
-      IntVector dimensions_;
+      /// Cutoff wavenumber for long range interaction.
+      double kCutoff_;
+
+      /// Pointer to array of AtomTypes.
+      const Array<AtomType>* atomTypesPtr_;
 
       /// Has readParam been called?
       bool isInitialized_;
@@ -221,14 +242,14 @@ namespace McMd
    /*
    * Get cutoff distance for short range interaction.
    */
-   inline double CoulombPotential::rCutoff() const
+   inline const double CoulombPotential::rCutoff() const
    {  return rCutoff_; }
 
    /*
    * Get IntVector of maximum k-vector indices.
    */
-   inline const IntVector CoulombPotential::maxK() const
-   {  return maxK_; }
+   inline const double CoulombPotential::kCutoff() const
+   {  return kCutoff_; }
 
 } 
 #endif

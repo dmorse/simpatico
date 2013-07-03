@@ -32,7 +32,7 @@ namespace McMd
       *
       * \param atomTypes array of AtomType objects.
       */
-      void setAtomTypes(Array<AtomType> atomTypes);
+      void setAtomTypes(const Array<AtomType>& atomTypes);
 
       /**
       * Returns interaction energy for a single pair of particles. 

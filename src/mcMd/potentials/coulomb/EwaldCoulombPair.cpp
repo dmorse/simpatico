@@ -17,7 +17,7 @@ namespace McMd
    /*
    * Set pointer to array of AtomTypes.
    */
-   void EwaldCoulombPair::setAtomTypes(const Array<AtomType> atomTypes)
+   void EwaldCoulombPair::setAtomTypes(const Array<AtomType>& atomTypes)
    {  atomTypesPtr_ = &atomTypes; }
 
    /*
