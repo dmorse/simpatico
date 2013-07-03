@@ -95,7 +95,7 @@ namespace McMd
       }
 
 
-   protected:
+   private:
 
       /// Get parent McSystem.
       McSystem& system();
@@ -144,49 +144,6 @@ namespace McMd
       */
       void addEndAtom(Atom* endPtr, Atom* pvtPtr, int bondType,
                          double &rosenbluth, double &energy);
-
-      /**
-      * CFB algorithm for deleting an end atom from a flexible chain.
-      *
-      * This function computes the energy of an end atom and a Rosenbluth 
-      * factor for removing it. It does not remove the end atom from the 
-      * system cell list.
-      *
-      * Upon return:
-      *   
-      *   - rosenbluth is the nonbonded Rosenblush factor for the deleted
-      *     atom, i.e., the sum of Boltzmann factors from nonbonded pair
-      *     interactions for the initial position and nTrial_ - 1 trials.
-      *
-      *   - energy is the total energy (bonded + nonbonded) of the end atom 
-      *     before it was deleted.
-      *
-      * \param endPtr     ptr to end atom, which we attempt to remove
-      * \param pvtPtr     ptr to atom next to end, or end after removal
-      * \param bondType   type of bond connecting pvt and end atoms
-      * \param rosenbluth nonbonded Rosenbluth factor of deleted atom (out)
-      * \param energy     total potential energy of deleted atom (out)
-      */
-      void deleteEndAtom(Atom* endPtr, Atom* pvtPtr, int bondType,
-                         double &rosenbluth, double &energy);
-
-      /**
-      * Rosenbluth algorithm for calculationg chemical potential.
-      * 
-      * This function computes the chemical potential of a system of linear
-      * polymers by insertion method. Rosenbluth insertion method is used to
-      * insert polymers.
-      *
-      * Upon return:
-      *
-      *   - rosenbluth factor of the whole chain is returned. 
-      *
-      * \param speciesid    specie id of the added molecule.
-      * \param rosenbluth   rosenbluth factor of the whole grown chain
-      */
-      double chemicalPotential();
-
-   private:
 
       /// Maximum allowed number of trial positions for a regrown atom.
       static const int MaxTrial_ = 20;
