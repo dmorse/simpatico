@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "McCoulombPotential.h"
+#include "CoulombPotential.h"
 
 namespace McMd
 {
@@ -30,7 +30,7 @@ namespace McMd
       /**
       * Constructor .
       */
-      McCoulombPotential();
+      McCoulombPotential(System& system);
 
       /**
       * Destructor (does nothing)

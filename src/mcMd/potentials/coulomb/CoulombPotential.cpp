@@ -22,7 +22,7 @@ namespace McMd
    using namespace Util;
 
    /*
-   * Constructor .
+   * Constructor.
    */
    CoulombPotential::CoulombPotential(System& system)
     : simulationPtr_(&system.simulation()),
@@ -33,8 +33,9 @@ namespace McMd
       alpha_(1.0),
       rCutoff_(1.0),
       kCutoff_(1.0),
+      atomTypesPtr_(NULL),
       isInitialized_(0)
-   {  setClassName("CoulombPotential"); }
+   { setClassName("CoulombPotential"); }
 
    /*
    * Destructor (does nothing)
@@ -83,9 +84,10 @@ namespace McMd
    */
    void CoulombPotential::makeWaves()
    {
-      Vector    b0, b1, b2;   // Recprocal basis vectors.
-      IntVector maxK, k;      // Wave indices.
-      Vector    q0, q1, q;    // Partial and complete wavevectors.
+      Vector    b0, b1, b2;    // Recprocal basis vectors.
+      IntVector maxK, k;       // Wave indices.
+      int       mink1, mink2;  // Minimum k-indices.
+      Vector    q0, q1, q;     // Partial and complete wavevectors.
       double    prefactor(-0.25/alpha_/alpha_);
       double    kCutoffSq(kCutoff_*kCutoff_), ksq;
 
@@ -103,12 +105,16 @@ namespace McMd
 
          q1.multiply(b1, -maxK[1]-1);
          q1 += q0;
-         for (k[1] = -maxK[1]; k[1] <= maxK[1]; ++k[1]) {
+
+         mink1 = (k[0] == 0 ? 0 : -maxK[1]);
+         for (k[1] = mink1; k[1] <= maxK[1]; ++k[1]) {
             q1 += b1;
 
             q.multiply(b2, -maxK[2]-1);
             q += q1;
-            for (k[2] = -maxK[2]; k[2] <= maxK[2]; ++k[2]) {
+
+            mink2 = (k[0] == 0 && k[1] == 0 ? 0 : -maxK[2]);
+            for (k[2] = mink2; k[2] <= maxK[2]; ++k[2]) {
 
                if (k[0] + abs(k[1]) + abs(k[2]) > 0) {
                   ksq = q.square();
@@ -138,7 +144,7 @@ namespace McMd
    void CoulombPotential::computeKSq()
    {
       Vector    b0, b1, b2;   // recprocal basis vectors
-      Vector    q, qtmp;     // partial and complete wavevectors
+      Vector    q, qtmp;      // partial and complete wavevectors
       double    prefactor = -0.25/alpha_/alpha_;
       double    ksq;
 
@@ -168,33 +174,33 @@ namespace McMd
       Molecule::AtomIterator atomIter;
       int     nSpecies(simulationPtr_->nSpecies());
       std::complex<double> img(0.0, 1.0); // Imaginary number unit.
-      Vector  rg;            // Cartesian and general atom position vector.
-      Vector  b0, b1, b2;    // Recprocal basis vectors.
-      Vector  q, qtmp;       // Partial and complete wavevectors.
-      int     i;             // Index for waves.
-      int     type;          // Atom type id.
-      double  dotqr;         // Dot product between q and r.
-
-      b0 = boundaryPtr_->reciprocalBasisVector(0);
-      b1 = boundaryPtr_->reciprocalBasisVector(1);
-      b2 = boundaryPtr_->reciprocalBasisVector(2);
+      Vector     rg;         // Cartesian and general atom position vector.
+      IntVector  q;          // Wavenumber.
+      int        i;          // Index for waves.
+      int        type;       // Atom type id.
+      double     dotqr;      // Dot product between q and r.
 
       for (i = 0; i < rho_.size(); ++i)
          rho_[i] = std::complex<double>(0.0, 0.0);
 
-      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         systemPtr_->begin(iSpecies, molIter); 
-         for ( ; molIter.notEnd(); ++molIter) {
-            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+      for (int i = 0; i < waves_.size(); ++i) {
+         q = waves_[i];
 
-               boundaryPtr_->transformCartToGen(atomIter->position(), rg);
-               dotqr = rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2];
-               type = atomIter->typeId();
-               rho_[i] += (*atomTypesPtr_)[type].charge() * exp(img*dotqr);
+         for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+            systemPtr_->begin(iSpecies, molIter); 
+            for ( ; molIter.notEnd(); ++molIter) {
+               for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
 
-            } // For atoms.
-         } // For molecules.
-      } // For species.
+                  boundaryPtr_->transformCartToGen(atomIter->position(), rg);
+                  dotqr = rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2];
+                  type = atomIter->typeId();
+                  rho_[i] += (*atomTypesPtr_)[type].charge() * exp(img*dotqr);
+
+               } // For atoms.
+            } // For molecules.
+         } // For species.
+
+      }
 
    }
 
@@ -205,12 +211,20 @@ namespace McMd
    double CoulombPotential::kspaceEnergy()
    {
       double total(0.0);
+      double x, y;
 
-      // Compute Fourier modes of charge density.
+      // Comput Fourier components of charge density.
       computeChargeKMode();
 
-      // Loop over waves.
-      return total;
+      for (int i = 0; i < waves_.size(); ++i) {
+         x = rho_[i].real();
+         y = rho_[i].imag();
+         total += (x*x + y*y)*g_[i];
+      }
+      total *= 0.5 / epsilon_ / boundaryPtr_->volume();
+
+      // Correct for conjugate wave contribution and return.
+      return (2.0 * total);
    }
 
    #if 0

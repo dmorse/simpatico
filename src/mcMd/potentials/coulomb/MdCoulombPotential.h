@@ -8,10 +8,12 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "MdCoulombPotential.h"
+#include "CoulombPotential.h"
 
 namespace McMd
 {
+
+   class System;
 
    using namespace Util;
 
@@ -20,7 +22,7 @@ namespace McMd
    *
    * \ingroup McMd_Coulomb_Module
    */
-   class MdCoulombPotential : public ParamComposite
+   class MdCoulombPotential : public CoulombPotential
    {
 
    public:
@@ -28,7 +30,7 @@ namespace McMd
       /**
       * Constructor .
       */
-      MdCoulombPotential();
+      MdCoulombPotential(System& system);
 
       /**
       * Destructor (does nothing)

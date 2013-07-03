@@ -181,18 +181,6 @@ namespace McMd
 
    protected:
 
-      /// Wave vector indices.
-      GArray< IntVector > waves_;
-
-      /// Values of square of Fourier wavevector.
-      GArray<double> ksq_;
-
-      /// Regularized Green's function (Gaussian/ksq)
-      GArray<double> g_;
-
-      /// Fourier modes of charge density.
-      GArray< std::complex<double> > rho_;
-
       /// Pointer to associated Simulation
       Simulation* simulationPtr_;
 
@@ -222,6 +210,18 @@ namespace McMd
 
       /// Has readParam been called?
       bool isInitialized_;
+
+      /// Wave vector indices.
+      GArray< IntVector > waves_;
+
+      /// Values of square of Fourier wavevector.
+      GArray<double> ksq_;
+
+      /// Regularized Green's function (Gaussian/ksq)
+      GArray<double> g_;
+
+      /// Fourier modes of charge density.
+      GArray< std::complex<double> > rho_;
 
    };
 
