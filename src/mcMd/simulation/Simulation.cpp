@@ -48,11 +48,14 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       nDihedralType_(-1),
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_(-1),
+      #ifdef INTER_COULOMB
+      hasCoulomb_(-1),
       #endif
       #ifdef INTER_EXTERNAL
       hasExternal_(-1),
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_(-1),
       #endif
       #ifdef INTER_TETHER
       hasTether_(-1),
@@ -107,11 +110,14 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       nDihedralType_(-1),
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_(-1),
+      #ifdef INTER_COULOMB
+      hasCoulomb_(-1),
       #endif
       #ifdef INTER_EXTERNAL
       hasExternal_(-1),
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_(-1),
       #endif
       #ifdef INTER_TETHER
       hasTether_(-1),
@@ -203,17 +209,22 @@ namespace McMd
          UTIL_THROW("nDihedralType must be >= 0");
       }
       #endif
+      #ifdef INTER_COULOMB
+      read<int>(in, "hasCoulomb", hasCoulomb_);
+      if ((hasCoulomb_ != 0) && (hasCoulomb_ != 1)) {
+         UTIL_THROW("hasCoulomb must be 0 or 1");
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      read<int>(in, "hasExternal", hasExternal_);
+      if ((hasExternal_ != 0) && (hasExternal_ != 1)) {
+         UTIL_THROW("hasExternal must be 0 or 1");
+      }
+      #endif
       #ifdef MCMD_LINK
       read<int>(in, "nLinkType", nLinkType_);
       if (nLinkType_ < 0) {
          UTIL_THROW("nLinkType must be >= 0");
-      }
-      #endif
-
-      #ifdef INTER_EXTERNAL
-      read<int>(in, "hasExternal", hasExternal_);
-      if (hasExternal_ < 0) {
-         UTIL_THROW("hasExternal must be >= 0");
       }
       #endif
       #ifdef INTER_TETHER
@@ -261,11 +272,14 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       loadParameter<int>(ar, "nDihedralType", nDihedralType_);
       #endif
-      #ifdef MCMD_LINK
-      loadParameter<int>(ar, "nLinkType", nLinkType_);
+      #ifdef INTER_COULOMB
+      loadParameter<int>(ar, "hasCoulomb", hasCoulomb_);
       #endif
       #ifdef INTER_EXTERNAL
       loadParameter<int>(ar, "hasExternal", hasExternal_);
+      #endif
+      #ifdef MCMD_LINK
+      loadParameter<int>(ar, "nLinkType", nLinkType_);
       #endif
       #ifdef INTER_TETHER
       loadParameter<int>(ar, "hasTether", hasTether_);
@@ -303,11 +317,14 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       ar << nDihedralType_;
       #endif
-      #ifdef MCMD_LINK
-      ar << nLinkType_;
+      #ifdef INTER_COULOMB
+      ar << hasCoulomb_;
       #endif
       #ifdef INTER_EXTERNAL
       ar << hasExternal_;
+      #endif
+      #ifdef MCMD_LINK
+      ar << nLinkType_;
       #endif
       #ifdef INTER_TETHER
       ar << hasTether_;

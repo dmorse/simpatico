@@ -23,7 +23,6 @@
 
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/potentials/bond/BondFactory.h>
-
 #ifdef INTER_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #include <mcMd/potentials/angle/AngleFactory.h>
@@ -31,11 +30,14 @@
 #ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
-#ifdef MCMD_LINK
-#include <mcMd/links/LinkMaster.h>
+#ifdef INTER_COULOMB
+#include <mcMd/potentials/coulomb/CoulombPotential.h>
 #endif
 #ifdef INTER_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
+#endif
+#ifdef MCMD_LINK
+#include <mcMd/links/LinkMaster.h>
 #endif
 #ifdef INTER_TETHER
 #include <mcMd/potentials/tether/TetherPotential.h>
@@ -72,11 +74,14 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       dihedralPotentialPtr_(0),
       #endif
-      #ifdef MCMD_LINK
-      linkPotentialPtr_(0),
+      #ifdef INTER_COULOMB
+      coulombPotentialPtr_(0),
       #endif
       #ifdef INTER_EXTERNAL
       externalPotentialPtr_(0),
+      #endif
+      #ifdef MCMD_LINK
+      linkPotentialPtr_(0),
       #endif
       #ifdef INTER_TETHER
       tetherPotentialPtr_(0),
@@ -101,11 +106,14 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       dihedralPotentialPtr_(0),
       #endif
-      #ifdef MCMD_LINK
-      linkPotentialPtr_(0),
+      #ifdef INTER_COULOMB
+      coulombPotentialPtr_(0),
       #endif
       #ifdef INTER_EXTERNAL
       externalPotentialPtr_(0),
+      #endif
+      #ifdef MCMD_LINK
+      linkPotentialPtr_(0),
       #endif
       #ifdef INTER_TETHER
       tetherPotentialPtr_(0),
@@ -132,14 +140,21 @@ namespace McMd
          dihedralPotentialPtr_ = &system.dihedralPotential();
       }
       #endif
-      #ifdef MCMD_LINK
-      if (system.hasLinkPotential()) {
-         linkPotentialPtr_ = &system.linkPotential();
+      #ifdef INTER_COULOMB
+      #if 0
+      if (system.hasCoulombPotential()) {
+         coulombPotentialPtr_ = &system.coulombPotential();
       }
+      #endif // if 0
       #endif
       #ifdef INTER_EXTERNAL
       if (system.hasExternalPotential()) {
          externalPotentialPtr_ = &system.externalPotential();
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (system.hasLinkPotential()) {
+         linkPotentialPtr_ = &system.linkPotential();
       }
       #endif
       #ifdef INTER_TETHER
@@ -163,6 +178,9 @@ namespace McMd
       #endif
       #ifdef INTER_DIHEDRAL
       if (!isCopy() && dihedralPotentialPtr_) delete dihedralPotentialPtr_;
+      #endif
+      #ifdef INTER_COULOMB
+      if (!isCopy() && coulombPotentialPtr_) delete coulombPotentialPtr_;
       #endif
       #ifdef MCMD_LINK
       if (!isCopy() && linkPotentialPtr_) delete linkPotentialPtr_;
@@ -256,15 +274,14 @@ namespace McMd
          }
          #endif
 
-         #ifdef MCMD_LINK
-         assert(linkPotentialPtr_ == 0);
-         if (simulation().nLinkType() > 0) {
-            readLinkMaster(in);
-            linkPotentialPtr_ = linkFactory().factory(linkStyle());
-            if (linkPotentialPtr_ == 0) {
-               UTIL_THROW("Failed attempt to create linkPotential");
+         #ifdef INTER_COULOMB
+         assert(coulombPotentialPtr_ == 0);
+         if (simulation().hasCoulomb()) {
+            coulombPotentialPtr_ = new CoulombPotential(*this);
+            if (coulombPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create CoulombPotential");
             }
-            readParamComposite(in, *linkPotentialPtr_);
+            readParamComposite(in, *coulombPotentialPtr_);
          }
          #endif
 
@@ -280,8 +297,20 @@ namespace McMd
          }
          #endif
 
+         #ifdef MCMD_LINK
+         assert(linkPotentialPtr_ == 0);
+         if (simulation().nLinkType() > 0) {
+            readLinkMaster(in);
+            linkPotentialPtr_ = linkFactory().factory(linkStyle());
+            if (linkPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create linkPotential");
+            }
+            readParamComposite(in, *linkPotentialPtr_);
+         }
+         #endif
+
          #ifdef INTER_TETHER
-         if (simulation().hasExternal() > 0) {
+         if (simulation().hasTether() > 0) {
             readTetherMaster(in);
             tetherPotentialPtr_ =
                        tetherFactory().factory(tetherStyle(), *this);
@@ -378,15 +407,14 @@ namespace McMd
          }
          #endif
 
-         #ifdef MCMD_LINK
-         assert(linkPotentialPtr_ == 0);
-         if (simulation().nLinkType() > 0) {
-            loadLinkMaster(ar);
-            linkPotentialPtr_ = linkFactory().factory(linkStyle());
-            if (linkPotentialPtr_ == 0) {
-               UTIL_THROW("Failed attempt to create linkPotential");
+         #ifdef INTER_COULOMB
+         assert(coulombPotentialPtr_ == 0);
+         if (simulation().hasCoulomb() > 0) {
+            coulombPotentialPtr_ = new CoulombPotential(*this);
+            if (coulombPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create CoulombPotential");
             }
-            loadParamComposite(ar, *linkPotentialPtr_);
+            loadParamComposite(ar, *coulombPotentialPtr_);
          }
          #endif
 
@@ -399,6 +427,18 @@ namespace McMd
                UTIL_THROW("Failed attempt to create externalPotential");
             }
             loadParamComposite(ar, *externalPotentialPtr_);
+         }
+         #endif
+
+         #ifdef MCMD_LINK
+         assert(linkPotentialPtr_ == 0);
+         if (simulation().nLinkType() > 0) {
+            loadLinkMaster(ar);
+            linkPotentialPtr_ = linkFactory().factory(linkStyle());
+            if (linkPotentialPtr_ == 0) {
+               UTIL_THROW("Failed attempt to create linkPotential");
+            }
+            loadParamComposite(ar, *linkPotentialPtr_);
          }
          #endif
 
@@ -467,6 +507,11 @@ namespace McMd
          #ifdef INTER_DIHEDRAL
          if (simulation().nDihedralType() > 0) {
             dihedralPotentialPtr_->save(ar);
+         }
+         #endif
+         #ifdef INTER_COULOMB
+         if (simulation().hasCoulomb()) {
+            coulombPotentialPtr_->save(ar);
          }
          #endif
          #ifdef MCMD_LINK
@@ -662,14 +707,19 @@ namespace McMd
          dihedralPotential().addForces();
       }
       #endif
-      #ifdef MCMD_LINK
-      if (hasLinkPotential()) {
-         linkPotential().addForces();
+      #ifdef INTER_COULOMB
+      if (hasCoulombPotential()) {
+         coulombPotential().addKSpaceForces();
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternalPotential()) {
          externalPotential().addForces();
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (hasLinkPotential()) {
+         linkPotential().addForces();
       }
       #endif
       #ifdef INTER_TETHER
@@ -699,6 +749,11 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       if (hasDihedralPotential()) {
          energy += dihedralPotential().energy();
+      }
+      #endif
+      #ifdef INTER_COULOMB
+      if (hasCoulombPotential()) {
+         energy += coulombPotential().kspaceEnergy();
       }
       #endif
       #ifdef MCMD_LINK
@@ -812,7 +867,6 @@ namespace McMd
          stress += angleStress;
       }
       #endif
-
       #ifdef INTER_DIHEDRAL
       if (hasDihedralPotential()) {
          T dihedralStress;
@@ -820,7 +874,13 @@ namespace McMd
          stress += dihedralStress;
       }
       #endif
-
+      #ifdef INTER_COULOMB
+      if (hasCoulombPotential()) {
+         T coulombStress;
+         coulombPotential().computeKSpaceStress(coulombStress);
+         stress += coulombStress;
+      }
+      #endif
       #ifdef MCMD_LINK
       if (hasLinkPotential()) {
          T linkStress;

@@ -33,6 +33,9 @@ namespace McMd
    #ifdef INTER_DIHEDRAL
    class DihedralPotential;
    #endif
+   #ifdef INTER_COULOMB
+   class CoulombPotential;
+   #endif
    #ifdef INTER_EXTERNAL
    class ExternalPotential;
    #endif
@@ -236,16 +239,16 @@ namespace McMd
       DihedralPotential& dihedralPotential() const;
       #endif
 
-      #ifdef MCMD_LINK
+      #ifdef INTER_COULOMB
       /**
-      * Does a link potential exist?.
+      * Does a Coulomb potential exist?.
       */
-      bool hasLinkPotential() const;
+      bool hasCoulombPotential() const;
 
       /**
-      * Return link potential by reference.
+      * Return CoulombPotential by reference.
       */
-      BondPotential& linkPotential() const;
+      CoulombPotential& coulombPotential() const;
       #endif
 
       #ifdef INTER_EXTERNAL
@@ -258,6 +261,18 @@ namespace McMd
       * Return ExternalPotential by reference.
       */
       ExternalPotential& externalPotential() const;
+      #endif
+
+      #ifdef MCMD_LINK
+      /**
+      * Does a link potential exist?.
+      */
+      bool hasLinkPotential() const;
+
+      /**
+      * Return link potential by reference.
+      */
+      BondPotential& linkPotential() const;
       #endif
 
       #ifdef INTER_TETHER
@@ -349,18 +364,23 @@ namespace McMd
       #endif
 
       #ifdef INTER_DIHEDRAL
-      /// Pointer to an DihedralPotential. 
+      /// Pointer to a DihedralPotential. 
       DihedralPotential* dihedralPotentialPtr_;
       #endif
 
-      #ifdef MCMD_LINK
-      /// Pointer to the MdLinkPotential. 
-      BondPotential* linkPotentialPtr_;
+      #ifdef INTER_COULOMB
+      /// Pointer to a CoulombPotential. 
+      CoulombPotential* coulombPotentialPtr_;
       #endif
 
       #ifdef INTER_EXTERNAL
       /// Pointer to an ExternalPotential. 
       ExternalPotential* externalPotentialPtr_;
+      #endif
+
+      #ifdef MCMD_LINK
+      /// Pointer to the MdLinkPotential. 
+      BondPotential* linkPotentialPtr_;
       #endif
 
       #ifdef INTER_TETHER
@@ -449,9 +469,7 @@ namespace McMd
    * Does a dihedral potential exist?
    */
    inline bool MdSystem::hasDihedralPotential() const
-   {
-      return bool(dihedralPotentialPtr_); 
-   }
+   {  return bool(dihedralPotentialPtr_); }
 
    /*
    * Return dihedral potential by reference.
@@ -463,22 +481,20 @@ namespace McMd
    }
    #endif
 
-   #ifdef MCMD_LINK
+   #ifdef INTER_COULOMB
    /*
-   * Does a link potential exist?
+   * Does a Coulomb potential exist?
    */
-   inline bool MdSystem::hasLinkPotential() const
-   {
-      return bool(linkPotentialPtr_); 
-   }
+   inline bool MdSystem::hasCoulombPotential() const
+   {  return bool(coulombPotentialPtr_); }
 
    /*
-   * Return link potential by reference.
+   * Return Coulomb potential by reference.
    */
-   inline BondPotential& MdSystem::linkPotential() const
+   inline CoulombPotential& MdSystem::coulombPotential() const
    {  
-      assert(linkPotentialPtr_);  
-      return *linkPotentialPtr_; 
+      assert(coulombPotentialPtr_);  
+      return *coulombPotentialPtr_; 
    }
    #endif
 
@@ -487,9 +503,7 @@ namespace McMd
    * Does an external potential exist?
    */
    inline bool MdSystem::hasExternalPotential() const
-   {
-      return bool(externalPotentialPtr_); 
-   }
+   {  return bool(externalPotentialPtr_); }
 
    /*
    * Return external potential by reference.
@@ -498,6 +512,23 @@ namespace McMd
    {  
       assert(externalPotentialPtr_);  
       return *externalPotentialPtr_; 
+   }
+   #endif
+
+   #ifdef MCMD_LINK
+   /*
+   * Does a link potential exist?
+   */
+   inline bool MdSystem::hasLinkPotential() const
+   {  return bool(linkPotentialPtr_); }
+
+   /*
+   * Return link potential by reference.
+   */
+   inline BondPotential& MdSystem::linkPotential() const
+   {  
+      assert(linkPotentialPtr_);  
+      return *linkPotentialPtr_; 
    }
    #endif
 

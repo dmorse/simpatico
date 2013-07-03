@@ -237,11 +237,11 @@ namespace McMd
       int nDihedralType() const;
       #endif
 
-      #ifdef MCMD_LINK
+      #ifdef INTER_COULOMB
       /**
-      * Get the number of link types.
+      * Does a Coulomb potential exist?
       */
-      int nLinkType() const;
+      int hasCoulomb() const;
       #endif
 
       #ifdef INTER_EXTERNAL
@@ -249,6 +249,13 @@ namespace McMd
       * Does an external potential exist?
       */
       int hasExternal() const;
+      #endif
+
+      #ifdef MCMD_LINK
+      /**
+      * Get the number of link types.
+      */
+      int nLinkType() const;
       #endif
 
       #ifdef INTER_TETHER
@@ -472,13 +479,13 @@ namespace McMd
       * Element firstDihedralIds[i] is an integer index for the first Dihedral of the
       * block of the dihedrals_ Array associated with species number i.
       */
-      DArray<int>      firstDihedralIds_;
+      DArray<int>  firstDihedralIds_;
       #endif
 
       /**
       * Object for opening associated input and output files.
       */
-      FileMaster       fileMaster_;
+      FileMaster  fileMaster_;
 
       #ifdef UTIL_MPI
       /**
@@ -531,14 +538,19 @@ namespace McMd
       int  nDihedralType_;
       #endif
 
-      #ifdef MCMD_LINK
-      /// Number of link types.
-      int  nLinkType_;
+      #ifdef INTER_COULOMB
+      /// Does an Coulomb potential exist? (0 false or 1 true)
+      int  hasCoulomb_;
       #endif
 
       #ifdef INTER_EXTERNAL
       /// Does an external potential exist? (0 false or 1 true)
       int  hasExternal_;
+      #endif
+
+      #ifdef MCMD_LINK
+      /// Number of link types.
+      int  nLinkType_;
       #endif
 
       #ifdef INTER_TETHER
@@ -660,6 +672,11 @@ namespace McMd
    #ifdef INTER_DIHEDRAL
    inline int Simulation::nDihedralType() const
    {  return nDihedralType_; }
+   #endif
+
+   #ifdef INTER_COULOMB
+   inline int Simulation::hasCoulomb() const
+   {  return hasCoulomb_; }
    #endif
 
    #ifdef MCMD_LINK
