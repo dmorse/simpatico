@@ -70,12 +70,12 @@ namespace McMd
    public:
 
       /**
-      * Constructor .
+      * Constructor.
       */
       CoulombPotential(System& system);
 
       /**
-      * Destructor (does nothing)
+      * Destructor (does nothing).
       */
       virtual ~CoulombPotential();
 
@@ -246,7 +246,7 @@ namespace McMd
    {  return rCutoff_; }
 
    /*
-   * Get IntVector of maximum k-vector indices.
+   * Get cutfoff wavenumber for long range interaction.
    */
    inline const double CoulombPotential::kCutoff() const
    {  return kCutoff_; }

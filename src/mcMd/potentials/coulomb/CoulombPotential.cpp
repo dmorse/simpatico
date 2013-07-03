@@ -34,7 +34,7 @@ namespace McMd
       rCutoff_(1.0),
       kCutoff_(1.0),
       atomTypesPtr_(NULL),
-      isInitialized_(0)
+      isInitialized_(false)
    { setClassName("CoulombPotential"); }
 
    /*
@@ -174,7 +174,7 @@ namespace McMd
       Molecule::AtomIterator atomIter;
       int     nSpecies(simulationPtr_->nSpecies());
       std::complex<double> img(0.0, 1.0); // Imaginary number unit.
-      Vector     rg;         // Cartesian and general atom position vector.
+      Vector     rg;         // General atom position vector.
       IntVector  q;          // Wavenumber.
       int        i;          // Index for waves.
       int        type;       // Atom type id.

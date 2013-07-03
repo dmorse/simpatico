@@ -28,7 +28,7 @@ namespace McMd
    public:
 
       /**
-      * Constructor .
+      * Constructor.
       */
       MdCoulombPotential(System& system);
 

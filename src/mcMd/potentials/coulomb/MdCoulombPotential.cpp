@@ -22,7 +22,7 @@ namespace McMd
    */
    MdCoulombPotential::MdCoulombPotential(System& system)
       : CoulombPotential(system)
-   {}
+   { setClassName("MdCoulombPotential"); }
 
    /**
    * Destructor (does nothing)
@@ -37,9 +37,8 @@ namespace McMd
    {
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
-      int     nSpecies(simulationPtr_->nSpecies());
-      std::complex<double> img(0.0, 1.0); // Imaginary number unit.
-      Vector    rg;            // Cartesian and general atom position vector.
+      int       nSpecies(simulationPtr_->nSpecies());
+      Vector    rg;            // General atom position vector.
       Vector    b0, b1, b2;    // Recprocal basis vectors.
       Vector    vq, vqtmp;     // Wavevector.
       Vector    force;         // Force.
