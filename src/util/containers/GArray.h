@@ -217,7 +217,7 @@ namespace Util
    * Destructor.
    */
    template <typename Data>
-   inline GArray<Data>::~GArray()
+   GArray<Data>::~GArray()
    {
       if (data_) {
          delete [] data_;
