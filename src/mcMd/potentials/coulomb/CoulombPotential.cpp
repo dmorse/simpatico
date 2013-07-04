@@ -176,7 +176,7 @@ namespace McMd
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       int     nSpecies(simulationPtr_->nSpecies());
-      std::complex<double> img(0.0, 1.0); // Imaginary number unit.
+      std::complex<double>  img(Constants::Im); // Imaginary number unit.
       Vector     rg;         // General atom position vector.
       IntVector  q;          // Wavenumber.
       int        i;          // Index for waves.
@@ -197,7 +197,7 @@ namespace McMd
                   boundaryPtr_->transformCartToGen(atomIter->position(), rg);
                   dotqr = rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2];
                   type = atomIter->typeId();
-                  rho_[i] += (*atomTypesPtr_)[type].charge() * exp(img*dotqr);
+                  rho_[i] += (*atomTypesPtr_)[type].charge() * exp(img * dotqr);
 
                } // For atoms.
             } // For molecules.
@@ -244,6 +244,8 @@ namespace McMd
       Vector    force;         // Force.
       IntVector q;             // Wavenumber.
       double    dotqr;         // Dot product between q and r.
+      double    charge;        // Particle charge.
+      double    EPS(1.0E-10);  // A tiny number for charge test.
       double    x, y, fcoeff;
 
       b0 = boundaryPtr_->reciprocalBasisVector(0);
@@ -272,12 +274,16 @@ namespace McMd
             for ( ; molIter.notEnd(); ++molIter) {
                for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
 
-                  boundaryPtr_->transformCartToGen(atomIter->position(), rg);
-                  dotqr = rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2];
-                  fcoeff = y * cos(dotqr) - x * sin(dotqr);
+                  charge = (*atomTypesPtr_)[atomIter->typeId()].charge();
 
-                  force.multiply(vq, fcoeff);
-                  atomIter->force() += force;
+                  if (fabs(charge) > EPS) {
+                     boundaryPtr_->transformCartToGen(atomIter->position(), rg);
+                     dotqr = rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2];
+                     fcoeff = (y * cos(dotqr) - x * sin(dotqr)) * charge;
+
+                     force.multiply(vq, fcoeff);
+                     atomIter->force() += force;
+                  }
 
                } // For atoms.
             } // For molecules.
