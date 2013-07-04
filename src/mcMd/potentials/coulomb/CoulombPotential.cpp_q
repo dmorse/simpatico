@@ -168,9 +168,8 @@ namespace McMd
       TwoPiIm = (Constants::Im)*(2.0*Constants::Pi);
 
       // Clear rho for all waves
-      for (i = 0; i < rho_.size(); ++i) {
+      for (i = 0; i < rho_.size(); ++i)
          rho_[i] = std::complex<double>(0.0, 0.0);
-      }
 
       // Loop over species, molecules atoms
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
@@ -185,7 +184,7 @@ namespace McMd
                for (i = 0; i < waves_.size(); ++i) {
                   q = waves_[i];
                   dotqr = rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2];
-                  rho_[i] += charge*exp(TwoPiIm*dotqr);
+                  rho_[i] += charge* exp(TwoPiIm*dotqr);
                }
 
             } // For atoms.
@@ -223,64 +222,61 @@ namespace McMd
    {
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
-      std::complex<double>  TwoPiIm; // 2*pi*(0.0,1.0)
-      std::complex<double>  phasor;
-      Vector  b[Dimension];  // array of reciprocal basis vectors
-      Vector  rg;            // scaled atom position vector
-      Vector  q;             // Wavevector and force contribution
-      Vector  fg;            // generalized force on atom
-      Vector  f;             // Cartesian force on atom
-      double  dotqr;         // Dot product between q and r
-      double  charge;        // atom charge
-      double  prefactor;     // -2/(epsilon*volume)
-      int  nSpecies(simulationPtr_->nSpecies());
-      int  type;
-      int  i, j;
+      int       nSpecies(simulationPtr_->nSpecies());
+      Vector    rg;            // General atom position vector.
+      Vector    b0, b1, b2;    // Recprocal basis vectors.
+      Vector    vq, vqtmp;     // Wavevector.
+      Vector    force;         // Force.
+      IntVector q;             // Wavenumber.
+      double    dotqr;         // Dot product between q and r.
+      double    charge;        // Particle charge.
+      double    EPS(1.0E-10);  // A tiny number for charge test.
+      double    x, y, fcoeff;
+      double    twoPi(Constants::Pi);
+      double    esfactor(2.0 / epsilon_ / boundaryPtr_->volume());
 
-      // Constants
-      TwoPiIm = (Constants::Im)*(2.0*Constants::Pi);
-      prefactor = -2.0/(epsilon_*boundaryPtr_->volume());
+      b0 = boundaryPtr_->reciprocalBasisVector(0);
+      b1 = boundaryPtr_->reciprocalBasisVector(1);
+      b2 = boundaryPtr_->reciprocalBasisVector(2);
 
-      // Compute Fourier components of charge density.
+      // Comput Fourier components of charge density.
       computeChargeKMode();
-     
-      for (j = 0; j < Dimension; ++j) {
-         b[j] = boundaryPtr_->reciprocalBasisVector(j);
-      }
 
-      // Loop over species, molecules atoms
-      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         systemPtr_->begin(iSpecies, molIter); 
-         for ( ; molIter.notEnd(); ++molIter) {
-            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-               boundaryPtr_->transformCartToGen(atomIter->position(), rg);
-               type = atomIter->typeId();
-               charge = (*atomTypesPtr_)[type].charge();
+      for (int i = 0; i < waves_.size(); ++i) {
 
-               // Loop over waves
-               fg.zero();
-               for (i = 0; i < waves_.size(); ++i) {
-                  dotqr = 0;
-                  for (j = 0; j < Dimension; ++j) {
-                     q[j] = (double) waves_[i][j];
-                     dotqr += rg[j]*q[j];
+         q = waves_[i];
+
+         vq.multiply(b0, q[0]);
+         vqtmp.multiply(b1, q[1]);
+         vq += vqtmp;
+         vqtmp.multiply(b2, q[2]);
+         vq += vqtmp;
+         vq *= esfactor*g_[i];
+
+         x = rho_[i].real();
+         y = rho_[i].imag();
+
+         for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+            systemPtr_->begin(iSpecies, molIter); 
+            for ( ; molIter.notEnd(); ++molIter) {
+               for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+
+                  charge = (*atomTypesPtr_)[atomIter->typeId()].charge();
+
+                  if (fabs(charge) > EPS) {
+                     boundaryPtr_->transformCartToGen(atomIter->position(), rg);
+                     dotqr = twoPi*(rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2]);
+                     fcoeff = ( y * cos(dotqr) - x * sin(dotqr) ) * charge;
+
+                     force.multiply(vq, fcoeff);
+                     atomIter->force() += force;
                   }
-                  phasor = exp(-TwoPiIm*dotqr)*rho_[i];
-                  q *= g_[i]*std::imag(phasor);
-                  fg += q;
-               }
 
-               // Transform to Cartesian coordinates
-               for (j = 0; j < Dimension; ++j) {
-                  fg[j] *= charge*prefactor;
-                  f.multiply(b[j], fg[j]);
-                  atomIter->force() += f;
-               }
+               } // For atoms.
+            } // For molecules.
+         } // For species.
 
-            } // For atoms.
-         } // For molecules.
-      } // For species.
-
+      }
    }
 
    #if 0
