@@ -553,6 +553,11 @@ namespace McMd
       pairPotential().clearPairListStatistics();
       pairPotential().buildPairList();
       #endif
+      #ifdef INTER_COULOMB
+      if (hasCoulombPotential()) {
+         coulombPotential().makeWaves();
+      }
+      #endif
       calculateForces();
    }
 
@@ -565,6 +570,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairPotential().clearPairListStatistics();
       pairPotential().buildPairList();
+      #endif
+      #ifdef INTER_COULOMB
+      if (hasCoulombPotential()) {
+         coulombPotential().makeWaves();
+      }
       #endif
       calculateForces();
    }

@@ -324,6 +324,13 @@ namespace McMd
       *
       * \param i integer index of desired AtomType
       */
+      const Array<AtomType>& atomTypes() const;
+
+      /**
+      * Get an AtomType object by const reference.
+      *
+      * \param i integer index of desired AtomType
+      */
       const AtomType& atomType(int i) const;
       #endif
 
@@ -723,6 +730,9 @@ namespace McMd
    {  return random_; }
 
    #ifndef MCMD_NOATOMTYPES
+   inline const Array<AtomType>& Simulation::atomTypes() const
+   {  return atomTypes_; }
+
    inline const AtomType& Simulation::atomType(int i) const
    {  return atomTypes_[i]; }
    #endif

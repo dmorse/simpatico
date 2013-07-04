@@ -34,9 +34,9 @@ namespace McMd
       alpha_(1.0),
       rCutoff_(1.0),
       kCutoff_(1.0),
-      atomTypesPtr_(NULL),
+      atomTypesPtr_(&system.simulation().atomTypes()),
       isInitialized_(false)
-   { setClassName("CoulombPotential"); }
+   {  setClassName("CoulombPotential"); }
 
    /*
    * Destructor (does nothing)
@@ -63,15 +63,15 @@ namespace McMd
    /*
    * Read parameters and initialize.
    */
-   void CoulombPotential::readParam(std::istream& in)
+   void CoulombPotential::readParameters(std::istream& in)
    {
       read<double>(in, "epsilon", epsilon_);
       read<double>(in, "alpha",   alpha_);
       read<double>(in, "rCutoff", rCutoff_);
       read<double>(in, "kCutoff", kCutoff_);
-      pairInteractionPtr_->set(epsilon_, alpha_, rCutoff_);
-
-      makeWaves();
+      if (pairInteractionPtr_) {
+         pairInteractionPtr_->set(epsilon_, alpha_, rCutoff_);
+      }
       isInitialized_ = true;
    }
 
@@ -88,7 +88,6 @@ namespace McMd
       Vector    b0, b1, b2;    // Recprocal basis vectors.
       IntVector maxK, k;       // Max and running wave indices.
       Vector    q0, q1, q;     // Partial and complete wavevectors.
-      int       nWaves;        // Number of waves to reserve.
       int       mink1, mink2;  // Minimum k-indices.
       double    prefactor(-0.25/alpha_/alpha_);
       double    kCutoffSq(kCutoff_*kCutoff_), ksq;
@@ -104,6 +103,7 @@ namespace McMd
       maxK[2] = ceil(kCutoff_*boundaryPtr_->bravaisBasisVector(2).abs()/pi2);
 
       if (waves_.capacity() == 0) {
+         int  nWaves; // Number of waves to reserve.
          nWaves = ((2*maxK[0] + 1) * (2*maxK[1] + 1) * (2*maxK[2] + 1) - 1)/2;
          waves_.reserve(nWaves);
          ksq_.reserve(nWaves);
@@ -121,18 +121,18 @@ namespace McMd
       for (k[0] = 0; k[0] <= maxK[0]; ++k[0]) { // First index always non-negative.
          q0 += b0;
 
-         q1.multiply(b1, -maxK[1]-1);
-         q1 += q0;
-
          mink1 = (k[0] == 0 ? 0 : -maxK[1]);
+         q1.multiply(b1, mink1 - 1);
+         q1 += q0;
          for (k[1] = mink1; k[1] <= maxK[1]; ++k[1]) {
             q1 += b1;
 
-            q.multiply(b2, -maxK[2]-1);
+            mink2 = (k[0] == 0 && k[1] == 0 ? 1 : -maxK[2]);
+            q.multiply(b2, mink2 - 1);
             q += q1;
 
-            mink2 = (k[0] == 0 && k[1] == 0 ? 1 : -maxK[2]);
             for (k[2] = mink2; k[2] <= maxK[2]; ++k[2]) {
+               q += b2;
 
                ksq = q.square();
                if (ksq <= kCutoffSq) {
@@ -157,47 +157,51 @@ namespace McMd
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       int     nSpecies(simulationPtr_->nSpecies());
-      std::complex<double>  img(Constants::Im); // Imaginary number unit.
-      Vector     rg;         // General atom position vector.
-      IntVector  q;          // Wavenumber.
-      int        i;          // Index for waves.
-      int        type;       // Atom type id.
-      double     dotqr;      // Dot product between q and r.
+      std::complex<double>  TwoPiIm; // 2*pi*(0.0,1.0)
+      Vector     rg;        // scaled atom position vector
+      IntVector  q;         // integer wave vector
+      int        i;         // index for waves
+      int        type;      // atom type id
+      double     dotqr;     // dot product between q and r
+      double     charge;    // atom charge
 
+      TwoPiIm = (Constants::Im)*(2.0*Constants::Pi);
+
+      // Clear rho for all waves
       for (i = 0; i < rho_.size(); ++i)
          rho_[i] = std::complex<double>(0.0, 0.0);
 
-      for (int i = 0; i < waves_.size(); ++i) {
-         q = waves_[i];
+      // Loop over species, molecules atoms
+      for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         systemPtr_->begin(iSpecies, molIter); 
+         for ( ; molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+               boundaryPtr_->transformCartToGen(atomIter->position(), rg);
+               type = atomIter->typeId();
+               charge = (*atomTypesPtr_)[type].charge();
 
-         for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-            systemPtr_->begin(iSpecies, molIter); 
-            for ( ; molIter.notEnd(); ++molIter) {
-               for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-
-                  boundaryPtr_->transformCartToGen(atomIter->position(), rg);
+               // Loop over waves
+               for (i = 0; i < waves_.size(); ++i) {
+                  q = waves_[i];
                   dotqr = rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2];
-                  type = atomIter->typeId();
-                  rho_[i] += (*atomTypesPtr_)[type].charge() * exp(img * dotqr);
+                  rho_[i] += charge* exp(TwoPiIm*dotqr);
+               }
 
-               } // For atoms.
-            } // For molecules.
-         } // For species.
-
-      }
+            } // For atoms.
+         } // For molecules.
+      } // For species.
 
    }
-
 
    /*
    * Calculate the k-space contribution to the Coulomb energy.
    */
    double CoulombPotential::kspaceEnergy()
    {
-      double total(0.0);
+      double total = 0.0;
       double x, y;
 
-      // Comput Fourier components of charge density.
+      // Compute Fourier components of charge density.
       computeChargeKMode();
 
       for (int i = 0; i < waves_.size(); ++i) {

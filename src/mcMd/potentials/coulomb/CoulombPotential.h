@@ -101,7 +101,7 @@ namespace McMd
       *
       * \param in input stream
       */
-      void readParam(std::istream& in);
+      void readParameters(std::istream& in);
 
       /**
       * Generate waves and allocate memory for wave-related parameters.

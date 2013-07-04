@@ -26,7 +26,6 @@
 #include <util/format/Dbl.h>
 #include <util/format/Str.h>
 #include <util/misc/Log.h>
-//#include <util/random/serialize.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/misc/ioUtil.h>
 #include <util/misc/Timer.h>
@@ -478,6 +477,11 @@ namespace McMd
       } else {
          iStep_ = 0;
          system().shiftAtoms();
+         #ifdef UTIL_COULOMB
+         if (system().hasCoulombPotential()) {
+            system().coulombPotential().makeWaves();
+         }
+         #endif
          system().calculateForces();
          diagnosticManager().setup();
          system_.mdIntegrator().setup();
