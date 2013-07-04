@@ -130,28 +130,28 @@ namespace McMd
       /**
       * Add k-space Coulomb forces for all atoms.
       */
-      virtual void addKSpaceForces(){};
+      void addKSpaceForces();
 
       /**
       * Compute kspace part of Coulomb pressure.
       *
       * \param stress (output) pressure
       */
-      virtual void computeKSpaceStress(double& stress){};
+      void computeKSpaceStress(double& stress) {};
 
       /**
       * Compute kspace part of Coulomb x, y, z pressures.
       *
       * \param stress (output) pressures
       */
-      virtual void computeKSpaceStress(Util::Vector& stress){};
+      void computeKSpaceStress(Util::Vector& stress) {};
 
       /**
       * Compute kspace part of Coulomb stress tensor.
       *
       * \param stress (output) stress tensor
       */
-      virtual void computeKSpaceStress(Util::Tensor& stress){};
+      void computeKSpaceStress(Util::Tensor& stress) {};
     
       //@}
       /// \name Accessors (const)
