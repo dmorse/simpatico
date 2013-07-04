@@ -108,11 +108,6 @@ namespace McMd
       */
       void makeWaves();
 
-      /**
-      * Compute values of k-squared and influence function.
-      */
-      void computeKSq();
-
       //@}
       /// \name System energy and stress.
       //@{

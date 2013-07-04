@@ -86,20 +86,35 @@ namespace McMd
    void CoulombPotential::makeWaves()
    {
       Vector    b0, b1, b2;    // Recprocal basis vectors.
-      IntVector maxK, k;       // Wave indices.
-      int       mink1, mink2;  // Minimum k-indices.
+      IntVector maxK, k;       // Max and running wave indices.
       Vector    q0, q1, q;     // Partial and complete wavevectors.
+      int       nWaves;        // Number of waves to reserve.
+      int       mink1, mink2;  // Minimum k-indices.
       double    prefactor(-0.25/alpha_/alpha_);
       double    kCutoffSq(kCutoff_*kCutoff_), ksq;
+      double    pi2(2.0*Constants::Pi);
 
       b0 = boundaryPtr_->reciprocalBasisVector(0);
       b1 = boundaryPtr_->reciprocalBasisVector(1);
       b2 = boundaryPtr_->reciprocalBasisVector(2);
 
-      // Max wave indices.
-      maxK[0] = ceil(kCutoff_ * boundaryPtr_->length(0) / 2.0 / Constants::Pi);
-      maxK[1] = ceil(kCutoff_ * boundaryPtr_->length(1) / 2.0 / Constants::Pi);
-      maxK[2] = ceil(kCutoff_ * boundaryPtr_->length(2) / 2.0 / Constants::Pi);
+      // Get max wave indices and reserve arrays.
+      maxK[0] = ceil(kCutoff_*boundaryPtr_->bravaisBasisVector(0).abs()/pi2);
+      maxK[1] = ceil(kCutoff_*boundaryPtr_->bravaisBasisVector(1).abs()/pi2);
+      maxK[2] = ceil(kCutoff_*boundaryPtr_->bravaisBasisVector(2).abs()/pi2);
+
+      if (waves_.capacity() == 0) {
+         nWaves = ((2*maxK[0] + 1) * (2*maxK[1] + 1) * (2*maxK[2] + 1) - 1)/2;
+         waves_.reserve(nWaves);
+         ksq_.reserve(nWaves);
+         g_.reserve(nWaves);
+         rho_.reserve(nWaves);
+      } else {
+         waves_.clear();
+         ksq_.clear();
+         g_.clear();
+         rho_.clear();
+      }
 
       // Accumulate waves, and wave-related properties.
       q0.multiply(b0, -1);
@@ -116,20 +131,14 @@ namespace McMd
             q.multiply(b2, -maxK[2]-1);
             q += q1;
 
-            mink2 = (k[0] == 0 && k[1] == 0 ? 0 : -maxK[2]);
+            mink2 = (k[0] == 0 && k[1] == 0 ? 1 : -maxK[2]);
             for (k[2] = mink2; k[2] <= maxK[2]; ++k[2]) {
 
-               if (k[0] + abs(k[1]) + abs(k[2]) > 0) {
-                  ksq = q.square();
-                  if (ksq <= kCutoffSq) {
-                     waves_.append(k);
-                     ksq_.append(ksq);
-                     g_.append(exp(prefactor*ksq)/ksq);
-                  }
-               } else {
+               ksq = q.square();
+               if (ksq <= kCutoffSq) {
                   waves_.append(k);
-                  ksq_.append(0.0);
-                  g_.append(0.0);
+                  ksq_.append(ksq);
+                  g_.append(exp(prefactor*ksq)/ksq);
                }
 
             } // for k[2]
@@ -138,34 +147,6 @@ namespace McMd
 
       // Allocate fourier modes for charge density.
       rho_.resize(waves_.size());
-   }
-
-   /*
-   * Compute values of k-squared and damping function.
-   * Needed when box is reshaped.
-   */
-   void CoulombPotential::computeKSq()
-   {
-      Vector    b0, b1, b2;   // recprocal basis vectors
-      Vector    q, qtmp;      // partial and complete wavevectors
-      double    prefactor = -0.25/alpha_/alpha_;
-      double    ksq;
-
-      b0 = boundaryPtr_->reciprocalBasisVector(0);
-      b1 = boundaryPtr_->reciprocalBasisVector(1);
-      b2 = boundaryPtr_->reciprocalBasisVector(2);
-
-      for (int i = 0; i < waves_.size(); ++i) {
-         q.multiply(b0, waves_[i][0]);
-         qtmp.multiply(b1, waves_[i][1]);
-         q += qtmp;
-         qtmp.multiply(b2, waves_[i][2]);
-         q += qtmp;
-
-         ksq = q.square();
-         ksq_[i] = ksq;
-         g_[i] = exp(prefactor*ksq) / ksq;
-      }
    }
 
    /*
