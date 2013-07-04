@@ -232,6 +232,8 @@ namespace McMd
       double    charge;        // Particle charge.
       double    EPS(1.0E-10);  // A tiny number for charge test.
       double    x, y, fcoeff;
+      double    twoPi(Constants::Pi);
+      double    esfactor(2.0 / epsilon_ / boundaryPtr_->volume());
 
       b0 = boundaryPtr_->reciprocalBasisVector(0);
       b1 = boundaryPtr_->reciprocalBasisVector(1);
@@ -249,7 +251,7 @@ namespace McMd
          vq += vqtmp;
          vqtmp.multiply(b2, q[2]);
          vq += vqtmp;
-         vq *= -2.0;
+         vq *= esfactor*g_[i];
 
          x = rho_[i].real();
          y = rho_[i].imag();
@@ -263,8 +265,8 @@ namespace McMd
 
                   if (fabs(charge) > EPS) {
                      boundaryPtr_->transformCartToGen(atomIter->position(), rg);
-                     dotqr = rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2];
-                     fcoeff = (y * cos(dotqr) - x * sin(dotqr)) * charge;
+                     dotqr = twoPi*(rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2]);
+                     fcoeff = ( y * cos(dotqr) - x * sin(dotqr) ) * charge;
 
                      force.multiply(vq, fcoeff);
                      atomIter->force() += force;
