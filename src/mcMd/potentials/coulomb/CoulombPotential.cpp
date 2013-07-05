@@ -40,7 +40,7 @@ namespace McMd
    {}
 
    /*
-   * Destructor (does nothing)
+   * Create association with an EwaldCoulombPair interaction.
    */
    void CoulombPotential::setPairInteraction(EwaldCoulombPair& pairInteraction)
    {

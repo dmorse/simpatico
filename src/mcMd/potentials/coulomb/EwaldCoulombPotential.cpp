@@ -136,7 +136,7 @@ namespace McMd
    /*
    * Calculate fourier modes of charge density.
    */
-   void EwaldCoulombPotential::computeChargeKMode()
+   void EwaldCoulombPotential::computeKSpaceCharge()
    {
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
@@ -186,7 +186,7 @@ namespace McMd
       double x, y;
 
       // Compute Fourier components of charge density.
-      computeChargeKMode();
+      computeKSpaceCharge();
 
       for (int i = 0; i < waves_.size(); ++i) {
          x = rho_[i].real();
@@ -224,7 +224,7 @@ namespace McMd
       prefactor = -2.0/(epsilon_*boundaryPtr_->volume());
 
       // Compute Fourier components of charge density.
-      computeChargeKMode();
+      computeKSpaceCharge();
     
       // Store reciprocal lattice vectors 
       for (j = 0; j < Dimension; ++j) {

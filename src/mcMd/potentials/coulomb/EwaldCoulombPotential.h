@@ -115,7 +115,7 @@ namespace McMd
 
       //@}
 
-   private:
+   protected:
 
       /// Cutoff wavenumber for long range interaction.
       double kCutoff_;
@@ -135,7 +135,7 @@ namespace McMd
       /**
       * Calculate fourier modes of charge density.
       */
-      void computeChargeKMode();
+      void computeKSpaceCharge();
 
    };
 
