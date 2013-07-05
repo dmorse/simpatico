@@ -189,7 +189,7 @@ namespace McMd
                   dotqr = rg.dot(waves_[i])*TwoPi;
                   x = charge*cos(dotqr);
                   y = charge*sin(dotqr);
-                  rho_[i] = std::complex<double>(x, y);
+                  rho_[i] += std::complex<double>(x, y);
                }
 
             } // For atoms.
