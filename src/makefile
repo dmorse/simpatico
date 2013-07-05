@@ -54,11 +54,12 @@ veryclean:
 	-rm -f mcMd/mdIntegrators/MdIntegratorFactory.cpp
 	-rm -f mcMd/perturb/mcSystem/McPerturbationFactory.cpp
 	-rm -f mcMd/potentials/angle/AngleFactory.cpp
+	-rm -f mcMd/potentials/pair/PairFactory.cpp
 	-rm -f mcMd/potentials/bond/BondFactory.cpp
 	-rm -f mcMd/potentials/dihedral/DihedralFactory.cpp
+	-rm -f mcMd/potentials/coulomb/CoulombFactory.cpp
 	-rm -f mcMd/potentials/external/ExternalFactory.cpp
 	-rm -f mcMd/potentials/link/LinkFactory.cpp
-	-rm -f mcMd/potentials/pair/PairFactory.cpp
 	-rm -f mcMd/species/SpeciesFactory.cpp
 	-rm -f mcMd/trajectoryIos/TrajectoryIoFactory.cpp
 	-rm -f ddMd/configIos/ConfigIoFactory.cpp
