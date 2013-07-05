@@ -104,7 +104,7 @@ namespace McMd
       void readParameters(std::istream& in);
 
       /**
-      * Generate waves and allocate memory for wave-related parameters.
+      * Generate wavevectors for the current boundary and kCutoff.
       */
       void makeWaves();
 
@@ -158,19 +158,24 @@ namespace McMd
       double epsilon() const;
 
       /**
-      * Get value of inverse range parameter.
+      * Get value of Ewald inverse range parameter.
       */
       double alpha() const;
 
       /**
       * Get cutoff distance for short range interaction.
       */
-      const double rCutoff() const;
+      double rCutoff() const;
 
       /**
       * Get cutoff wavenumber for long range interaction.
       */
-      const double kCutoff() const;
+      double kCutoff() const;
+
+      /**
+      * Current number of wavevectors with |k| < kCutoff.
+      */
+      int nWave() const;
 
       //@}
 
@@ -207,7 +212,7 @@ namespace McMd
       bool isInitialized_;
 
       /// Wave vector indices.
-      GArray< IntVector > waves_;
+      GArray<Vector> waves_;
 
       /// Values of square of Fourier wavevector.
       GArray<double> ksq_;
@@ -237,14 +242,14 @@ namespace McMd
    /*
    * Get cutoff distance for short range interaction.
    */
-   inline const double CoulombPotential::rCutoff() const
+   inline double CoulombPotential::rCutoff() const
    {  return rCutoff_; }
 
    /*
    * Get cutfoff wavenumber for long range interaction.
    */
-   inline const double CoulombPotential::kCutoff() const
-   {  return kCutoff_; }
+   inline int CoulombPotential::nWave() const
+   {  return waves_.size(); }
 
 } 
 #endif

@@ -557,6 +557,8 @@ namespace McMd
       if (hasCoulombPotential()) {
          coulombPotential().makeWaves();
       }
+      Log::file() << "Initial coulombPotential nWave = " 
+                  << coulombPotential().nWave() << std::endl;
       #endif
       calculateForces();
    }

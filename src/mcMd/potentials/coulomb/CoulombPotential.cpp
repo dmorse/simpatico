@@ -86,29 +86,31 @@ namespace McMd
    void CoulombPotential::makeWaves()
    {
       Vector    b0, b1, b2;    // Recprocal basis vectors.
-      IntVector maxK, k;       // Max and running wave indices.
       Vector    q0, q1, q;     // Partial and complete wavevectors.
-      int       mink1, mink2;  // Minimum k-indices.
+      Vector    kv;            // Integer wavevector expressed as real vector
       double    prefactor(-0.25/alpha_/alpha_);
       double    kCutoffSq(kCutoff_*kCutoff_), ksq;
       double    pi2(2.0*Constants::Pi);
+      IntVector maxK, k;       // Max and running wave indices.
+      int       mink1, mink2;  // Minimum k-indices
+      int       j;
 
       b0 = boundaryPtr_->reciprocalBasisVector(0);
       b1 = boundaryPtr_->reciprocalBasisVector(1);
       b2 = boundaryPtr_->reciprocalBasisVector(2);
 
       // Get max wave indices and reserve arrays.
-      maxK[0] = ceil(kCutoff_*boundaryPtr_->bravaisBasisVector(0).abs()/pi2);
-      maxK[1] = ceil(kCutoff_*boundaryPtr_->bravaisBasisVector(1).abs()/pi2);
-      maxK[2] = ceil(kCutoff_*boundaryPtr_->bravaisBasisVector(2).abs()/pi2);
+      for (j=0; j < Dimension; ++j) {
+         maxK[j] = ceil(kCutoff_*boundaryPtr_->bravaisBasisVector(j).abs()/pi2);
+      }
 
       if (waves_.capacity() == 0) {
-         int  nWaves; // Number of waves to reserve.
-         nWaves = ((2*maxK[0] + 1) * (2*maxK[1] + 1) * (2*maxK[2] + 1) - 1)/2;
-         waves_.reserve(nWaves);
-         ksq_.reserve(nWaves);
-         g_.reserve(nWaves);
-         rho_.reserve(nWaves);
+         int capacity; 
+         capacity = ((2*maxK[0] + 1) * (2*maxK[1] + 1) * (2*maxK[2] + 1) - 1)/2;
+         waves_.reserve(capacity);
+         ksq_.reserve(capacity);
+         g_.reserve(capacity);
+         rho_.reserve(capacity);
       } else {
          waves_.clear();
          ksq_.clear();
@@ -136,7 +138,10 @@ namespace McMd
 
                ksq = q.square();
                if (ksq <= kCutoffSq) {
-                  waves_.append(k);
+                  for (j = 0; j < Dimension; ++j) {
+                    kv[j] = (double)k[j];
+                  }
+                  waves_.append(kv);
                   ksq_.append(ksq);
                   g_.append(exp(prefactor*ksq)/ksq);
                }
@@ -156,16 +161,14 @@ namespace McMd
    {
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
-      int     nSpecies(simulationPtr_->nSpecies());
-      std::complex<double>  TwoPiIm; // 2*pi*(0.0,1.0)
-      Vector     rg;        // scaled atom position vector
-      IntVector  q;         // integer wave vector
-      int        i;         // index for waves
-      int        type;      // atom type id
-      double     dotqr;     // dot product between q and r
-      double     charge;    // atom charge
+      Vector  rg;     // scaled atom position vector
+      double  dotqr;  // dot product between q and r
+      double  x, y;   // real and imaginary parts of phasor
+      double  charge; // atom charge
+      double  TwoPi;  // 2.0*pi
+      int  i;         // array index
 
-      TwoPiIm = (Constants::Im)*(2.0*Constants::Pi);
+      TwoPi = 2.0*Constants::Pi;
 
       // Clear rho for all waves
       for (i = 0; i < rho_.size(); ++i) {
@@ -173,19 +176,20 @@ namespace McMd
       }
 
       // Loop over species, molecules atoms
+      int  nSpecies = simulationPtr_->nSpecies();
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          systemPtr_->begin(iSpecies, molIter); 
          for ( ; molIter.notEnd(); ++molIter) {
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                boundaryPtr_->transformCartToGen(atomIter->position(), rg);
-               type = atomIter->typeId();
-               charge = (*atomTypesPtr_)[type].charge();
+               charge = (*atomTypesPtr_)[atomIter->typeId()].charge();
 
                // Loop over waves
                for (i = 0; i < waves_.size(); ++i) {
-                  q = waves_[i];
-                  dotqr = rg[0]*q[0] + rg[1]*q[1] + rg[2]*q[2];
-                  rho_[i] += charge*exp(TwoPiIm*dotqr);
+                  dotqr = rg.dot(waves_[i])*TwoPi;
+                  x = charge*cos(dotqr);
+                  y = charge*sin(dotqr);
+                  rho_[i] = std::complex<double>(x, y);
                }
 
             } // For atoms.
@@ -210,7 +214,7 @@ namespace McMd
          y = rho_[i].imag();
          total += (x*x + y*y)*g_[i];
       }
-      total *= 0.5 / epsilon_ / boundaryPtr_->volume();
+      total *= 0.5 / (epsilon_*boundaryPtr_->volume());
 
       // Correct for conjugate wave contribution and return.
       return (2.0 * total);
@@ -227,23 +231,26 @@ namespace McMd
       std::complex<double>  phasor;
       Vector  b[Dimension];  // array of reciprocal basis vectors
       Vector  rg;            // scaled atom position vector
-      Vector  q;             // Wavevector and force contribution
       Vector  fg;            // generalized force on atom
-      Vector  f;             // Cartesian force on atom
+      Vector  df;            // force contribution
       double  dotqr;         // Dot product between q and r
       double  charge;        // atom charge
+      double  x, y;          // Real and imaginary parts of phasor
       double  prefactor;     // -2/(epsilon*volume)
+      double  TwoPi;         // 2.0*pi
       int  nSpecies(simulationPtr_->nSpecies());
       int  type;
       int  i, j;
 
       // Constants
-      TwoPiIm = (Constants::Im)*(2.0*Constants::Pi);
+      TwoPi   = 2.0*Constants::Pi;
+      TwoPiIm = (Constants::Im)*TwoPi;
       prefactor = -2.0/(epsilon_*boundaryPtr_->volume());
 
       // Compute Fourier components of charge density.
       computeChargeKMode();
-     
+    
+      // Store reciprocal lattice vectors 
       for (j = 0; j < Dimension; ++j) {
          b[j] = boundaryPtr_->reciprocalBasisVector(j);
       }
@@ -260,26 +267,24 @@ namespace McMd
                // Loop over waves
                fg.zero();
                for (i = 0; i < waves_.size(); ++i) {
-                  dotqr = 0;
-                  for (j = 0; j < Dimension; ++j) {
-                     q[j] = (double) waves_[i][j];
-                     dotqr += rg[j]*q[j];
-                  }
-                  phasor = exp(-TwoPiIm*dotqr)*rho_[i];
-                  q *= g_[i]*std::imag(phasor);
-                  fg += q;
+                  df = waves_[i];
+                  dotqr = rg.dot(df)*TwoPi;
+                  x = cos(dotqr);
+                  y = sin(dotqr);
+                  df *= g_[i]*( x*rho_[i].imag() - y*rho_[i].real() );
+                  fg += df;
                }
+               fg *= charge*prefactor;
 
                // Transform to Cartesian coordinates
                for (j = 0; j < Dimension; ++j) {
-                  fg[j] *= charge*prefactor;
-                  f.multiply(b[j], fg[j]);
-                  atomIter->force() += f;
+                  df.multiply(b[j], fg[j]);
+                  atomIter->force() += df;
                }
 
-            } // For atoms.
-         } // For molecules.
-      } // For species.
+            } // for atoms
+         } // for molecules
+      } // for species
 
    }
 
