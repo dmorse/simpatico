@@ -1,0 +1,52 @@
+#ifndef MCMD_COULOMB_FACTORY_CPP
+#define MCMD_COULOMB_FACTORY_CPP
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include <mcMd/potentials/bond/CoulombFactory.h>
+#include <mcMd/simulation/System.h>
+
+// CoulombPotential interfaces and implementation classes
+#include <mcMd/potentials/bond/CoulombPotential.h>
+
+// Coulomb Potential interaction classes
+#include <inter/coulomb/EwaldCoulombPotential.h>
+
+namespace McMd
+{
+
+   using namespace Inter;
+
+   /**
+   * Default constructor.
+   */
+   CoulombFactory::CoulombFactory(System& system)
+    : Factory<CoulombPotential>(),
+      systemPtr_(&system)
+   {}
+
+   /*
+   * Return a pointer to a new CoulombPotential, if possible.
+   */
+   CoulombPotential* 
+   CoulombFactory::factory(const std::string& name) const
+   {
+      CoulombPotential* ptr = 0;
+
+      // Try subfactories first.
+      ptr = trySubfactories(name);
+      if (ptr) return ptr;
+
+      if (name == "Ewald") {
+         ptr = new EwaldCoulombPotential(*systemPtr_);
+      } 
+      return ptr;
+   }
+
+}
+#endif
