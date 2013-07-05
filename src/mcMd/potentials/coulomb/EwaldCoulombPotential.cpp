@@ -1,5 +1,5 @@
-#ifndef MCMD_COULOMB_POTENTIAL_CPP
-#define MCMD_COULOMB_POTENTIAL_CPP
+#ifndef MCMD_EWALD_COULOMB_POTENTIAL_CPP
+#define MCMD_EWALD_COULOMB_POTENTIAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,14 +8,14 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <stdlib.h>
-#include <util/space/Vector.h>
-#include <util/space/Tensor.h>
-#include <util/math/Constants.h>
+#include "EwaldCoulombPotential.h" 
+//#include "EwaldCoulombPair.h" 
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
-#include "CoulombPotential.h" 
-#include "EwaldCoulombPair.h" 
+//#include <util/space/Vector.h>
+#include <util/space/Tensor.h>
+#include <util/math/Constants.h>
+#include <stdlib.h>
 
 namespace McMd
 {
@@ -25,55 +25,34 @@ namespace McMd
    /*
    * Constructor.
    */
-   CoulombPotential::CoulombPotential(System& system)
-    : simulationPtr_(&system.simulation()),
-      systemPtr_(&system),
-      boundaryPtr_(&system.boundary()),
-      pairInteractionPtr_(0),
-      epsilon_(1.0),
-      alpha_(1.0),
-      rCutoff_(1.0),
-      kCutoff_(1.0),
-      atomTypesPtr_(&system.simulation().atomTypes()),
-      isInitialized_(false)
-   {  setClassName("CoulombPotential"); }
-
-   /*
-   * Destructor (does nothing)
-   */
-   CoulombPotential::~CoulombPotential()
-   {}
-
-   /*
-   * Set pointer to array of AtomTypes.
-   */
-   void CoulombPotential::setAtomTypes(const Array<AtomType>& atomTypes)
-   {  atomTypesPtr_ = &atomTypes; }
-
-
-   /*
-   * Destructor (does nothing)
-   */
-   void CoulombPotential::setPairInteraction(EwaldCoulombPair& pairInteraction)
+   EwaldCoulombPotential::EwaldCoulombPotential(System& system)
+    : CoulombPotential(system),
+      kCutoff_(1.0)
    {
-      pairInteractionPtr_ = &pairInteraction;
-      pairInteractionPtr_->set(epsilon_, alpha_, rCutoff_);
+      // Note: Don't setClassName - using "CoulombPotential" base class name
    }
+
+   /*
+   * Destructor (does nothing)
+   */
+   EwaldCoulombPotential::~EwaldCoulombPotential()
+   {}
 
    /*
    * Read parameters and initialize.
    */
-   void CoulombPotential::readParameters(std::istream& in)
+   void EwaldCoulombPotential::readParameters(std::istream& in)
    {
-      read<double>(in, "epsilon", epsilon_);
-      read<double>(in, "alpha",   alpha_);
-      read<double>(in, "rCutoff", rCutoff_);
+      CoulombPotential::readParameters(in);
       read<double>(in, "kCutoff", kCutoff_);
-      if (pairInteractionPtr_) {
-         pairInteractionPtr_->set(epsilon_, alpha_, rCutoff_);
-      }
       isInitialized_ = true;
    }
+
+   /*
+   * Get cutfoff wavenumber for long range interaction.
+   */
+   inline int EwaldCoulombPotential::nWave() const
+   {  return waves_.size(); }
 
    /*
    * Generate waves using kCutoff; allocate memories for associated variables.
@@ -83,7 +62,7 @@ namespace McMd
    *   The first index is always non-negative.
    *
    */
-   void CoulombPotential::makeWaves()
+   void EwaldCoulombPotential::makeWaves()
    {
       Vector    b0, b1, b2;    // Recprocal basis vectors.
       Vector    q0, q1, q;     // Partial and complete wavevectors.
@@ -157,7 +136,7 @@ namespace McMd
    /*
    * Calculate fourier modes of charge density.
    */
-   void CoulombPotential::computeChargeKMode()
+   void EwaldCoulombPotential::computeChargeKMode()
    {
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
@@ -201,7 +180,7 @@ namespace McMd
    /*
    * Calculate the k-space contribution to the Coulomb energy.
    */
-   double CoulombPotential::kspaceEnergy()
+   double EwaldCoulombPotential::kspaceEnergy()
    {
       double total = 0.0;
       double x, y;
@@ -223,12 +202,10 @@ namespace McMd
    /*
    * Add k-space Coulomb forces for all atoms.
    */
-   void CoulombPotential::addKSpaceForces()
+   void EwaldCoulombPotential::addKSpaceForces()
    {
       System::MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
-      std::complex<double>  TwoPiIm; // 2*pi*(0.0,1.0)
-      std::complex<double>  phasor;
       Vector  b[Dimension];  // array of reciprocal basis vectors
       Vector  rg;            // scaled atom position vector
       Vector  fg;            // generalized force on atom
@@ -244,7 +221,6 @@ namespace McMd
 
       // Constants
       TwoPi   = 2.0*Constants::Pi;
-      TwoPiIm = (Constants::Im)*TwoPi;
       prefactor = -2.0/(epsilon_*boundaryPtr_->volume());
 
       // Compute Fourier components of charge density.
@@ -288,25 +264,23 @@ namespace McMd
 
    }
 
-   #if 0
    /*
    * Compute total nonbonded pressure
    */
-   void CoulombPotential::computeKSpaceStress(double& stress) const
+   void EwaldCoulombPotential::computeKSpaceStress(double& stress)
    {}
 
    /*
    * Compute x, y, z nonbonded pressures.
    */
-   void CoulombPotential::computeKSpaceStress(Util::Vector& stress) const 
+   void EwaldCoulombPotential::computeKSpaceStress(Util::Vector& stress)
    {}
 
    /*
    * Compute stress tensor.
    */
-   void CoulombPotential::computeKSpaceStress(Util::Tensor& stress) const
+   void EwaldCoulombPotential::computeKSpaceStress(Util::Tensor& stress)
    {}
-   #endif
  
 } 
 #endif

@@ -31,6 +31,9 @@
 #ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralFactory.h>
 #endif
+#ifdef INTER_COULOMB
+#include <mcMd/potentials/coulomb/CoulombFactory.h>
+#endif
 #ifdef MCMD_LINK
 #include <mcMd/potentials/link/LinkFactory.h>
 #include <mcMd/links/LinkMaster.h>
@@ -89,6 +92,9 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       dihedralFactoryPtr_(0),
       #endif
+      #ifdef INTER_COULOMB
+      coulombFactoryPtr_(0),
+      #endif
       #ifdef MCMD_LINK
       linkFactoryPtr_(0),
       #endif
@@ -119,6 +125,9 @@ namespace McMd
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralStyle_(),
+      #endif
+      #ifdef INTER_COULOMB
+      coulombStyle_(),
       #endif
       #ifdef MCMD_LINK
       linkStyle_(),
@@ -172,11 +181,14 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       dihedralFactoryPtr_(other.dihedralFactoryPtr_),
       #endif
-      #ifdef MCMD_LINK
-      linkFactoryPtr_(other.linkFactoryPtr_),
+      #ifdef INTER_COULOMB
+      coulombFactoryPtr_(other.coulombFactoryPtr_),
       #endif
       #ifdef INTER_EXTERNAL
       externalFactoryPtr_(other.externalFactoryPtr_),
+      #endif
+      #ifdef MCMD_LINK
+      linkFactoryPtr_(other.linkFactoryPtr_),
       #endif
       #ifdef INTER_TETHER
       tetherFactoryPtr_(other.tetherFactoryPtr_),
@@ -202,6 +214,9 @@ namespace McMd
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralStyle_(other.dihedralStyle_),
+      #endif
+      #ifdef INTER_COULOMB
+      coulombStyle_(other.coulombStyle_),
       #endif
       #ifdef MCMD_LINK
       linkStyle_(other.linkStyle_),
@@ -252,6 +267,11 @@ namespace McMd
          #ifdef INTER_DIHEDRAL
          if (dihedralFactoryPtr_) {
             delete dihedralFactoryPtr_;
+         }
+         #endif
+         #ifdef INTER_COULOMB
+         if (coulombFactoryPtr_) {
+            delete coulombFactoryPtr_;
          }
          #endif
          #ifdef MCMD_LINK
@@ -435,26 +455,32 @@ namespace McMd
       if (simulation().nAngleType() > 0) {
          read<std::string>(in, "angleStyle", angleStyle_);
       }
-      #endif
 
+      #endif
       #ifdef INTER_DIHEDRAL
       if (simulation().nDihedralType() > 0) {
          read<std::string>(in, "dihedralStyle", dihedralStyle_);
       }
-      #endif
 
-      #ifdef MCMD_LINK
-      if (simulation().nLinkType() > 0) {
-         read<std::string>(in, "linkStyle", linkStyle_);
+      #endif
+      #ifdef INTER_COULOMB
+      if (simulation().hasCoulomb() > 0) {
+         read<std::string>(in, "coulombStyle", coulombStyle_);
       }
-      #endif
 
+      #endif
       #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
          read<std::string>(in, "externalStyle", externalStyle_);
       }
-      #endif
 
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         read<std::string>(in, "linkStyle", linkStyle_);
+      }
+
+      #endif
       #ifdef INTER_TETHER
       if (simulation().hasTether()) {
          read<std::string>(in, "tetherStyle", tetherStyle_);
@@ -483,14 +509,19 @@ namespace McMd
          loadParameter<std::string>(ar, "dihedralStyle", dihedralStyle_);
       }
       #endif
-      #ifdef MCMD_LINK
-      if (simulation().nLinkType() > 0) {
-         loadParameter<std::string>(ar, "linkStyle", linkStyle_);
+      #ifdef INTER_COULOMB
+      if (simulation().hasCoulomb() > 0) {
+         loadParameter<std::string>(ar, "coulombStyle", coulombStyle_);
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
          loadParameter<std::string>(ar, "externalStyle", externalStyle_);
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         loadParameter<std::string>(ar, "linkStyle", linkStyle_);
       }
       #endif
       #ifdef INTER_TETHER
@@ -519,6 +550,11 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       if (simulation().nDihedralType() > 0) {
          ar << dihedralStyle_;
+      }
+      #endif
+      #ifdef INTER_COULOMB
+      if (simulation().hasCoulomb() > 0) {
+         ar << coulombStyle_;
       }
       #endif
       #ifdef MCMD_LINK
@@ -1166,7 +1202,26 @@ namespace McMd
    {  return dihedralStyle_;  }
 
    #endif
+   #ifdef INTER_COULOMB
+   /*
+   * Return the CoulombFactory by reference.
+   */
+   CoulombFactory& System::coulombFactory()
+   {
+      if (coulombFactoryPtr_ == 0) {
+         coulombFactoryPtr_ = new CoulombFactory(*this);
+      }
+      assert(coulombFactoryPtr_);
+      return *coulombFactoryPtr_;
+   }
 
+   /*
+   * Get the coulomb style string.
+   */
+   std::string System::coulombStyle() const
+   {  return coulombStyle_;  }
+
+   #endif
    #ifdef MCMD_LINK
    /*
    * Return the Link factory by reference.
@@ -1185,8 +1240,8 @@ namespace McMd
    */
    std::string System::linkStyle() const
    {  return linkStyle_;  }
-   #endif
 
+   #endif
    #ifdef INTER_EXTERNAL
    /*
    * Return the ExternalFactory by reference.
@@ -1205,8 +1260,8 @@ namespace McMd
    */
    std::string System::externalStyle() const
    {  return externalStyle_;  }
-   #endif
 
+   #endif
    #ifdef INTER_TETHER
    /*
    * Return the TetherFactory by reference.
