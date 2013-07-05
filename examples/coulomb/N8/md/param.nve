@@ -50,11 +50,11 @@ MdSimulation{
       kappa                 4.000000000000e+02
       length                1.000000000000e+00
     }
-    CoulombPotential{
+    EwaldCoulombPotential{
       epsilon               1.000000000000e+00
-      alpha                 1.000000000000e+00
-      rCutoff               5.000000000000e+00
-      kCutoff               2.000000000000e+00
+      alpha                 0.500000000000e+00
+      rCutoff               8.000000000000e+00
+      kCutoff               3.000000000000e+00
     }
     EnergyEnsemble{
       type                  adiabatic
@@ -63,18 +63,18 @@ MdSimulation{
       type                  rigid
     }
     NveVvIntegrator{
-       dt                   0.001
+       dt                   0.002 
     }
   }
   DiagnosticManager{
-    baseInterval                           1
+    baseInterval                         100
 
     LogProgress{
-      interval                             1
+      interval                           100
     }
 
     MdEnergyOutput{
-      interval                             1
+      interval                           100
       outputFileName                  energy
     }
 

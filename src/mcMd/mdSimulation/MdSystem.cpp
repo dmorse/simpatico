@@ -32,6 +32,7 @@
 #endif
 #ifdef INTER_COULOMB
 #include <mcMd/potentials/coulomb/CoulombPotential.h>
+#include <mcMd/potentials/coulomb/EwaldCoulombPotential.h>
 #endif
 #ifdef INTER_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
@@ -277,7 +278,7 @@ namespace McMd
          #ifdef INTER_COULOMB
          assert(coulombPotentialPtr_ == 0);
          if (simulation().hasCoulomb()) {
-            coulombPotentialPtr_ = new CoulombPotential(*this);
+            coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
             if (coulombPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create CoulombPotential");
             }
@@ -410,7 +411,7 @@ namespace McMd
          #ifdef INTER_COULOMB
          assert(coulombPotentialPtr_ == 0);
          if (simulation().hasCoulomb() > 0) {
-            coulombPotentialPtr_ = new CoulombPotential(*this);
+            coulombPotentialPtr_ = new EwaldCoulombPotential(*this);
             if (coulombPotentialPtr_ == 0) {
                UTIL_THROW("Failed attempt to create CoulombPotential");
             }

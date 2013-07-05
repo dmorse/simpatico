@@ -9,9 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>   // base class
-#include <util/space/IntVector.h>        // members
 #include <mcMd/chemistry/AtomType.h>     // Member template parameter
-#include <util/containers/GArray.h>      // members
 #include <util/boundary/Boundary.h>      // typedef
 
 #include <complex>
@@ -82,13 +80,6 @@ namespace McMd
       /// \name Initialization
       //@{
 
-      /**  
-      * Create association with an array of AtomType objects.
-      *
-      * \param atomTypes array of AtomType objects.
-      */
-      void setAtomTypes(const Array<AtomType>& atomTypes);
-
       /**
       * Create association with an EwaldCoulombPair pair interaction.
       *
@@ -101,52 +92,47 @@ namespace McMd
       *
       * \param in input stream
       */
-      void readParameters(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /**
-      * Generate wavevectors for the current boundary and kCutoff.
+      * Generate wavevectors for the current boundary.
       */
-      void makeWaves();
+      virtual void makeWaves() = 0;
 
       //@}
       /// \name System energy and stress.
       //@{
 
       /**
-      * Calculate fourier modes of charge density.
-      */
-      void computeChargeKMode();
-
-      /**
       * Calculate the long range kspace part of Coulomb energy.
       */
-      double kspaceEnergy();
+      virtual double kspaceEnergy() = 0;
 
       /**
       * Add k-space Coulomb forces for all atoms.
       */
-      void addKSpaceForces();
+      virtual void addKSpaceForces() = 0;
 
       /**
       * Compute kspace part of Coulomb pressure.
       *
       * \param stress (output) pressure
       */
-      void computeKSpaceStress(double& stress) {};
+      virtual void computeKSpaceStress(double& stress) = 0;
 
       /**
       * Compute kspace part of Coulomb x, y, z pressures.
       *
       * \param stress (output) pressures
       */
-      void computeKSpaceStress(Util::Vector& stress) {};
+      virtual void computeKSpaceStress(Util::Vector& stress) = 0;
 
       /**
       * Compute kspace part of Coulomb stress tensor.
       *
       * \param stress (output) stress tensor
       */
-      void computeKSpaceStress(Util::Tensor& stress) {};
+      virtual void computeKSpaceStress(Util::Tensor& stress) = 0;
     
       //@}
       /// \name Accessors (const)
@@ -168,14 +154,9 @@ namespace McMd
       double rCutoff() const;
 
       /**
-      * Get cutoff wavenumber for long range interaction.
+      * Current number of wavevectors.
       */
-      double kCutoff() const;
-
-      /**
-      * Current number of wavevectors with |k| < kCutoff.
-      */
-      int nWave() const;
+      virtual int nWave() const = 0;
 
       //@}
 
@@ -190,6 +171,9 @@ namespace McMd
       /// Pointer to associated Boundary
       Boundary* boundaryPtr_;
 
+      /// Pointer to array of AtomTypes.
+      const Array<AtomType>* atomTypesPtr_;
+
       /// Pointer to associated short range pair interaction.
       EwaldCoulombPair* pairInteractionPtr_;
 
@@ -202,26 +186,8 @@ namespace McMd
       /// Cutoff distance for short range pair interaction.
       double rCutoff_;
 
-      /// Cutoff wavenumber for long range interaction.
-      double kCutoff_;
-
-      /// Pointer to array of AtomTypes.
-      const Array<AtomType>* atomTypesPtr_;
-
       /// Has readParam been called?
       bool isInitialized_;
-
-      /// Wave vector indices.
-      GArray<Vector> waves_;
-
-      /// Values of square of Fourier wavevector.
-      GArray<double> ksq_;
-
-      /// Regularized Green's function (Gaussian/ksq)
-      GArray<double> g_;
-
-      /// Fourier modes of charge density.
-      GArray< std::complex<double> > rho_;
 
    };
 
@@ -244,12 +210,6 @@ namespace McMd
    */
    inline double CoulombPotential::rCutoff() const
    {  return rCutoff_; }
-
-   /*
-   * Get cutfoff wavenumber for long range interaction.
-   */
-   inline int CoulombPotential::nWave() const
-   {  return waves_.size(); }
 
 } 
 #endif

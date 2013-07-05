@@ -6,7 +6,7 @@ MdSimulation{
   }
   nAtomType                              2
   nBondType                              1
-  hasCoulomb                             0
+  hasCoulomb                             1
   atomTypes                    A    1.0   1.0
                                B    1.0  -1.0
   maskedPairPolicy                MaskBonded
@@ -50,27 +50,32 @@ MdSimulation{
       kappa                 4.000000000000e+02
       length                1.000000000000e+00
     }
+    EwaldCoulombPotential{
+      epsilon               1.000000000000e+00
+      alpha                 0.500000000000e+00
+      rCutoff               8.000000000000e+00
+      kCutoff               3.000000000000e+00
+    }
     EnergyEnsemble{
       type                  isothermal
-      temperature           1.0
     }
     BoundaryEnsemble{
       type                  rigid
     }
-    NvtNhIntegrator{
-       dt                   0.001
-       tauT                 0.100
+    NveVvIntegrator{
+       dt                   0.002 
+       tauT                 1.000
     }
   }
   DiagnosticManager{
-    baseInterval                        1000
+    baseInterval                         100
 
     LogProgress{
-      interval                          2000
+      interval                           100
     }
 
     MdEnergyOutput{
-      interval                          1000
+      interval                           100
       outputFileName                  energy
     }
 
