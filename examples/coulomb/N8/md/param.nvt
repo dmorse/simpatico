@@ -32,6 +32,7 @@ MdSimulation{
   MdSystem{
     pairStyle                        LJPair
     bondStyle                  HarmonicBond
+    coulombStyle                      Ewald
     MdPairPotential{
       epsilon               1.000000000000e+00  1.300000000000e+00
                             1.300000000000e+00  1.000000000000e+00
@@ -50,7 +51,7 @@ MdSimulation{
       kappa                 4.000000000000e+02
       length                1.000000000000e+00
     }
-    EwaldCoulombPotential{
+    CoulombPotential{
       epsilon               1.000000000000e+00
       alpha                 0.500000000000e+00
       rCutoff               8.000000000000e+00
@@ -58,11 +59,12 @@ MdSimulation{
     }
     EnergyEnsemble{
       type                  isothermal
+      temperature           1.0
     }
     BoundaryEnsemble{
       type                  rigid
     }
-    NveVvIntegrator{
+    NvtNhIntegrator{
        dt                   0.002 
        tauT                 1.000
     }

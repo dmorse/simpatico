@@ -28,7 +28,9 @@ namespace McMd
    EwaldCoulombPotential::EwaldCoulombPotential(System& system)
     : CoulombPotential(system),
       kCutoff_(1.0)
-   {  setClassName("EwaldCoulombPotential"); }
+   {
+      // Note: Don't setClassName - using "CoulombPotential" base class name
+   }
 
    /*
    * Destructor (does nothing)
@@ -166,7 +168,7 @@ namespace McMd
                   dotqr = rg.dot(waves_[i])*TwoPi;
                   x = charge*cos(dotqr);
                   y = charge*sin(dotqr);
-                  rho_[i] = std::complex<double>(x, y);
+                  rho_[i] += std::complex<double>(x, y);
                }
 
             } // For atoms.
