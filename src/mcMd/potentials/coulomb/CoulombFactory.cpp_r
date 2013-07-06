@@ -8,19 +8,22 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/potentials/bond/CoulombFactory.h>
+#include <mcMd/potentials/coulomb/CoulombFactory.h>
 #include <mcMd/simulation/System.h>
 
 // CoulombPotential interfaces and implementation classes
-#include <mcMd/potentials/bond/CoulombPotential.h>
+#include <mcMd/potentials/coulomb/CoulombPotential.h>
 
 // Coulomb Potential interaction classes
-#include <inter/coulomb/EwaldCoulombPotential.h>
+#include <mcMd/potentials/coulomb/EwaldCoulombPotential.h>
+#include <mcMd/potentials/coulomb/RefinedEwaldCoulombPotential.h>
+#include <mcMd/potentials/coulomb/FineEwaldCoulombPotential.h>
+
 
 namespace McMd
 {
 
-   using namespace Inter;
+   //using namespace Inter;
 
    /**
    * Default constructor.
@@ -43,6 +46,8 @@ namespace McMd
       if (ptr) return ptr;
 
       if (name == "Ewald") {
+         //ptr = new FineEwaldCoulombPotential(*systemPtr_);
+         //ptr = new RefinedEwaldCoulombPotential(*systemPtr_);
          ptr = new EwaldCoulombPotential(*systemPtr_);
       } 
       return ptr;
