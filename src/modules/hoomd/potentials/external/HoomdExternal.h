@@ -12,6 +12,7 @@
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
 
+#include <util/space/Dimension.h>
 #include <util/param/ParamComposite.h>
 #include <util/boundary/Boundary.h>
 #include <util/global.h>
@@ -25,6 +26,7 @@
 #include <hoomd/SystemDefinition.h>
 #include <hoomd/PotentialExternalGPU.h>
 #include <hoomd/HOOMDMath.h>
+#include <hoomd/BoxDim.h>
 
 #include "HoomdExternalPotential.h"
 
@@ -51,7 +53,7 @@ namespace McMd
    public:
 
       typedef typename hoomd_evaluator::param_type param_type;
- 
+
       /**
       * Default constructor.
       */
@@ -186,9 +188,13 @@ namespace McMd
       const Vector& position, int i, Vector& force) const
    {
       Vector lengths = boundaryPtr_->lengths();
-      Scalar3 X = make_scalar3(position[0], position[1], position[2]);
-      
-      hoomd_evaluator eval(X, lengths[0], lengths[1], lengths[2], params_[i]);
+      Vector hoomdPosition;
+      for (int j=0; j < Dimension; ++j) {
+         hoomdPosition[j] = position[j]/lengths[j];
+      }
+      Scalar3 X = make_scalar3(hoomdPosition[0], hoomdPosition[1], hoomdPosition[2]);
+      BoxDim box(lengths[0], lengths[1], lengths[2]);
+      hoomd_evaluator eval(X, box, params_[i]);
       Scalar3 Force;
       Scalar energy = 0;
       Scalar virial[6];
@@ -209,8 +215,13 @@ namespace McMd
       const Vector& position, int i) const
    {
       Vector lengths = boundaryPtr_->lengths();
-      Scalar3 X = make_scalar3(position[0], position[1], position[2]);
-      hoomd_evaluator eval(X, lengths[0], lengths[1], lengths[2], params_[i]);
+      Vector hoomdPosition;
+      for (int j=0; j < Dimension; ++j) {
+         hoomdPosition[j] = position[j]/lengths[j];
+      }
+      Scalar3 X = make_scalar3(hoomdPosition[0], hoomdPosition[1], hoomdPosition[2]);
+      BoxDim box(lengths[0], lengths[1], lengths[2]);
+      hoomd_evaluator eval(X, box, params_[i]);
       Scalar3 Force;
       Scalar energy = 0;
       Scalar virial[6];

@@ -5,7 +5,7 @@
 #include <mcMd/mcSimulation/McSystem.h> 
 
 #include <modules/hoomd/mcMoves/HoomdMove.h>
-#include <modules/hoomd/mcMoves/HoomdNPHMove.h>
+#include <modules/hoomd/mcMoves/HoomdNPTMTKMove.h>
 
 namespace McMd
 {
@@ -28,9 +28,9 @@ namespace McMd
 
       if (className == "HoomdMove") {
         spp = new HoomdMove(system());
-      }          
-      if (className == "HoomdNPHMove") {
-        spp = new HoomdNPHMove(system());           
+      } else          
+      if (className == "HoomdNPTMTKMove") {
+        spp = new HoomdNPTMTKMove(system());           
       }
       return spp;
    }

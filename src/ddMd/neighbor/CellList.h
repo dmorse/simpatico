@@ -70,7 +70,6 @@ namespace DdMd
    *    // Build cell list
    *    cellList.build();
    *
-   *
    * \endcode
    *
    * The atomCapacity parameter should be set equal to the sum of atomCapacity 
@@ -366,14 +365,15 @@ namespace DdMd
       bool isBuilt_;
 
       /**
-      * Calculate required dimensions for cell grid.
+      * Calculate required dimensions for cell grid and resize cells_ array.
       *
-      * Called internally by allocate and makeGrid. Does not link cells or
-      * calculate offsets to neighbors.
+      * Called internally by allocate and makeGrid. Resizes cells_ array to 
+      * match size of new grid. Does not link cells or calculate offsets to 
+      * neighbors.
       *
-      * \param lower   lower bound used to allocate array of cells.
+      * \param lower lower bound used to allocate array of cells.
       * \param uppper  upper bound used to allocate array of cells.
-      * \param cutoffs minimum dimension of a cell in any direction
+      * \param cutoffs  minimum dimension of a cell in each direction
       */
       void setGridDimensions(const Vector& lower, const Vector& upper, 
                              const Vector& cutoffs);

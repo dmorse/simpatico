@@ -1,6 +1,6 @@
 #ifdef INTER_EXTERNAL
-#ifndef HOOMD_PERIODIC_EXTERNAL_H
-#define HOOMD_PERIODIC_EXTERNAL_H
+#ifndef HOOMD_LOCAL_LAMELLAR_ORDERING_EXTERNAL_H
+#define HOOMD_LOCAL_LAMELLAR_ORDERING_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -12,20 +12,21 @@
 #include "HoomdExternal.h"
 
 #include <hoomd/PotentialExternal.h>
-#include <hoomd/EvaluatorExternalPeriodic.h>
+#include <hoomd/LocalExternalParams.h>
+#include <hoomd/EvaluatorLocalExternal.h>
 #include <hoomd/AllDriverPotentialExternalGPU.cuh>
 
 namespace McMd
 {
-   extern char classNameHoomdLamellarOrdering[];
+   extern char classNameHoomdLocalLamellarOrdering[];
 
    /**
    * A potential encapsulating the HOOMD Periodic evaluator
    *
    * \ingroup External_Module
    */
-   class HoomdLamellarOrderingExternal : public HoomdExternal< EvaluatorExternalPeriodic,
-      gpu_compute_periodic_forces, classNameHoomdLamellarOrdering >
+   class HoomdLocalLamellarOrderingExternal : public HoomdExternal< EvaluatorLocalExternal,
+      gpu_compute_local_forces, classNameHoomdLocalLamellarOrdering >
    {
    
    public:
@@ -33,12 +34,12 @@ namespace McMd
       /**
       * Default constructor.
       */
-      HoomdLamellarOrderingExternal();
+      HoomdLocalLamellarOrderingExternal();
 
       /**
       * Copy constructor
       */
-      HoomdLamellarOrderingExternal(const HoomdLamellarOrderingExternal& other);
+      HoomdLocalLamellarOrderingExternal(const HoomdLocalLamellarOrderingExternal& other);
 
       /**
       * read parameters from file
@@ -67,6 +68,12 @@ namespace McMd
 
       /// Index representing the direction perpendicular to the lamellae.
       int perpDirection_;
+
+      /// Index representing the direction parallel to the lamellae.
+      int parallelDirection_;
+
+      /// Fraction of length in parallel direction for which lamellar ordering is imposed.
+      double fraction_;
 
       /// Interfacial width in periodic phase.
       double width_;

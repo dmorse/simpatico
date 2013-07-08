@@ -1,0 +1,472 @@
+\documentclass[12pt]{article} 
+
+%\usepackage{geometry} % Required to change the page size to A4
+%\geometry{a4paper} % Set the page size to be A4 as opposed to the default US Letter
+
+% Required for including pictures
+\usepackage{graphicx} 
+
+% Allows an [H] in \begin{figure} to specify exact location of figure
+\usepackage{float} 
+
+% Allows in-line images such as the example fish picture
+%\usepackage{wrapfig} 
+
+% Line spacing
+%\linespread{1.2} 
+
+% Uncomment to remove all indentation from paragraphs
+%\setlength\parindent{0pt} 
+
+% Specifies the directory where pictures are stored
+%\graphicspath{{./Pictures/}} 
+
+
+%-----------------------------------------------------------------
+% User-defined commands
+
+\newcommand{\eg}{{\it e.g.}}
+\newcommand{\vv}[1]{\mathbf{#1}}
+
+\newcommand\system{\Gamma^{N}}
+\newcommand\chain{\Gamma}
+
+\newcommand\Utot{U_{N+1}}
+\newcommand\Usys{U_{N}}
+\newcommand\delU{\Delta U}
+\newcommand\Uid{U^{({\rm id})}}
+\newcommand\Uext{U^{({\rm ext})}}
+
+\newcommand\Ztot{Z_{N+1}}
+\newcommand\Zsystem{Z_{N}}
+\newcommand\Zid{Z^{({\rm id})}}
+
+\newcommand\Ftot{F_{N+1}}
+\newcommand\Fsystem{F_{N}}
+\newcommand\Fid{F^{({\rm id})}}
+
+\newcommand\muid{\mu^{({\rm id})}}
+\newcommand\muex{\mu^{({\rm ex})}}
+
+\newcommand\vbead{\vv{r}}
+\newcommand\qbead{\vv{r}_{1}}
+\newcommand\nbead{l}
+
+\newcommand\vbond{\vv{b}}
+\newcommand\ubond{\vv{u}}
+\newcommand\rbond{b}
+\newcommand\nbond{l-1}
+
+\newcommand\ntrial{k}
+\newcommand\rtrial{\tilde{b}}
+\newcommand\vtrial{\tilde{\vv{b}}}
+\newcommand\utrial{\tilde{\vv{u}}}
+
+\newcommand\Ubond{U^{({\rm bond})}}
+\newcommand\Uornt{U^{({\rm ornt})}}
+\newcommand\Uangle{U^{({\rm angle})}}
+\newcommand\Udihedral{U^{({\rm dihedral})}}
+\newcommand\Pbond{P^{({\rm bond})}}
+\newcommand\Pornt{P^{({\rm ornt})}}
+\newcommand\zid{z^{({\rm id})}}
+
+\newcommand\rconfig{\tilde{\chain}}
+%-----------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------
+
+\begin{titlepage}
+
+% Defines a new command for the horizontal lines, change thickness here
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
+
+\center % Center everything on the page
+
+\textsc{\Large Simpatico}\\[0.5cm] % Major heading such as course name
+\textsc{\large Algorithm Notes}\\[0.5cm] % Minor heading such as course title
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Rosenbluth and Configuration Bias Algorithms for Linear Polymers}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+
+\begin{flushleft} \large
+\emph{Authors:}\\
+Taher \textsc{Ghasimakbari} and David \textsc{Morse} 
+\end{flushleft}
+
+{\large \today}\\[3cm] 
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+%\tableofcontents % Include a table of contents
+
+%\newpage % Begins the essay on a new page instead of on the same page as the table of contents 
+
+%-------------------------------------------------------------------------------
+%	INTRODUCTION
+%-------------------------------------------------------------------------------
+
+\section{Molecule Insertion}
+Chemical potentials can be measured by simulating the attempted insertion of a molecule into a liquid.  Consider a system that initially contains $N$ molecules of some species $S$ of interest, to which we will try to add one more molecule of species $S$. The system may contain any number of molecules of any number of other species. Let $\system$ denote the coordinates of all molecules of all species that are present in the initial state, before addition of the $(N+1)$th molecule of type $S$. Let $\chain$ the coordinates of the added $(N+1)$s molecule of type $S$. The potential energy $\Utot$ of a system with this added $S$ molecule can be written as a sum 
+\begin{equation}
+    \Utot(\system, \chain) = \Usys(\system) + \delU (\chain, \system) 
+    \quad. \label{UtotSum}
+\end{equation}
+Here, $\delU$ is the potential energy change arising from insertion of the molecule with conformation $\chain$ into a system with a fixed configuration $\system$ for all other molecules. The change $\delU$ generally includes the intramolecular covalent energy of the added molecule and all inter- and intra-molecular nonbonded pair interactions that involve the added molecule. 
+
+Let $\Zsystem$ and $\Ztot$ denote the partition functions of a system without the added molecule and with an added $S$ molecule, respectively. These are given by
+\begin{eqnarray}
+    \Zsystem & \equiv & \frac{C}{N!}\int d\system \; e^{-\beta \Usys(\system)} 
+    \label{ZsystemDef} \\
+    \Ztot  & \equiv & \frac{C}{(N+1)!}\int d\system \; e^{-\beta \Usys(\system)} 
+                       \int d\chain e^{-\beta \delU(\chain, \system)}
+    \label{ZtotDef}
+    \quad.
+\end{eqnarray}
+where $\beta = 1/(k_{B}T$, where $k_{B}$ is Boltzmann's constant.  Here, the constant $C$ represents any product of combinatorical (inverse factorial) factors arising from species other than species $S$.  Let $\Fsystem = -k_{B}T\ln \Zsystem$ and $\Ftot = -k_{B}T\ln \Ztot$ denote the corresponding free energies.  
+
+\subsection{Equilibrium Averages}
+Various properties of the system with $N+1$ molecules of species $S$ can be expressed in terms of averages over configurations of the system with only $N$ such molecules. Let
+\begin{equation}
+  \langle A \rangle_{N} \equiv \frac{1}{\Zsystem (N+1)!}
+  \int d\system e^{-\beta \Usys(\system)} A(\system)
+  \label{EqAveNDef}
+\end{equation}
+denotes the equilibrium average of some quantity $A(\system)$ in a system of $N$ $S$ molecules, without the added molecule. 
+By setting $A(\system) = \int d\chain e^{-\beta \delU(\chain, \system)}$ in Eq. (\ref{EqAveNDef}), and using Eq. (\ref{ZtotDef}) for $\Ztot$, it is straightforward to show that
+\begin{equation}
+  \frac{\Ztot}{\Zsystem} = \frac{1}{N+1}
+  \left\langle \int d\chain e^{-\beta \delU(\chain, \system)} \right\rangle_{N}
+  \quad, \label{ZRatio}
+\end{equation}
+The chemical potential of species $S$ is given by the free energy difference
+\begin{eqnarray}
+   \mu & = & \Ftot - \Fsystem \nonumber \\
+       & = & -k_{B}T \ln \left ( \frac{\Ztot}{\Zsystem} \right )
+   \quad. \label{mudef}
+\end{eqnarray}
+giving
+\begin{equation}
+  e^{-\beta\mu} = \frac{1}{N+1}
+  \left\langle \int d\chain e^{-\beta \delU(\chain, \system)} \right\rangle_{N}
+  \quad. \label{ZRatio}
+\end{equation}
+This is the starting point for many calculations of chemical potential.
+
+The equilibrium average of any mechanical property $A(\chain, \system)$ in a system of $N+1$ molecules may be expressed as
+\begin{equation}
+  \langle A \rangle_{N+1} \equiv \frac{1}{\Ztot (N+1)!}
+  \int d\system \; e^{-\beta \Usys(\system)} \int d\chain \; e^{-\beta \delU(\chain, \system)} 
+       A(\chain, \system) \quad,
+\end{equation}
+where we have used Eq. (\ref{UtotSum}) for the potential energy $\Utot$.  Using Eq. (\ref{ZRatio}), we express any such average as a ratio
+\begin{equation}
+  \langle A \rangle_{N+1} \equiv
+  \frac{ \left \langle 
+         \int d\chain \; e^{-\beta \delU} A
+         \right \rangle_{N}}
+         { \left \langle 
+         \int d\chain \; e^{-\beta \delU} \right \rangle_{N}}
+\end{equation}
+of averages over coordinates of the original system of $N$ $S$ molecules.
+
+\subsection{Ideal and External Potentials}
+For some purposes, it is useful to express the insertion energy $\delU$ 
+into a sum
+\begin{equation}
+   \delU(\system, \chain) = \Uid(\chain) + \Uext (\chain, \system)
+\end{equation}
+of a ``ideal" bonded contribution $\Uid(\chain)$ that depends only on the conformation of the added molecule and an "external" contribution $\Uext(\chain,\system)$ that depends upon the configuration of both the added molecule and the original system.  There is some freedom in how this division is defined, \eg, the ``ideal" Hamiltonian may be taken to include or exclude non-bonded pair interactions among particles within the added test molecule. Let 
+\begin{equation}
+    \Zid_{1} \equiv \int d\chain \; e^{-\beta \Uid(\chain) }
+\end{equation}
+be the partition function for system containing a single $S$ molecule with potential energy $\Uid$, confined to the same volume as that of the entire interacting system of interest. The chemical potential for an ``ideal" reference system of $N$ such non-interacting molecules, defined by analogy to Eq. (\ref{mudef}), is then
+\begin{eqnarray}
+    \muid & \equiv & \Fid_{N+1} - \Fid_{N}  \nonumber \\
+          & =      & -k_{B}T\ln(\Zid_{1}/N+1)
+    \quad.
+\end{eqnarray}
+We define an excess chemical potential $\muex$ for species $S$ as the difference
+\begin{equation}
+     \muex \equiv \mu - \muid
+\end{equation}
+between the chemical potentials of the real and ideal systems containing the same number of molecules in the same total volume. This is given by a dimensionless ratio
+\begin{equation}
+   \muex_{N}  = -k_{B}T \ln \left ( \frac{\Ztot (N+1) }{\Zsystem \Zid_{1}} \right )
+\end{equation}
+where
+\begin{equation}
+  \frac{\Ztot (N+1)}{\Zsystem \Zid_{1}} = 
+  \frac{\left \langle \int d\chain e^{-\beta \delU(\chain, \system)} \right \rangle_{N}} 
+       {\Zid_{1}} 
+  \quad.
+\end{equation}
+This is the quantity that is calculated in insertion methods.
+
+\section{Rosenbluth Sampling} % Sub-section
+Rosenbluth sampling is a method of growing an ensemble of low energy conformations for linear chains, which is the basis of several closely related algorithms for measuring chemical potentials and for conformational sampling. The method generates an ensemble of conformations that is not the equilibrium ensemble, but that can be reweighted in order to reproduce an equilibrium ensemble. The method was originally developed on a lattice and then generalized to continuum models. The version we describe here is for linear bead-spring chains with a potential energy that has an ``ideal" part that is described by the standard molecular mechanics model described above. 
+
+\subsection{Linear molecules}
+We begin by introducing some notation and results for linear chain molecules that are useful in the analysis of the Rosenbluth algorithm.
+
+Consider a linear chain of $\nbead$ point like particles with positions $\vbead_{1},\ldots,\vbead_{\nbead}$ connected by $\nbond$ bonds. Let 
+\begin{equation}
+   \vbond_{i} = \rbond_{i} \ubond_{i} = \vbead_{i} - \vbead_{i-1}
+\end{equation}
+denote the bond vector between beads $i$ and $i-1$, in which $\rbond_{i} \equiv |\vbond_{i}|$ is the bond length and and $\ubond_{i}$ is a unit vector.  
+
+In the Rosenbluth algorithm, a chain configuration is constructed sequentially, by first choosing a position of bead 1, and then for 2 bead, and and so on, until the chain is complete.  The configuration $\system$ of all neighboring molecules is kept fixed throughout this growth process. At each stage of this process, let $\chain_{i}$ denote the configuration of the partially constructed chain, given by the positions of beads $1,\ldots,i$. For a given system configuration $\system$ and a given partial chain configuration $\chain_{i}$, let $\delU_{i}(\chain_{i}, \system)$ denote the change in total potential energy resulting from addition of bead $i$ at specific location. This quantity, which will be referred to as an ``incremental" energy, includes all contributions to $\delU$ that arise from bonded and nonbonded interactions involving bead $i$, including interactions with beads $1,\ldots, i-1$ and with surrounding chains, but excluding any bonded or nonbonded interactions involving beads $i+1,\ldots,\nbead$, which do not yet exist. By definition, for a given final chain configuration $\chain$,
+\begin{equation}
+   \delU(\chain, \system) 
+   = \sum_{i=1}^{\nbead} \delU_{i}(\chain_i, \system) 
+   \quad.
+\end{equation}
+If $\delU$ is divided into ``ideal" and ``external" parts, similar reasoning may be applied to these components: We may define analogous ideal and external incremental energies $\Uid_{i}$ and $\Uext_{i}$. The ideal incremental energy is a function $\Uid_{i}(\chain_{i})$ that depends only on partial chain configuration for the added chain, while the external incremental contribution is a function $\Uext_{i}(\chain_{i}, \system)$ of both the partial chainc configuration and the configuration $\system$ of surrounding molecules.
+
+The version of the Rosenbluth algorithm that we describe below is designed for an ``ideal" chain energy $\Uid$ that has the same form as a particular type of standard molecular mechanics model for a linear polymer. In what follows, we assume that $\Uid$ is the sum of two-particle bond energies that each depend only on the length of bonds between neighboring beads, three-particle angle terms that depend on the angles between pairs of neighboring bonds, and four-particle dihedral terms that depend only on the dihedral angle defined by three consecutive bonds within a chain. In this model, the incremental energy for any beads $i \geq 2$ can be expressed as a sum
+\begin{equation}
+   \Uid_{i} = \Ubond_{i}(\rbond_{i}) + \Uornt_{i}(\ubond_{i})
+\end{equation}
+in which $\Ubond_{i}$ is a bond energy that depends only on the length $\rbond_{i}$ of bond $i$, and $\Uornt_{i}(\ubond)$ is contribution that depends only on the orientation $\ubond_{i}$ of bond $i$ relative to the orientation of bond $i-1$ and relative to the plane defined by bonds $i-2$ and $i-1$. Specifically, this standard model expresses $\Uornt_{i}(\ubond)$ for all $i > 3$ as a sum
+\begin{equation}
+   \Uornt_{i}(\ubond_{i}) = \Uangle_{i}(\theta_{i}) 
+                          + \Udihedral_{i}(\phi_{i}) 
+\end{equation}
+of a bending angle component $\Uangle(\theta)$ that (for $i>2$) depends only on the angle $\theta$ between bonds $i-1$ and $i$, and a dihedral compoennt $\Udihedral(\phi)$ that (for $i > 3$) depends only on the dihedral angle between bond $i$ and the plane defined by bonds $i-2$ and $i-1$. The incremental dihedral component $\Udihedral_{i}$ is taken to vanish for the first two bonds ($i=2$ and $3$), since a dihedral potential involves three bonds. Similarly, the incremental angle component is zero for the first bond ($i=2$). 
+
+The ideal single-chain partition function $\Zid_{1}$ for this standard model can be expressed as a product of the form
+\begin{equation}
+    \Zid_{1} = V \prod_{i=2}^{\nbead} \zid_{i}
+    \label{ZidProduct}
+\end{equation}
+in which $V$ is the volume of the system, and in which
+\begin{equation}
+    \zid_{i} \equiv \int d\vbond 
+    \exp( -\beta \Uid_{i}(\rbond, \ubond) )
+    \label{zidDef}
+\end{equation}
+is an ideal partition function factor associated with addition of particle and bond $i$ to a chain with known positions for beads $1, \ldots, i-1$. To derive Eq. (\ref{ZidProduct}), we first express the integral over chain configurations as an integral over the position $\qbead$ of the first bead and a product of integrals over bond vectors for bonds $i=2,\ldots,N$, and express the integral each bond vector $\vbond_{i}$ in terms of local polar coordinates $b_{i}, \theta_{i}, \phi_{i}$, using a frame of reference defined by the orientation of the previous two bonds. The multi-dimensional integral may then be evaluated iteratively, by integrating over the last bond, with $i=\nbead$, to generate the factor $z_{\nbead}$, then integrating over coordinates associated with bond $\nbead-1$ to generate $z_{\nbead-1}$, and so on for all bonds. A final integration over the position of the first bead generates the prefactor of $V$. Any potential energy model for $\Uid(\chain)$ that satisfies Eq. (\ref{ZidProduct}) will said to be ``separable" in what follows. 
+
+At each stage of growth of a chain with an ideal potential energy $\Uid$ of the form described above, we may also define an conditional equilibrium distributions for the bond length $\rbond_{i}$ and bond orientation $\ubond_{i}$. The ideal equilibrium distribution for the bond length is given, to within a normalization constant,
+\begin{equation}
+    \Pbond_{i}(\rbond) = 
+    \frac{\rbond^{2} \exp( -\beta \Ubond_{i}(\rbond) )}
+         {\int_{0}^{\infty}d\rbond \rbond^{2} \exp( -\beta \Ubond_{i}(\rbond) )}
+\end{equation}
+The factor of $\rbond^{2}$ is required to account for the volume element in polar coordinates.  The ideal equilibrium distribution for unit vector $\ubond_{i}$, given knowledge of the orientations for bonds $i-1$ and $i-2$, is given by
+\begin{equation}
+    \Pornt_{i}(\ubond) =
+    \frac{\exp( -\beta \Uornt_{i}(\ubond))}
+         {\int d\ubond \exp( -\beta \Uornt_{i}(\ubond))}
+    \quad,
+\end{equation}
+where $\int d\ubond = \int_{0}^{2pi}d\phi \; \int_{-1}^{1}d(cos\theta)$.
+The overall distribution for bond $i$ can be expressed as
+\begin{equation}
+   \Pbond_{i}(\rbond_{i})\Pornt(\ubond_{i}) = 
+   \frac{e^{-\beta\Uid_{i}(\chain_i) }} {\zid_{i}}
+   \label{PtrialNormalized}
+\end{equation}
+where $\zid$ is defined in Eq. (\ref{zidDef}). Taking a product over all
+bonds, we find that
+\begin{equation}
+   \frac{1}{V}\prod_{i=2}^{\nbead}
+   \Pbond_{i}(\rbond_{i})\Pornt_{i}(\ubond_{i}) = \frac{e^{-\beta\Uid(\chain) }} {\Zid_{1}}
+   \quad, \label{PtrialProduct}
+\end{equation}
+where we have used Eq. (\ref{ZidProduct}) for $\Zid_{1}$ and the fact that
+$\Uid = \sum_{i=2}^{\nbead}\Uid_{i}$.
+
+\subsection{Growth Algorithm}
+In outline, the Rosenbluth algorithm for growing a trial chain conformation is:
+\begin{itemize}
+\item Choose the position $\qbead$ of the first bead at random within the system 
+      volume.
+\item For each subsequent bead $i=2,\ldots, \nbead$, we choose $\ntrial$ trial 
+positions or, equivalently, $\ntrial$ trial values of the bond vector $\vbond_{i}$. 
+Let $\vtrial_{i}^{j}$ denote the $j$th trial bond vector for bond $i$.
+\item For each bond, one of the $\ntrial$ trial bond vectors is then selected with a 
+probability criterion that tends to favor trials with low values of $\delU^{ext}_{i}$.
+Let $\vbond_{i}$ denote the selected bond vector for bond $i$.  
+\end{itemize} 
+A specfic set of rules for generating and selecting bond vectors is discussed below.  The construction of bonds is repeated until the chain is complete.
+
+For each bond $i$, a set of $\ntrial$ trial bond vectors is generated as follows:
+\begin{itemize}
+\item First, a single bond length $\rbond_{i}$ is chosen from the ideal equilibrium 
+distribution $\Pbond_{i}(\rbond_{i})$. 
+\item Then, a set of $\ntrial$ unit vectors $\utrial_{i}^{j}$ with $j=1,\ldots,\ntrial$ are chosen from ideal equilibrium probability distribution 
+$\Pornt_{i}(\utrial)$.  This generates a set of $\ntrial$ trial bond vectors with the same bond length but different orientations.  
+\item Finally, one of the $\ntrial$ trial bond orientations is selected with a probability $S^{j}_{i}$ given by
+\begin{equation}
+    S^{j}_{i} = \frac{e^{-\beta\Uext_{i}(\vtrial^{j}_{i})}}{w_{i}}
+    \label{PtrialSelection},
+\end{equation}
+in which $w_{i}$ is a normalization factor chosen so that $\sum_{j=1}^{\ntrial}S^{j}_{i} = 1$.
+\end{itemize} 
+The normalization factor $w_{i}$ in Eq. (\ref{PtrialSelection}) is given by the sum
+\begin{equation}
+     w_{i} \equiv \sum_{j=1}^{\ntrial} e^{ -\beta \Uext_{i}(\vtrial^{j}_{i})}
+     \label{RosenbluthBond}
+\end{equation}
+and referred to as the Rosenbluth weight associated with bond $i$.
+
+\subsection{Probability Distributions}
+In what follows we will refer to the overall result of this growth process, including the discarded trial bond orientations, as a Rosenbluth configuration. A Rosenbluth configuration is defined by a choice for the position of the first bead, a choice of a bond length $b_{i}$ for each bond $i$, a set of $\ntrial$ trial orientations $\utrial_{i}^{j}$ for each bond, and choice $\vbond_{i}$ of which trial bond vector is selected for each bond.  Let $s_{i}$ denote the index of the selected trial orientation for bond $i$, so that $\vbond_{i} = \vtrial_{i}^{s_{i}}$.  Let $\rconfig$ denote the entire Rosenbluth configuration generated by this process, which is specified by a set of variables 
+\begin{equation}
+   \rconfig 
+   = \left \{ \vbead_{1},\rbond_{i},\utrial_{i}^{j},s_{i} \right \}
+\end{equation}
+for all $i=2,\ldots,\nbead$ and $j=1,\ldots,\ntrial$. The relationship between the Rosenbluth configuration $\rconfig$ and the final chain configuration $\chain$ is many-to-one: Each Rosenbluth configuration contains a single final configuration, but there are many possible Rosenbluth configurations that could lead to the same final configuration.
+
+The probability density for a Rosenbluth configuration is given by a product 
+\begin{equation}
+   P(\rconfig) = \frac{1}{V}
+                 \prod_{i=2}^{\nbead} \left (
+                 S^{s_{i}}_{i}
+                 \Pbond_{i}(\rbond_{i})
+                 \prod_{j=1}^{\ntrial}
+                 \Pornt_{i}(\utrial_{i}^{j}) \right )
+   \quad, \label{RosenbluthProbability}
+\end{equation} 
+where $S_{j}^{i}$ is given by Eq. (\ref{PtrialSelection}), and where $\Pbond_{i}$ and $\Pornt_{i}$ are normalized ideal equilibrium distributions.  The factor of $1/V$ arises from the random choice of the position $\vbead_{1}$ of the first bead.  Let $\int d\rconfig$ denote an integral over all possible Rosenbluth configurations. This implicitly involves a sum over possible choices for the index $s_{i}$ of the selected orientation for each bond, as well as integration over bond lengths and trial bond orientations, and so may be written as
+\begin{equation}
+    \int d\rconfig \equiv 
+                   \int d\qbead
+                   \prod_{i=2}^{\nbead} 
+                   \sum_{s_{i}=1}^{\ntrial}
+                   \int d\rbond_{i}
+                   \prod_{j=1}^{\ntrial}
+                   \int d\vbond_{i}^{j}
+                   \quad.
+\end{equation}
+It is straightforward to confirm that $\int d\rconfig P(\rconfig) = 1$. 
+In what follows, we will use the notation
+\begin{equation}
+   \langle \cdots \rangle_{\rconfig} \equiv
+   \int d\rconfig P(\rconfig) \cdots
+\end{equation}
+to denote an average over the ensemble of configurations generated by the Rosenbluth algorithm, in which $\cdots$ represents a function whose value may depend upon the entire Rosenbluth configuration (i.e., upon the rejected trial bond orientations as well as upon the final chain configuration $\chain$).
+
+We define a Rosenbluth weight $W(\rconfig)$ for each Rosenbluth configuration $\rconfig$ as a product
+\begin{equation}
+   W(\rconfig) = w_{1} \prod_{i=2}^{\nbead} \frac{w_{i}}{k}
+   \quad. \label{WchainDef}
+\end{equation}
+Here, $w_{i}$ for $i=2,\ldots,\nbead$ is the Rosenbluth weight for bond $i$, defined in Eq. (\ref{RosenbluthBond}), and 
+\begin{equation}
+   w_{1} = e^{-\Uext_{1}(\vbead_{1})} 
+\end{equation}
+is a Rosenbluth factor for the first bead. It is straightforward to show, by multipliying Eqs. (\ref{RosenbluthProbability}) and (\ref{WchainDef}), that: 
+\begin{equation}
+   P(\rconfig)W(\rconfig) 
+   = \frac{1}{V} 
+   \prod_{i=2}^{\nbead} \left (
+   \frac{1}{k}
+   \Pbond_{i}(\rbond_{i})
+   \prod_{j=1}^{\ntrial}
+   \Pornt_{i}(\utrial_{i}^{j}) \right )
+   e^{-\beta\Uext(\chain,\system)}
+   \label{PWRosenbluthProduct}
+\end{equation}
+where $\Uext(\chain, \system) = \sum_{i=1}^{\nbead} \Uext_{i}$ is the total external potential of the added chain.
+
+\subsection{Canonical Averages}
+The following theorem shows how we can use a Rosenbluth ensemble to generate canonical Boltzmann averages: 
+
+{\it Theorem}: Let $A(\chain)$ be any function that depends only on the final configuration $\chain$, and not on the rejected trial bond orientations. We may show that for any such function,
+\begin{equation}
+   \langle W(\rconfig) A(\chain) \rangle_{\rconfig} =
+   \frac{\int d\chain \; e^{-\beta\delU(\chain)}A(\chain)}
+         {\Zid_{1}} 
+   \label{RosenbluthIntegralThm}
+\end{equation}
+where $\langle \cdots \rangle_{\rconfig}$ denotes an average over
+Rosenbluth configurations. 
+\vspace{12pt}
+
+\noindent
+Proof: Using Eq. (\ref{PWRosenbluthProduct}), we may show that
+\begin{eqnarray}
+   \langle W(\rconfig) A(\chain) \rangle_{\rconfig}
+   & = & \int d\rconfig P(\rconfig)W(\rconfig) A(\chain) \\
+   & = & \frac{1}{V} \int d\rconfig 
+    \prod_{i=2}^{\nbead} \left (
+    \frac{1}{k} e^{-\beta\Uext_{i}(\vbond_{i})}
+                 \Pbond_{i}(\rbond_{i})
+                 \prod_{j=1}^{\ntrial}
+                 \Pornt_{i}(\utrial_{i}^{j}) \right )A(\chain)
+    \nonumber
+\end{eqnarray}
+To prove the theorem, we must reduce the integral over Rosenbluth configurations to an integral over chain configurations. To do so, we must carry out the summations over the values of the index $s_{i}$ of the selected trial for each bond and the integral over the remaining $\ntrial - 1$ trial orientations for each bond. We do this in stages, by first evaluating the required sum and partial integral for the last bond, with $i=\nbead$, then apply the same reasoning to bond $\nbead-1$, until all bonds have been treated. The factor arising from summation over possible values of the selected trial index $s_{i}$ and integration over all trial bond orientations for bond $i$ (with $i=\nbead$ initially) is an integral of the form
+\begin{equation}
+   I_i \equiv \frac{1}{k} \sum_{s_{i}=1}^{\ntrial}
+   \prod_{j=1}^{\ntrial} \left ( \int d\utrial_{i}^{j} 
+   \Pornt(\utrial_{i}^{j}) \right ) 
+   e^{-\beta\Uext_{i}(\vbond_{i})} A(\chain) 
+   \quad.
+\end{equation}
+The sum over possible values of $s_{i}$ generates $\ntrial$ equivalent 
+integrals, each of which is an integral over $\ntrial$ trial orientations. In each such integral, one of the trial orientations is selected, and the remaining $k-1$ orientations are rejected. The functions $\Uext$ and $A$ in the integrand depend only on the selected orientation. In each such integral, each rejected trial orientation thus enters the integrand only through an associated factor of $\Pornt_{i}(\utrial_{i}^{j})$. Because $\int d\utrial \Pornt_{i}(\utrial) =1$, an integral over each rejected trial orientation just yields a factor of unity. By dividing the sum of $k$ identical integrals by the explicit prefactor of $k$, we thus obtain reduce the above expression to an integral
+\begin{equation}
+   I_i = \int d\ubond_{i} \Pornt(\ubond_{i}) 
+   e^{-\beta\Uext_{i}(\vbond_{i})} A(\chain) 
+\end{equation}
+over the selected bond orientation $\ubond_{i} \equiv \utrial_{i}^{s_{i}}$ alone. By applying this reduction to each bond in sequence, and thus removing all integrals over rejected bond orientations, we obtain an integral may be expressed as an integral
+\begin{equation}
+    \int d\rconfig P(\rconfig)W(\rconfig) A(\chain) = 
+    \frac{1}{V} \int d\chain 
+    \prod_{i=2}^{\nbead} \left ( \Pbond(\rbond_{i}) \Pornt(\ubond_{i}) \right )
+    e^{-\beta\Uext(\chain)} A(\chain) 
+\end{equation}
+over the selected chain configuration $d\chain$. Eq. (\ref{RosenbluthIntegralThm}) then follows from Eq. (\ref{PtrialProduct}), and the fact that $\delU = \Uid + \Uext$. (QED)
+
+%Using Eq. (\ref{PtrialNormalized}) for the ideal bond distribution then yields
+%\begin{equation}
+%    \int d\rconfig P(\rconfig)W(\rconfig) A(\chain) = 
+%    \int d\chain \frac{e^{-\beta\delU(\chain)}A(\chain)}{ V\prod_{i=2}^{\nbead}\     \zid_{i}}
+%\end{equation}
+%for any function $A(\chain)$ of the chain conformation. For any separable 
+%model, we may then use Eq.  (\ref{ZidProduct}) to obtain 
+
+In order to relate the Rosenbluth factor to the chemical potential, we set $A(\chain)=1$
+in the above theorem to show that
+\begin{equation}
+    \langle W \rangle_{\rconfig} = \int d\rconfig P(\rconfig)W(\rconfig) = 
+    \frac{\int d\chain e^{-\beta\delU(\chain)}}{\Zid} 
+    \quad,
+\end{equation}
+where $\langle \cdots \rangle_{\rconfig}$ denotes an average over Rosenbluth configurations.
+Taking the average of this quantity respect to configuration $\chain$ of the system without 
+an added chain then yields an expression for the excess activity $e^{\beta\muex}$ as an 
+average of the Rosenbluth weight
+\begin{equation}
+   e^{-\beta \muex} = 
+   \frac{\Ztot (N+1)}{\Zsystem\Zid} = 
+   \langle \langle W \rangle_{\rconfig} \rangle_{N}
+\end{equation}
+over both Rosenbluth configurations and equilibrium system configurations. 
+
+%-------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%-------------------------------------------------------------------------------
+
+\begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
+
+[1] D. Frenkel, B. Smit. Understanding Molecular Simulation. 
+ 
+\end{thebibliography}
+
+%-------------------------------------------------------------------------------
+
+\end{document}
