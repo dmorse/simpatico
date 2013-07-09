@@ -43,6 +43,13 @@ namespace McMd
    void MdPairPotential::buildPairList() 
    {
 
+      // Allocate the pair list, if not already allocated
+      if (!pairList_.isAllocated()) {
+         double cutoff = maxPairCutoff();
+         int atomCapacity = simulation().atomCapacity();
+         pairList_.allocate(atomCapacity, maxBoundary_, cutoff);
+      }
+
       // Recalculate the grid for the internal CellList
       pairList_.makeGrid(boundary());
 
