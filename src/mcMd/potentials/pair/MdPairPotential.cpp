@@ -1,6 +1,6 @@
 #ifndef INTER_NOPAIR
-#ifndef MD_PAIR_INTERACTION
-#define MD_PAIR_INTERACTION
+#ifndef MCMD_MD_PAIR_POTENTIAL_CPP
+#define MCMD_MD_PAIR_POTENTIAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

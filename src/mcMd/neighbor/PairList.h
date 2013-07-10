@@ -32,7 +32,7 @@ namespace McMd
    * the Verlet list is the sum of a potential cutoff, which is passed as a 
    * parameter to allocate(), and a "skin", which is read by readParameters().
    *
-   * After a PairList is constructed, the allocate() method must be called to
+   * After a PairList is instantiated, the allocate() method must be called to
    * allocate memory for both the data structures required to store the PairList
    * and for a private CellList object that is used to construct the PairList.
    *
@@ -349,43 +349,43 @@ namespace McMd
    * Add an Atom to the CellList.
    */ 
    inline void PairList::addAtom(Atom &atom)
-   { cellList_.addAtom(atom); }
+   {  cellList_.addAtom(atom); }
 
    /*
    * Get the current number of atoms in the pairlist.
    */ 
    inline int PairList::nAtom() const
-   { return nAtom_; }
+   {  return nAtom_; }
 
    /*
    * Get the current number of pairs.
    */ 
    inline int PairList::nPair() const
-   { return nAtom2_; }
+   {  return nAtom2_; }
 
    /*
    * Get the maximum value of aAtom() since instantiation.
    */ 
    inline int PairList::maxNAtom() const
-   { return maxNAtom_; }
+   {  return maxNAtom_; }
 
    /*
    * Get the maximum value of nPair() since instantiation.
    */ 
    inline int PairList::maxNPair() const
-   { return maxNAtom2_; }
+   {  return maxNAtom2_; }
 
    /*
    * Get the number of times this PairList has been built.
    */ 
    inline int PairList::buildCounter() const
-   { return buildCounter_; }
+   {  return buildCounter_; }
 
    /*
    * Has memory been allocated for this PairList?
    */ 
    inline bool PairList::isAllocated() const
-   { return cellList_.isAllocated(); }
+   {  return cellList_.isAllocated(); }
 
 } 
 #endif
