@@ -1,5 +1,5 @@
-#ifndef INTER_ORDERING_EXTERNAL_H
-#define INTER_ORDERING_EXTERNAL_H
+#ifndef INTER_PERIODIC_EXTERNAL_H
+#define INTER_PERIODIC_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -34,7 +34,7 @@ namespace Inter
    *
    * \ingroup Inter_External_Module
    */
-   class OrderingExternal : public ParamComposite 
+   class PeriodicExternal : public ParamComposite 
    {
    
    public:
@@ -42,17 +42,17 @@ namespace Inter
       /**
       * Default constructor.
       */
-      OrderingExternal();
+      PeriodicExternal();
 
       /**
       * Copy constructor.
       */
-      OrderingExternal(const OrderingExternal& other);
+      PeriodicExternal(const PeriodicExternal& other);
 
       /**
       * Assignment.
       */
-      OrderingExternal& operator = (const OrderingExternal& other);
+      PeriodicExternal& operator = (const PeriodicExternal& other);
 
       /**  
       * Set nAtomType value.
@@ -111,7 +111,7 @@ namespace Inter
       void getForce(const Vector& position, int type, Vector& force) const;
  
       /**
-      * Return name string "OrderingExternal".
+      * Return name string "PeriodicExternal".
       */
       std::string className() const;
  
@@ -154,7 +154,7 @@ namespace Inter
    /* 
    * Calculate external potential energy for a single atom.
    */
-   inline double OrderingExternal::energy(const Vector& position, int type) const
+   inline double PeriodicExternal::energy(const Vector& position, int type) const
    {
       const Vector cellLengths = boundaryPtr_->lengths();
       double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);
@@ -176,7 +176,7 @@ namespace Inter
    * Calculate external force for a single atom.
    */
    inline 
-   void OrderingExternal::getForce(const Vector& position, int type, 
+   void PeriodicExternal::getForce(const Vector& position, int type, 
                                      Vector& force) const
    {
       const Vector cellLengths = boundaryPtr_->lengths();

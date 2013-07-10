@@ -189,9 +189,9 @@ namespace Inter
       Vector lengths;
       lengths = boundaryPtr_->lengths();
       perpLength = lengths[perpDirection_];
+
       q = (2.0*M_PI*periodicity_)/perpLength;
       clipParameter   = 1.0/(q*width_*perpLength);
-
       arg = q*d;
       clipcos = clipParameter*cos(arg);
       
@@ -208,7 +208,7 @@ namespace Inter
       totalEnergy = 0.0;
       d = position[perpDirection_];
       totalEnergy += energy(d, type);
-      
+       
       return totalEnergy;
    }
 
@@ -221,6 +221,7 @@ namespace Inter
       Vector lengths;
       lengths = boundaryPtr_->lengths();
       perpLength = lengths[perpDirection_];
+
       q = (2.0*M_PI*periodicity_)/perpLength;
       clipParameter   = 1.0/(q*width_*perpLength);
       arg = q*d;
