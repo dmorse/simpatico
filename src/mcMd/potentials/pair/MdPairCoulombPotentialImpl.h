@@ -334,7 +334,7 @@ namespace McMd
    {
       double pairCutoff = pairInteraction().maxPairCutoff();
       double coulombCutoff = coulombPairInteraction().rCutoff();
-      max = (coulombCutoff > pairCutoff) : coulombCutoff ? pairCutoff;
+      max = (coulombCutoff > pairCutoff ? coulombCutoff : pairCutoff);
       return max;
    }
  
