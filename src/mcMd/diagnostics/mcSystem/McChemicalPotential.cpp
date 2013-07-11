@@ -52,12 +52,15 @@ namespace McMd
    /*
    * Read parameters and initialize.
    */
-   void McChemicalPotential::readParam(std::istream& in)
+   void McChemicalPotential::readParameters(std::istream& in)
    {
 
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
+      read<int>(in, "nTrial", nTrial_);
+      read<int>(in, "nMoleculeTrial", nMoleculeTrial_);
+      read<int>(in, "speciesId", speciesId_);
 
       accumulator_.setNSamplePerBlock(nSamplePerBlock_);
 
@@ -66,19 +69,16 @@ namespace McMd
          fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       }
 
-      read<int>(in, "nTrial", nTrial_);
       if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
-         UTIL_THROW("Invalid value input for nTrial");
+         UTIL_THROW("Invalid value input for nTrial");  
       }
-
-      read<int>(in, "nMoleculeTrial", nMoleculeTrial_);
+         
       if (nMoleculeTrial_ <=0 || nMoleculeTrial_ > MaxMoleculeTrial_) {
          UTIL_THROW("Invalid value input for nMoleculeTrial");
       }
-
-      read<int>(in, "speciesId", speciesId_);
-      if (speciesId_ <=0 || speciesId_ > system().simulation().nSpecies()) {
-         UTIL_THROW("Invalid value input for nMoleculeTrial");
+    
+      if (speciesId_ <0 || speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("Invalid value input for speciesId");
       }
 
       isInitialized_ = true;
@@ -107,10 +107,11 @@ namespace McMd
          double de;
          double e = 0;
 
+         speciesPtr = &(simulation().species(speciesId_));
+         molPtr = &(speciesPtr->reservoir().pop());
+         system().addMolecule(*molPtr);
+
          for (int i = 0; i < nMoleculeTrial_; i++) {
-            speciesPtr = &(simulation().species(speciesId_));
-            molPtr = &(speciesPtr->reservoir().pop());
-            system().addMolecule(*molPtr);
 
             endPtr = &molPtr->atom(0);
             boundary().randomPosition(random(), endPtr->position());
@@ -127,17 +128,17 @@ namespace McMd
             }
 
             rosenbluth = rosenbluth / pow(nTrial_,molPtr->nAtom()-1);
+            accumulator_.sample(rosenbluth, outputFile_);
 
             system().pairPotential().deleteAtom(*endPtr);
             for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
                 system().pairPotential().deleteAtom(bondIter->atom(1));
-            }
-      
-            system().removeMolecule(*molPtr);
+            }         
          }
 
-         accumulator_.sample(rosenbluth, outputFile_);
-      }     
+         system().removeMolecule(*molPtr);
+         speciesPtr->reservoir().push(*molPtr);
+      }
    }
 
    /*
