@@ -128,7 +128,7 @@ namespace McMd
             }
 
             rosenbluth = rosenbluth / pow(nTrial_,molPtr->nAtom()-1);
-            accumulator_.sample(rosenbluth, outputFile_);
+            accumulator_.sample(- log(rosenbluth) / energyEnsemblePtr_->beta(), outputFile_);
 
             system().pairPotential().deleteAtom(*endPtr);
             for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
@@ -269,6 +269,5 @@ namespace McMd
       endPtr->position() = trialPos[iTrial];
 
    }
- 
 }
 #endif
