@@ -55,16 +55,16 @@ McSimulation{
     baseInterval                            10
 
     LogProgress{
-      interval                          200000
+      interval                            2000
     }
 
     McEnergyOutput{
-      interval                           10000
+      interval                             100
       outputFileName                    energy
     }
 
     McEnergyAverage{
-      interval                           10000
+      interval                             100
       outputFileName                 energyAve
       nSamplePerBlock                       10
     }
