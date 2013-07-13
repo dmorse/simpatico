@@ -487,6 +487,9 @@ namespace DdMd
       if (hasExternal_) {
          assert(externalPotentialPtr_ == 0);
          externalPotentialPtr_ = externalFactory().factory(externalStyle());
+         if (!externalPotentialPtr_) {
+            UTIL_THROW("Unknown externalStyle");
+         }
          externalPotentialPtr_->setNAtomType(nAtomType_);
          readParamComposite(in, *externalPotentialPtr_);
       }

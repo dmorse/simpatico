@@ -79,21 +79,8 @@ namespace McMd
       * \param ar      saving or loading archive
       * \param version archive version id
       */
-
-      /*
-      * Serialize to/from an archive. 
-      */
       template <class Archive>
-      void serialize(Archive& ar, const unsigned int version)
-      {
-         if (!isInitialized_) {
-            UTIL_THROW("Error: Object not initialized.");
-         }
-
-         ar & accumulator_;
-         ar & nSamplePerBlock_;
-      }
-
+      void serialize(Archive& ar, const unsigned int version);
 
    private:
 
@@ -146,10 +133,7 @@ namespace McMd
                          double &rosenbluth, double &energy);
 
       /// Maximum allowed number of trial positions for a regrown atom.
-      static const int MaxTrial_ = 20;
-
-      /// Maximum allowed number of trial molecules to grow.
-      static const int MaxMoleculeTrial_ = 50;
+      static const int MaxTrial_ = 200;
 
       /// Pointer to parent McSystem object.
       McSystem  *systemPtr_;
@@ -187,47 +171,63 @@ namespace McMd
       /// Has readParam been called?
       bool isInitialized_;
 
-      /// Grant friend access to unit test class
-      //  friend class CbEndBaseTest;
-      };
+   };
 
-      // Inline methods
+   // Inline methods
 
-      /*
-      * Get parent McSystem.
-      */
-      inline McSystem& McChemicalPotential::system()
-      {  return *systemPtr_; }
+   /*
+   * Get parent McSystem.
+   */
+   inline McSystem& McChemicalPotential::system()
+   {  return *systemPtr_; }
 
-      /*
-      * Get Simulation object of parent McSystem.
-      */
-      inline Simulation& McChemicalPotential::simulation()
-      {  return *simulationPtr_; }
+   /*
+   * Get Simulation object of parent McSystem.
+   */
+   inline Simulation& McChemicalPotential::simulation()
+   {  return *simulationPtr_; }
 
-      /*
-      * Get Boundary object of parent McSystem.
-      */
-      inline Boundary& McChemicalPotential::boundary()
-      {  return *boundaryPtr_; }
+   /*
+   * Get Boundary object of parent McSystem.
+   */
+   inline Boundary& McChemicalPotential::boundary()
+   {  return *boundaryPtr_; }
 
-      /*
-      * Get EnergyEnsemble object of parent McSystem.
-      */
-      inline EnergyEnsemble& McChemicalPotential::energyEnsemble()
-      {  return *energyEnsemblePtr_; }
+   /*
+   * Get EnergyEnsemble object of parent McSystem.
+   */
+   inline EnergyEnsemble& McChemicalPotential::energyEnsemble()
+   {  return *energyEnsemblePtr_; }
 
-      /*
-      * Get random object of parent McSystem.
-      */
-      inline Random& McChemicalPotential::random()
-      {  return *randomPtr_; }
+   /*
+   * Get random object of parent McSystem.
+   */
+   inline Random& McChemicalPotential::random()
+   {  return *randomPtr_; }
 
-      /*
-      * Boltzmann weight associated with an energy difference.
-      */
-      inline double McChemicalPotential::boltzmann(double energy)
-      {  return exp(-energyEnsemblePtr_->beta()*energy); }
+   /*
+   * Boltzmann weight associated with an energy difference.
+   */
+   inline double McChemicalPotential::boltzmann(double energy)
+   {  return exp(-energyEnsemblePtr_->beta()*energy); }
+
+   // Function template
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void McChemicalPotential::serialize(Archive& ar, const unsigned int version)
+   {
+      if (!isInitialized_) {
+         UTIL_THROW("Error: Object not initialized.");
+      }
+      ar & accumulator_;
+      ar & nSamplePerBlock_;
+      ar & nTrial_;
+      ar & nMoleculeTrial_;
+      ar & speciesId_;
+   }
 
 }
 #endif 

@@ -166,6 +166,59 @@ namespace McMd
          if (j != nWave_) {
             UTIL_THROW("Error");
          } 
+      } else if (lattice_ == Orthorhombic) {
+
+         nStar_ = (hMax_ + 1 )*(hMax_ + 1)*(hMax_ + 1);
+         starIds_.allocate(nStar_);
+         starSizes_.allocate(nStar_);
+         // Create orthorhombic point group
+         PointGroup group;
+         PointSymmetry a, b, c;
+
+         a.R(0,0) =  -1;
+         a.R(1,1) =  1;
+         a.R(2,2) =  1;
+
+         b.R(0,0) =  1;
+         b.R(1,1) =  -1;
+         b.R(2,2) =  1;
+
+         c.R(0,0) =  1;
+         c.R(1,1) =  1;
+         c.R(2,2) =  -1;
+
+         group.add(c);
+         group.add(b);
+         group.add(a);
+         group.makeCompleteGroup();
+
+         // Create grid of wavevectors
+         FSArray<IntVector, 16> star;
+         i = 0;
+         j = 0;
+         for (h = 0; h <= hMax_; ++h) {
+            g[0] = h;
+            for (k = 0; k <= hMax_; ++k) {
+               g[1] = k;
+               for (l = 0; l <= hMax_; ++l) {
+                  g[2] = l;
+                  starIds_[i] = j;
+                  group.makeStar(g, star);
+                  starSizes_[i] = star.size();
+                  for (m = 0; m < star.size(); ++m) {
+                     waveIntVectors_[j] = star[m];
+                     ++j;
+                  }
+                  ++i;
+               }
+            }
+         }
+         if (i != nStar_) {
+            UTIL_THROW("Error");
+         }
+         if (j != nWave_) {
+            UTIL_THROW("Error");
+         }
       }
 
       // Clear accumulators
@@ -291,7 +344,7 @@ namespace McMd
             }
             average = average/double(size);
             logFile_ << Dbl(average, 20, 8);
-         } 
+         }
          logFile_ << std::endl;
       }
       logFile_ << std::endl;

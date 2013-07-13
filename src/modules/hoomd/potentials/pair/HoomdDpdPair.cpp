@@ -48,9 +48,9 @@ namespace McMd
 
       // Read parameters
       readCArray2D<double> (
-                  in, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
+                  in, "epsilon", epsilon_[0], nAtomType_, nAtomType_, MaxAtomType);
       readCArray2D<double> (
-                  in, "sigma",   sigma_[0], nAtomType_, nAtomType_);
+                  in, "sigma",   sigma_[0], nAtomType_, nAtomType_, MaxAtomType);
 
       // calculate maxPairCutoff and assign parameters
       maxPairCutoff_ = 0.0;

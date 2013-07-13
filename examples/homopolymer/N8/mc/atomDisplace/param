@@ -11,7 +11,7 @@ McSimulation{
   SpeciesManager{
 
     Homopolymer{
-      moleculeCapacity                     101
+      moleculeCapacity                     100
       nAtom                                  8
       atomType                               0
       bondType                               0
@@ -52,7 +52,7 @@ McSimulation{
 
   }
   DiagnosticManager{
-    baseInterval                            10
+    baseInterval                           100
 
     LogProgress{
       interval                            2000
@@ -67,15 +67,6 @@ McSimulation{
       interval                             100
       outputFileName                 energyAve
       nSamplePerBlock                       10
-    }
-
-    McChemicalPotential{
-      interval                             100
-      outputFileName         ChemicalPotential
-      nSamplePerBlock                       10
-      nTrial                                10
-      nMoleculeTrial                        40
-      speciesId                              0
     }
 
     McPairEnergyAverage{
@@ -130,4 +121,14 @@ McSimulation{
   saveInterval                20000
   saveFileName              restart
 }
+
+
+    McChemicalPotential{
+      interval                             100
+      outputFileName         ChemicalPotential
+      nSamplePerBlock                       10
+      nTrial                                10
+      nMoleculeTrial                        40
+      speciesId                              0
+    }
 
