@@ -73,8 +73,8 @@ namespace McMd
          UTIL_THROW("Invalid value input for nTrial");  
       }
          
-      if (nMoleculeTrial_ <=0 || nMoleculeTrial_ > MaxMoleculeTrial_) {
-         UTIL_THROW("Invalid value input for nMoleculeTrial");
+      if (nMoleculeTrial_ <=0) {
+         UTIL_THROW("Invalide value input for nMoleculeTrial");
       }
     
       if (speciesId_ <0 || speciesId_ >= system().simulation().nSpecies()) {
