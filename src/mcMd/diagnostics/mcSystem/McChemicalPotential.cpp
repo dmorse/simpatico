@@ -9,29 +9,29 @@
 */
 
 #include "McChemicalPotential.h"                        // class header
-#include <util/misc/FileMaster.h>  
-#include <util/archives/Serializable_includes.h>
 
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mcMoves/SystemMove.h>
 #include <mcMd/mcSimulation/mc_potentials.h>
-
-#include <util/boundary/Boundary.h>
 #include <mcMd/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
+
+#include <util/boundary/Boundary.h>
 #include <util/space/Vector.h>
+#include <util/misc/FileMaster.h>
+#include <util/archives/Serializable_includes.h>
 #include <util/global.h>
 
-#include <cstdio> 
+#include <cstdio>
 
 namespace McMd
 {
 
    using namespace Util;
 
-   /* 
+   /*
    * Constructor.
    */
    McChemicalPotential::McChemicalPotential(McSystem& system)
@@ -70,13 +70,13 @@ namespace McMd
       }
 
       if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
-         UTIL_THROW("Invalid value input for nTrial");  
+         UTIL_THROW("Invalid value input for nTrial");
       }
-         
+
       if (nMoleculeTrial_ <=0) {
          UTIL_THROW("Invalide value input for nMoleculeTrial");
       }
-    
+
       if (speciesId_ <0 || speciesId_ >= system().simulation().nSpecies()) {
          UTIL_THROW("Invalid value input for speciesId");
       }
@@ -87,14 +87,13 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void McChemicalPotential::setup() 
+   void McChemicalPotential::setup()
    {  accumulator_.clear(); }
- 
-   
-   /* 
+
+   /*
    * Evaluate Rosenbluth weight, and add to accumulator.
    */
-   void McChemicalPotential::sample(long iStep) 
+   void McChemicalPotential::sample(long iStep)
    {
       if (isAtInterval(iStep))  {
 
@@ -108,16 +107,20 @@ namespace McMd
          double e = 0;
 
          speciesPtr = &(simulation().species(speciesId_));
+
+         // Pop a new molecule off the species reservoir
          molPtr = &(speciesPtr->reservoir().pop());
          system().addMolecule(*molPtr);
 
+         // Loop over molecule growth trials
          for (int i = 0; i < nMoleculeTrial_; i++) {
 
+            // Pick a random position for the first atom
             endPtr = &molPtr->atom(0);
             boundary().randomPosition(random(), endPtr->position());
 
             e = system().pairPotential().atomEnergy(*endPtr);
-            rosenbluth = boltzmann(e);                  
+            rosenbluth = boltzmann(e);
             system().pairPotential().addAtom(*endPtr);
 
             for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
@@ -128,51 +131,53 @@ namespace McMd
             }
 
             rosenbluth = rosenbluth / pow(nTrial_,molPtr->nAtom()-1);
-            accumulator_.sample(- log(rosenbluth) / energyEnsemblePtr_->beta(), outputFile_);
+            accumulator_.sample(rosenbluth, outputFile_);
 
             system().pairPotential().deleteAtom(*endPtr);
             for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
                 system().pairPotential().deleteAtom(bondIter->atom(1));
-            }         
+            }
          }
 
+         // Return additional molecule to reservoir
          system().removeMolecule(*molPtr);
          speciesPtr->reservoir().push(*molPtr);
       }
+
    }
 
    /*
    * Output results to file after simulation is completed.
    */
-   void McChemicalPotential::output() 
-   { 
+   void McChemicalPotential::output()
+   {
       // If outputFile_ was used to write block averages, close it.
       if (accumulator_.nSamplePerBlock()) {
          outputFile_.close();
       }
 
+      // Open and write a *.prm file for the parameter block
       fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
-      writeParam(outputFile_); 
+      writeParam(outputFile_);
       outputFile_.close();
 
+      // Open a *.ave file for Average accumulator output
       fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
-      accumulator_.output(outputFile_); 
+      accumulator_.output(outputFile_);
       outputFile_.close();
    }
-   
-   
+
    /*
    * Save state to binary file archive.
    */
    void McChemicalPotential::save(Serializable::OArchive& ar)
    {  ar & *this; }
-   
+
    /*
    * Load state from a binary file archive.
    */
    void McChemicalPotential::load(Serializable::IArchive& ar)
    { ar & *this; }
-   
 
    /*
    * Configuration bias algorithm for adding one atom to a chain end.
@@ -196,19 +201,19 @@ namespace McMd
       int    iAngle, angleTypeId(0);
       double rsq1, rsq2, cosTheta;
       #endif
-   
+
       // Generate a random bond length
       beta   = energyEnsemble().beta();
-      length = 
+      length =
          system().bondPotential().randomBondLength(&random(), beta, bondType);
-   
+
       // Loop over nTrial trial positions:
       rosenbluth = 0.0;
       for (iTrial=0; iTrial < nTrial_; ++iTrial) {
          random().unitVector(bondVec);
          bondVec *= length;
          // trialPos = pvtPos + bondVec
-         trialPos[iTrial].add(pvtPos, bondVec); 
+         trialPos[iTrial].add(pvtPos, bondVec);
          boundary().shift(trialPos[iTrial]);
          endPtr->position() = trialPos[iTrial];
          #ifndef INTER_NOPAIR
@@ -232,14 +237,14 @@ namespace McMd
                   angleTypeId = anglePtr->typeId();
                }
             }
-   
+
             // Get the angle spanned.
             rsq1 = boundary().distanceSq(pvtPtr->position(),
                                          pvtPtr2->position(), dr1);
             rsq2 = boundary().distanceSq(endPtr->position(),
                                          pvtPtr->position(), dr2);
             cosTheta = dr1.dot(dr2) / sqrt(rsq1 * rsq2);
-   
+
             trialEnergy[iTrial] += system().anglePotential().
                                    energy(cosTheta, angleTypeId);
          }
@@ -252,22 +257,22 @@ namespace McMd
          trialProb[iTrial] = boltzmann(trialEnergy[iTrial]);
          rosenbluth += trialProb[iTrial];
       }
-   
-      // Normalize trial probabilities 
+
+      // Normalize trial probabilities
       for (iTrial = 0; iTrial < nTrial_; ++iTrial) {
          trialProb[iTrial] = trialProb[iTrial]/rosenbluth;
       }
-     
+
       // Choose trial position
       iTrial = random().drawFrom(trialProb, nTrial_);
-   
-      // Calculate total energy for chosen trial.
+
+      // Calculate total energy for chosen trial
       energy = system().bondPotential().energy(length*length, bondType);
       energy += trialEnergy[iTrial];
-   
-      // Set position of new end atom to chosen value
-      endPtr->position() = trialPos[iTrial];
 
+      // Set position of new end atom to chosen trialPos Vector
+      endPtr->position() = trialPos[iTrial];
    }
+
 }
 #endif

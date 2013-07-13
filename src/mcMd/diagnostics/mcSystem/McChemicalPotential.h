@@ -79,21 +79,8 @@ namespace McMd
       * \param ar      saving or loading archive
       * \param version archive version id
       */
-
-      /*
-      * Serialize to/from an archive. 
-      */
       template <class Archive>
-      void serialize(Archive& ar, const unsigned int version)
-      {
-         if (!isInitialized_) {
-            UTIL_THROW("Error: Object not initialized.");
-         }
-
-         ar & accumulator_;
-         ar & nSamplePerBlock_;
-      }
-
+      void serialize(Archive& ar, const unsigned int version);
 
    private:
 
@@ -223,6 +210,24 @@ namespace McMd
    */
    inline double McChemicalPotential::boltzmann(double energy)
    {  return exp(-energyEnsemblePtr_->beta()*energy); }
+
+   // Function template
+
+   /*
+   * Serialize to/from an archive. 
+   */
+   template <class Archive>
+   void McChemicalPotential::serialize(Archive& ar, const unsigned int version)
+   {
+      if (!isInitialized_) {
+         UTIL_THROW("Error: Object not initialized.");
+      }
+      ar & accumulator_;
+      ar & nSamplePerBlock_;
+      ar & nTrial_;
+      ar & nMoleculeTrial_;
+      ar & speciesId_;
+   }
 
 }
 #endif 
