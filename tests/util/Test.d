@@ -108,6 +108,8 @@
         /home/taher/simpatico/tests/util/containers/DRaggedMatrixTest.h\
         /home/taher/simpatico/src/util/containers/DRaggedMatrix.h\
         /home/taher/simpatico/src/util/containers/RaggedMatrix.h\
+        /home/taher/simpatico/tests/util/containers/GridArrayTest.h\
+        /home/taher/simpatico/src/util/containers/GridArray.h\
         /home/taher/simpatico/tests/util/containers/ListTest.h\
         /home/taher/simpatico/src/util/containers/Node.h\
         /home/taher/simpatico/src/util/containers/List.h\

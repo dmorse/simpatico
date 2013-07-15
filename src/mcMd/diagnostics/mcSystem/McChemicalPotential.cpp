@@ -47,7 +47,7 @@ namespace McMd
       nMoleculeTrial_(-1),
       nSamplePerBlock_(1),
       isInitialized_(false)
-   {}
+      { setClassName("McChemicalPotential"); }
 
    /*
    * Read parameters and initialize.
