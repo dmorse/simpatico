@@ -9,8 +9,6 @@
 */
 
 #include <util/param/ParamComposite.h>   // base class
-#include <mcMd/chemistry/AtomType.h>     // Member template parameter
-#include <util/boundary/Boundary.h>      // typedef
 
 #include <complex>
 
@@ -23,8 +21,6 @@ namespace Util
 namespace McMd
 {
 
-   class Simulation;
-   class System;
    class EwaldCoulombPair;
 
    using namespace Util;
@@ -70,7 +66,7 @@ namespace McMd
       /**
       * Constructor.
       */
-      CoulombPotential(System& system);
+      CoulombPotential();
 
       /**
       * Destructor (does nothing).
@@ -161,18 +157,6 @@ namespace McMd
       //@}
 
    protected:
-
-      /// Pointer to associated Simulation
-      Simulation* simulationPtr_;
-
-      /// Pointer to associated System
-      System* systemPtr_;
-
-      /// Pointer to associated Boundary
-      Boundary* boundaryPtr_;
-
-      /// Pointer to array of AtomTypes.
-      const Array<AtomType>* atomTypesPtr_;
 
       /// Pointer to associated short range pair interaction.
       EwaldCoulombPair* pairInteractionPtr_;

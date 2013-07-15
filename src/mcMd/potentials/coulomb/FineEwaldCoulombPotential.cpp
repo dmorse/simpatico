@@ -9,10 +9,9 @@
 */
 
 #include "FineEwaldCoulombPotential.h" 
-//#include "EwaldCoulombPair.h" 
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/Simulation.h>
-//#include <util/space/Vector.h>
+#include <util/space/Vector.h>
 #include <util/space/Tensor.h>
 #include <util/math/Constants.h>
 #include <stdlib.h>
@@ -26,7 +25,8 @@ namespace McMd
    * Constructor.
    */
    FineEwaldCoulombPotential::FineEwaldCoulombPotential(System& system)
-    : CoulombPotential(system),
+    : CoulombPotential(),
+      CoulombSystemMixIn(system),
       kCutoff_(1.0)
    {
       // Note: Don't setClassName - using "CoulombPotential" base class name

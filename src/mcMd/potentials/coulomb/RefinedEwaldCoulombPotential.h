@@ -9,11 +9,10 @@
 */
 
 #include "CoulombPotential.h"            // base class
-#include <mcMd/chemistry/AtomType.h>     // Member template parameter
-#include <util/space/Vector.h>           // member template parameter
+#include "CoulombSystemMixIn.h"          // base class
+#include <util/space/IntVector.h>        // member template parameter
+#include <util/containers/Pair.h>        // member template parameter
 #include <util/containers/GArray.h>      // member template
-#include <util/containers/Pair.h>      // member template
-#include <util/boundary/Boundary.h>      // typedef
 
 #include <complex>
 
@@ -28,7 +27,6 @@ namespace McMd
 
    class Simulation;
    class System;
-   class EwaldCoulombPair;
 
    typedef std::complex<double> DCMPLX;
 
@@ -42,7 +40,8 @@ namespace McMd
    *
    * \ingroup McMd_Coulomb_Module
    */
-   class RefinedEwaldCoulombPotential : public CoulombPotential
+   class RefinedEwaldCoulombPotential : public CoulombPotential,
+                                        protected CoulombSystemMixIn
    {
 
    public:

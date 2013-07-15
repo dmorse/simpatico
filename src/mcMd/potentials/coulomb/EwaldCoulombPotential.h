@@ -9,24 +9,20 @@
 */
 
 #include "CoulombPotential.h"            // base class
-#include <mcMd/chemistry/AtomType.h>     // Member template parameter
+#include "CoulombSystemMixIn.h"          // base class
 #include <util/space/Vector.h>           // member template parameter
 #include <util/containers/GArray.h>      // member template
-#include <util/boundary/Boundary.h>      // typedef
 
 #include <complex>
 
 namespace Util
 {
-   class Vector;
    class Tensor;
 }
 
 namespace McMd
 {
 
-   class Simulation;
-   class System;
    class EwaldCoulombPair;
 
    using namespace Util;
@@ -39,7 +35,8 @@ namespace McMd
    *
    * \ingroup McMd_Coulomb_Module
    */
-   class EwaldCoulombPotential : public CoulombPotential
+   class EwaldCoulombPotential : public CoulombPotential, 
+                                 protected CoulombSystemMixIn
    {
 
    public:

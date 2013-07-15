@@ -32,7 +32,7 @@ MdSimulation{
   MdSystem{
     pairStyle                        LJPair
     bondStyle                  HarmonicBond
-    coulombStyle               Ewald
+    coulombStyle                      Ewald
     MdPairPotential{
       epsilon               1.000000000000e+00  1.300000000000e+00
                             1.300000000000e+00  1.000000000000e+00
@@ -55,7 +55,7 @@ MdSimulation{
       epsilon               1.000000000000e+00
       alpha                 0.500000000000e+00
       rCutoff               8.000000000000e+00
-      kCutoff               3.000000000000e+00
+      kCutoff               5.000000000000e+00
     }
     EnergyEnsemble{
       type                  adiabatic

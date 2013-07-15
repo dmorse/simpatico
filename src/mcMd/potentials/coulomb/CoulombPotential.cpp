@@ -21,12 +21,8 @@ namespace McMd
    /*
    * Constructor.
    */
-   CoulombPotential::CoulombPotential(System& system)
-    : simulationPtr_(&system.simulation()),
-      systemPtr_(&system),
-      boundaryPtr_(&system.boundary()),
-      atomTypesPtr_(&system.simulation().atomTypes()),
-      pairInteractionPtr_(0),
+   CoulombPotential::CoulombPotential()
+    : pairInteractionPtr_(0),
       epsilon_(1.0),
       alpha_(1.0),
       rCutoff_(1.0),
