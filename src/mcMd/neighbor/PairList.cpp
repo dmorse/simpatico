@@ -58,7 +58,7 @@ namespace McMd
    }
 
    /*
-   * Load parameters an archive, but do not allocate.
+   * Load parameters an archive.
    */
    void PairList::loadParameters(Serializable::IArchive &ar)
    {

@@ -52,7 +52,7 @@ McSimulation{
 
   }
   DiagnosticManager{
-    baseInterval                         10000
+    baseInterval                           100
 
     LogProgress{
       interval                          200000
@@ -121,4 +121,14 @@ McSimulation{
   saveInterval                20000
   saveFileName              restart
 }
+
+
+    McChemicalPotential{
+      interval                             100
+      outputFileName         ChemicalPotential
+      nSamplePerBlock                       10
+      nTrial                                10
+      nMoleculeTrial                        40
+      speciesId                              0
+    }
 
