@@ -27,7 +27,7 @@
 #include <mcMd/potentials/external/ExternalPotential.h>
 #include <inter/external/LamellarOrderingExternal.h>
 #include <inter/external/LocalLamellarOrderingExternal.h>
-#include <inter/external/OrderingExternal.h>
+#include <inter/external/PeriodicExternal.h>
 #ifndef INTER_NOPAIR
 #include "McPairExternalPerturbation.h"
 #include <mcMd/potentials/pair/McPairPotential.h>
@@ -88,8 +88,8 @@ namespace McMd
                ptr = new McPairExternalPerturbation<LJPair,LamellarOrderingExternal> (*systemPtr_, size, rank);
             } else if (externalInteractionClassName == "LocalLamellarOrderingExternal") {
                ptr = new McPairExternalPerturbation<LJPair,LocalLamellarOrderingExternal> (*systemPtr_, size, rank);
-            } else if (externalInteractionClassName == "OrderingExternal") {
-               ptr = new McPairExternalPerturbation<LJPair,OrderingExternal> (*systemPtr_, size, rank);
+            } else if (externalInteractionClassName == "PeriodicExternal") {
+               ptr = new McPairExternalPerturbation<LJPair,PeriodicExternal> (*systemPtr_, size, rank);
             } else {
                UTIL_THROW("Unsupported external potential.");
             }
@@ -98,8 +98,8 @@ namespace McMd
                ptr = new McPairExternalPerturbation<DpdPair,LamellarOrderingExternal> (*systemPtr_, size, rank);
             } else if (externalInteractionClassName == "LocalLamellarOrderingExternal") {
                ptr = new McPairExternalPerturbation<DpdPair,LocalLamellarOrderingExternal> (*systemPtr_, size, rank);
-            } else if (externalInteractionClassName == "OrderingExternal") {
-               ptr = new McPairExternalPerturbation<DpdPair,OrderingExternal> (*systemPtr_, size, rank);
+            } else if (externalInteractionClassName == "PeriodicExternal") {
+               ptr = new McPairExternalPerturbation<DpdPair,PeriodicExternal> (*systemPtr_, size, rank);
             } else {
                UTIL_THROW("Unsupported external potential.");
             }
@@ -117,8 +117,8 @@ namespace McMd
             ptr = new McExternalPerturbation<LamellarOrderingExternal>(*systemPtr_, size, rank);
          } else if (interactionClassName == "LocalLamellarOrderingExternal") {
             ptr = new McExternalPerturbation<LocalLamellarOrderingExternal> (*systemPtr_, size, rank);
-         } else if (interactionClassName == "OrderingExternal") {
-            ptr = new McExternalPerturbation<OrderingExternal> (*systemPtr_, size, rank);
+         } else if (interactionClassName == "PeriodicExternal") {
+            ptr = new McExternalPerturbation<PeriodicExternal> (*systemPtr_, size, rank);
          } else {
             UTIL_THROW("Unsupported external potential.");
          }

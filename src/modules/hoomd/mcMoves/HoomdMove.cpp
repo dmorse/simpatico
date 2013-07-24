@@ -44,6 +44,7 @@
 #include <hoomd/ParticleGroup.h>
 #include <hoomd/IntegratorTwoStep.h>
 #include <hoomd/TwoStepNVEGPU.h>
+#include <hoomd/TwoStepNPTMTKGPU.h>
 #include <hoomd/SFCPackUpdater.h>
 #include <hoomd/NeighborList.h>
 
@@ -332,6 +333,7 @@ namespace McMd
       #ifdef INTER_EXTERNAL
       externalForceSPtr_ = HoomdExternalFactory::hoomdFactory(system().externalPotential(),system(),
          systemDefinitionSPtr_);
+      implementExternalPotential_ = system().implementExternalPotential();
       #endif 
 
       #ifdef HOOMD_DEVEL
@@ -395,7 +397,8 @@ namespace McMd
       integratorSPtr_->addForceCompute(pairForceSPtr_);
       integratorSPtr_->addForceCompute(bondForceSPtr_);
       #ifdef INTER_EXTERNAL
-      integratorSPtr_->addForceCompute(externalForceSPtr_);
+      if (implementExternalPotential_)
+         integratorSPtr_->addForceCompute(externalForceSPtr_);
       #endif
 
 

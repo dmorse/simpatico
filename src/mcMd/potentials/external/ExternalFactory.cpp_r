@@ -20,10 +20,11 @@
 // Interaction classes
 #include <inter/external/BoxExternal.h>
 #include <inter/external/OrthoBoxExternal.h>
+#include <inter/external/OrthoBoxExternal.h>
 #include <inter/external/SlitExternal.h>
 #include <inter/external/LamellarOrderingExternal.h>
 #include <inter/external/LocalLamellarOrderingExternal.h>
-#include <inter/external/OrderingExternal.h>
+#include <inter/external/PeriodicExternal.h>
 
 namespace McMd
 {
@@ -62,8 +63,8 @@ namespace McMd
       if (name == "LocalLamellarOrderingExternal") {
          ptr = new ExternalPotentialImpl<LocalLamellarOrderingExternal>(*systemPtr_);
       } else
-      if (name == "OrderingExternal") {
-         ptr = new ExternalPotentialImpl<OrderingExternal>(*systemPtr_);
+      if (name == "PeriodicExternal") {
+         ptr = new ExternalPotentialImpl<PeriodicExternal>(*systemPtr_);
       }
       return ptr;
    }
