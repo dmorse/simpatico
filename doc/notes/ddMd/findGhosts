@@ -1,0 +1,55 @@
+Goal:
+
+1) Allow multiple atoms with same id to be easily found.
+
+2) Allow atomStorage::findGhosts to find image of each atom
+   that minimizes the bond lengths, avoiding the need for a
+   minimum image convention.
+
+
+Option #1: Singly-Linked List built into Atom class
+---------
+
+1) To add an atom to a singly linked list, one needs tail.
+
+2) To iterate through a singly linked list, one needs head.
+
+Option 1a:
+----------
+
+   - Store head in AtomStorage, indexed by global id.
+   - Each Atom has next pointer (can be null).
+   - Add Atom::addImage() would iterate to end of list
+     and add atom to the tail.
+   
+Option 1b:
+----------
+
+   - Store head and tail in atomStorage, indexed by globalId.
+   - Each Atom has next pointer (can be null).
+
+   Disadvantage: Immediate doubling of globally indexed memory
+   Advantage: Easily Fixable by switching to an associative 
+              container for (head, tail)
+
+Option 2b:
+----------
+
+   - Store head in atomStorage, indexed by globalId.
+   - Each Atom has next pointer (can be null).
+   - Each Atom has tail pointer (can be itself).
+
+   - Variant: Each atom has head and tail pointer
+
+   Disadvantage: Repetition of tail pointer (or head and tail).
+
+Option 4a:
+----------
+
+   - Store head in atomStorage, indexed by globalId.
+   - Each Atom has next pointer (can be null).
+   - Each Atom has tail pointer (can be itself).
+
+   - Variant: Each atom has head and tail pointer
+
+   Disadvantage: Repetition of tail pointer (or head and tail).
