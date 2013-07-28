@@ -101,9 +101,9 @@ namespace McMd
          Molecule* molPtr;
          Molecule::BondIterator bondIter;
          Atom* endPtr;
-         double w;
          double rosenbluth = 1;
-         double de;
+         double energy = 0;
+         double w = 1;
          double e = 0;
 
          speciesPtr = &(simulation().species(speciesId_));
@@ -114,23 +114,19 @@ namespace McMd
 
          // Loop over molecule growth trials
          for (int i = 0; i < nMoleculeTrial_; i++) {
-
             // Pick a random position for the first atom
             endPtr = &molPtr->atom(0);
-            boundary().randomPosition(random(), endPtr->position());
-
-            e = system().pairPotential().atomEnergy(*endPtr);
-            rosenbluth = boltzmann(e);
+            addFirstAtom(endPtr, rosenbluth, energy);
             system().pairPotential().addAtom(*endPtr);
 
             for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
-                addEndAtom(&(bondIter->atom(1)), &(bondIter->atom(0)), bondIter->typeId(), w, de);
-                e += de;
+                addEndAtom(&(bondIter->atom(1)), &(bondIter->atom(0)), bondIter->typeId(), w, e);
                 rosenbluth *= w;
+                energy += e;
                 system().pairPotential().addAtom(bondIter->atom(1));
             }
 
-            rosenbluth = rosenbluth / pow(nTrial_,molPtr->nAtom()-1);
+            rosenbluth = rosenbluth / pow(nTrial_,molPtr->nAtom());
             accumulator_.sample(rosenbluth, outputFile_);
 
             system().pairPotential().deleteAtom(*endPtr);
@@ -204,8 +200,7 @@ namespace McMd
 
       // Generate a random bond length
       beta   = energyEnsemble().beta();
-      length =
-         system().bondPotential().randomBondLength(&random(), beta, bondType);
+      length = system().bondPotential().randomBondLength(&random(), beta, bondType);
 
       // Loop over nTrial trial positions:
       rosenbluth = 0.0;
@@ -239,14 +234,11 @@ namespace McMd
             }
 
             // Get the angle spanned.
-            rsq1 = boundary().distanceSq(pvtPtr->position(),
-                                         pvtPtr2->position(), dr1);
-            rsq2 = boundary().distanceSq(endPtr->position(),
-                                         pvtPtr->position(), dr2);
+            rsq1 = boundary().distanceSq(pvtPtr->position(), pvtPtr2->position(), dr1);
+            rsq2 = boundary().distanceSq(endPtr->position(), pvtPtr->position(), dr2);
             cosTheta = dr1.dot(dr2) / sqrt(rsq1 * rsq2);
 
-            trialEnergy[iTrial] += system().anglePotential().
-                                   energy(cosTheta, angleTypeId);
+            trialEnergy[iTrial] += system().anglePotential().energy(cosTheta, angleTypeId);
          }
          #endif
 
@@ -268,11 +260,56 @@ namespace McMd
 
       // Calculate total energy for chosen trial
       energy = system().bondPotential().energy(length*length, bondType);
-      energy += trialEnergy[iTrial];
+      energy = trialEnergy[iTrial];
 
       // Set position of new end atom to chosen trialPos Vector
       endPtr->position() = trialPos[iTrial];
    }
 
+   /*
+   * Configuration bias algorithm for adding first atom of chain.
+   */
+   void
+   McChemicalPotential::addFirstAtom(Atom* endPtr, double &rosenbluth, double &energy)
+   {
+      Vector trialPos[MaxTrial_];
+      double trialProb[MaxTrial_], trialEnergy[MaxTrial_];
+      int    iTrial;
+
+      // Loop over nTrial trial positions:
+      rosenbluth = 0.0;
+      for (iTrial = 0; iTrial < nTrial_; ++iTrial) {
+
+         // trialPos = pvtPos + bondVec
+         boundary().randomPosition(random(), trialPos[iTrial]);
+         boundary().shift(trialPos[iTrial]);
+         #ifndef INTER_NOPAIR
+         trialEnergy[iTrial] = system().pairPotential().atomEnergy(*endPtr);
+         #else
+         trialEnergy[iTrial] = 0.0;
+         #endif
+
+         #ifdef INTER_EXTERNAL
+         trialEnergy[iTrial] += system().externalPotential().atomEnergy(*endPtr);
+         #endif
+
+         trialProb[iTrial] = boltzmann(trialEnergy[iTrial]);
+         rosenbluth += trialProb[iTrial];
+      }
+
+      // Normalize trial probabilities
+      for (iTrial = 0; iTrial < nTrial_; ++iTrial) {
+         trialProb[iTrial] = trialProb[iTrial]/rosenbluth;
+      }
+
+      // Choose trial position
+      iTrial = random().drawFrom(trialProb, nTrial_);
+
+      // Calculate total energy for chosen trial
+      energy = trialEnergy[iTrial];
+
+      // Set position of new end atom to chosen trialPos Vector
+      endPtr->position() = trialPos[iTrial];
+   }
 }
 #endif

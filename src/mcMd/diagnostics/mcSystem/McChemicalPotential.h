@@ -132,6 +132,28 @@ namespace McMd
       void addEndAtom(Atom* endPtr, Atom* pvtPtr, int bondType,
                          double &rosenbluth, double &energy);
 
+      /**
+      * Configuration bias algorithm for adding first atom of chain.
+      *
+      * This function generates and computes Rosenbluth factors for nTrial 
+      * trial positions, chooses one, updates the atomic position. It does
+      * not add the end atom to the system cell list.
+      *
+      * Upon return:
+      *  
+      *   - rosenbluth is the nonbonded Rosenblush factor for the added atom,
+      *     i.e., the sum of Boltzmann factors from nonbonded pair interactions
+      *     for all nTrial_ trial positions.
+      *
+      *+  - energy is the total energy (nonbonded) of atom in its chosen
+      *     position. 
+      *
+      * \param endPtr     ptr to new end atom, which we attempt to add
+      * \param rosenbluth Rosenbluth factor of added atom (out)
+      * \param energy     potential energy of deleted atom (out)
+      */
+      void addFirstAtom(Atom* endPtr, double &rosenbluth, double &energy);
+
       /// Maximum allowed number of trial positions for a regrown atom.
       static const int MaxTrial_ = 200;
 
