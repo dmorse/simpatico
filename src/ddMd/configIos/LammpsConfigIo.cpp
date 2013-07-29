@@ -427,7 +427,6 @@ namespace DdMd
                boundary().transformGenToCart(atomPtr->position(), r);
             }
             atoms_[id].position = r;
-            atoms_[id].velocity = atomPtr->velocity();
             atomPtr = atomCollector().nextPtr();
             ++n;
          }
@@ -457,6 +456,7 @@ namespace DdMd
          // Write atomic velocities
          // lammps atom     tag = Simpatico atom id + 1
          // lammps molecule id  = Simpatico molecule id + 1
+         /*
          file << endl;
          file << "Velocities" << endl;
          file << endl;
@@ -467,7 +467,7 @@ namespace DdMd
             file << id+1 << " " << atoms_[id].velocity;
             file << std::endl;
          }
-
+         */
       } else {
          atomCollector().send();
       }

@@ -1,5 +1,5 @@
-#ifndef HOOMD_NPH_MOVE_CPP
-#define HOOMD_NPH_MOVE_CPP
+#ifndef HOOMD_NPT_MTK_MOVE_CPP
+#define HOOMD_NPT_MTK_MOVE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,10 +8,13 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "HoomdNPHMove.h"
+#include "HoomdNPTMTKMove.h"
 
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
+#include <mcMd/species/Species.h>
+#include <mcMd/chemistry/Molecule.h>
+#include <mcMd/chemistry/Atom.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <util/ensembles/BoundaryEnsemble.h>
 
@@ -23,21 +26,21 @@ namespace McMd
    /*
    * Constructor
    */
-   HoomdNPHMove::HoomdNPHMove(McSystem& system) :
-      HoomdMove(system), W_(0.0)
+   HoomdNPTMTKMove::HoomdNPTMTKMove(McSystem& system) :
+      HoomdMove(system), tauP_(0.0)
    {
    }
 
    /*
    * Destructor.
    */
-   HoomdNPHMove::~HoomdNPHMove()
+   HoomdNPTMTKMove::~HoomdNPTMTKMove()
    {}
 
    /*
    * Read parameters
    */
-   void HoomdNPHMove::readParameters(std::istream& in)
+   void HoomdNPTMTKMove::readParameters(std::istream& in)
    {
       if ((! system().boundaryEnsemble().isIsobaric()) || (!energyEnsemble().isIsothermal()))
          UTIL_THROW("Must be in isothermal-isobaric ensemble.");
@@ -46,18 +49,30 @@ namespace McMd
       read<int>(in, "nStep", nStep_);
       read<double>(in, "dt", dt_);
 
-      read<std::string>(in, "mode", modeIn_);
-      if (modeIn_ == "cubic")
-         integrationMode_ = TwoStepNPHGPU::cubic;
-      else if (modeIn_ == "orthorhombic")
-         integrationMode_ = TwoStepNPHGPU::orthorhombic;
-      else if (modeIn_ == "tetragonal")
-         integrationMode_ = TwoStepNPHGPU::tetragonal;
+      read<std::string>(in, "couplingMode", couplingModeIn_);
+      if (couplingModeIn_ == "couple_none")
+         couplingMode_ = TwoStepNPTMTKGPU::couple_none;
+      else if (couplingModeIn_ == "couple_xy") 
+         couplingMode_ = TwoStepNPTMTKGPU::couple_xy;
+      else if (couplingModeIn_ == "couple_xz")
+         couplingMode_ = TwoStepNPTMTKGPU::couple_xz;
+      else if (couplingModeIn_ == "couple_yz")
+         couplingMode_ = TwoStepNPTMTKGPU::couple_yz;
+      else if (couplingModeIn_ == "couple_xyz")
+         couplingMode_ = TwoStepNPTMTKGPU::couple_xyz;
       else
-         UTIL_THROW("Unsupported integration mode.");
+         UTIL_THROW("Unsupported coupling mode.");
 
-      read<double>(in,"W", W_);
-      read<double>(in, "skin", skin_);
+      // Should a constraint be applied on aspect ratio in the case of a tetragonal cell
+      read<bool>(in, "imposeConstrain", imposeConstrain_);
+      if (imposeConstrain_) {
+         // Aspect ratio defined as length in unique direction over the other length
+         read<double>(in, "minAspectRatio", minAspectRatio_);
+         read<double>(in, "maxAspectRatio", maxAspectRatio_);
+      }
+
+      // Barostat mass W ~ 3 N T tauP^2
+      read<double>(in,"tauP", tauP_);
       char* env;
       if ((env = getenv("OMPI_COMM_WORLD_LOCAL_RANK")) != NULL) {
          GPUId_ = atoi(env);
@@ -65,8 +80,8 @@ namespace McMd
          GPUId_ = -1;
       }
 
-      toImposeConstrain_ = false;
-      setConstrain_ = false;
+      //toImposeConstrain_ = false;
+      //setConstrain_ = false;
 
       //read<int>(in, "GPUId", GPUId_);
       // create HOOMD execution configuration
@@ -90,17 +105,30 @@ namespace McMd
 
    }
  
-   void HoomdNPHMove::createIntegrator()     
+   void HoomdNPTMTKMove::createIntegrator()     
    {
 
       // create NVE Integrator 
       integratorSPtr_ = boost::shared_ptr<IntegratorTwoStep>(new IntegratorTwoStep(systemDefinitionSPtr_,dt_));
 
+      boost::shared_ptr<Variant> variantTSPtr(new VariantConst(1.0));
       boost::shared_ptr<Variant> variantPSPtr(new VariantConst(system().boundaryEnsemble().pressure()));
-      // create IntegrationMethod
-      twoStepNPHGPUSPtr_ = boost::shared_ptr<TwoStepNPHGPU>(new TwoStepNPHGPU(systemDefinitionSPtr_,groupAllSPtr_, thermoSPtr_, W_, variantPSPtr, integrationMode_,""));
 
-      integratorSPtr_->addIntegrationMethod(twoStepNPHGPUSPtr_);
+      Species  *speciesPtr;
+      int       iSpec, nMolecule;
+      int       nAtom = 0;
+      for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
+         speciesPtr = &simulation().species(iSpec);
+         nMolecule  = system().nMolecule(iSpec);
+         nAtom += nMolecule*(speciesPtr->nAtom());
+      }
+      thermoSPtr_->setNDOF(3.0*nAtom);
+
+      // create IntegrationMethod
+      twoStepNPTMTKGPUSPtr_ = boost::shared_ptr<TwoStepNPTMTKGPU>(new TwoStepNPTMTKGPU(systemDefinitionSPtr_, groupAllSPtr_,                                                                  thermoSPtr_, 1.0, tauP_, variantTSPtr, variantPSPtr, 
+                                                                  couplingMode_, TwoStepNPTMTKGPU::baro_x | TwoStepNPTMTKGPU                                                                  ::baro_y | TwoStepNPTMTKGPU::baro_z, true));
+
+      integratorSPtr_->addIntegrationMethod(twoStepNPTMTKGPUSPtr_);
 
       // register pair and bond forces in Integrator
       integratorSPtr_->addForceCompute(pairForceSPtr_);
@@ -121,18 +149,20 @@ namespace McMd
    /*
    * Generate, attempt and accept or reject a Hybrid MD/MC move.
    */
-   bool HoomdNPHMove::move()
+   bool HoomdNPTMTKMove::move()
    {
       if ((!HoomdIsInitialized_) || moleculeSetHasChanged_) {
          initSimulation();
          moleculeSetHasChanged_ = false;
       }
 
+      /*
       if ( !setConstrain_ && toImposeConstrain_) {
          Boundary initBoundary = system().boundary();
          constrainLengths_ = initBoundary.lengths();
          setConstrain_ = true;
       }
+      */
 
       // We need to create the Integrator every time since we are starting
       // with new coordinates, velocities etc.
@@ -177,13 +207,6 @@ namespace McMd
                h_pos.data[idx].w = __int_as_scalar(type);
                h_tag.data[idx] = idx;
                h_rtag.data[idx] = idx; 
-               /*
-               if(nind == 1) {
-                  std::cout << " index is " << atomIter->id() << std::endl;
-                  std::cout << "position is " << pos << std::endl;
-                  std::cout << "lengths is " << lengths_ << std::endl;
-                  std::cout << "hpos is " << h_pos.data[idx].x << "  " << h_pos.data[idx].y << " " << h_pos.data[idx].z << std::endl;
-               }*/
             }
          }
       }
@@ -193,35 +216,61 @@ namespace McMd
       }
 
       // Done with the data
-
       // generate integrator variables from a Gaussian distribution
       double etax = 0.0;
       double etay = 0.0;
       double etaz = 0.0;
       Random& random = simulation().random();
       double temp = energyEnsemble().temperature();
-      if (integrationMode_ == TwoStepNPHGPU::cubic) {
+      Species  *speciesPtr;
+      int       nMolecule;
+      int       nAtom = 0;
+      for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
+         speciesPtr = &simulation().species(iSpec);
+         nMolecule  = system().nMolecule(iSpec);
+         nAtom += nMolecule*(speciesPtr->nAtom());
+      }
+      if (couplingMode_ == TwoStepNPTMTKGPU::couple_xyz) {
          // one degree of freedom
          // barostat_energy = 1/2 (1/W) eta_x^2
-         double sigma = sqrt(temp/W_);
+         double sigma = sqrt( temp/(tauP_*tauP_*temp*3.0*nAtom) );
          etax = sigma*random.gaussian();
-      } else if (integrationMode_ == TwoStepNPHGPU::tetragonal) {
-         // two degrees of freedom
-         // barostat_energy = 1/2 (1/W) eta_x^2 + 1/2 (1/(2W)) eta_y^2
-         double sigma1 = sqrt(temp/W_);
-         etax = sigma1*random.gaussian();
-         double sigma2 = sqrt(temp/W_/2.0);
-         etay = sigma2*random.gaussian();
-      } else if (integrationMode_ == TwoStepNPHGPU::orthorhombic) {
+         etay = etax;
+         etaz = etax;
+      } else if (couplingMode_ == TwoStepNPTMTKGPU::couple_none) {
          // three degrees of freedom 
          // barostat_energy = 1/2 (1/W) (eta_x^2 + eta_y^2 + eta_z^2)
-         double sigma = sqrt(temp/W_);
+         double sigma = sqrt( temp/(tauP_*tauP_*temp*3.0*nAtom) );
          etax = sigma*random.gaussian();
          etay = sigma*random.gaussian();
          etaz = sigma*random.gaussian();
-      } 
-      twoStepNPHGPUSPtr_->setEta(etax,etay,etaz);
-      
+      } else {
+         // two degrees of freedom
+         // barostat_energy = 1/2 (1/W) eta_x^2 + 1/2 (1/(2W)) eta_y^2
+         double sigma1 = sqrt( temp/(tauP_*tauP_*temp*3.0*nAtom) );
+         double eta1 = sigma1*random.gaussian();
+         double sigma2 = sqrt( temp/(tauP_*tauP_*temp*3.0*nAtom)/2.0 );
+         double eta2 = sigma2*random.gaussian();
+         if (couplingMode_ == TwoStepNPTMTKGPU::couple_xy) {
+            etax = eta2;
+            etay = eta2;
+            etaz = eta1;
+         } else
+         if (couplingMode_ == TwoStepNPTMTKGPU::couple_yz) {
+            etax = eta1;
+            etay = eta2;
+            etaz = eta2;
+         } else 
+         if (couplingMode_ == TwoStepNPTMTKGPU::couple_xz) {
+            etax = eta2;
+            etay = eta1;
+            etaz = eta2;
+         } else { 
+           UTIL_THROW("Unsupported coupling mode.");
+         }
+      }
+      twoStepNPTMTKGPUSPtr_->setEta(etax,etay,etaz);
+
       // Notify that the particle order might have changed
       particleDataSPtr_->notifyParticleSort();
 
@@ -236,12 +285,11 @@ namespace McMd
       double oldH = thermoSPtr_->getLogValue("kinetic_energy",0);
       oldH += thermoSPtr_->getLogValue("potential_energy",0);
       oldH += system().boundaryEnsemble().pressure() * volume;
-      oldH += integratorSPtr_->getLogValue("nph_barostat_energy",0);
-//      std::cout << "Ekin = " << thermoSPtr_->getLogValue("kinetic_energy",nStep_) << " ";
-//      std::cout << "Epot = " << thermoSPtr_->getLogValue("potential_energy",nStep_) << " ";
-//      std::cout << "PV = " << system().boundaryEnsemble().pressure() * volume << " ";
-//      std::cout << "Ebaro = " << integratorSPtr_->getLogValue("nph_barostat_energy",nStep_) << " ";
-//      std::cout << "H = " << oldH << std::endl;
+      oldH += integratorSPtr_->getLogValue("npt_barostat_energy",0);
+      //std::cout << "oldH kinetic is " << thermoSPtr_->getLogValue("kinetic_energy",0) << std::endl;
+      //std::cout << "oldH potential is " << thermoSPtr_->getLogValue("potential_energy",0) << std::endl;
+      //std::cout << "oldH pressure is " << system().boundaryEnsemble().pressure() * volume << std::endl;
+      //std::cout << "oldH barostat is " << integratorSPtr_->getLogValue("npt_barostat_energy",0) << std::endl;
 
       // Integrate nStep_ steps forward
       for (int iStep = 0; iStep < nStep_; ++iStep) {
@@ -260,53 +308,52 @@ namespace McMd
       newLengths[1] = (box.getL()).y;
       newLengths[2] = (box.getL()).z;
       volume = newLengths[0]*newLengths[1]*newLengths[2];
- 
 
       // Calculate new value of the conserved quantity
       thermoSPtr_->compute(nStep_);
       double newH = thermoSPtr_->getLogValue("kinetic_energy",nStep_);
       newH += thermoSPtr_->getLogValue("potential_energy",nStep_);
       newH += system().boundaryEnsemble().pressure() * volume;
-      newH += integratorSPtr_->getLogValue("nph_barostat_energy",nStep_);
-//      std::cout << "Ekin_2 = " << thermoSPtr_->getLogValue("kinetic_energy",nStep_) << " ";
-//      std::cout << "Epot_2 = " << thermoSPtr_->getLogValue("potential_energy",nStep_) << " ";
-//      std::cout << "PV_2 = " << system().boundaryEnsemble().pressure() * volume << " ";
-//      std::cout << "Ebaro_2 = " << integratorSPtr_->getLogValue("nph_barostat_energy",nStep_) << " ";
-//      std::cout << "H_2 = " << newH << std::endl;
+      newH += integratorSPtr_->getLogValue("npt_barostat_energy",nStep_);
+      //std::cout << "newH kinetic is " << thermoSPtr_->getLogValue("kinetic_energy",nStep_) << std::endl;
+      //std::cout << "newH potential is " << thermoSPtr_->getLogValue("potential_energy",nStep_) << std::endl;
+      //std::cout << "newH pressure is " << system().boundaryEnsemble().pressure() * volume << std::endl;
+      //std::cout << "newH barostat is " << integratorSPtr_->getLogValue("npt_barostat_energy",nStep_) << std::endl;
 
       bool accept;
 
       // Decide whether to accept or reject
-      if (integrationMode_ == TwoStepNPHGPU::tetragonal) {
-         if (!setConstrain_) {
-            double  newAspectRatio, aspectRatioParam;
-            newAspectRatio = double(newLengths[0]/newLengths[1]);
-            if ( newAspectRatio > 1.4 || newAspectRatio < 0.8) {
+      if (imposeConstrain_) {
+         double  newAspectRatio;
+         if (couplingMode_ == TwoStepNPTMTKGPU::couple_xy) {
+            // Aspect ratio defined as length in unique direction over the other length
+            newAspectRatio = double(newLengths[2]/newLengths[0]);
+            if ( newAspectRatio < minAspectRatio_ || newAspectRatio > maxAspectRatio_) {
                accept = false;
             } else {
                accept = random.metropolis( boltzmann(newH-oldH) );
             }
-         } else
-         if (setConstrain_) {
-            double diffLx, diffLy;
-            if ( newLengths[0] >= constrainLengths_[0] ) {
-               diffLx = newLengths[0] - constrainLengths_[0];
+         } 
+         if (couplingMode_ == TwoStepNPTMTKGPU::couple_xz) {
+            // Aspect ratio defined as length in unique direction over the other length
+            newAspectRatio = double(newLengths[1]/newLengths[0]);
+            if ( newAspectRatio < minAspectRatio_ || newAspectRatio > maxAspectRatio_) {
+               accept = false;
             } else {
-               diffLx = -(newLengths[0] - constrainLengths_[0]);
+               accept = random.metropolis( boltzmann(newH-oldH) );
             }
-            if ( newLengths[1] >= constrainLengths_[1] ) {
-               diffLy = newLengths[1] - constrainLengths_[1];
-            } else {
-               diffLy = -(newLengths[1] - constrainLengths_[1]);
-            }
-            if ( diffLx > 0.5 || diffLy > 0.5 ) {
+         } 
+         if (couplingMode_ == TwoStepNPTMTKGPU::couple_yz) {
+            // Aspect ratio defined as length in unique direction over the other length
+            newAspectRatio = double(newLengths[0]/newLengths[1]);
+            if ( newAspectRatio < minAspectRatio_ || newAspectRatio > maxAspectRatio_) {
                accept = false;
             } else {
                accept = random.metropolis( boltzmann(newH-oldH) );
             }
          }
-      } else {
-            accept = random.metropolis( boltzmann(newH-oldH) );
+      } else { 
+         accept = random.metropolis( boltzmann(newH-oldH) );
       }
 
       if (accept) {
@@ -314,7 +361,7 @@ namespace McMd
          box = particleDataSPtr_->getBox();
          lengths_ = newLengths;
          system().boundary().setOrthorhombic(lengths_);
-         
+
          // read back integrated positions
          ArrayHandle<Scalar4> h_pos(particleDataSPtr_->getPositions(), access_location::host, access_mode::read);
          ArrayHandle<Scalar4> h_vel(particleDataSPtr_->getVelocities(), access_location::host, access_mode::read);

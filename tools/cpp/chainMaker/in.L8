@@ -1,11 +1,22 @@
+<<<<<<< HEAD
 boundary  cubic 1.04551590e+01
 HarmonicBond{
 kappa  2000.0
 length 1.0
+=======
+bmoundary  cubic 10.5
+iHarmonicBond{
+   kappa  2000.0
+   length 1.0
+>>>>>>> 846da398def29b9a1e250e4438644d11699027cb
 }
 Random{
   seed   10314761
 }
+<<<<<<< HEAD
 nMolecule        100
+=======
+nMolecule       1000
+>>>>>>> 846da398def29b9a1e250e4438644d11699027cb
 nAtomPerMolecule   8
 McMd

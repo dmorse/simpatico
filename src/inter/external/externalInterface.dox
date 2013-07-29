@@ -96,7 +96,6 @@ External:
       // \param force     force on the atom (on output)
       //
       void getForce(const Vector& position, int type, Vector& force) const;
-
       // Get a parameter value, identified by a string.
       //
       // \param name   parameter name

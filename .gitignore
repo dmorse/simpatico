@@ -1,6 +1,10 @@
 edit.py
 log
 *.a
+<<<<<<< HEAD
 *.o
 *.d
 /examples
+=======
+*~
+>>>>>>> 846da398def29b9a1e250e4438644d11699027cb

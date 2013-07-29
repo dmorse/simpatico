@@ -23,6 +23,8 @@
 #include "FMatrixTest.h"
 #include "DRaggedMatrixTest.h"
 
+#include "GridArrayTest.h"
+
 #include "ListTest.h"
 
 TEST_COMPOSITE_BEGIN(ContainersTestComposite)
@@ -45,6 +47,8 @@ TEST_COMPOSITE_ADD_UNIT(SSetTest)
 TEST_COMPOSITE_ADD_UNIT(DMatrixTest)
 TEST_COMPOSITE_ADD_UNIT(FMatrixTest)
 TEST_COMPOSITE_ADD_UNIT(DRaggedMatrixTest)
+
+TEST_COMPOSITE_ADD_UNIT(GridArrayTest)
 
 TEST_COMPOSITE_ADD_UNIT(ListTest)
 
