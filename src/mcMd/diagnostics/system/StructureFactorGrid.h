@@ -145,9 +145,6 @@ namespace McMd
 
       /// Log file
       std::ofstream logFile_;
-
-      /// Is this the first step?
-      bool isFirstStep_;
    };
 
 
