@@ -88,6 +88,8 @@
         /home/user1/taher/simpatico/src/util/format/Int.h\
         /home/user1/taher/simpatico/src/util/format/Dbl.h\
         /home/user1/taher/simpatico/src/util/format/write.h\
+        /home/user1/taher/simpatico/src/mcMd/diagnostics/mcSystem/McNVTChemicalPotential.h\
+        /home/user1/taher/simpatico/src/util/ensembles/EnergyEnsemble.h\
         /home/user1/taher/simpatico/src/mcMd/diagnostics/mcSystem/McIntraBondStressAutoCorr.h\
         /home/user1/taher/simpatico/src/mcMd/diagnostics/system/IntraBondStressAutoCorr.h\
         /home/user1/taher/simpatico/src/util/accumulators/AutoCorrArray.h\

@@ -2,3 +2,4 @@ compiler.mk
 *.o
 edit.py
 temp*
+*.d
