@@ -1,5 +1,5 @@
-#ifndef MCMD_MC_CHEMICAL_POTENTIAL_H
-#define MCMD_MC_CHEMICAL_POTENTIAL_H
+#ifndef MCMD_MC_NVT_CHEMICAL_POTENTIAL_H
+#define MCMD_MC_NVT_CHEMICAL_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -29,7 +29,7 @@ namespace McMd
    *
    * \ingroup McMd_Diagnostic_Module
    */
-   class McChemicalPotential : public SystemDiagnostic<McSystem>
+   class McNVTChemicalPotential : public SystemDiagnostic<McSystem>
    {
    
    public:
@@ -37,7 +37,7 @@ namespace McMd
       /**   
       * Constructor.
       */
-      McChemicalPotential(McSystem& system);
+      McNVTChemicalPotential(McSystem& system);
 
       /**
       * Read parameters and initialize.
@@ -79,8 +79,21 @@ namespace McMd
       * \param ar      saving or loading archive
       * \param version archive version id
       */
+
+      /*
+      * Serialize to/from an archive. 
+      */
       template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
+      void serialize(Archive& ar, const unsigned int version)
+      {
+         if (!isInitialized_) {
+            UTIL_THROW("Error: Object not initialized.");
+         }
+
+         ar & accumulator_;
+         ar & nSamplePerBlock_;
+      }
+
 
    private:
 
@@ -132,28 +145,6 @@ namespace McMd
       void addEndAtom(Atom* endPtr, Atom* pvtPtr, int bondType,
                          double &rosenbluth, double &energy);
 
-      /**
-      * Configuration bias algorithm for adding first atom of chain.
-      *
-      * This function generates and computes Rosenbluth factors for nTrial 
-      * trial positions, chooses one, updates the atomic position. It does
-      * not add the end atom to the system cell list.
-      *
-      * Upon return:
-      *  
-      *   - rosenbluth is the nonbonded Rosenblush factor for the added atom,
-      *     i.e., the sum of Boltzmann factors from nonbonded pair interactions
-      *     for all nTrial_ trial positions.
-      *
-      *+  - energy is the total energy (nonbonded) of atom in its chosen
-      *     position. 
-      *
-      * \param endPtr     ptr to new end atom, which we attempt to add
-      * \param rosenbluth Rosenbluth factor of added atom (out)
-      * \param energy     potential energy of deleted atom (out)
-      */
-      void addFirstAtom(Atom* endPtr, double &rosenbluth, double &energy);
-
       /// Maximum allowed number of trial positions for a regrown atom.
       static const int MaxTrial_ = 200;
 
@@ -193,63 +184,47 @@ namespace McMd
       /// Has readParam been called?
       bool isInitialized_;
 
-   };
+      /// Grant friend access to unit test class
+      //  friend class CbEndBaseTest;
+      };
 
-   // Inline methods
+      // Inline methods
 
-   /*
-   * Get parent McSystem.
-   */
-   inline McSystem& McChemicalPotential::system()
-   {  return *systemPtr_; }
+      /*
+      * Get parent McSystem.
+      */
+      inline McSystem& McNVTChemicalPotential::system()
+      {  return *systemPtr_; }
 
-   /*
-   * Get Simulation object of parent McSystem.
-   */
-   inline Simulation& McChemicalPotential::simulation()
-   {  return *simulationPtr_; }
+      /*
+      * Get Simulation object of parent McSystem.
+      */
+      inline Simulation& McNVTChemicalPotential::simulation()
+      {  return *simulationPtr_; }
 
-   /*
-   * Get Boundary object of parent McSystem.
-   */
-   inline Boundary& McChemicalPotential::boundary()
-   {  return *boundaryPtr_; }
+      /*
+      * Get Boundary object of parent McSystem.
+      */
+      inline Boundary& McNVTChemicalPotential::boundary()
+      {  return *boundaryPtr_; }
 
-   /*
-   * Get EnergyEnsemble object of parent McSystem.
-   */
-   inline EnergyEnsemble& McChemicalPotential::energyEnsemble()
-   {  return *energyEnsemblePtr_; }
+      /*
+      * Get EnergyEnsemble object of parent McSystem.
+      */
+      inline EnergyEnsemble& McNVTChemicalPotential::energyEnsemble()
+      {  return *energyEnsemblePtr_; }
 
-   /*
-   * Get random object of parent McSystem.
-   */
-   inline Random& McChemicalPotential::random()
-   {  return *randomPtr_; }
+      /*
+      * Get random object of parent McSystem.
+      */
+      inline Random& McNVTChemicalPotential::random()
+      {  return *randomPtr_; }
 
-   /*
-   * Boltzmann weight associated with an energy difference.
-   */
-   inline double McChemicalPotential::boltzmann(double energy)
-   {  return exp(-energyEnsemblePtr_->beta()*energy); }
-
-   // Function template
-
-   /*
-   * Serialize to/from an archive. 
-   */
-   template <class Archive>
-   void McChemicalPotential::serialize(Archive& ar, const unsigned int version)
-   {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
-      ar & accumulator_;
-      ar & nSamplePerBlock_;
-      ar & nTrial_;
-      ar & nMoleculeTrial_;
-      ar & speciesId_;
-   }
+      /*
+      * Boltzmann weight associated with an energy difference.
+      */
+      inline double McNVTChemicalPotential::boltzmann(double energy)
+      {  return exp(-energyEnsemblePtr_->beta()*energy); }
 
 }
 #endif 
