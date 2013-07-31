@@ -2,3 +2,5 @@ defines.mk
 Test
 edit.py
 *Factory.cpp
+*.d
+*.o

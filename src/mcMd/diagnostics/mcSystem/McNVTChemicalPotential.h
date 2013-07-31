@@ -1,5 +1,5 @@
-#ifndef MCMD_MC_CHEMICAL_POTENTIAL_H
-#define MCMD_MC_CHEMICAL_POTENTIAL_H
+#ifndef MCMD_MC_NVT_CHEMICAL_POTENTIAL_H
+#define MCMD_MC_NVT_CHEMICAL_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -29,7 +29,7 @@ namespace McMd
    *
    * \ingroup McMd_Diagnostic_Module
    */
-   class McChemicalPotential : public SystemDiagnostic<McSystem>
+   class McNVTChemicalPotential : public SystemDiagnostic<McSystem>
    {
    
    public:
@@ -37,12 +37,12 @@ namespace McMd
       /**   
       * Constructor.
       */
-      McChemicalPotential(McSystem& system);
+      McNVTChemicalPotential(McSystem& system);
 
       /**
       * Read parameters and initialize.
       */
-      virtual void readParam(std::istream& in);
+      virtual void readParameters(std::istream& in);
 
       /** 
       * Clear accumulator.
@@ -146,10 +146,7 @@ namespace McMd
                          double &rosenbluth, double &energy);
 
       /// Maximum allowed number of trial positions for a regrown atom.
-      static const int MaxTrial_ = 20;
-
-      /// Maximum allowed number of trial molecules to grow.
-      static const int MaxMoleculeTrial_ = 50;
+      static const int MaxTrial_ = 200;
 
       /// Pointer to parent McSystem object.
       McSystem  *systemPtr_;
@@ -196,37 +193,37 @@ namespace McMd
       /*
       * Get parent McSystem.
       */
-      inline McSystem& McChemicalPotential::system()
+      inline McSystem& McNVTChemicalPotential::system()
       {  return *systemPtr_; }
 
       /*
       * Get Simulation object of parent McSystem.
       */
-      inline Simulation& McChemicalPotential::simulation()
+      inline Simulation& McNVTChemicalPotential::simulation()
       {  return *simulationPtr_; }
 
       /*
       * Get Boundary object of parent McSystem.
       */
-      inline Boundary& McChemicalPotential::boundary()
+      inline Boundary& McNVTChemicalPotential::boundary()
       {  return *boundaryPtr_; }
 
       /*
       * Get EnergyEnsemble object of parent McSystem.
       */
-      inline EnergyEnsemble& McChemicalPotential::energyEnsemble()
+      inline EnergyEnsemble& McNVTChemicalPotential::energyEnsemble()
       {  return *energyEnsemblePtr_; }
 
       /*
       * Get random object of parent McSystem.
       */
-      inline Random& McChemicalPotential::random()
+      inline Random& McNVTChemicalPotential::random()
       {  return *randomPtr_; }
 
       /*
       * Boltzmann weight associated with an energy difference.
       */
-      inline double McChemicalPotential::boltzmann(double energy)
+      inline double McNVTChemicalPotential::boltzmann(double energy)
       {  return exp(-energyEnsemblePtr_->beta()*energy); }
 
 }

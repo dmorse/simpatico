@@ -1,6 +1,7 @@
 mcMd_diagnostics_mcSystem_SRCS=\
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McBondEnergyAverage.cpp \
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McDiagnosticFactory.cpp \
+    $(SRC_DIR)/mcMd/diagnostics/mcSystem/McChemicalPotential.cpp \
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McEnergyAverage.cpp \
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McEnergyOutput.cpp \
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McPairEnergyAverage.cpp \
@@ -8,7 +9,7 @@ mcMd_diagnostics_mcSystem_SRCS=\
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McStressAutoCorr.cpp \
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McIntraBondStressAutoCorr.cpp \
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McIntraBondTensorAutoCorr.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/mcSystem/McChemicalPotential.cpp 
+    $(SRC_DIR)/mcMd/diagnostics/mcSystem/McNVTChemicalPotential.cpp 
 
 ifdef INTER_EXTERNAL
 mcMd_diagnostics_mcSystem_SRCS+=\

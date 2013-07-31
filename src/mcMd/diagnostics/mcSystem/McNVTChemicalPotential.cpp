@@ -1,5 +1,5 @@
-#ifndef MCMD_MC_CHEMICAL_POTENTIAL_CPP
-#define MCMD_MC_CHEMICAL_POTENTIAL_CPP
+#ifndef MCMD_MC_NVT_CHEMICAL_POTENTIAL_CPP
+#define MCMD_MC_NVT_CHEMICAL_POTENTIAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "McChemicalPotential.h"                        // class header
+#include "McNVTChemicalPotential.h"                        // class header
 #include <util/misc/FileMaster.h>  
 #include <util/archives/Serializable_includes.h>
 
@@ -34,7 +34,7 @@ namespace McMd
    /* 
    * Constructor.
    */
-   McChemicalPotential::McChemicalPotential(McSystem& system)
+   McNVTChemicalPotential::McNVTChemicalPotential(McSystem& system)
     : SystemDiagnostic<McSystem>(system),
       systemPtr_(&system),
       simulationPtr_(&system.simulation()),
@@ -52,12 +52,15 @@ namespace McMd
    /*
    * Read parameters and initialize.
    */
-   void McChemicalPotential::readParam(std::istream& in)
+   void McNVTChemicalPotential::readParameters(std::istream& in)
    {
 
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
+      read<int>(in, "nTrial", nTrial_);
+      read<int>(in, "nMoleculeTrial", nMoleculeTrial_);
+      read<int>(in, "speciesId", speciesId_);
 
       accumulator_.setNSamplePerBlock(nSamplePerBlock_);
 
@@ -66,19 +69,16 @@ namespace McMd
          fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       }
 
-      read<int>(in, "nTrial", nTrial_);
       if (nTrial_ <=0 || nTrial_ > MaxTrial_) {
-         UTIL_THROW("Invalid value input for nTrial");
+         UTIL_THROW("Invalid value input for nTrial");  
       }
-
-      read<int>(in, "nMoleculeTrial", nMoleculeTrial_);
-      if (nMoleculeTrial_ <=0 || nMoleculeTrial_ > MaxMoleculeTrial_) {
+         
+      if (nMoleculeTrial_ <=0) {
          UTIL_THROW("Invalid value input for nMoleculeTrial");
       }
-
-      read<int>(in, "speciesId", speciesId_);
-      if (speciesId_ <=0 || speciesId_ > system().simulation().nSpecies()) {
-         UTIL_THROW("Invalid value input for nMoleculeTrial");
+    
+      if (speciesId_ <0 || speciesId_ >= system().simulation().nSpecies()) {
+         UTIL_THROW("Invalid value input for speciesId");
       }
 
       isInitialized_ = true;
@@ -87,14 +87,14 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void McChemicalPotential::setup() 
+   void McNVTChemicalPotential::setup() 
    {  accumulator_.clear(); }
  
    
    /* 
    * Evaluate Rosenbluth weight, and add to accumulator.
    */
-   void McChemicalPotential::sample(long iStep) 
+   void McNVTChemicalPotential::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
 
@@ -107,10 +107,11 @@ namespace McMd
          double de;
          double e = 0;
 
+         speciesPtr = &(simulation().species(speciesId_));
+         molPtr = &(speciesPtr->reservoir().pop());
+         system().addMolecule(*molPtr);
+
          for (int i = 0; i < nMoleculeTrial_; i++) {
-            speciesPtr = &(simulation().species(speciesId_));
-            molPtr = &(speciesPtr->reservoir().pop());
-            system().addMolecule(*molPtr);
 
             endPtr = &molPtr->atom(0);
             boundary().randomPosition(random(), endPtr->position());
@@ -127,23 +128,23 @@ namespace McMd
             }
 
             rosenbluth = rosenbluth / pow(nTrial_,molPtr->nAtom()-1);
+            accumulator_.sample(rosenbluth, outputFile_);
 
             system().pairPotential().deleteAtom(*endPtr);
             for (molPtr->begin(bondIter); bondIter.notEnd(); ++bondIter) {
                 system().pairPotential().deleteAtom(bondIter->atom(1));
-            }
-      
-            system().removeMolecule(*molPtr);
+            }         
          }
 
-         accumulator_.sample(rosenbluth, outputFile_);
-      }     
+         system().removeMolecule(*molPtr);
+         speciesPtr->reservoir().push(*molPtr);
+      }
    }
 
    /*
    * Output results to file after simulation is completed.
    */
-   void McChemicalPotential::output() 
+   void McNVTChemicalPotential::output() 
    { 
       // If outputFile_ was used to write block averages, close it.
       if (accumulator_.nSamplePerBlock()) {
@@ -163,13 +164,13 @@ namespace McMd
    /*
    * Save state to binary file archive.
    */
-   void McChemicalPotential::save(Serializable::OArchive& ar)
+   void McNVTChemicalPotential::save(Serializable::OArchive& ar)
    {  ar & *this; }
    
    /*
    * Load state from a binary file archive.
    */
-   void McChemicalPotential::load(Serializable::IArchive& ar)
+   void McNVTChemicalPotential::load(Serializable::IArchive& ar)
    { ar & *this; }
    
 
@@ -177,7 +178,7 @@ namespace McMd
    * Configuration bias algorithm for adding one atom to a chain end.
    */
    void
-   McChemicalPotential::addEndAtom(Atom* endPtr, Atom* pvtPtr, int bondType,
+   McNVTChemicalPotential::addEndAtom(Atom* endPtr, Atom* pvtPtr, int bondType,
                           double &rosenbluth, double &energy)
    {
       Vector trialPos[MaxTrial_];

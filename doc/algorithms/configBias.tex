@@ -116,48 +116,79 @@ Taher \textsc{Ghasimakbari} and David \textsc{Morse}
 %	INTRODUCTION
 %-------------------------------------------------------------------------------
 
-\section{Chemical Potentials and Insertion}
-Chemical potentials can be measured by simulating the attempted insertion of a molecule into a liquid.  Consider a system that initially contains $N$ molecules of some species $S$ of interest, to which we will try to add one more molecule of species $S$. The system may contain any number of molecules of any number of other species. Let $\system$ denote the coordinates of all molecules of all species that are present in the initial state, before addition of the $(N+1)$th molecule of type $S$. Let $\chain$ denote a set of coordinates required to specify the spatial configuration of the added molecule. The potential energy $\Utot$ of a system with this added $S$ molecule can be written as a sum 
+\section{Molecule Insertion}
+Chemical potentials can be measured by simulating the attempted insertion of a molecule into a liquid.  Consider a system that initially contains $N$ molecules of some species $S$ of interest, to which we will try to add one more molecule of species $S$. The system may contain any number of molecules of any number of other species. Let $\system$ denote the coordinates of all molecules of all species that are present in the initial state, before addition of the $(N+1)$th molecule of type $S$. Let $\chain$ the coordinates of the added $(N+1)$s molecule of type $S$. The potential energy $\Utot$ of a system with this added $S$ molecule can be written as a sum 
 \begin{equation}
     \Utot(\system, \chain) = \Usys(\system) + \delU (\chain, \system) 
-    \quad.
+    \quad. \label{UtotSum}
 \end{equation}
-Here, $\delU$ is the potential energy change arising from insertion of the molecule with a known conformation $\chain$ into a system with a known configuration $\system$ for all other molecules. The change $\delU$ generally includes the intramolecular covalent energy of the added molecule and all interm- and intra-molecular nonbonded pair interactions that involve the added molecule. 
+Here, $\delU$ is the potential energy change arising from insertion of the molecule with conformation $\chain$ into a system with a fixed configuration $\system$ for all other molecules. The change $\delU$ generally includes the intramolecular covalent energy of the added molecule and all inter- and intra-molecular nonbonded pair interactions that involve the added molecule. 
 
 Let $\Zsystem$ and $\Ztot$ denote the partition functions of a system without the added molecule and with an added $S$ molecule, respectively. These are given by
 \begin{eqnarray}
-    \Zsystem & \equiv & \frac{C}{N!}\int d\system e^{-\beta \Usys(\system)} \\
-    \Ztot  & \equiv & \frac{C}{(N+1)!}\int d\system e^{-\beta \Usys(\system)} 
+    \Zsystem & \equiv & \frac{C}{N!}\int d\system \; e^{-\beta \Usys(\system)} 
+    \label{ZsystemDef} \\
+    \Ztot  & \equiv & \frac{C}{(N+1)!}\int d\system \; e^{-\beta \Usys(\system)} 
                        \int d\chain e^{-\beta \delU(\chain, \system)}
+    \label{ZtotDef}
     \quad.
 \end{eqnarray}
-where $\beta = 1/(k_{B}T$, where $k_{B}$ is Boltzmann's constant.  Here, the constant $C$ represents any product of combinatorical (inverse factorial) factors arising from species other than species $S$.  Let $\Fsystem = -k_{B}T\ln \Zsystem$ and $\Ftot = -k_{B}T\ln \Ztot$ denote the corresponding free energies.  The chemical potential of species $S$ is given by the free energy difference
+where $\beta = 1/(k_{B}T$, where $k_{B}$ is Boltzmann's constant.  Here, the constant $C$ represents any product of combinatorical (inverse factorial) factors arising from species other than species $S$.  Let $\Fsystem = -k_{B}T\ln \Zsystem$ and $\Ftot = -k_{B}T\ln \Ztot$ denote the corresponding free energies.  
+
+\subsection{Equilibrium Averages}
+Various properties of the system with $N+1$ molecules of species $S$ can be expressed in terms of averages over configurations of the system with only $N$ such molecules. Let
+\begin{equation}
+  \langle A \rangle_{N} \equiv \frac{1}{\Zsystem (N+1)!}
+  \int d\system e^{-\beta \Usys(\system)} A(\system)
+  \label{EqAveNDef}
+\end{equation}
+denotes the equilibrium average of some quantity $A(\system)$ in a system of $N$ $S$ molecules, without the added molecule. 
+By setting $A(\system) = \int d\chain e^{-\beta \delU(\chain, \system)}$ in Eq. (\ref{EqAveNDef}), and using Eq. (\ref{ZtotDef}) for $\Ztot$, it is straightforward to show that
+\begin{equation}
+  \frac{\Ztot}{\Zsystem} = \frac{1}{N+1}
+  \left\langle \int d\chain e^{-\beta \delU(\chain, \system)} \right\rangle_{N}
+  \quad, \label{ZRatio}
+\end{equation}
+The chemical potential of species $S$ is given by the free energy difference
 \begin{eqnarray}
    \mu & = & \Ftot - \Fsystem \nonumber \\
-       & = & -k_{B}T \ln \left ( \frac{\Ztot}{\Zsystem (N+1)} \right )
-      \label{mudef}
+       & = & -k_{B}T \ln \left ( \frac{\Ztot}{\Zsystem} \right )
+   \quad. \label{mudef}
 \end{eqnarray}
-The required ratio $\Ztot/\Zsystem$ can be rewritten as an average
+giving
 \begin{equation}
-  \frac{\Ztot}{\Zsystem} = 
-  \left \langle \int d\chain e^{-\beta \delU(\chain, \system)} \right \rangle_{N}
+  e^{-\beta\mu} = \frac{1}{N+1}
+  \left\langle \int d\chain e^{-\beta \delU(\chain, \system)} \right\rangle_{N}
+  \quad. \label{ZRatio}
 \end{equation}
-in which 
-\begin{equation}
-  \langle \cdots \rangle_{N} \equiv
-  \frac{ \int d\system e^{-\beta \Usys(\system)} \cdots }
-       { \int d\system e^{-\beta \Usys(\system)}}
-\end{equation}
-denotes an average of some quantity ``$\cdots$" over the thermal equilibrium 
-distribution for the system without the added molecule. 
+This is the starting point for many calculations of chemical potential.
 
-For some purposes, it is useful to divide $\delU$ into a sum
+The equilibrium average of any mechanical property $A(\chain, \system)$ in a system of $N+1$ molecules may be expressed as
+\begin{equation}
+  \langle A \rangle_{N+1} \equiv \frac{1}{\Ztot (N+1)!}
+  \int d\system \; e^{-\beta \Usys(\system)} \int d\chain \; e^{-\beta \delU(\chain, \system)} 
+       A(\chain, \system) \quad,
+\end{equation}
+where we have used Eq. (\ref{UtotSum}) for the potential energy $\Utot$.  Using Eq. (\ref{ZRatio}), we express any such average as a ratio
+\begin{equation}
+  \langle A \rangle_{N+1} \equiv
+  \frac{ \left \langle 
+         \int d\chain \; e^{-\beta \delU} A
+         \right \rangle_{N}}
+         { \left \langle 
+         \int d\chain \; e^{-\beta \delU} \right \rangle_{N}}
+\end{equation}
+of averages over coordinates of the original system of $N$ $S$ molecules.
+
+\subsection{Ideal and External Potentials}
+For some purposes, it is useful to express the insertion energy $\delU$ 
+into a sum
 \begin{equation}
    \delU(\system, \chain) = \Uid(\chain) + \Uext (\chain, \system)
 \end{equation}
 of a ``ideal" bonded contribution $\Uid(\chain)$ that depends only on the conformation of the added molecule and an "external" contribution $\Uext(\chain,\system)$ that depends upon the configuration of both the added molecule and the original system.  There is some freedom in how this division is defined, \eg, the ``ideal" Hamiltonian may be taken to include or exclude non-bonded pair interactions among particles within the added test molecule. Let 
 \begin{equation}
-    \Zid_{1} \equiv \int d\chain \l e^{-\beta \Uid(\chain) }
+    \Zid_{1} \equiv \int d\chain \; e^{-\beta \Uid(\chain) }
 \end{equation}
 be the partition function for system containing a single $S$ molecule with potential energy $\Uid$, confined to the same volume as that of the entire interacting system of interest. The chemical potential for an ``ideal" reference system of $N$ such non-interacting molecules, defined by analogy to Eq. (\ref{mudef}), is then
 \begin{eqnarray}
@@ -171,11 +202,11 @@ We define an excess chemical potential $\muex$ for species $S$ as the difference
 \end{equation}
 between the chemical potentials of the real and ideal systems containing the same number of molecules in the same total volume. This is given by a dimensionless ratio
 \begin{equation}
-   \muex_{N}  = -k_{B}T \ln \left ( \frac{\Ztot}{\Zsystem \Zid_{1}} \right )
+   \muex_{N}  = -k_{B}T \ln \left ( \frac{\Ztot (N+1) }{\Zsystem \Zid_{1}} \right )
 \end{equation}
 where
 \begin{equation}
-  \frac{\Ztot}{\Zsystem \Zid_{1}} = 
+  \frac{\Ztot (N+1)}{\Zsystem \Zid_{1}} = 
   \frac{\left \langle \int d\chain e^{-\beta \delU(\chain, \system)} \right \rangle_{N}} 
        {\Zid_{1}} 
   \quad.
@@ -420,11 +451,11 @@ Taking the average of this quantity respect to configuration $\chain$ of the sys
 an added chain then yields an expression for the excess activity $e^{\beta\muex}$ as an 
 average of the Rosenbluth weight
 \begin{equation}
-   e^{\beta \muex} = 
-   \frac{\Ztot}{\Zsystem\Zid} = 
-   \langle \langle W \rangle_{\rconfig} \rangle
+   e^{-\beta \muex} = 
+   \frac{\Ztot (N+1)}{\Zsystem\Zid} = 
+   \langle \langle W \rangle_{\rconfig} \rangle_{N}
 \end{equation}
-over both Rosenbluth configurations and equilibrium solvent chain configurations. 
+over both Rosenbluth configurations and equilibrium system configurations. 
 
 %-------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
