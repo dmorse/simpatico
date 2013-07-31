@@ -269,7 +269,7 @@ namespace McMd
            UTIL_THROW("Unsupported coupling mode.");
          }
       }
-      twoStepNPTMTKGPUSPtr_->setEta(etax,etay,etaz);
+      //twoStepNPTMTKGPUSPtr_->setEta(etax,etay,etaz);
 
       // Notify that the particle order might have changed
       particleDataSPtr_->notifyParticleSort();

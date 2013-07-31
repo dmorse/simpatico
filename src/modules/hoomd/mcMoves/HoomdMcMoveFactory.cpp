@@ -28,10 +28,10 @@ namespace McMd
 
       if (className == "HoomdMove") {
         spp = new HoomdMove(system());
-      } else          
-      if (className == "HoomdNPTMTKMove") {
-        spp = new HoomdNPTMTKMove(system());           
-      }
+      }           
+//      if (className == "HoomdNPTMTKMove") {  //Temporarily disabled
+//        spp = new HoomdNPTMTKMove(system());           
+//      }
       return spp;
    }
 
