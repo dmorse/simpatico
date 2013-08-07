@@ -167,7 +167,7 @@ namespace McMd
       if (pflag) {
 
          if (rflag) {
-            std::string msg("Error: Options -r and option -p are incompatible. Use -r alone. ");
+            std::string msg("Error: Options -r and -p are incompatible. Use -r alone. ");
             msg += "Existence of a perturbation is specified in restart file.";
             UTIL_THROW(msg.c_str());
          }

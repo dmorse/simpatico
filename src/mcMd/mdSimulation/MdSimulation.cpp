@@ -135,9 +135,16 @@ namespace McMd
       if (eflag) {
          Util::ParamComponent::setEcho(true);
       }
+
       #ifdef MCMD_PERTURB
       // Set to use a perturbation.
       if (pflag) {
+   
+         if (rflag) {
+            std::string msg("Error: Options -r and -p are incompatible. Use -r alone. ");
+            msg += "Existence of a perturbation is specified in restart file.";
+            UTIL_THROW(msg.c_str());
+         }
    
          // Set to expect perturbation in the param file.
          system().setExpectPerturbation();
