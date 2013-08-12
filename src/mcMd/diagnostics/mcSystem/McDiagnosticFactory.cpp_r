@@ -13,6 +13,7 @@
 #include "McEnergyOutput.h"
 #include "McEnergyAverage.h"
 #include "McPairEnergyAverage.h"
+#include "McNVTChemicalPotential.h"
 #include "McExternalEnergyAverage.h"
 #include "McBondEnergyAverage.h"
 #include "McPressureAverage.h"
