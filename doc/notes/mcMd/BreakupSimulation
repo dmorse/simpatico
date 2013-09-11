@@ -1,0 +1,59 @@
+---------------------------------------------------------
+Alternative #1:
+
+   Gist: Define new Types class that contains the number of 
+   atoms bonds, etc. 
+
+class McMd::Simulation
+   class Types:
+   
+       DArray<AtomType> atomTypes_;
+       int nAtomType_;
+       int nBondType_;
+       int nAngleType_;
+       int nDihedralType_;
+       int hasExternal_;
+       int hasTether_;
+       maskedPairPolicy_;
+   
+   class SpeciesManager speciesManagerPtr_;
+   
+   class Random random_;
+   
+       Call initialize() after has types and speciesManager.
+   
+   Requirements:: 
+   
+       Types and SpeciesManager can be added in either order.
+       initialize() can be called only once, after:
+   
+          Types are added and initialized.
+          SpeciesManger is initialized.
+   
+       Access random() via a pointer, so it can be shared.
+   
+   Methods:
+   
+       SetTypes(&const Types types);
+         Use a pointer.
+   
+       SetSpeciesManager(SpeciesManager);
+   
+       Rename initialize() -> allocate(). Make public, put in
+       strong tests.
+
+---------------------------------------------------------
+Alternative #2:
+
+   Gist: Define new ForceField class that contains not just the 
+   number of atoms bonds, etc., but also: 
+
+   - Interaction classes and the potentials to be used.
+   - Association of atom type sequences to 
+
+   Each Potential classes would then require a pointer to the array
+   of Pair, Bond, Angle, etc. Interaction classes held by the force 
+   field.
+
+   Steps: Make Interaction scalar objects held in an array, rather
+   than arrays themselves. 
