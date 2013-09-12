@@ -307,13 +307,50 @@ namespace DdMd
       stamp(ATOM_PLAN);
 
       /*
-      * Find groups that span boundaries (uses information about ghosts).
-      * Clear pointers to ghosts in each Group after inspecting the Group.
+      * Set ghost communication flags for groups that span boundaries and
+      * clear pointers to ghosts in each Group after inspecting the Group.
+      * This function information uses old coordinate information about 
+      * ghosts atoms, and so must be called before all ghosts are cleared.
+      * 
+      * Algorithm:: GroupExchanger::markSpanningGroups loops over all groups,
+      * Because it is called before ghosts are cleared, all groups should 
+      * be complete, but coordinate values for ghosts are values obtained 
+      * from the previous update, and so are outdated by one step. (The only
+      * exception is the first step of a simulation, which is discussed
+      * separately below). For each group, it loops over all directions 
+      * (i, j), with i=0,..,Dimension-1 and j=0, 1. For each direction it 
+      * determines which atoms are or might be "inside" or "outside" of the 
+      * boundary. This is determining by comparing atom coordinate i to 
+      * inner_(i, j) and outer_(i, j), which are scaled coordinates somehwat 
+      * "inside" and "outside" of the true domain boundary. If coordinate i
+      * is "outside" of inner_(i, j), the atom is considered potentially 
+      * inside the boundary. If a coordinate is "inside" of outer_(i, j), 
+      * it is considered potentially outside the boundary. If a coordinate 
+      * is between inner_(i, j) and outer_(i, j), it is considered both 
+      * inside or outside, to reflect the uncertainty that arises from 
+      * the use of outdated ghost positions. 
       *
-      * Atoms in Group<N> objects that span boundaries, and are incomplete
-      * after atom migration, are marked for sending as ghosts in the
-      * finishGroupGhostPlan<N> function, further below.
+      * If a group has atoms both "inside" and "outside" boundary (i, j),
+      * the group is said to "span" the boundary, and ghost communication 
+      * flag (i, j) is set for the Group. Otherwise, this ghost communication 
+      * flag for the Group cleared. After finishing inspection of a Group, 
+      * all pointers to ghost atoms within the Group are cleared.
+      *
+      * If a Group is incomplete when this function is called, Group ghost
+      * flags are set for all directions. This should only happen on the
+      * first time step of a simulation. 
+      *
+      * Why this necessary: After all local atoms have been exchanged, atoms
+      * that belong to incomplete groups are marked for sending as ghosts 
+      * in each direction for which the group spans a boundary. This is
+      * done in the GroupExchanger::markGhosts function at the end of this
+      * function.
+      *
+      * The function interfaces defined in GroupExchanger are implemented 
+      * in the GroupStorage<int N> class template. 
       */
+
+      // Set ghost communication flags for groups (see above)
       for (k = 0; k < groupExchangers_.size(); ++k) {
          groupExchangers_[k].markSpanningGroups(bound_, inner_, outer_,
                                                 gridFlags_);
@@ -343,8 +380,8 @@ namespace DdMd
       for (i = 0; i < Dimension; ++i) {
 
          // Transmission direction
-         // j = 0 sends to processor with lower grid coordinate i
-         // j = 1 sends to processor with higher grid coordinate i
+         // j = 0 sends down to processor with lower grid coordinate i
+         // j = 1 sends up   to processor with higher grid coordinate i
          for (j = 0; j < 2; ++j) {
 
             // Index for conjugate (reverse) direction
@@ -438,16 +475,16 @@ namespace DdMd
             * Notes:
             *
             * (1) Removal of atoms cannot be done within the atom packing
-            * loop because element removal invalidates the atom iterator.
+            * loop because element removal would invalidate the atom 
+            * iterator.
             *
             * (2) Groups must be packed for sending before atoms are removed
-            * because the algorithm for identifying groups to send invokes
-            * pointers to associated atoms.
+            * because the algorithm for identifying which groups to send 
+            * references pointers to associated atoms.
             */
 
-
             #ifdef UTIL_MPI
-            // Send and receive only if processor grid dimension(i) > 1
+            // Send and receive buffers only if processor grid dimension(i) > 1
             if (gridFlags_[i]) {
 
                // End atom send block

@@ -1099,7 +1099,7 @@ namespace McMd
    * Does this system have an associated Perturbation?
    */
    inline bool System::hasPerturbation() const
-   {  return (perturbationPtr_ != 0); }
+   {  return perturbationPtr_; }
 
    /*
    * Get the Perturbation by reference.
@@ -1115,7 +1115,7 @@ namespace McMd
    * Does this system have an associated ReplicaMove?
    */
    inline bool System::hasReplicaMove() const
-   {  return (replicaMovePtr_ != 0); }
+   {  return replicaMovePtr_; }
    
    /*
    * Get the ReplicaMove by reference.
