@@ -81,11 +81,6 @@ namespace McMd
 
    public:
 
-      /**
-      * Number of diagnostic samples in simulation.
-      */
-      static const int Samples = 100000;
-      
       /**	
       * Constructor.
       *
@@ -183,21 +178,6 @@ namespace McMd
       */
       DMatrix<double>  modes_;
 
-      /**
-      * Array of vector of maximum structure factor values. 
-      */
-      DArray< std::vector<double> > maximumValue_;
-
-      /**
-      * Array of vector of Miller index IntVector with maximum S(q).
-      */
-      DArray< std::vector<IntVector> > maximumWaveIntVector_;
-
-      /**
-      * Array of vector of magnitudes of waveVector with maximum S(q).
-      */
-      DArray< std::vector<double> > maximumQ_;
-
       /// Number of wavevectors.
       int  nWave_;
 
@@ -215,11 +195,13 @@ namespace McMd
       */
       void makeWaveVectors();
 
+      /// Is this the first step?
+      bool isFirstStep_;
+
    private:
 
       /// Has readParam been called?
       bool isInitialized_;
-
    };
 
    /**

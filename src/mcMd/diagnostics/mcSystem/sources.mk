@@ -7,7 +7,8 @@ mcMd_diagnostics_mcSystem_SRCS=\
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McPressureAverage.cpp \
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McStressAutoCorr.cpp \
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McIntraBondStressAutoCorr.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/mcSystem/McIntraBondTensorAutoCorr.cpp 
+    $(SRC_DIR)/mcMd/diagnostics/mcSystem/McIntraBondTensorAutoCorr.cpp \
+    $(SRC_DIR)/mcMd/diagnostics/mcSystem/McChemicalPotential.cpp 
 
 ifdef INTER_EXTERNAL
 mcMd_diagnostics_mcSystem_SRCS+=\

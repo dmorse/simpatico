@@ -470,13 +470,13 @@ namespace DdMd
    * Algorithm: Loop over all Group<N> objects in the storage, identify
    * groups that span boundaries of the processor domain associated with
    * each of 6 transfer directions (3 Cartesian directions, and transfer
-   * "up" and "down" in each direction). This requires information about 
-   * positions of ghost as well as local atoms. For each boundary of the 
-   * domain, identify atoms whose positions are "inside" and "outside".
+   * "down" (j=0) and "up" (j=1) in each direction). This requires information
+   * about positions of ghost as well as local atoms. For each boundary of 
+   * the domain, identify atoms whose positions are "inside" and "outside".
    * Count ghost atoms very near the boundary as both inside and outside,
-   * for saftey. If a group has atoms both inside and outside a domain 
+   * for safety. If a group has atoms both inside and outside a domain 
    * boundary, it is marked for sending in the associated communication 
-   * step.
+   * step. 
    *
    * After calculating a ghost communication plan for each group, clear 
    * the pointers to all ghost atoms in the group. The exchangeAtoms 
@@ -491,27 +491,31 @@ namespace DdMd
       double coordinate;
       GroupIterator<N> groupIter;
       Atom* atomPtr;
-      int nIn;
-      int nOut;
-      int i, j, k;
+      int nIn, nOut, i, j, k;
+      bool isComplete;
       bool choose;
 
       // Loop over groups
       begin(groupIter);
       for ( ; groupIter.notEnd(); ++groupIter) {
-
-         // Compute ghost communication plan for group
          groupIter->plan().clearFlags();
-         for (i = 0; i < Dimension; ++i) {
-            if (gridFlags[i]) {
-               for (j = 0; j < 2; ++j) {
-                  choose = false;
-                  nIn = 0;
-                  nOut = 0;
-                  // Loop over atoms in group
-                  for (k = 0; k < N; ++k) {
-                     atomPtr = groupIter->atomPtr(k);
-                     if (atomPtr) {
+
+         isComplete = (groupIter->nPtr() == N); // Is this group complete?
+
+         if (isComplete) {
+
+            for (i = 0; i < Dimension; ++i) {
+               if (gridFlags[i]) {
+                  for (j = 0; j < 2; ++j) {
+            
+                     // Determine if Group may span boundary (i, j)
+                     choose = false;
+                     nIn = 0;
+                     nOut = 0;
+                     // Loop over atoms in group
+                     for (k = 0; k < N; ++k) {
+                        atomPtr = groupIter->atomPtr(k);
+                        assert(atomPtr);
                         coordinate = atomPtr->position()[i];
                         if (atomPtr->isGhost()) {
                            if (j == 0) {
@@ -538,23 +542,59 @@ namespace DdMd
                               ++nIn;
                            }
                         }
-                     } else { // if atomPtr is null
+                     } // end for k (atoms in group)
+                     if (nOut > 0 && nIn > 0) {
                         choose = true;
-                        break;
                      }
-                  } // end for k (atoms in group)
-                  if (nOut > 0 && nIn > 0) {
-                     choose = true;
+                     if (choose) {
+                        groupIter->plan().setGhost(i, j);
+                     } else {
+                        groupIter->plan().clearGhost(i, j);
+                     }
+                  } // end for j = 0, 1
+  
+                  #if 0 
+                  // A complete group may not span both lower (j=0) and upper (j=1) boundaries
+                  if (groupIter->plan().ghost(i, 0) && groupIter->plan().ghost(i, 1)) {
+                     std::cout << "Direction " << i << std::endl;
+                     std::cout << "Inner / outer (j=0) = " << inner(i,0) 
+                               << "  " << outer(i, 0) << std::endl;
+                     std::cout << "Inner / outer (j=1) = " << inner(i,1) 
+                               << "  " << outer(i, 1) << std::endl;
+                     for (k = 0; k < N; ++k) {
+                        atomPtr = groupIter->atomPtr(k);
+                        assert(atomPtr);
+                        coordinate = atomPtr->position()[i];
+                        std::cout << k << "  " << coordinate;
+                        if (atomPtr->isGhost()) {
+                           std::cout << " ghost  ";
+                        } else {
+                           std::cout << " local  "
+                                     << atomPtr->plan().exchange(i, 0) << "  "
+                                     << atomPtr->plan().exchange(i, 1);
+                        }
+                        std::cout << std::endl;
+                        std::cout << std::endl;
+                     }
+                     UTIL_THROW("Group spans both upper and lower boundaries");
                   }
-                  if (choose) {
-                     groupIter->plan().setGhost(i, j);
-                  } else {
-                     groupIter->plan().clearGhost(i, j);
-                  }
-               } // end for j = 0, 1
+                  #endif
+   
+               } // end if gridFlags[i]
+            } // end for i (Cartesian axes)
 
-            } // end if gridFlags[i]
-         } // end for i (Cartesian axes)
+         } else { // if group is not complete
+
+            // If not complete, mark ghost flag for all multi-processor directions
+            for (i = 0; i < Dimension; ++i) {
+               if (gridFlags[i]) {
+                  for (j = 0; j < 2; ++j) {
+                    groupIter->plan().setGhost(i, j);
+                  }
+               }
+            }
+
+         } // if-else (isComplete)
 
          // Clear pointers to all ghost atoms in this group
          for (k = 0; k < N; ++k) {

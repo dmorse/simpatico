@@ -299,7 +299,7 @@ namespace McMd
          #endif
 
          #ifdef MCMD_PERTURB
-         if (perturbationPtr_ && createdPerturbationFactory_) {
+         if (perturbationPtr_ && createdPerturbation_) {
             delete perturbationPtr_;
          }
          if (perturbationFactoryPtr_ && createdPerturbationFactory_) {
