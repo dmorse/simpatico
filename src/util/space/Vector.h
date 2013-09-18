@@ -334,6 +334,22 @@ namespace Util
       */
       Vector& transverse(const Vector& v, const Vector& p);
 
+      /**
+      * calculates the index corresponding to minimum element in a vector.
+      *
+      * \param v  input vector
+      * \return index of the minimum element.
+      */
+      int minId(const Vector& v);
+
+      /**
+      * calculates the index corresponding to maximum element in a vector.
+      *
+      * \param v  input vector
+      * \return index of the maximum element.
+      */
+      int maxId(const Vector& v);
+
       //@}
       /// \name Static Members
       //@{ 
@@ -754,6 +770,40 @@ namespace Util
       elem_[2] = v.elem_[2] - p.elem_[2]*fac;
       return *this;
    }
+
+   /**
+   * calculates the index corresponding to minimum element in a vector.
+   *
+   * \param v  input vector
+   * \return index of the minimum element.
+   */
+   inline
+   int minId(const Vector& v)
+   {
+      int id = 0;
+      for (int i = 1; i < DimensionSq; i++) {
+         if (v[i] < v[id])
+            id = i;
+      }
+      return id;
+   }   
+
+   /**
+   * calculates the index corresponding to maximum element in a vector.
+   *
+   * \param v  input vector
+   * \return index of the maximum element.
+   */
+   inline
+   int maxId(const Vector& v)
+   {
+      int id = 0;
+      for (int i = 1; i < DimensionSq; i++) {
+         if (v[i] > v[id])
+            id = i;
+      }
+      return id; 
+   } 
 
    /*
    * Serialize to/from an archive.

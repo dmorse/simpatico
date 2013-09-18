@@ -152,10 +152,10 @@ namespace Util
          }
       }
 
-      out <<  "Average   " << Dbl(average())         
-          <<  "  +- " << Dbl(aveErr, 9, 2) << std::endl;
-      out <<  "Variance  " << Dbl(variance())        << std::endl;
-      out <<  "Std Dev   " << Dbl(stdDeviation())    << std::endl;
+      out <</*  "Average   " <<*/ Dbl(average())         
+          /*<<  "  +- " << Dbl(aveErr, 9, 2) */<< std::endl;
+      out <</*  "Variance  " <<*/ Dbl(variance())        << std::endl;
+/*    out <<  "Std Dev   " << Dbl(stdDeviation())    << std::endl;
       out <<  std::endl;
 
       out << "Hierarchichal Error Analysis:" << std::endl;
@@ -173,7 +173,7 @@ namespace Util
                 << Int(nSample) << std::endl;
          }
       }
-      out << std::endl;
+      out << std::endl;*/
    }
 
    /*

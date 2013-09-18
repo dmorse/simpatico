@@ -142,8 +142,18 @@ namespace McMd
       * \param rosenbluth Rosenbluth factor of added atom (out)
       * \param energy     potential energy of deleted atom (out)
       */
-      void addEndAtom(Atom* endPtr, Atom* pvtPtr, int bondType,
-                         double &rosenbluth, double &energy);
+      void addEndAtom(Molecule* molPtr, int atomId, double &rosenbluth, double &energy);
+
+      /**
+      * Generates a vector p making angle theta with vector n and having length b.
+      *
+      * \param theta      theta is the angle between n and p.
+      * \param b          the length of vector p.
+      * \param n          original vector relative to which the theta angle is measured.
+      * \param p          a refrence to the generated vector.
+      */
+      void uniformCone(const double length, const double angle, const Vector n, Vector &p);
+
 
       /// Maximum allowed number of trial positions for a regrown atom.
       static const int MaxTrial_ = 200;
@@ -168,6 +178,66 @@ namespace McMd
 
       /// Average object - statistical accumulator
       Average  accumulator_;
+
+      /// Output file stream
+      std::ofstream EoutputFile_;
+
+      /// Average object - statistical accumulator
+      Distribution  Eaccumulator_;
+
+      /// Minimum of range
+      double Emin_;
+
+      /// Maximum of range
+      double Emax_;
+
+      /// Number of bins in range
+      double EnBin_;
+
+      /// Output file stream
+      std::ofstream EcoutputFile_;
+
+      /// Average object - statistical accumulator
+      Distribution  Ecaccumulator_;
+
+      /// Minimum of range
+      double Ecmin_;
+
+      /// Maximum of range
+      double Ecmax_;
+
+      /// Number of bins in range
+      double EcnBin_;
+
+      /// Output file stream
+      std::ofstream EmoutputFile_;
+
+      /// Average object - statistical accumulator
+      Distribution  Emaccumulator_;
+
+      /// Minimum of range
+      double Emmin_;
+
+      /// Maximum of range
+      double Emmax_;
+
+      /// Number of bins in range
+      double EmnBin_;
+
+      /// Output file stream
+      std::ofstream BRoutputFile_;
+
+      /// Average object - statistical accumulator
+      Distribution  BRaccumulator_;
+
+      /// Minimum of range
+      double BRmin_;
+
+      /// Maximum of range
+      double BRmax_;
+
+      /// Number of bins in range
+      double BRnBin_;
 
       /// Actual number of trial positions for each regrown atom.
       int  nTrial_; 

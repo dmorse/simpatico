@@ -102,6 +102,56 @@ namespace Inter
       ar.pack(kappa_, nAngleType_);
    }
 
+   /* 
+   * Generate a random bond angle chosen from an equilibrium distribution for
+   * randomly oriented bonds. 
+   *
+   * Algorithm: Generate random bond vector and take the angle.
+   */
+   double CosineAngle::randomAngle(Random *random, double beta, int type) const
+   {
+      double Theta, Theta_min;
+      double U, U_min;
+      bool chosen = false;
+      
+      Theta_min = 0;
+      U_min = energy(cos(Theta_min), type);
+
+      while (chosen == false) {
+         Theta = random->uniform(0, Constants::Pi);
+         U = energy(cos(Theta), type);
+         if (random->uniform() < exp(-beta*(U-U_min))*cos(Theta)/cos(Theta_min))
+            chosen = true;
+      }
+
+      return Theta;
+   }
+
+   /* 
+   * Generate a random bond angle cosine chosen from an equilibrium distribution
+   * for randomly oriented bonds. 
+   *
+   * Algorithm: Generate random bond vector and take the angle.
+   */
+   double CosineAngle::randomCosineAngle(Random *random, double beta, int type) const
+   {
+      double CosineTheta, CosineTheta_min;
+      double U, U_min;
+      bool chosen = false;
+      
+      CosineTheta_min = 1;
+      U_min = energy(CosineTheta_min, type);
+
+      while (chosen == false) {
+         CosineTheta = random->uniform(-1, 1);
+         U = energy(CosineTheta, type);
+         if (random->uniform() < exp(-beta*(U-U_min)))
+            chosen = true;
+      }
+
+      return CosineTheta;
+   }
+
    /*
    * Modify a parameter, identified by a string.
    */
