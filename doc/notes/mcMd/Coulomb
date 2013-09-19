@@ -1,0 +1,49 @@
+Existing classes in mcMd/potentials/coulomb:
+
+   CoulombPotential : ParamComposite
+   -> Base class for CoulombPotentials (i.e., k-space potentials)
+  
+   EwaldCoulombPotential : CoulombPotential, CoulombSystemMixIn
+   -> Implementation of CoulombPotential
+  
+   EwaldCoulombPair 
+   -> Pair interaction for short range Ewald Coulomb interaction
+  
+   CoulombPotential has an associated EwaldCoulombPair, which is set by 
+   the setPairInteraction() method. CoulombPotential is also a friend of
+   EwaldCoulombPair, and so can modify its parameters. 
+
+   MdCoulombPairPotential<PairInteraction, CoulombInteraction>
+
+Proposal changes:
+
+   CoulombKSpacePotential -> public pure virtual compute functions
+                          -> public accessors for k-space energy and pressure
+                          -> protected data
+
+   CoulombRSpacePotential -> No compute functions (combined in PairPotentialImpl)
+                          -> public accumulators and accessors for r-space
+                          -> protected data
+
+   CoulombPotential : public ParamComposite
+
+      -> pointer to CoulombRSpacePotential, public accessor and setter
+      -> pointer to CoulombKSpacePotential, public accessor and setter
+      -> accessors for k-space and r-space accumulators
+         CoulombKSpacePotential& kSpace();
+         CoulombRSpacePotential& rSpace();
+
+   EwaldCoulombPotential : public CoulombPotential, private CoulombKSpacePotential
+
+      -> Set pointer to CoulombKSpacePotential in base class.
+
+      void setRSpacePotential();
+      void setKSpacePotential();
+
+   template <class PairInteraction, CoulombInteraction>
+   class MdCoulombPotentialImpl< PairInteraction, CoulombInteraction> : CoulombRSpacePotential
+
+   How to create connections?:
+
+     Create CoulombParameters -> has only parameters, no computations.
+     Create CoulombPairInteraction -> dependent on parent CoulombInteraction for parameters
