@@ -320,45 +320,8 @@ namespace McMd
 
          system().removeMolecule(*molPtr);
          speciesPtr->reservoir().push(*molPtr);
-
-            // Normalize trial probabilities
-            for (iTrial = 0; iTrial < nTrial_; ++iTrial) {
-               trialProb[iTrial] = trialProb[iTrial]/rosenbluth;
-            }
-            // Choose trial position
-            iTrial = random().drawFrom(trialProb, nTrial_);
-            // Calculate total energy for chosen trial
-            de = trialEnergy[iTrial];
-            // Calculate total energy for chosen trial.
-            de += system().bondPotential().energy(length*length, bondTypeId);
-            #ifdef INTER_ANGLE
-            de += system().anglePotential().energy(cos(angle), angleTypeId);
-            #endif
-
-            // Set position of new end atom to chosen trialPos Vector
-            endPtr->position() = trialPos[iTrial];                  
-            system().pairPotential().addAtom(*endPtr);
-            rosenbluth *= w;
-            energy += de;
-
-            for (int atomId = 3; atomId < molPtr->nAtom(); ++atomId) {
-                addEndAtom(molPtr, atomId, w, de);
-                rosenbluth *= w;
-                energy += de;
-                system().pairPotential().addAtom(molPtr->atom(atomId));
-            }
-
-            rosenbluth = rosenbluth / pow(nTrial_,molPtr->nAtom());
-            accumulator_.sample(rosenbluth, outputFile_);
-
-            for (int atomId = 0; atomId < molPtr->nAtom(); ++atomId) {
-                system().pairPotential().deleteAtom(molPtr->atom(atomId));
-            }         
+     
          }
-
-         system().removeMolecule(*molPtr);
-         speciesPtr->reservoir().push(*molPtr);
-      }
    }
 
    /*

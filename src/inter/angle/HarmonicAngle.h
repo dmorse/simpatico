@@ -11,6 +11,7 @@
 #include <util/param/ParamComposite.h>  // base class
 #include <inter/angle/BendForce.h>      // used in inline function
 #include <util/global.h>
+#include <util/random/Random.h>
 
 #include <cmath>
 

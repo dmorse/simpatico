@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/math/Constants.h>
 #include "CosineAngle.h"
 
 namespace Inter

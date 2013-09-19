@@ -9,6 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>
+#include <util/random/Random.h>
 #include <string>
 
 namespace Util

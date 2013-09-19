@@ -9,6 +9,7 @@
 */
 
 #include <util/space/Dimension.h>
+#include <util/space/Vector.h>
 
 #ifdef UTIL_MPI
 #include <util/mpi/MpiTraits.h>

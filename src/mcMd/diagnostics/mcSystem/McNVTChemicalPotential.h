@@ -11,6 +11,7 @@
 #include <mcMd/diagnostics/SystemDiagnostic.h>  // base class template
 #include <mcMd/mcSimulation/McSystem.h>         // base template parameter
 #include <util/accumulators/Average.h>          // member
+#include <util/accumulators/Distribution.h>     // member
 #include <util/random/Random.h>                 // member
 #include <util/ensembles/EnergyEnsemble.h>      // inline function
 #include <util/archives/Serializable.h>         // typedef used in interface
