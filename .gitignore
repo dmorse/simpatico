@@ -1,6 +1,8 @@
 edit.py
 log
-*.a
-*.d
 *.o
-/examples
+*.d
+*~
+examples/
+tools/
+tests/	
