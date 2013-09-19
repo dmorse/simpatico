@@ -1,0 +1,88 @@
+Idea: Add optional mechanism for keeping track of relationships between atoms 
+and molecules.
+
+-----------------------------------------------------------------------------
+class AtomContext
+{
+   unsigned int speciesId;        \\ index of species
+   unsigned int moleculeId;       \\ index of molecule within species
+   unsigned int atomId;           \\ index of atom within molecule
+   unsigned int moleculeArrayId;  \\ index of molecule within storage
+}
+
+-----------------------------------------------------------------------------
+class Molecule 
+{
+
+public:
+
+   void setSpecies(Species& species);
+
+   add(Atom::Context& atomContext);
+
+   remove(Atom& atom);
+
+   Atom* findAtom(int atomId);
+
+   begin(MoleculeIterator& );
+
+   Species& species();
+
+private:
+
+   /// Map of atom ids to Atoms.
+   std::map<unsigned int, Atom*> ptrs_;
+
+   /// Pointer to parent Species.
+   Species& speciesPtr_;
+
+   /// Array index within array container.
+   unsigned int arrayId_;
+
+}
+
+-----------------------------------------------------------
+class Species
+{
+
+   Species(Array<Molecule> molecules);
+
+   /// Add molecule to this Species.
+   void add(Molecule& molecule);
+
+   /// Remove molecule from this Species.
+   void remove(Molecule& molecule);
+
+   /// Return pointer to molecule or null.
+   Molecule* findMolecule(unsigned int id);
+
+private:
+
+   std::map<unsigned int id, unsigned int arrayId>; 
+
+   RArray<Molecule> molecules_;
+
+};
+
+class MoleculeReservoir {
+
+   Molecule& pop();
+   void      push(Molecule& molecule);
+
+   unsigned int capacity();
+   unsigned int size();
+
+   Molecule* data();
+
+private:
+
+   GArray<Molecule>     molecules_;
+   GArray<unsigned int> reservoir_;
+  
+}
+
+Todo (Steps)
+------------
+
+   Add Atom::Context to Atom class.
+   Add Atom::Context IO to file formats
