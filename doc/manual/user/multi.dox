@@ -4,7 +4,9 @@
 \ref user_options_page   (Next) 
 <BR>
 
-These pages discuss how to run simultaneous simulations of more than one system with various programs. The discussion of multi-system simulations in mcSim and mdSim also discusses the use of free energy perturbations and replica exchange simulations.
+These pages discuss how to run simultaneous simulations of more than one system with various programs. Multi-simulations can be carried out either using the multi-processor (MPI-enabled) versions of mcSim or mdSim, in which each system is simulated on a single processor, or using ddSim, which can assign different groups of processors to different simulations. 
+
+The discussion of multi-system simulations in mcSim and mdSim also discusses the use of free energy perturbations (to define a sequence of systems with slightly different parameters) and replica exchange simulations. These features are not yet enabled for multi-system ddSim simulations. 
 
 <h2> Contents:</h2> 
    <ul style="list-style: none;">
