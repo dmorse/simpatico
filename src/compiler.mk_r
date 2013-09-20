@@ -53,7 +53,7 @@ MAKEDEP=$(ROOT_DIR)/bin/makeDep
 #-----------------------------------------------------------------------
 # COMPILER and MPI_LIB identifiers (choose as needed).
 
-COMPILER:=gcc
+COMPILER=gcc
 MPI_LIB=mpicxx
 
 # ------------------------------------------------------------------------

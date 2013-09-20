@@ -1,0 +1,7 @@
+    MdEnergyOutput{
+      interval                             100
+      outputFileName                    energy
+    }
+
+File format:
+  [pair]       [bond]       [potential]  [kinetic]    [total]      

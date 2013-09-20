@@ -18,7 +18,7 @@ Several different choices of potential energy function are provided for the nonb
 
 Classes that represent particular potential energy functions, such as a Lennard-Jones pair potential, are referred to in simpatico as "interactions". The source files for all interaction classes are in src/inter directory, and all such classes are defined in the "Inter" C++ namespace.  The same set of interaction classes is available for use in the mcSim, mdSim, and ddSim programs.  
 
-Long-range electrostatic potentials have not yet been implemented in any of the simpatico programs. This is now the most important missing feature that would be required to make the package suitable for atomistic models.
+Long-range electrostatic potentials have not yet been implemented in any of the simpatico programs. This is now the most important missing feature.
 
 \section features_integrators_sec Molecular Dynamics Integrators
 
