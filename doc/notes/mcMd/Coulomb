@@ -1,3 +1,4 @@
+-------------------------------------------------------------------------------
 Existing classes in mcMd/potentials/coulomb:
 
    CoulombPotential : ParamComposite
@@ -15,35 +16,66 @@ Existing classes in mcMd/potentials/coulomb:
 
    MdCoulombPairPotential<PairInteraction, CoulombInteraction>
 
+-------------------------------------------------------------------------------
+General problems:
+
+   Coordination of parameters (e.g., alpha and epsilon) for real-space and 
+   k-space potentials requires a link between them.
+
+   It would be nice if the solution allowed mixed potentials other than Coulomb.
+
+   The use of polymorphic base classes for the potentials make it hard to
+   create such a link: How can a link be created without knowing what 
+   information must be shared?
+
+   Possibility: Pass parameter using the Observer pattern with an array of 
+   doubles. May require additional virtual method or methods in PairPotential 
+   base class as well as in the KSpace potential class. The implementation
+   of these methods could rely on casting to a specific subclass. 
+
+   The constructor for the KSpace class could require access to a pointer
+   to the pair class. 
+
+-------------------------------------------------------------------------------
 Proposal changes:
 
-   CoulombKSpacePotential -> public pure virtual compute functions
-                          -> public accessors for k-space energy and pressure
-                          -> protected data
+   New Base Classes:
 
-   CoulombRSpacePotential -> No compute functions (combined in PairPotentialImpl)
-                          -> public accumulators and accessors for r-space
-                          -> protected data
+   KSpacePotential : public ParamComposite
+                   -> public pure virtual global compute functions
+                   -> public accessors for k-space energy and pressure
+                   -> protected data
 
-   CoulombPotential : public ParamComposite
+   RSpacePotential : public ParamComposite
+                   -> No compute functions (combined in PairPotentialImpl)
+                   -> public accumulators and accessors for r-space
+                   -> protected data
 
-      -> pointer to CoulombRSpacePotential, public accessor and setter
-      -> pointer to CoulombKSpacePotential, public accessor and setter
-      -> accessors for k-space and r-space accumulators
-         CoulombKSpacePotential& kSpace();
-         CoulombRSpacePotential& rSpace();
+   KRSpacePotential : public ParamComposite
 
-   EwaldCoulombPotential : public CoulombPotential, private CoulombKSpacePotential
+      -> virtual public accessor kSpace()
+      -> virtual public accessor rSpace()
 
-      -> Set pointer to CoulombKSpacePotential in base class.
-
-      void setRSpacePotential();
-      void setKSpacePotential();
+   -----------------------------------------------------------------------------
+   Implementation classes:
 
    template <class PairInteraction, CoulombInteraction>
-   class MdCoulombPotentialImpl< PairInteraction, CoulombInteraction> : CoulombRSpacePotential
+   class MdCoulombPairPotentialImpl<PairInteraction, CoulombInteraction> : 
+                                    public CoulombRSpacePotential
 
-   How to create connections?:
+   CoulombKSpacePotential : public KSpacePotential
+   {}
 
-     Create CoulombParameters -> has only parameters, no computations.
-     Create CoulombPairInteraction -> dependent on parent CoulombInteraction for parameters
+   CoulombPotential : public KRSpacePotential
+   {
+
+      CoulombPotential(PairPotential& pair)
+      {
+          // Dynamic cast to required type. 
+      }
+   
+   private:
+
+      CoulomKSpacePotential  kspace_;
+      CoulomRSpacePotential* rspacePtr_;
+   }
