@@ -2,7 +2,7 @@
 #define DDMD_BOND_STORAGE_TEST_H
 
 #include <ddMd/storage/BondStorage.h>
-#include <ddMd/storage/BondIterator.h>
+#include <ddMd/storage/GroupIterator.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/GroupStorage.tpp>
 #include <ddMd/chemistry/Bond.h>
@@ -175,7 +175,7 @@ void BondStorageTest::testIterator()
    TEST_ASSERT(bondStorage_.size() == 7);
    TEST_ASSERT(bondStorage_.isValid());
  
-   BondIterator localIter;
+   GroupIterator<2> localIter;
    int n = 0; 
    for (bondStorage_.begin(localIter); localIter.notEnd(); ++localIter) {
       ++n;

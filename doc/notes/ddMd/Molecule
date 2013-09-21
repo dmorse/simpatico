@@ -4,10 +4,10 @@ and molecules.
 -----------------------------------------------------------------------------
 class AtomContext
 {
-   unsigned int speciesId;        \\ index of species
-   unsigned int moleculeId;       \\ index of molecule within species
-   unsigned int atomId;           \\ index of atom within molecule
-   unsigned int moleculeArrayId;  \\ index of molecule within storage
+   int speciesId;    \\ index of species
+   int moleculeId;   \\ index of molecule within species
+   int atomId;       \\ index of atom within molecule
+   Molecule* molPr;  \\ index of molecule within storage
 }
 
 -----------------------------------------------------------------------------
@@ -18,7 +18,7 @@ public:
 
    void setSpecies(Species& species);
 
-   add(Atom::Context& atomContext);
+   add(Atom& atom);
 
    remove(Atom& atom);
 
@@ -31,13 +31,13 @@ public:
 private:
 
    /// Map of atom ids to Atoms.
-   std::map<unsigned int, Atom*> ptrs_;
+   std::map<int, Atom*> ptrs_;
 
    /// Pointer to parent Species.
    Species& speciesPtr_;
 
-   /// Array index within array container.
-   unsigned int arrayId_;
+   /// Number of atoms currently in this system.
+   int nAtom_;
 
 }
 
@@ -54,35 +54,46 @@ class Species
    void remove(Molecule& molecule);
 
    /// Return pointer to molecule or null.
-   Molecule* findMolecule(unsigned int id);
+   Molecule* findMolecule(int id);
 
 private:
 
-   std::map<unsigned int id, unsigned int arrayId>; 
-
-   RArray<Molecule> molecules_;
+   std::map<int id, Molecule* moleculePtr>; 
+  
+   int id;
 
 };
 
+-----------------------------------------------------------
 class MoleculeReservoir {
 
-   Molecule& pop();
-   void      push(Molecule& molecule);
+   Molecule* pop();
+   void      push();
 
-   unsigned int capacity();
-   unsigned int size();
+   int capacity();
+   int size();
 
    Molecule* data();
 
 private:
 
-   GArray<Molecule>     molecules_;
-   GArray<unsigned int> reservoir_;
-  
+   DArray<Molecule>     molecules_;
+   ArrayStack<Molecule> reservoir_;
 }
 
-Todo (Steps)
-------------
+-----------------------------------------------------------------
+Todo (Steps):
 
-   Add Atom::Context to Atom class.
-   Add Atom::Context IO to file formats
+   Add AtomContext to Atom class.
+   Add AtomContext IO to at least one file formats.
+
+   Write class Molecule;
+   Write class MoleculeReservoir;
+   Write class Species;
+   Add DArray<Species> and MoleculeReservoir to AtomStorage;
+   Modify AtomStorage methods to keep track of molecules:
+      On addition, add to molecule (if first, add molecule).
+      On removal, remove from molecule (if last, remove molecule).
+   Return Species
+   Write class Species::MoleculeIterator
+   Write class Molecule::AtomIterator

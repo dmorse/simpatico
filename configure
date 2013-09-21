@@ -126,7 +126,7 @@ while getopts "m:g:a:d:c:e:l:f:s:k:b:q" opt; do
     b)
       FILE=src/compiler.mk
       cp "$FILE" temp
-      sed "s/COMPILER:=.*$/COMPILER:=$OPTARG/" temp > "$FILE"
+      sed "s/COMPILER=.*$/COMPILER=$OPTARG/" temp > "$FILE"
       echo "Setting COMPILER = $OPTARG in file $FILE" >&2
       rm temp
       ;;
@@ -185,7 +185,7 @@ while getopts "m:g:a:d:c:e:l:f:s:k:b:q" opt; do
       else
          echo "-k OFF - automatic dependency tracking" >&2
       fi
-      echo `grep "^ *COMPILER *:=" src/compiler.mk` >&2
+      echo `grep "^ *COMPILER *=" src/compiler.mk` >&2
       ;;
   esac
 
