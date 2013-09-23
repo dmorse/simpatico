@@ -18,7 +18,7 @@
 #include <util/global.h>
 
 // Uncomment to enable paranoid validity checks.
-#define DDMD_INTEGRATOR_DEBUG
+//#define DDMD_INTEGRATOR_DEBUG
 
 namespace DdMd
 {
