@@ -232,9 +232,9 @@ To remove all the html documentation in the doc/html directory, enter
 \endcode
 from the root directory.
 
-\section compile_makefile_section Configuration Files for Make
+\section compile_makefile_section User-Modifiable Make Files
 
-Simpatico uses the unix "make" utility to control the build process. The ./setup script creates copies of several makefile fragments that users may need to modify to control the choice of compiler or compiler options and to enable or disable particular features.  These configuration files are:
+Simpatico uses the unix "make" utility to control the build process. The ./setup script creates copies of several makefile fragments that users may need to modify.  These configuration files are:
  
     - src/compiler.mk
 
@@ -248,17 +248,15 @@ Simpatico uses the unix "make" utility to control the build process. The ./setup
 
 None of these files are in the git repository, or in the gzipped tar archive of the source code. Initial versions of each of these files are instead created by the setup script by making copies of default (repository) versions of each file.  The repository version of each such file is a file with the same name as the user configuration file plus a suffix "_r" (for repository). The repository version and user versions are located in the same directory. Thus, for example, an initial version of the file src/mcMd/defines.mk is created by the setup script by copying src/mcMd/defines.mk_r. 
 
-The most common modifications of these configuration files can be carried out using the configure script, but some changes require manual editing. Users can modify these *.mk files as needed, but should generally not modify the corresonding "*.mk_r" repository versions.
+The most common modifications of these configuration files can be carried out using the configure script, but some changes require manual editing. Users may modify these *.mk files as needed, but should generally not modify the corresonding "*.mk_r" repository versions.
 
-Contents of the configuration files:
+The file src/compiler.mk is a makefile fragment that is included in every complete makefile in the build system. It defines makefile variables that specify the choice of C++ compiler, MPI library, and compiler options. It also defines variables ROOT_DIR, SRC_DIR, BIN_DIR, and LIB_DIR that represent paths to the simpatico root directory, the source directory, and the directories in which executables and libraries will be installed. This file also contain contains definitions of the variable MAKEDEP that (if not commented out) enables automatic dependency generation, and the variable UTIL_MPI that enables MPI. 
 
-The file src/compiler.mk is a makefile fragment that is included in every makefile in the build system. It defines makefile variables that specify the choice of C++ compiler, MPI library, and compiler options. It also defines variables ROOT_DIR, SRC_DIR, BIN_DIR, and LIB_DIR that represent paths to the simpatico root directory, the source directory, and the directories in which executables and libraries will be installed. This file also contain contains definitions of the variable MAKEDEP that (if not commented out) enables automatic dependency generation, and the variable UTIL_MPI that enables MPI. 
+The makefile fragments src/util/defines.mk, src/inter/defines.mk, mcMd/defines.mk, and ddMd/defines.mk can be used to define makefile variables that enable or disable various optional features of Simpatico before compilation. Each of these files contains one or more commented out definitions for makefile variables that, when uncommented, enable particular optional features of one or more programs. All available option features are discussed \ref user_options_page "here". 
 
-The makefile fragments src/util/defines.mk, src/inter/defines.mk, mcMd/defines.mk, and ddMd/defines.mk can be used to define makefile variables that enable or disable various optional features of Simpatico before compilation. Each of these files contains one or more commented out definitions for makefile variables that, when uncommented, enable particular features. All available compile-time options are discussed \ref user_options_page "here". 
+\section compile_source_section User-Modifiable C++ Source Files
 
-\section compile_source_section Configurable C++ Source Files
-
-The setup script also creates default user versions of several modifiable *.cpp C++ source files. These are files that users may need to modify in order to customize or extend some aspect of a simulation, e.g., by adding a new class that implements a new analysis or simulation algorithm. Each of these files is created by copying a repository version of the file, whose name is obtained by adding a suffix _r to the name of the user version. See the body of the setup script (which is a simple shell script) to see which files are created by this method. 
+The setup script also creates initial default versions of several C++ source files that users may need to modify in order to customize or extend some aspect of a simulation, e.g., by adding a new class that implements a new analysis or simulation algorithm. Each of these files is a source file, with a name ending with .cpp, that is created by copying a repository version of the file, which is a file with the same base name but a file extension .cpp_r. See the body of the setup script (which is a simple shell script) to see which files are created by this method. 
 
 IMPORTANT: Because the setup script creates some files that users may subsequently modify, users should be careful to NOT call the setup script after modifying any of these makefile or C++ files, unless the modified files have first been saved under different names or unless the user intends to discard all modifications to all such files and start over. It should not be necesary to invoke the setup script more than once. Doing so will cause any modified versions of configuration files to be overwritten by the default repository versions.
 
