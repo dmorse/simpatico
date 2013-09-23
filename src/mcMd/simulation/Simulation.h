@@ -320,16 +320,16 @@ namespace McMd
 
       #ifndef MCMD_NOATOMTYPES
       /**
-      * Get a const Array of all AtomType objects.
-      */
-      const Array<AtomType>& atomTypes() const;
-
-      /**
       * Get a single AtomType object by const reference.
       *
       * \param i integer index of desired AtomType
       */
       const AtomType& atomType(int i) const;
+
+      /**
+      * Get a const Array of all AtomType objects.
+      */
+      const Array<AtomType>& atomTypes() const;
       #endif
 
       /**
