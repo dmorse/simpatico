@@ -16,66 +16,62 @@ Existing classes in mcMd/potentials/coulomb:
 
    MdCoulombPairPotential<PairInteraction, CoulombInteraction>
 
--------------------------------------------------------------------------------
-General problems:
+---------------------------------------------------------------------
+Proposed changes:
 
-   Coordination of parameters (e.g., alpha and epsilon) for real-space and 
-   k-space potentials requires a link between them.
-
-   It would be nice if the solution allowed mixed potentials other than Coulomb.
-
-   The use of polymorphic base classes for the potentials make it hard to
-   create such a link: How can a link be created without knowing what 
-   information must be shared?
-
-   Possibility: Pass parameter using the Observer pattern with an array of 
-   doubles. May require additional virtual method or methods in PairPotential 
-   base class as well as in the KSpace potential class. The implementation
-   of these methods could rely on casting to a specific subclass. 
-
-   The constructor for the KSpace class could require access to a pointer
-   to the pair class. 
-
--------------------------------------------------------------------------------
-Proposal changes:
-
-   New Base Classes:
-
+   /// Abstract base class for potentials with K-space part
+   /// Interface class - no data
    KSpacePotential : public ParamComposite
-                   -> public pure virtual global compute functions
-                   -> public accessors for k-space energy and pressure
-                   -> protected data
+       -> public pure virtual addForce() function
+       -> public pure virtual global computeEnergy() and computeStress() functions
+       -> public pure virtual accessors for kspaceEnergy() and kspaceStress()
+       -> public upre virtual accessors for rspaceEnergy() and rspaceStress()
 
-   RSpacePotential : public ParamComposite
-                   -> No compute functions (combined in PairPotentialImpl)
-                   -> public accumulators and accessors for r-space
-                   -> protected data
+   /// Class template for sharing data between pair and kspace potentials
+   template <class CoulombInteraction>
+   RSpacePotentialData <CoulombInteraction> : public ParamComposite
+       -> No compute functions 
+       -> public accessors energy() and stress() for r-space accumulators
+       -> public accessor for CoulombInteraction
+       -> protected energy_ and stress_ member data accumulators
 
-   KRSpacePotential : public ParamComposite
+   /// Ewald Coulomb pair interaction class (similar to LJPair)
+   class EwaldCoulombPairInteraction : public ParamComposite
 
-      -> virtual public accessor kSpace()
-      -> virtual public accessor rSpace()
-
-   -----------------------------------------------------------------------------
-   Implementation classes:
-
+   /// Pair potential class template
    template <class PairInteraction, CoulombInteraction>
-   class MdCoulombPairPotentialImpl<PairInteraction, CoulombInteraction> : 
-                                    public CoulombRSpacePotential
-
-   CoulombKSpacePotential : public KSpacePotential
-   {}
-
-   CoulombPotential : public KRSpacePotential
+   class MdCoulombPairPotentialImpl<PairInteraction, CoulombInteraction> 
+    : public RSpacePotentialData<CoulombInteraction>
    {
 
-      CoulombPotential(PairPotential& pair)
-      {
-          // Dynamic cast to required type. 
-      }
-   
-   private:
+       // Single loop for force evaluation, which adds both types of pair force.
+       void addForces();
 
-      CoulomKSpacePotential  kspace_;
-      CoulomRSpacePotential* rspacePtr_;
+       void computeEnergy();
+       void computeStress();
+
+       // Single loop for energy and stress functions, but add increments to separate
+       // accumulator variables. CoulombInteraction energy and stress accumulated in
+       // protected data members of RSpacePotentialData<CoulombInteraction> base class.
    }
+
+   /// Coulomb potential concrete class
+   EwaldCoulombPotential : public KSpacePotential
+   {
+   public:
+
+       // Constructor
+       EwaldCoulombPotential(MdPairPotential& ){
+          // static cast to RSpacePotentialData<EwaldCoulombPairInteraction>* pointer.
+       }
+
+       // Implement kspaceEnergy() and kspaceStress().
+
+       // Implement rspaceEnergy() and rspaceStress() as call through functions
+       // to corresponding functions of RSpacePotentialData<EwaldCoulombPairInteraction>
+
+    private:
+
+       RSpacePotentialData<EwaldCoulombPairInteraction>* rSpaceDataPtr_;
+
+    }
