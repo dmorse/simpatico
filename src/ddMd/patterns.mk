@@ -6,25 +6,25 @@
 # contains the source code for the DdMd namespace. It is included by
 # all makefile files in this directory tree. 
 #
-# This pattern uses makefile variables defined in src/compiler.mk and 
-# the variables $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) constructed in
-# the defines.mk files in the src/util, src/mcMd, and src/ddMd 
-# directories. This file should thus be included in other makefiles 
-# after src/compiler.mk and after these three defines.mk files. 
+# This file should be included in other makefiles after inclusion of
+# the files src/compiler.mk, src/util/defines.mk, src/inter/defines.mk, 
+# and src/ddMd/defines.mk, because this file uses makefile variables
+# defined in those files.
 #-----------------------------------------------------------------------
 
-# Dependencies of source files on makefile fragments
-DDMD_ALLDEPS= -A$(SRC_DIR)/compiler.mk
-DDMD_ALLDEPS+= -A$(SRC_DIR)/util/defines.mk
-DDMD_ALLDEPS+= -A$(SRC_DIR)/inter/defines.mk
-DDMD_ALLDEPS+= -A$(SRC_DIR)/ddMd/defines.mk
+# C preprocessor macro definitions
+CPPDEFS=$(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS)
 
-# Rule to compile all class source (*.cpp) files in src/ddMd
+# Dependencies of source files in src/ddMd on makefile fragments
+MAKE_DEPS= -A$(SRC_DIR)/compiler.mk
+MAKE_DEPS+= -A$(SRC_DIR)/util/defines.mk
+MAKE_DEPS+= -A$(SRC_DIR)/inter/defines.mk
+MAKE_DEPS+= -A$(SRC_DIR)/ddMd/defines.mk
+
+# Pattern rule to compile all class source (*.cpp) files in src/ddMd
 %.o:%.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) \
-               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) \
-               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) $(DDMD_ALLDEPS) $<
+	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) $<
 endif
 

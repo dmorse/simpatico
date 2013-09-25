@@ -77,9 +77,17 @@ MPI_LIB=mpicxx
 # ARFLAGS    - flags used by archiver
 # MPIRUN     - command to start mpi, with np option, e.g. "mpirun -np"
 #
-# Slightly different pattern rules for compiling source files in the util/, 
-# inter, mcMd/ and ddMd/ directories are defined in the patterns.mk files
-# in each of these namespace-level directories. 
+# Pattern rules for compiling source files in the util/, inter, mcMd/ and 
+# ddMd/ directories are defined in the patterns.mk files in each of these 
+# namespace-level directories. In each of these, the basic pattern is
+#
+# %.o:%.cpp
+#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
+#
+# The variable $(CPPDEFS), which contains is a list of C preprocessor
+# macro definitions, is assigned a different value in each of namespace
+# level patterns.mk files. The value of $(CPPDEFS) used in each namespace
+# contains only the macro definitions used in that namespace. 
 # ------------------------------------------------------------------------
 
 # Search simpatico/src directory for header files (all compilers)

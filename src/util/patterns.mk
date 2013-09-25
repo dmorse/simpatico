@@ -6,21 +6,23 @@
 # contains all source code for the Util namespace. It is included by
 # all "makefile" files in this directory tree. 
 #
-# This pattern use makefile variables defined in src/compiler.mk, and
-# uses a variable $(UTIL_DEFS) that is defined in src/util/defines.mk.
-# This file should thus be be included after src/compiler.mk and 
-# src/util/defines.mk in other makefiles.
+# This file should be included in other makefiles after inclusion of
+# the files src/compiler.mk and src/util/defines.mk because this file
+# uses makefile variables defined in those files.
 #-----------------------------------------------------------------------
 
-# Dependencies of source files on makefile fragments
-UTIL_ALLDEPS= -A$(SRC_DIR)/compiler.mk
-UTIL_ALLDEPS+= -A$(SRC_DIR)/util/defines.mk
+# Preprocessor macro definitions
+CPPDEFS=$(UTIL_DEFS)
 
-# Rule to compile *.cpp class source (*.cpp) files in src/util
+# Dependencies of source files in src/util on makefile fragments
+MAKE_DEPS= -A$(SRC_DIR)/compiler.mk
+MAKE_DEPS+= -A$(SRC_DIR)/util/defines.mk
+
+# Pattern rule to compile *.cpp class source (*.cpp) files in src/util
 %.o:%.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(UTIL_DEFS) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(UTIL_DEFS) $(UTIL_ALLDEPS) $<
+	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) $<
 endif
 
 #-----------------------------------------------------------------------

@@ -5,22 +5,23 @@
 # files in the directory tree rooted at directory src/inter. This file
 # is included by all makefile files in this directory tree. 
 #
-# These patterns use variables defined in src/compiler.mk, and the 
-# strings $(INTER_UTIL) and $(INTER_DEFS) that are defined in the
-# defines.mk files in src/util and src/inter directories.  This file 
-# should thus be 
-# included in other makefiles after these files. 
+# This file should be included in other makefiles after inclusion of the 
+# files src/compiler.mk, src/util/defines.mk and src/inter/defines.mk, 
+# because this file uses makefile variables defined in those files.
 #-----------------------------------------------------------------------
 
-# Dependencies of source files on makefile fragments
-INTER_ALLDEPS= -A$(SRC_DIR)/compiler.mk
-INTER_ALLDEPS+= -A$(SRC_DIR)/util/defines.mk
-INTER_ALLDEPS+= -A$(SRC_DIR)/inter/defines.mk
+# C preprocessor macro definitions
+CPPDEFS=$(UTIL_DEFS) $(INTER_DEFS)
 
-# Rule to compile all class source (*.cpp) files in src/inter
+# Dependencies of source files in src/inter on makefile fragments
+MAKE_DEPS= -A$(SRC_DIR)/compiler.mk
+MAKE_DEPS+= -A$(SRC_DIR)/util/defines.mk
+MAKE_DEPS+= -A$(SRC_DIR)/inter/defines.mk
+
+# Pattern rule to compile all class source (*.cpp) files in src/inter
 %.o:%.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(INTER_ALLDEPS) $<
+	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) $<
 endif
 

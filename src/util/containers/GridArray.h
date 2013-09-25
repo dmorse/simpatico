@@ -365,6 +365,7 @@ namespace Util
    int GridArray<Data>::rank(const IntVector& position) const
    {
       int result = 0;
+      int i;
       for (i = 0; i < Dimension - 1; ++i) {
          assert(position[i] >= 0);
          assert(position[i] < dimensions_[i]);
