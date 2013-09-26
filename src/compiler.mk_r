@@ -1,38 +1,39 @@
 #-----------------------------------------------------------------------
 # file: src/compiler.mk
 #
-# This makefile fragment is included by all other makefiles. It defines
-# absolute paths for various directories, and specifies the choice of
-# compiler and compiler options. It also (optionally) defines macros
-# UTIL_MPI and MAKEDEP that enable MPI and dependency generation,
-# respectively.
+# This makefile fragment is included by all other makefiles. It contains
+# definitions of makefile variables that specify:
 # 
-# Users may select a compiler and a MPI library implementation by setting
-# values for the strings:
+#  - Absolute paths for the simpatico directory and some subdirectories
+#  - Identifiers for the choice of compiler and MPI library
+#  - Compiler options and flags for specific compilers
+#  - A variable UTIL_MPI that defines MPI if defined
+#  - A variable MAKEDEP that enables automatic dependency generation
 #
-# COMPILER = label for selecting a compiler (gcc, intel, etc.)
-# MPI_LIB  = label for selecting an MPI library.
-#
-# Each valid combination of these strings selects a block of definitions 
-# of CXXFLAGS and several other variables that define the options passed 
-# to the compiler and linker. Compiler options may also be modified by 
-# modifying values of these variables within each such block. 
-#
-# The configure script may be used to modify the value of the COMPILER 
-# macro, using the -c option. This script may also be used to comment
-# out or uncomment the definitions of the macros UTIL_MPI (which enables
-# MPI) and MAKEDEP (which enabled dependency generation).
+# MPI and automatic dependency generation may be enabled or disabled by
+# commenting out or uncommenting the definitions of UTIL_MPI and MAKEDEP.
 #
 # Users may edit the file src/compiler.mk, but should avoid modifying 
 # the file src/compiler.mk_r, which is a repository version. An initial 
 # version of the compiler.mk configuration file is created by the setup 
 # script by copying compiler.mk_r. 
 #
-# The setup script should set the value of ROOT_DIR in compiler.mk to 
-# the absolute path to the root simpatico/ directory. In compiler.mk_r, 
-# ROOT_DIR is assigned a placeholder value "PWD". 
+# Some common changes to this file may be made by invoking configure 
+# script from the root simpatico directory with appropriate options.
+# This script may be used to enable (option -m1) or disable (-m0) MPI, 
+# to enable (-k1) or disable (-k0) automatic dependency generation, or
+# or choose the compiler identifier string (the -c option). For example,
+# the command:
+#
+# ./configure -m1 -c gcc
+#
+# would enable MPI and select the gcc compiler.
 #-----------------------------------------------------------------------
 # Absolute directory paths
+#
+# The setup script should set the value of ROOT_DIR in compiler.mk to 
+# the absolute path to the root simpatico/ directory. In the repository
+# file compiler.mk_r, ROOT_DIR is assigned a placeholder value "PWD". 
 
 ROOT_DIR=PWD
 SRC_DIR=$(ROOT_DIR)/src
@@ -46,12 +47,17 @@ TESTS_DIR=$(ROOT_DIR)/tests
 #UTIL_MPI=1
 
 #-----------------------------------------------------------------------
-# Automatic dependency generation (Disable by commenting out)
- 
-MAKEDEP=$(ROOT_DIR)/bin/makeDep
-
-#-----------------------------------------------------------------------
-# COMPILER and MPI_LIB identifiers (choose as needed).
+# Compiler and MPI library identifiers:
+#
+# Users may select a compiler and a MPI library implementation by setting
+# values for the strings:
+#
+# COMPILER - string identifier for the compiler (e.g., gcc or intel)
+# MPI_LIB  - string identifier for the MPI library (e.g., mpicxx or openmpi)
+#
+# Each valid combination of these strings selects a block of definitions 
+# for variables that define the name of the compiler and the string of 
+# options that should be passed to the compiler and linker.
 
 COMPILER=gcc
 MPI_LIB=mpicxx
@@ -59,17 +65,33 @@ MPI_LIB=mpicxx
 # ------------------------------------------------------------------------
 # Compiler settings:
 #
-# Each of the following blocks sets values appropriate for a particular
-# compiler and mpi library for the following set of makefile variables:
+# Each of the following blocks sets values of the following variables for
+# for a particular compiler and mpi library:
 #
-# CXX        - C++ compiler command (must be in PATH or an absolute path)
+# CXX        - C++ compiler executable name (must be in PATH)
 # CXXFLAGS   - flags used to compile source files, without linking
 # LDFLAGS    - flags used to compile and link a main program
-# TESTFLAGS  - flags usd to compile unit test programs
+# TESTFLAGS  - flags used to compile unit test programs
+# INCLUDES   - Directories to search for included header files
 # AR         - path to archiver, to create library (*.a) files
 # ARFLAGS    - flags used by archiver
 # MPIRUN     - command to start mpi, with np option, e.g. "mpirun -np"
+#
+# Pattern rules for compiling source files in the util/, inter, mcMd/ and 
+# ddMd/ directories are defined in the patterns.mk files in each of these 
+# namespace-level directories. In each of these, the basic pattern is
+#
+# %.o:%.cpp
+#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
+#
+# The variable $(CPPDEFS), which contains is a list of C preprocessor
+# macro definitions, is assigned a different value in each of namespace
+# level patterns.mk files. The value of $(CPPDEFS) used in each namespace
+# contains only the macro definitions used in that namespace. 
 # ------------------------------------------------------------------------
+
+# Search simpatico/src directory for header files (all compilers)
+INCLUDES= -I$(SRC_DIR)
 
 #-- Gnu GCC compiler ------
 ifeq ($(COMPILER),gcc)
@@ -90,7 +112,8 @@ ifeq ($(COMPILER),gcc)
       ifeq ($(MPI_LIB),openmpi)
          # Gnu g++ using the openmpi library explicitly
          CXX=g++
-         CXXFLAGS= -O3 -ffast-math -Wall -Winline -std=c++98 -I/opt/local/include/openmpi
+         CXXFLAGS= -O3 -ffast-math -Wall -Winline -std=c++98 
+         INCLUDES+= -I/opt/local/include/openmpi
          LDFLAGS= -L/opt/local/lib -lmpi_cxx -lmpi
          TESTFLAGS= -O3 -ffast-math -Wall -std=c++98 -pedantic
       endif
@@ -99,7 +122,6 @@ ifeq ($(COMPILER),gcc)
    ARFLAGS=rcs
    MPIRUN=mpirun -np
 endif
-
 
 # -- Intel ICC compiler ---
 ifeq ($(COMPILER),intel)
@@ -111,7 +133,7 @@ ifeq ($(COMPILER),intel)
       TESTFLAGS= -ansi
    else
       ifeq ($(MPI_LIB),mpicxx)
-         # Intel icpc compiler using a module and mpicxx script
+         # Intel icpc compiler using linux modules and mpicxx script
          CXX=mpicxx
          CXXFLAGS= -ansi
          LDFLAGS=
@@ -122,4 +144,9 @@ ifeq ($(COMPILER),intel)
    ARFLAGS=rcs
    MPIRUN=mpirun -np
 endif
+
+#-----------------------------------------------------------------------
+# Automatic dependency generation (Disable by commenting out)
+ 
+MAKEDEP=$(ROOT_DIR)/bin/makeDep
 

@@ -14,24 +14,28 @@ all:
 	cd src; make ddMd
 	make test-ddMd
 	cat log
+	rm log
 
 mcMd:
 	cd src; make mcMd
 	-rm -f log
 	make test-mcMd
 	cat log
+	rm log
 
 mcMd-mpi: 
 	cd src; make mcMd-mpi
 	-rm -f log
 	make test-mcMd-mpi
 	cat log
+	rm log
 
 ddMd:
 	cd src; make ddMd
 	-rm -f log
 	make test-ddMd
 	cat log
+	rm log
 
 # ==============================================================================
 test-mcMd:

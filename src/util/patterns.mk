@@ -1,30 +1,28 @@
 # ---------------------------------------------------------------------
 # File: src/util/patterns.mk
 #
-# This makefile contains the pattern rules used to compile all sources
+# This makefile contains the pattern rule used to compile all sources
 # files in the directory tree rooted at the src/util directory, which
 # contains all source code for the Util namespace. It is included by
 # all "makefile" files in this directory tree. 
 #
-# These patterns use the string $(UTIL_DEFS) of preprocessor macro
-# definitions that is constructed in src/util/defines.mk. It also
-# uses various variables defined in src/compiler.mk. It must thus 
-# be included in other makefiles after these files. 
+# This file should be included in other makefiles after inclusion of
+# the files src/compiler.mk and src/util/defines.mk because this file
+# uses makefile variables defined in those files.
 #-----------------------------------------------------------------------
-# Compilation pattern rules
 
-# Path(s) to search for header files. 
-INCLUDES= -I$(SRC_DIR)
+# Preprocessor macro definitions
+CPPDEFS=$(UTIL_DEFS)
 
-# Extra dependencies for all source files
-UTIL_ALLDEPS= -A$(SRC_DIR)/compiler.mk
-UTIL_ALLDEPS+= -A$(SRC_DIR)/util/defines.mk
+# Dependencies of source files in src/util on makefile fragments
+MAKE_DEPS= -A$(SRC_DIR)/compiler.mk
+MAKE_DEPS+= -A$(SRC_DIR)/util/defines.mk
 
-# Rule to compile *.cpp class source (*.cpp) files.
+# Pattern rule to compile *.cpp class source (*.cpp) files in src/util
 %.o:%.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(UTIL_DEFS) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(UTIL_DEFS) $(UTIL_ALLDEPS) $<
+	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) $<
 endif
 
 #-----------------------------------------------------------------------
