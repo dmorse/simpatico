@@ -23,9 +23,9 @@ Proposed changes:
    /// Interface class - no data
    KSpacePotential : public ParamComposite
        -> public pure virtual addForce() function
-       -> public pure virtual global computeEnergy() and computeStress() functions
-       -> public pure virtual accessors for kspaceEnergy() and kspaceStress()
-       -> public upre virtual accessors for rspaceEnergy() and rspaceStress()
+       -> public pure virtual computeEnergy() and computeStress() functions
+       -> public pure virtual accessors kspaceEnergy() and kspaceStress()
+       -> public upre virtual accessors rspaceEnergy() and rspaceStress()
 
    /// Class template for sharing data between pair and kspace potentials
    template <class CoulombInteraction>
@@ -44,31 +44,60 @@ Proposed changes:
     : public RSpacePotentialData<CoulombInteraction>
    {
 
-       // Single loop for force evaluation, which adds both types of pair force.
-       void addForces();
+       // Force evaluation, which adds both types of pair force.
+       virtual void addForces();
+       
+       /** 
+       * Thermo computes, which increment different accumulator variables.
+       * Conventional nonbonded pair energy and stress are added to member
+       * variables of this class.  Ewald RSpace energy and stress are 
+       * added corresponding protected data members of the base class
+       * RSpacePotentialData<CoulombInteraction>.
+       */
+       virtual void computeEnergy();
+       virtual void computeStress();
 
-       void computeEnergy();
-       void computeStress();
-
-       // Single loop for energy and stress functions, but add increments to separate
-       // accumulator variables. CoulombInteraction energy and stress accumulated in
-       // protected data members of RSpacePotentialData<CoulombInteraction> base class.
+       // Accessors for nonbonded non-Ewald coulomb energy and stress.
+       double energy();
+       double pressure();
+       Tensor& stress();
    }
 
-   /// Coulomb potential concrete class
+   /**
+   * Ewald Coulomb potential concrete class
+   */
    EwaldCoulombPotential : public KSpacePotential
    {
    public:
 
        // Constructor
-       EwaldCoulombPotential(MdPairPotential& ){
-          // static cast to RSpacePotentialData<EwaldCoulombPairInteraction>* pointer.
+       EwaldCoulombPotential(MdPairPotential& )
+       {
+          // cast to RSpacePotentialData<EwaldCoulombPairInteraction>* pointer.
+          // Retain address in private pointer variable.
        }
 
-       // Implement kspaceEnergy() and kspaceStress().
+       /// Add K-Space forces
+       void addForces();
 
-       // Implement rspaceEnergy() and rspaceStress() as call through functions
-       // to corresponding functions of RSpacePotentialData<EwaldCoulombPairInteraction>
+       /// Compute K-Space forces
+       void computeEnergy();
+       void computeStress();
+
+       // Return total Coulomb energy and stress
+       double energy();
+       void stress(double& pressure);
+       void stress(tensor& stress);
+  
+       // Return K-space contributions
+       double kspaceEnergy();
+       void stress(double& pressure);
+       void stress(Tensor& stress);
+
+       // Return R-space contributions
+       double rspaceEnergy();
+       void rspaceStress(double& pressure);
+       void rspaceStress(Tensor& stress);
 
     private:
 
