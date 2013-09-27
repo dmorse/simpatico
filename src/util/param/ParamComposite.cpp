@@ -144,6 +144,22 @@ namespace Util
       size_ = 0;
    }
 
+   /*
+   * Add a ScalarParam to the format array.
+   */
+   void ParamComposite::addParameter(Parameter& param)
+   {
+      list_.push_back(&param);
+      isLeaf_.push_back(true);
+      ++size_;
+      param.setIndent(*this);
+      #ifdef UTIL_MPI
+      if (hasIoCommunicator()) {
+         param.setIoCommunicator(ioCommunicator());
+      }
+      #endif
+   }
+
    // ParamComposite object
 
    /*

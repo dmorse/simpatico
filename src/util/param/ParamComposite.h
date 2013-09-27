@@ -434,6 +434,7 @@ namespace Util
                   DMatrix<Type>& matrix, int m, int n);
 
       //@}
+
       /// \name add* methods
       /// \brief These methods add a ParamComponent object to the format
       /// array, but do not read any data from an input stream.
@@ -446,77 +447,6 @@ namespace Util
       * \param next  true if the indent level is one higher than parent.
       */
       void addParamComposite(ParamComposite& child, bool next = true);
-
-      /**
-      * Add a new Param < Type > object to the format array.
-      *
-      * \param label  Label string for new ScalarParam < Type >
-      * \param value  reference to parameter value
-      * \return reference to the new Param<Type> object
-      */
-      template <typename Type>
-      ScalarParam<Type>& add(const char *label, Type &value);
-
-      /**
-      * Add a C array parameter.
-      *
-      * \param label  Label string for new array
-      * \param value  pointer to array
-      * \param n      number of elements
-      * \return reference to the new CArrayParam<Type> object
-      */
-      template <typename Type>
-      CArrayParam<Type>& addCArray(const char *label, Type *value, int n);
-
-      /**
-      * Add a DArray<Type> parameter.
-      *
-      * \param label  Label string for new array
-      * \param array  DArray object.
-      * \param n      number of elements
-      * \return reference to the new DArrayParam<Type> object
-      */
-      template <typename Type>
-      DArrayParam<Type>& addDArray(const char *label, DArray<Type>& array,
-                                   int n);
-
-      /**
-      * Add a FArray<Type> parameter.
-      *
-      * \param label  Label string for new array
-      * \param array  FArray object.
-      * \return reference to the new FArrayParam<Type, N> object
-      */
-      template <typename Type, int N>
-      FArrayParam<Type, N>&
-      addFArray(const char *label, FArray<Type, N>& array);
-
-      /**
-      * Add a C two-dimensional array parameter.
-      *
-      * \param label  Label string for new array
-      * \param value  pointer to 2D array
-      * \param m      number of rows (1st dimension)
-      * \param n      logical number of columns (2nd dimension)
-      * \param np     physical number of columns (2nd dimension)
-      * \return reference to the new CArray2DParam<Type> object
-      */
-      template <typename Type>
-      CArray2DParam<Type>&
-      addCArray2D(const char *label, Type *value, int m, int n, int np);
-
-      /**
-      * Add a C two-dimensional array parameter.
-      *
-      * \param label  Label string for new array
-      * \param matrix  pointer to arr
-      * \param m      number of rows (1st dimension)
-      * \param n      number of columns (2nd dimension)
-      * \return reference to the new DMatrixParam<Type> object
-      */
-      template <typename Type>
-      DMatrixParam<Type>&
-      addDMatrix(const char *label, DMatrix<Type>& matrix, int m, int n);
 
       /**
       * Add a class label and opening bracket.
@@ -570,28 +500,16 @@ namespace Util
       /// Name of subclass.
       std::string className_;
 
+      /**
+      * Add a new Parameter object to the format array.
+      *
+      * \param param Parameter object
+      */
+      void addParameter(Parameter& param);
+
    };
 
    // Method templates for scalar parameters
-
-   /*
-   * Add a ScalarParam to the format array.
-   */
-   template <typename Type>
-   ScalarParam<Type>& ParamComposite::add(const char *label, Type &value)
-   {
-      ScalarParam<Type>* ptr = new ScalarParam<Type>(label, value);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
 
    /*
    * Add a ScalarParam to the format array, and read its contents from file.
@@ -600,8 +518,10 @@ namespace Util
    ScalarParam<Type>&
    ParamComposite::read(std::istream &in, const char *label, Type &value)
    {
-      ScalarParam<Type>* ptr = &add<Type>(label, value);
+      ScalarParam<Type>* ptr = new ScalarParam<Type>(label, value);
       ptr->readParam(in);
+      //add(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 
@@ -613,32 +533,14 @@ namespace Util
    ParamComposite::loadParameter(Serializable::IArchive &ar, const char *label,
                                  Type &value)
    {
-      ScalarParam<Type>* ptr = &add<Type>(label, value);
+      ScalarParam<Type>* ptr = new ScalarParam<Type>(label, value);
       ptr->load(ar);
+      //add(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 
    // Templates for 1D C Arrays
-
-   /*
-   * Add a CArrayParam object associated with a built-in array.
-   */
-   template <typename Type>
-   CArrayParam<Type>&
-   ParamComposite::addCArray(const char *label, Type *value, int n)
-   {
-      CArrayParam<Type>* ptr = new CArrayParam<Type>(label, value, n);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
 
    /*
    * Add a a CArrayParam associated with a built-in array, and read it.
@@ -648,8 +550,10 @@ namespace Util
    ParamComposite::readCArray(std::istream &in,
                    const char *label, Type *value, int n)
    {
-      CArrayParam<Type>* ptr = &addCArray<Type>(label, value, n);
+      CArrayParam<Type>* ptr = new CArrayParam<Type>(label, value, n);
       ptr->readParam(in);
+      //addCArray(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 
@@ -661,32 +565,14 @@ namespace Util
    ParamComposite::loadCArray(Serializable::IArchive &ar, const char *label,
                               Type *value, int n)
    {
-      CArrayParam<Type>* ptr = &addCArray<Type>(label, value, n);
+      CArrayParam<Type>* ptr = new CArrayParam<Type>(label, value, n);
       ptr->load(ar);
+      //addCArray(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 
    // Templates for DArray parameters
-
-   /*
-   * Add a DArrayParam < Type > object associated with a DArray<Type> container.
-   */
-   template <typename Type>
-   DArrayParam<Type>&
-   ParamComposite::addDArray(const char *label, DArray<Type>& array, int n)
-   {
-      DArrayParam<Type>* ptr = new DArrayParam<Type>(label, array, n);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
 
    /*
    * Add a a DArrayParam associated with a DArray<Type> container, and read it.
@@ -696,8 +582,10 @@ namespace Util
    ParamComposite::readDArray(std::istream &in,
                               const char *label, DArray<Type>& array, int n)
    {
-      DArrayParam<Type>* ptr = &addDArray<Type>(label, array, n);
+      DArrayParam<Type>* ptr = new DArrayParam<Type>(label, array, n);
       ptr->readParam(in);
+      //addDArray(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 
@@ -709,32 +597,14 @@ namespace Util
    ParamComposite::loadDArray(Serializable::IArchive &ar, const char *label,
                               DArray<Type>& array, int n)
    {
-      DArrayParam<Type>* ptr = &addDArray<Type>(label, array, n);
+      DArrayParam<Type>* ptr = new DArrayParam<Type>(label, array, n);
       ptr->load(ar);
+      // addDArray(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 
    // Templates for fixed size FArray array objects.
-
-   /*
-   * Add a FArrayParam <Type, N> object.
-   */
-   template <typename Type, int N>
-   FArrayParam<Type, N>&
-   ParamComposite::addFArray(const char *label, FArray<Type, N>& array)
-   {
-      FArrayParam<Type, N>* ptr = new FArrayParam<Type, N>(label, array);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
 
    /*
    * Add and read an FArray<Type, N> fixed size array.
@@ -744,8 +614,10 @@ namespace Util
    ParamComposite::readFArray(std::istream &in, const char *label,
                               FArray<Type, N>& array)
    {
-      FArrayParam<Type, N>* ptr = &addFArray<Type, N>(label, array);
+      FArrayParam<Type, N>* ptr = new FArrayParam<Type, N>(label, array);
       ptr->readParam(in);
+      // addFArray(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 
@@ -757,34 +629,14 @@ namespace Util
    ParamComposite::loadFArray(Serializable::IArchive &ar, const char *label,
                               FArray<Type, N >& array)
    {
-      FArrayParam<Type, N>* ptr = &addFArray<Type, N>(label, array);
+      FArrayParam<Type, N>* ptr = new FArrayParam<Type, N>(label, array);
       ptr->load(ar);
+      // addFArray(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 
    // Templates for built-in two-dimensional C Arrays
-
-   /*
-   * Add a CArray2Param associated with a built-in 2D array.
-   */
-   template <typename Type>
-   CArray2DParam<Type>&
-   ParamComposite::addCArray2D(const char *label, Type *value, 
-                               int m, int n, int np)
-   {
-      CArray2DParam<Type>* ptr = 
-                           new CArray2DParam<Type>(label, value, m, n, np);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
 
    /*
    * Add and read a CArray2DParam associated with a built-in 2D array.
@@ -794,8 +646,11 @@ namespace Util
    ParamComposite::readCArray2D(std::istream &in,
                    const char *label, Type *value, int m, int n, int np)
    {
-      CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n, np);
+      CArray2DParam<Type>* ptr = 
+                           new CArray2DParam<Type>(label, value, m, n, np);
       ptr->readParam(in);
+      // addCArray2D(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 
@@ -807,32 +662,15 @@ namespace Util
    ParamComposite::loadCArray2D(Serializable::IArchive &ar, const char *label,
                                 Type *value, int m, int n, int np)
    {
-      CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n, np);
+      CArray2DParam<Type>* ptr = 
+                           new CArray2DParam<Type>(label, value, m, n, np);
       ptr->load(ar);
+      // addCArray2D(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 
    // Templates for DMatrix containers
-
-   /*
-   * Add a DMatrixParam associated with a DMatrix 2D array..
-   */
-   template <typename Type>
-   DMatrixParam<Type>&
-   ParamComposite::addDMatrix(const char *label, DMatrix<Type>& matrix, int m, int n)
-   {
-      DMatrixParam<Type>* ptr = new DMatrixParam<Type>(label, matrix, m, n);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
 
    /*
    * Add and read a DMatrixParam associated with a built-in array.
@@ -842,8 +680,10 @@ namespace Util
    ParamComposite::readDMatrix(std::istream &in, const char *label,
                                DMatrix<Type>& matrix, int m, int n)
    {
-      DMatrixParam<Type>* ptr = &addDMatrix<Type>(label, matrix, m, n);
+      DMatrixParam<Type>* ptr = new DMatrixParam<Type>(label, matrix, m, n);
       ptr->readParam(in);
+      // addDMatrix(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 
@@ -855,8 +695,10 @@ namespace Util
    ParamComposite::loadDMatrix(Serializable::IArchive &ar, const char *label,
                                DMatrix<Type>& matrix, int m, int n)
    {
-      DMatrixParam<Type>* ptr = &addDMatrix<Type>(label, matrix, m, n);
+      DMatrixParam<Type>* ptr = new DMatrixParam<Type>(label, matrix, m, n);
       ptr->load(ar);
+      // addDMatrix(*ptr);
+      addParameter(*ptr);
       return *ptr;
    }
 

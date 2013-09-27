@@ -41,6 +41,7 @@ public:
    void testConstructor() 
    {}
 
+   #if 0
    void testAddWrite() 
    {
       printMethod(TEST_FUNC);
@@ -89,6 +90,7 @@ public:
       printEndl();
       paramComposite_.writeParam(std::cout);
    }
+   #endif
 
    void testReadWrite() 
    {
@@ -385,7 +387,7 @@ public:
 
 TEST_BEGIN(ParamCompositeTest)
 TEST_ADD(ParamCompositeTest, testConstructor)
-TEST_ADD(ParamCompositeTest, testAddWrite)
+//TEST_ADD(ParamCompositeTest, testAddWrite)
 TEST_ADD(ParamCompositeTest, testReadWrite)
 TEST_ADD(ParamCompositeTest, testSaveLoadWrite)
 TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite1)
