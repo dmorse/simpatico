@@ -9,6 +9,7 @@
 */
 
 #include "Begin.h"
+#include "Label.h"
 #include <util/global.h>
 
 namespace Util
@@ -27,20 +28,9 @@ namespace Util
    void Begin::readParam(std::istream &in)
    {
       if (isIoProcessor()) {
-         // Read label
-         std::string actual;
-         in >> actual;
-
-         // Check label   
          std::string expected;
          expected = label_ + "{";
-         if (actual != expected) {
-            Log::file() << "Error reading label\n";
-            Log::file() << "Expected: " <<  expected  << std::endl;
-            Log::file() << "Scanned:  " <<  actual    << std::endl;
-            UTIL_THROW("Incorrect label");
-         }
-
+         in >> Label(expected.c_str());
          if (ParamComponent::echo()) {
             writeParam(Log::file());
          }
@@ -51,9 +41,7 @@ namespace Util
    * Begin::writeParam() template
    */
    void Begin::writeParam(std::ostream &out)
-   {
-      out << indent() << label_ << "{" << std::endl;
-   }
+   {  out << indent() << label_ << "{" << std::endl; }
 
    /*
    * Do-nothing implementation of virtual resetIo function.

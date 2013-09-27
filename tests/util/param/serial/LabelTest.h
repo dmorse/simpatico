@@ -77,6 +77,7 @@ public:
          in >> label3;
       } catch (Util::Exception& e) {
          std::cout << "Caught expected Exception" << std::endl;
+         Label::clear();
       }
       in.close();
    }

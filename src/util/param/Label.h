@@ -40,6 +40,9 @@ namespace Util
       /// Width of label field in file output format.
       static const int LabelWidth  = 20;
 
+      /// Initialize read buffer to empty.
+      static void clear();
+
       /**
       * Constructor.
       *
