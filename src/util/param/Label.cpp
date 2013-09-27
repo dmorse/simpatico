@@ -20,6 +20,15 @@ namespace Util
    std::string  Label::input_;
 
    /*
+   * Clear read buffer (static variable).
+   */
+   void Label::clear()
+   {
+      isMatch_ = true;
+      input_.clear(); 
+   }
+
+   /*
    * Constructor.
    */
    Label::Label(const char* label, bool isRequired)
