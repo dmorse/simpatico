@@ -10,6 +10,10 @@
 
 #include "Parameter.h"
 
+#ifdef UTIL_MPI
+#include <util/mpi/MpiSendRecv.h>
+#endif
+
 namespace Util
 {
 
@@ -44,7 +48,7 @@ namespace Util
       }
       #ifdef UTIL_MPI
       if (hasIoCommunicator()) {
-         is (isRequired()) {
+         if (isRequired()) {
             bcastValue();
          } else {
             bcast<bool>(ioCommunicator(), isActive_, 0); 

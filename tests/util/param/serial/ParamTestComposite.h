@@ -5,7 +5,7 @@
 
 #include "LabelTest.h"
 #include "BeginEndTest.h"
-#include "ParamTest.h"
+#include "ParameterTest.h"
 #include "ParamCompositeTest.h"
 #include "ManagerTest.h"
 //#include "TextCompositeTest.h"
