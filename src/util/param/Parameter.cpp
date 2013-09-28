@@ -17,7 +17,8 @@ namespace Util
    * Constructor. 
    */
    Parameter::Parameter(const char *label, bool isRequired)
-    : label_(label, isRequired)
+    : label_(label, isRequired),
+      isActive_(isRequired)
    {}
 
    /*
@@ -25,6 +26,76 @@ namespace Util
    */
    Parameter::~Parameter()
    {}
+
+   /*
+   * Read a parameter.
+   */
+   void Parameter::readParam(std::istream &in)
+   {
+      if (isIoProcessor()) {
+         in >> label_;
+         if (Label::isClear()) {
+            readValue(in);
+            isActive_ = true;
+            if (ParamComponent::echo()) {
+               writeParam(Log::file());
+            }
+         }
+      }
+      #ifdef UTIL_MPI
+      if (hasIoCommunicator()) {
+         is (isRequired()) {
+            bcastValue();
+         } else {
+            bcast<bool>(ioCommunicator(), isActive_, 0); 
+            if (isActive_) {
+               bcastValue();
+            }
+         }
+      }
+      #endif
+   }
+
+   /*
+   * Load from an archive.
+   */
+   void Parameter::load(Serializable::IArchive& ar)
+   {
+      if (isIoProcessor()) {
+         if (!isRequired()) {
+            ar & isActive_;
+         }
+         if (isActive_) {
+            loadValue(ar);
+            if (ParamComponent::echo()) {
+               writeParam(Log::file());
+            }
+         }
+      }
+      #ifdef UTIL_MPI
+      if (hasIoCommunicator()) {
+         if (!isRequired()) {
+            bcast<bool>(ioCommunicator(), isActive_, 0); 
+         }
+         if (isActive_) {
+            bcastValue();
+         }
+      }
+      #endif
+   }
+
+   /*
+   * Save to an archive.
+   */
+   void Parameter::save(Serializable::OArchive& ar)
+   {
+      if (!isRequired()) {
+        ar & isActive_;
+      }
+      if (isActive_) {
+         saveValue(ar);
+      }
+   }
 
    /*
    * Return label string.
@@ -37,6 +108,12 @@ namespace Util
    */
    bool Parameter::isRequired() const
    {  return label_.isRequired(); }
+
+   /*
+   * Is this an active parameter?
+   */
+   bool Parameter::isActive() const
+   {  return isActive_; }
 
 } 
 #endif

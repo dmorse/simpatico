@@ -44,20 +44,6 @@ namespace Util
       * \param isRequired  Is this a required parameter?
       */
       ScalarParam(const char *label, Type& value, bool isRequired = true); 
- 
-      /** 
-      * Read parameter from stream.
-      *
-      * \param in input stream
-      */
-      void readParam(std::istream& in); 
- 
-      /**
-      * Load from an archive.
-      *
-      * \param ar loading (input) archive.
-      */
-      void load(Serializable::IArchive& ar);
 
       /** 
       * Write parameter to stream.
@@ -65,13 +51,6 @@ namespace Util
       * \param out output stream
       */
       void writeParam(std::ostream& out);
-
-      /**
-      * Save to an archive.
-      *
-      * \param ar saving (output) archive.
-      */
-      void save(Serializable::OArchive& ar);
 
       /**
       * Set the pointer to point a specific variable.
@@ -82,13 +61,40 @@ namespace Util
 
    protected:
    
-      /// Pointer to value.
-      Type* valuePtr_;
+      /**
+      * Read parameter value from an input stream.
+      * 
+      * \param in input stream from which to read
+      */
+      virtual void readValue(std::istream& in);
 
-      /// Is value initialized?
-      bool isInitialized_;
+      /**
+      * Load bare parameter value from an archive.
+      *
+      * \param ar input archive from which to load
+      */
+      virtual void loadValue(Serializable::IArchive& ar);
+
+      /**
+      * Save parameter value to an archive.
+      *
+      * \param ar output archive to which to save
+      */
+      virtual void saveValue(Serializable::OArchive& ar);
+
+      #ifdef UTIL_MPI
+      /**
+      * Broadcast parameter value within the ioCommunicator.
+      *
+      * \param ar output archive to which to save
+      */
+      virtual void bcastValue();
+      #endif
 
    private:
+
+      /// Pointer to value.
+      Type* valuePtr_;
 
       /// Private and not implemented to prevent copying.
       ScalarParam(const ScalarParam<Type>& other);
@@ -98,7 +104,7 @@ namespace Util
    
    };
 
-   // ScalarParam Methods
+   // Member Function Definitions
 
    /*
    * ScalarParam<Type> constructor.
@@ -107,40 +113,26 @@ namespace Util
    ScalarParam<Type>::ScalarParam(const char *label, Type &value, 
                                   bool isRequired)
     : Parameter(label, isRequired),
-      valuePtr_(&value),
-      isInitialized_(false)
+      valuePtr_(&value)
    {}
 
-   /*
-   * Read a parameter.
-   */
    template <class Type>
-   void ScalarParam<Type>::readParam(std::istream &in)
-   {
-      if (isIoProcessor()) {
-         in >> label_;
-         if (Label::isClear()) {
-            in >> *valuePtr_;
-            isInitialized_ = true;
-            if (ParamComponent::echo()) {
-               writeParam(Log::file());
-            }
-         }
-      }
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         is (isRequired()) {
-            assert(success);
-            bcast<Type>(ioCommunicator(), *valuePtr_, 0); 
-         } else {
-            bcast<bool>(ioCommunicator(), isInitialized_, 0); 
-            if (success) {
-               bcast<Type>(ioCommunicator(), *valuePtr_, 0); 
-            }
-         }
-      }
-      #endif
-   }
+   void ScalarParam<Type>::readValue(std::istream &in)
+   {  in >> *valuePtr_; }
+
+   template <class Type>
+   void ScalarParam<Type>::loadValue(Serializable::IArchive& ar)
+   {  ar & *valuePtr_; }
+
+   template <class Type>
+   void ScalarParam<Type>::saveValue(Serializable::OArchive& ar)
+   {  ar & *valuePtr_; }
+
+   #ifdef UTIL_MPI
+   template <class Type>
+   void ScalarParam<Type>::bcastValue()
+   {  bcast<Type>(ioCommunicator(), *valuePtr_, 0); }
+   #endif
 
    /*
    * Write a parameter.
@@ -148,68 +140,13 @@ namespace Util
    template <class Type>
    void ScalarParam<Type>::writeParam(std::ostream& out)
    {
-      if (isInitialized_) {
+      if (isActive()) {
          out << indent();
          out << label_;
          out << std::right << std::scientific 
              << std::setprecision(Parameter::Precision) 
              << std::setw(Parameter::Width) << *valuePtr_ 
              << std::endl;
-      }
-   }
-
-   /*
-   * Load from an archive.
-   */
-   template <class Type>
-   void ScalarParam<Type>::load(Serializable::IArchive& ar)
-   {
-      if (isIoProcessor()) {
-         if (isRequired()) {
-            isInitialized_ = true;
-         } else {
-            ar & isInitialized_;
-         }
-         if (isInitialized_) {
-            if (valuePtr_) {  
-               ar & *valuePtr_; 
-            } else {
-               UTIL_THROW("Attempt to load into null valuePtr_");
-            }
-            if (ParamComponent::echo()) {
-               writeParam(Log::file());
-            }
-         }
-      }
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         if (isRequired()) {
-            isInitialized_ = true;
-         } else {
-            bcast<bool>(ioCommunicator(), isInitialized_, 0); 
-         }
-         if (isInitialized_) {
-            bcast<Type>(ioCommunicator(), *valuePtr_, 0); 
-         }
-      }
-      #endif
-   }
-
-   /*
-   * Save to an archive.
-   */
-   template <class Type>
-   void ScalarParam<Type>::save(Serializable::OArchive& ar)
-   {
-      if (!isRequired()) {
-        ar & isInitialized_;
-      }
-      if (isInitialized_) {
-         if (valuePtr_) {
-            ar & *valuePtr_; 
-         } else {
-            UTIL_THROW("Attempt to write from null valuePtr_");
-         }
       }
    }
 

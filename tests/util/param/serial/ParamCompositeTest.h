@@ -188,8 +188,8 @@ public:
       long    cValue1;
       double  cValue2;
       int     cValue3[3];
-      double cValue4[3];
-      double cValue5[2][2];
+      double  cValue4[3];
+      double  cValue5[3][3];
       DArray<double> cValue6;
       cValue6.allocate(4);
       FArray<double, 4> cValue7;

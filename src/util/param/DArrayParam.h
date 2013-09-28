@@ -31,14 +31,7 @@ namespace Util
       /*   
       * Constructor.
       */
-      DArrayParam(const char *label, DArray<Type>& array, int n = 0);
- 
-      /** 
-      * Read parameter from stream.
-      *
-      * \param in input stream
-      */
-      void readParam(std::istream &in);
+      DArrayParam(const char *label, DArray<Type>& array, int n, bool isRequired = true);
  
       /** 
       * Write parameter to stream.
@@ -47,21 +40,39 @@ namespace Util
       */
       void writeParam(std::ostream &out);
 
-      /**
-      * Load from an archive.
-      *
-      * \param ar loading (input) archive.
-      */
-      void load(Serializable::IArchive& ar);
-
-      /**
-      * Save to an archive.
-      *
-      * \param ar saving (output) archive.
-      */
-      void save(Serializable::OArchive& ar);
-
    protected:
+      
+      /**
+      * Read parameter value from an input stream.
+      * 
+      * \param in input stream from which to read
+      */
+      virtual void readValue(std::istream& in);
+
+      /**
+      * Load bare parameter value from an archive.
+      *
+      * \param ar input archive from which to load
+      */
+      virtual void loadValue(Serializable::IArchive& ar);
+
+      /**
+      * Save parameter value to an archive.
+      *
+      * \param ar output archive to which to save
+      */
+      virtual void saveValue(Serializable::OArchive& ar);
+
+      #ifdef UTIL_MPI
+      /**
+      * Broadcast parameter value within the ioCommunicator.
+      *
+      * \param ar output archive to which to save
+      */
+      virtual void bcastValue();
+      #endif
+
+   private:
    
       /// Pointer to associated DArray.
       DArray<Type>* arrayPtr_;
@@ -75,42 +86,67 @@ namespace Util
    * DArrayParam<Type> constructor.
    */
    template <class Type>
-   DArrayParam<Type>::DArrayParam(const char *label, DArray<Type>& array, int n)
-    : Parameter(label),
+   DArrayParam<Type>::DArrayParam(const char *label, DArray<Type>& array, int n, bool isRequired)
+    : Parameter(label, isRequired),
       arrayPtr_(&array),
       n_(n)
    {}
 
    /*
-   * Read a DArray parameter.
+   * Read array of values from isteam.
    */
    template <class Type>
-   void DArrayParam<Type>::readParam(std::istream &in)
-   {
-      // Preconditions
+   void DArrayParam<Type>::readValue(std::istream &in)
+   {  
       if (!(arrayPtr_->isAllocated())) {
          UTIL_THROW("Cannot read unallocated DArray");
       }
+      if (arrayPtr_->capacity() != n_) {
+         UTIL_THROW("Error: DArray capacity < n");
+      }
+      for (int i = 0; i < n_; ++i) {
+         in >> (*arrayPtr_)[i];
+      }
+   }
+
+   /*
+   * Load a DArray from input archive.
+   */
+   template <class Type>
+   void DArrayParam<Type>::loadValue(Serializable::IArchive& ar)
+   {  
+      if (!(arrayPtr_->isAllocated())) {
+         arrayPtr_->allocate(n_);
+      }
+      ar >> *arrayPtr_;
       if (arrayPtr_->capacity() < n_) {
          UTIL_THROW("Error: DArray capacity < n");
       }
-
-      if (isIoProcessor()) {
-         in >> label_;
-         for (int i = 0; i < n_; ++i) {
-            in >> (*arrayPtr_)[i];
-         }
-         if (ParamComponent::echo()) {
-            writeParam(Log::file());
-         }
-      }
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         bcast<Type>(ioCommunicator(), *arrayPtr_, n_, 0); 
-      }
-      #endif
-
    }
+
+   /*
+   * Save a DArray to an output archive.
+   */
+   template <class Type>
+   void DArrayParam<Type>::saveValue(Serializable::OArchive& ar)
+   {  
+      if (!(arrayPtr_->isAllocated())) {
+         UTIL_THROW("Cannot save unallocated DArray");
+      }
+      if (arrayPtr_->capacity() != n_) {
+         UTIL_THROW("Error: DArray capacity < n");
+      }
+      ar << *arrayPtr_;
+   }
+
+   #ifdef UTIL_MPI
+   /*
+   * Broadcast a DArray.
+   */
+   template <class Type>
+   void DArrayParam<Type>::bcastValue()
+   {  bcast<Type>(ioCommunicator(), *arrayPtr_, n_, 0); }
+   #endif
 
    /*
    * Write a DArray parameter.
@@ -118,70 +154,31 @@ namespace Util
    template <class Type>
    void DArrayParam<Type>::writeParam(std::ostream &out) 
    {
+      if (isActive()) {
 
-      // Preconditions
-      if (!(arrayPtr_->isAllocated())) {
-         UTIL_THROW("Cannot write unallocated DArray");
-      }
-      if (arrayPtr_->capacity() < n_) {
-         UTIL_THROW("Error: DArray capacity < n in writeParam");
-      }
-
-      Label space("");
-      int i;
-      for (i = 0; i < n_; ++i) {
-         if (i == 0) {
-            out << indent() << label_;
-         } else {
-            out << indent() << space;
+         if (!(arrayPtr_->isAllocated())) {
+            UTIL_THROW("Cannot write unallocated DArray");
          }
-         out << std::right << std::scientific 
-             << std::setprecision(Parameter::Precision) 
-             << std::setw(Parameter::Width)
-             << (*arrayPtr_)[i] 
-             << std::endl;
-      }
-   }
-
-   /*
-   * Load from an archive.
-   */
-   template <class Type>
-   void DArrayParam<Type>::load(Serializable::IArchive& ar)
-   {
-      if (!(arrayPtr_->isAllocated())) {
-         arrayPtr_->allocate(n_);
-      }
-      if (isIoProcessor()) {
-         ar >> *arrayPtr_;
-         if (arrayPtr_->capacity() < n_) {
-            UTIL_THROW("Error: DArray capacity < n");
+         if (arrayPtr_->capacity() != n_) {
+            UTIL_THROW("Error: DArray capacity != n in writeParam");
          }
-         if (ParamComponent::echo()) {
-            writeParam(Log::file());
+   
+         Label space("");
+         int i;
+         for (i = 0; i < n_; ++i) {
+            if (i == 0) {
+               out << indent() << label_;
+            } else {
+               out << indent() << space;
+            }
+            out << std::right << std::scientific 
+                << std::setprecision(Parameter::Precision) 
+                << std::setw(Parameter::Width)
+                << (*arrayPtr_)[i] 
+                << std::endl;
          }
-      }
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         bcast<Type>(ioCommunicator(), *arrayPtr_, n_, 0); 
-      }
-      #endif
-   }
 
-   /*
-   * Save to an archive.
-   */
-   template <class Type>
-   void DArrayParam<Type>::save(Serializable::OArchive& ar)
-   {
-      // Preconditions
-      if (!(arrayPtr_->isAllocated())) {
-         UTIL_THROW("Cannot save unallocated DArray");
-      }
-      if (arrayPtr_->capacity() < n_) {
-         UTIL_THROW("Error: DArray capacity < n");
-      }
-      ar << *arrayPtr_;
+      } // if isActive
    }
 
 } 
