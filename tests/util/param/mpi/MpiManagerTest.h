@@ -25,6 +25,14 @@ class MpiManagerTest : public UnitTest
 
 public:
 
+   void setUp() {
+      Label::clear();
+   }
+
+   void breakDown() {
+      Label::clear();
+   }
+
    /**
    * Test factory using string.
    */
@@ -40,11 +48,10 @@ public:
 
       TEST_ASSERT(ptr->className() == "B");
  
-      //if (mpiRank() == 1) {
+      // if (mpiRank() == 1) {
       //   std::cout <<  ptr->className() << std::endl;
       //   std::cout.flush();
       //}
-
    }
 
    /**
@@ -57,14 +64,17 @@ public:
       AFactory    factory;
       AManager    manager;
       std::string className;
-      A*          ptr;
-      bool        isEnd;
+      A*          ptr = 0;
+      bool        isEnd = false;
 
       manager.setIoCommunicator(communicator());
 
-      std::ifstream in("in/Factory");
+      std::ifstream in;
+      if (manager.isIoProcessor()) {
+         in.open("in/Factory");
+      }
       ptr = factory.readObject(in, manager, className, isEnd);
-      //TEST_ASSERT(ptr->className() == "B");
+      TEST_ASSERT(ptr->className() == "B");
 
       //if (mpiRank() == 1) {
       //   //std::cout <<  ptr->className() << std::endl;
@@ -111,13 +121,18 @@ public:
       fileMaster.setDirectoryId(mpiRank());
       fileMaster.openInputFile("Manager", in);
       fileMaster.openOutputFile("Manager.log", log);
-      Log::setFile(log);
 
       manager.readParam(in);
 
+      Log::setFile(log);
       Log::file() << std::endl;
       manager.writeParam(Log::file());
       Log::file().flush();
+      Log::close();
+      
+      //log << std::endl;
+      //manager.writeParam(log);
+      //log.flush();
 
    }
 

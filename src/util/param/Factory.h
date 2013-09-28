@@ -289,8 +289,8 @@ namespace Util
          // Read closing bracket, set indentation as for child.
          typePtr->readEnd(in).setIndent(parent);
 
-         // Note: The readParam() methods for managed objects should not
-         // read begin and end lines, since these are instead read here.
+         // Note: The readParameters() methods for managed objects should 
+         // not read begin and end lines, which read here. 
 
       }
       return typePtr;

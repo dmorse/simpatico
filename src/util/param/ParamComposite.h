@@ -501,6 +501,17 @@ namespace Util
       std::string className_;
 
       /**
+      * Set this to the parent of a child component.
+      *
+      * This function sets the indent and (ifdef UTIL_MPI)
+      * the ioCommunicator of the child component.
+      *  
+      * \param param child ParamComponent
+      * \param next  if true, set indent level one higher than that of parent.
+      */
+      void setParent(ParamComponent& param, bool next = true);
+
+      /**
       * Add a new Parameter object to the format array.
       *
       * \param param Parameter object
@@ -519,6 +530,7 @@ namespace Util
    ParamComposite::read(std::istream &in, const char *label, Type &value)
    {
       ScalarParam<Type>* ptr = new ScalarParam<Type>(label, value);
+      setParent(*ptr);
       ptr->readParam(in);
       addParameter(*ptr);
       return *ptr;
@@ -533,6 +545,7 @@ namespace Util
                                  Type &value)
    {
       ScalarParam<Type>* ptr = new ScalarParam<Type>(label, value);
+      setParent(*ptr);
       ptr->load(ar);
       addParameter(*ptr);
       return *ptr;
@@ -549,6 +562,7 @@ namespace Util
                    const char *label, Type *value, int n)
    {
       CArrayParam<Type>* ptr = new CArrayParam<Type>(label, value, n);
+      setParent(*ptr);
       ptr->readParam(in);
       addParameter(*ptr);
       return *ptr;
@@ -563,6 +577,7 @@ namespace Util
                               Type *value, int n)
    {
       CArrayParam<Type>* ptr = new CArrayParam<Type>(label, value, n);
+      setParent(*ptr);
       ptr->load(ar);
       addParameter(*ptr);
       return *ptr;
@@ -579,6 +594,7 @@ namespace Util
                               const char *label, DArray<Type>& array, int n)
    {
       DArrayParam<Type>* ptr = new DArrayParam<Type>(label, array, n);
+      setParent(*ptr);
       ptr->readParam(in);
       addParameter(*ptr);
       return *ptr;
@@ -593,6 +609,7 @@ namespace Util
                               DArray<Type>& array, int n)
    {
       DArrayParam<Type>* ptr = new DArrayParam<Type>(label, array, n);
+      setParent(*ptr);
       ptr->load(ar);
       addParameter(*ptr);
       return *ptr;
@@ -609,6 +626,7 @@ namespace Util
                               FArray<Type, N>& array)
    {
       FArrayParam<Type, N>* ptr = new FArrayParam<Type, N>(label, array);
+      setParent(*ptr);
       ptr->readParam(in);
       addParameter(*ptr);
       return *ptr;
@@ -623,6 +641,7 @@ namespace Util
                               FArray<Type, N >& array)
    {
       FArrayParam<Type, N>* ptr = new FArrayParam<Type, N>(label, array);
+      setParent(*ptr);
       ptr->load(ar);
       addParameter(*ptr);
       return *ptr;
@@ -640,6 +659,7 @@ namespace Util
    {
       CArray2DParam<Type>* ptr = 
                            new CArray2DParam<Type>(label, value, m, n, np);
+      setParent(*ptr);
       ptr->readParam(in);
       addParameter(*ptr);
       return *ptr;
@@ -655,6 +675,7 @@ namespace Util
    {
       CArray2DParam<Type>* ptr = 
                            new CArray2DParam<Type>(label, value, m, n, np);
+      setParent(*ptr);
       ptr->load(ar);
       addParameter(*ptr);
       return *ptr;
@@ -671,6 +692,7 @@ namespace Util
                                DMatrix<Type>& matrix, int m, int n)
    {
       DMatrixParam<Type>* ptr = new DMatrixParam<Type>(label, matrix, m, n);
+      setParent(*ptr);
       ptr->readParam(in);
       addParameter(*ptr);
       return *ptr;
@@ -685,6 +707,7 @@ namespace Util
                                DMatrix<Type>& matrix, int m, int n)
    {
       DMatrixParam<Type>* ptr = new DMatrixParam<Type>(label, matrix, m, n);
+      setParent(*ptr);
       ptr->load(ar);
       addParameter(*ptr);
       return *ptr;

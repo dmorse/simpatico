@@ -145,6 +145,19 @@ namespace Util
    }
 
    /*
+   * Set this to be the parent of a child component.
+   */
+   void ParamComposite::setParent(ParamComponent& param, bool next)
+   {
+      param.setIndent(*this, next);
+      #if UTIL_MPI
+      if (hasIoCommunicator()) {
+         param.setIoCommunicator(ioCommunicator());
+      }
+      #endif 
+   }
+
+   /*
    * Add a ScalarParam to the format array.
    */
    void ParamComposite::addParameter(Parameter& param)
@@ -152,12 +165,6 @@ namespace Util
       list_.push_back(&param);
       isLeaf_.push_back(true);
       ++size_;
-      param.setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         param.setIoCommunicator(ioCommunicator());
-      }
-      #endif
    }
 
    // ParamComposite object
@@ -167,15 +174,10 @@ namespace Util
    */
    void ParamComposite::addParamComposite(ParamComposite &child, bool next)
    {
-      child.setIndent(*this, next);
+      setParent(child, next);
       list_.push_back(&child);
       isLeaf_.push_back(false);
       ++size_;
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         child.setIoCommunicator(ioCommunicator());
-      }
-      #endif
    }
 
    /*
@@ -208,15 +210,10 @@ namespace Util
    Begin& ParamComposite::addBegin(const char *label)
    {
       Begin* ptr = new Begin(label);
+      setParent(*ptr, false);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
-      ptr->setIndent(*this, false);
       ++size_;
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
       return *ptr;
    }
 
@@ -238,15 +235,10 @@ namespace Util
    End& ParamComposite::addEnd()
    {
       End* ptr = new End();
+      setParent(*ptr, false);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
-      ptr->setIndent(*this, false);
       ++size_;
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
       return *ptr;
    }
 
@@ -268,14 +260,10 @@ namespace Util
    Blank& ParamComposite::addBlank()
    {
       Blank* ptr = new Blank();
+      setParent(*ptr);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
       ++size_;
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
       return *ptr;
    }
 

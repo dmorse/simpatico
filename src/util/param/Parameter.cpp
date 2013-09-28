@@ -50,6 +50,7 @@ namespace Util
       if (hasIoCommunicator()) {
          if (isRequired()) {
             bcastValue();
+            isActive_ = true;
          } else {
             bcast<bool>(ioCommunicator(), isActive_, 0); 
             if (isActive_) {

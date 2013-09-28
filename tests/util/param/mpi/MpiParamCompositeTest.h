@@ -35,7 +35,13 @@ class MpiParamCompositeTest : public ParamFileTest
 public:
 
    void setUp()
-   {}
+   {  Label::clear(); }
+
+   void breakDown()
+   {  
+      Label::clear(); 
+      // Log::close(); 
+   }
 
    void testReadWrite1() 
    {
@@ -57,7 +63,7 @@ public:
       AManager  manager;
 
       object.setIoCommunicator(communicator()); 
-      //ParamComponent::setEcho(true);
+      ParamComponent::setEcho(true);
 
       openFile("in/ParamComposite");
 
@@ -94,6 +100,7 @@ public:
 
       openFile("in/ParamComposite");
       object.readParam(file());
+      file().close();
 
       if (mpiRank() == 1) {
          std::cout << std::endl;
@@ -111,13 +118,17 @@ public:
 
       fileMaster.setDirectoryId(mpiRank());
       fileMaster.openInputFile("ParamComposite", file());
+      object.readParam(file());
+      file().close();
+
       fileMaster.openOutputFile("log", logFile);
       Log::setFile(logFile);
-
-      object.readParam(file());
-
       Log::file() << std::endl;
       object.writeParam(Log::file());
+      Log::close();
+      
+      //logFile << std::endl;
+      //object.writeParam(logFile);
 
    }
 
