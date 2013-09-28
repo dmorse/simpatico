@@ -40,8 +40,15 @@ namespace Util
       /// Width of label field in file output format.
       static const int LabelWidth  = 20;
 
-      /// Initialize read buffer to empty.
+      /**
+      * Initialize read buffer to empty.
+      */
       static void clear();
+
+      /**
+      * Is the input buffer clear?
+      */
+      static bool isClear();
 
       /**
       * Constructor.
@@ -68,6 +75,11 @@ namespace Util
       */
       std::string string() const;
 
+      /**
+      * Is this the label for a required component?
+      */
+      bool isRequired() const;
+
    private:
 
       /// Is this label a required entry ? (passed to constructor).
@@ -78,8 +90,8 @@ namespace Util
 
    // Static members:
 
-      /// Did the previous input match the label? (initialized true).
-      static bool isMatch_;
+      /// Did the input buffer clear? (initialized true).
+      static bool isClear_;
 
       /// Most recent input value from istream (initialized empty).
       static std::string input_;
@@ -106,6 +118,12 @@ namespace Util
    * \param label Label to be written to file
    */ 
    std::ostream& operator<<(std::ostream& out, Label label);
+
+   /*
+   * Is this the label for a required component?
+   */
+   inline bool Label::isRequired() const
+   {  return isRequired_; }
 
 } 
 #endif

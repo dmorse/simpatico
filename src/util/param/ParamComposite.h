@@ -520,7 +520,6 @@ namespace Util
    {
       ScalarParam<Type>* ptr = new ScalarParam<Type>(label, value);
       ptr->readParam(in);
-      //add(*ptr);
       addParameter(*ptr);
       return *ptr;
    }
@@ -535,7 +534,6 @@ namespace Util
    {
       ScalarParam<Type>* ptr = new ScalarParam<Type>(label, value);
       ptr->load(ar);
-      //add(*ptr);
       addParameter(*ptr);
       return *ptr;
    }
@@ -552,7 +550,6 @@ namespace Util
    {
       CArrayParam<Type>* ptr = new CArrayParam<Type>(label, value, n);
       ptr->readParam(in);
-      //addCArray(*ptr);
       addParameter(*ptr);
       return *ptr;
    }
@@ -567,7 +564,6 @@ namespace Util
    {
       CArrayParam<Type>* ptr = new CArrayParam<Type>(label, value, n);
       ptr->load(ar);
-      //addCArray(*ptr);
       addParameter(*ptr);
       return *ptr;
    }
@@ -584,7 +580,6 @@ namespace Util
    {
       DArrayParam<Type>* ptr = new DArrayParam<Type>(label, array, n);
       ptr->readParam(in);
-      //addDArray(*ptr);
       addParameter(*ptr);
       return *ptr;
    }
@@ -599,7 +594,6 @@ namespace Util
    {
       DArrayParam<Type>* ptr = new DArrayParam<Type>(label, array, n);
       ptr->load(ar);
-      // addDArray(*ptr);
       addParameter(*ptr);
       return *ptr;
    }
@@ -616,7 +610,6 @@ namespace Util
    {
       FArrayParam<Type, N>* ptr = new FArrayParam<Type, N>(label, array);
       ptr->readParam(in);
-      // addFArray(*ptr);
       addParameter(*ptr);
       return *ptr;
    }
@@ -631,7 +624,6 @@ namespace Util
    {
       FArrayParam<Type, N>* ptr = new FArrayParam<Type, N>(label, array);
       ptr->load(ar);
-      // addFArray(*ptr);
       addParameter(*ptr);
       return *ptr;
    }
@@ -649,7 +641,6 @@ namespace Util
       CArray2DParam<Type>* ptr = 
                            new CArray2DParam<Type>(label, value, m, n, np);
       ptr->readParam(in);
-      // addCArray2D(*ptr);
       addParameter(*ptr);
       return *ptr;
    }
@@ -665,7 +656,6 @@ namespace Util
       CArray2DParam<Type>* ptr = 
                            new CArray2DParam<Type>(label, value, m, n, np);
       ptr->load(ar);
-      // addCArray2D(*ptr);
       addParameter(*ptr);
       return *ptr;
    }
@@ -682,7 +672,6 @@ namespace Util
    {
       DMatrixParam<Type>* ptr = new DMatrixParam<Type>(label, matrix, m, n);
       ptr->readParam(in);
-      // addDMatrix(*ptr);
       addParameter(*ptr);
       return *ptr;
    }
@@ -697,7 +686,6 @@ namespace Util
    {
       DMatrixParam<Type>* ptr = new DMatrixParam<Type>(label, matrix, m, n);
       ptr->load(ar);
-      // addDMatrix(*ptr);
       addParameter(*ptr);
       return *ptr;
    }

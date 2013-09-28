@@ -16,8 +16,8 @@ namespace Util
    /*
    * Constructor. 
    */
-   Parameter::Parameter(const char *label)
-    : label_(label)
+   Parameter::Parameter(const char *label, bool isRequired)
+    : label_(label, isRequired)
    {}
 
    /*
@@ -29,9 +29,14 @@ namespace Util
    /*
    * Return label string.
    */
-   std::string Parameter::label() 
+   std::string Parameter::label() const
    {  return label_.string(); }
 
+   /*
+   * Is this a required parameter?
+   */
+   bool Parameter::isRequired() const
+   {  return label_.isRequired(); }
 
 } 
 #endif
