@@ -14,7 +14,9 @@
 #include <ddMd/communicate/Domain.h>   
 
 #include <ddMd/storage/AtomStorage.h>               
+#ifdef INTER_BOND
 #include <ddMd/storage/BondStorage.h>               
+#endif
 #ifdef INTER_ANGLE
 #include <ddMd/storage/AngleStorage.h>               
 #endif
@@ -46,15 +48,19 @@ namespace DdMd
     : domainPtr_(0),
       boundaryPtr_(0),
       atomStoragePtr_(0),
+      #ifdef INTER_BOND
       bondStoragePtr_(0),
+      #endif
       #ifdef INTER_ANGLE
       angleStoragePtr_(0),
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralStoragePtr_(0),
       #endif
-      atomCacheCapacity_(0),
-      bondCacheCapacity_(0)
+      atomCacheCapacity_(0)
+      #ifdef INTER_BOND
+      , bondCacheCapacity_(0)
+      #endif
       #ifdef INTER_ANGLE
       , angleCacheCapacity_(0)
       #endif
@@ -70,15 +76,19 @@ namespace DdMd
     : domainPtr_(0),
       boundaryPtr_(0),
       atomStoragePtr_(0),
+      #ifdef INTER_BOND
       bondStoragePtr_(0),
+      #endif
       #ifdef INTER_ANGLE
       angleStoragePtr_(0),
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralStoragePtr_(0),
       #endif
-      atomCacheCapacity_(0),
-      bondCacheCapacity_(0)
+      atomCacheCapacity_(0)
+      #ifdef INTER_BOND
+      #endif
+      , bondCacheCapacity_(0)
       #ifdef INTER_ANGLE
       , angleCacheCapacity_(0)
       #endif
@@ -90,7 +100,9 @@ namespace DdMd
       associate(simulation.domain(),
                 simulation.boundary(),
                 simulation.atomStorage(),
+                #ifdef INTER_BOND
                 simulation.bondStorage(),
+                #endif
                 #ifdef INTER_ANGLE
                 simulation.angleStorage(),
                 #endif
@@ -106,7 +118,9 @@ namespace DdMd
    */
    void ConfigIo::associate(Domain& domain, Boundary& boundary,
                             AtomStorage& atomStorage,
+                            #ifdef INTER_BOND
                             BondStorage& bondStorage,
+                            #endif
                             #ifdef INTER_ANGLE
                             AngleStorage& angleStorage,
                             #endif
@@ -122,10 +136,12 @@ namespace DdMd
       atomDistributor_.associate(domain, boundary, atomStorage, buffer);
       atomCollector_.associate(domain, atomStorage, buffer);
 
+      #ifdef INTER_BOND
       bondStoragePtr_ = &bondStorage;
       bondDistributor_.associate(domain, atomStorage,
                                  bondStorage, buffer);
       bondCollector_.associate(domain, bondStorage, buffer);
+      #endif
 
       #ifdef INTER_ANGLE
       angleStoragePtr_ = &angleStorage;
@@ -146,7 +162,10 @@ namespace DdMd
    /*
    * Set parameters and allocate memory.
    */
-   void ConfigIo::initialize(int atomCacheCapacity, int bondCacheCapacity
+   void ConfigIo::initialize(int atomCacheCapacity
+                             #ifdef INTER_BOND
+                             , int bondCacheCapacity
+                             #endif
                              #ifdef INTER_ANGLE
                              , int angleCacheCapacity
                              #endif
@@ -156,11 +175,13 @@ namespace DdMd
                             )
    {
       atomCacheCapacity_ = atomCacheCapacity;
-      bondCacheCapacity_ = bondCacheCapacity;
       atomDistributor_.initialize(atomCacheCapacity_);
       atomCollector_.allocate(atomCacheCapacity_);
+      #ifdef INTER_BOND
+      bondCacheCapacity_ = bondCacheCapacity;
       bondDistributor_.initialize(bondCacheCapacity_);
       bondCollector_.allocate(bondCacheCapacity_);
+      #endif
       #ifdef INTER_ANGLE
       angleCacheCapacity_ = angleCacheCapacity;
       angleDistributor_.initialize(angleCacheCapacity_);
@@ -181,9 +202,11 @@ namespace DdMd
       read<int>(in, "atomCacheCapacity", atomCacheCapacity_);
       atomDistributor_.initialize(atomCacheCapacity_);
       atomCollector_.allocate(atomCacheCapacity_);
+      #ifdef INTER_BOND
       read<int>(in, "bondCacheCapacity", bondCacheCapacity_);
       bondDistributor_.initialize(bondCacheCapacity_);
       bondCollector_.allocate(bondCacheCapacity_);
+      #endif
       #ifdef INTER_ANGLE
       read<int>(in, "angleCacheCapacity", angleCacheCapacity_);
       angleDistributor_.initialize(angleCacheCapacity_);
@@ -207,9 +230,11 @@ namespace DdMd
       atomDistributor_.initialize(atomCacheCapacity_);
       atomCollector_.allocate(atomCacheCapacity_);
 
+      #ifdef INTER_BOND
       loader.load(bondCacheCapacity_);
       bondDistributor_.initialize(bondCacheCapacity_);
       bondCollector_.allocate(bondCacheCapacity_);
+      #endif
 
       #ifdef INTER_ANGLE
       loader.load(angleCacheCapacity_);
@@ -230,7 +255,9 @@ namespace DdMd
    void ConfigIo::save(Serializable::OArchive& ar)
    {
       ar & atomCacheCapacity_;
+      #ifdef INTER_BOND
       ar & bondCacheCapacity_;
+      #endif
       #ifdef INTER_ANGLE
       ar & angleCacheCapacity_;
       #endif

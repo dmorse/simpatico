@@ -15,7 +15,9 @@
 #include <ddMd/storage/GroupStorage.tpp>
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
+#ifdef INTER_BOND
 #include <ddMd/potentials/bond/BondPotential.h>
+#endif
 #ifdef INTER_ANGLE
 #include <ddMd/potentials/angle/AnglePotential.h>
 #endif
@@ -149,8 +151,12 @@ namespace DdMd
       simulation().zeroForces();
       pairPotential().computeForces();
       timer_.stamp(PAIR_FORCE);
-      bondPotential().computeForces();
-      timer_.stamp(BOND_FORCE);
+      #ifdef INTER_BOND
+      if (nBondType()) {
+         bondPotential().computeForces();
+         timer_.stamp(BOND_FORCE);
+      }
+      #endif
       #ifdef INTER_ANGLE
       if (nAngleType()) {
          anglePotential().computeForces();
@@ -191,8 +197,12 @@ namespace DdMd
       simulation().zeroForces();
       pairPotential().computeForcesAndStress(domain().communicator());
       timer_.stamp(PAIR_FORCE);
-      bondPotential().computeForcesAndStress(domain().communicator());
-      timer_.stamp(BOND_FORCE);
+      #ifdef INTER_BOND
+      if (nBondType()) {
+         bondPotential().computeForcesAndStress(domain().communicator());
+         timer_.stamp(BOND_FORCE);
+      }
+      #endif
       #ifdef INTER_ANGLE
       if (nAngleType()) {
          anglePotential().computeForcesAndStress(domain().communicator());
@@ -424,6 +434,7 @@ namespace DdMd
           << "   "
           << Dbl(pairForceT*factor2, 12, 6)
           << "   " << Dbl(100.0*pairForceT/time, 12 , 6, true) << std::endl;
+      #ifdef INTER_BOND
       double bondForceT = timer().time(BOND_FORCE);
       totalT += bondForceT;
       out << "Bond Forces          " 
@@ -431,6 +442,7 @@ namespace DdMd
           << "   "
           << Dbl(bondForceT*factor2, 12, 6)
           << "   " << Dbl(100.0*bondForceT/time, 12 , 6, true) << std::endl;
+      #endif
       #ifdef INTER_ANGLE
       double angleForceT = timer().time(ANGLE_FORCE);
       totalT += angleForceT;
@@ -481,9 +493,11 @@ namespace DdMd
       timer().clear(); 
       simulation().exchanger().timer().clear();
       simulation().buffer().clearStatistics();
-      pairPotential().pairList().clearStatistics();
       atomStorage().clearStatistics();
+      pairPotential().pairList().clearStatistics();
+      #ifdef INTER_BOND
       bondStorage().clearStatistics();
+      #endif
       #ifdef INTER_ANGLE
       angleStorage().clearStatistics();
       #endif

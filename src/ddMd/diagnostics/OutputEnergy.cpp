@@ -88,14 +88,17 @@ namespace DdMd
          sys.computePotentialEnergies();
          if (sys.domain().isMaster()) {
             double kinetic   = sys.kineticEnergy();
-            double pair      = sys.pairPotential().energy();
-            double potential = pair;
-            double bond      = sys.bondPotential().energy();
-            potential += bond;
             Log::file() << Int(iStep, 10)
-                        << Dbl(kinetic, 15)
-                        << Dbl(pair, 15)
-                        << Dbl(bond, 15);
+                        << Dbl(kinetic, 15);
+            double potential = 0.0;
+            double pair = sys.pairPotential().energy();
+            potential += pair;
+            Log::file() << Dbl(pair, 15);
+            if (sys.nBondType()) {
+               double bond = sys.bondPotential().energy();
+               potential += bond;
+               Log::file() << Dbl(bond, 15);
+            }
             #ifdef INTER_ANGLE
             if (sys.nAngleType()) {
                double angle = sys.anglePotential().energy();
