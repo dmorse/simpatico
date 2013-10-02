@@ -44,6 +44,12 @@ namespace Util
             if (ParamComponent::echo()) {
                writeParam(Log::file());
             }
+         } else {
+            if (ParamComponent::echo()) {
+               Log::file() << indent() 
+                           << "[ " << label_.string() 
+                           << " is absent ]" << std::endl;
+            }
          }
       }
       #ifdef UTIL_MPI

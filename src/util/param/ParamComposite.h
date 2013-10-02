@@ -32,15 +32,17 @@ namespace Util
    * An object that can read multiple parameters from file.
    *
    * A ParamComposite has a private array of pointers to ParamComponent
-   * objects, stored in the order in which they are read from file by the
-   * readParam() method. We will refer to this as the format array. Each
-   * element of the format array may point to a Parameter object (which
-   * represents a single parameter), a Begin or End object (which represents
-   * a line containing the opening or closing bracket for a parameter block),
-   * a Blank object (i.e., a blank line), or another ParamComposite object.
+   * objects. These are stored in the order in which they are read from 
+   * file by the ParamComposite::readParam() method. We will refer to this 
+   * array as the format array. Each element of the format array may point 
+   * to a Parameter object (which represents a single parameter), a Begin 
+   * object (which represents a line containing the class name and an
+   * opening bracket) and End object (which represents a line containing
+   * only a closing bracket), a Blank object (i.e., a blank line), or 
+   * another ParamComposite object.
    *
    * Any class that reads a block of parameters from the input parameter file
-   * should be derived from ParamComposite. The readParam() method must read
+   * must be derived from ParamComposite. The readParam() method must read
    * the associated parameter file block. The virtual readParameters() method,
    * if re-implemented, should read only the body of the parameter file
    * block, without opening and closing lines. The default implementation of
@@ -48,13 +50,13 @@ namespace Util
    * readParameters() to read the body of the  parameter file block, and then
    * reads the closing line. Almost all subclasses of ParamComposite should
    * re-implement the readParameters() method, and rely on the default
-   * implementation of ParamComposite::readParam() to add the begin and end
-   * lines.
+   * implementation of ParamComposite::readParam() to add the Begin and 
+   * End lines.
    *
-   * The setClassName() and className() methods are used to set and get a
-   * string representing the a subclass name. The setClassName() method
+   * The setClassName() and className() functions may be used to set and get
+   * a std::string containing the class name. The setClassName() method
    * should be called in the constructor of each subclass of ParamComposite.
-   * The name string set in the constructor of a subclass will replace any
+   * The class name set in the constructor of a subclass will replace any
    * name set by a base class, because of the order in which constructors
    * are called. The class name string is used by the default implementation
    * of ParamComposite::readParam() in order to check that the opening line
@@ -64,16 +66,17 @@ namespace Util
    * using protected methods provided by ParamComposite to read individual
    * parameters and "child" ParamComposite objects.  The implementation of
    * readParameters() normally uses read< T >, which reads an individual
-   * parameter, readParamComposite, which reads a nested subblock, readBlank,
-   * which reads a blank line, and more specialized methods to read arrays
-   * and matrices of parameters.  Each of these methods creates a new
-   * ParamComponent of a specified type, adds a pointer to the new object
-   * to the format array, and invokes the readParam method of the new object
-   * in order to read the associated line or block of the parameter file.
+   * parameter, and readParamComposite, which reads a nested subblock. 
+   * There are also more specialized methods (e.g., readDArray<T>to read 
+   * different types of arrays and matrices of parameters.  Each of these 
+   * methods creates a new ParamComponent of a specific type, adds a 
+   * pointer to the new object to the format array, and invokes the 
+   * readParam method of the new object in order to read the associated 
+   * line or block of the parameter file.
    *
    * The ParamComposite::writeParam() method uses the format array to write
-   * data to a file in the same format in which it was read by a previous
-   * call to readParam().
+   * data to an output parameter file in the same format in which it was 
+   * read by a previous call to readParam().
    *
    * \ingroup Param_Module
    */
@@ -136,8 +139,9 @@ namespace Util
       /**
       * Write all parameters to an output stream.
       *
-      * The default implementation calls the readParam method of each
-      * child in the format array.
+      * The default implementation iterates through the format array, and
+      * calls the readParam member function of each ReadComponent in the 
+      * array.  This is sufficient for most subclasses.
       *
       * \param out output stream for reading
       */
@@ -146,7 +150,7 @@ namespace Util
       /**
       * Load all parameters from an archive.
       *
-      * This method is inherited from Serializable. The default
+      * This function is inherited from Serializable. The default
       * implementation for a ParamComposite calls loadParameters, and
       * adds Begin and End lines. All subclasses of ParamComposite
       * should overload loadParameters.
@@ -158,10 +162,11 @@ namespace Util
       /**
       * Load state from archive, without adding Begin and End lines.
       *
-      * This default implementation is empty, and should be overloaded
-      * by all subclasses. The overloaded method should load the entire
-      * internal state from the archive, including members that do not
-      * appear in the parameter file format.
+      * This default implementation is empty, and should be re-implemented
+      * by all subclasses that have an internal state which should be saved
+      * in a restart file. Subclass implementations should load the entire 
+      * internal state from the archive, including persistent private data 
+      * that does not appear in the parameter file format.
       *
       * \param ar input/loading archive.
       */
@@ -171,10 +176,10 @@ namespace Util
       /**
       * Saves all parameters to an archive.
       *
-      * This default implementation calls the save method for all
-      * items in the parameter file format array. This is not sufficient
-      * for classes that contain non-volatile members that do not
-      * appear in the parameter file format.
+      * This default implementation calls the save method for all items in 
+      * the parameter file format array. This is not sufficient for classes 
+      * that contain persistent private data that does not appear in the 
+      * parameter file format.
       *
       * If a class also defines a serialize method template, which allows
       * instances to be serialized to any type of archive, then the save
@@ -192,22 +197,11 @@ namespace Util
       * Resets ParamComposite to its empty state.
       *
       * This method deletes Parameter, Begin, End, and Blank objects in the
-      * format array, recursively invokes resetParam() for any ParamComposite
-      * objects in the format array, nullifies all pointers in the list, and
-      * resets the number of items in the array to 0.
+      * format array (i.e., all "leaf" objects in the format tree), invokes
+      * the resetParam() for any child ParamComposite in the format array
+      * (the nodes in the true), and clears the array of pointers.
       */
       void resetParam();
-
-      #if 0
-      #ifdef UTIL_MPI
-      /**
-      * Set an MPI communicator for parameter IO.
-      *
-      * This method recursively sets the ParamCommunicator for all children.
-      */
-      virtual void setIoCommunicator(MPI::Intracomm& communicator);
-      #endif
-      #endif
 
       //@}
       /// \name read* methods

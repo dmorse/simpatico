@@ -20,10 +20,15 @@ class ParameterTest : public UnitTest
 public:
 
    void setUp()
-   { setVerbose(2); }
+   { 
+      setVerbose(2); 
+      ParamComponent::setEcho(true);
+   }
 
    void tearDown()
-   {}
+   {
+      ParamComponent::setEcho(false);
+   }
 
    void testParamIntConstructor1() {
       printMethod(TEST_FUNC);
@@ -62,6 +67,7 @@ public:
       param  = new ScalarParam<int>("MyLabel", value);
       std::ifstream in;
       openInputFile("in/ScalarParamInt", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       in.close();
       TEST_ASSERT(Label::isClear());
@@ -84,6 +90,7 @@ public:
       Parameter* param  = new ScalarParam<int>("MyLabel", value);
       std::ifstream in;
       openInputFile("in/ScalarParamInt", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       absent->readParam(in);
       TEST_ASSERT(!Label::isClear());
       param->readParam(in);
@@ -107,6 +114,7 @@ public:
       param  = new ScalarParam<int>("MyLabel", value);
       std::ifstream in;
       openInputFile("in/ScalarParamInt", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       in.close();
       TEST_ASSERT(Label::isClear());
@@ -147,6 +155,7 @@ public:
       Parameter* param  = new ScalarParam<int>("MyLabel", value);
       std::ifstream in;
       openInputFile("in/ScalarParamInt", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       absent->readParam(in);
       TEST_ASSERT(!Label::isClear());
       param->readParam(in);
@@ -165,6 +174,7 @@ public:
       // Load from archive
       Serializable::IArchive iar;
       openInputFile("out/binary", iar.file());
+      if (ParamComponent::echo()) std::cout << std::endl;
       int empty2;
       int value2;
       Parameter* absent2 = new ScalarParam<int>("Wrong", empty2, false);
@@ -205,6 +215,7 @@ public:
       param = new ScalarParam<double>("MyLabel", value);
       std::ifstream in;
       openInputFile("in/ScalarParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       in.close();
       if (verbose() > 0) {
@@ -233,6 +244,7 @@ public:
       param = new ScalarParam<std::string>("MyLabel", value);
       std::ifstream in;
       openInputFile("in/ScalarParamString", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       if (verbose() > 0) {
          printEndl();
@@ -249,6 +261,7 @@ public:
       Parameter* param = new ScalarParam<std::string>("MyLabel", value);
       std::ifstream in;
       openInputFile("in/ScalarParamString", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       absent->readParam(in);
       param->readParam(in);
       if (verbose() > 0) {
@@ -268,6 +281,7 @@ public:
       Parameter* param  = new ScalarParam<std::string>("MyLabel", value);
       std::ifstream in;
       openInputFile("in/ScalarParamString", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       absent->readParam(in);
       TEST_ASSERT(!Label::isClear());
       param->readParam(in);
@@ -330,6 +344,7 @@ public:
       param = new CArrayParam<int>("MyLabel", value, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamInt", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       if (verbose() > 0) {
          printEndl();
@@ -360,6 +375,7 @@ public:
       param = new CArrayParam<double>("MyLabel", value, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       if (verbose() > 0) {
          printEndl();
@@ -391,6 +407,7 @@ public:
       Parameter* param = new DArrayParam<int>("MyLabel", value, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamInt", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       if (verbose() > 0) {
          printEndl();
@@ -423,6 +440,7 @@ public:
       param = new DArrayParam<double>("MyLabel", value, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       in.close();
       if (verbose() > 0) {
@@ -432,10 +450,6 @@ public:
       delete param;
    }
 
-
-
-
-
    void testDArrayParamDoubleReadSaveLoad1() {
       printMethod(TEST_FUNC);
       DArray<double> value;
@@ -443,6 +457,7 @@ public:
       Parameter* param  = new DArrayParam<double>("MyLabel", value, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       in.close();
       if (verbose() > 0) {
@@ -486,6 +501,7 @@ public:
       Parameter* param  = new DArrayParam<double>("MyLabel", value, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       absent->readParam(in);
       param->readParam(in);
       in.close();
@@ -551,6 +567,7 @@ public:
       param = new FArrayParam<int, 3>("MyLabel", value);
       std::ifstream in;
       openInputFile("in/ArrayParamInt", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       in.close();
       if (verbose() > 0) {
@@ -582,6 +599,7 @@ public:
       param = new FArrayParam<double, 3>("MyLabel", value);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       in.close();
       if (verbose() > 0) {
@@ -597,6 +615,7 @@ public:
       Parameter* param  = new FArrayParam<double, 3>("MyLabel", value);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       in.close();
       if (verbose() > 0) {
@@ -637,6 +656,7 @@ public:
       Parameter* param  = new FArrayParam<double, 3>("MyLabel", value, true);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       absent->readParam(in);
       param->readParam(in);
       in.close();
@@ -718,6 +738,7 @@ public:
       param = new DMatrixParam<double>("MyLabel", value, 2, 2);
       std::ifstream in;
       openInputFile("in/MatrixParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
       param->readParam(in);
       if (verbose() > 0) {
          printEndl();
