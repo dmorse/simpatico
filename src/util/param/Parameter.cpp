@@ -14,6 +14,8 @@
 #include <util/mpi/MpiSendRecv.h>
 #endif
 
+#include <iomanip>
+
 namespace Util
 {
 
@@ -39,16 +41,19 @@ namespace Util
       if (isIoProcessor()) {
          in >> label_;
          if (Label::isClear()) {
+            // If label matches
             readValue(in);
             isActive_ = true;
             if (ParamComponent::echo()) {
                writeParam(Log::file());
             }
          } else {
-            if (ParamComponent::echo()) {
+            // If optional label does not match
+            if (ParamComponent::echo() && !isRequired()) {
                Log::file() << indent() 
-                           << "[ " << label_.string() 
-                           << " is absent ]" << std::endl;
+                           << label_ << std::right
+                           << std::setw(Parameter::Width)
+                           << "[ absent ]" << std::endl;
             }
          }
       }

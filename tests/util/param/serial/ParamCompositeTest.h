@@ -96,6 +96,7 @@ public:
    {
       printMethod(TEST_FUNC);
       int     value0;
+      int     optInt;
       long    value1;
       double  value2;
       std::string str;
@@ -113,9 +114,11 @@ public:
 
       openInputFile("in/ParamComposite", file_);
 
-      //paramComposite_.setEcho();
+      paramComposite_.setEcho();
+      if (ParamComponent::echo()) std::cout << std::endl;
       paramComposite_.readBegin(file_, "ClassName");
       paramComposite_.read<int>(file_, "value0", value0);
+      paramComposite_.read<int>(file_, "optInt", optInt, false); // Optional parameter
       paramComposite_.read<long>(file_, "value1", value1);
       paramComposite_.read<double>(file_, "value2", value2);
       paramComposite_.read<std::string>(file_, "str", str);

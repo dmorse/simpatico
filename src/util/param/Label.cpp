@@ -78,9 +78,7 @@ namespace Util
          label.isClear_ = false;
       }
       if (label.input_ == label.label_) {
-         // clear();
-         label.input_.clear();
-         label.isClear_ = true;
+         label.clear(); // Clear label input buffer
       } else {
          if (label.isRequired_) {
             Log::file() << "Error reading label"        << std::endl;

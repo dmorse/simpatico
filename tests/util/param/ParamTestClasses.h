@@ -4,6 +4,7 @@
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
 #include <util/containers/Matrix.h>
+#include <util/param/ParamComposite.h>
 
 #include <string>
 
@@ -33,24 +34,28 @@
       virtual void readParameters(std::istream& in) 
       {
          read<double>(in, "x", x_);
+         read<int>(in, "opt", opt_, false); // optional
          read<int>(in, "m", m_);
       }
 
       virtual void loadParameters(Serializable::IArchive& ar) 
       {
          loadParameter<double>(ar, "x", x_);
+         loadParameter<int>(ar, "opt", opt_, false); // optional
          loadParameter<int>(ar, "m", m_);
       }
 
       virtual void save(Serializable::OArchive& ar) 
       {
-         ar << x_;
-         ar << m_;
+         ParamComposite::save(ar);
+         // ar << x_;
+         // ar << m_;
       }
 
    private:
 
       double x_;
+      int    opt_;
       int    m_;
 
    };
