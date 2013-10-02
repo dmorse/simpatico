@@ -14,7 +14,9 @@
 #include <ddMd/communicate/Domain.h>   
 
 #include <ddMd/storage/AtomStorage.h>               
+#ifdef INTER_BOND
 #include <ddMd/storage/BondStorage.h>               
+#endif
 #ifdef INTER_ANGLE
 #include <ddMd/storage/AngleStorage.h>               
 #endif
@@ -178,6 +180,7 @@ namespace DdMd
 
       // Read covalent groups
       bool hasGhosts = false;
+      #ifdef INTER_BOND
       if (bondStorage().capacity()) {
          readGroups<2>(file, "BONDS", "nBond", bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
@@ -186,6 +189,7 @@ namespace DdMd
             setAtomMasks();
          }
       }
+      #endif
       #ifdef INTER_ANGLE
       if (angleStorage().capacity()) {
          readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
@@ -327,9 +331,11 @@ namespace DdMd
       }
 
       // Write the groups
+      #ifdef INTER_BOND
       if (bondStorage().capacity()) {
          writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector());
       }
+      #endif
       #ifdef INTER_ANGLE
       if (angleStorage().capacity()) {
          writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), angleCollector());

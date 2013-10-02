@@ -19,6 +19,7 @@
 #
 #   -m (0|1)   mpi parallelization      (defines/undefines UTIL_MPI)
 #   -g (0|1)   debugging                (defines/undefines UTIL_DEBUG)
+#   -b (0|1)   bond potentials          (defines/undefines INTER_ANGLE)
 #   -a (0|1)   angle potentials         (defines/undefines INTER_ANGLE)
 #   -d (0|1)   dihedral potentials      (defines/undefines INTER_DIHEDRAL)
 #   -e (0|1)   external potentials      (defines/undefines INTER_EXTERNAL)
@@ -43,7 +44,7 @@
 #   >  ./configure -c intel
 #
 #-----------------------------------------------------------------------
-while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
+while getopts "m:g:b:a:d:e:f:l:s:k:c:q" opt; do
 
   if [ -n "$MACRO" ]; then 
     MACRO=""
@@ -62,6 +63,11 @@ while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
       MACRO=UTIL_DEBUG
       VALUE=1
       FILE=src/util/defines.mk
+      ;;
+    b)
+      MACRO=INTER_BOND
+      VALUE=1
+      FILE=src/inter/defines.mk
       ;;
     a)
       MACRO=INTER_ANGLE
@@ -136,6 +142,11 @@ while getopts "m:g:a:d:e:f:l:s:k:c:q" opt; do
          echo "-g ON  - debugging" >&2
       else
          echo "-g OFF - debugging" >&2
+      fi
+      if [ `grep "^ *INTER_BOND *= *1" src/inter/defines.mk` ]; then
+         echo "-b ON  - bond potential" >&2
+      else
+         echo "-b OFF - bond potential" >&2
       fi
       if [ `grep "^ *INTER_ANGLE *= *1" src/inter/defines.mk` ]; then
          echo "-a ON  - angle potential" >&2

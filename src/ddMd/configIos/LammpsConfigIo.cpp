@@ -14,7 +14,9 @@
 #include <ddMd/communicate/Domain.h>   
 
 #include <ddMd/storage/AtomStorage.h>               
+#ifdef INTER_BOND
 #include <ddMd/storage/BondStorage.h>               
+#endif
 #ifdef INTER_ANGLE
 #include <ddMd/storage/AngleStorage.h>               
 #endif
@@ -53,10 +55,13 @@ namespace DdMd
     : ConfigIo(simulation)
    {
       nAtomType_ = simulation.nAtomType();
-      nBondType_ = simulation.nBondType();
+      nBondType_ = 0;
       nAngleType_ = 0;
       nDihedralType_ = 0;
       nImproperType_ = 0;
+      #ifdef INTER_BOND
+      nBondType_ = simulation.nBondType();
+      #endif
       #ifdef INTER_ANGLE
       nAngleType_ = simulation.nAngleType();
       #endif
@@ -151,9 +156,11 @@ namespace DdMd
          if (nAtomType > nAtomType_) {
             UTIL_THROW("nAtomType > simulation().nAtomType()");
          }
+         #ifdef INTER_BOND
          if (nBondType > nBondType_) {
             UTIL_THROW("nAtomType > simulation().nBondType()");
          }
+         #endif
          #ifdef INTER_ANGLE
          if (nAngleType > nAngleType_) {
             UTIL_THROW("nAngleype > simulation().nAngleType()");
@@ -341,17 +348,25 @@ namespace DdMd
       atomStorage().computeNAtomTotal(domain().communicator());
 
       // Bonds
-      if (bondStorage().capacity()) {
-         bondStorage().computeNTotal(domain().communicator());
+      #ifdef INTER_BOND
+      if (nBondType_) {
+         if (bondStorage().capacity()) {
+            bondStorage().computeNTotal(domain().communicator());
+         }
       }
+      #endif
       #ifdef INTER_ANGLE
-      if (angleStorage().capacity()) {
-         angleStorage().computeNTotal(domain().communicator());
+      if (nAngleType_) {
+         if (angleStorage().capacity()) {
+            angleStorage().computeNTotal(domain().communicator());
+         }
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      if (dihedralStorage().capacity()) {
-         dihedralStorage().computeNTotal(domain().communicator());
+      if (nDihedralType_) {
+         if (dihedralStorage().capacity()) {
+            dihedralStorage().computeNTotal(domain().communicator());
+         }
       }
       #endif
 
@@ -362,15 +377,24 @@ namespace DdMd
          file << endl;
       
          int nAtom = atomStorage().nAtomTotal();
-         int nBond = bondStorage().nTotal();
+         int nBond = 0;
          int nAngle  = 0;
          int nDihedral= 0;
          int nImproper = 0;
+         #ifdef INTER_BOND
+         if (nBondType_) {
+            nBond = bondStorage().nTotal();
+         }
+         #endif
          #ifdef INTER_ANGLE
-         nAngle = angleStorage().nTotal();
+         if (nAngleType_) {
+            nAngle = angleStorage().nTotal();
+         }
          #endif
          #ifdef INTER_DIHEDRAL
-         nDihedral = dihedralStorage().nTotal();
+         if (nDihedralType_) {
+            nDihedral = dihedralStorage().nTotal();
+         }
          #endif
 
          // Write numbers of atoms, bonds, etc.
@@ -473,17 +497,25 @@ namespace DdMd
       }
 
       // Write the groups
-      if (bondStorage().capacity()) {
-         writeGroups<2>(file, "Bonds", bondStorage(), bondCollector());
+      #ifdef INTER_BOND
+      if (nBondType_) {
+         if (bondStorage().capacity()) {
+            writeGroups<2>(file, "Bonds", bondStorage(), bondCollector());
+         }
       }
+      #endif
       #ifdef INTER_ANGLE
-      if (angleStorage().capacity()) {
-         writeGroups<3>(file, "Angles", angleStorage(), angleCollector());
+      if (nAngleType_) {
+         if (angleStorage().capacity()) {
+            writeGroups<3>(file, "Angles", angleStorage(), angleCollector());
+         }
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      if (dihedralStorage().capacity()) {
-         writeGroups<4>(file, "Dihedrals", dihedralStorage(), dihedralCollector());
+      if (nDihedralType_) {
+         if (dihedralStorage().capacity()) {
+            writeGroups<4>(file, "Dihedrals", dihedralStorage(), dihedralCollector());
+         }
       }
       #endif
 

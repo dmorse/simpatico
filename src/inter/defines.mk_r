@@ -19,6 +19,9 @@
 # Define INTER_NOPAIR, disable non-bonded pair potentials 
 #INTER_NOPAIR=1
 
+# Define INTER_BOND, enable 2-body bond potentials
+INTER_BOND=1
+
 # Define INTER_ANGLE, enable 3-body angle potentials
 #INTER_ANGLE=1
 
@@ -69,6 +72,13 @@ INTER_SUFFIX:=
 ifdef INTER_NOPAIR
 INTER_DEFS+= -DINTER_NOPAIR
 INTER_SUFFIX:=$(INTER_SUFFIX)_np
+endif
+
+# Enable bond potential
+ifdef INTER_BOND
+INTER_DEFS+= -DINTER_BOND
+else
+INTER_SUFFIX:=$(INTER_SUFFIX)_nb
 endif
 
 # Enable angle potential
