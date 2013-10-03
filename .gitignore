@@ -3,6 +3,3 @@ log
 *.o
 *.d
 *~
-examples/
-tools/
-tests/	

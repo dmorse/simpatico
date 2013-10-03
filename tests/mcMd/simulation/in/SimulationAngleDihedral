@@ -15,13 +15,23 @@ SpeciesManager{
   Homopolymer{
     moleculeCapacity             5
     nAtom                        2
-    type                         0
+    atomType                     0
+    bondType                     0
+    hasAngles                    1
+    angleType                    0
+    hasDihedrals                 1
+    dihedralType                 0
   }
    
   Diblock{
     moleculeCapacity             4
-    blockLength                  3       2
-    type                         1       0
+    blockLengths                 3       2
+    atomTypes                    1       0
+    bondType                     0
+    hasAngles                    1
+    angleType                    0
+    hasDihedrals                 1
+    dihedralType                 0
   }
    
 }
