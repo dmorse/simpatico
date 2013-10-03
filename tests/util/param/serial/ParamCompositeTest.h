@@ -133,6 +133,7 @@ public:
       paramComposite_.readParamComposite(file_, e);
       paramComposite_.readParamComposite(file_, manager);
       paramComposite_.readEnd(file_);
+      paramComposite_.setEcho(false);
 
       printEndl();
       paramComposite_.writeParam(std::cout);
@@ -273,6 +274,7 @@ public:
       paramComposite_.readParamComposite(file_, e);
       paramComposite_.readParamComposite(file_, manager);
       paramComposite_.readEnd(file_);
+      paramComposite_.setEcho(false);
 
       Serializable::OArchive oar;
       openOutputFile("out/save2.bin", oar.file());

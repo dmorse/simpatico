@@ -158,9 +158,9 @@ namespace Util
    }
 
    /*
-   * Add a ScalarParam to the format array.
+   * Add a leaf ParamComponent to the format array.
    */
-   void ParamComposite::addParameter(Parameter& param)
+   void ParamComposite::addLeaf(ParamComponent& param)
    {
       list_.push_back(&param);
       isLeaf_.push_back(true);
@@ -211,9 +211,10 @@ namespace Util
    {
       Begin* ptr = new Begin(label);
       setParent(*ptr, false);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
+      addLeaf(*ptr);
+      // list_.push_back(ptr);
+      // isLeaf_.push_back(true);
+      // ++size_;
       return *ptr;
    }
 

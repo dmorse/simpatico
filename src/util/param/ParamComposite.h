@@ -246,7 +246,7 @@ namespace Util
       {  return read<Type>(in, label, value, true); }
 
       /**
-      * Add a C array parameter, and read its elements.
+      * Add and read a C array parameter.
       *
       * \param in     input stream for reading
       * \param label  Label string for new array
@@ -269,32 +269,33 @@ namespace Util
       {  return readCArray<Type>(in, label, value, n, true); }
 
       /**
-      * Add a DArray < Type > parameter, and read its elements.
+      * Add and read a DArray < Type > parameter.
       *
-      * \param in     input stream for reading
+      * \param in  input stream for reading
       * \param label  Label string for new array
       * \param array  DArray object
-      * \param n      number of elements
+      * \param n  number of elements
       * \param isRequired  Is this a required parameter?
       * \return reference to the new DArrayParam<Type> object
       */
       template <typename Type>
-      DArrayParam<Type>&
-      readDArray(std::istream &in, const char *label, DArray<Type>& array, int n,
-                 bool isRequired);
+      DArrayParam<Type>& 
+      readDArray(std::istream &in, const char *label, 
+                 DArray<Type>& array, int n, bool isRequired);
 
       /**
       * Add a required DArray < Type > parameter.
       */
       template <typename Type>
       DArrayParam<Type>&
-      readDArray(std::istream &in, const char *label, DArray<Type>& array, int n)
+      readDArray(std::istream &in, const char *label, 
+                 DArray<Type>& array, int n)
       {  return readDArray<Type>(in, label, array, n, true); }
 
       /**
       * Add and read an FArray < Type, N > fixed-size array parameter.
       *
-      * \param in     input stream for reading
+      * \param in  input stream for reading
       * \param label  Label string for new array
       * \param array  FArray object
       * \param isRequired  Is this a required parameter?
@@ -318,12 +319,12 @@ namespace Util
       *
       * This reads m rows of n elements into an array of type array[][np].
       *
-      * \param in     input stream for reading
+      * \param in  input stream for reading
       * \param label  Label string for new array
       * \param value  pointer to array
-      * \param m      number of rows (1st dimension)
-      * \param n      logical number of columns (2nd dimension)
-      * \param np     physical number of columns (elements allocated per row)
+      * \param m  number of rows (1st dimension)
+      * \param n  logical number of columns (2nd dimension)
+      * \param np  physical number of columns (elements allocated per row)
       * \param isRequired  Is this a required parameter?
       * \return reference to the CArray2DParam<Type> object
       */
@@ -349,7 +350,7 @@ namespace Util
       * \param matrix  DMatrix object
       * \param m  number of rows (1st dimension)
       * \param n  number of columns (2nd dimension)
-      * \param isRequired  Is this a required parameter?
+      * \param  isRequired  Is this a required parameter?
       * \return reference to the DMatrixParam<Type> object
       */
       template <typename Type>
@@ -369,8 +370,8 @@ namespace Util
       /**
       * Add and read a class label and opening bracket.
       *
-      * \param in    input stream for reading
-      * \param label class name string, without trailing bracket
+      * \param in  input stream for reading
+      * \param label  class name string, without trailing bracket
       * \return reference to the new Begin object
       */
       Begin& readBegin(std::istream &in, const char* label);
@@ -378,7 +379,7 @@ namespace Util
       /**
       * Add and read the closing bracket.
       *
-      * \param in input stream for reading
+      * \param in  input stream for reading
       * \return reference to the new End object
       */
       End& readEnd(std::istream &in);
@@ -393,16 +394,17 @@ namespace Util
 
       //@}
       /// \name load* methods
-      /// \brief Each of these methods invokes an associated add* method to create
-      /// a new ParamComponent object, and then invokes the load() method of the
-      /// new object to load the associated parameter value from an archive.
+      /// \brief Each of these methods invokes an associated add* method to 
+      /// create a new ParamComponent object, and then invokes the load() 
+      /// method of the new object to load the associated parameter value 
+      /// from an input archive.
       //@{
 
       /**
       * Add and load a child ParamComposite.
       *
-      * \param ar    input archive for loading
-      * \param child child ParamComposite object
+      * \param ar  input archive for loading
+      * \param child  child ParamComposite object
       * \param next  true if the indent level is one higher than parent.
       */
       void
@@ -412,7 +414,7 @@ namespace Util
       /**
       * Add a new Param < Type > object, and load its value.
       *
-      * \param ar     archive for loading
+      * \param ar  archive for loading
       * \param label  Label string
       * \param value  reference to the Type variable
       * \return reference to the new CArrayParam<Type> object
@@ -433,10 +435,10 @@ namespace Util
       /**
       * Add a C array parameter, and load its elements.
       *
-      * \param ar     archive for loading
+      * \param ar  archive for loading
       * \param label  Label string for new array
       * \param value  pointer to array
-      * \param n      number of elements
+      * \param n  number of elements
       * \return reference to the new CArrayParam<Type> object
       */
       template <typename Type>
@@ -456,10 +458,10 @@ namespace Util
       /**
       * Add a DArray < Type > parameter, and load its elements.
       *
-      * \param ar     archive for loading
+      * \param ar  archive for loading
       * \param label  Label string for new array
       * \param array  DArray object
-      * \param n      number of elements (logical size)
+      * \param n  number of elements (logical size)
       * \param isRequired  Is this a required parameter?
       * \return reference to the new DArrayParam<Type> object
       */
@@ -480,7 +482,7 @@ namespace Util
       /**
       * Add and load an FArray < Type, N > fixed-size array parameter.
       *
-      * \param ar     archive for loading
+      * \param ar  archive for loading
       * \param label  Label string for new array
       * \param array  FArray object
       * \param isRequired  Is this a required parameter?
@@ -630,11 +632,11 @@ namespace Util
       void setParent(ParamComponent& param, bool next = true);
 
       /**
-      * Add a new Parameter object to the format array.
+      * Add a new leaf ParamComponent object to the format array.
       *
       * \param param Parameter object
       */
-      void addParameter(Parameter& param);
+      void addLeaf(ParamComponent& param);
 
    };
 
@@ -652,7 +654,7 @@ namespace Util
       ptr = new ScalarParam<Type>(label, value, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
@@ -668,7 +670,7 @@ namespace Util
       ptr = new ScalarParam<Type>(label, value, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
@@ -679,14 +681,14 @@ namespace Util
    */
    template <typename Type>
    CArrayParam<Type>&
-   ParamComposite::readCArray(std::istream &in,
-                   const char *label, Type *value, int n, bool isRequired)
+   ParamComposite::readCArray(std::istream &in, const char *label, 
+                              Type *value, int n, bool isRequired)
    {
       CArrayParam<Type>* ptr; 
       ptr = new CArrayParam<Type>(label, value, n, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
@@ -702,7 +704,7 @@ namespace Util
       ptr = new CArrayParam<Type>(label, value, n, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
@@ -720,7 +722,7 @@ namespace Util
       ptr = new DArrayParam<Type>(label, array, n, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
@@ -736,7 +738,7 @@ namespace Util
       ptr = new DArrayParam<Type>(label, array, n, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
@@ -754,7 +756,7 @@ namespace Util
       ptr = new FArrayParam<Type, N>(label, array, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
@@ -770,7 +772,7 @@ namespace Util
       ptr  = new FArrayParam<Type, N>(label, array, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
@@ -789,7 +791,7 @@ namespace Util
       ptr = new CArray2DParam<Type>(label, value, m, n, np, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
@@ -806,7 +808,7 @@ namespace Util
       ptr = new CArray2DParam<Type>(label, value, m, n, np, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
@@ -825,7 +827,7 @@ namespace Util
       ptr = new DMatrixParam<Type>(label, matrix, m, n, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
@@ -842,7 +844,7 @@ namespace Util
       ptr = new DMatrixParam<Type>(label, matrix, m, n, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addParameter(*ptr);
+      addLeaf(*ptr);
       return *ptr;
    }
 
