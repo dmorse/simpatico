@@ -5,6 +5,7 @@
 #include <test/UnitTestRunner.h>
 
 #include <util/param/Label.h>
+#include <util/global.h>
 
 #include <iostream>
 #include <fstream>
@@ -22,24 +23,64 @@ public:
    void tearDown()
    { }
 
-   void testLabelConstructor() 
+   void testLabelConstructor1() 
    {
       printMethod(TEST_FUNC);
       Label label("MyLabel");
    }
 
+   void testLabelConstructor2() 
+   {
+      printMethod(TEST_FUNC);
+      Label label("MyLabel", false);
+   }
 
-   void testExtracter() 
+   void testExtractor1() 
    {
       printMethod(TEST_FUNC);
       Label label("MyLabel");
       std::ifstream in;
       openInputFile("in/Label", in);
       in >> label;
-      in >> label;
+      in >> Label("YourLabel");
       in.close();
    }
 
+   void testExtractor2() 
+   {
+      printMethod(TEST_FUNC);
+      Label label0("WrongLabel", false);
+      Label label1("AnotherLabel", false);
+      Label label2("MyLabel", false);
+      Label label3("YourLabel", true);
+      std::ifstream in;
+      openInputFile("in/Label", in);
+      in >> label0;
+      in >> label1;
+      in >> label2;
+      in >> label3;
+      in.close();
+   }
+
+   void testExtractor3() 
+   {
+      printMethod(TEST_FUNC);
+      Label label0("WrongLabel", false);
+      Label label1("AnotherLabel", false);
+      Label label2("MyLabel", false);
+      Label label3("YourLabel", true);
+      std::ifstream in;
+      openInputFile("in/Label", in);
+      in >> label0;
+      in >> label1;
+      try {
+         in >> label3;
+      } catch (Util::Exception& e) {
+         std::cout << "Caught expected Exception" << std::endl;
+         Label::clear();
+      }
+      in.close();
+   }
 
    void testInserter() 
    {
@@ -54,8 +95,11 @@ public:
 
 
 TEST_BEGIN(LabelTest)
-TEST_ADD(LabelTest, testLabelConstructor)
-TEST_ADD(LabelTest, testExtracter)
+TEST_ADD(LabelTest, testLabelConstructor1)
+TEST_ADD(LabelTest, testLabelConstructor2)
+TEST_ADD(LabelTest, testExtractor1)
+TEST_ADD(LabelTest, testExtractor2)
+TEST_ADD(LabelTest, testExtractor3)
 TEST_ADD(LabelTest, testInserter)
 TEST_END(LabelTest)
 

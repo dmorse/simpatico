@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <string>
+#include <string>
 
 namespace Util
 {
@@ -18,6 +19,16 @@ namespace Util
    * A label string in a file format.
    *
    * The operator >> for a label checks if the expected label was found.
+   * The operator << outputs the expected label.
+   *
+   * The constructor takes a parameter isRequired that determines whether
+   * the label must be matched (isRequired == true), or if it is optional
+   * (isRequired == false). If the input value read by the >> operator does
+   * not match the expected value and isRequired is true, the >> operator 
+   * will print an error message to the Log::file() and then throw an 
+   * Exception. If the input value does not match and isRequired is false,
+   * the >> operator stores the input value in a string buffer, and will 
+   * compare it to subsequent values until a match is found.
    *
    * \ingroup Param_Module
    */
@@ -26,15 +37,19 @@ namespace Util
 
    public:
 
-      /// Width of label field in file format.
+      /// Width of label field in file output format.
       static const int LabelWidth  = 20;
+
+      /// Initialize read buffer to empty.
+      static void clear();
 
       /**
       * Constructor.
       *
-      * \param label label string that precedes value in file format
+      * \param label      label string that precedes value in file format
+      * \param isRequired Is this label a required entry? (true by default)
       */
-      explicit Label(const char* label);
+      explicit Label(const char* label, bool isRequired = true);
 
       /**
       * Copy constructor.
@@ -55,7 +70,19 @@ namespace Util
 
    private:
 
+      /// Is this label a required entry ? (passed to constructor).
+      bool isRequired_;
+
+      /// Expected label (passed to constructor).
       std::string label_;
+
+   // Static members:
+
+      /// Did the previous input match the label? (initialized true).
+      static bool isMatch_;
+
+      /// Most recent input value from istream (initialized empty).
+      static std::string input_;
 
    //friends:
 

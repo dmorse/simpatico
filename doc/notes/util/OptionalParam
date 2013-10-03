@@ -1,42 +1,85 @@
 How to allow for optional entries in a parameter file:
 
-Label class:
+==========================================================================
+class Label:
 
-  - Add a stringstream buffer to Label. 
-  - Add bool isOptional_ member, set false by default.
-  - Add an optional isOptional argument to constructor.
-  - Within the readParam method:
+  - Add a stringstream buffer_ to Label. 
+  - Add an optional isOptional argument to constructor, default false.
+  - Add bool isOptional_ member, initialize to isOptional parameter.
+  - Add bool isMatch_ member. Initialize true.
+  - Add bool isMatch() accessor. This can be checked after using >> operator.
 
-    If buffer is empty, read into buffer;
-    if (isOptional_) {
-       compare strings
-       if (string == expected) {
-          clear buffer; return 1;
+  - Within the >> operator:
+
+    If (isMatch_) {
+       in >> actual
+    } else {
+       buffer >> actual
+    }
+    if (actual != label.label_) {
+       isMatch_ == false;
+       if (isOptional_) {
+          put actual into buffer
        } else {
-          return 0.
+          throw exception
        }
+    } else {
+       isMatch_ == true;
+       clear buffer
+    }
+    return in;
 
-Parameter:
+==========================================================================
+class Parameter:
 
-  - Add isOptional_ member.
-  - If isOptional, return immediately if Label does not match. 
+  - Add isOptional optional parameter to constructor, default false.
+  - Add isOptional_ member, initialize to isOptional parameter.
+  - Add isOptional() accessor. 
 
+==========================================================================
+template <typename Type>
+class ScalarParam<Type> templates:
+
+  - Add isOptional optional parameter to constructor, default false.
+
+  - Change return type of readParam(std::istream& ) to bool
+  - int readParam() {
+        Label label;
+        in >> label_;
+        if (label_.isMatch()) { 
+            in >> value_;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+==========================================================================
+template <typename Type>
+class (CArray|CArray2D|DArray|FArray)Param<Type> templates:
+
+  - Change return type to bool (true on success)
+  - Change readParam() method similar to above
+==========================================================================
 ParamComposite:
 
-  - Add className member to ParamComposite. Set value for every
-    subclass of ParamComposite. (No harm done at this point).
+  - Strategy: 
 
-  - Change name of method of a ParamComposite to readParamBlock(). 
-    This is the only method that is defined for ParamComposite 
-    subclasses in the McMd or DdMd namespace, so a global change 
-    might suffice.
+    1. Make changes to allow for optional ScalarParameter first.
+    2. Then allow optional (CArray/Array2D/DArray/FArray) etc. parameters.
+    3. Allow optional parameter composites last.
 
-  - Default implementation of ParamComposite::readParam() would 
-    call Begin::read, virtual readChildParameters(), End::read(). 
-    Behavior of the default implementation could depend on 
-    isOptional member.
+  - Make add<Type> and add(ArrayType)<Type> templates private.
 
-  - Remove explicit Begin and End statements from readParamBlock
-    statement of every ParamComposite. Perhaps there is some
-    way to automate this change?
+  - Separate instantiation of Parameter objects from addition to list:
+    Make the add* methods take an instantiated ScalarParam as a parameter,
+    rather than taking a label and value and instantiating it themselves.
 
+  - Change the read*<Type> methods to instantiate a ScalarParam object,
+    then call its readParam() method, and then add it only if readParam
+    returns true. 
+
+  - Change the load*<Type> methods accordingly.
+
+  - Later: Default implementation of ParamComposite::readParam() would 
+    check if the class label matched and return immediately if did not.

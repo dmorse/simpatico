@@ -13,23 +13,35 @@
 
 #include <iomanip>
 
-//using namespace std;
-
 namespace Util
 {
+
+   bool  Label::isMatch_ = true;
+   std::string  Label::input_;
+
+   /*
+   * Clear read buffer (static variable).
+   */
+   void Label::clear()
+   {
+      isMatch_ = true;
+      input_.clear(); 
+   }
 
    /*
    * Constructor.
    */
-   Label::Label(const char* label)
-    : label_(label)
+   Label::Label(const char* label, bool isRequired)
+    : isRequired_(isRequired),
+      label_(label)
    {}
 
    /*
    * Copy constructor.
    */
    Label::Label(const Label& other)
-    : label_(other.label_)
+    : isRequired_(other.isRequired_),
+      label_(other.label_)
    {}
 
    /*
@@ -49,13 +61,21 @@ namespace Util
    */
    std::istream& operator>>(std::istream& in, Label label)
    {
-      std::string actual;
-      in >> actual;
-      if ( actual != label.label_ ) {
-         Log::file() << "Error reading label"          << std::endl;
-         Log::file() << "Expected: " <<  label.label_  << std::endl;
-	 Log::file() << "Scanned:  " <<  actual        << std::endl;
-         UTIL_THROW("Incorrect label");
+      // If previous input value matched, read a new one.
+      if (label.isMatch_) {
+         in >> label.input_;
+      }
+      if (label.input_ == label.label_) {
+         label.isMatch_ = true;
+         label.input_.clear();
+      } else {
+         label.isMatch_ = false;
+         if (label.isRequired_) {
+            Log::file() << "Error reading label"        << std::endl;
+            Log::file() << "Expected: " << label.label_ << std::endl;
+            Log::file() << "Scanned:  " << label.input_ << std::endl;
+            UTIL_THROW("Incorrect label");
+         }
       };
       return in;
    }
