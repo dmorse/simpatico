@@ -77,7 +77,7 @@ namespace Util
    * \param version archive version id
    */
    template <class Archive, typename T>
-   inline void serializeOptional(Archive& ar, T& data, bool& isActive)
+   inline void saveOptional(Archive& ar, T& data, bool isActive)
    {  
       ar & isActive;
       if (isActive) {

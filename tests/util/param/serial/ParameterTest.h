@@ -544,6 +544,62 @@ public:
       delete param2;
    }
 
+   void testDArrayParamDoubleReadSaveLoad3() {
+      printMethod(TEST_FUNC);
+      DArray<double> empty;
+      DArray<double> value;
+      empty.allocate(3);
+      value.allocate(3);
+      Parameter* absent = new DArrayParam<double>("Wrong", empty, 3, false);
+      Parameter* param  = new DArrayParam<double>("MyLabel", value, 3);
+      std::ifstream in;
+      openInputFile("in/ArrayParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
+      absent->readParam(in);
+      param->readParam(in);
+      in.close();
+      if (verbose() > 0) {
+         printEndl();
+         param->writeParam(std::cout);
+      }
+
+      // Save to archive
+      Serializable::OArchive oar;
+      openOutputFile("out/binary", oar.file());
+      saveOptional(oar, empty, false);
+      saveOptional(oar, value, true);
+      //absent->save(oar);
+      //param->save(oar);
+      oar.file().close();
+
+      #if 0
+      // Load from archive
+      Serializable::IArchive iar;
+      openInputFile("out/binary", iar.file());
+      DArray<double> empty2;
+      DArray<double> value2;
+      empty2.allocate(3);
+      value2.allocate(3);
+      Parameter* absent2 = new DArrayParam<double>("Wrong", empty2, 3, false);
+      Parameter* param2 = new DArrayParam<double>("MyLabel", value2, 3);
+      absent2->load(iar);
+      param2->load(iar);
+      iar.file().close();
+
+      TEST_ASSERT(param2->label() == "MyLabel");
+      //TEST_ASSERT(value2 == 36);
+
+      if (verbose() > 0) {
+         printEndl();
+         param2->writeParam(std::cout);
+      }
+      #endif
+
+      delete absent;
+      delete param;
+      //delete absent2;
+      //delete param2;
+   }
    void testFArrayParamIntWrite() 
    {
       printMethod(TEST_FUNC);
@@ -773,6 +829,7 @@ TEST_ADD(ParameterTest, testDArrayParamDoubleWrite)
 TEST_ADD(ParameterTest, testDArrayParamDoubleRead)
 TEST_ADD(ParameterTest, testDArrayParamDoubleReadSaveLoad1)
 TEST_ADD(ParameterTest, testDArrayParamDoubleReadSaveLoad2)
+TEST_ADD(ParameterTest, testDArrayParamDoubleReadSaveLoad3)
 TEST_ADD(ParameterTest, testFArrayParamIntWrite)
 TEST_ADD(ParameterTest, testFArrayParamIntRead)
 TEST_ADD(ParameterTest, testFArrayParamDoubleWrite)

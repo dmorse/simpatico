@@ -5,6 +5,7 @@
 #include <util/space/IntVector.h>
 #include <util/containers/Matrix.h>
 #include <util/param/ParamComposite.h>
+#include <util/archives/serialize.h>
 
 #include <string>
 
@@ -47,9 +48,9 @@
 
       virtual void save(Serializable::OArchive& ar) 
       {
-         ParamComposite::save(ar);
-         // ar << x_;
-         // ar << m_;
+         // ParamComposite::save(ar);
+         ar << x_;
+         ar << m_;
       }
 
    private:
@@ -229,13 +230,15 @@
       virtual void readParameters(std::istream& in)
       {
          read<int>(in, "value0", value0_);
+         read<int>(in, "optInt", optInt_, false);
          read<long>(in, "value1", value1_);
          read<double>(in, "value2", value2_);
          read<std::string>(in, "str", str_);
          readCArray<int>(in, "value3", value3_, 3);
          readCArray<double>(in, "value4", value4_, 3);
          readCArray2D<double>(in, "value5", value5_[0], 2, 2, 2);
-         readDArray<double>(in, "value6", value6_, 4);
+         //readDArray<double>(in, "value6", value6_, 4);
+         readDArray<double>(in, "value6", value6_, 4, false); // optional
          readBlank(in);
          read<Vector>(in, "value7", value7_);
          read<IntVector>(in, "value8", value8_);
@@ -247,13 +250,14 @@
       virtual void loadParameters(Serializable::IArchive& ar)
       {
          loadParameter<int>(ar, "value0", value0_);
+         loadParameter<int>(ar, "optInt", optInt_, false); // optional
          loadParameter<long>(ar, "value1", value1_);
          loadParameter<double>(ar, "value2", value2_);
          loadParameter<std::string>(ar, "str", str_);
          loadCArray<int>(ar, "value3", value3_, 3);
          loadCArray<double>(ar, "value4", value4_, 3);
          loadCArray2D<double>(ar, "value5", value5_[0], 2, 2, 2);
-         loadDArray<double>(ar, "value6", value6_, 4);
+         loadDArray<double>(ar, "value6", value6_, 4, false); // optional
          addBlank();
          loadParameter<Vector>(ar, "value7", value7_);
          loadParameter<IntVector>(ar, "value8", value8_);
@@ -265,13 +269,15 @@
       virtual void save(Serializable::OArchive& ar) 
       {
          ar & value0_;
+         saveOptional(ar, optInt_, false);
          ar & value1_;
          ar & value2_;
          ar & str_;
          ar.pack(value3_, 3);
          ar.pack(value4_, 3);
          ar.pack(value5_[0], 2, 2, 2);
-         ar & value6_;
+         // ar & value6_;
+         saveOptional(ar, value6_, true);
          ar & value7_;
          ar & value8_;
          ar & value9_;
@@ -282,6 +288,7 @@
    private:
    
       int     value0_;
+      int     optInt_;
       long    value1_;
       double  value2_;
       std::string str_;
