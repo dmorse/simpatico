@@ -35,11 +35,15 @@ class MpiParamCompositeTest : public ParamFileTest
 public:
 
    void setUp()
-   {  Label::clear(); }
+   {  
+      Label::clear(); 
+      ParamComponent::setEcho(false);
+   }
 
    void breakDown()
    {  
       Label::clear(); 
+      ParamComponent::setEcho(false);
       // Log::close(); 
    }
 
@@ -47,6 +51,7 @@ public:
    {
       printMethod(TEST_FUNC);
       int     value0;
+      int     optInt;
       long    value1;
       double  value2;
       std::string  str;
@@ -63,16 +68,18 @@ public:
       AManager  manager;
 
       object.setIoCommunicator(communicator()); 
-      ParamComponent::setEcho(true);
+      //ParamComponent::setEcho(true);
 
       openFile("in/ParamComposite");
+      if (ParamComponent::echo()) Log::file() << std::endl;
 
       object.readBegin(file(), "ClassName");
       object.read<int>(file(), "value0", value0);
       object.read<long>(file(), "value1", value1);
+      object.read<int>(file(), "optInt", optInt, false);
       object.read<double>(file(), "value2", value2);
       object.read<std::string>(file(), "str", str);
-      object.readCArray<int>(file(), "value3", value3, 3);
+      object.readCArray<int>(file(), "value3", value3, 3, false);
       object.readCArray<double>(file(), "value4", value4, 3);
       object.readCArray2D<double>(file(), "value5", value5[0], 2, 2, 3);
       object.readDArray<double>(file(), "value6", value6, 4);
@@ -99,6 +106,7 @@ public:
       //ParamComponent::setEcho(true);
 
       openFile("in/ParamComposite");
+      if (ParamComponent::echo()) Log::file() << std::endl;
       object.readParam(file());
       file().close();
 

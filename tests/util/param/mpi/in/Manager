@@ -1,7 +1,7 @@
 AManager{
 
    B{
-      x    2.0
+      opt  3
       m    1
    }
 

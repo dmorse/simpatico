@@ -33,7 +33,7 @@
 
       virtual void readParameters(std::istream& in) 
       {
-         read<double>(in, "x", x_);
+         read<double>(in, "x", x_, false); // optional
          read<int>(in, "opt", opt_, false); // optional
          read<int>(in, "m", m_);
       }

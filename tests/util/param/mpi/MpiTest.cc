@@ -1,4 +1,5 @@
 
+#ifdef UTIL_MPI
 #include <util/global.h>
 #define TEST_MPI
 #include "MpiParamTest.h"
@@ -20,5 +21,4 @@ int main()
 
    MPI::Finalize();
 }
-#ifdef UTIL_MPI
 #endif
