@@ -184,6 +184,9 @@ namespace Util
    {
       int capacity1, capacity2;
       if (Archive::is_saving()) {
+         if (!isAllocated()) {
+            UTIL_THROW("Cannot save unallocated DMatrix.");
+         }
          capacity1 = capacity1_;
          capacity2 = capacity2_;
       }
@@ -194,9 +197,7 @@ namespace Util
             if (capacity1 > 0 && capacity2 > 0) {
                allocate(capacity1, capacity2);
             } else {
-               if (capacity1 > 0 || capacity2 > 0) {
-                  UTIL_THROW("Inconsistent input capacities for DMatrix");
-               }
+               UTIL_THROW("Unallocated DMatrix, invalid capacity values");
             }
          } else {
             if (capacity1 != capacity1_) {
@@ -207,10 +208,8 @@ namespace Util
             }
          }
       }
-      if (isAllocated()) {
-         for (int i = 0; i < capacity1_*capacity2_; ++i) {
-            ar & data_[i];
-         }
+      for (int i = 0; i < capacity1_*capacity2_; ++i) {
+         ar & data_[i];
       }
    }
 

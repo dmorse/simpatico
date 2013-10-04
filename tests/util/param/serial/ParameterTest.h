@@ -566,8 +566,8 @@ public:
       // Save to archive
       Serializable::OArchive oar;
       openOutputFile("out/binary", oar.file());
-      saveOptional(oar, empty, false);
-      saveOptional(oar, value, true);
+      Parameter::saveOptional(oar, empty, false);
+      Parameter::saveOptional(oar, value, true);
       //absent->save(oar);
       //param->save(oar);
       oar.file().close();

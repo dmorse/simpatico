@@ -75,7 +75,7 @@ public:
       value7[2] = 15.3;
       value7[3] = 15.2;
 
-      paramComposite_.addBegin("ClassName");
+      paramComposite_.addBegin("AComposite");
       paramComposite_.add<int>("value0", value0);
       paramComposite_.add<long>("value1", value1);
       paramComposite_.add<double>("value2", value2);
@@ -116,7 +116,7 @@ public:
 
       paramComposite_.setEcho();
       if (ParamComponent::echo()) std::cout << std::endl;
-      paramComposite_.readBegin(file_, "ClassName");
+      paramComposite_.readBegin(file_, "AComposite");
       paramComposite_.read<int>(file_, "value0", value0);
       paramComposite_.read<int>(file_, "optInt", optInt, false); // Optional parameter
       paramComposite_.read<long>(file_, "value1", value1);
@@ -199,7 +199,7 @@ public:
       FArray<double, 4> cValue7;
 
       ParamComposite clone;
-      clone.addBegin("ClassName");
+      clone.addBegin("AComposite");
       clone.loadParameter<int>(iar, "value0", cValue0);
       clone.loadParameter<long>(iar, "value1", cValue1);
       clone.loadParameter<double>(iar, "value2", cValue2);
@@ -258,7 +258,7 @@ public:
       openInputFile("in/ParamComposite", file_);
 
       //paramComposite_.setEcho();
-      paramComposite_.readBegin(file_, "ClassName");
+      paramComposite_.readBegin(file_, "AComposite");
       paramComposite_.read<int>(file_, "value0", value0);
       paramComposite_.read<long>(file_, "value1", value1);
       paramComposite_.read<double>(file_, "value2", value2);
@@ -312,7 +312,7 @@ public:
       openInputFile("out/save2.bin", iar.file());
 
       ParamComposite clone;
-      clone.addBegin("ClassName");
+      clone.addBegin("AComposite");
       clone.loadParameter<int>(iar, "value0", cValue0);
       clone.loadParameter<long>(iar, "value1", cValue1);
       clone.loadParameter<double>(iar, "value2", cValue2);

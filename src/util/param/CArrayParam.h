@@ -115,7 +115,7 @@ namespace Util
    */
    template <class Type>
    void CArrayParam<Type>::saveValue(Serializable::OArchive& ar)
-   {  
+   {
       for (int i = 0; i < n_; ++i) {
          ar << value_[i];
       }

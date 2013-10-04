@@ -69,21 +69,5 @@ namespace Util
       }
    }
 
-   /**
-   * Serialize an optional value.
-   *
-   * \param ar      archive object
-   * \param data    object to be serialized
-   * \param version archive version id
-   */
-   template <class Archive, typename T>
-   inline void saveOptional(Archive& ar, T& data, bool isActive)
-   {  
-      ar & isActive;
-      if (isActive) {
-         ar & data;
-      }
-   }
-
 }
 #endif

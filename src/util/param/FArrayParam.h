@@ -142,10 +142,11 @@ namespace Util
    */
    template <class Type, int N>
    void FArrayParam<Type, N>::saveValue(Serializable::OArchive& ar)
-   {  
-      for (int i = 0; i < N; ++i) {
-         ar << (*arrayPtr_)[i];
-      }
+   { 
+      ar << *arrayPtr_; 
+      // for (int i = 0; i < N; ++i) {
+      //   ar << (*arrayPtr_)[i];
+      // }
    }
 
    #ifdef UTIL_MPI

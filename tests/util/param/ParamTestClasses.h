@@ -41,7 +41,7 @@
 
       virtual void loadParameters(Serializable::IArchive& ar) 
       {
-         loadParameter<double>(ar, "x", x_);
+         loadParameter<double>(ar, "x", x_, false); // optional
          loadParameter<int>(ar, "opt", opt_, false); // optional
          loadParameter<int>(ar, "m", m_);
       }
@@ -49,7 +49,8 @@
       virtual void save(Serializable::OArchive& ar) 
       {
          // ParamComposite::save(ar);
-         ar << x_;
+         Parameter::saveOptional(ar, x_, false);
+         Parameter::saveOptional(ar, opt_, false);
          ar << m_;
       }
 
@@ -222,7 +223,7 @@
    
       AComposite()
       {  
-         setClassName("ClassName");
+         setClassName("AComposite");
          value6_.allocate(4); 
          value9_.allocate(2, 2); 
       }
@@ -269,7 +270,7 @@
       virtual void save(Serializable::OArchive& ar) 
       {
          ar & value0_;
-         saveOptional(ar, optInt_, false);
+         Parameter::saveOptional(ar, optInt_, false);
          ar & value1_;
          ar & value2_;
          ar & str_;
@@ -277,7 +278,7 @@
          ar.pack(value4_, 3);
          ar.pack(value5_[0], 2, 2, 2);
          // ar & value6_;
-         saveOptional(ar, value6_, true);
+         Parameter::saveOptional(ar, value6_, true);
          ar & value7_;
          ar & value8_;
          ar & value9_;

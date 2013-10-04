@@ -243,19 +243,25 @@ namespace Util
    {
       int capacity;
       if (Archive::is_saving()) {
+         if (!isAllocated()) {
+            UTIL_THROW("Cannot save unallocated DSArray");
+         }
          capacity = capacity_;
       }
       ar & capacity;
       ar & size_;
       if (Archive::is_loading()) {
+         if (capacity <= 0) {
+            UTIL_THROW("Invalid DSArray input capacity on load, capacity <= 0");
+         }
+         if (size_ < 0) {
+            UTIL_THROW("Invalid DSArray input size on load, size < 0");
+         }
          if (!isAllocated()) {
-            if (capacity > 0) {
-               allocate(capacity);
-            }
-         } else {
-            if (size_ > capacity_) {
-               UTIL_THROW("Inconsistent DSArray size and capacity");
-            }
+            allocate(capacity);
+         } 
+         if (size_ > capacity_) {
+            UTIL_THROW("Inconsistent DSArray size and capacity on load");
          }
       }
       for (int i = 0; i < size_; ++i) {

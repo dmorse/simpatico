@@ -152,7 +152,13 @@ namespace Util
    */
    template <class Type>
    void DMatrixParam<Type>::saveValue(Serializable::OArchive& ar)
-   {  
+   {
+      if (m_ != matrixPtr_->capacity1()) {
+         UTIL_THROW("Error: Logical size m_ != DMatrix<Type>::capacity1()");
+      }
+      if (n_ != matrixPtr_->capacity2()) {
+         UTIL_THROW("Error: Logical size n_ != DMatrix<Type>::capacity2()");
+      }
       ar << *matrixPtr_; 
    }
 
