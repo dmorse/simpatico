@@ -134,28 +134,14 @@ namespace Util
    */
    template <class Type>
    void CArray2DParam<Type>::loadValue(Serializable::IArchive& ar)
-   {  
-      int i, j;
-      for (i = 0; i < m_; ++i) {
-         for (j = 0; j < n_; ++j) {
-            ar >> value_[i*np_ + j];
-         }
-      }
-   }
+   {  ar.unpack(value_, m_, n_, np_); }
 
    /*
    * Save a DArray to an output archive.
    */
    template <class Type>
    void CArray2DParam<Type>::saveValue(Serializable::OArchive& ar)
-   {  
-      int i, j;
-      for (i = 0; i < m_; ++i) {
-         for (j = 0; j < n_; ++j) {
-            ar << value_[i*np_ + j];
-         }
-      }
-   }
+   {  ar.pack(value_, m_, n_, np_); }
 
    #ifdef UTIL_MPI
    /*

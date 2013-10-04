@@ -153,11 +153,6 @@ namespace Util
       /// Indentation string, a string of spaces.
       std::string indent_;
 
-      #if 0
-      /// Object to identify if this processor can do file Io.
-      MpiFileIo   io_;
-      #endif
-
       /// Parameter to enable (true) or disable (false) echoing.
       static bool echo_;
 

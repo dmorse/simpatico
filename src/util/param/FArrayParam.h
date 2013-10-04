@@ -44,29 +44,6 @@ namespace Util
       */
       void writeParam(std::ostream &out);
 
-      #if 0
-      /** 
-      * Read FArray parameter from stream.
-      *
-      * \param in input stream
-      */
-      void readParam(std::istream &in);
- 
-      /**
-      * Load from an archive.
-      *
-      * \param ar loading (input) archive.
-      */
-      void load(Serializable::IArchive& ar);
-
-      /**
-      * Save to an archive.
-      *
-      * \param ar saving (output) archive.
-      */
-      void save(Serializable::OArchive& ar);
-      #endif
-
    protected:
       
       /**
@@ -116,7 +93,7 @@ namespace Util
    {}
 
    /*
-   * Read a DArray from isteam.
+   * Read a FArray from isteam.
    */
    template <class Type, int N>
    void FArrayParam<Type, N>::readValue(std::istream &in)
@@ -127,88 +104,26 @@ namespace Util
    }
 
    /*
-   * Load a DArray from input archive.
+   * Load a FArray from input archive.
    */
    template <class Type, int N>
    void FArrayParam<Type, N>::loadValue(Serializable::IArchive& ar)
-   {  
-      for (int i = 0; i < N; ++i) {
-         ar >> (*arrayPtr_)[i];
-      }
-   }
+   {  ar >> *arrayPtr_; }  
 
    /*
-   * Save a DArray to an output archive.
+   * Save a FArray to an output archive.
    */
    template <class Type, int N>
    void FArrayParam<Type, N>::saveValue(Serializable::OArchive& ar)
-   { 
-      ar << *arrayPtr_; 
-      // for (int i = 0; i < N; ++i) {
-      //   ar << (*arrayPtr_)[i];
-      // }
-   }
+   { ar << *arrayPtr_; }
 
    #ifdef UTIL_MPI
    /*
-   * Broadcast a DArray.
+   * Broadcast a FArray.
    */
    template <class Type, int N>
    void FArrayParam<Type, N>::bcastValue()
    {  bcast<Type>(ioCommunicator(), &((*arrayPtr_)[0]), N, 0); }
-   #endif
-
-   #if 0
-   /*
-   * Read a FArray parameter.
-   */
-   template <class Type, int N>
-   void FArrayParam<Type, N>::readParam(std::istream &in)
-   {
-      if (isIoProcessor()) {
-         in >> label_;
-         for (int i = 0; i < N; ++i) {
-            in >> (*arrayPtr_)[i];
-         }
-         if (ParamComponent::echo()) {
-            writeParam(Log::file());
-         }
-      }
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         bcast<Type>(ioCommunicator(), &((*arrayPtr_)[0]), N, 0); 
-      }
-      #endif
-   }
-
-   /*
-   * Load from an archive.
-   */
-   template <class Type, int N>
-   void FArrayParam<Type, N>::load(Serializable::IArchive& ar)
-   {
-      if (isIoProcessor()) {
-         for (int i = 0; i < N; ++i) {
-            ar >> (*arrayPtr_)[i];
-         }
-      }
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         bcast<Type>(ioCommunicator(), &((*arrayPtr_)[0]), N, 0); 
-      }
-      #endif
-   }
-
-   /*
-   * Save to an archive.
-   */
-   template <class Type, int N>
-   void FArrayParam<Type, N>::save(Serializable::OArchive& ar)
-   {
-      for (int i = 0; i < N; ++i) {
-         ar << (*arrayPtr_)[i];
-      }
-   }
    #endif
 
    /*

@@ -104,22 +104,14 @@ namespace Util
    */
    template <class Type>
    void CArrayParam<Type>::loadValue(Serializable::IArchive& ar)
-   {  
-      for (int i = 0; i < n_; ++i) {
-         ar >> value_[i];
-      }
-   }
+   {  ar.unpack(value_, n_); }
 
    /*
    * Save C-array of n values to an output archive
    */
    template <class Type>
    void CArrayParam<Type>::saveValue(Serializable::OArchive& ar)
-   {
-      for (int i = 0; i < n_; ++i) {
-         ar << value_[i];
-      }
-   }
+   {  ar.pack(value_, n_); }
 
    #ifdef UTIL_MPI
    /*

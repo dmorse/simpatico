@@ -22,7 +22,7 @@ public:
    void setUp()
    { 
       setVerbose(2); 
-      ParamComponent::setEcho(true);
+      // ParamComponent::setEcho(true);
    }
 
    void tearDown()
@@ -32,775 +32,948 @@ public:
 
    void testParamIntConstructor1() {
       printMethod(TEST_FUNC);
-      int        value = 4;
-      Parameter* param;
-      param = new ScalarParam<int>("MyLabel", value);
-      delete param;
+      int        requiredVal = 4;
+      Parameter* requiredPrm;
+      requiredPrm = new ScalarParam<int>("Required", requiredVal);
+      delete requiredPrm;
    }
 
    void testParamIntConstructor2() {
       printMethod(TEST_FUNC);
-      int        value = 4;
-      Parameter* param;
-      param = new ScalarParam<int>("MyLabel", value, false);
-      delete param;
+      int        requiredVal = 4;
+      Parameter* requiredPrm;
+      requiredPrm = new ScalarParam<int>("Required", requiredVal, false);
+      delete requiredPrm;
    }
 
    void testParamIntWrite() {
       printMethod(TEST_FUNC);
-      int        value = 4;
-      Parameter *param;
-      param = new ScalarParam<int>("MyLabel", value);
+      int        requiredVal = 4;
+      Parameter *requiredPrm;
+      requiredPrm = new ScalarParam<int>("Required", requiredVal);
 
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testParamIntRead1() 
    {
       printMethod(TEST_FUNC);
-      int        value;
-      Parameter *param;
-      param  = new ScalarParam<int>("MyLabel", value);
+      int        requiredVal;
+      Parameter *requiredPrm;
+      requiredPrm  = new ScalarParam<int>("Required", requiredVal);
       std::ifstream in;
       openInputFile("in/ScalarParamInt", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
       TEST_ASSERT(Label::isClear());
-      TEST_ASSERT(param->label() == "MyLabel");
-      TEST_ASSERT(value == 36);
+      TEST_ASSERT(requiredPrm->label() == "Required");
+      TEST_ASSERT(requiredVal == 36);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testParamIntRead2() 
    {
-      /// Test absent optional parameter
+      /// Test absentPrm optional parameter
       printMethod(TEST_FUNC);
-      int empty;
-      int value;
-      Parameter* absent = new ScalarParam<int>("Absent", empty, false);
-      Parameter* param  = new ScalarParam<int>("MyLabel", value);
+      int absentVal;
+      int requiredVal;
+      Parameter* absentPrm = new ScalarParam<int>("Absent", absentVal, false);
+      Parameter* requiredPrm  = new ScalarParam<int>("Required", requiredVal);
       std::ifstream in;
       openInputFile("in/ScalarParamInt", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      absent->readParam(in);
+      absentPrm->readParam(in);
       TEST_ASSERT(!Label::isClear());
-      param->readParam(in);
+      requiredPrm->readParam(in);
       TEST_ASSERT(Label::isClear());
-      TEST_ASSERT(param->label() == "MyLabel");
-      //TEST_ASSERT(value == 36);
+      TEST_ASSERT(requiredPrm->label() == "Required");
+      //TEST_ASSERT(requiredVal == 36);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
       in.close();
-      delete absent;
-      delete param;
+      delete absentPrm;
+      delete requiredPrm;
    }
 
    void testParamIntReadSaveLoad1() 
    {
       printMethod(TEST_FUNC);
-      int        value;
-      Parameter *param;
-      param  = new ScalarParam<int>("MyLabel", value);
+      int        requiredVal;
+      Parameter *requiredPrm;
+      requiredPrm  = new ScalarParam<int>("Required", requiredVal);
       std::ifstream in;
       openInputFile("in/ScalarParamInt", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
       TEST_ASSERT(Label::isClear());
-      TEST_ASSERT(param->label() == "MyLabel");
-      TEST_ASSERT(value == 36);
+      TEST_ASSERT(requiredPrm->label() == "Required");
+      TEST_ASSERT(requiredVal == 36);
 
       // Save to archive
       Serializable::OArchive oar;
       openOutputFile("out/binary", oar.file());
-      param->save(oar);
+      requiredPrm->save(oar);
       oar.file().close();
 
       // Load from archive
       Serializable::IArchive iar;
       openInputFile("out/binary", iar.file());
-      int value2;
-      Parameter* param2  = new ScalarParam<int>("MyLabel", value2);
-      param2->load(iar);
+      int requiredVal2;
+      Parameter* requiredPrm2  = new ScalarParam<int>("Required", requiredVal2);
+      requiredPrm2->load(iar);
       iar.file().close();
-      TEST_ASSERT(param2->label() == "MyLabel");
-      TEST_ASSERT(value2 == 36);
+      TEST_ASSERT(requiredPrm2->label() == "Required");
+      TEST_ASSERT(requiredVal2 == 36);
 
       if (verbose() > 0) {
          printEndl();
-         param2->writeParam(std::cout);
+         requiredPrm2->writeParam(std::cout);
       }
 
-      delete param;
-      delete param2;
+      delete requiredPrm;
+      delete requiredPrm2;
    }
 
    void testParamIntReadSaveLoad2() 
    {
       printMethod(TEST_FUNC);
-      int empty;
-      int value;
-      Parameter* absent = new ScalarParam<int>("Wrong", empty, false);
-      Parameter* param  = new ScalarParam<int>("MyLabel", value);
+      int absentVal;
+      int requiredVal;
+      Parameter* absentPrm = new ScalarParam<int>("Absent", absentVal, false);
+      Parameter* requiredPrm  = new ScalarParam<int>("Required", requiredVal);
       std::ifstream in;
       openInputFile("in/ScalarParamInt", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      absent->readParam(in);
+      absentPrm->readParam(in);
       TEST_ASSERT(!Label::isClear());
-      param->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
       TEST_ASSERT(Label::isClear());
-      TEST_ASSERT(param->label() == "MyLabel");
-      TEST_ASSERT(value == 36);
+      TEST_ASSERT(requiredPrm->label() == "Required");
+      TEST_ASSERT(requiredVal == 36);
 
       // Save to archive
       Serializable::OArchive oar;
       openOutputFile("out/binary", oar.file());
-      absent->save(oar);
-      param->save(oar);
+      // Parameter::saveOptional(oar, absentVal, false);
+      // oar << requiredVal;
+      absentPrm->save(oar);
+      requiredPrm->save(oar);
       oar.file().close();
 
       // Load from archive
       Serializable::IArchive iar;
       openInputFile("out/binary", iar.file());
       if (ParamComponent::echo()) std::cout << std::endl;
-      int empty2;
-      int value2;
-      Parameter* absent2 = new ScalarParam<int>("Wrong", empty2, false);
-      Parameter* param2 = new ScalarParam<int>("MyLabel", value2);
-      absent2->load(iar);
-      param2->load(iar);
+      int absentVal2;
+      int requiredVal2;
+      Parameter* absentPrm2 = new ScalarParam<int>("Absent", absentVal2, false);
+      Parameter* requiredPrm2 = new ScalarParam<int>("Required", requiredVal2);
+      absentPrm2->load(iar);
+      requiredPrm2->load(iar);
       iar.file().close();
-      TEST_ASSERT(param2->label() == "MyLabel");
-      TEST_ASSERT(value2 == 36);
+      TEST_ASSERT(requiredPrm2->label() == "Required");
+      TEST_ASSERT(requiredVal2 == 36);
 
       if (verbose() > 0) {
          printEndl();
-         param2->writeParam(std::cout);
+         requiredPrm2->writeParam(std::cout);
       }
 
-      delete param;
-      delete absent;
-      delete param2;
-      delete absent2;
+      delete requiredPrm;
+      delete absentPrm;
+      delete requiredPrm2;
+      delete absentPrm2;
+   }
+
+   void testParamIntReadSaveLoad3() 
+   {
+      printMethod(TEST_FUNC);
+      int absentVal;
+      int requiredVal;
+      Parameter* absentPrm = new ScalarParam<int>("Absent", absentVal, false);
+      Parameter* requiredPrm  = new ScalarParam<int>("Required", requiredVal);
+      std::ifstream in;
+      openInputFile("in/ScalarParamInt", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
+      absentPrm->readParam(in);
+      TEST_ASSERT(!Label::isClear());
+      requiredPrm->readParam(in);
+      in.close();
+      TEST_ASSERT(Label::isClear());
+      TEST_ASSERT(requiredPrm->label() == "Required");
+      TEST_ASSERT(requiredVal == 36);
+
+      // Save to archive
+      Serializable::OArchive oar;
+      openOutputFile("out/binary", oar.file());
+      Parameter::saveOptional(oar, absentVal, false);
+      oar << requiredVal;
+      //absentPrm->save(oar);
+      //requiredPrm->save(oar);
+      oar.file().close();
+
+      // Load from archive
+      Serializable::IArchive iar;
+      openInputFile("out/binary", iar.file());
+      if (ParamComponent::echo()) std::cout << std::endl;
+      int absentVal2;
+      int requiredVal2;
+      Parameter* absentPrm2 = new ScalarParam<int>("Absent", absentVal2, false);
+      Parameter* requiredPrm2 = new ScalarParam<int>("Required", requiredVal2);
+      absentPrm2->load(iar);
+      requiredPrm2->load(iar);
+      iar.file().close();
+      TEST_ASSERT(requiredPrm2->label() == "Required");
+      TEST_ASSERT(requiredVal2 == 36);
+
+      if (verbose() > 0) {
+         printEndl();
+         requiredPrm2->writeParam(std::cout);
+      }
+
+      delete requiredPrm;
+      delete absentPrm;
+      delete requiredPrm2;
+      delete absentPrm2;
    }
 
    void testParamDoubleWrite() {
       printMethod(TEST_FUNC);
-      double value = 4.0;
-      Parameter     *param;
-      param = new ScalarParam<double>("MyLabel", value);
+      double requiredVal = 4.0;
+      Parameter     *requiredPrm;
+      requiredPrm = new ScalarParam<double>("Required", requiredVal);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testParamDoubleRead() {
       printMethod(TEST_FUNC);
-      double value;
-      Parameter *param;
-      param = new ScalarParam<double>("MyLabel", value);
+      double requiredVal;
+      Parameter *requiredPrm;
+      requiredPrm = new ScalarParam<double>("Required", requiredVal);
       std::ifstream in;
       openInputFile("in/ScalarParamDouble", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testParamStringWrite() {
       printMethod(TEST_FUNC);
-      std::string value = "stringy";
-      Parameter *param;
-      param = new ScalarParam<std::string>("MyLabel", value);
+      std::string requiredVal = "stringy";
+      Parameter *requiredPrm;
+      requiredPrm = new ScalarParam<std::string>("Required", requiredVal);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testParamStringRead1() {
       printMethod(TEST_FUNC);
-      std::string value;
-      Parameter *param;
-      param = new ScalarParam<std::string>("MyLabel", value);
+      std::string requiredVal;
+      Parameter *requiredPrm;
+      requiredPrm = new ScalarParam<std::string>("Required", requiredVal);
       std::ifstream in;
       openInputFile("in/ScalarParamString", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testParamStringRead2() {
       printMethod(TEST_FUNC);
-      int empty;
-      std::string value;
-      Parameter* absent = new ScalarParam<int>("Wrong", empty, false);
-      Parameter* param = new ScalarParam<std::string>("MyLabel", value);
+      int absentVal;
+      std::string requiredVal;
+      Parameter* absentPrm = new ScalarParam<int>("Absent", absentVal, false);
+      Parameter* requiredPrm = new ScalarParam<std::string>("Required", requiredVal);
       std::ifstream in;
       openInputFile("in/ScalarParamString", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      absent->readParam(in);
-      param->readParam(in);
+      absentPrm->readParam(in);
+      requiredPrm->readParam(in);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete absent;
-      delete param;
+      delete absentPrm;
+      delete requiredPrm;
    }
 
    void testParamStringReadSaveLoad2() 
    {
       printMethod(TEST_FUNC);
-      int empty;
-      std::string value;
-      Parameter* absent = new ScalarParam<int>("Wrong", empty, false);
-      Parameter* param  = new ScalarParam<std::string>("MyLabel", value);
+      int absentVal;
+      std::string requiredVal;
+      Parameter* absentPrm = new ScalarParam<int>("Absent", absentVal, false);
+      Parameter* requiredPrm  = new ScalarParam<std::string>("Required", requiredVal);
       std::ifstream in;
       openInputFile("in/ScalarParamString", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      absent->readParam(in);
+      absentPrm->readParam(in);
       TEST_ASSERT(!Label::isClear());
-      param->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
       TEST_ASSERT(Label::isClear());
-      TEST_ASSERT(param->label() == "MyLabel");
-      //TEST_ASSERT(value == 36);
+      TEST_ASSERT(requiredPrm->label() == "Required");
+      //TEST_ASSERT(requiredVal == 36);
 
       // Save to archive
       Serializable::OArchive oar;
       openOutputFile("out/binary", oar.file());
-      absent->save(oar);
-      param->save(oar);
+      absentPrm->save(oar);
+      requiredPrm->save(oar);
       oar.file().close();
 
       // Load from archive
       Serializable::IArchive iar;
       openInputFile("out/binary", iar.file());
-      int empty2;
-      std::string value2;
-      Parameter* absent2 = new ScalarParam<int>("Wrong", empty2, false);
-      Parameter* param2 = new ScalarParam<std::string>("MyLabel", value2);
-      absent2->load(iar);
-      param2->load(iar);
+      int absentVal2;
+      std::string requiredVal2;
+      Parameter* absentPrm2 = new ScalarParam<int>("Absent", absentVal2, false);
+      Parameter* requiredPrm2 = new ScalarParam<std::string>("Required", requiredVal2);
+      absentPrm2->load(iar);
+      requiredPrm2->load(iar);
       iar.file().close();
-      TEST_ASSERT(param2->label() == "MyLabel");
-      //TEST_ASSERT(value2 == 36);
+      TEST_ASSERT(requiredPrm2->label() == "Required");
+      //TEST_ASSERT(requiredVal2 == 36);
 
       if (verbose() > 0) {
          printEndl();
-         param2->writeParam(std::cout);
+         requiredPrm2->writeParam(std::cout);
       }
 
-      delete param;
-      delete absent;
-      delete param2;
-      delete absent2;
+      delete requiredPrm;
+      delete absentPrm;
+      delete requiredPrm2;
+      delete absentPrm2;
    }
 
    void testCArrayParamIntWrite() 
    {
       printMethod(TEST_FUNC);
-      int value[3];
-      value[0] = 3;
-      value[1] = 34;
-      value[2] = 8;
-      Parameter *param;
-      param = new CArrayParam<int>("MyLabel", value, 3);
+      int requiredVal[3];
+      requiredVal[0] = 3;
+      requiredVal[1] = 34;
+      requiredVal[2] = 8;
+      Parameter *requiredPrm;
+      requiredPrm = new CArrayParam<int>("Required", requiredVal, 3);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testCArrayParamIntRead() {
       printMethod(TEST_FUNC);
-      int value[3];
-      Parameter *param;
-      param = new CArrayParam<int>("MyLabel", value, 3);
+      int requiredVal[3];
+      Parameter *requiredPrm;
+      requiredPrm = new CArrayParam<int>("Required", requiredVal, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamInt", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testCArrayParamDoubleWrite() {
       printMethod(TEST_FUNC);
-      double value[3];
-      value[0] = 3.0;
-      value[1] = 34.7;
-      value[2] = 8.97296;
-      Parameter *param;
-      param = new CArrayParam<double>("MyLabel", value, 3);
+      double requiredVal[3];
+      requiredVal[0] = 3.0;
+      requiredVal[1] = 34.7;
+      requiredVal[2] = 8.97296;
+      Parameter *requiredPrm;
+      requiredPrm = new CArrayParam<double>("Required", requiredVal, 3);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testCArrayParamDoubleRead() {
       printMethod(TEST_FUNC);
-      double value[3];
-      Parameter *param;
-      param = new CArrayParam<double>("MyLabel", value, 3);
+      double requiredVal[3];
+      Parameter *requiredPrm;
+      requiredPrm = new CArrayParam<double>("Required", requiredVal, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
+   }
+
+   void testCArrayParamDoubleReadSaveLoad1() {
+      printMethod(TEST_FUNC);
+      double absentVal[3];
+      double requiredVal[3];
+      double presentVal[3];
+      Parameter *absentPrmPrm;
+      Parameter *requiredPrm;
+      Parameter *presentPrm;
+      absentPrmPrm = new CArrayParam<double>("Absent", absentVal, 3, false);
+      requiredPrm  = new CArrayParam<double>("Required", requiredVal, 3);
+      presentPrm = new CArrayParam<double>("Present", presentVal, 3, false);
+      std::ifstream in;
+      openInputFile("in/ArrayParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
+      requiredPrm->readParam(in);
+      TEST_ASSERT(!absentPrmPrm->isRequired());
+      TEST_ASSERT(!absentPrmPrm->isActive());
+      TEST_ASSERT(requiredPrm->isRequired());
+      TEST_ASSERT(requiredPrm->isActive());
+
+      // Save to archive
+      Serializable::OArchive oar;
+      openOutputFile("out/binary", oar.file());
+      Parameter::saveOptionalCArray(oar, absentVal, 3, false);
+      //requiredPrm->save(oar);
+      oar.pack(requiredVal, 3);
+      Parameter::saveOptionalCArray(oar, presentVal, 3, true);
+      oar.file().close();
+
+      // Load from archive
+      double absentVal2[3];
+      double requiredVal2[3];
+      double presentVal2[3];
+      Serializable::IArchive iar;
+      openInputFile("out/binary", iar.file());
+      Parameter* absentPrmPrm2 = new CArrayParam<double>("Absent", absentVal2, 3, false);
+      Parameter* requiredPrm2 = new CArrayParam<double>("Required", requiredVal2, 3);
+      Parameter* presentPrm2 = new CArrayParam<double>("Present", presentVal2, 3, false);
+      absentPrmPrm2->load(iar);
+      requiredPrm2->load(iar);
+      presentPrm2->load(iar);
+      iar.file().close();
+      TEST_ASSERT(!absentPrmPrm2->isRequired());
+      TEST_ASSERT(!absentPrmPrm2->isActive());
+      TEST_ASSERT(requiredPrm2->label() == "Required");
+      TEST_ASSERT(requiredPrm2->isRequired());
+      TEST_ASSERT(presentPrm2->label() == "Present");
+      TEST_ASSERT(!presentPrm2->isRequired());
+      TEST_ASSERT(presentPrm2->isActive());
+
+      if (verbose() > 0) {
+         printEndl();
+         absentPrmPrm2->writeParam(std::cout);
+         requiredPrm2->writeParam(std::cout);
+      }
+
+      delete absentPrmPrm;
+      delete requiredPrm;
+      delete presentPrm;
+      delete absentPrmPrm2;
+      delete requiredPrm2;
+      delete presentPrm2;
    }
 
    void testDArrayParamIntWrite() 
    {
       printMethod(TEST_FUNC);
-      DArray<int> value;
-      value.allocate(3);
-      value[0] = 3;
-      value[1] = 34;
-      value[2] = 8;
-      Parameter* param = new DArrayParam<int>("MyLabel", value, 3);
+      DArray<int> requiredVal;
+      requiredVal.allocate(3);
+      requiredVal[0] = 3;
+      requiredVal[1] = 34;
+      requiredVal[2] = 8;
+      Parameter* requiredPrm = new DArrayParam<int>("Required", requiredVal, 3);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testDArrayParamIntRead() {
       printMethod(TEST_FUNC);
-      DArray<int> value;
-      value.allocate(3);
-      Parameter* param = new DArrayParam<int>("MyLabel", value, 3);
+      DArray<int> requiredVal;
+      requiredVal.allocate(3);
+      Parameter* requiredPrm = new DArrayParam<int>("Required", requiredVal, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamInt", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testDArrayParamDoubleWrite() {
       printMethod(TEST_FUNC);
-      DArray<double> value;
-      value.allocate(3);
-      value[0] = 3.0;
-      value[1] = 34.7;
-      value[2] = 8.97296;
-      Parameter *param;
-      param = new DArrayParam<double>("MyLabel", value, 3);
+      DArray<double> requiredVal;
+      requiredVal.allocate(3);
+      requiredVal[0] = 3.0;
+      requiredVal[1] = 34.7;
+      requiredVal[2] = 8.97296;
+      Parameter *requiredPrm;
+      requiredPrm = new DArrayParam<double>("Required", requiredVal, 3);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testDArrayParamDoubleRead() {
       printMethod(TEST_FUNC);
-      DArray<double> value;
-      value.allocate(3);
-      Parameter *param;
-      param = new DArrayParam<double>("MyLabel", value, 3);
+      DArray<double> requiredVal;
+      requiredVal.allocate(3);
+      Parameter *requiredPrm;
+      requiredPrm = new DArrayParam<double>("Required", requiredVal, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testDArrayParamDoubleReadSaveLoad1() {
       printMethod(TEST_FUNC);
-      DArray<double> value;
-      value.allocate(3);
-      Parameter* param  = new DArrayParam<double>("MyLabel", value, 3);
+      DArray<double> requiredVal;
+      requiredVal.allocate(3);
+      Parameter* requiredPrm  = new DArrayParam<double>("Required", requiredVal, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
-      if (verbose() > 0) {
-         printEndl();
-         param->writeParam(std::cout);
-      }
 
       // Save to archive
       Serializable::OArchive oar;
       openOutputFile("out/binary", oar.file());
-      param->save(oar);
+      requiredPrm->save(oar);
       oar.file().close();
 
       // Load from archive
       Serializable::IArchive iar;
       openInputFile("out/binary", iar.file());
-      DArray<double> value2;
-      value2.allocate(3);
-      Parameter* param2 = new DArrayParam<double>("MyLabel", value2, 3);
-      param2->load(iar);
+      DArray<double> requiredVal2;
+      requiredVal2.allocate(3);
+      Parameter* requiredPrm2 = new DArrayParam<double>("Required", requiredVal2, 3);
+      requiredPrm2->load(iar);
       iar.file().close();
-      TEST_ASSERT(param2->label() == "MyLabel");
-      //TEST_ASSERT(value2 == 36);
+      TEST_ASSERT(requiredPrm2->label() == "Required");
+      //TEST_ASSERT(requiredVal2 == 36);
 
       if (verbose() > 0) {
          printEndl();
-         param2->writeParam(std::cout);
+         requiredPrm2->writeParam(std::cout);
       }
 
-      delete param;
-      //delete param2;
+      delete requiredPrm;
+      delete requiredPrm2;
    }
 
    void testDArrayParamDoubleReadSaveLoad2() {
       printMethod(TEST_FUNC);
-      DArray<double> empty;
-      DArray<double> value;
-      empty.allocate(3);
-      value.allocate(3);
-      Parameter* absent = new DArrayParam<double>("Wrong", empty, 3, false);
-      Parameter* param  = new DArrayParam<double>("MyLabel", value, 3);
+      DArray<double> absentVal;
+      DArray<double> requiredVal;
+      absentVal.allocate(3);
+      requiredVal.allocate(3);
+      Parameter* absentPrm = new DArrayParam<double>("Absent", absentVal, 3, false);
+      Parameter* requiredPrm  = new DArrayParam<double>("Required", requiredVal, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      absent->readParam(in);
-      param->readParam(in);
+      absentPrm->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
-      if (verbose() > 0) {
-         printEndl();
-         param->writeParam(std::cout);
-      }
 
       // Save to archive
       Serializable::OArchive oar;
       openOutputFile("out/binary", oar.file());
-      absent->save(oar);
-      param->save(oar);
+      absentPrm->save(oar);
+      requiredPrm->save(oar);
       oar.file().close();
 
       // Load from archive
       Serializable::IArchive iar;
       openInputFile("out/binary", iar.file());
-      DArray<double> empty2;
-      DArray<double> value2;
-      empty2.allocate(3);
-      value2.allocate(3);
-      Parameter* absent2 = new DArrayParam<double>("Wrong", empty2, 3, false);
-      Parameter* param2 = new DArrayParam<double>("MyLabel", value2, 3);
-      absent2->load(iar);
-      param2->load(iar);
+      DArray<double> absentVal2;
+      DArray<double> requiredVal2;
+      absentVal2.allocate(3);
+      requiredVal2.allocate(3);
+      Parameter* absentPrm2 = new DArrayParam<double>("Absent", absentVal2, 3, false);
+      Parameter* requiredPrm2 = new DArrayParam<double>("Required", requiredVal2, 3);
+      absentPrm2->load(iar);
+      requiredPrm2->load(iar);
       iar.file().close();
 
-      TEST_ASSERT(param2->label() == "MyLabel");
-      //TEST_ASSERT(value2 == 36);
+      TEST_ASSERT(requiredPrm2->label() == "Required");
 
       if (verbose() > 0) {
          printEndl();
-         param2->writeParam(std::cout);
+         requiredPrm2->writeParam(std::cout);
       }
 
-      delete absent;
-      delete param;
-      delete absent2;
-      delete param2;
+      delete absentPrm;
+      delete requiredPrm;
+      delete absentPrm2;
+      delete requiredPrm2;
    }
 
    void testDArrayParamDoubleReadSaveLoad3() {
       printMethod(TEST_FUNC);
-      DArray<double> empty;
-      DArray<double> value;
-      empty.allocate(3);
-      value.allocate(3);
-      Parameter* absent = new DArrayParam<double>("Wrong", empty, 3, false);
-      Parameter* param  = new DArrayParam<double>("MyLabel", value, 3);
+      DArray<double> absentVal;
+      DArray<double> requiredVal;
+      absentVal.allocate(3);
+      requiredVal.allocate(3);
+      Parameter* absentPrm = new DArrayParam<double>("Absent", absentVal, 3, false);
+      Parameter* requiredPrm  = new DArrayParam<double>("Required", requiredVal, 3);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      absent->readParam(in);
-      param->readParam(in);
+      absentPrm->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
 
       // Save to archive
       Serializable::OArchive oar;
       openOutputFile("out/binary", oar.file());
-      Parameter::saveOptional(oar, empty, false);
-      Parameter::saveOptional(oar, value, true);
-      //absent->save(oar);
-      //param->save(oar);
+      Parameter::saveOptional(oar, absentVal, false);
+      //absentPrm->save(oar);
+      requiredPrm->save(oar);
       oar.file().close();
 
-      #if 0
+      #if 1
       // Load from archive
       Serializable::IArchive iar;
       openInputFile("out/binary", iar.file());
-      DArray<double> empty2;
-      DArray<double> value2;
-      empty2.allocate(3);
-      value2.allocate(3);
-      Parameter* absent2 = new DArrayParam<double>("Wrong", empty2, 3, false);
-      Parameter* param2 = new DArrayParam<double>("MyLabel", value2, 3);
-      absent2->load(iar);
-      param2->load(iar);
+      DArray<double> absentVal2;
+      DArray<double> requiredVal2;
+      absentVal2.allocate(3);
+      requiredVal2.allocate(3);
+      Parameter* absentPrm2 = new DArrayParam<double>("Absent", absentVal2, 3, false);
+      Parameter* requiredPrm2 = new DArrayParam<double>("Required", requiredVal2, 3);
+      absentPrm2->load(iar);
+      requiredPrm2->load(iar);
       iar.file().close();
 
-      TEST_ASSERT(param2->label() == "MyLabel");
-      //TEST_ASSERT(value2 == 36);
+      TEST_ASSERT(requiredPrm2->label() == "Required");
+      //TEST_ASSERT(requiredVal2 == 36);
 
       if (verbose() > 0) {
          printEndl();
-         param2->writeParam(std::cout);
+         requiredPrm2->writeParam(std::cout);
       }
       #endif
 
-      delete absent;
-      delete param;
-      //delete absent2;
-      //delete param2;
+      delete absentPrm;
+      delete requiredPrm;
+      delete absentPrm2;
+      delete requiredPrm2;
    }
+
    void testFArrayParamIntWrite() 
    {
       printMethod(TEST_FUNC);
-      FArray<int, 3> value;
-      value[0] = 3;
-      value[1] = 34;
-      value[2] = 8;
-      Parameter *param;
-      param = new FArrayParam<int, 3>("MyLabel", value);
+      FArray<int, 3> requiredVal;
+      requiredVal[0] = 3;
+      requiredVal[1] = 34;
+      requiredVal[2] = 8;
+      Parameter *requiredPrm;
+      requiredPrm = new FArrayParam<int, 3>("Required", requiredVal);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testFArrayParamIntRead() {
       printMethod(TEST_FUNC);
-      FArray<int, 3> value;
-      Parameter *param;
-      param = new FArrayParam<int, 3>("MyLabel", value);
+      FArray<int, 3> requiredVal;
+      Parameter *requiredPrm;
+      requiredPrm = new FArrayParam<int, 3>("Required", requiredVal);
       std::ifstream in;
       openInputFile("in/ArrayParamInt", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testFArrayParamDoubleWrite() {
       printMethod(TEST_FUNC);
-      FArray<double,3> value;
-      value[0] = 3.0;
-      value[1] = 34.7;
-      value[2] = 8.97296;
-      Parameter *param;
-      param = new FArrayParam<double, 3>("MyLabel", value);
+      FArray<double,3> requiredVal;
+      requiredVal[0] = 3.0;
+      requiredVal[1] = 34.7;
+      requiredVal[2] = 8.97296;
+      Parameter *requiredPrm;
+      requiredPrm = new FArrayParam<double, 3>("Required", requiredVal);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testFArrayParamDoubleRead() {
       printMethod(TEST_FUNC);
-      FArray<double,3> value;
-      Parameter *param;
-      param = new FArrayParam<double, 3>("MyLabel", value);
+      FArray<double,3> requiredVal;
+      Parameter *requiredPrm;
+      requiredPrm = new FArrayParam<double, 3>("Required", requiredVal);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testFArrayParamDoubleReadSaveLoad1() {
       printMethod(TEST_FUNC);
-      FArray<double, 3> value;
-      Parameter* param  = new FArrayParam<double, 3>("MyLabel", value);
+      FArray<double, 3> requiredVal;
+      Parameter* requiredPrm  = new FArrayParam<double, 3>("Required", requiredVal);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
 
       // Save to archive
       Serializable::OArchive oar;
       openOutputFile("out/binary", oar.file());
-      param->save(oar);
+      requiredPrm->save(oar);
       oar.file().close();
 
       // Load from archive
       Serializable::IArchive iar;
       openInputFile("out/binary", iar.file());
-      FArray<double, 3> value2;
-      Parameter* param2 = new FArrayParam<double, 3>("MyLabel", value2);
-      param2->load(iar);
+      FArray<double, 3> requiredVal2;
+      Parameter* requiredPrm2 = new FArrayParam<double, 3>("Required", requiredVal2);
+      requiredPrm2->load(iar);
       iar.file().close();
-      TEST_ASSERT(param2->label() == "MyLabel");
-      //TEST_ASSERT(value2 == 36);
+      TEST_ASSERT(requiredPrm2->label() == "Required");
+      //TEST_ASSERT(requiredVal2 == 36);
 
       if (verbose() > 0) {
          printEndl();
-         param2->writeParam(std::cout);
+         requiredPrm2->writeParam(std::cout);
       }
 
-      delete param;
-      //delete param2;
+      delete requiredPrm;
+      //delete requiredPrm2;
    }
 
    void testFArrayParamDoubleReadSaveLoad2() {
       printMethod(TEST_FUNC);
-      FArray<double, 3> empty;
-      FArray<double, 3> value;
-      Parameter* absent = new FArrayParam<double, 3>("Wrong", empty, false);
-      Parameter* param  = new FArrayParam<double, 3>("MyLabel", value, true);
+      FArray<double, 3> absentVal;
+      FArray<double, 3> requiredVal;
+      Parameter* absentPrm = new FArrayParam<double, 3>("Absent", absentVal, false);
+      Parameter* requiredPrm  = new FArrayParam<double, 3>("Required", requiredVal, true);
       std::ifstream in;
       openInputFile("in/ArrayParamDouble", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      absent->readParam(in);
-      param->readParam(in);
+      absentPrm->readParam(in);
+      requiredPrm->readParam(in);
       in.close();
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
 
       // Save to archive
       Serializable::OArchive oar;
       openOutputFile("out/binary", oar.file());
-      absent->save(oar);
-      param->save(oar);
+      absentPrm->save(oar);
+      requiredPrm->save(oar);
       oar.file().close();
 
       // Load from archive
       Serializable::IArchive iar;
       openInputFile("out/binary", iar.file());
-      FArray<double, 3> empty2;
-      FArray<double, 3> value2;
-      Parameter* absent2 = new FArrayParam<double, 3>("Wrong", empty2, false);
-      Parameter* param2 = new FArrayParam<double, 3>("MyLabel", value2);
-      absent2->load(iar);
-      param2->load(iar);
+      FArray<double, 3> absentVal2;
+      FArray<double, 3> requiredVal2;
+      Parameter* absentPrm2 = new FArrayParam<double, 3>("Absent", absentVal2, false);
+      Parameter* requiredPrm2 = new FArrayParam<double, 3>("Required", requiredVal2);
+      absentPrm2->load(iar);
+      requiredPrm2->load(iar);
       iar.file().close();
 
-      TEST_ASSERT(param2->label() == "MyLabel");
-      //TEST_ASSERT(value2 == 36);
+      TEST_ASSERT(requiredPrm2->label() == "Required");
+      //TEST_ASSERT(requiredVal2 == 36);
 
       if (verbose() > 0) {
          printEndl();
-         param2->writeParam(std::cout);
+         requiredPrm2->writeParam(std::cout);
       }
 
-      delete absent;
-      delete param;
-      delete absent2;
-      delete param2;
+      delete absentPrm;
+      delete requiredPrm;
+      delete absentPrm2;
+      delete requiredPrm2;
    }
 
    void testCArray2DParamDoubleWrite() {
       printMethod(TEST_FUNC);
-      double value[2][2];
-      value[0][0] = 3.0;
-      value[0][1] = 34.7;
-      value[1][0] = 8.97296;
-      value[1][1] = 27.54;
-      Parameter *param;
-      param = new CArray2DParam<double>("MyLabel", &value[0][0], 2, 2, 2);
+      double requiredVal[2][2];
+      requiredVal[0][0] = 3.0;
+      requiredVal[0][1] = 34.7;
+      requiredVal[1][0] = 8.97296;
+      requiredVal[1][1] = 27.54;
+      Parameter *requiredPrm;
+      requiredPrm = new CArray2DParam<double>("Required", &requiredVal[0][0], 2, 2, 2);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
+   }
+
+   void testCArray2DParamDoubleReadSaveLoad1() {
+      printMethod(TEST_FUNC);
+      double absentVal[2][2];
+      double requiredVal[2][2];
+      double presentVal[2][2];
+      Parameter *absentPrmPrm;
+      Parameter *requiredPrm;
+      Parameter *presentPrm;
+      absentPrmPrm = new CArray2DParam<double>("Absent", absentVal[0], 2, 2, 2, false);
+      requiredPrm  = new CArray2DParam<double>("Required", requiredVal[0], 2, 2, 2);
+      presentPrm = new CArray2DParam<double>("Present", presentVal[0], 2, 2, 2, false);
+      std::ifstream in;
+      openInputFile("in/ArrayParamDouble", in);
+      if (ParamComponent::echo()) std::cout << std::endl;
+      requiredPrm->readParam(in);
+      TEST_ASSERT(!absentPrmPrm->isRequired());
+      TEST_ASSERT(!absentPrmPrm->isActive());
+      TEST_ASSERT(requiredPrm->isRequired());
+      TEST_ASSERT(requiredPrm->isActive());
+
+      // Save to archive
+      Serializable::OArchive oar;
+      openOutputFile("out/binary", oar.file());
+      Parameter::saveOptionalCArray2D(oar, absentVal[0], 2, 2, 2, false);
+      //requiredPrm->save(oar);
+      oar.pack(requiredVal, 2, 2, 2);
+      Parameter::saveOptionalCArray2D(oar, presentVal[0], 2, 2, 2, true);
+      oar.file().close();
+
+      // Load from archive
+      double absentVal2[2][2];
+      double requiredVal2[2][2];
+      double presentVal2[2][2];
+      Serializable::IArchive iar;
+      openInputFile("out/binary", iar.file());
+      Parameter* absentPrmPrm2 = new CArray2DParam<double>("Absent", absentVal2[0], 2, 2, 2, false);
+      Parameter* requiredPrm2 = new CArray2DParam<double>("Required", requiredVal2[0], 2, 2, 2);
+      Parameter* presentPrm2 = new CArray2DParam<double>("Present", presentVal2[0], 2, 2, 2, false);
+      absentPrmPrm2->load(iar);
+      requiredPrm2->load(iar);
+      presentPrm2->load(iar);
+      iar.file().close();
+      TEST_ASSERT(!absentPrmPrm2->isRequired());
+      TEST_ASSERT(!absentPrmPrm2->isActive());
+      TEST_ASSERT(requiredPrm2->label() == "Required");
+      TEST_ASSERT(requiredPrm2->isRequired());
+      TEST_ASSERT(presentPrm2->label() == "Present");
+      TEST_ASSERT(!presentPrm2->isRequired());
+      TEST_ASSERT(presentPrm2->isActive());
+
+      if (verbose() > 0) {
+         printEndl();
+         absentPrmPrm2->writeParam(std::cout);
+         requiredPrm2->writeParam(std::cout);
+      }
+
+      delete absentPrmPrm;
+      delete requiredPrm;
+      delete presentPrm;
+      delete absentPrmPrm2;
+      delete requiredPrm2;
+      delete presentPrm2;
    }
 
    void testDMatrixParamDoubleWrite() {
       printMethod(TEST_FUNC);
-      DMatrix<double> value;
-      value.allocate(2, 2);
-      value(0, 0) = 3.0;
-      value(0, 1) = 34.7;
-      value(1, 0) = 8.97296;
-      value(1, 1) = 27.54;
-      Parameter *param;
-      param = new DMatrixParam<double>("MyLabel", value, 2, 2);
+      DMatrix<double> requiredVal;
+      requiredVal.allocate(2, 2);
+      requiredVal(0, 0) = 3.0;
+      requiredVal(0, 1) = 34.7;
+      requiredVal(1, 0) = 8.97296;
+      requiredVal(1, 1) = 27.54;
+      Parameter *requiredPrm;
+      requiredPrm = new DMatrixParam<double>("Required", requiredVal, 2, 2);
       if (verbose() > -3) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
    void testDMatrixParamDoubleRead() {
       printMethod(TEST_FUNC);
-      DMatrix<double> value;
-      value.allocate(2, 2);
-      Parameter *param;
-      param = new DMatrixParam<double>("MyLabel", value, 2, 2);
+      DMatrix<double> requiredVal;
+      requiredVal.allocate(2, 2);
+      Parameter *requiredPrm;
+      requiredPrm = new DMatrixParam<double>("Required", requiredVal, 2, 2);
       std::ifstream in;
       openInputFile("in/MatrixParamDouble", in);
       if (ParamComponent::echo()) std::cout << std::endl;
-      param->readParam(in);
+      requiredPrm->readParam(in);
       if (verbose() > 0) {
          printEndl();
-         param->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
       }
-      delete param;
+      delete requiredPrm;
    }
 
 };
@@ -813,6 +986,7 @@ TEST_ADD(ParameterTest, testParamIntRead1)
 TEST_ADD(ParameterTest, testParamIntRead2)
 TEST_ADD(ParameterTest, testParamIntReadSaveLoad1)
 TEST_ADD(ParameterTest, testParamIntReadSaveLoad2)
+TEST_ADD(ParameterTest, testParamIntReadSaveLoad3)
 TEST_ADD(ParameterTest, testParamDoubleWrite)
 TEST_ADD(ParameterTest, testParamDoubleRead)
 TEST_ADD(ParameterTest, testParamStringWrite)
@@ -823,6 +997,7 @@ TEST_ADD(ParameterTest, testCArrayParamIntWrite)
 TEST_ADD(ParameterTest, testCArrayParamIntRead)
 TEST_ADD(ParameterTest, testCArrayParamDoubleWrite)
 TEST_ADD(ParameterTest, testCArrayParamDoubleRead)
+TEST_ADD(ParameterTest, testCArrayParamDoubleReadSaveLoad1)
 TEST_ADD(ParameterTest, testDArrayParamIntWrite)
 TEST_ADD(ParameterTest, testDArrayParamIntRead)
 TEST_ADD(ParameterTest, testDArrayParamDoubleWrite)
@@ -837,6 +1012,7 @@ TEST_ADD(ParameterTest, testFArrayParamDoubleRead)
 TEST_ADD(ParameterTest, testFArrayParamDoubleReadSaveLoad1)
 TEST_ADD(ParameterTest, testFArrayParamDoubleReadSaveLoad2)
 TEST_ADD(ParameterTest, testCArray2DParamDoubleWrite)
+TEST_ADD(ParameterTest, testCArray2DParamDoubleReadSaveLoad1)
 TEST_ADD(ParameterTest, testDMatrixParamDoubleWrite)
 TEST_ADD(ParameterTest, testDMatrixParamDoubleRead)
 TEST_END(ParameterTest)
