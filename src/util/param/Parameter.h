@@ -211,7 +211,7 @@ namespace Util
    void Parameter::saveOptional(Serializable::OArchive& ar, 
                                 Type& value, bool isActive)
    {
-      ar & isActive;
+      ar << isActive;
       if (isActive) {
          ar & value;
       }
@@ -224,11 +224,9 @@ namespace Util
    void Parameter::saveOptionalCArray(Serializable::OArchive& ar, 
                                       Type* ptr, int n, bool isActive)
    {
-      ar & isActive;
+      ar << isActive;
       if (isActive) {
-         for (int i = 0; i < n; ++i) {
-            ar << ptr[i];
-         }
+         ar.pack(ptr, n);
       }
    }
 
@@ -240,14 +238,14 @@ namespace Util
                                         Type* ptr, int m, int n, int np, 
                                         bool isActive)
    {
-      ar & isActive;
+      ar << isActive;
       if (isActive) {
-         int i, j;
-         for (i = 0; i < m; ++i) {
-            for (j = 0; j < n; ++j) {
-               ar << ptr[i*np + j];
-            }
-         }
+         std::cout << "Packing optional CArray2D" 
+                   << m  << "  "
+                   << n  << "  "
+                   << np << "  "
+                   << std::endl;
+         ar.pack(ptr, m, n, np);
       }
    }
 

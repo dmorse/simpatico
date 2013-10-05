@@ -41,13 +41,14 @@ namespace Util
       * \endcode
       *
       * \param label  parameter label (usually a literal C-string)
-      * \param value  pointer to first element of associated 1D array
+      * \param ptr  pointer to first element of first row of 2D array
       * \param m  logical number of rows
       * \param n  logical number of columns
-      * \param np  physical number of columns (elements per row).
+      * \param np  physical number of columns (allocated elements per row).
       * \param isRequired Is this a required parameter?
       */
-      CArray2DParam(const char *label, Type* value, int m, int n, int np, bool isRequired = true);
+      CArray2DParam(const char *label, Type* ptr, 
+                    int m, int n, int np, bool isRequired = true);
  
       /**
       * Write 2D C array to file.
@@ -57,21 +58,21 @@ namespace Util
    protected:
       
       /**
-      * Read parameter value from an input stream.
+      * Read 2D array parameter from an input stream.
       * 
       * \param in input stream from which to read
       */
       virtual void readValue(std::istream& in);
 
       /**
-      * Load bare parameter value from an archive.
+      * Load 2D array from an archive.
       *
       * \param ar input archive from which to load
       */
       virtual void loadValue(Serializable::IArchive& ar);
 
       /**
-      * Save parameter value to an archive.
+      * Save 2D array to an archive.
       *
       * \param ar output archive to which to save
       */
@@ -79,15 +80,15 @@ namespace Util
 
       #ifdef UTIL_MPI
       /**
-      * Broadcast parameter value within the ioCommunicator.
+      * Broadcast 2D array within the ioCommunicator.
       */
       virtual void bcastValue();
       #endif
 
    private:
    
-      /// Pointer to first element in associated 1D C array
-      Type* value_;
+      /// Pointer to first element of first row in associated 2D C array
+      Type* ptr_;
    
       /// Number of rows in array[][np]
       int m_; 
@@ -105,9 +106,9 @@ namespace Util
    * CArray2D constructor.
    */
    template <class Type>
-   CArray2DParam<Type>::CArray2DParam(const char* label, Type* value, int m, int n, int np, bool isRequired)
+   CArray2DParam<Type>::CArray2DParam(const char* label, Type* ptr, int m, int n, int np, bool isRequired)
     : Parameter(label, isRequired),
-      value_(value),
+      ptr_(ptr),
       m_(m),
       n_(n),
       np_(np)
@@ -122,7 +123,7 @@ namespace Util
       int i, j;
       for (i = 0; i < m_; ++i) {
          for (j = 0; j < n_; ++j) {
-            in >> value_[i*np_ + j];
+            in >> ptr_[i*np_ + j];
          }
       }
    }
@@ -132,14 +133,21 @@ namespace Util
    */
    template <class Type>
    void CArray2DParam<Type>::loadValue(Serializable::IArchive& ar)
-   {  ar.unpack(value_, m_, n_, np_); }
+   {
+      std::cout << "Unpacking 2CArray2D " 
+                << label() << ", dimensions: "
+                << m_  << "  " 
+                << n_  << "  " 
+                << np_ << "  "  << std::endl;
+      ar.unpack(ptr_, m_, n_, np_); 
+   }
 
    /*
-   * Save a DArray to an output archive.
+   *  Save a DArray to an output archive.
    */
    template <class Type>
    void CArray2DParam<Type>::saveValue(Serializable::OArchive& ar)
-   {  ar.pack(value_, m_, n_, np_); }
+   {  ar.pack(ptr_, m_, n_, np_); }
 
    #ifdef UTIL_MPI
    /*
@@ -147,7 +155,7 @@ namespace Util
    */
    template <class Type>
    void CArray2DParam<Type>::bcastValue()
-   {  bcast<Type>(ioCommunicator(), value_, m_*np_, 0); }
+   {  bcast<Type>(ioCommunicator(), ptr_, m_*np_, 0); }
    #endif
 
    /*
@@ -170,7 +178,7 @@ namespace Util
                out << std::right << std::scientific 
                    << std::setprecision(Parameter::Precision) 
                    << std::setw(Parameter::Width)
-                   << value_[i*np_ + j];
+                   << ptr_[i*np_ + j];
             }
             out << std::endl;
          }

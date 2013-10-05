@@ -78,8 +78,10 @@ namespace Util
    void Parameter::load(Serializable::IArchive& ar)
    {
       if (isIoProcessor()) {
-         if (!isRequired()) {
-            ar & isActive_;
+         if (isRequired()) { 
+            isActive_ = true;
+         } else {
+            ar >> isActive_;
          }
          if (isActive_) {
             loadValue(ar);
@@ -90,7 +92,9 @@ namespace Util
       }
       #ifdef UTIL_MPI
       if (hasIoCommunicator()) {
-         if (!isRequired()) {
+         if (isRequired()) {
+            isActive_ = true;
+         } else {
             bcast<bool>(ioCommunicator(), isActive_, 0); 
          }
          if (isActive_) {
@@ -106,7 +110,7 @@ namespace Util
    void Parameter::save(Serializable::OArchive& ar)
    {
       if (!isRequired()) {
-        ar & isActive_;
+         ar << isActive_;
       }
       if (isActive_) {
          saveValue(ar);
