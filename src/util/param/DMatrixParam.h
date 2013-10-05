@@ -38,7 +38,7 @@ namespace Util
       * \param matrix  DMatrix<Type> object
       * \param m  number of rows
       * \param n  number of columns
-      * \param isRequired Is this a required parameter?
+      * \param isRequired  Is this a required parameter?
       */
       DMatrixParam(const char *label, DMatrix<Type>& matrix, int m, int n, bool isRequired = true);
  
@@ -73,8 +73,6 @@ namespace Util
       #ifdef UTIL_MPI
       /**
       * Broadcast parameter value within the ioCommunicator.
-      *
-      * \param ar output archive to which to save
       */
       virtual void bcastValue();
       #endif

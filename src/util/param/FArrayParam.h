@@ -70,8 +70,6 @@ namespace Util
       #ifdef UTIL_MPI
       /**
       * Broadcast parameter value within the ioCommunicator.
-      *
-      * \param ar output archive to which to save
       */
       virtual void bcastValue();
       #endif

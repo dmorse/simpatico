@@ -417,6 +417,7 @@ namespace Util
       * \param ar  archive for loading
       * \param label  Label string
       * \param value  reference to the Type variable
+      * \param isRequired Is this a required parameter?
       * \return reference to the new CArrayParam<Type> object
       */
       template <typename Type>
@@ -439,6 +440,7 @@ namespace Util
       * \param label  Label string for new array
       * \param value  pointer to array
       * \param n  number of elements
+      * \param isRequired Is this a required parameter?
       * \return reference to the new CArrayParam<Type> object
       */
       template <typename Type>
