@@ -73,7 +73,7 @@ public:
       openFile("in/ParamComposite");
       if (ParamComponent::echo()) Log::file() << std::endl;
 
-      object.readBegin(file(), "ClassName");
+      object.readBegin(file(), "AComposite");
       object.read<int>(file(), "value0", value0);
       object.read<long>(file(), "value1", value1);
       object.read<int>(file(), "optInt", optInt, false);

@@ -34,11 +34,13 @@ public:
       std::ifstream in;
       int value;
 
-      ScalarParam<int> param("MyLabel", value);
+      ScalarParam<int> param("Required", value);
       param.setIoCommunicator(communicator());
       if (mpiRank() == 0)
          in.open("in/ScalarParamInt");
       param.readParam(in);
+      if (mpiRank() == 0)
+         in.close();
       if (mpiRank() == 1) {
          std::cout << std::endl;
          param.writeParam(std::cout);
