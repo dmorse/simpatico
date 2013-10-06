@@ -181,13 +181,9 @@ namespace Util
          std::ostringstream buffer;
          writeParam(buffer);
          str = buffer.str();
-         // std::cout << "Saving archive" << std::endl;
-         // std::cout << str << std::endl;
       } 
       ar & str;
       if (Archive::is_loading()) {
-         // std::cout << "Loading archive" << std::endl;
-         // std::cout << str << std::endl;
          std::istringstream buffer(str);
          readParam(buffer);
       } 

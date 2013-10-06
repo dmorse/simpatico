@@ -28,6 +28,7 @@ public:
 
    void tearDown()
    {
+      Label::clear();
       ParamComponent::setEcho(false);
    }
 
@@ -909,7 +910,8 @@ public:
       delete requiredPrm;
    }
 
-   void testCArray2DParamDoubleReadSaveLoad1() {
+   void testCArray2DParamDoubleReadSaveLoad1() 
+   {
       printMethod(TEST_FUNC);
       double absentVal[2][2];
       double requiredVal[2][2];
@@ -924,10 +926,11 @@ public:
       presentPrm = 
             new CArray2DParam<double>("Present", presentVal[0], 2, 2, 2, false);
 
-      Parameter::setEcho(true);
+      //Parameter::setEcho(true);
+      if (ParamComponent::echo()) printEndl();
+
       std::ifstream in;
       openInputFile("in/MatrixParamDouble", in);
-      if (ParamComponent::echo()) std::cout << std::endl;
       absentPrm->readParam(in);
       TEST_ASSERT(!Label::isClear());
       requiredPrm->readParam(in);
@@ -942,7 +945,7 @@ public:
       TEST_ASSERT(!presentPrm->isRequired());
       TEST_ASSERT(presentPrm->isActive());
 
-      #if 1
+      #if 0
       if (verbose() > 0) {
          printEndl();
          absentPrm->writeParam(std::cout);
@@ -955,7 +958,7 @@ public:
       Serializable::OArchive oar;
       openOutputFile("out/binary", oar.file());
       Parameter::saveOptionalCArray2D(oar, absentVal[0], 2, 2, 2, false);
-      oar.pack(requiredVal, 2, 2, 2);
+      oar.pack(requiredVal[0], 2, 2, 2);
       Parameter::saveOptionalCArray2D(oar, presentVal[0], 2, 2, 2, true);
       oar.file().close();
 
@@ -1034,6 +1037,105 @@ public:
       delete requiredPrm;
    }
 
+   void testDMatrixParamDoubleReadSaveLoad() 
+   {
+      printMethod(TEST_FUNC);
+      DMatrix<double> absentVal;
+      DMatrix<double> requiredVal;
+      DMatrix<double> presentVal;
+      absentVal.allocate(2, 2);
+      requiredVal.allocate(2, 2);
+      presentVal.allocate(2, 2);
+      Parameter *absentPrm;
+      Parameter *requiredPrm;
+      Parameter *presentPrm;
+      absentPrm = 
+            new DMatrixParam<double>("Absent", absentVal, 2, 2, false);
+      requiredPrm  = 
+            new DMatrixParam<double>("Required", requiredVal, 2, 2);
+      presentPrm = 
+            new DMatrixParam<double>("Present", presentVal, 2, 2, false);
+
+      //Parameter::setEcho(true);
+      if (ParamComponent::echo()) printEndl();
+
+      std::ifstream in;
+      openInputFile("in/MatrixParamDouble", in);
+      absentPrm->readParam(in);
+      TEST_ASSERT(!Label::isClear());
+      requiredPrm->readParam(in);
+      TEST_ASSERT(Label::isClear());
+      presentPrm->readParam(in);
+      TEST_ASSERT(Label::isClear());
+
+      TEST_ASSERT(!absentPrm->isRequired());
+      TEST_ASSERT(!absentPrm->isActive());
+      TEST_ASSERT(requiredPrm->isRequired());
+      TEST_ASSERT(requiredPrm->isActive());
+      TEST_ASSERT(!presentPrm->isRequired());
+      TEST_ASSERT(presentPrm->isActive());
+
+      #if 0
+      if (verbose() > 0) {
+         printEndl();
+         absentPrm->writeParam(std::cout);
+         requiredPrm->writeParam(std::cout);
+         presentPrm->writeParam(std::cout);
+      }
+      #endif
+
+      // Save to archive
+      Serializable::OArchive oar;
+      openOutputFile("out/binary", oar.file());
+      Parameter::saveOptional(oar, absentVal, false);
+      oar << requiredVal;
+      Parameter::saveOptional(oar, presentVal, true);
+      oar.file().close();
+
+      // Load from archive
+      DMatrix<double> absentVal2;
+      DMatrix<double> requiredVal2;
+      DMatrix<double> presentVal2;
+      absentVal2.allocate(2, 2);
+      requiredVal2.allocate(2, 2);
+      presentVal2.allocate(2, 2);
+      Parameter* absentPrm2;
+      Parameter* requiredPrm2;
+      Parameter* presentPrm2;
+      absentPrm2 = 
+           new DMatrixParam<double>("Absent", absentVal2, 2, 2, false);
+      requiredPrm2 = 
+           new DMatrixParam<double>("Required", requiredVal2, 2, 2);
+      presentPrm2 = 
+           new DMatrixParam<double>("Present", presentVal2, 2, 2, false);
+
+      Serializable::IArchive iar;
+      openInputFile("out/binary", iar.file());
+      absentPrm2->load(iar);
+      requiredPrm2->load(iar);
+      presentPrm2->load(iar);
+      iar.file().close();
+      TEST_ASSERT(!absentPrm2->isRequired());
+      TEST_ASSERT(!absentPrm2->isActive());
+      TEST_ASSERT(requiredPrm2->isRequired());
+      TEST_ASSERT(!presentPrm2->isRequired());
+      TEST_ASSERT(presentPrm2->isActive());
+
+      if (verbose() > 0) {
+         printEndl();
+         absentPrm2->writeParam(std::cout);
+         requiredPrm2->writeParam(std::cout);
+         presentPrm2->writeParam(std::cout);
+      }
+
+      delete absentPrm;
+      delete requiredPrm;
+      delete presentPrm;
+      delete absentPrm2;
+      delete requiredPrm2;
+      delete presentPrm2;
+   }
+
 };
 
 TEST_BEGIN(ParameterTest)
@@ -1070,9 +1172,10 @@ TEST_ADD(ParameterTest, testFArrayParamDoubleRead)
 TEST_ADD(ParameterTest, testFArrayParamDoubleReadSaveLoad1)
 TEST_ADD(ParameterTest, testFArrayParamDoubleReadSaveLoad2)
 TEST_ADD(ParameterTest, testCArray2DParamDoubleWrite)
-//TEST_ADD(ParameterTest, testCArray2DParamDoubleReadSaveLoad1)
+TEST_ADD(ParameterTest, testCArray2DParamDoubleReadSaveLoad1)
 TEST_ADD(ParameterTest, testDMatrixParamDoubleWrite)
 TEST_ADD(ParameterTest, testDMatrixParamDoubleRead)
+TEST_ADD(ParameterTest, testDMatrixParamDoubleReadSaveLoad)
 TEST_END(ParameterTest)
 
 #endif

@@ -240,11 +240,6 @@ namespace Util
    {
       ar << isActive;
       if (isActive) {
-         std::cout << "Packing optional CArray2D" 
-                   << m  << "  "
-                   << n  << "  "
-                   << np << "  "
-                   << std::endl;
          ar.pack(ptr, m, n, np);
       }
    }

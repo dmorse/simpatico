@@ -133,14 +133,7 @@ namespace Util
    */
    template <class Type>
    void CArray2DParam<Type>::loadValue(Serializable::IArchive& ar)
-   {
-      std::cout << "Unpacking 2CArray2D " 
-                << label() << ", dimensions: "
-                << m_  << "  " 
-                << n_  << "  " 
-                << np_ << "  "  << std::endl;
-      ar.unpack(ptr_, m_, n_, np_); 
-   }
+   {  ar.unpack(ptr_, m_, n_, np_); }
 
    /*
    *  Save a DArray to an output archive.
