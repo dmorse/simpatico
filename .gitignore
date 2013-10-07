@@ -2,3 +2,6 @@ edit.py
 log
 *.a
 *.swp
+*.o
+*.d
+*~

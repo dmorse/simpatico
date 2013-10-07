@@ -13,11 +13,12 @@
 #include "McEnergyOutput.h"
 #include "McEnergyAverage.h"
 #include "McPairEnergyAverage.h"
+#include "McNVTChemicalPotential.h"
 #include "McExternalEnergyAverage.h"
 #include "McBondEnergyAverage.h"
 #include "McPressureAverage.h"
 #include "McStressAutoCorr.h"
-#include "McChemicalPotential.h"
+#include "McNVTChemicalPotential.h"
 #include "McIntraBondStressAutoCorr.h"
 #include "McIntraBondTensorAutoCorr.h"
 
@@ -75,8 +76,8 @@ namespace McMd
       if (className == "McPressureAverage") {
          ptr = new McPressureAverage(system());
       } else
-      if (className == "McChemicalPotential") {
-         ptr = new McChemicalPotential(system());
+      if (className == "McNVTChemicalPotential") {
+         ptr = new McNVTChemicalPotential(system());
       } else
       if (className == "McStressAutoCorr") {
          ptr = new McStressAutoCorr(system());

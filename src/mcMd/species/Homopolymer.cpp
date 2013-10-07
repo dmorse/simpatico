@@ -39,30 +39,28 @@ namespace McMd
       read<int>(in,"atomType", atomType_);
       nBond_  = nAtom_ - 1;
       read<int>(in,"bondType", bondType_);
-      #ifdef INTER_ANGLE
-      read<int>(in,"hasAngles", hasAngles_);
+
+      #if INTER_ANGLE
+      read<int>(in, "hasAngles", hasAngles_);
+      if (nAtom_ < 3) {
+         UTIL_THROW("Error: Cannot have angles with nAtom < 3");
+      }
       if (hasAngles_) {
-         nAngle_ = nBond_ - 1;
-         if (nAngle_ > 0) {
-            read<int>(in,"angleType", angleType_);
-         }
+         nAngle_ = nAtom_ - 2;
+         read<int>(in, "angleType", angleType_);
       } else {
          nAngle_ = 0;
       }
       #endif
-      #ifdef INTER_DIHEDRAL
-      read<int>(in,"hasDihedrals", hasDihedrals_);
+
+      #if INTER_DIHEDRAL
+      read<int>(in, "hasDihedrals", hasDihedrals_);
+      if (nAtom_ < 4) {
+         UTIL_THROW("Error: Cannot have dihedrals with nAtom < 4");
+      }
       if (hasDihedrals_) {
-         if (nAtom_ > 3) {
-            nDihedral_ = nAtom_ - 3;
-         } else {
-            nDihedral_ = 0;
-         }
-         if (nDihedral_ > 0) {
-            read<int>(in,"dihedralType", dihedralType_);
-         } else {
-            nDihedral_ = 0;
-         }
+         nDihedral_ = nAtom_ - 3;
+         read<int>(in, "dihedralType", dihedralType_);
       } else {
          nDihedral_ = 0;
       }

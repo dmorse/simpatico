@@ -9,6 +9,7 @@
 */
 
 #include <util/space/Dimension.h>
+#include <util/space/Vector.h>
 
 #ifdef UTIL_MPI
 #include <util/mpi/MpiTraits.h>
@@ -150,6 +151,20 @@ namespace Util
       * \return reference to this tensor
       */
       Tensor& zero();
+
+      /**
+      * Set row i of the tensor to elements of vector r.
+      *
+      * \return reference to this tensor
+      */
+      Tensor& setRow(int i, Vector r);
+
+      /**
+      * Set row i of the tensor to elements of vector r.
+      *
+      * \return reference to this tensor
+      */
+      Tensor& setColumn(int i, Vector r);
 
       /**
       * Add tensors t1 and t2.
@@ -415,6 +430,30 @@ namespace Util
    {
       for (int i = 0; i < DimensionSq; ++i) {
          elem_[i] = 0.0;
+      }
+      return *this;
+   }
+
+   /*
+   * Set row i of the tensor to elements of vector r.
+   */
+   inline
+   Tensor& Tensor::setRow(int i, Vector r)
+   {
+      for (int j = 0; j < DimensionSq; j++) {
+         elem_[i*Dimension+j] = r[j];
+      }
+      return *this;
+   }
+
+   /*
+   * Set column i of the tensor to elements of vector r.
+   */
+   inline
+   Tensor& Tensor::setColumn(int j, Vector r)
+   {
+      for (int i = 0; i < DimensionSq; i++) {
+         elem_[i*Dimension+j] = r[i];
       }
       return *this;
    }
