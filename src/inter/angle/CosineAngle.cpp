@@ -8,8 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/math/Constants.h>
 #include "CosineAngle.h"
+#include <util/math/Constants.h>
+#include <util/random/Random.h>
 
 namespace Inter
 {

@@ -10,6 +10,7 @@
 
 #include "CosineSqAngle.h"
 #include <util/math/Constants.h>
+#include <util/random/Random.h>
 
 namespace Inter
 {

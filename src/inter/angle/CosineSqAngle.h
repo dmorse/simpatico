@@ -10,10 +10,11 @@
 
 #include <util/global.h>
 #include <util/space/Vector.h>
-#include <util/random/Random.h>
 #include <util/param/ParamComposite.h>  // base class
 
 #include <cmath>
+
+namespace Util {class Random;}
 
 namespace Inter
 {
