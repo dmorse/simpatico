@@ -1,4 +1,6 @@
 edit.py
+*.pyc
 log
-*.a
+*.[ado]
+*~
 *.swp

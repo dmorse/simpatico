@@ -53,9 +53,9 @@ namespace McMd
       read<int>(in, "bondType", bondType_);
 
       #if INTER_ANGLE
-      read<int>(in, "hasAngle", hasAngles_);
-      if (nAtom_ <= 3) {
-         UTIL_THROW("Error: Cannot have dihedrals with nAtom <= 4");
+      read<int>(in, "hasAngles", hasAngles_);
+      if (nAtom_ < 3) {
+         UTIL_THROW("Error: Cannot have angles with nAtom < 3");
       }
       if (hasAngles_) {
          nAngle_ = nAtom_ - 2;
@@ -65,10 +65,10 @@ namespace McMd
       }
       #endif
 
-      #if INTER_DIHEDRALS
+      #if INTER_DIHEDRAL
       read<int>(in, "hasDihedrals", hasDihedrals_);
-      if (nAtom_ <= 4) {
-         UTIL_THROW("Error: Cannot have dihedrals with nAtom <= 4");
+      if (nAtom_ < 4) {
+         UTIL_THROW("Error: Cannot have dihedrals with nAtom < 4");
       }
       if (hasDihedrals_) {
          nDihedral_ = nAtom_ - 3;
