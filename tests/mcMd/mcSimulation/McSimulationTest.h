@@ -52,16 +52,23 @@ public:
    virtual void readParam(McSimulation& sim)
    {  
       #ifdef INTER_ANGLE
+      #ifdef INTER_DIHEDRAL
+      openFile("in/McSimulationAngleDihedral"); 
+      #else
       openFile("in/McSimulationAngle"); 
+      #endif
+      #else
+      #ifdef INTER_DIHEDRAL
+      openFile("in/McSimulationDihedral"); 
       #else
       openFile("in/McSimulation"); 
       #endif
-      //sim.setEcho();
+      #endif
       sim.readParam(file());
       std::cout << std::endl;
    }
 
-   void testReadParam();
+// void testReadParam();
    void testPairEnergy();
    void testBondEnergy();
    #ifdef INTER_ANGLE
@@ -82,7 +89,7 @@ private:
 
 };
 
-void McSimulationTest::testReadParam()
+/*void McSimulationTest::testReadParam()
 {
    printMethod(TEST_FUNC);
    readParam(simulation_);
@@ -101,7 +108,7 @@ void McSimulationTest::testReadParam()
    }
 
 }
-
+*/
 
 void McSimulationTest::testPairEnergy()
 { 
@@ -289,8 +296,19 @@ void McSimulationTest::testSimulate()
 {
    printMethod(TEST_FUNC);
    std::cout << std::endl;
-
+   #ifdef INTER_ANGLE
+   #ifdef INTER_DIHEDRAL
+   openFile("in/McSimulationAngleDihedral"); 
+   #else
+   openFile("in/McSimulationAngle"); 
+   #endif
+   #else
+   #ifdef INTER_DIHEDRAL
+   openFile("in/McSimulationDihedral"); 
+   #else
    openFile("in/McSimulation"); 
+   #endif
+   #endif
    simulation_.readParam(file());
    simulation_.readCommands();
 
@@ -310,8 +328,19 @@ void McSimulationTest::testWriteRestart()
 {
    printMethod(TEST_FUNC);
    std::cout << std::endl;
-
+   #ifdef INTER_ANGLE
+   #ifdef INTER_DIHEDRAL
+   openFile("in/McSimulationAngleDihedral"); 
+   #else
+   openFile("in/McSimulationAngle"); 
+   #endif
+   #else
+   #ifdef INTER_DIHEDRAL
+   openFile("in/McSimulationDihedral"); 
+   #else
    openFile("in/McSimulation"); 
+   #endif
+   #endif
    simulation_.readParam(file());
    simulation_.readCommands();
 
@@ -343,7 +372,7 @@ void McSimulationTest::testReadRestart()
 }
 
 TEST_BEGIN(McSimulationTest)
-TEST_ADD(McSimulationTest, testReadParam)
+//TEST_ADD(McSimulationTest, testReadParam)
 TEST_ADD(McSimulationTest, testPairEnergy)
 TEST_ADD(McSimulationTest, testBondEnergy)
 #ifdef INTER_ANGLE
