@@ -87,6 +87,9 @@ namespace Util
       /// Number of rows (range of first index).
       int  capacity1_;
 
+      /// Total number of elements.
+      int  capacity_;
+
       /**
       * Default constructor. 
       *
@@ -115,7 +118,8 @@ namespace Util
     : data_(0),
       rows_(0),
       capacity2_(0),
-      capacity1_(0)
+      capacity1_(0),
+      capacity_(0)
    {}
 
    /*

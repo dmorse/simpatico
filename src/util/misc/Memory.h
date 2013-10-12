@@ -47,7 +47,7 @@ namespace Util
       /**
       * Return total amount of memory allocated thus far.
       */
-      static size_t totalAllocated();
+      static size_t total();
 
       /**
       * Call this just to guarantee initialization of static memory.
@@ -57,7 +57,7 @@ namespace Util
    private: 
 
       /// Total amount of memory allocated, in bytes. 
-      static size_t totalAllocated_;
+      static size_t total_;
    
    };
    
@@ -73,7 +73,7 @@ namespace Util
          std::cout << "Allocation error" << std::endl;
          throw;
       }
-      totalAllocated_ += size*sizeof(Data);
+      total_ += size*sizeof(Data);
    }
 
    /*
@@ -84,7 +84,7 @@ namespace Util
    {
       if (ptr) {
          delete [] ptr;
-         totalAllocated_ -= size*sizeof(Data);
+         total_ -= size*sizeof(Data);
          ptr = 0;
       }
    }

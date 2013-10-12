@@ -174,12 +174,9 @@ namespace Util
    */
    void ParamComposite::addParamComposite(ParamComposite &child, bool next)
    {
-      setParent(child, next);
       bool isLeaf = false;
+      setParent(child, next);
       addComponent(child, isLeaf);
-      //list_.push_back(&child);
-      //isLeaf_.push_back(false);
-      //++size_;
    }
 
    /*
@@ -190,7 +187,7 @@ namespace Util
                                       bool next)
    {
       addParamComposite(child, next);
-      list_.back()->readParam(in);
+      child.readParam(in);
    }
 
    /*
@@ -201,7 +198,7 @@ namespace Util
                                       ParamComposite &child, bool next)
    {
       addParamComposite(child, next);
-      list_.back()->load(ar);
+      child.load(ar);
    }
 
    // Begin

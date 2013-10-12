@@ -11,6 +11,7 @@
 #include <util/containers/Array.h>
 #include <util/containers/Node.h>
 #include <util/containers/List.h>
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -160,12 +161,14 @@ namespace Util
    ListArray<Data>::~ListArray()
    {
       if (nodes_ != 0) {
-         delete [] nodes_; 
-         nodes_ = 0;
+         Memory::deallocate< Node<Data> >(nodes_, capacity_);
+         // delete [] nodes_; 
+         // nodes_ = 0;
       }
       if (lists_ != 0) {
-         delete [] lists_; 
-         lists_ = 0;
+         Memory::deallocate< List<Data> >(lists_, nList_);
+         // delete [] lists_; 
+         // lists_ = 0;
       }
    }
  
@@ -183,10 +186,12 @@ namespace Util
       nList_    = nList;
 
       // Allocate array of nodes
-      nodes_  = new Node<Data>[capacity_];
+      Memory::allocate< Node<Data> >(nodes_, capacity_);
+      //nodes_  = new Node<Data>[capacity_];
 
       // Allocate and initialize lists
-      lists_ = new List<Data>[nList_];
+      Memory::allocate< List<Data> >(lists_, nList_);
+      // lists_ = new List<Data>[nList_];
       for (i=0; i < nList_; ++i) {
          lists_[i].initialize(nodes_, capacity_);
       }

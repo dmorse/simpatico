@@ -28,6 +28,7 @@ namespace Util
       using RaggedMatrix<Data>::rows_;
       using RaggedMatrix<Data>::capacity1_;
       using RaggedMatrix<Data>::capacity2_;
+      using RaggedMatrix<Data>::capacity_;
 
    public:
 
@@ -72,13 +73,16 @@ namespace Util
    DRaggedMatrix<Data>::~DRaggedMatrix()
    {
       if (data_ != 0) {
-         delete [] data_;
+         Memory::deallocate<Data>(data_, capacity_);
+         //delete [] data_;
       }
       if (rows_ != 0) {
-         delete [] rows_;
+         //delete [] rows_;
+         Memory::deallocate<Data*>(rows_, capacity1_);
       }
       if (capacity2_ != 0) {
-         delete [] capacity2_;
+         //delete [] capacity2_;
+         Memory::deallocate<int>(capacity2_, capacity1_);
       }
    }
 
@@ -88,33 +92,35 @@ namespace Util
    template <typename Data>
    void DRaggedMatrix<Data>::allocate(const DArray<int>& rowSizes)
    {
-      int i, capacity;
-
       if (data_ != 0) 
          UTIL_THROW("Attempt to re-allocate a RaggedMatrix");
 
       if (rowSizes.capacity() <= 0) 
          UTIL_THROW("rowSizes.capacity() must be positive");
 
-      capacity = 0; 
-      for (i = 0; i < rowSizes.capacity(); ++i) {
+      capacity_ = 0; 
+      for (int i = 0; i < rowSizes.capacity(); ++i) {
          if (rowSizes[i] < 0) 
             UTIL_THROW("rowSizes must all be nonnegative");
-         capacity += rowSizes[i];
+         capacity_ += rowSizes[i];
       }
 
-      if (capacity == 0) 
+      if (capacity_ == 0) 
          UTIL_THROW("Sum of row sizes must be positive");
 
       // Allocate all memory
-      capacity1_  = rowSizes.capacity();
-      capacity2_  = new int[capacity1_];
-      rows_       = new Data*[capacity1_];
-      data_       = new Data[capacity];
+      capacity1_ = rowSizes.capacity();
+      Memory::allocate<int>(capacity2_, capacity1_);
+      Memory::allocate<Data*>(rows_, capacity1_);
+      Memory::allocate<Data>(data_, capacity_);
+
+      // capacity2_  = new int[capacity1_];
+      // rows_ = new Data*[capacity1_];
+      // data_ = new Data[capacity_];
 
       // Set row sizes and pointers to rows
       Data* ptr = data_;
-      for (i = 0; i < capacity1_; ++i) {
+      for (int i = 0; i < capacity1_; ++i) {
          capacity2_[i] = rowSizes[i];
          rows_[i] = ptr;
          ptr += rowSizes[i];

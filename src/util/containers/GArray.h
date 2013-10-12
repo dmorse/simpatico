@@ -8,9 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/global.h>
 #include <util/containers/ArrayIterator.h>
 #include <util/containers/ConstArrayIterator.h>
+#include <util/misc/Memory.h>
+#include <util/global.h>
 
 namespace Util
 {
@@ -202,7 +203,8 @@ namespace Util
       if (other.data_ != 0) {
          assert(other.capacity_ > 0);
          // Allocate new array
-         data_  = new Data[other.capacity_];
+         Memory::allocate<Data>(data_, other.capacity_);
+         // data_  = new Data[other.capacity_];
          capacity_ = other.capacity_;
          // Copy objects
          int i;
@@ -220,7 +222,8 @@ namespace Util
    inline GArray<Data>::~GArray()
    {
       if (data_) {
-         delete [] data_;
+         Memory::deallocate<Data>(data_, capacity_);
+         // delete [] data_;
       }
    }
 
@@ -250,17 +253,20 @@ namespace Util
          UTIL_THROW("Cannot reserve with capacity <=0");
       }
       if (data_ == 0) {
-         data_ = new Data[capacity];
+         Memory::allocate<Data>(data_, capacity);
+         // data_ = new Data[capacity];
          capacity_ = capacity;
          size_ = 0;
       } else if (capacity > capacity_) {
          Data* old = data_;
-         data_ = new Data[capacity];
-         capacity_ = capacity;
+         Memory::allocate<Data>(data_, capacity);
+         //data_ = new Data[capacity];
          for (int i = 0; i < size_; ++i) {
             data_[i] = old[i];
          }
-         delete [] old;
+         Memory::deallocate<Data>(old, capacity_);
+         // delete [] old;
+         capacity_ = capacity;
       }
    }
 
@@ -271,7 +277,8 @@ namespace Util
    void GArray<Data>::deallocate() 
    {
       if (data_) {
-         delete [] data_;
+         Memory::deallocate<Data>(data_, capacity_);
+         // delete [] data_;
          size_ = 0;
          capacity_ = 0; 
       }
@@ -292,18 +299,22 @@ namespace Util
    {
       if (size_ == capacity_) {
          if (capacity_ == 0) {
-            data_ = new Data[64];
+            Memory::allocate<Data>(data_, 64);
+            //data_ = new Data[64];
             capacity_ = 64;
          } else {
             Data* old = data_;
-            capacity_ = 2*capacity_;
-            data_ = new Data[capacity_];
+            Memory::allocate<Data>(data_, 2*capacity_);
+            // data_ = new Data[2*capacity_];
             for (int i = 0; i < size_; ++i) {
                data_[i] = old[i];
             }
-            delete [] old;
+            Memory::deallocate<Data>(old, capacity_);
+            // delete [] old;
+            capacity_ = 2*capacity_;
          }
       }
+      // Append new element
       data_[size_] = data;
       ++size_;
    }
@@ -328,12 +339,15 @@ namespace Util
                   m *= 2;
                }
             }
-            Data* newPtr = new Data[m];
+            Data* newPtr;
+            Memory::allocate<Data>(newPtr, m);
+            // newPtr = new Data[m];
             if (data_) {
                for (int i = 0; i < size_; ++i) {
                   newPtr[i] = data_[i];
                }
-               delete [] data_;
+               Memory::deallocate<Data>(data_, capacity_);
+               // delete [] data_;
             }
             data_ = newPtr;
             capacity_ = m;

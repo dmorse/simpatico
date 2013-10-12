@@ -9,6 +9,7 @@
 */
 
 #include <util/containers/Array.h>
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 
@@ -120,7 +121,9 @@ namespace Util
       if (!other.isAllocated()) {
          UTIL_THROW("Other DArray must be allocated.");
       }
-      data_     = new Data[other.capacity_];
+      capacity_ = other.capacity_;
+      Memory::allocate(data_, other.capacity_);
+      //data_ = new Data[other.capacity_];
       capacity_ = other.capacity_;
       for (int i = 0; i < capacity_; ++i) {
          data_[i] = other.data_[i];
@@ -134,7 +137,8 @@ namespace Util
    DArray<Data>::~DArray()
    {
       if (data_) {
-         delete [] data_;
+         Memory::deallocate<Data>(data_, capacity_);
+         // delete [] data_;
       }
    }
 
@@ -189,7 +193,8 @@ namespace Util
       if (capacity <= 0) {
          UTIL_THROW("Cannot allocate a DArray with capacity <= 0");
       }
-      data_     = new Data[capacity];
+      Memory::allocate<Data>(data_, capacity);
+      // data_  = new Data[capacity];
       capacity_ = capacity;
    }
 
@@ -204,8 +209,9 @@ namespace Util
       if (!data_) {
          UTIL_THROW("Array is not allocated");
       }
-      delete [] data_;
-      data_ = 0;
+      Memory::deallocate<Data>(data_, capacity_);
+      // delete [] data_;
+      // data_ = 0;
       capacity_ = 0;
    }
 

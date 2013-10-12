@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -135,8 +136,8 @@ namespace Util
    ArrayStack<Data>::~ArrayStack()
    {
       if (ptrs_ != 0) {
-         delete [] ptrs_; 
-         ptrs_ = 0;
+         Memory::deallocate<Data*>(ptrs_, capacity_);
+         // delete [] ptrs_; 
       }
    }
  
@@ -149,8 +150,11 @@ namespace Util
       if (capacity <=0) {
          UTIL_THROW("Cannot allocate ArrayStack with capacity <= 0");
       }
-      ptrs_     = new Data*[capacity];
+
+      Memory::allocate<Data*>(ptrs_, capacity);
+      // ptrs_  = new Data*[capacity];
       capacity_ = capacity;
+
       size_     = 0;
       // Nullify all Data* pointer elements
       for (int i = 0; i < capacity; ++i) {
