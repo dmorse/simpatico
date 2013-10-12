@@ -1,5 +1,5 @@
-#ifndef MCMD_MC_CHEMICAL_POTENTIAL_H
-#define MCMD_MC_CHEMICAL_POTENTIAL_H
+#ifndef MCMD_MC_NVT_CHEMICAL_POTENTIAL_H
+#define MCMD_MC_NVT_CHEMICAL_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -11,6 +11,7 @@
 #include <mcMd/diagnostics/SystemDiagnostic.h>  // base class template
 #include <mcMd/mcSimulation/McSystem.h>         // base template parameter
 #include <util/accumulators/Average.h>          // member
+#include <util/accumulators/Distribution.h>     // member
 #include <util/random/Random.h>                 // member
 #include <util/ensembles/EnergyEnsemble.h>      // inline function
 #include <util/archives/Serializable.h>         // typedef used in interface
@@ -29,7 +30,7 @@ namespace McMd
    *
    * \ingroup McMd_Diagnostic_Module
    */
-   class McChemicalPotential : public SystemDiagnostic<McSystem>
+   class McNVTChemicalPotential : public SystemDiagnostic<McSystem>
    {
    
    public:
@@ -37,7 +38,7 @@ namespace McMd
       /**   
       * Constructor.
       */
-      McChemicalPotential(McSystem& system);
+      McNVTChemicalPotential(McSystem& system);
 
       /**
       * Read parameters and initialize.
@@ -79,8 +80,21 @@ namespace McMd
       * \param ar      saving or loading archive
       * \param version archive version id
       */
+
+      /*
+      * Serialize to/from an archive. 
+      */
       template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
+      void serialize(Archive& ar, const unsigned int version)
+      {
+         if (!isInitialized_) {
+            UTIL_THROW("Error: Object not initialized.");
+         }
+
+         ar & accumulator_;
+         ar & nSamplePerBlock_;
+      }
+
 
    private:
 
@@ -129,8 +143,18 @@ namespace McMd
       * \param rosenbluth Rosenbluth factor of added atom (out)
       * \param energy     potential energy of deleted atom (out)
       */
-      void addEndAtom(Atom* endPtr, Atom* pvtPtr, int bondType,
-                         double &rosenbluth, double &energy);
+      void addEndAtom(Molecule* molPtr, int atomId, double &rosenbluth, double &energy);
+
+      /**
+      * Generates a vector p making angle theta with vector n and having length b.
+      *
+      * \param theta      theta is the angle between n and p.
+      * \param b          the length of vector p.
+      * \param n          original vector relative to which the theta angle is measured.
+      * \param p          a refrence to the generated vector.
+      */
+      void uniformCone(const double length, const double angle, const Vector n, Vector &p);
+
 
       /// Maximum allowed number of trial positions for a regrown atom.
       static const int MaxTrial_ = 200;
@@ -156,6 +180,66 @@ namespace McMd
       /// Average object - statistical accumulator
       Average  accumulator_;
 
+      /// Output file stream
+      std::ofstream EoutputFile_;
+
+      /// Average object - statistical accumulator
+      Distribution  Eaccumulator_;
+
+      /// Minimum of range
+      double Emin_;
+
+      /// Maximum of range
+      double Emax_;
+
+      /// Number of bins in range
+      double EnBin_;
+
+      /// Output file stream
+      std::ofstream EcoutputFile_;
+
+      /// Average object - statistical accumulator
+      Distribution  Ecaccumulator_;
+
+      /// Minimum of range
+      double Ecmin_;
+
+      /// Maximum of range
+      double Ecmax_;
+
+      /// Number of bins in range
+      double EcnBin_;
+
+      /// Output file stream
+      std::ofstream EmoutputFile_;
+
+      /// Average object - statistical accumulator
+      Distribution  Emaccumulator_;
+
+      /// Minimum of range
+      double Emmin_;
+
+      /// Maximum of range
+      double Emmax_;
+
+      /// Number of bins in range
+      double EmnBin_;
+
+      /// Output file stream
+      std::ofstream BRoutputFile_;
+
+      /// Average object - statistical accumulator
+      Distribution  BRaccumulator_;
+
+      /// Minimum of range
+      double BRmin_;
+
+      /// Maximum of range
+      double BRmax_;
+
+      /// Number of bins in range
+      double BRnBin_;
+
       /// Actual number of trial positions for each regrown atom.
       int  nTrial_; 
 
@@ -171,63 +255,47 @@ namespace McMd
       /// Has readParam been called?
       bool isInitialized_;
 
-   };
+      /// Grant friend access to unit test class
+      //  friend class CbEndBaseTest;
+      };
 
-   // Inline methods
+      // Inline methods
 
-   /*
-   * Get parent McSystem.
-   */
-   inline McSystem& McChemicalPotential::system()
-   {  return *systemPtr_; }
+      /*
+      * Get parent McSystem.
+      */
+      inline McSystem& McNVTChemicalPotential::system()
+      {  return *systemPtr_; }
 
-   /*
-   * Get Simulation object of parent McSystem.
-   */
-   inline Simulation& McChemicalPotential::simulation()
-   {  return *simulationPtr_; }
+      /*
+      * Get Simulation object of parent McSystem.
+      */
+      inline Simulation& McNVTChemicalPotential::simulation()
+      {  return *simulationPtr_; }
 
-   /*
-   * Get Boundary object of parent McSystem.
-   */
-   inline Boundary& McChemicalPotential::boundary()
-   {  return *boundaryPtr_; }
+      /*
+      * Get Boundary object of parent McSystem.
+      */
+      inline Boundary& McNVTChemicalPotential::boundary()
+      {  return *boundaryPtr_; }
 
-   /*
-   * Get EnergyEnsemble object of parent McSystem.
-   */
-   inline EnergyEnsemble& McChemicalPotential::energyEnsemble()
-   {  return *energyEnsemblePtr_; }
+      /*
+      * Get EnergyEnsemble object of parent McSystem.
+      */
+      inline EnergyEnsemble& McNVTChemicalPotential::energyEnsemble()
+      {  return *energyEnsemblePtr_; }
 
-   /*
-   * Get random object of parent McSystem.
-   */
-   inline Random& McChemicalPotential::random()
-   {  return *randomPtr_; }
+      /*
+      * Get random object of parent McSystem.
+      */
+      inline Random& McNVTChemicalPotential::random()
+      {  return *randomPtr_; }
 
-   /*
-   * Boltzmann weight associated with an energy difference.
-   */
-   inline double McChemicalPotential::boltzmann(double energy)
-   {  return exp(-energyEnsemblePtr_->beta()*energy); }
-
-   // Function template
-
-   /*
-   * Serialize to/from an archive. 
-   */
-   template <class Archive>
-   void McChemicalPotential::serialize(Archive& ar, const unsigned int version)
-   {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
-      ar & accumulator_;
-      ar & nSamplePerBlock_;
-      ar & nTrial_;
-      ar & nMoleculeTrial_;
-      ar & speciesId_;
-   }
+      /*
+      * Boltzmann weight associated with an energy difference.
+      */
+      inline double McNVTChemicalPotential::boltzmann(double energy)
+      {  return exp(-energyEnsemblePtr_->beta()*energy); }
 
 }
 #endif 

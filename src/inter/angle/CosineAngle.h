@@ -11,8 +11,9 @@
 #include <util/global.h>
 #include <util/space/Vector.h>
 #include <util/param/ParamComposite.h>  // base class
-
 #include <cmath>
+
+namespace Util{class Random;}
 
 namespace Inter
 {
@@ -115,6 +116,38 @@ namespace Inter
       */
       void force(const Vector& R1, const Vector& R2,
                       Vector& F1, Vector& F2, int type) const;
+
+      /**
+      * Return bond angle chosen from equilibrium distribution.
+      *
+      * This function returns a bond angle chosen from the Boltzmann
+      * distribution of angle for bonds of random orientation. The
+      * distribution P(\theta) of values of the angle \theta is proportional 
+      * to sin(\theta)*exp[-beta*phi(\theta) ], where phi(\theta) 
+      * is the bond energy. 
+      *
+      * \param random pointer to random number generator object.
+      * \param beta   inverse temperature
+      * \param type   bond type
+      * \return random bond length chosen from equilibrium distribution.
+      */
+      double randomAngle(Random *random, double beta, int type) const;
+
+      /**
+      * Return bond angle cosine chosen from equilibrium distribution.
+      *
+      * This function returns a bond angle chosen from the Boltzmann
+      * distribution of angle for bonds of random orientation. The
+      * distribution P(\theta) of values of the angle \theta is proportional 
+      * to sin(\theta)*exp[-beta*phi(\theta) ], where phi(\theta) 
+      * is the bond energy. 
+      *
+      * \param random pointer to random number generator object.
+      * \param beta   inverse temperature
+      * \param type   bond type
+      * \return random bond length chosen from equilibrium distribution.
+      */
+      double randomCosineAngle(Random *random, double beta, int type) const;
 
       /**
       * Get a parameter value, identified by a string.

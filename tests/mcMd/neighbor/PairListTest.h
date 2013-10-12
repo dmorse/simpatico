@@ -112,7 +112,7 @@ public:
       // Logical checks
       TEST_ASSERT(pairList.atomCapacity_ - 1 - pairList.tList1_ 
                      + pairList.nAtom1_ == pairList.nAtom_);
-      //TEST_ASSERT(pairList.nAtom1_ - 1 == pairList.tList1_);
+//    TEST_ASSERT(pairList.nAtom1_ - 1 == pairList.tList1_);
       TEST_ASSERT(pairList.first_[0] == 0);
       TEST_ASSERT(pairList.first_[pairList.nAtom1_] == pairList.nAtom2_);
 

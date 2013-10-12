@@ -101,6 +101,27 @@ namespace McMd
                        Vector& F1, Vector& F2, int type) const;
 
       /**
+      * Returns a random bond Angle.
+      *
+      * \param random        an instance of Random object.
+      * \param beta          beta of simulation.
+      * \param bondTypeId    Type of bond being used.
+      */
+      virtual 
+      double randomAngle(Random* random, double beta, int bondTypeId) 
+             const;
+
+      /**
+      * Returns Cosine a random bond Angle.
+      *
+      * \param random        an instance of Random object.
+      * \param beta          beta of simulation.
+      * \param bondTypeId    Type of bond being used.
+      */
+      virtual 
+      double randomCosineAngle(Random *random, double beta, int type) const;
+
+      /**
       * Modify a parameter, identified by a string.
       *
       * \param name  parameter name
@@ -303,6 +324,22 @@ namespace McMd
    void AnglePotentialImpl<Interaction>::force(const Vector& R1, const Vector& R2, 
                                           Vector& F1, Vector& F2, int typeId) const
    {  interaction().force(R1, R2, F1, F2, typeId); }
+
+   /**
+   * Returns a random bond Angle.
+   */
+   template <class Interaction> 
+   double AnglePotentialImpl<Interaction>::randomAngle(Random *random, 
+                                         double beta, int angleTypeId) const 
+   {  return interaction().randomAngle(random, beta, angleTypeId); } 
+
+   /**
+   * Returns Cosine a random bond Angle.
+   */
+   template <class Interaction> 
+   double AnglePotentialImpl<Interaction>::randomCosineAngle(Random *random,
+                                               double beta, int angleTypeId) const
+   {  return interaction().randomCosineAngle(random, beta, angleTypeId); } 
 
    /*
    * Return angle energy for one Atom. 

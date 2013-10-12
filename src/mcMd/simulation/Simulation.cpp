@@ -923,7 +923,11 @@ namespace McMd
                      UTIL_THROW("Invalid local atom id in a SpeciesBond");
                   }
                   if (bondType < 0 || bondType >= nBondType_) {
-                     UTIL_THROW("Invalid local atom id in a SpeciesBond");
+                     std::cout << "bondType   = " << bondType 
+                              << std::endl;
+                     std::cout << "nBondType_ = " << nBondType_ 
+                              << std::endl;
+                     UTIL_THROW("Invalid bondType in a SpeciesBond");
                   }
 
                   // Validate consistency of Bond and SpeciesBond
