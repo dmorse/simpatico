@@ -27,7 +27,7 @@ class SimulationTest : public ParamFileTest
 {
 private:
 
-    Simulation simulation_;
+   DdMd::Simulation simulation_;
 
    void displaceAtoms(AtomStorage& atomStorage, const Boundary& boundary, 
                       Random& random, double range);
@@ -35,7 +35,15 @@ private:
 public:
 
    virtual void setUp()
-   {  simulation_.fileMaster().setRootPrefix(filePrefix()); }
+   {  
+      Label::clear();
+      simulation_.fileMaster().setRootPrefix(filePrefix()); 
+   }
+
+   virtual void tearDown()
+   {  
+      Label::clear();
+   }
 
    void testReadParam();
 
@@ -130,6 +138,7 @@ inline void SimulationTest::testExchangeAtoms()
 
    openFile("in/param1"); 
    simulation_.readParam(file()); 
+   file().close(); 
 
    Domain&   domain = simulation_.domain();
    Boundary& boundary = simulation_.boundary();
@@ -141,27 +150,12 @@ inline void SimulationTest::testExchangeAtoms()
 
    displaceAtoms(atomStorage, boundary, random, 0.8);
  
-   #if 0
-   // Range of random increments for the atom positions.
-   double range1 = double(-0.8);
-   double range2 = double(0.8);
-
-   // Add a random increment to atom positions
-   AtomIterator atomIter;
-   for (int i = 0; i < Dimension; ++i) {
-     atomStorage.begin(atomIter);
-     for ( ; atomIter.notEnd(); ++atomIter) {
-        atomIter->position()[i] += random.uniform(range1, range2);
-     }
-   }
-   #endif
-
    // Exchange atoms among processors
    simulation_.exchanger().exchange();
 
    // Check that all atoms are accounted for after exchange.
    int nAtomAll;
-   int myRank   = domain.gridRank();
+   int myRank = domain.gridRank();
    atomStorage.computeNAtomTotal(domain.communicator());
    if (myRank == 0) {
       nAtomAll = atomStorage.nAtomTotal();
@@ -175,7 +169,7 @@ inline void SimulationTest::testExchangeAtoms()
    atomStorage.begin(atomIter);
    for ( ; atomIter.notEnd(); ++atomIter) {
       j++;
-      TEST_ASSERT( domain.isInDomain( atomIter->position() ) );
+      TEST_ASSERT( domain.isInDomain(atomIter->position()) );
    }
    TEST_ASSERT(j == atomStorage.nAtom());
 
@@ -186,7 +180,8 @@ inline void SimulationTest::testExchange()
    printMethod(TEST_FUNC); 
 
    openFile("in/param1"); 
-   simulation_.readParam(file()); 
+   simulation_.readParam(file());
+   file().close(); 
 
    Domain&  domain  = simulation_.domain();
    Boundary& boundary = simulation_.boundary();
@@ -201,6 +196,7 @@ inline void SimulationTest::testExchange()
    // Exchange atoms among processors
    simulation_.exchanger().exchange();
 
+   #if 0
    // Check that all atoms are accounted for after exchange.
    int nAtomAll;
    int myRank = domain.gridRank();
@@ -228,6 +224,7 @@ inline void SimulationTest::testExchange()
    for ( ; ghostIter.notEnd(); ++ghostIter) {
       TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
    }
+   #endif
 
    #if 0
    int nGhostAll = simulation_.nGhostTotal();
@@ -287,8 +284,10 @@ inline void SimulationTest::testUpdate()
    }
    atomStorage.transformGenToCart(boundary);
 
+   #if 1
    displaceAtoms(atomStorage, boundary, random, 0.1);
    simulation_.exchanger().update();
+   #endif
 
 }
 

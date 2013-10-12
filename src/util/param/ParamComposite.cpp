@@ -150,7 +150,7 @@ namespace Util
    void ParamComposite::setParent(ParamComponent& param, bool next)
    {
       param.setIndent(*this, next);
-      #if UTIL_MPI
+      #ifdef UTIL_MPI
       if (hasIoCommunicator()) {
          param.setIoCommunicator(ioCommunicator());
       }
@@ -160,10 +160,10 @@ namespace Util
    /*
    * Add a leaf ParamComponent to the format array.
    */
-   void ParamComposite::addLeaf(ParamComponent& param)
+   void ParamComposite::addComponent(ParamComponent& param, bool isLeaf)
    {
       list_.push_back(&param);
-      isLeaf_.push_back(true);
+      isLeaf_.push_back(isLeaf);
       ++size_;
    }
 
@@ -175,9 +175,11 @@ namespace Util
    void ParamComposite::addParamComposite(ParamComposite &child, bool next)
    {
       setParent(child, next);
-      list_.push_back(&child);
-      isLeaf_.push_back(false);
-      ++size_;
+      bool isLeaf = false;
+      addComponent(child, isLeaf);
+      //list_.push_back(&child);
+      //isLeaf_.push_back(false);
+      //++size_;
    }
 
    /*
@@ -211,10 +213,7 @@ namespace Util
    {
       Begin* ptr = new Begin(label);
       setParent(*ptr, false);
-      addLeaf(*ptr);
-      // list_.push_back(ptr);
-      // isLeaf_.push_back(true);
-      // ++size_;
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -237,9 +236,7 @@ namespace Util
    {
       End* ptr = new End();
       setParent(*ptr, false);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -262,9 +259,7 @@ namespace Util
    {
       Blank* ptr = new Blank();
       setParent(*ptr);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
+      addComponent(*ptr);
       return *ptr;
    }
 

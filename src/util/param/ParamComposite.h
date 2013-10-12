@@ -634,11 +634,12 @@ namespace Util
       void setParent(ParamComponent& param, bool next = true);
 
       /**
-      * Add a new leaf ParamComponent object to the format array.
+      * Add a new ParamComponent object to the format array.
       *
       * \param param Parameter object
+      * \param isLeaf Is this a leaf object or a a ParamComposite node?
       */
-      void addLeaf(ParamComponent& param);
+      void addComponent(ParamComponent& param, bool isLeaf = true);
 
    };
 
@@ -656,7 +657,7 @@ namespace Util
       ptr = new ScalarParam<Type>(label, value, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -672,7 +673,7 @@ namespace Util
       ptr = new ScalarParam<Type>(label, value, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -690,7 +691,7 @@ namespace Util
       ptr = new CArrayParam<Type>(label, value, n, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -706,7 +707,7 @@ namespace Util
       ptr = new CArrayParam<Type>(label, value, n, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -724,7 +725,7 @@ namespace Util
       ptr = new DArrayParam<Type>(label, array, n, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -740,7 +741,7 @@ namespace Util
       ptr = new DArrayParam<Type>(label, array, n, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -758,7 +759,7 @@ namespace Util
       ptr = new FArrayParam<Type, N>(label, array, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -774,7 +775,7 @@ namespace Util
       ptr  = new FArrayParam<Type, N>(label, array, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -793,7 +794,7 @@ namespace Util
       ptr = new CArray2DParam<Type>(label, value, m, n, np, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -810,7 +811,7 @@ namespace Util
       ptr = new CArray2DParam<Type>(label, value, m, n, np, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -829,7 +830,7 @@ namespace Util
       ptr = new DMatrixParam<Type>(label, matrix, m, n, isRequired);
       setParent(*ptr);
       ptr->readParam(in);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -846,7 +847,7 @@ namespace Util
       ptr = new DMatrixParam<Type>(label, matrix, m, n, isRequired);
       setParent(*ptr);
       ptr->load(ar);
-      addLeaf(*ptr);
+      addComponent(*ptr);
       return *ptr;
    }
 

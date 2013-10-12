@@ -56,6 +56,14 @@ namespace Util
                            << "[ absent ]" << std::endl;
             }
          }
+      } else {
+         #ifdef UTIL_MPI
+         if (!hasIoCommunicator()) {
+            UTIL_THROW("Error: not isIoProcessor and not hasIoCommunicator");
+         }
+         #else
+         UTIL_THROW("Error: not isIoProcessor and no MPI");
+         #endif
       }
       #ifdef UTIL_MPI
       if (hasIoCommunicator()) {
@@ -89,6 +97,14 @@ namespace Util
                writeParam(Log::file());
             }
          }
+      } else {
+         #ifdef UTIL_MPI
+         if (!hasIoCommunicator()) {
+            UTIL_THROW("Error: not isIoProcessor and !hasIoCommunicator");
+         }
+         #else
+         UTIL_THROW("Error: not isIoProcessor and no MPI");
+         #endif
       }
       #ifdef UTIL_MPI
       if (hasIoCommunicator()) {

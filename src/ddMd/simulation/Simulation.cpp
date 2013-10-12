@@ -225,6 +225,9 @@ namespace DdMd
          delete externalPotentialPtr_;
       }
       #endif
+      if (fileMasterPtr_) {
+         delete fileMasterPtr_;
+      }
       if (energyEnsemblePtr_) {
          delete energyEnsemblePtr_;
       }
@@ -233,9 +236,6 @@ namespace DdMd
       }
       if (integratorPtr_) {
          delete integratorPtr_;
-      }
-      if (fileMasterPtr_) {
-         delete fileMasterPtr_;
       }
       if (configIoPtr_) {
          delete configIoPtr_;
@@ -389,6 +389,10 @@ namespace DdMd
    */
    void Simulation::readParameters(std::istream& in)
    {
+      if (isInitialized_) {
+         UTIL_THROW("Error: Called Simulation::readParameters when isInitialized");
+      }
+
       // Read Domain and FileMaster
       readParamComposite(in, domain_);
       readFileMaster(in);
@@ -688,6 +692,9 @@ namespace DdMd
       // External potential
       if (hasExternal_) {
          externalPotentialPtr_ = externalFactory().factory(externalStyle());
+         if (!externalPotentialPtr_) {
+            UTIL_THROW("Unknown externalStyle");
+         }
          externalPotentialPtr_->setNAtomType(nAtomType_);
          loadParamComposite(ar, *externalPotentialPtr_);
       }
@@ -745,6 +752,7 @@ namespace DdMd
       }
       #endif
 
+
       isInitialized_ = true;
 
       // Load the configuration (boundary + positions + groups)
@@ -773,7 +781,7 @@ namespace DdMd
       if (isIoProcessor()) {
          fileMaster().openRestartIFile(filename, ".rst", ar.file());
       }
-      // Call ParamComposite::load(), which calls Simulation::loadParameters()
+      // ParamComposite::load() calls Simulation::loadParameters()
       load(ar); 
       if (isIoProcessor()) {
          ar.file().close();
@@ -921,13 +929,21 @@ namespace DdMd
    * Read the FileMaster parameters.
    */
    void Simulation::readFileMaster(std::istream &in)
-   {  readParamComposite(in, *fileMasterPtr_); }
+   {  
+      assert(fileMasterPtr_);  
+      readParamComposite(in, *fileMasterPtr_); 
+      assert(fileMasterPtr_->hasIoCommunicator());  
+   }
 
    /*
    * If no FileMaster exists, create and load one.
    */
    void Simulation::loadFileMaster(Serializable::IArchive& ar)
-   {  loadParamComposite(ar, *fileMasterPtr_); }
+   {
+      assert(fileMasterPtr_);  
+      loadParamComposite(ar, *fileMasterPtr_); 
+      assert(fileMasterPtr_->hasIoCommunicator());  
+   }
 
    /*
    * If createdFileMaster_, save to archive.
