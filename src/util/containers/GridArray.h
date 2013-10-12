@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -224,8 +225,9 @@ namespace Util
    GridArray<Data>::~GridArray()
    {
       if (data_ != 0) {
-         delete [] data_;
-         data_ = 0;
+         Memory::deallocate<Data>(data_, size_);
+         // delete [] data_;
+         // data_ = 0;
       }
    }
 
@@ -311,7 +313,8 @@ namespace Util
          offsets_[i-1] = offsets_[i]*dimensions_[i];
       }
       size_ = offsets_[0]*dimensions_[0];
-      data_ = new Data[size_];
+      Memory::allocate<Data>(data_, size_);
+      // data_ = new Data[size_];
    }
 
    /*

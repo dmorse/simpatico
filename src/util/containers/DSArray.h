@@ -10,6 +10,7 @@
 
 #include <util/containers/ArrayIterator.h>
 #include <util/containers/ConstArrayIterator.h>
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -168,8 +169,9 @@ namespace Util
          UTIL_THROW("Other DSArray must be allocated.");
        }
 
-      data_     = new Data[other.capacity_];
-      size_     = other.size_;
+      Memory::allocate<Data>(data_, other.capacity_);
+      // data_ = new Data[other.capacity_];
+      size_ = other.size_;
       capacity_ = other.capacity_;
       for (int i = 0; i < size_; ++i) {
          data_[i] = other.data_[i];
@@ -214,7 +216,8 @@ namespace Util
    DSArray<Data>::~DSArray()
    {
        if (data_) {
-          delete [] data_;
+          Memory::deallocate<Data>(data_, capacity_);
+          // delete [] data_;
        }
    }
 
@@ -230,7 +233,8 @@ namespace Util
       if (capacity <= 0) {
          UTIL_THROW("Cannot allocate a DSArray with capacity <= 0");
       }
-      data_     = new Data[capacity];
+      Memory::allocate<Data>(data_, capacity);
+      // data_ = new Data[capacity];
       capacity_ = capacity;
    }
 

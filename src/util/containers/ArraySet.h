@@ -10,7 +10,7 @@
 
 #include <util/containers/Array.h>
 #include <util/containers/PArray.h>
-#include <util/memory/memory.h>
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -196,10 +196,12 @@ namespace Util
    ArraySet<Data>::~ArraySet()
    {
       if (ptrs_ != 0) {
-         delete [] ptrs_; 
+         Memory::deallocate<Data*>(ptrs_, capacity_);
+         // delete [] ptrs_; 
       }
       if (tags_ != 0) {
-         delete [] tags_;
+         Memory::deallocate<int>(tags_, capacity_);
+         // delete [] tags_;
       }
    }
  

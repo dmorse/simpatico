@@ -52,14 +52,17 @@ void DArrayTest::testConstructor()
 void DArrayTest::testAllocate()
 {
    printMethod(TEST_FUNC);
+   TEST_ASSERT((int)Memory::total() == 0);
    v.allocate(capacity);
    TEST_ASSERT(v.capacity() == capacity );
    TEST_ASSERT(v.isAllocated());
+   TEST_ASSERT((int)Memory::total() == capacity*sizeof(Data));
 } 
 
 void DArrayTest::testSubscript()
 {
    printMethod(TEST_FUNC);
+   TEST_ASSERT(Memory::total() == 0);
    v.allocate(capacity);
    for (int i=0; i < capacity; i++ ) {
       real(v[i]) = (i+1)*10 ;
@@ -69,11 +72,13 @@ void DArrayTest::testSubscript()
    TEST_ASSERT(real(v[0]) == 10 );
    TEST_ASSERT(imag(v[1]) == 20.1 );
    TEST_ASSERT(real(v[2]) == 30 );
+   TEST_ASSERT((int)Memory::total() == capacity*sizeof(Data));
 } 
 
 void DArrayTest::testIterator()
 {
    printMethod(TEST_FUNC);
+   TEST_ASSERT((int)Memory::total() == 0);
    v.allocate(capacity);
    for (int i=0; i < capacity; i++ ) {
       real(v[i]) = (i+1)*10 ;
@@ -94,6 +99,7 @@ void DArrayTest::testIterator()
    ++it;
    TEST_ASSERT(it.isEnd());
    TEST_ASSERT(!it.notEnd());
+   TEST_ASSERT((int)Memory::total() == capacity*sizeof(Data));
 } 
 
 void DArrayTest::testCopyConstructor()
@@ -119,6 +125,7 @@ void DArrayTest::testCopyConstructor()
    TEST_ASSERT(real(u[0]) == 10 );
    TEST_ASSERT(imag(u[1]) == 20.1 );
    TEST_ASSERT(real(u[2]) == 30 );
+   TEST_ASSERT((int)Memory::total() == 2*capacity*sizeof(Data));
 } 
 
 void DArrayTest::testAssignment()

@@ -9,7 +9,7 @@
 */
 
 #include <util/containers/Array.h>
-#include <util/memory/Memory.h>
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 
@@ -137,7 +137,8 @@ namespace Util
    DArray<Data>::~DArray()
    {
       if (data_) {
-         delete [] data_;
+         Memory::deallocate<Data>(data_, capacity_);
+         // delete [] data_;
       }
    }
 
@@ -208,8 +209,9 @@ namespace Util
       if (!data_) {
          UTIL_THROW("Array is not allocated");
       }
-      delete [] data_;
-      data_ = 0;
+      Memory::deallocate<Data>(data_, capacity_);
+      // delete [] data_;
+      // data_ = 0;
       capacity_ = 0;
    }
 

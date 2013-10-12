@@ -10,8 +10,8 @@
 
 #include "initStatic.h"
 #include <util/misc/Log.h>
+#include <util/misc/Memory.h>
 #include <util/format/Format.h>
-#include <util/memory/Memory.h>
 #include <util/param/ParamComponent.h>
 #include <util/math/Constants.h>
 #include <util/space/Vector.h>

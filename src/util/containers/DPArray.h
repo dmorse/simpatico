@@ -9,6 +9,7 @@
 */
 
 #include <util/containers/PArray.h>
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -110,7 +111,8 @@ namespace Util
       if (other.isAllocated()) {
 
          // Allocate array of Data* pointers
-         ptrs_     = new Data*[other.capacity_];
+         Memory::allocate<Data*>(ptrs_, other.capacity_);
+         //ptrs_ = new Data*[other.capacity_];
          capacity_ = other.capacity_;
 
          // Copy pointers
@@ -173,7 +175,8 @@ namespace Util
    inline DPArray<Data>::~DPArray()
    {
       if (ptrs_ != 0) {
-         delete [] ptrs_;
+         // delete [] ptrs_;
+         Memory::deallocate<Data*>(ptrs_, capacity_);
       }
    }
 
@@ -191,7 +194,8 @@ namespace Util
          UTIL_THROW("Cannot allocate a DPArray with capacity <=0");
       }
 
-      ptrs_     = new Data*[capacity];
+      Memory::allocate<Data*>(ptrs_, capacity);
+      // ptrs_ = new Data*[capacity];
       capacity_ = capacity;
    }
 

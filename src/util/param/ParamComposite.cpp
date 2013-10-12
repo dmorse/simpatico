@@ -192,6 +192,7 @@ namespace Util
    Begin& ParamComposite::addBegin(const char *label)
    {
       Begin* ptr = new Begin(label);
+      assert(ptr);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
       ptr->setIndent(*this, false);
@@ -222,6 +223,7 @@ namespace Util
    End& ParamComposite::addEnd()
    {
       End* ptr = new End();
+      assert(ptr);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
       ptr->setIndent(*this, false);
@@ -252,6 +254,7 @@ namespace Util
    Blank& ParamComposite::addBlank()
    {
       Blank* ptr = new Blank();
+      assert(ptr);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
       ++size_;

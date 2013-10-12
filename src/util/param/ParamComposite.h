@@ -581,6 +581,7 @@ namespace Util
    ScalarParam<Type>& ParamComposite::add(const char *label, Type &value)
    {
       ScalarParam<Type>* ptr = new ScalarParam<Type>(label, value);
+      assert(ptr);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
       ++size_;
@@ -628,6 +629,7 @@ namespace Util
    ParamComposite::addCArray(const char *label, Type *value, int n)
    {
       CArrayParam<Type>* ptr = new CArrayParam<Type>(label, value, n);
+      assert(ptr);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
       ++size_;
@@ -676,6 +678,7 @@ namespace Util
    ParamComposite::addDArray(const char *label, DArray<Type>& array, int n)
    {
       DArrayParam<Type>* ptr = new DArrayParam<Type>(label, array, n);
+      assert(ptr);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
       ++size_;
@@ -724,6 +727,7 @@ namespace Util
    ParamComposite::addFArray(const char *label, FArray<Type, N>& array)
    {
       FArrayParam<Type, N>* ptr = new FArrayParam<Type, N>(label, array);
+      assert(ptr);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
       ++size_;
@@ -822,6 +826,7 @@ namespace Util
    ParamComposite::addDMatrix(const char *label, DMatrix<Type>& matrix, int m, int n)
    {
       DMatrixParam<Type>* ptr = new DMatrixParam<Type>(label, matrix, m, n);
+      assert(ptr);
       list_.push_back(ptr);
       isLeaf_.push_back(true);
       ++size_;

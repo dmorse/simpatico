@@ -9,6 +9,7 @@
 */
 
 #include <util/containers/Matrix.h>
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -151,8 +152,8 @@ namespace Util
    DMatrix<Data>::~DMatrix()
    {
       if (data_ != 0) {
-         delete [] data_;
-         data_ = 0;
+         // delete [] data_;
+         Memory::deallocate<Data>(data_, capacity1_*capacity2_);
       }
    }
 
@@ -170,7 +171,8 @@ namespace Util
       if (capacity2 <= 0) UTIL_THROW("Capacity2 must be positive");
       if (data_     != 0) UTIL_THROW("Attempt to re-allocate a Matrix");
 
-      data_      = new Data[capacity1*capacity2];
+      Memory::allocate<Data>(data_, capacity1*capacity2);
+      //data_ = new Data[capacity1*capacity2];
       capacity1_ = capacity1;
       capacity2_ = capacity2;
    }
