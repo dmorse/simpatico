@@ -10,6 +10,7 @@
 
 #include <util/containers/Array.h>
 #include <util/containers/PArray.h>
+#include <util/memory/memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -217,8 +218,11 @@ namespace Util
       data_     = array;
       capacity_ = capacity;
 
-      ptrs_     = new Data*[capacity_];
-      tags_     = new int[capacity_];
+      Memory::allocate<Data*>(ptrs_, capacity_);
+      Memory::allocate<int>(tags_, capacity_);
+
+      // ptrs_ = new Data*[capacity_];
+      // tags_ = new int[capacity_];
 
       size_     = 0;
       for (int i = 0; i < capacity_; ++i) {
