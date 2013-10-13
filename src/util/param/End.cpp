@@ -19,8 +19,7 @@ namespace Util
    */
    End::End()
     : label_("}")
-   {
-   }
+   {}
 
    /* 
    * Destructor.
@@ -34,9 +33,6 @@ namespace Util
    void End::readParam(std::istream &in)
    {
       if (isIoProcessor()) {
-         // std::string expected;
-         // expected = "}";
-         // in >> Label(expected.c_str());
          in >> label_;
          if (ParamComponent::echo()) {
             writeParam(Log::file());
@@ -48,9 +44,7 @@ namespace Util
    * End::writeParam()
    */
    void End::writeParam(std::ostream &out)
-   {
-      out << indent() << "}" << std::endl;
-   }
+   {  out << indent() << "}" << std::endl; }
 
    /* 
    * Empty implementation of virtual resetParam() method.

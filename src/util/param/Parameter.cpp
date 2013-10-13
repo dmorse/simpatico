@@ -40,15 +40,21 @@ namespace Util
    {
       if (isIoProcessor()) {
          in >> label_;
+
+         // If this parameter is required and the 
+         // label doesn't match an exception will 
+         // be thrown by the >> operator.
+
          if (Label::isClear()) {
-            // If label matches
+            // If the label string matches
             readValue(in);
             isActive_ = true;
             if (ParamComponent::echo()) {
                writeParam(Log::file());
             }
          } else {
-            // If optional label does not match
+            // If label does not match and this isOptional
+            isActive_ = false;
             if (ParamComponent::echo() && !isRequired()) {
                Log::file() << indent() 
                            << label_ << std::right
