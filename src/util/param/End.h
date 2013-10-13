@@ -9,6 +9,7 @@
 */
 
 #include <util/param/ParamComponent.h>
+#include <util/param/Label.h>
 
 #include <string>
 
@@ -47,6 +48,10 @@ namespace Util
 
       /// Do-nothing implementation of virtual resetParam function.
       void resetParam();
+
+   private:
+
+      Label label_;
 
    };
 

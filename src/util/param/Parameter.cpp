@@ -96,6 +96,13 @@ namespace Util
             if (ParamComponent::echo()) {
                writeParam(Log::file());
             }
+         } else {
+            if (ParamComponent::echo() && !isRequired()) {
+               Log::file() << indent() 
+                           << label_ << std::right
+                           << std::setw(Parameter::Width)
+                           << "[ absent ]" << std::endl;
+            }
          }
       } else {
          #ifdef UTIL_MPI

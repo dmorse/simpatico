@@ -265,7 +265,7 @@ namespace Util
             newPtr[i] = data_[i];
          }
          Memory::deallocate<Data>(data_, capacity_);
-         Data* data_ = newPtr;
+         data_ = newPtr;
          capacity_ = capacity;
       }
    }
