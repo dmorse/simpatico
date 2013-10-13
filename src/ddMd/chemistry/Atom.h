@@ -15,6 +15,8 @@
 #include <ddMd/communicate/Plan.h>        // member 
 #include "AtomArray.h"                    // inline methods
 
+namespace Util{ class Memory; }
+
 namespace DdMd
 {
 
@@ -314,6 +316,7 @@ namespace DdMd
       Atom(const Atom& other);
 
       friend class AtomArray;
+      friend class Util::Memory;
 
    };
 

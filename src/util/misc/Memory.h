@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <stddef.h>
 #include <iostream>
 #include <new>
@@ -45,9 +46,23 @@ namespace Util
       static void deallocate(Data*& ptr, size_t size);
 
       /**
-      * Return total amount of memory allocated thus far.
+      * Return total amount of memory currently allocated.
       */
       static size_t total();
+
+      /**
+      * Return the maximum amount of allocated heap memory thus far.
+      *
+      * This function returns the temporal maximum of total().
+      */
+      static size_t max();
+
+      #ifdef UTIL_MPI
+      /**
+      * Return max for any processor in communicator.
+      */
+      static size_t max(MPI::Intracomm& communicator);
+      #endif
 
       /**
       * Call this just to guarantee initialization of static memory.
@@ -58,6 +73,9 @@ namespace Util
 
       /// Total amount of memory allocated, in bytes. 
       static size_t total_;
+   
+      /// Maximum amount of memory allocated, in bytes. 
+      static size_t max_;
    
    };
    
@@ -74,6 +92,7 @@ namespace Util
          throw;
       }
       total_ += size*sizeof(Data);
+      if (total_ > max_) max_ = total_;
    }
 
    /*

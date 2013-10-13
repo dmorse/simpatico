@@ -51,6 +51,7 @@
 #include <util/space/Tensor.h>
 #include <util/param/Factory.h>
 #include <util/misc/Log.h>
+#include <util/misc/Memory.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/misc/Timer.h>
 
@@ -705,7 +706,6 @@ namespace DdMd
       // Integrator
       assert(integratorPtr_ == 0);
       std::string className;
-      bool isEnd;
       integratorPtr_ =
          integratorFactory().loadObject(ar, *this, className);
       if (!integratorPtr_) {
@@ -751,7 +751,6 @@ namespace DdMd
          exchangeSignal().addObserver(dihedralStorage_, memberPtr);
       }
       #endif
-
 
       isInitialized_ = true;
 
@@ -1215,6 +1214,7 @@ namespace DdMd
                buffer().computeStatistics(domain_.communicator());
                pairPotential().pairList()
                               .computeStatistics(domain_.communicator());
+               int maxMemory = Memory::max(domain_.communicator());
                if (domain_.isMaster()) {
                   atomStorage().outputStatistics(Log::file());
                   #ifdef INTER_BOND
@@ -1234,6 +1234,9 @@ namespace DdMd
                   #endif
                   buffer().outputStatistics(Log::file());
                   pairPotential().pairList().outputStatistics(Log::file());
+                  Log::file() << std::endl;
+                  Log::file() << "Memory: maximum allocated for arrays = "
+                              << maxMemory << " bytes" << std::endl;
                   Log::file() << std::endl;
                }
 

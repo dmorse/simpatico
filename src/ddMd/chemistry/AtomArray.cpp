@@ -10,11 +10,14 @@
 
 #include "AtomArray.h"
 #include "Atom.h"
+#include <util/misc/Memory.h>
 
 #include <stdlib.h>
 
 namespace DdMd
 {
+
+   using namespace Util;
 
    /*
    * Constructor.
@@ -24,8 +27,8 @@ namespace DdMd
    AtomArray::AtomArray() 
     : Array<Atom>(),
       velocities_(0),
-      plans_(0),
       masks_(0),
+      plans_(0),
       ids_(0)
    {}
 
@@ -35,12 +38,17 @@ namespace DdMd
    AtomArray::~AtomArray()
    {
       if (data_) {
-         delete [] data_;
-         //free(data_);
-         delete [] velocities_;
-         delete [] masks_;
-         delete [] plans_;
-         delete [] ids_;
+         // free(data_);
+         // delete [] data_;
+         // delete [] velocities_;
+         // delete [] masks_;
+         // delete [] plans_;
+         // delete [] ids_;
+         Memory::deallocate<Atom>(data_, capacity_);
+         Memory::deallocate<Vector>(velocities_, capacity_);
+         Memory::deallocate<Mask>(masks_, capacity_);
+         Memory::deallocate<Plan>(plans_, capacity_);
+         Memory::deallocate<int>(ids_, capacity_);
       }
    }
 
@@ -62,12 +70,17 @@ namespace DdMd
       }
 
       // Allocate memory
+      Memory::allocate<Atom>(data_, capacity);
+      Memory::allocate<Vector>(velocities_, capacity);
+      Memory::allocate<Mask>(masks_, capacity);
+      Memory::allocate<Plan>(plans_, capacity);
+      Memory::allocate<int>(ids_, capacity);
       //posix_memalign((void**) &data_, 64, capacity*sizeof(Atom));
-      data_        = new Atom[capacity];
-      velocities_  = new Vector[capacity];
-      masks_       = new Mask[capacity];
-      plans_       = new Plan[capacity];
-      ids_         = new int[capacity];
+      // data_        = new Atom[capacity];
+      // velocities_  = new Vector[capacity];
+      // masks_       = new Mask[capacity];
+      // plans_       = new Plan[capacity];
+      // ids_         = new int[capacity];
       capacity_    = capacity;
 
       // Initialize values.
