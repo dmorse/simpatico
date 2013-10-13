@@ -109,26 +109,21 @@ namespace Util
     : PArray<Data>()
    {
       if (other.isAllocated()) {
-
          // Allocate array of Data* pointers
          Memory::allocate<Data*>(ptrs_, other.capacity_);
-         //ptrs_ = new Data*[other.capacity_];
          capacity_ = other.capacity_;
-
          // Copy pointers
          int i;
          for (i = 0; i < other.size_; ++i) {
             ptrs_[i] = other.ptrs_[i];
          }
          size_ = other.size_;
-
          // Nullify unused elements of ptrs_ array
          if (capacity_ > size_) {
             for (i = size_; i < capacity_; ++i) {
                ptrs_[i] = 0;
             }
          }
-
       }
    }
 
@@ -174,9 +169,9 @@ namespace Util
    template <typename Data>
    inline DPArray<Data>::~DPArray()
    {
-      if (ptrs_ != 0) {
-         // delete [] ptrs_;
+      if (ptrs_) {
          Memory::deallocate<Data*>(ptrs_, capacity_);
+         capacity_ = 0;
       }
    }
 
@@ -193,9 +188,7 @@ namespace Util
       if (capacity <= 0) {
          UTIL_THROW("Cannot allocate a DPArray with capacity <=0");
       }
-
       Memory::allocate<Data*>(ptrs_, capacity);
-      // ptrs_ = new Data*[capacity];
       capacity_ = capacity;
    }
 

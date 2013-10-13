@@ -48,20 +48,20 @@ namespace Util
       /**
       * Return total amount of memory currently allocated.
       */
-      static size_t total();
+      static int total();
 
       /**
       * Return the maximum amount of allocated heap memory thus far.
       *
       * This function returns the temporal maximum of total().
       */
-      static size_t max();
+      static int max();
 
       #ifdef UTIL_MPI
       /**
       * Return max for any processor in communicator.
       */
-      static size_t max(MPI::Intracomm& communicator);
+      static int max(MPI::Intracomm& communicator);
       #endif
 
       /**
@@ -72,10 +72,10 @@ namespace Util
    private: 
 
       /// Total amount of memory allocated, in bytes. 
-      static size_t total_;
+      static int total_;
    
       /// Maximum amount of memory allocated, in bytes. 
-      static size_t max_;
+      static int max_;
    
    };
    
@@ -86,7 +86,7 @@ namespace Util
    void Memory::allocate(Data*& ptr, size_t size)
    {
       try {
-         ptr  = new Data[size];
+         ptr = new Data[size];
       } catch (std::bad_alloc&) {
          std::cout << "Allocation error" << std::endl;
          throw;
@@ -103,8 +103,10 @@ namespace Util
    {
       if (ptr) {
          delete [] ptr;
-         total_ -= size*sizeof(Data);
          ptr = 0;
+         total_ -= size*sizeof(Data);
+      } else {
+         UTIL_THROW("Attempt to de-allocate null pointer");
       }
    }
 

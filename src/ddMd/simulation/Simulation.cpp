@@ -203,29 +203,62 @@ namespace DdMd
    */
    Simulation::~Simulation()
    {
+      if (pairFactoryPtr_) {
+         delete pairFactoryPtr_;
+      }
       if (pairPotentialPtr_) {
          delete pairPotentialPtr_;
       }
       #ifdef INTER_BOND
+      if (bondFactoryPtr_) {
+         delete bondFactoryPtr_;
+      }
       if (bondPotentialPtr_) {
          delete bondPotentialPtr_;
       }
       #endif
       #ifdef INTER_ANGLE
+      if (angleFactoryPtr_) {
+         delete angleFactoryPtr_;
+      }
       if (anglePotentialPtr_) {
          delete anglePotentialPtr_;
       }
       #endif
       #ifdef INTER_DIHEDRAL
+      if (dihedralFactoryPtr_) {
+         delete dihedralFactoryPtr_;
+      }
       if (dihedralPotentialPtr_) {
          delete dihedralPotentialPtr_;
       }
       #endif
       #ifdef INTER_EXTERNAL
+      if (externalFactoryPtr_) {
+         delete externalFactoryPtr_;
+      }
       if (externalPotentialPtr_) {
          delete externalPotentialPtr_;
       }
       #endif
+      if (configIoFactoryPtr_) {
+         delete configIoFactoryPtr_;
+      }
+      if (configIoPtr_) {
+         delete configIoPtr_;
+      }
+      if (serializeConfigIoPtr_) {
+         delete serializeConfigIoPtr_;
+      }
+      if (integratorFactoryPtr_) {
+         delete integratorFactoryPtr_;
+      }
+      if (integratorPtr_) {
+         delete integratorPtr_;
+      }
+      if (diagnosticManagerPtr_) {
+         delete diagnosticManagerPtr_;
+      }
       if (fileMasterPtr_) {
          delete fileMasterPtr_;
       }
@@ -234,49 +267,6 @@ namespace DdMd
       }
       if (boundaryEnsemblePtr_) {
          delete boundaryEnsemblePtr_;
-      }
-      if (integratorPtr_) {
-         delete integratorPtr_;
-      }
-      if (configIoPtr_) {
-         delete configIoPtr_;
-      }
-      if (serializeConfigIoPtr_) {
-         delete serializeConfigIoPtr_;
-      }
-      if (diagnosticManagerPtr_) {
-         delete diagnosticManagerPtr_;
-      }
-      #ifndef DDMD_NOPAIR
-      if (pairFactoryPtr_) {
-         delete pairFactoryPtr_;
-      }
-      #endif
-      #ifdef INTER_BOND
-      if (bondFactoryPtr_) {
-         delete bondFactoryPtr_;
-      }
-      #endif
-      #ifdef INTER_ANGLE
-      if (angleFactoryPtr_) {
-         delete angleFactoryPtr_;
-      }
-      #endif
-      #ifdef INTER_DIHEDRAL
-      if (dihedralFactoryPtr_) {
-         delete dihedralFactoryPtr_;
-      }
-      #endif
-      #ifdef INTER_EXTERNAL
-      if (externalFactoryPtr_) {
-         delete externalFactoryPtr_;
-      }
-      #endif
-      if (integratorFactoryPtr_) {
-         delete integratorFactoryPtr_;
-      }
-      if (configIoFactoryPtr_) {
-         delete configIoFactoryPtr_;
       }
 
       #ifdef UTIL_MPI

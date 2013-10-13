@@ -18,7 +18,7 @@ namespace Util
    * Multi-dimensional array with the dimensionality of space.
    *
    * The memory for a GridArray is stored in a single one-dimensional C array.
-   * The subscript [] operator is overloaded to return an element indexed by 
+   * The subscript [] operator is overloaded to return an element indexed by
    * a one-dimensional rank, and the () operator is overloaded to return an
    * element indexed by an IntVector of grid coordinates.
    *
@@ -43,7 +43,7 @@ namespace Util
       /**
       * Destructor.
       *
-      * Delete dynamically allocated C array.
+      * Delete dynamically allocated C array, if allocated.
       */
       ~GridArray();
 
@@ -64,7 +64,7 @@ namespace Util
       /**
       * Serialize a GridArray to/from an Archive.
       *
-      * \param ar  archive 
+      * \param ar  archive
       * \param version  archive version id
       */
       template <class Archive>
@@ -135,11 +135,11 @@ namespace Util
       *
       * Upon return, the coordinate will be shifted to lie within the
       * range 0 <= coordinate < dimension(i) by subtracting an integer
-      * multiple of dimension(i), giving coordinate - shift*dimension(i). 
+      * multiple of dimension(i), giving coordinate - shift*dimension(i).
       * The return value is the required integer `shift'.
       *
       * \param  coordinate  coordinate in Cartesian direction i.
-      * \param  i           index of Cartesian direction, i >= 0. 
+      * \param  i           index of Cartesian direction, i >= 0.
       * \return multiple of dimension(i) subtracted from input value.
       */
       int shift(int& coordinate, int i) const;
@@ -147,9 +147,9 @@ namespace Util
       /**
       * Shift a periodic position into primary grid.
       *
-      * Upon return, each element of the parameter position is shifted 
-      * to lie within the range 0 <= position[i] < dimension(i) by 
-      * adding or subtracting an integer multiple of dimension(i). The 
+      * Upon return, each element of the parameter position is shifted
+      * to lie within the range 0 <= position[i] < dimension(i) by
+      * adding or subtracting an integer multiple of dimension(i). The
       * IntVector of shift values is returned.
       *
       * \param  position IntVector position within a grid.
@@ -201,7 +201,7 @@ namespace Util
       /// Total number of grid points
       int size_;
 
-   }; 
+   };
 
    // Method definitions
 
@@ -224,10 +224,9 @@ namespace Util
    template <typename Data>
    GridArray<Data>::~GridArray()
    {
-      if (data_ != 0) {
+      if (data_) {
          Memory::deallocate<Data>(data_, size_);
-         // delete [] data_;
-         // data_ = 0;
+         size_ = 0;
       }
    }
 
@@ -235,11 +234,18 @@ namespace Util
    * Copy constructor.
    */
    template <typename Data>
-   GridArray<Data>::GridArray(const GridArray<Data>& other) 
+   GridArray<Data>::GridArray(const GridArray<Data>& other)
+    : data_(0),
+      offsets_(),
+      dimensions_(),
+      size_(0)
    {
       // Precondition
       if (other.data_ == 0) {
          UTIL_THROW("Other GridArray must be allocated");
+      }
+      if (isAllocated()) {
+         UTIL_THROW("GridArray already allocated in copy constructor");
       }
 
       allocate(other.dimensions_);
@@ -253,14 +259,13 @@ namespace Util
          data_[i] = other.data_[i];
       }
    }
-  
+
    /*
    * Assignment.
    */
    template <typename Data>
-   GridArray<Data>& GridArray<Data>::operator = (const GridArray<Data>& other) 
+   GridArray<Data>& GridArray<Data>::operator = (const GridArray<Data>& other)
    {
-
       // Check for self assignment.
       if (this == &other) {
          return *this;
@@ -268,12 +273,12 @@ namespace Util
 
       // Precondition
       if (other.data_ == 0) {
-         UTIL_THROW("Other GridArray must be allocated in assignment");
+         UTIL_THROW("Other GridArray must be allocated before assignment");
       }
 
       // If this GridArray if not allocated, allocate now.
       // If it is allocated, check that dimensions are equal.
-      if (data_ == 0) {
+      if (!isAllocated()) {
          allocate(other.dimensions_);
       } else {
          if (dimensions_ != other.dimensions_ ) {
@@ -300,21 +305,22 @@ namespace Util
    */
    template <typename Data>
    void GridArray<Data>::allocate(const IntVector& dimensions)
-   { 
-      int i;
-      for (i = 0; i < Dimension; ++i) {
+   {
+      if (isAllocated()) {
+         UTIL_THROW("Attempt to re-allocate a GridArray");
+      }
+      for (int i = 0; i < Dimension; ++i) {
          if (dimensions[i] <= 0) {
             UTIL_THROW("Dimension not positive");
          }
       }
       dimensions_ = dimensions;
       offsets_[Dimension -1] = 1;
-      for (i = Dimension - 1; i > 0; --i) {
+      for (int i = Dimension - 1; i > 0; --i) {
          offsets_[i-1] = offsets_[i]*dimensions_[i];
       }
       size_ = offsets_[0]*dimensions_[0];
       Memory::allocate<Data>(data_, size_);
-      // data_ = new Data[size_];
    }
 
    /*
@@ -372,7 +378,7 @@ namespace Util
       for (i = 0; i < Dimension - 1; ++i) {
          assert(position[i] >= 0);
          assert(position[i] < dimensions_[i]);
-         result += position[i]*offsets_[i]; 
+         result += position[i]*offsets_[i];
       }
       assert(position[i] >= 0);
       assert(position[i] < dimensions_[i]);
@@ -381,7 +387,7 @@ namespace Util
    }
    #else
    inline int GridArray<Data>::rank(const IntVector& position) const
-   { 
+   {
       return (position[0]*offsets_[0] + position[1]*offsets_[1] + position[2]);
    }
    #endif
@@ -397,8 +403,8 @@ namespace Util
 
       int i;
       for (i = 0; i < Dimension - 1; ++i) {
-         position[i] = remainder/offsets_[i]; 
-         remainder -= position[i]*offsets_[i]; 
+         position[i] = remainder/offsets_[i];
+         remainder -= position[i]*offsets_[i];
       }
       position[i] = remainder;
       return position;
@@ -411,9 +417,9 @@ namespace Util
    bool GridArray<Data>::isInGrid(int coordinate, int i) const
    {
       bool result = true;
-      if (coordinate <  0) 
+      if (coordinate <  0)
          result = false;
-      if (coordinate >= dimensions_[i]) 
+      if (coordinate >= dimensions_[i])
          result = false;
       return result;
    }
@@ -426,9 +432,9 @@ namespace Util
    {
       bool result = true;
       for (int i = 0; i < Dimension; ++i) {
-         if (position[i] <  0) 
+         if (position[i] <  0)
             result = false;
-         if (position[i] >= dimensions_[i]) 
+         if (position[i] >= dimensions_[i])
             result = false;
       }
       return result;
@@ -442,7 +448,7 @@ namespace Util
    {
       int shift;
       if (coordinate >= 0) {
-         shift = coordinate/dimensions_[i]; 
+         shift = coordinate/dimensions_[i];
       } else {
          shift = -1 + ((coordinate+1)/dimensions_[i]);
       }
@@ -474,14 +480,14 @@ namespace Util
    * Return element by reference, indexed by 1D rank.
    */
    template <typename Data>
-   inline Data& GridArray<Data>::operator[] (int rank) 
+   inline Data& GridArray<Data>::operator[] (int rank)
    {  return *(data_ + rank); }
 
    /*
    * Return element by const reference, indexed by IntVector of coordinates
    */
    template <typename Data>
-   inline 
+   inline
    const Data& GridArray<Data>::operator() (const IntVector& position) const
    {  return *(data_ + rank(position)); }
 
@@ -496,8 +502,8 @@ namespace Util
    * Return true if the GridArray has been allocated, false otherwise.
    */
    template <class Data>
-   inline bool GridArray<Data>::isAllocated() const 
-   {  return !(data_ == 0); }
+   inline bool GridArray<Data>::isAllocated() const
+   {  return (bool)(data_ != 0); }
 
 }
 #endif

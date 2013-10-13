@@ -151,8 +151,7 @@ namespace Util
    template <typename Data>
    DMatrix<Data>::~DMatrix()
    {
-      if (data_ != 0) {
-         // delete [] data_;
+      if (data_) {
          Memory::deallocate<Data>(data_, capacity1_*capacity2_);
       }
    }
@@ -172,7 +171,6 @@ namespace Util
       if (data_     != 0) UTIL_THROW("Attempt to re-allocate a Matrix");
 
       Memory::allocate<Data>(data_, capacity1*capacity2);
-      //data_ = new Data[capacity1*capacity2];
       capacity1_ = capacity1;
       capacity2_ = capacity2;
    }

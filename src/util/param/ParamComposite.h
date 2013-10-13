@@ -772,7 +772,7 @@ namespace Util
                               FArray<Type, N >& array, bool isRequired)
    {
       FArrayParam<Type, N>* ptr;
-      ptr  = new FArrayParam<Type, N>(label, array, isRequired);
+      ptr = new FArrayParam<Type, N>(label, array, isRequired);
       setParent(*ptr);
       ptr->load(ar);
       addComponent(*ptr);

@@ -85,7 +85,7 @@ namespace DdMd
 
       // Initialize values.
       unsigned int localId;
-      for (int i=0; i < capacity; ++i) {
+      for (int i=0; i < capacity_; ++i) {
         data_[i].localId_ = (i << 1);
         data_[i].arrayPtr_ = this;
         localId = (data_[i].localId_ >> 1);

@@ -170,7 +170,6 @@ namespace Util
        }
 
       Memory::allocate<Data>(data_, other.capacity_);
-      // data_ = new Data[other.capacity_];
       size_ = other.size_;
       capacity_ = other.capacity_;
       for (int i = 0; i < size_; ++i) {
@@ -216,8 +215,8 @@ namespace Util
    DSArray<Data>::~DSArray()
    {
        if (data_) {
+          assert(capacity_);
           Memory::deallocate<Data>(data_, capacity_);
-          // delete [] data_;
        }
    }
 
@@ -234,7 +233,6 @@ namespace Util
          UTIL_THROW("Cannot allocate a DSArray with capacity <= 0");
       }
       Memory::allocate<Data>(data_, capacity);
-      // data_ = new Data[capacity];
       capacity_ = capacity;
    }
 

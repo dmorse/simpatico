@@ -14,7 +14,7 @@ class GridArrayTest : public UnitTest
 
 public:
 
-   void setUp() {}
+   void setUp() { TEST_ASSERT(Memory::total() == 0); }
 
    void tearDown() {}
   

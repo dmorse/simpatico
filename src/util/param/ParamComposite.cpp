@@ -69,7 +69,7 @@ namespace Util
             if (isLeaf_[i]) {
                delete list_[i];
             }
-            /* Only delete Param, Begin, End & Blank leaf objects.
+            /* Only delete Parameter, Begin, End & Blank leaf objects.
             * Do NOT delete node objects here. These are instances of
             * of subclasses of ParamComposite that are never created
             * by this object, and so should not be destroyed by this

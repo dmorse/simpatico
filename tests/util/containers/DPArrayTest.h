@@ -36,12 +36,12 @@ public:
 
 void DPArrayTest::setUp()
 {
+   TEST_ASSERT(Memory::total() == 0);
    array.allocate(capacity);
    parray.allocate(capacity);
    for (int i=0; i < capacity; i++ ) {
       array[i] = (i+1)*10 + 1;
    }
-
 }
 
 void DPArrayTest::tearDown()

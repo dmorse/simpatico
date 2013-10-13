@@ -72,16 +72,13 @@ namespace Util
    template <typename Data>
    DRaggedMatrix<Data>::~DRaggedMatrix()
    {
-      if (data_ != 0) {
+      if (data_) {
          Memory::deallocate<Data>(data_, capacity_);
-         //delete [] data_;
       }
-      if (rows_ != 0) {
-         //delete [] rows_;
+      if (rows_) {
          Memory::deallocate<Data*>(rows_, capacity1_);
       }
-      if (capacity2_ != 0) {
-         //delete [] capacity2_;
+      if (capacity2_) {
          Memory::deallocate<int>(capacity2_, capacity1_);
       }
    }
@@ -98,6 +95,7 @@ namespace Util
       if (rowSizes.capacity() <= 0) 
          UTIL_THROW("rowSizes.capacity() must be positive");
 
+      // Calculate total number of elements (all rows)
       capacity_ = 0; 
       for (int i = 0; i < rowSizes.capacity(); ++i) {
          if (rowSizes[i] < 0) 
@@ -113,10 +111,6 @@ namespace Util
       Memory::allocate<int>(capacity2_, capacity1_);
       Memory::allocate<Data*>(rows_, capacity1_);
       Memory::allocate<Data>(data_, capacity_);
-
-      // capacity2_  = new int[capacity1_];
-      // rows_ = new Data*[capacity1_];
-      // data_ = new Data[capacity_];
 
       // Set row sizes and pointers to rows
       Data* ptr = data_;

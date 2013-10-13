@@ -123,7 +123,6 @@ namespace Util
       }
       capacity_ = other.capacity_;
       Memory::allocate(data_, other.capacity_);
-      //data_ = new Data[other.capacity_];
       capacity_ = other.capacity_;
       for (int i = 0; i < capacity_; ++i) {
          data_[i] = other.data_[i];
@@ -138,7 +137,7 @@ namespace Util
    {
       if (data_) {
          Memory::deallocate<Data>(data_, capacity_);
-         // delete [] data_;
+         capacity_ = 0;
       }
    }
 
@@ -155,13 +154,13 @@ namespace Util
    template <class Data>
    DArray<Data>& DArray<Data>::operator = (const DArray<Data>& other) 
    {
+      // Check for self assignment
+      if (this == &other) return *this;
+
       // Precondition
       if (!other.isAllocated()) {
          UTIL_THROW("Other DArray must be allocated.");
       }
-
-      // Check for self assignment
-      if (this == &other) return *this;
 
       if (!isAllocated()) {
          allocate(other.capacity());
@@ -194,7 +193,6 @@ namespace Util
          UTIL_THROW("Cannot allocate a DArray with capacity <= 0");
       }
       Memory::allocate<Data>(data_, capacity);
-      // data_  = new Data[capacity];
       capacity_ = capacity;
    }
 
@@ -210,8 +208,6 @@ namespace Util
          UTIL_THROW("Array is not allocated");
       }
       Memory::deallocate<Data>(data_, capacity_);
-      // delete [] data_;
-      // data_ = 0;
       capacity_ = 0;
    }
 
