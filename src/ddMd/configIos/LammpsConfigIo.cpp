@@ -258,6 +258,7 @@ namespace DdMd
          }
       }
 
+      #ifdef INTER_BOND
       bool hasGhosts = false;
       if (bondStorage().capacity()) {
          readGroups<2>(file, "Bonds", nBond, bondDistributor());
@@ -267,6 +268,7 @@ namespace DdMd
             setAtomMasks();
          }
       }
+      #endif
        
    }
 

@@ -45,7 +45,9 @@ namespace DdMd
    class SerializeConfigIo;
    class DiagnosticManager;
    class PairPotential;
+   #ifdef INTER_BOND
    class BondPotential;
+   #endif 
    #ifdef INTER_ANGLE
    class AnglePotential;
    #endif
@@ -455,6 +457,7 @@ namespace DdMd
       Factory<PairPotential>& pairFactory();
       #endif
 
+      #ifdef INTER_BOND
       /**
       * Get the PairPotential by reference.
       */
@@ -469,6 +472,7 @@ namespace DdMd
       * Get the Factory<BondPotential> by reference.
       */
       Factory<BondPotential>& bondFactory();
+      #endif
   
       #ifdef INTER_ANGLE 
       /**
@@ -529,11 +533,13 @@ namespace DdMd
       * Get the AtomStorage by reference.
       */
       AtomStorage& atomStorage();
-   
+  
+      #ifdef INTER_BOND 
       /**
       * Get the BondStorage by reference.
       */
       BondStorage& bondStorage();
+      #endif
   
       #ifdef INTER_ANGLE 
       /**
@@ -624,10 +630,12 @@ namespace DdMd
       */
       int nAtomType();
 
+      #ifdef INTER_BOND 
       /**
       * Get maximum number of bond types.
       */
       int nBondType();
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -761,8 +769,10 @@ namespace DdMd
       /// Container for all atoms and ghosts.
       AtomStorage atomStorage_;
 
+      #ifdef INTER_BOND 
       /// Container for bonds.
       BondStorage bondStorage_;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Container for angles.
@@ -804,8 +814,10 @@ namespace DdMd
       /// Pointer to force/energy evaluator.
       PairPotential* pairPotentialPtr_;
 
+      #ifdef INTER_BOND 
       /// Pointer to covalent bond potential.
       BondPotential* bondPotentialPtr_;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Pointer to covalent 3-body angle potential.
@@ -848,8 +860,10 @@ namespace DdMd
       Factory<PairPotential>* pairFactoryPtr_;
       #endif
 
+      #ifdef INTER_BOND
       /// Pointer to a Factory<BondPotential>.
       Factory<BondPotential>* bondFactoryPtr_;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Pointer to the AnglePotential Factory.
@@ -877,8 +891,10 @@ namespace DdMd
       std::string pairStyle_;
       #endif
 
+      #ifdef INTER_BOND
       /// Name of bond potential style.
       std::string bondStyle_;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Name of angle potential style.
@@ -898,8 +914,10 @@ namespace DdMd
       /// Number of distinct atom types.
       int nAtomType_;
 
+      #ifdef INTER_BOND
       /// Number of distinct bond types.
       int nBondType_;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Number of distinct angle types.
@@ -978,8 +996,10 @@ namespace DdMd
    inline AtomStorage& Simulation::atomStorage()
    { return atomStorage_; }
 
+   #ifdef INTER_BOND
    inline BondStorage& Simulation::bondStorage()
    { return bondStorage_; }
+   #endif
 
    #ifdef INTER_ANGLE
    inline AngleStorage& Simulation::angleStorage()
@@ -1002,12 +1022,14 @@ namespace DdMd
       assert(pairPotentialPtr_); 
       return *pairPotentialPtr_; 
    }
-
+ 
+   #ifdef INTER_BOND
    inline BondPotential& Simulation::bondPotential()
    { 
       assert(bondPotentialPtr_); 
       return *bondPotentialPtr_; 
    }
+   #endif 
 
    #ifdef INTER_ANGLE
    inline AnglePotential& Simulation::anglePotential()
@@ -1093,11 +1115,13 @@ namespace DdMd
    inline int Simulation::nAtomType()
    {  return nAtomType_; }
 
+   #ifdef INTER_BOND
    /*
    * Get maximum number of bond types.
    */
    inline int Simulation::nBondType()
    {  return nBondType_; }
+   #endif 
 
    #ifdef INTER_ANGLE
    /*

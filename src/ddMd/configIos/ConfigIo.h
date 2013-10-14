@@ -64,7 +64,9 @@ namespace DdMd
       */
       void associate(Domain& domain, Boundary& boundary,
                      AtomStorage& atomStorage,
+                     #ifdef INTER_BOND
                      BondStorage& bondStorage,
+                     #endif
                      #ifdef INTER_ANGLE
                      AngleStorage& angleStorage,
                      #endif
@@ -81,8 +83,10 @@ namespace DdMd
       * \param angleCacheCapacity size of internal angle cache. 
       * \param dihedralCacheCapacity size of internal dihedral cache. 
       */
-      virtual void initialize(int atomCacheCapacity = 100,
-                              int bondCacheCapacity = 100
+      virtual void initialize(int atomCacheCapacity = 100
+                              #ifdef INTER_BOND
+                              , int bondCacheCapacity = 100
+                              #endif
                               #ifdef INTER_ANGLE
                               , int angleCacheCapacity = 100
                               #endif
@@ -214,6 +218,7 @@ namespace DdMd
       */
       AtomCollector& atomCollector();
 
+      #ifdef INTER_BOND
       /**
       * Get BondStorage by reference.
       */
@@ -228,6 +233,7 @@ namespace DdMd
       * Get the bond collector by reference.
       */
       GroupCollector<2>& bondCollector();
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -268,8 +274,10 @@ namespace DdMd
       // Distributors and collectors
       AtomDistributor atomDistributor_;
       AtomCollector atomCollector_;
+      #ifdef INTER_BOND
       GroupDistributor<2> bondDistributor_;
       GroupCollector<2> bondCollector_;
+      #endif
       #ifdef INTER_ANGLE
       GroupDistributor<3> angleDistributor_;
       GroupCollector<3> angleCollector_;
@@ -283,7 +291,9 @@ namespace DdMd
       Domain* domainPtr_;
       Boundary* boundaryPtr_;
       AtomStorage* atomStoragePtr_;
+      #ifdef INTER_BOND
       BondStorage* bondStoragePtr_;
+      #endif
       #ifdef INTER_ANGLE
       AngleStorage* angleStoragePtr_;
       #endif
@@ -293,7 +303,9 @@ namespace DdMd
 
       // Cache capacities
       int  atomCacheCapacity_;
+      #ifdef INTER_BOND
       int  bondCacheCapacity_;
+      #endif
       #ifdef INTER_ANGLE
       int  angleCacheCapacity_;
       #endif
@@ -336,6 +348,7 @@ namespace DdMd
    inline AtomCollector& ConfigIo::atomCollector()
    {  return atomCollector_; }
 
+   #ifdef INTER_BOND
    inline BondStorage& ConfigIo::bondStorage()
    {  return *bondStoragePtr_; }
 
@@ -344,6 +357,7 @@ namespace DdMd
 
    inline GroupCollector<2>& ConfigIo::bondCollector()
    {  return bondCollector_; }
+   #endif
 
    #ifdef INTER_ANGLE
    inline AngleStorage& ConfigIo::angleStorage()
