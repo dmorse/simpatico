@@ -315,7 +315,6 @@ namespace DdMd
    {
       if (interactionPtr_) {
          delete interactionPtr_;
-         interactionPtr_ = 0;
       }
    }
 

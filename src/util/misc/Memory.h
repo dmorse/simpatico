@@ -46,6 +46,16 @@ namespace Util
       static void deallocate(Data*& ptr, size_t size);
 
       /**
+      * Return number of times allocated was called.
+      */
+      static int nAllocate();
+
+      /**
+      * Return number of times deallocate was called.
+      */
+      static int nDeallocate();
+
+      /**
       * Return total amount of memory currently allocated.
       */
       static int total();
@@ -77,6 +87,12 @@ namespace Util
       /// Maximum amount of memory allocated, in bytes. 
       static int max_;
    
+      /// Number of calls to allocate.
+      static int nAllocate_;
+   
+      /// Number of calls to deallocate.
+      static int nDeallocate_;
+   
    };
    
    /*
@@ -85,14 +101,18 @@ namespace Util
    template <typename Data>
    void Memory::allocate(Data*& ptr, size_t size)
    {
+     if (ptr) {
+         UTIL_THROW("Attempt to allocate to non-null pointer");
+      }
       try {
          ptr = new Data[size];
+         total_ += (size*sizeof(Data));
+         ++nAllocate_;
+         if (total_ > max_) max_ = total_;
       } catch (std::bad_alloc&) {
          std::cout << "Allocation error" << std::endl;
          throw;
       }
-      total_ += size*sizeof(Data);
-      if (total_ > max_) max_ = total_;
    }
 
    /*
@@ -105,6 +125,7 @@ namespace Util
          delete [] ptr;
          ptr = 0;
          total_ -= size*sizeof(Data);
+         ++nDeallocate_;
       } else {
          UTIL_THROW("Attempt to de-allocate null pointer");
       }

@@ -119,7 +119,7 @@ namespace DdMd
       enum TimeId {DIAGNOSTIC, INTEGRATE1, CHECK, ALLREDUCE, TRANSFORM_F, 
                    EXCHANGE, CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, 
                    PAIR_FORCE, BOND_FORCE, ANGLE_FORCE, DIHEDRAL_FORCE,
-                   INTEGRATE2, NTime};
+                   EXTERNAL_FORCE, INTEGRATE2, NTime};
 
       /**
       * Set any internal dynamical to default initial values.

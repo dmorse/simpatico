@@ -164,6 +164,11 @@ namespace Util
       */
       int size() const;
 
+      /**
+      * Is this array allocated?
+      */
+      bool isAllocated() const;
+
    private:
 
       /// Array of Data elements.
@@ -200,14 +205,14 @@ namespace Util
       size_(0),
       capacity_(0)
    {
-      if (other.data_ != 0) {
+      assert(other.size_ <= other.capacity_);
+      if (other.isAllocated()) {
          assert(other.capacity_ > 0);
          // Allocate new array
          Memory::allocate<Data>(data_, other.capacity_);
          capacity_ = other.capacity_;
          // Copy objects
-         int i;
-         for (i = 0; i < other.size_; ++i) {
+         for (int i = 0; i < other.size_; ++i) {
             data_[i] = other.data_[i];
             ++size_;
          }
@@ -220,8 +225,10 @@ namespace Util
    template <typename Data>
    inline GArray<Data>::~GArray()
    {
-      if (data_) {
+      size_ = 0;
+      if (isAllocated()) {
          Memory::deallocate<Data>(data_, capacity_);
+         capacity_ = 0;
       }
    }
 
@@ -250,7 +257,7 @@ namespace Util
       if (capacity <= 0) {
          UTIL_THROW("Cannot reserve with capacity <=0");
       }
-      if (data_ == 0) {
+      if (!isAllocated()) {
          assert(capacity_ == 0);
          assert(size_ == 0);
          Memory::allocate<Data>(data_, capacity);
@@ -259,10 +266,12 @@ namespace Util
       } else if (capacity > capacity_) {
          assert(capacity_ > 0);
          assert(capacity_ >= size_);
-         Data* newPtr;
+         Data* newPtr = 0;
          Memory::allocate<Data>(newPtr, capacity);
-         for (int i = 0; i < size_; ++i) {
-            newPtr[i] = data_[i];
+         if (size_ > 0) {
+            for (int i = 0; i < size_; ++i) {
+               newPtr[i] = data_[i];
+            }
          }
          Memory::deallocate<Data>(data_, capacity_);
          data_ = newPtr;
@@ -276,9 +285,9 @@ namespace Util
    template <typename Data>
    void GArray<Data>::deallocate() 
    {
-      if (data_) {
+      size_ = 0;
+      if (isAllocated()) {
          Memory::deallocate<Data>(data_, capacity_);
-         size_ = 0;
          capacity_ = 0; 
       }
    }
@@ -296,6 +305,7 @@ namespace Util
    template <typename Data>
    void GArray<Data>::append(const Data& data) 
    {
+      assert(size_ <= capacity_);
       if (size_ == capacity_) {
          if (capacity_ == 0) {
             assert(data_ == 0); 
@@ -304,10 +314,12 @@ namespace Util
          } else {
             assert(data_); 
             assert(capacity_ > 0); 
-            Data* newPtr;
+            Data* newPtr = 0;
             Memory::allocate<Data>(newPtr, 2*capacity_);
-            for (int i = 0; i < size_; ++i) {
-               newPtr[i] = data_[i];
+            if (size_ > 0) {
+               for (int i = 0; i < size_; ++i) {
+                  newPtr[i] = data_[i];
+               }
             }
             Memory::deallocate<Data>(data_, capacity_);
             data_ = newPtr;
@@ -317,6 +329,7 @@ namespace Util
       // Append new element
       data_[size_] = data;
       ++size_;
+      assert(size_ <= capacity_);
    }
 
    /*
@@ -339,7 +352,7 @@ namespace Util
                   m *= 2;
                }
             }
-            Data* newPtr;
+            Data* newPtr = 0;
             Memory::allocate<Data>(newPtr, m);
             if (data_) {
                assert(capacity_ > 0);
@@ -423,7 +436,7 @@ namespace Util
    template <class Data>
    inline const Data& GArray<Data>::operator[] (int i) const
    {
-      assert(i >= 0 );
+      assert(i >= 0);
       assert(i < size_);
       return data_[i];
    }
@@ -441,6 +454,13 @@ namespace Util
    template <class Data>
    inline int GArray<Data>::size() const
    {  return size_; }
+
+   /*
+   * Is this array allocated?
+   */
+   template <class Data>
+   inline bool GArray<Data>::isAllocated() const
+   {  return (bool)data_; }
 
 } 
 #endif

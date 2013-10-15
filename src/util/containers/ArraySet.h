@@ -211,17 +211,18 @@ namespace Util
    {
 
       // Preconditions
-      if (ptrs_ != 0)    UTIL_THROW("Can only be allocated once");
       if (capacity == 0) UTIL_THROW("Zero capacity");
       if (capacity < 0)  UTIL_THROW("Negative capacity");
+      if (array == 0) UTIL_THROW("Null array pointer");
+      if (ptrs_) UTIL_THROW("ptrs_ array already allocated");
+      if (tags_) UTIL_THROW("tags_ array already allocated");
 
       data_  = array;
+      Memory::allocate<Data*>(ptrs_, capacity);
+      Memory::allocate<int>(tags_, capacity);
       capacity_ = capacity;
+      size_ = 0;
 
-      Memory::allocate<Data*>(ptrs_, capacity_);
-      Memory::allocate<int>(tags_, capacity_);
-
-      size_     = 0;
       for (int i = 0; i < capacity_; ++i) {
          ptrs_[i] =  0;
          tags_[i] = -1;

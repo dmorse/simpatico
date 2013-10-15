@@ -168,7 +168,7 @@ namespace Util
       // Preconditions
       if (capacity1 <= 0) UTIL_THROW("Capacity1 must be positive");
       if (capacity2 <= 0) UTIL_THROW("Capacity2 must be positive");
-      if (data_     != 0) UTIL_THROW("Attempt to re-allocate a Matrix");
+      if (data_  != 0) UTIL_THROW("Attempt to re-allocate a Matrix");
 
       Memory::allocate<Data>(data_, capacity1*capacity2);
       capacity1_ = capacity1;

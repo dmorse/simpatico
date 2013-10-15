@@ -54,12 +54,11 @@
 #include <util/misc/Memory.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/misc/Timer.h>
-
+#include <util/misc/initStatic.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/format/Str.h>
 #include <util/misc/ioUtil.h>
-#include <util/misc/initStatic.h>
 
 // std headers
 #include <fstream>
@@ -192,9 +191,8 @@ namespace DdMd
       exchanger_.associate(domain_, boundary_, atomStorage_, buffer_);
 
       fileMasterPtr_ = new FileMaster;
-      energyEnsemblePtr_  = new EnergyEnsemble;
+      energyEnsemblePtr_ = new EnergyEnsemble;
       boundaryEnsemblePtr_ = new BoundaryEnsemble;
-
       diagnosticManagerPtr_ = new DiagnosticManager(*this);
    }
 
@@ -391,25 +389,29 @@ namespace DdMd
       // Read numbers of types
       read<int>(in, "nAtomType", nAtomType_);
       #ifdef INTER_BOND
-      read<int>(in, "nBondType", nBondType_);
+      nBondType_ = 0;
+      read<int>(in, "nBondType", nBondType_, false); // optional
       if (nBondType_) {
          exchanger_.addGroupExchanger(bondStorage_);
       }
       #endif
       #ifdef INTER_ANGLE
-      read<int>(in, "nAngleType", nAngleType_);
+      nAngleType_ = 0;
+      read<int>(in, "nAngleType", nAngleType_, false); // optional
       if (nAngleType_) {
          exchanger_.addGroupExchanger(angleStorage_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      read<int>(in, "nDihedralType", nDihedralType_);
+      nDihedralType_ = 0;
+      read<int>(in, "nDihedralType", nDihedralType_, false); // optional
       if (nDihedralType_) {
          exchanger_.addGroupExchanger(dihedralStorage_);
       }
       #endif
       #ifdef INTER_EXTERNAL
-      read<bool>(in, "hasExternal", hasExternal_);
+      hasExternal_ = false;
+      read<bool>(in, "hasExternal", hasExternal_, false); // optional
       #endif
 
       // Read array of atom type descriptors
@@ -580,25 +582,29 @@ namespace DdMd
       // Load types
       loadParameter<int>(ar, "nAtomType", nAtomType_);
       #ifdef INTER_BOND
-      loadParameter<int>(ar, "nBondType", nBondType_);
+      nBondType_ = 0;
+      loadParameter<int>(ar, "nBondType", nBondType_, false);
       if (nBondType_) {
          exchanger_.addGroupExchanger(bondStorage_);
       }
       #endif
       #ifdef INTER_ANGLE
-      loadParameter<int>(ar, "nAngleType", nAngleType_);
+      nAngleType_ = 0;
+      loadParameter<int>(ar, "nAngleType", nAngleType_, false);
       if (nAngleType_) {
          exchanger_.addGroupExchanger(angleStorage_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      loadParameter<int>(ar, "nDihedralType", nDihedralType_);
+      nDihedralType_ = 0;
+      loadParameter<int>(ar, "nDihedralType", nDihedralType_, false);
       if (nDihedralType_) {
          exchanger_.addGroupExchanger(dihedralStorage_);
       }
       #endif
       #ifdef INTER_EXTERNAL
-      loadParameter<bool>(ar, "hasExternal", hasExternal_);
+      hasExternal_ = false;
+      loadParameter<bool>(ar, "hasExternal", hasExternal_, false);
       #endif
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
@@ -795,16 +801,20 @@ namespace DdMd
       // Read types
       ar << nAtomType_;
       #ifdef INTER_BOND
-      ar << nBondType_;
+      Parameter::saveOptional(ar, nBondType_, (bool)nBondType_);
+      //ar << nBondType_;
       #endif
       #ifdef INTER_ANGLE
-      ar << nAngleType_;
+      //ar << nAngleType_;
+      Parameter::saveOptional(ar, nAngleType_, (bool)nAngleType_);
       #endif
       #ifdef INTER_DIHEDRAL
-      ar << nDihedralType_;
+      //ar << nDihedralType_;
+      Parameter::saveOptional(ar, nDihedralType_, (bool)nDihedralType_);
       #endif
       #ifdef INTER_EXTERNAL
-      ar << hasExternal_;
+      //ar << hasExternal_;
+      Parameter::saveOptional(ar, hasExternal_, hasExternal_);
       #endif
       ar << atomTypes_;
 
@@ -1285,7 +1295,7 @@ namespace DdMd
                pairPotential().set(paramName, typeId1, typeId2, value);
             } else
             #ifdef INTER_BOND
-            if (command == "SET_BOND") {
+            if (command == "SET_BOND" && nBondType_) {
                // Modify one parameter of a bond interaction.
                std::string paramName;
                int typeId;

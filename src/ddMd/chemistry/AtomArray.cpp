@@ -39,16 +39,12 @@ namespace DdMd
    {
       if (data_) {
          // free(data_);
-         // delete [] data_;
-         // delete [] velocities_;
-         // delete [] masks_;
-         // delete [] plans_;
-         // delete [] ids_;
          Memory::deallocate<Atom>(data_, capacity_);
          Memory::deallocate<Vector>(velocities_, capacity_);
          Memory::deallocate<Mask>(masks_, capacity_);
          Memory::deallocate<Plan>(plans_, capacity_);
          Memory::deallocate<int>(ids_, capacity_);
+         capacity_ = 0;
       }
    }
 
@@ -70,22 +66,17 @@ namespace DdMd
       }
 
       // Allocate memory
+      //posix_memalign((void**) &data_, 64, capacity*sizeof(Atom));
       Memory::allocate<Atom>(data_, capacity);
       Memory::allocate<Vector>(velocities_, capacity);
       Memory::allocate<Mask>(masks_, capacity);
       Memory::allocate<Plan>(plans_, capacity);
       Memory::allocate<int>(ids_, capacity);
-      //posix_memalign((void**) &data_, 64, capacity*sizeof(Atom));
-      // data_        = new Atom[capacity];
-      // velocities_  = new Vector[capacity];
-      // masks_       = new Mask[capacity];
-      // plans_       = new Plan[capacity];
-      // ids_         = new int[capacity];
-      capacity_    = capacity;
+      capacity_ = capacity;
 
       // Initialize values.
       unsigned int localId;
-      for (int i=0; i < capacity_; ++i) {
+      for (int i = 0; i < capacity_; ++i) {
         data_[i].localId_ = (i << 1);
         data_[i].arrayPtr_ = this;
         localId = (data_[i].localId_ >> 1);
@@ -100,7 +91,7 @@ namespace DdMd
    * Return true if this is already allocated, false otherwise.
    */
    bool AtomArray::isAllocated() const 
-   {  return !(data_ == 0); }
+   {  return (bool)data_; }
 
 }
 #endif
