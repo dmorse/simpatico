@@ -154,8 +154,8 @@ namespace Util
       }
       Memory::allocate<Data*>(ptrs_, capacity);
       capacity_ = capacity;
-
       size_ = 0;
+
       // Nullify all Data* pointer elements
       for (int i = 0; i < capacity_; ++i) {
          ptrs_[i] =  0;

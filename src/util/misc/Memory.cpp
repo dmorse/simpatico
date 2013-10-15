@@ -13,6 +13,12 @@
 namespace Util
 {
 
+   /// Number of calls to allocate.
+   int Memory::nAllocate_ = 0;
+
+   /// Number of calls to de-allocate.
+   int Memory::nDeallocate_ = 0;
+
    /// Total amount of memory allocated, in bytes.
    int Memory::total_ = 0;
 
@@ -23,26 +29,32 @@ namespace Util
    * Call this to ensure compilation of this file. 
    */
    void Memory::initStatic()
-   {   
-      Memory::total_ = 0; 
-      Memory::max_ = 0; 
-   }  
+   {  max_ = 0; }  
+
+   /*
+   * Return number of calls to allocate.
+   */
+   int Memory::nAllocate()
+   {  return nAllocate_; }
+
+   /*
+   * Return number of calls to deallocate.
+   */
+   int Memory::nDeallocate()
+   {  return nDeallocate_; }
 
    /*
    * Return total amount of memory allocated thus far.
    */
    int Memory::total()
-   { return total_; }
+   {  return total_; }
 
    /*
    * Return maximum amount of allocated memory thus far.
    */
    int Memory::max()
-   { return max_; }
+   {  return max_; }
 
-   /*
-   * Compute memory usage statistics (call on all processors).
-   */
    #ifdef UTIL_MPI
    int Memory::max(MPI::Intracomm& communicator)
    { 

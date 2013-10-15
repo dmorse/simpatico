@@ -81,6 +81,11 @@ namespace Util
       */ 
       void clear();
 
+      /**
+      * Is this DPArray allocated?
+      */ 
+      bool isAllocated() const;
+
    protected:
 
       using PArray<Data>::ptrs_;
@@ -108,19 +113,21 @@ namespace Util
    DPArray<Data>::DPArray(const DPArray<Data>& other) 
     : PArray<Data>()
    {
+      if (other.size_ > other.capacity_) {
+         UTIL_THROW("Inconsistent size and capacity");
+      }
       if (other.isAllocated()) {
          // Allocate array of Data* pointers
          Memory::allocate<Data*>(ptrs_, other.capacity_);
          capacity_ = other.capacity_;
          // Copy pointers
-         int i;
-         for (i = 0; i < other.size_; ++i) {
+         for (int i = 0; i < other.size_; ++i) {
             ptrs_[i] = other.ptrs_[i];
          }
          size_ = other.size_;
          // Nullify unused elements of ptrs_ array
          if (capacity_ > size_) {
-            for (i = size_; i < capacity_; ++i) {
+            for (int i = size_; i < capacity_; ++i) {
                ptrs_[i] = 0;
             }
          }
@@ -165,11 +172,15 @@ namespace Util
       return *this;
    }
 
-   // Destructor.
+   /*
+   * Destructor.
+   */
    template <typename Data>
    inline DPArray<Data>::~DPArray()
    {
+      size_ = 0;
       if (ptrs_) {
+         assert(capacity_ > 0);
          Memory::deallocate<Data*>(ptrs_, capacity_);
          capacity_ = 0;
       }
@@ -196,9 +207,9 @@ namespace Util
    * Append an element to the end of the PArray.
    */
    template <typename Data>
-   void DPArray<Data>::append(Data& data) 
+   inline void DPArray<Data>::append(Data& data) 
    {
-      if (ptrs_ == 0) {
+      if (!isAllocated()) {
          UTIL_THROW("Error: Attempt to append to unallocated DPArray");
       }
       if (size_ == capacity_) {
@@ -214,9 +225,17 @@ namespace Util
    template <typename Data>
    void DPArray<Data>::clear()
    {
-      assert(ptrs_ != 0);
+      assert(isAllocated());
       size_ = 0;
    }
+
+   /*
+   * Is this DPArray allocated?
+   */ 
+   template <typename Data>
+   inline 
+   bool DPArray<Data>::isAllocated() const
+   { return (bool)ptrs_;  }
 
 
 

@@ -44,6 +44,7 @@ namespace DdMd
          Memory::deallocate<Mask>(masks_, capacity_);
          Memory::deallocate<Plan>(plans_, capacity_);
          Memory::deallocate<int>(ids_, capacity_);
+         capacity_ = 0;
       }
    }
 
@@ -71,11 +72,11 @@ namespace DdMd
       Memory::allocate<Mask>(masks_, capacity);
       Memory::allocate<Plan>(plans_, capacity);
       Memory::allocate<int>(ids_, capacity);
-      capacity_    = capacity;
+      capacity_ = capacity;
 
       // Initialize values.
       unsigned int localId;
-      for (int i=0; i < capacity_; ++i) {
+      for (int i = 0; i < capacity_; ++i) {
         data_[i].localId_ = (i << 1);
         data_[i].arrayPtr_ = this;
         localId = (data_[i].localId_ >> 1);
@@ -90,7 +91,7 @@ namespace DdMd
    * Return true if this is already allocated, false otherwise.
    */
    bool AtomArray::isAllocated() const 
-   {  return !(data_ == 0); }
+   {  return (bool)data_; }
 
 }
 #endif
