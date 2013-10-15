@@ -39,11 +39,6 @@ namespace DdMd
    {
       if (data_) {
          // free(data_);
-         // delete [] data_;
-         // delete [] velocities_;
-         // delete [] masks_;
-         // delete [] plans_;
-         // delete [] ids_;
          Memory::deallocate<Atom>(data_, capacity_);
          Memory::deallocate<Vector>(velocities_, capacity_);
          Memory::deallocate<Mask>(masks_, capacity_);
@@ -70,17 +65,12 @@ namespace DdMd
       }
 
       // Allocate memory
+      //posix_memalign((void**) &data_, 64, capacity*sizeof(Atom));
       Memory::allocate<Atom>(data_, capacity);
       Memory::allocate<Vector>(velocities_, capacity);
       Memory::allocate<Mask>(masks_, capacity);
       Memory::allocate<Plan>(plans_, capacity);
       Memory::allocate<int>(ids_, capacity);
-      //posix_memalign((void**) &data_, 64, capacity*sizeof(Atom));
-      // data_        = new Atom[capacity];
-      // velocities_  = new Vector[capacity];
-      // masks_       = new Mask[capacity];
-      // plans_       = new Plan[capacity];
-      // ids_         = new int[capacity];
       capacity_    = capacity;
 
       // Initialize values.
