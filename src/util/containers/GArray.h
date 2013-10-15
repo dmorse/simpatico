@@ -266,7 +266,7 @@ namespace Util
       } else if (capacity > capacity_) {
          assert(capacity_ > 0);
          assert(capacity_ >= size_);
-         Data* newPtr;
+         Data* newPtr = 0;
          Memory::allocate<Data>(newPtr, capacity);
          if (size_ > 0) {
             for (int i = 0; i < size_; ++i) {
@@ -314,7 +314,7 @@ namespace Util
          } else {
             assert(data_); 
             assert(capacity_ > 0); 
-            Data* newPtr;
+            Data* newPtr = 0;
             Memory::allocate<Data>(newPtr, 2*capacity_);
             if (size_ > 0) {
                for (int i = 0; i < size_; ++i) {
@@ -352,7 +352,7 @@ namespace Util
                   m *= 2;
                }
             }
-            Data* newPtr;
+            Data* newPtr = 0;
             Memory::allocate<Data>(newPtr, m);
             if (data_) {
                assert(capacity_ > 0);
