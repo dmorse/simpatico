@@ -6,37 +6,40 @@ include src/compiler.mk
         html clean-html veryclean
 
 all:
-	-rm -f log
-	cd src; make mcMd
-	make test-mcMd
-	cd src; make mcMd-mpi
-	make test-mcMd-mpi
-	cd src; make ddMd
-	make test-ddMd
-	cat log
-	rm log
+	cd build/serial; make mcMd
+	cd build/serial; make mcMd
+	cd build/parallel; make ddMd
 
 mcMd:
-	cd src; make mcMd
-	-rm -f log
-	make test-mcMd
-	cat log
-	rm log
+	cd build/serial; make mcMd
 
 mcMd-mpi: 
-	cd src; make mcMd-mpi
-	-rm -f log
-	make test-mcMd-mpi
-	cat log
-	rm log
+	cd build/parallel; make mcMd-mpi
 
 ddMd:
-	cd src; make ddMd
-	-rm -f log
-	make test-ddMd
-	cat log
-	rm log
+	cd build/parallel; make ddMd
 
+# ==============================================================================
+# Clean targets
+
+clean-serial:
+	cd build/serial; make clean
+
+clean-parallel:
+	cd build/parallel; make clean
+
+clean-tests:
+	cd tests; make clean;
+
+clean:
+	cd src; make clean
+	cd build/serial; make clean
+	cd build/parallel; make clean
+	cd tests; make clean
+	-rm -f log
+
+clean-bin:
+	cd src; make clean-bin
 # ==============================================================================
 test-mcMd:
 	./configure -m0
@@ -64,28 +67,6 @@ test-ddMd:
 	cd tests/ddMd; make all; $(MPIRUN) 6 ./Test > log;
 	echo `grep failed tests/ddMd/log` ", "\
              `grep successful tests/ddMd/log` "in tests/ddMd/log" >> log
-# ==============================================================================
-# Clean targets
-
-clean-mcMd:
-	cd src; make clean-mcMd
-	cd tests/util; make clean;
-	cd tests/inter; make clean;
-	cd tests/mcMd; make clean;
-
-clean-ddMd:
-	cd src; make clean-ddMd
-	cd tests/util; make clean;
-	cd tests/inter; make clean;
-	cd tests/ddMd; make clean;
-
-clean:
-	cd src; make clean
-	cd tests; make clean
-	-rm -f log
-
-clean-bin:
-	cd src; make clean-bin
 # ==============================================================================
 # HTML Documentation
  
