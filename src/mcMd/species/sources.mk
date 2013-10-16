@@ -1,14 +1,17 @@
 
-mcMd_species_SRCS=$(SRC_DIR)/mcMd/species/Diblock.cpp \
-    $(SRC_DIR)/mcMd/species/Homopolymer.cpp \
-    $(SRC_DIR)/mcMd/species/HomopolymerSG.cpp \
-    $(SRC_DIR)/mcMd/species/HomoRing.cpp $(SRC_DIR)/mcMd/species/Linear.cpp \
-    $(SRC_DIR)/mcMd/species/Point.cpp $(SRC_DIR)/mcMd/species/Ring.cpp \
-    $(SRC_DIR)/mcMd/species/Species.cpp \
-    $(SRC_DIR)/mcMd/species/species_queries.cpp \
-    $(SRC_DIR)/mcMd/species/SpeciesFactory.cpp \
-    $(SRC_DIR)/mcMd/species/SpeciesManager.cpp \
-    $(SRC_DIR)/mcMd/species/SpeciesMutator.cpp 
+mcMd_species_=mcMd/species/Diblock.cpp \
+    mcMd/species/Homopolymer.cpp \
+    mcMd/species/HomopolymerSG.cpp \
+    mcMd/species/HomoRing.cpp mcMd/species/Linear.cpp \
+    mcMd/species/Point.cpp mcMd/species/Ring.cpp \
+    mcMd/species/Species.cpp \
+    mcMd/species/species_queries.cpp \
+    mcMd/species/SpeciesFactory.cpp \
+    mcMd/species/SpeciesManager.cpp \
+    mcMd/species/SpeciesMutator.cpp 
 
-mcMd_species_OBJS=$(mcMd_species_SRCS:.cpp=.o)
+mcMd_species_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_species_))
+mcMd_species_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(mcMd_species_:.cpp=.o))
 

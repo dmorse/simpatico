@@ -1,11 +1,14 @@
-mcMd_configIos_SRCS=$(SRC_DIR)/mcMd/configIos/ConfigIo.cpp \
-    $(SRC_DIR)/mcMd/configIos/ConfigIoFactory.cpp \
-    $(SRC_DIR)/mcMd/configIos/DdMdConfigIo.cpp \
-    $(SRC_DIR)/mcMd/configIos/McConfigIo.cpp \
-    $(SRC_DIR)/mcMd/configIos/McMdConfigIo.cpp \
-    $(SRC_DIR)/mcMd/configIos/MdConfigIo.cpp \
-    $(SRC_DIR)/mcMd/configIos/PmcConfigIo.cpp \
-    $(SRC_DIR)/mcMd/configIos/LammpsConfigIo.cpp 
+mcMd_configIos_=mcMd/configIos/ConfigIo.cpp \
+    mcMd/configIos/ConfigIoFactory.cpp \
+    mcMd/configIos/DdMdConfigIo.cpp \
+    mcMd/configIos/McConfigIo.cpp \
+    mcMd/configIos/McMdConfigIo.cpp \
+    mcMd/configIos/MdConfigIo.cpp \
+    mcMd/configIos/PmcConfigIo.cpp \
+    mcMd/configIos/LammpsConfigIo.cpp 
 
-mcMd_configIos_OBJS=$(mcMd_configIos_SRCS:.cpp=.o)
+mcMd_configIos_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_configIos_))
+mcMd_configIos_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(mcMd_configIos_:.cpp=.o))
 

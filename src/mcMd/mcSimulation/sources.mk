@@ -1,8 +1,12 @@
 
-mcMd_mcSimulation_SRCS=$(SRC_DIR)/mcMd/mcSimulation/McDiagnosticManager.cpp \
-    $(SRC_DIR)/mcMd/mcSimulation/McModule.cpp \
-    $(SRC_DIR)/mcMd/mcSimulation/McSimulation.cpp \
-    $(SRC_DIR)/mcMd/mcSimulation/McSystem.cpp 
+mcMd_mcSimulation_=\
+    mcMd/mcSimulation/McDiagnosticManager.cpp \
+    mcMd/mcSimulation/McModule.cpp \
+    mcMd/mcSimulation/McSimulation.cpp \
+    mcMd/mcSimulation/McSystem.cpp 
 
-mcMd_mcSimulation_OBJS=$(mcMd_mcSimulation_SRCS:.cpp=.o)
+mcMd_mcSimulation_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_mcSimulation_))
+mcMd_mcSimulation_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(mcMd_mcSimulation_:.cpp=.o))
 
