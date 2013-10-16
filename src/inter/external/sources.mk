@@ -1,10 +1,13 @@
-inter_external_SRCS=\
-    $(SRC_DIR)/inter/external/BoxExternal.cpp \
-    $(SRC_DIR)/inter/external/OrthoBoxExternal.cpp \
-    $(SRC_DIR)/inter/external/SlitExternal.cpp \
-    $(SRC_DIR)/inter/external/LamellarOrderingExternal.cpp \
-    $(SRC_DIR)/inter/external/LocalLamellarOrderingExternal.cpp \
-    $(SRC_DIR)/inter/external/PeriodicExternal.cpp 
+inter_external_=\
+    inter/external/BoxExternal.cpp \
+    inter/external/OrthoBoxExternal.cpp \
+    inter/external/SlitExternal.cpp \
+    inter/external/LamellarOrderingExternal.cpp \
+    inter/external/LocalLamellarOrderingExternal.cpp \
+    inter/external/PeriodicExternal.cpp 
 
-inter_external_OBJS=$(inter_external_SRCS:.cpp=.o)
+inter_external_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(inter_external_))
+inter_external_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(inter_external_:.cpp=.o))
 

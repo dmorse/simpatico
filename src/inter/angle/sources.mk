@@ -1,7 +1,10 @@
-inter_angle_SRCS=\
-    $(SRC_DIR)/inter/angle/CosineAngle.cpp \
-    $(SRC_DIR)/inter/angle/CosineSqAngle.cpp \
-    $(SRC_DIR)/inter/angle/HarmonicAngle.cpp \
+inter_angle_=\
+    inter/angle/CosineAngle.cpp \
+    inter/angle/CosineSqAngle.cpp \
+    inter/angle/HarmonicAngle.cpp \
 
-inter_angle_OBJS=$(inter_angle_SRCS:.cpp=.o)
+inter_angle_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(inter_angle_))
+inter_angle_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(inter_angle_:.cpp=.o))
 

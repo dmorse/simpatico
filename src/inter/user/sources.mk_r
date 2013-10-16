@@ -1,7 +1,10 @@
 
-inter_user_SRCS=\
-    #$(SRC_DIR)/inter/user/Class1.cpp \
-    #$(SRC_DIR)/inter/user/Class2.cpp 
+inter_user_=\
+    #inter/user/Class1.cpp \
+    #inter/user/Class2.cpp 
 
-inter_user_OBJS=$(inter_user_SRCS:.cpp=.o)
+inter_user_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(inter_user_))
+inter_user_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(inter_user_:.cpp=.o))
 
