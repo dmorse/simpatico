@@ -583,29 +583,30 @@ namespace DdMd
       loadParameter<int>(ar, "nAtomType", nAtomType_);
       #ifdef INTER_BOND
       nBondType_ = 0;
-      loadParameter<int>(ar, "nBondType", nBondType_, false);
+      loadParameter<int>(ar, "nBondType", nBondType_, false); // optional
       if (nBondType_) {
          exchanger_.addGroupExchanger(bondStorage_);
       }
       #endif
       #ifdef INTER_ANGLE
       nAngleType_ = 0;
-      loadParameter<int>(ar, "nAngleType", nAngleType_, false);
+      loadParameter<int>(ar, "nAngleType", nAngleType_, false); // opt
       if (nAngleType_) {
          exchanger_.addGroupExchanger(angleStorage_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       nDihedralType_ = 0;
-      loadParameter<int>(ar, "nDihedralType", nDihedralType_, false);
+      loadParameter<int>(ar, "nDihedralType", nDihedralType_, false); // opt
       if (nDihedralType_) {
          exchanger_.addGroupExchanger(dihedralStorage_);
       }
       #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = false;
-      loadParameter<bool>(ar, "hasExternal", hasExternal_, false);
+      loadParameter<bool>(ar, "hasExternal", hasExternal_, false); // opt
       #endif
+
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
@@ -687,6 +688,7 @@ namespace DdMd
 
       #ifdef INTER_EXTERNAL
       // External potential
+      assert(externalPotentialPtr_ == 0);
       if (hasExternal_) {
          externalPotentialPtr_ = externalFactory().factory(externalStyle());
          if (!externalPotentialPtr_) {
@@ -713,7 +715,7 @@ namespace DdMd
       loadParamComposite(ar, random_);
       loadParamComposite(ar, *diagnosticManagerPtr_);
 
-      // Finished loading data from archive. Finish initialization:
+      // Finished loading data from archive. Now finish initialization:
 
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
@@ -802,18 +804,14 @@ namespace DdMd
       ar << nAtomType_;
       #ifdef INTER_BOND
       Parameter::saveOptional(ar, nBondType_, (bool)nBondType_);
-      //ar << nBondType_;
       #endif
       #ifdef INTER_ANGLE
-      //ar << nAngleType_;
       Parameter::saveOptional(ar, nAngleType_, (bool)nAngleType_);
       #endif
       #ifdef INTER_DIHEDRAL
-      //ar << nDihedralType_;
       Parameter::saveOptional(ar, nDihedralType_, (bool)nDihedralType_);
       #endif
       #ifdef INTER_EXTERNAL
-      //ar << hasExternal_;
       Parameter::saveOptional(ar, hasExternal_, hasExternal_);
       #endif
       ar << atomTypes_;
@@ -838,7 +836,7 @@ namespace DdMd
 
       buffer_.save(ar);
 
-      // Potentials energy styles and parameters
+      // Potential energy styles and potential classes
       savePotentialStyles(ar);
       #ifndef DDMD_NOPAIR
       assert(pairPotentialPtr_);
@@ -863,19 +861,17 @@ namespace DdMd
       }
       #endif
       #ifdef INTER_EXTERNAL
-      // External potential
       if (hasExternal_) {
          assert(externalPotentialPtr_);
          externalPotentialPtr_->save(ar);
       }
       #endif
 
-      // Save ensembles and integrator
+      // Save ensembles, integrator, random, diagnostics
       saveEnsembles(ar);
       std::string name = integrator().className();
       ar << name;
       integrator().save(ar);
-
       random_.save(ar);
       diagnosticManagerPtr_->save(ar);
    }
@@ -935,7 +931,7 @@ namespace DdMd
    }
 
    /*
-   * If no FileMaster exists, create and load one.
+   * Load the FileMaster.
    */
    void Simulation::loadFileMaster(Serializable::IArchive& ar)
    {
@@ -945,12 +941,7 @@ namespace DdMd
    }
 
    /*
-   * If createdFileMaster_, save to archive.
-   *
-   * A Simulation normally creates its own FileMaster only in unit tests.
-   * In a simulation, the FileMaster is normally set to that of either
-   * a parent Simulation or that of another Simulation from which this was
-   * copied.
+   * Save the FileMaster.
    */
    void Simulation::saveFileMaster(Serializable::OArchive& ar)
    {  fileMasterPtr_->save(ar); }
@@ -1002,22 +993,22 @@ namespace DdMd
       loadParameter<std::string>(ar, "pairStyle", pairStyle_);
       #endif
       #ifdef INTER_BOND
-      if (nBondType()) {
+      if (nBondType_) {
          loadParameter<std::string>(ar, "bondStyle", bondStyle_);
       }
       #endif
       #ifdef INTER_ANGLE
-      if (nAngleType()) {
+      if (nAngleType_) {
          loadParameter<std::string>(ar, "angleStyle", angleStyle_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      if (nDihedralType()) {
+      if (nDihedralType_) {
          loadParameter<std::string>(ar, "dihedralStyle", dihedralStyle_);
       }
       #endif
       #ifdef INTER_EXTERNAL
-      if (hasExternal()) {
+      if (hasExternal_) {
          loadParameter<std::string>(ar, "externalStyle", externalStyle_);
       }
       #endif
@@ -1036,22 +1027,22 @@ namespace DdMd
       ar << pairStyle_;
       #endif
       #ifdef INTER_BOND
-      if (nBondType()) {
+      if (nBondType_) {
          ar << bondStyle_;
       }
       #endif
       #ifdef INTER_ANGLE
-      if (nAngleType()) {
+      if (nAngleType_) {
          ar << angleStyle_;
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      if (nDihedralType()) {
+      if (nDihedralType_) {
          ar << dihedralStyle_;
       }
       #endif
       #ifdef INTER_EXTERNAL
-      if (hasExternal()) {
+      if (hasExternal_) {
          ar << externalStyle_;
       }
       #endif
@@ -1211,9 +1202,9 @@ namespace DdMd
                   dihedralStorage().computeStatistics(domain_.communicator());
                }
                #endif
-               buffer().computeStatistics(domain_.communicator());
                pairPotential().pairList()
                               .computeStatistics(domain_.communicator());
+               buffer().computeStatistics(domain_.communicator());
                int maxMemory = Memory::max(domain_.communicator());
                if (domain_.isMaster()) {
                   atomStorage().outputStatistics(Log::file());
@@ -1295,7 +1286,10 @@ namespace DdMd
                pairPotential().set(paramName, typeId1, typeId2, value);
             } else
             #ifdef INTER_BOND
-            if (command == "SET_BOND" && nBondType_) {
+            if (command == "SET_BOND") {
+               if (nBondType_ == 0) {
+                  UTIL_THROW("SET_BOND command with nBondType = 0");
+               }
                // Modify one parameter of a bond interaction.
                std::string paramName;
                int typeId;
@@ -1305,7 +1299,10 @@ namespace DdMd
             } else
             #endif
             #ifdef INTER_ANGLE
-            if (command == "SET_ANGLE" && nAngleType_) {
+            if (command == "SET_ANGLE") {
+               if (nAngleType_ == 0) {
+                  UTIL_THROW("SET_ANGLE command with nAngleType = 0");
+               }
                // Modify one parameter of an angle interaction.
                std::string paramName;
                int typeId;
@@ -1315,7 +1312,10 @@ namespace DdMd
             } else
             #endif
             #ifdef INTER_DIHEDRAL
-            if (command == "SET_DIHEDRAL" && nDihedralType_) {
+            if (command == "SET_DIHEDRAL") {
+               if (nDihedralType_ == 0) {
+                  UTIL_THROW("SET_DIHEDRAL command with nDihedralType = 0");
+               }
                // Modify one parameter of a dihedral interaction.
                std::string paramName;
                int typeId;
