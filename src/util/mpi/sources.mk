@@ -1,13 +1,14 @@
 
-util_mpi_SRCS=$(SRC_DIR)/util/mpi/MpiFileIo.cpp \
-    $(SRC_DIR)/util/mpi/MpiTraits.cpp 
+util_mpi_=util/mpi/MpiFileIo.cpp \
+    util/mpi/MpiTraits.cpp 
 
 ifdef UTIL_MPI
-util_mpi_SRCS+=\
-    $(SRC_DIR)/util/mpi/MpiLogger.cpp \
-    $(SRC_DIR)/util/mpi/MpiSendRecv.cpp \
-    $(SRC_DIR)/util/mpi/MpiStructBuilder.cpp
+util_mpi_+=\
+    util/mpi/MpiLogger.cpp \
+    util/mpi/MpiSendRecv.cpp \
+    util/mpi/MpiStructBuilder.cpp
 endif
 
-util_mpi_OBJS=$(util_mpi_SRCS:.cpp=.o)
+util_mpi_SRCS=$(addprefix $(SRC_DIR)/, $(util_mpi_))
+util_mpi_OBJS=$(addprefix $(BLD_DIR)/, $(util_mpi_:.cpp=.o))
 

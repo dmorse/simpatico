@@ -1,4 +1,5 @@
-util_math_SRCS=$(SRC_DIR)/util/math/Constants.cpp 
+util_math_=util/math/Constants.cpp 
 
-util_math_OBJS=$(util_math_SRCS:.cpp=.o)
+util_math_SRCS=$(addprefix $(SRC_DIR)/, $(util_math_))
+util_math_OBJS=$(addprefix $(BLD_DIR)/, $(util_math_:.cpp=.o))
 

@@ -5,11 +5,17 @@ from makeDepend import *
 
 options = ''
 alldeps = ''
+blddir = ''
+srcdir = ''
 for arg in sys.argv[1:-1]:
    if arg[:2] == '-A':
       alldeps += ' ' + arg[2:]   
+   elif arg[:2] == '-B':
+      blddir += arg[2:]   
+   elif arg[:2] == '-S':
+      srcdir += arg[2:]   
    else:
       options += ' ' + arg
 source = sys.argv[-1]
 
-makeDepend(source, options, alldeps)
+makeDepend(source, options, srcdir, blddir, alldeps)

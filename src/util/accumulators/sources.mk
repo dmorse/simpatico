@@ -1,9 +1,10 @@
 
-util_accumulators_SRCS=$(SRC_DIR)/util/accumulators/Average.cpp \
-    $(SRC_DIR)/util/accumulators/AverageStage.cpp \
-    $(SRC_DIR)/util/accumulators/Distribution.cpp \
-    $(SRC_DIR)/util/accumulators/IntDistribution.cpp \
-    $(SRC_DIR)/util/accumulators/RadialDistribution.cpp 
+util_accumulators_=util/accumulators/Average.cpp \
+    util/accumulators/AverageStage.cpp \
+    util/accumulators/Distribution.cpp \
+    util/accumulators/IntDistribution.cpp \
+    util/accumulators/RadialDistribution.cpp 
 
-util_accumulators_OBJS=$(util_accumulators_SRCS:.cpp=.o)
+util_accumulators_SRCS=$(addprefix $(SRC_DIR)/, $(util_accumulators_))
+util_accumulators_OBJS=$(addprefix $(BLD_DIR)/, $(util_accumulators_:.cpp=.o))
 

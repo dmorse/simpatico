@@ -1,9 +1,10 @@
 
-util_boundary_SRCS=\
-    $(SRC_DIR)/util/boundary/OrthoRegion.cpp \
-    $(SRC_DIR)/util/boundary/OrthorhombicBoundary.cpp \
-    $(SRC_DIR)/util/boundary/MonoclinicBoundary.cpp 
-    #$(SRC_DIR)/util/boundary/MonoclinicBoundaryMI.cpp
+util_boundary_=\
+    util/boundary/OrthoRegion.cpp \
+    util/boundary/OrthorhombicBoundary.cpp \
+    util/boundary/MonoclinicBoundary.cpp 
+    #util/boundary/MonoclinicBoundaryMI.cpp
 
-util_boundary_OBJS=$(util_boundary_SRCS:.cpp=.o)
+util_boundary_SRCS=$(addprefix $(SRC_DIR)/, $(util_boundary_))
+util_boundary_OBJS=$(addprefix $(BLD_DIR)/, $(util_boundary_:.cpp=.o))
 

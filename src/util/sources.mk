@@ -13,14 +13,17 @@ include $(SRC_DIR)/util/ensembles/sources.mk
 include $(SRC_DIR)/util/accumulators/sources.mk
 include $(SRC_DIR)/util/archives/sources.mk
 
-util_SRCS=$(util_misc_SRCS) $(util_format_SRCS) \
-    $(util_containers_SRCS) $(util_mpi_SRCS) \
-    $(util_signal_SRCS) $(util_param_SRCS) $(util_math_SRCS) \
-    $(util_space_SRCS) $(util_random_SRCS) $(util_boundary_SRCS) \
-    $(util_crystal_SRCS) $(util_ensembles_SRCS) \
-    $(util_accumulators_SRCS) $(util_archives_SRCS)
+util_=$(util_misc_) $(util_format_) \
+    $(util_containers_) $(util_mpi_) \
+    $(util_signal_) $(util_param_) $(util_math_) \
+    $(util_space_) $(util_random_) $(util_boundary_) \
+    $(util_crystal_) $(util_ensembles_) \
+    $(util_accumulators_) $(util_archives_)
 
-util_OBJS=$(util_SRCS:.cpp=.o)
+util_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(util_))
+util_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(util_:.cpp=.o))
 
 $(util_LIB): $(util_OBJS)
 	$(AR) rcs $(util_LIB) $(util_OBJS)
