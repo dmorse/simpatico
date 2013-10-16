@@ -1,14 +1,18 @@
-
-ddMd_storage_SRCS=$(SRC_DIR)/ddMd/storage/AtomStorage.cpp \
-                  $(SRC_DIR)/ddMd/storage/GroupExchanger.cpp \
-                  $(SRC_DIR)/ddMd/storage/BondStorage.cpp \
+ddMd_storage_=\
+   ddMd/storage/AtomStorage.cpp \
+   ddMd/storage/GroupExchanger.cpp \
+   ddMd/storage/BondStorage.cpp \
 
 ifdef INTER_ANGLE
-ddMd_storage_SRCS+=$(SRC_DIR)/ddMd/storage/AngleStorage.cpp
+ddMd_storage_+=ddMd/storage/AngleStorage.cpp
 endif
 
 ifdef INTER_DIHEDRAL
-ddMd_storage_SRCS+=$(SRC_DIR)/ddMd/storage/DihedralStorage.cpp
+ddMd_storage_+=ddMd/storage/DihedralStorage.cpp
 endif
 
-ddMd_storage_OBJS=$(ddMd_storage_SRCS:.cpp=.o)
+ddMd_storage_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(ddMd_storage_))
+ddMd_storage_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(ddMd_storage_:.cpp=.o))
+

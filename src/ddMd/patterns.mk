@@ -22,7 +22,7 @@ MAKE_DEPS+= -A$(SRC_DIR)/inter/defines.mk
 MAKE_DEPS+= -A$(SRC_DIR)/ddMd/defines.mk
 
 # Pattern rule to compile all class source (*.cpp) files in src/ddMd
-%.o:%.cpp
+$(BLD_DIR)/%.o:$(SRC_DIR)/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) $<

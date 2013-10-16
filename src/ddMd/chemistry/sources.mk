@@ -1,10 +1,12 @@
+ddMd_chemistry_=\
+    ddMd/chemistry/Atom.cpp \
+    ddMd/chemistry/AtomArray.cpp \
+    ddMd/chemistry/AtomType.cpp \
+    ddMd/chemistry/Mask.cpp \
+    ddMd/chemistry/MaskPolicy.cpp 
 
 ddMd_chemistry_SRCS=\
-    $(SRC_DIR)/ddMd/chemistry/Atom.cpp \
-    $(SRC_DIR)/ddMd/chemistry/AtomArray.cpp \
-    $(SRC_DIR)/ddMd/chemistry/AtomType.cpp \
-    $(SRC_DIR)/ddMd/chemistry/Mask.cpp \
-    $(SRC_DIR)/ddMd/chemistry/MaskPolicy.cpp 
-
-ddMd_chemistry_OBJS=$(ddMd_chemistry_SRCS:.cpp=.o)
+     $(addprefix $(SRC_DIR)/, $(ddMd_chemistry_))
+ddMd_chemistry_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(ddMd_chemistry_:.cpp=.o))
 

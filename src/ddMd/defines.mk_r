@@ -47,7 +47,7 @@ DDMD_SUFFIX:=
 DDMD_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(DDMD_SUFFIX)
 
 ddMd_LIBNAME=ddMd$(DDMD_ALL_SUFFIX)
-ddMd_LIB=$(LIB_DIR)/lib$(ddMd_LIBNAME).a
+ddMd_LIB=$(BLD_DIR)/ddMd/lib$(ddMd_LIBNAME).a
 
 DDSIM_EXE=$(BIN_DIR)/ddSim$(DDMD_ALL_SUFFIX)
 #-----------------------------------------------------------------------
