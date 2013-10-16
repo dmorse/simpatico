@@ -1,4 +1,4 @@
-include mcMd/perturb/mcSystem/sources.mk
+include $(SRC_DIR)/mcMd/perturb/mcSystem/sources.mk
 
 mcMd_perturb_=\
     $(mcMd_perturb_mcSystem_) \

@@ -13,14 +13,19 @@ include $(SRC_DIR)/mcMd/diagnostics/sources.mk
 include $(SRC_DIR)/mcMd/user/sources.mk
 
 mcMd_=\
-    $(mcMd_potentials_) $(mcMd_chemistry_SRCS) \
-    $(mcMd_species_) $(mcMd_neighbor_SRCS) \
-    $(mcMd_simulation_) $(mcMd_mcSimulation_SRCS) \
-    $(mcMd_mdSimulation_) $(mcMd_configIos_SRCS) \
-    $(mcMd_trajectoryIos_) $(mcMd_mdIntegrators_SRCS) \
-    $(mcMd_mcMoves_) $(mcMd_diagnostics_SRCS) \
+    $(mcMd_chemistry_) \
+    $(mcMd_species_) \
+    $(mcMd_neighbor_) \
+    $(mcMd_potentials_) \
+    $(mcMd_simulation_) \
+    $(mcMd_mcSimulation_) \
+    $(mcMd_mdSimulation_) \
+    $(mcMd_configIos_) \
+    $(mcMd_trajectoryIos_) \
+    $(mcMd_mdIntegrators_) \
+    $(mcMd_mcMoves_) \
+    $(mcMd_diagnostics_) \
     $(mcMd_user_)
-
 
 ifdef MCMD_PERTURB
 include $(SRC_DIR)/mcMd/perturb/sources.mk
@@ -42,7 +47,5 @@ mcMd_SRCS=\
 mcMd_OBJS=\
      $(addprefix $(BLD_DIR)/, $(mcMd_:.cpp=.o))
 
-
 $(mcMd_LIB): $(mcMd_OBJS)
 	$(AR) rcs $(mcMd_LIB) $(mcMd_OBJS)
-

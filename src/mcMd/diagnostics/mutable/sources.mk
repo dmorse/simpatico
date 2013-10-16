@@ -1,6 +1,9 @@
-mcMd_diagnostics_mutable_SRCS=\
-    $(SRC_DIR)/mcMd/diagnostics/mutable/SemiGrandDistribution.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/mutable/TypeDistribution.cpp 
+mcMd_diagnostics_mutable_=\
+    mcMd/diagnostics/mutable/SemiGrandDistribution.cpp \
+    mcMd/diagnostics/mutable/TypeDistribution.cpp 
 
-mcMd_diagnostics_mutable_OBJS=$(mcMd_diagnostics_mutable_SRCS:.cpp=.o)
+mcMd_diagnostics_mutable_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_diagnostics_mutable_))
+mcMd_diagnostics_mutable_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(mcMd_diagnostics_mutable_:.cpp=.o))
 

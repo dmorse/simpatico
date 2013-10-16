@@ -1,25 +1,27 @@
-SRC_DIR_REL =..
+BLD_DIR_REL =..
 
-include $(SRC_DIR_REL)/compiler.mk
-include $(SRC_DIR_REL)/util/defines.mk
-include $(SRC_DIR_REL)/inter/defines.mk
-include $(SRC_DIR_REL)/mcMd/defines.mk
-include $(SRC_DIR_REL)/mcMd/patterns.mk
-include $(SRC_DIR_REL)/util/sources.mk
-include $(SRC_DIR_REL)/inter/sources.mk
-include $(SRC_DIR_REL)/mcMd/sources.mk
+include $(BLD_DIR_REL)/compiler.mk
+include $(BLD_DIR)/util/defines.mk
+include $(BLD_DIR)/inter/defines.mk
+include $(BLD_DIR)/mcMd/defines.mk
+include $(SRC_DIR)/mcMd/patterns.mk
+include $(SRC_DIR)/util/sources.mk
+include $(SRC_DIR)/inter/sources.mk
+include $(SRC_DIR)/mcMd/sources.mk
 
 #-----------------------------------------------------------------------
 # Variable definitions
 
-MDSIM=$(SRC_DIR)/mcMd/mdSim
-MCSIM=$(SRC_DIR)/mcMd/mcSim
+MDSIM=$(BLD_DIR)/mcMd/mdSim
+MCSIM=$(BLD_DIR)/mcMd/mcSim
 MCMD_LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB)
 
 #-----------------------------------------------------------------------
 # Main targets
 
 all: $(mcMd_OBJS) $(mcMd_LIB) $(MDSIM).o $(MCSIM).o $(MCSIM_EXE) $(MDSIM_EXE)
+
+lib: $(mcMd_OBJS) $(mcMd_LIB) 
 
 clean:
 	rm -f $(mcMd_OBJS) $(mcMd_LIB)

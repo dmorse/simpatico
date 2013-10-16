@@ -1,4 +1,4 @@
-include $(BLD_DIR)/util/random/mersenne/sources.mk
+include $(SRC_DIR)/util/random/mersenne/sources.mk
 
 util_random_=$(util_random_mersenne_) \
     util/random/Ar1Process.cpp \
