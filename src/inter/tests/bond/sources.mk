@@ -1,4 +1,7 @@
-tests_inter_bond_SRCS=$(TESTS_DIR)/inter/bond/Test.cc 
+inter_tests_bond_=inter/tests/bond/Test.cpp
 
-tests_inter_bond_OBJS=$(tests_inter_bond_SRCS:.cc=.o)
+inter_tests_bond_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(inter_tests_bond_))
+inter_tests_bond_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(inter_tests_bond_:.cpp=.o))
 

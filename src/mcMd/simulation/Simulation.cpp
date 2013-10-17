@@ -212,7 +212,7 @@ namespace McMd
       }
       #endif
       #ifdef INTER_EXTERNAL
-      hasExternal = 0;
+      hasExternal_ = 0;
       read<int>(in, "hasExternal", hasExternal_, false); // optional
       if (hasExternal_ < 0) {
          UTIL_THROW("hasExternal must be >= 0");

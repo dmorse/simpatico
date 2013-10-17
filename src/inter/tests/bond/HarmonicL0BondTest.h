@@ -2,7 +2,7 @@
 #define HARMONIC_L0_BOND_TEST_H
 
 #include <inter/bond/HarmonicL0Bond.h>
-#include <inter/bond/BondTestTemplate.h>
+#include <inter/tests/bond/BondTestTemplate.h>
 
 #include <iostream>
 #include <fstream>

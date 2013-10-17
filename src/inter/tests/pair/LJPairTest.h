@@ -2,7 +2,7 @@
 #define LJ_PAIR_TEST_H
 
 #include <inter/pair/LJPair.h>
-#include <inter/pair/PairTestTemplate.h>
+#include <inter/tests/pair/PairTestTemplate.h>
 
 #include <iostream>
 #include <fstream>

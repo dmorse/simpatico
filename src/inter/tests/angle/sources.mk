@@ -1,4 +1,8 @@
-tests_inter_angle_SRCS=$(TESTS_DIR)/inter/angle/Test.cc 
+inter_tests_angle_=inter/tests/angle/Test.cpp
 
-tests_inter_angle_OBJS=$(tests_inter_angle_SRCS:.cc=.o)
+
+inter_tests_angle_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(inter_tests_angle_))
+inter_tests_angle_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(inter_tests_angle_:.cpp=.o))
 

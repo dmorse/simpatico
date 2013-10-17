@@ -1,4 +1,4 @@
-mcMd_potentials_dihedral_SRCS=\
+mcMd_potentials_dihedral_=\
     mcMd/potentials/dihedral/DihedralPotential.cpp \
     mcMd/potentials/dihedral/DihedralFactory.cpp 
 

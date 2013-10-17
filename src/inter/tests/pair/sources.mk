@@ -1,4 +1,7 @@
-tests_inter_pair_SRCS=$(TESTS_DIR)/inter/pair/Test.cc 
+inter_tests_pair_=inter/tests/pair/Test.cpp
 
-tests_inter_pair_OBJS=$(tests_inter_pair_SRCS:.cc=.o)
+inter_tests_pair_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(inter_tests_pair_))
+inter_tests_pair_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(inter_tests_pair_:.cpp=.o))
 
