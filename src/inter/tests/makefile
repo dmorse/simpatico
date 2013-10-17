@@ -11,6 +11,11 @@ all: $(inter_tests_OBJS) Test
 
 clean:
 	rm -f $(inter_tests_OBJS) Test $(inter_tests_OBJS:.o=.d)
+	cd pair; make clean
+	cd bond; make clean
+	cd angle; make clean
+	cd dihedral; make clean
+
 
 clean-deps:
 	rm -f $(inter_tests_OBJS:.o=.d)

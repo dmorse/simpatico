@@ -1,5 +1,5 @@
-#ifndef MCMD_TEST_CC
-#define MCMD_TEST_CC
+#ifndef MCMD_TEST_CPP
+#define MCMD_TEST_CPP
 
 /*
 * This program runs all unit tests in the mcMd directory.

@@ -1,4 +1,7 @@
-tests_mcMd_links_SRCS=$(TESTS_DIR)/mcMd/links/Test.cc 
+mcMd_tests_links_=mcMd/links/Test.cpp
 
-tests_mcMd_links_OBJS=$(tests_mcMd_links_SRCS:.cc=.o)
+mcMd_tests_links_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_tests_links_))
+mcMd_tests_links_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(mcMd_tests_links_:.cpp=.o))
 

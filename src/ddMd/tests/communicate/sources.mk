@@ -11,3 +11,8 @@ tests_ddMd_communicate_SRCS=$(TESTS_DIR)/ddMd/communicate/BufferTest.cc \
 
 tests_ddMd_communicate_OBJS=$(tests_ddMd_communicate_SRCS:.cc=.o)
 
+mcMd_tests_TMP_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_tests_TMP_))
+mcMd_tests_TMP_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(mcMd_tests_TMP_:.cpp=.o))
+

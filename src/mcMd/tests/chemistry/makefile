@@ -1,33 +1,25 @@
-SRC_DIR_REL =../../../src
-include $(SRC_DIR_REL)/compiler.mk
-include $(SRC_DIR)/util/defines.mk
-include $(SRC_DIR)/inter/defines.mk
-include $(SRC_DIR)/mcMd/defines.mk
-include $(TESTS_DIR)/mcMd/patterns.mk
-include $(SRC_DIR)/util/sources.mk
+BLD_DIR_REL =../../..
+include $(BLD_DIR_REL)/compiler.mk
+include $(BLD_DIR)/mcMd/defines.mk
+include $(BLD_DIR)/inter/defines.mk
+include $(BLD_DIR)/util/defines.mk
+include $(SRC_DIR)/inter/patterns.mk
 include $(SRC_DIR)/mcMd/sources.mk
-include sources.mk
+include $(SRC_DIR)/inter/sources.mk
+include $(SRC_DIR)/util/sources.mk
+include $(SRC_DIR)/mcMd/tests/chemistry/sources.mk
 
-ifdef UTIL_MPI
-all: $(tests_mcMd_chemistry_OBJS) MpiTest 
-else
-all: $(tests_mcMd_chemistry_OBJS) Test
-endif
+all: $(mcMd_tests_chemistry_OBJS) Test
 
 clean:
-	rm -f $(tests_mcMd_chemistry_OBJS) MpiTest Test $(tests_mcMd_chemistry_OBJS:.o=.d)
+	rm -f $(mcMd_tests_chemistry_OBJS) Test $(mcMd_tests_chemistry_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(tests_mcMd_chemistry_OBJS:.o=.d)
-
-MpiTest: MpiTest.o $(mcMd_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o MpiTest MpiTest.o \
-	       $(mcMd_LIB) $(util_LIB)
+	rm -f $(mcMd_tests_chemistry_OBJS:.o=.d)
 
 Test: Test.o $(mcMd_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
 	       $(mcMd_LIB) $(util_LIB)
 
--include $(tests_mcMd_chemistry_OBJS:.o=.d)
--include Test.d
+-include $(mcMd_tests_chemistry_OBJS:.o=.d)
 

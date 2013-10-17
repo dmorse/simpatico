@@ -40,7 +40,7 @@ namespace McMd
       moleculeCapacity_(0),
       id_(-1),
       mutatorPtr_(0)
-   {}
+   {  setClassName("Species"); }
 
    /*
    * Destructor.

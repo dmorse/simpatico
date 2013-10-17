@@ -1,4 +1,7 @@
-tests_mcMd_mdSimulation_SRCS=$(TESTS_DIR)/mcMd/mdSimulation/Test.cc 
+mcMd_tests_mdSimulation_=mcMd/tests/mdSimulation/Test.cpp
 
-tests_mcMd_mdSimulation_OBJS=$(tests_mcMd_mdSimulation_SRCS:.cc=.o)
+mcMd_tests_mdSimulation_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_tests_mdSimulation_))
+mcMd_tests_mdSimulation_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(mcMd_tests_mdSimulation_:.cpp=.o))
 
