@@ -41,13 +41,17 @@ DDMD_SUFFIX:=
 # operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_c. 
 
 #-----------------------------------------------------------------------
-# Names of library and executable files.
-# Note: LIB_DIR and BIN_DIR are defined in src/compiler.mk.
+# Path to library
+# BLD_DIR is defined in src/compiler.mk.
 
 DDMD_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(DDMD_SUFFIX)
 
 ddMd_LIBNAME=ddMd$(DDMD_ALL_SUFFIX)
 ddMd_LIB=$(BLD_DIR)/ddMd/lib$(ddMd_LIBNAME).a
+
+#-----------------------------------------------------------------------
+# Path to executable 
+# BIN_DIR is defined in src/compiler.mk.
 
 DDSIM_EXE=$(BIN_DIR)/ddSim$(DDMD_ALL_SUFFIX)
 #-----------------------------------------------------------------------

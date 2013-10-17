@@ -74,7 +74,8 @@ UTIL_DEFS+= -DUTIL_HOOMD
 endif
 
 #-----------------------------------------------------------------------
-# Library file name 
+# Path to library 
+# Note: BLD_DIR is defined in compiler.mk
 
 util_LIBNAME=util$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)
 util_LIB=$(BLD_DIR)/util/lib$(util_LIBNAME).a

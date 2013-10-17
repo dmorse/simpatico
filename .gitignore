@@ -1,6 +1,4 @@
-edit.py
 *.pyc
 log
-*.[ado]
 *~
 *.swp

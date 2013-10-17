@@ -4,18 +4,18 @@
 include compiler.mk
 
 mcMd: 
-	cd $(ROOT_DIR); ./configure -m0
+	./configure -m0
 	cd util;  make all
 	cd inter; make all
 	cd mcMd;  make all
 
 mcMd-mpi: 
-	cd $(ROOT_DIR); ./configure -m1
+	./configure -m1
 	cd util;  make all
 	cd inter; make all
 	cd mcMd;  make all
 ddMd:
-	cd $(ROOT_DIR); ./configure -m1
+	./configure -m1
 	cd util;  make all
 	cd inter; make all
 	cd ddMd;  make all

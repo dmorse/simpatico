@@ -1,1 +1,4 @@
 defines.mk
+*.a
+*.o
+*.d
