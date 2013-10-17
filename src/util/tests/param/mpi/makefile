@@ -1,21 +1,21 @@
-SRC_DIR_REL =../../../../src
-include $(SRC_DIR_REL)/compiler.mk
-include $(SRC_DIR)/util/defines.mk
-include $(TESTS_DIR)/util/patterns.mk
+BLD_DIR_REL =../../../..
+include $(BLD_DIR_REL)/compiler.mk
+include $(BLD_DIR)/util/defines.mk
+include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
-include sources.mk
+include $(SRC_DIR)/util/tests/param/mpi/sources.mk
 
-all: $(tests_util_param_mpi_OBJS) MpiTest
+all: $(util_tests_param_mpi_OBJS) Test
 
 clean:
-	rm -f $(tests_util_param_mpi_OBJS) MpiTest $(tests_util_param_mpi_OBJS:.o=.d)
+	rm -f $(util_tests_param_mpi_OBJS) Test $(util_tests_param_mpi_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(tests_util_param_mpi_OBJS:.o=.d)
+	rm -f $(util_tests_param_mpi_OBJS:.o=.d)
 
-MpiTest: MpiTest.o $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o MpiTest MpiTest.o \
+Test: Test.o $(util_LIB)
+	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
 	       $(util_LIB)
 
--include $(tests_util_param_mpi_OBJS:.o=.d)
+-include $(util_tests_param_mpi_OBJS:.o=.d)
 

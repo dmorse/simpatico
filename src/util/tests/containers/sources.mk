@@ -1,4 +1,7 @@
-tests_util_containers_SRCS=$(TESTS_DIR)/util/containers/Test.cc 
+util_tests_containers_=util/tests/containers/Test.cpp
 
-tests_util_containers_OBJS=$(tests_util_containers_SRCS:.cc=.o)
+util_tests_containers_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(util_tests_containers_))
+util_tests_containers_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(util_tests_containers_:.cpp=.o))
 

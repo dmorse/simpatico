@@ -1,8 +1,11 @@
 ifdef UTIL_MPI
-tests_util_archives_SRCS=$(TESTS_DIR)/util/archives/MpiTest.cc
+util_tests_archives_=util/tests/archives/MpiTest.cpp
 else
-tests_util_archives_SRCS=$(TESTS_DIR)/util/archives/Test.cc 
+util_tests_archives_=util/tests/archives/Test.cpp
 endif
 
-tests_util_archives_OBJS=$(tests_util_archives_SRCS:.cc=.o)
+util_tests_archives_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(util_tests_archives_))
+util_tests_archives_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(util_tests_archives_:.cpp=.o))
 

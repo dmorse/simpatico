@@ -1,4 +1,8 @@
-tests_util_param_mpi_SRCS=$(TESTS_DIR)/util/param/mpi/MpiTest.cc 
+util_tests_param_mpi_=util/tests/param/mpi/MpiTest.cpp
 
-tests_util_param_mpi_OBJS=$(tests_util_param_mpi_SRCS:.cc=.o)
+
+util_tests_param_mpi_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(util_tests_param_mpi_))
+util_tests_param_mpi_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(util_tests_param_mpi_:.cpp=.o))
 

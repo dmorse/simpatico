@@ -1,4 +1,7 @@
-util_format_tests_SRCS=$(SRC_DIR)/util/format/tests/Test.cc 
+util_tests_format_=util/tests/format/Test.cpp
 
-util_format_tests_OBJS=$(util_format_tests_SRCS:.cc=.o)
+util_tests_format_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(util_tests_format_))
+util_tests_format_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(util_tests_format_:.cpp=.o))
 

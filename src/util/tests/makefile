@@ -1,16 +1,15 @@
-SRC_DIR_REL =../../src
-include $(SRC_DIR_REL)/compiler.mk
-TESTS_DIR=$(ROOT_DIR)/tests
-
-include $(SRC_DIR)/util/defines.mk
+BLD_DIR_REL =../..
+include $(BLD_DIR_REL)/compiler.mk
+include $(BLD_DIR)/util/defines.mk
+include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
-include $(TESTS_DIR)/util/patterns.mk
+include $(SRC_DIR)/util/tests/sources.mk
 
-all:  Test
+all: $(util_tests_OBJS) Test
 
 clean:
-	-rm -f Test Test.o Test.d
-	cd accumulators; make clean
+	rm -f $(util_tests_OBJS) Test $(util_tests_OBJS:.o=.d)
+	cd accumulators/unit; make clean
 	cd archives; make clean
 	cd boundary; make clean
 	cd containers; make clean
@@ -25,9 +24,12 @@ clean:
 	-rm -f dummy
 	-rm -f log
 
-Test: $(util_LIB) $(TESTS_DIR)/util/Test.o
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test $(TESTS_DIR)/util/Test.o \
+clean-deps:
+	rm -f $(util_tests_OBJS:.o=.d)
+
+Test: Test.o $(util_LIB)
+	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
 	       $(util_LIB)
 
--include Test.d
+-include $(util_tests_OBJS:.o=.d)
 

@@ -1,4 +1,7 @@
-tests_util_param_serial_SRCS=$(TESTS_DIR)/util/param/serial/Test.cc 
+util_tests_param_serial_=util/tests/param/serial/Test.cpp
 
-tests_util_param_serial_OBJS=$(tests_util_param_serial_SRCS:.cc=.o)
+util_tests_param_serial_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(util_tests_param_serial_))
+util_tests_param_serial_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(util_tests_param_serial_:.cpp=.o))
 

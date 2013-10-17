@@ -1,4 +1,7 @@
-tests_util_boundary_SRCS=$(TESTS_DIR)/util/boundary/Test.cc 
+util_tests_boundary_=util/tests/boundary/Test.cpp
 
-tests_util_boundary_OBJS=$(tests_util_boundary_SRCS:.cc=.o)
+util_tests_boundary_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(util_tests_boundary_))
+util_tests_boundary_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(util_tests_boundary_:.cpp=.o))
 

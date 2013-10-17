@@ -1,39 +1,21 @@
-SRC_DIR_REL =../../../src
-
-include $(SRC_DIR_REL)/compiler.mk
-include $(SRC_DIR)/util/defines.mk
-include $(TESTS_DIR)/util/patterns.mk
+BLD_DIR_REL =../../..
+include $(BLD_DIR_REL)/compiler.mk
+include $(BLD_DIR)/util/defines.mk
+include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
+include $(SRC_DIR)/util/tests/archives/sources.mk
 
-include sources.mk
-
-ifdef UTIL_MPI
-
-all: $(tests_util_archives_OBJS) MpiTest
+all: $(util_tests_archives_OBJS) Test
 
 clean:
-	rm -f $(tests_util_archives_OBJS) MpiTest $(tests_util_archives_OBJS:.o=.d)
-	rm -f text binary dummy
+	rm -f $(util_tests_archives_OBJS) Test $(util_tests_archives_OBJS:.o=.d)
 
-MpiTest: $(util_LIB) $(tests_util_archives_OBJS)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o MpiTest MpiTest.o \
-	       $(util_LIB)
-else
+clean-deps:
+	rm -f $(util_tests_archives_OBJS:.o=.d)
 
-all: $(tests_util_archives_OBJS) Test
-
-clean:
-	rm -f $(tests_util_archives_OBJS) Test $(tests_util_archives_OBJS:.o=.d)
-	rm -f text binary dummy
-
-Test: $(util_LIB) $(tests_util_archives_OBJS)
+Test: Test.o $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
 	       $(util_LIB)
 
-endif
-
-clean-deps:
-	rm -f $(tests_util_archives_OBJS:.o=.d)
-
--include $(tests_util_archives_OBJS:.o=.d)
+-include $(util_tests_archives_OBJS:.o=.d)
 

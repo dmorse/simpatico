@@ -1,4 +1,7 @@
-tests_util_random_SRCS=$(TESTS_DIR)/util/random/Test.cc 
+util_tests_random_=util/tests/random/Test.cpp
 
-tests_util_random_OBJS=$(tests_util_random_SRCS:.cc=.o)
+util_tests_random_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(util_tests_random_))
+util_tests_random_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(util_tests_random_:.cpp=.o))
 
