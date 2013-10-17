@@ -7,6 +7,7 @@ mcMd       serial Monte Carlo (MC) / molecular dynamics (MD) (namespace McMd)
 ddMd       parallel domain-decomposition MD simulation (namespace DdMd)
 modules    add-on components for particular applications
 draft      unfinished or proposed classes
+tests      unit test framework
 
 Files:
 ------
@@ -18,5 +19,5 @@ LICENSE       GPL license
 The configure script also creates a file compiler.mk, which is created by
 copying and modifying compiler.mk_r (the default version).
 
-For compilation instructions, see the file src/dox/compile.dox, or the README 
+For compilation instructions, see the file doc/manual/user/compile.dox, or the README 
 file in the root directory (the parent of this directory).
