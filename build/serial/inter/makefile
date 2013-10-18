@@ -11,11 +11,9 @@ all: $(inter_OBJS) $(inter_LIB)
 clean:
 	rm -f $(inter_OBJS) $(inter_LIB)
 	rm -f $(inter_OBJS:.o=.d)
-	rm -f */*.o */*.d
-
-clean-deps:
-	rm -f $(inter_OBJS:.o=.d)
-	rm -f */*.d
+	cd tests; make clean
+	-rm -f */*.o */*/*.o
+	-rm -f */*.d */*/*.d
 
 -include $(util_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)

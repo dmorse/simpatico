@@ -4,7 +4,6 @@ include $(BLD_DIR_REL)/compiler.mk
 include $(BLD_DIR)/util/defines.mk
 include $(BLD_DIR)/inter/defines.mk
 include $(BLD_DIR)/mcMd/defines.mk
-
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk
@@ -27,16 +26,15 @@ lib: $(mcMd_OBJS) $(mcMd_LIB)
 clean:
 	rm -f $(mcMd_OBJS) $(mcMd_LIB)
 	rm -f $(mcMd_OBJS:.o=.d)
-	rm -f $(MCSIM_EXE) $(MDSIM).o $(MDSIM).d
-	rm -f $(MDSIM_EXE) $(MCSIM).o $(MCSIM).d
-	rm -f */*.o */*/*.o
-	rm -f */*.d */*/*.d
+	rm -f $(MDSIM).o $(MDSIM).d
+	rm -f $(MCSIM).o $(MCSIM).d
+	cd tests; make clean
+	-rm -f */*.o */*/*.o
+	-rm -f */*.d */*/*.d
 
-clean-deps:
-	rm -f $(mcMd_OBJS:.o=.d)
-	rm -f $(MDSIM).d
-	rm -f $(MCSIM).d
-	rm -f */*.d */*/*.d
+uninstall:
+	rm -f $(MCSIM_EXE)
+	rm -f $(MDSIM_EXE) 
 
 #-----------------------------------------------------------------------
 # Executables

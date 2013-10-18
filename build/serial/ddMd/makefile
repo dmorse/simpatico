@@ -23,14 +23,12 @@ all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE)
 clean:
 	-rm -f $(ddMd_OBJS) $(ddMd_OBJS:.o=.d) $(ddMd_LIB)
 	-rm -f $(DDSIM).o $(DDSIM).d
-	-rm -f $(DDSIM_EXE)
+	cd tests; make clean
 	-rm -f */*.o */*/*.o
 	-rm -f */*.d */*/*.d
 
-clean-deps:
-	-rm -f $(ddMd_OBJS:.o=.d)
-	-rm -f $(DDSIM).d
-	-rm -f */*.d */*/*.d
+uninstall:
+	-rm -f $(DDSIM_EXE)
 
 $(DDSIM_EXE): $(DDSIM).o $(DDSIM_LIBS)
 	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o $(DDSIM_LIBS)

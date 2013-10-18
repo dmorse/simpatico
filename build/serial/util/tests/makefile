@@ -8,11 +8,13 @@ include $(SRC_DIR)/util/tests/sources.mk
 all: $(util_tests_OBJS) Test
 
 run: $(util_tests_OBJS) Test
-	./Test $(SRC_DIR)/util/tests/
+	./Test $(SRC_DIR)/util/tests/ > log
+	@echo `grep failed log` ", "\
+              `grep successful log` "in util/tests/log" 
 
 clean:
 	rm -f $(util_tests_OBJS) Test $(util_tests_OBJS:.o=.d)
-	-rm -f dummy
+	-rm -f dummy log 
 
 clean-deps:
 	rm -f $(util_tests_OBJS:.o=.d)
