@@ -1,9 +1,7 @@
-tests_ddMd_simulation_SRCS=$(TESTS_DIR)/ddMd/simulation/Test.cc 
+ddMd_tests_simulation_=ddMd/tests/simulation/Test.cpp
 
-tests_ddMd_simulation_OBJS=$(tests_ddMd_simulation_SRCS:.cc=.o)
-
-ddMd_tests_TMP_SRCS=\
-     $(addprefix $(SRC_DIR)/, $(ddMd_tests_TMP_))
-ddMd_tests_TMP_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(ddMd_tests_TMP_:.cpp=.o))
+ddMd_tests_simulation_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(ddMd_tests_simulation_))
+ddMd_tests_simulation_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(ddMd_tests_simulation_:.cpp=.o))
 

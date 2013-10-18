@@ -1,18 +1,17 @@
-tests_ddMd_communicate_SRCS=$(TESTS_DIR)/ddMd/communicate/BufferTest.cc \
-    $(TESTS_DIR)/ddMd/communicate/DomainTest.cc \
-    $(TESTS_DIR)/ddMd/communicate/AtomDistributorTest.cc \
-    $(TESTS_DIR)/ddMd/communicate/GroupDistributorTest.cc \
-    $(TESTS_DIR)/ddMd/communicate/AtomCollectorTest.cc \
-    $(TESTS_DIR)/ddMd/communicate/BondCollectorTest.cc \
-    $(TESTS_DIR)/ddMd/communicate/PlanTest.cc \
-    $(TESTS_DIR)/ddMd/communicate/ExchangerTest.cc \
-    $(TESTS_DIR)/ddMd/communicate/ExchangerForceTest.cc \
-    $(TESTS_DIR)/ddMd/communicate/Test.cc 
+ddMd_tests_communicate_= \
+    ddMd/tests/communicate/BufferTest.cpp \
+    ddMd/tests/communicate/DomainTest.cpp \
+    ddMd/tests/communicate/AtomDistributorTest.cpp \
+    ddMd/tests/communicate/GroupDistributorTest.cpp \
+    ddMd/tests/communicate/AtomCollectorTest.cpp \
+    ddMd/tests/communicate/BondCollectorTest.cpp \
+    ddMd/tests/communicate/PlanTest.cpp \
+    ddMd/tests/communicate/ExchangerTest.cpp \
+    ddMd/tests/communicate/ExchangerForceTest.cpp \
+    ddMd/tests/communicate/Test.cpp 
 
-tests_ddMd_communicate_OBJS=$(tests_ddMd_communicate_SRCS:.cc=.o)
-
-mcMd_tests_TMP_SRCS=\
-     $(addprefix $(SRC_DIR)/, $(mcMd_tests_TMP_))
-mcMd_tests_TMP_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(mcMd_tests_TMP_:.cpp=.o))
+ddMd_tests_communicate_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(ddMd_tests_communicate_))
+ddMd_tests_communicate_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(ddMd_tests_communicate_:.cpp=.o))
 

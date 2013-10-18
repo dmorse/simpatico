@@ -1,10 +1,9 @@
-tests_ddMd_chemistry_SRCS=$(TESTS_DIR)/ddMd/chemistry/AtomTest.cc \
-    $(TESTS_DIR)/ddMd/chemistry/GroupTest.cc 
+ddMd_tests_chemistry_=\
+    ddMd/tests/chemistry/AtomTest.cpp \
+    ddMd/tests/chemistry/GroupTest.cpp 
 
-tests_ddMd_chemistry_OBJS=$(tests_ddMd_chemistry_SRCS:.cc=.o)
-
-ddMd_tests_TMP_SRCS=\
-     $(addprefix $(SRC_DIR)/, $(ddMd_tests_TMP_))
-ddMd_tests_TMP_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(ddMd_tests_TMP_:.cpp=.o))
+ddMd_tests_chemistry_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(ddMd_tests_chemistry_))
+ddMd_tests_chemistry_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(ddMd_tests_chemistry_:.cpp=.o))
 

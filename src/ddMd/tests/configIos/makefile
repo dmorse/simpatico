@@ -7,19 +7,24 @@ include $(SRC_DIR)/inter/patterns.mk
 include $(SRC_DIR)/ddMd/sources.mk
 include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/ddMd/tests/TMP/sources.mk
+include $(SRC_DIR)/ddMd/tests/configIos/sources.mk
 
-all: $(ddMd_tests_TMP_OBJS) Test
+all: $(ddMd_tests_configIos_OBJS) ConfigIoTest SerializeConfigIoTest
 
 clean:
-	rm -f $(ddMd_tests_TMP_OBJS) Test $(ddMd_tests_TMP_OBJS:.o=.d)
+	rm -f $(ddMd_tests_configIos_OBJS) $(ddMd_tests_configIos_OBJS:.o=.d)
+	rm -f ConfigIoTest SerializeConfigIoTest
 
 clean-deps:
-	rm -f $(ddMd_tests_TMP_OBJS:.o=.d)
+	rm -f $(ddMd_tests_configIos_OBJS:.o=.d)
 
-Test: Test.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
+ConfigIoTest: ConfigIoTest.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
+	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o ConfigIoTest ConfigIoTest.o \
 	       $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 
--include $(ddMd_tests_TMP_OBJS:.o=.d)
+SerializeConfigIoTest: SerializeConfigIoTest.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
+	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o SerializeConfigIoTest SerializeConfigIoTest.o \
+	       $(ddMd_LIB) $(inter_LIB) $(util_LIB)
+
+-include $(ddMd_tests_configIos_OBJS:.o=.d)
 

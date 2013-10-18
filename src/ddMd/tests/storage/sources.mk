@@ -1,9 +1,7 @@
-tests_ddMd_storage_SRCS=$(TESTS_DIR)/ddMd/storage/Test.cc 
+ddMd_tests_storage_=ddMd/tests/storage/Test.cpp
 
-tests_ddMd_storage_OBJS=$(tests_ddMd_storage_SRCS:.cc=.o)
-
-ddMd_tests_TMP_SRCS=\
-     $(addprefix $(SRC_DIR)/, $(ddMd_tests_TMP_))
-ddMd_tests_TMP_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(ddMd_tests_TMP_:.cpp=.o))
+ddMd_tests_storage_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(ddMd_tests_storage_))
+ddMd_tests_storage_OBJS=\
+     $(addprefix $(BLD_DIR)/, $(ddMd_tests_storage_:.cpp=.o))
 

@@ -7,19 +7,19 @@ include $(SRC_DIR)/inter/patterns.mk
 include $(SRC_DIR)/ddMd/sources.mk
 include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/ddMd/tests/TMP/sources.mk
+include $(SRC_DIR)/ddMd/tests/storage/sources.mk
 
-all: $(ddMd_tests_TMP_OBJS) Test
+all: $(ddMd_tests_storage_OBJS) Test
 
 clean:
-	rm -f $(ddMd_tests_TMP_OBJS) Test $(ddMd_tests_TMP_OBJS:.o=.d)
+	rm -f $(ddMd_tests_storage_OBJS) Test $(ddMd_tests_storage_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(ddMd_tests_TMP_OBJS:.o=.d)
+	rm -f $(ddMd_tests_storage_OBJS:.o=.d)
 
 Test: Test.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
 	       $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 
--include $(ddMd_tests_TMP_OBJS:.o=.d)
+-include $(ddMd_tests_storage_OBJS:.o=.d)
 
