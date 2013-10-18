@@ -12,20 +12,7 @@ run: $(util_tests_OBJS) Test
 
 clean:
 	rm -f $(util_tests_OBJS) Test $(util_tests_OBJS:.o=.d)
-	cd accumulators/unit; make clean
-	cd archives; make clean
-	cd boundary; make clean
-	cd containers; make clean
-	cd crystal; make clean
-	cd format; make clean
-	cd param; make clean
-	cd random; make clean
-	cd space; make clean
-	cd misc; make clean
-	rm -f */*.o */*/*.o 
-	rm -f */*.d */*/*.d
 	-rm -f dummy
-	-rm -f log
 
 clean-deps:
 	rm -f $(util_tests_OBJS:.o=.d)

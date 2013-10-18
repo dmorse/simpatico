@@ -204,8 +204,8 @@ public:
             MPI::COMM_WORLD.Recv(&(results_[i]), 1, MPI_INT, i, i);
             // If the test failed on processor i
             if (results_[i] == 0) {
-               result = 0; // Overall result fails (==0) if failure on any processor
-               // Send permission to print failure statement on processor i
+               result = 0; // fails (==0) if failure on any processor
+               // Send permission to print failure on processor i
                MPI::COMM_WORLD.Send(&(results_[i]), 1, MPI_INT, i, mpiSize() + i);
                // Receive confirmation that processor i completed printing
                MPI::COMM_WORLD.Recv(&(results_[i]), 1, MPI_INT, i, 2*mpiSize() + i);

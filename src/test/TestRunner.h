@@ -24,12 +24,37 @@
 * the tests for a sequence of other TestRunner objects, each of 
 * which can be a UnitTestRunner or another CompositeTestRunner.
 *
-* The pure virtual run() method of a TestRunner must run all of 
-* the associated test methods, and records the number nSuccess() 
-* of tests that succeed and the number nFailure() that fail. A 
-* test fails if it throws a TestException. Must test methods use
-* the TEST_ASSERT(expr) macro to throw a TestException if the
-* logical expression expr is false.
+* An implementation of the pure virtual run() method of must run 
+* all of the associated test methods, and records the number 
+* nSuccess() of tests that succeed and the number nFailure() that 
+* fail.  A test fails if it throws a TestException. Test methods 
+* use the TEST_ASSERT(expr) macro to assert the truth of a logical
+* exprression expr, which throws a TestException if expr is false.
+* The implementation of run() for a UnitTestRunner runs each unit 
+* test method of the associated UnitTest in a try-catch block and
+* catches any thrown TestExceptions. The implementation of run 
+* for a TestComposite calls the run() method for each of its
+* children. 
+* 
+* Each TestRunner may have a parent TestRunner. The parent, if
+* any, is always TestComposite. A TestComposite can have any
+* number of children.  The recordFailure() and recordSuccess() 
+* methods, which can be called by the run method, increment the 
+* nSuccess or nFailure counters, and also call the corresponding 
+* method of the parent, if any. The nSuccess and nFailure counters 
+* for a TestComposite thereby keep track of the total number of 
+* successful and failed tests run by all descendants. 
+*
+* Each TestRunner has a filePrefix string. This string is 
+* prepended to the names of any files opened by the functions
+* openInputFile() and openOutputFile() of the UnitTest subclass.
+* The filePrefix is initialized to an empty string, and may be 
+* modified by the virtual addFilePrefix() function. The default
+* implementation of this function prepends a string argument to 
+* the existing filePrefix. The implementation by TestComposite
+* calls the addFilePrefix method of each of its children, thus
+* allowing a common prefix to be added to the file paths used
+* by all of its children.
 */
 class TestRunner
 {
@@ -50,15 +75,15 @@ public:
       #endif
    {
        #ifndef TEST_MPI
-          isIoProcessor_ = true; 
+       isIoProcessor_ = true; 
        #else
-          mpiRank_ = MPI::COMM_WORLD.Get_rank();
-          mpiSize_ = MPI::COMM_WORLD.Get_size();
-          if (mpiRank_ == 0) {
-             isIoProcessor_ = true; 
-          } else {
-             isIoProcessor_ = false; 
-          }
+       mpiRank_ = MPI::COMM_WORLD.Get_rank();
+       mpiSize_ = MPI::COMM_WORLD.Get_size();
+       if (mpiRank_ == 0) {
+          isIoProcessor_ = true; 
+       } else {
+          isIoProcessor_ = false; 
+       }
        #endif
    }
 

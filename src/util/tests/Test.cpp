@@ -47,7 +47,7 @@ addChild(new SpaceTestComposite, "space/");
 TEST_COMPOSITE_END
 
 
-int main()
+int main(int argc, char* argv[])
 {
    #ifdef UTIL_MPI
    MPI::Init();
@@ -56,8 +56,14 @@ int main()
    #endif 
 
    UtilNsTestComposite runner;
-   runner.run();
 
+   if (argc > 2) {
+      UTIL_THROW("Too many arguments");
+   }
+   if (argc == 2) {
+      runner.addFilePrefix(argv[1]);
+    }
+   runner.run();
 
    #ifdef UTIL_MPI
    MPI::Finalize();

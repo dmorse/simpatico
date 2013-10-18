@@ -29,7 +29,12 @@ addChild(new NeighborTestComposite, "neighbor/");
 addChild(new TEST_RUNNER(SimulationTest), "simulation/");
 TEST_COMPOSITE_END
 
-int main() {
+int main(int argc, char* argv[])
+{
+   // Precondition
+   if (argc > 2) {
+      UTIL_THROW("Too many arguments");
+   }
 
    #ifdef UTIL_MPI 
    MPI::Init();
@@ -37,6 +42,9 @@ int main() {
    Util::Vector::commitMpiType();
 
    DdMdNsTestComposite runner;
+   if (argc == 2) {
+      runner.addFilePrefix(argv[1]);
+    }
    runner.run();
 
    MPI::Finalize();

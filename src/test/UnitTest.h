@@ -21,7 +21,7 @@
 *
 * Each subclass of UnitTest should define one or more test
 * methods. Each test method must be a zero parameter function
-* that returns void, and may be given any informative name.
+* that returns void. Test methods may be given arbitrary names.
 * Individual test methods should use the preprocessor macro
 * TEST_ASSERT(expression) defined in TextException.h to assert 
 * the truth of logical expressions.

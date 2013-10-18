@@ -3,7 +3,7 @@
 This package is a simple unit test library for C++ code. The library 
 contains only header files, in which all member functions are inlined. 
 There are several simple programs that illustrate library usage are 
-in the examples/ subdirectory.
+in the test/examples/ subdirectory.
 
 \section Design Overview
 
@@ -37,7 +37,7 @@ or another CompositeTestRunner.
 
 More information about each class is given in the class documentation 
 for the UnitTest, TestRunner, UnitTestRunner, and CompositeTestRunner. 
-Three programs that illustrate usage are given in the examples/ 
+Three programs that illustrate usage are given in the test/examples/ 
 subdirectory.
 
 */
