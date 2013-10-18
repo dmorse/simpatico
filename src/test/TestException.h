@@ -24,9 +24,7 @@ public:
    /**
    * Default constructor.
    */
-   TestException() 
-    : message_()
-   {}
+   TestException();
 
    /**
    * Constructor for throwing.
@@ -46,23 +44,7 @@ public:
    * \param line     line number in file
    */
    TestException(const char *function, const char *message, 
-                 const char *file, int line) 
-   {
-      message_ = "   Function: ";
-      message_.append(function);
-      message_.append("\n");
-      message_.append("   Message : ");
-      message_.append(message);
-      message_.append("\n");
-      message_.append("   File    : ");
-      message_.append(file);
-      message_.append("\n");
-      message_.append("   Line    : ");
-      std::ostringstream s;
-      s << line;
-      message_.append(s.str());
-      message_.append("\n");
-   }
+                 const char *file, int line);
    
    /**
    * Constructor without function name parameter.
@@ -71,40 +53,24 @@ public:
    * \param file     name of the file from which the TestException was thrown
    * \param line     line number in file
    */
-   TestException(const char *message, const char *file, int line) 
-   {
-      message_ = "   Message : ";
-      message_.append(message);
-      message_.append("\n");
-      message_.append("   File    : ");
-      message_.append(file);
-      message_.append("\n");
-      message_.append("   Line    : ");
-      std::ostringstream s;
-      s << line;
-      message_.append(s.str());
-      message_.append("\n");
-   }
+   TestException(const char *message, const char *file, int line);
    
    /**
    * Destructor.
    */
-   ~TestException()
-   {}
+   ~TestException();
    
    /**
    * Write error message to output stream.
    *
    * \param out output stream
    */
-   void write(std::ostream &out)
-   {  out << message_; }
+   void write(std::ostream &out);
    
    /**
    * Return the error message.
    */
-   const std::string& message()
-   {  return message_; }
+   const std::string& message();
 
 
 protected:
@@ -112,6 +78,77 @@ protected:
    std::string message_;  ///< Error message
 
 };
+
+/// Function Definitions ------------------------------------------
+
+/*
+* Default constructor.
+*/
+TestException::TestException() 
+ : message_()
+{}
+
+/*
+* Constructor for throwing.
+*/
+TestException::TestException(const char *function, const char *message, 
+                             const char *file, int line) 
+{
+   message_ = "   Function: ";
+   message_.append(function);
+   message_.append("\n");
+   message_.append("   Message : ");
+   message_.append(message);
+   message_.append("\n");
+   message_.append("   File    : ");
+   message_.append(file);
+   message_.append("\n");
+   message_.append("   Line    : ");
+   std::ostringstream s;
+   s << line;
+   message_.append(s.str());
+   message_.append("\n");
+}
+
+/*
+* Constructor without function name parameter.
+*/
+TestException::TestException(const char *message, const char *file, int line) 
+{
+   message_ = "   Message : ";
+   message_.append(message);
+   message_.append("\n");
+   message_.append("   File    : ");
+   message_.append(file);
+   message_.append("\n");
+   message_.append("   Line    : ");
+   std::ostringstream s;
+   s << line;
+   message_.append(s.str());
+   message_.append("\n");
+}
+
+/*
+* Destructor.
+*/
+TestException::~TestException()
+{}
+
+/*
+* Write error message to output stream.
+*
+* \param out output stream
+*/
+inline void TestException::write(std::ostream &out)
+{  out << message_; }
+
+/*
+* Return the error message.
+*/
+inline const std::string& TestException::message()
+{  return message_; }
+
+/// Preprocessor Macros -----------------------------------------------
 
 /**
 * Macro for the name of the current function (compiler dependent).

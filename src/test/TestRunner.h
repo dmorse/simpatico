@@ -64,34 +64,12 @@ public:
    /**
    * Constructor.
    */
-   TestRunner()
-    : parentPtr_(0),
-      nSuccess_(0),
-      nFailure_(0),
-      isIoProcessor_(0)
-      #ifdef TEST_MPI
-      ,mpiRank_(0),
-      mpiSize_(0)
-      #endif
-   {
-       #ifndef TEST_MPI
-       isIoProcessor_ = true; 
-       #else
-       mpiRank_ = MPI::COMM_WORLD.Get_rank();
-       mpiSize_ = MPI::COMM_WORLD.Get_size();
-       if (mpiRank_ == 0) {
-          isIoProcessor_ = true; 
-       } else {
-          isIoProcessor_ = false; 
-       }
-       #endif
-   }
+   TestRunner();
 
    /**
    * Destructor.
    */
-   virtual ~TestRunner()
-   {}
+   virtual ~TestRunner();
 
    /**
    * Run all tests.
@@ -103,98 +81,69 @@ public:
    /**
    * Increment counter for failed tests, and that of parent (if any).
    */
-   void recordFailure() 
-   {
-      if (isIoProcessor()) {
-         ++nFailure_;
-         if (hasParent()) {
-            parent().recordFailure();
-         }
-      }
-   }
+   void recordFailure();
 
    /**
    * Increment counter for successful tests, and that of parent (if any).
    */
-   void recordSuccess()
-   {
-      if (isIoProcessor()) {
-         ++nSuccess_;
-         if (hasParent()) {
-            parent().recordSuccess();
-         }
-      }
-   }
+   void recordSuccess();
 
    /**
    * Set another TestRunner as the parent.
    */
-   void setParent(TestRunner& parent)
-   {  parentPtr_ = &parent; }
+   void setParent(TestRunner& parent);
 
    /**
    * Return the parent object, if any.
    */
-   TestRunner& parent()
-   {  return *parentPtr_; }
+   TestRunner& parent();
 
    /**
    * Does this object have a parent?
    */
-   bool hasParent() const
-   {  return (parentPtr_ != 0); }
+   bool hasParent() const;
 
    /**
    * Return number of successful tests run.
    */
-   int nSuccess() const
-   {  return nSuccess_; }
+   int nSuccess() const;
 
    /**
    * Return number of failed tests run.
    */
-   int nFailure() const
-   {  return nFailure_; }
+   int nFailure() const;
 
    /**
    * If this object has no parent, report success and failure counters.
    */
-   void report() const
-   { 
-      if (!hasParent() && isIoProcessor()) {
-         std::cout << std::endl;
-         std::cout << nSuccess_ << "  successful tests  " << std::endl;
-         std::cout << nFailure_ << "  failed tests  "    << std::endl;
-         std::cout << std::endl;
-      }
-   }
+   void report() const;
 
-   bool isIoProcessor() const
-   {  return isIoProcessor_; }
+   /**
+   * Is this the IO processor of an MPI communicator?
+   */
+   bool isIoProcessor() const;
 
    #ifdef TEST_MPI
-   int mpiRank() const
-   {  return mpiRank_; }
+   /**
+   * Return the MPI rank in the communicator.
+   */
+   int mpiRank() const;
 
-   int mpiSize() const
-   {  return mpiSize_; } 
+   /**
+   * Return the size (number of processors) of the communicator.
+   */
+   int mpiSize() const;
    #endif
 
    /**
    * Prepend argument prefix to existing filePrefix.
    */
-   virtual void addFilePrefix(const std::string& prefix) 
-   {
-      std::string newPrefix = prefix;
-      newPrefix += filePrefix_;
-      filePrefix_ = newPrefix;
-   }
+   virtual void addFilePrefix(const std::string& prefix);
 
    /**
    * Return file prefix by const reference.
    */
-   const std::string& filePrefix() const
-   {  return filePrefix_; }
+   const std::string& filePrefix() const;
 
 protected:
 
@@ -225,4 +174,135 @@ private:
    #endif
 
 };
+
+/*
+* Constructor.
+*/
+TestRunner::TestRunner()
+ : parentPtr_(0),
+   nSuccess_(0),
+   nFailure_(0),
+   isIoProcessor_(0)
+   #ifdef TEST_MPI
+   ,mpiRank_(0),
+   mpiSize_(0)
+   #endif
+{
+    #ifndef TEST_MPI
+    isIoProcessor_ = true; 
+    #else
+    mpiRank_ = MPI::COMM_WORLD.Get_rank();
+    mpiSize_ = MPI::COMM_WORLD.Get_size();
+    if (mpiRank_ == 0) {
+       isIoProcessor_ = true; 
+    } else {
+       isIoProcessor_ = false; 
+    }
+    #endif
+}
+
+/*
+* Destructor.
+*/
+TestRunner::~TestRunner()
+{}
+
+/*
+* Increment counter for failed tests, and that of parent (if any).
+*/
+void TestRunner::recordFailure() 
+{
+   if (isIoProcessor()) {
+      ++nFailure_;
+      if (hasParent()) {
+         parent().recordFailure();
+      }
+   }
+}
+
+/*
+* Increment counter for successful tests, and that of parent (if any).
+*/
+void TestRunner::recordSuccess()
+{
+   if (isIoProcessor()) {
+      ++nSuccess_;
+      if (hasParent()) {
+         parent().recordSuccess();
+      }
+   }
+}
+
+/*
+* Set another TestRunner as the parent.
+*/
+inline void TestRunner::setParent(TestRunner& parent)
+{  parentPtr_ = &parent; }
+
+/*
+* Return the parent object, if any.
+*/
+inline TestRunner& TestRunner::parent()
+{  return *parentPtr_; }
+
+/*
+* Does this object have a parent?
+*/
+inline bool TestRunner::hasParent() const
+{  return (parentPtr_ != 0); }
+
+/*
+* Return number of successful tests run.
+*/
+inline int TestRunner::nSuccess() const
+{  return nSuccess_; }
+
+/*
+* Return number of failed tests run.
+*/
+inline int TestRunner::nFailure() const
+{  return nFailure_; }
+
+/*
+* If this object has no parent, report success and failure counters.
+*/
+void TestRunner::report() const
+{ 
+   if (!hasParent() && isIoProcessor()) {
+      std::cout << std::endl;
+      std::cout << nSuccess_ << "  successful tests  " << std::endl;
+      std::cout << nFailure_ << "  failed tests  "    << std::endl;
+      std::cout << std::endl;
+   }
+}
+
+inline bool TestRunner::isIoProcessor() const
+{  return isIoProcessor_; }
+
+#ifdef TEST_MPI
+inline int TestRunner::mpiRank() const
+{  return mpiRank_; }
+
+inline
+inline int TestRunner::mpiSize() const
+{  return mpiSize_; } 
+#endif
+
+/*
+* Prepend argument prefix to existing filePrefix (virtual).
+*/
+void TestRunner::addFilePrefix(const std::string& prefix) 
+{
+   std::string newPrefix = prefix;
+   newPrefix += filePrefix_;
+   filePrefix_ = newPrefix;
+}
+
+/*
+* Return file prefix by const reference.
+*/
+inline 
+const std::string& TestRunner::filePrefix() const
+{  return filePrefix_; }
+
 #endif
