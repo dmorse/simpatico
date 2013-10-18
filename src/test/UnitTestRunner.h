@@ -121,139 +121,31 @@ public:
    /**
    * Constructor.
    */
-   UnitTestRunner()
-    : TestRunner()
-   {
-      #ifdef TEST_MPI
-      if (isIoProcessor()) {
-         results_.reserve(mpiSize());
-         for (int i=0; i < mpiSize(); ++i) {
-            results_.push_back(false);
-         }
-      }
-      #endif
-   }
+   UnitTestRunner();
 
    // Use compiler generated destructor.
 
    /**
    * Register a test method of the associated unit test class.
    */
-   void addTestMethod(MethodPtr methodPtr)
-   {  methodPtrs_.push_back(methodPtr); }
+   void addTestMethod(MethodPtr methodPtr);
 
    /**
    * Return the number of registered test methods.
    */
-   int nTestMethod()
-   {  return methodPtrs_.size(); } 
+   int nTestMethod();
 
    /**
    * Run test method number i.
    *
    * \param i index of test method
    */
-   void method(unsigned int i)
-   {
-      UnitTestClass testCase;
-      #ifdef TEST_MPI
-      TestException exception;
-      int result;
-      #endif
-
-      testCase.setFilePrefix(filePrefix());
-
-      // Run test method (try / catch)
-      try {
-         testCase.setUp();
-         (testCase.*methodPtrs_[i])();
-         #ifndef TEST_MPI
-         std::cout << ".";
-         recordSuccess();
-         #else
-         result = 1;
-         #endif
-      } catch (TestException &e) {
-         #ifndef TEST_MPI
-         std::cout << std::endl;
-         std::cout << " Failure " << std::endl << std::endl;
-         std::cout << e.message() << std::endl;
-         std::cout << ".";
-         recordFailure();
-         #else
-         result = 0;
-         exception = e;
-         #endif
-      }
-      testCase.tearDown();
-
-      #ifdef TEST_MPI
-      // Process MPI Tests from all processors
-      MPI::COMM_WORLD.Barrier();
-      if (mpiRank() == 0) {
-         results_[0] = result; // Result on processor 0
-         if (results_[0] == 0) {
-            std::cout << std::endl;
-            std::cout << " Failure  on Processor 0" 
-                      << std::endl << std::endl;
-            std::cout << exception.message() << std::endl;
-            std::cout.flush();
-         }
-         for (int i=1; i < mpiSize(); ++i) {
-            // Receive result results_[i] of test on processor i.
-            MPI::COMM_WORLD.Recv(&(results_[i]), 1, MPI_INT, i, i);
-            // If the test failed on processor i
-            if (results_[i] == 0) {
-               result = 0; // fails (==0) if failure on any processor
-               // Send permission to print failure on processor i
-               MPI::COMM_WORLD.Send(&(results_[i]), 1, MPI_INT, i, mpiSize() + i);
-               // Receive confirmation that processor i completed printing
-               MPI::COMM_WORLD.Recv(&(results_[i]), 1, MPI_INT, i, 2*mpiSize() + i);
-            }
-         }
-         // Record success on master (rank == 0) iff success on all processors
-         if (result) {
-            recordSuccess();
-         } else {
-            recordFailure();
-         }
-         std::cout << ".";
-         std::cout.flush();
-      } else {   // Slave node
-         // Send result of test on this processor to master, tag = mpiRank().
-         MPI::COMM_WORLD.Send(&result, 1, MPI_INT, 0, mpiRank());
-         // If test failed on this processor
-         if (result == 0) {
-            // Receive permission to print failure statement
-            MPI::COMM_WORLD.Recv(&result, 1, MPI_INT, 0, 
-                                 mpiSize() + mpiRank());
-            std::cout.flush();
-            std::cout << std::endl;
-            std::cout << " Failure  on Processor " << mpiRank() 
-                      << std::endl << std::endl;
-            std::cout << exception.message() << std::endl;
-            std::cout.flush();
-            // Confirm completion of print.
-            MPI::COMM_WORLD.Send(&result, 1, MPI_INT, 0, 
-                                 2*mpiSize() + mpiRank());
-         }
-      }
-      MPI::COMM_WORLD.Barrier();
-      #endif // ifdef TEST_MPI
-
-   }
+   void method(unsigned int i);
 
    /**
    * Run all registered test methods in the order added.
    */
-   virtual int run()
-   {
-      for (unsigned int i = 0; i < methodPtrs_.size(); ++i) {
-         method(i);
-      }
-      report();
-      return nFailure();
-   }
+   virtual int run();
 
 private:
 
@@ -264,6 +156,148 @@ private:
    #endif 
 
 };
+
+/*
+* Constructor.
+*/
+template <class UnitTestClass>
+UnitTestRunner<UnitTestClass>::UnitTestRunner()
+ : TestRunner()
+{
+   #ifdef TEST_MPI
+   if (isIoProcessor()) {
+      results_.reserve(mpiSize());
+      for (int i=0; i < mpiSize(); ++i) {
+         results_.push_back(false);
+      }
+   }
+   #endif
+}
+
+/*
+* Register a test method of the associated unit test class.
+*/
+template <class UnitTestClass>
+void UnitTestRunner<UnitTestClass>::addTestMethod(MethodPtr methodPtr)
+{  methodPtrs_.push_back(methodPtr); }
+
+/*
+* Return the number of registered test methods.
+*/
+template <class UnitTestClass>
+int UnitTestRunner<UnitTestClass>::nTestMethod()
+{  return methodPtrs_.size(); } 
+
+/*
+* Run test method number i.
+*
+* \param i index of test method
+*/
+template <class UnitTestClass>
+void UnitTestRunner<UnitTestClass>::method(unsigned int i)
+{
+   UnitTestClass testCase;
+   #ifdef TEST_MPI
+   TestException exception;
+   int result;
+   #endif
+
+   testCase.setFilePrefix(filePrefix());
+
+   // Run test method (try / catch)
+   try {
+      testCase.setUp();
+      (testCase.*methodPtrs_[i])();
+      #ifndef TEST_MPI
+      std::cout << ".";
+      recordSuccess();
+      #else
+      result = 1;
+      #endif
+   } catch (TestException &e) {
+      #ifndef TEST_MPI
+      std::cout << std::endl;
+      std::cout << " Failure " << std::endl << std::endl;
+      std::cout << e.message() << std::endl;
+      std::cout << ".";
+      recordFailure();
+      #else
+      result = 0;
+      exception = e;
+      #endif
+   }
+   testCase.tearDown();
+
+   #ifdef TEST_MPI
+   // Process MPI Tests from all processors
+   MPI::COMM_WORLD.Barrier();
+   if (mpiRank() == 0) {
+      results_[0] = result; // Result on processor 0
+      if (results_[0] == 0) {
+         std::cout << std::endl;
+         std::cout << " Failure  on Processor 0" 
+                   << std::endl << std::endl;
+         std::cout << exception.message() << std::endl;
+         std::cout.flush();
+      }
+      for (int i=1; i < mpiSize(); ++i) {
+         // Receive result results_[i] of test on processor i.
+         MPI::COMM_WORLD.Recv(&(results_[i]), 1, MPI_INT, i, i);
+         // If the test failed on processor i
+         if (results_[i] == 0) {
+            result = 0; // fails (==0) if failure on any processor
+            // Send permission to print failure on processor i
+            MPI::COMM_WORLD.Send(&(results_[i]), 1, MPI_INT, i, mpiSize() + i);
+            // Receive confirmation that processor i completed printing
+            MPI::COMM_WORLD.Recv(&(results_[i]), 1, MPI_INT, i, 2*mpiSize() + i);
+         }
+      }
+      // Record success on master (rank == 0) iff success on all processors
+      if (result) {
+         recordSuccess();
+      } else {
+         recordFailure();
+      }
+      std::cout << ".";
+      std::cout.flush();
+   } else {   // Slave node
+      // Send result of test on this processor to master, tag = mpiRank().
+      MPI::COMM_WORLD.Send(&result, 1, MPI_INT, 0, mpiRank());
+      // If test failed on this processor
+      if (result == 0) {
+         // Receive permission to print failure statement
+         MPI::COMM_WORLD.Recv(&result, 1, MPI_INT, 0, 
+                              mpiSize() + mpiRank());
+         std::cout.flush();
+         std::cout << std::endl;
+         std::cout << " Failure  on Processor " << mpiRank() 
+                   << std::endl << std::endl;
+         std::cout << exception.message() << std::endl;
+         std::cout.flush();
+         // Confirm completion of print.
+         MPI::COMM_WORLD.Send(&result, 1, MPI_INT, 0, 
+                              2*mpiSize() + mpiRank());
+      }
+   }
+   MPI::COMM_WORLD.Barrier();
+   #endif // ifdef TEST_MPI
+
+}
+
+/*
+* Run all registered test methods in the order added.
+*/
+template <class UnitTestClass>
+int UnitTestRunner<UnitTestClass>::run()
+{
+   for (unsigned int i = 0; i < methodPtrs_.size(); ++i) {
+      method(i);
+   }
+   report();
+   return nFailure();
+}
+
+// Preprocessor Macros -------------------------------------------------
 
 /**
 * Macro for name of the UnitTestRunner class associated with UnitTestClass.

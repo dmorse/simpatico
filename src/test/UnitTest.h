@@ -78,6 +78,8 @@ public:
 
    /**
    * Set file prefix.
+   *
+   * \param prefix string to be prepended to input and output file names.
    */
    void setFilePrefix(const std::string& prefix);
 
@@ -105,7 +107,7 @@ public:
    int mpiRank();
 
    /**
-   * Does this test have a communicator?
+   * Does this test have an MPI communicator?
    */
    bool hasCommunicator();
 

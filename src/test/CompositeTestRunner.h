@@ -24,24 +24,17 @@ public:
    /**
    * Destructor.
    */
-   virtual ~CompositeTestRunner()
-   {
-      unsigned int i; 
-      for (i = 0; i < children_.size(); ++i) {
-         delete ownedChildren_[i]; 
-      }
-   }
+   virtual ~CompositeTestRunner();
 
    /**
    * Add an existing TestRunner as a child.
    *
+   * Children added by this method are not destroyed by the parent
+   * CompositeTestRunner destructor.
+   *
    * \param child enclosed TestRunner object
    */
-   void addChild(TestRunner& child)
-   {
-      children_.push_back(&child); 
-      child.setParent(*this);
-   }
+   void addChild(TestRunner& child);
 
    /**
    * Add a TestRunner as a child, and accept ownership.
@@ -51,12 +44,7 @@ public:
    *
    * \param childPtr pointer to child TestRunner
    */
-   void addChild(TestRunner* childPtr)
-   {
-      children_.push_back(childPtr);
-      ownedChildren_.push_back(childPtr);
-      childPtr->setParent(*this);
-   }
+   void addChild(TestRunner* childPtr);
 
    /**
    * Add a TestRunner as a child, accept ownership, and set file prefix.
@@ -67,34 +55,17 @@ public:
    * \param childPtr   pointer to child TestRunner
    * \param filePrefix prefix to append to file names in all descendants
    */
-   void addChild(TestRunner* childPtr, const std::string& prefix)
-   {
-      addChild(childPtr);
-      childPtr->addFilePrefix(prefix);
-   }
+   void addChild(TestRunner* childPtr, const std::string& prefix);
 
    /**
    * Prepend argument prefix to existing filePrefix.
    */
-   virtual void addFilePrefix(const std::string& prefix) 
-   {
-      TestRunner::addFilePrefix(prefix);
-      for (unsigned int i = 0; i < children_.size(); ++i) {
-         children_[i]->addFilePrefix(prefix); 
-      }
-   }
+   virtual void addFilePrefix(const std::string& prefix);
 
    /**
    * Run all children in sequence, using depth-first recursion. 
    */
-   virtual int run() 
-   {
-      for (unsigned int i = 0; i < children_.size(); ++i) {
-         children_[i]->run(); 
-      }
-      report();
-      return nFailure();
-   }
+   virtual int run(); 
 
 private:
 
@@ -105,6 +76,73 @@ private:
    std::vector<TestRunner*> ownedChildren_;
 
 };
+
+// Function definitions
+
+/*
+* Destructor.
+*/
+CompositeTestRunner::~CompositeTestRunner()
+{
+   unsigned int i; 
+   for (i = 0; i < children_.size(); ++i) {
+      delete ownedChildren_[i]; 
+   }
+}
+
+/*
+* Add an existing TestRunner as a child.
+*/
+void CompositeTestRunner::addChild(TestRunner& child)
+{
+   children_.push_back(&child); 
+   child.setParent(*this);
+}
+
+/*
+* Add a TestRunner as a child, and accept ownership.
+*/
+void CompositeTestRunner::addChild(TestRunner* childPtr)
+{
+   children_.push_back(childPtr);
+   ownedChildren_.push_back(childPtr);
+   childPtr->setParent(*this);
+}
+
+/*
+* Add a TestRunner as a child, accept ownership, and set file prefix.
+*/
+void CompositeTestRunner::addChild(TestRunner* childPtr, 
+                                   const std::string& prefix)
+{
+   addChild(childPtr);
+   childPtr->addFilePrefix(prefix);
+}
+
+/*
+* Prepend argument prefix to existing filePrefix.
+*/
+void CompositeTestRunner::addFilePrefix(const std::string& prefix) 
+{
+   TestRunner::addFilePrefix(prefix);
+   for (unsigned int i = 0; i < children_.size(); ++i) {
+      children_[i]->addFilePrefix(prefix); 
+   }
+}
+
+/*
+* Run all children in sequence, using depth-first recursion. 
+*/
+int CompositeTestRunner::run() 
+{
+   for (unsigned int i = 0; i < children_.size(); ++i) {
+      children_[i]->run(); 
+   }
+   report();
+   return nFailure();
+}
+
+// Preprocessor macros
 
 /**
 * Macro to open a TestComposite class definition.

@@ -90,6 +90,8 @@ public:
 
    /**
    * Set another TestRunner as the parent.
+   *
+   * \param parent parent CompositeTestRunner object
    */
    void setParent(TestRunner& parent);
 
@@ -175,6 +177,61 @@ private:
 
 };
 
+// Inline methods
+
+/*
+* Set another TestRunner as the parent.
+*/
+inline void TestRunner::setParent(TestRunner& parent)
+{  parentPtr_ = &parent; }
+
+/*
+* Return the parent object, if any.
+*/
+inline TestRunner& TestRunner::parent()
+{  return *parentPtr_; }
+
+/*
+* Does this object have a parent?
+*/
+inline bool TestRunner::hasParent() const
+{  return (parentPtr_ != 0); }
+
+/*
+* Return number of successful tests run.
+*/
+inline int TestRunner::nSuccess() const
+{  return nSuccess_; }
+
+/*
+* Return number of failed tests run.
+*/
+inline int TestRunner::nFailure() const
+{  return nFailure_; }
+
+/*
+* Return file prefix by const reference.
+*/
+inline 
+const std::string& TestRunner::filePrefix() const
+{  return filePrefix_; }
+
+/*
+* Is this an Io processor? (always true without MPI)
+*/
+inline bool TestRunner::isIoProcessor() const
+{  return isIoProcessor_; }
+
+#ifdef TEST_MPI
+inline int TestRunner::mpiRank() const
+{  return mpiRank_; }
+
+inline int TestRunner::mpiSize() const
+{  return mpiSize_; } 
+#endif
+
+// Non-inline methods
+
 /*
 * Constructor.
 */
@@ -234,36 +291,6 @@ void TestRunner::recordSuccess()
 }
 
 /*
-* Set another TestRunner as the parent.
-*/
-inline void TestRunner::setParent(TestRunner& parent)
-{  parentPtr_ = &parent; }
-
-/*
-* Return the parent object, if any.
-*/
-inline TestRunner& TestRunner::parent()
-{  return *parentPtr_; }
-
-/*
-* Does this object have a parent?
-*/
-inline bool TestRunner::hasParent() const
-{  return (parentPtr_ != 0); }
-
-/*
-* Return number of successful tests run.
-*/
-inline int TestRunner::nSuccess() const
-{  return nSuccess_; }
-
-/*
-* Return number of failed tests run.
-*/
-inline int TestRunner::nFailure() const
-{  return nFailure_; }
-
-/*
 * If this object has no parent, report success and failure counters.
 */
 void TestRunner::report() const
@@ -276,18 +303,6 @@ void TestRunner::report() const
    }
 }
 
-inline bool TestRunner::isIoProcessor() const
-{  return isIoProcessor_; }
-
-#ifdef TEST_MPI
-inline int TestRunner::mpiRank() const
-{  return mpiRank_; }
-
-inline
-inline int TestRunner::mpiSize() const
-{  return mpiSize_; } 
-#endif
-
 /*
 * Prepend argument prefix to existing filePrefix (virtual).
 */
@@ -297,12 +312,5 @@ void TestRunner::addFilePrefix(const std::string& prefix)
    newPrefix += filePrefix_;
    filePrefix_ = newPrefix;
 }
-
-/*
-* Return file prefix by const reference.
-*/
-inline 
-const std::string& TestRunner::filePrefix() const
-{  return filePrefix_; }
 
 #endif
