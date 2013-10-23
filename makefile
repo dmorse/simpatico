@@ -1,8 +1,11 @@
 include src/compiler.mk
 # ==============================================================================
 .PHONY: mcMd ddMd mcMd-mpi \
-        clean-serial clean-parallel clean clean-bin \
+        clean-serial clean-parallel clean \
         html clean-html 
+
+# ==============================================================================
+# Main targets
 
 all:
 	cd build/serial; make mcMd
@@ -32,15 +35,11 @@ clean:
 	cd build/serial; make clean
 	cd build/parallel; make clean
 
-clean-bin:
-	cd src; make clean-bin
-
-# Remove all generated files, including those created by the setup script.
 veryclean:
 	cd html; make clean
+	cd build/serial; make veryclean
+	cd build/parallel; make veryclean
 	cd src; make veryclean
-	cd build/serial; make clean
-	cd build/parallel; make clean
 
 # ==============================================================================
 # HTML Documentation

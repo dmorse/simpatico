@@ -23,14 +23,21 @@ all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE)
 clean:
 	-rm -f $(ddMd_OBJS) $(ddMd_OBJS:.o=.d) $(ddMd_LIB)
 	-rm -f $(DDSIM).o $(DDSIM).d
-	-rm -f $(DDSIM_EXE)
-	-rm -f */*.o */*/*.o
-	-rm -f */*.d */*/*.d
+	cd tests; make clean
+	-rm -f *.o */*.o */*/*.o
+	-rm -f *.d */*.d */*/*.d
 
-clean-deps:
-	-rm -f $(ddMd_OBJS:.o=.d)
-	-rm -f $(DDSIM).d
-	-rm -f */*.d */*/*.d
+veryclean:
+	make clean
+	-rm -f lib*.a
+	-rm -f configIos/ConfigIoFactory.cpp
+	-rm -f diagnostics/DiagnosticFactory.cpp
+	-rm -f integrators/IntegratorFactory.cpp
+	-rm -f potentials/angle/AngleFactory.cpp
+	-rm -f potentials/bond/BondFactory.cpp
+	-rm -f potentials/dihedral/DihedralFactory.cpp
+	-rm -f potentials/external/ExternalFactory.cpp
+	-rm -f potentials/pair/PairFactory.cpp
 
 $(DDSIM_EXE): $(DDSIM).o $(DDSIM_LIBS)
 	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o $(DDSIM_LIBS)

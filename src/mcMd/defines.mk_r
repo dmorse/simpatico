@@ -37,10 +37,11 @@ endif
 # consist of a list of zero or more preprocessor macro names, each
 # preceded by the compiler flag "-D".
 #
-# The variable MCMD_SUFFIX is appended to the base names of the library
-# mcMd.a in the $(LIB_DIR) directory and (by default) to the executables
+# The variable MCMD_SUFFIX is appended to the base name mcMd.a of the 
+# mcMd library and (by default) to the base names of the executables
 # mcSim and mdSim in the $(BIN_DIR).
 #
+# Initialize to empty strings: 
 
 MCMD_DEFS=
 MCMD_SUFFIX:=
@@ -49,7 +50,7 @@ MCMD_SUFFIX:=
 # is extended using the += operator, e.g., MCMD_DEFS+=-DMCMD_PERTURB.
 # The MCMD_SUFFIX is a non-recursive makefile variable, which may be
 # extended using the := operator, as MCMD_SUFFIX:=$(MCMD_SUFFIX)_f.
-#
+ 
 
 # Enable free energy perturbation (_f for "free energy")
 ifdef UTIL_MPI
@@ -74,7 +75,7 @@ MCMD_SUFFIX:=$(MCMD_SUFFIX)_s
 endif
 
 #-----------------------------------------------------------------------
-# Path to library
+# Path to mcMd library
 
 MCMD_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
 

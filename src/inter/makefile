@@ -9,13 +9,13 @@ include $(SRC_DIR)/inter/sources.mk
 all: $(inter_OBJS) $(inter_LIB)
 
 clean:
-	rm -f $(inter_OBJS) $(inter_LIB)
-	rm -f $(inter_OBJS:.o=.d)
-	rm -f */*.o */*.d
+	-rm -f $(inter_OBJS) $(inter_OBJS:.o=.d) $(inter_LIB)
+	cd tests; make clean
+	-rm -f */*.o */*.d
 
-clean-deps:
-	rm -f $(inter_OBJS:.o=.d)
-	rm -f */*.d
+veryclean:
+	make clean
+	-rm -f lib*.a
 
 -include $(util_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)

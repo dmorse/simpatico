@@ -9,12 +9,14 @@ all: $(util_OBJS) $(util_LIB)
 
 clean:
 	rm -f $(util_OBJS) $(util_OBJS:.o=.d) $(util_LIB)
-	rm -f $(util_LIB)
-	rm -f */*.o */*/*.o 
-	rm -f */*.d */*/*.d
+	cd tests; make clean
+	rm -f */*.o */*/*.o */*/*/*.o
+	rm -f */*.d */*/*.d */*/*/*.d
 
-clean-deps:
-	rm -f $(util_OBJS:.o=.d)
+veryclean:
+	make clean
+	-rm -f lib*.a
+	-rm -f boundary/Boundary.h
 
 -include $(util_OBJS:.o=.d)
 
