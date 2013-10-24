@@ -1,13 +1,12 @@
 McSimulation{
   FileMaster{
-    commandFileName           commands_a_d
+    commandFileName               commands
     inputPrefix                        in/
     outputPrefix                      out/
   }
   nAtomType                              1
   nBondType                              1
   nAngleType                             1
-  nDihedralType                          0
   atomTypes                    A       1.0
   maskedPairPolicy              MaskBonded
   SpeciesManager{
@@ -108,6 +107,7 @@ McSimulation{
     }
 
   }
+  saveInterval                        0
 }
 
     RadiusGyration{

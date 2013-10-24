@@ -15,3 +15,7 @@ Begin reading restart, base file name restart
    Message : Cannot allocate ArrayStack with capacity <= 0
 
 -------------------------------------------------------------------------------------
+Error in example worm/N8/mc/CfbReptation:
+
+Segmentation fault occurs after reading param file and entering main loop. 
+-------------------------------------------------------------------------------------

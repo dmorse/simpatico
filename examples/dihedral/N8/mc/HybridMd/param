@@ -1,13 +1,13 @@
 McSimulation{
   FileMaster{
-    commandFileName           commands_a_d
+    commandFileName               commands
     inputPrefix                        in/
     outputPrefix                      out/
   }
   nAtomType                              1
   nBondType                              1
   nAngleType                             1
-  nDihedralType                          0
+  nDihedralType                          1
   atomTypes                    A       1.0
   maskedPairPolicy              MaskBonded
   SpeciesManager{
@@ -19,7 +19,8 @@ McSimulation{
       bondType                           0
       hasAngles                          1
       angleType                          0
-      hasDihedrals                       0
+      hasDihedrals                       1
+      dihedralType                       0
     }
 
   }
@@ -27,21 +28,26 @@ McSimulation{
     seed                          13451892
   }
   McSystem{
-    pairStyle       LJPair
-    bondStyle       HarmonicBond
-    angleStyle      CosineAngle
+    pairStyle                       LJPair
+    bondStyle                 HarmonicBond
+    angleStyle               HarmonicAngle
+    dihedralStyle           CosineDihedral
     McPairPotential{
       epsilon           1.000000000000e+00
       sigma             1.000000000000e+00
       cutoff            1.122460000000e+00
-      maxBoundary         cubic         10.5
+      maxBoundary         cubic       10.5
     }
     BondPotential{
       kappa             4.000000000000e+02
       length            1.000000000000e+00
     }
     AnglePotential{
-      kappa             4.000000000000e+00
+      kappa             20.00000000000e+00
+      theta0            60.00000000000e+00
+    }
+    DihedralPotential{
+      kappa             1.000000000000e+00
     }
     EnergyEnsemble{
       type                      isothermal
@@ -53,42 +59,54 @@ McSimulation{
   }
   McMoveManager{
     
-    CfbReptationMove{
-      probability      1.0000000000e+00
-      speciesId                       0
-      nTrial                         20
-    } 
+    HybridMdMove{
+      probability         1.000000000000e+00
+      nStep                              200
+      MdSystem{
+        MdPairPotential{
+           maxBoundary         cubic     10.5
+           PairList{
+             atomCapacity                 800
+             pairCapacity               10000
+             skin             3.000000000e-01
+           }
+        }
+        NveVvIntegrator{
+          dt               7.000000000e-03
+        }
+      }
+    }
 
   }
   DiagnosticManager{
-    baseInterval                    10000
+    baseInterval                       10
 
     LogProgress{
-      interval                      10000
+      interval                         50
     }
 
     McEnergyAverage{
-      interval                      20000
+      interval                         10
       outputFileName               energy
       nSamplePerBlock                  10
     }
     
     McPairEnergyAverage{
-      interval                    20000
+      interval                       10
       outputFileName         pairEnergy
       nSamplePerBlock               10
       selector             inter -1 -1
     }
     
     RadiusGyration{
-      interval                   20000
+      interval                      10
       outputFileName              RgSq
       nSamplePerBlock               10
       speciesId                      0
     }
 
     IntraPairAutoCorr{
-      interval                    10000
+      interval                       10
       outputFileName       RendAutoCorr
       speciesId                      0
       atom1Id                        0
@@ -96,6 +114,8 @@ McSimulation{
       capacity                     500
     }
   }
+  saveInterval            100
+  saveFileName        restart
 }
 
     AtomDisplaceMove{
@@ -103,20 +123,11 @@ McSimulation{
       delta                      0.11
     }
 
-    HybridMdMove{
-      nStep                            400
-      MdSystem{
-        PairList{
-          atomCapacity                 800
-          pairCapacity               10000
-          skin             3.000000000e-01
-        }
-        NveVvIntegrator{
-          dt               7.000000000e-03
-        }
-      }
+    CfbReptationMove{
+      probability      1.0000000000e+00
+      speciesId                       0
+      nTrial                         20
     }
-    probability         1.000000000000e+00
 
     McPressureAverage{
       interval                       10000

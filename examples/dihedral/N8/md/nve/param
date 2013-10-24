@@ -1,13 +1,13 @@
 MdSimulation{
   FileMaster{
-    commandFileName           commands_a_d
-    inputPrefix                     ../in/
+    commandFileName               commands
+    inputPrefix                  ../../in/
     outputPrefix                      out/
   }
   nAtomType                              1
   nBondType                              1
   nAngleType                             1
-  nDihedralType                          0
+  nDihedralType                          1
   atomTypes                     A      1.0
   maskedPairPolicy              MaskBonded
   SpeciesManager{
@@ -19,7 +19,8 @@ MdSimulation{
       bondType                           0
       hasAngles                          1
       angleType                          0
-      hasDihedrals                       0
+      hasDihedrals                       1
+      dihedralType                       0
     }
 
   }
@@ -29,7 +30,8 @@ MdSimulation{
   MdSystem{
     pairStyle                       LJPair
     bondStyle                 HarmonicBond
-    angleStyle                 CosineAngle
+    angleStyle               HarmonicAngle
+    dihedralStyle           CosineDihedral
     MdPairPotential{
       epsilon           1.000000000000e+00
       sigma             1.000000000000e+00
@@ -46,7 +48,11 @@ MdSimulation{
       length            1.000000000000e+00
     }
     AnglePotential{
-      kappa             1.500000000000e+00
+      kappa             2.000000000000e+01
+      theta0            60.00000000000e+00
+    }
+    DihedralPotential{
+      kappa             0.000000000000e+00
     }
     EnergyEnsemble{
       type                       adiabatic
@@ -55,7 +61,7 @@ MdSimulation{
       type                           rigid
     }
     NveVvIntegrator{
-       dt               1.000000000000e-03
+       dt               5.000000000000e-04
     }
   }
   DiagnosticManager{
@@ -83,13 +89,17 @@ MdSimulation{
     }
 
   }
+  saveInterval               50000
+  saveFileName             restart
 }
 
-    CosineSqAngle{
-      kappa             1.500000000000e+02
-      theta0            60.00000000000e+00
+    DihedralPotential{
+      kappa             0.000000000000e+00
     }
 
+    AnglePotential{
+      kappa             1.500000000000e+00
+    }
     MdPressureAverage{
       interval                         100
       outputFileName              pressure

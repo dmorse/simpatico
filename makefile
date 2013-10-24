@@ -26,6 +26,12 @@ test:
 	cd build/serial/inter/tests; make all; make run
 	cd build/serial/mcMd/tests; make all; make run
 	cd build/parallel/ddMd/tests; make all; make run
+	@cat build/serial/util/tests/count > count
+	@cat build/serial/inter/tests/count >> count
+	@cat build/serial/mcMd/tests/count >> count
+	@cat build/parallel/ddMd/tests/count >> count
+	@cat count
+	@rm -f count
 
 
 # ==============================================================================
