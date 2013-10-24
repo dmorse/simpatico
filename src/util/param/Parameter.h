@@ -63,7 +63,7 @@ namespace Util
       *
       * \param ar  output archive to which to save
       * \param ptr pointer to first element of optional C-array parameter
-      * \param number of element in array
+      * \param n   number of elements in array
       * \param isActive Is this parameter present in the parameter file?
       */
       template <class Type>

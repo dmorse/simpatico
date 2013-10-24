@@ -77,13 +77,13 @@ namespace McMd
       * distribution P(l) of values of the length l is proportional 
       * to l*l*exp[-beta*phi(l) ], where phi(l) is the bond energy. 
       *
-      * \param random        pointer to random number generator object.
-      * \param beta          inverse temperature
-      * \param angleTypeId   bond type
-      * \return              angle chosen from equilibrium distribution.
+      * \param random  pointer to random number generator object.
+      * \param beta  inverse temperature
+      * \param type  integer angle typd index
+      * \return  angle chosen from equilibrium distribution.
       */
       virtual 
-      double randomAngle(Util::Random* random, double beta, int angleTypeId) 
+      double randomAngle(Util::Random* random, double beta, int type) 
              const = 0;
 
       /**
@@ -94,13 +94,13 @@ namespace McMd
       * distribution P(l) of values of the length l is proportional 
       * to l*l*exp[-beta*phi(l) ], where phi(l) is the bond energy. 
       *
-      * \param random        pointer to random number generator object.
-      * \param beta          inverse temperature
-      * \param type          bond type
-      * \return              angle cosine chosen from equilibrium distribution.
+      * \param random  pointer to random number generator object.
+      * \param beta  inverse temperature
+      * \param type  bond type
+      * \return  angle cosine chosen from equilibrium distribution.
       */
       virtual 
-      double randomCosineAngle(Util::Random* random, double beta, int angleTypeId) 
+      double randomCosineAngle(Util::Random* random, double beta, int type) 
              const = 0;
 
       /**
