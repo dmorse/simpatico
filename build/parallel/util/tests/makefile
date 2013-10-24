@@ -10,7 +10,8 @@ all: $(util_tests_OBJS) Test
 run: $(util_tests_OBJS) Test
 	./Test $(SRC_DIR)/util/tests/ > log
 	@echo `grep failed log` ", "\
-              `grep successful log` "in util/tests/log" 
+              `grep successful log` "in parallel/util/tests/log" > count
+	@cat count
 
 clean:
 	rm -f $(util_tests_OBJS) Test $(util_tests_OBJS:.o=.d)

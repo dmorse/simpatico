@@ -1,6 +1,6 @@
 include src/compiler.mk
 # ==============================================================================
-.PHONY: mcMd ddMd mcMd-mpi \
+.PHONY: mcMd ddMd mcMd-mpi test \
         clean-serial clean-parallel clean \
         html clean-html 
 
@@ -20,6 +20,13 @@ mcMd-mpi:
 
 ddMd:
 	cd build/parallel; make ddMd
+
+test:
+	cd build/serial/util/tests; make all; make run
+	cd build/serial/inter/tests; make all; make run
+	cd build/serial/mcMd/tests; make all; make run
+	cd build/parallel/ddMd/tests; make all; make run
+
 
 # ==============================================================================
 # Clean targets
