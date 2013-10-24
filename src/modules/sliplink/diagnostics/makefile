@@ -4,17 +4,17 @@
 #  - BIN_DIR, to change the directory for executables
 
 # Directory containing Simpatico library source files
-SRC_DIR=../../..
+BLD_DIR_REL=../../..
 
 # Parent directory for modules
-MODULES_DIR=../..
+MODULES_DIR=$(BLD_DIR)/modules
 
 #-----------------------------------------------------------------------
 # Include master makefiles
 
-include $(SRC_DIR)/compiler.mk
-include $(SRC_DIR)/util/defines.mk
-include $(SRC_DIR)/mcMd/defines.mk
+include $(BLD_DIR_REL)/compiler.mk
+include $(BLD_DIR)/util/defines.mk
+include $(BLD_DIR)/mcMd/defines.mk
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/sources.mk
@@ -27,9 +27,6 @@ all: $(modules_sliplink_diagnostics_OBJS)
 
 clean:
 	-rm -f $(modules_sliplink_diagnostics_OBJS)
-	-rm -f $(modules_sliplink_diagnostics_OBJS:.o=.d)
-
-clean-deps:
 	-rm -f $(modules_sliplink_diagnostics_OBJS:.o=.d)
 
 -include $(modules_sliplink_diagnostics_OBJS:.o=.d)
