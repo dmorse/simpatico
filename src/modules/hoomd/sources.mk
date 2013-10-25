@@ -7,7 +7,7 @@ include $(SRC_DIR)/modules/hoomd/potentials/link/sources.mk
 include $(SRC_DIR)/modules/hoomd/potentials/external/sources.mk
 include $(SRC_DIR)/modules/hoomd/perturbation/sources.mk
 
------------------------------------------------------------------
+#-----------------------------------------------------------------
 # CPP files
 
 modules_hoomd_= \
@@ -25,7 +25,7 @@ modules_hoomd_SRCS=\
 modules_hoomd_OBJS=\
     $(addprefix $(BLD_DIR)/, $(modules_hoomd_:.cpp=.o))
 
------------------------------------------------------------------
+#-----------------------------------------------------------------
 # Cuda C files
 
 modules_hoomd_NVCC_=\
@@ -34,5 +34,5 @@ modules_hoomd_NVCC_=\
 modules_hoomd_NVCC_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_hoomd_NVCC_))
 modules_hoomd_NVCC_OBJS=\
-    $(addprefix $(BLD_DIR)/, $(modules_hoomd_NVCC_:.cpp=.o))
+    $(addprefix $(BLD_DIR)/, $(modules_hoomd_NVCC_:.cu=.cu.o))
 

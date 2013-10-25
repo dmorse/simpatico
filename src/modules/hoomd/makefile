@@ -1,58 +1,65 @@
 # ------------------------------------------------------------------
-# Users may need to change the following Makefile macros:
-#  - SRC_DIR_REL, if this directory is moved or copied to another location.
-#  - BIN_DIR, to change the directory for executables
+# Includes
 
 # Relative path to to Simpatico src directory.
-SRC_DIR_REL=../..
+BLD_DIR_REL=../..
 
-# Include master makefiles
+# Include configuration files (build directory)
+include $(BLD_DIR_REL)/compiler.mk
+include $(BLD_DIR)/util/defines.mk
+include $(BLD_DIR)/inter/defines.mk
+include $(BLD_DIR)/mcMd/defines.mk
+include $(BLD_DIR)/modules/hoomd/defines.mk
 
-include $(SRC_DIR_REL)/compiler.mk
-include $(SRC_DIR_REL)/util/defines.mk
-include $(SRC_DIR_REL)/inter/defines.mk
-include $(SRC_DIR_REL)/mcMd/defines.mk
-include $(SRC_DIR_REL)/mcMd/patterns.mk
-include $(SRC_DIR_REL)/util/sources.mk
-include $(SRC_DIR_REL)/inter/sources.mk
-include $(SRC_DIR_REL)/mcMd/sources.mk
-include $(SRC_DIR_REL)/modules/hoomd/sources.mk
-include $(SRC_DIR_REL)/modules/hoomd/defines.mk
+# Include patterns and sources files (src directory)
+include $(SRC_DIR)/mcMd/patterns.mk
+include $(SRC_DIR)/util/sources.mk
+include $(SRC_DIR)/inter/sources.mk
+include $(SRC_DIR)/mcMd/sources.mk
+include $(SRC_DIR)/modules/hoomd/sources.mk
 
 #-----------------------------------------------------------------------
-# Executable file name macros
+# Pattern rule to compile all NVCC source (*.cu) files.
+# Note: No dependency files are generated for NVCC files
 
-BIN_DIR=$(ROOT_DIR)/bin
-BIN_SUFFIX:=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)_aspect_tric_trialmaster_h
+$(BLD_DIR)/%.cu.o: $(SRC_DIR)/%.cu
+	nvcc -arch sm_20 -c -o $@ $<
+
+#-----------------------------------------------------------------------
+# Variable definitions
+
+MCSIM=$(BLD_DIR)/modules/hoomd/mcSim
+
+BIN_SUFFIX:=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)_h
 
 MCSIM_EXE=$(BIN_DIR)/mcSim$(BIN_SUFFIX)
-
-# Rule to compile all NVCC source (*.cu) files.
-%.cu.o: %.cu
-	nvcc -arch sm_20 -c -o $@ $<
 
 #-------------------------------------------------------------------
 # Major targets
 
-all:	
-	make $(modules_hoomd_NVCC_OBJS)
+all:
 	make $(modules_hoomd_OBJS)
-	make mcSim.o $(MCSIM_EXE)
+	make $(modules_hoomd_NVCC_OBJS)
+	make $(MCSIM).o
+	make $(MCSIM_EXE)
 
 clean:
-	-rm $(MCSIM_EXE) mcSim.o mcSim.d
-	-rm -f $(modules_hoomd_OBJS) $(modules_hoomd_OBJS:.o=.d) $(modules_hoomd_NVCC_OBJS)
+	-rm -f $(modules_hoomd_OBJS) $(modules_hoomd_OBJS:.o=.d) 
+	-rm -f $(modules_hoomd_NVCC_OBJS)
+	-rm -f $(MCSIM_EXE) $(MCSIM).o $(MCSIM).d
 
-clean-deps:
-	-rm -f $(modules_hoomd_OBJS:.o=.d) $(modules_hoomd_NVCC_OBJS:.o=.d) mcSim.d
+veryclean:
+	make clean
+	-rm -f */*.o */*.d
+	-rm -f defines.mk makefile
 
--include $(modules_hoomd_OBJS:.o=.d) $(modules_hoomd_NVCC_OBJS:.o=.d)
+$(MCSIM_EXE): mcSim.o $(modules_hoomd_NVCC_OBJS) $(modules_hoomd_OBJS) \
+                 $(util_LIB) $(inter_LIB) $(mcMd_LIB) $(LIBS)
+	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) mcSim.o \
+                 $(modules_hoomd_OBJS) $(modules_hoomd_NVCC_OBJS) \
+                 $(mcMd_LIB) $(util_LIB) $(inter_LIB) $(LIBPATH) $(LIBS)
+
+-include $(modules_hoomd_OBJS:.o=.d)
 -include mcSim.d
 
-#-------------------------------------------------------------------
-# Executables 
-
-$(MCSIM_EXE): mcSim.o $(modules_hoomd_NVCC_OBJS) $(modules_hoomd_OBJS) $(modules_hoomd_NVCC_OBJS) $(util_LIB) $(inter_LIB) $(mcMd_LIB) $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) mcSim.o \
-		 $(modules_hoomd_OBJS) $(modules_hoomd_NVCC_OBJS) $(mcMd_LIB) $(util_LIB) $(inter_LIB) $(LIBPATH) $(LIBS)
-
+# Note: No dependency files are generated for NVCC files

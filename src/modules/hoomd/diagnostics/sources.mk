@@ -13,5 +13,5 @@ modules_hoomd_diagnostics_OBJS=\
 modules_hoomd_diagnostics_NVCC_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_hoomd_diagnostics_NVCC_))
 modules_hoomd_diagnostics_NVCC_OBJS=\
-    $(addprefix $(BLD_DIR)/, $(modules_hoomd_diagnostics_NVCC_:.cu=.o))
+    $(addprefix $(BLD_DIR)/, $(modules_hoomd_diagnostics_NVCC_:.cu=.cu.o))
 
