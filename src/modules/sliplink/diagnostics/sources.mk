@@ -17,5 +17,5 @@ modules_sliplink_diagnostics_= \
 modules_sliplink_diagnostics_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_sliplink_diagnostics_))
 modules_sliplink_diagnostics_OBJS=\
-    $(addprefix $(SRC_DIR)/, $(modules_sliplink_diagnostics_:.cpp=.o))
+    $(addprefix $(BLD_DIR)/, $(modules_sliplink_diagnostics_:.cpp=.o))
 
