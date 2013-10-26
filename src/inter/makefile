@@ -1,8 +1,8 @@
-BLD_DIR_REL =..
+OBJ_DIR_REL =..
 
-include $(BLD_DIR_REL)/compiler.mk
-include $(BLD_DIR)/util/defines.mk
-include $(BLD_DIR)/inter/defines.mk
+include $(OBJ_DIR_REL)/compiler.mk
+include $(OBJ_DIR)/util/defines.mk
+include $(OBJ_DIR)/inter/defines.mk
 include $(SRC_DIR)/inter/patterns.mk
 include $(SRC_DIR)/inter/sources.mk
 

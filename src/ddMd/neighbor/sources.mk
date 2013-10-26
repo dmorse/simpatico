@@ -6,5 +6,5 @@ ddMd_neighbor_= \
 ddMd_neighbor_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_neighbor_))
 ddMd_neighbor_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(ddMd_neighbor_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(ddMd_neighbor_:.cpp=.o))
 

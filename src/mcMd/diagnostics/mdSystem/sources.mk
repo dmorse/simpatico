@@ -11,5 +11,5 @@ mcMd_diagnostics_mdSystem_=\
 mcMd_diagnostics_mdSystem_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_diagnostics_mdSystem_))
 mcMd_diagnostics_mdSystem_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(mcMd_diagnostics_mdSystem_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(mcMd_diagnostics_mdSystem_:.cpp=.o))
 

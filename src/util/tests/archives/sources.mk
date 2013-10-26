@@ -7,5 +7,5 @@ endif
 util_tests_archives_SRCS=\
      $(addprefix $(SRC_DIR)/, $(util_tests_archives_))
 util_tests_archives_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(util_tests_archives_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(util_tests_archives_:.cpp=.o))
 

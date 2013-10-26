@@ -1,12 +1,12 @@
 #-----------------------------------------------------------------------
 # File includes
 
-BLD_DIR_REL =..
+OBJ_DIR_REL =..
 
-include $(BLD_DIR_REL)/compiler.mk
-include $(BLD_DIR)/util/defines.mk
-include $(BLD_DIR)/inter/defines.mk
-include $(BLD_DIR)/mcMd/defines.mk
+include $(OBJ_DIR_REL)/compiler.mk
+include $(OBJ_DIR)/util/defines.mk
+include $(OBJ_DIR)/inter/defines.mk
+include $(OBJ_DIR)/mcMd/defines.mk
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk
@@ -15,8 +15,8 @@ include $(SRC_DIR)/mcMd/sources.mk
 #-----------------------------------------------------------------------
 # Variable definitions
 
-MDSIM=$(BLD_DIR)/mcMd/mdSim
-MCSIM=$(BLD_DIR)/mcMd/mcSim
+MDSIM=$(OBJ_DIR)/mcMd/mdSim
+MCSIM=$(OBJ_DIR)/mcMd/mcSim
 MCMD_LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB)
 
 #-----------------------------------------------------------------------

@@ -15,5 +15,5 @@ ddMd_diagnostics_=\
 ddMd_diagnostics_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_diagnostics_))
 ddMd_diagnostics_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(ddMd_diagnostics_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(ddMd_diagnostics_:.cpp=.o))
 

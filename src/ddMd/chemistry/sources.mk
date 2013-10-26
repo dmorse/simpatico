@@ -8,5 +8,5 @@ ddMd_chemistry_=\
 ddMd_chemistry_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_chemistry_))
 ddMd_chemistry_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(ddMd_chemistry_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(ddMd_chemistry_:.cpp=.o))
 

@@ -31,7 +31,7 @@ endif
 inter_SRCS=\
      $(addprefix $(SRC_DIR)/, $(inter_))
 inter_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(inter_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(inter_:.cpp=.o))
 
 
 $(inter_LIB): $(inter_OBJS)

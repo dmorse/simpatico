@@ -2,14 +2,14 @@
 # Includes
 
 # Relative path to to Simpatico src directory.
-BLD_DIR_REL=../..
+OBJ_DIR_REL=../..
 
 # Include configuration files (build directory)
-include $(BLD_DIR_REL)/compiler.mk
-include $(BLD_DIR)/util/defines.mk
-include $(BLD_DIR)/inter/defines.mk
-include $(BLD_DIR)/mcMd/defines.mk
-include $(BLD_DIR)/modules/hoomd/defines.mk
+include $(OBJ_DIR_REL)/compiler.mk
+include $(OBJ_DIR)/util/defines.mk
+include $(OBJ_DIR)/inter/defines.mk
+include $(OBJ_DIR)/mcMd/defines.mk
+include $(OBJ_DIR)/modules/hoomd/defines.mk
 
 # Include patterns and sources files (src directory)
 include $(SRC_DIR)/mcMd/patterns.mk
@@ -22,13 +22,13 @@ include $(SRC_DIR)/modules/hoomd/sources.mk
 # Pattern rule to compile all NVCC source (*.cu) files.
 # Note: No dependency files are generated for NVCC files
 
-$(BLD_DIR)/%.cu.o: $(SRC_DIR)/%.cu
+$(OBJ_DIR)/%.cu.o: $(SRC_DIR)/%.cu
 	nvcc -arch sm_20 -c -o $@ $<
 
 #-----------------------------------------------------------------------
 # Variable definitions
 
-MCSIM=$(BLD_DIR)/modules/hoomd/mcSim
+MCSIM=$(OBJ_DIR)/modules/hoomd/mcSim
 
 BIN_SUFFIX:=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)_h
 

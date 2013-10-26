@@ -19,8 +19,8 @@
 #------------------------------------------------------------------------
 # Copy the compiler.mk files and set the value of $(ROOT_DIR) to $PWD.
 sed "s|=PWD|=$PWD|" src/compiler.mk_r > src/compiler.mk
-sed "s|=PWD|=$PWD|" build/serial/compiler.mk_r > build/serial/compiler.mk
-sed "s|=PWD|=$PWD|" build/parallel/compiler.mk_r > build/parallel/compiler.mk
+sed "s|=PWD|=$PWD|" obj/serial/compiler.mk_r > obj/serial/compiler.mk
+sed "s|=PWD|=$PWD|" obj/parallel/compiler.mk_r > obj/parallel/compiler.mk
 
 # Copy repository (_r) versions of defines.mk makefile fragments.
 # The defines.mk makefile fragments can be used to enable/disable options.
@@ -31,17 +31,17 @@ cp  src/inter/defines.mk_r src/inter/defines.mk
 cp  src/mcMd/defines.mk_r src/mcMd/defines.mk
 cp  src/ddMd/defines.mk_r src/ddMd/defines.mk
 
-# Serial build directory (for out-of-source builds without MPI)
-cp  src/util/defines.mk_r build/serial/util/defines.mk
-cp  src/inter/defines.mk_r build/serial/inter/defines.mk
-cp  src/mcMd/defines.mk_r build/serial/mcMd/defines.mk
-cp  src/ddMd/defines.mk_r build/serial/ddMd/defines.mk
+# Serial obj directory (for out-of-source builds without MPI)
+cp  src/util/defines.mk_r obj/serial/util/defines.mk
+cp  src/inter/defines.mk_r obj/serial/inter/defines.mk
+cp  src/mcMd/defines.mk_r obj/serial/mcMd/defines.mk
+cp  src/ddMd/defines.mk_r obj/serial/ddMd/defines.mk
 
-# Parallel build directory (for out-of-source builds with MPI)
-cp  src/util/defines.mk_r build/parallel/util/defines.mk
-cp  src/inter/defines.mk_r build/parallel/inter/defines.mk
-cp  src/mcMd/defines.mk_r build/parallel/mcMd/defines.mk
-cp  src/ddMd/defines.mk_r build/parallel/ddMd/defines.mk
+# Parallel obj directory (for out-of-source builds with MPI)
+cp  src/util/defines.mk_r obj/parallel/util/defines.mk
+cp  src/inter/defines.mk_r obj/parallel/inter/defines.mk
+cp  src/mcMd/defines.mk_r obj/parallel/mcMd/defines.mk
+cp  src/ddMd/defines.mk_r obj/parallel/ddMd/defines.mk
 
 # Copy repository versions of sources.mk files in user directories.
 # These list user-contributed classes.

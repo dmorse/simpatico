@@ -23,5 +23,5 @@ endif
 mcMd_diagnostics_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_diagnostics_))
 mcMd_diagnostics_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(mcMd_diagnostics_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(mcMd_diagnostics_:.cpp=.o))
 

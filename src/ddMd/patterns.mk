@@ -16,15 +16,15 @@
 CPPDEFS=$(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS)
 
 # Dependencies of source files in src/ddMd on makefile fragments
-MAKE_DEPS= -A$(BLD_DIR)/compiler.mk
-MAKE_DEPS+= -A$(BLD_DIR)/util/defines.mk
-MAKE_DEPS+= -A$(BLD_DIR)/inter/defines.mk
-MAKE_DEPS+= -A$(BLD_DIR)/ddMd/defines.mk
+MAKE_DEPS= -A$(OBJ_DIR)/compiler.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/util/defines.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/inter/defines.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/ddMd/defines.mk
 
 # Pattern rule to compile all class source (*.cpp) files in src/ddMd
-$(BLD_DIR)/%.o:$(SRC_DIR)/%.cpp
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
 endif
 

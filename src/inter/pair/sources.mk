@@ -6,5 +6,5 @@ inter_pair_=\
 inter_pair_SRCS=\
      $(addprefix $(SRC_DIR)/, $(inter_pair_))
 inter_pair_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(inter_pair_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(inter_pair_:.cpp=.o))
 

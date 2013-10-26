@@ -1,9 +1,9 @@
 SRC_DIR_REL =..
 
 include $(SRC_DIR_REL)/compiler.mk
-include $(BLD_DIR)/util/defines.mk
-include $(BLD_DIR)/inter/defines.mk
-include $(BLD_DIR)/ddMd/defines.mk
+include $(OBJ_DIR)/util/defines.mk
+include $(OBJ_DIR)/inter/defines.mk
+include $(OBJ_DIR)/ddMd/defines.mk
 include $(SRC_DIR)/ddMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk
@@ -12,7 +12,7 @@ include $(SRC_DIR)/ddMd/sources.mk
 #-----------------------------------------------------------------------
 # Variable definitions
 
-DDSIM=$(BLD_DIR)/ddMd/ddSim
+DDSIM=$(OBJ_DIR)/ddMd/ddSim
 DDSIM_LIBS= $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 
 #-----------------------------------------------------------------------

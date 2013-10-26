@@ -5,5 +5,5 @@ mcMd_diagnostics_mutable_=\
 mcMd_diagnostics_mutable_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_diagnostics_mutable_))
 mcMd_diagnostics_mutable_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(mcMd_diagnostics_mutable_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(mcMd_diagnostics_mutable_:.cpp=.o))
 

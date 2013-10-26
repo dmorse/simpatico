@@ -23,7 +23,7 @@ modules_hoomd_= \
 modules_hoomd_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_hoomd_))
 modules_hoomd_OBJS=\
-    $(addprefix $(BLD_DIR)/, $(modules_hoomd_:.cpp=.o))
+    $(addprefix $(OBJ_DIR)/, $(modules_hoomd_:.cpp=.o))
 
 #-----------------------------------------------------------------
 # Cuda C files
@@ -34,5 +34,5 @@ modules_hoomd_NVCC_=\
 modules_hoomd_NVCC_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_hoomd_NVCC_))
 modules_hoomd_NVCC_OBJS=\
-    $(addprefix $(BLD_DIR)/, $(modules_hoomd_NVCC_:.cu=.cu.o))
+    $(addprefix $(OBJ_DIR)/, $(modules_hoomd_NVCC_:.cu=.cu.o))
 

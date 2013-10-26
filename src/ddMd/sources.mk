@@ -21,7 +21,7 @@ ddMd_=$(ddMd_chemistry_) $(ddMd_storage_) \
 ddMd_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_))
 ddMd_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(ddMd_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(ddMd_:.cpp=.o))
 
 $(ddMd_LIB): $(ddMd_OBJS)
 	$(AR) rcs $(ddMd_LIB) $(ddMd_OBJS)

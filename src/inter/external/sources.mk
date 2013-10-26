@@ -9,5 +9,5 @@ inter_external_=\
 inter_external_SRCS=\
      $(addprefix $(SRC_DIR)/, $(inter_external_))
 inter_external_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(inter_external_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(inter_external_:.cpp=.o))
 

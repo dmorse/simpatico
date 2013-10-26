@@ -6,5 +6,5 @@ inter_bond_=\
 inter_bond_SRCS=\
      $(addprefix $(SRC_DIR)/, $(inter_bond_))
 inter_bond_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(inter_bond_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(inter_bond_:.cpp=.o))
 

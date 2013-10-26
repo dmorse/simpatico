@@ -4,7 +4,7 @@ Goal: Modify makefile system to allow out of place builds
 In compiler.mk, define
    
    $(SRC_DIR) = source directory (absolute path)
-   $(BLD_DIR) = build directory (absolute path)
+   $(OBJ_DIR) = build directory (absolute path)
 
 -----------------------------------------------------------
 In each subdirectory, in sources.mk, define the following
@@ -13,7 +13,7 @@ variables:
 <directory>_=util_misc.cpp
 
 <directory>_SRCS=(addprefix $(SRC_DIR), <Directory>_)
-<directory>_OBJS=(addprefix $(BLD_DIR), <Directory>_)
+<directory>_OBJS=(addprefix $(OBJ_DIR), <Directory>_)
 
 -----------------------------------------------------------
 In parent directories, concatenate bare variables, without
@@ -22,21 +22,21 @@ prefixes, then add prefixes explicitly.
 parent_ = child1_ child2_ .....
 
 <parent>_SRCS=(addprefix $(SRC_DIR), <parent>_)
-<parent>_OBJS=(addprefix $(BLD_DIR), <parent>_)
+<parent>_OBJS=(addprefix $(OBJ_DIR), <parent>_)
 
 -----------------------------------------------------------
 In editDepend python function, figure out how to replace
-the value of the $(SRC_DIR) with the variable $(BLD_DIR).
+the value of the $(SRC_DIR) with the variable $(OBJ_DIR).
 
 Strategy: Make absolute path to target in build dir, then
-replace value of $(SRC_DIR) with $(BLD_DIR) in the target 
+replace value of $(SRC_DIR) with $(OBJ_DIR) in the target 
 name.
 
 Figure out how to also place dependency files in the build 
 directory. 
 
 makeDep function will require values of $(SRC_DIR) and
-$(BLD_DIR) as command line parameters. 
+$(OBJ_DIR) as command line parameters. 
 -----------------------------------------------------------
 Each build directory should contain:
 

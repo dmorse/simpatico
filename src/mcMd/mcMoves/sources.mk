@@ -18,5 +18,5 @@ mcMd_mcMoves_=\
 mcMd_mcMoves_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_mcMoves_))
 mcMd_mcMoves_OBJS=\
-     $(addprefix $(BLD_DIR)/, $(mcMd_mcMoves_:.cpp=.o))
+     $(addprefix $(OBJ_DIR)/, $(mcMd_mcMoves_:.cpp=.o))
 
