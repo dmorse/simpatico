@@ -15,7 +15,7 @@ run: $(util_tests_OBJS) Test
 
 clean:
 	rm -f $(util_tests_OBJS) Test $(util_tests_OBJS:.o=.d)
-	-rm -f dummy log 
+	-rm -f dummy log count
 
 clean-deps:
 	rm -f $(util_tests_OBJS:.o=.d)

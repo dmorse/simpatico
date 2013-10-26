@@ -17,7 +17,7 @@ run: $(inter_tests_OBJS) Test
 
 clean:
 	rm -f $(inter_tests_OBJS) Test $(inter_tests_OBJS:.o=.d)
-	rm -f log
+	rm -f log count
 
 Test: Test.o $(inter_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
