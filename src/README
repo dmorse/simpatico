@@ -16,8 +16,8 @@ makefile      main makefile
 compiler.mk_r compiler settings (repository version)
 LICENSE       GPL license
 
-The configure script also creates a file compiler.mk, which is created by
+The setup script also creates a file compiler.mk, which is created by
 copying and modifying compiler.mk_r (the default version).
 
-For compilation instructions, see the file doc/manual/user/compile.dox, or the README 
-file in the root directory (the parent of this directory).
+For compilation instructions, see the file doc/manual/user/compile.dox, or 
+the README file in the root directory (the parent of this directory).
