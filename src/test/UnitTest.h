@@ -43,6 +43,8 @@
 * should be used to create the boiler-plate code necessary 
 * to define a unit test runner and to add test methods to 
 * it. 
+*
+* \ingroup Test_Module
 */
 class UnitTest
 {

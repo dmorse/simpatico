@@ -31,8 +31,9 @@ By convention, classes in the McMd and DdMd namespace may use names defined in t
 
   - namespace DdMd depends on namespaces Inter and Util
 
-The main program mdSim.cpp and mcSim.cpp for single processor operation are in the src/mcMd directory.
-The main program ddSim.cpp for parallel MD simulations is in the src/ddMd directory. 
+The main program mdSim.cpp and mcSim.cpp for single processor operation are in the src/mcMd directory.  The main program ddSim.cpp for parallel MD simulations is in the src/ddMd directory. 
+
+Each of the namespace level source directories contains a subdirectory named tests/ that contains unit tests for classes in the associated name space. These unit tests are not automatically compiled or run by the build system that compiles the source code.
 
 \section make_object Object Directories
 Compiling a source file with extension *.cpp normally creates both an object file, with file name extension *.o, and a dependency file, with extension *.d. (The dependency file is not created if automatic dependency generation has been disabled.) These two generated files have the same base name as the corresponding source file, with the .cpp extension replaced by .o or .d. The dependency file is created as a side effect of compilation, and contains a makefile target that lists the header files that are included by the source file, along with other dependencies. 
@@ -53,7 +54,15 @@ After the setup script has been run, but before any code is compiled, each of th
       mcMd/
       ddMd/
 \endcode
-Here we use the OBJ_DIR to represent the path to the relevant object directory. Each of the four namespace level subdirectories util/, inter/, mcMd/ and ddMd/ has a set of files of the form:
+Here we use the OBJ_DIR to represent the path to the relevant object directory.  The files in the main object directory OBJ_DIR have the following purposes:
+
+   - makefile is the main makefile for building a program in a particular object directory.
+
+   - compiler.mk is the main build configuration file. The file compiler.mk_r is a default repository version of compiler.mk. 
+
+    - The configure file is a bash script that may be used to edit the build configuration files in order to enable or disable particular features.
+
+Each of the four namespace level subdirectories (util/, inter/, mcMd/ and ddMd/) contains an additional set of files of the form:
 \code
    namespace/
       makefile
@@ -62,21 +71,15 @@ Here we use the OBJ_DIR to represent the path to the relevant object directory. 
       \tests
          makefile
 \endcode
-Here, we use "namespace/" to represent the namespace level directory name util/, inter/, mcMd/ or ddMd/. The obj/serial and obj/parallel directories are empty except for the above files. The same set of files also exist in the src/ directory, but there appear alongside source files and a variety of other files.  
-
-The files in the main object directory OBJ_DIR have the following purposes:
-
-   - makefile is the main makefile for building a program in a particular object directory.
-
-   - compiler.mk is the main build configuration file. The file compiler.mk_r is a default repository version of compiler.mk. 
-
-    - The configure file is a bash script that may be used to edit the build configuration files in order to enable or disable particular features.
-
-The files in each namespace level directory have the following purposes:
+Here, we use "namespace/" to represent the namespace level directory name util/, inter/, mcMd/ or ddMd/. The files in each namespace level directory have the following purposes:
 
     - namespace/makefile defines an "all" target that compiles all of the source code in the corresponding subdirectory of src/, or the corresponding C++ namespace.
 
     - namespace/defines.mk file is a makefile fragment that specifies whether particular program features will be enabled or disabled in the code in the corresponding namespace. The defines.mk_r is a default repository version of the corresponding defines.mk file. 
+
+The makefile system that is used to build the source code does not automatically compile or run the unit tests. Unit tsts for each namespace may be compiled by cd'ing to the tests/ subdirectory of the corresponding namespace-level directory and entering "make all", to compile all of the tests, followed by "make run" to run them. 
+
+The obj/serial and obj/parallel directories are initially empty except for the files listed above. The same set of files also exist in the src/ directory, but appear there alongside source files and a variety of other files.  
 
 \section make_configuration Build Configuration Files
 The files named compiler.mk and defines.mk will be referred to in what follows as build configuration files. Each of these files is a makefile fragment that is created by the setup script by making a copy of the corresponding file with extension *.mk_r in the same directory.  These files are included by the object directory and namespace level makefiles. 

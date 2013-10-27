@@ -103,6 +103,8 @@
 * runner class, e.g., to TestClass_Runner. In the above example, this 
 * macro is used as a class name to instantiate an instance of the of
 * required test runner. 
+*
+* \ingroup Test_Module
 */
 template <class UnitTestClass>
 class UnitTestRunner : public TestRunner

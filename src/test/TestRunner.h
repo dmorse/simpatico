@@ -55,6 +55,8 @@
 * calls the addFilePrefix method of each of its children, thus
 * allowing a common prefix to be added to the file paths used
 * by all of its children.
+* 
+* \ingroup Test_Module
 */
 class TestRunner
 {

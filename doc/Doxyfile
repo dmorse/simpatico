@@ -672,6 +672,7 @@ INPUT                  = ../src/util \
                          ../src/inter \
                          ../src/mcMd \
                          ../src/ddMd \
+                         ../src/test \
                          manual
 
 # This tag can be used to specify the character encoding of the source files

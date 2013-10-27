@@ -13,6 +13,8 @@
 
 /**
 * A TestRunner comprised of one or more child TestRunners.
+*
+* \ingroup Test_Module
 */
 class CompositeTestRunner : public TestRunner
 {

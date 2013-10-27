@@ -9,7 +9,9 @@
 
 /**
 * A UnitTest with a built-in input file.
- **/
+*
+* \ingroup Test_Module
+**/
 class ParamFileTest : public UnitTest 
 {
 
