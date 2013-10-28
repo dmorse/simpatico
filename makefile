@@ -21,14 +21,21 @@ mcMd-mpi:
 ddMd:
 	cd obj/parallel; make ddMd
 
-test:
-	cd obj/serial/util/tests; make all; make run
-	cd obj/serial/inter/tests; make all; make run
-	cd obj/serial/mcMd/tests; make all; make run
-	cd obj/parallel/ddMd/tests; make all; make run
+# ==============================================================================
+# Test targets
+
+test-serial:
+	@cd obj/serial/util/tests; make all; make run
+	@cd obj/serial/inter/tests; make all; make run
+	@cd obj/serial/mcMd/tests; make all; make run
 	@cat obj/serial/util/tests/count > count
 	@cat obj/serial/inter/tests/count >> count
 	@cat obj/serial/mcMd/tests/count >> count
+	@cat count
+	@rm -f count
+
+test-parallel:
+	cd obj/parallel/ddMd/tests; make all; make run
 	@cat obj/parallel/ddMd/tests/count >> count
 	@cat count
 	@rm -f count

@@ -15,6 +15,8 @@
 
 /**
 * Abstraction of a C array of command line arguments.
+*
+* \ingroup Test_Module
 */
 class CommandLine
 {
