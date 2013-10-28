@@ -5,4 +5,4 @@ example1 constructs and runs a UnitTestRunner.
 example2 constructs and runs a CompositeTestRunner for two unit tests.
 
 example3 is compiled only if UTIL_MPI is defined, and demonstrates
-demonstrates use of a UnitTestRunner for an MPI job.
+use of a UnitTestRunner for an MPI job.

@@ -1,4 +1,4 @@
-SRC_DIR_REL =../../../src
+SRC_DIR_REL =../..
 include $(SRC_DIR_REL)/compiler.mk
 
 #-----------------------------------------------------------------------
@@ -15,11 +15,13 @@ clean:
 	rm -f $(EXES)
 #-----------------------------------------------------------------------
 # Path(s) to search for header files. 
-INCLUDES= -I$(TESTS_DIR)/test
+TEST_DIR=$(SRC_DIR)/test
+INCLUDES= -I$(TEST_DIR)
 
 # Extra dependencies for all source files
-ALLDEPS= $(SRC_DIR)/compiler.mk ../UnitTest.h ../TestRunner.h \
-         ../UnitTestRunner.h ../CompositeTestRunner.h
+ALLDEPS= $(SRC_DIR)/compiler.mk \
+        $(TEST_DIR)/UnitTest.h $(TEST_DIR)/TestRunner.h \
+        $(TEST_DIR)/UnitTestRunner.h $(TEST_DIR)/CompositeTestRunner.h
 #-----------------------------------------------------------------------
 
 example1: example1.cpp $(ALLDEPS)
