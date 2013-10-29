@@ -8,10 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ActorFactory.h" // Class header
+#include "ModifierFactory.h" // Class header
 
-// Actors 
-// #include "Actor1.h"
+// Modifiers 
+// #include "Modifier1.h"
 
 namespace DdMd
 {
@@ -21,25 +21,25 @@ namespace DdMd
    /*
    * Constructor.
    */
-   ActorFactory::ActorFactory(Simulation& simulation)
+   ModifierFactory::ModifierFactory(Simulation& simulation)
     : simulationPtr_(&simulation)
    {}
 
    /* 
-   * Return a pointer to an instance of Actor subclass className.
+   * Return a pointer to an instance of Modifier subclass className.
    */
-   Actor* ActorFactory::factory(const std::string &className) const
+   Modifier* ModifierFactory::factory(const std::string &className) const
    {
-      Actor* ptr = 0;
+      Modifier* ptr = 0;
 
       // Try subfactories first (if any)
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
       #if 0
-      // Simulation Actors
-      if (className == "Actor1") {
-         ptr = new Actor1(simulation());
+      // Simulation Modifiers
+      if (className == "Modifier1") {
+         ptr = new Modifier1(simulation());
       } // else 
       #endif
 

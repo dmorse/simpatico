@@ -10,7 +10,7 @@
 
 #include <util/param/Manager.h>        // base class template
 #include <util/containers/GPArray.h>   // member template
-#include "Actor.h"                     // template parameter
+#include "Modifier.h"                     // template parameter
 
 namespace DdMd
 {
@@ -20,16 +20,16 @@ namespace DdMd
    class Simulation;
 
    /**
-   * Manager for a set of Actor objects.
+   * Manager for a set of Modifier objects.
    *
-   * An ActorManager maintains a list of Actor objects and 
+   * An ModifierManager maintains a list of Modifier objects and 
    * provides methods to execute specified actions at various 
    * points before and during the main integration loop. 
    *
    * \ingroup DdMd_Manager_Module
-   * \ingroup DdMd_Actor_Module
+   * \ingroup DdMd_Modifier_Module
    */
-   class ActorManager : public Manager<Actor>
+   class ModifierManager : public Manager<Modifier>
    {
 
    public:
@@ -37,17 +37,17 @@ namespace DdMd
       /**
       * Default constructor.
       */
-      ActorManager();
+      ModifierManager();
 
       /**
       * Constructor.
       */
-      ActorManager(Simulation& simulation);
+      ModifierManager(Simulation& simulation);
 
       /**
       * Destructor.
       */
-      ~ActorManager();
+      ~ModifierManager();
 
       /**
       * Read parameter file. 
@@ -59,9 +59,9 @@ namespace DdMd
       /**
       * Return pointer to a new default factory.
       *
-      * Virtual, inherited from Manager<Actor>.
+      * Virtual, inherited from Manager<Modifier>.
       */
-      Factory<Actor>* newDefaultFactory() const;
+      Factory<Modifier>* newDefaultFactory() const;
 
       /// \name Setup actions 
       //@{ 
@@ -104,24 +104,24 @@ namespace DdMd
       /// Pointer to parent Simulation.
       Simulation* simulationPtr_;
 
-      // Arrays of actors for specific actions.
-      GPArray<Actor> setupPostExchangeActors_;
-      GPArray<Actor> setupPostNeighborActors_;
-      GPArray<Actor> setupPostForceActors_;
-      GPArray<Actor> preIntegrate1Actors_;
-      GPArray<Actor> postIntegrate1Actors_;
-      GPArray<Actor> preTransformActors_;
-      GPArray<Actor> preExchangeActors_;
-      GPArray<Actor> postExchangeActors_;
-      GPArray<Actor> postNeighborActors_;
-      GPArray<Actor> preUpdateActors_;
-      GPArray<Actor> postUpdateActors_;
-      GPArray<Actor> preForceActors_;
-      GPArray<Actor> postForceActors_;
-      GPArray<Actor> endOfStepActors_;
-      GPArray<Actor> exchangeActors_;
-      GPArray<Actor> updateActors_;
-      GPArray<Actor> reverseUpdateActors_;
+      // Arrays of modifiers for specific actions.
+      GPArray<Modifier> setupPostExchangeModifiers_;
+      GPArray<Modifier> setupPostNeighborModifiers_;
+      GPArray<Modifier> setupPostForceModifiers_;
+      GPArray<Modifier> preIntegrate1Modifiers_;
+      GPArray<Modifier> postIntegrate1Modifiers_;
+      GPArray<Modifier> preTransformModifiers_;
+      GPArray<Modifier> preExchangeModifiers_;
+      GPArray<Modifier> postExchangeModifiers_;
+      GPArray<Modifier> postNeighborModifiers_;
+      GPArray<Modifier> preUpdateModifiers_;
+      GPArray<Modifier> postUpdateModifiers_;
+      GPArray<Modifier> preForceModifiers_;
+      GPArray<Modifier> postForceModifiers_;
+      GPArray<Modifier> endOfStepModifiers_;
+      GPArray<Modifier> exchangeModifiers_;
+      GPArray<Modifier> updateModifiers_;
+      GPArray<Modifier> reverseUpdateModifiers_;
 
    };
 
