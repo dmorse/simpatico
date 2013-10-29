@@ -107,12 +107,14 @@ namespace DdMd
       /**
       * Bit flag constant associated with particular virtual methods.
       */
-      namespace Flags { 
-         static const Bit SetupExchange;
+      class Flags 
+      { 
+      public:
+         static const Bit SetupPostExchange;
          static const Bit SetupPostNeighbor;
          static const Bit SetupPostForce;
          static const Bit PreIntegrate1;
-         static const Bit PostIntegrate2;
+         static const Bit PostIntegrate1;
          static const Bit PreTransform;
          static const Bit PreExchange;
          static const Bit PostExchange;
@@ -122,10 +124,10 @@ namespace DdMd
          static const Bit PreForce;
          static const Bit PostForce;
          static const Bit EndOfStep;
-         static const Bit PackExchange;
-         static const Bit PackUpdate;
-         static const Bit PackReverseUpdate;
-      }
+         static const Bit Exchange;
+         static const Bit Update;
+         static const Bit ReverseUpdate;
+      };
 
       /**
       * Return true if a flag is set, false otherwise.
@@ -204,18 +206,6 @@ namespace DdMd
    */
    inline Simulation& Actor::simulation()
    {  return *simulationPtr_; }
-
-   /*
-   * Return true if a flag is set, false otherwise.
-   */
-   inline bool Actor::isSet(Bit flag)
-   {  flag.isSet(flags_); }
-
-   /*
-   * Return true if a flag is set, false otherwise.
-   */
-   inline void Actor::set(Bit flag)
-   {  flag.set(flags_); }
 
 }
 #endif

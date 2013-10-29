@@ -17,6 +17,14 @@ namespace DdMd
    using namespace Util;
 
    /*
+   * Default constructor.
+   */
+   ActorManager::ActorManager()
+   : Manager<Actor>(),
+     simulationPtr_(0)
+   {}
+
+   /*
    * Constructor.
    */
    ActorManager::ActorManager(Simulation& simulation)
@@ -42,56 +50,56 @@ namespace DdMd
       Actor* ptr;
       for  (int i = 0; i < size(); ++i) {
          ptr = &(*this)[i];
-         if (ptr->hasSetupPostExchange()) { 
-            actionsSetupPostExchange_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::SetupPostExchange)) { 
+            setupPostExchangeActors_.append(*ptr); 
          }
-         if (ptr->hasSetupPostNeighbor()) { 
-            actionsSetupPostNeighbor_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::SetupPostNeighbor)) { 
+            setupPostNeighborActors_.append(*ptr); 
          }
-         if (ptr->hasSetupPostForce()) { 
-            actionsSetupPostForce_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::SetupPostForce)) { 
+            setupPostForceActors_.append(*ptr); 
          }
-         if (ptr->hasPreIntegrate()) { 
-            actionsPreIntegrate_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::PreIntegrate1)) { 
+            preIntegrate1Actors_.append(*ptr); 
          }
-         if (ptr->hasPostIntegrate()) { 
-            actionsPostIntegrate_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::PostIntegrate1)) { 
+            postIntegrate1Actors_.append(*ptr); 
          }
-         if (ptr->hasPreTransform()) { 
-            actionsPreTransform_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::PreTransform)) { 
+            preTransformActors_.append(*ptr); 
          }
-         if (ptr->hasPreExchange()) { 
-            actionsPreExchange_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::PreExchange)) { 
+            preExchangeActors_.append(*ptr); 
          }
-         if (ptr->hasPostExchange()) { 
-            actionsPostExchange_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::PostExchange)) { 
+            postExchangeActors_.append(*ptr); 
          }
-         if (ptr->hasPostNeighbor()) { 
-            actionsPostNeighbor_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::PostNeighbor)) { 
+            postNeighborActors_.append(*ptr); 
          }
-         if (ptr->hasPreUpdate()) { 
-            actionsPreUpdate_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::PreUpdate)) { 
+            preUpdateActors_.append(*ptr); 
          }
-         if (ptr->hasPostUpdate()) { 
-            actionsPostUpdate_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::PostUpdate)) { 
+            postUpdateActors_.append(*ptr); 
          }
-         if (ptr->hasPreForce()) { 
-            actionsPreForce_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::PreForce)) { 
+            preForceActors_.append(*ptr); 
          }
-         if (ptr->hasPostForce()) { 
-            actionsPostForce_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::PostForce)) { 
+            postForceActors_.append(*ptr); 
          }
-         if (ptr->hasEndOfStep()) { 
-            actionsEndOfStep_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::EndOfStep)) { 
+            endOfStepActors_.append(*ptr); 
          }
-         if (ptr->hasPackExchange()) { 
-            actionsUnpackExchange_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::Exchange)) { 
+            exchangeActors_.append(*ptr); 
          }
-         if (ptr->hasPackUpdate()) { 
-            actionsUnpackUpdate_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::Update)) { 
+            updateActors_.append(*ptr); 
          }
-         if (ptr->hasPackReverseUpdate()) { 
-            actionsUnpackReverseUpdate_.push_back(ptr); 
+         if (ptr->isSet(Actor::Flags::ReverseUpdate)) { 
+            reverseUpdateActors_.append(*ptr); 
          }
       } // end for i
    }
@@ -100,50 +108,50 @@ namespace DdMd
 
    void ActorManager::setupPostExchange() 
    {
-      int n = actionsSetupPostExchange_.size();
+      int n = setupPostExchangeActors_.size();
       for (int i = 0; i < n; ++i) {
-         actionsSetupPostExchange_[i]->setupPostExchange();
+         setupPostExchangeActors_[i].setupPostExchange();
       }
    }
  
    void ActorManager::setupPostNeighbor()
    {
-      int n = actionsSetupPostNeighbor_.size();
+      int n = setupPostNeighborActors_.size();
       for (int i = 0; i < n; ++i) {
-         actionsSetupPostNeighbor_[i]->setupPostNeighbor();
+         setupPostNeighborActors_[i].setupPostNeighbor();
       }
    }
 
    void ActorManager::setupPostForce()
    {
-      int n = actionsSetupPostForce_.size();
+      int n = setupPostForceActors_.size();
       for (int i = 0; i < n; ++i) {
-         actionsSetupPostForce_[i]->setupPostForce();
+         setupPostForceActors_[i].setupPostForce();
       }
    }
 
    // Integration
 
-   void ActorManager::preIntegrate(long iStep)
+   void ActorManager::preIntegrate1(long iStep)
    {
       Actor* ptr;
-      int n = actionsPreIntegrate_.size();
+      int n = preIntegrate1Actors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPreIntegrate_[i];
+         ptr = &preIntegrate1Actors_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->preIntegrate();
+            ptr->preIntegrate1();
          }
       }
    }
  
-   void ActorManager::postIntegrate(long iStep)
+   void ActorManager::postIntegrate1(long iStep)
    {
       Actor* ptr;
-      int n = actionsPostIntegrate_.size();
+      int n = postIntegrate1Actors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPostIntegrate_[i];
+         ptr = &postIntegrate1Actors_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->postIntegrate();
+            ptr->postIntegrate1();
          }
       }
    }
@@ -151,9 +159,9 @@ namespace DdMd
    void ActorManager::preTransform(long iStep)
    {
       Actor* ptr;
-      int n = actionsPreTransform_.size();
+      int n = preTransformActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPreTransform_[i];
+         ptr = &preTransformActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->preTransform();
          }
@@ -163,9 +171,9 @@ namespace DdMd
    void ActorManager::preExchange(long iStep)
    {
       Actor* ptr;
-      int n = actionsPreExchange_.size();
+      int n = preExchangeActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPreExchange_[i];
+         ptr = &preExchangeActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->preExchange();
          }
@@ -175,9 +183,9 @@ namespace DdMd
    void ActorManager::postExchange(long iStep)
    {
       Actor* ptr;
-      int n = actionsPostExchange_.size();
+      int n = postExchangeActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPostExchange_[i];
+         ptr = &postExchangeActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->postExchange();
          }
@@ -187,9 +195,9 @@ namespace DdMd
    void ActorManager::postNeighbor(long iStep)
    {
       Actor* ptr;
-      int n = actionsPostNeighbor_.size();
+      int n = postNeighborActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPostNeighbor_[i];
+         ptr = &postNeighborActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->postNeighbor();
          }
@@ -199,9 +207,9 @@ namespace DdMd
    void ActorManager::preUpdate(long iStep)
    {
       Actor* ptr;
-      int n = actionsPreUpdate_.size();
+      int n = preUpdateActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPreUpdate_[i];
+         ptr = &preUpdateActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->preUpdate();
          }
@@ -211,9 +219,9 @@ namespace DdMd
    void ActorManager::postUpdate(long iStep)
    {
       Actor* ptr;
-      int n = actionsPostUpdate_.size();
+      int n = postUpdateActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPostUpdate_[i];
+         ptr = &postUpdateActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->postUpdate();
          }
@@ -223,9 +231,9 @@ namespace DdMd
    void ActorManager::preForce(long iStep)
    {
       Actor* ptr;
-      int n = actionsPreForce_.size();
+      int n = preForceActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPreForce_[i];
+         ptr = &preForceActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->preForce();
          }
@@ -235,9 +243,9 @@ namespace DdMd
    void ActorManager::postForce(long iStep)
    {
       Actor* ptr;
-      int n = actionsPostForce_.size();
+      int n = postForceActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPostForce_[i];
+         ptr = &postForceActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->postForce();
          }
@@ -247,24 +255,23 @@ namespace DdMd
    void ActorManager::endOfStep(long iStep)
    {
       Actor* ptr;
-      int n = actionsEndOfStep_.size();
+      int n = endOfStepActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsEndOfStep_[i];
+         ptr = &endOfStepActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->endOfStep();
          }
       }
    }
- 
 
    // Communication
 
    void ActorManager::packExchange(long iStep)
    {
       Actor* ptr;
-      int n = actionsPackExchange_.size();
+      int n = exchangeActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPackExchange_[i];
+         ptr = &exchangeActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->packExchange();
          }
@@ -274,9 +281,9 @@ namespace DdMd
    void ActorManager::unpackExchange(long iStep)
    {
       Actor* ptr;
-      int n = actionsUnpackExchange_.size();
+      int n = exchangeActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsUnpackExchange_[i];
+         ptr = &exchangeActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->unpackExchange();
          }
@@ -286,9 +293,9 @@ namespace DdMd
    void ActorManager::packUpdate(long iStep)
    {
       Actor* ptr;
-      int n = actionsPackUpdate_.size();
+      int n = updateActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPackUpdate_[i];
+         ptr = &updateActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->packUpdate();
          }
@@ -298,9 +305,9 @@ namespace DdMd
    void ActorManager::unpackUpdate(long iStep)
    {
       Actor* ptr;
-      int n = actionsUnpackUpdate_.size();
+      int n = updateActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsUnpackUpdate_[i];
+         ptr = &updateActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->unpackUpdate();
          }
@@ -310,9 +317,9 @@ namespace DdMd
    void ActorManager::packReverseUpdate(long iStep)
    {
       Actor* ptr;
-      int n = actionsPackReverseUpdate_.size();
+      int n = reverseUpdateActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsPackReverseUpdate_[i];
+         ptr = &reverseUpdateActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->packReverseUpdate();
          }
@@ -322,9 +329,9 @@ namespace DdMd
    void ActorManager::unpackReverseUpdate(long iStep)
    {
       Actor* ptr;
-      int n = actionsUnpackReverseUpdate_.size();
+      int n = reverseUpdateActors_.size();
       for (int i = 0; i < n; ++i) {
-         ptr = actionsUnpackReverseUpdate_[i];
+         ptr = &reverseUpdateActors_[i];
          if (ptr->isAtInterval(iStep)) {
             ptr->unpackReverseUpdate();
          }

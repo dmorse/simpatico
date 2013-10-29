@@ -15,7 +15,7 @@ namespace DdMd
 
    using namespace Util;
 
-   const Bit Actor::Flags::SetupExchange = 0;
+   const Bit Actor::Flags::SetupPostExchange = 0;
    const Bit Actor::Flags::SetupPostNeighbor = 1;
    const Bit Actor::Flags::SetupPostForce = 2;
    const Bit Actor::Flags::PreIntegrate1 = 3;
@@ -29,9 +29,18 @@ namespace DdMd
    const Bit Actor::Flags::PreForce = 12;
    const Bit Actor::Flags::PostForce = 13;
    const Bit Actor::Flags::EndOfStep = 14;
-   const Bit Actor::Flags::PackExchange = 15;
-   const Bit Actor::Flags::PackUpdate = 16;
-   const Bit Actor::Flags::PackReverseUpdate = 17;
+   const Bit Actor::Flags::Exchange = 15;
+   const Bit Actor::Flags::Update = 16;
+   const Bit Actor::Flags::ReverseUpdate = 17;
+
+   /*
+   * Default constructor.
+   */
+   Actor::Actor()
+    : flags_(0),
+      interval_(1),
+      simulationPtr_(0)
+   {}
 
    /*
    * Constructor.
