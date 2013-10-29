@@ -27,6 +27,7 @@ namespace DdMd
    * points before and during the main integration loop. 
    *
    * \ingroup DdMd_Manager_Module
+   * \ingroup DdMd_Actor_Module
    */
    class ActorManager : public Manager<Actor>
    {

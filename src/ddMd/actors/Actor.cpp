@@ -61,7 +61,7 @@ namespace DdMd
    * Return true if a flag is set, false otherwise.
    */
    bool Actor::isSet(Bit flag)
-   {  flag.isSet(flags_); }
+   {  return flag.isSet(flags_); }
 
    /*
    * Return true if a flag is set, false otherwise.

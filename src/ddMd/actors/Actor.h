@@ -44,6 +44,8 @@ namespace DdMd
    * is initialized to 1 (every time step) in the base Actor class 
    * constructor, but may be reset to a greater value in the subclass 
    * readParam method, by calling the protected readInterval() method.
+   *
+   * \ingroup DdMd_Actor_Module
    */
    class Actor : public ParamComposite
    {

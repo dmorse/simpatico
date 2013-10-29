@@ -21,7 +21,24 @@ namespace DdMd
    */
    ActorManager::ActorManager()
    : Manager<Actor>(),
-     simulationPtr_(0)
+     simulationPtr_(0),
+     setupPostExchangeActors_(),
+     setupPostNeighborActors_(),
+     setupPostForceActors_(),
+     preIntegrate1Actors_(),
+     postIntegrate1Actors_(),
+     preTransformActors_(),
+     preExchangeActors_(),
+     postExchangeActors_(),
+     postNeighborActors_(),
+     preUpdateActors_(),
+     postUpdateActors_(),
+     preForceActors_(),
+     postForceActors_(),
+     endOfStepActors_(),
+     exchangeActors_(),
+     updateActors_(),
+     reverseUpdateActors_()
    {}
 
    /*
@@ -29,7 +46,24 @@ namespace DdMd
    */
    ActorManager::ActorManager(Simulation& simulation)
    : Manager<Actor>(),
-     simulationPtr_(&simulation)
+     simulationPtr_(&simulation),
+     setupPostExchangeActors_(),
+     setupPostNeighborActors_(),
+     setupPostForceActors_(),
+     preIntegrate1Actors_(),
+     postIntegrate1Actors_(),
+     preTransformActors_(),
+     preExchangeActors_(),
+     postExchangeActors_(),
+     postNeighborActors_(),
+     preUpdateActors_(),
+     postUpdateActors_(),
+     preForceActors_(),
+     postForceActors_(),
+     endOfStepActors_(),
+     exchangeActors_(),
+     updateActors_(),
+     reverseUpdateActors_()
    {}
 
    /*

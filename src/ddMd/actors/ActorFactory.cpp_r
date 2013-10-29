@@ -11,8 +11,7 @@
 #include "ActorFactory.h" // Class header
 
 // Actors 
-// #include "WriteConfig.h"
-// #include "OutputEnergy.h"
+// #include "Actor1.h"
 
 namespace DdMd
 {
@@ -39,8 +38,8 @@ namespace DdMd
 
       #if 0
       // Simulation Actors
-      if (className == "WriteConfig") {
-         ptr = new WriteConfig(simulation());
+      if (className == "Actor1") {
+         ptr = new Actor1(simulation());
       } // else 
       #endif
 
