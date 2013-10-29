@@ -170,7 +170,7 @@ namespace Util
       
    // Method definitions
 
-   /**
+   /*
    * Constructor.
    */
    template <typename Data, int Capacity>
@@ -233,28 +233,28 @@ namespace Util
       return *this;
    }
  
-   /**
+   /*
    * Destructor.
    */
    template <typename Data, int Capacity>
-   inline SSet<Data, Capacity>::~SSet()
+   SSet<Data, Capacity>::~SSet()
    {}
 
-   /**
+   /*
    * Return physical capacity of array.
    */
    template <typename Data, int Capacity>
    inline int SSet<Data, Capacity>::capacity() const
    { return Capacity; }
 
-   /**
+   /*
    * Return logical size of this array.
    */
    template <typename Data, int Capacity>
    inline int SSet<Data, Capacity>::size() const
    { return size_; }
 
-   /**
+   /*
    * Set a PArrayIterator to the beginning of this Array.
    *
    * \param iterator PArrayIterator, initialized on output. 
@@ -266,10 +266,8 @@ namespace Util
       iterator.setEnd(const_cast<Data**>(ptrs_ + size_));
    }
 
-   /**
+   /*
    * Set a PArrayIterator to the beginning of this Array.
-   *
-   * \param iterator PArrayIterator, initialized on output. 
    */
    template <typename Data, int Capacity>
    inline void SSet<Data, Capacity>::begin(ConstPArrayIterator<Data> &iterator) const
@@ -278,11 +276,8 @@ namespace Util
       iterator.setEnd(const_cast<Data**>(ptrs_ + size_));
    }
 
-   /**
+   /*
    * Mimic C array subscripting.
-   *
-   * \param  i array index
-   * \return reference to element i
    */
    template <typename Data, int Capacity>
    inline Data& SSet<Data, Capacity>::operator[] (int i)
@@ -292,11 +287,8 @@ namespace Util
       return *ptrs_[i];
    }
 
-   /**
+   /*
    * Mimic C array subscripting.
-   *
-   * \param i array index
-   * \return const reference to element i
    */
    template <typename Data, int Capacity>
    inline const Data& SSet<Data, Capacity>::operator[] (int i) const
@@ -306,7 +298,7 @@ namespace Util
       return *ptrs_[i];
    }
 
-   /**
+   /*
    * Append data to the end of the array.
    *
    * \param data Data to add to end of array.
@@ -321,7 +313,7 @@ namespace Util
       ++size_;
    }
 
-   /**
+   /*
    * Clear out the container.
    */
    template <typename Data, int Capacity>
@@ -365,7 +357,7 @@ namespace Util
 
    }
 
-   /**
+   /*
    * Return true if an object is in the set, false otherwise.
    */
    template <typename Data, int Capacity>
@@ -410,7 +402,6 @@ namespace Util
          return -1;
       }
    }
-
 
 } 
 #endif
