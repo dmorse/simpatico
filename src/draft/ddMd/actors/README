@@ -1,7 +1,0 @@
-This directory contains unfinished code to define Actor classes.
-An Actor is a class that implements actions before, during, or 
-after the integration loop. 
-
-The code to actually implement the actions, which will require
-modifications to the integrator classes and Exchanger class, 
-has not yet been written.
