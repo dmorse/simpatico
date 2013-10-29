@@ -75,11 +75,9 @@ namespace DdMd
       capacity_ = capacity;
 
       // Initialize values.
-      unsigned int localId;
       for (int i = 0; i < capacity_; ++i) {
         data_[i].localId_ = (i << 1);
         data_[i].arrayPtr_ = this;
-        localId = (data_[i].localId_ >> 1);
         ids_[i] = -1;
         masks_[i].clear();
         plans_[i].clearFlags();
