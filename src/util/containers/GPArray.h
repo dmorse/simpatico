@@ -173,7 +173,7 @@ namespace Util
    * Destructor.
    */
    template <typename Data>
-   inline GPArray<Data>::~GPArray()
+   GPArray<Data>::~GPArray()
    {
       size_ = 0; 
       if (isAllocated()) {

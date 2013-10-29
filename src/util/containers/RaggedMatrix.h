@@ -126,7 +126,7 @@ namespace Util
    * Destructor.
    */
    template <typename Data>
-   inline RaggedMatrix<Data>::~RaggedMatrix()
+   RaggedMatrix<Data>::~RaggedMatrix()
    {}
 
    /*

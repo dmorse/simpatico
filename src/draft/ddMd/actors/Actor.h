@@ -1,14 +1,15 @@
 #ifndef DDMD_ACTOR_H
 #define DDMD_ACTOR_H
 
+#include <util/param/ParamComposite.h>  // base class
+#include <util/misc/Bit.h>              // constants in namespace
+
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
-
-#include <util/param/ParamComposite.h>  // base class
 
 #include <iostream>
 
@@ -19,7 +20,7 @@ namespace DdMd
    class Simulation;
 
    /**
-   * An Actor defines actions taken during execution.
+   * An Actor defines actions taken during integration.
    *
    * The Actor base class declares a variety of virtual "action" methods 
    * that may be re-implemented by subclasses to define actions that 
@@ -29,32 +30,14 @@ namespace DdMd
    * postForce() method is invoked within the main integration loop 
    * immediately after evaluation of all forces. 
    *
-   * For each action method, there is a protected boolean data member 
-   * whose name is given by the name of the associated method prefixed 
-   * by "has", and suffixed by an underscore. For example, the boolean
-   * flag associated with the postForce() method is hasPostForce_.
-   * Each such boolean flag is initialized to false in the constructor
-   * of the Actor base class, and must be reset to true by the constructor
-   * of a subclass to activate execution of the associated method. Each
-   * action method will be executed if and only if the corresponding 
-   * boolean flag is set to true in a subclass constructor. Each action
-   * method has an empty default implementation, so activating a method
-   * without re-implementing the method thus does nothing.
-   *
-   * Each subclass of Actor must thus re-implement one or more of the
-   * virtual action methods, and set the associated boolean flags to 
-   * true to activate these methods. For example, to implement only
-   * one action that should be executed immediately after forces are 
-   * evaluated, one would create a a subcalss of Actor that:
-   *
-   * (1) Re-implements the virtual postForce() method to execute the
-   * desired action, and 
-   *
-   * (2) Re-initializes the protected variable hasPostForce_ to true 
-   * in the subclass constructor.
+   * For each action method, there is a boolean flag. Each action method 
+   * will be executed if and only if the corresponding flag is set to 
+   * true. All flags are set to false in the base class constructor, but
+   * should be set to true in the subclass constructor to activate a
+   * method. 
    *
    * Each Actor class also has an associated interval integer member. 
-   * A activated action method of an Actor will be executed only on 
+   * An activated action method of an Actor will be executed only on 
    * time steps that are multiples of this interval. Different intervals 
    * are not defined for different action methods: a single interval 
    * value is defined for each Actor object. The value of the interval 
@@ -68,7 +51,12 @@ namespace DdMd
    public:
 
       /**
-      * Default constructor.
+      * Default constructor (for unit testing)
+      */
+      Actor();
+
+      /**
+      * Constructor (for use in simulation).
       */
       Actor(Simulation& simulation);
 
@@ -88,54 +76,61 @@ namespace DdMd
       /// \name Integration actions (within main loop)
       //@{ 
 
-      virtual void preIntegrate() {};
-      virtual void postIntegrate() {};
+      virtual void preIntegrate1() {};
+      virtual void postIntegrate1() {};
    
       virtual void preTransform() {};
       virtual void preExchange() {};
-      virtual void packExchange() {};
-      virtual void unpackExchange() {};
       virtual void postExchange() {};
       virtual void postNeighbor() {};
-   
       virtual void preUpdate() {};
-      virtual void packUpdate() {};
-      virtual void unpackUpdate() {};
       virtual void postUpdate() {};
-   
       virtual void preForce() {};
-      virtual void packReverseUpdate() {};
-      virtual void unpackReverseUpdate() {};
       virtual void postForce() {};
-
       virtual void endOfStep() {};
 
       //@} 
-      /// \name Boolean flags (accessors)
+      /// \name Interprocessor communication actions 
       //@{ 
 
-      bool hasSetupPostExchange() const;
-      bool hasSetupPostNeighbor() const;
-      bool hasSetupPostForce() const;
+      virtual void packExchange() {};
+      virtual void unpackExchange() {};
+      virtual void packUpdate() {};
+      virtual void unpackUpdate() {};
+      virtual void packReverseUpdate() {};
+      virtual void unpackReverseUpdate() {};
 
-      bool hasPreIntegrate() const;
-      bool hasPostIntegrate() const;
-      bool hasPreTransform() const;
-      bool hasPreExchange() const;
-      bool hasPackExchange() const;
-      bool hasUnpackExchange() const;
-      bool hasPostExchange() const;
-      bool hasPostNeighbor() const;
-      bool hasPreUpdate() const;
-      bool hasPackUpdate() const;
-      bool hasUnpackUpdate() const;
-      bool hasPostUpdate() const;
-      bool hasPreForce() const;
-      bool hasPackReverseUpdate() const;
-      bool hasUnpackReverseUpdate() const;
-      bool hasPostForce() const;
-      bool hasEndOfStep() const;
+      //@} 
+      /// \name Bit Flags 
+      //@{
 
+      /**
+      * Bit flag constant associated with particular virtual methods.
+      */
+      namespace Flags { 
+         static const Bit SetupExchange;
+         static const Bit SetupPostNeighbor;
+         static const Bit SetupPostForce;
+         static const Bit PreIntegrate1;
+         static const Bit PostIntegrate2;
+         static const Bit PreTransform;
+         static const Bit PreExchange;
+         static const Bit PostExchange;
+         static const Bit PostNeighbor;
+         static const Bit PreUpdate;
+         static const Bit PostUpdate;
+         static const Bit PreForce;
+         static const Bit PostForce;
+         static const Bit EndOfStep;
+         static const Bit PackExchange;
+         static const Bit PackUpdate;
+         static const Bit PackReverseUpdate;
+      }
+
+      /**
+      * Return true if a flag is set, false otherwise.
+      */
+      bool isSet(Bit flag);
 
       //@} 
       /// \name Interval methods
@@ -173,36 +168,17 @@ namespace DdMd
       */
       Simulation& simulation();
 
-      /// Number of simulation steps between subsequent actions.
-      long  interval_;
-
-      /// \name Boolean flags 
-      //@{ 
-
-      bool hasSetupPostExchange_;
-      bool hasSetupPostNeighbor_;
-      bool hasSetupPostForce_;
-      bool hasPreIntegrate_;
-      bool hasPostIntegrate_;
-      bool hasPreTransform_;
-      bool hasPreExchange_;
-      bool hasPostExchange_;
-      bool hasPostNeighbor_;
-      bool hasPreUpdate_;
-      bool hasPostUpdate_;
-      bool hasPreForce_;
-      bool hasPostForce_;
-      bool hasEndOfStep_;
-      bool hasPackExchange_;
-      bool hasUnpackExchange_;
-      bool hasPackUpdate_;
-      bool hasUnpackUpdate_;
-      bool hasPackReverseUpdate_;
-      bool hasUnpackReverseUpdate_;
-
-      //@}
+      /**
+      * Set the flag associated with a particular action.
+      */
+      void set(Bit flag);
 
    private:
+
+      unsigned int flags_;
+
+      /// Number of simulation steps between subsequent actions.
+      long  interval_;
 
       /// Pointer to parent Simulation
       Simulation* simulationPtr_;
@@ -229,65 +205,17 @@ namespace DdMd
    inline Simulation& Actor::simulation()
    {  return *simulationPtr_; }
 
-   inline bool Actor::hasSetupPostExchange() const
-   {  return hasSetupPostExchange_; }
+   /*
+   * Return true if a flag is set, false otherwise.
+   */
+   inline bool Actor::isSet(Bit flag)
+   {  flag.isSet(flags_); }
 
-   inline bool Actor::hasSetupPostNeighbor() const
-   {  return hasSetupPostNeighbor_; }
-
-   inline bool Actor::hasSetupPostForce() const
-   {  return hasSetupPostForce_; }
-
-   inline bool Actor::hasPreIntegrate() const
-   {  return hasPreIntegrate_; }
-
-   inline bool Actor::hasPostIntegrate() const
-   {  return hasPostIntegrate_; }
-
-   inline bool Actor::hasPreTransform() const
-   {  return hasPreTransform_; }
-
-   inline bool Actor::hasPreExchange() const
-   {  return hasPreExchange_; }
-
-   inline bool Actor::hasPostExchange() const
-   {  return hasPostExchange_; }
-
-   inline bool Actor::hasPostNeighbor() const
-   {  return hasPostNeighbor_; }
-
-   inline bool Actor::hasPreUpdate() const
-   {  return hasPreUpdate_; }
-
-   inline bool Actor::hasPostUpdate() const
-   {  return hasPostUpdate_; }
-
-   inline bool Actor::hasPreForce() const
-   {  return hasPreForce_; }
-
-   inline bool Actor::hasPostForce() const
-   {  return hasPostForce_; }
-
-   inline bool Actor::hasEndOfStep() const
-   {  return hasEndOfStep_; }
-
-   inline bool Actor::hasPackExchange() const
-   {  return hasPackExchange_; }
-
-   inline bool Actor::hasUnpackExchange() const
-   {  return hasUnpackExchange_; }
-
-   inline bool Actor::hasPackUpdate() const
-   {  return hasPackUpdate_; }
-
-   inline bool Actor::hasUnpackUpdate() const
-   {  return hasUnpackUpdate_; }
-
-   inline bool Actor::hasPackReverseUpdate() const
-   {  return hasPackReverseUpdate_; }
-
-   inline bool Actor::hasUnpackReverseUpdate() const
-   {  return hasUnpackReverseUpdate_; }
+   /*
+   * Return true if a flag is set, false otherwise.
+   */
+   inline void Actor::set(Bit flag)
+   {  flag.set(flags_); }
 
 }
 #endif

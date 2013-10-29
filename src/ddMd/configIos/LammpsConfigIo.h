@@ -93,6 +93,14 @@ namespace DdMd
          Vector velocity;
          int    typeId;
          int    id;
+
+         IoAtom()
+          : position(0.0),
+            velocity(0.0),
+            typeId(-1),
+            id(-1)
+         {}
+
       };
 
       /**

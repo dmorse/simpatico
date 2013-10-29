@@ -1,9 +1,9 @@
-SRC_DIR_REL =../..
+OBJ_DIR_REL =../..
 
-include $(SRC_DIR_REL)/compiler.mk
-include $(SRC_DIR_REL)/util/defines.mk
-include $(SRC_DIR_REL)/util/patterns.mk
-include $(SRC_DIR_REL)/util/misc/sources.mk
+include $(OBJ_DIR_REL)/compiler.mk
+include $(OBJ_DIR)/util/defines.mk
+include $(SRC_DIR)/util/patterns.mk
+include $(SRC_DIR)/util/misc/sources.mk
 
 all: $(util_misc_OBJS)
 

@@ -401,7 +401,7 @@ namespace Util
    * Set an ArrayIterator to the beginning of this Array.
    */
    template <class Data>
-   inline
+   inline 
    void GArray<Data>::begin(ArrayIterator<Data> &iterator)
    {
       iterator.setCurrent(data_);
