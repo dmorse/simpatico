@@ -25,7 +25,7 @@ public:
       printMethod(TEST_FUNC);
 
       Bit bit(3);
-      TEST_ASSERT(bit.value() == 8);
+      TEST_ASSERT(bit.mask() == 8);
    }
 
    void testIsSet() 
@@ -48,6 +48,7 @@ public:
       TEST_ASSERT(!bit.isSet(35));
       TEST_ASSERT(!bit.isSet(39));
       TEST_ASSERT(bit.isSet(40));
+      TEST_ASSERT(bit.mask() == 8);
    }
 
    void testSet() 
@@ -62,6 +63,7 @@ public:
       bit.set(flags);
       TEST_ASSERT(bit.isSet(flags));
       TEST_ASSERT(flags == 47);
+      TEST_ASSERT(bit.mask() == 8);
    }
 
    void testClear() 
@@ -76,6 +78,7 @@ public:
       bit.set(flags);
       TEST_ASSERT(flags == 47);
       TEST_ASSERT(bit.isSet(flags));
+      TEST_ASSERT(bit.mask() == 8);
    }
 
 };

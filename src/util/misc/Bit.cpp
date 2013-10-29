@@ -23,7 +23,7 @@ namespace Util
       if (shift > sizeof(unsigned int)*CHAR_BIT) {
          UTIL_THROW("Shift is too large");
       }
-      value_ = 1 << shift;  
+      mask_ = 1 << shift;  
    }
 
 }

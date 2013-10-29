@@ -51,12 +51,12 @@ namespace Util
       /**
       * Return integer with only this bit set.
       */
-      unsigned int value() const;
+      unsigned int mask() const;
 
    private:
 
       /// Integer with this bit set, all others clear.
-      unsigned int value_;
+      unsigned int mask_;
    
    };
 
@@ -64,25 +64,25 @@ namespace Util
    * Set this bit in the flags parameter.
    */
    inline void Bit::set(unsigned int& flags) const
-   {  flags |= value_; }
+   {  flags |= mask_; }
 
    /*
    * Clear this bit in the flags parameter.
    */
    inline void Bit::clear(unsigned int& flags) const
-   {  flags &= (~value_); }
+   {  flags &= (~mask_); }
 
    /*
    * Is this bit set in the flags integer?
    */
    inline bool Bit::isSet(unsigned int flags) const
-   {  return bool(flags & value_); }
+   {  return bool(flags & mask_); }
 
    /*
    * Return unsigned int with only this bit set.
    */
-   inline unsigned int Bit::value() const
-   {  return value_; }
+   inline unsigned int Bit::mask() const
+   {  return mask_; }
    
 }
 #endif
