@@ -197,7 +197,7 @@ namespace Util
    * Destructor.
    */
    template <typename Data, int Capacity>
-   inline FPArray<Data, Capacity>::~FPArray()
+   FPArray<Data, Capacity>::~FPArray()
    {}
 
    /**
