@@ -49,8 +49,6 @@ namespace DdMd
    */
    void PairList::allocate(int atomCapacity, int pairCapacity , double cutoff) 
    {
-      int i;
-
       atomCapacity_ = atomCapacity;
       pairCapacity_ = pairCapacity;
       cutoff_       = cutoff;

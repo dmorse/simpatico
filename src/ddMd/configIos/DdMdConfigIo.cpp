@@ -69,14 +69,10 @@ namespace DdMd
          file >> Label(sectionLabel);
          file >> Label(nGroupLabel) >> nGroup;
          Group<N>* groupPtr;
-         int i, j, k;
          distributor.setup();
-         for (i = 0; i < nGroup; ++i) {
+         for (int i = 0; i < nGroup; ++i) {
             groupPtr = distributor.newPtr();
             file >> *groupPtr;
-            for (j = 0; j < 2; ++j) {
-               k = groupPtr->atomId(j);
-            }
             distributor.add();
          }
          // Send any groups not sent previously.
@@ -138,8 +134,7 @@ namespace DdMd
          Atom*  atomPtr;
          int  id;
          int  typeId;
-         int  rank;
-         for(int i = 0; i < nAtom; ++i) {
+         for (int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
@@ -155,7 +150,7 @@ namespace DdMd
             file >> atomPtr->velocity();
 
             // Add atom to list for sending.
-            rank = atomDistributor().addAtom();
+            atomDistributor().addAtom();
 
          }
 

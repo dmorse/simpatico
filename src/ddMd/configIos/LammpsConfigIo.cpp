@@ -212,12 +212,11 @@ namespace DdMd
          atomDistributor().setup();
          
          // Read atoms
-         Vector r;
-         Atom*  atomPtr;
+         Vector r(0.0);
+         Atom*  atomPtr = 0;
          int id;
          int typeId;
          int moleculeId;
-         int rank;
          IntVector shift;
 
          for (int i = 0; i < nAtom; ++i) {
@@ -237,7 +236,7 @@ namespace DdMd
             file >> shift;
 
             // Add atom to list for sending.
-            rank = atomDistributor().addAtom();
+            atomDistributor().addAtom();
 
          }
 

@@ -77,10 +77,19 @@ namespace DdMd
    private:
 
       struct IoAtom {
+
          Vector position;
          Vector velocity;
-         int    typeId;
-         int    id;
+         int typeId;
+         int id;
+
+         IoAtom()
+          : position(0.0),
+            velocity(0.0),
+            typeId(-1),
+            id(-1)
+         {}
+
       };
 
       /**
