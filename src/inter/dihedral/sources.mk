@@ -1,6 +1,9 @@
-inter_dihedral_SRCS=\
-    $(SRC_DIR)/inter/dihedral/CosineDihedral.cpp \
-    $(SRC_DIR)/inter/dihedral/MultiHarmonicDihedral.cpp 
+inter_dihedral_=\
+    inter/dihedral/CosineDihedral.cpp \
+    inter/dihedral/MultiHarmonicDihedral.cpp 
 
-inter_dihedral_OBJS=$(inter_dihedral_SRCS:.cpp=.o)
+inter_dihedral_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(inter_dihedral_))
+inter_dihedral_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(inter_dihedral_:.cpp=.o))
 

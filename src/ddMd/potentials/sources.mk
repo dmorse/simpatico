@@ -1,25 +1,31 @@
 include $(SRC_DIR)/ddMd/potentials/pair/sources.mk
-include $(SRC_DIR)/ddMd/potentials/bond/sources.mk
 
-ddMd_potentials_SRCS=\
-    $(SRC_DIR)/ddMd/potentials/Potential.cpp\
-    $(ddMd_potentials_pair_SRCS) \
-    $(ddMd_potentials_bond_SRCS) \
-    $(ddMd_potentials_external_SRCS)
+ddMd_potentials_= \
+   ddMd/potentials/Potential.cpp \
+   $(ddMd_potentials_pair_) 
+
+ifdef INTER_BOND
+include $(SRC_DIR)/ddMd/potentials/bond/sources.mk
+ddMd_potentials_+=$(ddMd_potentials_bond_)
+endif
 
 ifdef INTER_ANGLE
 include $(SRC_DIR)/ddMd/potentials/angle/sources.mk
-ddMd_potentials_SRCS+=$(ddMd_potentials_angle_SRCS)
+ddMd_potentials_+=$(ddMd_potentials_angle_)
 endif
 
 ifdef INTER_DIHEDRAL
 include $(SRC_DIR)/ddMd/potentials/dihedral/sources.mk
-ddMd_potentials_SRCS+=$(ddMd_potentials_dihedral_SRCS)
+ddMd_potentials_+=$(ddMd_potentials_dihedral_)
 endif
 
 ifdef INTER_EXTERNAL
 include $(SRC_DIR)/ddMd/potentials/external/sources.mk
-ddMd_potentials_SRCS+=$(ddMd_potentials_external_SRCS)
+ddMd_potentials_+=$(ddMd_potentials_external_)
 endif
 
-ddMd_potentials_OBJS=$(ddMd_potentials_SRCS:.cpp=.o)
+ddMd_potentials_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(ddMd_potentials_))
+ddMd_potentials_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(ddMd_potentials_:.cpp=.o))
+

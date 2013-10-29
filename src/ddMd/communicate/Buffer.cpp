@@ -10,10 +10,10 @@
 
 #include "Buffer.h"
 #include "Domain.h"
+#include <util/misc/Memory.h>
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Group.h>
 #include <util/format/Int.h>
-#include <util/mpi/MpiLogger.h>
 
 namespace DdMd
 {
@@ -50,7 +50,14 @@ namespace DdMd
    * Destructor.
    */
    Buffer::~Buffer()
-   {}
+   {
+      if (sendBufferBegin_) {
+         Memory::deallocate<char>(sendBufferBegin_, bufferCapacity_);
+      }
+      if (recvBufferBegin_) {
+         Memory::deallocate<char>(recvBufferBegin_, bufferCapacity_);
+      }
+   }
 
    /*
    * Allocate send and recv buffers.
@@ -192,17 +199,11 @@ namespace DdMd
       bufferCapacity_ += dataCapacity_ + 4 * sizeof(int);
 
       // Allocate memory for the send buffer 
-      sendBufferBegin_ = new char[bufferCapacity_];
-      if (sendBufferBegin_ == 0) {
-         UTIL_THROW("Error: memory not allocated for send buffer");
-      }
+      Memory::allocate<char>(sendBufferBegin_, bufferCapacity_);
       sendBufferEnd_ = sendBufferBegin_ + bufferCapacity_;
 
       // Allocate memory for the receive buffer
-      recvBufferBegin_ = new char[bufferCapacity_];
-      if (recvBufferBegin_ == 0) {
-         UTIL_THROW("Error: memory not allocated for recv buffer");
-      }
+      Memory::allocate<char>(recvBufferBegin_, bufferCapacity_);
       recvBufferEnd_ = recvBufferBegin_ + bufferCapacity_;
 
       recvPtr_ = recvBufferBegin_;

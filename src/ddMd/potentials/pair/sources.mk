@@ -1,6 +1,9 @@
-ddMd_potentials_pair_SRCS= \
-    $(SRC_DIR)/ddMd/potentials/pair/PairPotential.cpp \
-    $(SRC_DIR)/ddMd/potentials/pair/PairFactory.cpp 
+ddMd_potentials_pair_= \
+    ddMd/potentials/pair/PairPotential.cpp \
+    ddMd/potentials/pair/PairFactory.cpp 
 
-ddMd_potentials_pair_OBJS=$(ddMd_potentials_pair_SRCS:.cpp=.o)
+ddMd_potentials_pair_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(ddMd_potentials_pair_))
+ddMd_potentials_pair_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(ddMd_potentials_pair_:.cpp=.o))
 

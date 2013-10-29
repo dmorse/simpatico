@@ -3,8 +3,41 @@ import os.path
 from string import *
 from TextWrapper import *
 
-def editDepend(infile, outfile, extraDependencies=''):
-   file  = open(infile, 'r')
+def makeDepend(cfile, options, srcdir, blddir, extraDependencies=''):
+
+   # Isolate base source file name 
+   base = os.path.basename(cfile)
+   groups = base.split('.')
+   base = groups[0]
+
+   # Calculate source file directory path relative to srcdir
+   abspath = os.path.abspath(cfile)
+   relpath = os.path.relpath(abspath, srcdir)
+   reldir  = os.path.dirname(relpath)
+
+   # Construct paths to subdirectories of build and src directories
+   if (reldir != '.' and reldir != ''):
+      blddir = os.path.normpath(os.path.join(blddir, reldir))
+      srcdir = os.path.normpath(os.path.join(srcdir, reldir))
+
+   pfile = os.path.normpath(os.path.join(srcdir, base)) + '.p'
+   dfile = os.path.normpath(os.path.join(blddir, base)) + '.d'
+
+   # Create compiler command to calculate dependencies
+   command  = 'g++ '
+   command += options
+   command += ' -MM -MF '
+   command += pfile + ' '
+   command += cfile
+   #print command
+   os.system(command)
+
+   #Edit dependency file
+   editDepend(pfile, dfile, blddir, extraDependencies)
+   os.remove(pfile)
+
+def editDepend(pfile, dfile, blddir, extraDependencies):
+   file  = open(pfile, 'r')
    lines = file.readlines()
    file.close()
 
@@ -13,14 +46,9 @@ def editDepend(infile, outfile, extraDependencies=''):
    target   = groups[0]
    lines[0] = groups[1]
 
-   # Replace target by absolute path
-   # (The gcc -M option yields only the target base name)
-   dirname = os.path.dirname(infile)
-   if (dirname != '.' and dirname != ''):
-      dirname = os.path.abspath(dirname)
-   else:
-      dirname = os.getcwd()
-   target = os.path.normpath(os.path.join(dirname, target))
+   # Replace target by file in build directory
+   base = os.path.basename(target)
+   target = os.path.normpath(os.path.join(blddir, base))
 
    # Replace dependencies by absolute paths
    text = TextWrapper('\\\n', 8)
@@ -44,33 +72,8 @@ def editDepend(infile, outfile, extraDependencies=''):
        for dep in deps:
           path = os.path.abspath(dep)
           text.append(path)
-      
-   
 
-   file  = open(outfile, 'w')
+   file  = open(dfile, 'w')
    file.write(str(text))
    file.close()
 
-
-def makeDepend(cpath, options, extraDependencies=''):
-
-   # Separate source file name into components
-   dir    = os.path.dirname(cpath)
-   base   = os.path.basename(cpath)
-   groups = base.split('.')
-   base   = groups[0]
-   if dir != '':
-      base  = dir + os.sep + base
-
-   # Create command
-   command  = 'g++ '
-   command += options
-   command += ' -MM -MF '
-   command += base + '.p '
-   command += cpath
-   #print command
-   os.system(command)
-
-   #Edit dependency file
-   editDepend(base + '.p', base + '.d', extraDependencies)
-   os.remove(base + '.p')

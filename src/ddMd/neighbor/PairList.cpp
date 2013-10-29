@@ -59,18 +59,6 @@ namespace DdMd
       atom2Ptrs_.reserve(pairCapacity_);
       first_.reserve(atomCapacity_ + 1);
   
-      #if 0 
-      // Initialize array elements to null values
-      for (i=0; i < atomCapacity_; ++i) {
-         atom1Ptrs_[i] = 0;
-         first_[i] = PairList::NullIndex;
-      }
-      first_[atomCapacity_] = PairList::NullIndex;
-      for (i=0; i < pairCapacity_; ++i) {
-         atom2Ptrs_[i] = 0;
-      }
-      #endif
-
       isAllocated_ = true;
    }
 

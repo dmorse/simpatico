@@ -15,14 +15,14 @@
 CPPDEFS=$(UTIL_DEFS)
 
 # Dependencies of source files in src/util on makefile fragments
-MAKE_DEPS= -A$(SRC_DIR)/compiler.mk
-MAKE_DEPS+= -A$(SRC_DIR)/util/defines.mk
+MAKE_DEPS= -A$(OBJ_DIR)/compiler.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/util/defines.mk
 
 # Pattern rule to compile *.cpp class source (*.cpp) files in src/util
-%.o:%.cpp
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) $<
+	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
 endif
 
 #-----------------------------------------------------------------------

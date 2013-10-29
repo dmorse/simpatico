@@ -1,12 +1,13 @@
 
-util_archives_SRCS=\
-    $(SRC_DIR)/util/archives/MemoryOArchive.cpp \
-    $(SRC_DIR)/util/archives/MemoryIArchive.cpp \
-    $(SRC_DIR)/util/archives/MemoryCounter.cpp \
-    $(SRC_DIR)/util/archives/BinaryFileOArchive.cpp \
-    $(SRC_DIR)/util/archives/BinaryFileIArchive.cpp \
-    $(SRC_DIR)/util/archives/TextFileOArchive.cpp \
-    $(SRC_DIR)/util/archives/TextFileIArchive.cpp 
+util_archives_=\
+    util/archives/MemoryOArchive.cpp \
+    util/archives/MemoryIArchive.cpp \
+    util/archives/MemoryCounter.cpp \
+    util/archives/BinaryFileOArchive.cpp \
+    util/archives/BinaryFileIArchive.cpp \
+    util/archives/TextFileOArchive.cpp \
+    util/archives/TextFileIArchive.cpp 
 
-util_archives_OBJS=$(util_archives_SRCS:.cpp=.o)
+util_archives_SRCS=$(addprefix $(SRC_DIR)/, $(util_archives_))
+util_archives_OBJS=$(addprefix $(OBJ_DIR)/, $(util_archives_:.cpp=.o))
 

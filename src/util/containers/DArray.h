@@ -9,6 +9,7 @@
 */
 
 #include <util/containers/Array.h>
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 
@@ -120,7 +121,7 @@ namespace Util
       if (!other.isAllocated()) {
          UTIL_THROW("Other DArray must be allocated.");
       }
-      data_     = new Data[other.capacity_];
+      Memory::allocate(data_, other.capacity_);
       capacity_ = other.capacity_;
       for (int i = 0; i < capacity_; ++i) {
          data_[i] = other.data_[i];
@@ -133,8 +134,9 @@ namespace Util
    template <class Data>
    DArray<Data>::~DArray()
    {
-      if (data_) {
-         delete [] data_;
+      if (isAllocated()) {
+         Memory::deallocate<Data>(data_, capacity_);
+         capacity_ = 0;
       }
    }
 
@@ -151,13 +153,13 @@ namespace Util
    template <class Data>
    DArray<Data>& DArray<Data>::operator = (const DArray<Data>& other) 
    {
+      // Check for self assignment
+      if (this == &other) return *this;
+
       // Precondition
       if (!other.isAllocated()) {
          UTIL_THROW("Other DArray must be allocated.");
       }
-
-      // Check for self assignment
-      if (this == &other) return *this;
 
       if (!isAllocated()) {
          allocate(other.capacity());
@@ -183,13 +185,13 @@ namespace Util
    template <class Data>
    void DArray<Data>::allocate(int capacity) 
    {
-      if (!(data_ == 0)) {
-         UTIL_THROW("Cannot re-allocate a DArray");
+      if (isAllocated()) {
+         UTIL_THROW("Attempt to re-allocate a DArray");
       }
       if (capacity <= 0) {
-         UTIL_THROW("Cannot allocate a DArray with capacity <= 0");
+         UTIL_THROW("Attempt to allocate with capacity <= 0");
       }
-      data_     = new Data[capacity];
+      Memory::allocate<Data>(data_, capacity);
       capacity_ = capacity;
    }
 
@@ -201,11 +203,10 @@ namespace Util
    template <class Data>
    void DArray<Data>::deallocate() 
    {
-      if (!data_) {
+      if (!isAllocated()) {
          UTIL_THROW("Array is not allocated");
       }
-      delete [] data_;
-      data_ = 0;
+      Memory::deallocate<Data>(data_, capacity_);
       capacity_ = 0;
    }
 
@@ -214,7 +215,7 @@ namespace Util
    */
    template <class Data>
    inline bool DArray<Data>::isAllocated() const 
-   {  return !(data_ == 0); }
+   {  return (bool)data_; }
 
    /*
    * Serialize a DArray to/from an Archive.

@@ -23,7 +23,9 @@ namespace DdMd
       simulationPtr_(&simulation),
       boundaryPtr_(&simulation.boundary_),
       atomStoragePtr_(&simulation.atomStorage_),
+      #ifdef INTER_BOND
       bondStoragePtr_(&simulation.bondStorage_),
+      #endif
       #ifdef INTER_ANGLE
       angleStoragePtr_(&simulation.angleStorage_),
       #endif
@@ -31,7 +33,9 @@ namespace DdMd
       dihedralStoragePtr_(&simulation.dihedralStorage_),
       #endif
       pairPotentialPtr_(simulation.pairPotentialPtr_),
+      #ifdef INTER_BOND
       bondPotentialPtr_(simulation.bondPotentialPtr_),
+      #endif
       #ifdef INTER_ANGLE
       anglePotentialPtr_(simulation.anglePotentialPtr_),
       #endif
@@ -48,7 +52,9 @@ namespace DdMd
       exchangerPtr_(&simulation.exchanger_),
       fileMasterPtr_(simulation.fileMasterPtr_),
       nAtomType_(simulation.nAtomType_),
+      #ifdef INTER_BOND
       nBondType_(simulation.nBondType_),
+      #endif
       #ifdef INTER_ANGLE
       nAngleType_(simulation.nAngleType_),
       #endif

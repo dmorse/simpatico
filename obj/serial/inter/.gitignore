@@ -1,0 +1,4 @@
+defines.mk
+*.o
+*.d
+*.a

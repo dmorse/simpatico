@@ -16,17 +16,28 @@
 namespace Util
 {
 
-   bool  Label::isMatch_ = true;
+   /// Define static variables.
+   bool  Label::isClear_ = true;
    std::string  Label::input_;
 
+   // Static member functions
+
    /*
-   * Clear read buffer (static variable).
+   * Clear input buffer (static member function).
    */
    void Label::clear()
    {
-      isMatch_ = true;
       input_.clear(); 
+      isClear_ = true;
    }
+
+   /*
+   * Is the input buffer clear? (static member function).
+   */
+   bool Label::isClear() 
+   {  return isClear_; }
+
+   // Non-static member functions
 
    /*
    * Constructor.
@@ -62,14 +73,13 @@ namespace Util
    std::istream& operator>>(std::istream& in, Label label)
    {
       // If previous input value matched, read a new one.
-      if (label.isMatch_) {
+      if (label.isClear_) {
          in >> label.input_;
+         label.isClear_ = false;
       }
       if (label.input_ == label.label_) {
-         label.isMatch_ = true;
-         label.input_.clear();
+         label.clear(); // Clear label input buffer
       } else {
-         label.isMatch_ = false;
          if (label.isRequired_) {
             Log::file() << "Error reading label"        << std::endl;
             Log::file() << "Expected: " << label.label_ << std::endl;

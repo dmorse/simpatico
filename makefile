@@ -1,91 +1,66 @@
 include src/compiler.mk
 # ==============================================================================
-.PHONY: mcMd ddMd mcMd-mpi \
-        test-mcMd test-mcMd-mpi test-ddMd clean clean-bin \
-        clean-mcMd clean-ddMd clean clean-bin \
-        html clean-html veryclean
-
-all:
-	-rm -f log
-	cd src; make mcMd
-	make test-mcMd
-	cd src; make mcMd-mpi
-	make test-mcMd-mpi
-	cd src; make ddMd
-	make test-ddMd
-	cat log
-	rm log
-
-mcMd:
-	cd src; make mcMd
-	-rm -f log
-	make test-mcMd
-	cat log
-	rm log
-
-mcMd-mpi: 
-	cd src; make mcMd-mpi
-	-rm -f log
-	make test-mcMd-mpi
-	cat log
-	rm log
-
-ddMd:
-	cd src; make ddMd
-	-rm -f log
-	make test-ddMd
-	cat log
-	rm log
+.PHONY: mcMd ddMd mcMd-mpi test \
+        clean-serial clean-parallel clean \
+        html clean-html 
 
 # ==============================================================================
-test-mcMd:
-	./configure -m0
-	cd tests/util; make all; ./Test > log;
-	echo `grep failed tests/util/log` ", "\
-             `grep successful tests/util/log` "in tests/util/log" >> log
-	cd tests/inter; make all; ./Test > log;
-	echo `grep failed tests/inter/log` ", "\
-             `grep successful tests/inter/log` "in tests/inter/log" >> log
-	cd tests/mcMd; make all; ./Test > log;
-	echo `grep failed tests/mcMd/log` ", "\
-             `grep successful tests/mcMd/log` "in tests/mcMd/log" >> log
+# Main targets
 
-test-mcMd-mpi:
-	./configure -m1
-	cd tests/util/mpi; make all; $(MPIRUN) 2 ./Test > log
-	echo `grep failed tests/util/mpi/log` ", "\
-             `grep successful tests/util/mpi/log` "in tests/util/mpi/log" >> log
-	cd tests/util/param/mpi; make all; $(MPIRUN) 2 ./MpiTest > log
-	echo `grep failed tests/util/param/mpi/log` ", "\
-             `grep successful tests/util/param/mpi/log` "in tests/util/param/mpi/log" >> log
+all:
+	cd obj/serial; make mcMd
+	cd obj/parallel; make ddMd
+	cd obj/parallel; make mcMd-mpi
 
-test-ddMd:
-	./configure -m1
-	cd tests/ddMd; make all; $(MPIRUN) 6 ./Test > log;
-	echo `grep failed tests/ddMd/log` ", "\
-             `grep successful tests/ddMd/log` "in tests/ddMd/log" >> log
+mcMd:
+	cd obj/serial; make mcMd
+
+mcMd-mpi: 
+	cd obj/parallel; make mcMd-mpi
+
+ddMd:
+	cd obj/parallel; make ddMd
+
+# ==============================================================================
+# Test targets
+
+test-serial:
+	@cd obj/serial/util/tests; make all; make run
+	@cd obj/serial/inter/tests; make all; make run
+	@cd obj/serial/mcMd/tests; make all; make run
+	@cat obj/serial/util/tests/count > count
+	@cat obj/serial/inter/tests/count >> count
+	@cat obj/serial/mcMd/tests/count >> count
+	@cat count
+	@rm -f count
+
+test-parallel:
+	cd obj/parallel/ddMd/tests; make all; make run
+	@cat obj/parallel/ddMd/tests/count >> count
+	@cat count
+	@rm -f count
+
+
 # ==============================================================================
 # Clean targets
 
-clean-mcMd:
-	cd src; make clean-mcMd
-	cd tests/util; make clean;
-	cd tests/inter; make clean;
-	cd tests/mcMd; make clean;
+clean-serial:
+	cd obj/serial; make clean
 
-clean-ddMd:
-	cd src; make clean-ddMd
-	cd tests/util; make clean;
-	cd tests/inter; make clean;
-	cd tests/ddMd; make clean;
+clean-parallel:
+	cd obj/parallel; make clean
 
 clean:
 	cd src; make clean
-	cd tests; make clean
-	-rm -f log
+	cd obj/serial; make clean
+	cd obj/parallel; make clean
 
-clean-bin:
-	cd src; make clean-bin
+veryclean:
+	cd html; make clean
+	cd obj/serial; make veryclean
+	cd obj/parallel; make veryclean
+	cd src; make veryclean
+
 # ==============================================================================
 # HTML Documentation
  
@@ -94,14 +69,5 @@ html:
 
 clean-html:
 	cd doc; make clean
-
-# ==============================================================================
-# Remove all generated files
-
-veryclean:
-	-rm -f log
-	cd html; make clean
-	cd tests; make clean
-	cd src; make veryclean
 
 # ==============================================================================

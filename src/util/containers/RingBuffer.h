@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -152,10 +153,10 @@ namespace Util
    {
       if (other.capacity_ > 0) {
          assert(other.data_ != 0);
-         data_ = new Data[capacity_];
+         Memory::allocate<Data>(data_, other.capacity_);
          capacity_ = other.capacity_;
-         size_     = other.size_;
-         last_     = other.last_;
+         size_ = other.size_;
+         last_ = other.last_;
          for (int i = 0; i < capacity_; ++i) {
             data_[i] = other.data_[i];
          }
@@ -183,7 +184,7 @@ namespace Util
 
          if (!isAllocated()) {
 
-            data_ = new Data[other.capacity_];
+            Memory::allocate<Data>(data_, other.capacity_);
             capacity_ = other.capacity_;
 
          } else if (capacity_ != other.capacity_) {
@@ -211,7 +212,7 @@ namespace Util
    RingBuffer<Data>::~RingBuffer()
    {
       if (data_) {
-         delete [] data_;
+         Memory::deallocate<Data>(data_, capacity_);
       }
    }
 
@@ -220,7 +221,7 @@ namespace Util
    void  RingBuffer<Data>::allocate(int capacity) 
    {
       if (data_ == 0) {
-         data_     = new Data[capacity];
+         Memory::allocate<Data>(data_, capacity);
          capacity_ = capacity;
       } else {
          UTIL_THROW("Error: Attempt to re-allocate a RingBuffer");

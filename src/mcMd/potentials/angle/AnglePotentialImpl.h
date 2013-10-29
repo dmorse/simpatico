@@ -83,7 +83,7 @@ namespace McMd
       * Returns potential energy for one angle.
       *
       * \param cosTheta  cosine of the bend angle.
-      * \param type      type of bend angle.
+      * \param type  integer angle type index
       */
       double energy(double cosTheta, int type) const;
  
@@ -95,10 +95,31 @@ namespace McMd
       * \param R2     bond vector from atom 2 to 3.
       * \param F1     return force along R1 direction.
       * \param F2     return force along R2 direction.
-      * \param type   type of angle.
+      * \param type   integer angle type index
       */
       void force(const Vector& R1, const Vector& R2,
                        Vector& F1, Vector& F2, int type) const;
+
+      /**
+      * Returns a random bond Angle.
+      *
+      * \param random  an instance of Random object.
+      * \param beta  beta of simulation.
+      * \param type integer angle type index
+      */
+      virtual 
+      double randomAngle(Random* random, double beta, int type) 
+             const;
+
+      /**
+      * Returns Cosine a random bond Angle.
+      *
+      * \param random  an instance of Random object.
+      * \param beta  beta of simulation.
+      * \param type  integer angle type index
+      */
+      virtual 
+      double randomCosineAngle(Random *random, double beta, int type) const;
 
       /**
       * Modify a parameter, identified by a string.
@@ -292,17 +313,33 @@ namespace McMd
    * Return energy for a single angle.
    */
    template <class Interaction>
-   double AnglePotentialImpl<Interaction>::energy(double cosTheta, int angleTypeId) 
+   double AnglePotentialImpl<Interaction>::energy(double cosTheta, int type) 
       const
-   {  return interaction().energy(cosTheta, angleTypeId); }
+   {  return interaction().energy(cosTheta, type); }
 
    /*
    * Return forces for a single angle.
    */
    template <class Interaction>
    void AnglePotentialImpl<Interaction>::force(const Vector& R1, const Vector& R2, 
-                                          Vector& F1, Vector& F2, int typeId) const
-   {  interaction().force(R1, R2, F1, F2, typeId); }
+                                          Vector& F1, Vector& F2, int type) const
+   {  interaction().force(R1, R2, F1, F2, type); }
+
+   /*
+   * Returns a random bond Angle.
+   */
+   template <class Interaction> 
+   double AnglePotentialImpl<Interaction>::randomAngle(Random *random, 
+                                         double beta, int type) const 
+   {  return interaction().randomAngle(random, beta, type); } 
+
+   /*
+   * Returns Cosine a random bond Angle.
+   */
+   template <class Interaction> 
+   double AnglePotentialImpl<Interaction>::randomCosineAngle(Random *random,
+                                               double beta, int type) const
+   {  return interaction().randomCosineAngle(random, beta, type); } 
 
    /*
    * Return angle energy for one Atom. 

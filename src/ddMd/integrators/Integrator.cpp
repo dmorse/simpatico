@@ -172,6 +172,7 @@ namespace DdMd
       #ifdef INTER_EXTERNAL
       if (hasExternal()) {
          externalPotential().computeForces();
+         timer_.stamp(EXTERNAL_FORCE);
       }
       #endif
 
@@ -218,6 +219,7 @@ namespace DdMd
       #ifdef INTER_EXTERNAL
       if (hasExternal()) {
          externalPotential().computeForces();
+         timer_.stamp(EXTERNAL_FORCE);
       }
       #endif
 
@@ -435,31 +437,48 @@ namespace DdMd
           << Dbl(pairForceT*factor2, 12, 6)
           << "   " << Dbl(100.0*pairForceT/time, 12 , 6, true) << std::endl;
       #ifdef INTER_BOND
-      double bondForceT = timer().time(BOND_FORCE);
-      totalT += bondForceT;
-      out << "Bond Forces          " 
-          << Dbl(bondForceT, 12, 6)
-          << "   "
-          << Dbl(bondForceT*factor2, 12, 6)
-          << "   " << Dbl(100.0*bondForceT/time, 12 , 6, true) << std::endl;
+      if (nBondType()) {
+         double bondForceT = timer().time(BOND_FORCE);
+         totalT += bondForceT;
+         out << "Bond Forces          " 
+             << Dbl(bondForceT, 12, 6)
+             << "   "
+             << Dbl(bondForceT*factor2, 12, 6)
+             << "   " << Dbl(100.0*bondForceT/time, 12 , 6, true) << std::endl;
+      }
       #endif
       #ifdef INTER_ANGLE
-      double angleForceT = timer().time(ANGLE_FORCE);
-      totalT += angleForceT;
-      out << "Angle Forces         " 
-          << Dbl(angleForceT, 12, 6)
-          << "   "
-          << Dbl(angleForceT*factor2, 12, 6)
-          << "   " << Dbl(100.0*angleForceT/time, 12 , 6, true) << std::endl;
+      if (nAngleType()) {
+         double angleForceT = timer().time(ANGLE_FORCE);
+         totalT += angleForceT;
+         out << "Angle Forces         " 
+             << Dbl(angleForceT, 12, 6)
+             << "   "
+             << Dbl(angleForceT*factor2, 12, 6)
+             << "   " << Dbl(100.0*angleForceT/time, 12 , 6, true) << std::endl;
+      }
       #endif
       #ifdef INTER_DIHEDRAL
-      double dihedralForceT = timer().time(DIHEDRAL_FORCE);
-      totalT += dihedralForceT;
-      out << "Dihedral Forces      " 
-          << Dbl(dihedralForceT, 12, 6) 
-          << "   "
-          << Dbl(dihedralForceT*factor2, 12, 6)
-          << "   " << Dbl(100.0*dihedralForceT/time, 12 , 6, true) << std::endl;
+      if (nDihedralType()) {
+         double dihedralForceT = timer().time(DIHEDRAL_FORCE);
+         totalT += dihedralForceT;
+         out << "Dihedral Forces      " 
+             << Dbl(dihedralForceT, 12, 6) 
+             << "   "
+             << Dbl(dihedralForceT*factor2, 12, 6)
+             << "   " << Dbl(100.0*dihedralForceT/time, 12 , 6, true) << std::endl;
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      if (hasExternal()) {
+         double externalForceT = timer().time(DIHEDRAL_FORCE);
+         totalT += externalForceT;
+         out << "External Forces      " 
+             << Dbl(externalForceT, 12, 6) 
+             << "   "
+             << Dbl(externalForceT*factor2, 12, 6)
+             << "   " << Dbl(100.0*externalForceT/time, 12 , 6, true) << std::endl;
+      }
       #endif
       double integrate2T = timer().time(INTEGRATE2);
       totalT += integrate2T;
@@ -468,8 +487,6 @@ namespace DdMd
           << "   "
           << Dbl(integrate2T*factor2, 12, 6) 
           << "   " << Dbl(100.0*integrate2T/time, 12, 6, true) << std::endl;
-      //out << "Sum of above         " << Dbl(totalT*ratio, 12, 6) 
-      //    << " sec   " << Dbl(100.0*totalT/time, 12, 6, true) << std::endl;
       out << std::endl;
 
       int buildCounter = pairPotential().pairList().buildCounter(); 

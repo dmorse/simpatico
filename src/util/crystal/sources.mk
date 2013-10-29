@@ -1,7 +1,8 @@
 
-util_crystal_SRCS=$(SRC_DIR)/util/crystal/LatticeSystem.cpp \
-    $(SRC_DIR)/util/crystal/PointGroup.cpp \
-    $(SRC_DIR)/util/crystal/PointSymmetry.cpp 
+util_crystal_=util/crystal/LatticeSystem.cpp \
+    util/crystal/PointGroup.cpp \
+    util/crystal/PointSymmetry.cpp 
 
-util_crystal_OBJS=$(util_crystal_SRCS:.cpp=.o)
+util_crystal_SRCS=$(addprefix $(SRC_DIR)/, $(util_crystal_))
+util_crystal_OBJS=$(addprefix $(OBJ_DIR)/, $(util_crystal_:.cpp=.o))
 

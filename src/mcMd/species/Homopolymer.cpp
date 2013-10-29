@@ -39,30 +39,30 @@ namespace McMd
       read<int>(in,"atomType", atomType_);
       nBond_  = nAtom_ - 1;
       read<int>(in,"bondType", bondType_);
-      #ifdef INTER_ANGLE
-      read<int>(in,"hasAngles", hasAngles_);
+
+      #if INTER_ANGLE
+      hasAngles_ = 0;
+      read<int>(in, "hasAngles", hasAngles_, false); // optional
       if (hasAngles_) {
-         nAngle_ = nBond_ - 1;
-         if (nAngle_ > 0) {
-            read<int>(in,"angleType", angleType_);
+         if (nAtom_ < 3) {
+            UTIL_THROW("Error: Cannot have angles with nAtom < 3");
          }
+         nAngle_ = nAtom_ - 2;
+         read<int>(in, "angleType", angleType_);
       } else {
          nAngle_ = 0;
       }
       #endif
-      #ifdef INTER_DIHEDRAL
-      read<int>(in,"hasDihedrals", hasDihedrals_);
+
+      #if INTER_DIHEDRAL
+      hasDihedrals_ = 0;
+      read<int>(in, "hasDihedrals", hasDihedrals_, false); // optional
       if (hasDihedrals_) {
-         if (nAtom_ > 3) {
-            nDihedral_ = nAtom_ - 3;
-         } else {
-            nDihedral_ = 0;
+         if (nAtom_ < 4) {
+            UTIL_THROW("Error: Cannot have dihedrals with nAtom < 4");
          }
-         if (nDihedral_ > 0) {
-            read<int>(in,"dihedralType", dihedralType_);
-         } else {
-            nDihedral_ = 0;
-         }
+         nDihedral_ = nAtom_ - 3;
+         read<int>(in, "dihedralType", dihedralType_);
       } else {
          nDihedral_ = 0;
       }
@@ -81,7 +81,8 @@ namespace McMd
       nBond_  = nAtom_ - 1;
       loadParameter<int>(ar,"bondType", bondType_);
       #ifdef INTER_ANGLE
-      loadParameter<int>(ar,"hasAngles", hasAngles_);
+      hasAngles_ = 0;
+      loadParameter<int>(ar,"hasAngles", hasAngles_, false);
       if (hasAngles_) {
          nAngle_ = nBond_ - 1;
          if (nAngle_ > 0) {
@@ -92,7 +93,8 @@ namespace McMd
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      loadParameter<int>(ar,"hasDihedrals", hasDihedrals_);
+      hasDihedrals_ = 0;
+      loadParameter<int>(ar,"hasDihedrals", hasDihedrals_, false);
       if (hasDihedrals_) {
          if (nAtom_ > 3) {
             nDihedral_ = nAtom_ - 3;
@@ -101,8 +103,6 @@ namespace McMd
          }
          if (nDihedral_ > 0) {
             loadParameter<int>(ar, "dihedralType", dihedralType_);
-         } else {
-            nDihedral_ = 0;
          }
       } else {
          nDihedral_ = 0;
@@ -122,13 +122,13 @@ namespace McMd
       ar << atomType_;
       ar << bondType_;
       #ifdef INTER_ANGLE
-      ar << hasAngles_;
+      Parameter::saveOptional(ar, hasAngles_, hasAngles_);
       if (hasAngles_ && nAngle_ > 0) {
          ar << angleType_;
       } 
       #endif
       #ifdef INTER_DIHEDRAL
-      ar << hasDihedrals_;
+      Parameter::saveOptional(ar, hasDihedrals_, hasDihedrals_);
       if (hasDihedrals_ && nDihedral_ > 0) {
          ar << dihedralType_;
       } 

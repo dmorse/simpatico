@@ -17,17 +17,34 @@
 # shell variable $PWD.
 # 
 #------------------------------------------------------------------------
+# Copy the compiler.mk files and set the value of $(ROOT_DIR) to $PWD.
+sed "s|=PWD|=$PWD|" src/compiler.mk_r > src/compiler.mk
+sed "s|=PWD|=$PWD|" obj/serial/compiler.mk_r > obj/serial/compiler.mk
+sed "s|=PWD|=$PWD|" obj/parallel/compiler.mk_r > obj/parallel/compiler.mk
 
 # Copy repository (_r) versions of defines.mk makefile fragments.
 # The defines.mk makefile fragments can be used to enable/disable options.
 
+# Source directory (for in-source builds)
 cp  src/util/defines.mk_r src/util/defines.mk
 cp  src/inter/defines.mk_r src/inter/defines.mk
 cp  src/mcMd/defines.mk_r src/mcMd/defines.mk
 cp  src/ddMd/defines.mk_r src/ddMd/defines.mk
 
+# Serial obj directory (for out-of-source builds without MPI)
+cp  src/util/defines.mk_r obj/serial/util/defines.mk
+cp  src/inter/defines.mk_r obj/serial/inter/defines.mk
+cp  src/mcMd/defines.mk_r obj/serial/mcMd/defines.mk
+cp  src/ddMd/defines.mk_r obj/serial/ddMd/defines.mk
+
+# Parallel obj directory (for out-of-source builds with MPI)
+cp  src/util/defines.mk_r obj/parallel/util/defines.mk
+cp  src/inter/defines.mk_r obj/parallel/inter/defines.mk
+cp  src/mcMd/defines.mk_r obj/parallel/mcMd/defines.mk
+cp  src/ddMd/defines.mk_r obj/parallel/ddMd/defines.mk
+
 # Copy repository versions of sources.mk files in user directories.
-# These file list user-contributed classes.
+# These list user-contributed classes.
 cp  src/inter/user/sources.mk_r src/inter/user/sources.mk
 cp  src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
 cp  src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
@@ -60,7 +77,4 @@ cp  src/ddMd/potentials/pair/PairFactory.cpp_r src/ddMd/potentials/pair/PairFact
 
 # Copy typedef for the class that defines boundary conditions
 cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
-
-# Copy the compiler.mk file and set the value of $(ROOT_DIR) to $PWD.
-sed "s|=PWD|=$PWD|" src/compiler.mk_r > src/compiler.mk
 

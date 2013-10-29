@@ -1,10 +1,13 @@
+ddMd_communicate_=\
+    ddMd/communicate/Buffer.cpp \
+    ddMd/communicate/Domain.cpp \
+    ddMd/communicate/AtomDistributor.cpp \
+    ddMd/communicate/Exchanger.cpp \
+    ddMd/communicate/AtomCollector.cpp \
+    ddMd/communicate/Plan.cpp 
 
-ddMd_communicate_SRCS=$(SRC_DIR)/ddMd/communicate/Buffer.cpp \
-    $(SRC_DIR)/ddMd/communicate/Domain.cpp \
-    $(SRC_DIR)/ddMd/communicate/AtomDistributor.cpp \
-    $(SRC_DIR)/ddMd/communicate/Exchanger.cpp \
-    $(SRC_DIR)/ddMd/communicate/AtomCollector.cpp \
-    $(SRC_DIR)/ddMd/communicate/Plan.cpp 
-
-ddMd_communicate_OBJS=$(ddMd_communicate_SRCS:.cpp=.o)
+ddMd_communicate_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(ddMd_communicate_))
+ddMd_communicate_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(ddMd_communicate_:.cpp=.o))
 

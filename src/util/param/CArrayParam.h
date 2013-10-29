@@ -23,17 +23,12 @@ namespace Util
    {
    
    public:
-   
-      /// Constructor.
-      CArrayParam(const char *label, Type *value, int n=0);
- 
-      /** 
-      * Read parameter from stream.
-      *
-      * \param in input stream
+
+      /**   
+      * Constructor.
       */
-      void readParam(std::istream &in);
- 
+      CArrayParam(const char *label, Type *value, int n, bool isRequired = true);
+
       /** 
       * Write parameter to stream.
       *
@@ -41,22 +36,37 @@ namespace Util
       */
       void writeParam(std::ostream &out);
 
-      /**
-      * Load from an archive.
-      *
-      * \param ar loading (input) archive.
-      */
-      void load(Serializable::IArchive& ar);
-
-      /**
-      * Save to an archive.
-      *
-      * \param ar saving (output) archive.
-      */
-      void save(Serializable::OArchive& ar);
-
- 
    protected:
+      
+      /**
+      * Read parameter value from an input stream.
+      * 
+      * \param in input stream from which to read
+      */
+      virtual void readValue(std::istream& in);
+
+      /**
+      * Load bare parameter value from an archive.
+      *
+      * \param ar input archive from which to load
+      */
+      virtual void loadValue(Serializable::IArchive& ar);
+
+      /**
+      * Save parameter value to an archive.
+      *
+      * \param ar output archive to which to save
+      */
+      virtual void saveValue(Serializable::OArchive& ar);
+
+      #ifdef UTIL_MPI
+      /**
+      * Broadcast parameter value within the ioCommunicator.
+      */
+      virtual void bcastValue();
+      #endif
+
+   private:
    
       /// Pointer to value.
       Type* value_;
@@ -70,34 +80,45 @@ namespace Util
    * CArrayParam<Type> constructor.
    */
    template <class Type>
-   CArrayParam<Type>::CArrayParam(const char *label, Type* value, int n)
-    : Parameter(label),
+   CArrayParam<Type>::CArrayParam(const char *label, Type* value, int n, bool isRequired)
+    : Parameter(label, isRequired),
       value_(value),
       n_(n)
    {}
 
    /*
-   * Read a C array parameter.
+   * Read C-array of n values from file.
    */
    template <class Type>
-   void CArrayParam<Type>::readParam(std::istream &in)
-   {
-      if (isIoProcessor()) {
-         in >> label_;
-         in >> value_[0];
-         for (int i = 1; i < n_; ++i) {
-            in >> value_[i];
-         }
-         if (ParamComponent::echo()) {
-            writeParam(Log::file());
-         }
+   void CArrayParam<Type>::readValue(std::istream &in)
+   {  
+      for (int i = 0; i < n_; ++i) {
+         in >> value_[i];
       }
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         bcast<Type>(ioCommunicator(), value_, n_, 0); 
-      }
-      #endif
    }
+
+   /*
+   * Load C-array of n values from an input archive
+   */
+   template <class Type>
+   void CArrayParam<Type>::loadValue(Serializable::IArchive& ar)
+   {  ar.unpack(value_, n_); }
+
+   /*
+   * Save C-array of n values to an output archive
+   */
+   template <class Type>
+   void CArrayParam<Type>::saveValue(Serializable::OArchive& ar)
+   {  ar.pack(value_, n_); }
+
+   #ifdef UTIL_MPI
+   /*
+   * Broadcast an array of n values
+   */
+   template <class Type>
+   void CArrayParam<Type>::bcastValue()
+   {  bcast<Type>(ioCommunicator(), value_, n_, 0); }
+   #endif
 
    /*
    * Write a C array
@@ -105,67 +126,20 @@ namespace Util
    template <class Type>
    void CArrayParam<Type>::writeParam(std::ostream &out) 
    {
-
-      #if 0
-      // Output label
-      out << indent();
-      out << label_;
-
-      // Output values
-      for (int i = 0; i < n_; ++i) {
-         out.setf(std::ios::scientific);
-         out.width(Parameter::Width);
-         out.precision(Parameter::Precision);
-         out << value_[i];
-      }
-      out << std::endl;
-      #endif
-
-      Label space("");
-      for (int i = 0; i < n_; ++i) {
-         if (i == 0) {
-            out << indent() << label_;
-         } else {
-            out << indent() << space;
-         }
-         out << std::right << std::scientific 
-             << std::setprecision(Parameter::Precision) 
-             << std::setw(Parameter::Width)
-             << value_[i] 
-             << std::endl;
-      }
-
-   }
-
-   /*
-   * Load from an archive.
-   */
-   template <class Type>
-   void CArrayParam<Type>::load(Serializable::IArchive& ar)
-   {
-      if (isIoProcessor()) {
+      if (isActive()) {
+         Label space("");
          for (int i = 0; i < n_; ++i) {
-            ar >> value_[i];
+            if (i == 0) {
+               out << indent() << label_;
+            } else {
+               out << indent() << space;
+            }
+            out << std::right << std::scientific 
+                << std::setprecision(Parameter::Precision) 
+                << std::setw(Parameter::Width)
+                << value_[i] 
+                << std::endl;
          }
-         if (ParamComponent::echo()) {
-            writeParam(Log::file());
-         }
-      }
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         bcast<Type>(ioCommunicator(), value_, n_, 0); 
-      }
-      #endif
-   }
-
-   /*
-   * Save to an archive.
-   */
-   template <class Type>
-   void CArrayParam<Type>::save(Serializable::OArchive& ar)
-   {
-      for (int i = 0; i < n_; ++i) {
-         ar << value_[i];
       }
    }
 

@@ -40,7 +40,7 @@ namespace McMd
       moleculeCapacity_(0),
       id_(-1),
       mutatorPtr_(0)
-   {}
+   {  setClassName("Species"); }
 
    /*
    * Destructor.
@@ -560,7 +560,7 @@ namespace McMd
          #ifdef INTER_ANGLE
          // Loop over all angles (if any) in speciesAngles_ array
          int  angleId, id, id2, atomId2(-1);
-         bool hasAngle;
+         bool hasAngles;
          for (angleId = 0; angleId < nAngle_; ++angleId) {
 
             for (id = 0; id < 3; ++id) {
@@ -578,14 +578,14 @@ namespace McMd
                }
 
                // Check that angleId is in atomAngleIdArrays_ for atomId
-               hasAngle = false;
+               hasAngles = false;
                for (j = 0; j < atomAngleIdArrays_[atomId].size(); ++j) {
                   if (atomAngleIdArrays_[atomId][j] == angleId) {
-                     hasAngle = true;
+                     hasAngles = true;
                      break;
                   } 
                }
-               if (!hasAngle) {
+               if (!hasAngles) {
                   UTIL_THROW("AngleId missing from atomAngleIdArrays_");
                }
             }

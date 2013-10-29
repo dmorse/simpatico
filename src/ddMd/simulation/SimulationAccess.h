@@ -27,7 +27,9 @@ namespace DdMd
    class AtomStorage;
    template <int N> class GroupStorage;
    class PairPotential;
+   #ifdef INTER_BOND
    class BondPotential;
+   #endif
    #ifdef INTER_ANGLE
    class AnglePotential;
    #endif
@@ -87,9 +89,11 @@ namespace DdMd
    
       /// Get the AtomStorage.
       AtomStorage& atomStorage();
-   
+  
+      #ifdef INTER_BOND 
       /// Get the BondStorage.
       GroupStorage<2>& bondStorage();
+      #endif
   
       #ifdef INTER_ANGLE 
       /// Get the AngleStorage.
@@ -104,8 +108,10 @@ namespace DdMd
       /// Get the PairPotential.
       PairPotential& pairPotential();
    
+      #ifdef INTER_BOND 
       /// Get the PairPotential.
       BondPotential& bondPotential();
+      #endif
   
       #ifdef INTER_ANGLE 
       /// Get the AnglePotential.
@@ -143,8 +149,10 @@ namespace DdMd
       /// Get maximum number of atom types.
       int nAtomType();
 
+      #ifdef INTER_BOND 
       /// Get maximum number of bond types.
       int nBondType();
+      #endif
 
       #ifdef INTER_ANGLE
       /// Get maximum number of angle types.
@@ -186,8 +194,10 @@ namespace DdMd
       /// Container for all atoms and ghosts.
       AtomStorage*  atomStoragePtr_;
 
+      #ifdef INTER_BOND 
       /// Container for bonds.
       GroupStorage<2>*  bondStoragePtr_;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Container for angles.
@@ -202,8 +212,10 @@ namespace DdMd
       /// Pointer to force/energy evaluator.
       PairPotential* pairPotentialPtr_;
 
+      #ifdef INTER_BOND
       /// Pointer to covalent bond potential.
       BondPotential* bondPotentialPtr_;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Pointer to covalent 3-body angle potential.
@@ -241,8 +253,10 @@ namespace DdMd
       /// Number of distinct atom types.
       int nAtomType_;
 
+      #ifdef INTER_BOND
       /// Number of distinct bond types.
       int nBondType_;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Number of distinct angle types.
@@ -287,8 +301,10 @@ namespace DdMd
    inline AtomStorage& SimulationAccess::atomStorage()
    {  return *atomStoragePtr_; }
 
+   #ifdef INTER_BOND
    inline GroupStorage<2>& SimulationAccess::bondStorage()
    {  return *bondStoragePtr_; }
+   #endif
 
    #ifdef INTER_ANGLE
    inline GroupStorage<3>& SimulationAccess::angleStorage()
@@ -303,8 +319,10 @@ namespace DdMd
    inline PairPotential& SimulationAccess::pairPotential()
    {  return *pairPotentialPtr_; }
 
+   #ifdef INTER_BOND
    inline BondPotential& SimulationAccess::bondPotential()
    {  return *bondPotentialPtr_; }
+   #endif
 
    #ifdef INTER_ANGLE
    inline AnglePotential& SimulationAccess::anglePotential()
@@ -342,8 +360,10 @@ namespace DdMd
    inline int SimulationAccess::nAtomType()
    {  return nAtomType_; }
 
+   #ifdef INTER_BOND
    inline int SimulationAccess::nBondType()
    {  return nBondType_; }
+   #endif
 
    #ifdef INTER_ANGLE
    inline int SimulationAccess::nAngleType()

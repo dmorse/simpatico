@@ -11,8 +11,9 @@
 #     executable files.
 #
 # This file is included by every makefile in the ddMd directory. 
-# It must be included after $(SRC_DIR)/compiler.mk and before
-# $(SRC_DIR)/mcmd/patterns.mk.
+# It should be included after $(SRC_DIR)/compiler.mk and after the
+# $(SRC_DIR)/util/defines.mk and $(SRC_DIR)/inter/defines.mk files,
+# but before $(SRC_DIR)/mcmd/patterns.mk.
 # 
 # Note: The structure of this file is the same as that of defines.mk
 # files in the src/util, src/inter and src/mcMd directories, but this
@@ -41,13 +42,17 @@ DDMD_SUFFIX:=
 # operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_c. 
 
 #-----------------------------------------------------------------------
-# Names of library and executable files.
-# Note: LIB_DIR and BIN_DIR are defined in src/compiler.mk.
+# Path to ddMd library
+# Note: OBJ_DIR is defined in src/compiler.mk.
 
 DDMD_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(DDMD_SUFFIX)
 
 ddMd_LIBNAME=ddMd$(DDMD_ALL_SUFFIX)
-ddMd_LIB=$(LIB_DIR)/lib$(ddMd_LIBNAME).a
+ddMd_LIB=$(OBJ_DIR)/ddMd/lib$(ddMd_LIBNAME).a
+
+#-----------------------------------------------------------------------
+# Path to executable 
+# BIN_DIR is defined in src/compiler.mk.
 
 DDSIM_EXE=$(BIN_DIR)/ddSim$(DDMD_ALL_SUFFIX)
 #-----------------------------------------------------------------------

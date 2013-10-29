@@ -46,7 +46,13 @@ namespace Util
    * Close the log file, if any.
    */
    void Log::close() 
-   {  if (filePtr_) filePtr_->close();  }
+   {  
+      if (filePtr_) {
+         filePtr_->close();  
+      }
+      filePtr_ = 0;
+      streamPtr_ = &std::cout;
+   }
 
    /*
    * Get the log ostream by reference.

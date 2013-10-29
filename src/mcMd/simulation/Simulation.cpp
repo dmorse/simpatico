@@ -192,39 +192,43 @@ namespace McMd
       if (nAtomType_ <= 0) {
          UTIL_THROW("nAtomType must be > 0");
       }
-
       read<int>(in, "nBondType", nBondType_);
       if (nBondType_ <= 0) {
          UTIL_THROW("nBondType must be > 0");
       }
       #ifdef INTER_ANGLE
-      read<int>(in, "nAngleType", nAngleType_);
+      nAngleType_ = 0;
+      read<int>(in, "nAngleType", nAngleType_, false); // optional
       if (nAngleType_ < 0) {
          UTIL_THROW("nAngleType must be >= 0");
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      read<int>(in, "nDihedralType", nDihedralType_);
+      nDihedralType_ = 0;
+      read<int>(in, "nDihedralType", nDihedralType_, false); // optional
       if (nDihedralType_ < 0) {
          UTIL_THROW("nDihedralType must be >= 0");
       }
       #endif
       #ifdef INTER_COULOMB
-      read<int>(in, "hasCoulomb", hasCoulomb_);
+      hasCoulomb_ = 0;
+      read<int>(in, "hasCoulomb", hasCoulomb_, false); // optional
       if ((hasCoulomb_ != 0) && (hasCoulomb_ != 1)) {
          UTIL_THROW("hasCoulomb must be 0 or 1");
       }
       #endif
-      #ifdef INTER_EXTERNAL
-      read<int>(in, "hasExternal", hasExternal_);
-      if ((hasExternal_ != 0) && (hasExternal_ != 1)) {
-         UTIL_THROW("hasExternal must be 0 or 1");
-      }
-      #endif
       #ifdef MCMD_LINK
-      read<int>(in, "nLinkType", nLinkType_);
+      nLinkType_ = 0;
+      read<int>(in, "nLinkType", nLinkType_, false); // optional
       if (nLinkType_ < 0) {
          UTIL_THROW("nLinkType must be >= 0");
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      hasExternal_ = 0;
+      read<int>(in, "hasExternal", hasExternal_, false); // optional
+      if (hasExternal_ < 0) {
+         UTIL_THROW("hasExternal must be >= 0");
       }
       #endif
       #ifdef INTER_TETHER
@@ -267,23 +271,30 @@ namespace McMd
       loadParameter<int>(ar, "nAtomType", nAtomType_);
       loadParameter<int>(ar, "nBondType", nBondType_);
       #ifdef INTER_ANGLE
-      loadParameter<int>(ar, "nAngleType", nAngleType_);
+      nAngleType_ = 0;
+      loadParameter<int>(ar, "nAngleType", nAngleType_, false);
       #endif
       #ifdef INTER_DIHEDRAL
-      loadParameter<int>(ar, "nDihedralType", nDihedralType_);
+      nDihedralType_ = 0;
+      loadParameter<int>(ar, "nDihedralType", nDihedralType_, false);
       #endif
       #ifdef INTER_COULOMB
-      loadParameter<int>(ar, "hasCoulomb", hasCoulomb_);
-      #endif
-      #ifdef INTER_EXTERNAL
-      loadParameter<int>(ar, "hasExternal", hasExternal_);
+      hasCoulomb_ = false;
+      loadParameter<int>(ar, "hasCoulomb", hasCoulomb_, false);
       #endif
       #ifdef MCMD_LINK
-      loadParameter<int>(ar, "nLinkType", nLinkType_);
+      nLinkType_ = 0;
+      loadParameter<int>(ar, "nLinkType", nLinkType_, false);
+      #endif
+      #ifdef INTER_EXTERNAL
+      hasExternal_ = false;
+      loadParameter<int>(ar, "hasExternal", hasExternal_, false);
       #endif
       #ifdef INTER_TETHER
-      loadParameter<int>(ar, "hasTether", hasTether_);
+      hasTether_ = false;
+      loadParameter<int>(ar, "hasTether", hasTether_, false);
       #endif
+
       #ifndef MCMD_NOATOMTYPES
       // Allocate and load an array of AtomType objects
       atomTypes_.allocate(nAtomType_);
@@ -312,23 +323,30 @@ namespace McMd
       ar << nAtomType_;
       ar << nBondType_;
       #ifdef INTER_ANGLE
-      ar << nAngleType_;
+      Parameter::saveOptional(ar, nAngleType_, (bool)nAngleType_);
+      // ar << nAngleType_;
       #endif
       #ifdef INTER_DIHEDRAL
-      ar << nDihedralType_;
+      // ar << nDihedralType_;
+      Parameter::saveOptional(ar, nDihedralType_, (bool)nDihedralType_);
       #endif
       #ifdef INTER_COULOMB
-      ar << hasCoulomb_;
-      #endif
-      #ifdef INTER_EXTERNAL
-      ar << hasExternal_;
+      //ar << hasCoulomb_;
+      Parameter::saveOptional(ar, hasCoulomb_, hasCoulomb_);
       #endif
       #ifdef MCMD_LINK
-      ar << nLinkType_;
+      // ar << nLinkType_;
+      Parameter::saveOptional(ar, nLinkType_, (bool)nLinkType_);
+      #endif
+      #ifdef INTER_EXTERNAL
+      // ar << hasExternal_;
+      Parameter::saveOptional(ar, hasExternal_, hasExternal_);
       #endif
       #ifdef INTER_TETHER
       ar << hasTether_;
+      Parameter::saveOptional(ar, hasTether_, hasTether_);
       #endif
+
       #ifndef MCMD_NOATOMTYPES
       ar << atomTypes_;
       #endif
@@ -940,7 +958,11 @@ namespace McMd
                      UTIL_THROW("Invalid local atom id in a SpeciesBond");
                   }
                   if (bondType < 0 || bondType >= nBondType_) {
-                     UTIL_THROW("Invalid local atom id in a SpeciesBond");
+                     std::cout << "bondType   = " << bondType 
+                              << std::endl;
+                     std::cout << "nBondType_ = " << nBondType_ 
+                              << std::endl;
+                     UTIL_THROW("Invalid bondType in a SpeciesBond");
                   }
 
                   // Validate consistency of Bond and SpeciesBond

@@ -176,25 +176,25 @@ namespace DdMd
       GArray<Atom*>  atom2Ptrs_;  
 
       /// Array of indices in atom2Ptrs_ of first neighbor of an Atom.
-      GArray<int>    first_; 
+      GArray<int>  first_; 
 
       /// Pair list cutoff radius (pair potential cutoff + skin_).
       double cutoff_;
    
       /// Maximum number of atoms (dimension of atom1Ptrs_).
-      int    atomCapacity_;     
+      int  atomCapacity_;     
    
       /// Maximum number of distinct pairs (dimension of atom2Ptrs_).
-      int    pairCapacity_;     
+      int  pairCapacity_;     
    
       /// Maximum number of primary atoms on this proc since stats cleared.
-      int    maxNAtomLocal_;     
+      int  maxNAtomLocal_;     
    
       /// Maximum # of pairs on this proc since stats cleared.
-      int    maxNPairLocal_;     
+      int  maxNPairLocal_;     
    
       /// The number of times this list has been built since stats cleared.
-      int    buildCounter_;
+      int  buildCounter_;
 
       /// Maximum number of primary atoms on all procs (defined only on master).
       Setable<int>  maxNAtom_;     
@@ -203,7 +203,7 @@ namespace DdMd
       Setable<int>  maxNPair_;     
    
       /// Has memory been allocated?
-      bool   isAllocated_;
+      bool  isAllocated_;
   
       /* 
       * Implementation Notes:

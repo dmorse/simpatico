@@ -1,31 +1,38 @@
-include $(SRC_DIR)/inter/bond/sources.mk
 include $(SRC_DIR)/inter/user/sources.mk
 
 inter_SRCS=\
-    $(inter_bond_SRCS)\
     $(inter_user_SRCS)
 
 ifndef INTER_NOPAIR
 include $(SRC_DIR)/inter/pair/sources.mk
-inter_SRCS+=$(inter_pair_SRCS)
+inter_+=$(inter_pair_)
+endif
+
+ifdef INTER_BOND
+include $(SRC_DIR)/inter/bond/sources.mk
+inter_+=$(inter_bond_)
 endif
 
 ifdef INTER_ANGLE
 include $(SRC_DIR)/inter/angle/sources.mk
-inter_SRCS+=$(inter_angle_SRCS)
+inter_+=$(inter_angle_)
 endif
 
 ifdef INTER_DIHEDRAL
 include $(SRC_DIR)/inter/dihedral/sources.mk
-inter_SRCS+=$(inter_dihedral_SRCS)
+inter_+=$(inter_dihedral_)
 endif
 
 ifdef INTER_EXTERNAL
 include $(SRC_DIR)/inter/external/sources.mk
-inter_SRCS+=$(inter_external_SRCS)
+inter_+=$(inter_external_)
 endif
 
-inter_OBJS=$(inter_SRCS:.cpp=.o)
+inter_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(inter_))
+inter_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(inter_:.cpp=.o))
+
 
 $(inter_LIB): $(inter_OBJS)
 	$(AR) rcs $(inter_LIB) $(inter_OBJS)

@@ -21,7 +21,7 @@ namespace McMd
    HomoRing::HomoRing()
     : Ring(),
       type_(NullIndex)
-   {} 
+   {  setClassName("HomoRing"); } 
  
    /* 
    * Read nAtom and type.

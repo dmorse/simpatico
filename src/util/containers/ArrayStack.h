@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -104,10 +105,10 @@ namespace Util
       Data **ptrs_;
   
       // Allocated size of ptrs_ array (maximum size of stack).
-      int    capacity_;
+      int  capacity_;
   
       // Size of stack.
-      int    size_; 
+      int  size_; 
 
       /// Copy constructor, declared private to prohibit copying.
       ArrayStack(const ArrayStack&);
@@ -134,9 +135,8 @@ namespace Util
    template <typename Data>
    ArrayStack<Data>::~ArrayStack()
    {
-      if (ptrs_ != 0) {
-         delete [] ptrs_; 
-         ptrs_ = 0;
+      if (ptrs_) {
+         Memory::deallocate<Data*>(ptrs_, capacity_);
       }
    }
  
@@ -149,11 +149,15 @@ namespace Util
       if (capacity <=0) {
          UTIL_THROW("Cannot allocate ArrayStack with capacity <= 0");
       }
-      ptrs_     = new Data*[capacity];
+      if (ptrs_) {
+         UTIL_THROW("Attempt to re-allocate an ArrayStack");
+      }
+      Memory::allocate<Data*>(ptrs_, capacity);
       capacity_ = capacity;
-      size_     = 0;
+      size_ = 0;
+
       // Nullify all Data* pointer elements
-      for (int i = 0; i < capacity; ++i) {
+      for (int i = 0; i < capacity_; ++i) {
          ptrs_[i] =  0;
       }
    }
@@ -163,14 +167,14 @@ namespace Util
    */
    template <typename Data>
    int ArrayStack<Data>::capacity() const
-   { return capacity_; }
+   {  return capacity_; }
 
    /*
    * Get the current size.
    */
    template <typename Data>
    inline int ArrayStack<Data>::size() const
-   { return size_; }
+   {  return size_; }
 
    /*
    * Push a Data object onto the stack.
@@ -205,14 +209,14 @@ namespace Util
    */
    template <typename Data>
    inline Data& ArrayStack<Data>::peek()
-   { return *ptrs_[size_-1]; }
+   {  return *ptrs_[size_-1]; }
 
    /* 
    * Return a const reference to the top element, without popping.
    */
    template <typename Data>
    inline const Data& ArrayStack<Data>::peek() const
-   { return *ptrs_[size_-1]; }
+   {  return *ptrs_[size_-1]; }
 
    /* 
    * Return true if valid, or throw an exception.

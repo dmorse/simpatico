@@ -1,9 +1,13 @@
 
-util_misc_SRCS=\
-    $(SRC_DIR)/util/misc/Exception.cpp \
-    $(SRC_DIR)/util/misc/FileMaster.cpp \
-    $(SRC_DIR)/util/misc/initStatic.cpp $(SRC_DIR)/util/misc/ioUtil.cpp \
-    $(SRC_DIR)/util/misc/Log.cpp 
+util_misc_=\
+    util/misc/Exception.cpp \
+    util/misc/FileMaster.cpp \
+    util/misc/initStatic.cpp \
+    util/misc/ioUtil.cpp \
+    util/misc/Log.cpp \
+    util/misc/Memory.cpp
 
-util_misc_OBJS=$(util_misc_SRCS:.cpp=.o)
+
+util_misc_SRCS=$(addprefix $(SRC_DIR)/, $(util_misc_))
+util_misc_OBJS=$(addprefix $(OBJ_DIR)/, $(util_misc_:.cpp=.o))
 

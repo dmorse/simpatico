@@ -224,7 +224,7 @@ namespace Util
    {
       // Delete objects referenced by non-null elements of ptrs_[].
       for (int i=0; i < size_; ++i) {
-         if (!(ptrs_[i] == 0)) {
+         if (ptrs_[i]) {
             delete ptrs_[i];
          }
       }

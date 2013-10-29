@@ -1,12 +1,15 @@
-mcMd_diagnostics_mdSystem_SRCS=\
-    $(SRC_DIR)/mcMd/diagnostics/mdSystem/MdDiagnosticFactory.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/mdSystem/MdEnergyOutput.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/mdSystem/MdKineticEnergyAverage.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/mdSystem/MdPairEnergyCoefficients.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/mdSystem/MdPotentialEnergyAverage.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/mdSystem/MdPressureAverage.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/mdSystem/MdIntraBondStressAutoCorr.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/mdSystem/MdIntraBondTensorAutoCorr.cpp 
+mcMd_diagnostics_mdSystem_=\
+    mcMd/diagnostics/mdSystem/MdDiagnosticFactory.cpp \
+    mcMd/diagnostics/mdSystem/MdEnergyOutput.cpp \
+    mcMd/diagnostics/mdSystem/MdKineticEnergyAverage.cpp \
+    mcMd/diagnostics/mdSystem/MdPairEnergyCoefficients.cpp \
+    mcMd/diagnostics/mdSystem/MdPotentialEnergyAverage.cpp \
+    mcMd/diagnostics/mdSystem/MdPressureAverage.cpp \
+    mcMd/diagnostics/mdSystem/MdIntraBondStressAutoCorr.cpp \
+    mcMd/diagnostics/mdSystem/MdIntraBondTensorAutoCorr.cpp 
 
-mcMd_diagnostics_mdSystem_OBJS=$(mcMd_diagnostics_mdSystem_SRCS:.cpp=.o)
+mcMd_diagnostics_mdSystem_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_diagnostics_mdSystem_))
+mcMd_diagnostics_mdSystem_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(mcMd_diagnostics_mdSystem_:.cpp=.o))
 

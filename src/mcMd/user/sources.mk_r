@@ -1,7 +1,10 @@
 
-mcMd_user_SRCS=\
-    #$(SRC_DIR)/mcMd/user/Class1.cpp \
-    #$(SRC_DIR)/mcMd/user/Class2.cpp 
+mcMd_user_=\
+    #mcMd/user/Class1.cpp \
+    #mcMd/user/Class2.cpp 
 
-mcMd_user_OBJS=$(mcMd_user_SRCS:.cpp=.o)
+mcMd_user_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_user_))
+mcMd_user_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(mcMd_user_:.cpp=.o))
 

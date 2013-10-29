@@ -32,15 +32,17 @@ namespace Util
    * An object that can read multiple parameters from file.
    *
    * A ParamComposite has a private array of pointers to ParamComponent
-   * objects, stored in the order in which they are read from file by the
-   * readParam() method. We will refer to this as the format array. Each
-   * element of the format array may point to a Parameter object (which
-   * represents a single parameter), a Begin or End object (which represents
-   * a line containing the opening or closing bracket for a parameter block),
-   * a Blank object (i.e., a blank line), or another ParamComposite object.
+   * objects. These are stored in the order in which they are read from 
+   * file by the ParamComposite::readParam() method. We will refer to this 
+   * array as the format array. Each element of the format array may point 
+   * to a Parameter object (which represents a single parameter), a Begin 
+   * object (which represents a line containing the class name and an
+   * opening bracket) and End object (which represents a line containing
+   * only a closing bracket), a Blank object (i.e., a blank line), or 
+   * another ParamComposite object.
    *
    * Any class that reads a block of parameters from the input parameter file
-   * should be derived from ParamComposite. The readParam() method must read
+   * must be derived from ParamComposite. The readParam() method must read
    * the associated parameter file block. The virtual readParameters() method,
    * if re-implemented, should read only the body of the parameter file
    * block, without opening and closing lines. The default implementation of
@@ -48,13 +50,13 @@ namespace Util
    * readParameters() to read the body of the  parameter file block, and then
    * reads the closing line. Almost all subclasses of ParamComposite should
    * re-implement the readParameters() method, and rely on the default
-   * implementation of ParamComposite::readParam() to add the begin and end
-   * lines.
+   * implementation of ParamComposite::readParam() to add the Begin and 
+   * End lines.
    *
-   * The setClassName() and className() methods are used to set and get a
-   * string representing the a subclass name. The setClassName() method
+   * The setClassName() and className() functions may be used to set and get
+   * a std::string containing the class name. The setClassName() method
    * should be called in the constructor of each subclass of ParamComposite.
-   * The name string set in the constructor of a subclass will replace any
+   * The class name set in the constructor of a subclass will replace any
    * name set by a base class, because of the order in which constructors
    * are called. The class name string is used by the default implementation
    * of ParamComposite::readParam() in order to check that the opening line
@@ -64,16 +66,17 @@ namespace Util
    * using protected methods provided by ParamComposite to read individual
    * parameters and "child" ParamComposite objects.  The implementation of
    * readParameters() normally uses read< T >, which reads an individual
-   * parameter, readParamComposite, which reads a nested subblock, readBlank,
-   * which reads a blank line, and more specialized methods to read arrays
-   * and matrices of parameters.  Each of these methods creates a new
-   * ParamComponent of a specified type, adds a pointer to the new object
-   * to the format array, and invokes the readParam method of the new object
-   * in order to read the associated line or block of the parameter file.
+   * parameter, and readParamComposite, which reads a nested subblock. 
+   * There are also more specialized methods (e.g., readDArray<T>to read 
+   * different types of arrays and matrices of parameters.  Each of these 
+   * methods creates a new ParamComponent of a specific type, adds a 
+   * pointer to the new object to the format array, and invokes the 
+   * readParam method of the new object in order to read the associated 
+   * line or block of the parameter file.
    *
    * The ParamComposite::writeParam() method uses the format array to write
-   * data to a file in the same format in which it was read by a previous
-   * call to readParam().
+   * data to an output parameter file in the same format in which it was 
+   * read by a previous call to readParam().
    *
    * \ingroup Param_Module
    */
@@ -136,8 +139,9 @@ namespace Util
       /**
       * Write all parameters to an output stream.
       *
-      * The default implementation calls the readParam method of each
-      * child in the format array.
+      * The default implementation iterates through the format array, and
+      * calls the readParam member function of each ReadComponent in the 
+      * array.  This is sufficient for most subclasses.
       *
       * \param out output stream for reading
       */
@@ -146,7 +150,7 @@ namespace Util
       /**
       * Load all parameters from an archive.
       *
-      * This method is inherited from Serializable. The default
+      * This function is inherited from Serializable. The default
       * implementation for a ParamComposite calls loadParameters, and
       * adds Begin and End lines. All subclasses of ParamComposite
       * should overload loadParameters.
@@ -158,10 +162,11 @@ namespace Util
       /**
       * Load state from archive, without adding Begin and End lines.
       *
-      * This default implementation is empty, and should be overloaded
-      * by all subclasses. The overloaded method should load the entire
-      * internal state from the archive, including members that do not
-      * appear in the parameter file format.
+      * This default implementation is empty, and should be re-implemented
+      * by all subclasses that have an internal state which should be saved
+      * in a restart file. Subclass implementations should load the entire 
+      * internal state from the archive, including persistent private data 
+      * that does not appear in the parameter file format.
       *
       * \param ar input/loading archive.
       */
@@ -171,10 +176,10 @@ namespace Util
       /**
       * Saves all parameters to an archive.
       *
-      * This default implementation calls the save method for all
-      * items in the parameter file format array. This is not sufficient
-      * for classes that contain non-volatile members that do not
-      * appear in the parameter file format.
+      * This default implementation calls the save method for all items in 
+      * the parameter file format array. This is not sufficient for classes 
+      * that contain persistent private data that does not appear in the 
+      * parameter file format.
       *
       * If a class also defines a serialize method template, which allows
       * instances to be serialized to any type of archive, then the save
@@ -192,24 +197,17 @@ namespace Util
       * Resets ParamComposite to its empty state.
       *
       * This method deletes Parameter, Begin, End, and Blank objects in the
-      * format array, recursively invokes resetParam() for any ParamComposite
-      * objects in the format array, nullifies all pointers in the list, and
-      * resets the number of items in the array to 0.
+      * format array (i.e., all "leaf" objects in the format tree), invokes
+      * the resetParam() for any child ParamComposite in the format array
+      * (the nodes in the true), and clears the array of pointers.
       */
       void resetParam();
 
-      #if 0
-      #ifdef UTIL_MPI
-      /**
-      * Set an MPI communicator for parameter IO.
-      *
-      * This method recursively sets the ParamCommunicator for all children.
-      */
-      virtual void setIoCommunicator(MPI::Intracomm& communicator);
-      #endif
-      #endif
-
       //@}
+
+
+
+
       /// \name read* methods
       /// \brief Each of these methods invokes an associated add* method to
       /// create a new ParamComponent object, and then invoke the readParam()
@@ -229,91 +227,151 @@ namespace Util
                          bool next = true);
 
       /**
-      * Add a new Param < Type > object, and read its value.
+      * Add a new ScalarParam < Type > object, and read its value.
       *
       * \param in     input stream for reading
       * \param label  Label string
       * \param value  reference to new ScalarParam< Type >
+      * \param isRequired  Is this a required parameter?
       */
       template <typename Type>
-      ScalarParam<Type>& read(std::istream &in, const char *label, Type &value);
+      ScalarParam<Type>& read(std::istream &in, const char *label, Type &value, 
+                              bool isRequired);
 
       /**
-      * Add a C array parameter, and read its elements.
+      * Add and read a new required ScalarParam < Type > object.
+      */
+      template <typename Type>
+      ScalarParam<Type>& read(std::istream &in, const char *label, Type &value)
+      {  return read<Type>(in, label, value, true); }
+
+      /**
+      * Add and read a C array parameter.
       *
       * \param in     input stream for reading
       * \param label  Label string for new array
       * \param value  pointer to array
       * \param n      number of elements
+      * \param isRequired  Is this a required parameter?
       * \return reference to the new CArrayParam<Type> object
       */
       template <typename Type>
       CArrayParam<Type>&
-      readCArray(std::istream &in, const char *label, Type *value, int n);
+      readCArray(std::istream &in, const char *label, Type *value, int n, 
+                 bool isRequired);
 
       /**
-      * Add a DArray < Type > parameter, and read its elements.
+      * Add and read a required C array parameter.
+      */
+      template <typename Type>
+      CArrayParam<Type>&
+      readCArray(std::istream &in, const char *label, Type *value, int n)
+      {  return readCArray<Type>(in, label, value, n, true); }
+
+      /**
+      * Add and read a DArray < Type > parameter.
       *
-      * \param in     input stream for reading
+      * \param in  input stream for reading
       * \param label  Label string for new array
       * \param array  DArray object
-      * \param n      number of elements
+      * \param n  number of elements
+      * \param isRequired  Is this a required parameter?
       * \return reference to the new DArrayParam<Type> object
       */
       template <typename Type>
+      DArrayParam<Type>& 
+      readDArray(std::istream &in, const char *label, 
+                 DArray<Type>& array, int n, bool isRequired);
+
+      /**
+      * Add a required DArray < Type > parameter.
+      */
+      template <typename Type>
       DArrayParam<Type>&
-      readDArray(std::istream &in, const char *label, DArray<Type>& array, int n);
+      readDArray(std::istream &in, const char *label, 
+                 DArray<Type>& array, int n)
+      {  return readDArray<Type>(in, label, array, n, true); }
 
       /**
       * Add and read an FArray < Type, N > fixed-size array parameter.
       *
-      * \param in     input stream for reading
+      * \param in  input stream for reading
       * \param label  Label string for new array
       * \param array  FArray object
+      * \param isRequired  Is this a required parameter?
       * \return reference to the new FArrayParam<Type, N> object
       */
       template <typename Type, int N>
       FArrayParam<Type, N>&
-      readFArray(std::istream &in, const char *label, FArray<Type, N >& array);
+      readFArray(std::istream &in, const char *label, FArray<Type, N >& array,
+                 bool isRequired);
 
       /**
-      * Add and read a CArray2DParam < Type > C two-dimensional array parameter.
+      * Add and read a required FArray < Type, N > array parameter.
+      */
+      template <typename Type, int N>
+      FArrayParam<Type, N>&
+      readFArray(std::istream &in, const char *label, FArray<Type, N >& array)
+      {  return readFArray<Type>(in, label, array, true); }
+
+      /**
+      * Add and read a CArray2DParam < Type > C 2D array parameter.
       *
       * This reads m rows of n elements into an array of type array[][np].
       *
-      * \param in     input stream for reading
+      * \param in  input stream for reading
       * \param label  Label string for new array
       * \param value  pointer to array
-      * \param m      number of rows (1st dimension)
-      * \param n      logical number of columns (2nd dimension)
-      * \param np     physical number of columns (elements allocated per row)
+      * \param m  number of rows (1st dimension)
+      * \param n  logical number of columns (2nd dimension)
+      * \param np  physical number of columns (elements allocated per row)
+      * \param isRequired  Is this a required parameter?
       * \return reference to the CArray2DParam<Type> object
       */
       template <typename Type>
       CArray2DParam<Type>&
       readCArray2D(std::istream &in, const char *label,
-                   Type *value, int m, int n, int np);
+                   Type *value, int m, int n, int np, bool isRequired);
+
+      /**
+      * Add and read a required CArray2DParam < Type > C 2D array parameter.
+      */
+      template <typename Type>
+      CArray2DParam<Type>&
+      readCArray2D(std::istream &in, const char *label,
+                   Type *value, int m, int n, int np)
+      {  return readCArray2D<Type>(in, label, value, m, n, np, true); }
 
       /**
       * Add and read a DMatrix < Type > C two-dimensional matrix parameter.
       *
-      * \param in     input stream for reading
+      * \param in  input stream for reading
       * \param label  Label string for new array
-      * \param matrix DMatrix object
-      * \param m      number of rows (1st dimension)
-      * \param n      number of columns (2nd dimension)
+      * \param matrix  DMatrix object
+      * \param m  number of rows (1st dimension)
+      * \param n  number of columns (2nd dimension)
+      * \param  isRequired  Is this a required parameter?
       * \return reference to the DMatrixParam<Type> object
       */
       template <typename Type>
       DMatrixParam<Type>&
-      readDMatrix(std::istream &in, const char *label,
-                       DMatrix<Type>& matrix, int m, int n);
+      readDMatrix(std::istream &in, const char *label, DMatrix<Type>& matrix, 
+                  int m, int n, bool isRequired);
+
+      /**
+      * Add and read a required DMatrix < Type > C matrix parameter.
+      */
+      template <typename Type>
+      DMatrixParam<Type>&
+      readDMatrix(std::istream &in, const char *label, 
+                  DMatrix<Type>& matrix, int m, int n)
+      {  return readDMatrix<Type>(in, label, matrix, m, n, true); }
 
       /**
       * Add and read a class label and opening bracket.
       *
-      * \param in    input stream for reading
-      * \param label class name string, without trailing bracket
+      * \param in  input stream for reading
+      * \param label  class name string, without trailing bracket
       * \return reference to the new Begin object
       */
       Begin& readBegin(std::istream &in, const char* label);
@@ -321,7 +379,7 @@ namespace Util
       /**
       * Add and read the closing bracket.
       *
-      * \param in input stream for reading
+      * \param in  input stream for reading
       * \return reference to the new End object
       */
       End& readEnd(std::istream &in);
@@ -336,16 +394,17 @@ namespace Util
 
       //@}
       /// \name load* methods
-      /// \brief Each of these methods invokes an associated add* method to create
-      /// a new ParamComponent object, and then invokes the load() method of the
-      /// new object to load the associated parameter value from an archive.
+      /// \brief Each of these methods invokes an associated add* method to 
+      /// create a new ParamComponent object, and then invokes the load() 
+      /// method of the new object to load the associated parameter value 
+      /// from an input archive.
       //@{
 
       /**
       * Add and load a child ParamComposite.
       *
-      * \param ar    input archive for loading
-      * \param child child ParamComposite object
+      * \param ar  input archive for loading
+      * \param child  child ParamComposite object
       * \param next  true if the indent level is one higher than parent.
       */
       void
@@ -355,85 +414,149 @@ namespace Util
       /**
       * Add a new Param < Type > object, and load its value.
       *
-      * \param ar     archive for loading
+      * \param ar  archive for loading
       * \param label  Label string
       * \param value  reference to the Type variable
+      * \param isRequired Is this a required parameter?
       * \return reference to the new CArrayParam<Type> object
       */
       template <typename Type>
       ScalarParam<Type>& loadParameter(Serializable::IArchive &ar,
-                                       const char *label, Type &value);
+                                       const char *label, Type &value,
+                                       bool isRequired);
+
+      /**
+      * Add and load new required ScalarParam < Type >  object.
+      */
+      template <typename Type>
+      ScalarParam<Type>& loadParameter(Serializable::IArchive &ar,
+                                       const char *label, Type &value)
+      {  return loadParameter<Type>(ar, label, value, true); }
 
       /**
       * Add a C array parameter, and load its elements.
       *
-      * \param ar     archive for loading
+      * \param ar  archive for loading
       * \param label  Label string for new array
       * \param value  pointer to array
-      * \param n      number of elements
+      * \param n  number of elements
+      * \param isRequired Is this a required parameter?
       * \return reference to the new CArrayParam<Type> object
       */
       template <typename Type>
       CArrayParam<Type>&
-      loadCArray(Serializable::IArchive &ar, const char *label, Type *value, int n);
+      loadCArray(Serializable::IArchive &ar, const char *label, 
+                 Type *value, int n, bool isRequired);
+
+      /**
+      * Add and load a required CArrayParam< Type > array parameter.
+      */
+      template <typename Type>
+      CArrayParam<Type>&
+      loadCArray(Serializable::IArchive &ar, const char *label, 
+                 Type *value, int n)
+      {  return loadCArray<Type>(ar, label, value, n, true); }
 
       /**
       * Add a DArray < Type > parameter, and load its elements.
       *
-      * \param ar     archive for loading
+      * \param ar  archive for loading
       * \param label  Label string for new array
       * \param array  DArray object
-      * \param n      number of elements
+      * \param n  number of elements (logical size)
+      * \param isRequired  Is this a required parameter?
       * \return reference to the new DArrayParam<Type> object
       */
       template <typename Type>
       DArrayParam<Type>&
-      loadDArray(Serializable::IArchive &ar, const char *label, DArray<Type>& array, int n);
+      loadDArray(Serializable::IArchive &ar, const char *label, 
+                 DArray<Type>& array, int n, bool isRequired);
+
+      /**
+      * Add and load a required DArray< Type > array parameter.
+      */
+      template <typename Type>
+      DArrayParam<Type>&
+      loadDArray(Serializable::IArchive &ar, const char *label, 
+                 DArray<Type>& array, int n)
+      {  return loadDArray<Type>(ar, label, array, n, true); }
 
       /**
       * Add and load an FArray < Type, N > fixed-size array parameter.
       *
-      * \param ar     archive for loading
+      * \param ar  archive for loading
       * \param label  Label string for new array
       * \param array  FArray object
+      * \param isRequired  Is this a required parameter?
       * \return reference to the new FArrayParam<Type, N> object
       */
       template <typename Type, int N>
       FArrayParam<Type, N>&
-      loadFArray(Serializable::IArchive &ar, const char *label, FArray<Type, N >& array);
+      loadFArray(Serializable::IArchive &ar, const char *label, 
+                 FArray<Type, N >& array, bool isRequired);
 
       /**
-      * Add and load a CArray2DParam < Type > C two-dimensional array parameter.
+      * Add and load a required FArray < Type > array parameter.
+      */
+      template <typename Type, int N>
+      FArrayParam<Type, N>&
+      loadFArray(Serializable::IArchive &ar, const char *label, 
+                 FArray<Type, N >& array)
+      {  return loadFArray<Type, N>(ar, label, array, true); }
+
+      /**
+      * Add and load a CArray2DParam < Type > C 2D array parameter.
       *
-      * \param ar     archive for loading
+      * \param ar  archive for loading
       * \param label  Label string for new array
       * \param value  pointer to array
-      * \param m      number of rows (1st dimension)
-      * \param n      logical number of columns (2nd dimension)
-      * \param np     physical number of columns (elements allocated per row)
+      * \param m  number of rows (1st dimension)
+      * \param n  logical number of columns (2nd dimension)
+      * \param np  physical number of columns (elements allocated per row)
+      * \param isRequired  Is this a required parameter?
       * \return reference to the CArray2DParam<Type> object
       */
       template <typename Type>
       CArray2DParam<Type>&
       loadCArray2D(Serializable::IArchive &ar, const char *label,
-                   Type *value, int m, int n, int np);
+                   Type *value, int m, int n, int np, bool isRequired);
 
       /**
-      * Add and load a DMatrix < Type > C two-dimensional matrix parameter.
+      * Add and load a required < Type > matrix parameter.
+      */
+      template <typename Type>
+      CArray2DParam<Type>&
+      loadCArray2D(Serializable::IArchive &ar, const char *label,
+                   Type *value, int m, int n, int np)
+      {  return loadCArray2D<Type>(ar, label, value, m, n, np, true); }
+
+      /**
+      * Add and load a DMatrix < Type > matrix parameter.
       *
-      * \param ar     archive for loading
+      * \param ar  archive for loading
       * \param label  Label string for new array
-      * \param matrix DMatrix object
-      * \param m      number of rows (1st dimension)
-      * \param n      number of columns (2nd dimension)
+      * \param matrix  DMatrix object
+      * \param m  number of rows (1st dimension)
+      * \param n  number of columns (2nd dimension)
+      * \param isRequired  Is this a required parameter?
       * \return reference to the DMatrixParam<Type> object
       */
       template <typename Type>
       DMatrixParam<Type>&
       loadDMatrix(Serializable::IArchive &ar, const char *label,
-                  DMatrix<Type>& matrix, int m, int n);
+                  DMatrix<Type>& matrix, int m, int n, bool isRequired);
+
+      /**
+      * Add and load a required < Type > matrix parameter.
+      */
+      template <typename Type>
+      DMatrixParam<Type>&
+      loadDMatrix(Serializable::IArchive &ar, const char *label,
+                  DMatrix<Type>& matrix, int m, int n)
+      {  return loadDMatrix<Type>(ar, label, matrix, m, n, true); }
 
       //@}
+
       /// \name add* methods
       /// \brief These methods add a ParamComponent object to the format
       /// array, but do not read any data from an input stream.
@@ -446,77 +569,6 @@ namespace Util
       * \param next  true if the indent level is one higher than parent.
       */
       void addParamComposite(ParamComposite& child, bool next = true);
-
-      /**
-      * Add a new Param < Type > object to the format array.
-      *
-      * \param label  Label string for new ScalarParam < Type >
-      * \param value  reference to parameter value
-      * \return reference to the new Param<Type> object
-      */
-      template <typename Type>
-      ScalarParam<Type>& add(const char *label, Type &value);
-
-      /**
-      * Add a C array parameter.
-      *
-      * \param label  Label string for new array
-      * \param value  pointer to array
-      * \param n      number of elements
-      * \return reference to the new CArrayParam<Type> object
-      */
-      template <typename Type>
-      CArrayParam<Type>& addCArray(const char *label, Type *value, int n);
-
-      /**
-      * Add a DArray<Type> parameter.
-      *
-      * \param label  Label string for new array
-      * \param array  DArray object.
-      * \param n      number of elements
-      * \return reference to the new DArrayParam<Type> object
-      */
-      template <typename Type>
-      DArrayParam<Type>& addDArray(const char *label, DArray<Type>& array,
-                                   int n);
-
-      /**
-      * Add a FArray<Type> parameter.
-      *
-      * \param label  Label string for new array
-      * \param array  FArray object.
-      * \return reference to the new FArrayParam<Type, N> object
-      */
-      template <typename Type, int N>
-      FArrayParam<Type, N>&
-      addFArray(const char *label, FArray<Type, N>& array);
-
-      /**
-      * Add a C two-dimensional array parameter.
-      *
-      * \param label  Label string for new array
-      * \param value  pointer to 2D array
-      * \param m      number of rows (1st dimension)
-      * \param n      logical number of columns (2nd dimension)
-      * \param np     physical number of columns (2nd dimension)
-      * \return reference to the new CArray2DParam<Type> object
-      */
-      template <typename Type>
-      CArray2DParam<Type>&
-      addCArray2D(const char *label, Type *value, int m, int n, int np);
-
-      /**
-      * Add a C two-dimensional array parameter.
-      *
-      * \param label  Label string for new array
-      * \param matrix  pointer to arr
-      * \param m      number of rows (1st dimension)
-      * \param n      number of columns (2nd dimension)
-      * \return reference to the new DMatrixParam<Type> object
-      */
-      template <typename Type>
-      DMatrixParam<Type>&
-      addDMatrix(const char *label, DMatrix<Type>& matrix, int m, int n);
 
       /**
       * Add a class label and opening bracket.
@@ -570,38 +622,42 @@ namespace Util
       /// Name of subclass.
       std::string className_;
 
+      /**
+      * Set this to the parent of a child component.
+      *
+      * This function sets the indent and (ifdef UTIL_MPI)
+      * the ioCommunicator of the child component.
+      *  
+      * \param param child ParamComponent
+      * \param next  if true, set indent level one higher than that of parent.
+      */
+      void setParent(ParamComponent& param, bool next = true);
+
+      /**
+      * Add a new ParamComponent object to the format array.
+      *
+      * \param param Parameter object
+      * \param isLeaf Is this a leaf object or a a ParamComposite node?
+      */
+      void addComponent(ParamComponent& param, bool isLeaf = true);
+
    };
 
    // Method templates for scalar parameters
-
-   /*
-   * Add a ScalarParam to the format array.
-   */
-   template <typename Type>
-   ScalarParam<Type>& ParamComposite::add(const char *label, Type &value)
-   {
-      ScalarParam<Type>* ptr = new ScalarParam<Type>(label, value);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
 
    /*
    * Add a ScalarParam to the format array, and read its contents from file.
    */
    template <typename Type>
    ScalarParam<Type>&
-   ParamComposite::read(std::istream &in, const char *label, Type &value)
+   ParamComposite::read(std::istream &in, const char *label, Type &value, 
+                        bool isRequired)
    {
-      ScalarParam<Type>* ptr = &add<Type>(label, value);
+      ScalarParam<Type>* ptr;
+      ptr = new ScalarParam<Type>(label, value, isRequired);
+      setParent(*ptr);
       ptr->readParam(in);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -611,45 +667,31 @@ namespace Util
    template <typename Type>
    ScalarParam<Type>&
    ParamComposite::loadParameter(Serializable::IArchive &ar, const char *label,
-                                 Type &value)
+                                 Type &value, bool isRequired)
    {
-      ScalarParam<Type>* ptr = &add<Type>(label, value);
+      ScalarParam<Type>* ptr;
+      ptr = new ScalarParam<Type>(label, value, isRequired);
+      setParent(*ptr);
       ptr->load(ar);
+      addComponent(*ptr);
       return *ptr;
    }
 
    // Templates for 1D C Arrays
 
    /*
-   * Add a CArrayParam object associated with a built-in array.
-   */
-   template <typename Type>
-   CArrayParam<Type>&
-   ParamComposite::addCArray(const char *label, Type *value, int n)
-   {
-      CArrayParam<Type>* ptr = new CArrayParam<Type>(label, value, n);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
-
-   /*
    * Add a a CArrayParam associated with a built-in array, and read it.
    */
    template <typename Type>
    CArrayParam<Type>&
-   ParamComposite::readCArray(std::istream &in,
-                   const char *label, Type *value, int n)
+   ParamComposite::readCArray(std::istream &in, const char *label, 
+                              Type *value, int n, bool isRequired)
    {
-      CArrayParam<Type>* ptr = &addCArray<Type>(label, value, n);
+      CArrayParam<Type>* ptr; 
+      ptr = new CArrayParam<Type>(label, value, n, isRequired);
+      setParent(*ptr);
       ptr->readParam(in);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -659,45 +701,31 @@ namespace Util
    template <typename Type>
    CArrayParam<Type>&
    ParamComposite::loadCArray(Serializable::IArchive &ar, const char *label,
-                              Type *value, int n)
+                              Type *value, int n, bool isRequired)
    {
-      CArrayParam<Type>* ptr = &addCArray<Type>(label, value, n);
+      CArrayParam<Type>* ptr;
+      ptr = new CArrayParam<Type>(label, value, n, isRequired);
+      setParent(*ptr);
       ptr->load(ar);
+      addComponent(*ptr);
       return *ptr;
    }
 
    // Templates for DArray parameters
 
    /*
-   * Add a DArrayParam < Type > object associated with a DArray<Type> container.
-   */
-   template <typename Type>
-   DArrayParam<Type>&
-   ParamComposite::addDArray(const char *label, DArray<Type>& array, int n)
-   {
-      DArrayParam<Type>* ptr = new DArrayParam<Type>(label, array, n);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
-
-   /*
    * Add a a DArrayParam associated with a DArray<Type> container, and read it.
    */
    template <typename Type>
    DArrayParam<Type>&
-   ParamComposite::readDArray(std::istream &in,
-                              const char *label, DArray<Type>& array, int n)
+   ParamComposite::readDArray(std::istream &in, const char *label, 
+                              DArray<Type>& array, int n, bool isRequired)
    {
-      DArrayParam<Type>* ptr = &addDArray<Type>(label, array, n);
+      DArrayParam<Type>* ptr;
+      ptr = new DArrayParam<Type>(label, array, n, isRequired);
+      setParent(*ptr);
       ptr->readParam(in);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -707,34 +735,17 @@ namespace Util
    template <typename Type>
    DArrayParam<Type>&
    ParamComposite::loadDArray(Serializable::IArchive &ar, const char *label,
-                              DArray<Type>& array, int n)
+                              DArray<Type>& array, int n, bool isRequired)
    {
-      DArrayParam<Type>* ptr = &addDArray<Type>(label, array, n);
+      DArrayParam<Type>* ptr;
+      ptr = new DArrayParam<Type>(label, array, n, isRequired);
+      setParent(*ptr);
       ptr->load(ar);
+      addComponent(*ptr);
       return *ptr;
    }
 
    // Templates for fixed size FArray array objects.
-
-   /*
-   * Add a FArrayParam <Type, N> object.
-   */
-   template <typename Type, int N>
-   FArrayParam<Type, N>&
-   ParamComposite::addFArray(const char *label, FArray<Type, N>& array)
-   {
-      FArrayParam<Type, N>* ptr = new FArrayParam<Type, N>(label, array);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
 
    /*
    * Add and read an FArray<Type, N> fixed size array.
@@ -742,10 +753,13 @@ namespace Util
    template <typename Type, int N>
    FArrayParam<Type, N>&
    ParamComposite::readFArray(std::istream &in, const char *label,
-                              FArray<Type, N>& array)
+                              FArray<Type, N>& array, bool isRequired)
    {
-      FArrayParam<Type, N>* ptr = &addFArray<Type, N>(label, array);
+      FArrayParam<Type, N>* ptr;
+      ptr = new FArrayParam<Type, N>(label, array, isRequired);
+      setParent(*ptr);
       ptr->readParam(in);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -755,47 +769,32 @@ namespace Util
    template <typename Type, int N>
    FArrayParam<Type, N>&
    ParamComposite::loadFArray(Serializable::IArchive &ar, const char *label,
-                              FArray<Type, N >& array)
+                              FArray<Type, N >& array, bool isRequired)
    {
-      FArrayParam<Type, N>* ptr = &addFArray<Type, N>(label, array);
+      FArrayParam<Type, N>* ptr;
+      ptr = new FArrayParam<Type, N>(label, array, isRequired);
+      setParent(*ptr);
       ptr->load(ar);
+      addComponent(*ptr);
       return *ptr;
    }
 
    // Templates for built-in two-dimensional C Arrays
 
    /*
-   * Add a CArray2Param associated with a built-in 2D array.
-   */
-   template <typename Type>
-   CArray2DParam<Type>&
-   ParamComposite::addCArray2D(const char *label, Type *value, 
-                               int m, int n, int np)
-   {
-      CArray2DParam<Type>* ptr = 
-                           new CArray2DParam<Type>(label, value, m, n, np);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
-
-   /*
    * Add and read a CArray2DParam associated with a built-in 2D array.
    */
    template <typename Type>
    CArray2DParam<Type>&
-   ParamComposite::readCArray2D(std::istream &in,
-                   const char *label, Type *value, int m, int n, int np)
+   ParamComposite::readCArray2D(std::istream &in, const char *label, 
+                                Type *value, int m, int n, int np,
+                                bool isRequired)
    {
-      CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n, np);
+      CArray2DParam<Type>* ptr;
+      ptr = new CArray2DParam<Type>(label, value, m, n, np, isRequired);
+      setParent(*ptr);
       ptr->readParam(in);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -805,34 +804,18 @@ namespace Util
    template <typename Type>
    CArray2DParam<Type>&
    ParamComposite::loadCArray2D(Serializable::IArchive &ar, const char *label,
-                                Type *value, int m, int n, int np)
+                                Type *value, int m, int n, int np, 
+                                bool isRequired)
    {
-      CArray2DParam<Type>* ptr = &addCArray2D<Type>(label, value, m, n, np);
+      CArray2DParam<Type>* ptr;
+      ptr = new CArray2DParam<Type>(label, value, m, n, np, isRequired);
+      setParent(*ptr);
       ptr->load(ar);
+      addComponent(*ptr);
       return *ptr;
    }
 
    // Templates for DMatrix containers
-
-   /*
-   * Add a DMatrixParam associated with a DMatrix 2D array..
-   */
-   template <typename Type>
-   DMatrixParam<Type>&
-   ParamComposite::addDMatrix(const char *label, DMatrix<Type>& matrix, int m, int n)
-   {
-      DMatrixParam<Type>* ptr = new DMatrixParam<Type>(label, matrix, m, n);
-      list_.push_back(ptr);
-      isLeaf_.push_back(true);
-      ++size_;
-      ptr->setIndent(*this);
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         ptr->setIoCommunicator(ioCommunicator());
-      }
-      #endif
-      return *ptr;
-   }
 
    /*
    * Add and read a DMatrixParam associated with a built-in array.
@@ -840,10 +823,14 @@ namespace Util
    template <typename Type>
    DMatrixParam<Type>&
    ParamComposite::readDMatrix(std::istream &in, const char *label,
-                               DMatrix<Type>& matrix, int m, int n)
+                               DMatrix<Type>& matrix, int m, int n,
+                               bool isRequired)
    {
-      DMatrixParam<Type>* ptr = &addDMatrix<Type>(label, matrix, m, n);
+      DMatrixParam<Type>* ptr;
+      ptr = new DMatrixParam<Type>(label, matrix, m, n, isRequired);
+      setParent(*ptr);
       ptr->readParam(in);
+      addComponent(*ptr);
       return *ptr;
    }
 
@@ -853,10 +840,14 @@ namespace Util
    template <typename Type>
    DMatrixParam<Type>&
    ParamComposite::loadDMatrix(Serializable::IArchive &ar, const char *label,
-                               DMatrix<Type>& matrix, int m, int n)
+                               DMatrix<Type>& matrix, int m, int n,
+                               bool isRequired)
    {
-      DMatrixParam<Type>* ptr = &addDMatrix<Type>(label, matrix, m, n);
+      DMatrixParam<Type>* ptr;
+      ptr = new DMatrixParam<Type>(label, matrix, m, n, isRequired);
+      setParent(*ptr);
       ptr->load(ar);
+      addComponent(*ptr);
       return *ptr;
    }
 

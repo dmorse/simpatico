@@ -87,8 +87,8 @@ namespace DdMd
       #endif
       atomCacheCapacity_(0)
       #ifdef INTER_BOND
-      #endif
       , bondCacheCapacity_(0)
+      #endif
       #ifdef INTER_ANGLE
       , angleCacheCapacity_(0)
       #endif
@@ -142,14 +142,12 @@ namespace DdMd
                                  bondStorage, buffer);
       bondCollector_.associate(domain, bondStorage, buffer);
       #endif
-
       #ifdef INTER_ANGLE
       angleStoragePtr_ = &angleStorage;
       angleDistributor_.associate(domain, atomStorage,
                                   angleStorage, buffer);
       angleCollector_.associate(domain, angleStorage, buffer);
       #endif
-
       #ifdef INTER_DIHEDRAL
       dihedralStoragePtr_ = &dihedralStorage;
       dihedralDistributor_.associate(domain, atomStorage,
@@ -235,13 +233,11 @@ namespace DdMd
       bondDistributor_.initialize(bondCacheCapacity_);
       bondCollector_.allocate(bondCacheCapacity_);
       #endif
-
       #ifdef INTER_ANGLE
       loader.load(angleCacheCapacity_);
       angleDistributor_.initialize(angleCacheCapacity_);
       angleCollector_.allocate(angleCacheCapacity_);
       #endif
-
       #ifdef INTER_DIHEDRAL
       loader.load(dihedralCacheCapacity_);
       dihedralDistributor_.initialize(dihedralCacheCapacity_);
@@ -341,6 +337,7 @@ namespace DdMd
          atomIter->mask().clear();
       }
   
+      #ifdef INTER_BOND
       int   atomId0, atomId1;
       Atom* atomPtr0;
       Atom* atomPtr1;
@@ -358,6 +355,7 @@ namespace DdMd
             atomPtr1->mask().append(atomId0);
          }
       }
+      #endif
    }
 
 }

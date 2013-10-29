@@ -18,6 +18,7 @@ namespace Util
    * Constructor.
    */
    End::End()
+    : label_("}")
    {}
 
    /* 
@@ -32,24 +33,10 @@ namespace Util
    void End::readParam(std::istream &in)
    {
       if (isIoProcessor()) {
-
-         // Read label
-         std::string actual;
-         in >> actual;
-   
-         std::string expected;
-         expected = "}";
-         if (actual != expected ) {
-            Log::file() << "Error reading End\n";
-            Log::file() << "Expected: " <<  expected  << std::endl;
-            Log::file() << "Scanned:  " <<  actual    << std::endl;
-            UTIL_THROW("Incorrect ParamComposite End line");
-         }
-
+         in >> label_;
          if (ParamComponent::echo()) {
             writeParam(Log::file());
          }
-
       }
    }
 
@@ -57,9 +44,7 @@ namespace Util
    * End::writeParam()
    */
    void End::writeParam(std::ostream &out)
-   {
-      out << indent() << "}" << std::endl;
-   }
+   {  out << indent() << "}" << std::endl; }
 
    /* 
    * Empty implementation of virtual resetParam() method.

@@ -1,0 +1,94 @@
+McSimulation{
+  FileMaster{
+    commandFileName              in/commands
+    inputPrefix                       in/md.
+    outputPrefix                     in/out.
+  }
+  nAtomType                              2
+  nBondType                              1
+  nAngleType                             1
+  atomTypes                              A  1.000000000000e+00
+                                         B  1.000000000000e+00
+  maskedPairPolicy              MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                       5
+      nAtom                                  2
+      atomType                               0
+      bondType                               0
+      hasAngles                              0
+      hasDihedrals                           0
+    }
+
+    Diblock{
+      moleculeCapacity                       4
+      blockLengths                           3
+                                             2
+      atomTypes                              1
+                                             0
+      bondType                               0
+      hasAngles                              1
+      angleType                              0
+      hasDihedrals                           0
+    }
+
+  }
+  Random{
+    seed                          3420352003
+  }
+  McSystem{
+    pairStyle                         LJPair
+    bondStyle                   HarmonicBond
+    angleStyle                   CosineAngle
+    McPairPotential{
+      epsilon               1.000000000000e+00  2.000000000000e+00
+                            2.000000000000e+00  1.000000000000e+00
+      sigma                 1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      cutoff                1.122460000000e+00  1.122460000000e+00
+                            1.122460000000e+00  1.122460000000e+00
+      maxBoundary                 orthorhombic     2.00000000000000000e+00  3.00000000000000000e+00  4.00000000000000000e+00
+    }
+    BondPotential{
+      kappa                 1.000000000000e+02
+      length                1.000000000000e+00
+    }
+    AnglePotential{
+      kappa                 1.500000000000e+00
+    }
+    EnergyEnsemble{
+      type                          isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                               rigid
+    }
+  }
+  McMoveManager{
+
+    HybridMdMove{
+      probability           1.000000000000e+00
+      nStep                                 20
+      MdSystem{
+        MdPairPotential{
+          maxBoundary                 orthorhombic     2.00000000000000000e+00  3.00000000000000000e+00  4.00000000000000000e+00
+          PairList{
+            atomCapacity                          30
+            pairCapacity                        1000
+            skin                  2.000000000000e-01
+          }
+        }
+        NveVvIntegrator{
+          dt                    1.000000000000e-03
+        }
+      }
+    }
+
+  }
+  DiagnosticManager{
+    baseInterval                          10
+
+  }
+  saveInterval                           0
+}

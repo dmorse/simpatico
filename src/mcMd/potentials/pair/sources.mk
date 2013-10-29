@@ -1,8 +1,10 @@
+mcMd_potentials_pair_=\
+    mcMd/potentials/pair/McPairPotential.cpp \
+    mcMd/potentials/pair/MdPairPotential.cpp \
+    mcMd/potentials/pair/PairFactory.cpp
+
 mcMd_potentials_pair_SRCS=\
-    $(SRC_DIR)/mcMd/potentials/pair/McPairPotential.cpp \
-    $(SRC_DIR)/mcMd/potentials/pair/MdPairPotential.cpp \
-    $(SRC_DIR)/mcMd/potentials/pair/PairFactory.cpp
-
-
-mcMd_potentials_pair_OBJS=$(mcMd_potentials_pair_SRCS:.cpp=.o)
+     $(addprefix $(SRC_DIR)/, $(mcMd_potentials_pair_))
+mcMd_potentials_pair_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(mcMd_potentials_pair_:.cpp=.o))
 

@@ -4,7 +4,7 @@ Simulation{
   }
   FileMaster{
     commandFileName commands
-    inputPrefix     in/
+    inputPrefix     ../in/
     outputPrefix    out/
   }
   nAtomType          1
@@ -51,6 +51,7 @@ Simulation{
     dt                0.005
     W                 20000
     mode              cubic
+    saveInterval          0
   }
   Random{
     seed              8012457890

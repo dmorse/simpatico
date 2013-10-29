@@ -11,6 +11,7 @@
 #include <util/containers/Array.h>
 #include <util/containers/Node.h>
 #include <util/containers/List.h>
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -159,13 +160,11 @@ namespace Util
    template <typename Data>
    ListArray<Data>::~ListArray()
    {
-      if (nodes_ != 0) {
-         delete [] nodes_; 
-         nodes_ = 0;
+      if (nodes_) {
+         Memory::deallocate< Node<Data> >(nodes_, capacity_);
       }
-      if (lists_ != 0) {
-         delete [] lists_; 
-         lists_ = 0;
+      if (lists_) {
+         Memory::deallocate< List<Data> >(lists_, nList_);
       }
    }
  
@@ -183,10 +182,10 @@ namespace Util
       nList_    = nList;
 
       // Allocate array of nodes
-      nodes_  = new Node<Data>[capacity_];
+      Memory::allocate< Node<Data> >(nodes_, capacity_);
 
-      // Allocate and initialize lists
-      lists_ = new List<Data>[nList_];
+      // Allocate and initialize array of lists
+      Memory::allocate< List<Data> >(lists_, nList_);
       for (i=0; i < nList_; ++i) {
          lists_[i].initialize(nodes_, capacity_);
       }
@@ -256,15 +255,13 @@ namespace Util
    template <typename Data>
    bool ListArray<Data>::isValid() const
    {
-      int i;
-
       if (nodes_ != 0) {
          if (lists_ == 0) {
             UTIL_THROW("nodes_ is allocated but lists_ is not");
          }
 
          // Check validity of all lists 
-         for (i=0; i < nList_ ; ++i) {
+         for (int i=0; i < nList_ ; ++i) {
             if (!lists_[i].isValid()){
                UTIL_THROW("Invalid list in ListArray");
             }

@@ -280,7 +280,7 @@ namespace Util
    {
       ar & size_;
       if (size_ > Capacity) {
-         UTIL_THROW("size > Capacity");
+         UTIL_THROW("FSArray<Data, Capacity> with size > Capacity");
       }
       for (int i = 0; i < size_; ++i) {
          ar & data_[i];

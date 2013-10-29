@@ -93,6 +93,11 @@ namespace Util
       */ 
       void clear();
 
+      /**
+      * Is this GPArray allocated?
+      */
+      bool isAllocated() const;
+
    protected:
 
       using PArray<Data>::ptrs_;
@@ -120,32 +125,31 @@ namespace Util
    GPArray<Data>::GPArray(const GPArray<Data>& other) 
     : PArray<Data>()
    {
+      assert(other.capacity_ >= other.size_);
       if (other.ptrs_ == 0) {
-
+         assert(other.capacity_ == 0);
+         assert(other.size_ == 0);
          ptrs_ = 0;
          capacity_ = 0;
          size_ = 0;
-
       } else { 
-
+         assert(other.capacity_ > 0);
          // Allocate array of Data* pointers
-         ptrs_  = new Data*[other.capacity_];
+         Memory::allocate<Data*>(ptrs_, other.capacity_);
          capacity_ = other.capacity_;
          size_ = other.size_;
-
          // Copy pointers
-         int i;
-         for (i = 0; i < size_; ++i) {
-            ptrs_[i] = other.ptrs_[i];
+         if (size_ > 0) {
+            for (int i = 0; i < size_; ++i) {
+               ptrs_[i] = other.ptrs_[i];
+            }
          }
-
          // Nullify unused elements of ptrs_ array
          if (capacity_ > size_) {
-            for (i = size_; i < capacity_; ++i) {
+            for (int i = size_; i < capacity_; ++i) {
                ptrs_[i] = 0;
             }
          }
-
       }
    }
 
@@ -165,12 +169,16 @@ namespace Util
       return *this;
    }
 
-   // Destructor.
+   /*
+   * Destructor.
+   */
    template <typename Data>
    inline GPArray<Data>::~GPArray()
    {
-      if (ptrs_) {
-         delete [] ptrs_;
+      size_ = 0; 
+      if (isAllocated()) {
+         Memory::deallocate(ptrs_, capacity_);
+         capacity_ = 0; 
       }
    }
 
@@ -184,16 +192,25 @@ namespace Util
          UTIL_THROW("Cannot reserve with capacity <=0");
       }
       if (ptrs_ == 0) {
-         ptrs_ = new Data*[capacity];
+         assert(capacity_ == 0);
+         assert(size_ == 0);
+         Memory::allocate<Data*>(ptrs_, capacity);
          capacity_ = capacity;
+         size_ = 0;
       } else if (capacity > capacity_) {
-         Data** old = ptrs_;
-         ptrs_ = new Data*[capacity];
-         capacity_ = capacity;
-         for (int i = 0; i < size_; ++i) {
-            ptrs_[i] = old[i];
+         assert(capacity_ > 0);
+         assert(capacity_ >= size_);
+         assert(size_ >= 0);
+         Data** newPtr = 0;
+         Memory::allocate<Data*>(newPtr, capacity);
+         if (size_ > 0) {
+            for (int i = 0; i < size_; ++i) {
+               newPtr[i] = ptrs_[i];
+            }
          }
-         delete [] old;
+         Memory::deallocate<Data*>(ptrs_, capacity_);
+         ptrs_ = newPtr;
+         capacity_ = capacity;
       }
    }
 
@@ -203,11 +220,12 @@ namespace Util
    template <typename Data>
    void GPArray<Data>::deallocate() 
    {  
-      if (ptrs_) {
-         delete [] ptrs_;
+      size_ = 0; 
+      if (isAllocated()) {
+         assert(capacity_ > 0);
+         Memory::deallocate<Data*>(ptrs_, capacity_);
          capacity_ = 0; 
-         size_ = 0; 
-      }
+      } 
    }
 
    /*
@@ -216,29 +234,46 @@ namespace Util
    template <typename Data>
    void GPArray<Data>::append(Data& data) 
    {
-      if (ptrs_ == 0) {
-         ptrs_ = new Data*[64];
+      if (!isAllocated()) {
+         assert(capacity_ == 0);
+         Memory::allocate<Data*>(ptrs_, 64);
          capacity_ = 64;
          size_ = 0;
       } else if (size_ == capacity_) {
-         Data** old = ptrs_;
-         capacity_ = 2*capacity_;
-         ptrs_ = new Data*[capacity_];
-         for (int i = 0; i < size_; ++i) {
-            ptrs_[i] = old[i];
+         assert(capacity_ > 0);
+         assert(capacity_ >= size_);
+         assert(size_ >= 0);
+         Data** newPtr = 0;
+         Memory::allocate<Data*>(newPtr, 2*capacity_);
+         if (size_ > 0) {
+            for (int i = 0; i < size_; ++i) {
+               newPtr[i] = ptrs_[i];
+            }
          }
-         delete [] old;
+         Memory::deallocate<Data*>(ptrs_, capacity_);
+         ptrs_ = newPtr;
+         capacity_ = 2*capacity_;
+         // size_ is unchanged
       }
+      // Append new element
       ptrs_[size_] = &data;
       ++size_;
+      assert(size_ <= capacity_);
    }
 
    /*
    * Reset to empty state, without deallocating.
    */
    template <typename Data>
-   void GPArray<Data>::clear()
+   inline void GPArray<Data>::clear()
    {  size_ = 0; }
+
+   /*
+   * Is this GPArray allocated?
+   */
+   template <class Data>
+   inline bool GPArray<Data>::isAllocated() const
+   {  return (bool)ptrs_; }
 
 } 
 #endif

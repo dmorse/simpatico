@@ -127,14 +127,14 @@ namespace Util
    */
    template <typename Data>
    inline int Matrix<Data>::capacity1()
-   { return capacity1_; }
+   {  return capacity1_; }
 
    /*
    * Get number of columns.
    */
    template <typename Data>
    inline int Matrix<Data>::capacity2()
-   { return capacity2_; }
+   {  return capacity2_; }
 
    /*
    * Return element (i,j) of matrix by const reference.
@@ -163,7 +163,6 @@ namespace Util
       assert(j < capacity2_);
       return *(data_ + i*capacity2_ + j);
    }
-
 
 }
 #endif

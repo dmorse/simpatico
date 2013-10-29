@@ -1,21 +1,20 @@
 include $(SRC_DIR)/mcMd/potentials/bond/sources.mk
-
-mcMd_potentials_SRCS=\
-    $(mcMd_potentials_bond_SRCS) 
+mcMd_potentials_=\
+    $(mcMd_potentials_bond_) 
 
 ifndef INTER_NOPAIR
 include $(SRC_DIR)/mcMd/potentials/pair/sources.mk
-mcMd_potentials_SRCS+=$(mcMd_potentials_pair_SRCS) 
+mcMd_potentials_+=$(mcMd_potentials_pair_) 
 endif
 
 ifdef INTER_ANGLE
 include $(SRC_DIR)/mcMd/potentials/angle/sources.mk
-mcMd_potentials_SRCS+=$(mcMd_potentials_angle_SRCS) 
+mcMd_potentials_+=$(mcMd_potentials_angle_) 
 endif
 
 ifdef INTER_DIHEDRAL
 include $(SRC_DIR)/mcMd/potentials/dihedral/sources.mk
-mcMd_potentials_SRCS+=$(mcMd_potentials_dihedral_SRCS) 
+mcMd_potentials_+=$(mcMd_potentials_dihedral_) 
 endif
 
 ifdef INTER_COULOMB
@@ -25,13 +24,16 @@ endif
 
 ifdef MCMD_LINK
 include $(SRC_DIR)/mcMd/potentials/link/sources.mk
-mcMd_potentials_SRCS+=$(mcMd_potentials_link_SRCS) 
+mcMd_potentials_+=$(mcMd_potentials_link_) 
 endif
 
 ifdef INTER_EXTERNAL
 include $(SRC_DIR)/mcMd/potentials/external/sources.mk
-mcMd_potentials_SRCS+=$(mcMd_potentials_external_SRCS) 
+mcMd_potentials_+=$(mcMd_potentials_external_) 
 endif
 
-mcMd_potentials_OBJS=$(mcMd_potentials_SRCS:.cpp=.o)
+mcMd_potentials_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_potentials_))
+mcMd_potentials_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(mcMd_potentials_:.cpp=.o))
 

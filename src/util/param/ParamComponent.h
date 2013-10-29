@@ -153,11 +153,6 @@ namespace Util
       /// Indentation string, a string of spaces.
       std::string indent_;
 
-      #if 0
-      /// Object to identify if this processor can do file Io.
-      MpiFileIo   io_;
-      #endif
-
       /// Parameter to enable (true) or disable (false) echoing.
       static bool echo_;
 
@@ -186,13 +181,9 @@ namespace Util
          std::ostringstream buffer;
          writeParam(buffer);
          str = buffer.str();
-         // std::cout << "Saving archive" << std::endl;
-         // std::cout << str << std::endl;
       } 
       ar & str;
       if (Archive::is_loading()) {
-         // std::cout << "Loading archive" << std::endl;
-         // std::cout << str << std::endl;
          std::istringstream buffer(str);
          readParam(buffer);
       } 

@@ -1,0 +1,78 @@
+Goal: Modify makefile system to allow out of place builds
+
+-----------------------------------------------------------
+In compiler.mk, define
+   
+   $(SRC_DIR) = source directory (absolute path)
+   $(OBJ_DIR) = build directory (absolute path)
+
+-----------------------------------------------------------
+In each subdirectory, in sources.mk, define the following
+variables:
+
+<directory>_=util_misc.cpp
+
+<directory>_SRCS=(addprefix $(SRC_DIR), <Directory>_)
+<directory>_OBJS=(addprefix $(OBJ_DIR), <Directory>_)
+
+-----------------------------------------------------------
+In parent directories, concatenate bare variables, without
+prefixes, then add prefixes explicitly. 
+
+parent_ = child1_ child2_ .....
+
+<parent>_SRCS=(addprefix $(SRC_DIR), <parent>_)
+<parent>_OBJS=(addprefix $(OBJ_DIR), <parent>_)
+
+-----------------------------------------------------------
+In editDepend python function, figure out how to replace
+the value of the $(SRC_DIR) with the variable $(OBJ_DIR).
+
+Strategy: Make absolute path to target in build dir, then
+replace value of $(SRC_DIR) with $(OBJ_DIR) in the target 
+name.
+
+Figure out how to also place dependency files in the build 
+directory. 
+
+makeDep function will require values of $(SRC_DIR) and
+$(OBJ_DIR) as command line parameters. 
+-----------------------------------------------------------
+Each build directory should contain:
+
+   - All makefiles (including fragments that define variables)
+   - All object files
+   - All dependency files
+
+   but no source files.
+
+Currently, each makefile:
+
+   includes other makefiles using relative paths
+   use only *_OBJS makefile variable, defined in sources.mk
+   include *.d files using *.o:*.d substitution of *_OBJS.
+
+   -> Everything should work with source files in a source
+   directory tree and makefiles, *.o files and *.d files
+   all in a separate build directory tree, as long as 
+   dependency targets and dependency files can be constructed 
+   correctly. 
+  
+ 
+-----------------------------------------------------------
+Directory structure:
+
+   simpatico/
+      src/
+      bin/
+      tools/
+      tests/
+      build/
+        serial/
+           makefile (clean target)
+           src/
+        mpi/
+           makefile (clean target)
+           src/
+        Place libraries in namespace level directory.
+        Place executables in namespace level directory.

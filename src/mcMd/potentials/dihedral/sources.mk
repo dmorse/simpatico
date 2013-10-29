@@ -1,6 +1,9 @@
-mcMd_potentials_dihedral_SRCS=\
-    $(SRC_DIR)/mcMd/potentials/dihedral/DihedralPotential.cpp \
-    $(SRC_DIR)/mcMd/potentials/dihedral/DihedralFactory.cpp 
+mcMd_potentials_dihedral_=\
+    mcMd/potentials/dihedral/DihedralPotential.cpp \
+    mcMd/potentials/dihedral/DihedralFactory.cpp 
 
-mcMd_potentials_dihedral_OBJS=$(mcMd_potentials_dihedral_SRCS:.cpp=.o)
+mcMd_potentials_dihedral_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_potentials_dihedral_))
+mcMd_potentials_dihedral_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(mcMd_potentials_dihedral_:.cpp=.o))
 

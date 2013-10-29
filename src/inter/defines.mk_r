@@ -5,13 +5,14 @@
 #     preprocessor flags that effect the code in the mcMd/ directory. 
 #
 #   - A variable $(INTER_SUFFIX) which is added as a suffix to the name
-#     of the mcMd library and (by default) the main executables. 
+#     of the inter library.
 #
-#   - The name $(INTER_LIB) of the McMd library. 
+#   - The name $(INTER_LIB) of the inter library file.
 #
-# This file is included by every makefile in the mcMd directory. 
-# It must be included after $(SRC_DIR)/compiler.mk and before
-# $(SRC_DIR)/mcmd/patterns.mk.
+# This file is included by every makefile in the inter directory, and in 
+# directories containing source code that depends on the Inter namespace.
+# It should be included after $(SRC_DIR)/compiler.mk and before
+# $(SRC_DIR)/inter/patterns.mk.
 #-----------------------------------------------------------------------
 # Makefile variables to define preprocessor macros that enable/disable
 # potential energy contributions.
@@ -45,10 +46,12 @@ INTER_BOND=1
 # of the code with angle and dihedral potentials enabled.
 #
 # The variable INTER_SUFFIX is appended to the base names of the library 
-# mcMd.a in the $(LIB_DIR) directory and (by default) to the executables 
-# mcSim, mdSim, and ddSim in the $(BIN_DIR). Setting INTER_SUFFIX to "_a", 
-# to denote a version with angular potentials enabled, will create a
-# library mcMd_a.a and executables named mcSim_a and mdSim_a. 
+# mcMd.a in the $(LIB_DIR) directory. It is also added to the mcMd library
+# and to the executables mcSim, mdSim, and ddSim in the $(BIN_DIR). If no
+# other features were enabled, setting INTER_SUFFIX to "_a", to denote a 
+# version with angular potentials enabled, would lead to creation of a 
+# library file named inter_a.a in the directory $(SRC_DIR)/inter and 
+# executables named mcSim_a and mdSim_a. 
  
 INTER_DEFS=
 INTER_SUFFIX:=
@@ -57,16 +60,16 @@ INTER_SUFFIX:=
 # may be extended using the += operator, e.g., INTER_DEFS+=-DINTER_ANGLE.
 # The INTER_SUFFIX is a non-recursive makefile variable, which may be 
 # extended using the := operator, as INTER_SUFFIX:=$(INTER_SUFFIX)_a. 
-# They are defined differently because the += operator adds a white 
-# space before an added string, which is appropriate for INTER_DEFS, 
-# but not for INTER_SUFFIX. 
+# They are defined differently because the += operator adds a white space
+# before an added string, which is appropriate for INTER_DEFS, but not for 
+# INTER_SUFFIX. 
 #
 # Each if block in what follows contains two lines: The first adds a 
-# string containing a preprocessor macro to INTER_DEFS. The second
-# adds an underscore and a string of one or two identifying letters 
-# to INTER_SUFFIX. The addition of suffixes to the library and 
-# executable names is optional, and may be suppressed by commenting
-# out the relevant lines.
+# string containing a preprocessor macro to INTER_DEFS. The second adds
+# an underscore and a string of one or two identifying letters to 
+# INTER_SUFFIX. The addition of suffixes to the library and executable
+# names is optional, and may be suppressed by commenting out the relevant 
+# lines.
 #
 # See the file src/mcMd/dox/preprocessor.dox for an explanation of all
 # of preprocessor macros listed below.
@@ -114,5 +117,5 @@ endif
 INTER_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)
 
 inter_LIBNAME=inter$(INTER_ALL_SUFFIX)
-inter_LIB=$(LIB_DIR)/lib$(inter_LIBNAME).a
+inter_LIB=$(OBJ_DIR)/inter/lib$(inter_LIBNAME).a
 #-----------------------------------------------------------------------

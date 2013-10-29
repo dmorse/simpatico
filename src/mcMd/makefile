@@ -1,19 +1,22 @@
-SRC_DIR_REL =..
+#-----------------------------------------------------------------------
+# File includes
 
-include $(SRC_DIR_REL)/compiler.mk
-include $(SRC_DIR_REL)/util/defines.mk
-include $(SRC_DIR_REL)/inter/defines.mk
-include $(SRC_DIR_REL)/mcMd/defines.mk
-include $(SRC_DIR_REL)/mcMd/patterns.mk
-include $(SRC_DIR_REL)/util/sources.mk
-include $(SRC_DIR_REL)/inter/sources.mk
-include $(SRC_DIR_REL)/mcMd/sources.mk
+OBJ_DIR_REL =..
+
+include $(OBJ_DIR_REL)/compiler.mk
+include $(OBJ_DIR)/util/defines.mk
+include $(OBJ_DIR)/inter/defines.mk
+include $(OBJ_DIR)/mcMd/defines.mk
+include $(SRC_DIR)/mcMd/patterns.mk
+include $(SRC_DIR)/util/sources.mk
+include $(SRC_DIR)/inter/sources.mk
+include $(SRC_DIR)/mcMd/sources.mk
 
 #-----------------------------------------------------------------------
 # Variable definitions
 
-MDSIM=$(SRC_DIR)/mcMd/mdSim
-MCSIM=$(SRC_DIR)/mcMd/mcSim
+MDSIM=$(OBJ_DIR)/mcMd/mdSim
+MCSIM=$(OBJ_DIR)/mcMd/mcSim
 MCMD_LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB)
 
 #-----------------------------------------------------------------------
@@ -21,22 +24,36 @@ MCMD_LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB)
 
 all: $(mcMd_OBJS) $(mcMd_LIB) $(MDSIM).o $(MCSIM).o $(MCSIM_EXE) $(MDSIM_EXE)
 
+lib: $(mcMd_OBJS) $(mcMd_LIB) 
+
 clean:
-	rm -f $(mcMd_OBJS) $(mcMd_LIB)
-	rm -f $(mcMd_OBJS:.o=.d)
-	rm -f $(MCSIM_EXE) $(MDSIM).o $(MDSIM).d
-	rm -f $(MDSIM_EXE) $(MCSIM).o $(MCSIM).d
-	rm -f */*.o */*/*.o
-	rm -f */*.d */*/*.d
+	-rm -f $(mcMd_OBJS) $(mcMd_OBJS:.o=.d) $(mcMd_LIB)
+	-rm -f $(MDSIM).o $(MDSIM).d
+	-rm -f $(MCSIM).o $(MCSIM).d
+	cd tests; make clean
+	-rm -f *.o */*.o */*/*.o
+	-rm -f *.d */*.d */*/*.d
 
-clean-deps:
-	rm -f $(mcMd_OBJS:.o=.d)
-	rm -f $(MDSIM).d
-	rm -f $(MCSIM).d
-	rm -f */*.d */*/*.d
+veryclean:
+	make clean
+	-rm -f lib*.a
+	-rm -f configIos/ConfigIoFactory.cpp
+	-rm -f diagnostics/mcSystem/McDiagnosticFactory.cpp
+	-rm -f diagnostics/mdSystem/MdDiagnosticFactory.cpp
+	-rm -f diagnostics/system/SystemDiagnosticFactory.cpp
+	-rm -f mcMoves/McMoveFactory.cpp
+	-rm -f mdIntegrators/MdIntegratorFactory.cpp
+	-rm -f perturb/mcSystem/McPerturbationFactory.cpp
+	-rm -f potentials/angle/AngleFactory.cpp
+	-rm -f potentials/bond/BondFactory.cpp
+	-rm -f potentials/dihedral/DihedralFactory.cpp
+	-rm -f potentials/external/ExternalFactory.cpp
+	-rm -f potentials/link/LinkFactory.cpp
+	-rm -f potentials/pair/PairFactory.cpp
+	-rm -f species/SpeciesFactory.cpp
+	-rm -f trajectoryIos/TrajectoryIoFactory.cpp
 
-#-----------------------------------------------------------------------
-# Executables
+# Executable targets
 
 $(MCSIM_EXE): $(MCSIM).o $(MCMD_LIBS)
 	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) $(MCSIM).o $(MCMD_LIBS) $(LIBS)

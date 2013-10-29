@@ -10,6 +10,7 @@
 
 #include <util/containers/ArrayIterator.h>
 #include <util/containers/ConstArrayIterator.h>
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -162,15 +163,18 @@ namespace Util
    */
    template <class Data>
    DSArray<Data>::DSArray(const DSArray< Data >& other) 
+    : data_(0),
+      size_(0),
+      capacity_(0)
    {
       // Precondition
       if (!other.isAllocated()) {
          UTIL_THROW("Other DSArray must be allocated.");
        }
 
-      data_     = new Data[other.capacity_];
-      size_     = other.size_;
+      Memory::allocate<Data>(data_, other.capacity_);
       capacity_ = other.capacity_;
+      size_ = other.size_;
       for (int i = 0; i < size_; ++i) {
          data_[i] = other.data_[i];
       }
@@ -213,8 +217,11 @@ namespace Util
    template <class Data>
    DSArray<Data>::~DSArray()
    {
-       if (data_) {
-          delete [] data_;
+       size_ = 0;
+       if (isAllocated()) {
+          assert(capacity_);
+          Memory::deallocate<Data>(data_, capacity_);
+          capacity_ = 0;
        }
    }
 
@@ -224,14 +231,15 @@ namespace Util
    template <class Data>
    void DSArray<Data>::allocate(int capacity)
    {
-      if (data_) {
+      if (isAllocated()) {
          UTIL_THROW("Cannot re-allocate a DSArray");
       }
       if (capacity <= 0) {
          UTIL_THROW("Cannot allocate a DSArray with capacity <= 0");
       }
-      data_     = new Data[capacity];
+      Memory::allocate<Data>(data_, capacity);
       capacity_ = capacity;
+      size_ = 0;
    }
 
    /*
@@ -243,19 +251,25 @@ namespace Util
    {
       int capacity;
       if (Archive::is_saving()) {
+         if (!isAllocated()) {
+            UTIL_THROW("Cannot save unallocated DSArray");
+         }
          capacity = capacity_;
       }
       ar & capacity;
       ar & size_;
       if (Archive::is_loading()) {
+         if (capacity <= 0) {
+            UTIL_THROW("Invalid DSArray input capacity on load, capacity <= 0");
+         }
+         if (size_ < 0) {
+            UTIL_THROW("Invalid DSArray input size on load, size < 0");
+         }
          if (!isAllocated()) {
-            if (capacity > 0) {
-               allocate(capacity);
-            }
-         } else {
-            if (size_ > capacity_) {
-               UTIL_THROW("Inconsistent DSArray size and capacity");
-            }
+            allocate(capacity);
+         } 
+         if (size_ > capacity_) {
+            UTIL_THROW("Inconsistent DSArray size and capacity on load");
          }
       }
       for (int i = 0; i < size_; ++i) {
@@ -348,7 +362,7 @@ namespace Util
    */
    template <class Data>
    inline bool DSArray<Data>::isAllocated() const
-   {  return !(data_ == 0); }
+   {  return (bool)data_; }
 
 } 
 #endif

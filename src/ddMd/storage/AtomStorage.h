@@ -504,54 +504,54 @@ namespace DdMd
    private:
 
       // Array that holds all available local Atom objects.
-      AtomArray        atoms_;
+      AtomArray  atoms_;
 
       // Set of pointers to local atoms.
-      ArraySet<Atom>   atomSet_;
+      ArraySet<Atom>  atomSet_;
 
       // Stack of pointers to unused local Atom objects.
-      ArrayStack<Atom> atomReservoir_;
+      ArrayStack<Atom>  atomReservoir_;
 
       // Array that holds all available local Atom objects.
-      AtomArray        ghosts_;
+      AtomArray  ghosts_;
 
       // Set of pointers to ghost atoms.
-      ArraySet<Atom>   ghostSet_;
+      ArraySet<Atom>  ghostSet_;
 
       // Stack of pointers to unused ghost Atom objects.
-      ArrayStack<Atom> ghostReservoir_;
+      ArrayStack<Atom>  ghostReservoir_;
 
       // Array of pointers to atoms, indexed by Id.
       // Elements corresponding to absent atoms hold null pointers.
-      DArray<Atom*>    atomPtrs_;
+      DArray<Atom*>  atomPtrs_;
 
       // Array of stored old positions.
-      DArray<Vector>   snapshot_;
+      DArray<Vector>  snapshot_;
 
       // Pointer to space for a new local Atom
-      Atom* newAtomPtr_;
+      Atom*  newAtomPtr_;
 
       // Pointer to space for a new ghost Atom.
-      Atom* newGhostPtr_;
+      Atom*  newGhostPtr_;
 
       // Capacity for local atoms on this processor.
-      int atomCapacity_;
+      int  atomCapacity_;
 
       // Capacity for ghost atoms on this processors.
-      int ghostCapacity_;
+      int  ghostCapacity_;
 
       // Maximum number of atoms on all processors, maximum id + 1
-      int totalAtomCapacity_;
+      int  totalAtomCapacity_;
 
       /// Maximum number of atoms on this proc since stats cleared.
-      int maxNAtomLocal_; 
+      int  maxNAtomLocal_; 
    
       /// Maximum number of ghosts on this proc since stats cleared.
-      int maxNGhostLocal_; 
+      int  maxNGhostLocal_; 
    
       #ifdef UTIL_MPI
       // Total number of local atoms on all processors.
-      Setable<int> nAtomTotal_;
+      Setable<int>  nAtomTotal_;
 
       /// Maximum of maxNAtomLocal_ on all procs (defined on master).
       Setable<int>  maxNAtom_;     

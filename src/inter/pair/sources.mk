@@ -1,7 +1,10 @@
-inter_pair_SRCS=\
-    $(SRC_DIR)/inter/pair/DpdPair.cpp \
-    $(SRC_DIR)/inter/pair/LJPair.cpp \
-    $(SRC_DIR)/inter/pair/WcaPair.cpp 
+inter_pair_=\
+    inter/pair/DpdPair.cpp \
+    inter/pair/LJPair.cpp \
+    inter/pair/WcaPair.cpp 
 
-inter_pair_OBJS=$(inter_pair_SRCS:.cpp=.o)
+inter_pair_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(inter_pair_))
+inter_pair_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(inter_pair_:.cpp=.o))
 

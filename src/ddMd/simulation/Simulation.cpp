@@ -51,14 +51,14 @@
 #include <util/space/Tensor.h>
 #include <util/param/Factory.h>
 #include <util/misc/Log.h>
+#include <util/misc/Memory.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/misc/Timer.h>
-
+#include <util/misc/initStatic.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/format/Str.h>
 #include <util/misc/ioUtil.h>
-#include <util/misc/initStatic.h>
 
 // std headers
 #include <fstream>
@@ -191,9 +191,8 @@ namespace DdMd
       exchanger_.associate(domain_, boundary_, atomStorage_, buffer_);
 
       fileMasterPtr_ = new FileMaster;
-      energyEnsemblePtr_  = new EnergyEnsemble;
+      energyEnsemblePtr_ = new EnergyEnsemble;
       boundaryEnsemblePtr_ = new BoundaryEnsemble;
-
       diagnosticManagerPtr_ = new DiagnosticManager(*this);
    }
 
@@ -202,40 +201,46 @@ namespace DdMd
    */
    Simulation::~Simulation()
    {
+      if (pairFactoryPtr_) {
+         delete pairFactoryPtr_;
+      }
       if (pairPotentialPtr_) {
          delete pairPotentialPtr_;
       }
       #ifdef INTER_BOND
+      if (bondFactoryPtr_) {
+         delete bondFactoryPtr_;
+      }
       if (bondPotentialPtr_) {
          delete bondPotentialPtr_;
       }
       #endif
       #ifdef INTER_ANGLE
+      if (angleFactoryPtr_) {
+         delete angleFactoryPtr_;
+      }
       if (anglePotentialPtr_) {
          delete anglePotentialPtr_;
       }
       #endif
       #ifdef INTER_DIHEDRAL
+      if (dihedralFactoryPtr_) {
+         delete dihedralFactoryPtr_;
+      }
       if (dihedralPotentialPtr_) {
          delete dihedralPotentialPtr_;
       }
       #endif
       #ifdef INTER_EXTERNAL
+      if (externalFactoryPtr_) {
+         delete externalFactoryPtr_;
+      }
       if (externalPotentialPtr_) {
          delete externalPotentialPtr_;
       }
       #endif
-      if (energyEnsemblePtr_) {
-         delete energyEnsemblePtr_;
-      }
-      if (boundaryEnsemblePtr_) {
-         delete boundaryEnsemblePtr_;
-      }
-      if (integratorPtr_) {
-         delete integratorPtr_;
-      }
-      if (fileMasterPtr_) {
-         delete fileMasterPtr_;
+      if (configIoFactoryPtr_) {
+         delete configIoFactoryPtr_;
       }
       if (configIoPtr_) {
          delete configIoPtr_;
@@ -243,39 +248,23 @@ namespace DdMd
       if (serializeConfigIoPtr_) {
          delete serializeConfigIoPtr_;
       }
-      if (diagnosticManagerPtr_) {
-         delete diagnosticManagerPtr_;
-      }
-      #ifndef DDMD_NOPAIR
-      if (pairFactoryPtr_) {
-         delete pairFactoryPtr_;
-      }
-      #endif
-      #ifdef INTER_BOND
-      if (bondFactoryPtr_) {
-         delete bondFactoryPtr_;
-      }
-      #endif
-      #ifdef INTER_ANGLE
-      if (angleFactoryPtr_) {
-         delete angleFactoryPtr_;
-      }
-      #endif
-      #ifdef INTER_DIHEDRAL
-      if (dihedralFactoryPtr_) {
-         delete dihedralFactoryPtr_;
-      }
-      #endif
-      #ifdef INTER_EXTERNAL
-      if (externalFactoryPtr_) {
-         delete externalFactoryPtr_;
-      }
-      #endif
       if (integratorFactoryPtr_) {
          delete integratorFactoryPtr_;
       }
-      if (configIoFactoryPtr_) {
-         delete configIoFactoryPtr_;
+      if (integratorPtr_) {
+         delete integratorPtr_;
+      }
+      if (diagnosticManagerPtr_) {
+         delete diagnosticManagerPtr_;
+      }
+      if (fileMasterPtr_) {
+         delete fileMasterPtr_;
+      }
+      if (energyEnsemblePtr_) {
+         delete energyEnsemblePtr_;
+      }
+      if (boundaryEnsemblePtr_) {
+         delete boundaryEnsemblePtr_;
       }
 
       #ifdef UTIL_MPI
@@ -389,6 +378,10 @@ namespace DdMd
    */
    void Simulation::readParameters(std::istream& in)
    {
+      if (isInitialized_) {
+         UTIL_THROW("Error: Called Simulation::readParameters when isInitialized");
+      }
+
       // Read Domain and FileMaster
       readParamComposite(in, domain_);
       readFileMaster(in);
@@ -396,25 +389,29 @@ namespace DdMd
       // Read numbers of types
       read<int>(in, "nAtomType", nAtomType_);
       #ifdef INTER_BOND
-      read<int>(in, "nBondType", nBondType_);
+      nBondType_ = 0;
+      read<int>(in, "nBondType", nBondType_, false); // optional
       if (nBondType_) {
          exchanger_.addGroupExchanger(bondStorage_);
       }
       #endif
       #ifdef INTER_ANGLE
-      read<int>(in, "nAngleType", nAngleType_);
+      nAngleType_ = 0;
+      read<int>(in, "nAngleType", nAngleType_, false); // optional
       if (nAngleType_) {
          exchanger_.addGroupExchanger(angleStorage_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      read<int>(in, "nDihedralType", nDihedralType_);
+      nDihedralType_ = 0;
+      read<int>(in, "nDihedralType", nDihedralType_, false); // optional
       if (nDihedralType_) {
          exchanger_.addGroupExchanger(dihedralStorage_);
       }
       #endif
       #ifdef INTER_EXTERNAL
-      read<bool>(in, "hasExternal", hasExternal_);
+      hasExternal_ = false;
+      read<bool>(in, "hasExternal", hasExternal_, false); // optional
       #endif
 
       // Read array of atom type descriptors
@@ -585,26 +582,31 @@ namespace DdMd
       // Load types
       loadParameter<int>(ar, "nAtomType", nAtomType_);
       #ifdef INTER_BOND
-      loadParameter<int>(ar, "nBondType", nBondType_);
+      nBondType_ = 0;
+      loadParameter<int>(ar, "nBondType", nBondType_, false); // optional
       if (nBondType_) {
          exchanger_.addGroupExchanger(bondStorage_);
       }
       #endif
       #ifdef INTER_ANGLE
-      loadParameter<int>(ar, "nAngleType", nAngleType_);
+      nAngleType_ = 0;
+      loadParameter<int>(ar, "nAngleType", nAngleType_, false); // opt
       if (nAngleType_) {
          exchanger_.addGroupExchanger(angleStorage_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      loadParameter<int>(ar, "nDihedralType", nDihedralType_);
+      nDihedralType_ = 0;
+      loadParameter<int>(ar, "nDihedralType", nDihedralType_, false); // opt
       if (nDihedralType_) {
          exchanger_.addGroupExchanger(dihedralStorage_);
       }
       #endif
       #ifdef INTER_EXTERNAL
-      loadParameter<bool>(ar, "hasExternal", hasExternal_);
+      hasExternal_ = false;
+      loadParameter<bool>(ar, "hasExternal", hasExternal_, false); // opt
       #endif
+
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
@@ -686,8 +688,12 @@ namespace DdMd
 
       #ifdef INTER_EXTERNAL
       // External potential
+      assert(externalPotentialPtr_ == 0);
       if (hasExternal_) {
          externalPotentialPtr_ = externalFactory().factory(externalStyle());
+         if (!externalPotentialPtr_) {
+            UTIL_THROW("Unknown externalStyle");
+         }
          externalPotentialPtr_->setNAtomType(nAtomType_);
          loadParamComposite(ar, *externalPotentialPtr_);
       }
@@ -698,7 +704,6 @@ namespace DdMd
       // Integrator
       assert(integratorPtr_ == 0);
       std::string className;
-      bool isEnd;
       integratorPtr_ =
          integratorFactory().loadObject(ar, *this, className);
       if (!integratorPtr_) {
@@ -710,7 +715,7 @@ namespace DdMd
       loadParamComposite(ar, random_);
       loadParamComposite(ar, *diagnosticManagerPtr_);
 
-      // Finished loading data from archive. Finish initialization:
+      // Finished loading data from archive. Now finish initialization:
 
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
@@ -773,7 +778,7 @@ namespace DdMd
       if (isIoProcessor()) {
          fileMaster().openRestartIFile(filename, ".rst", ar.file());
       }
-      // Call ParamComposite::load(), which calls Simulation::loadParameters()
+      // ParamComposite::load() calls Simulation::loadParameters()
       load(ar); 
       if (isIoProcessor()) {
          ar.file().close();
@@ -798,16 +803,16 @@ namespace DdMd
       // Read types
       ar << nAtomType_;
       #ifdef INTER_BOND
-      ar << nBondType_;
+      Parameter::saveOptional(ar, nBondType_, (bool)nBondType_);
       #endif
       #ifdef INTER_ANGLE
-      ar << nAngleType_;
+      Parameter::saveOptional(ar, nAngleType_, (bool)nAngleType_);
       #endif
       #ifdef INTER_DIHEDRAL
-      ar << nDihedralType_;
+      Parameter::saveOptional(ar, nDihedralType_, (bool)nDihedralType_);
       #endif
       #ifdef INTER_EXTERNAL
-      ar << hasExternal_;
+      Parameter::saveOptional(ar, hasExternal_, hasExternal_);
       #endif
       ar << atomTypes_;
 
@@ -831,7 +836,7 @@ namespace DdMd
 
       buffer_.save(ar);
 
-      // Potentials energy styles and parameters
+      // Potential energy styles and potential classes
       savePotentialStyles(ar);
       #ifndef DDMD_NOPAIR
       assert(pairPotentialPtr_);
@@ -856,19 +861,17 @@ namespace DdMd
       }
       #endif
       #ifdef INTER_EXTERNAL
-      // External potential
       if (hasExternal_) {
          assert(externalPotentialPtr_);
          externalPotentialPtr_->save(ar);
       }
       #endif
 
-      // Save ensembles and integrator
+      // Save ensembles, integrator, random, diagnostics
       saveEnsembles(ar);
       std::string name = integrator().className();
       ar << name;
       integrator().save(ar);
-
       random_.save(ar);
       diagnosticManagerPtr_->save(ar);
    }
@@ -921,21 +924,24 @@ namespace DdMd
    * Read the FileMaster parameters.
    */
    void Simulation::readFileMaster(std::istream &in)
-   {  readParamComposite(in, *fileMasterPtr_); }
+   {  
+      assert(fileMasterPtr_);  
+      readParamComposite(in, *fileMasterPtr_); 
+      assert(fileMasterPtr_->hasIoCommunicator());  
+   }
 
    /*
-   * If no FileMaster exists, create and load one.
+   * Load the FileMaster.
    */
    void Simulation::loadFileMaster(Serializable::IArchive& ar)
-   {  loadParamComposite(ar, *fileMasterPtr_); }
+   {
+      assert(fileMasterPtr_);  
+      loadParamComposite(ar, *fileMasterPtr_); 
+      assert(fileMasterPtr_->hasIoCommunicator());  
+   }
 
    /*
-   * If createdFileMaster_, save to archive.
-   *
-   * A Simulation normally creates its own FileMaster only in unit tests.
-   * In a simulation, the FileMaster is normally set to that of either
-   * a parent Simulation or that of another Simulation from which this was
-   * copied.
+   * Save the FileMaster.
    */
    void Simulation::saveFileMaster(Serializable::OArchive& ar)
    {  fileMasterPtr_->save(ar); }
@@ -987,22 +993,22 @@ namespace DdMd
       loadParameter<std::string>(ar, "pairStyle", pairStyle_);
       #endif
       #ifdef INTER_BOND
-      if (nBondType()) {
+      if (nBondType_) {
          loadParameter<std::string>(ar, "bondStyle", bondStyle_);
       }
       #endif
       #ifdef INTER_ANGLE
-      if (nAngleType()) {
+      if (nAngleType_) {
          loadParameter<std::string>(ar, "angleStyle", angleStyle_);
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      if (nDihedralType()) {
+      if (nDihedralType_) {
          loadParameter<std::string>(ar, "dihedralStyle", dihedralStyle_);
       }
       #endif
       #ifdef INTER_EXTERNAL
-      if (hasExternal()) {
+      if (hasExternal_) {
          loadParameter<std::string>(ar, "externalStyle", externalStyle_);
       }
       #endif
@@ -1021,22 +1027,22 @@ namespace DdMd
       ar << pairStyle_;
       #endif
       #ifdef INTER_BOND
-      if (nBondType()) {
+      if (nBondType_) {
          ar << bondStyle_;
       }
       #endif
       #ifdef INTER_ANGLE
-      if (nAngleType()) {
+      if (nAngleType_) {
          ar << angleStyle_;
       }
       #endif
       #ifdef INTER_DIHEDRAL
-      if (nDihedralType()) {
+      if (nDihedralType_) {
          ar << dihedralStyle_;
       }
       #endif
       #ifdef INTER_EXTERNAL
-      if (hasExternal()) {
+      if (hasExternal_) {
          ar << externalStyle_;
       }
       #endif
@@ -1196,9 +1202,10 @@ namespace DdMd
                   dihedralStorage().computeStatistics(domain_.communicator());
                }
                #endif
-               buffer().computeStatistics(domain_.communicator());
                pairPotential().pairList()
                               .computeStatistics(domain_.communicator());
+               buffer().computeStatistics(domain_.communicator());
+               int maxMemory = Memory::max(domain_.communicator());
                if (domain_.isMaster()) {
                   atomStorage().outputStatistics(Log::file());
                   #ifdef INTER_BOND
@@ -1218,6 +1225,9 @@ namespace DdMd
                   #endif
                   buffer().outputStatistics(Log::file());
                   pairPotential().pairList().outputStatistics(Log::file());
+                  Log::file() << std::endl;
+                  Log::file() << "Memory: maximum allocated for arrays = "
+                              << maxMemory << " bytes" << std::endl;
                   Log::file() << std::endl;
                }
 
@@ -1277,6 +1287,9 @@ namespace DdMd
             } else
             #ifdef INTER_BOND
             if (command == "SET_BOND") {
+               if (nBondType_ == 0) {
+                  UTIL_THROW("SET_BOND command with nBondType = 0");
+               }
                // Modify one parameter of a bond interaction.
                std::string paramName;
                int typeId;
@@ -1286,7 +1299,10 @@ namespace DdMd
             } else
             #endif
             #ifdef INTER_ANGLE
-            if (command == "SET_ANGLE" && nAngleType_) {
+            if (command == "SET_ANGLE") {
+               if (nAngleType_ == 0) {
+                  UTIL_THROW("SET_ANGLE command with nAngleType = 0");
+               }
                // Modify one parameter of an angle interaction.
                std::string paramName;
                int typeId;
@@ -1296,7 +1312,10 @@ namespace DdMd
             } else
             #endif
             #ifdef INTER_DIHEDRAL
-            if (command == "SET_DIHEDRAL" && nDihedralType_) {
+            if (command == "SET_DIHEDRAL") {
+               if (nDihedralType_ == 0) {
+                  UTIL_THROW("SET_DIHEDRAL command with nDihedralType = 0");
+               }
                // Modify one parameter of a dihedral interaction.
                std::string paramName;
                int typeId;

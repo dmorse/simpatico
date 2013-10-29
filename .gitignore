@@ -1,4 +1,4 @@
-edit.py
+*.pyc
 log
-*.a
+*~
 *.swp

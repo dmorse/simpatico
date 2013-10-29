@@ -10,6 +10,7 @@
 
 #include <util/containers/Array.h>
 #include <util/containers/PArray.h>
+#include <util/misc/Memory.h>
 #include <util/global.h>
 
 namespace Util
@@ -194,11 +195,11 @@ namespace Util
    template <typename Data>
    ArraySet<Data>::~ArraySet()
    {
-      if (ptrs_ != 0) {
-         delete [] ptrs_; 
+      if (ptrs_) {
+         Memory::deallocate<Data*>(ptrs_, capacity_);
       }
-      if (tags_ != 0) {
-         delete [] tags_;
+      if (tags_) {
+         Memory::deallocate<int>(tags_, capacity_);
       }
    }
  
@@ -210,17 +211,18 @@ namespace Util
    {
 
       // Preconditions
-      if (ptrs_ != 0)    UTIL_THROW("Can only be allocated once");
       if (capacity == 0) UTIL_THROW("Zero capacity");
       if (capacity < 0)  UTIL_THROW("Negative capacity");
+      if (array == 0) UTIL_THROW("Null array pointer");
+      if (ptrs_) UTIL_THROW("ptrs_ array already allocated");
+      if (tags_) UTIL_THROW("tags_ array already allocated");
 
-      data_     = array;
+      data_  = array;
+      Memory::allocate<Data*>(ptrs_, capacity);
+      Memory::allocate<int>(tags_, capacity);
       capacity_ = capacity;
+      size_ = 0;
 
-      ptrs_     = new Data*[capacity_];
-      tags_     = new int[capacity_];
-
-      size_     = 0;
       for (int i = 0; i < capacity_; ++i) {
          ptrs_[i] =  0;
          tags_[i] = -1;
@@ -272,7 +274,7 @@ namespace Util
          UTIL_THROW("Pointer out of range");
       }
       int arrayId = id(ptr);
-      int setId   = tags_[arrayId];
+      int setId = tags_[arrayId];
       if (setId < 0) {
          UTIL_THROW("Element is not in set");
       }
@@ -339,29 +341,9 @@ namespace Util
       return tags_[id(ptr)];
    }
 
-   #if 0
-   template <typename Data>
-   void ArraySet<Data>::dump() const
-   {
-      for (int i=0; i < capacity_; ++i) {
-         Log::file() << i << "  ";
-         if (ptrs_[i] != 0 ) {
-            Log::file() << id(ptrs_[i]);
-         } else {
-            Log::file() << "N";
-         }
-         Log::file() << "  " ;
-         if (tags_[i] >= 0 ) {
-            Log::file() << tags_[i];
-         } else {
-            Log::file() << "N";
-         }
-         Log::file() << std::endl;
-      }
-      Log::file() << std::endl << std::endl;
-   }
-   #endif
-
+   /* 
+   * Is this allocated?
+   */
    template <typename Data>
    inline bool ArraySet<Data>::isAllocated() const
    { return ptrs_ != 0; }

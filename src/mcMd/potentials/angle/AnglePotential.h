@@ -9,6 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>
+#include <util/random/Random.h>
 #include <string>
 
 namespace Util
@@ -67,6 +68,40 @@ namespace McMd
       */
       virtual void force(const Vector& R1, const Vector& R2,
                          Vector& F1, Vector& F2, int type) const = 0;
+
+      /**
+      * Return bond angle chosen from equilibrium distribution.
+      *
+      * This function returns a bond length chosen from the Boltzmann
+      * distribution of lengths for bonds of random orientation. The
+      * distribution P(l) of values of the length l is proportional 
+      * to l*l*exp[-beta*phi(l) ], where phi(l) is the bond energy. 
+      *
+      * \param random  pointer to random number generator object.
+      * \param beta  inverse temperature
+      * \param type  integer angle typd index
+      * \return  angle chosen from equilibrium distribution.
+      */
+      virtual 
+      double randomAngle(Util::Random* random, double beta, int type) 
+             const = 0;
+
+      /**
+      * Return bond angle chosen from equilibrium distribution.
+      *
+      * This function returns a bond length chosen from the Boltzmann
+      * distribution of lengths for bonds of random orientation. The
+      * distribution P(l) of values of the length l is proportional 
+      * to l*l*exp[-beta*phi(l) ], where phi(l) is the bond energy. 
+      *
+      * \param random  pointer to random number generator object.
+      * \param beta  inverse temperature
+      * \param type  bond type
+      * \return  angle cosine chosen from equilibrium distribution.
+      */
+      virtual 
+      double randomCosineAngle(Util::Random* random, double beta, int type) 
+             const = 0;
 
       /**
       * Modify an interaction parameter, identified by a string.

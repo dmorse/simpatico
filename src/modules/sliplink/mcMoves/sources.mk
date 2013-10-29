@@ -1,9 +1,12 @@
-modules_sliplink_mcMoves_SRCS= \
-    $(SRC_DIR)/modules/sliplink/mcMoves/SliplinkerAll.cpp \
-    $(SRC_DIR)/modules/sliplink/mcMoves/SliplinkerEnd.cpp \
-    $(SRC_DIR)/modules/sliplink/mcMoves/SliplinkMove.cpp \
-    $(SRC_DIR)/modules/sliplink/mcMoves/GcSliplinkMove.cpp \
-    $(SRC_DIR)/modules/sliplink/mcMoves/SliplinkMcMoveFactory.cpp 
+modules_sliplink_mcMoves_=\
+    modules/sliplink/mcMoves/SliplinkerAll.cpp \
+    modules/sliplink/mcMoves/SliplinkerEnd.cpp \
+    modules/sliplink/mcMoves/SliplinkMove.cpp \
+    modules/sliplink/mcMoves/GcSliplinkMove.cpp \
+    modules/sliplink/mcMoves/SliplinkMcMoveFactory.cpp 
 
-modules_sliplink_mcMoves_OBJS=$(modules_sliplink_mcMoves_SRCS:.cpp=.o)
+modules_sliplink_mcMoves_SRCS=\
+    $(addprefix $(SRC_DIR)/, $(modules_sliplink_mcMoves_))
+modules_sliplink_mcMoves_OBJS=\
+    $(addprefix $(OBJ_DIR)/, $(modules_sliplink_mcMoves_:.cpp=.o))
 

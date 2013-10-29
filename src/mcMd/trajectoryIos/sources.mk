@@ -1,6 +1,10 @@
-mcMd_trajectoryIos_SRCS=$(SRC_DIR)/mcMd/trajectoryIos/DCDTrajectoryIo.cpp \
-    $(SRC_DIR)/mcMd/trajectoryIos/TrajectoryIo.cpp \
-    $(SRC_DIR)/mcMd/trajectoryIos/TrajectoryIoFactory.cpp 
+mcMd_trajectoryIos_=\
+    mcMd/trajectoryIos/DCDTrajectoryIo.cpp \
+    mcMd/trajectoryIos/TrajectoryIo.cpp \
+    mcMd/trajectoryIos/TrajectoryIoFactory.cpp 
 
-mcMd_trajectoryIos_OBJS=$(mcMd_trajectoryIos_SRCS:.cpp=.o)
+mcMd_trajectoryIos_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_trajectoryIos_))
+mcMd_trajectoryIos_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(mcMd_trajectoryIos_:.cpp=.o))
 

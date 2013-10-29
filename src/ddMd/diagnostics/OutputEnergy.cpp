@@ -10,7 +10,9 @@
 
 #include "OutputEnergy.h"
 #include <ddMd/potentials/pair/PairPotential.h>
+#ifdef INTER_BOND
 #include <ddMd/potentials/bond/BondPotential.h>
+#endif
 #ifdef INTER_ANGLE
 #include <ddMd/potentials/angle/AnglePotential.h>
 #endif
@@ -94,11 +96,13 @@ namespace DdMd
             double pair = sys.pairPotential().energy();
             potential += pair;
             Log::file() << Dbl(pair, 15);
+            #ifdef INTER_BOND
             if (sys.nBondType()) {
                double bond = sys.bondPotential().energy();
                potential += bond;
                Log::file() << Dbl(bond, 15);
             }
+            #endif
             #ifdef INTER_ANGLE
             if (sys.nAngleType()) {
                double angle = sys.anglePotential().energy();

@@ -12,33 +12,40 @@ include $(SRC_DIR)/mcMd/mcMoves/sources.mk
 include $(SRC_DIR)/mcMd/diagnostics/sources.mk
 include $(SRC_DIR)/mcMd/user/sources.mk
 
-mcMd_SRCS=\
-    $(mcMd_potentials_SRCS) $(mcMd_chemistry_SRCS) \
-    $(mcMd_species_SRCS) $(mcMd_neighbor_SRCS) \
-    $(mcMd_simulation_SRCS) $(mcMd_mcSimulation_SRCS) \
-    $(mcMd_mdSimulation_SRCS) $(mcMd_configIos_SRCS) \
-    $(mcMd_trajectoryIos_SRCS) $(mcMd_mdIntegrators_SRCS) \
-    $(mcMd_mcMoves_SRCS) $(mcMd_diagnostics_SRCS) \
-    $(mcMd_user_SRCS)
-
+mcMd_=\
+    $(mcMd_chemistry_) \
+    $(mcMd_species_) \
+    $(mcMd_neighbor_) \
+    $(mcMd_potentials_) \
+    $(mcMd_simulation_) \
+    $(mcMd_mcSimulation_) \
+    $(mcMd_mdSimulation_) \
+    $(mcMd_configIos_) \
+    $(mcMd_trajectoryIos_) \
+    $(mcMd_mdIntegrators_) \
+    $(mcMd_mcMoves_) \
+    $(mcMd_diagnostics_) \
+    $(mcMd_user_)
 
 ifdef MCMD_PERTURB
 include $(SRC_DIR)/mcMd/perturb/sources.mk
-mcMd_SRCS+=$(mcMd_perturb_SRCS)
+mcMd_+=$(mcMd_perturb_)
 endif
 
 ifdef MCMD_LINK
 include $(SRC_DIR)/mcMd/links/sources.mk
-mcMd_SRCS+=$(mcMd_links_SRCS)
+mcMd_+=$(mcMd_links_)
 endif
 
 ifdef INTER_TETHER
 include $(SRC_DIR)/mcMd/tethers/sources.mk
-mcMd_SRCS+=$(mcMd_tethers_SRCS)
+mcMd_+=$(mcMd_tethers_)
 endif
 
-mcMd_OBJS=$(mcMd_SRCS:.cpp=.o)
+mcMd_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_))
+mcMd_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(mcMd_:.cpp=.o))
 
 $(mcMd_LIB): $(mcMd_OBJS)
 	$(AR) rcs $(mcMd_LIB) $(mcMd_OBJS)
-

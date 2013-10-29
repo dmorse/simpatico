@@ -1,4 +1,7 @@
-mcMd_misc_SRCS=
+mcMd_misc_=
 
-mcMd_misc_OBJS=$(mcMd_misc_SRCS:.cpp=.o)
+mcMd_misc_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(mcMd_misc_))
+mcMd_misc_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(mcMd_misc_:.cpp=.o))
 
