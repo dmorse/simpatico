@@ -13,5 +13,5 @@ print str(p.SpeciesManager.Diblock[0])
 print str(p.SpeciesManager.Diblock[1])
 print str(p.SpeciesManager.Diblock[2])
 
-#print p.DiagnosticManager.VanHove
+#print p.AnalyzerManager.VanHove
 

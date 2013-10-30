@@ -40,9 +40,9 @@ Factory files in src/mcMd:
 
 configIos/ConfigIoFactory.h
 trajectoryIos/TrajectoryIoFactory.h
-diagnostics/mcSystem/McDiagnosticFactory.h
-diagnostics/mdSystem/MdDiagnosticFactory.h
-diagnostics/system/SystemDiagnosticFactory.h
+analyzers/mcSystem/McAnalyzerFactory.h
+analyzers/mdSystem/MdAnalyzerFactory.h
+analyzers/system/SystemAnalyzerFactory.h
 mcMoves/McMoveFactory.h
 mdIntegrators/MdIntegratorFactory.h
 perturb/mcSystem/McPerturbationFactory.h
@@ -59,7 +59,7 @@ Factory files in src/ddMd:
 
 actors/ActorFactory.h
 configIos/ConfigIoFactory.h
-diagnostics/DiagnosticFactory.h
+analyzers/AnalyzerFactory.h
 integrators/IntegratorFactory.h
 potentials/angle/AngleFactory.h
 potentials/bond/BondFactory.h

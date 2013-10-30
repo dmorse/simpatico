@@ -1,6 +1,6 @@
 
 
-class ClusterAnalysis : public SystemDiagnostic<System>
+class ClusterAnalysis : public SystemAnalyzer<System>
 {
 
 public:
@@ -8,7 +8,7 @@ public:
    /**
    * Constructor.
    */
-   ClusterAnalysis(SystemDiagnostic& system, int speciesId);
+   ClusterAnalysis(SystemAnalyzer& system, int speciesId);
 
    /**
    * Main analysis
@@ -42,7 +42,7 @@ private:
 }
 
 ClusterAnalysis::ClusterAnalysis(System& system, int speciesId)
- : SystemDiagnostic<System>(system),
+ : SystemAnalyzer<System>(system),
    speciesId_(speciesId),
    nMolecule_(-1)
 {}

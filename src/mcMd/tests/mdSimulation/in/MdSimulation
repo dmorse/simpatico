@@ -58,7 +58,7 @@ MdSimulation{
       dt                  0.00100
     }
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                  10
 
   }

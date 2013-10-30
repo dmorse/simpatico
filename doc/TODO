@@ -1,7 +1,7 @@
 TODO:
 
-1) Document all of the diagnostics, with one *.dox file per interaction in new
-   directories doc/diagnostics/ddMd and doc/diagnostics/mcMd.
+1) Document all of the analyzers, with one *.dox file per interaction in new
+   directories doc/analyzers/ddMd and doc/analyzers/mcMd.
 
 2) Document changes to the parameter file format caused by enabling particular 
    features.

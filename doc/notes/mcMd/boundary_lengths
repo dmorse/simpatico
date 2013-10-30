@@ -7,15 +7,15 @@ Constant pressure algorithms: Must be orthogonal as written
 ./mdIntegrators/NphIntegrator.cpp:      Vector lengths  = system().boundary().lengths();
 
 Algorithms for constant pressure ensemble: As written, must be orthogonal
-./diagnostics/system/BoundaryAverage.cpp:      lengths = system().boundary().lengths();
-./diagnostics/system/CompositionProfile.cpp:      blengths = system().boundary().lengths();
+./analyzers/system/BoundaryAverage.cpp:      lengths = system().boundary().lengths();
+./analyzers/system/CompositionProfile.cpp:      blengths = system().boundary().lengths();
 
 Already generalized correctly:
 ./neighbor/CellList.cpp:        lengths_ = boundary.lengths();
 
-Used to reconstruct true positions from shifts in MSD diagnostics:
-./diagnostics/system/AtomMSD.cpp:     Vector     lengths = system().boundary().lengths();
-./diagnostics/system/ComMSD.cpp:      Vector     lengths = system().boundary().lengths();
+Used to reconstruct true positions from shifts in MSD analyzers:
+./analyzers/system/AtomMSD.cpp:     Vector     lengths = system().boundary().lengths();
+./analyzers/system/ComMSD.cpp:      Vector     lengths = system().boundary().lengths();
 
 Need to generalize MPI code:
 ./perturb/ReplicaMove.cpp:      myBoundary = system().boundary().lengths();

@@ -1,5 +1,5 @@
 
-Several types of simulation algorithm and diagnostics 
+Several types of simulation algorithm and analyzers 
 involve the definition of a Boltzmann weight W(x) that depends 
 upon a continuous parameter x, and an ensemble of allowed values 
 for this parameter. In each of these applications, each System 

@@ -15,7 +15,7 @@ Constant Pressure MD
 Non-Orthorhombic (Rigid) Boundaries
 -----------------------------------
 
-- Use new applyShift method in MSD diagnostic classes.
+- Use new applyShift method in MSD analyzer classes.
 
 - Find other uses of Boundary::lengths in McMd namespace.
   Add tests to cause crash before misuse, as needed.
@@ -55,8 +55,8 @@ SystemAccess base classes
 
 - Rename SubSystem SystemAccess
 - Define McSystemAccess and MdSystemAccess classes with potential energy accessors.
-- Derive diagnostics from a public Diagnostic and a protected (Mc|Md)SystemAccess.
-- Remove replace system().typePotential() by typePotential() in diagnostics
+- Derive analyzers from a public Analyzer and a protected (Mc|Md)SystemAccess.
+- Remove replace system().typePotential() by typePotential() in analyzers
 - Derive SystemMcMove from a protected McSystemAccess.
 - Remove replace system().typePotential() by typePotential() in mcMoves.
 - Derive MdIntegrator from a protected MdSystemAccess.

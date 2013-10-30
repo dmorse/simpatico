@@ -7,7 +7,7 @@ Class EeMcSimatulation : public Simulation {
 
    Has an ExtendedEnsemble (required)
 
-   Has an EeDiagnosticManager
+   Has an EeAnalyzerManager
 
    Has some sort of method to periodically
        update free energy estimates.
