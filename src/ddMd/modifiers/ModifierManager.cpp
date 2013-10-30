@@ -1,5 +1,5 @@
-#ifndef DDMD_ACTOR_MANAGER_CPP
-#define DDMD_ACTOR_MANAGER_CPP
+#ifndef DDMD_MODIFIER_MANAGER_CPP
+#define DDMD_MODIFIER_MANAGER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -39,7 +39,7 @@ namespace DdMd
      exchangeModifiers_(),
      updateModifiers_(),
      reverseUpdateModifiers_()
-   {}
+   { setClassName("ModifierManager"); }
 
    /*
    * Constructor.
@@ -64,7 +64,7 @@ namespace DdMd
      exchangeModifiers_(),
      updateModifiers_(),
      reverseUpdateModifiers_()
-   {}
+   { setClassName("ModifierManager"); }
 
    /*
    * Destructor.
@@ -79,7 +79,7 @@ namespace DdMd
    */
    void ModifierManager::readParam(std::istream &in)
    {
-      Manager<Modifier>::readParameters(in);
+      Manager<Modifier>::readParam(in);
 
       Modifier* ptr;
       for  (int i = 0; i < size(); ++i) {

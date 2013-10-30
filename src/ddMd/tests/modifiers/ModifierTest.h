@@ -35,13 +35,28 @@ public:
       ModifierA modifier;
       TEST_ASSERT(modifier.isSet(Modifier::Flags::PostIntegrate1));
       TEST_ASSERT(!modifier.isSet(Modifier::Flags::PreIntegrate1));
-      cout << modifier.mask() << std::endl;
+
+      std::cout << std::endl;
+      std::cout << modifier.flags() << std::endl;
+   }
+
+   void testReadParam()
+   {
+      printMethod(TEST_FUNC);
+      ModifierA modifier;
+      std::ifstream in;
+      openInputFile("in/ModifierA", in);
+      modifier.readParam(in);
+      TEST_ASSERT(modifier.interval() == 10);
+      std::cout << std::endl;
+      modifier.writeParam(std::cout);
    }
 
 };
 
 TEST_BEGIN(ModifierTest)
 TEST_ADD(ModifierTest, testConstructor)
+TEST_ADD(ModifierTest, testReadParam)
 TEST_END(ModifierTest)
 
 #endif //ifndef DDMD_MODIFIER_TEST_H

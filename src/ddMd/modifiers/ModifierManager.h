@@ -1,5 +1,5 @@
-#ifndef DDMD_ACTOR_MANAGER_H
-#define DDMD_ACTOR_MANAGER_H
+#ifndef DDMD_MODIFIER_MANAGER_H
+#define DDMD_MODIFIER_MANAGER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

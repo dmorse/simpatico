@@ -1,5 +1,5 @@
-#ifndef DDMD_ACTOR_FACTORY_H
-#define DDMD_ACTOR_FACTORY_H
+#ifndef DDMD_MODIFIER_FACTORY_H
+#define DDMD_MODIFIER_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -28,6 +28,11 @@ namespace DdMd
    {
 
    public:
+
+      /**
+      * Default constructor (for unit testing)
+      */
+      ModifierFactory();
 
       /**
       * Constructor.

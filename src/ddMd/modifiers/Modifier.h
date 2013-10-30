@@ -1,5 +1,5 @@
-#ifndef DDMD_ACTOR_H
-#define DDMD_ACTOR_H
+#ifndef DDMD_MODIFIER_H
+#define DDMD_MODIFIER_H
 
 #include <util/param/ParamComposite.h>  // base class
 #include <util/misc/Bit.h>              // constants in namespace

@@ -1,5 +1,5 @@
-#ifndef DDMD_ACTOR_CPP
-#define DDMD_ACTOR_CPP
+#ifndef DDMD_MODIFIER_CPP
+#define DDMD_MODIFIER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -56,6 +56,18 @@ namespace DdMd
    */
    Modifier::~Modifier()
    {}
+
+   /**
+   * Read parameter interval from file.
+   *
+   * This function throws an exception if the value of interval
+   * is not a multiple of Modifier::baseInterval, or if
+   * baseInterval has not been set to a nonzero positive value.
+   *
+   * \param in input parameter file stream.
+   */
+   void Modifier::readInterval(std::istream &in)
+   {  read<long>(in, "interval", interval_); }
 
    /*
    * Return true if a flag is set, false otherwise.

@@ -13,8 +13,16 @@ namespace DdMd {
    
       ModifierA() :
          Modifier()
-      { set(Modifier::Flags::PostIntegrate1); }
-     
+      {
+         setClassName("ModifierA"); 
+         set(Modifier::Flags::PostIntegrate1); 
+      }
+    
+      void readParameters(std::istream& in) 
+      {
+         readInterval(in);
+      } 
+
       void postIntegrate1(long iStep)
       {}
    
