@@ -60,8 +60,14 @@ namespace DdMd
    /*
    * Return true if a flag is set, false otherwise.
    */
-   bool Modifier::isSet(Bit flag)
+   bool Modifier::isSet(Bit flag) const
    {  return flag.isSet(flags_); }
+
+   /*
+   * Return unsigned int representation of all bit flags.
+   */
+   unsigned int Modifier::flags() const
+   {  return flags_; }
 
    /*
    * Return true if a flag is set, false otherwise.

@@ -150,7 +150,12 @@ namespace DdMd
       /**
       * Return true if a flag is set, false otherwise.
       */
-      bool isSet(Bit flag);
+      bool isSet(Bit flag) const;
+
+      /**
+      * Return unsigned int representation of all bit flags.
+      */
+      unsigned int flags() const;
 
       //@} 
       /// \name Interval methods
