@@ -40,8 +40,8 @@ all:
 	make $(MCSIM_EXE) 
 
 clean:
-	-rm $(MCSIM_EXE) mcSim.o mcSim.d
-	-rm $(MDSIM_EXE) mdSim.o mdSim.d
+	-rm -f $(MCSIM_EXE) mcSim.o mcSim.d
+	-rm -f $(MDSIM_EXE) mdSim.o mdSim.d
 	-rm -f $(modules_sliplink_OBJS) $(modules_sliplink_OBJS:.o=.d)
 
 -include $(modules_sliplink_OBJS:.o=.d)

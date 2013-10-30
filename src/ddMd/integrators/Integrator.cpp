@@ -361,7 +361,7 @@ namespace DdMd
           << "   " << Dbl(100.0, 12, 6, true) << std::endl;
       double analyzerT = timer().time(ANALYZER);
       totalT += analyzerT;
-      out << "Analyzers          " 
+      out << "Analyzers            " 
           << Dbl(analyzerT*factor1, 12, 6)
           << "   "
           << Dbl(analyzerT*factor2, 12, 6)
