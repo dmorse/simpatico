@@ -23,7 +23,7 @@ namespace McMd
    /**
    * Abstract base for periodic output and/or analysis actions.
    *
-   * The periodic action associated with a Analyzer can involve sampling
+   * The periodic action associated with an Analyzer can involve sampling
    * of a physical property and adding it to statistical accumulator, 
    * outputting it to file, or both. This periodic action must be 
    * implemented by the pure virtual sample() method.
@@ -33,7 +33,7 @@ namespace McMd
    * parameter.  The interval must be a positive integer that is a multiple 
    * of the static member Analyzer::baseInterval.
    *
-   * The virtual sample() method does not take any parameters. A Analyzer
+   * The virtual sample() method does not take any parameters. An Analyzer
    * must thus access its parent Simulation and/or System via a pointer, 
    * which is usually initialized in its subclass constructor.
    *
@@ -41,7 +41,7 @@ namespace McMd
    * or MdSystem (i.e., almost all of them) should be derived from the
    * SystemAnalyzer<class SystemType> class template. This takes a 
    * reference to the parent system as parameter to its constructor. 
-   * A Analyzer subclass that can be used with any System should be
+   * An Analyzer subclass that can be used with any System should be
    * derived from SystemAnalyzer<System>, and one that can be used 
    * only with a MdSystem or McSystem should be derived from 
    * SystemAnalyzer<MdSystem> or SystemAnalyzer<MdSystem>, 
@@ -152,7 +152,7 @@ namespace McMd
       // Static members
 
       /**
-      * The interval for a Analyzer must be a multiple of baseInterval.
+      * The interval for an Analyzer must be a multiple of baseInterval.
       */
       static long baseInterval;
 

@@ -62,7 +62,7 @@ namespace McMd
    * 
    *  - A SpeciesManager, which has one or more Species objects.
    *
-   *  - A AnalyzerManager, which has one or more Analyzer objects.
+   *  - An AnalyzerManager, which has one or more Analyzer objects.
    *
    *  - A FileMaster to manage associated input and output files.
    *

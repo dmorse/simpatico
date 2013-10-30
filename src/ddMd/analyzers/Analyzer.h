@@ -24,7 +24,7 @@ namespace DdMd
    /**
    * Abstract base for periodic output and/or analysis actions.
    *
-   * The periodic action associated with a Analyzer can involve sampling
+   * The periodic action associated with an Analyzer can involve sampling
    * of a physical property and adding it to statistical accumulator, 
    * outputting it to file, or both. This periodic action must be 
    * implemented by the pure virtual sample() method.
@@ -34,7 +34,7 @@ namespace DdMd
    * parameter.  The interval must be a positive integer that is a multiple 
    * of the static member Analyzer::baseInterval.
    *
-   * The virtual sample() method does not take any parameters. A Analyzer
+   * The virtual sample() method does not take any parameters. An Analyzer
    * must thus access its parent Simulation and/or Simulation via a pointer, 
    * which is usually initialized in its subclass constructor.
    *
@@ -134,7 +134,7 @@ namespace DdMd
       // Static members
 
       /**
-      * The interval for a Analyzer must be a multiple of baseInterval.
+      * The interval for an Analyzer must be a multiple of baseInterval.
       */
       static long baseInterval;
 

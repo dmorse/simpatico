@@ -94,7 +94,7 @@ A complete MC or MD simulation is represented by a Simulation object.  MdSimulat
 
  - a Util::Random random number generator.
 
- - A AnalyzerManager that holds a set of Analyzer objects.
+ - An AnalyzerManager that holds a set of Analyzer objects.
 
 The Simulation is also responsible for reading a command file, and for implementing the main simulation loop. 
 An MdSimulation contains one McSystem. An McSimulation contains one MdSystem. 
