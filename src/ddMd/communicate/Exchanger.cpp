@@ -196,7 +196,7 @@ namespace DdMd
    {
       stamp(START);
       Vector lengths = boundaryPtr_->lengths();
-      double bound, inner, slabWidth;
+      double bound, slabWidth;
       double coordinate, rshift;
       AtomIterator atomIter;
       Atom* atomPtr;
@@ -391,7 +391,6 @@ namespace DdMd
             source = domainPtr_->sourceRank(i, j); // rank to receive from
             dest = domainPtr_->destRank(i, j);     // rank to send to
             bound = domainPtr_->domainBound(i, j); // bound for send
-            inner = inner_(i, jc);                 // inner bound upon receipt
             shift = domainPtr_->shift(i, j);       // shift for periodic b.c.
             rshift = double(shift);
 
@@ -457,10 +456,10 @@ namespace DdMd
 
                      #if UTIL_DEBUG
                      // Check ghost communication plan
-                     if (j == 0 && atomIter->position()[i] > inner) {
+                     if (j == 0 && atomIter->position()[i] > inner_(i, jc)) {
                         assert(atomIter->plan().ghost(i, 1));
                      } else
-                     if (j == 1 && atomIter->position()[i] < inner) {
+                     if (j == 1 && atomIter->position()[i] < inner_(i, jc)) {
                         assert(atomIter->plan().ghost(i, 0));
                      }
                      #endif
@@ -630,11 +629,10 @@ namespace DdMd
          UTIL_THROW("atomStoragePtr_->nGhost() != 0");
       }
 
-      Vector  lengths = boundaryPtr_->lengths();
       double  rshift;
       Atom* atomPtr;
       Atom* sendPtr;
-      int i, j, jc, ip, jp, k, source, dest, shift, size;
+      int i, j, ip, jp, k, source, dest, shift, size;
 
       // Clear all receive arrays
       for (i = 0; i < Dimension; ++i) {
@@ -689,10 +687,6 @@ namespace DdMd
 
             // j = 0: Send ghosts near minimum bound to lower coordinate
             // j = 1: Send ghosts near maximum bound to higher coordinate
-
-            // Set index for reverse direction
-            if (j == 0) jc = 1;
-            if (j == 1) jc = 0;
 
             // Shift on receiving node for periodic b.c.s
             shift = domainPtr_->shift(i, j);
@@ -848,7 +842,6 @@ namespace DdMd
          UTIL_THROW("Error: Coordinates not Cartesian on entry to update");
       }
 
-      Vector lengths = boundaryPtr_->lengths();
       Atom*  atomPtr;
       int    i, j, k, source, dest, size, shift;
 
@@ -923,7 +916,6 @@ namespace DdMd
    void Exchanger::reverseUpdate()
    {
       stamp(START);
-      Vector lengths = boundaryPtr_->lengths();
       Atom*  atomPtr;
       int    i, j, k, source, dest, size;
 

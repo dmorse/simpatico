@@ -176,7 +176,7 @@ namespace Util
    * Destructor.
    */
    template <typename Data>
-   inline DPArray<Data>::~DPArray()
+   DPArray<Data>::~DPArray()
    {
       size_ = 0;
       if (ptrs_) {

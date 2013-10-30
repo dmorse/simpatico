@@ -114,6 +114,12 @@ namespace DdMd
    }
 
    /*
+   * Destructor.
+   */
+   ConfigIo::~ConfigIo()
+   {}
+
+   /*
    * Associate with required domain, boundary, storage, and buffer objects.
    */
    void ConfigIo::associate(Domain& domain, Boundary& boundary,

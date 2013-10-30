@@ -1,6 +1,7 @@
 #include "ExceptionTest.h"
 #include "ioUtilTest.h"
 #include "SetableTest.h"
+#include "BitTest.h"
 
 int main() 
 {
@@ -19,6 +20,9 @@ int main()
 
    TEST_RUNNER(SetableTest) test3;
    test3.run();
+
+   TEST_RUNNER(BitTest) test4;
+   test4.run();
 
    #ifdef UTIL_MPI
    MPI::Finalize();

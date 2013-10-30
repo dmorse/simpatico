@@ -240,7 +240,7 @@ namespace DdMd
             double norm;
             for (j = 0; j < nMode_; ++j) {
                double maxValue = 0.0;
-               IntVector maxIntVector;
+               IntVector maxIntVector(0);
                double maxQ;
                for (i = 0; i < nWave_; ++i) {
                   norm = std::norm(totalFourierModes_(i, j));

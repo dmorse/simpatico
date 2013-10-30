@@ -1,5 +1,6 @@
 
 util_misc_=\
+    util/misc/Bit.cpp \
     util/misc/Exception.cpp \
     util/misc/FileMaster.cpp \
     util/misc/initStatic.cpp \

@@ -58,6 +58,11 @@ namespace DdMd
       ConfigIo(Simulation& simulation);
 
       /**
+      * Destructor.
+      */
+      virtual ~ConfigIo();
+
+      /**
       * Associate with related objects.
       *
       * Required iff instantiated with default constructor.

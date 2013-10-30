@@ -280,8 +280,8 @@ namespace DdMd
       bool  eFlag = false;
       bool  rFlag = false;
       bool  sFlag = false;
-      char* sArg;
-      char* rArg;
+      char* sArg = 0;
+      char* rArg = 0;
       int  nSystem = 1;
 
       // Read command-line arguments
