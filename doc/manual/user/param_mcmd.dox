@@ -110,7 +110,7 @@ McSimulation{
     }
 
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                        1000
 
     LogProgress{
@@ -155,7 +155,7 @@ McSimulation{
   Random{ ... }
   McSystem{ ... }
   McMoveManager{ ... }
-  DiagnosticManager{ ... }
+  AnalyzerManager{ ... }
   writeRestartInterval  [int]
   writeRestartFileName  [string]
 }
@@ -172,7 +172,7 @@ MdSimulation{
   SpeciesManager{ ... }
   Random{ ... }
   MdSystem{ ... }
-  DiagnosticManager{ ... }
+  AnalyzerManager{ ... }
   writeRestartInterval    [int]
   writeRestartFileName    [string]
 }
@@ -212,8 +212,8 @@ The Random block is associated with a Util::Random object.  The only parameter t
 \section user_param_mcmd_species_manager_section SpeciesManager
 The SpeciesManager block contains a sequence of one or more polymorphic blocks, each of which contains the appropriate file format for a subclass of McMd::Species. Each such subclass describes a different class of molecules, and so requires a different file format. Instances of the base class McMd::Species use a file format that is flexible enough to describe any molecular structure. 
 
-\section user_param_mcmd_diagnostic_manager_section DiagnosticManager
-The DiagnosticManager block contains a single integer parameter named baseInterval, followed by a sequence of polymorphic blocks associated with subclasses of McMd::Diagnostic.  Most subclasses of McMd::Diagnostic implement an operation that calculates one or more physical properties and either outputs data or carries out a statistical analysis, or both. Each diagnostic has an parameter named "interval" that specifies how often this operation should be invoked: Each diagnostic is invoked when the global step counter is an integer multiple of its interval parameter. The interval for each diagnostic must be a multiple of baseInterval.
+\section user_param_mcmd_analyzer_manager_section AnalyzerManager
+The AnalyzerManager block contains a single integer parameter named baseInterval, followed by a sequence of polymorphic blocks associated with subclasses of McMd::Analyzer.  Most subclasses of McMd::Analyzer implement an operation that calculates one or more physical properties and either outputs data or carries out a statistical analysis, or both. Each analyzer has an parameter named "interval" that specifies how often this operation should be invoked: Each analyzer is invoked when the global step counter is an integer multiple of its interval parameter. The interval for each analyzer must be a multiple of baseInterval.
 
 \section user_param_mcmd_mcsystem_section McSystem and MdSystem
 The format for an McSystem subblock of an MdSimulation is:

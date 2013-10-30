@@ -60,7 +60,7 @@ McSimulation{
     } 
 
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                    10000
 
     LogProgress{

@@ -31,7 +31,7 @@ veryclean:
 	make clean
 	-rm -f lib*.a
 	-rm -f configIos/ConfigIoFactory.cpp
-	-rm -f diagnostics/DiagnosticFactory.cpp
+	-rm -f analyzers/AnalyzerFactory.cpp
 	-rm -f integrators/IntegratorFactory.cpp
 	-rm -f potentials/angle/AngleFactory.cpp
 	-rm -f potentials/bond/BondFactory.cpp

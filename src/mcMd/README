@@ -21,7 +21,7 @@ mcSimulation   Monte Carlo (MC) Simulation and System subclasses
 mcMoves        classes for specific MC moves (derived from McMove)
 mdSimulation   molecular dynamics (MD) Simulation and System subclasses
 mdIntegrators  specific MD integrators (derived from MdIntegrator)
-diagnostics    data analysis (classes derived from Diagnostic)
+analyzers    data analysis (classes derived from Analyzer)
 configIos      configuration file IO 
 trajectoryIos  MD trajectory (multi-configuration) file IO.
 perturb        free energy perturbation theory

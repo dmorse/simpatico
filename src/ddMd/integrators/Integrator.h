@@ -73,7 +73,7 @@ namespace DdMd
       * Set integrator to initial state and clears all statistics.
       *
       * This method resset iStep = 0, calls initDynamicalState(), calls the
-      * DiagnosticManger::clear(), clears the internal Timer and all timing 
+      * AnalyzerManger::clear(), clears the internal Timer and all timing 
       * statistics, clear the additional timing statistics maintained by
       * the Exchanger class, and clears the memory usage statistics for the 
       * Buffer, PairList, and storage classes. 
@@ -116,7 +116,7 @@ namespace DdMd
    protected:
 
       /// Timestamps for loop timing.
-      enum TimeId {DIAGNOSTIC, INTEGRATE1, CHECK, ALLREDUCE, TRANSFORM_F, 
+      enum TimeId {ANALYZER, INTEGRATE1, CHECK, ALLREDUCE, TRANSFORM_F, 
                    EXCHANGE, CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, 
                    PAIR_FORCE, BOND_FORCE, ANGLE_FORCE, DIHEDRAL_FORCE,
                    EXTERNAL_FORCE, INTEGRATE2, NTime};

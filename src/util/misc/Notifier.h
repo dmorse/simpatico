@@ -55,7 +55,7 @@ namespace Util
       void registerObserver(Observer<Event>& observer);
    
       /**
-      * Remove a diagnostic observer from the container list.
+      * Remove an analyzer observer from the container list.
       *
       * \param observer observer object
       */

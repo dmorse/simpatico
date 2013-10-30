@@ -1,0 +1,4 @@
+subDirectories =
+pathFromSrc = modules/hoomd/analyzers
+pathToSrc = ../../..
+

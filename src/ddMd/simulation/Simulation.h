@@ -18,7 +18,7 @@
 #include <ddMd/storage/DihedralStorage.h>        // member 
 #include <ddMd/chemistry/AtomType.h>             // member (template param)
 #include <ddMd/chemistry/MaskPolicy.h>           // member
-#include <ddMd/diagnostics/DiagnosticManager.h>  // member
+#include <ddMd/analyzers/AnalyzerManager.h>  // member
 #include <util/random/Random.h>                  // member 
 #include <util/boundary/Boundary.h>              // member 
 #include <util/space/Tensor.h>                   // member (template param)
@@ -43,7 +43,7 @@ namespace DdMd
    class Integrator;
    class ConfigIo;
    class SerializeConfigIo;
-   class DiagnosticManager;
+   class AnalyzerManager;
    class PairPotential;
    #ifdef INTER_BOND
    class BondPotential;
@@ -612,9 +612,9 @@ namespace DdMd
       Buffer& buffer();
   
       /**
-      * Return the DiagnosticManager by reference.
+      * Return the AnalyzerManager by reference.
       */
-      DiagnosticManager& diagnosticManager();
+      AnalyzerManager& analyzerManager();
 
       /**
       * Get the Integrator factory by reference.
@@ -852,8 +852,8 @@ namespace DdMd
       /// Pointer to a configuration reader/writer for restart.
       SerializeConfigIo* serializeConfigIoPtr_;
    
-      /// DiagnosticManager
-      DiagnosticManager* diagnosticManagerPtr_;
+      /// AnalyzerManager
+      AnalyzerManager* analyzerManagerPtr_;
 
       #ifndef INTER_NOPAIR
       /// Pointer to a PairPotential factory.
@@ -1101,12 +1101,12 @@ namespace DdMd
    }
 
    /*
-   * Get the DiagnosticManager by reference.
+   * Get the AnalyzerManager by reference.
    */
-   inline DiagnosticManager& Simulation::diagnosticManager()
+   inline AnalyzerManager& Simulation::analyzerManager()
    {
-      assert(diagnosticManagerPtr_);
-      return *diagnosticManagerPtr_;
+      assert(analyzerManagerPtr_);
+      return *analyzerManagerPtr_;
    }
 
    /*

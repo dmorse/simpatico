@@ -84,7 +84,7 @@ McSimulation{
     }
 
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval           10
 
   }

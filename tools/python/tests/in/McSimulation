@@ -84,7 +84,7 @@ McSimulation{
     probability           0.900000000000e+00
 
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                          10
 
     LogProgress{

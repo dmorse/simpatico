@@ -9,7 +9,7 @@ include $(SRC_DIR)/mcMd/configIos/sources.mk
 include $(SRC_DIR)/mcMd/trajectoryIos/sources.mk
 include $(SRC_DIR)/mcMd/mdIntegrators/sources.mk
 include $(SRC_DIR)/mcMd/mcMoves/sources.mk
-include $(SRC_DIR)/mcMd/diagnostics/sources.mk
+include $(SRC_DIR)/mcMd/analyzers/sources.mk
 include $(SRC_DIR)/mcMd/user/sources.mk
 
 mcMd_=\
@@ -24,7 +24,7 @@ mcMd_=\
     $(mcMd_trajectoryIos_) \
     $(mcMd_mdIntegrators_) \
     $(mcMd_mcMoves_) \
-    $(mcMd_diagnostics_) \
+    $(mcMd_analyzers_) \
     $(mcMd_user_)
 
 ifdef MCMD_PERTURB

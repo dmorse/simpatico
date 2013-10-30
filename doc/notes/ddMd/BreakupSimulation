@@ -107,7 +107,7 @@ Proposed Smaller Classes, Alternative #1:
       - Random
       - ConfigIo
       - Integrator
-      - DiagnosticManager
+      - AnalyzerManager
    
       Properties:    kinetic energy, stress, etc.
 

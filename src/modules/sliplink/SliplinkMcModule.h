@@ -12,7 +12,7 @@ namespace McMd
    using namespace Util;
 
    class McMove;
-   class Diagnostic;
+   class Analyzer;
 
    /**
    * Module for slip link simulation. 
@@ -35,13 +35,13 @@ namespace McMd
       virtual ~SliplinkMcModule();
 
       /**
-      * Add Diagnostic and McMove sub-factories.
+      * Add Analyzer and McMove sub-factories.
       */
       virtual void addFactories();
    
    private:
    
-      Factory<Diagnostic>* diagnosticFactoryPtr_;
+      Factory<Analyzer>* analyzerFactoryPtr_;
 
       Factory<McMove>*     mcMoveFactoryPtr_;
    

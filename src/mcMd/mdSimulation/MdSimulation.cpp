@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/mdSimulation/MdSimulation.h>
-#include <mcMd/mdSimulation/MdDiagnosticManager.h>
+#include <mcMd/mdSimulation/MdAnalyzerManager.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/bond/BondPotential.h>
@@ -19,7 +19,7 @@
 #ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
-#include <mcMd/diagnostics/Diagnostic.h>
+#include <mcMd/analyzers/Analyzer.h>
 #include <mcMd/trajectoryIos/TrajectoryIo.h>
 #include <mcMd/species/Species.h>
 #include <util/format/Int.h>
@@ -46,7 +46,7 @@ namespace McMd
    MdSimulation::MdSimulation(MPI::Intracomm& communicator)
     : Simulation(communicator),
       system_(),
-      mdDiagnosticManagerPtr_(0),
+      mdAnalyzerManagerPtr_(0),
       saveFileName_(),
       saveInterval_(0),
       isInitialized_(false),
@@ -56,9 +56,9 @@ namespace McMd
       system_.setId(0);
       system_.setSimulation(*this);
       system_.setFileMaster(fileMaster());
-      mdDiagnosticManagerPtr_ = new MdDiagnosticManager(*this);
-      assert(mdDiagnosticManagerPtr_);
-      setDiagnosticManager(mdDiagnosticManagerPtr_);
+      mdAnalyzerManagerPtr_ = new MdAnalyzerManager(*this);
+      assert(mdAnalyzerManagerPtr_);
+      setAnalyzerManager(mdAnalyzerManagerPtr_);
    }
    #endif
 
@@ -68,7 +68,7 @@ namespace McMd
    MdSimulation::MdSimulation()
     : Simulation(),
       system_(),
-      mdDiagnosticManagerPtr_(0),
+      mdAnalyzerManagerPtr_(0),
       saveFileName_(),
       saveInterval_(0),
       isInitialized_(false),
@@ -78,9 +78,9 @@ namespace McMd
       system_.setId(0);
       system_.setSimulation(*this);
       system_.setFileMaster(fileMaster());
-      mdDiagnosticManagerPtr_ = new MdDiagnosticManager(*this);
-      assert(mdDiagnosticManagerPtr_);
-      setDiagnosticManager(mdDiagnosticManagerPtr_);
+      mdAnalyzerManagerPtr_ = new MdAnalyzerManager(*this);
+      assert(mdAnalyzerManagerPtr_);
+      setAnalyzerManager(mdAnalyzerManagerPtr_);
    }
 
    /* 
@@ -88,10 +88,10 @@ namespace McMd
    */
    MdSimulation::~MdSimulation()
    {
-      assert(mdDiagnosticManagerPtr_);
-      if (mdDiagnosticManagerPtr_) {
-         delete mdDiagnosticManagerPtr_;
-         mdDiagnosticManagerPtr_ = 0;
+      assert(mdAnalyzerManagerPtr_);
+      if (mdAnalyzerManagerPtr_) {
+         delete mdAnalyzerManagerPtr_;
+         mdAnalyzerManagerPtr_ = 0;
       }
    }
 
@@ -176,7 +176,7 @@ namespace McMd
       Simulation::readParameters(in); 
 
       readParamComposite(in, system_); 
-      readParamComposite(in, diagnosticManager());
+      readParamComposite(in, analyzerManager());
 
       // Parameters for writing restart files
       read<int>(in, "saveInterval", saveInterval_);
@@ -220,7 +220,7 @@ namespace McMd
 
       Simulation::loadParameters(ar); 
       loadParamComposite(ar, system_); 
-      loadParamComposite(ar, diagnosticManager());
+      loadParamComposite(ar, analyzerManager());
       loadParameter<int>(ar, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
          loadParameter<std::string>(ar, "saveFileName", saveFileName_);
@@ -240,7 +240,7 @@ namespace McMd
    { 
       Simulation::save(ar); 
       system_.saveParameters(ar);
-      diagnosticManager().save(ar);
+      analyzerManager().save(ar);
       ar << saveInterval_;
       if (saveInterval_ > 0) {
          ar << saveFileName_;
@@ -490,7 +490,7 @@ namespace McMd
          }
          #endif
          system().calculateForces();
-         diagnosticManager().setup();
+         analyzerManager().setup();
          system_.mdIntegrator().setup();
       }
       int beginStep = iStep_;
@@ -501,11 +501,11 @@ namespace McMd
       timer.start();
       for ( ; iStep_ < endStep; ++iStep_) {
 
-         // Sample scheduled diagnostics
-         if (Diagnostic::baseInterval > 0) {
-            if (iStep_ % Diagnostic::baseInterval == 0) {
+         // Sample scheduled analyzers
+         if (Analyzer::baseInterval > 0) {
+            if (iStep_ % Analyzer::baseInterval == 0) {
                system().shiftAtoms();
-               diagnosticManager().sample(iStep_);
+               analyzerManager().sample(iStep_);
             }
          }
          if (saveInterval_ > 0) {
@@ -517,9 +517,9 @@ namespace McMd
          #ifdef INTER_NOPAIR
          else {
             // When the pair potential is disabled, require that
-            // Diagnostic::baseInterval != 0 to guarantee periodic 
+            // Analyzer::baseInterval != 0 to guarantee periodic 
             // shifting of atomic positions into primary cell.
-            UTIL_THROW("Diagnostic::baseInterval == 0 with no pair potential");
+            UTIL_THROW("Analyzer::baseInterval == 0 with no pair potential");
          }
          #endif
 
@@ -534,10 +534,10 @@ namespace McMd
       // Shift final atomic positions 
       system().shiftAtoms();
 
-      // Final diagnostics and restart
-      if (Diagnostic::baseInterval > 0) {
-         if (iStep_ % Diagnostic::baseInterval == 0) {
-            diagnosticManager().sample(iStep_);
+      // Final analyzers and restart
+      if (Analyzer::baseInterval > 0) {
+         if (iStep_ % Analyzer::baseInterval == 0) {
+            analyzerManager().sample(iStep_);
          }
       }
       if (saveInterval_ > 0) {
@@ -546,8 +546,8 @@ namespace McMd
          }
       }
 
-      // Final diagnostic output
-      diagnosticManager().output();
+      // Final analyzer output
+      analyzerManager().output();
 
       // Output timing results
       Log::file() << std::endl;
@@ -625,11 +625,11 @@ namespace McMd
          isValid();
          #endif
 
-         // Initialize diagnostics (taking in molecular information).
-         if (iStep_ == min) diagnosticManager().setup();
+         // Initialize analyzers (taking in molecular information).
+         if (iStep_ == min) analyzerManager().setup();
 
          // Sample property values
-         diagnosticManager().sample(iStep_);
+         analyzerManager().sample(iStep_);
 
          // Clear out the System for the next readConfig.
          system().removeAllMolecules();
@@ -638,8 +638,8 @@ namespace McMd
       timer.stop();
       Log::file()<< "end main loop" << std::endl;
 
-      // Output results of all diagnostics to output files
-      diagnosticManager().output();
+      // Output results of all analyzers to output files
+      analyzerManager().output();
 
       // Output time 
       Log::file() << std::endl;
@@ -715,11 +715,11 @@ namespace McMd
          isValid();
          #endif
 
-         // Initialize diagnostics (taking in molecular information).
-         if (iStep_ == min) diagnosticManager().setup();
+         // Initialize analyzers (taking in molecular information).
+         if (iStep_ == min) analyzerManager().setup();
 
          // Sample property values only for iStep >= min
-         if (iStep_ >= min) diagnosticManager().sample(iStep_);
+         if (iStep_ >= min) analyzerManager().sample(iStep_);
 
       }
       timer.stop();
@@ -732,8 +732,8 @@ namespace McMd
       delete trajectoryIo;
       delete trajectoryFile;
 
-      // Output results of all diagnostics to output files
-      diagnosticManager().output();
+      // Output results of all analyzers to output files
+      analyzerManager().output();
 
       // Output time 
       Log::file() << std::endl;

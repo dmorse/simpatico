@@ -85,7 +85,7 @@ namespace McMd
 
 }
 \endcode
-The addSubfactory() method must be invoked before MdSimulation::readParam() in order for the subfactory to be available for use when the parameter file is read. A similar pattern is used to set user defined Factory classes for subclasses of Species, McMove, and Diagnostic. The SpeciesFactory and DiagnosticFactory are accessed through methods of the Simulation class. The McMoveFactory is accessible through a method of McSimulation.
+The addSubfactory() method must be invoked before MdSimulation::readParam() in order for the subfactory to be available for use when the parameter file is read. A similar pattern is used to set user defined Factory classes for subclasses of Species, McMove, and Analyzer. The SpeciesFactory and AnalyzerFactory are accessed through methods of the Simulation class. The McMoveFactory is accessible through a method of McSimulation.
 
 \section custom_factory_accessor_sec Access to Factory Classes
 
@@ -93,7 +93,7 @@ The default Factory object for each of the polymorphic base classes in an mcSim 
 
   - McMd::Factory<Species>&            McMd::Simulation::speciesFactory() 
 
-  - McMd::Factory<Diagnostic>&         McMd::Simulation::diagnosticFactory() 
+  - McMd::Factory<Analyzer>&         McMd::Simulation::analyzerFactory() 
 
   - McMd::Factory<McMove>&             McMd::McSimulation::mcMoveFactory() 
 

@@ -13,12 +13,12 @@ The mcSim and mdSim programs use several base classes that can be extended by us
  <li> McMd::Species, a molecular species </li>
  <li> McMd::McMove, a MC Markov move </li>
  <li> McMd::MdIntegrator, an MD integration algorithm </li>
- <li> McMd::Diagnostic, a data analysis or output operation </li>
+ <li> McMd::Analyzer, a data analysis or output operation </li>
  <li> McMd::ConfigIo, a configuration file format</li>
  <li> McMd::TrajectoryIo, an MD trajectory file format</li>
  <li> McMd::Perturbation, which defines a free energy perturbation</li>
 </ul>
-In order to implement, for instance, a new data analysis operation in mcSim and/or MdSim, the user must thus write a subclass of the McMd::Diagnostic base class. The McMd namespace also contains a set of potential energy base classes:
+In order to implement, for instance, a new data analysis operation in mcSim and/or MdSim, the user must thus write a subclass of the McMd::Analyzer base class. The McMd namespace also contains a set of potential energy base classes:
 <ul>
  <li> McMd::McPairPotential, a nonbonded pair interaction for MC simulations </li>
  <li> McMd::MdPairPotential, a nonbonded pair interaction for MD simulations </li>
@@ -33,7 +33,7 @@ The BondPotential, AnglePotential, DihedralPotential, and ExternalPotential clas
 The base classes used by the ddSim parallel MD program are defined in the DdMd namespace. Many of them have names that are similar or identical to names of analogous classes in the McMd namespace. They include:
 <ul>
  <li> DdMd::Integrator, a parallel MD integration algorithm </li>
- <li> DdMd::Diagnostic, a data analysis or output operation </li>
+ <li> DdMd::Analyzer, a data analysis or output operation </li>
  <li> DdMd::ConfigIo,   a configuration file format </li>
 </ul>
 and potential energy classes

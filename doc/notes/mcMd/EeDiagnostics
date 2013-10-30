@@ -1,18 +1,18 @@
-Diagnostics in EeEnsemble may need a new base class 
-EeDiagnostic that keeps track of the stateId, and that 
+Analyzers in EeEnsemble may need a new base class 
+EeAnalyzer that keeps track of the stateId, and that 
 allows for an MPI reduce at the end of a simulation.
 The design proposed below has additional methods
 setStateId, stateId, isReplicated, and reduce.
 
-Using a base class EeDiagnostic that is derived from
-Diagnostic would make it impossible to reuse individual
-subclasses of Diagnostic, or to directly extend them.
+Using a base class EeAnalyzer that is derived from
+Analyzer would make it impossible to reuse individual
+subclasses of Analyzer, or to directly extend them.
 We could instead use a set of templates to convert 
-instances of Diagnostic into instances of EeDiagnostic.
+instances of Analyzer into instances of EeAnalyzer.
 Each 
 
 
-class EeDiagnostic : public Diagnostic
+class EeAnalyzer : public Analyzer
 {
 
    void setStateId(int size);
@@ -32,21 +32,21 @@ class EeDiagnostic : public Diagnostic
 -----------------------------------------------------------
 
 /**
-* Replicated diagnostic for extended ensemble.
+* Replicated analyzer for extended ensemble.
 *
-* Create copies of diagnostic by creating an array with a
+* Create copies of analyzer by creating an array with a
 * default constructor, and using an assignment operator to 
 * make clones.
 */
-template <class BaseDiagnostic, class SystemType>
-class ReplicatedDiagnostic : public Diagnostic
+template <class BaseAnalyzer, class SystemType>
+class ReplicatedAnalyzer : public Analyzer
 {
 
    // Construct (allocates array using default constructor).
    ReplicatedDiagnotic(int nState);
 
    // Construct array.
-   ReplicatedDiagnotic(BaseDiagnostic& diagnostic, int nState);
+   ReplicatedDiagnotic(BaseAnalyzer& analyzer, int nState);
 
    // Read first array, assign same state to others.
    virtual void readParam(std::istream& in);
@@ -70,7 +70,7 @@ class ReplicatedDiagnostic : public Diagnostic
 
 private:
 
-   DArray<BaseDiagnostic> diagnostics_;
+   DArray<BaseAnalyzer> analyzers_;
 
    int stateId_;
 

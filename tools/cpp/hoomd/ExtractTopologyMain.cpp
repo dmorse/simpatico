@@ -594,7 +594,7 @@ int main(int argc, char **argv)
 
    // Initialize the parameter file with some standard values
    // these have to be adjusted according to the actual parameters
-   // before running certain diagnostics
+   // before running certain analyzers
    *outputFilePtr << "  MdSystem{" << endl;
    *outputFilePtr << "    EnergyEnsemble{" << endl;
    *outputFilePtr << "      type                  isothermal" << endl;
@@ -652,7 +652,7 @@ int main(int argc, char **argv)
    *outputFilePtr << "      tauT                  1.000000000000" << endl;
    *outputFilePtr << "    }" << endl;
    *outputFilePtr << "  }" << endl;
-   *outputFilePtr << "  DiagnosticManager{" << endl;
+   *outputFilePtr << "  AnalyzerManager{" << endl;
    *outputFilePtr << "    baseInterval                         1" << endl;
    *outputFilePtr << endl;
    *outputFilePtr << "    LogProgress{" << endl;

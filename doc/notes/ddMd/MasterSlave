@@ -3,13 +3,13 @@ We could have either of two types of master class:
 
 1) Subclasses of McMd::Simulation and McMd::System
 
-   -> Advantages: Allow use of diagnostics, MC moves, species, etc.
+   -> Advantages: Allow use of analyzers, MC moves, species, etc.
    -> Disadvantages: Integration is harder
 
 2) New class similar in structure to DdMd::Simulation, called DdMd::Simulation
 
     -> Advantages: Integration is easier, all data structures can be the same.
-    -> All single processor diagnostics, etc. need to be rewritten.
+    -> All single processor analyzers, etc. need to be rewritten.
 
 
 -----------------------------------------------------------------------------

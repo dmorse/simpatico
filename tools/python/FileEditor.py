@@ -71,7 +71,7 @@ class FileEditor:
       if (not self.isReady):
          print "FileEditor is not ready"
          return
- 
+
       oldfile = open(filename, 'r')
       lines   = oldfile.readlines()
       n       = len(lines)
@@ -108,4 +108,5 @@ class FileEditor:
       dir = Directory(dirName)
       filenames = dir.filenames(pattern)
       for filename in filenames:
-         self.editFileBlocks(filename)
+         if isfile(filename): 
+            self.editFileBlocks(filename)
