@@ -1,5 +1,5 @@
-#ifndef DDMD_ACTOR_FACTORY_H
-#define DDMD_ACTOR_FACTORY_H
+#ifndef DDMD_MODIFIER_FACTORY_H
+#define DDMD_MODIFIER_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,7 +9,7 @@
 */
 
 #include <util/param/Factory.h>    // base class template
-#include "Actor.h"                // base template parameter
+#include "Modifier.h"                // base template parameter
 
 namespace DdMd
 {
@@ -19,30 +19,35 @@ namespace DdMd
    class Simulation;
 
    /**
-   * Factory for DdMd::Actor objects.
+   * Factory for DdMd::Modifier objects.
    *
    * \ingroup DdMd_Factory_Module
-   * \ingroup DdMd_Actor_Module
+   * \ingroup DdMd_Modifier_Module
    */
-   class ActorFactory : public Factory<Actor>
+   class ModifierFactory : public Factory<Modifier>
    {
 
    public:
+
+      /**
+      * Default constructor (for unit testing)
+      */
+      ModifierFactory();
 
       /**
       * Constructor.
       *
       * \param simulation     parent Simulation
       */
-      ActorFactory(Simulation& simulation);
+      ModifierFactory(Simulation& simulation);
 
       /** 
-      * Return pointer to a new Actor object.
+      * Return pointer to a new Modifier object.
       *
-      * \param  className name of a subclass of Actor.
+      * \param  className name of a subclass of Modifier.
       * \return base class pointer to a new instance of className.
       */
-      virtual Actor* factory(const std::string& className) const;
+      virtual Modifier* factory(const std::string& className) const;
 
    protected:
 

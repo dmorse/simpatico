@@ -1,0 +1,7 @@
+ModifierManager{
+
+   ModifierA{
+      interval 10
+   }
+
+}

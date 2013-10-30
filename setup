@@ -65,14 +65,15 @@ cp  src/mcMd/potentials/link/LinkFactory.cpp_r src/mcMd/potentials/link/LinkFact
 cp  src/mcMd/potentials/pair/PairFactory.cpp_r src/mcMd/potentials/pair/PairFactory.cpp
 cp  src/mcMd/species/SpeciesFactory.cpp_r src/mcMd/species/SpeciesFactory.cpp
 cp  src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp_r src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp
-cp  src/ddMd/configIos/ConfigIoFactory.cpp_r src/ddMd/configIos/ConfigIoFactory.cpp
 cp  src/ddMd/analyzers/AnalyzerFactory.cpp_r src/ddMd/analyzers/AnalyzerFactory.cpp
+cp  src/ddMd/configIos/ConfigIoFactory.cpp_r src/ddMd/configIos/ConfigIoFactory.cpp
 cp  src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/IntegratorFactory.cpp
 cp  src/ddMd/potentials/angle/AngleFactory.cpp_r src/ddMd/potentials/angle/AngleFactory.cpp
 cp  src/ddMd/potentials/bond/BondFactory.cpp_r src/ddMd/potentials/bond/BondFactory.cpp
 cp  src/ddMd/potentials/dihedral/DihedralFactory.cpp_r src/ddMd/potentials/dihedral/DihedralFactory.cpp
 cp  src/ddMd/potentials/external/ExternalFactory.cpp_r src/ddMd/potentials/external/ExternalFactory.cpp
 cp  src/ddMd/potentials/pair/PairFactory.cpp_r src/ddMd/potentials/pair/PairFactory.cpp
+cp  src/ddMd/actors/ActorFactory.cpp_r src/ddMd/actors/ActorFactory.cpp
 
 # Copy typedef for the class that defines boundary conditions
 cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h

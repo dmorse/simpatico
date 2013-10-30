@@ -1,5 +1,5 @@
-#ifndef DDMD_ACTOR_H
-#define DDMD_ACTOR_H
+#ifndef DDMD_MODIFIER_H
+#define DDMD_MODIFIER_H
 
 #include <util/param/ParamComposite.h>  // base class
 #include <util/misc/Bit.h>              // constants in namespace
@@ -20,32 +20,38 @@ namespace DdMd
    class Simulation;
 
    /**
-   * An Actor defines actions taken during integration.
+   * An Modifier can modify the Simulation during MD integration.
    *
-   * The Actor base class declares a variety of virtual "action" methods 
-   * that may be re-implemented by subclasses to define actions that 
-   * should be executed at specific points before, during, or after the 
-   * main integration loop. The name of each such action method describes 
-   * when it will be invoked, if activated (see below). For example, the 
-   * postForce() method is invoked within the main integration loop 
+   * The Modifier base class declares a variety of virtual "action" methods 
+   * that may be re-implemented by subclasses to define actions that can
+   * modify the system, and that, if activated, should be executed as specific 
+   * points during, or after the main integration loop. The name of each such 
+   * action method describes when it will be invoked if activated. For example, 
+   * the postForce() method is invoked within the main integration loop 
    * immediately after evaluation of all forces. 
    *
-   * For each action method, there is a boolean flag. Each action method 
-   * will be executed if and only if the corresponding flag is set to 
-   * true. All flags are set to false in the base class constructor, but
-   * should be set to true in the subclass constructor to activate a
-   * method. 
+   * Each action method may be activated by setting a corresponding flag.
+   * Each action method is executed if and only if the corresponding flag
+   * has is set.  All flags are cleared in the base class constructor.
+   * Subclasses that implement specific methods must set the corresponding
+   * flag for each such method in the subclass constructor to activate all 
+   * re-implemented methods. 
    *
-   * Each Actor class also has an associated interval integer member. 
-   * An activated action method of an Actor will be executed only on 
+   * Each Modifier also has an associated interval integer member. 
+   * An activated action method of an Modifier will be executed only on 
    * time steps that are multiples of this interval. Different intervals 
    * are not defined for different action methods: a single interval 
-   * value is defined for each Actor object. The value of the interval 
-   * is initialized to 1 (every time step) in the base Actor class 
+   * value is defined for each Modifier object. The value of the interval 
+   * is initialized to 1 (every time step) in the base Modifier class 
    * constructor, but may be reset to a greater value in the subclass 
    * readParam method, by calling the protected readInterval() method.
+   *
+   * The design of the Modifer class is inspired by the Lammps "Fix" 
+   * class, which it closely resembles. 
+   *
+   * \ingroup DdMd_Modifier_Module
    */
-   class Actor : public ParamComposite
+   class Modifier : public ParamComposite
    {
 
    public:
@@ -53,17 +59,17 @@ namespace DdMd
       /**
       * Default constructor (for unit testing)
       */
-      Actor();
+      Modifier();
 
       /**
       * Constructor (for use in simulation).
       */
-      Actor(Simulation& simulation);
+      Modifier(Simulation& simulation);
 
       /**
       * Destructor.
       */
-      virtual ~Actor();
+      virtual ~Modifier();
 
       /// \name Setup actions 
       //@{ 
@@ -78,7 +84,6 @@ namespace DdMd
 
       virtual void preIntegrate1() {};
       virtual void postIntegrate1() {};
-   
       virtual void preTransform() {};
       virtual void preExchange() {};
       virtual void postExchange() {};
@@ -105,14 +110,29 @@ namespace DdMd
       //@{
 
       /**
-      * Bit flag constant associated with particular virtual methods.
+      * Bit flag constants associated with particular actions.
+      *
+      * The flag for each reimplemented method should be set 
+      * in the subclass constructor by passing the appropriate
+      * Bit constant to the protected void Modifier::set(Bit) 
+      * function. 
+      *
+      * For example, to activate an action that should be
+      * invoked at the end of each time step, one would call
+      * \code
+      *    set(Flags::EndOfStep);
+      * \endcode
+      * within the body of the constructor for the subclass
+      * of Modifer that defines this member action function. 
       */
-      namespace Flags { 
-         static const Bit SetupExchange;
+      class Flags 
+      { 
+      public:
+         static const Bit SetupPostExchange;
          static const Bit SetupPostNeighbor;
          static const Bit SetupPostForce;
          static const Bit PreIntegrate1;
-         static const Bit PostIntegrate2;
+         static const Bit PostIntegrate1;
          static const Bit PreTransform;
          static const Bit PreExchange;
          static const Bit PostExchange;
@@ -122,15 +142,20 @@ namespace DdMd
          static const Bit PreForce;
          static const Bit PostForce;
          static const Bit EndOfStep;
-         static const Bit PackExchange;
-         static const Bit PackUpdate;
-         static const Bit PackReverseUpdate;
-      }
+         static const Bit Exchange;
+         static const Bit Update;
+         static const Bit ReverseUpdate;
+      };
 
       /**
       * Return true if a flag is set, false otherwise.
       */
-      bool isSet(Bit flag);
+      bool isSet(Bit flag) const;
+
+      /**
+      * Return unsigned int representation of all bit flags.
+      */
+      unsigned int flags() const;
 
       //@} 
       /// \name Interval methods
@@ -156,7 +181,7 @@ namespace DdMd
       * Read parameter interval from file.
       *
       * This function throws an exception if the value of interval
-      * is not a multiple of Actor::baseInterval, or if
+      * is not a multiple of Modifier::baseInterval, or if
       * baseInterval has not been set to a nonzero positive value.
       *
       * \param in input parameter file stream.
@@ -190,32 +215,20 @@ namespace DdMd
    /*
    * Return interval value.
    */
-   inline int Actor::interval() const
+   inline int Modifier::interval() const
    {  return interval_; }
 
    /*
    * Return true iff the iStep is a multiple of the interval.
    */
-   inline bool Actor::isAtInterval(long iStep) const
+   inline bool Modifier::isAtInterval(long iStep) const
    {  return (iStep%interval_ == 0); }
 
    /*
    * Get the parent Simulation by reference.
    */
-   inline Simulation& Actor::simulation()
+   inline Simulation& Modifier::simulation()
    {  return *simulationPtr_; }
-
-   /*
-   * Return true if a flag is set, false otherwise.
-   */
-   inline bool Actor::isSet(Bit flag)
-   {  flag.isSet(flags_); }
-
-   /*
-   * Return true if a flag is set, false otherwise.
-   */
-   inline void Actor::set(Bit flag)
-   {  flag.set(flags_); }
 
 }
 #endif
