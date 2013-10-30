@@ -42,7 +42,7 @@ namespace Util
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
 #include <mcMd/chemistry/SpeciesGroup.tpp>
-#include <mcMd/diagnostics/util/PairSelector.h>
+#include <mcMd/analyzers/util/PairSelector.h>
 
 namespace McMd
 {

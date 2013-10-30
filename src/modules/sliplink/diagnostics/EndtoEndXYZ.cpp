@@ -24,7 +24,7 @@ namespace McMd
 
    /// Constructor.
    EndtoEndXYZ::EndtoEndXYZ(System& system) 
-    : SystemDiagnostic<System>(system)
+    : SystemAnalyzer<System>(system)
    {  setClassName("EndtoEndXYZ"); }
 
    /// Read parameters from file, and allocate data array.

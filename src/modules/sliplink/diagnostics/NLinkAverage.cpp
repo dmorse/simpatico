@@ -21,7 +21,7 @@ namespace McMd
 
    /// Constructor.
    NLinkAverage::NLinkAverage(System& system) 
-    : SystemDiagnostic<System>(system)
+    : SystemAnalyzer<System>(system)
    {  setClassName("NLinkAverage"); }
 
    /// Read parameters from file, and allocate data array.

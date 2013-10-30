@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/diagnostics/SystemDiagnostic.h>  // base class template
+#include <mcMd/analyzers/SystemAnalyzer.h>  // base class template
 #include <mcMd/simulation/System.h>             // class template parameter
 #include <util/accumulators/Average.h>          // member
 #include <util/containers/DArray.h>             // member template
@@ -32,9 +32,9 @@ namespace McMd
    *
    * Evaluates msd of link ends along the chains
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup Analyzer_Module
    */
-   class LinkMSD : public SystemDiagnostic<System>,
+   class LinkMSD : public SystemAnalyzer<System>,
                    public Observer<LinkAddEvent>, 
                    public Observer<LinkRemoveEvent>  
    {

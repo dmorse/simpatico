@@ -26,7 +26,7 @@ namespace McMd
 
    /// Constructor.
    LinkLengthDist::LinkLengthDist(System& system) 
-    : SystemDiagnostic<System>(system)
+    : SystemAnalyzer<System>(system)
    {  setClassName("LinkLengthDist"); }
 
    /// Read parameters from file, and allocate data array.

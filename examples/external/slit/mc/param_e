@@ -79,7 +79,7 @@ McSimulation{
       delta                           0.04
     }
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                      1000
 
     LogProgress{

@@ -186,9 +186,9 @@ The following table shows a list of available commands for all three programs.  
     <td> <b>X</b> </td>
   </tr>
   <tr>
-    <td> OUTPUT_DIAGNOSTICS </td>
+    <td> OUTPUT_ANALYZERS </td>
     <td>  </td>
-    <td> Call output() function of each Diagnostic </td>
+    <td> Call output() function of each Analyzer </td>
     <td> <b>-</b> </td>
     <td> <b>-</b> </td>
     <td> <b>X</b> </td>

@@ -45,8 +45,8 @@ namespace McMd
    class Species;
    class SpeciesManager;
 
-   class Diagnostic;
-   class DiagnosticManager;
+   class Analyzer;
+   class AnalyzerManager;
 
    /**
    * The main object in a simulation, which coordinates others.
@@ -62,7 +62,7 @@ namespace McMd
    * 
    *  - A SpeciesManager, which has one or more Species objects.
    *
-   *  - A DiagnosticManager, which has one or more Diagnostic objects.
+   *  - A AnalyzerManager, which has one or more Analyzer objects.
    *
    *  - A FileMaster to manage associated input and output files.
    *
@@ -188,9 +188,9 @@ namespace McMd
       Species& species(int i);
 
       /**
-      * Return the Diagnostic factory by reference.
+      * Return the Analyzer factory by reference.
       */
-      Factory<Diagnostic>& diagnosticFactory();
+      Factory<Analyzer>& analyzerFactory();
 
       /**
       * Return the Species Factory by reference.
@@ -353,19 +353,19 @@ namespace McMd
       int  iStep_;
 
       /**
-      * Set the associated DiagnosticManager.
+      * Set the associated AnalyzerManager.
       *
       * This is used in the constructor for each subclass of Simulation
       * (e.g., in McSimulation and MdSimulation) by register an instance 
-      * of an appropriate subclass of DiagnosticManager (e.g, either a
-      * McDiagnosticManager or a MdDiagnosticManager). 
+      * of an appropriate subclass of AnalyzerManager (e.g, either a
+      * McAnalyzerManager or a MdAnalyzerManager). 
       */
-      void setDiagnosticManager(DiagnosticManager* ptr);
+      void setAnalyzerManager(AnalyzerManager* ptr);
 
       /**
-      * Get the associated DiagnosticManager by reference.
+      * Get the associated AnalyzerManager by reference.
       */
-      DiagnosticManager& diagnosticManager();
+      AnalyzerManager& analyzerManager();
 
    private:
 
@@ -506,10 +506,10 @@ namespace McMd
       /**
       * Manager for data analysis and output classes.
       *
-      * An instance of a default subclass of DiagnosticManager must be 
+      * An instance of a default subclass of AnalyzerManager must be 
       * instantiated by each subclass of Simulation.
       */
-      DiagnosticManager* diagnosticManagerPtr_;
+      AnalyzerManager* analyzerManagerPtr_;
 
       #ifdef UTIL_MPI
       /// Pointer to the simulation communicator.
@@ -728,13 +728,13 @@ namespace McMd
    inline FileMaster& Simulation::fileMaster()
    {  return fileMaster_; }
 
-   inline void Simulation::setDiagnosticManager(DiagnosticManager* ptr)
-   {  diagnosticManagerPtr_ = ptr; }
+   inline void Simulation::setAnalyzerManager(AnalyzerManager* ptr)
+   {  analyzerManagerPtr_ = ptr; }
 
-   inline DiagnosticManager& Simulation::diagnosticManager()
+   inline AnalyzerManager& Simulation::analyzerManager()
    {  
-      assert(diagnosticManagerPtr_);
-      return *diagnosticManagerPtr_; 
+      assert(analyzerManagerPtr_);
+      return *analyzerManagerPtr_; 
    }
 
    inline int Simulation::iStep() const

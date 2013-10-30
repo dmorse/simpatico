@@ -12,7 +12,7 @@ specific application area, along with a set of factory classes that are required
 to allow the new classes to be used within the parameter files. The classes 
 McModule and MdModule are abstract base classes for modules designed for use 
 with with mcSim and mdSim simulations, respectively.  The developer of a new set 
-of subclasses of, e.g., Diagnostic, Species, and McMove or MdIntegrator, can 
+of subclasses of, e.g., Analyzer, Species, and McMove or MdIntegrator, can 
 create a subclass of McModule and/or MdModule to organize these classes. Once 
 the developer creates a module, a user of Simpatico can use an instance of the 
 module class to make this entire set of classes accessible in a simulation.

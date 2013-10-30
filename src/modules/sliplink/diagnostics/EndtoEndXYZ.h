@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/diagnostics/SystemDiagnostic.h>  // base class template
+#include <mcMd/analyzers/SystemAnalyzer.h>  // base class template
 #include <mcMd/simulation/System.h>             // class template parameter
 #include <util/accumulators/Average.h>          // member
 #include <util/containers/DArray.h>             // member template
@@ -42,9 +42,9 @@ namespace McMd
    * averages to file at an interval specified by the input parameter
    * nSamplePerBlock. No block averages are output if nSamplePerBlock = 0.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup Analyzer_Module
    */
-   class EndtoEndXYZ : public SystemDiagnostic<System>
+   class EndtoEndXYZ : public SystemAnalyzer<System>
    {
    
    public:

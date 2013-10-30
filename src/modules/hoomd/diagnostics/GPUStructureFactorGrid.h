@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/diagnostics/system/StructureFactorGrid.h>
+#include <mcMd/analyzers/system/StructureFactorGrid.h>
 
 /** 
  * This class calculates the static structure factor on the GPU.

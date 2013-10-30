@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/diagnostics/SystemDiagnostic.h>  // base class template
+#include <mcMd/analyzers/SystemAnalyzer.h>  // base class template
 #include <mcMd/simulation/System.h>             // class template parameter
 #include <util/accumulators/Average.h>          // member
 #include <util/containers/DArray.h>             // member template
@@ -28,9 +28,9 @@ namespace McMd
    *
    * Evaluates x-velocity profile as a function of z
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup Analyzer_Module
    */
-   class VelProf : public SystemDiagnostic<System>
+   class VelProf : public SystemAnalyzer<System>
    {
    
    public:

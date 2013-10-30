@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/diagnostics/SystemDiagnostic.h>  // base class template
+#include <mcMd/analyzers/SystemAnalyzer.h>  // base class template
 #include <mcMd/simulation/System.h>             // base class template parameter
 #include <util/accumulators/MeanSqDispArray.h>  // member template 
 #include <util/space/Vector.h>                   // template parameter
@@ -24,7 +24,7 @@ namespace McMd
    /**
    * Autocorrelation for vector separation of any two monomers on a molecule.
    */
-   class G1MSD : public SystemDiagnostic<System>
+   class G1MSD : public SystemAnalyzer<System>
    {
    
    public:

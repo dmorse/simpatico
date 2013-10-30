@@ -24,7 +24,7 @@ namespace McMd
 
    /// Constructor.
    LinkMSD::LinkMSD(System& system) 
-    : SystemDiagnostic<System>(system)
+    : SystemAnalyzer<System>(system)
    {  setClassName("LinkMSD"); }
 
    /// Read parameters from file, and allocate data arrays.

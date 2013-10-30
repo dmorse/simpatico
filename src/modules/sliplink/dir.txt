@@ -1,3 +1,3 @@
-subDirectories = diagnostics mcMoves
+subDirectories = analyzers mcMoves
 pathFromSrc = modules/sliplink
 pathToSrc = ../..

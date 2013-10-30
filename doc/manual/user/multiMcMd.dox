@@ -27,7 +27,7 @@ To use a parallel version of mcSim or mdSim to run a set of completely independe
 In this mode, it is not possible to read the parameter file from standard input, as done single-system simulations, since that would cause every processor to read the same param file. By convention, the parameter file for processor n in a set of independent simulations is instead read from the file "n/param". The command file processor n is read from a file name obtained by adding  "n/" as a prefix to the commandFileName given in this parameter file. Paths to other input and ouput files are also obtained by adding a string "n/" before the inputPrefix or outputPrefix.  
 
 For example: If the inputPrefix is set to "in/" and the outputPrefix is set to "out/" in the file "3/param", the command "WRITE_CONFIG config" in the command file for processor 3 will cause that processor to read 
-the input configuration file "3/in/config", and all of diagnostic and configuration output files for processor 3 will be written to the directory "3/out". 
+the input configuration file "3/in/config", and all of analyzer and configuration output files for processor 3 will be written to the directory "3/out". 
 
 To run independent MC simulations on 3 processors, using an executable mcSim_m_f, one might thus enter
 \code
@@ -204,7 +204,7 @@ McSimulation{
     }
 
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                        1000
 
     LogProgress{

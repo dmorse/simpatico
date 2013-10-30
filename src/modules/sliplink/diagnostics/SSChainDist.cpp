@@ -26,7 +26,7 @@ namespace McMd
 
    /// Constructor.
    SSChainDist::SSChainDist(System& system) 
-    : SystemDiagnostic<System>(system)
+    : SystemAnalyzer<System>(system)
    {  setClassName("SSChainDist"); }
 
    /// Read parameters from file.

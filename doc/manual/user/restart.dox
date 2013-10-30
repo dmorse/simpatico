@@ -6,17 +6,17 @@
 
 The -r command line option can be used to restart mcSim, mdSim, or ddSim simulation from a binary restart file. This allows a user to either recover from a failure (caused, e.g., by a hardware failure or a wall-clock limit on a queue) or to continue a simulation that completed successfully. 
 
-A restart file preserves the full internal state of a simulation. This includes a great deal of information that is not preserved in a configuration file, including the internal state of statistical accumulators used by on-the-fly diagnostics, the internal state of some MD integrators that are based on an extended dynamical system (e.g., Nose-Hoover), and the state of the random number generator. It is designed to allow the simulation to continue as if had not been interrupted. 
+A restart file preserves the full internal state of a simulation. This includes a great deal of information that is not preserved in a configuration file, including the internal state of statistical accumulators used by on-the-fly analyzers, the internal state of some MD integrators that are based on an extended dynamical system (e.g., Nose-Hoover), and the state of the random number generator. It is designed to allow the simulation to continue as if had not been interrupted. 
 
 \section user_restart_page_restart Writing Restart Files
 
 For a simulation to be restartable, the original run must periodically write a restart file.  Each time a restart file is written, the previous version of the file is overwritten, so that only the most recent verion is available at any instant. The interval (number of time steps) between subsequent file writes is given in the parameter file by an integer parameter named "saveInterval". Output of the restart file may be completely suppressed by setting this parameter to zero. If saveInterval is not zero, the base name of the output file is given by a string parameter "saveFileName."  The full name of the output restart file is constructed by appending a suffix ".rst" to this base name. 
 
-In parameter files for mcSim or mdSim simulations, the parameters "saveInterval" and (if present) "saveFileName" are the last parameters in main block of the parameter file. They appear just before the closing bracket of the main block, and just after the closing bracket of the DiagnosticManager block.  For example, an mcSim or mdSim parameter file that requires the restart file to be written every 10000 time steps to a file named "restart.rst" would thus look in part like this
+In parameter files for mcSim or mdSim simulations, the parameters "saveInterval" and (if present) "saveFileName" are the last parameters in main block of the parameter file. They appear just before the closing bracket of the main block, and just after the closing bracket of the AnalyzerManager block.  For example, an mcSim or mdSim parameter file that requires the restart file to be written every 10000 time steps to a file named "restart.rst" would thus look in part like this
 \code
 MdSimulation{
   ...
-  DiagnosticManager{
+  AnalyzerManager{
      ...
   }
   saveInterval       10000
@@ -28,7 +28,7 @@ If saveInterval is set to 0, output of restart file is suppressed. In this case,
 \code
 MdSimulation{
   ...
-  DiagnosticManager{
+  AnalyzerManager{
      ...
   }
   saveInterval           0

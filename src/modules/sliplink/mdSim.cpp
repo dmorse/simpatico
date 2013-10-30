@@ -6,7 +6,7 @@
 */
 
 #include <mcMd/mdSimulation/MdSimulation.h>
-#include "diagnostics/SliplinkMdDiagnosticFactory.h"
+#include "analyzers/SliplinkMdAnalyzerFactory.h"
 
 /**
 * Program for molecular dynamics simulation.
@@ -53,10 +53,10 @@ int main(int argc, char **argv)
    // Process command line options
    simulation.setOptions(argc, argv);
 
-   // Instantiate and set custom MdDiagnosticFactory
-   McMd::SliplinkMdDiagnosticFactory diagnosticFactory(simulation, 
+   // Instantiate and set custom MdAnalyzerFactory
+   McMd::SliplinkMdAnalyzerFactory analyzerFactory(simulation, 
                                                        simulation.system());
-   simulation.diagnosticFactory().addSubfactory(diagnosticFactory);
+   simulation.analyzerFactory().addSubfactory(analyzerFactory);
 
    // Read parameters from default parameter file
    simulation.readParam();

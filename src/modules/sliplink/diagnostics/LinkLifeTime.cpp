@@ -26,7 +26,7 @@ namespace McMd
 
    /// Constructor.
    LinkLifeTime::LinkLifeTime(System& system) 
-    : SystemDiagnostic<System>(system)
+    : SystemAnalyzer<System>(system)
    {  setClassName("LinkLifeTime"); }
 
    /// Read parameters from file.

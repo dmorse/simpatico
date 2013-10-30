@@ -64,12 +64,12 @@ namespace DdMd
    {
       read<int>(in, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
-         if (Diagnostic::baseInterval > 0) {
-            if (saveInterval_ % Diagnostic::baseInterval != 0) {
+         if (Analyzer::baseInterval > 0) {
+            if (saveInterval_ % Analyzer::baseInterval != 0) {
                UTIL_THROW("saveInterval is not a multiple of baseInterval");
             }
          } else {
-            UTIL_THROW("Diagnostic::baseInterval is not positive");
+            UTIL_THROW("Analyzer::baseInterval is not positive");
          }
          read<std::string>(in, "saveFileName", saveFileName_);
       }
@@ -82,12 +82,12 @@ namespace DdMd
    {
       loadParameter<int>(ar, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
-         if (Diagnostic::baseInterval > 0) {
-            if (saveInterval_ % Diagnostic::baseInterval != 0) {
+         if (Analyzer::baseInterval > 0) {
+            if (saveInterval_ % Analyzer::baseInterval != 0) {
                UTIL_THROW("saveInterval is not a multiple of baseInterval");
             }
          } else {
-            UTIL_THROW("Diagnostic::baseInterval is not positive");
+            UTIL_THROW("Analyzer::baseInterval is not positive");
          }
          loadParameter<std::string>(ar, "saveFileName", saveFileName_);
       }
@@ -359,13 +359,13 @@ namespace DdMd
           << "   "
           << Dbl(time*factor2, 12, 6)
           << "   " << Dbl(100.0, 12, 6, true) << std::endl;
-      double diagnosticT = timer().time(DIAGNOSTIC);
-      totalT += diagnosticT;
-      out << "Diagnostics          " 
-          << Dbl(diagnosticT*factor1, 12, 6)
+      double analyzerT = timer().time(ANALYZER);
+      totalT += analyzerT;
+      out << "Analyzers          " 
+          << Dbl(analyzerT*factor1, 12, 6)
           << "   "
-          << Dbl(diagnosticT*factor2, 12, 6)
-          << "   " << Dbl(100.0*diagnosticT/time, 12, 6, true) << std::endl;
+          << Dbl(analyzerT*factor2, 12, 6)
+          << "   " << Dbl(100.0*analyzerT/time, 12, 6, true) << std::endl;
       double integrate1T = timer().time(INTEGRATE1);
       totalT += integrate1T;
       out << "Integrate1           " 
@@ -501,7 +501,7 @@ namespace DdMd
    }
 
    /*
-   * Clear timing, dynamical state, statistics, and diagnostic accumulators.
+   * Clear timing, dynamical state, statistics, and analyzer accumulators.
    */
    void Integrator::clear()
    { 
@@ -521,7 +521,7 @@ namespace DdMd
       #ifdef INTER_DIHEDRAL
       dihedralStorage().clearStatistics();
       #endif
-      simulation().diagnosticManager().clear();
+      simulation().analyzerManager().clear();
    }
 
 }

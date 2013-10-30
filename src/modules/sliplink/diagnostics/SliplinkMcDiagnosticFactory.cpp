@@ -1,10 +1,10 @@
-#ifndef SLIPLINK_MC_DIAGNOSTIC_FACTORY_CPP
-#define SLIPLINK_MC_DIAGNOSTIC_FACTORY_CPP
+#ifndef SLIPLINK_MC_ANALYZER_FACTORY_CPP
+#define SLIPLINK_MC_ANALYZER_FACTORY_CPP
 
-#include "SliplinkMcDiagnosticFactory.h"  
+#include "SliplinkMcAnalyzerFactory.h"  
 #include <mcMd/mcSimulation/McSystem.h>  
 
-// Include headers for any user defined Diagnostics for MC simulations
+// Include headers for any user defined Analyzers for MC simulations
 #include "G1MSD.h"
 #include "EndtoEnd.h"
 #include "EndtoEndXYZ.h"
@@ -23,9 +23,9 @@ namespace McMd
    /* 
    * Return a pointer to a new instance of className.
    */
-   Diagnostic* SliplinkMcDiagnosticFactory::factory(const std::string &className) const
+   Analyzer* SliplinkMcAnalyzerFactory::factory(const std::string &className) const
    {
-      Diagnostic* ptr = 0;
+      Analyzer* ptr = 0;
 
       ptr = trySubfactories(className);
       if (ptr) return ptr;
@@ -67,7 +67,7 @@ namespace McMd
       #if 0
       // If not a user-defined class, try the standard factory 
       if (!ptr) {
-         ptr = McDiagnosticFactory::factory(className);
+         ptr = McAnalyzerFactory::factory(className);
       }
       #endif
 

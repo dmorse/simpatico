@@ -51,9 +51,9 @@ cp  src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
 
 # Copy repository version of Factory implementation files to user versions.
 cp  src/mcMd/configIos/ConfigIoFactory.cpp_r src/mcMd/configIos/ConfigIoFactory.cpp
-cp  src/mcMd/diagnostics/mcSystem/McDiagnosticFactory.cpp_r src/mcMd/diagnostics/mcSystem/McDiagnosticFactory.cpp
-cp  src/mcMd/diagnostics/mdSystem/MdDiagnosticFactory.cpp_r src/mcMd/diagnostics/mdSystem/MdDiagnosticFactory.cpp
-cp  src/mcMd/diagnostics/system/SystemDiagnosticFactory.cpp_r src/mcMd/diagnostics/system/SystemDiagnosticFactory.cpp
+cp  src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp_r src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp
+cp  src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp_r src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp
+cp  src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp_r src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp
 cp  src/mcMd/mcMoves/McMoveFactory.cpp_r src/mcMd/mcMoves/McMoveFactory.cpp
 cp  src/mcMd/mdIntegrators/MdIntegratorFactory.cpp_r src/mcMd/mdIntegrators/MdIntegratorFactory.cpp
 cp  src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp_r src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp
@@ -66,7 +66,7 @@ cp  src/mcMd/potentials/pair/PairFactory.cpp_r src/mcMd/potentials/pair/PairFact
 cp  src/mcMd/species/SpeciesFactory.cpp_r src/mcMd/species/SpeciesFactory.cpp
 cp  src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp_r src/mcMd/trajectoryIos/TrajectoryIoFactory.cpp
 cp  src/ddMd/configIos/ConfigIoFactory.cpp_r src/ddMd/configIos/ConfigIoFactory.cpp
-cp  src/ddMd/diagnostics/DiagnosticFactory.cpp_r src/ddMd/diagnostics/DiagnosticFactory.cpp
+cp  src/ddMd/analyzers/AnalyzerFactory.cpp_r src/ddMd/analyzers/AnalyzerFactory.cpp
 cp  src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/IntegratorFactory.cpp
 cp  src/ddMd/potentials/angle/AngleFactory.cpp_r src/ddMd/potentials/angle/AngleFactory.cpp
 cp  src/ddMd/potentials/bond/BondFactory.cpp_r src/ddMd/potentials/bond/BondFactory.cpp

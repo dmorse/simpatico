@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "HoomdDiagnosticFactory.h" // Class header
+#include "HoomdAnalyzerFactory.h" // Class header
 
 #include "GPUStructureFactorGrid.h"
 
@@ -17,7 +17,7 @@ namespace McMd
    /*
    * Constructor.
    */
-   HoomdDiagnosticFactory::HoomdDiagnosticFactory(Simulation& simulation, 
+   HoomdAnalyzerFactory::HoomdAnalyzerFactory(Simulation& simulation, 
                                             System& system)
     : simulationPtr_(&simulation),
       systemPtr_(&system)
@@ -26,9 +26,9 @@ namespace McMd
    /* 
    * Return a pointer to a instance of Species subclass className.
    */
-   Diagnostic* HoomdDiagnosticFactory::factory(const std::string &className) const
+   Analyzer* HoomdAnalyzerFactory::factory(const std::string &className) const
    {
-      Diagnostic* ptr = 0;
+      Analyzer* ptr = 0;
 
       if (className == "GPUStructureFactorGrid") {
          ptr = new GPUStructureFactorGrid(*systemPtr_);

@@ -18,7 +18,7 @@
 #include <ddMd/configIos/ConfigIoFactory.h>
 #include <ddMd/configIos/DdMdConfigIo.h>
 #include <ddMd/configIos/SerializeConfigIo.h>
-#include <ddMd/diagnostics/DiagnosticManager.h>
+#include <ddMd/analyzers/AnalyzerManager.h>
 
 #ifndef DDMD_NOPAIR
 #include <ddMd/potentials/pair/PairPotential.h>
@@ -115,7 +115,7 @@ namespace DdMd
       fileMasterPtr_(0),
       configIoPtr_(0),
       serializeConfigIoPtr_(0),
-      diagnosticManagerPtr_(0),
+      analyzerManagerPtr_(0),
       #ifndef DDMD_NOPAIR
       pairFactoryPtr_(0),
       #endif
@@ -193,7 +193,7 @@ namespace DdMd
       fileMasterPtr_ = new FileMaster;
       energyEnsemblePtr_ = new EnergyEnsemble;
       boundaryEnsemblePtr_ = new BoundaryEnsemble;
-      diagnosticManagerPtr_ = new DiagnosticManager(*this);
+      analyzerManagerPtr_ = new AnalyzerManager(*this);
    }
 
    /*
@@ -254,8 +254,8 @@ namespace DdMd
       if (integratorPtr_) {
          delete integratorPtr_;
       }
-      if (diagnosticManagerPtr_) {
-         delete diagnosticManagerPtr_;
+      if (analyzerManagerPtr_) {
+         delete analyzerManagerPtr_;
       }
       if (fileMasterPtr_) {
          delete fileMasterPtr_;
@@ -523,7 +523,7 @@ namespace DdMd
       }
 
       readParamComposite(in, random_);
-      readParamComposite(in, *diagnosticManagerPtr_);
+      readParamComposite(in, *analyzerManagerPtr_);
 
       // Finished reading parameter file. Now finish initialization:
 
@@ -713,7 +713,7 @@ namespace DdMd
       }
 
       loadParamComposite(ar, random_);
-      loadParamComposite(ar, *diagnosticManagerPtr_);
+      loadParamComposite(ar, *analyzerManagerPtr_);
 
       // Finished loading data from archive. Now finish initialization:
 
@@ -867,13 +867,13 @@ namespace DdMd
       }
       #endif
 
-      // Save ensembles, integrator, random, diagnostics
+      // Save ensembles, integrator, random, analyzers
       saveEnsembles(ar);
       std::string name = integrator().className();
       ar << name;
       integrator().save(ar);
       random_.save(ar);
-      diagnosticManagerPtr_->save(ar);
+      analyzerManagerPtr_->save(ar);
    }
 
    /*
@@ -1161,8 +1161,8 @@ namespace DdMd
                }
                integrator().run(nStep);
             } else
-            if (command == "OUTPUT_DIAGNOSTICS") {
-               diagnosticManager().output();
+            if (command == "OUTPUT_ANALYZERS") {
+               analyzerManager().output();
             } else
             if (command == "OUTPUT_INTEGRATOR_STATS") {
                // Output statistics about time usage during simulation.
@@ -1252,7 +1252,7 @@ namespace DdMd
 
             } else
             if (command == "CLEAR_INTEGRATOR") {
-               // Clear timing, memory statistics, diagnostic accumulators.
+               // Clear timing, memory statistics, analyzer accumulators.
                // Also resets integrator iStep() to zero
                integrator().clear();
             } else

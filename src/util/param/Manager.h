@@ -30,7 +30,7 @@ namespace Util
    * subclass.
    *
    * Subclasses of Manager<Data> are used to manage arrays of Species, McMove,
-   * and Diagnostic objects.
+   * and Analyzer objects.
    *
    * \ingroup Manager_Module
    */

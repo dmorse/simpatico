@@ -1,10 +1,10 @@
-#ifndef SLIPLINK_MD_DIAGNOSTIC_FACTORY_CPP
-#define SLIPLINK_MD_DIAGNOSTIC_FACTORY_CPP
+#ifndef SLIPLINK_MD_ANALYZER_FACTORY_CPP
+#define SLIPLINK_MD_ANALYZER_FACTORY_CPP
 
-#include "SliplinkMdDiagnosticFactory.h"       // Class header
+#include "SliplinkMdAnalyzerFactory.h"       // Class header
 #include <mcMd/mdSimulation/MdSystem.h>  
 
-// Include headers for any user defined Diagnostics for MD simulations
+// Include headers for any user defined Analyzers for MD simulations
 #include "Crosslinker.h"
 #include "G1MSD.h"
 #include "EndtoEnd.h"
@@ -24,16 +24,16 @@ namespace McMd
    /* 
    * Return a pointer to a new instance of className.
    */
-   Diagnostic* SliplinkMdDiagnosticFactory::factory(const std::string &className) const
+   Analyzer* SliplinkMdAnalyzerFactory::factory(const std::string &className) const
    {
-      Diagnostic* spp = 0;
+      Analyzer* spp = 0;
 
-      // Check names of user defined subclasses of Diagnostic
-      //if (className == "NewDiagnostic1") {
-      //   spp = new NewDiagnostic1(system());
+      // Check names of user defined subclasses of Analyzer
+      //if (className == "NewAnalyzer1") {
+      //   spp = new NewAnalyzer1(system());
       //} else 
-      //if (className == "NewDiagnostic2") {
-      //   spp = new NewDiagnostic2(system());
+      //if (className == "NewAnalyzer2") {
+      //   spp = new NewAnalyzer2(system());
       //} else 
       //  ...
       //}
@@ -77,7 +77,7 @@ namespace McMd
      
       // If not a user-defined class, try the standard factory 
       if (!spp) {
-         spp = MdDiagnosticFactory::factory(className);
+         spp = MdAnalyzerFactory::factory(className);
       }
 
       return spp;

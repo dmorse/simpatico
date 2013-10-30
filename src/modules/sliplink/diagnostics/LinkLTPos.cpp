@@ -26,7 +26,7 @@ namespace McMd
 
    /// Constructor.
    LinkLTPos::LinkLTPos(System& system) 
-    : SystemDiagnostic<System>(system)
+    : SystemAnalyzer<System>(system)
    {  setClassName("LinkLTPos"); }
 
    /// Read parameters from file.

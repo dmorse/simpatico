@@ -1,15 +1,15 @@
-#ifndef SLIPLINK_MC_DIAGNOSTIC_FACTORY_H
-#define SLIPLINK_MC_DIAGNOSTIC_FACTORY_H
+#ifndef SLIPLINK_MC_ANALYZER_FACTORY_H
+#define SLIPLINK_MC_ANALYZER_FACTORY_H
 
-#include <mcMd/diagnostics/mcSystem/McDiagnosticFactory.h>
+#include <mcMd/analyzers/mcSystem/McAnalyzerFactory.h>
 
 namespace McMd
 {
 
    /**
-   * Custom DiagnosticFactory for an McSimulation
+   * Custom AnalyzerFactory for an McSimulation
    */
-   class SliplinkMcDiagnosticFactory : public McDiagnosticFactory
+   class SliplinkMcAnalyzerFactory : public McAnalyzerFactory
    {
 
    public:
@@ -20,17 +20,17 @@ namespace McMd
       * \param simulation parent simulation
       * \param system     parent system
       */
-      SliplinkMcDiagnosticFactory(McSimulation& simulation, McSystem& system)
-       : McDiagnosticFactory(simulation, system)
+      SliplinkMcAnalyzerFactory(McSimulation& simulation, McSystem& system)
+       : McAnalyzerFactory(simulation, system)
       {}
 
       /** 
-      * Return pointer to a new Diagnostic object.
+      * Return pointer to a new Analyzer object.
       *
-      * \param  className name of a subclass of Diagnostic.
+      * \param  className name of a subclass of Analyzer.
       * \return base class pointer to a new instance of className.
       */
-      virtual Diagnostic* factory(const std::string& className) const;
+      virtual Analyzer* factory(const std::string& className) const;
 
    };
 

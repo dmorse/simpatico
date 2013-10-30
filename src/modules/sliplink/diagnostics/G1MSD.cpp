@@ -25,7 +25,7 @@ namespace McMd
    * Constructor.
    */
    G1MSD::G1MSD(System& system) :
-      SystemDiagnostic<System>(system),
+      SystemAnalyzer<System>(system),
       outputFile_(),
       accumulator_(),
       truePositions_(),
@@ -149,7 +149,7 @@ namespace McMd
    void G1MSD::output() 
    {  
 
-      // Echo parameter to diagnostic log file
+      // Echo parameter to analyzer log file
       fileMaster().openOutputFile(outputFileName(), outputFile_);
       writeParam(outputFile_); 
       outputFile_ << std::endl;

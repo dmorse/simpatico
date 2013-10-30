@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/diagnostics/SystemDiagnostic.h>
+#include <mcMd/analyzers/SystemAnalyzer.h>
 #include <mcMd/simulation/System.h>
 #include <mcMd/neighbor/CellList.h>
 
@@ -18,11 +18,11 @@ namespace McMd
    using namespace Util;
   
    /**
-   * Diagnostic to create crosslinks and output the resulting configuration.
+   * Analyzer to create crosslinks and output the resulting configuration.
    * 
-   * \ingroup Diagnostic_Module
+   * \ingroup Analyzer_Module
    */
-   class Crosslinker : public SystemDiagnostic<System>
+   class Crosslinker : public SystemAnalyzer<System>
    {
 
    public:

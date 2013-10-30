@@ -24,7 +24,7 @@ namespace McMd
 
    /// Constructor.
    VelProf::VelProf(System& system) 
-    : SystemDiagnostic<System>(system),
+    : SystemAnalyzer<System>(system),
       outputFile_(),
       accumulator_(),
       totalMomentum_(0.0),

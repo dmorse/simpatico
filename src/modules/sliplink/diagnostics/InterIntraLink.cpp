@@ -23,7 +23,7 @@ namespace McMd
 
    /// Constructor.
    InterIntraLink::InterIntraLink(System& system) 
-    : SystemDiagnostic<System>(system)
+    : SystemAnalyzer<System>(system)
    {  setClassName("InterIntraLink"); }
 
    /// Read parameters from file, and allocate data array.

@@ -24,7 +24,7 @@ namespace McMd
 
    // Constructor
    Crosslinker::Crosslinker(System& system) :
-      SystemDiagnostic<System>(system),
+      SystemAnalyzer<System>(system),
       nSample_(0),
       cutoff_(0),
       probability_(0)

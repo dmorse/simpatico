@@ -60,7 +60,7 @@ McSimulation{
     probability           8.750000000000e-01
 
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                        1000
     capacity                               9
 

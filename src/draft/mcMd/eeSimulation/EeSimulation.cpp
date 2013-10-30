@@ -11,9 +11,9 @@
 #include <util/global.h>
 
 #include "EeSimulation.h"
-#include <mcMd/mcSimulation/McDiagnosticManager.h>
+#include <mcMd/mcSimulation/McAnalyzerManager.h>
 #include <mcMd/simulation/serialize.h>
-#include <mcMd/diagnostics/Diagnostic.h>
+#include <mcMd/analyzers/Analyzer.h>
 #include <mcMd/mcMoves/McMoveManager.h>
 #include <mcMd/species/Species.h>
 #ifndef INTER_NOPAIR
@@ -53,7 +53,7 @@ namespace McMd
     : Simulation(communicator),
       system_(),
       mcMoveManagerPtr_(0),
-      mcDiagnosticManagerPtr_(0),
+      mcAnalyzerManagerPtr_(0),
       paramFilePtr_(0),
       isInitialized_(false),
       isRestarting_(false)
@@ -63,12 +63,12 @@ namespace McMd
       system().setSimulation(*this);
       system().setFileMaster(fileMaster());
 
-      // Create McMove and Diagnostic managers
+      // Create McMove and Analyzer managers
       mcMoveManagerPtr_ = new McMoveManager(*this);
-      mcDiagnosticManagerPtr_ = new McDiagnosticManager(*this);
+      mcAnalyzerManagerPtr_ = new McAnalyzerManager(*this);
 
-      // Pass Manager<Diagnostic>* to Simulation base class.
-      setDiagnosticManager(mcDiagnosticManagerPtr_);
+      // Pass Manager<Analyzer>* to Simulation base class.
+      setAnalyzerManager(mcAnalyzerManagerPtr_);
    }
    #endif
 
@@ -79,7 +79,7 @@ namespace McMd
     : Simulation(),
       system_(),
       mcMoveManagerPtr_(0),
-      mcDiagnosticManagerPtr_(0),
+      mcAnalyzerManagerPtr_(0),
       paramFilePtr_(0),
       isInitialized_(false),
       isRestarting_(false)
@@ -89,12 +89,12 @@ namespace McMd
       system().setSimulation(*this);
       system().setFileMaster(fileMaster());
 
-      // Create McMove and Diagnostic managers
+      // Create McMove and Analyzer managers
       mcMoveManagerPtr_ = new McMoveManager(*this);
-      mcDiagnosticManagerPtr_ = new McDiagnosticManager(*this);
+      mcAnalyzerManagerPtr_ = new McAnalyzerManager(*this);
 
-      // Pass Manager<Diagnostic>* to Simulation base class.
-      setDiagnosticManager(mcDiagnosticManagerPtr_);
+      // Pass Manager<Analyzer>* to Simulation base class.
+      setAnalyzerManager(mcAnalyzerManagerPtr_);
    }
 
    /*
@@ -103,7 +103,7 @@ namespace McMd
    EeSimulation::~EeSimulation()
    {
       delete mcMoveManagerPtr_;
-      delete mcDiagnosticManagerPtr_;
+      delete mcAnalyzerManagerPtr_;
    }
 
    /*
@@ -116,7 +116,7 @@ namespace McMd
 
       readBegin(in,"EeSimulation");
 
-      // Read all species, diagnostics, random number seed
+      // Read all species, analyzers, random number seed
       Simulation::readParam(in);
 
       // Read the McSystem parameters: potential parameters, temperature etc.
@@ -126,8 +126,8 @@ namespace McMd
       assert(mcMoveManagerPtr_);
       readParamComposite(in, *mcMoveManagerPtr_);
 
-      // Read Diagnostics
-      readParamComposite(in, diagnosticManager());
+      // Read Analyzers
+      readParamComposite(in, analyzerManager());
 
       isValid();
       isInitialized_ = true;
@@ -313,7 +313,7 @@ namespace McMd
          Log::file() << "Restarting from iStep = " << iStep_ << std::endl;
       } else {
          iStep_ = 0;
-         diagnosticManager().setup();
+         analyzerManager().setup();
          mcMoveManagerPtr_->setup();
       }
       int beginStep = iStep_;
@@ -325,10 +325,10 @@ namespace McMd
       timer.start();
       for ( ; iStep_ < endStep; ++iStep_) {
 
-         // Sample diagnostics
-         if (Diagnostic::baseInterval > 0) {
-            if (iStep_ % Diagnostic::baseInterval == 0) {
-               diagnosticManager().sample(iStep_);
+         // Sample analyzers
+         if (Analyzer::baseInterval > 0) {
+            if (iStep_ % Analyzer::baseInterval == 0) {
+               analyzerManager().sample(iStep_);
             }
          }
 
@@ -357,16 +357,16 @@ namespace McMd
       timer.stop();
       double time = timer.time();
 
-      // Final diagnostic sample
+      // Final analyzer sample
       assert(iStep_ == endStep);
-      if (Diagnostic::baseInterval > 0) {
-         if (iStep_ % Diagnostic::baseInterval == 0) {
-            diagnosticManager().sample(iStep_);
+      if (Analyzer::baseInterval > 0) {
+         if (iStep_ % Analyzer::baseInterval == 0) {
+            analyzerManager().sample(iStep_);
          }
       }
 
-      // Output results of all diagnostics to output files
-      diagnosticManager().output();
+      // Output results of all analyzers to output files
+      analyzerManager().output();
 
       // Output results of move statistics to files
       mcMoveManagerPtr_->output();
@@ -469,11 +469,11 @@ namespace McMd
          isValid();
          #endif
 
-         // Initialize diagnostics (taking in molecular information).
-         if (iStep_ == min) diagnosticManager().setup();
+         // Initialize analyzers (taking in molecular information).
+         if (iStep_ == min) analyzerManager().setup();
 
          // Sample property values
-         diagnosticManager().sample(iStep_);
+         analyzerManager().sample(iStep_);
 
          // Clear out the System for the next readConfig.
          system().removeAllMolecules();
@@ -482,8 +482,8 @@ namespace McMd
       timer.stop();
       Log::file() << "end main loop" << std::endl;
 
-      // Output results of all diagnostics to output files
-      diagnosticManager().output();
+      // Output results of all analyzers to output files
+      analyzerManager().output();
 
       // Output time
       Log::file() << std::endl;
@@ -511,7 +511,7 @@ namespace McMd
       ar & system();
       ar & iStep_;
       mcMoveManagerPtr_->save(ar);
-      mcDiagnosticManagerPtr_->save(ar);
+      mcAnalyzerManagerPtr_->save(ar);
       out.close();
    }
 
@@ -535,7 +535,7 @@ namespace McMd
       system().load(ar);
       ar & iStep_;
       mcMoveManagerPtr_->load(ar);
-      mcDiagnosticManagerPtr_->load(ar);
+      mcAnalyzerManagerPtr_->load(ar);
       in.close();
 
       fileMaster().openParamIFile(filename, ".cmd", in);

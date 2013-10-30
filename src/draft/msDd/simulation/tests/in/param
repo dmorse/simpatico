@@ -52,7 +52,7 @@ Master{
       }  
   
     }
-    DiagnosticManager{
+    AnalyzerManager{
       baseInterval                        10000
   
       LogProgress{
@@ -117,7 +117,7 @@ Master{
   Random{
     seed        8012457890
   }
-  DiagnosticManager{
+  AnalyzerManager{
      baseInterval  1000
 
      WriteConfig{

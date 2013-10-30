@@ -1,5 +1,5 @@
-#ifndef HOOMD_DIAGNOSTIC_FACTORY_H
-#define HOOMD_DIAGNOSTIC_FACTORY_H
+#ifndef HOOMD_ANALYZER_FACTORY_H
+#define HOOMD_ANALYZER_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,7 +9,7 @@
 */
 
 #include <util/param/Factory.h>
-#include <mcMd/diagnostics/Diagnostic.h>
+#include <mcMd/analyzers/Analyzer.h>
 
 namespace McMd
 {
@@ -19,7 +19,7 @@ namespace McMd
    class Simulation;
    class System;
 
-   class HoomdDiagnosticFactory : public Factory<Diagnostic>
+   class HoomdAnalyzerFactory : public Factory<Analyzer>
    {
 
    public:
@@ -30,15 +30,15 @@ namespace McMd
       * \param simulation parent simulation
       * \param system     parent system
       */
-      HoomdDiagnosticFactory(Simulation& simulation, System& system);
+      HoomdAnalyzerFactory(Simulation& simulation, System& system);
 
       /** 
-      * Return pointer to a new Diagnostic object.
+      * Return pointer to a new Analyzer object.
       *
-      * \param  className name of a subclass of Diagnostic.
+      * \param  className name of a subclass of Analyzer.
       * \return base class pointer to a new instance of className.
       */
-      virtual Diagnostic* factory(const std::string& className) const;
+      virtual Analyzer* factory(const std::string& className) const;
 
    protected:
 

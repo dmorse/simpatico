@@ -74,13 +74,13 @@ Monte Carlo move algorithms are represented by subclasses of McMove.  Each McMov
 
 See also: \ref McMd_McMove_Module "McMove Module"
 
-\section Diagnostic_sec Diagnostics and Accumulators
+\section Analyzer_sec Analyzers and Accumulators
 
-Diagnostic is an abstract base class for objects that represent data analysis or data output operations that must be carried out periodically during a simulation.  Each Diagnostic has a sample() method that is called to implement the desired operation, and an integer "interval" member that specifies the number of MD steps or MC moves that should elapse between subsequent invocations of sample(). The simplest subclasses of Diagnostic periodically output values of specific variables for later analysis. Other diagnostics evaluate statistical properties of particular physical quantities, e.g., they may evaluate the average, variance, distribution, and/or autocorrelation of a sequence of values. The DumpConfig class outputs a sequence of complete configuration files for postprocessing
+Analyzer is an abstract base class for objects that represent data analysis or data output operations that must be carried out periodically during a simulation.  Each Analyzer has a sample() method that is called to implement the desired operation, and an integer "interval" member that specifies the number of MD steps or MC moves that should elapse between subsequent invocations of sample(). The simplest subclasses of Analyzer periodically output values of specific variables for later analysis. Other analyzers evaluate statistical properties of particular physical quantities, e.g., they may evaluate the average, variance, distribution, and/or autocorrelation of a sequence of values. The DumpConfig class outputs a sequence of complete configuration files for postprocessing
 
-Diagnostics that execute a statistical analysis are usually implemented using one of the accumulator classes from the src/util/accumulators directory. Each accumulator class models an abstract mathematical operations, such as evaluation of an average, a histogram, or an autorcorrelation function. 
+Analyzers that execute a statistical analysis are usually implemented using one of the accumulator classes from the src/util/accumulators directory. Each accumulator class models an abstract mathematical operations, such as evaluation of an average, a histogram, or an autorcorrelation function. 
 
-See also: \ref McMd_Diagnostic_Module   "Diagnostic Module"
+See also: \ref McMd_Analyzer_Module   "Analyzer Module"
 
 See also: \ref Accumulators_Module "Accumulators Module"
 
@@ -94,7 +94,7 @@ A complete MC or MD simulation is represented by a Simulation object.  MdSimulat
 
  - a Util::Random random number generator.
 
- - A DiagnosticManager that holds a set of Diagnostic objects.
+ - A AnalyzerManager that holds a set of Analyzer objects.
 
 The Simulation is also responsible for reading a command file, and for implementing the main simulation loop. 
 An MdSimulation contains one McSystem. An McSimulation contains one MdSystem. 
@@ -105,7 +105,7 @@ The simulate() method of an McSimulation implements a loop in which each step in
 
 The simulate() method of an MdSimulation repeatedly calls the step() method of the MdIntegrator associated with its MdSystem.
 
-The analyze() method of an MdSimulation or McSimulation reads a series of config files that have been written during a previous simulation by a DumpConfig Diagnostic object. The analyze() method implements a loop that reads in configuration files and applies each of the Diagnostic objects.
+The analyze() method of an MdSimulation or McSimulation reads a series of config files that have been written during a previous simulation by a DumpConfig Analyzer object. The analyze() method implements a loop that reads in configuration files and applies each of the Analyzer objects.
 
 The conceptual distinction between a System and a Simulation is somewhat arbitrary, and is not necessary in simulations of single system. Distinct Simulation and System classes were introduced to allow for eventual implementation of Gibbs ensemble simulations. In a Gibbs ensemble simulation, the molecules of each Species will be divided among two or more System sub-objects, and each System will maintain a record of which molecules are currently in that system.  The main simulation loop was implemented in the parent Simulation object, rather than within a System, in order to allow for Gibbs ensemble molecular exchange moves, which are MC moves that involve two systems. 
 

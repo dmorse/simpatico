@@ -179,7 +179,7 @@ namespace DdMd
       *     WRITE_CONFIG command, atomic coordinates will be scaled / 
       *     generalized on both entry and exit. 
       *
-      *   - When used within a Diagnostic, to dump configuration files, 
+      *   - When used within a Analyzer, to dump configuration files, 
       *     atomic coordinates will be Cartesian on entry and exit.
       *
       * \param file output file stream (must be open on master processor).

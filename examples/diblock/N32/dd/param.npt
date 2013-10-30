@@ -61,7 +61,7 @@ Simulation{
   Random{
     seed              8012457890
   }
-  DiagnosticManager{
+  AnalyzerManager{
      baseInterval     1000
 
      OutputEnergy{
@@ -77,7 +77,7 @@ Simulation{
   }
 }
 
-  DiagnosticManager{
+  AnalyzerManager{
      baseInterval     1000
 
      OutputEnergy{

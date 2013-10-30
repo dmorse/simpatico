@@ -18,17 +18,17 @@ include $(OBJ_DIR)/mcMd/defines.mk
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/sources.mk
-include $(MODULES_DIR)/sliplink/diagnostics/sources.mk
+include $(MODULES_DIR)/sliplink/analyzers/sources.mk
 
 #-------------------------------------------------------------------
 # Major targets
 
-all: $(modules_sliplink_diagnostics_OBJS)
+all: $(modules_sliplink_analyzers_OBJS)
 
 clean:
-	-rm -f $(modules_sliplink_diagnostics_OBJS)
-	-rm -f $(modules_sliplink_diagnostics_OBJS:.o=.d)
+	-rm -f $(modules_sliplink_analyzers_OBJS)
+	-rm -f $(modules_sliplink_analyzers_OBJS:.o=.d)
 
--include $(modules_sliplink_diagnostics_OBJS:.o=.d)
+-include $(modules_sliplink_analyzers_OBJS:.o=.d)
 
 #-------------------------------------------------------------------
