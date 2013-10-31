@@ -15,23 +15,21 @@ namespace DdMd
 
    using namespace Util;
 
-   const Bit Modifier::Flags::SetupPostExchange = 0;
-   const Bit Modifier::Flags::SetupPostNeighbor = 1;
-   const Bit Modifier::Flags::SetupPostForce = 2;
-   const Bit Modifier::Flags::PreIntegrate1 = 3;
-   const Bit Modifier::Flags::PostIntegrate1 = 4;
-   const Bit Modifier::Flags::PreTransform = 5;
-   const Bit Modifier::Flags::PreExchange = 6;
-   const Bit Modifier::Flags::PostExchange = 7;
-   const Bit Modifier::Flags::PostNeighbor = 8;
-   const Bit Modifier::Flags::PreUpdate = 9;
-   const Bit Modifier::Flags::PostUpdate = 10;
-   const Bit Modifier::Flags::PreForce = 12;
-   const Bit Modifier::Flags::PostForce = 13;
-   const Bit Modifier::Flags::EndOfStep = 14;
-   const Bit Modifier::Flags::Exchange = 15;
-   const Bit Modifier::Flags::Update = 16;
-   const Bit Modifier::Flags::ReverseUpdate = 17;
+   const Bit Modifier::Flags::Setup = 0;
+   const Bit Modifier::Flags::PreIntegrate1 = 1;
+   const Bit Modifier::Flags::PostIntegrate1 = 2;
+   const Bit Modifier::Flags::PreTransform = 3;
+   const Bit Modifier::Flags::PreExchange = 4;
+   const Bit Modifier::Flags::PostExchange = 5;
+   const Bit Modifier::Flags::PostNeighbor = 6;
+   const Bit Modifier::Flags::PreUpdate = 7;
+   const Bit Modifier::Flags::PostUpdate = 8;
+   const Bit Modifier::Flags::PreForce = 9;
+   const Bit Modifier::Flags::PostForce = 10;
+   const Bit Modifier::Flags::EndOfStep = 11;
+   const Bit Modifier::Flags::Exchange = 12;
+   const Bit Modifier::Flags::Update = 13;
+   const Bit Modifier::Flags::ReverseUpdate = 14;
 
    /*
    * Default constructor.

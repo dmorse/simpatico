@@ -22,9 +22,7 @@ namespace DdMd
    ModifierManager::ModifierManager()
    : Manager<Modifier>(),
      simulationPtr_(0),
-     setupPostExchangeModifiers_(),
-     setupPostNeighborModifiers_(),
-     setupPostForceModifiers_(),
+     setupModifiers_(),
      preIntegrate1Modifiers_(),
      postIntegrate1Modifiers_(),
      preTransformModifiers_(),
@@ -47,9 +45,7 @@ namespace DdMd
    ModifierManager::ModifierManager(Simulation& simulation)
    : Manager<Modifier>(),
      simulationPtr_(&simulation),
-     setupPostExchangeModifiers_(),
-     setupPostNeighborModifiers_(),
-     setupPostForceModifiers_(),
+     setupModifiers_(),
      preIntegrate1Modifiers_(),
      postIntegrate1Modifiers_(),
      preTransformModifiers_(),
@@ -84,14 +80,8 @@ namespace DdMd
       Modifier* ptr;
       for  (int i = 0; i < size(); ++i) {
          ptr = &(*this)[i];
-         if (ptr->isSet(Modifier::Flags::SetupPostExchange)) { 
-            setupPostExchangeModifiers_.append(*ptr); 
-         }
-         if (ptr->isSet(Modifier::Flags::SetupPostNeighbor)) { 
-            setupPostNeighborModifiers_.append(*ptr); 
-         }
-         if (ptr->isSet(Modifier::Flags::SetupPostForce)) { 
-            setupPostForceModifiers_.append(*ptr); 
+         if (ptr->isSet(Modifier::Flags::Setup)) { 
+            setupModifiers_.append(*ptr); 
          }
          if (ptr->isSet(Modifier::Flags::PreIntegrate1)) { 
             preIntegrate1Modifiers_.append(*ptr); 
@@ -140,30 +130,14 @@ namespace DdMd
 
    // Setup
 
-   void ModifierManager::setupPostExchange() 
+   void ModifierManager::setup() 
    {
-      int n = setupPostExchangeModifiers_.size();
+      int n = setupModifiers_.size();
       for (int i = 0; i < n; ++i) {
-         setupPostExchangeModifiers_[i].setupPostExchange();
+         setupModifiers_[i].setup();
       }
    }
  
-   void ModifierManager::setupPostNeighbor()
-   {
-      int n = setupPostNeighborModifiers_.size();
-      for (int i = 0; i < n; ++i) {
-         setupPostNeighborModifiers_[i].setupPostNeighbor();
-      }
-   }
-
-   void ModifierManager::setupPostForce()
-   {
-      int n = setupPostForceModifiers_.size();
-      for (int i = 0; i < n; ++i) {
-         setupPostForceModifiers_[i].setupPostForce();
-      }
-   }
-
    // Integration
 
    void ModifierManager::preIntegrate1(long iStep)

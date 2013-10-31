@@ -63,17 +63,10 @@ namespace DdMd
       */
       Factory<Modifier>* newDefaultFactory() const;
 
-      /// \name Setup actions 
+      /// \name Integrator actions 
       //@{ 
    
-      void setupPostExchange();
-      void setupPostNeighbor();
-      void setupPostForce();
-  
-      //@} 
-      /// \name Integration actions (within main loop)
-      //@{ 
-
+      void setup();
       void preIntegrate1(long iStep);
       void postIntegrate1(long iStep);
       void preTransform(long iStep);
@@ -105,9 +98,7 @@ namespace DdMd
       Simulation* simulationPtr_;
 
       // Arrays of modifiers for specific actions.
-      GPArray<Modifier> setupPostExchangeModifiers_;
-      GPArray<Modifier> setupPostNeighborModifiers_;
-      GPArray<Modifier> setupPostForceModifiers_;
+      GPArray<Modifier> setupModifiers_;
       GPArray<Modifier> preIntegrate1Modifiers_;
       GPArray<Modifier> postIntegrate1Modifiers_;
       GPArray<Modifier> preTransformModifiers_;

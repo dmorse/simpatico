@@ -21,7 +21,10 @@
 # DDMD_SUFFIX strings are thus left empty. 
 #
 #-----------------------------------------------------------------------
-# Makefile variables to define preprocessor macros (None yet defined).
+# Makefile variables to define preprocessor macros.
+
+# Define DDMD_MODIFIERS, enable 2-body bond potentials
+# DDMD_MODIFIERS=1
 
 #-----------------------------------------------------------------------
 # The following code defines the variables DDMD_DEFS and DDMD_SUFFIX.
@@ -40,6 +43,13 @@ DDMD_SUFFIX:=
 # may be extended using the += operator, but that DDMD_SUFFIX is a 
 # non-recursive makefile variable, which may be extended using the := 
 # operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_c. 
+
+
+# Enable bond potential
+ifdef DDMD_MODIFIERS
+DDMD_DEFS+= -DDDMD_MODIFIERS
+#DDMD_SUFFIX:=$(DDMD_SUFFIX)_u
+endif
 
 #-----------------------------------------------------------------------
 # Path to ddMd library

@@ -71,17 +71,10 @@ namespace DdMd
       */
       virtual ~Modifier();
 
-      /// \name Setup actions 
+      /// \name Setup and integration actions 
       //@{ 
    
-      virtual void setupPostExchange(){};
-      virtual void setupPostNeighbor(){};
-      virtual void setupPostForce(){};
-  
-      //@} 
-      /// \name Integration actions (within main loop)
-      //@{ 
-
+      virtual void setup(){};
       virtual void preIntegrate1() {};
       virtual void postIntegrate1() {};
       virtual void preTransform() {};
@@ -128,9 +121,7 @@ namespace DdMd
       class Flags 
       { 
       public:
-         static const Bit SetupPostExchange;
-         static const Bit SetupPostNeighbor;
-         static const Bit SetupPostForce;
+         static const Bit Setup;
          static const Bit PreIntegrate1;
          static const Bit PostIntegrate1;
          static const Bit PreTransform;
