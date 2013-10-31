@@ -1,14 +1,6 @@
 Proposed compatibility breaking changes:
 ---------------------------------------
 
-- Param file format:
-
-    (1) Require bondtype parameter for homopolymers and diblocks.
-
-    Why: Currently, all bonds are taken to be bond type 0. This is
-    an entirely arbitrary hack. The only alternative is to specify
-    the bond type explicitly.
-
 - Method names:
  
    (1) Reconsider interface for Random, e.g., getFloat() -> uniform().
