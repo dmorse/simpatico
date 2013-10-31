@@ -25,3 +25,10 @@ ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
 endif
 
+# Pattern rule to compile all class source (*.cpp) files in src/inter
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.cc
+	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
+ifdef MAKEDEP
+	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
+endif
+

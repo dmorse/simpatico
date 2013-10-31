@@ -28,3 +28,10 @@ ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
 endif
 
+# Pattern rule to compile all test source (*.c) files in src/mcMd/tests
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp
+	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
+ifdef MAKEDEP
+	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
+endif
+
