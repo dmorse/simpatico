@@ -119,7 +119,7 @@ namespace Util
    * Destructor.
    */
    template <typename Data>
-   inline Matrix<Data>::~Matrix()
+   Matrix<Data>::~Matrix()
    {}
 
    /*
