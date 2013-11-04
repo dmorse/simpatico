@@ -5,16 +5,19 @@ include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/util/tests/sources.mk
 
-all: $(util_tests_OBJS) Test
+TEST=util/tests/Test
 
-run: $(util_tests_OBJS) Test
-	./Test $(SRC_DIR)/util/tests/ > log
+all: $(util_tests_OBJS) $(OBJ_DIR)/$(TEST)
+
+run: $(util_tests_OBJS) $(OBJ_DIR)/$(TEST)
+	$(OBJ_DIR)/$(TEST) $(SRC_DIR)/util/tests/ > log
 	@echo `grep failed log` ", "\
               `grep successful log` "in src/util/tests/log" > count
 	@cat count
 
 clean:
-	rm -f $(util_tests_OBJS) Test $(util_tests_OBJS:.o=.d)
+	rm -f $(util_tests_OBJS) $(util_tests_OBJS:.o=.d)
+	rm -f $(OBJ_DIR)/$(TEST) $(OBJ_DIR)/$(TEST).d
 	rm -f dummy log count
 	cd accumulators/unit; make clean
 	cd archives; make clean
@@ -29,12 +32,6 @@ clean:
 	rm -f */*.o */*/*.o 
 	rm -f */*.d */*/*.d
 
-clean-deps:
-	rm -f $(util_tests_OBJS:.o=.d)
-
-Test: Test.o $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(util_LIB)
-
 -include $(util_tests_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 

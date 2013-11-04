@@ -12,8 +12,11 @@
 # defined in those files.
 #-----------------------------------------------------------------------
 
-# C preprocessor macro definitions
-CPPDEFS=$(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS)
+# All libraries needed in this namespace
+LIBS=$(ddMd_LIB) $(inter_LIB) $(util_LIB)
+
+# All C preprocessor macro definitions for this namespace
+DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS)
 
 # Dependencies of source files in src/ddMd on makefile fragments
 MAKE_DEPS= -A$(OBJ_DIR)/compiler.mk
@@ -23,8 +26,16 @@ MAKE_DEPS+= -A$(OBJ_DIR)/ddMd/defines.mk
 
 # Pattern rule to compile all class source (*.cpp) files in src/ddMd
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
+endif
+
+# Pattern rule to compile all test source (*.cc) files in src/ddMd
+$(OBJ_DIR)/% $(OBJ_DIR)/%.o::$(SRC_DIR)/%.cc $(LIBS)
+	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
+	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o $(@:.o=) $< $(LIBS)
+ifdef MAKEDEP
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
 endif
 

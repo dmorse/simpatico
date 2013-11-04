@@ -3,19 +3,16 @@ include $(OBJ_DIR_REL)/compiler.mk
 include $(OBJ_DIR)/util/defines.mk
 include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
-include $(SRC_DIR)/util/tests/TMP/sources.mk
+include $(SRC_DIR)/util/tests/mpi/sources.mk
 
-all: $(util_tests_TMP_OBJS) Test
+TEST=util/tests/mpi/Test
+
+all: $(util_tests_mpi_OBJS) $(OBJ_DIR)/$(TEST)
 
 clean:
-	rm -f $(util_tests_TMP_OBJS) Test $(util_tests_TMP_OBJS:.o=.d)
+	rm -f $(util_tests_mpi_OBJS) $(util_tests_param_mpi_OBJS:.o=.d)
+	rm -f $(OBJ_DIR)/$(TEST)
 
-clean-deps:
-	rm -f $(util_tests_TMP_OBJS:.o=.d)
-
-Test: Test.o $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(util_LIB)
-
--include $(util_tests_TMP_OBJS:.o=.d)
+-include $(util_tests_mpi_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 

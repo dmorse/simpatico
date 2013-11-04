@@ -1715,7 +1715,9 @@ namespace DdMd
       }
       #endif
       #ifdef INTER_EXTERNAL
-      externalPotential().unsetEnergy();
+      if (hasExternal_) {
+         externalPotential().unsetEnergy();
+      }
       #endif
    }
 

@@ -125,6 +125,11 @@ public:
    */
    UnitTestRunner();
 
+   /**
+   * Destructor.
+   */
+   ~UnitTestRunner();
+
    // Use compiler generated destructor.
 
    /**
@@ -159,6 +164,7 @@ private:
 
 };
 
+
 /*
 * Constructor.
 */
@@ -175,6 +181,13 @@ UnitTestRunner<UnitTestClass>::UnitTestRunner()
    }
    #endif
 }
+
+/*
+* Destructor.
+*/
+template <class UnitTestClass>
+UnitTestRunner<UnitTestClass>::~UnitTestRunner()
+{}
 
 /*
 * Register a test method of the associated unit test class.

@@ -9,22 +9,23 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/tests/sources.mk
 
-all: $(ddMd_tests_OBJS) Test
+TEST=ddMd/tests/Test
 
-run: $(ddMd_tests_OBJS) Test
-	$(MPIRUN) 6 ./Test $(SRC_DIR)/ddMd/tests/ > log
+all: $(ddMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
+
+run: $(ddMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
+	$(MPIRUN) 6 $(OBJ_DIR)/$(TEST) $(SRC_DIR)/ddMd/tests/ > log
 	@echo `grep failed log` ", "\
               `grep successful log` "in parallel/ddMd/tests/log" > count
 	@cat count
 
 clean:
-	-rm -f $(ddMd_tests_OBJS) Test $(ddMd_tests_OBJS:.o=.d)
-	-rm -f log count
-
-Test: Test.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(ddMd_LIB) $(inter_LIB) $(util_LIB)
+	rm -f $(ddMd_tests_OBJS) $(ddMd_tests_OBJS:.o=.d)
+	rm -f $(OBJ_DIR)/$(TEST) 
+	rm -f log count
 
 -include $(ddMd_tests_OBJS:.o=.d)
-
+-include $(ddMd_OBJS:.o=.d)
+-include $(inter_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 

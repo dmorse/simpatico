@@ -5,17 +5,14 @@ include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/util/tests/space/sources.mk
 
-all: $(util_tests_space_OBJS) Test
+TEST=util/tests/space/Test
+
+all: $(util_tests_space_OBJS) $(OBJ_DIR)/$(TEST)
 
 clean:
-	rm -f $(util_tests_space_OBJS) Test $(util_tests_space_OBJS:.o=.d)
-
-clean-deps:
-	rm -f $(util_tests_space_OBJS:.o=.d)
-
-Test: Test.o $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(util_LIB)
+	rm -f $(util_tests_space_OBJS) $(util_tests_space_OBJS:.o=.d)
+	rm -f $(OBJ_DIR)/$(TEST) 
 
 -include $(util_tests_space_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 

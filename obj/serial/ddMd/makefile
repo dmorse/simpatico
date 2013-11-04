@@ -13,7 +13,6 @@ include $(SRC_DIR)/ddMd/sources.mk
 # Variable definitions
 
 DDSIM=$(OBJ_DIR)/ddMd/ddSim
-DDSIM_LIBS= $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 
 #-----------------------------------------------------------------------
 # Main targets
@@ -30,8 +29,8 @@ clean:
 uninstall:
 	-rm -f $(DDSIM_EXE)
 
-$(DDSIM_EXE): $(DDSIM).o $(DDSIM_LIBS)
-	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o $(DDSIM_LIBS)
+$(DDSIM_EXE): $(DDSIM).o $(LIBS)
+	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o $(DDSIM_EXE) $(DDSIM).o $(LIBS)
 
 ddSim:
 	make $(DDSIM_EXE)
