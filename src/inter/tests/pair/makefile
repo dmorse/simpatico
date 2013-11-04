@@ -7,17 +7,19 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/tests/pair/sources.mk
 
-all: $(inter_tests_pair_OBJS) Test
+TEST=inter/tests/pair/Test
+
+all: $(inter_tests_pair_OBJS) $(OBJ_DIR)/$(TEST)
 
 clean:
-	rm -f $(inter_tests_pair_OBJS) Test $(inter_tests_pair_OBJS:.o=.d)
+	rm -f $(inter_tests_pair_OBJS) $(inter_tests_pair_OBJS:.o=.d)
+	rm -f $(OBJ_DIR)/$(TEST) 
+	make clean-outputs
 
-clean-deps:
-	rm -f $(inter_tests_pair_OBJS:.o=.d)
-
-Test: Test.o $(inter_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(inter_LIB) $(util_LIB)
+clean-outputs:
+	rm -f out/*
 
 -include $(inter_tests_pair_OBJS:.o=.d)
+-include $(inter_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 

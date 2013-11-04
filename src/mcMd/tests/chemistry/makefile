@@ -3,24 +3,30 @@ include $(OBJ_DIR_REL)/compiler.mk
 include $(OBJ_DIR)/mcMd/defines.mk
 include $(OBJ_DIR)/inter/defines.mk
 include $(OBJ_DIR)/util/defines.mk
-include $(SRC_DIR)/inter/patterns.mk
+include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/mcMd/sources.mk
 include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/tests/chemistry/sources.mk
 
-all: $(mcMd_tests_chemistry_OBJS) Test
+ifdef UTIL_MPI
+TEST=mcMd/tests/chemistry/MpiTest
+else
+TEST=mcMd/tests/chemistry/Test
+endif
+
+all: $(mcMd_tests_chemistry_OBJS) $(OBJ_DIR)/$(TEST)
 
 clean:
-	rm -f $(mcMd_tests_chemistry_OBJS) Test $(mcMd_tests_chemistry_OBJS:.o=.d)
+	rm -f $(mcMd_tests_chemistry_OBJS) $(mcMd_tests_chemistry_OBJS:.o=.d)
+	rm -f $(OBJ_DIR)/$(TEST) 
+	make clean-outputs
+
+clean-outputs:
 	rm -f ar.txt. binary
 
-clean-deps:
-	rm -f $(mcMd_tests_chemistry_OBJS:.o=.d)
-
-Test: Test.o $(mcMd_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(mcMd_LIB) $(util_LIB)
-
 -include $(mcMd_tests_chemistry_OBJS:.o=.d)
+-include $(mcMd_OBJS:.o=.d)
+-include $(inter_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 
