@@ -9,22 +9,15 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/tests/configIos/sources.mk
 
-all: $(ddMd_tests_configIos_OBJS) \
-     ConfigIoTest \
-     SerializeConfigIoTest 
+all: $(ddMd_tests_configIos_OBJS) $(ddMd_tests_configIos_OBJS:.o=)
 
 clean:
 	rm -f $(ddMd_tests_configIos_OBJS) $(ddMd_tests_configIos_OBJS:.o=.d)
-	rm -f ConfigIoTest SerializeConfigIoTest
+	rm -f $(ddMd_tests_configIos_OBJS:.o=)
 	rm -f binary out
 
-ConfigIoTest: ConfigIoTest.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) -o ConfigIoTest ConfigIoTest.o \
-	       $(ddMd_LIB) $(inter_LIB) $(util_LIB)
-
-SerializeConfigIoTest: SerializeConfigIoTest.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) -o SerializeConfigIoTest SerializeConfigIoTest.o \
-	       $(ddMd_LIB) $(inter_LIB) $(util_LIB)
-
 -include $(ddMd_tests_configIos_OBJS:.o=.d)
+-include $(ddMd_OBJS:.o=.d)
+-include $(inter_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 
