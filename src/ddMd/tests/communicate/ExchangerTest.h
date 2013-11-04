@@ -52,6 +52,8 @@ private:
    DihedralStorage dihedralStorage;
    #endif
    int atomCount;
+   bool hasAngle;
+   bool hasDihedral;
 
    bool isExchangeNeeded(double skin);
    void exchangeNotify();
@@ -71,6 +73,8 @@ public:
 
 void ExchangerTest::setUp()
 {
+   hasAngle = false;
+   hasDihedral = false;
 
    // Set connections between atomDistributors
    domain.setBoundary(boundary);
@@ -85,10 +89,14 @@ void ExchangerTest::setUp()
    exchanger.associate(domain, boundary, atomStorage, buffer);
    exchanger.addGroupExchanger(bondStorage);
    #ifdef INTERANGLE
-   exchanger.addGroupExchanger(angleStorage);
+   if (hasAngle) {
+      exchanger.addGroupExchanger(angleStorage);
+   }
    #endif
    #ifdef INTERDIHEDRAL
-   exchanger.addGroupExchanger(dihedralStorage);
+   if (hasDihedral) {
+      exchanger.addGroupExchanger(dihedralStorage);
+   }
    #endif
 
    #ifdef UTIL_MPI
@@ -128,10 +136,14 @@ void ExchangerTest::setUp()
    atomStorage.readParam(file());
    bondStorage.readParam(file());
    #ifdef INTER_ANGLE
-   angleStorage.readParam(file());
+   if (hasAngle) {
+      angleStorage.readParam(file());
+   }
    #endif
    #ifdef INTER_DIHEDRAL
-   dihedralStorage.readParam(file());
+   if (hasDihedral) {
+      dihedralStorage.readParam(file());
+   }
    #endif
    closeFile(); // close parameter file
 

@@ -530,9 +530,9 @@ namespace DdMd
                   // Check ghost plan
                   assert(!planPtr->ghost(i, j));
                   if (j == 0) {
-                     assert(planPtr->ghost(i, 1) == (coordinate > inner) );
+                     assert(planPtr->ghost(i, 1) == (coordinate > inner_(i, 1)) );
                   } else {
-                     assert(planPtr->ghost(i, 0) == (coordinate < inner) );
+                     assert(planPtr->ghost(i, 0) == (coordinate < inner_(i, 0)) );
                   }
                   #endif
 
