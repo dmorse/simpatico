@@ -11,8 +11,11 @@
 # uses makefile variables defined in those files.
 #-----------------------------------------------------------------------
 
+# All libraries needed in this namespace
+LIBS=$(util_LIB)
+
 # Preprocessor macro definitions
-CPPDEFS=$(UTIL_DEFS)
+DEFINES=$(UTIL_DEFS)
 
 # Dependencies of source files in src/util on makefile fragments
 MAKE_DEPS= -A$(OBJ_DIR)/compiler.mk
@@ -20,16 +23,16 @@ MAKE_DEPS+= -A$(OBJ_DIR)/util/defines.mk
 
 # Pattern rule to compile *.cpp class source files in src/util
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
 endif
 
 # Pattern rule to compile *.cc test source files in src/util/tests
-$(OBJ_DIR)/%.o:$(SRC_DIR)/%.cc
-	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
+$(OBJ_DIR)/% $(OBJ_DIR)/%.o:$(SRC_DIR)/%.cc $(LIBS)
+	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
+	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o $(@:.o=) $< $(LIBS)
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(CPPDEFS) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
 endif
 
-#-----------------------------------------------------------------------

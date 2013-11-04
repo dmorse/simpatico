@@ -1,0 +1,9 @@
+BUGS:
+-----
+
+communicate/
+    ExchangerTest::testDistribute fails when compiled with angles and dihedrals, missing ghost.
+
+configIos/
+    In ConfigIoTest and SerializeConfigIoTest, the "BOUNDARY" label is output in binary.
+    It isn't causing a crash because it is not read back in.

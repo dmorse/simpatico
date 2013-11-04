@@ -7,24 +7,24 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/tests/sources.mk
 
-all: $(inter_tests_OBJS) Test
+TEST=inter/tests/Test
 
-run: $(inter_tests_OBJS) Test
-	./Test $(SRC_DIR)/inter/tests/ > log
+all: $(inter_tests_OBJS) $(OBJ_DIR)/$(TEST)
+
+run: $(inter_tests_OBJS) $(OBJ_DIR)/$(TEST)
+	./$(OBJ_DIR)/$(TEST) $(SRC_DIR)/inter/tests/ > log
 	@echo `grep failed log` ", "\
               `grep successful log` "in src/inter/tests/log" > count
 	@cat count
 
 clean:
-	rm -f $(inter_tests_OBJS) $(inter_tests_OBJS:.o=.d) Test
+	rm -f $(inter_tests_OBJS) $(inter_tests_OBJS:.o=.d) $(OBJ_DIR)/$(TEST)
 	rm -f log count
 	cd pair; make clean
 	cd bond; make clean
 	cd angle; make clean
 	cd dihedral; make clean
 
-Test: Test.o $(inter_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(inter_LIB) $(util_LIB)
+$(OBJ_DIR)/$(TEST): $(OBJ_DIR)/$(TEST).o $(LIBS)
 
 -include $(inter_tests_OBJS:.o=.d)

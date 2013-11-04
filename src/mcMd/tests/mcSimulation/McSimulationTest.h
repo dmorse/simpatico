@@ -52,23 +52,15 @@ public:
    virtual void readParam(McSimulation& sim)
    {  
       #ifdef INTER_ANGLE
-      #ifdef INTER_DIHEDRAL
-      openFile("in/McSimulationAngleDihedral"); 
-      #else
       openFile("in/McSimulationAngle"); 
-      #endif
-      #else
-      #ifdef INTER_DIHEDRAL
-      openFile("in/McSimulationDihedral"); 
       #else
       openFile("in/McSimulation"); 
-      #endif
       #endif
       sim.readParam(file());
       std::cout << std::endl;
    }
 
-// void testReadParam();
+   void testReadParam();
    void testPairEnergy();
    void testBondEnergy();
    #ifdef INTER_ANGLE
@@ -78,7 +70,10 @@ public:
    //void testMemorySerialize();
    //void testTextFileSerialize();
    //void testTextFileUnSerialize();
-   void testSimulate();
+   void testSimulateBond();
+   #ifdef INTER_ANGLE
+   void testSimulateAngle();
+   #endif
    void testWriteRestart();
    void testReadRestart();
 
@@ -89,7 +84,8 @@ private:
 
 };
 
-/*void McSimulationTest::testReadParam()
+#if 1
+void McSimulationTest::testReadParam()
 {
    printMethod(TEST_FUNC);
    readParam(simulation_);
@@ -108,14 +104,16 @@ private:
    }
 
 }
-*/
+#endif
 
 void McSimulationTest::testPairEnergy()
 { 
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   readParam(simulation_);
+   //readParam(simulation_);
+   openFile("in/McSimulation"); 
+   simulation_.readParam(file());
    simulation_.readCommands();
 
    simulation_.simulate(10);
@@ -145,7 +143,9 @@ void McSimulationTest::testBondEnergy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   readParam(simulation_);
+   // readParam(simulation_);
+   openFile("in/McSimulation"); 
+   simulation_.readParam(file());
    simulation_.readCommands();
 
    simulation_.simulate(10);
@@ -176,6 +176,8 @@ void McSimulationTest::testAngleEnergy()
    std::cout << std::endl;
 
    readParam(simulation_);
+   // openFile("in/McSimulationAngle"); 
+   // simulation_.readParam(file());
    simulation_.readCommands();
 
    simulation_.simulate(10);
@@ -206,7 +208,9 @@ void McSimulationTest::testMdSystemCopy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   readParam(simulation_);
+   //readParam(simulation_);
+   openFile("in/McSimulation"); 
+   simulation_.readParam(file());
    simulation_.readCommands();
 
    simulation_.simulate(10);
@@ -227,88 +231,11 @@ void McSimulationTest::testMdSystemCopy()
 
 }
 
-#if 0
-void McSimulationTest::testMemorySerialize()
+void McSimulationTest::testSimulateBond()
 {
    printMethod(TEST_FUNC);
    std::cout << std::endl;
-
-   readParam(simulation_);
-   simulation_.readCommands();
-
-   //simulation_.simulate(10);
-
-   MemoryCounter car;
-   car << simulation_;
-   int size = car.size();
-
-   MemoryOArchive oar;
-   oar.allocate(size);
-   oar << simulation_;
-
-   MemoryIArchive iar;
-   iar = oar;
-
-   std::cout << "Iar size = " << (size_t) (iar.end() - iar.begin()) << std::endl;
-
-   McSimulation    clone;
-   iar >> clone;
-
-   clone.writeParam(std::cout);
-}
-
-void McSimulationTest::testTextFileSerialize()
-{
-   printMethod(TEST_FUNC);
-   std::cout << std::endl;
-
-   readParam(simulation_);
-   simulation_.readCommands();
-
-   TextFileOArchive oar;
-   std::ofstream out;
-   openOutputFile("text", out);
-   oar.setStream(out);
-
-   oar << simulation_;
-   out.close();
-
-}
-
-void McSimulationTest::testTextFileUnSerialize()
-{
-   printMethod(TEST_FUNC);
-   std::cout << std::endl;
-
-   TextFileIArchive iar;
-   std::ifstream in;
-   openInputFile("text", in); 
-   iar.setStream(in);
-
-   iar >> simulation_;
-
-   simulation_.writeParam(std::cout);
-   simulation_.simulate(100);
-}
-#endif
-
-void McSimulationTest::testSimulate()
-{
-   printMethod(TEST_FUNC);
-   std::cout << std::endl;
-   #ifdef INTER_ANGLE
-   #ifdef INTER_DIHEDRAL
-   openFile("in/McSimulationAngleDihedral"); 
-   #else
-   openFile("in/McSimulationAngle"); 
-   #endif
-   #else
-   #ifdef INTER_DIHEDRAL
-   openFile("in/McSimulationDihedral"); 
-   #else
    openFile("in/McSimulation"); 
-   #endif
-   #endif
    simulation_.readParam(file());
    simulation_.readCommands();
 
@@ -324,24 +251,33 @@ void McSimulationTest::testSimulate()
 
 }
 
+#ifdef INTER_ANGLE
+void McSimulationTest::testSimulateAngle()
+{
+   printMethod(TEST_FUNC);
+   std::cout << std::endl;
+   openFile("in/McSimulationAngle"); 
+   simulation_.readParam(file());
+   simulation_.readCommands();
+
+   std::cout << std::endl;
+
+   std::string baseFileName("simulateAngle.0");
+   simulation_.save(baseFileName);
+
+   simulation_.simulate(20);
+
+   baseFileName = "simulateAngle.20";
+   simulation_.save(baseFileName);
+
+}
+#endif
+
 void McSimulationTest::testWriteRestart()
 {
    printMethod(TEST_FUNC);
    std::cout << std::endl;
-   #ifdef INTER_ANGLE
-   #ifdef INTER_DIHEDRAL
-   openFile("in/McSimulationAngleDihedral"); 
-   #else
-   openFile("in/McSimulationAngle"); 
-   #endif
-   #else
-   #ifdef INTER_DIHEDRAL
-   openFile("in/McSimulationDihedral"); 
-   #else
-   openFile("in/McSimulation"); 
-   #endif
-   #endif
-   simulation_.readParam(file());
+   readParam(simulation_);
    simulation_.readCommands();
 
    std::cout << std::endl;
@@ -372,17 +308,17 @@ void McSimulationTest::testReadRestart()
 }
 
 TEST_BEGIN(McSimulationTest)
-//TEST_ADD(McSimulationTest, testReadParam)
+TEST_ADD(McSimulationTest, testReadParam)
 TEST_ADD(McSimulationTest, testPairEnergy)
 TEST_ADD(McSimulationTest, testBondEnergy)
 #ifdef INTER_ANGLE
 TEST_ADD(McSimulationTest, testAngleEnergy)
 #endif
 TEST_ADD(McSimulationTest, testMdSystemCopy)
-//TEST_ADD(McSimulationTest, testMemorySerialize)
-//TEST_ADD(McSimulationTest, testTextFileSerialize)
-//TEST_ADD(McSimulationTest, testTextFileUnSerialize)
-TEST_ADD(McSimulationTest, testSimulate)
+TEST_ADD(McSimulationTest, testSimulateBond)
+#ifdef INTER_ANGLE
+TEST_ADD(McSimulationTest, testSimulateAngle)
+#endif
 TEST_ADD(McSimulationTest, testWriteRestart)
 //TEST_ADD(McSimulationTest, testReadRestart)
 TEST_END(McSimulationTest)

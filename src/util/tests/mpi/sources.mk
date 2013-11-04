@@ -1,4 +1,7 @@
-tests_util_mpi_SRCS=$(TESTS_DIR)/util/mpi/Test.cc 
+util_tests_mpi_=util/tests/mpi/Test.cc
 
-tests_util_mpi_OBJS=$(tests_util_mpi_SRCS:.cc=.o)
+util_tests_mpi_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(util_tests_mpi_))
+util_tests_mpi_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(util_tests_mpi_:.cc=.o))
 

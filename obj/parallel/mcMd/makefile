@@ -14,8 +14,6 @@ include $(SRC_DIR)/mcMd/sources.mk
 
 MDSIM=$(OBJ_DIR)/mcMd/mdSim
 MCSIM=$(OBJ_DIR)/mcMd/mcSim
-MCMD_LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB)
-
 #-----------------------------------------------------------------------
 # Main targets
 
@@ -39,11 +37,11 @@ uninstall:
 #-----------------------------------------------------------------------
 # Executables
 
-$(MCSIM_EXE): $(MCSIM).o $(MCMD_LIBS)
-	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) $(MCSIM).o $(MCMD_LIBS) $(LIBS)
+$(MCSIM_EXE): $(MCSIM).o $(LIBS)
+	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) $(MCSIM).o $(LIBS)
  
-$(MDSIM_EXE): $(MDSIM).o $(MCMD_LIBS)
-	$(CXX) $(LDFLAGS) -o $(MDSIM_EXE) $(MDSIM).o $(MCMD_LIBS)
+$(MDSIM_EXE): $(MDSIM).o $(LIBS)
+	$(CXX) $(LDFLAGS) -o $(MDSIM_EXE) $(MDSIM).o $(LIBS)
 
 # Short names for executable targets (for convenience)
  
@@ -59,5 +57,5 @@ mdSim:
 -include $(util_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)
--include $(MDSIM).d 
--include $(MCSIM).d 
+-include $(MDSIM).d)
+-include $(MCSIM).d)

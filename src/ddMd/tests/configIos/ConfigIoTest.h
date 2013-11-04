@@ -26,28 +26,68 @@ using namespace DdMd;
 
 class ConfigIoTest: public ParamFileTest
 {
+
+   DdMdConfigIo configIo;
+   Boundary boundary;
+   Domain   domain;
+   Buffer   buffer;
+   AtomStorage  atomStorage;
+   BondStorage  bondStorage;
+   #ifdef INTER_ANGLE
+   AngleStorage  angleStorage;
+   #endif
+   #ifdef INTER_DIHEDRAL
+   DihedralStorage  dihedralStorage;
+   #endif
+   bool hasAngle;
+   bool hasDihedral;
+
 public:
 
    virtual void setUp()
-   {}
-
-   void testReadConfig()
    {
-      printMethod(TEST_FUNC);
+      // Set connections between objects
+      domain.setBoundary(boundary);
+      configIo.associate(domain, boundary, atomStorage, bondStorage, 
+                         #ifdef INTER_ANGLE
+                         angleStorage,
+                         #endif
+                         #ifdef INTER_DIHEDRAL
+                         dihedralStorage,
+                         #endif
+                         buffer);
 
-      DdMdConfigIo configIo;
-      Boundary boundary;
-      Domain   domain;
-      Buffer   buffer;
-      AtomStorage  atomStorage;
-      BondStorage  bondStorage;
+      #ifdef UTIL_MPI
+      // Set communicators
+      domain.setGridCommunicator(communicator());
+      domain.setIoCommunicator(communicator());
+      atomStorage.setIoCommunicator(communicator());
+      bondStorage.setIoCommunicator(communicator());
       #ifdef INTER_ANGLE
-      AngleStorage  angleStorage;
+      angleStorage.setIoCommunicator(communicator());
+      #else
       #endif
       #ifdef INTER_DIHEDRAL
-      DihedralStorage  dihedralStorage;
+      dihedralStorage.setIoCommunicator(communicator());
+      #endif
+      buffer.setIoCommunicator(communicator());
+      configIo.setIoCommunicator(communicator());
+      #else
+      domain.setRank(0);
       #endif
 
+      hasAngle = false;
+      #ifdef INTER_ANGLE
+      hasAngle = true;
+      #endif
+      hasDihedral = false;
+      #ifdef INTER_DIHEDRAL
+      hasDihedral = true;
+      #endif
+   }
+
+   void readParam()
+   {
       // Set connections between objects
       domain.setBoundary(boundary);
       configIo.associate(domain, boundary, atomStorage, bondStorage, 
@@ -75,101 +115,53 @@ public:
       configIo.setIoCommunicator(communicator());
       #else
       domain.setRank(0);
-      #endif
+      #endif // ifdef UTIL_MPI
 
       // Open parameter file
       std::ifstream file;
-      #ifdef INTER_ANGLE
-         #ifdef INTER_DIHEDRAL 
+      if (hasDihedral) {
          openInputFile("in/ConfigIo_a_d", file);
-         #else  // ifndef INTER_DIHEDRAL
-         openInputFile("in/ConfigIo_a", file);
-         #endif // INTER_DIHEDRAL
-      #else  // inndef INTER_ANGLE
-      openInputFile("in/ConfigIo", file);
-      #endif // INTER_ANGLE
+      } else {
+         if (hasAngle) {
+            openInputFile("in/ConfigIo_a", file);
+         } else {
+            openInputFile("in/ConfigIo", file);
+         }
+      }
 
       domain.readParam(file);
       atomStorage.readParam(file);
       bondStorage.readParam(file);
       #ifdef INTER_ANGLE
-      angleStorage.readParam(file);
+      if (hasAngle) {
+         angleStorage.readParam(file);
+      }
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralStorage.readParam(file);
+      if (hasDihedral) {
+         dihedralStorage.readParam(file);
+      }
       #endif
       buffer.readParam(file);
       configIo.readParam(file);
       file.close();
+   }
 
+   void testReadConfig()
+   {
+      printMethod(TEST_FUNC);
+      readParam();
+      std::ifstream file;
       openInputFile("in/config", file);
       configIo.readConfig(file, MaskBonded);
-
    }
 
    void testReadWriteConfig()
    {
       printMethod(TEST_FUNC);
 
-      DdMdConfigIo configIo;
-      Boundary boundary;
-      Domain   domain;
-      Buffer   buffer;
-      AtomStorage  atomStorage;
-      BondStorage  bondStorage;
-      #ifdef INTER_ANGLE
-      AngleStorage  angleStorage;
-      #endif
-      #ifdef INTER_DIHEDRAL
-      DihedralStorage  dihedralStorage;
-      #endif
-
-      // Set connections between objects
-      domain.setBoundary(boundary);
-      configIo.associate(domain, boundary, atomStorage, bondStorage, 
-                         #ifdef INTER_ANGLE
-                         angleStorage,
-                         #endif
-                         #ifdef INTER_DIHEDRAL
-                         dihedralStorage,
-                         #endif
-                         buffer);
-
-      #ifdef UTIL_MPI
-      // Set communicators
-      domain.setGridCommunicator(communicator());
-      domain.setIoCommunicator(communicator());
-      atomStorage.setIoCommunicator(communicator());
-      bondStorage.setIoCommunicator(communicator());
-      #ifdef INTER_ANGLE
-      angleStorage.setIoCommunicator(communicator());
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralStorage.setIoCommunicator(communicator());
-      #endif
-      buffer.setIoCommunicator(communicator());
-      configIo.setIoCommunicator(communicator());
-      #else
-      domain.setRank(0);
-      #endif
-
-      // Open parameter file
+      readParam();
       std::ifstream file;
-      openInputFile("in/ConfigIo", file);
-
-      domain.readParam(file);
-      atomStorage.readParam(file);
-      bondStorage.readParam(file);
-      #ifdef INTER_ANGLE
-      angleStorage.readParam(file);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralStorage.readParam(file);
-      #endif
-      buffer.readParam(file);
-      configIo.readParam(file);
-      file.close();
-
       openInputFile("in/config", file);
       configIo.readConfig(file, MaskBonded);
 
