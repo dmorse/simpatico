@@ -195,44 +195,6 @@ inline void SimulationTest::testExchange()
 
    // Exchange atoms among processors
    simulation_.exchanger().exchange();
-
-   #if 0
-   // Check that all atoms are accounted for after exchange.
-   int nAtomAll;
-   int myRank = domain.gridRank();
-   atomStorage.computeNAtomTotal(domain.communicator());
-   if (myRank == 0) {
-      nAtomAll = atomStorage.nAtomTotal();
-      //std::cout << "Total atom count = " << nAtomAll << std::endl;
-      TEST_ASSERT(nAtomAll == 100);
-   }
-
-   // Check that all atoms are within the processor domain.
-   AtomIterator atomIter;
-   int j = 0;
-   atomStorage.begin(atomIter);
-   for ( ; atomIter.notEnd(); ++atomIter) {
-      j++;
-      TEST_ASSERT(domain.isInDomain( atomIter->position()));
-   }
-   TEST_ASSERT(j == atomStorage.nAtom());
-   int nAtom = atomStorage.nAtom();
-
-   // Check that all ghosts are outside the processor domain.
-   GhostIterator ghostIter;
-   atomStorage.begin(ghostIter);
-   for ( ; ghostIter.notEnd(); ++ghostIter) {
-      TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
-   }
-   #endif
-
-   #if 0
-   int nGhostAll = simulation_.nGhostTotal();
-   if (myRank == 0) {
-      std::cout << "Total ghost count = " << nGhostAll << std::endl;
-   }
-   #endif
-
 }
 
 inline void SimulationTest::testUpdate()
@@ -340,6 +302,10 @@ inline void SimulationTest::testIntegrate1()
 {
    printMethod(TEST_FUNC); 
 
+   Domain& domain = simulation_.domain();
+   Boundary& boundary = simulation_.boundary();
+   AtomStorage& atomStorage = simulation_.atomStorage();
+
    CommandLine opts;
    opts.append("-e");
    simulation_.setOptions(opts.argc(), opts.argv());
@@ -347,10 +313,10 @@ inline void SimulationTest::testIntegrate1()
    openFile("in/param2"); 
    simulation_.readParam(file()); 
 
-   Domain& domain = simulation_.domain();
-   Boundary& boundary = simulation_.boundary();
-   AtomStorage& atomStorage = simulation_.atomStorage();
    int myRank = domain.gridRank();
+   if (myRank == 0) {
+      std::cout << std::endl;
+   }
 
    // Read configuration file
    std::string filename("config2");
@@ -360,13 +326,6 @@ inline void SimulationTest::testIntegrate1()
    double temperature = 1.0;
    simulation_.setBoltzmannVelocities(temperature);
 
-   if (myRank == 0) {
-      std::cout << std::endl;
-   }
-
-   // Setup the integrator
-   //simulation_.integrator().setup();
-   
    TEST_ASSERT(simulation_.isValid());
 
    double kinetic;
@@ -383,7 +342,7 @@ inline void SimulationTest::testIntegrate1()
                    << Dbl(kinetic + potential) << std::endl;
       }
 
-      simulation_.integrator().run(200);
+      simulation_.integrator().run(20);
       TEST_ASSERT(simulation_.isValid());
    }
    if (myRank == 0) {

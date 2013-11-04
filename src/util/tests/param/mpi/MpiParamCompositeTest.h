@@ -10,7 +10,7 @@
 #include <util/param/Manager.h>
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
-#include "FileMaster.cpp"
+#include <util/misc/FileMaster.cpp>
 
 #ifndef TEST_MPI
 #define TEST_MPI
@@ -23,7 +23,6 @@
 #include <fstream>
 
 using namespace Util;
-using namespace McMd;
 
 #include "../ParamTestClasses.h"
 

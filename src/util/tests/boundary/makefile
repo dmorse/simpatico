@@ -5,17 +5,15 @@ include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/util/tests/boundary/sources.mk
 
-all: $(util_tests_boundary_OBJS) Test
+TEST=util/tests/boundary/Test
+
+all: $(util_tests_boundary_OBJS) $(OBJ_DIR)/$(TEST)
 
 clean:
-	rm -f $(util_tests_boundary_OBJS) Test $(util_tests_boundary_OBJS:.o=.d)
+	rm -f $(util_tests_boundary_OBJS) $(OBJ_DIR)/$(TEST) $(util_tests_boundary_OBJS:.o=.d)
 
 clean-deps:
 	rm -f $(util_tests_boundary_OBJS:.o=.d)
-
-Test: Test.o $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(util_LIB)
 
 -include $(util_tests_boundary_OBJS:.o=.d)
 
