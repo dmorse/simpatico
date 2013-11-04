@@ -20,7 +20,8 @@ run: $(mcMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
 	@cat count
 
 clean:
-	rm -f $(mcMd_tests_OBJS) $(OBJ_DIR)/$(TEST) $(mcMd_tests_OBJS:.o=.d)
+	rm -f $(mcMd_tests_OBJS) $(mcMd_tests_OBJS:.o=.d)
+	rm -f $(OBJ_DIR)/$(TEST) 
 	rm -f *.cfg log count
 	cd chemistry; make clean
 	cd mcSimulation; make clean
@@ -28,7 +29,8 @@ clean:
 	cd neighbor; make clean
 	cd species; make clean
 
-$(OBJ_DIR)/$(TEST): $(OBJ_DIR)/$(TEST).o $(LIBS)
-
 -include $(mcMd_tests_OBJS:.o=.d)
+-include $(mcMd_OBJS:.o=.d)
+-include $(inter_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 
