@@ -6,7 +6,7 @@
 #include <mcMd/mcSimulation/McSystem.h>
 
 // Custom factory classes
-#include "diagnostics/SliplinkMcDiagnosticFactory.h"
+#include "analyzers/SliplinkMcAnalyzerFactory.h"
 #include "mcMoves/SliplinkMcMoveFactory.h"
 
 namespace McMd 
@@ -17,21 +17,21 @@ namespace McMd
    SliplinkMcModule::SliplinkMcModule(McSimulation& sim)
     : McModule(sim)
    {
-      diagnosticFactoryPtr_ 
-          = new SliplinkMcDiagnosticFactory(simulation(), system());
+      analyzerFactoryPtr_ 
+          = new SliplinkMcAnalyzerFactory(simulation(), system());
       mcMoveFactoryPtr_     
           = new SliplinkMcMoveFactory(simulation(), system());
    }
 
    SliplinkMcModule::~SliplinkMcModule()
    {
-      delete diagnosticFactoryPtr_;
+      delete analyzerFactoryPtr_;
       delete mcMoveFactoryPtr_;
    }
 
    void SliplinkMcModule::addFactories()
    {
-      simulation().diagnosticFactory().addSubfactory(*diagnosticFactoryPtr_);
+      simulation().analyzerFactory().addSubfactory(*analyzerFactoryPtr_);
       simulation().mcMoveFactory().addSubfactory(*mcMoveFactoryPtr_);
    }
 

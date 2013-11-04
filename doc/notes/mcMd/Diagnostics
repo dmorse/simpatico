@@ -1,7 +1,7 @@
 --------------------------------------------------
-IntraMSDDiagnostic:
+IntraMSDAnalyzer:
 
-   AtomMSD : SystemDiagnostic<System>
+   AtomMSD : SystemAnalyzer<System>
 
    private: 
 
@@ -25,7 +25,7 @@ IntraMSDDiagnostic:
        ComMSD
        AtomMSD
 --------------------------------------------------
-IntraAverageDiagnostic
+IntraAverageAnalyzer
 
    DArray<Average>  accumulators_ 
    int              nMolecule_;
@@ -34,7 +34,7 @@ IntraAverageDiagnostic
    BlockRadiusGyration 
 
 --------------------------------------------------
-ThermoAverageDiagnostic
+ThermoAverageAnalyzer
 
    Average          accumulator_
 
@@ -42,7 +42,7 @@ ThermoAverageDiagnostic
    Energies
    BoundaryAverage
 --------------------------------------------------
-ThermoOutputDiagnostic
+ThermoOutputAnalyzer
 
    McBondEnergyAverage
    McEnergyAverage
@@ -56,7 +56,7 @@ ThermoOutputDiagnostic
    Combine all into one for Mc and one for Md?
 --------------------------------------------------
 template<class T>
-IntraAutocCorrDiagnostic<T>
+IntraAutocCorrAnalyzer<T>
 
    IntraPairAutoCorr
    IntraBondStressAutoCorr
@@ -65,14 +65,14 @@ IntraAutocCorrDiagnostic<T>
 
 --------------------------------------------------
 template<class T>
-ThermoAutocCorrDiagnostic<T>
+ThermoAutocCorrAnalyzer<T>
 
 --------------------------------------------------
-DistributionDiagnostic
+DistributionAnalyzer
 
    BondLengthDist
 
 --------------------------------------------------
-RadialDistributionDiagnostic
+RadialDistributionAnalyzer
 
    RDF

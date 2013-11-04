@@ -62,7 +62,7 @@ Simulation{
   Random{
     seed              8012457890
   }
-  DiagnosticManager{
+  AnalyzerManager{
      baseInterval     1000
 
      OutputEnergy{
@@ -102,7 +102,7 @@ Simulation{
   BoundaryEnsemble{ ... }
   NveIntegrator{ ... }
   Random{ ... }
-  DiagnosticManager{ ... }
+  AnalyzerManager{ ... }
 }
 \endcode
 The main Simulation{} block for a ddSim file is associated with a DdMd::Simulation object. There is no analog in a ddSim parameter file of the MdSystem or McSystem subblocks that appear in the mdSim and mcSim param files. 
@@ -111,7 +111,7 @@ Many parameters and parameter blocks in this format are similar to those in mcSi
 
 The PairPotential and BondPotential blocks are associated with instances of DdMd::PairPotential and DdMd::BondPotential. These blocks take the same parameters as the MdPairPotential and BondPotential blocks of an mdSim simulation. The same pair and bond style strings can be used in ddSim, mdSim and mcSim simulation. Ifthe ddSim executable has been compiled with angle, dihedral, and/or external potentials enabled (by uncommenting defitions of INTER_ANGLE, INTER_DIHEDRAL, and/or INTER_EXTERNAL in inter/defines.mk) then the PairPotential and BondPotential blocks must be followed by AnglePotential, DihedralPotential, and/or ExternalPotential blocks, as appropriate.
 
-The DiagnosticManager block is associated with an instance of DdMd::DiagnosticManager, and has a format similar to that of the corresponding block in a mdSim or mcSim parameter file. This block must contain a value for the baseInterval, followed by zero or more polymorphic blocks, each of which contains the parameter block for a subclass of DdMd::Diagnostic. The number of diagnostics that are provided for use on-the-fly during ddSim simulations is thus far much smaller than the number avaiable for mdSim and mcSim simulations. This is partly a result of lack of time, and partly because some diagnostics that are easy to implement in single-processor simulations are more difficult to implement efficiently in a parallel simulation.
+The AnalyzerManager block is associated with an instance of DdMd::AnalyzerManager, and has a format similar to that of the corresponding block in a mdSim or mcSim parameter file. This block must contain a value for the baseInterval, followed by zero or more polymorphic blocks, each of which contains the parameter block for a subclass of DdMd::Analyzer. The number of analyzers that are provided for use on-the-fly during ddSim simulations is thus far much smaller than the number avaiable for mdSim and mcSim simulations. This is partly a result of lack of time, and partly because some analyzers that are easy to implement in single-processor simulations are more difficult to implement efficiently in a parallel simulation.
 
 \section user_param_reverseUpdateFlag_section reverseUpdateFlag
 The reverseUpdateFlag is a bool variable whose value determines which of two communication patterns should be used in algorithm used to communicate particle data between neighboring processors. It should usually be set to zero. A value of 1 enables an algorithm in which the forces for each nonbonded or bonded group of particles in which particles are owned by different processors is calculated on only processor. This requires the resulting forces to then be communicate to the other processors via a separate "reverseUpdate" communication step. A value of 0 (the default) enables and algorithm in which this calculation is replicated on every processor that owns an atom within a group, which avoids the need to communicate forces arising from such group in a separate communication step. The reserveUpdate algorithm will be necessary for some integrators, but is generally slightly slower.

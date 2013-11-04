@@ -1,5 +1,5 @@
 
-include $(SRC_DIR)/modules/hoomd/diagnostics/sources.mk
+include $(SRC_DIR)/modules/hoomd/analyzers/sources.mk
 include $(SRC_DIR)/modules/hoomd/mcMoves/sources.mk
 include $(SRC_DIR)/modules/hoomd/potentials/pair/sources.mk
 include $(SRC_DIR)/modules/hoomd/potentials/bond/sources.mk
@@ -11,7 +11,7 @@ include $(SRC_DIR)/modules/hoomd/perturbation/sources.mk
 # CPP files
 
 modules_hoomd_= \
-    $(modules_hoomd_diagnostics_) \
+    $(modules_hoomd_analyzers_) \
     $(modules_hoomd_mcMoves_) \
     $(modules_hoomd_potentials_pair_) \
     $(modules_hoomd_potentials_bond_) \
@@ -29,7 +29,7 @@ modules_hoomd_OBJS=\
 # Cuda C files
 
 modules_hoomd_NVCC_=\
-    $(modules_hoomd_diagnostics_NVCC_)
+    $(modules_hoomd_analyzers_NVCC_)
 
 modules_hoomd_NVCC_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_hoomd_NVCC_))

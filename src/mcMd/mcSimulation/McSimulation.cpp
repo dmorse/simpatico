@@ -11,10 +11,10 @@
 #include <util/global.h>
 
 #include "McSimulation.h"
-#include "McDiagnosticManager.h"
+#include "McAnalyzerManager.h"
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/diagnostics/Diagnostic.h>
+#include <mcMd/analyzers/Analyzer.h>
 #include <mcMd/mcMoves/McMoveManager.h>
 #include <mcMd/species/Species.h>
 #ifndef INTER_NOPAIR
@@ -61,7 +61,7 @@ namespace McMd
     : Simulation(communicator),
       system_(),
       mcMoveManagerPtr_(0),
-      mcDiagnosticManagerPtr_(0),
+      mcAnalyzerManagerPtr_(0),
       paramFilePtr_(0),
       saveFileName_(),
       saveInterval_(0),
@@ -75,12 +75,12 @@ namespace McMd
       system().setSimulation(*this);
       system().setFileMaster(fileMaster());
 
-      // Create McMove and Diagnostic managers
+      // Create McMove and Analyzer managers
       mcMoveManagerPtr_ = new McMoveManager(*this);
-      mcDiagnosticManagerPtr_ = new McDiagnosticManager(*this);
+      mcAnalyzerManagerPtr_ = new McAnalyzerManager(*this);
 
-      // Pass Manager<Diagnostic>* to Simulation base class.
-      setDiagnosticManager(mcDiagnosticManagerPtr_);
+      // Pass Manager<Analyzer>* to Simulation base class.
+      setAnalyzerManager(mcAnalyzerManagerPtr_);
    }
    #endif
 
@@ -91,7 +91,7 @@ namespace McMd
     : Simulation(),
       system_(),
       mcMoveManagerPtr_(0),
-      mcDiagnosticManagerPtr_(0),
+      mcAnalyzerManagerPtr_(0),
       paramFilePtr_(0),
       saveFileName_(),
       saveInterval_(0),
@@ -105,12 +105,12 @@ namespace McMd
       system().setSimulation(*this);
       system().setFileMaster(fileMaster());
 
-      // Create McMove and Diagnostic managers
+      // Create McMove and Analyzer managers
       mcMoveManagerPtr_ = new McMoveManager(*this);
-      mcDiagnosticManagerPtr_ = new McDiagnosticManager(*this);
+      mcAnalyzerManagerPtr_ = new McAnalyzerManager(*this);
 
-      // Pass Manager<Diagnostic>* to Simulation base class.
-      setDiagnosticManager(mcDiagnosticManagerPtr_);
+      // Pass Manager<Analyzer>* to Simulation base class.
+      setAnalyzerManager(mcAnalyzerManagerPtr_);
    }
 
    /*
@@ -119,7 +119,7 @@ namespace McMd
    McSimulation::~McSimulation()
    {
       delete mcMoveManagerPtr_;
-      delete mcDiagnosticManagerPtr_;
+      delete mcAnalyzerManagerPtr_;
    }
 
    /*
@@ -207,7 +207,7 @@ namespace McMd
       // Record identity of parameter file
       paramFilePtr_ = &in;
 
-      // Read all species, diagnostics, random number seed
+      // Read all species, analyzers, random number seed
       Simulation::readParameters(in);
 
       // Read the McSystem parameters: potential parameters, temperature etc.
@@ -217,8 +217,8 @@ namespace McMd
       assert(mcMoveManagerPtr_);
       readParamComposite(in, *mcMoveManagerPtr_);
 
-      // Read Diagnostics
-      readParamComposite(in, diagnosticManager());
+      // Read Analyzers
+      readParamComposite(in, analyzerManager());
 
       // Parameters for writing restart files
       read<int>(in, "saveInterval", saveInterval_);
@@ -268,7 +268,7 @@ namespace McMd
       Simulation::loadParameters(ar);
       loadParamComposite(ar, system());
       loadParamComposite(ar, *mcMoveManagerPtr_);
-      loadParamComposite(ar, diagnosticManager());
+      loadParamComposite(ar, analyzerManager());
       loadParameter<int>(ar, "saveInterval", saveInterval_);
       if (saveInterval_ > 0) {
          loadParameter<std::string>(ar, "saveFileName", saveFileName_);
@@ -288,7 +288,7 @@ namespace McMd
       Simulation::save(ar);
       system().saveParameters(ar);
       mcMoveManagerPtr_->save(ar);
-      diagnosticManager().save(ar);
+      analyzerManager().save(ar);
       ar << saveInterval_;
       if (saveInterval_ > 0) {
          ar << saveFileName_;
@@ -625,7 +625,7 @@ namespace McMd
                      << iStep_ << std::endl;
       } else {
          iStep_ = 0;
-         diagnosticManager().setup();
+         analyzerManager().setup();
          mcMoveManagerPtr_->setup();
       }
       int beginStep = iStep_;
@@ -637,11 +637,11 @@ namespace McMd
       timer.start();
       for ( ; iStep_ < endStep; ++iStep_) {
 
-         // Diagnostics and restart outut
-         if (Diagnostic::baseInterval > 0) {
-            if (iStep_ % Diagnostic::baseInterval == 0) {
+         // Analyzers and restart outut
+         if (Analyzer::baseInterval > 0) {
+            if (iStep_ % Analyzer::baseInterval == 0) {
                save(saveFileName_);
-               diagnosticManager().sample(iStep_);
+               analyzerManager().sample(iStep_);
             }
          }
 
@@ -670,17 +670,17 @@ namespace McMd
       timer.stop();
       double time = timer.time();
 
-      // Final diagnostics / save
+      // Final analyzers / save
       assert(iStep_ == endStep);
-      if (Diagnostic::baseInterval > 0) {
-         if (iStep_ % Diagnostic::baseInterval == 0) {
+      if (Analyzer::baseInterval > 0) {
+         if (iStep_ % Analyzer::baseInterval == 0) {
             save(saveFileName_);
-            diagnosticManager().sample(iStep_);
+            analyzerManager().sample(iStep_);
          }
       }
 
-      // Output results of all diagnostics to output files
-      diagnosticManager().output();
+      // Output results of all analyzers to output files
+      analyzerManager().output();
 
       // Output results of move statistics to files
       mcMoveManagerPtr_->output();
@@ -783,11 +783,11 @@ namespace McMd
          isValid();
          #endif
 
-         // Initialize diagnostics (taking in molecular information).
-         if (iStep_ == min) diagnosticManager().setup();
+         // Initialize analyzers (taking in molecular information).
+         if (iStep_ == min) analyzerManager().setup();
 
          // Sample property values
-         diagnosticManager().sample(iStep_);
+         analyzerManager().sample(iStep_);
 
          // Clear out the System for the next readConfig.
          system().removeAllMolecules();
@@ -796,8 +796,8 @@ namespace McMd
       timer.stop();
       Log::file() << "end main loop" << std::endl;
 
-      // Output results of all diagnostics to output files
-      diagnosticManager().output();
+      // Output results of all analyzers to output files
+      analyzerManager().output();
 
       // Output time
       Log::file() << std::endl;

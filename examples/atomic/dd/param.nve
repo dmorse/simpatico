@@ -43,7 +43,7 @@ Simulation{
   Random{
     seed              8082457890
   }
-  DiagnosticManager{
+  AnalyzerManager{
      baseInterval      100
 
      OutputEnergy{

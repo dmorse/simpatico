@@ -58,7 +58,7 @@ MdSimulation{
       tauT                 2.0
     }
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                         100
 
     LogProgress{

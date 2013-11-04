@@ -1,0 +1,3 @@
+subDirectories =
+pathFromSrc = modules/sliplink/analyzers
+pathToSrc = ../../..

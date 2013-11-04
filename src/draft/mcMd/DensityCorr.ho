@@ -9,7 +9,7 @@
 */
 
 #include "../GLOBAL.h"
-#include "../base/Diagnostic.h"
+#include "../base/Analyzer.h"
 #include "../analysis/BlockAverageVec.h"
 #include "../base/System.h"
 
@@ -39,9 +39,9 @@
 *
 * The dimensions of these arrays are nCorr.
 *
-* \ingroup Diagnostic_Module
+* \ingroup Analyzer_Module
 */
-template <class ChainType> class DensityCorr : public Diagnostic
+template <class ChainType> class DensityCorr : public Analyzer
 {
 
 public:
@@ -129,7 +129,7 @@ private:
 * Constructor.
 */
 template <class ChainType> DensityCorr<ChainType> ::
-   DensityCorr(System *system, ChainType *species_in) : Diagnostic()
+   DensityCorr(System *system, ChainType *species_in) : Analyzer()
 {  
    sys = system;
    species = species_in;
@@ -149,7 +149,7 @@ template <class ChainType> DensityCorr<ChainType> ::
 template <class ChainType> 
 DensityCorr<ChainType>::~DensityCorr()
 {
-   // Analysis & diagnostic arrays
+   // Analysis & analyzer arrays
    if (corr)      delete [] corr;
    if (monoType1) delete [] monoType1;
    if (monoType2) delete [] monoType2;
@@ -188,7 +188,7 @@ void DensityCorr<ChainType>::read(FILE *file)
    // input and make wave
    readWave(file);
    
-   // Read diagnostic specific parameter 
+   // Read analyzer specific parameter 
    readInt(file, "nCorr",  &nCorr);
    if (nCorr < 1) {
       PMC_THROW("Invalid number of correlation functions (<1).");
@@ -235,7 +235,7 @@ void DensityCorr<ChainType>::read(FILE *file)
    
    if (outFile == NULL) {
       printf("%s\n", fileName);
-      PMC_THROW("Error opening diagnostic file.");
+      PMC_THROW("Error opening analyzer file.");
    }
 } 
 

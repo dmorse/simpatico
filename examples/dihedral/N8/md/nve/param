@@ -64,7 +64,7 @@ MdSimulation{
        dt               5.000000000000e-04
     }
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseInterval                       100
 
     LogProgress{

@@ -16,7 +16,7 @@ Subdirectories:
 chemistry/    - atoms and covalent groups (bonds, etc.)
 communicate/  - interprocessor communication
 configIos/    - configuration file reader/writers
-diagnostics/  - classes for data analysis and output
+analyzers/  - classes for data analysis and output
 integrators/  - molecular dynamics integrator algorithms
 neighbor/     - cell list and pair list data structures
 potentials/   - potential energy classes

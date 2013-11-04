@@ -11,8 +11,8 @@ load virtual functions?
 
 i) Polymorphic classes, which are accessed through a base class pointer, must all 
 be Serializable, and must use the virtual save and load methods. This includes all 
-of the Species, Diagnostic, McMove, MdIntegrator and Potential classes in McMd, 
-and all Diagnostic, Integrator, and Potential classes in DdMd.
+of the Species, Analyzer, McMove, MdIntegrator and Potential classes in McMd, 
+and all Analyzer, Integrator, and Potential classes in DdMd.
 
 ii) Classes that own polymorphic classes will generally also need to be Serializable,
 and implement save and load methods, since they require substantially different 

@@ -11,11 +11,11 @@
 
 #include "../GLOBAL.h"
 #include "../base/System.h"
-#include "../base/Diagnostic.h"              // base class
+#include "../base/Analyzer.h"              // base class
 #include "../analysis/DcmplxCorrelation.h"
 
-// Diagnostic observer base class
-#include <util/util/DiagnosticObserver.h>
+// Analyzer observer base class
+#include <util/util/AnalyzerObserver.h>
 
 // Use observer pattern if replicaX move is invoked
 #include "../mcmove/RepXMove.h"
@@ -38,8 +38,8 @@
 * Monomer types are defined by two integer arrays: monoType1 and monoType2.
 * {0, 1, ...} are valid values.
 */
-template <class ChainType> class VanHove : public Diagnostic,
-                                           public DiagnosticObserver
+template <class ChainType> class VanHove : public Analyzer,
+                                           public AnalyzerObserver
 {
 
 public:
@@ -108,7 +108,7 @@ public:
 
 
    /**
-   * Override the update method of DiagnosticObserver class.
+   * Override the update method of AnalyzerObserver class.
    *
    * \param partnerId  neighboring replica ID to which the statistics is
    *                   exchanged.
@@ -168,7 +168,7 @@ private:
 * Default constructor.
 */
 template <class ChainType> VanHove<ChainType> ::
-   VanHove(System *system, ChainType *species_in) : Diagnostic()
+   VanHove(System *system, ChainType *species_in) : Analyzer()
 {  
    sys = system;
    species = species_in;
@@ -192,7 +192,7 @@ template <class ChainType> VanHove<ChainType> ::
 */
 template <class ChainType> VanHove<ChainType> ::
    VanHove(System *system, ChainType *species_in, RepXMove *repXMoveIn)
-   : Diagnostic()
+   : Analyzer()
 {  
    sys = system;
    species = species_in;
@@ -220,7 +220,7 @@ template <class ChainType> VanHove<ChainType> ::
 template <class ChainType> 
 VanHove<ChainType>::~VanHove()
 {
-   // Analysis & diagnostic arrays
+   // Analysis & analyzer arrays
    if (corr)      delete [] corr;
    if (monoType1) delete [] monoType1;
    if (monoType2) delete [] monoType2;
@@ -249,7 +249,7 @@ void VanHove<ChainType>::read(FILE *file)
    // Generate waves
    readWave(file);
    
-   // Read diagnostic specific parameter 
+   // Read analyzer specific parameter 
    readInt(file, "nCorr",  &nCorr);
    if (nCorr < 1) {
       PMC_THROW("Invalid number of correlation functions (<1).");
@@ -306,7 +306,7 @@ void VanHove<ChainType>::read(FILE *file)
    
    if (outFile == NULL) {
       printf("%s\n", fileName);
-      PMC_THROW("Error opening diagnostic file.");
+      PMC_THROW("Error opening analyzer file.");
    }
 
    // Allocate buffer array

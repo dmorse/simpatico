@@ -57,7 +57,7 @@ namespace DdMd
       // Setup required before main loop (ghosts, forces, etc)
       // Atomic coordinates are Cartesian on exit from setup.
       setup();
-      simulation().diagnosticManager().setup();
+      simulation().analyzerManager().setup();
 
       // Main MD loop
       timer().start();
@@ -72,8 +72,8 @@ namespace DdMd
             UTIL_THROW("Error: Atomic coordinates are not Cartesian");
          }
 
-         // Sample diagnostics, if scheduled.
-         simulation().diagnosticManager().sample(iStep_);
+         // Sample analyzers, if scheduled.
+         simulation().analyzerManager().sample(iStep_);
 
          // Write restart file, if scheduled.
          if (saveInterval() > 0) {
@@ -83,7 +83,7 @@ namespace DdMd
                }
             }
          }
-         timer().stamp(DIAGNOSTIC);
+         timer().stamp(ANALYZER);
  
          // First step of integration: Update positions, half velocity 
          integrateStep1();
@@ -156,8 +156,8 @@ namespace DdMd
       exchanger().timer().stop();
       timer().stop();
 
-      // Final diagnostics and restart file, if scheduled.
-      simulation().diagnosticManager().sample(iStep_);
+      // Final analyzers and restart file, if scheduled.
+      simulation().analyzerManager().sample(iStep_);
       if (saveInterval() > 0) {
          if (iStep_ % saveInterval() == 0) {
             simulation().save(saveFileName());

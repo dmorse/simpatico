@@ -11,7 +11,7 @@
 #include "Simulation.h"
 
 // namespace McMd
-#include <mcMd/diagnostics/DiagnosticManager.h>
+#include <mcMd/analyzers/AnalyzerManager.h>
 #include <mcMd/species/SpeciesManager.h>
 #include <mcMd/species/Species.h>
 #include <mcMd/chemistry/SpeciesGroup.tpp>
@@ -38,7 +38,7 @@ namespace McMd
    Simulation::Simulation(MPI::Intracomm& communicator)
     : nSystem_(1),
       speciesManagerPtr_(0),
-      diagnosticManagerPtr_(0),
+      analyzerManagerPtr_(0),
       communicatorPtr_(&communicator),
       nAtomType_(-1),
       nBondType_(-1),
@@ -70,7 +70,7 @@ namespace McMd
       setClassName("Simulation");
       Util::initStatic();
       Atom::initStatic();
-      Diagnostic::initStatic();
+      Analyzer::initStatic();
 
       if (!MPI::Is_initialized()) {
          UTIL_THROW("MPI not initialized on entry");
@@ -95,7 +95,7 @@ namespace McMd
    Simulation::Simulation()
     : nSystem_(1),
       speciesManagerPtr_(0),
-      diagnosticManagerPtr_(0),
+      analyzerManagerPtr_(0),
       #ifdef UTIL_MPI
       communicatorPtr_(0),
       #endif
@@ -129,7 +129,7 @@ namespace McMd
       setClassName("Simulation");
       Util::initStatic();
       Atom::initStatic();
-      Diagnostic::initStatic();
+      Analyzer::initStatic();
       speciesManagerPtr_ = new SpeciesManager;
    }
 
@@ -1089,12 +1089,12 @@ namespace McMd
    }
 
    /*
-   * Return the Diagnostic factory by reference.
+   * Return the Analyzer factory by reference.
    */
-   Factory<Diagnostic>& Simulation::diagnosticFactory()
+   Factory<Analyzer>& Simulation::analyzerFactory()
    {
-      assert(diagnosticManagerPtr_);
-      return diagnosticManagerPtr_->factory();
+      assert(analyzerManagerPtr_);
+      return analyzerManagerPtr_->factory();
    }
 
 }

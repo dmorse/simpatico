@@ -55,7 +55,7 @@ used to initialize the simulation.
 All of the output files except restart files are written 
 to a subdirectory out/ of the directory containing the 
 example.  Most of the files that are created in the out/ 
-directory are created by diagnostics that are declared in 
+directory are created by analyzers that are declared in 
 the parameter file. The parameter file required for this
 directory structure would define inputPrefix = in/ and
 outputPrefix = out/.

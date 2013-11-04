@@ -24,7 +24,7 @@ for a variable of type Type. This method must have a pure virtual
 index(Type) method that gives the integer index associated with a 
 value.
 
-5) How about diagnostics? Perhaps a base class template 
-NonBoltzmannDiagnostic<Type> that constructs a 1D array of diagnostic 
+5) How about analyzers? Perhaps a base class template 
+NonBoltzmannAnalyzer<Type> that constructs a 1D array of analyzer 
 objects and that is associated with a NonBoltzmann<Type>. 
 

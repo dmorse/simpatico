@@ -1,0 +1,81 @@
+#ifndef ANALYZER_FACTORY
+#define ANALYZER_FACTORY
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "AnalyzerFactory.h" // Class header
+
+//#include <ddMd/simulation/Simulation.h>
+
+// Analyzers 
+#include "WriteConfig.h"
+#include "OutputEnergy.h"
+#include "OutputPressure.h"
+#include "OutputBoxdim.h"
+#include "OutputTemperature.h"
+#include "OutputPairEnergies.h"
+#include "StructureFactor.h"
+#include "StructureFactorGrid.h"
+#include "OrderParamNucleation.h"
+
+namespace DdMd
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor.
+   */
+   AnalyzerFactory::AnalyzerFactory(Simulation& simulation)
+    : simulationPtr_(&simulation)
+   {}
+
+   /* 
+   * Return a pointer to an instance of Analyzer subclass className.
+   */
+   Analyzer* AnalyzerFactory::factory(const std::string &className) const
+   {
+      Analyzer* ptr = 0;
+
+      // Try subfactories first (if any)
+      //ptr = trySubfactories(className);
+      //if (ptr) return ptr;
+
+      // Simulation Analyzers
+      if (className == "WriteConfig") {
+         ptr = new WriteConfig(simulation());
+      } else 
+      if (className == "OutputEnergy") {
+         ptr = new OutputEnergy(simulation());
+      } else 
+      if (className == "OutputPressure") {
+         ptr = new OutputPressure(simulation());
+      } else
+      if (className == "OutputBoxdim") {
+         ptr = new OutputBoxdim(simulation());
+      } else
+      if (className == "OutputTemperature") {
+         ptr = new OutputTemperature(simulation());
+      } else
+      if (className == "OutputPairEnergies") {
+         ptr = new OutputPairEnergies(simulation());
+      } else
+      if (className == "StructureFactor") {
+         ptr = new StructureFactor(simulation());
+      } else
+      if (className == "StructureFactorGrid") {
+         ptr = new StructureFactorGrid(simulation());
+      } else
+      if (className == "OrderParamNucleation") {
+         ptr = new OrderParamNucleation(simulation());
+      }
+      return ptr;
+   }
+
+}
+#endif

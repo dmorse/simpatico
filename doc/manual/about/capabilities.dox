@@ -61,7 +61,7 @@ Simpatico provides an optional module that allows the use of the <a href=http://
 
 \section features_analysis_sec Data Analysis
 
-Simpatico is distributed with a collection of classes for statistical analysis, referred to as "diagnostics".  The classes available for use with the single-processor mcSim and mdSim programs include classes that evaluate:
+Simpatico is distributed with a collection of classes for statistical analysis, referred to as "analyzers".  The classes available for use with the single-processor mcSim and mdSim programs include classes that evaluate:
 <ul>
   <li> Thermodynamic properties (energy and stress components) </li>
   <li> Full and partial radial distribution functions (in coordinate space). </li>
@@ -75,7 +75,7 @@ Simpatico is distributed with a collection of classes for statistical analysis, 
 </ul>
 All mcSim and mdSim data analysis classes can be used either on-the-fly, during a simulation, or for post-processing of a trajectory file or a sequence of configuration dump files. Postprocessing is done by the the mcSim and mdSim programs, by invoking a command that replaces the main simulation loop by a loop that reads a sequence of configurations from file. 
 
-A smaller set of diagnostics is distributed for use on-the-fly with ddSim. Classes are available to evaluate thermodynamic properties (energy contributions and stress components) and structure factors. MD trajectories from ddSim simulations can also be post-processed by using mcSim or msSim as analysis tools. 
+A smaller set of analyzers is distributed for use on-the-fly with ddSim. Classes are available to evaluate thermodynamic properties (energy contributions and stress components) and structure factors. MD trajectories from ddSim simulations can also be post-processed by using mcSim or msSim as analysis tools. 
 
 <BR>
 \ref about_goals_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 

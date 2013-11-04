@@ -36,9 +36,9 @@ veryclean:
 	make clean
 	-rm -f lib*.a
 	-rm -f configIos/ConfigIoFactory.cpp
-	-rm -f diagnostics/mcSystem/McDiagnosticFactory.cpp
-	-rm -f diagnostics/mdSystem/MdDiagnosticFactory.cpp
-	-rm -f diagnostics/system/SystemDiagnosticFactory.cpp
+	-rm -f analyzers/mcSystem/McAnalyzerFactory.cpp
+	-rm -f analyzers/mdSystem/MdAnalyzerFactory.cpp
+	-rm -f analyzers/system/SystemAnalyzerFactory.cpp
 	-rm -f mcMoves/McMoveFactory.cpp
 	-rm -f mdIntegrators/MdIntegratorFactory.cpp
 	-rm -f perturb/mcSystem/McPerturbationFactory.cpp

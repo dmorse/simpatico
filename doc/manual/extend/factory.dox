@@ -21,7 +21,7 @@ In order to allow users to modify the factory implementation files, but to avoid
 
 \section factory_structure_sec factory() Methods
 
-The Factory class associated with a class named "Base" (where "Base" could be McMove, MdIntegrator, Diagnostic, etc.) is normally derived from the class template Util::Factory < Base >. For example, McMd::McMoveFactory is derived from the template instantiation Util::Factory < McMd::McMove >. The Util::Factory template declares a pure virtual method named factory() with the following interface.
+The Factory class associated with a class named "Base" (where "Base" could be McMove, MdIntegrator, Analyzer, etc.) is normally derived from the class template Util::Factory < Base >. For example, McMd::McMoveFactory is derived from the template instantiation Util::Factory < McMd::McMove >. The Util::Factory template declares a pure virtual method named factory() with the following interface.
 \code
    template <class Base>
    Base* Factory<Base>::factory(const std::string className) const = 0;

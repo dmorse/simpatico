@@ -43,7 +43,7 @@ Scripts for manipulating data output files:
 3) Class DataFilePlot to make plots from *.dat files. Subclass of DataFile.
 
 -----------------------------------------------------------------------
-New output file types for diagnostics:
+New output file types for analyzers:
 
    Parameter file:         <basename>.prm
    Average output file:    <basename>.ave

@@ -38,7 +38,7 @@ McSimulation{
     capacity                                 0
 
   }
-  DiagnosticManager{
+  AnalyzerManager{
     baseStepPerSample                     10
     capacity                               0
 
