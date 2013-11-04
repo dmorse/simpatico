@@ -32,10 +32,6 @@ clean:
 	rm -f */*.o */*/*.o 
 	rm -f */*.d */*/*.d
 
-clean-deps:
-	rm -f $(util_tests_OBJS:.o=.d)
-
-$(OBJ_DIR)/$(TEST): $(OBJ_DIR)/$(TEST).o $(LIBS)
-
 -include $(util_tests_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 

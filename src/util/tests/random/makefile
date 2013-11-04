@@ -5,17 +5,18 @@ include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/util/tests/random/sources.mk
 
-all: $(util_tests_random_OBJS) Test
+TEST=util/tests/random/Test
+
+all: $(util_tests_random_OBJS) $(OBJ_DIR)/$(TEST)
 
 clean:
-	rm -f $(util_tests_random_OBJS) Test $(util_tests_random_OBJS:.o=.d)
+	rm -f $(util_tests_random_OBJS) $(util_tests_random_OBJS:.o=.d)
+	rm -f $(OBJ_DIR)/$(TEST) 
+	make clean-outputs
 
-clean-deps:
-	rm -f $(util_tests_random_OBJS:.o=.d)
-
-Test: Test.o $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(util_LIB)
+clean-outputs:
+	rm -f binary
 
 -include $(util_tests_random_OBJS:.o=.d)
+-include $(util_OBJS:.o=.d)
 
