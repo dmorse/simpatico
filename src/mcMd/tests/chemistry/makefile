@@ -13,6 +13,7 @@ all: $(mcMd_tests_chemistry_OBJS) Test
 
 clean:
 	rm -f $(mcMd_tests_chemistry_OBJS) Test $(mcMd_tests_chemistry_OBJS:.o=.d)
+	rm -f ar.txt. binary
 
 clean-deps:
 	rm -f $(mcMd_tests_chemistry_OBJS:.o=.d)

@@ -7,7 +7,7 @@
 #include <util/param/ParamComposite.h>
 #include <util/param/Manager.h>
 #include <util/param/Factory.h>
-#include "FileMaster.cpp"
+#include <util/misc/FileMaster.cpp>
 
 #ifndef TEST_MPI
 #define TEST_MPI

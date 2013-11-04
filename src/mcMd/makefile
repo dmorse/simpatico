@@ -17,8 +17,6 @@ include $(SRC_DIR)/mcMd/sources.mk
 
 MDSIM=$(OBJ_DIR)/mcMd/mdSim
 MCSIM=$(OBJ_DIR)/mcMd/mcSim
-MCMD_LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB)
-
 #-----------------------------------------------------------------------
 # Main targets
 
@@ -55,11 +53,11 @@ veryclean:
 
 # Executable targets
 
-$(MCSIM_EXE): $(MCSIM).o $(MCMD_LIBS)
-	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) $(MCSIM).o $(MCMD_LIBS) $(LIBS)
+$(MCSIM_EXE): $(MCSIM).o $(LIBS)
+	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) $(MCSIM).o $(LIBS)
  
-$(MDSIM_EXE): $(MDSIM).o $(MCMD_LIBS)
-	$(CXX) $(LDFLAGS) -o $(MDSIM_EXE) $(MDSIM).o $(MCMD_LIBS)
+$(MDSIM_EXE): $(MDSIM).o $(LIBS)
+	$(CXX) $(LDFLAGS) -o $(MDSIM_EXE) $(MDSIM).o $(LIBS)
 
 # Short names for executable targets (for convenience)
  

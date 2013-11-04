@@ -13,6 +13,7 @@ all: $(mcMd_tests_mcSimulation_OBJS) Test
 
 clean:
 	rm -f $(mcMd_tests_mcSimulation_OBJS) Test $(mcMd_tests_mcSimulation_OBJS:.o=.d)
+	rm -f out/param
 
 clean-deps:
 	rm -f $(mcMd_tests_mcSimulation_OBJS:.o=.d)
