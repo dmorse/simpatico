@@ -7,8 +7,8 @@
 # all makefile files in this directory tree. 
 #
 # This file should be included in other makefiles after inclusion of
-# the files src/compiler.mk, src/util/defines.mk, src/inter/defines.mk, 
-# and src/mcMd/defines.mk, because this file uses makefile variables
+# the files src/config.mk, src/util/config.mk, src/inter/config.mk, 
+# and src/mcMd/config.mk, because this file uses makefile variables
 # defined in those files. 
 #-----------------------------------------------------------------------
 
@@ -19,10 +19,10 @@ LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB)
 DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS)
 
 # Dependencies of source files in src/mcMd on makefile fragments
-MAKE_DEPS= -A$(OBJ_DIR)/compiler.mk
-MAKE_DEPS+= -A$(OBJ_DIR)/util/defines.mk
-MAKE_DEPS+= -A$(OBJ_DIR)/inter/defines.mk
-MAKE_DEPS+= -A$(OBJ_DIR)/mcMd/defines.mk
+MAKE_DEPS= -A$(OBJ_DIR)/config.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/util/config.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/inter/config.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/mcMd/config.mk
 
 # Pattern rule to compile all class source (*.cpp) files in src/mcMd
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp

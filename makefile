@@ -1,4 +1,4 @@
-include src/compiler.mk
+include src/config.mk
 # ==============================================================================
 .PHONY: mcMd ddMd mcMd-mpi test \
         clean-serial clean-parallel clean \

@@ -6,7 +6,7 @@
 # Must be defined before including makefile.inc files
 SRC_DIR=../../../src
 
-include $(SRC_DIR)/compiler.mk
+include $(SRC_DIR)/config.mk
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/util/patterns.mk
 include makefile.inc

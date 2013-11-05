@@ -1,4 +1,4 @@
-defines.mk
+config.mk
 *.o
 *.d
 *.a

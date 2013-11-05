@@ -47,7 +47,7 @@ The following table lists the most important compile time options for the Simapt
     <td> _m </td>
     <td> Message Passing Interface (MPI) </td>
     <td> UTIL_MPI </td>
-    <td> src/compiler.mk </td>
+    <td> src/config.mk </td>
     <td> (1) (2) </td>
   </tr>
   <tr> 
@@ -55,7 +55,7 @@ The following table lists the most important compile time options for the Simapt
     <td> _g </td>
     <td> Debugging - enables additional error checks </td>
     <td> UTIL_DEBUG </td>
-    <td> src/util/defines.mk </td>
+    <td> src/util/config.mk </td>
     <td>  </td>
   </tr>
   <tr> 
@@ -63,7 +63,7 @@ The following table lists the most important compile time options for the Simapt
     <td> _a </td>
     <td> Angle potentials </td>
     <td> INTER_ANGLE </td>
-    <td> src/inter/defines.mk </td>
+    <td> src/inter/config.mk </td>
     <td>  </td>
   </tr>
   <tr> 
@@ -71,7 +71,7 @@ The following table lists the most important compile time options for the Simapt
     <td> _d </td>
     <td> Dihedral potentials </td>
     <td> INTER_DIHEDRAL </td>
-    <td> src/inter/defines.mk </td>
+    <td> src/inter/config.mk </td>
     <td>  </td>
   </tr>
   <tr> 
@@ -79,7 +79,7 @@ The following table lists the most important compile time options for the Simapt
     <td> _e </td>
     <td> External potentials </td>
     <td> INTER_DIHEDRAL </td>
-    <td> src/inter/defines.mk </td>
+    <td> src/inter/config.mk </td>
     <td>  </td>
   </tr>
   <tr> 
@@ -87,7 +87,7 @@ The following table lists the most important compile time options for the Simapt
     <td> _l </td>
     <td> Links (mutable bonds) </td>
     <td> MCMD_LINKS </td>
-    <td> src/mcMd/defines.mk </td>
+    <td> src/mcMd/config.mk </td>
     <td>  </td>
   </tr>
   <tr> 
@@ -95,7 +95,7 @@ The following table lists the most important compile time options for the Simapt
     <td> _f </td>
     <td> Free energy perturbation </td>
     <td> MCMD_PERTURB </td>
-    <td> src/mcMd/defines.mk </td>
+    <td> src/mcMd/config.mk </td>
     <td> (3), (4) </td>
   </tr>
 </table>
@@ -126,7 +126,7 @@ Notes:
 
 The source code for Simpatico is divided into four namespaces named Util, Inter, McMd and DdMd. Classes in these namespaces are located in corresponding directories src/util, src/inter, src/mcMd and src/ddMd, respectively. There is a strict hierarchy of dependencies among the namespaces. The code in the Util namespace does not use names defined in any other space. Code in the Inter namespace may use names defined in Util, but not names defined in the McMd and DdMd. Code in McMd may use Util and Inter, but not DdMd. Codein DdMd may use Util and Inter, but McMd.
 
-The names of the macro names associated with different compile time options reflect which namespaces they effect.  Those whose names begin with UTIL_, which are defined in the files src/compiler.mk and src/util/defines.mk, can appear in source files in any of the Simpatico namespaces (i.e., in the Util, Inter, McMd or DdMd namespaces, corresponding to the src/util, src/inter, src/ddMd, and src/ddMd directories).  Macros with names that begin with INTER_, which are defined in src/inter/defines.mk, are not used in the Util namespace (the src/util directory), but can appear in the Inter, McMd and DdMd namespaces (or the src/inter/, src/mcMd/ and src/dMd/ directories). Macros with names that begin with MCMD_, which are defined in src/mcMd/defines.mk, are used only in the McMd namespace (the src/mcMd directory).  Macros whose names begin with DDMD_, which are defined in src/dMd/defines.mk, are used only in the DdMd namespace (the src/ddMd directory).
+The names of the macro names associated with different compile time options reflect which namespaces they effect.  Those whose names begin with UTIL_, which are defined in the files src/config.mk and src/util/config.mk, can appear in source files in any of the Simpatico namespaces (i.e., in the Util, Inter, McMd or DdMd namespaces, corresponding to the src/util, src/inter, src/ddMd, and src/ddMd directories).  Macros with names that begin with INTER_, which are defined in src/inter/config.mk, are not used in the Util namespace (the src/util directory), but can appear in the Inter, McMd and DdMd namespaces (or the src/inter/, src/mcMd/ and src/dMd/ directories). Macros with names that begin with MCMD_, which are defined in src/mcMd/config.mk, are used only in the McMd namespace (the src/mcMd directory).  Macros whose names begin with DDMD_, which are defined in src/dMd/config.mk, are used only in the DdMd namespace (the src/ddMd directory).
 
 \section user_option_suffix File Name Suffixes 
 
@@ -150,9 +150,9 @@ Conditional compilation of each of optional feature of Simpatico is controlled b
 \endcode
 in which MACRO represents the name of the relevant preprocessor macro (e.g., UTIL_DEBUG).
 
-Each C++ preprocessor macros is defined if and only if the makefile variable of the same name is defined is enabled in the relevant makefile fragment (i.e., in src/compiler.mk, src/util/defines.mk, src/inter/defines.mk, src/mcMd/defines.mk or src/ddMd/defines.mk).  For example, to define the C++ preprocessorer macro UTIL_DEBUG throughout the source code, and thus compile a debugging version with extra error checking, the makefile fragment src/util/defines.mk must contain a line that defines "UTIL_DEBUG=1$. Conversely, to disable this feature, this definition must be commented out, by adding a hash ('#') at the beginning of the line.  
+Each C++ preprocessor macros is defined if and only if the makefile variable of the same name is defined is enabled in the relevant makefile fragment (i.e., in src/config.mk, src/util/config.mk, src/inter/config.mk, src/mcMd/config.mk or src/ddMd/config.mk).  For example, to define the C++ preprocessorer macro UTIL_DEBUG throughout the source code, and thus compile a debugging version with extra error checking, the makefile fragment src/util/config.mk must contain a line that defines "UTIL_DEBUG=1$. Conversely, to disable this feature, this definition must be commented out, by adding a hash ('#') at the beginning of the line.  
 
-When the makefile variable associated with a feature is defined, the makefile system uses the "-D" compiler option to define the corresponding preprocessor macro.  For example, if the file src/util/defines.mk contains a line defining UTIL_DEBUG=1, another part of the same file adds a string "-DUTIL_DEBUG" to the list of options that will be passed to the compiler, thus causing the C++ UTIL_DEBUG macro to be defined throughout the source code. The makefile block that conditionally adds a "-D" option to list of compiler options is always near the bottom of the makefile fragment that defines the associated makefile variable.  Each such block also contains code to add an associated file name suffix to any relevant libraries and executables. 
+When the makefile variable associated with a feature is defined, the makefile system uses the "-D" compiler option to define the corresponding preprocessor macro.  For example, if the file src/util/config.mk contains a line defining UTIL_DEBUG=1, another part of the same file adds a string "-DUTIL_DEBUG" to the list of options that will be passed to the compiler, thus causing the C++ UTIL_DEBUG macro to be defined throughout the source code. The makefile block that conditionally adds a "-D" option to list of compiler options is always near the bottom of the makefile fragment that defines the associated makefile variable.  Each such block also contains code to add an associated file name suffix to any relevant libraries and executables. 
  
 \section user_options_boundary Boundary Type
 

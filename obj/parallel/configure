@@ -30,7 +30,7 @@
 #
 # Other Command Line Options:
 #
-#   -c compiler  Chooses a compiler, set COMPILER=compiler in compiler.mk
+#   -c compiler  Chooses a compiler, set COMPILER=compiler in config.mk
 #   -q           query: prints report of options that are enabled / disabled.
 #
 # Examples:
@@ -39,7 +39,7 @@
 #
 #   >  ./configure -g0 -a1 -d1
 #
-# To set COMPILER=intel in compiler.mk
+# To set COMPILER=intel in config.mk
 #
 #   >  ./configure -c intel
 #
@@ -57,135 +57,135 @@ while getopts "m:g:b:a:d:e:f:l:s:k:c:q" opt; do
     m)
       MACRO=UTIL_MPI
       VALUE=1
-      FILE=compiler.mk
+      FILE=config.mk
       ;;
     g)
       MACRO=UTIL_DEBUG
       VALUE=1
-      FILE=util/defines.mk
+      FILE=util/config.mk
       ;;
     b)
       MACRO=INTER_BOND
       VALUE=1
-      FILE=inter/defines.mk
+      FILE=inter/config.mk
       ;;
     a)
       MACRO=INTER_ANGLE
       VALUE=1
-      FILE=inter/defines.mk
+      FILE=inter/config.mk
       ;;
     d)
       MACRO=INTER_DIHEDRAL
       VALUE=1
-      FILE=inter/defines.mk
+      FILE=inter/config.mk
       ;;
     e)
       MACRO=INTER_EXTERNAL
       VALUE=1
-      FILE=inter/defines.mk
+      FILE=inter/config.mk
       ;;
     l)
       MACRO=MCMD_LINK
       VALUE=1
-      FILE=mcMd/defines.mk
+      FILE=mcMd/config.mk
       ;;
     f)
       MACRO=MCMD_PERTURB
       VALUE=1
-      FILE=mcMd/defines.mk
+      FILE=mcMd/config.mk
       ;;
     s)
       MACRO=MCMD_SHIFT
       VALUE=1
-      FILE=mcMd/defines.mk
+      FILE=mcMd/config.mk
       ;;
     k)
       case $OPTARG in
       0)  # Disable (comment out) the definition of MAKEDEP
-        if [ `grep "^ *MAKEDEP" compiler.mk` ]; then
-           echo "Disabling MAKEDEP in file compiler.mk" >&2
-           sed "s/^ *MAKEDEP/#MAKEDEP/" compiler.mk > temp
-           cp temp compiler.mk
+        if [ `grep "^ *MAKEDEP" config.mk` ]; then
+           echo "Disabling MAKEDEP in file config.mk" >&2
+           sed "s/^ *MAKEDEP/#MAKEDEP/" config.mk > temp
+           cp temp config.mk
            rm temp
         else
-           echo "MAKEDEP already disabled in file compiler.mk" >&2
+           echo "MAKEDEP already disabled in file config.mk" >&2
         fi
         ;;
       1) # Enable (uncomment) the definition of MAKEDEP
-        if [ `grep "^ *MAKEDEP" compiler.mk` ]; then
-           echo "MAKEDEP already enabled in file compiler.mk" >&2
+        if [ `grep "^ *MAKEDEP" config.mk` ]; then
+           echo "MAKEDEP already enabled in file config.mk" >&2
         else
-           echo "Enabling MAKEDEP in file compiler.mk" >&2
-           sed "s/^ *# *MAKEDEP/MAKEDEP/" compiler.mk > temp
-           cp temp compiler.mk
+           echo "Enabling MAKEDEP in file config.mk" >&2
+           sed "s/^ *# *MAKEDEP/MAKEDEP/" config.mk > temp
+           cp temp config.mk
            rm temp
         fi
         ;;
       esac
       ;;
     c)
-      FILE=compiler.mk
+      FILE=config.mk
       cp "$FILE" temp
       sed "s/COMPILER=.*$/COMPILER=$OPTARG/" temp > "$FILE"
       echo "Setting COMPILER = $OPTARG in file $FILE" >&2
       rm temp
       ;;
     q)
-      if [ `grep "^ *UTIL_MPI *= *1" compiler.mk` ]; then
+      if [ `grep "^ *UTIL_MPI *= *1" config.mk` ]; then
          echo "-m ON  - MPI" >&2
          MPI=1
       else
          echo "-m OFF - MPI" >&2
          MPI=
       fi
-      if [ `grep "^ *UTIL_DEBUG *= *1" util/defines.mk` ]; then
+      if [ `grep "^ *UTIL_DEBUG *= *1" util/config.mk` ]; then
          echo "-g ON  - debugging" >&2
       else
          echo "-g OFF - debugging" >&2
       fi
-      if [ `grep "^ *INTER_BOND *= *1" inter/defines.mk` ]; then
+      if [ `grep "^ *INTER_BOND *= *1" inter/config.mk` ]; then
          echo "-b ON  - bond potential" >&2
       else
          echo "-b OFF - bond potential" >&2
       fi
-      if [ `grep "^ *INTER_ANGLE *= *1" inter/defines.mk` ]; then
+      if [ `grep "^ *INTER_ANGLE *= *1" inter/config.mk` ]; then
          echo "-a ON  - angle potential" >&2
       else
          echo "-a OFF - angle potential" >&2
       fi
-      if [ `grep "^ *INTER_DIHEDRAL *= *1" inter/defines.mk` ]; then
+      if [ `grep "^ *INTER_DIHEDRAL *= *1" inter/config.mk` ]; then
          echo "-d ON  - dihedral potential" >&2
       else
          echo "-d OFF - dihedral potential" >&2
       fi
-      if [ `grep "^ *INTER_EXTERNAL *= *1" inter/defines.mk` ]; then
+      if [ `grep "^ *INTER_EXTERNAL *= *1" inter/config.mk` ]; then
          echo "-e ON  - external potential" >&2
       else
          echo "-e OFF - external potential" >&2
       fi
-      if [ `grep "^ *MCMD_LINK *= *1" mcMd/defines.mk` ]; then
+      if [ `grep "^ *MCMD_LINK *= *1" mcMd/config.mk` ]; then
          echo "-l ON  - links (mutable bonds)" >&2
       else
          echo "-l OFF - links (mutable bonds)" >&2
       fi
-      if [ `grep "^ *MCMD_SHIFT *= *1" mcMd/defines.mk` ]; then
+      if [ `grep "^ *MCMD_SHIFT *= *1" mcMd/config.mk` ]; then
          echo "-s ON  - shift" >&2
       else
          echo "-s OFF - shift" >&2
       fi
       if [ -n "$MPI" ]; then
-         if [ `grep "^ *MCMD_PERTURB *= *1" mcMd/defines.mk` ]; then
+         if [ `grep "^ *MCMD_PERTURB *= *1" mcMd/config.mk` ]; then
             echo "-f ON  - free energy perturbation" >&2
          else
             echo "-f OFF - free energy perturbation" >&2
          fi
       fi
-      if [ `grep "^ *MAKEDEP" compiler.mk` ]; then
+      if [ `grep "^ *MAKEDEP" config.mk` ]; then
          echo "-k ON  - automatic dependency tracking" >&2
       else
          echo "-k OFF - automatic dependency tracking" >&2
       fi
-      echo `grep "^ *COMPILER *=" compiler.mk` >&2
+      echo `grep "^ *COMPILER *=" config.mk` >&2
       ;;
   esac
 

@@ -11,7 +11,7 @@
 #     executable files.
 #
 # This file is included by every makefile in the msDd directory. 
-# It must be included after $(SRC_DIR)/compiler.mk and before
+# It must be included after $(SRC_DIR)/config.mk and before
 # $(SRC_DIR)/mcmd/patterns.mk.
 #-----------------------------------------------------------------------
 # Makefile variables to define preprocessor macros (None yet defined).
