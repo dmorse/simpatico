@@ -4,6 +4,7 @@ include $(OBJ_DIR_REL)/compiler.mk
 include $(OBJ_DIR)/util/defines.mk
 include $(OBJ_DIR)/inter/defines.mk
 include $(SRC_DIR)/inter/patterns.mk
+include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk
 
 all: $(inter_OBJS) $(inter_LIB)
@@ -19,5 +20,4 @@ veryclean:
 
 -include $(util_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
-
 
