@@ -89,7 +89,7 @@ The config.mk files in the object directory and its subdirectories will be refer
 
 The makefile system that is used to build the source code does not automatically compile or run the unit tests in the namespace/tests directory. Unit tests for each namespace may be compiled by cd'ing to the namespace/tests subdirectory of the relevant namespace-level directory, and invoking make from there. Entering "make all" compiles all tests for that namespace. Entering "make run" will run them. 
 
-\section make_config.mk Main build configuration file
+\section make_config_main Main build configuration file
 The main config.mk in each object directory is the main build configuration file for that directory. It defines makefile variables that contain paths to the source, object and binary directories, and other variables that define the choice of compiler and various compiler options.
 
 The following variables defined in the main config.mk file define paths: 
@@ -107,7 +107,7 @@ BIN_DIR=$(ROOT_DIR)/bin
 \endcode
 Here, PARENT is used represent an absolute path to the directory that contains the simpatico/ root directory. In the actual file, this would be replaced by the literal absolute path to this parent directory. In the config.mk files in the obj/parallel and src/ directories, the value of OBJ_DIR would be set to ROOT_DIR/obj/parallel and ROOT_DIR/src, respectively. 
 
-\section make_config.mk Namespace build configuration files
+\section make_config_namespace Namespace build configuration files
 
 The "config.mk" file in each of the namespace level subdirectories of an object directory contains definitions of makefile variables that may be commented out to disable or uncommented to enable particular features of the code defined in the associated namespace. For example, the definition of a variable INTER_ANGLE in the file inter/config.mk may be commented out to disable 3-body angle potentials or uncommented to enable angle potentials. Similarly, the definition of UTIL_DEBUG in the file util/config.mk can commented out to disnable extra sanity checks that are intended for the debug version of the code, or uncommented to enable these checks. 
 
@@ -121,7 +121,7 @@ Each main object directory also contains a bash script named "configure". This s
 \endcode
 and corresponding command to disable MPI is "./configre -m0".  Here, the -m option denotes MPI, while the argument 1 is used to enable MPI, or an argument 0 to disable MPI. The configure script in each object directory edits only the build configuration files in the same directory tree.
 
-\section make_main Root Directory Makefile
+\section make_root_makefile Root Directory Makefile
 
 The makefile in the simpatico/ root directory contains four primary targets named "mcMd", "mcSim-mpi", "ddSim", and "all":
 
