@@ -9,6 +9,7 @@ namespace McMd
 Simpatico is compiled using a system of unix makefiles.  All development was done using gnu make (gmake). 
   
 \section make_files Source Directory
+
 All C++ files for simpatico, including both header (*.h) and source (*.cpp) files, are in the simpatico/src/ directory tree.  The header and source file for each class are in the same directory. The name of each C++ file is the same as the class name, followed by the extension .h or .cpp.  All class names and corresponding file names are upper space camel (like Util::Vector or McMd::Species).  
 
 The src/util, src/inter, src/mcMd, and src/ddMd directories each contain all the source and header files for a particular C++ namespace: 
@@ -38,6 +39,7 @@ The src/mcMd and src/ddMd also contain main program files. The main programs mdS
 Each of the namespace level source directories contains a subdirectory named tests/ that contains unit tests for classes in the associated name space. These unit tests are not automatically compiled or run by the build system that compiles the source code.
 
 \section make_object Object Directories
+
 Compiling a source file with file name extension *.cpp normally creates both an object file with extension *.o and a dependency file with extension *.d. (The dependency file is not created if automatic dependency generation is disabled.) The resulting object and dependency files the same base name as the corresponding source file, except for the file name extension. The dependency file contains a makefile target rule that lists all the files upon which the source file depends, including all the header files that it includes. 
 
 When a *.cpp source file from a subdirectory of the src/ directory is compiled, the resulting object and dependency file are placed in the corresponding subdirectory of an object directory. The object directory must thus contain the same structure of subdirectories as the src/directory tree. When make is invoked from the simpatico/ root directory, all object and dependency files are placed in one two object file directories, which are both subdirectories of the simpatico/obj directory. Directory obj/serial is used to hold object and dependency files that are created by building the single processor mcSim and mdSim programs by invoking "make mcMd" from the root directory. Directory obj/parallel is used to hold all object and dependency files created by building the mdSim program, by invoking "ddSim" from the root directory, and those created by building multiprocessor versions of mcSim and mdSim, by invoking "make mcMd-mpi" from the root directory. Directories obj/parallel and obj/serial each contain a tree of subdirectories similar to that of the src/ directory, but are initially almost empty except for a few makefiles and makefile fragments.
@@ -45,6 +47,7 @@ When a *.cpp source file from a subdirectory of the src/ directory is compiled, 
 Any of the simpatico programs can be build either by invoking make from the simpatico/ root directory, as described above, or by descending (cd'ing) to the an object directory (obj/serial for serial programs or obj/parallel for parallel programs) and invoking make with the appropriate target (mcMd, mcMd-mpi, or ddMd) from there. In addition, one may execute an "in-source" build, in which each object and dependency file is placed alongside the corresponding source files within the src/ directory, by invoking make from the src/ directory, using the same set of primary make targets ("make mcMd", "make mcMd-mpi" or "make ddMd").  In what follows, we will thus refer to the obj/serial, obj/parallel, and src/ directories collectively as object directories, since any of them can be used for this purpose.
 
 \section make_configuration Build Configuration Files
+
 After the setup script has been run, but before any source code has has been compiled, each of the three object directories contain the following files and subdirectories:
 \code
    OBJ_DIR/
@@ -89,7 +92,8 @@ The config.mk files in the object directory and its subdirectories will be refer
 
 The makefile system that is used to build the source code does not automatically compile or run the unit tests in the namespace/tests directory. Unit tests for each namespace may be compiled by cd'ing to the namespace/tests subdirectory of the relevant namespace-level directory, and invoking make from there. Entering "make all" compiles all tests for that namespace. Entering "make run" will run them. 
 
-\section make_config_main Main build configuration file
+\section make_config_main Object Directory config.mk File
+
 The main config.mk in each object directory is the main build configuration file for that directory. It defines makefile variables that contain paths to the source, object and binary directories, and other variables that define the choice of compiler and various compiler options.
 
 The following variables defined in the main config.mk file define paths: 
@@ -107,30 +111,36 @@ BIN_DIR=$(ROOT_DIR)/bin
 \endcode
 Here, PARENT is used represent an absolute path to the directory that contains the simpatico/ root directory. In the actual file, this would be replaced by the literal absolute path to this parent directory. In the config.mk files in the obj/parallel and src/ directories, the value of OBJ_DIR would be set to ROOT_DIR/obj/parallel and ROOT_DIR/src, respectively. 
 
-\section make_config_namespace Namespace build configuration files
+\section make_config_namespace Namespace Directory config.mk Files
 
-The "config.mk" file in each of the namespace level subdirectories of an object directory contains definitions of makefile variables that may be commented out to disable or uncommented to enable particular features of the code defined in the associated namespace. For example, the definition of a variable INTER_ANGLE in the file inter/config.mk may be commented out to disable 3-body angle potentials or uncommented to enable angle potentials. Similarly, the definition of UTIL_DEBUG in the file util/config.mk can commented out to disnable extra sanity checks that are intended for the debug version of the code, or uncommented to enable these checks. 
+The "config.mk" file in each of the namespace level subdirectories of each object directory contains definitions of makefile variables that control conditional compilation of specific features of the code. For example, the definition of a variable INTER_ANGLE in the file inter/config.mk may be commented out to disable 3-body angle potentials or uncommented to enable angle potentials. Similarly, the definition of UTIL_DEBUG in the file util/config.mk can commented out to disnable extra sanity checks that are intended for the debug version of the code, or uncommented to enable these checks. 
 
-Each such file defines a variable with a name of the form NAMESPACE_DEFS, in which NAMESPACE represents an upper case form of the name of the associated C++ namespace (i.e., UTIL, INTER, MCMD, or DDMD). Thus, util/config.mk defines a variable named UTIL_DEFS, inter/config.mk defines INTER_DEFS, mcMd/config.mk defines MCMD_DEFS, and ddMd/config.mk defines DDMD_DEFS. Each such makefile variables expands to a (possibly empty) string of compiler options that define C++ preprocessor macros, using the compiler "-D" option. Thus for example, if angle potentials are enabled by defining the makefile variable INTER_ANGLE in the file OBJ_DIR/inter/config.mk, the variable INTER_DEFS will contain a string "-DINTER_ANGLE" that, when passed to the compiler, defines a corresponding C++ preprocessor macro named INTER_ANGLE. Preprocessor macros that are defined in namespace level config.mk file are only used in the source code of the corresponding namespace and in other namespace(s) that depends upon it. Thus for example, preprocessor macros defined by the MCMD_DEFS string only appear in the McMd namespce, but preprocessor macros defined by the UTIL_DEFS can appear in any of the four C++ namespaces, since the Inter, McMd and DdMd namespaces all depend upon the Util namespace.
+Each namespace level config.mk file defines a variable with a name of the form NAMESPACE_DEFS, in which NAMESPACE represents an upper case form of the name of the associated namespace. Thus, util/config.mk defines a variable named UTIL_DEFS, inter/config.mk defines INTER_DEFS, mcMd/config.mk defines MCMD_DEFS, and ddMd/config.mk defines DDMD_DEFS. Each such makefile variable expands to a (possibly empty) string of compiler options that define C++ preprocessor macros, using the compiler "-D" option. Thus for example, when angle potentials are enabled by uncommenting the definition of the makefile variable INTER_ANGLE in the file OBJ_DIR/inter/config.mk, the variable INTER_DEFS will contain a string "-DINTER_ANGLE" that, when passed to the compiler, defines a corresponding C++ preprocessor macro, also named INTER_ANGLE. 
 
-\section make_config_script Configure script
+Preprocessor macros that are defined in a particular namespace level config.mk file are only used in the source code of the associated C++ namespace and in any other namespaces that depends upon it. Thus for example, preprocessor macros defined by the MCMD_DEFS string only appear in the McMd namespce, but preprocessor macros defined by the UTIL_DEFS can appear in any namespace, since the Inter, McMd and DdMd namespaces all depend upon the Util namespace.
 
-Each main object directory also contains a bash script named "configure". This script may be used to edit the configuration files in that directory from the command line, in order to enable or disable specific features. The configure script must be invoked from the main object directory (the directory that contains the script), and uses specific command line options to enable or disable specific features. For example, the command to enable MPI is
+\section make_config_script configure Script
+
+Each object directory also contains a bash script named "configure". This script may be used to edit configuration files in that directory from the command line.
+ The configure script must be invoked from the main object directory that contains the script, and uses specific command line options to enable or disable specific features. For example, the command to enable MPI is
 \code
   ./configure -m1
 \endcode
-and corresponding command to disable MPI is "./configre -m0".  Here, the -m option denotes MPI, while the argument 1 is used to enable MPI, or an argument 0 to disable MPI. The configure script in each object directory edits only the build configuration files in the same directory tree.
+The corresponding command to disable MPI is "./configre -m0".  Here, the -m option denotes MPI, while the argument 1 is used to enable MPI, or an argument 0 to disable MPI. The configure script in each object directory edits only the build configuration files in that directory tree, and thus only effects the configuration of programs that are built in that directory.
 
-\section make_root_makefile Root Directory Makefile
+\section make_root_makefile Root Directory makefile
 
 The makefile in the simpatico/ root directory contains four primary targets named "mcMd", "mcSim-mpi", "ddSim", and "all":
 
   -"make mcMd" builds the single-processor mcSim and mdSim programs. 
-  -"make mcMd-mpi" builds multi-processor versions of mcSim and mdSim.
-  -"make ddMd" builds the ddSim program. 
-  -"make all" build all of the serial and parallel programs in the package
 
-This top level makefile is recursive: The commands associated with the "mcMd", "mcMd-mpi" and "ddMd" targets in this makefile each command make to descend to an appropriate object directory (i.e., to obj/serial for serial programs and to obj/parallel for MPI programs) and then recursively invoke make with the same target from within that object directory. The relevant part of the makefile in the root directory thus looks like this:
+  -"make mcMd-mpi" builds multi-processor versions of mcSim and mdSim.
+
+  -"make ddMd" builds the ddSim program. 
+
+  -"make all" build all of the above programs
+
+The commands associated with these targets are recursive: The commands associated with the "mcMd", "mcMd-mpi" and "ddMd" targets each command make to descend to an appropriate object directory (i.e., to obj/serial for serial programs and to obj/parallel for MPI programs) and then recursively invoke make with the same target name from within that object directory. The definitions of the main makefile targets in the root directory makefile thus look like this:
 \code
 all:
 	make mcMd
@@ -148,7 +158,8 @@ ddMd:
 \endcode
 The default "all" target simply invokes the other three targets, thus building all of the programs in the package.
 
-\section make_object_makefile Object Directory Makefile
+\section make_object_makefile Object Directory makefile
+
 The main makefile in each object directorY also contains three targets named "mcMd", "mcMd-mpi" and "ddMd". These three targets exist in all three makefiles. Invoking make one of these primary targets from any object file directory will cause the corresponding program(s) to be built in the object directory from which make was invoked, using the build configuration files in that directory, and cause the executable or executables to be installed in directory BIN_DIR.
 
 The primary "mcMd", "mcMd-mpi" and "ddMd" targets of each object directory makefile are also recursive. The associated list of commands for each of them first invokes the configure script to enable or disable MPI, as appropriate, and then descends to the namespace level directory for each namespace that is required to build the target program or programs, invoking "make all" from within each such namespace sub-directory. The key part of the main makefile file in each object directory thus looks like this:
@@ -175,7 +186,7 @@ ddMd:
 \endcode
 The command "./configure -m0" or "./configure -m1" uses the configure script to either disable ("./configure -m0") or enable ("./configure -m1") conditional compilation of parts of the code that use an MPI library. Note that the only difference between the the "mcMd" and "mcMd-mpi" targets is that the "mcMd" target disables MPI before compiling any source files, while "mcMd-mpi" enables MPI before compiling. The ddMd target always enables MPI, because MPI is essential to the functioning of the ddSim target program.
 
-\section make_namespace_makefile Namespace Level Makefiles
+\section make_namespace_makefile Namespace Directory makefiles
 
 The makefile in each namespace level subdirectories of each object directory defines an "all" target that compiles all of the source files in corresponding subdirectory of src/, or the corresponding namespace.  In addition, this "all" target creates a static library that contains the object files for all of the classes in that namespace.  Program executables are built by linking to these namespace level static libraries rather than by directly linking to the object files.The base name of each such library is given by a prefix "lib" followed by the namespace level directory name with a ".a" file extension. Each such library is placed in the corresponding namespace level object directory. For example, the makefile in the util/ subdirectory creates a static library that (by default) is named OBJ_DIR/util/libutil.a.  
 
@@ -183,7 +194,7 @@ The "all" targets of the makefiles in the OJB_DIR/mcMd and OBJ_DIR/ddMd subdirec
 
 Unlike higher level makefiles, the namespace level makefiles are not recursive, i.e., they do not recursively invoke make in yet lower level subdirectories. The "all" target in each namespace-level directory instead compiles all files in a list of source files for that namespace.
 
-\section make_sources Source File Lists
+\section make_sources Source File Lists (sources.mk Files)
 
 Every subdirectory of src/ (other than the tests/ directories) contains a makefile fragment named "sources.mk". Each such file defines a variable that contains a list of the source files in that directory and all of its subdirectories (if any). In each such subdirectory of src/, this variable has a name of the form [directory]_, where "[directory]" represents a mangled form of the subdirectory name. Specifically, [directory] is constructed by taking the path from the src/ directory to the subdirectory of interest and replacing each "/" directory separator by an underscore ("_"). For example, the file src/util/sources.mk defines a variable util_ that expands to a list of all of the source files in the directory tree rooted at src/util. The file src/util/space/sources.mk defines a corresponding variable named util_space_.  The value of the [directory]_ variable is a list of relative paths for all source files in the corresponding directory and its descendant subdirectories, in which each path is expressed relative to the src/ directory.
 
@@ -238,7 +249,8 @@ util_OBJS=\
 \endcode
 Here, SRC_DIR expands to the absolute path to the simpatico/src directory and OBJ_DIR expands to the absolute path to the object directory. Note that the only difference between the paths in a [directory]_ variable (e.g., util_) and those in a [directory]_SRCS variable (e.g., util_SRCS) is that the [directory]_ variable contains relative paths, relative to src/, while the [directory]_SRCS variable contains corresponding absolute paths. 
 
-\section make_patterns Pattern Rules
+\section make_patterns Pattern Rules (patterns.mk Files)
+
 Each namespace level subdirectory of the src/ directory has a makefile fragment named "patterns.mk" that defines a pattern rule for compiling source files in that directory or namespace. The pattern rule has the same structure in all four namespace level directories. In each case, the rule looks like this:
 \code
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp
@@ -247,7 +259,7 @@ ifdef MAKEDEP
         $(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
 endif
 \endcode
-The target pattern requires that an object file target with file extension *.o in a subdirectory of the object directory $(OBJ_DIR) can be created by compiling a *.cpp source file with the same base name in the corresponding subdirectory of the source directory $(SRC_DIR). The first command actually compiles the source file and creates the object file. The second command, which is within an ifdef MAKEDEP .. endif block, generates a dependency file as a side-effect of compilation. Automatic generation of dependency files can be disabled by commenting out the definition of the variable MAKEDEP in the config.mk file.
+The target pattern requires that an object file target with file extension *.o in a subdirectory of the object directory OBJ_DIR can be created by compiling a *.cpp source file with the same base name in the corresponding subdirectory of the source directory SRC_DIR. The first command actually compiles the source file and creates the object file. The second command, which is within an ifdef MAKEDEP .. endif block, generates a dependency file as a side-effect of compilation. Automatic generation of dependency files can be disabled by commenting out the definition of the variable MAKEDEP in the config.mk file.
 
 The following variables used in the above pattern are defined in the config.mk file file in the object directory from which make was invoked:
    
@@ -278,11 +290,11 @@ MAKE_DEPS= -A$(OBJ_DIR)/config.mk
 MAKE_DEPS+= -A$(OBJ_DIR)/util/config.mk
 MAKE_DEPS+= -A$(OBJ_DIR)/inter/config.mk
 \endcode
-The DEFINES variable is constructing by concatenating the NAMESPACE_DEFS variables (UTIL_DEFS, INTER_DEFS, etc.) for this namespace (i.e., INTER_DEFS) and for all namespaces upon which this namespace depends (i.e., UTIL_DEFS). For the Inter namespace, this yields a concatenation of $(UTIL_DEFS) and $(INTER_DEFS). The resulting string contains all of the preprocessor definitions that are allowed to be used by code in this namespace. 
+The DEFINES variable is constructing by concatenating the NAMESPACE_DEFS variables (UTIL_DEFS, INTER_DEFS, etc.) for this namespace (i.e., INTER_DEFS) and for all namespaces upon which this namespace depends (i.e., UTIL_DEFS). For the Inter namespace, this yields a concatenation of UTIL_DEFS and INTER_DEFS. The resulting string contains all of the preprocessor definitions that are allowed to be used by code in this namespace. 
 
 The MAKE_DEPS variable contains a list of build configuration files whose contents can effect compilation of source code in this namespace. This list always contains the main config.mk file from the parent object directory, the config.mk file for the namespace of interest, and config.mk files for any namespace(s) upon which this namespace depends. For the Inter namespace, MAKE_DEPS thus contains paths to the config.mk files in the inter/ and util/ subdirectories. These build configuration files are added to the list of dependencies for every object file in this namespace because changes to these config.mk files can change which preprocessor macros are defined or which compiler options are set, and thus can change the contents of the resulting object files.
 
-\section make_dependency Dependency Files
+\section make_dependency Dependency Files (*.d Files)
 
 If automatic dependency generation is not disabled, a dependency file will be generated for each source file whenever the file is compiled, as a result of the second command in the pattern rule shown above. Each dependency file defines a makefile rule for constructing the corresponding object file. This rule can be used to determine when the source file needs to be recompiled as a result of changes in the files upon which it depends. The rule consists of the name of the object file target followed by a colon and list of files upon which it depends, of the form 
 \code
@@ -308,19 +320,60 @@ in which [directory] represents the mangled name of the directory containing the
 \endcode
 This command attempts to include a *.d dependency file for each *.o object file in the object file list. The dash in front of "include" instructs "make" to continue quietly if no dependency file is found for any object file target.
 
+\section make_makefile Example: A Namespace Directory makefile
+
+As an example of how the system works, here are the essential parts of the namespace level makefile from the directory obj/serial/inter. The actual makefile also includes "clean" and "veryclean" targets" that have been excluded for clarity. Corresponding makefiles in obj/parallel/inter and src/inter are identical:
+\code
+
+OBJ_DIR_REL =..
+include $(OBJ_DIR_REL)/config.mk
+include $(OBJ_DIR)/util/config.mk
+include $(OBJ_DIR)/inter/config.mk
+include $(SRC_DIR)/inter/patterns.mk
+include $(SRC_DIR)/inter/sources.mk
+
+all: $(inter_OBJS) $(inter_LIB)
+
+-include $(inter_OBJS:.o=.d)
+
+\endcode
+This simplified makefile contains three blocks:
+
+(1) The include statements at the top of this file include all of the relevant build configuration files, the appropriate patterns.mk file, and the appropriate source file lists. The main config.mk file must be included using a relative path OBJ_DIR_REL_=.. to the parent object directory. The main config.mk file defines variables OBJ_DIR and SRC_DIR that contain absolute paths to the object and source directories, which can be used in the remainder of this makefile, and in makefile fragments that it includes. Next, the makefile includes the namespace level config.mk files for this namespace and any namespaces that it depends on. In this example, it thus includes the inter/config.mk and util/config.mk files from the object directory, because the Inter namespace depends upon the Util namespace. Finally, the makefile includes the patterns.mk file and sources.mk file list from the associated namespace level source directory src/inter.
+
+(2) The "all" target simply make to build all of the object files in the Inter namespace, which are listed in the variable inter_OBJS, and to build an associated library, whose name given by the variable inter_LIB.  The file inter/sources.mk defines both the source file list inter_OBJS and a makefile target rule for building the library inter_LIB. The file inter/patterns.mk contains the relevant pattern rule for building object files from source files. The library name inter_LIB is defined in the namespace level configuration file inter/config.mk.
+
+(3) The last lines of the makefile instructs make to try to include all of the dependency files for all of the source files in this namespace. The dash in front of the -include command tells it to continue quietly if any dependency file does not exist.   
+
+The first time "make all" is invoked in this directory, neither the object file nor the associated dependency files exist. In this case, since each object target file is absent, make knows that it must be built, and uses the pattern rule defined in inter/patterns.mk to create each object file listed in inter_OBJS. If "make all" is a called again from the same directory, however, make can use the information in the dependency files to determine which object files needs to be rebuilt as a result in changes in C++ or configuration files. 
+
+The dependency list for the library inter_LIB lists all of the object files in inter_OBJS as dependencies. The library will thus automatically be rebuilt if any object file in the Inter namespace is rebuilt. 
+
+\section make_makefile_executable Namespace Directory makefiles with Executable Targets
+
+ Corresponding namespace level makefiles for the ddMd/ and mcMd/ subdirectories of each object directory contain additional targets to compile and link main programs in order to build executables. Each executable is built by linking an object file that is created by compiling a main program file to several namespace-level static libraries. For example, the mcSim and mdSim executables are created by compiling the files src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp and linking the resulting executables to static libraries from the mcMd/, inter/ and util/ object directories. The fact that executable targets depend on libraries that are defined in other namespaces requires the following further changes to the structure of makefiles that contain executable targets:
+
+ - Each makefile with executable targets must include the sources.mk source file list from every namespace that contributes objects to the target executables.
+
+ - Each such makefile must include all *.d dependency files from every namespace that contributes objects to the target executables. 
+
+Thus, for example, the mcMd/makefile in each object directory must include the sources.mk files from the inter/ and util/ subdirectories of the src/ directory, and must include all dependency files from corresponding subdirectories of OBJ_DIR, in addition to files from the mcMd/ subdirectory. Inclusion of these additional files from other namespace level directories allows make to decide when any required library needs to be rebuilt, and provides instructions how to rebuild any required source file or library if necessary.
+
 \section make_subdirectory Subdirectory Makefiles
 
-As a convenience for developers, every subdirectory of the namespace level directories of src/ contains its own makefile. The "all" target of each such subdirectory makefile executes an in-source build of the files in that subdirectory and any descendant subdirectories.  During development, the most convenient way to test whether a source file that you have just modified compiles correctly is usually to just enter 
+As a convenience for developers, every subdirectory of the namespace level directories of src/ also contains a makefile. The "all" target of each such subdirectory makefile executes an in-source build of the files in that subdirectory and any descendant subdirectories. The structure of each such makefile is very similar to that of the namespace level makefiles, except for the absence of a target to build a library or executables. 
+
+During development, the most convenient way to test whether a source file that you have just modified compiles correctly is usually to just enter 
 \code
   > make all
 \endcode
 from the directory that contains the new or newly modified source file. If automatic dependency generation is enabled, and if you are modifying one class in that directory at a time, this will normally cause the build system to compile only the source file that you have just modified. If a directory contains more than one incomplete or broken file, should temporarily comment out all but one of these files (the one you are working on) in the value of the [directory]_ variable in the corresponding sources.mk file, and uncomment each such file when you are ready to work on it.
 
-The file name conventions used in the Simpatico build system make it awkward for a user to explictly request compilation of a specific source file. The build system uses absolute paths for all file paths. The "make" program is not smart enough to recognize when an absolute and relative path are equivalent.  As a result, the only way explicitly request compilation of a specific source file is to use the absolute path to the object file as a makefile target. For example, if the absolute path to the root simpatico directory within a user account named "george" was "/home/george/simpatico/", you (or George) could compile the source file src/mcMd/simulation/Simulation.cpp in-source by entering
+The file name conventions used in the Simpatico build system make it awkward for a user to explictly request compilation of just one specific source file. The build system uses absolute paths for all file paths. The "make" program is not smart enough to recognize when an absolute and relative path are equivalent.  As a result, the only way explicitly request compilation of a specific source file is to use the absolute path to the object file as a makefile target. For example, if the absolute path to the root simpatico directory within a user account named "george" was "/home/george/simpatico/", you (or George) could compile the source file src/mcMd/simulation/Simulation.cpp in-source by entering
 \code 
   make /home/george/simpatico/src/mcMd/simulation/Simulation.o
 \endcode 
-from either the src/mcMd/simulation or the src/mcMd/ directory.   Most programmers are unwilling to repeatedly type absolute paths, which is why we recommend simply using "make all" from the directory that contains the file of interest. 
+from either the src/mcMd/simulation or src/mcMd/ directory. Most programmers are unwilling to repeatedly type absolute paths, which is why we recommend simply using "make all" from the directory that contains the file of interest. 
 
 <BR>
 \ref developer_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
