@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------
-# file: src/compiler.mk
+# file: src/config.mk
 #
 # This makefile fragment is included by all other makefiles. It contains
 # definitions of makefile variables that specify:
@@ -13,10 +13,10 @@
 # MPI and automatic dependency generation may be enabled or disabled by
 # commenting out or uncommenting the definitions of UTIL_MPI and MAKEDEP.
 #
-# Users may edit the file src/compiler.mk, but should avoid modifying 
-# the file src/compiler.mk_r, which is a repository version. An initial 
-# version of the compiler.mk configuration file is created by the setup 
-# script by copying compiler.mk_r. 
+# Users may edit the file src/config.mk, but should avoid modifying 
+# the file src/config.mk_r, which is a repository version. An initial 
+# version of the config.mk configuration file is created by the setup 
+# script by copying config.mk_r. 
 #
 # Some common changes to this file may be made by invoking configure 
 # script from the root simpatico directory with appropriate options.
@@ -31,9 +31,9 @@
 #-----------------------------------------------------------------------
 # Absolute directory paths
 #
-# The setup script should set the value of ROOT_DIR in compiler.mk to 
+# The setup script should set the value of ROOT_DIR in config.mk to 
 # the absolute path to the root simpatico/ directory. In the repository
-# file compiler.mk_r, ROOT_DIR is assigned a placeholder value "PWD". 
+# file config.mk_r, ROOT_DIR is assigned a placeholder value "PWD". 
 
 ROOT_DIR=PWD
 SRC_DIR=$(ROOT_DIR)/src

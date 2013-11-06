@@ -1,9 +1,9 @@
 OBJ_DIR_REL =..
 
-include $(OBJ_DIR_REL)/compiler.mk
-include $(OBJ_DIR)/util/defines.mk
-include $(OBJ_DIR)/inter/defines.mk
-include $(OBJ_DIR)/mcMd/defines.mk
+include $(OBJ_DIR_REL)/config.mk
+include $(OBJ_DIR)/util/config.mk
+include $(OBJ_DIR)/inter/config.mk
+include $(OBJ_DIR)/mcMd/config.mk
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk

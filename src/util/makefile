@@ -1,7 +1,7 @@
 SRC_DIR_REL =..
 
-include $(SRC_DIR_REL)/compiler.mk
-include $(SRC_DIR_REL)/util/defines.mk
+include $(SRC_DIR_REL)/config.mk
+include $(SRC_DIR_REL)/util/config.mk
 include $(SRC_DIR_REL)/util/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 
@@ -13,7 +13,7 @@ clean:
 	rm -f */*.o */*/*.o */*/*/*.o
 	rm -f */*.d */*/*.d */*/*/*.d
 
-# Removes all generated files except util/defines.mk
+# Removes all generated files except util/config.mk
 veryclean:
 	make clean
 	-rm -f lib*.a

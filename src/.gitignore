@@ -1,4 +1,4 @@
-compiler.mk
+config.mk
 *.o
 *.d
 *.a

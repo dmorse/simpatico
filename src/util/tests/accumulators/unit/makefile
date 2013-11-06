@@ -1,21 +1,21 @@
 OBJ_DIR_REL =../../../..
-include $(OBJ_DIR_REL)/compiler.mk
-include $(OBJ_DIR)/util/defines.mk
+include $(OBJ_DIR_REL)/config.mk
+include $(OBJ_DIR)/util/config.mk
 include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/util/tests/accumulators/unit/sources.mk
 
-all: $(util_tests_accumulators_unit_OBJS) Test
+TEST=$(OBJ_DIR)/util/tests/accumulators/unit/Test
+
+all: $(util_tests_accumulators_unit_OBJS) $(TEST)
 
 clean:
-	rm -f $(util_tests_accumulators_unit_OBJS) Test $(util_tests_accumulators_unit_OBJS:.o=.d)
+	rm -f $(util_tests_accumulators_unit_OBJS) $(util_tests_accumulators_unit_OBJS:.o=.d)
+	rm -f $(TEST) 
+	make clean-outputs
 
-clean-deps:
-	rm -f $(util_tests_accumulators_unit_OBJS:.o=.d)
-
-Test: Test.o $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(util_LIB)
+clean-outputs:
+	rm -f binary
 
 -include $(util_tests_accumulators_unit_OBJS:.o=.d)
 
