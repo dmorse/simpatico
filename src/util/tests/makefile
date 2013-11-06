@@ -25,10 +25,11 @@ clean:
 	cd containers; make clean
 	cd crystal; make clean
 	cd format; make clean
+	cd misc; make clean
 	cd param; make clean
 	cd random; make clean
+	cd signal; make clean
 	cd space; make clean
-	cd misc; make clean
 	rm -f */*.o */*/*.o 
 	rm -f */*.d */*/*.d
 

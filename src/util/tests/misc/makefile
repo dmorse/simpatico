@@ -13,9 +13,6 @@ clean:
 	rm -f $(util_tests_misc_OBJS) $(util_tests_misc_OBJS:.o=.d)
 	rm -f $(OBJ_DIR)/$(TEST) 
 
-clean-deps:
-	rm -f $(util_tests_misc_OBJS:.o=.d)
-
 -include $(util_tests_misc_OBJS:.o=.d)
 -include $(util_OBJS:.o=.d)
 

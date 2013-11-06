@@ -16,7 +16,11 @@ all: $(mcMd_tests_mcSimulation_OBJS) $(OBJ_DIR)/$(TEST)
 clean:
 	rm -f $(mcMd_tests_mcSimulation_OBJS) $(mcMd_tests_mcSimulation_OBJS:.o=.d)
 	rm -f $(OBJ_DIR)/$(TEST) 
+	make clean-outputs
+
+clean-outputs:
 	rm -f out/param
+	rm -f *.rst
 
 -include $(mcMd_tests_mcSimulation_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)

@@ -26,7 +26,9 @@ clean:
 	cd chemistry; make clean
 	cd mcSimulation; make clean
 	cd mdSimulation; make clean
+	cd mdIntegrators; make clean
 	cd neighbor; make clean
+	cd simulation; make clean
 	cd species; make clean
 
 -include $(mcMd_tests_OBJS:.o=.d)

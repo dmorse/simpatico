@@ -22,6 +22,9 @@ run: $(ddMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
 clean:
 	rm -f $(ddMd_tests_OBJS) $(ddMd_tests_OBJS:.o=.d)
 	rm -f $(OBJ_DIR)/$(TEST)
+	make clean-outputs
+
+clean-outputs:
 	rm -f log count
         
 -include $(ddMd_tests_OBJS:.o=.d)
