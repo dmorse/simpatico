@@ -1,8 +1,8 @@
 SRC_DIR =../..
 
-include $(SRC_DIR)/compiler.mk
-include $(SRC_DIR)/util/defines.mk
-include $(SRC_DIR)/python/defines.mk
+include $(SRC_DIR)/config.mk
+include $(SRC_DIR)/util/config.mk
+include $(SRC_DIR)/python/config.mk
 include $(SRC_DIR)/python/patterns.mk
 include $(SRC_DIR)/python/cppmodule/sources.mk
 

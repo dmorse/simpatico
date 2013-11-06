@@ -1,8 +1,8 @@
 OBJ_DIR_REL =../..
-include $(OBJ_DIR_REL)/compiler.mk
-include $(OBJ_DIR)/ddMd/defines.mk
-include $(OBJ_DIR)/inter/defines.mk
-include $(OBJ_DIR)/util/defines.mk
+include $(OBJ_DIR_REL)/config.mk
+include $(OBJ_DIR)/ddMd/config.mk
+include $(OBJ_DIR)/inter/config.mk
+include $(OBJ_DIR)/util/config.mk
 include $(SRC_DIR)/ddMd/patterns.mk
 include $(SRC_DIR)/ddMd/sources.mk
 include $(SRC_DIR)/inter/sources.mk
@@ -22,6 +22,9 @@ run: $(ddMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
 clean:
 	rm -f $(ddMd_tests_OBJS) $(ddMd_tests_OBJS:.o=.d)
 	rm -f $(OBJ_DIR)/$(TEST)
+	make clean-outputs
+
+clean-outputs:
 	rm -f log count
         
 -include $(ddMd_tests_OBJS:.o=.d)

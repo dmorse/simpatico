@@ -11,7 +11,7 @@ exchange simulations, for free energy perturbations, or simply as a way to submi
 
 \section parallel_compile_sec Compilation
 
-Instructions for compiling the multi-processor versions of mcSim and mdSim are given \ref user_compile_page "elsewhere". Briefly, one must choose compiler settings that link to an MPI library, by choosing an appropriate value for the COMPILER variable in the file src/compiler.mk. 
+Instructions for compiling the multi-processor versions of mcSim and mdSim are given \ref user_compile_page "elsewhere". Briefly, one must choose compiler settings that link to an MPI library, by choosing an appropriate value for the COMPILER variable in the file src/config.mk. 
 
 When simpatico is compiled with mpi and free energy perturbation enabled, but no other preprocessor macros defined, the default names of the resulting MC and MD executables are mcSim_m_f and mdSim_m_f. The _m suffix stands for "mpi" and _f for "free energy perturbation". By default, the free energy perturbation feature is enabled when MPI is enabled, though it can be explicitly disabled by invoking "./configure -f0". Enabling free energy perturbation when the program is compiled allows the user to use a command line option to choose at run time whether or not to use this feature in a particular simulation, as discussed below.
 

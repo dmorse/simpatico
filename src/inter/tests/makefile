@@ -1,7 +1,7 @@
 OBJ_DIR_REL =../..
-include $(OBJ_DIR_REL)/compiler.mk
-include $(OBJ_DIR)/inter/defines.mk
-include $(OBJ_DIR)/util/defines.mk
+include $(OBJ_DIR_REL)/config.mk
+include $(OBJ_DIR)/inter/config.mk
+include $(OBJ_DIR)/util/config.mk
 include $(SRC_DIR)/inter/patterns.mk
 include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
@@ -12,7 +12,7 @@ TEST=inter/tests/Test
 all: $(inter_tests_OBJS) $(OBJ_DIR)/$(TEST)
 
 run: $(inter_tests_OBJS) $(OBJ_DIR)/$(TEST)
-	./$(OBJ_DIR)/$(TEST) $(SRC_DIR)/inter/tests/ > log
+	$(OBJ_DIR)/$(TEST) $(SRC_DIR)/inter/tests/ > log
 	@echo `grep failed log` ", "\
               `grep successful log` "in src/inter/tests/log" > count
 	@cat count

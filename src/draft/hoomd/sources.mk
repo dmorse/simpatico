@@ -2,7 +2,7 @@ ifdef PYTHON_FLAG
 
 include $(SRC_DIR)/python/cpp/sources.mk
 
-include $(SRC_DIR)/mcMd/defines.mk
+include $(SRC_DIR)/mcMd/config.mk
 
 python_SRCS=$(python_cpp_SRCS)
 

@@ -1,6 +1,6 @@
 OBJ_DIR_REL =../../..
-include $(OBJ_DIR_REL)/compiler.mk
-include $(OBJ_DIR)/util/defines.mk
+include $(OBJ_DIR_REL)/config.mk
+include $(OBJ_DIR)/util/config.mk
 include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/util/tests/archives/sources.mk
@@ -12,6 +12,9 @@ all: $(util_tests_archives_OBJS) $(OBJ_DIR)/$(TEST)
 clean:
 	rm -f $(util_tests_archives_OBJS) $(util_tests_archives_OBJS:.o=.d)
 	rm -f $(OBJ_DIR)/$(TEST) 
+	make clean-outputs
+
+clean-outputs:
 	rm -f dummy text binary
 
 -include $(util_tests_archives_OBJS:.o=.d)

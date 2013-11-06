@@ -5,11 +5,11 @@
 OBJ_DIR_REL=../..
 
 # Include configuration files (build directory)
-include $(OBJ_DIR_REL)/compiler.mk
-include $(OBJ_DIR)/util/defines.mk
-include $(OBJ_DIR)/inter/defines.mk
-include $(OBJ_DIR)/mcMd/defines.mk
-include $(OBJ_DIR)/modules/hoomd/defines.mk
+include $(OBJ_DIR_REL)/config.mk
+include $(OBJ_DIR)/util/config.mk
+include $(OBJ_DIR)/inter/config.mk
+include $(OBJ_DIR)/mcMd/config.mk
+include $(OBJ_DIR)/modules/hoomd/config.mk
 
 # Include patterns and sources files (src directory)
 include $(SRC_DIR)/mcMd/patterns.mk
@@ -51,7 +51,7 @@ clean:
 veryclean:
 	make clean
 	-rm -f */*.o */*.d
-	-rm -f defines.mk makefile
+	-rm -f config.mk makefile
 
 $(MCSIM_EXE): mcSim.o $(modules_hoomd_NVCC_OBJS) $(modules_hoomd_OBJS) \
                  $(util_LIB) $(inter_LIB) $(mcMd_LIB) $(LIBS)
