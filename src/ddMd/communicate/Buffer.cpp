@@ -109,7 +109,7 @@ namespace DdMd
       isInitialized_ = true;
    }
 
-   /**
+   /*
    * Load internal state from an archive.
    */
    void Buffer::loadParameters(Serializable::IArchive &ar)
@@ -459,10 +459,9 @@ namespace DdMd
       #else
       maxSend_.set(maxSendLocal_);
       #endif
-   
    }
 
-   /**
+   /*
    * Clear any accumulated usage statistics.
    */
    void Buffer::clearStatistics()
@@ -486,13 +485,13 @@ namespace DdMd
    }
 
    /*
-   * Number of items currently in data send block. 
+   * Number of items packed thus far in current data send block. 
    */
    int Buffer::sendSize() const
    {  return sendSize_; }
 
    /*
-   * Number of unread items currently in data receive block. 
+   * Number of unread items left in the current receive block. 
    */
    int Buffer::recvSize() const
    {  return recvSize_; }
