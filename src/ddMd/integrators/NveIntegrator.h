@@ -39,7 +39,7 @@ namespace DdMd
       /**
       * Read required parameters.
       *
-      * For velocity-verlet algorithm, reads the time step dt.
+      * Reads the time step dt.
       */
       void readParameters(std::istream& in);
 
@@ -61,6 +61,8 @@ namespace DdMd
 
       /**
       * Setup state just before main loop.
+      *
+      * Calls Integrator::setupAtoms(), initializes prefactors_ array.
       */
       void setup();
 
@@ -80,10 +82,10 @@ namespace DdMd
 
    private:
 
-      // Time step
+      /// Time step.
       double  dt_;
   
-      // Factors of 0.5*dt_/mass, calculated in setup() 
+      /// Factors of 0.5*dt_/mass, calculated in setup().
       DArray<double> prefactors_;      
 
    };
