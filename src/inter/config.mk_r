@@ -11,7 +11,7 @@
 #
 # This file is included by every makefile in the inter directory, and in 
 # directories containing source code that depends on the Inter namespace.
-# It should be included after $(SRC_DIR)/compiler.mk and before
+# It should be included after $(SRC_DIR)/config.mk and before
 # $(SRC_DIR)/inter/patterns.mk.
 #-----------------------------------------------------------------------
 # Makefile variables to define preprocessor macros that enable/disable

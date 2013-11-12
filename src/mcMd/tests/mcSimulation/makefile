@@ -1,8 +1,8 @@
 OBJ_DIR_REL =../../..
-include $(OBJ_DIR_REL)/compiler.mk
-include $(OBJ_DIR)/mcMd/defines.mk
-include $(OBJ_DIR)/inter/defines.mk
-include $(OBJ_DIR)/util/defines.mk
+include $(OBJ_DIR_REL)/config.mk
+include $(OBJ_DIR)/mcMd/config.mk
+include $(OBJ_DIR)/inter/config.mk
+include $(OBJ_DIR)/util/config.mk
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/mcMd/sources.mk
 include $(SRC_DIR)/inter/sources.mk
@@ -16,7 +16,11 @@ all: $(mcMd_tests_mcSimulation_OBJS) $(OBJ_DIR)/$(TEST)
 clean:
 	rm -f $(mcMd_tests_mcSimulation_OBJS) $(mcMd_tests_mcSimulation_OBJS:.o=.d)
 	rm -f $(OBJ_DIR)/$(TEST) 
+	make clean-outputs
+
+clean-outputs:
 	rm -f out/param
+	rm -f *.rst
 
 -include $(mcMd_tests_mcSimulation_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)

@@ -6,7 +6,7 @@
 # is included by all makefile files in this directory tree. 
 #
 # This file should be included in other makefiles after inclusion of the 
-# files src/compiler.mk, src/util/defines.mk and src/inter/defines.mk, 
+# files src/config.mk, src/util/config.mk and src/inter/config.mk, 
 # because this file uses makefile variables defined in those files.
 #-----------------------------------------------------------------------
 
@@ -17,9 +17,9 @@ LIBS= $(inter_LIB) $(util_LIB)
 DEFINES=$(UTIL_DEFS) $(INTER_DEFS)
 
 # Dependencies of source files in src/inter on makefile fragments
-MAKE_DEPS= -A$(OBJ_DIR)/compiler.mk
-MAKE_DEPS+= -A$(OBJ_DIR)/util/defines.mk
-MAKE_DEPS+= -A$(OBJ_DIR)/inter/defines.mk
+MAKE_DEPS= -A$(OBJ_DIR)/config.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/util/config.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/inter/config.mk
 
 # Pattern rule to compile all class source (*.cpp) files in src/inter
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp

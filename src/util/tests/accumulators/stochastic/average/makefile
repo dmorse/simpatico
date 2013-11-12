@@ -1,7 +1,7 @@
 SRC_DIR_REL =../../../../../src
 
-include $(SRC_DIR_REL)/compiler.mk
-include $(SRC_DIR)/util/defines.mk
+include $(SRC_DIR_REL)/config.mk
+include $(SRC_DIR)/util/config.mk
 include $(TESTS_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 

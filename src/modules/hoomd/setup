@@ -10,6 +10,6 @@
 # retaining clean copies of the repository versions.
 #------------------------------------------------------------------------
 
-cp defines.mk_r  defines.mk
+cp config.mk_r  config.mk
 cp makefile_r    makefile
 

@@ -63,7 +63,7 @@ UTIL_DEFS+= -DUTIL_MPI
 UTIL_MPI_SUFFIX:=_m
 endif
 # Note: The variable UTIL_MPI that enables MPI parallel operation must be 
-# defined (or not defined) in the file src/compiler.mk. 
+# defined (or not defined) in the file src/config.mk. 
 
 # Enable debugging assertions
 ifdef UTIL_DEBUG
@@ -78,7 +78,7 @@ endif
 
 #-----------------------------------------------------------------------
 # Path to the util library 
-# Note: OBJ_DIR is defined in compiler.mk
+# Note: OBJ_DIR is defined in config.mk
 
 util_LIBNAME=util$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)
 util_LIB=$(OBJ_DIR)/util/lib$(util_LIBNAME).a

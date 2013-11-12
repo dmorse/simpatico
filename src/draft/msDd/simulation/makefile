@@ -1,9 +1,9 @@
 SRC_DIR_REL =../..
 
-include $(SRC_DIR_REL)/compiler.mk
-include $(SRC_DIR_REL)/util/defines.mk
-include $(SRC_DIR_REL)/inter/defines.mk
-include $(SRC_DIR_REL)/ddMd/defines.mk
+include $(SRC_DIR_REL)/config.mk
+include $(SRC_DIR_REL)/util/config.mk
+include $(SRC_DIR_REL)/inter/config.mk
+include $(SRC_DIR_REL)/ddMd/config.mk
 
 include $(SRC_DIR_REL)/msDd/patterns.mk
 

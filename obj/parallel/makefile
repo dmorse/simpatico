@@ -1,7 +1,7 @@
 # ==============================================================================
 .PHONY: mcMd mcMd-mpi ddMd clean veryclean
 
-include compiler.mk
+include config.mk
 
 mcMd: 
 	./configure -m0
@@ -28,11 +28,11 @@ clean:
 
 veryclean:
 	make clean
-	-rm -f util/defines.mk
-	-rm -f inter/defines.mk
-	-rm -f mcMd/defines.mk
-	-rm -f ddMd/defines.mk
-	-rm -f compiler.mk
+	-rm -f util/config.mk
+	-rm -f inter/config.mk
+	-rm -f mcMd/config.mk
+	-rm -f ddMd/config.mk
+	-rm -f config.mk
 	-rm -f */*.a
 
 # ==============================================================================

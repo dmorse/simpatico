@@ -1,5 +1,5 @@
 SRC_DIR_REL =../..
-include $(SRC_DIR_REL)/compiler.mk
+include $(SRC_DIR_REL)/config.mk
 
 #-----------------------------------------------------------------------
 EXES=example1 example2
@@ -19,7 +19,7 @@ TEST_DIR=$(SRC_DIR)/test
 INCLUDES= -I$(TEST_DIR)
 
 # Extra dependencies for all source files
-ALLDEPS= $(SRC_DIR)/compiler.mk \
+ALLDEPS= $(SRC_DIR)/config.mk \
         $(TEST_DIR)/UnitTest.h $(TEST_DIR)/TestRunner.h \
         $(TEST_DIR)/UnitTestRunner.h $(TEST_DIR)/CompositeTestRunner.h
 #-----------------------------------------------------------------------
