@@ -34,7 +34,7 @@ Dimension - 1 (i.e., between 0 and 2).
 
 See also: \ref Space_Module "Space Module"
 
-\section containers_sec Container Templates
+\section containers_sec Container templates
 
 The src/util/containers directory provides a set of container class 
 templates that are used throughout Simpatico. These containers are used 
@@ -80,7 +80,7 @@ pattern in Simpatico.
 
 See also: \ref Container_Module "Container Module"
 
-\section param_sec Parameter File IO
+\section param_sec Parameter file io
 
 The src/util/containers directory contains a set of classes that are used 
 to read and write parameter file blocks. Every class that needs to read 
@@ -111,7 +111,7 @@ the class OrthorhombicBoundary. The use of a typedef is intended
 to make it easier to later develop versions of the code with more 
 general boundaries (e.g., non-orthogonal axes). 
 
-\section ensemble_sec Statistical Ensembles
+\section ensemble_sec Statistical ensembles
 
 EnergyEnsemble, BoundaryEnsemble, and SpeciesEnsemble are simple
 classes that specify the statistical ensemble to be used to sample
