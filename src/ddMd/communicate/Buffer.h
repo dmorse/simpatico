@@ -9,7 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>  // base class
-#include <util/misc/Setable.h>
+#include <util/misc/Setable.h>          // member
 #include <util/global.h>
 
 namespace DdMd

@@ -122,16 +122,16 @@ void ExchangerTest::setUp()
    #ifdef INTER_ANGLE
    #ifdef INTER_DIHEDRAL
    openFile("in/Exchanger_a_d");
-   #else
+   #else // dihedral
    openFile("in/Exchanger_a");
-   #endif
-   #else
+   #endif // dihedral
+   #else // angle
    openFile("in/Exchanger");
-   #endif
+   #endif // angle
 
    domain.readParam(file());
    buffer.readParam(file());
-   configIo.readParam(file());
+   //configIo.readParam(file());
    random.readParam(file());
    atomStorage.readParam(file());
    bondStorage.readParam(file());
@@ -145,6 +145,7 @@ void ExchangerTest::setUp()
       dihedralStorage.readParam(file());
    }
    #endif
+   configIo.initialize();
    closeFile(); // close parameter file
 
    exchanger.setPairCutoff(0.5);

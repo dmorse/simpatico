@@ -28,10 +28,6 @@ BondPotential{
   kappa            20.0
 }
 
-DdMdConfigIo{
-  atomCacheCapacity      50
-  bondCacheCapacity      50
-}
 
 AngleStorage{
   capacity             40
@@ -40,6 +36,11 @@ AngleStorage{
 DihedralStorage{
   capacity             40
   totalCapacity       150
+}
+
+DdMdConfigIo{
+  atomCacheCapacity      50
+  bondCacheCapacity      50
 }
   angleCacheCapacity     50
   dihedralCacheCapacity  50

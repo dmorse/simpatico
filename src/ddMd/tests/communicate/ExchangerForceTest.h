@@ -201,6 +201,7 @@ void ExchangerForceTest::initialize()
    // Read parameter file
    domain.readParam(file());
    buffer.readParam(file());
+   //configIo.readParam(file());
    random.readParam(file());
    atomStorage.readParam(file());
    bondStorage.readParam(file());
@@ -227,7 +228,6 @@ void ExchangerForceTest::initialize()
       dihedralPotential.readParam(file());
    }
    #endif
-   //configIo.readParam(file());
    configIo.initialize();
    closeFile();
 
@@ -654,12 +654,12 @@ void ExchangerForceTest::testInitialForces()
       exchanger.reverseUpdate();
    }
    saveForces();
-   int nPairNSq;
+   int nPairNSq = 0;
    pairPotential.computeNPair(domain.communicator());
    if (domain.communicator().Get_rank() == 0) {
       nPairNSq = pairPotential.nPair();
    }
-   double pairEnergyNSq;
+   double pairEnergyNSq = 0.0;
    pairPotential.unsetEnergy();
    pairPotential.computeEnergy(domain.communicator());
    if (domain.communicator().Get_rank() == 0) {
@@ -672,12 +672,12 @@ void ExchangerForceTest::testInitialForces()
    if (reverseUpdateFlag) {
       exchanger.reverseUpdate();
    }
-   int nPairList;
+   int nPairList = 0;
    pairPotential.computeNPair(domain.communicator());
    if (domain.communicator().Get_rank() == 0) {
       nPairList = pairPotential.nPair();
    }
-   double energyList;
+   double energyList = 0.0;
    pairPotential.unsetEnergy();
    pairPotential.computeEnergy(domain.communicator());
    if (domain.communicator().Get_rank() == 0) {
@@ -730,7 +730,7 @@ void ExchangerForceTest::testInitialForces()
    atomStorage.begin(atomIter);
    for ( ; atomIter.notEnd(); ++atomIter) {
       id = atomIter->id();
-      for (int i = 0; i < 3; ++i) {
+      for (i = 0; i < 3; ++i) {
          isEqual = eq(forces[id][i], atomIter->force()[i]);
          if (!isEqual) {
             std::cout << id << "  "
@@ -811,8 +811,8 @@ void ExchangerForceTest::testForceCycle()
 {
    initialize();
 
-   int  nAtom  = 0;    // Number of atoms on this processor.
-   int  nGhost = 0;    // Number of ghosts on this processor.
+   // int  nAtom  = 0;    // Number of atoms on this processor.
+   // int  nGhost = 0;    // Number of ghosts on this processor.
    bool needExchange;
 
    TEST_ASSERT(pairPotential.reverseUpdateFlag() == reverseUpdateFlag);
@@ -825,8 +825,8 @@ void ExchangerForceTest::testForceCycle()
    exchanger.exchange();
    exchangeNotify();
 
-   nAtom = atomStorage.nAtom();
-   nGhost = atomStorage.nGhost();
+   // nAtom = atomStorage.nAtom();
+   // nGhost = atomStorage.nGhost();
 
    // Assert that all atoms are within the processor domain.
    AtomIterator   atomIter;
@@ -919,8 +919,8 @@ void ExchangerForceTest::testForceCycle()
          exchanger.update();
       }
 
-      nAtom  = atomStorage.nAtom();
-      nGhost = atomStorage.nGhost();
+      // nAtom  = atomStorage.nAtom();
+      // nGhost = atomStorage.nGhost();
 
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
@@ -944,12 +944,12 @@ void ExchangerForceTest::testForceCycle()
          exchanger.reverseUpdate();
       }
       saveForces();
+      nPairNSq = 0;
+      pairEnergyNSq = 0.0;
       pairPotential.computeNPair(domain.communicator());
-      if (domain.communicator().Get_rank() == 0) {
-         nPairNSq = pairPotential.nPair();
-      }
       pairPotential.computeEnergy(domain.communicator());
       if (domain.communicator().Get_rank() == 0) {
+         nPairNSq = pairPotential.nPair();
          pairEnergyNSq = pairPotential.energy();
       }
 
@@ -959,12 +959,12 @@ void ExchangerForceTest::testForceCycle()
       if (reverseUpdateFlag) {
          exchanger.reverseUpdate();
       }
+      energyList = 0.0;
+      nPairList = 0;
       pairPotential.computeEnergy(domain.communicator());
-      if (domain.communicator().Get_rank() == 0) {
-         energyList = pairPotential.energy();
-      }
       pairPotential.computeNPair(domain.communicator());
       if (domain.communicator().Get_rank() == 0) {
+         energyList = pairPotential.energy();
          nPairList = pairPotential.nPair();
       }
    
@@ -1006,12 +1006,12 @@ void ExchangerForceTest::testForceCycle()
          pairPotential.setMethodId(0);    
          computeForces();
          saveForces();
+         nPairF = 0;
+         energyF = 0.0;
          pairPotential.computeEnergy(domain.communicator());
-         if (domain.communicator().Get_rank() == 0) {
-            energyF = pairPotential.energy();
-         }
          pairPotential.computeNPair(domain.communicator());
          if (domain.communicator().Get_rank() == 0) {
+            energyF = pairPotential.energy();
             nPairF = pairPotential.nPair();
          }
 

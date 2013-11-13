@@ -16,20 +16,30 @@ namespace DdMd
    /**
    * Communication plan.
    * 
-   * A plan contains intructions for the communication pattern for 
-   * exchanging atoms or for communicating ghosts. It can also be
-   * used to encode communication plans for Groups. 
+   * A plan contains intructions for a communication pattern for 
+   * exchanging atoms, ghosts, or Groups.
    *
    * A Plan has an exchange flag and storage flag for each of the
    * directions in the Plimpton communication scheme. Each direction
-   * is indexed by a Cartesian index i=0,..,Dim-1 and j=0,1. Each
-   * exchange flag should be set true in directions for which an
-   * atom should be communicated to exchange ownership. Each ghost
-   * flag should be set true for directions in which the atom must
-   * be communicated as a ghost, and for which its position must be
-   * updated. 
+   * is indexed by a Cartesian index i=0,..,Dim-1 and j=0,1, where
+   * Dim is the dimensionality of space (i.e., normally Dim=3). It
+   * also has an isComplete flag that is used only in the plan for
+   * a Group.
    *
-   * Implementation: These 12 flags are stored in different bits 
+   * When used as a plan for an atom, each exchange flag should be
+   * set true in directions for which an atom should be communicated 
+   * to exchange ownership, and each ghost flag should be set true 
+   * for directions in which the atom must be sent as a ghost in 
+   * order to provide position information to other processors.  
+   *
+   * When used as a plan for a Group, exchange flags are used to
+   * denote directions in which the Group must be sent, and ghost
+   * flags to denote directions in which the atoms of the Group
+   * must be sent as ghosts when the Group is divided among two
+   * or more processors. The isComplete flag is used to indicate
+   * whether the group was complete before the last atom exchange.
+   *
+   * Implementation: These 13 flags are stored in different bits 
    * of a single unsigned int that can also be accessed or set 
    * directly.
    *
@@ -86,6 +96,18 @@ namespace DdMd
       {  flags_ &= (~GMask[i][j]); }
 
       /**
+      * Set isComplete flag true (used only for groups).
+      */
+      void setIsComplete()
+      {  flags_ |= CMask; }
+ 
+      /**
+      * Set isComplete flag false (used only for groups).
+      */
+      void clearIsComplete()
+      {  flags_ &= (~CMask); }
+
+      /**
       * Set all flags (contains all bits).
       */
       void setFlags(unsigned int flags)
@@ -116,6 +138,12 @@ namespace DdMd
       {  return bool(flags_ & GMask[i][j]); }
  
       /**
+      * Is the isComplete flag set?
+      */
+      bool isComplete() const
+      {  return bool(flags_ & CMask); }
+ 
+      /**
       * Return raw flags unsigned int.
       */
       unsigned int flags() const
@@ -124,9 +152,15 @@ namespace DdMd
    private:
 
       unsigned int flags_;
- 
-      static unsigned int GMask[3][2];
+
+      /// Matrix of bit masks for exchange flags.
       static unsigned int EMask[3][2];
+
+      /// Matrix of bit masks for ghost flags.
+      static unsigned int GMask[3][2];
+  
+      /// Bit mask for isComplete flag.
+      static unsigned CMask;
 
    //friends:
 
