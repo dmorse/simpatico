@@ -62,50 +62,44 @@ export PYTHONPATH=${PYTHONPATH}:/${SIMPATICO_DIR}/tools/python
 \endcode
 The value of SIMPATICO_DIR should be set to the path to the simpatico root directory. As an example, this is taken here to be a subdirectory of the home directory. After adding an appropriate variant of these lines to .profile or .bash_profile, log out, log back in, and then enter "echo $PATH" and "echo $PYTHONPATH" to make sure that these variables have been set correctly. 
 
-Purpose: 
-
-The simpatico/bin directory is the default location of all executable files. It must be added to the users PATH to allow the operating system to find the executables.
-
-The simpatico/tools/python directory must be in the PYTHONPATH to allow the build system to generate information about dependencies among C++ files during compilation. The system used by simpatico to generate information about inter-file dependencies uses a python module that is located in this directory. Automatic dependency generation is discussed in more detail \ref compile_dependency_section "below".
+The simpatico/bin directory is the default location for executable files, and must be added to the users PATH to allow the operating system to find the executables used to run a simulation. The simpatico/tools/python directory contains a python script that is used by the build system to generate information about dependencies among C++ files, as discussed in more detail \ref compile_dependency_section "below".
 
 \section compile_setup_section Setup script
 
-After obtaining the source code, but before attempting to compile any files, you must run a bash script named "setup". This script is located in the root simpatico/ directory, and must be executed from within this directory. Thus, starting from the directory that contain the simpatico/ root directory, you would enter:
+After obtaining the source code, but before attempting to compile any files, you must run a bash script named "setup". This script is located in the simpatico/ root directory, and must be executed from within this directory. Thus, starting from the directory that contain the simpatico/ root directory, you would enter:
 \code
 > cd simpatico
 > ./setup
 \endcode
-The period and backslash in "./setup" are required to specify the location of the script (in the current directory).
-
-Purpose: The setup script creates initial user versions of several build configuration files (named config.mk) and C++ files that are required for compilation, but that users may need to modify. The identity and content of these configuration files is discussed below (\ref compile_makefile_section). The setup script should only need to be invoked once, before compiling any source code. After the setup script has been run, many further changes to the system configuration can be made using a separate "configure" script, as discussed \ref compile_configure_section "below".
+The setup script creates initial user versions of several makefile fragments and C++ files that are not kept in the repository because they are files that users may need to modify. The setup script should only need to be invoked once.
 
 \section compile_build_directories_section Understanding object directories 
 
-When "make" is invoked from the simpatico/ root directory, as described above, serial and mpi-enabled programs are built in two different subdirectories of the simpatico/obj/ directory. Object files that are created during compilation of the serial mcSim and mdSim programs, which do not use MPI, are placed in the simpatico/build/serial/ directory. Files that are created during compilation of the ddSim parallel MD program, and of the multi-processor versions of mcSim and mdSim, are all instead placed in the simpatico/build/parallel directory. 
+When "make" is invoked from the simpatico/ root directory, as described above, serial and mpi-enabled programs are built in two different subdirectories of the simpatico/obj/ directory: Files that are created during compilation of the serial mcSim and mdSim programs, which do not use MPI, are placed in the simpatico/obj/serial/ directory. Files created during compilation of the ddSim parallel MD program, and of the multi-processor versions of mcSim and mdSim, are all instead placed in the simpatico/obj/parallel directory. 
 
 It is also possible to execute an in-source build, in which object files are placed in the src/ directory, alongside the corresponding source files. This can be done by invoking "make mcMd", "make ddMd" and/or "make mcMd-mpi" from the simpatico/src directory, rather than from the root directory.
 
-In what follows, we refer to the obj/serial, obj/parallel, and src/ directories as "object" directories. Each of these three directories contain a similar tree of subdirectories, with top level subdirectories named util/, inter/, mcMd/ and ddMd/. Each of the three object directories can be used to build any of the simpatico programs, and can hold the object files and other files generated during compilation. 
+In what follows, we refer to obj/serial, obj/parallel, and src/ collectively as "object" directories. These three directories each contain a similar tree of subdirectories, with top level subdirectories named util/, inter/, mcMd/ and ddMd/. Each of the three object directories can be used to build any of the simpatico programs, and can hold the object files and other files generated during compilation. 
 
-After the setup script is run, each of the object directories will contain a set of build configuration files.  The main build configuration file in each object directory is a file named config.mk in the root of the object directory tree (i.e., in obj/serial, obj/parallel, or src/). In addition, the util/, inter/, mcMd/ and ddMd/ subdirectories of each object directory contains another configuration file, also named config.mk. The config.mk files in each object directory are all makefile fragments that specify choices of compiler options and optional features for any program built in that object directory.  
+After the setup script is run, each of the object directories will contain a set of build configuration files.  The main build configuration file in each object directory is a file named config.mk in the root of the object directory tree (i.e., in obj/serial, obj/parallel, or src/). In addition, the util/, inter/, mcMd/ and ddMd/ subdirectories of each object directory contain a separate configuration file, which is also named config.mk. The config.mk files are makefile fragments that specify choices of compiler options and optional features for any program built in a particular object directory.  
 
-Users may edit files named config.mk as needed, but should avoid editing files named config.mk_r, which are default repository versions of the corresponding configuration files. 
+Users may edit the config.mk build configuration files as needed, but should avoid editing files named config.mk_r. The config.mk_r files are default versions of the corresponding configuration files, and are stored in the git repository. 
 
 After running the setup script, inspect the main config.mk files in each object directories. In each, the value of the makefile variable ROOT_DIR should be set to the absolute path to the simpatico/ root directory on your machine. If you move the simpatico/ root directory after running "setup", you will need to either manually edit this variable in all of these files, or rerun the setup script from the new root directory.
 
 \section compile_mcMd_section Compiling mcSim and mdSim
 
-As a first step, try compiling the single-processor versions of the mcSim and mdSim programs. To compile default versions of these programs using the default gcc compiler, after running the setup script (see above), cd to the simpatico root directory and then enter:
+As a first step, compie the single-processor versions of the mcSim and mdSim programs. To compile default versions of these programs using the default gcc compiler, after running the setup script (see above), cd to the simpatico root directory and then enter:
 \code
 > make mcMd
 \endcode
 This should create executables named mcSim and mdSim in the simpatico/bin directory. 
 
-To remove all of the object files and libraries installed in the obj/serial directory by "make mcMd", enter "make clean-mcMd" from the root directory.
+To remove all of the object files and libraries installed in the obj/serial directory by "make mcMd", enter "make clean-mcMd" from the root directory. This command does not remove the executables from simpatico/bin.
 
 \section compile_configure_section Choosing optional features
 
-Each object directory (i.e., obj/serial, obj/parallel, and src/) also contains a bash script named "configure". The configure script in each such directory can be used to specify which optional features should be enabled or disabled in any program that is built in that directory. Each configure script works by editing the config.mk build configuration files in the same object directory, which only effect the configuration of programs built in the same object directory.  Each configure script must be invoked from the directory that contains it, before building a program.
+Each object directory (i.e., obj/serial, obj/parallel, and src/) also contains a bash script named "configure". The configure script in each such directory can be used to specify which optional features should be enabled or disabled in any program that is built in that directory. Each configure script works by editing the config.mk build configuration files in the same object directory, which only effect the configuration of programs built in the same object directory.  Each configure script must be invoked from the directory that contains it.
 
 As an introduction to the ./configure script, cd to the obj/serial directory and enter
 \code

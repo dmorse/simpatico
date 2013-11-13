@@ -129,9 +129,8 @@ namespace DdMd
    *    - Add local atoms that will be retained by this processor but
    *      sent as ghosts to appropriate send arrays.
    *
-   *    - Call initGroupGhostPlan each type of group (bond, angle, dihedral).
-   *      initGroupGhostPlan<N>{
-   *
+   *    - Call GroupExchanger::markSpanningGroups for each type (bond, angle, dihedral).
+   *      markSpanningGroups<N>{
    *         For each group{
    *            - Set ghost communication flags for groups that span
    *              or may span boundaries.
@@ -170,8 +169,8 @@ namespace DdMd
    *
    *      }
    *
-   *    - Call finishGroupPlan<N> each type of group (bond, angle, dihedral).
-   *      finishGroupPlan<N> {
+   *    - Call GroupExchanger::markGhosts each type of group (bond, angle, dihedral).
+   *      markGhosts<N> {
    *         for each group{
    *            if group is incomplete{
    *               for each direction (i and j) {
@@ -312,42 +311,14 @@ namespace DdMd
       * This function information uses old coordinate information about 
       * ghosts atoms, and so must be called before all ghosts are cleared.
       * 
-      * Algorithm:: GroupExchanger::markSpanningGroups loops over all groups,
-      * Because it is called before ghosts are cleared, all groups should 
-      * be complete, but coordinate values for ghosts are values obtained 
-      * from the previous update, and so are outdated by one step. (The only
-      * exception is the first step of a simulation, which is discussed
-      * separately below). For each group, it loops over all directions 
-      * (i, j), with i=0,..,Dimension-1 and j=0, 1. For each direction it 
-      * determines which atoms are or might be "inside" or "outside" of the 
-      * boundary. This is determining by comparing atom coordinate i to 
-      * inner_(i, j) and outer_(i, j), which are scaled coordinates somehwat 
-      * "inside" and "outside" of the true domain boundary. If coordinate i
-      * is "outside" of inner_(i, j), the atom is considered potentially 
-      * inside the boundary. If a coordinate is "inside" of outer_(i, j), 
-      * it is considered potentially outside the boundary. If a coordinate 
-      * is between inner_(i, j) and outer_(i, j), it is considered both 
-      * inside or outside, to reflect the uncertainty that arises from 
-      * the use of outdated ghost positions. 
-      *
       * If a group has atoms both "inside" and "outside" boundary (i, j),
       * the group is said to "span" the boundary, and ghost communication 
       * flag (i, j) is set for the Group. Otherwise, this ghost communication 
       * flag for the Group cleared. After finishing inspection of a Group, 
       * all pointers to ghost atoms within the Group are cleared.
       *
-      * If a Group is incomplete when this function is called, Group ghost
-      * flags are set for all directions. This should only happen on the
-      * first time step of a simulation. 
-      *
-      * Why this necessary: After all local atoms have been exchanged, atoms
-      * that belong to incomplete groups are marked for sending as ghosts 
-      * in each direction for which the group spans a boundary. This is
-      * done in the GroupExchanger::markGhosts function at the end of this
-      * function.
-      *
-      * The function interfaces defined in GroupExchanger are implemented 
-      * in the GroupStorage<int N> class template. 
+      * The function interface is defined in GroupExchanger, and is
+      * implemented by the GroupStorage<int N> class template. 
       */
 
       // Set ghost communication flags for groups (see above)
@@ -607,7 +578,7 @@ namespace DdMd
          groupExchangers_[k].markGhosts(*atomStoragePtr_, sendArray_,
                                         gridFlags_);
       }
-      stamp(FINISH_GROUP_PLAN);
+      stamp(MARK_GROUP_GHOSTS);
    }
 
    /*
@@ -1019,9 +990,9 @@ namespace DdMd
       double UnpackGroupsT =  timer_.time(Exchanger::UNPACK_GROUPS);
       out << "UnpackGroups          " << Dbl(UnpackGroupsT*ratio, 12, 6)
           << " sec   " << Dbl(UnpackGroupsT/time, 12, 6, true) << std::endl;
-      double FinishGroupPlanT =  timer_.time(Exchanger::FINISH_GROUP_PLAN);
-      out << "FinishGroupPlan       " << Dbl(FinishGroupPlanT*ratio, 12, 6)
-          << " sec   " << Dbl(FinishGroupPlanT/time, 12, 6, true) << std::endl;
+      double MarkGroupGhostsT =  timer_.time(Exchanger::MARK_GROUP_GHOSTS);
+      out << "MarkGroupGhosts       " << Dbl(MarkGroupGhostsT*ratio, 12, 6)
+          << " sec   " << Dbl(MarkGroupGhostsT/time, 12, 6, true) << std::endl;
       double SendArraysT =  timer_.time(Exchanger::INIT_SEND_ARRAYS);
       out << "SendArrays            " << Dbl(SendArraysT*ratio, 12, 6)
           << " sec   " << Dbl(SendArraysT/time, 12, 6, true) << std::endl;
