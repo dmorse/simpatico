@@ -45,7 +45,7 @@
 #   >  ./configure -h intel
 #
 #-----------------------------------------------------------------------
-while getopts "m:g:b:a:d:e:f:l:s:k:c::h:q" opt; do
+while getopts "m:g:b:a:d:e:f:l:s:k:c:h:q" opt; do
 
   if [ -n "$MACRO" ]; then 
     MACRO=""

@@ -9,7 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>  // base class
-#include <util/misc/Setable.h>
+#include <util/misc/Setable.h>          // member
 #include <util/global.h>
 
 namespace DdMd
@@ -99,8 +99,9 @@ namespace DdMd
       * Allocate send and recv buffers.
       *
       * Calculate amounts of memory required to accommodate specified
-      * numbers of local atoms and ghosts, and allocate buffers using
-      * the larger value.
+      * number of local atoms (atomCapacity), or the specified number
+      * of ghosts (ghostCapacity), and allocate send and receive buffers 
+      * large enough to hold the larger value.
       *
       * \param atomCapacity max expected number of local atoms.
       * \param ghostCapacity max expected number of ghost atoms.
@@ -111,7 +112,7 @@ namespace DdMd
       *
       * To pack a block of data into the send buffer.
       *
-      * - Call beginSendBlock(int) at the beginning of the block.
+      * - Call beginSendBlock() at the beginning of the block.
       *
       * - Call the appropriate method of DdMd::Atom or DdMd::Group
       *   once for each item to be packed, within a loop over items 
@@ -120,7 +121,7 @@ namespace DdMd
       * - After packing each item, call incrementSendSize() to
       *   increment a counter of the number of items in the block.
       *
-      * - Call endSendBlock(bool) at the end of the block, to
+      * - Call endSendBlock() at the end of the block, to
       *   finalize the block. 
       *
       * A complete send buffer may contain one or more such blocks
@@ -146,13 +147,13 @@ namespace DdMd
       /**
       * Function template for packing one variable into the send buffer.
       *
-      * This method is used to implement the pack functions provided
+      * This template is used to implement the pack functions provided
       * by the DdMd::Atom and DdMd::Group classes. It is designed to 
       * pack a single primitive C variable into the send buffer. It will 
-      * work on any plain old data type T for which the assignment (=) 
-      * operator does a straight bitwise copy.
+      * also work on any plain old data type T for which assignment (=) 
+      * does a straight bitwise copy.
       *
-      * \param data variable to be packed
+      * \param data variable to be packed into the send buffer.
       */
       template <typename T>
       void pack(const T& data);
@@ -165,13 +166,12 @@ namespace DdMd
       /**
       * Finalize a block in the send buffer.
       *
-      * This method writes a "descriptor" section at the beginning of the block,
-      * that describes the associated data block. The descriptor specifies the 
-      * length of the block, the type of data, and whether the block is 
-      * "complete". 
+      * This method writes a "descriptor" section at the beginning of a data
+      * block. The descriptor specifies the length of the block, the type of 
+      * data, and whether the block is "complete". 
       *
-      * A block should be marked as incomplete iff all of the required data 
-      * of the relevant sendtype did not fit into the buffer. This tells the
+      * A block should be marked as incomplete iff the required data of 
+      * the relevant sendtype did not fit into the buffer. This tells the
       * receiving processor to expect one or more other buffers containing 
       * the remaining data of that type.
       *
@@ -187,8 +187,8 @@ namespace DdMd
       * Begin to receive a block from the recv buffer.
       *
       * This method reads the descriptor section at the beginning of a
-      * block, and sets the receive cursor to be ready to read the first
-      * item.
+      * block, and sets the receive cursor to be ready to unpack the 
+      * first item.
       *
       * \return false if this block is complete, false otherwise.
       */
@@ -197,7 +197,7 @@ namespace DdMd
       /**
       * Function template unpacking one variable from the receive buffer.
       *
-      * This method is used to implement the unpack functions provided
+      * This template is used to implement the unpack functions provided
       * by the DdMd::Atom and DdMd::Group classes. It is designed to 
       * unpack a single primitive C variable from the buffer. It will 
       * work on any plain old data type T for which the assignment (=) 
@@ -209,7 +209,7 @@ namespace DdMd
       void unpack(T& data);
 
       /**
-      * Decrement recvSize counter after unpacking an item.
+      * Decrement recvSize counter after completely unpacking an item.
       */
       void decrementRecvSize();
 
@@ -290,7 +290,7 @@ namespace DdMd
       /**
       * Output statistics.
       *
-      * Call on master, after calling computeStatistics on all procs.
+      * Call this on master, after calling computeStatistics on all processors.
       *
       * \param out   output stream
       */
@@ -311,7 +311,7 @@ namespace DdMd
       int sendSize() const;
 
       /**
-      * Number of unread items in current recv block.
+      * Number of unread items left in current recv block.
       */
       int recvSize() const;
 

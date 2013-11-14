@@ -13,7 +13,7 @@ Many classes in the DdMd namespace have names that are similar or identical to t
 
 See also: \ref DdMd_Module "DdMd Module"
 
-\section chemistry_sec Chemical Structure
+\section DdMd_chemistry_sec Chemical structure
 
 The src/ddMd/chemistry directory contains a set of classes that describe atoms and molecular topology that are (for the most part) closely 
 analogous to classes introduced in the McMd namespace. Corresponding classes often have the same names: McMd::Atom and DdMd::Atom are both 
@@ -33,7 +33,7 @@ The code in the DdMd namespace does not involve any concept of a molecule, or of
 
 See also: \ref DdMd_Chemistry_Module "Chemistry Module"
 
-\section storage_sec Storage Classes
+\section DdMd_Storage_sec Storage classes
 
 Storage classes are classes that manage and provide access to sets of Atom < N > and Group < N > objects for one processor. The AtomStorage class manages separate sets of local and ghost Atom objects for one processor. The GroupStorage<int N> class manages the set of Group < N > objects (i.e., bonds, angles, or dihedrals) that are currently owned by this processor. 
 
@@ -47,7 +47,7 @@ Each storage provides an interface for adding and removing Atom or Group objects
 
 See also: \ref DdMd_Storage_Module "Storage Module"
 
-\section potential_sec Potential Energies
+\section DdMd_Potential_sec Potential energies
 
 The "potential" classes in the DdMd namespace are closely analogous to those in the McMd namespace: Each potential class is a polymorphic classes that provide virtual methods to calculate specific contributions to energies and atomic forces for an entire System. The classes PairPotential, BondPotential, AnglePotential, DihedralPotential and ExternalPotential in the DdMd namespace provide interfaces for nonbonded pair, bond, angle, dihedral, and external potentials, respectively. Each potential energy class provides an addForces() method that adds forces arising from the corresponding potential energy to every local atom on this processor. 
 
@@ -59,11 +59,11 @@ The implementation of each covalent potential energy class uses an associated st
 
 See also: \ref DdMd_Potential_Module "Potential Module"
 
-\section Integrator_sec Molecular Dynamics Integrators
+\section DdMd_Integrator_sec Molecular dynamics integrators
 
 DdMd molecular dynamics integration algorithms are represented by subclasses of Integrator.  Each Integrator implements a method run(int nStep) method that runs a simulation of a prescribed number of steps.  An Integrator may store internal state variables that are specific to the algorithm and that must be retained between steps. 
 
-\section Communicate_sec Interprocessor Communication
+\section DdMd_communicate_sec Interprocessor communication
 
 The src/ddMd/communicate directory contains a set of classes that are used to communicate between processors, to transfer ownership of atoms and groups between processors, and to update positions of ghosts. 
 
@@ -73,7 +73,7 @@ The AtomDistributor, AtomCollector classes, and the GroupDistributor < N > and G
 
 The Buffer class provides an interface for blocks of memory that are used for MPI communication. The Buffer class is used by all of the other communication classes discussed above.
 
-\section simulation_sec Simulation
+\section DdMd_Simulation_sec Simulation
 
 A Simulation object is the top level object in a DdMd simulation.  There is no distinction in the DdMd namespace between a "System" and a "Simulation". Every Simulation has:
  
