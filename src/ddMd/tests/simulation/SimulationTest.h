@@ -105,7 +105,7 @@ inline void SimulationTest::testReadConfig()
    simulation_.readParam(file()); 
 
    Domain& domain = simulation_.domain();
-   Boundary& boundary = simulation_.boundary();
+   //Boundary& boundary = simulation_.boundary();
    AtomStorage& atomStorage = simulation_.atomStorage();
 
    std::string filename("config1");
@@ -183,10 +183,9 @@ inline void SimulationTest::testExchange()
    simulation_.readParam(file());
    file().close(); 
 
-   Domain&  domain  = simulation_.domain();
    Boundary& boundary = simulation_.boundary();
+   Random& random = simulation_.random();
    AtomStorage& atomStorage = simulation_.atomStorage();
-   Random&  random = simulation_.random();
 
    std::string filename("config1");
    simulation_.readConfig(filename);
@@ -236,7 +235,6 @@ inline void SimulationTest::testUpdate()
       TEST_ASSERT( domain.isInDomain( atomIter->position() ) );
    }
    TEST_ASSERT(j == atomStorage.nAtom());
-   int nAtom = atomStorage.nAtom();
 
    // Check that all ghosts are outside the processor domain.
    GhostIterator ghostIter;
@@ -261,7 +259,6 @@ inline void SimulationTest::testCalculateForces()
    simulation_.readParam(file()); 
 
    Domain&  domain  = simulation_.domain();
-   Boundary& boundary = simulation_.boundary();
    AtomStorage& atomStorage = simulation_.atomStorage();
    int myRank = domain.gridRank();
 
@@ -303,8 +300,6 @@ inline void SimulationTest::testIntegrate1()
    printMethod(TEST_FUNC); 
 
    Domain& domain = simulation_.domain();
-   Boundary& boundary = simulation_.boundary();
-   AtomStorage& atomStorage = simulation_.atomStorage();
 
    CommandLine opts;
    opts.append("-e");

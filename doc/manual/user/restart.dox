@@ -8,7 +8,7 @@ The -r command line option can be used to restart mcSim, mdSim, or ddSim simulat
 
 A restart file preserves the full internal state of a simulation. This includes a great deal of information that is not preserved in a configuration file, including the internal state of statistical accumulators used by on-the-fly analyzers, the internal state of some MD integrators that are based on an extended dynamical system (e.g., Nose-Hoover), and the state of the random number generator. It is designed to allow the simulation to continue as if had not been interrupted. 
 
-\section user_restart_page_restart Writing Restart Files
+\section user_restart_page_restart Writing restart files
 
 For a simulation to be restartable, the original run must periodically write a restart file.  Each time a restart file is written, the previous version of the file is overwritten, so that only the most recent verion is available at any instant. The interval (number of time steps) between subsequent file writes is given in the parameter file by an integer parameter named "saveInterval". Output of the restart file may be completely suppressed by setting this parameter to zero. If saveInterval is not zero, the base name of the output file is given by a string parameter "saveFileName."  The full name of the output restart file is constructed by appending a suffix ".rst" to this base name. 
 
@@ -49,7 +49,7 @@ Simulation{
 \endcode
 As for mcSim and mdSim simulations, writing of restart files may be suppressed by setting saveInterval to 0 and omitting the saveFileName parameter.
 
-\section user_restart_page_command Command File
+\section user_restart_page_command Command file
 
 When a simulation is restarted, it first reads the restart (*.rst) file to recreate the internal state of the simulation, and then begins reading a separated command file. The name of the command file for a restarted simulation must begin with the same base name as the corresponding *.rst restart file, followed by a file extension ".cmd" (for "command"). For example, these two files might be named "restart.rst" and "restart.cmd". Because the paths to the restart (*.rst) file and command (*.cmd) file can only differ by the file extension, they must be in the same directory. For either single-processor or parallel MD simulations of a single system, both files are normally in the directory from which the program is executed.
 
@@ -64,7 +64,7 @@ Other commands may also appear before the initial RESTART command and the final 
 
 The RESTART command is only valid in a simulation that was executed using the -r command line option, in which case it must be the first line of the command file. 
 
-\section user_restart_usage_section Command Line Usage
+\section user_restart_usage_section Command line usage
 
 To restart a simulation, one must thus invoke the mcSim, mdSim, or ddSim executable with the -r option, and supply the common base name of the *.rst and *.cmd files as an argument to this command line option. Thus, for example, if a previous mcSim MC simulation were run using a base name of "restart" for the saveFileName, one could type
 \code
@@ -80,7 +80,7 @@ To continue a ddSim simulation, the number of processors must be the same as tha
 
 The -r option may be combined with the -e option. This causes parameters that would normally be read from the parameter file to be echoed to standard output while as they are read from the restart file.
 
-\section user_restart_multisystem_section Multi-System simulations 
+\section user_restart_multisystem_section Multi-system simulations 
 Is is also possible to restart multi-processor mcSim and mdSim simulations, in which a different system is simulated by each processor. Please read the discussion of how to run \ref user_multi_page "multi-processor simulations" before reading the following discussion of multi-processor restart procedures.
 
 In multi-system simulations, whether independent or replicated, each processor writes a separate restart file. The restart file for each processor is placed in the numbered directory that contains data associated with that processor. For example, if the saveFileName parameter in the original parameter file is "restart", the restart file for processor 2 would be repeatedly written to the file 2/restart.rst. 
