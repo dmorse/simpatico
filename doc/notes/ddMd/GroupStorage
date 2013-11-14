@@ -26,71 +26,25 @@ Plan (order of changes):
    methods to Group<N> template, where they belong (Done).
 
 2) Change all methods of Exchanger that involve GroupStorage 
-   to methods of GroupStorage<N> (see discussion below).
+   to methods of GroupStorage<N> (Done).
 
-3) Move GroupStorage to be a member of corresponding Potential.
+3) Create an appropriate abstraction for use of GroupStorage by
+   GroupDistributor and GroupCollector (not begun)
 
-4) Create PotentialMaster. This can read PairPotential, etc., then
+4) Move GroupStorage to be a member of corresponding Potential.
+
+5) Create PotentialMaster. This can read PairPotential, etc., then
    read the pair style. 
 
 ------------------------------------------------------------------------
-class Exchanger:
+Next Step:
 
-  Exchanger::exchange() calls several functions that use GroupStorage<N>:
+  - Figure out how to abstract the association between ConfigIos,
+    GroupDistributor and GroupCollector and GroupStorage<N> classes. 
 
-  1) Before clearing ghosts:   initGroupGhostPlan<N>(GroupStorage<N>& )
+    The problem is that these classes interact using pointers to
+    Group<N> objects, and that the use of templates makes it very
+    difficult to write generic interfaces or virtual functions.
 
-  2) After packing atoms:      packGroups<N>(i, j, GroupStorage<N>, emptyGroups)
+    See proposal for this ConfigIo file.
 
-  3) Upon receipt:             unpackGroups(GroupStorage<N>)
-
-  4) After all exchanges :     finishGroupGhostPlan<N>(GroupStorage<N>)
-
-  5) After ghost exchange :    findGroupGhosts
-
-  Questions:
-
-  1) Can these functions be made methods of the GroupStorage<N> class ?
-
-  2) Can packGroups and removeEmpty groups be combined?
-
-  Analysis:
-
-  1) initGroupGhostPlan uses:
-
-     multiProcessorDirection_, inner_, bound_, outer_
-
-     Solution: Pass required information as argument(s) (in what form?)
-
-     GroupStorage<N>::initGhostPlan(multiProcessorDirection_, bound, inner_, outer_);
-
-  2) packGroups uses
-
-     bufferPtr_, Groups are identified by which atoms are marked for sending.
-
-     Solution: Pass Buffer& as an arguments.
-
-     GroupStorage<N>::pack(i, j, Buffer& );
-
-  3) unpackGroups uses bufferPtr_ and atomStorage. 
-
-     Solution: Pass Buffer& and AtomStorage& as arguments.
-
-     GroupStorage<N>::unpackCleanUp(i, j, Buffer&, AtomStorage& );
-
-  4) finishGroupGhostPlan uses:
-
-     Includes a loop of i, j directions.
-
-     Uses: atomStorage, sendArray_, multiProcessorDirection_,
-     All can be passed as arguments. 
-
-     sendArray_(i, j) is used so that ghosts can be added to it. 
-
-     GroupStorage<N>::finishGhostPlan(AtomStorage&, FMatrix<APArray<Atom>, 3, 2>&)
-
-  5) findGroupGhosts uses:
-
-     atomStorage (Can be passed as argument)
-
-     FinishGhostExchange(AtomStorage& );
