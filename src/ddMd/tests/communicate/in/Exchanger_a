@@ -5,11 +5,6 @@ Buffer{
   atomCapacity    100
   ghostCapacity   100
 }
-DdMdConfigIo{
-  atomCacheCapacity      50
-  bondCacheCapacity      50
-  angleCacheCapacity     50
-}
 Random{
    seed 8762018674
 }
@@ -38,3 +33,8 @@ BondPotential{
 }
 
 
+DdMdConfigIo{
+  atomCacheCapacity      50
+  bondCacheCapacity      50
+  angleCacheCapacity     50
+}

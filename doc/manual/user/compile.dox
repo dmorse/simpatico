@@ -138,9 +138,9 @@ By default, the build system uses the gnu compiler collection (gcc) g++ compiler
 
 The choice of compiler is specified by the value of a makefile variable named COMPILER in the main config.mk in each object directory.  The default value, COMPILER=gcc, selects the gnu compiler. The initial default version of each config.mk file also contains settings for the intel compiler. The intel compiler may be selected by setting COMPILER=intel. Users may add settings for other compilers, or modify the options used for these two compilers, by editing this file.
 
-The -l option of the configure script may be used to reset the value of the COMPILER string from the command line. This option takes the desired value of the COMPILER string as an argument. To choose the intel compiler, rather than gcc, one would thus enter:
+The -h option of the configure script may be used to reset the value of the COMPILER string from the command line. This option takes the desired value of the COMPILER string as an argument. To choose the intel compiler, rather than gcc, one would thus enter:
 \code
-> ./configure -l intel
+> ./configure -h intel
 \endcode
 from the relevant object directory (i.e., from obj/serial and/or obj/parallel) before compiling.  To change the options passed to a particular compiler, users must manually edit the config.mk file. 
 
