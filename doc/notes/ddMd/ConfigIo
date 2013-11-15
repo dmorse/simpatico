@@ -20,33 +20,66 @@ Currently:
    - void      GroupDistributor<N>::send()
    - void      GroupDistributor<N>::receive()
 
+--------------------------------------------------------------------------
 Comments:
 
-   - Interface is generic except for newPtr.
+   - Interface is generic except for pointer to Group<N>* from newPtr.
 
-   - Create base classes GroupDistributor and GroupCollector
-     that implement the interaface:
+   - File IO and communication only requires information about integer
+     atom Ids. The required functionality of Group<N> could be encapsulated
+     in a class IntGroup with an int array of variable length. 
 
-     Distributor:
+--------------------------------------------------------------------------
+Proposal:
+
+   - Create a class IdGroup with an int* array and a capacity N:
+
+     class IdGroup {
+     private:
+        int* data_;
+        int  N_;
+     }
+
+   - Create a class IdGroupArray that allocates an array of IntGroup objects.
+     Make this a friend of IdGroup, and provide IdGroup a private constructor
+     and associate function that can be used to make an array.
+
+   - Create non-template classes GroupDistributor and GroupCollector that implement 
+     the interfaces:
+
+     GroupDistributor:
+     void associate(Domain& , GroupExchanger&, Buffer& )
      void setup();
-     virtual void read(std::istream& );
+     IdGroup* newPtr();
+     void add();
      void send();
      void receive();
+     int groupSize() const;
   
-     Collector:   
+     GroupCollector:   
+     void associate(Domain& , int N, GroupExchanger&, Buffer& )
      void setup();
-     virtual void write(std::ostream& );
+     IdGroup* newPtr()
+     void add();
      void send();
+     int groupSize() const;
 
-   - Add virtual factory methods to GroupExchanger that return instances 
-     of associated Collector and Distributor classes. Specialized storage
-     classes can create specialized Distributors and Collectors.
+   - Create IdGroupIterator that can iterates through a GroupExchanger and 
+     returns IdGroups.  This may require a template IdGroupIteratorImpl<N>
+     subclass and a factory method that returns an instance of the appropriate
+     subclass.
 
-   - This solution works for classes that can define their own file format.
+   - Add functions to GroupExchanger:
 
-   - If we use a base class interace, with no newPtr method, how can we
-     change file format for the standard Group<N> types?
+     // Get size N of group
+     virtual int GroupExchanger::groupSize() const;
 
-   - This requires a function read(std::istream, T*) with e.g., T= Group<N>.
-     Where can this be defined? This is getting complicated. For the
-     moment, I'm flummoxed. 
+     // Add an IdGroup to the underlying GroupStorage<N>
+     virtual void GroupExchanger::addIdGroup(IdGroup& group);
+
+     // Instantiate an IdGroupIterator of the appropriate subclass.
+     virtual IdGroupIterator* GroupExchanger::iterator();
+
+     // Initialize an IdGroupIterator
+     virtual void GroupExchanger::begin(IdGroupIterator& );
+
