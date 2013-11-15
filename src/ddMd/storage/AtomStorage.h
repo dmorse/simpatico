@@ -346,6 +346,7 @@ namespace DdMd
       */
       Atom* find(int atomId) const;  
 
+      #if 0
       /**
       * Count the number of atoms in Group and in this AtomStorage.
       *
@@ -359,6 +360,7 @@ namespace DdMd
       */ 
       template <int N> 
       int countGroupAtoms(Group<N>& group) const;
+      #endif
 
       /**
       * Set handles to atoms in a Group<N> object.
@@ -612,6 +614,7 @@ namespace DdMd
 
    // Template method definition
 
+   #if 0
    /*
    * Count the number of atoms in this Group and this AtomStorage.
    */
@@ -631,6 +634,7 @@ namespace DdMd
       }
       return nAtom;
    }
+   #endif
 
    /*
    * Set pointers to atoms in a Group<N> object.
