@@ -13,6 +13,7 @@
 //#include <ddMd/simulation/Simulation.h>
 
 // Analyzers 
+#include "LogEnergy.h"
 #include "WriteConfig.h"
 #include "OutputEnergy.h"
 #include "OutputPressure.h"
@@ -49,6 +50,9 @@ namespace DdMd
       // Simulation Analyzers
       if (className == "WriteConfig") {
          ptr = new WriteConfig(simulation());
+      } else 
+      if (className == "LogEnergy") {
+         ptr = new LogEnergy(simulation());
       } else 
       if (className == "OutputEnergy") {
          ptr = new OutputEnergy(simulation());

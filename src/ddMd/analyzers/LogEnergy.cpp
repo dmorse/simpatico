@@ -1,5 +1,5 @@
-#ifndef DDMD_OUTPUT_ENERGY_CPP
-#define DDMD_OUTPUT_ENERGY_CPP
+#ifndef DDMD_LOG_ENERGY_CPP
+#define DDMD_LOG_ENERGY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "OutputEnergy.h"
+#include "LogEnergy.h"
 #include <ddMd/potentials/pair/PairPotential.h>
 #ifdef INTER_BOND
 #include <ddMd/potentials/bond/BondPotential.h>
@@ -34,63 +34,51 @@ namespace DdMd
    /*
    * Constructor.
    */
-   OutputEnergy::OutputEnergy(Simulation& simulation) 
+   LogEnergy::LogEnergy(Simulation& simulation) 
     : Analyzer(simulation),
       nSample_(0),
       isInitialized_(false)
-   {  setClassName("OutputEnergy"); }
+   {  setClassName("LogEnergy"); }
 
    /*
    * Read interval and outputFileName. 
    */
-   void OutputEnergy::readParameters(std::istream& in) 
+   void LogEnergy::readParameters(std::istream& in) 
    {
       readInterval(in);
-      readOutputFileName(in);
-
-      std::string filename = outputFileName();
-      simulation().fileMaster().openOutputFile(filename, outputFile_);
-
       isInitialized_ = true;
    }
 
    /*
    * Load internal state from an archive.
    */
-   void OutputEnergy::loadParameters(Serializable::IArchive &ar)
+   void LogEnergy::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
-      loadOutputFileName(ar);
       MpiLoader<Serializable::IArchive> loader(*this, ar);
       loader.load(nSample_);
-
-      std::string filename = outputFileName();
-      simulation().fileMaster().openOutputFile(filename, outputFile_);
-
       isInitialized_ = true;
    }
 
    /*
    * Save internal state to an archive.
    */
-   void OutputEnergy::save(Serializable::OArchive &ar)
+   void LogEnergy::save(Serializable::OArchive &ar)
    {
       saveInterval(ar);
-      saveOutputFileName(ar);
       ar << nSample_;
    }
 
-  
    /*
    * Reset nSample.
    */
-   void OutputEnergy::clear() 
+   void LogEnergy::clear() 
    {  nSample_ = 0;  }
 
    /*
    * Dump configuration to file
    */
-   void OutputEnergy::sample(long iStep) 
+   void LogEnergy::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
          Simulation& sys = simulation();
@@ -98,34 +86,34 @@ namespace DdMd
          sys.computePotentialEnergies();
          if (sys.domain().isMaster()) {
             double kinetic   = sys.kineticEnergy();
-            outputFile_ << Int(iStep, 10)
+            Log::file() << Int(iStep, 10)
                         << Dbl(kinetic, 15);
             double potential = 0.0;
             double pair = sys.pairPotential().energy();
             potential += pair;
-            outputFile_ << Dbl(pair, 15);
+            Log::file() << Dbl(pair, 15);
             #ifdef INTER_BOND
             if (sys.nBondType()) {
                double bond = sys.bondPotential().energy();
                potential += bond;
-               outputFile_ << Dbl(bond, 15);
+               Log::file() << Dbl(bond, 15);
             }
             #endif
             #ifdef INTER_ANGLE
             if (sys.nAngleType()) {
                double angle = sys.anglePotential().energy();
                potential += angle;
-               outputFile_ << Dbl(angle, 15);
+               Log::file() << Dbl(angle, 15);
             }
             #endif
             #ifdef INTER_DIHEDRAL
             if (sys.nDihedralType()) {
                double dihedral  = sys.dihedralPotential().energy();
                potential += dihedral;
-               outputFile_ << Dbl(dihedral, 15);
+               Log::file() << Dbl(dihedral, 15);
             }
             #endif
-            outputFile_ << Dbl(kinetic + potential, 20)
+            Log::file() << Dbl(kinetic + potential, 20)
                         << std::endl;
          }
          ++nSample_;
