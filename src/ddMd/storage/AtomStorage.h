@@ -337,7 +337,13 @@ namespace DdMd
       //@}
       /// \name Accessors 
       //@{
+     
+      /**
+      * Return AtomMap by const reference.  
+      */
+      const AtomMap& map() const;
 
+      #if 0
       /**
       * Return pointer to Atom with specified id.
       *
@@ -365,6 +371,7 @@ namespace DdMd
       */ 
       template <int N> 
       int findGroupAtoms(Group<N>& group) const;
+      #endif
 
       /**
       * Return current number of atoms (excluding ghosts)
@@ -584,6 +591,9 @@ namespace DdMd
    inline bool AtomStorage::isCartesian() const
    { return isCartesian_; }
 
+   inline const AtomMap& AtomStorage::map() const
+   { return map_; }
+
    /*
    * On master processor (rank=0), stored value of total number of atoms.
    */
@@ -596,36 +606,16 @@ namespace DdMd
       #endif
    }
 
-   // Template method definition
-
    #if 0
-   /*
-   * Set pointers to atoms in a Group<N> object.
-   */
-   template <int N>
-   int AtomStorage::findGroupAtoms(Group<N>& group) const
-   {
-      Atom* ptr;
-      int nAtom = 0;
-      for (int i = 0; i < N; ++i) {
-         ptr = map_[group.atomId(i)];
-         if (ptr) {
-            group.setAtomPtr(i, ptr);
-            ++nAtom;
-         } else {
-            group.clearAtomPtr(i);
-         }
-      }
-      return nAtom;
-   }
-   #endif
-
+   // Template method definition
+ 
    /*
    * Set pointers to atoms in a Group<N> object.
    */
    template <int N>
    inline int AtomStorage::findGroupAtoms(Group<N>& group) const
    {  return map_.findGroupAtoms(group); }
+   #endif
 
 }
 #endif

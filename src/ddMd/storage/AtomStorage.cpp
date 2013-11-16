@@ -200,8 +200,6 @@ namespace DdMd
       map_.removeLocal(atomPtr);
       atomSet_.remove(*atomPtr);
       atomReservoir_.push(*atomPtr);
-      // atomPtr->setId(-1);
-      // atomPtr->setIsGhost(false);
    }
 
    /*
@@ -219,8 +217,6 @@ namespace DdMd
          atomPtr = &atomSet_.pop();
          map_.removeLocal(atomPtr);
          atomReservoir_.push(*atomPtr);
-         // atomPtr->setId(-1);
-         // atomPtr->clear();
       }
 
       // Sanity checks
@@ -298,7 +294,6 @@ namespace DdMd
       map_.removeGhost(atomPtr);
       ghostSet_.remove(*atomPtr);
       ghostReservoir_.push(*atomPtr);
-      // atomPtr->setId(-1);
    }
 
    /*
@@ -315,8 +310,6 @@ namespace DdMd
          atomPtr = &ghostSet_.pop();
          map_.removeGhost(atomPtr);
          ghostReservoir_.push(*atomPtr);
-         // atomPtr->setId(-1);
-         // atomPtr->clear();
       }
 
       if (ghostSet_.size() != 0) {
@@ -385,11 +378,13 @@ namespace DdMd
 
    // Accessors
 
+   #if 0
    /*
    * Return pointer to Atom with specified id.
    */
    Atom* AtomStorage::find(int atomId) const
    {  return map_.find(atomId); }
+   #endif
 
    /*
    * Set iterator to beginning of the set of local atoms.
@@ -569,7 +564,7 @@ namespace DdMd
       int j = 0;
       for (begin(localIter); localIter.notEnd(); ++localIter) {
          ++j;
-         ptr = find(localIter->id());
+         ptr = map_.find(localIter->id());
          if (ptr == 0) {
             UTIL_THROW("Unable to find local atom returned by iterator"); 
          }
@@ -586,7 +581,7 @@ namespace DdMd
       j = 0;
       for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
          ++j;
-         ptr = find(ghostIter->id());
+         ptr = map_.find(ghostIter->id());
          if (ptr == 0) {
             UTIL_THROW("find(ghostIter->id()) == 0"); 
          }
