@@ -378,14 +378,6 @@ namespace DdMd
 
    // Accessors
 
-   #if 0
-   /*
-   * Return pointer to Atom with specified id.
-   */
-   Atom* AtomStorage::find(int atomId) const
-   {  return map_.find(atomId); }
-   #endif
-
    /*
    * Set iterator to beginning of the set of local atoms.
    */
@@ -558,12 +550,18 @@ namespace DdMd
       if (nGhost() + ghostReservoir_.size() != ghostCapacity_) 
          UTIL_THROW("nGhost + reservoir size != ghost capacity"); 
 
+      // Test validity of AtomMap.
+      map_.isValid();
+
       // Iterate over, count and find local atoms on this processor.
       ConstAtomIterator localIter;
       Atom* ptr;
       int j = 0;
       for (begin(localIter); localIter.notEnd(); ++localIter) {
          ++j;
+         if (localIter->isGhost()) {
+            UTIL_THROW("Atom in atomSet is marked isGhost");
+         }
          ptr = map_.find(localIter->id());
          if (ptr == 0) {
             UTIL_THROW("Unable to find local atom returned by iterator"); 
@@ -581,6 +579,9 @@ namespace DdMd
       j = 0;
       for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
          ++j;
+         if (!localIter->isGhost()) {
+            UTIL_THROW("Atom in ghostSet is not marked isGhost");
+         }
          ptr = map_.find(ghostIter->id());
          if (ptr == 0) {
             UTIL_THROW("find(ghostIter->id()) == 0"); 

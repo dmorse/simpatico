@@ -682,10 +682,10 @@ namespace DdMd
          oldGroupPtr = find(groupId);
          if (oldGroupPtr) {
             returnPtr();
-            atomMap.findGroupAtoms(*oldGroupPtr);
+            atomMap.findGroupLocalAtoms(*oldGroupPtr);
          } else {
             add();
-            atomMap.findGroupAtoms(*newGroupPtr);
+            atomMap.findGroupLocalAtoms(*newGroupPtr);
          }
       }
       buffer.endRecvBlock();
@@ -800,7 +800,7 @@ namespace DdMd
       for (begin(groupIter); groupIter.notEnd(); ++groupIter) {
          nAtom = groupIter->nPtr();
          if (nAtom < N) {
-            nAtom = atomMap.findGroupAtoms(*groupIter);
+            nAtom = atomMap.findGroupGhostAtoms(*groupIter);
             if (nAtom < N) {
                UTIL_THROW("Incomplete group after search for ghosts");
             }

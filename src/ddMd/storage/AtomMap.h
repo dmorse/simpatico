@@ -107,21 +107,59 @@ namespace DdMd
       /**
       * Set handles to atoms in a Group<N> object.
       *
-      * On entry group is a Group<N> object for which the atom
-      * ids have been set for all N atoms in the group, but the
-      * pointers may not yet have been set. On exit, both pointers
-      * and values of atom ownerId are set are set for all atoms
-      * that are found in this AtomMap. Pointers for any atoms 
-      * that are not found on this storage are set to null values.
+      * On entry, group is a Group<N> object for which the atom ids
+      * for all N atoms in the Group have been set to valid values, 
+      * in the range 0 <= atomId < totalAtomCapacity, but in which
+      * some or all pointers have not been set. 
       *
-      * Precondition: All atom ids in the Group must be set to
-      * values in the range 0 <= atomId(i) < totalAtomCapacity.
+      * On exit, pointers are set for all atoms are present in this 
+      * AtomMap, or set to null for absent atoms. This method overwrites
+      * all old pointer values.
       *
       * \param group Group<N> object with known atom ids. 
       * \return number of atoms found on this processor.
       */ 
       template <int N> 
       int findGroupAtoms(Group<N>& group) const;
+
+      /**
+      * Set handles to atoms in a Group<N> object.
+      *
+      * On entry, group is a Group<N> object for which the atom ids
+      * for all N atoms in the Group have been set to valid values, 
+      * in the range 0 <= atomId < totalAtomCapacity, but in which
+      * some or all pointers have not been set. The AtomMap may not
+      * contain any ghosts.
+      *
+      * On exit, pointers are set for all local atoms that exist in 
+      * this AtomMap, or set to null otherwise. All old pointer values 
+      * are overwritten. 
+      *
+      * \param group Group<N> object with known atom ids. 
+      * \return number of atoms found on this processor.
+      */ 
+      template <int N> 
+      int findGroupLocalAtoms(Group<N>& group) const;
+
+      /**
+      * Set handles to ghost atoms in a Group<N> object.
+      *
+      * On entry, group is a Group<N> object for which the atom ids
+      * for all N atoms in the Group have been set to valid values, 
+      * in the range 0 <= atomId < totalAtomCapacity, and in which
+      * all pointers to local atoms have been set, but in which some
+      * or all pointers to ghosts have not been set. This function
+      * should be called after this AtomMap contains all ghost atoms.
+      * The function does not modify non-null pointers set previously.
+      *
+      * On exit, pointers are set for all ghost atoms present in this
+      * AtomMap.
+      *
+      * \param group Group<N> object with known atom ids. 
+      * \return number of atoms found on this processor.
+      */ 
+      template <int N> 
+      int findGroupGhostAtoms(Group<N>& group) const;
 
       /**
       * Check validity of this AtomMap.
@@ -164,7 +202,7 @@ namespace DdMd
    * Return the number of local atoms.
    */ 
    inline int AtomMap::nLocal() const
-   { return nLocal_; }
+   {  return nLocal_; }
 
    /*
    * Return the number of ghosts with distinct ids.
@@ -189,6 +227,52 @@ namespace DdMd
             ++nAtom;
          } else {
             group.clearAtomPtr(i);
+         }
+      }
+      return nAtom;
+   }
+
+   /*
+   * Set pointers to all atoms in a Group<N> object.
+   */
+   template <int N>
+   int AtomMap::findGroupLocalAtoms(Group<N>& group) const
+   {
+      Atom* ptr;
+      int nAtom = 0;
+      for (int i = 0; i < N; ++i) {
+         ptr = atomPtrs_[group.atomId(i)];
+         if (ptr) {
+            assert(!ptr->isGhost());
+            assert(ptr->atomId() == group.atomId(i));
+            group.setAtomPtr(i, ptr);
+            ++nAtom;
+         } else {
+            group.clearAtomPtr(i);
+         }
+      }
+      return nAtom;
+   }
+
+   /*
+   * Set pointers to atoms in a Group<N> object.
+   */
+   template <int N>
+   int AtomMap::findGroupGhostAtoms(Group<N>& group) const
+   {
+      Atom* ptr;
+      int nAtom = 0;
+      for (int i = 0; i < N; ++i) {
+         if (group.atomPtr(i)) {
+            ++nAtom;
+         } else {
+            ptr = atomPtrs_[group.atomId(i)];
+            if (ptr) {
+               assert(ptr->isGhost());
+               assert(ptr->atomId() == group.atomId(i));
+               group.setAtomPtr(i, ptr);
+               ++nAtom;
+            }
          }
       }
       return nAtom;

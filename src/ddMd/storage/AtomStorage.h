@@ -343,36 +343,6 @@ namespace DdMd
       */
       const AtomMap& map() const;
 
-      #if 0
-      /**
-      * Return pointer to Atom with specified id.
-      *
-      * This method returns a pointer to an Atom or ghost Atom with
-      * the specified id if it is exists on this processor, or returns
-      * a null pointer if the atom does not exist on this processor.
-      */
-      Atom* find(int atomId) const;  
-
-      /**
-      * Set handles to atoms in a Group<N> object.
-      *
-      * On entry group is a Group<N> object for which the atom
-      * ids have been set for all N atoms in the group, but the
-      * pointers may not yet have been set. On exit, both pointers
-      * and values of atom ownerId are set are set for all atoms
-      * that are found in this AtomStorage. Pointers for any atoms 
-      * that are not found on this storage are set to null values.
-      *
-      * Precondition: All atom ids in the Group must be set to
-      * values in the range 0 <= atomId(i) < totalAtomCapacity.
-      *
-      * \param group Group<N> object with known atom ids. 
-      * \return number of atoms found on this processor.
-      */ 
-      template <int N> 
-      int findGroupAtoms(Group<N>& group) const;
-      #endif
-
       /**
       * Return current number of atoms (excluding ghosts)
       */
@@ -605,17 +575,6 @@ namespace DdMd
       return atomSet_.size();
       #endif
    }
-
-   #if 0
-   // Template method definition
- 
-   /*
-   * Set pointers to atoms in a Group<N> object.
-   */
-   template <int N>
-   inline int AtomStorage::findGroupAtoms(Group<N>& group) const
-   {  return map_.findGroupAtoms(group); }
-   #endif
 
 }
 #endif
