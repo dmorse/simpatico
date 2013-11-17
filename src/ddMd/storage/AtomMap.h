@@ -13,6 +13,8 @@
 #include <ddMd/chemistry/Group.h>    // member function template
 #include <util/global.h>
 
+#include <map>
+
 namespace DdMd
 {
 
@@ -172,9 +174,13 @@ namespace DdMd
 
    private:
 
+      typedef std::map<int, Atom*> GhostMap;
+
       // Array of pointers to atoms, indexed by Id.
       // Elements corresponding to absent atoms hold null pointers.
       DArray<Atom*>  atomPtrs_;
+
+      GhostMap ghostMap_;
 
       /// Number of local atoms in this map.
       int nLocal_;
@@ -261,13 +267,18 @@ namespace DdMd
    int AtomMap::findGroupGhostAtoms(Group<N>& group) const
    {
       Atom* ptr;
+      GhostMap::const_iterator iter;
       int nAtom = 0;
+      int atomId;
       for (int i = 0; i < N; ++i) {
          if (group.atomPtr(i)) {
             ++nAtom;
          } else {
-            ptr = atomPtrs_[group.atomId(i)];
-            if (ptr) {
+            //ptr = atomPtrs_[group.atomId(i)];
+            atomId = group.atomId(i);
+            iter = ghostMap_.find(atomId);
+            if (iter != ghostMap_.end()) {
+               ptr = iter->second;
                assert(ptr->isGhost());
                assert(ptr->atomId() == group.atomId(i));
                group.setAtomPtr(i, ptr);

@@ -110,11 +110,20 @@ namespace DdMd
          UTIL_THROW("atomId is out of range");
       }
 
+      #if 0
       // Add iff no particle with same id is already present
       if (0 == atomPtrs_[atomId]) {
          atomPtrs_[atomId] = ptr;
          ++nGhost_;
       }
+      #endif
+
+      std::pair<GhostMap::iterator, bool> ret;
+      ret = ghostMap_.insert(std::pair<int, Atom*>(atomId, ptr));
+      if (ret.second) {
+         ++nGhost_;
+      }
+
    }
 
    /*
@@ -126,6 +135,8 @@ namespace DdMd
       if (atomId < 0 || atomId >= totalAtomCapacity_) {
          UTIL_THROW("atomId is out of range");
       }
+
+      #if 0
       if (atomPtrs_[atomId] == ptr) {
          atomPtrs_[atomId] = 0;
          --nGhost_;
@@ -135,6 +146,20 @@ namespace DdMd
          }
          // Note: No error if another atom with same id is present.
       }
+      #endif
+
+      GhostMap::iterator iter;
+      iter = ghostMap_.find(atomId);
+      if (iter != ghostMap_.end()) {
+         if (iter->second == ptr) {
+            ghostMap_.erase(iter);
+            --nGhost_;
+         }
+         // Note: No error if another atom with same id is present.
+      } else {
+         UTIL_THROW("Error: Attempt to remove absent ghost");
+      }
+
    }
 
    /*
@@ -159,8 +184,11 @@ namespace DdMd
             }
          }
       }
-      if (j != nLocal_ + nGhost_) {
-         UTIL_THROW("Inconsistent count in AtomMap");
+      if (j != nLocal_) {
+         UTIL_THROW("Inconsistent count of local atoms in AtomMap");
+      }
+      if (ghostMap_.size() != nGhost_) {
+         UTIL_THROW("Inconsistent count of ghost atoms in AtomMap");
       }
       return true;
    }
