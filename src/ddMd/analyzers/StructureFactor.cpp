@@ -31,6 +31,7 @@ namespace DdMd
    /// Constructor.
    StructureFactor::StructureFactor(Simulation& simulation) 
     : Analyzer(simulation),
+      isFirstStep_(true),
       isInitialized_(false)
    {  setClassName("StructureFactor"); }
 
@@ -65,15 +66,6 @@ namespace DdMd
             }
          }
 
-         maximumValue_.allocate(nMode_);
-         maximumWaveIntVector_.allocate(nMode_);
-         maximumQ_.allocate(nMode_);
-         for (j = 0; j < nMode_; ++j) {
-            maximumValue_[j].reserve(Samples);
-            maximumWaveIntVector_[j].reserve(Samples);
-            maximumQ_[j].reserve(Samples);
-         }
-
       }
       isInitialized_ = true;
    }
@@ -103,15 +95,6 @@ namespace DdMd
       if (simulation().domain().isMaster()) {
          structureFactors_.allocate(nWave_, nMode_);
          ar >> structureFactors_;
-
-         maximumValue_.allocate(nMode_);
-         maximumWaveIntVector_.allocate(nMode_);
-         maximumQ_.allocate(nMode_);
-         for (int j = 0; j < nMode_; ++j) {
-            ar >> maximumValue_[j];
-            ar >> maximumWaveIntVector_[j];
-            ar >> maximumQ_[j];
-         }
       }
 
       // Allocate work space (all processors).
@@ -137,11 +120,6 @@ namespace DdMd
       ar << nSample_;
 
       ar << structureFactors_;
-      for (int j = 0; j < nMode_; ++j) {
-         ar << maximumValue_[j];
-         ar << maximumWaveIntVector_[j];
-         ar << maximumQ_[j];
-      }
    }
   
    /*
@@ -164,11 +142,6 @@ namespace DdMd
                structureFactors_(i, j) = 0.0;
             }
          }
-         for (int j = 0; j < nMode_; ++j) {
-            maximumValue_[j].clear();
-            maximumWaveIntVector_[j].clear();
-            maximumQ_[j].clear();
-         }
       }
    }
 
@@ -179,6 +152,11 @@ namespace DdMd
    {
       if (isAtInterval(iStep))  {
 
+         if (simulation().domain().isMaster()) {
+            simulation().fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_, !isFirstStep_);
+         }
+
+         isFirstStep_ = false;
          Vector position;
          std::complex<double> expFactor;
          double  product;
@@ -240,9 +218,9 @@ namespace DdMd
             double norm;
             for (j = 0; j < nMode_; ++j) {
                double maxValue = 0.0;
-               IntVector maxIntVector(0);
+               IntVector maxIntVector;
                double maxQ;
-               for (i = 0; i < nWave_; ++i) {
+               for (i = 1; i < nWave_; ++i) {
                   norm = std::norm(totalFourierModes_(i, j));
                   if ( double(norm/volume) >= maxValue ) {
                      maxValue = double(norm/volume);
@@ -251,14 +229,18 @@ namespace DdMd
                   }
                   structureFactors_(i, j) += norm/volume;
                }
-               maximumValue_[j].insert(maximumValue_[j].end(), 1, maxValue);
-               maximumWaveIntVector_[j].insert(maximumWaveIntVector_[j].end(), 
-                                               1, maxIntVector);
-               maximumQ_[j].insert(maximumQ_[j].end(), 1, maxQ);
+               outputFile_ << maxIntVector;
+               outputFile_ << Dbl(maxQ,20,8);
+               outputFile_ << Dbl(maxValue,20,8);
+               outputFile_ << std::endl;
+
             }
          }
-
+   
          ++nSample_;
+
+         outputFile_ << std::endl;
+         outputFile_.close();
       }
 
    }
@@ -313,22 +295,9 @@ namespace DdMd
             outputFile_ << std::endl;
          }
          outputFile_.close();
-
-         // Output maximum structure factors to *_max.dat file
-         simulation().fileMaster().openOutputFile(outputFileName("_max.dat"), 
-                                                  outputFile_);
-         for (j = 0; j < nMode_; ++j) {
-            for (int i = 0; i < nSample_; ++i) {
-               outputFile_ << maximumWaveIntVector_[j][i];
-               outputFile_ << Dbl(maximumQ_[j][i], 20, 8);
-               outputFile_ << Dbl(maximumValue_[j][i], 20, 8);
-               outputFile_ << std::endl;
-            }
-         }
-         outputFile_.close();
       }
 
-   } 
+   }
 
 }
 #endif

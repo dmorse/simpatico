@@ -86,6 +86,20 @@ namespace Inter
       void readParameters(std::istream &in);
 
       /**
+      * Load internal state from an archive.
+      *
+      * \param ar input/loading archive
+      */
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      /**
+      * Save internal state to an archive.
+      *
+      * \param ar output/saving archive
+      */
+      virtual void save(Serializable::OArchive &ar);
+
+      /**
       * Returns external parameter
       *
       * \return external parameter
@@ -159,12 +173,12 @@ namespace Inter
       const Vector cellLengths = boundaryPtr_->lengths();
       double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);
 
-      Vector q;
       double cosine = 0.0;
       for (int i = 0; i < nWaveVectors_; ++i) {
-         q[0] = 2.0*M_PI*waveIntVectors_[i][0]/cellLengths[0];
-         q[1] = 2.0*M_PI*waveIntVectors_[i][1]/cellLengths[1]; 
-         q[2] = 2.0*M_PI*waveIntVectors_[i][2]/cellLengths[2];
+         Vector q;
+         q[0] = 2.0*M_PI*periodicity_*waveIntVectors_[i][0]/cellLengths[0];
+         q[1] = 2.0*M_PI*periodicity_*waveIntVectors_[i][1]/cellLengths[1]; 
+         q[2] = 2.0*M_PI*periodicity_*waveIntVectors_[i][2]/cellLengths[2];
          double arg = q.dot(position);
          cosine += cos(arg);
       }
@@ -184,12 +198,12 @@ namespace Inter
 
       double cosine = 0.0;
       Vector deriv;
-      Vector q;
       deriv.zero();
       for (int i = 0; i < nWaveVectors_; ++i) {
-         q[0] = 2.0*M_PI*waveIntVectors_[i][0]/cellLengths[0];
-         q[1] = 2.0*M_PI*waveIntVectors_[i][1]/cellLengths[1]; 
-         q[2] = 2.0*M_PI*waveIntVectors_[i][2]/cellLengths[2];
+         Vector q;
+         q[0] = 2.0*M_PI*periodicity_*waveIntVectors_[i][0]/cellLengths[0];
+         q[1] = 2.0*M_PI*periodicity_*waveIntVectors_[i][1]/cellLengths[1]; 
+         q[2] = 2.0*M_PI*periodicity_*waveIntVectors_[i][2]/cellLengths[2];
          double arg = q.dot(position);
          cosine += cos(arg);
          double sine = -1.0*sin(arg);

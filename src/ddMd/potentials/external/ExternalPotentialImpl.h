@@ -67,6 +67,10 @@ namespace DdMd
       */
       virtual void readParameters(std::istream& in);
 
+      virtual void loadParameters(Serializable::IArchive &ar);
+
+      virtual void save(Serializable::OArchive &ar);
+
       /// \name Interaction interface
       //@{
 
@@ -218,7 +222,25 @@ namespace DdMd
       addParamComposite(interaction(), nextIndent);
       interaction().readParameters(in);
    }
-  
+
+   /*
+   * Load internal state from an archive.
+   */
+   template <class Interaction>
+   void ExternalPotentialImpl<Interaction>::loadParameters(Serializable::IArchive &ar)
+   {
+      bool nextIndent = false;
+      addParamComposite(interaction(), nextIndent);
+      interaction().loadParameters(ar);
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   template <class Interaction>
+   void ExternalPotentialImpl<Interaction>::save(Serializable::OArchive &ar)
+   {  interaction().save(ar); }
+ 
    /**
    * Set the maximum number of atom types.
    */

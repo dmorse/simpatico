@@ -99,6 +99,18 @@ namespace DdMd
       virtual void save(Serializable::OArchive &ar);
   
       /**
+      * Set up before a simulation.
+      */
+      virtual void clear();
+
+      /**
+      * Add particles to StructureFactor accumulators.
+      *
+      * \param iStep step counter
+      */
+      virtual void sample(long iStep);
+
+      /**
       * Output structure factors, averaged over stars.
       */
       virtual void output();
@@ -120,6 +132,11 @@ namespace DdMd
       /// Lattice system used to create stars.
       LatticeSystem   lattice_;
 
+      /// Has readParam been called?
+      bool    isInitialized_;
+     
+      /// Log file
+      std::ofstream logFile_;
    };
 
 }
