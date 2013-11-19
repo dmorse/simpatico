@@ -97,6 +97,20 @@ namespace DdMd
       Atom* find(int atomId) const;  
 
       /**
+      * Return pointer to a local atom with specified id.
+      *
+      * \param atomId integer index of atom
+      */
+      Atom* findLocal(int atomId) const;  
+
+      /**
+      * Return pointer to a ghost atom with specified id.
+      *
+      * \param atomId integer index of atom
+      */
+      Atom* findGhost(int atomId) const;  
+
+      /**
       * Return the number of local atoms.
       */ 
       int nLocal() const;
@@ -199,10 +213,37 @@ namespace DdMd
    // Inline method definitions
 
    /*
-   * Return pointer to Atom with specified id.
+   * Return pointer to an Atom with specified id.
    */
    inline Atom* AtomMap::find(int atomId) const
+   {
+      Atom* ptr =atomPtrs_[atomId];
+      if (ptr) {
+         return ptr;
+      } else {
+         return findGhost(atomId);
+      }
+   }
+
+   /*
+   * Return pointer to a local Atom with specified id, or null.
+   */
+   inline Atom* AtomMap::findLocal(int atomId) const
    {  return atomPtrs_[atomId]; }
+
+   /*
+   * Return pointer to a ghost Atom with specified id.
+   */
+   inline Atom* AtomMap::findGhost(int atomId) const
+   {  
+      GhostMap::const_iterator iter;
+      iter = ghostMap_.find(atomId);
+      if (iter != ghostMap_.end()) {
+         return iter->second;
+      } else {
+         return 0;
+      }
+   }
 
    /*
    * Return the number of local atoms.
@@ -227,7 +268,7 @@ namespace DdMd
       Atom* ptr;
       int nAtom = 0;
       for (int i = 0; i < N; ++i) {
-         ptr = atomPtrs_[group.atomId(i)];
+         ptr = find(group.atomId(i));
          if (ptr) {
             group.setAtomPtr(i, ptr);
             ++nAtom;

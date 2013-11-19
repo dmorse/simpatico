@@ -353,8 +353,8 @@ namespace DdMd
       for ( ; bondIter.notEnd(); ++bondIter) {
          atomId0  = bondIter->atomId(0);
          atomId1  = bondIter->atomId(1);
-         atomPtr0 = atomMap.find(atomId0);
-         atomPtr1 = atomMap.find(atomId1);
+         atomPtr0 = atomMap.findLocal(atomId0);
+         atomPtr1 = atomMap.findLocal(atomId1);
          if (atomPtr0) {
             atomPtr0->mask().append(atomId1);
          }

@@ -55,20 +55,20 @@ namespace DdMd
    */ 
    void AtomMap::addLocal(Atom* ptr)
    {
-      int atomId = ptr->id();
 
       // Preconditions
+      int atomId = ptr->id();
       if (atomId < 0 || atomId >= totalAtomCapacity_) {
          std::cout << "atomId = " << atomId << std::endl;
          UTIL_THROW("atomId is out of range");
       }
-      if (find(atomId)) {
+      if (atomPtrs_[atomId]) {
          std::cout << "atomId       = " << atomId << std::endl;
          std::cout << "New Position = " << ptr->position() 
                    << std::endl;
-         std::cout << "Old Position = " << find(atomId)->position() 
+         std::cout << "Old Position = " << atomPtrs_[atomId]->position() 
                    << std::endl;
-         UTIL_THROW("Atom with specified id is already present");
+         UTIL_THROW("Local atom with specified id is already present");
       }
 
       // Add 
@@ -187,7 +187,7 @@ namespace DdMd
       if (j != nLocal_) {
          UTIL_THROW("Inconsistent count of local atoms in AtomMap");
       }
-      if (ghostMap_.size() != nGhost_) {
+      if ((int)ghostMap_.size() != nGhost_) {
          UTIL_THROW("Inconsistent count of ghost atoms in AtomMap");
       }
       return true;

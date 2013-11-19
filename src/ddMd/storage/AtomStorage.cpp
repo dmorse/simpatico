@@ -562,12 +562,12 @@ namespace DdMd
          if (localIter->isGhost()) {
             UTIL_THROW("Atom in atomSet is marked isGhost");
          }
-         ptr = map_.find(localIter->id());
+         ptr = map_.findLocal(localIter->id());
          if (ptr == 0) {
             UTIL_THROW("Unable to find local atom returned by iterator"); 
          }
          if (ptr != localIter.get()) {
-            UTIL_THROW("Inconsistent find(localIter->id()"); 
+            UTIL_THROW("Inconsistent findLocal(localIter->id()"); 
          }
       }
       if (j != nAtom()) {
@@ -579,10 +579,10 @@ namespace DdMd
       j = 0;
       for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
          ++j;
-         if (!localIter->isGhost()) {
+         if (!ghostIter->isGhost()) {
             UTIL_THROW("Atom in ghostSet is not marked isGhost");
          }
-         ptr = map_.find(ghostIter->id());
+         ptr = map_.findGhost(ghostIter->id());
          if (ptr == 0) {
             UTIL_THROW("find(ghostIter->id()) == 0"); 
          }
@@ -591,9 +591,11 @@ namespace DdMd
          // one correspondence of ids and pointers is guaranteed only for 
          // local atoms.
       }
+      #if 0
       if (j != nGhost()) {
          UTIL_THROW("Number counted by ghostIterator != nGhost()"); 
       }
+      #endif
 
       return true;
    }
