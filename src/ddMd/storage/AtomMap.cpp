@@ -91,8 +91,21 @@ namespace DdMd
          UTIL_THROW("atomId is out of range");
       }
       if (ptr == atomPtrs_[atomId]) {
+
+         // Remove from atomPtrs_
          atomPtrs_[atomId] = 0;
          --nLocal_;
+
+         // If possible, move an atom from ghostMap to atomPtrs_
+         if (!ghostMap_.empty()) {
+            GhostMap::iterator iter = ghostMap_.find(atomId);
+            if (iter != ghostMap_.end()) {
+               atomPtrs_[atomId] = iter->second;
+               ++nGhostDistinct_;
+               ghostMap_.erase(iter);
+            }
+         }
+
       } else {
          if (0 == atomPtrs_[atomId]) {
             UTIL_THROW("Error: Attempt to remove absent local atom");

@@ -149,6 +149,7 @@ inline void AtomMapTest::testFindLocalGhost()
    array_[13].setId(11);
    array_[15].setId(11);
    array_[8].setId(6);
+   array_[7].setId(6);
 
    map_.addLocal(&array_[6]);
    map_.addLocal(&array_[12]);
@@ -176,29 +177,36 @@ inline void AtomMapTest::testFindLocalGhost()
    TEST_ASSERT( map_.find(16) == 0 );
    TEST_ASSERT( map_.find(17) == 0 );
 
+   map_.addGhost(&array_[7]); 
+   TEST_ASSERT(map_.nGhost() == 5);
+   TEST_ASSERT(map_.nGhostDistinct() == 2);
+   TEST_ASSERT(map_.nLocal() == 3);
+   TEST_ASSERT(map_.find(6) == &array_[6]);
+
    map_.removeLocal(&array_[6]);
    map_.removeGhost(&array_[13]);
-   TEST_ASSERT(map_.nGhost() == 3);
-   TEST_ASSERT(map_.nGhostDistinct() == 2);
+   TEST_ASSERT(map_.nGhost() == 4);
+   TEST_ASSERT(map_.nGhostDistinct() == 3);
+   TEST_ASSERT(map_.find(6) == &array_[7]);
    TEST_ASSERT(map_.find(9) == &array_[9]);
    TEST_ASSERT(map_.find(11) == &array_[11]);
    map_.removeLocal(&array_[12]);
    map_.removeGhost(&array_[11]);
-   TEST_ASSERT(map_.nGhost() == 2);
-   TEST_ASSERT(map_.nGhostDistinct() == 2);
+   TEST_ASSERT(map_.nGhost() == 3);
+   TEST_ASSERT(map_.nGhostDistinct() == 3);
    TEST_ASSERT(map_.find(11) == &array_[15]);
-   TEST_ASSERT(map_.nGhost() == 2);
-   TEST_ASSERT(map_.nGhostDistinct() == 2);
+   TEST_ASSERT(map_.nGhost() == 3);
+   TEST_ASSERT(map_.nGhostDistinct() == 3);
    TEST_ASSERT(map_.nLocal() == 1);
    TEST_ASSERT(map_.isValid());
-   TEST_ASSERT( map_.find(6) == 0 );
-   TEST_ASSERT( map_.find(14) == &array_[14] );
-   TEST_ASSERT( map_.find(12) == 0);
-   TEST_ASSERT( map_.find(3) == 0);
-   TEST_ASSERT( map_.find(5) == 0);
-   TEST_ASSERT( map_.find(7) == 0);
-   TEST_ASSERT( map_.find(9) == &array_[9] );
-   TEST_ASSERT( map_.find(13) == 0);
+   TEST_ASSERT(map_.find(6) == &array_[7]);
+   TEST_ASSERT(map_.find(14) == &array_[14] );
+   TEST_ASSERT(map_.find(12) == 0);
+   TEST_ASSERT(map_.find(3) == 0);
+   TEST_ASSERT(map_.find(5) == 0);
+   TEST_ASSERT(map_.find(7) == 0);
+   TEST_ASSERT(map_.find(9) == &array_[9] );
+   TEST_ASSERT(map_.find(13) == 0);
 
 }
 
@@ -211,33 +219,38 @@ inline void AtomMapTest::testClearGhosts()
    array_[13].setId(11);
    array_[15].setId(11);
    array_[8].setId(6);
+   array_[7].setId(6);
 
    map_.addLocal(&array_[6]);
    map_.addLocal(&array_[12]);
-   //map_.addLocal(&array_[8]); // Should throws error
    map_.addGhost(&array_[9]); ghostSet.append(array_[9]);
    map_.addLocal(&array_[14]);
    map_.addGhost(&array_[11]); ghostSet.append(array_[11]);
+   TEST_ASSERT(map_.nGhost() == 2);
    TEST_ASSERT(map_.nGhostDistinct() == 2);
    map_.addGhost(&array_[13]); ghostSet.append(array_[13]);
+   TEST_ASSERT(map_.nGhost() == 3);
    TEST_ASSERT(map_.nGhostDistinct() == 2);
    map_.addGhost(&array_[15]); ghostSet.append(array_[15]);
+   TEST_ASSERT(map_.nGhost() == 4);
    TEST_ASSERT(map_.nGhostDistinct() == 2);
    TEST_ASSERT(map_.nLocal() == 3);
    TEST_ASSERT(map_.isValid());
 
+   
+   TEST_ASSERT(map_.nGhost() == 4);
+   TEST_ASSERT(map_.nGhostDistinct() == 2);
    map_.removeLocal(&array_[6]);
    TEST_ASSERT(map_.nLocal() == 2);
    map_.removeGhost(&array_[13]); ghostSet.remove(array_[13]);
-   TEST_ASSERT(map_.nGhostDistinct() == 2);
-   map_.removeLocal(&array_[12]);
-   TEST_ASSERT(map_.nLocal() == 1);
-   map_.removeGhost(&array_[11]); ghostSet.remove(array_[11]);
+   TEST_ASSERT(map_.nGhost() == 3);
    TEST_ASSERT(map_.nGhostDistinct() == 2);
    TEST_ASSERT(map_.isValid());
 
    map_.addGhost(&array_[1]); ghostSet.append(array_[1]);
    map_.addGhost(&array_[3]); ghostSet.append(array_[3]);
+   TEST_ASSERT(map_.nGhost() == 5);
+   TEST_ASSERT(map_.nGhostDistinct() == 4);
 
    map_.clearGhosts(ghostSet);
    TEST_ASSERT(map_.isValid());
@@ -248,7 +261,7 @@ TEST_ADD(AtomMapTest, testAdd)
 TEST_ADD(AtomMapTest, testAddRemove)
 TEST_ADD(AtomMapTest, testFindLocal)
 TEST_ADD(AtomMapTest, testFindLocalGhost)
-//TEST_ADD(AtomMapTest, testClearGhosts)
+TEST_ADD(AtomMapTest, testClearGhosts)
 TEST_END(AtomMapTest)
 
 #endif
