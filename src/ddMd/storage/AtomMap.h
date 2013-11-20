@@ -127,35 +127,17 @@ namespace DdMd
       int nGhost() const;
 
       /**
-      * Set handles to atoms in a Group<N> object.
-      *
-      * On entry, group is a Group<N> object for which the atom ids
-      * for all N atoms in the Group have been set to valid values, 
-      * in the range 0 <= atomId < totalAtomCapacity, but in which
-      * some or all pointers have not been set. 
-      *
-      * On exit, pointers are set for all atoms are present in this 
-      * AtomMap, or set to null for absent atoms. This method overwrites
-      * all old pointer values.
-      *
-      * \param group Group<N> object with known atom ids. 
-      * \return number of atoms found on this processor.
-      */ 
-      template <int N> 
-      int findGroupAtoms(Group<N>& group) const;
-
-      /**
-      * Set handles to atoms in a Group<N> object.
+      * Set handles to local atoms in a Group<N> object.
       *
       * On entry, group is a Group<N> object for which the atom ids
       * for all N atoms in the Group have been set to valid values, 
       * in the range 0 <= atomId < totalAtomCapacity, but in which
       * some or all pointers have not been set. The AtomMap may not
-      * contain any ghosts.
+      * contain any ghosts. 
       *
-      * On exit, pointers are set for all local atoms that exist in 
-      * this AtomMap, or set to null otherwise. All old pointer values 
-      * are overwritten. 
+      * On exit, pointers are set correctly for all local atoms that 
+      * exist in this AtomMap, or set to null for absent atoms. All 
+      * old pointer values are overwritten. 
       *
       * \param group Group<N> object with known atom ids. 
       * \return number of atoms found on this processor.
@@ -169,13 +151,13 @@ namespace DdMd
       * On entry, group is a Group<N> object for which the atom ids
       * for all N atoms in the Group have been set to valid values, 
       * in the range 0 <= atomId < totalAtomCapacity, and in which
-      * all pointers to local atoms have been set, but in which some
-      * or all pointers to ghosts have not been set. This function
-      * should be called after this AtomMap contains all ghost atoms.
-      * The function does not modify non-null pointers set previously.
+      * all pointers to local atoms have been set, but in which no
+      * pointers to ghosts have been set. This function may only be
+      * called after all pointers have been set for all local atoms
+      * and after this AtomMap contains all ghost atoms. 
       *
       * On exit, pointers are set for all ghost atoms present in this
-      * AtomMap.
+      * AtomMap. 
       *
       * \param group Group<N> object with known atom ids. 
       * \return number of atoms found on this processor.
@@ -249,6 +231,7 @@ namespace DdMd
 
    // Template method definition
 
+   #if 0
    /*
    * Set pointers to atoms in a Group<N> object.
    */
@@ -268,6 +251,7 @@ namespace DdMd
       }
       return nAtom;
    }
+   #endif
 
    /*
    * Set pointers to all atoms in a Group<N> object.
@@ -303,12 +287,13 @@ namespace DdMd
       int atomId;
       for (int i = 0; i < N; ++i) {
          if (group.atomPtr(i)) {
+            assert(!ptr->isGhost());
             ++nAtom;
          } else {
             atomId = group.atomId(i);
             ptr = atomPtrs_[atomId];
             if (ptr) {
-               assert(!ptr->isGhost());
+               assert(ptr->isGhost());
                assert(ptr->atomId() == atomId);
                group.setAtomPtr(i, ptr);
                ++nAtom;
