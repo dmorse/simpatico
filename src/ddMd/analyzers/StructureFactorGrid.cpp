@@ -31,7 +31,8 @@ namespace DdMd
     : StructureFactor(simulation),
       hMax_(0),
       nStar_(0),
-      lattice_(Triclinic)
+      lattice_(Triclinic),
+      isInitialized_(false)
    {  setClassName("StructureFactorGrid"); }
 
    /*
@@ -232,15 +233,6 @@ namespace DdMd
             }
          }
 
-         maximumValue_.allocate(nMode_);
-         maximumWaveIntVector_.allocate(nMode_);
-         maximumQ_.allocate(nMode_);
-         for (int j = 0; j < nMode_; ++j) {
-            maximumValue_[j].reserve(Samples);
-            maximumWaveIntVector_[j].reserve(Samples);
-            maximumQ_[j].reserve(Samples);
-         }
-
       }
       nSample_ = 0;
 
@@ -276,18 +268,8 @@ namespace DdMd
       loader.load(nSample_);
 
       if (simulation().domain().isMaster()) {
-
          structureFactors_.allocate(nWave_, nMode_);
          ar >> structureFactors_;
-
-         maximumValue_.allocate(nMode_);
-         maximumWaveIntVector_.allocate(nMode_);
-         maximumQ_.allocate(nMode_);
-         for (int j = 0; j < nMode_; ++j) {
-            ar >> maximumValue_[j];
-            ar >> maximumWaveIntVector_[j];
-            ar >> maximumQ_[j];
-         }
       }
 
       // Allocate work space
@@ -318,10 +300,52 @@ namespace DdMd
       ar << nSample_;
 
       ar << structureFactors_;
-      for (int j = 0; j < nMode_; ++j) {
-         ar << maximumValue_[j];
-         ar << maximumWaveIntVector_[j];
-         ar << maximumQ_[j];
+   }
+
+   void StructureFactorGrid::clear()
+   {}
+
+   void StructureFactorGrid::sample(long iStep)
+   {
+      if (isAtInterval(iStep))  {
+
+         if (simulation().domain().isMaster()) {
+            simulation().fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
+         }
+
+         StructureFactor::sample(iStep);
+         
+         // Log structure factors
+         if (simulation().domain().isMaster()) {
+            double volume = simulation().boundary().volume();
+            double norm;
+            for (int i = 0; i < nStar_; ++i) {
+               int size = starSizes_[i];
+
+               int k = starIds_[i];
+               for (int n = 0; n < Dimension; ++n) {
+                  logFile_ << Int(waveIntVectors_[k][n], 5);
+               }
+               logFile_ << Dbl(waveVectors_[k].abs(), 20, 8);
+
+               for (int j = 0; j < nMode_; ++j) {
+                  double average = 0.0;
+                  double value = 0.0;
+                  k = starIds_[i];
+                  for (int m = 0; m < size; ++m) {
+                     norm = std::norm(totalFourierModes_(k, j));
+                     value = norm/volume;
+                     average += value;
+                     ++k;
+                  }
+                  average = average/double(size);
+                  logFile_ << Dbl(average, 20, 8);
+               }
+               logFile_ << std::endl;
+            }
+            logFile_ << std::endl;
+            logFile_.close();
+         }
       }
    }
 
@@ -358,21 +382,6 @@ namespace DdMd
                outputFile_ << Dbl(average, 20, 8);
             }
             outputFile_ << std::endl;
-         }
-         outputFile_.close();
-
-         // Output history of maximum structure factors to *_max.dat file
-         simulation().fileMaster().openOutputFile(outputFileName("_max.dat"), 
-                                                  outputFile_);
-         for (j = 0; j < nMode_; ++j) {
-            for (i = 0; i < nSample_; ++i) {
-               for (n = 0; n < Dimension; ++n) {
-                  outputFile_ << Int(maximumWaveIntVector_[j][i][n], 5);
-               }
-               outputFile_ << Dbl(maximumQ_[j][i], 20, 8);
-               outputFile_ << Dbl(maximumValue_[j][i], 20, 8);
-               outputFile_ << std::endl;
-            }
          }
          outputFile_.close();
       
