@@ -13,6 +13,16 @@
 #include <ddMd/chemistry/Group.h>    // member function template
 #include <util/global.h>
 
+#ifdef UTIL_CXX11
+#include <unordered_map>
+#else
+#include <map>
+#endif
+
+namespace Util {
+   template <typename T> class ArraySet;
+}
+
 namespace DdMd
 {
 
@@ -80,6 +90,13 @@ namespace DdMd
       */
       void removeGhost(Atom* ptr); 
 
+      /**
+      * Clear all ghosts from this map.  
+      *
+      * \param Set of all ghosts on this processor.
+      */
+      void clearGhosts(const ArraySet<Atom>& ghostSet);
+
       //@}
       /// \name Accessors 
       //@{
@@ -102,38 +119,25 @@ namespace DdMd
       /**
       * Return the number of ghosts with distinct ids.
       */ 
+      int nGhostDistinct() const;
+
+      /**
+      * Return the number of ghosts images.
+      */ 
       int nGhost() const;
 
       /**
-      * Set handles to atoms in a Group<N> object.
-      *
-      * On entry, group is a Group<N> object for which the atom ids
-      * for all N atoms in the Group have been set to valid values, 
-      * in the range 0 <= atomId < totalAtomCapacity, but in which
-      * some or all pointers have not been set. 
-      *
-      * On exit, pointers are set for all atoms are present in this 
-      * AtomMap, or set to null for absent atoms. This method overwrites
-      * all old pointer values.
-      *
-      * \param group Group<N> object with known atom ids. 
-      * \return number of atoms found on this processor.
-      */ 
-      template <int N> 
-      int findGroupAtoms(Group<N>& group) const;
-
-      /**
-      * Set handles to atoms in a Group<N> object.
+      * Set handles to local atoms in a Group<N> object.
       *
       * On entry, group is a Group<N> object for which the atom ids
       * for all N atoms in the Group have been set to valid values, 
       * in the range 0 <= atomId < totalAtomCapacity, but in which
       * some or all pointers have not been set. The AtomMap may not
-      * contain any ghosts.
+      * contain any ghosts. 
       *
-      * On exit, pointers are set for all local atoms that exist in 
-      * this AtomMap, or set to null otherwise. All old pointer values 
-      * are overwritten. 
+      * On exit, pointers are set correctly for all local atoms that 
+      * exist in this AtomMap, or set to null for absent atoms. All 
+      * old pointer values are overwritten. 
       *
       * \param group Group<N> object with known atom ids. 
       * \return number of atoms found on this processor.
@@ -147,13 +151,13 @@ namespace DdMd
       * On entry, group is a Group<N> object for which the atom ids
       * for all N atoms in the Group have been set to valid values, 
       * in the range 0 <= atomId < totalAtomCapacity, and in which
-      * all pointers to local atoms have been set, but in which some
-      * or all pointers to ghosts have not been set. This function
-      * should be called after this AtomMap contains all ghost atoms.
-      * The function does not modify non-null pointers set previously.
+      * all pointers to local atoms have been set, but in which no
+      * pointers to ghosts have been set. This function may only be
+      * called after all pointers have been set for all local atoms
+      * and after this AtomMap contains all ghost atoms. 
       *
       * On exit, pointers are set for all ghost atoms present in this
-      * AtomMap.
+      * AtomMap. 
       *
       * \param group Group<N> object with known atom ids. 
       * \return number of atoms found on this processor.
@@ -172,15 +176,24 @@ namespace DdMd
 
    private:
 
+      #ifdef UTIL_CXX11
+      typedef std::unordered_multimap<int, Atom*> GhostMap;
+      #else
+      typedef std::multimap<int, Atom*> GhostMap;
+      #endif
+
       // Array of pointers to atoms, indexed by Id.
       // Elements corresponding to absent atoms hold null pointers.
-      DArray<Atom*>  atomPtrs_;
+      DArray<Atom*> atomPtrs_;
+
+      // Map for extra ghost images
+      GhostMap ghostMap_;
 
       /// Number of local atoms in this map.
       int nLocal_;
 
       /// Number of ghost atoms in this map.
-      int nGhost_;
+      int nGhostDistinct_;
 
       // Maximum number of atoms on all processors, maximum id + 1
       int totalAtomCapacity_;
@@ -193,7 +206,7 @@ namespace DdMd
    // Inline method definitions
 
    /*
-   * Return pointer to Atom with specified id.
+   * Return pointer to an Atom with specified id.
    */
    inline Atom* AtomMap::find(int atomId) const
    {  return atomPtrs_[atomId]; }
@@ -207,11 +220,18 @@ namespace DdMd
    /*
    * Return the number of ghosts with distinct ids.
    */ 
+   inline int AtomMap::nGhostDistinct() const
+   { return nGhostDistinct_; }
+
+   /*
+   * Return the number of ghosts with distinct ids.
+   */ 
    inline int AtomMap::nGhost() const
-   { return nGhost_; }
+   { return nGhostDistinct_ + ghostMap_.size(); }
 
    // Template method definition
 
+   #if 0
    /*
    * Set pointers to atoms in a Group<N> object.
    */
@@ -221,7 +241,7 @@ namespace DdMd
       Atom* ptr;
       int nAtom = 0;
       for (int i = 0; i < N; ++i) {
-         ptr = atomPtrs_[group.atomId(i)];
+         ptr = find(group.atomId(i));
          if (ptr) {
             group.setAtomPtr(i, ptr);
             ++nAtom;
@@ -231,6 +251,7 @@ namespace DdMd
       }
       return nAtom;
    }
+   #endif
 
    /*
    * Set pointers to all atoms in a Group<N> object.
@@ -261,17 +282,23 @@ namespace DdMd
    int AtomMap::findGroupGhostAtoms(Group<N>& group) const
    {
       Atom* ptr;
+      GhostMap::const_iterator iter;
       int nAtom = 0;
+      int atomId;
       for (int i = 0; i < N; ++i) {
          if (group.atomPtr(i)) {
+            assert(!ptr->isGhost());
             ++nAtom;
          } else {
-            ptr = atomPtrs_[group.atomId(i)];
+            atomId = group.atomId(i);
+            ptr = atomPtrs_[atomId];
             if (ptr) {
                assert(ptr->isGhost());
-               assert(ptr->atomId() == group.atomId(i));
+               assert(ptr->atomId() == atomId);
                group.setAtomPtr(i, ptr);
                ++nAtom;
+            } else {
+               group.clearAtomPtr(i);
             }
          }
       }

@@ -409,7 +409,7 @@ namespace DdMd
                if (atomPtr != 0) {
                   if (atomPtr->isGhost()) {
                      if (hasGhosts) {
-                          UTIL_THROW("Missing ghost atom");
+                        UTIL_THROW("Missing ghost atom");
                      }
                   } else {
                      UTIL_THROW("Missing local atom");

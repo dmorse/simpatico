@@ -305,10 +305,13 @@ namespace DdMd
       if (locked_) 
          UTIL_THROW("AtomStorage is locked");
 
-      Atom*  atomPtr;
+      // Clear ghosts from the map
+      map_.clearGhosts(ghostSet_);
+
+      // Transfer ghosts from the set to the reservoir
+      Atom* atomPtr;
       while (ghostSet_.size() > 0) {
          atomPtr = &ghostSet_.pop();
-         map_.removeGhost(atomPtr);
          ghostReservoir_.push(*atomPtr);
       }
 
@@ -317,6 +320,9 @@ namespace DdMd
       }
       if (map_.nGhost() != 0) {
          UTIL_THROW("Nonzero nGhost in map at end of clearGhosts");
+      }
+      if (map_.nGhostDistinct() != 0) {
+         UTIL_THROW("Nonzero nGhostDistinct at end of clearGhosts");
       }
    }
 
@@ -543,12 +549,15 @@ namespace DdMd
    */
    bool AtomStorage::isValid() const
    {
-      
-      if (nAtom() + atomReservoir_.size() != atomCapacity_) 
+      if (nAtom() + atomReservoir_.size() != atomCapacity_) {
          UTIL_THROW("nAtom + reservoir size != local capacity"); 
-
-      if (nGhost() + ghostReservoir_.size() != ghostCapacity_) 
+      }
+      if (nGhost() + ghostReservoir_.size() != ghostCapacity_) {
          UTIL_THROW("nGhost + reservoir size != ghost capacity"); 
+      }
+      if (nGhost() != map_.nGhost()) {
+         UTIL_THROW("Inconsistent values of nGhost");
+      }
 
       // Test validity of AtomMap.
       map_.isValid();
@@ -579,7 +588,7 @@ namespace DdMd
       j = 0;
       for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
          ++j;
-         if (!localIter->isGhost()) {
+         if (!ghostIter->isGhost()) {
             UTIL_THROW("Atom in ghostSet is not marked isGhost");
          }
          ptr = map_.find(ghostIter->id());
@@ -591,9 +600,11 @@ namespace DdMd
          // one correspondence of ids and pointers is guaranteed only for 
          // local atoms.
       }
+      #if 0
       if (j != nGhost()) {
          UTIL_THROW("Number counted by ghostIterator != nGhost()"); 
       }
+      #endif
 
       return true;
    }
