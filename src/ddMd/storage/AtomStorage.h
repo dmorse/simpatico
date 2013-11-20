@@ -476,7 +476,7 @@ namespace DdMd
       // Stack of pointers to unused local Atom objects.
       ArrayStack<Atom>  atomReservoir_;
 
-      // Array that holds all available local Atom objects.
+      // Array that holds all available ghost Atom objects.
       AtomArray  ghosts_;
 
       // Set of pointers to ghost atoms.

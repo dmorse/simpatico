@@ -112,8 +112,8 @@ inline void AtomStorageTest::testAddAtoms()
    TEST_ASSERT(ptr18->id() == 18);
    TEST_ASSERT(storage_.nAtom() == 2);
    TEST_ASSERT(storage_.nGhost() == 1);
-   TEST_ASSERT(storage_.isValid());
 
+   TEST_ASSERT(storage_.isValid());
 }
 
 void AtomStorageTest::testAddRemoveAtoms()
