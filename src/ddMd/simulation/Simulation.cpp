@@ -2176,6 +2176,11 @@ namespace DdMd
          dihedralPotential().isValid(domain_.communicator());
       }
       #endif
+      #ifdef INTER_EXTERNAL
+      if (hasExternal_) {
+         externalPotential().isValid(domain_.communicator());
+      }
+      #endif
       #endif // ifdef UTIL_MPI
 
       return true;

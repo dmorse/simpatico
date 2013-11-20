@@ -10,6 +10,7 @@
 
 #include <util/param/ParamComposite.h>   // base class
 #include <ddMd/chemistry/AtomArray.h>    // member
+#include <ddMd/storage/AtomMap.h>        // member
 #include <ddMd/chemistry/Atom.h>         // member template argument
 #include <ddMd/chemistry/Group.h>        // used in template methods
 #include <util/containers/DArray.h>      // member template
@@ -336,48 +337,11 @@ namespace DdMd
       //@}
       /// \name Accessors 
       //@{
-
+     
       /**
-      * Return pointer to Atom with specified id.
-      *
-      * This method returns a pointer to an Atom or ghost Atom with
-      * the specified id if it is exists on this processor, or returns
-      * a null pointer if the atom does not exist on this processor.
+      * Return AtomMap by const reference.  
       */
-      Atom* find(int atomId) const;  
-
-      /**
-      * Count the number of atoms in Group and in this AtomStorage.
-      *
-      * Preconditions: 
-      * 1) All atom ids in the Group<N> must be set to valid values,
-      *    in the range 0 <= atomId(i) < totalAtomCapacity.
-      * 2) No ghost atoms may exist in this AtomStorage. The 
-      *    method throws an exception if it finds a ghost atom.
-      *
-      * \param group Group<N> object with known atom ids. 
-      */ 
-      template <int N> 
-      int countGroupAtoms(Group<N>& group) const;
-
-      /**
-      * Set handles to atoms in a Group<N> object.
-      *
-      * On entry group is a Group<N> object for which the atom
-      * ids have been set for all N atoms in the group, but the
-      * pointers may not yet have been set. On exit, both pointers
-      * and values of atom ownerId are set are set for all atoms
-      * that are found in this AtomStorage. Pointers for any atoms 
-      * that are not found on this storage are set to null values.
-      *
-      * Precondition: All atom ids in the Group must be set to
-      * values in the range 0 <= atomId(i) < totalAtomCapacity.
-      *
-      * \param group Group<N> object with known atom ids. 
-      * \return number of atoms found on this processor.
-      */ 
-      template <int N> 
-      int findGroupAtoms(Group<N>& group) const;
+      const AtomMap& map() const;
 
       /**
       * Return current number of atoms (excluding ghosts)
@@ -521,9 +485,8 @@ namespace DdMd
       // Stack of pointers to unused ghost Atom objects.
       ArrayStack<Atom>  ghostReservoir_;
 
-      // Array of pointers to atoms, indexed by Id.
-      // Elements corresponding to absent atoms hold null pointers.
-      DArray<Atom*>  atomPtrs_;
+      // Map of atomIds to atom pointers.
+      AtomMap  map_;
 
       // Array of stored old positions.
       DArray<Vector>  snapshot_;
@@ -598,6 +561,9 @@ namespace DdMd
    inline bool AtomStorage::isCartesian() const
    { return isCartesian_; }
 
+   inline const AtomMap& AtomStorage::map() const
+   { return map_; }
+
    /*
    * On master processor (rank=0), stored value of total number of atoms.
    */
@@ -608,48 +574,6 @@ namespace DdMd
       #else
       return atomSet_.size();
       #endif
-   }
-
-   // Template method definition
-
-   /*
-   * Count the number of atoms in this Group and this AtomStorage.
-   */
-   template <int N>
-   int AtomStorage::countGroupAtoms(Group<N>& group) const
-   {
-      Atom* ptr;
-      int nAtom = 0;
-      for (int i = 0; i < N; ++i) {
-         ptr = atomPtrs_[group.atomId(i)];
-         if (ptr) {
-            if (ptr->isGhost()) {
-               UTIL_THROW("Found ghost atom");
-            }
-            ++nAtom;
-         }
-      }
-      return nAtom;
-   }
-
-   /*
-   * Set pointers to atoms in a Group<N> object.
-   */
-   template <int N>
-   int AtomStorage::findGroupAtoms(Group<N>& group) const
-   {
-      Atom* ptr;
-      int nAtom = 0;
-      for (int i = 0; i < N; ++i) {
-         ptr = atomPtrs_[group.atomId(i)];
-         if (ptr) {
-            group.setAtomPtr(i, ptr);
-            ++nAtom;
-         } else {
-            group.clearAtomPtr(i);
-         }
-      }
-      return nAtom;
    }
 
 }

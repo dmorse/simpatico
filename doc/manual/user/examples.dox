@@ -8,37 +8,15 @@ A set of examples are provided with Simpatico in the examples/
 directory. Examining and running these examples is the easiest
 way to start becoming familiar with the program.
 
-\section examples_subdirectories_sec Directory Tree
+\section examples_subdirectories_sec Directory structure
 
-Subdirectories of the examples/ directory contain different 
-types of examples that use different features of Simpatico. 
-Some directories contain examples that are designed to work 
-with versions of the code enabled or disabled by preprocessor 
-macros.
-The file examples/README describes the examples in different
-subdirectories, and explains which features must be enabled or 
-disabled at compile time run the examples in each subdirectory.
-The examples in the atomic/, dimer/ and chain/ subdirectories 
-are designed to work with the default versions of the code, 
-which contains only nonbonded pair and covalent bond potentials, 
-but no angle, dihedral or external potentials.  
-Many subdirectories also contain README files that explain 
-their contents in greater detail.  Subdirectories that contain 
-similar examples designed for use with mcSim, mdSim and ddSim 
-are often labelled mc/, md/ and dd/, respectively.
+Subdirectories of the examples/ directory contain different types of examples that use different features of Simpatico.  Some directories contain examples that are designed to work with versions of the code enabled or disabled by preprocessor macros.  The file examples/README describes the examples in different subdirectories, and explains which features must be enabled or disabled at compile time run the examples in each subdirectory.  The examples in the atomic/, dimer/ and chain/ subdirectories are designed to work with the default versions of the code, which contains only nonbonded pair and covalent bond potentials, but no angle, dihedral or external potentials.  Many subdirectories also contain README files that explain their contents in greater detail.  Subdirectories that contain similar examples designed for use with mcSim, mdSim and ddSim are often labelled mc/, md/ and dd/, respectively.
 
-\section examples_layout_sec Example Layout
+\section examples_layout_sec Example layout
 
-The input files for each example are in a separate directory.
-In the simplest examples for the single-processor versions of 
-mcSim and mdSim, the parameter file is named "param" and the 
-command file is named "commands". In some examples, the
-parameter file and command file names also have suffixes that
-denote which version of the program they should be used with,
-as explained in detail in the file examples/README.
+The input files for each example are in a separate directory.  In the simplest examples for the single-processor versions of mcSim and mdSim, the parameter file is named "param" and the command file is named "commands". In some examples, the parameter file and command file names also have suffixes that denote which version of the program they should be used with, as explained in detail in the file examples/README.
 
-The directory structure for the simplest example directories
-looks like this:
+The directory structure for the simplest example directories looks like this:
 \code
 
     param
@@ -49,28 +27,15 @@ looks like this:
        (output files)
 
 \endcode
-Here, in/config is the input configuration file that is
-used to initialize the simulation. 
+Here, in/config is the input configuration file that is used to initialize the simulation. 
 
-All of the output files except restart files are written 
-to a subdirectory out/ of the directory containing the 
-example.  Most of the files that are created in the out/ 
-directory are created by analyzers that are declared in 
-the parameter file. The parameter file required for this
-directory structure would define inputPrefix = in/ and
-outputPrefix = out/.
+All of the output files except restart files are written to a subdirectory out/ of the directory containing the example.  Most of the files that are created in the out/ directory are created by analyzers that are declared in the parameter file. The parameter file required for this directory structure would define inputPrefix = in/ and outputPrefix = out/.
 
-When two or more examples use the same input configuration 
-file, the input configuration file may instead be in a
-subdirectory named in/ of the parent directory of the
-example directories.
+When two or more examples use the same input configuration file, the input configuration file may instead be in a subdirectory named in/ of the parent directory of the example directories.
 
 \section examples_usage_sec Usage
 
-To run a simple MC example simulation with the above directory
-structure, one must cd to the main directory for the example 
-(the directory that contains the parameter and command files) 
-and issue the command 
+To run a simple MC example simulation with the above directory structure, one must cd to the main directory for the example (the directory that contains the parameter and command files) and issue the command 
 \code
     > mcSim < param
 \endcode
@@ -78,15 +43,9 @@ to send the log output to the screen, or
 \code
     > mcSim < param > log &
 \endcode
-to run the MC example in the background and send this output 
-to a file named "log".  Among the output files that will be 
-created in the out/ directory is a configuration file that
-contains the final system configuration. This is usually
-named out/config.
+to run the MC example in the background and send this output to a file named "log".  Among the output files that will be created in the out/ directory is a configuration file that contains the final system configuration. This is usually named out/config.
 
-The above directions assume that the users PATH shell 
-variable has been set to include the directory that contains 
-the mcSim (or mdSim) executable file.
+The above directions assume that the users PATH shell variable has been set to include the directory that contains the mcSim (or mdSim) executable file.
 
 <BR>
 \ref user_cfgfile_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 

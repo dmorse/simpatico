@@ -369,6 +369,24 @@ namespace DdMd
       * \return total pair energies (only correct on master node).
       */
       DMatrix<double> pairEnergies() const;
+     
+      #ifdef INTER_EXTERNAL
+      /**
+      * Compute pair energies for each pair of atom types.
+      * 
+      * Reduce operation: Must be called on all nodes.
+      */
+      void computeExternalEnergy();
+
+      /**
+      * Return precomputed pair energies.
+      *
+      * Call only on master processor, after computePairEnergies.
+      * 
+      * \return total pair energies (only correct on master node).
+      */
+      double externalEnergy() const;
+      #endif
 
       /**
       * Calculate and store kinetic stress.

@@ -385,8 +385,8 @@ namespace DdMd
       isValid();
 
       // Loop over groups.
-      begin(groupIter);
-      for ( ; groupIter.notEnd(); ++groupIter) {
+      const AtomMap& atomMap = atomStorage.map();
+      for (begin(groupIter); groupIter.notEnd(); ++groupIter) {
          nAtom = 0;
          nGhost = 0;
          for (i = 0; i < N; ++i) {
@@ -396,7 +396,7 @@ namespace DdMd
             }
             atomPtr = groupIter->atomPtr(i);
             if (atomPtr) {
-               if (atomPtr != atomStorage.find(atomId)) {
+               if (atomPtr != atomMap.find(atomId)) {
                   UTIL_THROW("Inconsistent non-null atom pointer in Group");
                }
                if (atomPtr->isGhost()) {
@@ -405,7 +405,7 @@ namespace DdMd
                   ++nAtom;
                }
             } else {
-               atomPtr = atomStorage.find(atomId);
+               atomPtr = atomMap.find(atomId);
                if (atomPtr != 0) {
                   if (atomPtr->isGhost()) {
                      if (hasGhosts) {
@@ -671,6 +671,7 @@ namespace DdMd
    {
       Group<N>* newGroupPtr;
       Group<N>* oldGroupPtr;
+      const AtomMap& atomMap = atomStorage.map();
       int groupId;
 
       buffer.beginRecvBlock();
@@ -681,10 +682,10 @@ namespace DdMd
          oldGroupPtr = find(groupId);
          if (oldGroupPtr) {
             returnPtr();
-            atomStorage.findGroupAtoms(*oldGroupPtr);
+            atomMap.findGroupLocalAtoms(*oldGroupPtr);
          } else {
             add();
-            atomStorage.findGroupAtoms(*newGroupPtr);
+            atomMap.findGroupLocalAtoms(*newGroupPtr);
          }
       }
       buffer.endRecvBlock();
@@ -729,13 +730,14 @@ namespace DdMd
          #ifdef UTIL_DEBUG
          #ifdef DDMD_GROUP_STORAGE_DEBUG
          // Validate group
+         const AtomMap& atomMap = atomStorage.map();
          int atomId;
          nAtom  = 0;
          for (k = 0; k < N; ++k) {
             atomPtr = groupIter->atomPtr(k);
             atomId  = groupIter->atomId(k);
             if (atomPtr != 0) {
-               if (atomPtr != atomStorage.find(atomId)) {
+               if (atomPtr != atomMap.find(atomId)) {
                   UTIL_THROW("Error in atom pointer in group");
                }
                if (atomPtr->isGhost()) {
@@ -744,7 +746,7 @@ namespace DdMd
                   ++nAtom;
                }
             } else { // if atomPtr == 0
-               atomPtr = atomStorage.find(atomId);
+               atomPtr = atomMap.find(atomId);
                if (atomPtr) {
                   if (!atomPtr->isGhost()) {
                      UTIL_THROW("Missing pointer to local atom in group");
@@ -793,11 +795,12 @@ namespace DdMd
    void GroupStorage<N>::findGhosts(AtomStorage& atomStorage)
    {
       GroupIterator<N> groupIter;
+      const AtomMap& atomMap = atomStorage.map();
       int nAtom;
       for (begin(groupIter); groupIter.notEnd(); ++groupIter) {
          nAtom = groupIter->nPtr();
          if (nAtom < N) {
-            nAtom = atomStorage.findGroupAtoms(*groupIter);
+            nAtom = atomMap.findGroupGhostAtoms(*groupIter);
             if (nAtom < N) {
                UTIL_THROW("Incomplete group after search for ghosts");
             }

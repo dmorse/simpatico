@@ -69,17 +69,13 @@ public:
       // Test length of linked list
       int n = 0;
       const Cell* cellPtr = cellList.begin();
-      int nNeighbor, i, in;
-      const Cell* nbCellPtr;
+      int nNeighbor;
 
       // Loop over local cells
       while (cellPtr) {
          ++n;
          nNeighbor = cellPtr->nNeighborCell();
          TEST_ASSERT(nNeighbor == 27);
-         for (i = 0; i < nNeighbor; ++i) {
-            nbCellPtr = cellPtr->neighborCellPtr(i);
-         }
          cellPtr = cellPtr->nextCellPtr();
       }
       TEST_ASSERT(n == 6);

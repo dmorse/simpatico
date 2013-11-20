@@ -56,9 +56,14 @@ namespace Util
       void setDimensions(const IntVector& dimensions);
 
       /**
-      * Get number of grid points along direction i.
+      * Get an IntVector of grid dimensions.
+      */
+      IntVector dimensions() const;
+
+      /**
+      * Get grid dimension along Cartesian direction i.
       *
-      * \param i index of Cartesian direction 0 <=i < 3.
+      * \param i index of Cartesian direction 0 <=i < Util::Dimension
       */
       int dimension(int i) const;
 
@@ -140,6 +145,11 @@ namespace Util
       int size_;
 
    };
+
+   // Inline member functions
+
+   inline IntVector Grid::dimensions() const
+   {  return dimensions_; }
 
    inline int Grid::dimension(int i) const
    {  return dimensions_[i]; }

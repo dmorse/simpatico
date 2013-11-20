@@ -6,7 +6,7 @@
 
 This section describes how to execute the simpatico programs mcSim, mdSim and ddSim. The command line interface is similar for all three programs. Differences among the three programs are discussed explicitly below as needed. This page gives instructions for using any of these three programs to simulate a single physical system. Multi-system simulations, such as those used for replica exchange algorithms, are discussed separately (see \ref user_multi_page).
 
-\section usage_inputs Input Files 
+\section usage_inputs Input files 
 A simpatico simulation normally requires the three input files: 
 <ul>
    <li> a \ref usage_parameter_section "parameter" file </li>
@@ -17,7 +17,7 @@ The contents and formats of these different types of file are discussed briefly 
 
 When a simulation is executed, the parameter file is read from standard input. The parameter file contains the name of the command file, which is read after the parameter file.  The command file contains a list of commands that are interpreted and executed in sequence. Among these is normally a command that instructs the program to read a specific input configuration file, a command that runs a simulation of a specified number of steps, and a command to write the final configuration to a file. 
 
-\section usage_running_section Running a Simulation 
+\section usage_running_section Running a simulation 
 To run a simulation, one invokes the executable name and reads the parameter file from standard input. For example, to run a single-processor mdSim MD simulation, using a parameter file named "param" in the current working directory, one would enter:
 \code
    mdSim < param
@@ -77,7 +77,7 @@ The readParam() method does more than read parameters: It is an initialization f
 
 The analogous code for the single-processor MD (mdSim) and parallel MD (ddSim) programs are almost identical. The only difference is that the main object in mdSim.cpp is an instance of McMd::MdSimulation, and the main object in ddSim.ccpp is an instance of DdMd::Simulation.
 
-\section usage_parameter_section Parameter File
+\section usage_parameter_section Parameter file
 
 The parameter file contains all the data required to initialize a simulation, i.e., to initialize all variables to valid values and to allocate all required memory. This data includes: 
 
@@ -88,7 +88,7 @@ The parameter file contains all the data required to initialize a simulation, i.
 
 In mcSim and mdSim simulations, the parameter file also contains data required to describe molecular species. In ddSim simulations, this information about molecular topology is instead embedded in the configuration file (discussed below). The parameter file also contains the filename for the command file that should be read by the readCommands() method.  Examples of parameter file formats for different types of simulation are shown and discussed \ref user_param_page "here".
 
-\section usage_command_section Command File
+\section usage_command_section Command file
 
 The command file contains a sequence of commands that are read and executed in the order they appear. Each line of the command file starts with a capitalized command name, followed by zero or more arguments. The minimal command file for an mcSim simulation looks like this:
 \code
@@ -101,7 +101,7 @@ This file instructs the program to read a configuration file named "config", run
 
 Paths for the input and output files specified in the command file are constructed by concatenating input and output prefix strings that are specified in the parameter file (named inputPrefix and outputPrefix) to file names specified in the command file.  The values of these prefix strings are often set to directory name strings, which end with a directory separator symbol "/", in order to place all input files and output files in different directories. The fact that the above example command script uses the same name "config" for both the input and output configuration files thus does not necessarily mean that the script would cause the input configuration file to be overwritten, sinceinput and output files are normally placed in different directories.
 
-\section usage_cfgfile_section Configuration File
+\section usage_cfgfile_section Configuration file
 
 A configuration file specifies atomic positions and other characteristics of a system that can change during the course of a simulation. Slightly different information is required by mcSim, mdSim, and ddSim.  A default configuration file format exists for each of the three programs, each of which can also read and write files using a several other file formats.
   
@@ -111,7 +111,7 @@ The default configuration file format for ddSim contains box dimensions, atomic 
 
 Configuration file formats for all programs are described in more detail \ref user_cfgfile_page "here".
 
-\section usage_output_section Output Files
+\section usage_output_section Output files
 
 Each simulation writes a limited amount of information to report the progress of the simulation. In simulations of single system, this is written to standard output. It will thus appear on the user's screen unless redirected to a file.  
  
@@ -119,7 +119,7 @@ A typical command file contains a command to write a final system configuration 
 
 A variety of other output files may also be written by classes that implement on-the-fly statistical analyses or data output operations, which we refer to as Analyzer classes. Each such data analysis and data output class is a subclasses of either the McMd::Analyzer (for mcSim or mdSim) or DdMd::Analyzer (for ddSim) base class. The parameter file for each type of simulation specifies a set of Analyzer objects that should used during a simulation. Each such object carries out a computation and/or outputs data to file at a specified interval. Each Analyzer writes output to one or more separate files. The path to each such output file is constructed by prepending a common string variable, named outputPrefix, to a base name that is specified in the parameter file block associated with a specific Analyzer.  
 
-\section section_options Command Line Options
+\section section_options Command line options
 
 All simpatico simulations of single systems can be invoked with either or both of the following two command line options:
 <ul>

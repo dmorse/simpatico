@@ -98,7 +98,8 @@ void BondStorageTest::testAddRemove()
    TEST_ASSERT(bondStorage_.size() == 3);
    TEST_ASSERT(bondStorage_.isValid());
 
-   Bond* newPtr = bondStorage_.newPtr();
+   // Retrieve and return another bond
+   bondStorage_.newPtr();
    bondStorage_.returnPtr();
 
    TEST_ASSERT(bondStorage_.find(53) == ptr53);
@@ -236,13 +237,13 @@ inline void BondStorageTest::testClear()
    printMethod(TEST_FUNC);
 
    // Add bonds
-   Bond* ptr53 = bondStorage_.add(53); // 0
-   Bond* ptr35 = bondStorage_.add(35); // 1
-   Bond* ptr18 = bondStorage_.add(18); // 2
-   Bond* ptr44 = bondStorage_.add(44); // 3
-   Bond* ptr17 = bondStorage_.add(17); // 4
+   bondStorage_.add(53); // 0
+   bondStorage_.add(35); // 1
+   bondStorage_.add(18); // 2
+   bondStorage_.add(44); // 3
+   bondStorage_.add(17); // 4
    Bond* ptr82 = bondStorage_.add(82); // 5
-   Bond* ptr39 = bondStorage_.add(39); // 6
+   bondStorage_.add(39); // 6
   
    TEST_ASSERT(bondStorage_.size() == 7);
    bondStorage_.remove(ptr82);

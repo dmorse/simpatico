@@ -1,5 +1,7 @@
-#include "AtomStorageTest.h"
-#include "BondStorageTest.h"
+//#include "AtomMapTest.h"
+//#include "AtomStorageTest.h"
+//#include "BondStorageTest.h"
+#include "StorageTestComposite.h"
 
 int main()
 {
@@ -7,11 +9,19 @@ int main()
    MPI::Init();
    #endif
 
-   TEST_RUNNER(AtomStorageTest) runner1;
+   StorageTestComposite runner;
+   runner.run();
+
+   #if 0
+   TEST_RUNNER(AtomMapTest) runner1;
    runner1.run();
 
-   TEST_RUNNER(BondStorageTest) runner2;
+   TEST_RUNNER(AtomStorageTest) runner2;
    runner2.run();
+
+   TEST_RUNNER(BondStorageTest) runner3;
+   runner3.run();
+   #endif
 
    #ifdef UTIL_MPI
    MPI::Finalize();

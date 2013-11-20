@@ -180,8 +180,8 @@ namespace DdMd
          UTIL_THROW("newPtr is null on entry to add()");
       }
 
-      // If group has at least one atoms on master, add to groupStorage.
-      int nAtom = atomStoragePtr_->findGroupAtoms(*newPtr_);
+      // If group has at least one atom on master, add to groupStorage.
+      int nAtom = atomStoragePtr_->map().findGroupLocalAtoms(*newPtr_);
       if (nAtom > 0) {
          Group<N>* ptr = groupStoragePtr_->newPtr();
          *ptr = *newPtr_;
@@ -285,7 +285,7 @@ namespace DdMd
          UTIL_THROW("GroupDistributor::receive called on master node");
       }
       if (atomStoragePtr_->nGhost() != 0) {
-         UTIL_THROW("AtomStorage has ghosts");
+         UTIL_THROW("Error: AtomStorage has ghosts");
       }
 
       Group<N>* ptr;
@@ -304,14 +304,14 @@ namespace DdMd
          while (bufferPtr_->recvSize() > 0) {
             ptr = groupStoragePtr_->newPtr();
             ptr->unpack(*bufferPtr_);
-            nAtom = atomStoragePtr_->findGroupAtoms(*ptr);
+            nAtom = atomStoragePtr_->map().findGroupLocalAtoms(*ptr);
             if (nAtom > 0) {
                groupStoragePtr_->add();
                nAtomRecv_ += nAtom;
             } else if (nAtom == 0) {
                groupStoragePtr_->returnPtr();
             } else {
-               UTIL_THROW("Invalid return value from findGroupAtoms");
+               UTIL_THROW("Invalid return value from findGroupLocalAtoms");
             }
          }
 

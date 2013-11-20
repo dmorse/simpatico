@@ -31,6 +31,10 @@ public:
       TEST_ASSERT(g.dimension(1) == 1);
       TEST_ASSERT(g.dimension(0) == 1);
       TEST_ASSERT(g.size() == 1);
+      IntVector u = g.dimensions();
+      TEST_ASSERT(u[2] == 1);
+      TEST_ASSERT(u[1] == 1);
+      TEST_ASSERT(u[0] == 1);
    } 
 
    void testConstructor2()
@@ -45,6 +49,10 @@ public:
       TEST_ASSERT(g.dimension(1) == 3);
       TEST_ASSERT(g.dimension(0) == 2);
       TEST_ASSERT(g.size() == 12);
+      IntVector u = g.dimensions();
+      TEST_ASSERT(u[2] == 2);
+      TEST_ASSERT(u[1] == 3);
+      TEST_ASSERT(u[0] == 2);
    }
 
    void testRankPosition()

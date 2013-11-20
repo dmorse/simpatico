@@ -13,7 +13,7 @@ The McMd namespace contains most of the classes used to construct Monte Carlo an
 
 See also: \ref McMd_Module "McMd Module"
 
-\section chemistry_sec Chemical Structure
+\section McMd_chemistry_sec  Chemical structure
 
 An Atom object represents a point particle that is part of an Molecule.  Each Atom has a position, velocity and force, each of which is represented by a Util::Vector object. The velocity and force vectors are not used in many MC move algorithms, but are provided even in MC simulations for use in hybrid MC/MD algorithms. An Atom has an integer atom type index, and an integer id that is unique within the simulation. The atom type ids are used to identify atom types within the calculation of non-bonded pair interactions. Each Atom is associated with a parent Molecule object, and can return a reference to its parent Molecule.  
 
@@ -27,7 +27,7 @@ An Species object contains a description of the chemical structure (connectivity
 
 See also: \ref McMd_Chemistry_Module "Chemistry Module"
 
-\section system_sec Systems 
+\section McMd_System_sec Systems 
 
 An System object represents a set of interacting molecules within a region of space. McSystem and MdSystem are subclasses of System that are specialized for MD and MC simulations, respectively.
 
@@ -51,7 +51,7 @@ In MC simulations, the parent McSimulation (discussed below) has an McMoveManage
 
 See also: \ref McMd_System_Module "System Module"
 
-\section potential_sec Potential Energies
+\section McMd_Potential_sec Potential energies
 
 The McMd "potential" classes in the mcMd/potentials/ directory are polymorphic classes that provide virtual methods to calculate specific contributions to energies and atomic forces for an entire System, as well as for small groups (e.g., pairs) of interacting atoms.  The classes BondPotential, AnglePotential, DihedralPotential provide interfaces for bond, angle, and dihedral potentials, respectively, which are used in both MD and MC simulations. The classes McPairPotential and MdPairPotential provide slightly different interfaces for nonbonded pair interactions for use in MC and MD simulations, respectively. Every potential class provides an energy() method that returns the associated energy for the entire system. The covalent potential energy classes (BondPotential, AnglePotential, and DihedralPotential) and the MdPairPotential class all provide an addForces() method that adds the contribution of the associated type of interaction to the atomic forces for every atom in the system.  The covalent potential energy classes and McPairPotential all provide an atomEnergy() method that returns the value of a particular energy contribution (i.e., the nonbonded pair energy or covalent bond energy) for a specific atom, for use in MC algorithms. 
 
@@ -63,28 +63,29 @@ The choice of which interaction class to use for each type of potential energy i
 
 See also: \ref McMd_Potential_Module "Potential Module"
 
-\section MdIntegrator_sec Molecular Dynamics Integrators
+\section McMd_MdIntegrator_sec  Molecular dynamics integrators
 
 Molecular dynamics integration algorithms are represented by subclasses of MdIntegrator. Each MdIntegrator is associated with a parent MdSystem.  Each MdIntegrator implements a step() method that applies one complete MD step to the molecules of the associated System.  An MdIntegrator may store internal state variables that are specific to the algorithm and that must be retained between steps. 
   
 See also: \ref McMd_MdIntegrator_Module "MdIntegrator Module"
 
-\section McMove_sec Monte Carlo Moves
+\section McMd_McMove_sec Monte Carlo moves
+
 Monte Carlo move algorithms are represented by subclasses of McMove.  Each McMove implements a move() method that attempts a Markov move, decides whether to accept or reject it, and then updates or restores the state of the associated McSystem or (in Gibbs ensemble) McSystems.  
 
 See also: \ref McMd_McMove_Module "McMove Module"
 
-\section Analyzer_sec Analyzers and Accumulators
+\section McMd_Analyzer_sec Analyzers and Accumulators
 
 Analyzer is an abstract base class for objects that represent data analysis or data output operations that must be carried out periodically during a simulation.  Each Analyzer has a sample() method that is called to implement the desired operation, and an integer "interval" member that specifies the number of MD steps or MC moves that should elapse between subsequent invocations of sample(). The simplest subclasses of Analyzer periodically output values of specific variables for later analysis. Other analyzers evaluate statistical properties of particular physical quantities, e.g., they may evaluate the average, variance, distribution, and/or autocorrelation of a sequence of values. The DumpConfig class outputs a sequence of complete configuration files for postprocessing
 
 Analyzers that execute a statistical analysis are usually implemented using one of the accumulator classes from the src/util/accumulators directory. Each accumulator class models an abstract mathematical operations, such as evaluation of an average, a histogram, or an autorcorrelation function. 
 
-See also: \ref McMd_Analyzer_Module   "Analyzer Module"
+See also: \ref McMd_Analyzer_Module  "Analyzer Module"
 
-See also: \ref Accumulators_Module "Accumulators Module"
+See also: \ref Accumulators_Module  "Accumulators Module"
 
-\section simulation_sec Simulations
+\section McMd_Simulation_sec Simulations
 
 A complete MC or MD simulation is represented by a Simulation object.  MdSimulation and McSimulation subclasses of Simulation are used for MD and MC simulations of a single system, respectively. Each Simulation object has:
 

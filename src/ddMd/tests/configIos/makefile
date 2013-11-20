@@ -14,7 +14,9 @@ all: $(ddMd_tests_configIos_OBJS) $(ddMd_tests_configIos_OBJS:.o=)
 clean:
 	rm -f $(ddMd_tests_configIos_OBJS) $(ddMd_tests_configIos_OBJS:.o=.d)
 	rm -f $(ddMd_tests_configIos_OBJS:.o=)
-	rm -f binary out
+
+clean-outputs:
+	rm -f binary out out2
 
 -include $(ddMd_tests_configIos_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)

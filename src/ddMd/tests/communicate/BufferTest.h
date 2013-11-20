@@ -792,12 +792,11 @@ public:
       printMethod(TEST_FUNC);
 
       DArray<Bond> bonds;
-      int          myrank, commsize, source;
-
       bonds.allocate(4);
-      myrank   = MPI::COMM_WORLD.Get_rank();
-      commsize = MPI::COMM_WORLD.Get_size();
-      source   = 0;
+
+      int myrank = MPI::COMM_WORLD.Get_rank();
+      // int commsize = MPI::COMM_WORLD.Get_size();
+      int source = 0;
 
       if (myrank == source) {
 

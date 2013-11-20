@@ -1,0 +1,52 @@
+
+Issues:
+
+ 1) For grid directions with 1 processor, no ghosts are sent to complete 
+    groups. Groups may be completed using long bonds, relying on minimum
+    image convention. This special case has thus far required use of the
+    minimum image convention for all cases. 
+
+ 2) For grid directions with 2 processors, one the first step, the current 
+    algorithm allows atoms in incomplete groups to be sent in both directions.
+    This means that the receiving processor will receive two images with
+    shifted coordinates. The group is completed using a pointer to the first
+    atom with the correct Id, which may not be the one that would not require
+    a minimum image convention.  For atoms near an edge or corner, there can
+    be more than 2 images. 
+
+Principles:
+
+ 1) For any number of processors, always create bonded ghosts. 
+
+ 2) For each direction, for 1 or 2 processors, send all members of the 
+    group in the same sense (j=0 or j=1). Try to choose this such that 
+    no shifts are required to complete the group. (How to do this?)
+
+ 3) For one and two processor cases: Identify uncoupled atoms, i.e., atoms
+    connected to incomplete bonds. Find the uncoupled atom that is closest
+    to a boundary. Send all local atoms in the direction of the boundary
+    for this atom. 
+
+ 4) Modify the algorithm on the receiving end so as to check the minimum
+    image convention immediately as each atom is added. Reject images 
+    that do not satisfy the minimum image convention. Throw an Exception
+    if it is not possible to find images that satisfy the minimum image
+    convention. 
+
+ 5) When trying to complete a Group, search in a specific order: Look 
+    first for atoms that are connected to at least one existing atom,
+    then repeat the process until the group is complete. This allows
+    minimum image convention for bonds to be satisfied at each step.
+
+    Problem with 4 and 5: The method for finding atoms only allows us to
+    identify one image of each atom. For a 2 x 2 x 2 grid, we will receive
+    up to 8 images. Will the problem will be solved if we require that 
+    each atom is sent in only one direction? Well, no, since a particle
+    near an corner in a 1 x 1 x 1 grid really should appear 6 times?
+
+ 6) Consider writing specific instantiations of GroupStorage::findGhosts
+    for different values of N, to reduce the number of if{...} blocks.
+
+ 7) Decide what to do if an atom must be sent in one direction as a result
+    of rule (3) and sent in the other as a result of proximity to a boundary.
+

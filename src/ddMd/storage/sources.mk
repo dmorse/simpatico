@@ -1,4 +1,5 @@
 ddMd_storage_=\
+   ddMd/storage/AtomMap.cpp \
    ddMd/storage/AtomStorage.cpp \
    ddMd/storage/GroupExchanger.cpp \
    ddMd/storage/BondStorage.cpp \

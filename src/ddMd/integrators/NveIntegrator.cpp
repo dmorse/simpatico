@@ -73,7 +73,10 @@ namespace DdMd
       ar << dt_;
       Integrator::save(ar);
    }
-  
+ 
+   /*
+   * Setup at beginning of run, before entering main loop.
+   */ 
    void NveIntegrator::setup()
    {
 
@@ -96,6 +99,9 @@ namespace DdMd
       }
    }
 
+   /*
+   * First half of velocity-Verlet update.
+   */
    void NveIntegrator::integrateStep1()
    {
       Vector dv;
@@ -116,6 +122,9 @@ namespace DdMd
       }
    }
 
+   /*
+   * Second half of velocity-Verlet update.
+   */
    void NveIntegrator::integrateStep2()
    {
       Vector dv;

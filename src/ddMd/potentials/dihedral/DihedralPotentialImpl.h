@@ -355,7 +355,7 @@ namespace DdMd
       Atom* atom1Ptr;
       Atom* atom2Ptr;
       Atom* atom3Ptr;
-      int   type, isLocal0, isLocal1, isLocal2, isLocal3;
+      int   type;
 
       // Loop over dihedral groups
       for (storage().begin(iter); iter.notEnd(); ++iter) {
@@ -375,26 +375,17 @@ namespace DdMd
          // Calculate derivatives of energy with respect to r1, r2, r3
          interaction().force(dr1, dr2, dr3, f1, f2, f3, type);
 
-         // isLocal0 = !(atom0Ptr->isGhost());
-         // isLocal1 = !(atom1Ptr->isGhost());
-         // isLocal2 = !(atom2Ptr->isGhost());
-         // isLocal3 = !(atom3Ptr->isGhost());
-         
-         //if (isLocal0) {
          if (!atom0Ptr->isGhost()) {
             atom0Ptr->force() += f1;
          }
-         //if (isLocal1) {
          if (!atom1Ptr->isGhost()) {
             atom1Ptr->force() -= f1;
             atom1Ptr->force() += f2;
          }
-         //if (isLocal2) {
          if (!atom2Ptr->isGhost()) {
             atom2Ptr->force() -= f2;
             atom2Ptr->force() += f3;
          }
-         //if (isLocal3) {
          if (!atom3Ptr->isGhost()) {
             atom3Ptr->force() -= f3;
          }
