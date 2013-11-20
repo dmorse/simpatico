@@ -298,7 +298,7 @@ namespace DdMd
       void pack(int i, int j, Buffer& buffer);
    
       /**
-      * Unpack groups from buffer.
+      * Unpack groups from buffer and locate available atoms.
       *
       * \param buffer  Buffer object from which groups are unpacked
       * \param atomStorage  AtomStorage used to find atoms pointers

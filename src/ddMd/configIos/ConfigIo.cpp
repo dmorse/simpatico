@@ -332,7 +332,7 @@ namespace DdMd
    }
 
    /*
-   * Set Mask (exclusion list) for every atoms, based on bond data.
+   * Set Mask (exclusion list) for all atoms, based on bond data.
    */ 
    void ConfigIo::setAtomMasks() 
    {
@@ -348,12 +348,13 @@ namespace DdMd
       Atom* atomPtr0;
       Atom* atomPtr1;
       GroupIterator<2> bondIter;
+      const AtomMap& atomMap = atomStorage().map();
       bondStorage().begin(bondIter);
       for ( ; bondIter.notEnd(); ++bondIter) {
          atomId0  = bondIter->atomId(0);
          atomId1  = bondIter->atomId(1);
-         atomPtr0 = atomStorage().find(atomId0);
-         atomPtr1 = atomStorage().find(atomId1);
+         atomPtr0 = atomMap.find(atomId0);
+         atomPtr1 = atomMap.find(atomId1);
          if (atomPtr0) {
             atomPtr0->mask().append(atomId1);
          }

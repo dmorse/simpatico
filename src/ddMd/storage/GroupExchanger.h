@@ -74,7 +74,11 @@ namespace DdMd
       virtual void pack(int i, int j, Buffer& buffer) = 0;
    
       /**
-      * Unpack groups from buffer.
+      * Unpack groups from buffer and find available associated atoms.
+      *
+      * This method should unpack groups, add new ones to a GroupStorage,
+      * set pointers to all Group atoms that are in the AtomStorage, and
+      * nullify pointers to atoms that are not present.
       *
       * \param buffer  Buffer object from which groups are unpacked
       * \param atomStorage  AtomStorage used to find atoms pointers
@@ -83,7 +87,7 @@ namespace DdMd
       #endif // ifdef UTIL_MPI
    
       /**
-      * Set ghost communication flags for all atoms in incomplete groups.
+      * Set ghost communication plans for all atoms in incomplete groups.
       *
       * Usage: This is called after exchanging all atoms and groups between 
       * processors, but before exchanging ghosts. At this point, atom
