@@ -19,6 +19,9 @@
 #ifdef INTER_DIHEDRAL
 #include <ddMd/potentials/dihedral/DihedralPotential.h>
 #endif
+#ifdef INTER_EXTERNAL
+#include <ddMd/potentials/external/ExternalPotential.h>
+#endif
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/mpi/MpiLoader.h>
@@ -79,7 +82,6 @@ namespace DdMd
       saveOutputFileName(ar);
       ar << nSample_;
    }
-
   
    /*
    * Reset nSample.
@@ -123,6 +125,13 @@ namespace DdMd
                double dihedral  = sys.dihedralPotential().energy();
                potential += dihedral;
                outputFile_ << Dbl(dihedral, 15);
+            }
+            #endif
+            #ifdef INTER_EXTERNAL
+            if (sys.hasExternal()) {
+               double external = sys.externalPotential().energy();
+               potential += external;
+               Log::file() << Dbl(external, 15);
             }
             #endif
             outputFile_ << Dbl(kinetic + potential, 20)
