@@ -177,21 +177,6 @@ namespace DdMd
       */
       DMatrix<double>  modes_;
 
-      /**
-      * Array of vector of maximum structure factor values. 
-      */
-      DArray< std::vector<double> > maximumValue_;
-
-      /**
-      * Array of vector of Miller index IntVector with maximum S(q).
-      */
-      DArray< std::vector<IntVector> > maximumWaveIntVector_;
-
-      /**
-      * Array of vector of magnitudes of waveVector with maximum S(q).
-      */
-      DArray< std::vector<double> > maximumQ_;
-
       /// Number of wavevectors.
       int  nWave_;
 
@@ -211,6 +196,9 @@ namespace DdMd
 
       /// Has readParam been called?
       bool isInitialized_;
+
+      /// Is this the first step?
+      bool isFirstStep_;
 
    };
 
