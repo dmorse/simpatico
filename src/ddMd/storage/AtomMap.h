@@ -13,7 +13,15 @@
 #include <ddMd/chemistry/Group.h>    // member function template
 #include <util/global.h>
 
+#ifdef UTIL_CXX11
+#include <unordered_map>
+#else
 #include <map>
+#endif
+
+namespace Util {
+   template <typename T> class ArraySet;
+}
 
 namespace DdMd
 {
@@ -82,6 +90,13 @@ namespace DdMd
       */
       void removeGhost(Atom* ptr); 
 
+      /**
+      * Clear all ghosts from this map.  
+      *
+      * \param Set of all ghosts on this processor.
+      */
+      void clearGhosts(const ArraySet<Atom>& ghostSet);
+
       //@}
       /// \name Accessors 
       //@{
@@ -97,26 +112,17 @@ namespace DdMd
       Atom* find(int atomId) const;  
 
       /**
-      * Return pointer to a local atom with specified id.
-      *
-      * \param atomId integer index of atom
-      */
-      Atom* findLocal(int atomId) const;  
-
-      /**
-      * Return pointer to a ghost atom with specified id.
-      *
-      * \param atomId integer index of atom
-      */
-      Atom* findGhost(int atomId) const;  
-
-      /**
       * Return the number of local atoms.
       */ 
       int nLocal() const;
 
       /**
       * Return the number of ghosts with distinct ids.
+      */ 
+      int nGhostDistinct() const;
+
+      /**
+      * Return the number of ghosts images.
       */ 
       int nGhost() const;
 
@@ -188,19 +194,24 @@ namespace DdMd
 
    private:
 
-      typedef std::map<int, Atom*> GhostMap;
+      #ifdef UTIL_CXX11
+      typedef std::unordered_multimap<int, Atom*> GhostMap;
+      #else
+      typedef std::multimap<int, Atom*> GhostMap;
+      #endif
 
       // Array of pointers to atoms, indexed by Id.
       // Elements corresponding to absent atoms hold null pointers.
-      DArray<Atom*>  atomPtrs_;
+      DArray<Atom*> atomPtrs_;
 
+      // Map for extra ghost images
       GhostMap ghostMap_;
 
       /// Number of local atoms in this map.
       int nLocal_;
 
       /// Number of ghost atoms in this map.
-      int nGhost_;
+      int nGhostDistinct_;
 
       // Maximum number of atoms on all processors, maximum id + 1
       int totalAtomCapacity_;
@@ -216,34 +227,7 @@ namespace DdMd
    * Return pointer to an Atom with specified id.
    */
    inline Atom* AtomMap::find(int atomId) const
-   {
-      Atom* ptr =atomPtrs_[atomId];
-      if (ptr) {
-         return ptr;
-      } else {
-         return findGhost(atomId);
-      }
-   }
-
-   /*
-   * Return pointer to a local Atom with specified id, or null.
-   */
-   inline Atom* AtomMap::findLocal(int atomId) const
    {  return atomPtrs_[atomId]; }
-
-   /*
-   * Return pointer to a ghost Atom with specified id.
-   */
-   inline Atom* AtomMap::findGhost(int atomId) const
-   {  
-      GhostMap::const_iterator iter;
-      iter = ghostMap_.find(atomId);
-      if (iter != ghostMap_.end()) {
-         return iter->second;
-      } else {
-         return 0;
-      }
-   }
 
    /*
    * Return the number of local atoms.
@@ -254,8 +238,14 @@ namespace DdMd
    /*
    * Return the number of ghosts with distinct ids.
    */ 
+   inline int AtomMap::nGhostDistinct() const
+   { return nGhostDistinct_; }
+
+   /*
+   * Return the number of ghosts with distinct ids.
+   */ 
    inline int AtomMap::nGhost() const
-   { return nGhost_; }
+   { return nGhostDistinct_ + ghostMap_.size(); }
 
    // Template method definition
 
@@ -315,15 +305,15 @@ namespace DdMd
          if (group.atomPtr(i)) {
             ++nAtom;
          } else {
-            //ptr = atomPtrs_[group.atomId(i)];
             atomId = group.atomId(i);
-            iter = ghostMap_.find(atomId);
-            if (iter != ghostMap_.end()) {
-               ptr = iter->second;
-               assert(ptr->isGhost());
-               assert(ptr->atomId() == group.atomId(i));
+            ptr = atomPtrs_[atomId];
+            if (ptr) {
+               assert(!ptr->isGhost());
+               assert(ptr->atomId() == atomId);
                group.setAtomPtr(i, ptr);
                ++nAtom;
+            } else {
+               group.clearAtomPtr(i);
             }
          }
       }

@@ -9,7 +9,11 @@
 */
 
 #include "AtomMap.h"
+#include <ddMd/storage/ConstGhostIterator.h>
+#include <util/containers/ArraySet.h>
 #include <util/global.h>
+
+#include <utility>
 
 namespace DdMd
 {
@@ -22,7 +26,7 @@ namespace DdMd
    AtomMap::AtomMap()
     : atomPtrs_(),
       nLocal_(0),
-      nGhost_(0),
+      nGhostDistinct_(0),
       totalAtomCapacity_(0),
       isInitialized_(false)
    {}
@@ -110,20 +114,13 @@ namespace DdMd
          UTIL_THROW("atomId is out of range");
       }
 
-      #if 0
-      // Add iff no particle with same id is already present
       if (0 == atomPtrs_[atomId]) {
          atomPtrs_[atomId] = ptr;
-         ++nGhost_;
+         ++nGhostDistinct_;
+      } else {
+         ghostMap_.insert(std::pair<int, Atom*>(atomId, ptr));
+         //ghostMap_.emplace(atomId, ptr);
       }
-      #endif
-
-      std::pair<GhostMap::iterator, bool> ret;
-      ret = ghostMap_.insert(std::pair<int, Atom*>(atomId, ptr));
-      if (ret.second) {
-         ++nGhost_;
-      }
-
    }
 
    /*
@@ -136,28 +133,66 @@ namespace DdMd
          UTIL_THROW("atomId is out of range");
       }
 
-      #if 0
       if (atomPtrs_[atomId] == ptr) {
-         atomPtrs_[atomId] = 0;
-         --nGhost_;
-      } else {
-         if (0 == atomPtrs_[atomId]) {
-            UTIL_THROW("Error: Attempt to remove absent atom");
-         }
-         // Note: No error if another atom with same id is present.
-      }
-      #endif
 
-      GhostMap::iterator iter;
-      iter = ghostMap_.find(atomId);
-      if (iter != ghostMap_.end()) {
-         if (iter->second == ptr) {
-            ghostMap_.erase(iter);
-            --nGhost_;
+         // Remove from atomPtrs array
+         atomPtrs_[atomId] = 0;
+         --nGhostDistinct_;
+
+         // If possible, move an atom from ghostMap to atomPtrs_
+         if (!ghostMap_.empty()) {
+            GhostMap::iterator iter = ghostMap_.find(atomId);
+            if (iter != ghostMap_.end()) {
+               atomPtrs_[atomId] = iter->second;
+               ++nGhostDistinct_;
+               ghostMap_.erase(iter);
+            }
          }
-         // Note: No error if another atom with same id is present.
-      } else {
-         UTIL_THROW("Error: Attempt to remove absent ghost");
+
+      } else { // If ptr is not found in atomPtrs
+
+         if (atomPtrs_[atomId] != 0) { 
+            // Search ghost map
+            std::pair<GhostMap::iterator, GhostMap::iterator> ret;
+            ret = ghostMap_.equal_range(atomId);
+            GhostMap::iterator it = ret.first;
+            GhostMap::iterator last = ret.second;
+            for ( ; it != last; ++it) {
+               assert(it->first == atomId);
+               if (it->second == ptr) {
+                  ghostMap_.erase(it);
+                  return;
+               }
+            } 
+            UTIL_THROW("Error: Attempt to remove absent ghost");
+         } else {
+            UTIL_THROW("Error: Attempt to remove absent ghost");
+         }
+      }
+
+   }
+
+   void AtomMap::clearGhosts(const ArraySet<Atom>& ghostSet)
+   {
+      // Precondition
+      if (ghostSet.size() != nGhost()) {
+         UTIL_THROW("Inconsistent ghost set sizes"); 
+      }
+
+      // Clear extra ghost images from ghostMap_
+      ghostMap_.clear();
+
+      // Clear ghosts from atomPtrs_ array
+      ConstGhostIterator iter;
+      const Atom* ptr;
+      int id;
+      for (ghostSet.begin(iter); iter.notEnd(); ++iter) {
+         id = iter->id();
+         ptr = iter.get();
+         if (atomPtrs_[id] == ptr) {
+            atomPtrs_[id] = 0;
+            --nGhostDistinct_;
+         }
       }
 
    }
@@ -170,25 +205,41 @@ namespace DdMd
    bool AtomMap::isValid() const
    {
       Atom* ptr;
-      int i, j;
-      j = 0;
+      int i, id, nAtom;
+
+      // Validate atomPtrs_
+      nAtom = 0;
       for (i = 0; i < totalAtomCapacity_ ; ++i) {
          ptr = atomPtrs_[i];
          if (ptr != 0) {
-            ++j;
-            if (ptr->id() != i) {
+            id = ptr->id();
+            if (id != i) {
                std::cout << std::endl;
                std::cout << "Index i in atomPtrs_  " << i << std::endl;
-               std::cout << "atomPtrs_[i]->id()    " << ptr->id() << std::endl;
+               std::cout << "atomPtrs_[i]->id()    " << id << std::endl;
                UTIL_THROW("ptr->id() != i");
             }
+            ++nAtom;
          }
       }
-      if (j != nLocal_) {
-         UTIL_THROW("Inconsistent count of local atoms in AtomMap");
+      if (nAtom != nLocal_ + nGhostDistinct_) {
+         UTIL_THROW("Inconsistent count of atoms in atomPtrs");
       }
-      if ((int)ghostMap_.size() != nGhost_) {
-         UTIL_THROW("Inconsistent count of ghost atoms in AtomMap");
+
+      // Validate ghostMap_
+      GhostMap::const_iterator it;  
+      for (it = ghostMap_.begin(); it != ghostMap_.end(); ++it) {
+         id  = it->first;
+         ptr = it->second;
+         if (id != ptr->id()) {
+            std::cout << std::endl;
+            std::cout << "key ghostMap " << id << std::endl;
+            std::cout << "Atom::id()   " << ptr->id() << std::endl;
+            UTIL_THROW("Inconsistent key in ghostMap");
+         }
+         if (atomPtrs_[id] == 0) {
+            UTIL_THROW("Id in ghostMap_ does not appear in atomPtrs_");
+         } 
       }
       return true;
    }
