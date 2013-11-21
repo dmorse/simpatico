@@ -1,8 +1,9 @@
 include src/config.mk
 # ==============================================================================
-.PHONY: mcMd ddMd mcMd-mpi test \
-        clean-serial clean-parallel clean \
-        html clean-html 
+.PHONY: mcMd ddMd mcMd-mpi \
+        test-serial test-parallel \
+        clean-serial clean-parallel clean clean-bin veryclean \
+        html clean-html
 
 # ==============================================================================
 # Main targets
@@ -41,7 +42,7 @@ test-parallel:
 	@rm -f count
 
 
-# ==============================================================================
+# =========================================================================
 # Clean targets
 
 clean-serial:
@@ -55,13 +56,19 @@ clean:
 	cd obj/serial; make clean
 	cd obj/parallel; make clean
 
+clean-bin:
+	-rm -f $(BIN_DIR)/mcSim*
+	-rm -f $(BIN_DIR)/mdSim*
+	-rm -f $(BIN_DIR)/ddSim*
+ 
 veryclean:
-	cd html; make clean
-	cd obj/serial; make veryclean
-	cd obj/parallel; make veryclean
+	cd obj/serial; make veryclean; rm -f configure
+	cd obj/parallel; make veryclean; rm -f configure
+	cd doc; make clean
+	make clean-bin
 	cd src; make veryclean
 
-# ==============================================================================
+# =========================================================================
 # HTML Documentation
  
 html:

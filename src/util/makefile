@@ -13,7 +13,7 @@ clean:
 	rm -f */*.o */*/*.o */*/*/*.o
 	rm -f */*.d */*/*.d */*/*/*.d
 
-# Removes all generated files except util/config.mk
+# Removes all generated files except util/config.mk files
 veryclean:
 	make clean
 	-rm -f lib*.a

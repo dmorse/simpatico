@@ -8,11 +8,15 @@ include $(SRC_DIR)/util/sources.mk
 all: $(util_OBJS) $(util_LIB)
 
 clean:
-	rm -f $(util_OBJS) $(util_OBJS:.o=.d) $(util_LIB)
+	rm -f $(util_OBJS) $(util_OBJS:.o=.d)
 	rm -f $(util_LIB)
 	cd tests; make clean
-	-rm -f */*.o */*/*.o
-	-rm -f */*.d */*/*.d
+
+veryclean:
+	make clean
+	rm -f *.o */*.o */*/*.o 
+	rm -f *.d */*.d */*/*.d 
+	rm -f lib*.a
 
 -include $(util_OBJS:.o=.d)
 

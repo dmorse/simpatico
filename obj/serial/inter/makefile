@@ -12,11 +12,11 @@ clean:
 	rm -f $(inter_OBJS) $(inter_LIB)
 	rm -f $(inter_OBJS:.o=.d)
 	cd tests; make clean
-	rm -f */*.o */*/*.o
-	rm -f */*.d */*/*.d
 
 veryclean:
 	make clean
+	rm -f */*.o */*/*.o
+	rm -f */*.d */*/*.d
 	rm -f lib*.a
 
 -include $(inter_OBJS:.o=.d)

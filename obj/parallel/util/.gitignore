@@ -1,4 +1,5 @@
 config.mk
+makefile
 *.o
 *.d
 *.a

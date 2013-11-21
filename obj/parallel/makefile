@@ -27,13 +27,20 @@ clean:
 	cd ddMd;  make clean
 
 veryclean:
-	make clean
-	-rm -f util/config.mk
-	-rm -f inter/config.mk
-	-rm -f mcMd/config.mk
-	-rm -f ddMd/config.mk
-	-rm -f config.mk
-	-rm -f configure
-	-rm -f */*.a
+	cd util;  make veryclean
+	cd inter; make veryclean
+	cd mcMd;  make veryclean
+	cd ddMd;  make veryclean
+	rm -f util/config.mk
+	rm -f inter/config.mk
+	rm -f mcMd/config.mk
+	rm -f ddMd/config.mk
+	rm -f util/makefile
+	rm -f inter/makefile
+	rm -f mcMd/makefile
+	rm -f ddMd/makefile
+	rm -f config.mk
+	rm -f */*.a
+	rm -f configure
 
-# ==============================================================================
+# =========================================================================

@@ -27,8 +27,12 @@ clean:
 	rm -f $(MDSIM).o $(MDSIM).d
 	rm -f $(MCSIM).o $(MCSIM).d
 	cd tests; make clean
-	-rm -f */*.o */*/*.o
-	-rm -f */*.d */*/*.d
+
+veryclean:
+	make clean
+	rm -f */*.o */*/*.o
+	rm -f */*.d */*/*.d
+	rm -f lib*.a
 
 uninstall:
 	rm -f $(MCSIM_EXE)
