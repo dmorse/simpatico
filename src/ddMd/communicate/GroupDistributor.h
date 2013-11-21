@@ -26,10 +26,13 @@ namespace DdMd
    * Class template for distributing Group<N> objects among processors.
    *
    * A GroupDistributor is used to distribute items among processors during
-   * startup, when the master process must read a configuration file.  The
-   * loops to distribute Groups (bonds, angles, or dihedrals) requires access
-   * to an DArray<int> atomOwners[i] in which atomOwners[i] is the rank of 
-   * the processor that owns atom i.
+   * startup, when the master process must read a configuration file. Each
+   * ConfigIo has a GroupDistributor for each group type.
+   *
+   * Precondition:
+   *
+   * The usage pattern described below must be invoked after all local atoms
+   * are distributed, but when there are no ghosts.  
    *
    * Usage:
    * \code
@@ -54,7 +57,7 @@ namespace DdMd
    *           // ...
    *
    *           // Cache active Group<N> for sending.
-   *           distributor.add(groupStorage, atomOwners);
+   *           distributor.add();
    *       }
    *
    *       // Send all remaining.
@@ -62,13 +65,20 @@ namespace DdMd
    *
    *    } else { // If not master processor
    *
-   *       distributor.receive(groupStorage);
+   *       distributor.receive();
    *
    *    }
    * \endcode
-   * The add(groupStorage) method can send items if required by
-   * memory limits, and the send() method then sends all remaining
-   * groups.
+   * The add(groupStorage) method can send items if required by memory
+   * limits, and the send() method then sends all remaining groups.
+   *
+   * Posconditions:
+   * 
+   *   - At the end end of the above pattern, each processor has a copy 
+   *     of every Group that contains one or more Atoms that it owns. 
+   *
+   *   - All pointers to local atoms are set, and pointer to missing atoms
+   *     are set to null. Missing atoms will later be assigned to ghosts.
    *
    * \ingroup DdMd_Communicate_Module
    */
@@ -89,7 +99,12 @@ namespace DdMd
       ~GroupDistributor();
 
       /**
-      * Set pointers to AtomStorage.
+      * Create required associations with related objects.
+      *
+      * \param domain        associated Domain object defines the processor grid
+      * \param atomStorage   associated AtomStorage manages memory for atoms
+      * \param groupsStorage associated AtomStorage manages memory for groups
+      * \param buffer        associated buffer provides memory for communication
       */
       void associate(Domain& domain, 
                      AtomStorage& atomStorage, 
@@ -130,7 +145,7 @@ namespace DdMd
       *
       * This method should be called only by the master processor. It
       * returns the address within the internal cache for a new Group<N>
-      * object.  Each call to newPtr() must be followed by a matching
+      * object. Each call to newPtr() must be followed by a matching
       * call to add(). 
       *
       * \return address for a new Group<N> object.
@@ -172,17 +187,17 @@ namespace DdMd
 
    private:
 
-      /// Array that holds cached Group objects to be sent to other processors.
+      /// Array of cached Group objects to be broadcast to all other procs.
       /// Allocated only on the master processor.
       DArray< Group<N> > cache_;
 
-      /// Pointer to space for a new local Group<N>. Null when inactive.
-      Group<N>*   newPtr_;
+      /// Pointer to space in cache for a new local Group<N>. Null when inactive.
+      Group<N>* newPtr_;
       
-      /// Pointer to associated Buffer object.
+      /// Pointer to associated Domain object.
       Domain* domainPtr_;
 
-      /// Pointer to associated Buffer object.
+      /// Pointer to associated AtomStorage object.
       AtomStorage* atomStoragePtr_;
 
       /// Pointer to associated GroupStorage<N> object.
@@ -194,17 +209,17 @@ namespace DdMd
       /// Type of object to send.
       enum Buffer::BlockDataType sendType_;
 
-      /// Total number of atoms in groups recieved (defined on all)
+      /// Total number of atoms in groups recieved (defined on all).
       int nAtomRecv_;
 
-      /// Total number of groups sent (defined only on master)
+      /// Total number of groups sent (defined only on master).
       int nSentTotal_;
 
-      /// Current size of cache_ (defined only on master)
+      /// Current size of cache_ (defined only on master).
       int cacheSize_;
 
-      /// Maximum number of items that can be cached on master.
-      int  cacheCapacity_;
+      /// Allocated capacity of cache (defined only on master).
+      int cacheCapacity_;
 
       /**
       * Validate groups after receipt.
