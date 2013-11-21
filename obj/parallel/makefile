@@ -33,6 +33,7 @@ veryclean:
 	-rm -f mcMd/config.mk
 	-rm -f ddMd/config.mk
 	-rm -f config.mk
+	-rm -f configure
 	-rm -f */*.a
 
 # ==============================================================================
