@@ -231,28 +231,6 @@ namespace DdMd
 
    // Template method definition
 
-   #if 0
-   /*
-   * Set pointers to atoms in a Group<N> object.
-   */
-   template <int N>
-   int AtomMap::findGroupAtoms(Group<N>& group) const
-   {
-      Atom* ptr;
-      int nAtom = 0;
-      for (int i = 0; i < N; ++i) {
-         ptr = find(group.atomId(i));
-         if (ptr) {
-            group.setAtomPtr(i, ptr);
-            ++nAtom;
-         } else {
-            group.clearAtomPtr(i);
-         }
-      }
-      return nAtom;
-   }
-   #endif
-
    /*
    * Set pointers to all atoms in a Group<N> object.
    */
