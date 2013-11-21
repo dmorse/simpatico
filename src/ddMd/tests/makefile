@@ -16,7 +16,7 @@ all: $(ddMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
 run: $(ddMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
 	$(MPIRUN) 6 $(OBJ_DIR)/$(TEST) $(SRC_DIR)/ddMd/tests/ > log
 	@echo `grep failed log` ", "\
-              `grep successful log` "in src/ddMd/tests/log" > count
+              `grep successful log` "in ddMd/tests/log" > count
 	@cat count
 
 clean:
