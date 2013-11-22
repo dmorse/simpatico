@@ -1,8 +1,6 @@
 # ==============================================================================
 .PHONY: mcMd mcMd-mpi ddMd clean veryclean
 
-include config.mk
-
 mcMd: 
 	./configure -m0
 	cd util;  make all
@@ -14,6 +12,7 @@ mcMd-mpi:
 	cd util;  make all
 	cd inter; make all
 	cd mcMd;  make all
+
 ddMd:
 	./configure -m1
 	cd util;  make all
@@ -35,12 +34,6 @@ veryclean:
 	rm -f inter/config.mk
 	rm -f mcMd/config.mk
 	rm -f ddMd/config.mk
-	rm -f util/makefile
-	rm -f inter/makefile
-	rm -f mcMd/makefile
-	rm -f ddMd/makefile
 	rm -f config.mk
-	rm -f */*.a
-	rm -f configure
 
-# =========================================================================
+# ==============================================================================
