@@ -136,6 +136,39 @@ namespace Inter
       isInitialized_ = true;
    }
 
+   /*
+   * Load internal state from an archive.
+   */
+   void PeriodicExternal::loadParameters(Serializable::IArchive &ar)
+   {
+      ar >> nAtomType_;
+      if (nAtomType_ <= 0) {
+         UTIL_THROW( "nAtomType must be positive");
+      }
+      prefactor_.allocate(nAtomType_);
+      loadDArray<double>(ar, "prefactor", prefactor_, nAtomType_);
+      loadParameter<double>(ar, "externalParameter", externalParameter_);
+      waveIntVectors_.allocate(nWaveVectors_);
+      loadDArray<IntVector>(ar, "waveIntVectors", waveIntVectors_, nWaveVectors_);
+      loadParameter<double>(ar, "interfaceWidth", interfaceWidth_);
+      loadParameter<int>(ar, "periodicity", periodicity_);
+      isInitialized_ = true;
+   }
+
+   /*
+   * Save internal state to an archive.
+   */
+   void PeriodicExternal::save(Serializable::OArchive &ar)
+   {
+      ar << nAtomType_;
+      ar << prefactor_;
+      ar << externalParameter_;
+      ar << waveIntVectors_;
+      ar << interfaceWidth_;
+      ar << periodicity_;
+   }
+
+
    double PeriodicExternal::externalParameter() const
    { 
      return externalParameter_; 

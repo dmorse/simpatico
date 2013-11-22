@@ -33,7 +33,7 @@ namespace DdMd
       ghosts_(),
       ghostSet_(),
       ghostReservoir_(),
-      atomPtrs_(),
+      map_(),
       newAtomPtr_(0),
       newGhostPtr_(0),
       atomCapacity_(0),
@@ -131,11 +131,7 @@ namespace DdMd
           ghostReservoir_.push(ghosts_[i]);
       }
 
-      atomPtrs_.allocate(totalAtomCapacity_);
-      for (i = 0; i < totalAtomCapacity_; ++i) {
-         atomPtrs_[i] = 0;
-      }
-
+      map_.allocate(totalAtomCapacity_);
       snapshot_.allocate(atomCapacity_);
 
       isInitialized_ = true;
@@ -173,23 +169,10 @@ namespace DdMd
          UTIL_THROW("No active newAtomPtr_");
       if (locked_) 
          UTIL_THROW("AtomStorage is locked");
-      int atomId = newAtomPtr_->id();
-      if (atomId < 0 || atomId >= totalAtomCapacity_) {
-         std::cout << "atomId = " << atomId << std::endl;
-         UTIL_THROW("atomId is out of range");
-      }
-      if (atomPtrs_[atomId] != 0) {
-         std::cout << "atomId       = " << atomId << std::endl;
-         std::cout << "New Position = " << newAtomPtr_->position() 
-                   << std::endl;
-         std::cout << "Old Position = " << atomPtrs_[atomId]->position() 
-                   << std::endl;
-         UTIL_THROW("Atom with specified id is already present");
-      }
 
-      // Add to atom set
+      // Add to containers.
+      map_.addLocal(newAtomPtr_);
       atomSet_.append(*newAtomPtr_);
-      atomPtrs_[atomId] = newAtomPtr_;
       newAtomPtr_->setIsGhost(false);
 
       // De-activate new atom pointer
@@ -214,17 +197,9 @@ namespace DdMd
    */
    void AtomStorage::removeAtom(Atom* atomPtr)
    {
-      // Precondition
-      int atomId = atomPtr->id();
-      if (atomId < 0 || atomId >= totalAtomCapacity_) {
-         std::cout << "atomId = " << atomId << std::endl;
-         UTIL_THROW("atomId is out of range");
-      }
-      atomReservoir_.push(*atomPtr);
+      map_.removeLocal(atomPtr);
       atomSet_.remove(*atomPtr);
-      atomPtrs_[atomId] = 0;
-      atomPtr->setId(-1);
-      atomPtr->setIsGhost(false);
+      atomReservoir_.push(*atomPtr);
    }
 
    /*
@@ -238,29 +213,18 @@ namespace DdMd
       }
 
       Atom* atomPtr;
-      int   atomId;
       while (atomSet_.size() > 0) {
          atomPtr = &atomSet_.pop();
-         atomId = atomPtr->id();
-         if (atomPtrs_[atomId] == atomPtr) { 
-            atomPtrs_[atomId] = 0;
-         } else {
-            if (atomPtrs_[atomId] == 0) {
-               UTIL_THROW("Error: Unexpected null in atomPtrs_");
-            } else {
-               if (atomPtrs_[atomId]->id() != atomId) {
-                  UTIL_THROW("Error: Inconsistent id in atomPtrs_");
-               }
-            }
-         }
-         // atomPtr->setId(-1);
-         // atomPtr->clear();
+         map_.removeLocal(atomPtr);
          atomReservoir_.push(*atomPtr);
       }
 
-      // Sanity check.
+      // Sanity checks
       if (atomSet_.size() != 0) {
          UTIL_THROW("Nonzero atomSet size at end of clearAtoms");
+      }
+      if (map_.nLocal() != 0) {
+         UTIL_THROW("Nonzero nLocal in atom map at end of clearAtoms");
       }
    }
 
@@ -296,17 +260,10 @@ namespace DdMd
       if (locked_) {
          UTIL_THROW("AtomStorage is locked");
       }
-      int atomId = newGhostPtr_->id();
-      if (atomId < 0 || atomId >= totalAtomCapacity_) {
-         UTIL_THROW("atomId is out of range");
-      }
 
-      // Add to ghost set
+      // Add to containers
+      map_.addGhost(newGhostPtr_);
       ghostSet_.append(*newGhostPtr_);
-      if (atomPtrs_[atomId] == 0) {
-         atomPtrs_[atomId] = newGhostPtr_;
-      }
-      // Note another atom with same id may already be present.
       newGhostPtr_->setIsGhost(true);
 
       // De-activate new ghost pointer
@@ -332,16 +289,11 @@ namespace DdMd
    void AtomStorage::removeGhost(Atom* atomPtr)
    {
       // Precondition
-      if (locked_) 
-         UTIL_THROW("AtomStorage is locked");
+      if (locked_) UTIL_THROW("AtomStorage is locked");
 
-      ghostReservoir_.push(*atomPtr);
+      map_.removeGhost(atomPtr);
       ghostSet_.remove(*atomPtr);
-      int atomId = atomPtr->id();
-      if (atomPtrs_[atomId] == atomPtr) {
-         atomPtrs_[atomId] = 0;
-      }
-      atomPtr->setId(-1);
+      ghostReservoir_.push(*atomPtr);
    }
 
    /*
@@ -353,29 +305,24 @@ namespace DdMd
       if (locked_) 
          UTIL_THROW("AtomStorage is locked");
 
+      // Clear ghosts from the map
+      map_.clearGhosts(ghostSet_);
+
+      // Transfer ghosts from the set to the reservoir
       Atom* atomPtr;
-      int   atomId;
       while (ghostSet_.size() > 0) {
          atomPtr = &ghostSet_.pop();
-         atomId = atomPtr->id();
-         if (atomPtrs_[atomId] == atomPtr) { 
-            atomPtrs_[atomId] = 0;
-         } else {
-            if (atomPtrs_[atomId] == 0) {
-               UTIL_THROW("Error: Unexpected null in atomPtrs_");
-            } else {
-               if (atomPtrs_[atomId]->id() != atomId) {
-                  UTIL_THROW("Error: Inconsistent id in atomPtrs_");
-               }
-            }
-         }
-         // atomPtr->setId(-1);
-         // atomPtr->clear();
          ghostReservoir_.push(*atomPtr);
       }
 
       if (ghostSet_.size() != 0) {
          UTIL_THROW("Nonzero ghostSet size at end of clearGhosts");
+      }
+      if (map_.nGhost() != 0) {
+         UTIL_THROW("Nonzero nGhost in map at end of clearGhosts");
+      }
+      if (map_.nGhostDistinct() != 0) {
+         UTIL_THROW("Nonzero nGhostDistinct at end of clearGhosts");
       }
    }
 
@@ -436,12 +383,6 @@ namespace DdMd
    }
 
    // Accessors
-
-   /*
-   * Return pointer to Atom with specified id.
-   */
-   Atom* AtomStorage::find(int atomId) const
-   {  return atomPtrs_[atomId]; }
 
    /*
    * Set iterator to beginning of the set of local atoms.
@@ -608,37 +549,29 @@ namespace DdMd
    */
    bool AtomStorage::isValid() const
    {
-      
-      if (nAtom() + atomReservoir_.size() != atomCapacity_) 
+      if (nAtom() + atomReservoir_.size() != atomCapacity_) {
          UTIL_THROW("nAtom + reservoir size != local capacity"); 
-
-      if (nGhost() + ghostReservoir_.size() != ghostCapacity_) 
-         UTIL_THROW("nGhost + reservoir size != ghost capacity"); 
-
-      // Check consistency of indexing in atomPtrs_.
-      // For atomPtr_[i] != 0, does atomPtr_[i]->id() = i ?
-      Atom* ptr;
-      int   i, j;
-      j = 0;
-      for (i = 0; i < totalAtomCapacity_ ; ++i) {
-         ptr = atomPtrs_[i];
-         if (ptr != 0) {
-            ++j;
-            if (ptr->id() != i) {
-               std::cout << std::endl;
-               std::cout << "Index i in atomPtrs_  " << i << std::endl;
-               std::cout << "atomPtrs_[i]->id()    " << ptr->id() << std::endl;
-               UTIL_THROW("ptr->id() != i");
-            }
-         }
       }
+      if (nGhost() + ghostReservoir_.size() != ghostCapacity_) {
+         UTIL_THROW("nGhost + reservoir size != ghost capacity"); 
+      }
+      if (nGhost() != map_.nGhost()) {
+         UTIL_THROW("Inconsistent values of nGhost");
+      }
+
+      // Test validity of AtomMap.
+      map_.isValid();
 
       // Iterate over, count and find local atoms on this processor.
       ConstAtomIterator localIter;
-      j = 0;
+      Atom* ptr;
+      int j = 0;
       for (begin(localIter); localIter.notEnd(); ++localIter) {
          ++j;
-         ptr = find(localIter->id());
+         if (localIter->isGhost()) {
+            UTIL_THROW("Atom in atomSet is marked isGhost");
+         }
+         ptr = map_.find(localIter->id());
          if (ptr == 0) {
             UTIL_THROW("Unable to find local atom returned by iterator"); 
          }
@@ -655,7 +588,10 @@ namespace DdMd
       j = 0;
       for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
          ++j;
-         ptr = find(ghostIter->id());
+         if (!ghostIter->isGhost()) {
+            UTIL_THROW("Atom in ghostSet is not marked isGhost");
+         }
+         ptr = map_.find(ghostIter->id());
          if (ptr == 0) {
             UTIL_THROW("find(ghostIter->id()) == 0"); 
          }
@@ -664,9 +600,11 @@ namespace DdMd
          // one correspondence of ids and pointers is guaranteed only for 
          // local atoms.
       }
+      #if 0
       if (j != nGhost()) {
          UTIL_THROW("Number counted by ghostIterator != nGhost()"); 
       }
+      #endif
 
       return true;
    }

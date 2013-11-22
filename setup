@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #------------------------------------------------------------------------
-# Configuration script:
+# Setup script:
 #
 # This script should be run once before the first time the program is
 # compiled. It must be run from the root simpatico/ directory, in which
@@ -9,39 +9,59 @@
 # 
 # This script:
 #
-# 1) Copies default or repository versions of several configuration files, 
-# marked with a suffix _r, to modifiable user versions. 
+# 1) Copies default or repository versions of several build configuration 
+# files, named config.mk_r, to modifiable user versions, named config.mk. 
+# A separate set of build configuration files is created in the src/
+# directory (for in-source build) and in the obj/serial and obj/parallel
+# object directories. 
 #
-# 2) Sets the makefile variable $(ROOT_DIR) in the file src/config.mk 
-# to the absolute path of the current working directory, as given by the 
-# shell variable $PWD.
-# 
+# 2) Sets the makefile variables $(ROOT_DIR) and $(OBJ_DIR) in the main
+# config.mk file in each object directory to the absolute paths of the 
+# current working directory of the object directory, respectively. 
+#
+# 3) Creates user-modifiable copies of the sources.mk files in the user/
+# subdirectory of each namespace level subdirectory of src/. 
+#
+# 4) Creates user modifiable copies of repository versions of some C++ 
+# source files that users often need to modify to add new features. 
+# Specifically, it makes copies of the factory implementation files 
+# and Boundary typedef.
 #------------------------------------------------------------------------
-# Copy the config.mk files and set the value of $(ROOT_DIR) to $PWD.
-sed "s|=PWD|=$PWD|" src/config.mk_r > src/config.mk
-sed "s|=PWD|=$PWD|" obj/serial/config.mk_r > obj/serial/config.mk
-sed "s|=PWD|=$PWD|" obj/parallel/config.mk_r > obj/parallel/config.mk
 
-# Copy repository (_r) versions of config.mk makefile fragments.
-# The config.mk makefile fragments can be used to enable/disable options.
+# Create main config.mk files and set the value of $(ROOT_DIR) and $(OBJ_DIR)
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|obj/serial|" src/config.mk_r > obj/serial/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|obj/parallel|" src/config.mk_r > obj/parallel/config.mk
 
-# Source directory (for in-source builds)
+# Namespace config.mk in src/ directory (for in-source builds)
 cp  src/util/config.mk_r src/util/config.mk
 cp  src/inter/config.mk_r src/inter/config.mk
 cp  src/mcMd/config.mk_r src/mcMd/config.mk
 cp  src/ddMd/config.mk_r src/ddMd/config.mk
 
-# Serial obj directory (for out-of-source builds without MPI)
+# Namespace config.mk in obj/serial (for out-of-source builds with no MPI)
 cp  src/util/config.mk_r obj/serial/util/config.mk
 cp  src/inter/config.mk_r obj/serial/inter/config.mk
 cp  src/mcMd/config.mk_r obj/serial/mcMd/config.mk
 cp  src/ddMd/config.mk_r obj/serial/ddMd/config.mk
 
-# Parallel obj directory (for out-of-source builds with MPI)
+# Namespace config.mk in obj/parallel (for out-of-source builds with no MPI)
 cp  src/util/config.mk_r obj/parallel/util/config.mk
 cp  src/inter/config.mk_r obj/parallel/inter/config.mk
 cp  src/mcMd/config.mk_r obj/parallel/mcMd/config.mk
 cp  src/ddMd/config.mk_r obj/parallel/ddMd/config.mk
+
+# Copy namespace level makefiles from src/ to obj/serial and obj/parallel 
+cp  src/makefile obj/serial/makefile
+cp  src/util/makefile obj/serial/util/makefile
+cp  src/inter/makefile obj/serial/inter/makefile
+cp  src/mcMd/makefile obj/serial/mcMd/makefile
+cp  src/ddMd/makefile obj/serial/ddMd/makefile
+cp  src/makefile obj/parallel/makefile
+cp  src/util/makefile obj/parallel/util/makefile
+cp  src/inter/makefile obj/parallel/inter/makefile
+cp  src/mcMd/makefile obj/parallel/mcMd/makefile
+cp  src/ddMd/makefile obj/parallel/ddMd/makefile
 
 # Copy repository versions of sources.mk files in user directories.
 # These list user-contributed classes.
@@ -49,7 +69,9 @@ cp  src/inter/user/sources.mk_r src/inter/user/sources.mk
 cp  src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
 cp  src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
 
+# ------------------------------------------------------------------------
 # Copy repository version of Factory implementation files to user versions.
+
 cp  src/mcMd/configIos/ConfigIoFactory.cpp_r src/mcMd/configIos/ConfigIoFactory.cpp
 cp  src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp_r src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp
 cp  src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp_r src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp
@@ -77,3 +99,10 @@ cp  src/ddMd/potentials/pair/PairFactory.cpp_r src/ddMd/potentials/pair/PairFact
 # Copy typedef for the class that defines boundary conditions
 cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
 
+# ---------------------------------------------------------------------
+# Create copies of the configure script.
+
+cp src/configure obj/serial/configure
+cp src/configure obj/parallel/configure
+
+cd obj/parallel; ./configure -m1 

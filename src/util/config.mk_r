@@ -51,10 +51,10 @@ UTIL_DEFS=
 UTIL_SUFFIX:=
 UTIL_MPI_SUFFIX:=
 
-# Each if-block below contains two lines: One of these appends a 
-# preprocessor macro definition to UTIL_DEFS, thus defining an associated
-# C++ preprocessor macro. A second add a suffix to the UTIL_SUFFIX or 
-# UTIL_MPI_SUFFIX variable, thus changing the name of the util library
+# Each if-block below contains a line that appends a preprocessor macro 
+# definition to UTIL_DEFS, thus defining an associated C++ preprocessor 
+# macro. In some blocks, a second line add a suffix to the UTIL_SUFFIX 
+# or UTIL_MPI_SUFFIX variable, thus changing the name of the util library
 # and other libraries and executables that depend on the util library.
 
 # Enable message passing interface
@@ -62,14 +62,20 @@ ifdef UTIL_MPI
 UTIL_DEFS+= -DUTIL_MPI
 UTIL_MPI_SUFFIX:=_m
 endif
-# Note: The variable UTIL_MPI that enables MPI parallel operation must be 
-# defined (or not defined) in the file src/config.mk. 
 
 # Enable debugging assertions
 ifdef UTIL_DEBUG
 UTIL_DEFS+= -DUTIL_DEBUG
 UTIL_SUFFIX:=$(UTIL_SUFFIX)_g
 endif
+
+# Enable features that require features of the C++11 standard
+ifdef UTIL_CXX11
+UTIL_DEFS+= -DUTIL_CXX11
+endif
+
+# Note: The variables UTIL_MPI and UTIL_CXX11 must be defined (or not
+# not defined) in the file src/config.mk. 
 
 # Enable HOOMD interoperability
 ifdef HOOMD_FLAG

@@ -27,8 +27,14 @@ class AtomStorageTest : public ParamFileTest
 private:
 
    AtomStorage storage_;
+   const AtomMap& map_;
 
 public:
+
+   AtomStorageTest() 
+    : storage_(),
+      map_(storage_.map())
+   {}
 
    virtual void setUp()
    { 
@@ -73,7 +79,7 @@ inline void AtomStorageTest::testAddAtoms()
    TEST_ASSERT(storage_.nAtom() == 0);
 
    Atom* ptr53 = storage_.addAtom(53);
-   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(map_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
    TEST_ASSERT(storage_.nAtom() == 1);
    TEST_ASSERT(storage_.nGhost() == 0);
@@ -84,9 +90,9 @@ inline void AtomStorageTest::testAddAtoms()
    TEST_ASSERT(ptr53 = &storage_.atoms_[0]);
 
    Atom* ptr18 = storage_.addAtom(18);
-   TEST_ASSERT(storage_.find(18) == ptr18);
+   TEST_ASSERT(map_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(map_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
    TEST_ASSERT(storage_.nAtom() == 2);
    TEST_ASSERT(storage_.atomReservoir_.size() == storage_.atomCapacity()-2);
@@ -98,16 +104,16 @@ inline void AtomStorageTest::testAddAtoms()
    TEST_ASSERT(storage_.isValid());
 
    Atom* ptr35 = storage_.addGhost(35);
-   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(map_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(storage_.find(35) == ptr35);
+   TEST_ASSERT(map_.find(35) == ptr35);
    TEST_ASSERT(ptr35->id() == 35);
-   TEST_ASSERT(storage_.find(18) == ptr18);
+   TEST_ASSERT(map_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
    TEST_ASSERT(storage_.nAtom() == 2);
    TEST_ASSERT(storage_.nGhost() == 1);
-   TEST_ASSERT(storage_.isValid());
 
+   TEST_ASSERT(storage_.isValid());
 }
 
 void AtomStorageTest::testAddRemoveAtoms()
@@ -118,9 +124,9 @@ void AtomStorageTest::testAddRemoveAtoms()
    Atom* ptr53 = storage_.addAtom(53);
    Atom* ptr18 = storage_.addAtom(18);
 
-   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(map_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(storage_.find(18) == ptr18);
+   TEST_ASSERT(map_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
    TEST_ASSERT(storage_.nAtom() == 2);
    TEST_ASSERT(storage_.nGhost() == 0);
@@ -128,9 +134,9 @@ void AtomStorageTest::testAddRemoveAtoms()
 
    // Remove one atom
    storage_.removeAtom(ptr53);
-   TEST_ASSERT(storage_.find(53) == 0);
-   TEST_ASSERT(ptr53->id() < 0);
-   TEST_ASSERT(storage_.find(18) == ptr18);
+   TEST_ASSERT(map_.find(53) == 0);
+   // TEST_ASSERT(ptr53->id() < 0);
+   TEST_ASSERT(map_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
    TEST_ASSERT(storage_.nAtom() == 1);
    TEST_ASSERT(storage_.nGhost() == 0);
@@ -139,40 +145,40 @@ void AtomStorageTest::testAddRemoveAtoms()
    // Add two atoms
    Atom* ptr67 = storage_.addAtom(67);
    Atom* ptr44 = storage_.addAtom(44);
-   TEST_ASSERT(storage_.find(53) == 0);
-   TEST_ASSERT(storage_.find(18) == ptr18);
+   TEST_ASSERT(map_.find(53) == 0);
+   TEST_ASSERT(map_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(storage_.find(67) == ptr67);
+   TEST_ASSERT(map_.find(67) == ptr67);
    TEST_ASSERT(ptr67->id() == 67);
-   TEST_ASSERT(storage_.find(44) == ptr44);
+   TEST_ASSERT(map_.find(44) == ptr44);
    TEST_ASSERT(ptr44->id() == 44);
    TEST_ASSERT(storage_.nAtom() == 3);
    TEST_ASSERT(storage_.nGhost() == 0);
    TEST_ASSERT(storage_.isValid());
 
    Atom* ptr35 = storage_.addGhost(35);
-   TEST_ASSERT(storage_.find(35) == ptr35);
+   TEST_ASSERT(map_.find(35) == ptr35);
    TEST_ASSERT(ptr35->id() == 35);
    TEST_ASSERT(storage_.nGhost() == 1);
    Atom* ptr82 = storage_.addGhost(82);
-   TEST_ASSERT(storage_.find(82) == ptr82);
+   TEST_ASSERT(map_.find(82) == ptr82);
    TEST_ASSERT(ptr82->id() == 82);
-   TEST_ASSERT(storage_.find(35) == ptr35);
+   TEST_ASSERT(map_.find(35) == ptr35);
    TEST_ASSERT(ptr35->id() == 35);
    TEST_ASSERT(storage_.nAtom() == 3);
    TEST_ASSERT(storage_.nGhost() == 2);
 
    storage_.removeGhost(ptr35);
-   TEST_ASSERT(storage_.find(53) == 0);
-   TEST_ASSERT(storage_.find(35) == 0);
-   TEST_ASSERT(ptr35->id() < 0);
-   TEST_ASSERT(storage_.find(18) == ptr18);
+   TEST_ASSERT(map_.find(53) == 0);
+   TEST_ASSERT(map_.find(35) == 0);
+   // TEST_ASSERT(ptr35->id() < 0);
+   TEST_ASSERT(map_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(storage_.find(67) == ptr67);
+   TEST_ASSERT(map_.find(67) == ptr67);
    TEST_ASSERT(ptr67->id() == 67);
-   TEST_ASSERT(storage_.find(82) == ptr82);
+   TEST_ASSERT(map_.find(82) == ptr82);
    TEST_ASSERT(ptr82->id() == 82);
-   TEST_ASSERT(storage_.find(44) == ptr44);
+   TEST_ASSERT(map_.find(44) == ptr44);
    TEST_ASSERT(ptr44->id() == 44);
    TEST_ASSERT(storage_.nAtom() == 3);
    TEST_ASSERT(storage_.nGhost() == 1);
@@ -190,24 +196,24 @@ void AtomStorageTest::testClear()
 
    // Add atoms
    Atom* ptr53 = storage_.addAtom(53);
-   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(map_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
 
    Atom* ptr18 = storage_.addAtom(18);
    TEST_ASSERT(ptr18 != ptr53);
-   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(map_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(storage_.find(18) == ptr18);
+   TEST_ASSERT(map_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
 
    Atom* ptr39 = storage_.addAtom(39);
    TEST_ASSERT(ptr39 != ptr53);
    TEST_ASSERT(ptr39 != ptr18);
-   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(map_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(storage_.find(18) == ptr18);
+   TEST_ASSERT(map_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(storage_.find(39) == ptr39);
+   TEST_ASSERT(map_.find(39) == ptr39);
    TEST_ASSERT(ptr39->id() == 39);
 
    Atom* ptr44 = storage_.addAtom(44);
@@ -216,7 +222,7 @@ void AtomStorageTest::testClear()
    TEST_ASSERT(ptr44 != ptr39);
    TEST_ASSERT(ptr39 != ptr53);
    TEST_ASSERT(ptr39 != ptr18);
-   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(map_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
 
    Atom* ptr82 = storage_.addAtom(82);
@@ -224,9 +230,9 @@ void AtomStorageTest::testClear()
    TEST_ASSERT(ptr82 != ptr44);
    TEST_ASSERT(ptr82 != ptr18);
    TEST_ASSERT(ptr82 != ptr39);
-   TEST_ASSERT(storage_.find(82) == ptr82);
+   TEST_ASSERT(map_.find(82) == ptr82);
    TEST_ASSERT(ptr82->id() == 82);
-   TEST_ASSERT(storage_.find(53) == ptr53);
+   TEST_ASSERT(map_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
    
    //localAtoms.append(*(storage_.addAtom(53)));
@@ -331,31 +337,31 @@ void AtomStorageTest::testSnapshot()
 
    Atom* ptr;
 
-   ptr = storage_.find(53);
+   ptr = map_.find(53);
    TEST_ASSERT(ptr !=0 );
    ptr->position()[0] = 0.1;
    ptr->position()[1] = 1.1;
    ptr->position()[2] = 2.1;
 
-   ptr = storage_.find(35);
+   ptr = map_.find(35);
    TEST_ASSERT(ptr !=0 );
    ptr->position()[0] = 0.2;
    ptr->position()[1] = 3.1;
    ptr->position()[2] = 2.8;
 
-   ptr = storage_.find(18);
+   ptr = map_.find(18);
    TEST_ASSERT(ptr !=0 );
    ptr->position()[0] = 5.2;
    ptr->position()[1] = 2.1;
    ptr->position()[2] = 2.7;
 
-   ptr = storage_.find(44);
+   ptr = map_.find(44);
    TEST_ASSERT(ptr !=0 );
    ptr->position()[0] = 5.2;
    ptr->position()[1] = 2.1;
    ptr->position()[2] = 2.7;
 
-   ptr = storage_.find(17);
+   ptr = map_.find(17);
    TEST_ASSERT(ptr !=0 );
    ptr->position()[0] = 2.4;
    ptr->position()[1] = 8.8;
@@ -381,18 +387,18 @@ void AtomStorageTest::testSnapshot()
    storage_.clearSnapshot();
 
    storage_.makeSnapshot();
-   ptr = storage_.find(44);
+   ptr = map_.find(44);
    ptr->position()[0] += -0.25;
    ptr->position()[1] +=  0.15;
-   ptr = storage_.find(18);
+   ptr = map_.find(18);
    ptr->position()[0] +=  0.05;
    ptr->position()[1] +=  0.10;
    ptr->position()[2] +=  0.15;
-   ptr = storage_.find(35);
+   ptr = map_.find(35);
    ptr->position()[0] +=  0.01;
    ptr->position()[1] +=  0.15;
    ptr->position()[2] +=  0.25;
-   ptr = storage_.find(17); // maximum displacement
+   ptr = map_.find(17); // maximum displacement
    ptr->position()[0] +=  0.20;
    ptr->position()[1] +=  0.05;
    ptr->position()[2] += -0.30;

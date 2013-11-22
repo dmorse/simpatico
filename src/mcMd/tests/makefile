@@ -16,7 +16,7 @@ all: $(mcMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
 run: $(mcMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
 	$(OBJ_DIR)/$(TEST) $(SRC_DIR)/mcMd/tests/ > log
 	@echo `grep failed log` ", "\
-             `grep successful log` "in src/mcMd/tests/log" > count
+             `grep successful log` "in mcMd/tests/log" > count
 	@cat count
 
 clean:

@@ -14,7 +14,7 @@ all: $(inter_tests_OBJS) $(OBJ_DIR)/$(TEST)
 run: $(inter_tests_OBJS) $(OBJ_DIR)/$(TEST)
 	$(OBJ_DIR)/$(TEST) $(SRC_DIR)/inter/tests/ > log
 	@echo `grep failed log` ", "\
-              `grep successful log` "in src/inter/tests/log" > count
+              `grep successful log` "in inter/tests/log" > count
 	@cat count
 
 clean:

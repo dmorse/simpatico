@@ -5,8 +5,7 @@
 * This program runs all unit tests in the DdMd directory.
 */ 
 
-#include "storage/AtomStorageTest.h"
-#include "storage/BondStorageTest.h"
+#include "storage/StorageTestComposite.h"
 #include "configIos/ConfigIoTest.h"
 #include "communicate/CommunicateTestComposite.h"
 #include "neighbor/NeighborTestComposite.h"
@@ -21,8 +20,7 @@
 #include <test/CompositeTestRunner.h>
 
 TEST_COMPOSITE_BEGIN(DdMdNsTestComposite)
-addChild(new TEST_RUNNER(AtomStorageTest), "storage/");
-addChild(new TEST_RUNNER(BondStorageTest), "storage/");
+addChild(new StorageTestComposite, "storage/");
 addChild(new TEST_RUNNER(ConfigIoTest), "configIos/");
 addChild(new CommunicateTestComposite, "communicate/");
 addChild(new NeighborTestComposite, "neighbor/");
