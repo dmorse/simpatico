@@ -51,13 +51,25 @@ cp  src/inter/config.mk_r obj/parallel/inter/config.mk
 cp  src/mcMd/config.mk_r obj/parallel/mcMd/config.mk
 cp  src/ddMd/config.mk_r obj/parallel/ddMd/config.mk
 
+# Copy namespace level makefiles from src/ to obj/serial and obj/parallel 
+cp  src/makefile obj/serial/makefile
+cp  src/util/makefile obj/serial/util/makefile
+cp  src/inter/makefile obj/serial/inter/makefile
+cp  src/mcMd/makefile obj/serial/mcMd/makefile
+cp  src/ddMd/makefile obj/serial/ddMd/makefile
+cp  src/makefile obj/parallel/makefile
+cp  src/util/makefile obj/parallel/util/makefile
+cp  src/inter/makefile obj/parallel/inter/makefile
+cp  src/mcMd/makefile obj/parallel/mcMd/makefile
+cp  src/ddMd/makefile obj/parallel/ddMd/makefile
+
 # Copy repository versions of sources.mk files in user directories.
 # These list user-contributed classes.
 cp  src/inter/user/sources.mk_r src/inter/user/sources.mk
 cp  src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
 cp  src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
 
-# ---------------------------------------------------------------------
+# ------------------------------------------------------------------------
 # Copy repository version of Factory implementation files to user versions.
 
 cp  src/mcMd/configIos/ConfigIoFactory.cpp_r src/mcMd/configIos/ConfigIoFactory.cpp
