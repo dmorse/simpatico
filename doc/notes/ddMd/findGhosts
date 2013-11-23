@@ -1,84 +1,32 @@
 Goal:
 
-1) Allow multiple atoms with same id to be easily found.
-
-2) Allow atomStorage::findGhosts to find image of each atom
+   Allow atomStorage::findGhosts to find image of each atom
    that minimizes the bond lengths, avoiding the need for a
    minimum image convention.
 
+Proposal:
 
-Option #1: Singly-Linked List, built int Atom Class
----------------------------------------------------
+   Rewrite AtomMap::findGroupGhostAtoms so as to find images
+   that satisfy the minimum image convention.
 
-1) To add an atom to a singly linked list, one needs tail.
+      DArray<Vector> positions
+      DArray<bool>   isLocal
+      DArray<bool>   isKnown
 
-2) To iterate through a singly linked list, one needs head.
+      - Iterate through all atoms.
 
-   Option 1a:
-   ----------
+          - If present (local) store position.
+          - If absent (ghost), find ghost and store position.
 
-   - Store head in AtomStorage, indexed by global id.
-   - Each Atom has next pointer (can be null).
-   - Add Atom::addImage() would iterate to end of list
-     and add atom to the tail.
+      - Choose one local atom as the root atom. Different conventions
+        can be used for different values of N.
+
+      - Make a plan for order in which to investigate remaining atoms
+        and bonds, and which bonds to check for each.
+
+      - For each atom in plan, check minimum image. 
+
+      - If not satisfied, find extra images and iterate.
+
+      - If no image satisfies minimum image convention, throw Exception.
    
-   Option 1b:
-   ----------
-
-   - Store head and tail in atomStorage, indexed by globalId.
-   - Each Atom has next pointer (can be null).
-
-   Disadvantage: Immediate doubling of globally indexed memory
-   Advantage: Easily Fixable by switching to an associative 
-              container for (head, tail)
-
-   Option 1c:
-   ----------
-
-   - Store head in atomStorage, indexed by globalId.
-   - Each Atom has next pointer (can be null).
-   - Each Atom has tail pointer (can be itself).
-
-   - Variant: Each atom has head and tail pointer
-
-   Disadvantage: Repetition of tail pointer (or head and tail).
-
-   Option 1d:
-   ----------
-
-   - Store head in atomStorage, indexed by globalId.
-   - Each Atom has next pointer (can be null).
-   - Each Atom has tail pointer (can be itself).
-
-   - Variant: Each atom has head and tail pointer
-
-   Disadvantage: Repetition of tail pointer (or head and tail).
-
-Option 2: Linked list, maintained by AtomStorage
----------
-
-   - Each atom has pointer to an ImageIterator (possibly null)
-
-   - AtomStorage maintains an DArray<ImageNode> imageNodes_
-     structure. Each ImageNode has a pointer to an atom and 
-     a pointer to the next node. If dimensioned with 
-     atomCapacity, we can use pointers rather than integers.
-
-   - An ImageIterator has (1) a pointer to the head node for 
-     this atom, and (2) a pointer to the tail node.
-
-   - Atom interface:
-
-        bool Atom::hasImages() const;
-        void Atom::beginImages(ConstImageIterator& )
-
-   - Data structures:  
-
-        DArray<ImageNode>      imageNodes_:
-        ArrayStack<ImageNode>  imageReservoir_; 
-        DArray<ImageIterator>  ImageIterator_;   
-
-     These all should be allocated with dimension atomCapacity,
-     but should be allocated only if needed.  Use of arrays that
-     cannot grow allows use of pointers to iterators in Atom and 
-     pointers to nodes in imageReservoir_.
