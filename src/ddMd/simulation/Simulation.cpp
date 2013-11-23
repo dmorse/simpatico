@@ -377,14 +377,19 @@ namespace DdMd
    */
    void Simulation::readParam(std::istream& in)
    {
-      if (isRestarting_) {
-         if (isInitialized_) {
-            return;
-         }
+      if (!isRestarting_) {
+         readBegin(in, className().c_str());
+         readParameters(in);
+         readEnd(in);
       }
-      readBegin(in, className().c_str());
-      readParameters(in);
-      readEnd(in);
+
+      /*
+      * Note that if isRestarting, this function returns immediately. 
+      * All information in the parameter file is also contained in
+      * a restart file. During a restart, the restart file is read 
+      * and isRestarting_ is set true within setOptions(), which the 
+      * main program ddSim.cpp calls before readParam().
+      */
    }
 
    /*

@@ -106,4 +106,5 @@ cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
 cp src/configure obj/serial/configure
 cp src/configure obj/parallel/configure
 
-cd obj/parallel; ./configure -m1 
+# Enable UTIL_MPI by default in obj/parallel (silently).
+cd obj/parallel; ./configure -m1 &> /dev/null
