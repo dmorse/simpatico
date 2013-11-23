@@ -98,7 +98,7 @@ namespace DdMd
    }
 
    /*
-   *
+   * Setup before distribution.
    */
    template <int N>
    void GroupDistributor<N>::setup()
@@ -133,6 +133,7 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
+      // If the cache is full, broadcast it and clear it for reuse.
       if (cacheSize_ == cacheCapacity_) {
           bool isComplete = false;
           int  source = 0;
@@ -144,12 +145,14 @@ namespace DdMd
           cacheSize_ = 0;
       }
       #endif
+
+      // Set newPtr to the next element in cache_, after last occupied.
       newPtr_ = &cache_[cacheSize_];
       return newPtr_;
    }
 
    /*
-   * Add an atom to the list to be sent.
+   * Add a Group to the list to be sent.
    */ 
    template <int N>
    void GroupDistributor<N>::add()
