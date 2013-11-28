@@ -1,52 +1,158 @@
-
 Issues:
 
- 1) For grid directions with 1 processor, no ghosts are sent to complete 
-    groups. Groups may be completed using long bonds, relying on minimum
-    image convention. This special case has thus far required use of the
-    minimum image convention for all cases. 
+ 1) For grids with 1 or 2 processors in one or more directions, a 
+    processor may contain mor than one atom images (local or ghost) 
+    of the same atom, with the same atom id. Currently, a group is 
+    completed with local atoms if possible and, if not, completed
+    with ghosts. The method for finding ghosts does not search among
+    multiple ghosts with the same id: It chooses the first ghost 
+    atom with the correct id.  The selected image may not be the one 
+    that would satify the minimum convention. As a result, the 
+    inner force loop for groups in BondPotentialImpl etc. must 
+    impose the minimum image convention. 
 
- 2) For grid directions with 2 processors, one the first step, the current 
-    algorithm allows atoms in incomplete groups to be sent in both directions.
-    This means that the receiving processor will receive two images with
-    shifted coordinates. The group is completed using a pointer to the first
-    atom with the correct Id, which may not be the one that would not require
-    a minimum image convention.  For atoms near an edge or corner, there can
-    be more than 2 images. 
+ 2) For grids that contain only 1 processor in one or more direction,
+    a processor may contain more than one images of the same atom even
+    for nonbonded ghosts.  A processor may contain either a local atom 
+    and one or more ghosts or more than one ghost and no local atom. 
 
-Principles:
+ 3) For grid directions with only 1 processor, ghosts are not sent to
+    complete groups.
 
- 1) For any number of processors, always create bonded ghosts. 
+ 4) For grid directions with 2 processors, one the first step, the current 
+    algorithm requires atoms in incomplete groups to be sent in both directions.
+    This means that the receiving processor will receive two images of each
+    such atom with shifted coordinates. 
 
- 2) For each direction, for 1 or 2 processors, send all members of the 
-    group in the same sense (j=0 or j=1). Try to choose this such that 
-    no shifts are required to complete the group. (How to do this?)
+ 5) The algorithm for checking which boundaries a group spans, at the
+    beginning of exchangeAtoms, uses the pointers to group atoms defined
+    when the group was completed, and does not check the minimum image
+    convention. The decision regarding which boundaries a group spans
+    effect communication on later steps. Long bonds created on the first 
+    step can thus persist long after the first step.
 
- 3) For one and two processor cases: Identify uncoupled atoms, i.e., atoms
-    connected to incomplete bonds. Find the uncoupled atom that is closest
-    to a boundary. Send all local atoms in the direction of the boundary
-    for this atom. 
+ 6) The communication of so many non-bonded ghosts on the first step
+    requires a larger communication buffer than required on subsequent 
+    steps.
 
- 4) Modify the algorithm on the receiving end so as to check the minimum
-    image convention immediately as each atom is added. Reject images 
-    that do not satisfy the minimum image convention. Throw an Exception
-    if it is not possible to find images that satisfy the minimum image
-    convention. 
+Proposals:
 
- 5) When trying to complete a Group, search in a specific order: Look 
-    first for atoms that are connected to at least one existing atom,
-    then repeat the process until the group is complete. This allows
-    minimum image convention for bonds to be satisfied at each step.
+ 1) Modify AtomStorage so as to retain a record of all ghost images (Done).
 
-    Problem with 4 and 5: The method for finding atoms only allows us to
-    identify one image of each atom. For a 2 x 2 x 2 grid, we will receive
-    up to 8 images. Will the problem will be solved if we require that 
-    each atom is sent in only one direction? Well, no, since a particle
-    near an corner in a 1 x 1 x 1 grid really should appear 6 times?
+ 2) Create ghosts to complete groups even in directions with one processor
 
- 6) Consider writing specific instantiations of GroupStorage::findGhosts
+ 3) For each direction, for 1 or 2 processors, try send connected members 
+    of the group in the same sense (j=0 or j=1).  Identify uncoupled atoms, 
+    i.e., atoms connected to incomplete bonds. Find the uncoupled atom that 
+    is closest to a boundary. Send all local atoms in the direction of the 
+    boundary for this atom. 
+
+ 4) Modify the algorithm for completing groups so as to check the minimum
+    image convention, by checking all ghosts until one is found that 
+    satisfies the minimum image convention. Throw an Exception if none is 
+    found.  Algorithm: First complete the group using a single pointer to 
+    each atom (the one in AtomMap::atomPtrs_). Then identify a root atom 
+    and check minimum image convention for each bond in sequence, working 
+    outward from the root atom. For each bond for which the initial choice
+    does not satisfy the minimum image convention, try all ghosts. Throw 
+    an exception if none of them satisfy the minimum image convention for 
+    a bond. 
+
+ 5) Consider writing specific instantiations of GroupStorage::findGhosts 
     for different values of N, to reduce the number of if{...} blocks.
 
- 7) Decide what to do if an atom must be sent in one direction as a result
-    of rule (3) and sent in the other as a result of proximity to a boundary.
+ 6) Write a new function Exchanger::initialGhostExchange() that will be
+    called just before the first step. This method would first exchange
+    all nonbonded ghosts, and unset each bit of their plan upon receipt.
+    After receiving nonbonded ghosts, it would add these to incomplete
+    groups, choosing from among images so as to satisfy the minimum
+    image convention.  Then, it would send atoms from groups that are 
+    still incomplete to neighboring processors, and complete groups on 
+    receipt, as in the current first step. The final step would be a
+    final all-to-all communication confirming that all groups are 
+    complete and satisfy the minimum image convention an all processors.
+
+    Because multiple images of nonbonded ghosts may be received in
+    systems with only one processor in some directions, the function
+    that completes groups on receipt of ghosts will require an 
+    algorithm for choosing from among images when completing a group 
+    using nonbonded ghosts. This algorithm needs to be worked out, but 
+    the same algorithm can be used during this initial exchange as 
+    during subsequent exchanges. Because some groups will be incomplete
+    after the first stage of exchange in the initial exchange, the
+    function should not throw an Exception as soon as it fails to
+    complete a group, but should return a value indicating success
+    or failure, which would be checked only after the final ghost
+    exchange.
+
+    In the final step of sending atoms from incomplete groups, we 
+    would like to avoid sending atoms from incomplete groups in all 27
+    directions. To do this, the algorithm would require a mechanism for 
+    deciding in which of two possible senses to send atoms from 
+    incomplete groups for each Cartesian direction. 
+
+    --------------------------------------------------------------------
+    Algorithm for receiving ghosts:
+
+    For each incomplete group {
+       Iterate over atoms {
+          Set flag marking which pointers are set.
+       }
+       Iterate over bonds {
+          if bond connects known to known {
+             check minimum image convention
+          }
+          if bond connects known to unknown {
+             add Pair<int bondId, int sign> to a queue
+          }
+       }
+       // Above is all for N=2 (specialization?)
+       while there are boundary bonds in queue {
+          foreach bond in queue {
+             find atom that satisfies minimum image
+             If another bond is connected to new one, add to queue
+          }
+       }
+    }
+
+    --------------------------------------------------------------------
+    Algorithm for sending ghosts
+
+    For each incomplete group {
+       For each direction {
+          middle = 0.5*(bound(i,1) + bound(i,0))
+          min0 = 1000000.0
+          min1 = 1000000.0
+          for each atom in group{
+             if present {
+                if connected to absent atom {
+                   coordinate = atomPtr->position(i);
+                   if (coordinate > middle) {
+                      diff = upper - coordinat
+                      if (diff < min1) {
+                         diff = min1;
+                      }
+                   } else {
+                      diff = coordinate - lower;
+                      if (diff < min0) {
+                         diff = min0;
+                      }
+                   }
+                }
+             }
+          }
+       }
+       if (min0 < min1) {
+         send group in direction 0;
+       } else {
+         send group in direction 0;
+       }
+    }
+
+    Note that this algorithm would use all available information about
+    atom positions, including nonbonded ghosts as well as local atoms.
+
+    Needed: Algorithm for choosing from among images upon receipt of
+    ghosts.
+
 
