@@ -88,7 +88,7 @@ namespace Util
       * Precondition: The algorithm assumes that on input, for each i=0,..,2,
       * minima_[i] - lengths_[i] < r[i] < maxima_[i] + lengths_[i]
       *
-      * \param r Vector of coordinates
+      * \param r Vector of Cartesian coordinates
       */
       void shift(Vector &r) const;
 
@@ -132,7 +132,7 @@ namespace Util
       * Precondition: The algorithm assumes that on input, for each i=0,..,2,
       * -1.0 < r[i] < 2.0
       *
-      * \param r Vector of generalized coordinates
+      * \param r Vector of scaled / generalized coordinates
       */
       void shiftGen(Vector &r) const;
 
@@ -152,52 +152,88 @@ namespace Util
       void shiftGen(Vector &r, IntVector& shift) const;
 
       //@}
-      ///\name Periodic Boundary Conditions - Minimum Image Separations
+      ///\name Minimum Image Pair Separations for Cartesian Vectors
       //@{
 
       /**
-      * Return square distance between positions r1 and r2, using the nearest
-      * the nearest image convention for the separation Vector.
+      * Return square distance between positions r1 and r2.
       *
-      * \param r1  first position Vector
-      * \param r2  second position Vector
+      * This function returns the square distance between two Cartesian 
+      * vectors, using the nearest image convention for the separation Vector.
+      *
+      * \param r1  first Cartesian position Vector
+      * \param r2  second Cartesian position Vector
       * \return square of distance between r1 and r2, using nearest image.
       */
       double distanceSq(const Vector &r1, const Vector &r2) const;
 
       /**
-      * Return square distance between positions r1 and r2, using the nearest
-      * the nearest image convention for the separation Vector.
+      * Return square distance between positions r1 and r2.
       *
-      * \param r1    first position Vector
-      * \param r2    second position Vector
-      * \param shift shift added to r1 to create nearest image of r2.
+      * This function returns the square distance between two Cartesian 
+      * vectors, using the nearest image convention for the separation Vector.
+      * On return, the IntVector shift contains the coefficients of the
+      * Bravais lattice vectors that were added to r1 to create a nearest
+      * image of r2.
+      *
+      * \param r1  first Cartesian position Vector
+      * \param r2  second Cartesian position Vector
+      * \param shift  shift added to r1 to create nearest image of r2.
       * \return square of distance between r1 and r2, using nearest image.
       */
       double distanceSq(const Vector &r1, const Vector &r2, IntVector& shift) 
       const;
 
       /**
-      * Return the squared distance between positions r1 and r2, using the
-      * nearest image convention, and calculate the separation Vector.
+      * Compute distance and separation between r1 and r2.
       *
-      * Upon return, Vector dr contains the separation r1 - r2, using
-      * the nearest image convention. Returns the square of the absolute
-      * magnitude of the separation dr.
+      * This function returns the square distance between two Cartesian 
+      * vectors, using the nearest image convention for the separation Vector.
+      * Upon return, Vector dr contains the separation r1 - r2 computed using
+      * the nearest image convention, and the return value is the square of dr.
       *
-      * \param r1  first position Vector
-      * \param r2  second position Vector
-      * \param dr  separation Vector (upon return)
+      * \param r1 first Cartesian position Vector
+      * \param r2 second Cartesian position Vector
+      * \param dr separation Vector (upon return)
       * \return square of separation Vector dr
       */
       double distanceSq(const Vector &r1, const Vector &r2, Vector &dr) const;
+
+      //@}
+      ///\name Minimum Image Vector Tests
+      //@{
+     
+      /**
+      * Is a generalized separation vector a minimimum image of itself?
+      *
+      * This function returns true if the scaled separation dr has a Cartesian
+      * norm less than or equal to that of any vector that can be produced by
+      * adding a Bravais vector to the corresponding Cartesian vector, or false 
+      * otherwise.
+      *
+      * \param dr separation vector in generalized coordinates.
+      * \return true if minimum image, false otherwise
+      */
+      bool isMinImageGen(const Vector &dr);
+
+      /**
+      * Is a Cartesian separation vector a minimimum image of itself?
+      *
+      * This function returns true if the scaled separation dr has a Cartesian
+      * norm less than or equal to that of any vector that can be produced by
+      * adding a Bravais vector to dr, false otherwise.
+      *
+      * \param dr separation vector in Cartesian coordinates.
+      * \return true if minimum image, false otherwise
+      */
+      bool isMinImageCart(const Vector &dr);
 
       //@}
       ///\name Coordinate Transformations
       //@{
 
       /**
-      * Transform Cartesian Vector to generalized coordinates.
+      * Transform Cartesian Vector to scaled / generalized coordinates.
       *
       * Generalized coordinates range from 0.0 < Rg[i] < 1.0 within the
       * primitive cell, for i=0,..,2.
@@ -564,6 +600,35 @@ namespace Util
          Rc[i] = Rg[i] * lengths_[i];
       }
    }
+
+   /*
+   * Is a generalized separation vector a minimimum image of itself?
+   */
+   inline
+   bool OrthorhombicBoundary::isMinImageGen(const Vector &dr)
+   {
+      for (int i = 0; i < Dimension; ++i) {
+         if (fabs(dr[i]) > 0.5) {
+            return false;
+         }
+      }
+      return true;
+   }
+
+   /*
+   * Is Cartesian separation vector dr a minimimum image of itself?
+   */
+   inline
+   bool OrthorhombicBoundary::isMinImageCart(const Vector &dr)
+   {
+      for (int i = 0; i < Dimension; ++i) {
+         if (fabs(dr[i]) > halfLengths_[i]) {
+            return false;
+         }
+      }
+      return true;
+   }
+
 
    /*
    * Serialize an OrthorhombicBoundary to/from an archive.

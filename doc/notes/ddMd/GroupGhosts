@@ -92,31 +92,30 @@ Proposals:
     incomplete groups for each Cartesian direction. 
 
     --------------------------------------------------------------------
-    Algorithm for receiving ghosts:
+    Algorithm for receiving ghosts, AtomMap::findGroupGhostAtoms
 
-    For each incomplete group {
-       Iterate over atoms {
-          Set flag marking which pointers are set.
-       }
-       Iterate over bonds {
-          if bond connects known to known {
-             check minimum image convention
-          }
-          if bond connects known to unknown {
-             add Pair<int bondId, int sign> to a queue
+       Choose a root atom from among local atoms;
+       Iterate over bonds going down from root {
+          checkout minimum image convention;
+          if (not minimum image) {
+             search ghosts
           }
        }
-       // Above is all for N=2 (specialization?)
-       while there are boundary bonds in queue {
-          foreach bond in queue {
-             find atom that satisfies minimum image
-             If another bond is connected to new one, add to queue
+       Iterate over bonds going up from root {
+          checkout minimum image convention;
+          if (not minimum image) {
+             search ghosts
           }
        }
-    }
+
+       Modify interfaces to accept const Boundary& parameter, for
+
+          AtomMap::findGroupGhostAtoms
+          GroupStorage<N>::findGroups
+          GroupExchanger::findGroups
 
     --------------------------------------------------------------------
-    Algorithm for sending ghosts
+    Algorithm for sending ghosts, in GroupStorage::markGroupGhosts()
 
     For each incomplete group {
        For each direction {
@@ -141,12 +140,13 @@ Proposals:
                 }
              }
           }
+          if (min0 < min1) {
+            mark local atoms for sending in direction 0;
+          } else {
+            mark local atoms for sending in direction 0;
+          }
        }
-       if (min0 < min1) {
-         send group in direction 0;
-       } else {
-         send group in direction 0;
-       }
+       
     }
 
     Note that this algorithm would use all available information about
