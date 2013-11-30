@@ -8,8 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/global.h>             
+#include <util/boundary/Boundary.h> 
 #include <util/space/Dimension.h> 
+#include <util/global.h>             
 
 namespace Util {
    class IntVector;
@@ -108,8 +109,10 @@ namespace DdMd
       * Usage: This called after all ghosts have been exchanged.
       *
       * \param atomStorage AtomStorage object used to find atom pointers
+      * \param boundary    Boundary object used to check minimum image convention
       */
-      virtual void findGhosts(AtomStorage& atomStorage) = 0;
+      virtual
+      void findGhosts(AtomStorage& atomStorage, const Boundary& boundary) = 0;
    
       /**
       * Return true if the container is valid, or throw an Exception.

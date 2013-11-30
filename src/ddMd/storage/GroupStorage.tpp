@@ -505,7 +505,7 @@ namespace DdMd
          if (isComplete) {
 
             for (i = 0; i < Dimension; ++i) {
-               if (gridFlags[i]) {
+               // if (gridFlags[i]) {
                   for (j = 0; j < 2; ++j) {
             
                      // Determine if Group may span boundary (i, j)
@@ -580,18 +580,18 @@ namespace DdMd
                   }
                   #endif
    
-               } // end if gridFlags[i]
+               // } // end if gridFlags[i]
             } // end for i (Cartesian axes)
 
          } else { // if group is not complete
 
             // If not complete, mark ghost flag for all multi-processor directions
             for (i = 0; i < Dimension; ++i) {
-               if (gridFlags[i]) {
+               // if (gridFlags[i]) {
                   for (j = 0; j < 2; ++j) {
                     groupIter->plan().setGhost(i, j);
                   }
-               }
+               // } // if gridFlags_[i]
             }
 
          } // if-else (isComplete)
@@ -765,7 +765,7 @@ namespace DdMd
          nAtom = groupIter->nPtr();
          if (nAtom < N) {
             for (i = 0; i < Dimension; ++i) {
-               if (gridFlags[i]) {
+               // if (gridFlags[i]) {
                   for (j = 0; j < 2; ++j) {
                      if (groupIter->plan().ghost(i, j)) {
                         for (k = 0; k < N; ++k) {
@@ -781,7 +781,7 @@ namespace DdMd
                         }
                      }
                   }
-               }
+               // }
             }
          }
 
@@ -792,7 +792,8 @@ namespace DdMd
    * Find ghost members of groups after exchanging all ghosts.
    */
    template <int N>
-   void GroupStorage<N>::findGhosts(AtomStorage& atomStorage)
+   void GroupStorage<N>::findGhosts(AtomStorage& atomStorage, 
+                                    const Boundary& boundary)
    {
       GroupIterator<N> groupIter;
       const AtomMap& atomMap = atomStorage.map();
@@ -800,7 +801,7 @@ namespace DdMd
       for (begin(groupIter); groupIter.notEnd(); ++groupIter) {
          nAtom = groupIter->nPtr();
          if (nAtom < N) {
-            nAtom = atomMap.findGroupGhostAtoms(*groupIter);
+            nAtom = atomMap.findGroupGhostAtoms(*groupIter, boundary);
             if (nAtom < N) {
                UTIL_THROW("Incomplete group after search for ghosts");
             }

@@ -10,7 +10,8 @@
 
 #include <ddMd/chemistry/Atom.h>     // member template argument
 #include <util/containers/DArray.h>  // member template
-#include <ddMd/chemistry/Group.h>    // member function template
+#include <ddMd/chemistry/Group.h>    // used in member function template
+#include <util/boundary/Boundary.h>  // used in member function template
 #include <util/global.h>
 
 #ifdef UTIL_CXX11
@@ -159,11 +160,13 @@ namespace DdMd
       * On exit, pointers are set for all ghost atoms present in this
       * AtomMap. 
       *
-      * \param group Group<N> object with known atom ids. 
-      * \return number of atoms found on this processor.
+      * \param group Group<N> object with known atom ids
+      * \param boundary Boundary object used to check min-image convention
+      * \return number of atoms found on this processor
       */ 
       template <int N> 
-      int findGroupGhostAtoms(Group<N>& group) const;
+      int findGroupGhostAtoms(Group<N>& group, const Boundary& boundary) 
+      const;
 
       /**
       * Check validity of this AtomMap.
@@ -276,14 +279,16 @@ namespace DdMd
    * Set pointers to atoms in a Group<N> object.
    */
    template <int N>
-   int AtomMap::findGroupGhostAtoms(Group<N>& group) const
+   int AtomMap::findGroupGhostAtoms(Group<N>& group, const Boundary& boundary) 
+   const
    {
       Atom* ptr;
-      GhostMap::const_iterator iter;
+      // GhostMap::const_iterator iter;
       int nAtom = 0;
       int atomId;
       for (int i = 0; i < N; ++i) {
-         if (group.atomPtr(i)) {
+         ptr = group.atomPtr(i);
+         if (ptr) {
             assert(!ptr->isGhost());
             ++nAtom;
          } else {
@@ -294,8 +299,6 @@ namespace DdMd
                assert(ptr->atomId() == atomId);
                group.setAtomPtr(i, ptr);
                ++nAtom;
-            } else {
-               group.clearAtomPtr(i);
             }
          }
       }

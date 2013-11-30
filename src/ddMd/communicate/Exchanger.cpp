@@ -785,7 +785,7 @@ namespace DdMd
 
       // Find ghost atoms for all incomplete groups
       for (k = 0; k < groupExchangers_.size(); ++k) {
-         groupExchangers_[k].findGhosts(*atomStoragePtr_);
+         groupExchangers_[k].findGhosts(*atomStoragePtr_, *boundaryPtr_);
       }
 
       #ifdef UTIL_DEBUG

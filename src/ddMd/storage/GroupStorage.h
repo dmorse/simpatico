@@ -331,7 +331,7 @@ namespace DdMd
       * \param atomStorage AtomStorage object used to find atom pointers
       */
       virtual
-      void findGhosts(AtomStorage& atomStorage);
+      void findGhosts(AtomStorage& atomStorage, const Boundary& boundary);
    
       /**
       * Return true if the container is valid, or throw an Exception.
