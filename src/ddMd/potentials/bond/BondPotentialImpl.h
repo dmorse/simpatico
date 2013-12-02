@@ -344,9 +344,17 @@ namespace DdMd
          atom1Ptr = iter->atomPtr(1);
          isLocal0 = !(atom0Ptr->isGhost());
          isLocal1 = !(atom1Ptr->isGhost());
+        
+         f.subtract(atom0Ptr->position(), atom1Ptr->position());
+         if (!boundary().isMinImageCart(f)) {
+            UTIL_THROW("Not minimum image in computeForces");
+         }
+         rsq = f.square();
+ 
          // Set f = r0 - r1, minimum image separation between atoms
-         rsq = boundary().distanceSq(atom0Ptr->position(), 
-                                     atom1Ptr->position(), f);
+         //rsq = boundary().distanceSq(atom0Ptr->position(), 
+         //                              atom1Ptr->position(), f);
+         
          // Set force = (r0-r1)*(forceOverR)
          f *= interactionPtr_->forceOverR(rsq, type);
          if (isLocal0) {

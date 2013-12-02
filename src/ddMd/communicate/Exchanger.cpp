@@ -347,6 +347,7 @@ namespace DdMd
       #endif
       #endif
 
+      // Atom exchange - loop over exchange directions
       // Cartesian directions for exchange (0=x, 1=y, 2=z)
       for (i = 0; i < Dimension; ++i) {
 

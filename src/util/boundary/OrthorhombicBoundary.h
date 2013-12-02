@@ -200,7 +200,7 @@ namespace Util
       double distanceSq(const Vector &r1, const Vector &r2, Vector &dr) const;
 
       //@}
-      ///\name Minimum Image Vector Tests
+      ///\name Minimum Image Separation Vector Tests
       //@{
      
       /**
@@ -214,7 +214,7 @@ namespace Util
       * \param dr separation vector in generalized coordinates.
       * \return true if minimum image, false otherwise
       */
-      bool isMinImageGen(const Vector &dr);
+      bool isMinImageGen(const Vector &dr) const;
 
       /**
       * Is a Cartesian separation vector a minimimum image of itself?
@@ -226,7 +226,7 @@ namespace Util
       * \param dr separation vector in Cartesian coordinates.
       * \return true if minimum image, false otherwise
       */
-      bool isMinImageCart(const Vector &dr);
+      bool isMinImageCart(const Vector &dr) const;
 
       //@}
       ///\name Coordinate Transformations
@@ -605,7 +605,7 @@ namespace Util
    * Is a generalized separation vector a minimimum image of itself?
    */
    inline
-   bool OrthorhombicBoundary::isMinImageGen(const Vector &dr)
+   bool OrthorhombicBoundary::isMinImageGen(const Vector &dr) const
    {
       for (int i = 0; i < Dimension; ++i) {
          if (fabs(dr[i]) > 0.5) {
@@ -619,7 +619,7 @@ namespace Util
    * Is Cartesian separation vector dr a minimimum image of itself?
    */
    inline
-   bool OrthorhombicBoundary::isMinImageCart(const Vector &dr)
+   bool OrthorhombicBoundary::isMinImageCart(const Vector &dr) const
    {
       for (int i = 0; i < Dimension; ++i) {
          if (fabs(dr[i]) > halfLengths_[i]) {

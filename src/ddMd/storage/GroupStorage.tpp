@@ -797,15 +797,10 @@ namespace DdMd
    {
       GroupIterator<N> groupIter;
       const AtomMap& atomMap = atomStorage.map();
-      int nAtom;
       for (begin(groupIter); groupIter.notEnd(); ++groupIter) {
-         nAtom = groupIter->nPtr();
-         if (nAtom < N) {
-            nAtom = atomMap.findGroupGhostAtoms(*groupIter, boundary);
-            if (nAtom < N) {
-               UTIL_THROW("Incomplete group after search for ghosts");
-            }
-         }
+         // if (groupIter->nPtr() < N) {
+         atomMap.findGroupGhostAtoms(*groupIter, boundary);
+         //}
       }
    }
 

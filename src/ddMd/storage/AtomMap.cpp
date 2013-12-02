@@ -132,7 +132,6 @@ namespace DdMd
          ++nGhostDistinct_;
       } else {
          ghostMap_.insert(std::pair<int, Atom*>(atomId, ptr));
-         //ghostMap_.emplace(atomId, ptr);
       }
    }
 
@@ -257,5 +256,60 @@ namespace DdMd
       return true;
    }
 
-}
+   /*
+   * Set pointers to atoms in a Group<2> object.
+   */
+   void AtomMap::findGroupGhostAtoms(Group<2>& group, const Boundary& boundary) 
+   const
+   {
+      Vector dr;
+      Atom* aPtr; // Pointer to atom a (must be local)
+      Atom* bPtr; // Pointer to atom b (may be local or ghost)
+      int bi;     // atom id for atom b (permanent global identifier)
+      int bj;     // Index of atom b in group (0 or 1)
+
+      // Identify atom a (must be local)
+      aPtr = group.atomPtr(0);
+      if (aPtr) {
+         assert(aPtr->id() == group.atomId(0));
+         bj = 1;
+      } else {
+         aPtr = group.atomPtr(1);
+         assert(aPtr);
+         assert(aPtr->id() == group.atomId(1));
+         bj = 0;
+      }
+      assert(!aPtr->isGhost());
+      bi = group.atomId(bj);
+
+      // Find first image of atom b, and check minimum image
+      bPtr = atomPtrs_[bi];
+      assert(bPtr);
+      assert(bPtr->id() == bi);
+      dr.subtract(aPtr->position(), bPtr->position());
+      if (boundary.isMinImageGen(dr)) {
+         group.setAtomPtr(bj, bPtr);
+         return;
+      }
+        
+      // Check further ghosts images of b if necessary
+      std::pair < GhostMap::const_iterator, GhostMap::const_iterator > ret;
+      ret = ghostMap_.equal_range(bi); 
+      GhostMap::const_iterator iter = ret.first;
+      GhostMap::const_iterator last = ret.second;
+      for ( ; iter != last; ++iter) {
+         assert(iter->first == bi);
+         bPtr = iter->second;
+         assert(bPtr->id() == bi);
+         dr.subtract(aPtr->position(), bPtr->position());
+         if (boundary.isMinImageGen(dr)) {
+            group.setAtomPtr(bj, bPtr);
+            return;
+         }
+      }
+
+      UTIL_THROW("Incomplete Group<2> at end of findGroupGhostAtoms");
+   }
+
+} // namespace DdMd
 #endif

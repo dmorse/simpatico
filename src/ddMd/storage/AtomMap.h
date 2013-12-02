@@ -162,10 +162,18 @@ namespace DdMd
       *
       * \param group Group<N> object with known atom ids
       * \param boundary Boundary object used to check min-image convention
-      * \return number of atoms found on this processor
       */ 
       template <int N> 
-      int findGroupGhostAtoms(Group<N>& group, const Boundary& boundary) 
+      void findGroupGhostAtoms(Group<N>& group, const Boundary& boundary) 
+      const;
+
+      /**
+      * Explict specialization of findGroupGhostAtoms<N> for N=2 (bonds).
+      *
+      * \param group Group<N> object with known atom ids
+      * \param boundary Boundary object used to check min-image convention
+      */ 
+      void findGroupGhostAtoms(Group<2>& group, const Boundary& boundary) 
       const;
 
       /**
@@ -265,7 +273,7 @@ namespace DdMd
          ptr = atomPtrs_[group.atomId(i)];
          if (ptr) {
             assert(!ptr->isGhost());
-            assert(ptr->atomId() == group.atomId(i));
+            assert(ptr->id() == group.atomId(i));
             group.setAtomPtr(i, ptr);
             ++nAtom;
          } else {
@@ -275,15 +283,15 @@ namespace DdMd
       return nAtom;
    }
 
+   #if 0
    /*
    * Set pointers to atoms in a Group<N> object.
    */
    template <int N>
-   int AtomMap::findGroupGhostAtoms(Group<N>& group, const Boundary& boundary) 
+   void AtomMap::findGroupGhostAtoms(Group<N>& group, const Boundary& boundary) 
    const
    {
       Atom* ptr;
-      // GhostMap::const_iterator iter;
       int nAtom = 0;
       int atomId;
       for (int i = 0; i < N; ++i) {
@@ -302,8 +310,11 @@ namespace DdMd
             }
          }
       }
-      return nAtom;
+      if (nAtom != N) {
+         UTIL_THROW("Incomplete group at end of findGroupGhostAtoms");
+      }
    }
+   #endif
 
 }
 #endif

@@ -3,7 +3,10 @@
 
 #include <ddMd/storage/AtomMap.h>
 #include <ddMd/chemistry/Atom.h>
+#include <ddMd/chemistry/Group.h>
 #include <ddMd/chemistry/AtomArray.h>
+#include <util/boundary/OrthorhombicBoundary.h>
+#include <util/space/Vector.h>
 #include <util/containers/ArraySet.h>
 
 #ifdef UTIL_MPI
@@ -52,6 +55,9 @@ public:
    void testFindLocal();
    void testFindLocalGhost();
    void testClearGhosts();
+   void testFindGroupGhostAtoms1();
+   void testFindGroupGhostAtoms2();
+   void testFindGroupGhostAtoms3();
 
 };
 
@@ -256,12 +262,115 @@ inline void AtomMapTest::testClearGhosts()
    TEST_ASSERT(map_.isValid());
 }
 
+inline void AtomMapTest::testFindGroupGhostAtoms1()
+{
+   printMethod(TEST_FUNC);
+
+   Vector L(1.0, 1.0, 1.0);
+   OrthorhombicBoundary boundary;
+   boundary.setOrthorhombic(L);
+
+   Group<2> bond;
+   bond.setAtomId(0, 4);
+   bond.setAtomId(1, 2);
+   bond.setAtomPtr(0, &array_[4]);
+   bond.setAtomPtr(1, &array_[2]);
+   array_[4].position() = Vector(0.9, 0.4, 0.4);
+   array_[2].position() = Vector(0.7, 0.5, 0.5);
+
+   // Both atoms local, satisfy minimum image convention.
+   map_.addLocal(&array_[2]);
+   map_.addLocal(&array_[4]);
+   TEST_ASSERT(map_.nLocal() == 2);
+   TEST_ASSERT(map_.nGhost() == 0);
+   TEST_ASSERT(map_.nGhostDistinct() == 0);
+   TEST_ASSERT(map_.isValid());
+
+   map_.findGroupGhostAtoms(bond, boundary);
+}
+
+inline void AtomMapTest::testFindGroupGhostAtoms2()
+{
+   printMethod(TEST_FUNC);
+
+   Vector L(1.0, 1.0, 1.0);
+   OrthorhombicBoundary boundary;
+   boundary.setOrthorhombic(L);
+
+   array_[3].setId(2);
+   array_[3].position() = Vector(1.1, 0.5, 0.5);
+   array_[4].position() = Vector(0.9, 0.4, 0.4);
+   TEST_ASSERT(array_[4].id() == 4);
+   TEST_ASSERT(array_[3].id() == 2);
+
+   Group<2> bond;
+   bond.setAtomId(0, 2); // ghost
+   bond.setAtomId(1, 4); // local
+   bond.setAtomPtr(1, &array_[4]);
+   // bond.setAtomPtr(1, &array_[3]);
+
+   // Both atoms local, satisfy minimum image convention.
+   map_.addLocal(&array_[4]);
+   map_.addGhost(&array_[3]);
+   TEST_ASSERT(map_.nLocal() == 1);
+   TEST_ASSERT(map_.nGhost() == 1);
+   TEST_ASSERT(map_.nGhostDistinct() == 1);
+   TEST_ASSERT(map_.isValid());
+
+   map_.findGroupGhostAtoms(bond, boundary);
+   TEST_ASSERT(bond.atomPtr(0) == &array_[3]);
+   TEST_ASSERT(bond.atomPtr(1) == &array_[4]);
+}
+
+inline void AtomMapTest::testFindGroupGhostAtoms3()
+{
+   printMethod(TEST_FUNC);
+
+   Vector L(1.0, 1.0, 1.0);
+   OrthorhombicBoundary boundary;
+   boundary.setOrthorhombic(L);
+
+   array_[2].position() = Vector(0.1, 0.5, 0.5);
+   array_[4].position() = Vector(0.9, 0.4, 0.4);
+   array_[3].setId(2);
+   array_[3].position() = Vector(1.1, 0.5, 0.5);  // ghost of 2
+   array_[5].setId(4);
+   array_[5].position() = Vector(-0.1, 0.4, 0.4); // ghost of 4
+   TEST_ASSERT(array_[2].id() == 2);
+   TEST_ASSERT(array_[3].id() == 2);
+   TEST_ASSERT(array_[4].id() == 4);
+   TEST_ASSERT(array_[5].id() == 4);
+
+   Group<2> bond;
+   bond.setAtomId(0, 2); // local and ghost
+   bond.setAtomId(1, 4); // local
+   bond.setAtomPtr(0, &array_[2]);
+   bond.setAtomPtr(1, &array_[4]);
+
+   // One atom local only, one local and ghost.
+   map_.addLocal(&array_[2]);
+   map_.addLocal(&array_[4]);
+   map_.addGhost(&array_[3]);
+   map_.addGhost(&array_[5]);
+   TEST_ASSERT(map_.nLocal() == 2);
+   TEST_ASSERT(map_.nGhost() == 2);
+   TEST_ASSERT(map_.nGhostDistinct() == 0);
+   TEST_ASSERT(map_.isValid());
+
+   map_.findGroupGhostAtoms(bond, boundary);
+   TEST_ASSERT(bond.atomPtr(0) == &array_[2]);
+   TEST_ASSERT(bond.atomPtr(1) == &array_[5]);
+}
+
 TEST_BEGIN(AtomMapTest)
 TEST_ADD(AtomMapTest, testAdd)
 TEST_ADD(AtomMapTest, testAddRemove)
 TEST_ADD(AtomMapTest, testFindLocal)
 TEST_ADD(AtomMapTest, testFindLocalGhost)
 TEST_ADD(AtomMapTest, testClearGhosts)
+TEST_ADD(AtomMapTest, testFindGroupGhostAtoms1)
+TEST_ADD(AtomMapTest, testFindGroupGhostAtoms2)
+TEST_ADD(AtomMapTest, testFindGroupGhostAtoms3)
 TEST_END(AtomMapTest)
 
 #endif
