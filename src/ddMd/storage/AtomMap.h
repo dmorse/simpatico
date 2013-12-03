@@ -156,8 +156,8 @@ namespace DdMd
       * called after all pointers have been set for all local atoms
       * and after this AtomMap contains all ghost atoms. 
       *
-      * On exit, pointers are set for all ghost atoms present in this
-      * AtomMap. 
+      * On exit, pointers are set for all ghost atoms present in
+      * this AtomMap.
       *
       * \param group Group<N> object with known atom ids. 
       * \return number of atoms found on this processor.
@@ -262,7 +262,7 @@ namespace DdMd
          ptr = atomPtrs_[group.atomId(i)];
          if (ptr) {
             assert(!ptr->isGhost());
-            assert(ptr->atomId() == group.atomId(i));
+            assert(ptr->id() == group.atomId(i));
             group.setAtomPtr(i, ptr);
             ++nAtom;
          } else {
@@ -279,19 +279,17 @@ namespace DdMd
    int AtomMap::findGroupGhostAtoms(Group<N>& group) const
    {
       Atom* ptr;
-      GhostMap::const_iterator iter;
       int nAtom = 0;
-      int atomId;
       for (int i = 0; i < N; ++i) {
-         if (group.atomPtr(i)) {
-            assert(!ptr->isGhost());
+         if (group.atomPtr(i) != 0) {
+            // assert(!(ptr->isGhost()));
             ++nAtom;
          } else {
-            atomId = group.atomId(i);
+            int atomId = group.atomId(i);
             ptr = atomPtrs_[atomId];
             if (ptr) {
                assert(ptr->isGhost());
-               assert(ptr->atomId() == atomId);
+               assert(ptr->id() == atomId);
                group.setAtomPtr(i, ptr);
                ++nAtom;
             } else {
