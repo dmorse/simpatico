@@ -375,10 +375,11 @@ namespace DdMd
    {
       int i;
       int atomId;
-      int nAtom;  // Number of local atoms in particular group.
-      int nGhost; // Number of local atoms in particular group.
-      int nAtomGroup = 0; // Number of local atoms in all groups on processor
+      int nAtom;  // Number of nonnull pointers to atoms in particular group.
+      int nLocal; // Number of local atoms in particular group.
+      int nGroupLocal = 0; // Number of local atoms in all groups on processor
       Atom* atomPtr;
+      Atom* findPtr;
       ConstGroupIterator<N> groupIter;
 
       // Call simpler function that only checks storage data structures.
@@ -388,42 +389,41 @@ namespace DdMd
       const AtomMap& atomMap = atomStorage.map();
       for (begin(groupIter); groupIter.notEnd(); ++groupIter) {
          nAtom = 0;
-         nGhost = 0;
+         nLocal = 0;
          for (i = 0; i < N; ++i) {
             atomId  = groupIter->atomId(i);
             if (atomId < 0 || atomId >= atomStorage.totalAtomCapacity()) {
                UTIL_THROW("Invalid atom id in Group");
             }
+            findPtr = atomMap.find(atomId);
             atomPtr = groupIter->atomPtr(i);
             if (atomPtr) {
-               if (atomPtr != atomMap.find(atomId)) {
-                  UTIL_THROW("Inconsistent non-null atom pointer in Group");
+               ++nAtom;
+               if (atomPtr->id() != atomId) {
+                  UTIL_THROW("Inconsistent id for atom pointer in Group");
                }
-               if (atomPtr->isGhost()) {
-                  ++nGhost;
-               } else {
-                  ++nAtom;
+               if (findPtr == 0) {
+                  UTIL_THROW("Pointer to atom with id that is not in the map");
                }
-            } else {
-               atomPtr = atomMap.find(atomId);
-               if (atomPtr != 0) {
-                  if (atomPtr->isGhost()) {
-                     if (hasGhosts) {
-                        UTIL_THROW("Missing ghost atom");
-                     }
-                  } else {
-                     UTIL_THROW("Missing local atom");
+               if (!atomPtr->isGhost()) {
+                  if (atomPtr != findPtr) {
+                     UTIL_THROW("Inconsistent pointer to local atom");
                   }
+               }
+            }
+            if (findPtr) {
+               if (!findPtr->isGhost()) {
+                  ++nLocal; 
                }
             }
          }
          if (nAtom == 0) {
             UTIL_THROW("Empty group");
          }
-         if (hasGhosts && (nAtom + nGhost) < N) {
+         if (hasGhosts && nAtom < N) {
             UTIL_THROW("Incomplete group");
          }
-         nAtomGroup += nAtom;
+         nGroupLocal += nLocal;
       }
 
       // Count number distinct groups.
@@ -434,17 +434,17 @@ namespace DdMd
 
       #ifdef UTIL_MPI
       // Count & return number of local atoms in groups on all processors.
-      int nAtomGroupTotal;
+      int nGroupLocalTotal;
       const int source = 0;
-      communicator.Reduce(&nAtomGroup, &nAtomGroupTotal, 1, 
+      communicator.Reduce(&nGroupLocal, &nGroupLocalTotal, 1, 
                           MPI::INT, MPI::SUM, source);
       if (communicator.Get_rank() == source) {
          if (!nTotal_.isSet()) {
             UTIL_THROW("nTotal not set");
          }
-         if (nAtomGroupTotal != N*nTotal()) {
-            std::cout << "nAtomGroupTotal = " << nAtomGroupTotal << std::endl;
-            std::cout << "nTotal*N        = " << N*nTotal() << std::endl;
+         if (nGroupLocalTotal != N*nTotal()) {
+            std::cout << "nGroupLocalTotal = " << nGroupLocalTotal << std::endl;
+            std::cout << "nTotal*N         = " << N*nTotal() << std::endl;
             UTIL_THROW("Discrepancy in number of local atoms in Group objects");
          }
       }
@@ -500,98 +500,102 @@ namespace DdMd
       for ( ; groupIter.notEnd(); ++groupIter) {
          groupIter->plan().clearFlags();
 
-         isComplete = (groupIter->nPtr() == N); // Is this group complete?
-
-         if (isComplete) {
+         isComplete = (groupIter->nPtr() == N); 
+         if (isComplete) { // if group is complete
 
             for (i = 0; i < Dimension; ++i) {
-               // if (gridFlags[i]) {
-                  for (j = 0; j < 2; ++j) {
-            
-                     // Determine if Group may span boundary (i, j)
-                     choose = false;
-                     nIn = 0;
-                     nOut = 0;
-                     // Loop over atoms in group
-                     for (k = 0; k < N; ++k) {
-                        atomPtr = groupIter->atomPtr(k);
-                        assert(atomPtr);
-                        coordinate = atomPtr->position()[i];
-                        if (atomPtr->isGhost()) {
-                           if (j == 0) {
-                              assert(inner(i, j) > bound(i, j));
-                              if (coordinate < inner(i, j)) {
-                                 ++nOut;
-                              }
-                              if (coordinate > outer(i, j)) {
-                                 ++nIn;
-                              }
-                           } else { // if j = 1
-                              assert(inner(i, j) < bound(i, j));
-                              if (coordinate > inner(i, j)) {
-                                 ++nOut;
-                              }
-                              if (coordinate < outer(i, j)) {
-                                 ++nIn;
-                              }
-                           }
-                        } else { // if atomPtr points to local atom
-                           if (atomPtr->plan().exchange(i, j)) {
+               for (j = 0; j < 2; ++j) {
+ 
+                  // Determine if Group may span boundary (i, j)
+                  choose = false; 
+                  nIn = 0;
+                  nOut = 0;
+                  // Loop over atoms in group
+                  for (k = 0; k < N; ++k) {
+                     atomPtr = groupIter->atomPtr(k);
+                     assert(atomPtr);
+                     coordinate = atomPtr->position()[i];
+                     if (atomPtr->isGhost()) {
+                        if (j == 0) {
+                           assert(inner(i, j) > bound(i, j));
+                           if (coordinate < inner(i, j)) {
                               ++nOut;
-                           } else {
+                           }
+                           if (coordinate > outer(i, j)) {
+                              ++nIn;
+                           }
+                        } else { // if j = 1
+                           assert(inner(i, j) < bound(i, j));
+                           if (coordinate > inner(i, j)) {
+                              ++nOut;
+                           }
+                           if (coordinate < outer(i, j)) {
                               ++nIn;
                            }
                         }
-                     } // end for k (atoms in group)
-                     if (nOut > 0 && nIn > 0) {
-                        choose = true;
-                     }
-                     if (choose) {
-                        groupIter->plan().setGhost(i, j);
-                     } else {
-                        groupIter->plan().clearGhost(i, j);
-                     }
-                  } // end for j = 0, 1
-  
-                  #if 0 
-                  // A complete group may not span both lower (j=0) and upper (j=1) boundaries
-                  if (groupIter->plan().ghost(i, 0) && groupIter->plan().ghost(i, 1)) {
-                     std::cout << "Direction " << i << std::endl;
-                     std::cout << "Inner / outer (j=0) = " << inner(i,0) 
-                               << "  " << outer(i, 0) << std::endl;
-                     std::cout << "Inner / outer (j=1) = " << inner(i,1) 
-                               << "  " << outer(i, 1) << std::endl;
-                     for (k = 0; k < N; ++k) {
-                        atomPtr = groupIter->atomPtr(k);
-                        assert(atomPtr);
-                        coordinate = atomPtr->position()[i];
-                        std::cout << k << "  " << coordinate;
-                        if (atomPtr->isGhost()) {
-                           std::cout << " ghost  ";
+                     } else { // if atomPtr points to local atom
+                        if (atomPtr->plan().exchange(i, j)) {
+                           ++nOut;
                         } else {
-                           std::cout << " local  "
-                                     << atomPtr->plan().exchange(i, 0) << "  "
-                                     << atomPtr->plan().exchange(i, 1);
+                           ++nIn;
                         }
-                        std::cout << std::endl;
-                        std::cout << std::endl;
                      }
-                     UTIL_THROW("Group spans both upper and lower boundaries");
+                  } // end for k (atoms in group)
+                  if (nOut > 0 && nIn > 0) {
+                     choose = true;
                   }
-                  #endif
-   
-               // } // end if gridFlags[i]
+
+                  // If group may span boundary (i,j), set ghost flag (i, j)
+                  if (choose) {
+                     groupIter->plan().setGhost(i, j);
+                  }
+
+               } // end for j = 0, 1
+  
+               // A complete group may not span both lower (j=0) and upper (j=1) boundaries
+               if (groupIter->plan().ghost(i, 0) && groupIter->plan().ghost(i, 1)) {
+                  std::cout << "Direction " << i << std::endl;
+                  std::cout << "Inner / outer (j=0) = " << inner(i,0) 
+                            << "  " << outer(i, 0) << std::endl;
+                  std::cout << "Inner / outer (j=1) = " << inner(i,1) 
+                            << "  " << outer(i, 1) << std::endl;
+                  for (k = 0; k < N; ++k) {
+                     atomPtr = groupIter->atomPtr(k);
+                     assert(atomPtr);
+                     coordinate = atomPtr->position()[i];
+                     std::cout << k << "  " << coordinate;
+                     if (atomPtr->isGhost()) {
+                        std::cout << " ghost  ";
+                     } else {
+                        std::cout << " local  "
+                                  << atomPtr->plan().exchange(i, 0) << "  "
+                                  << atomPtr->plan().exchange(i, 1);
+                     }
+                     std::cout << std::endl;
+                     std::cout << std::endl;
+                  }
+                  UTIL_THROW("Group spans both upper and lower boundaries");
+               }
+
+               // For directions with one processor, send in both directions or neither
+               if (!gridFlags[i]) {
+                  if (groupIter->plan().ghost(i,0)) {
+                     groupIter->plan().setGhost(i,1);
+                  } else 
+                  if (groupIter->plan().ghost(i,1)) {
+                     groupIter->plan().setGhost(i,0);
+                  }
+               }
+
             } // end for i (Cartesian axes)
 
          } else { // if group is not complete
 
-            // If not complete, mark ghost flag for all multi-processor directions
+            // If not complete, mark ghost flag for all directions
             for (i = 0; i < Dimension; ++i) {
-               // if (gridFlags[i]) {
-                  for (j = 0; j < 2; ++j) {
-                    groupIter->plan().setGhost(i, j);
-                  }
-               // } // if gridFlags_[i]
+               for (j = 0; j < 2; ++j) {
+                 groupIter->plan().setGhost(i, j);
+               }
             }
 
          } // if-else (isComplete)
@@ -687,6 +691,21 @@ namespace DdMd
             add();
             atomMap.findGroupLocalAtoms(*newGroupPtr);
          }
+
+         /*
+         * Notes:
+         * 1) On receipt a group is added to the storage only if it is not
+         * already present. 
+         * 2) Local atoms for every received group must be re-identified by
+         * calling AtomMap::findGroupLocalAtoms() after each communication
+         * in order to identify atoms that have just arrived. Pointers to
+         * departing atoms are cleared from groups on the sending processor
+         * in the GroupStorage::pack() function. Group pointers to local atoms 
+         * must be correct after each buffer exchange because they are used 
+         * on subsequent steps to determine which groups must be exchanged 
+         * when an atom is exchanged.
+         */
+
       }
       buffer.endRecvBlock();
       assert(buffer.recvSize() == 0);
@@ -697,21 +716,20 @@ namespace DdMd
    * Set ghost communication flags for all atoms in incomplete groups.
    *
    * Precondition: This is called by exchangeAtoms after exchanging atoms 
-   * and groups between neighboring processors. At this point, there are
+   * groups between neighboring processors. At this point, there are no 
    * no ghosts atoms.
    *
-   * Algorithm: Loop over all Group<N> objects in the group storage. 
-   * For each group, check if the group is incomplete, implying that one or
-   * more atoms in the group are owned by another processor. If the group 
-   * is incomplete, loop over 6 transfer directions. For each direction,
-   * if the group is marked for sending in that direction, set the ghost
-   * ghost communication flag for transfer in that direction for every 
-   * local atom in the group. Also add each such atom to sendArray(i, j).
-   *
-   * Note: If a group is incomplete on this processor, and thus
-   * contains atoms owned by other processors, the algorithm assumes
-   * that the ghost communication flag for each atom will be set by
-   * the processor that owns the atom.
+   * Algorithm: Loop over all Group<N> objects in the group storage. For
+   * each group, check if the group is incomplete or not compact. A group
+   * is incomplete if it has one or more null pointers, implying that 
+   * those atoms are owned by another processor. A group is not compact 
+   * if it marked for sending in a direction along which the grid has 
+   * only one processor, implying that is spans a periodic boundary.
+   * If the group is incomplete or not compact, loop over 6 transfer 
+   * directions. For each direction (i,j), if the group is marked for 
+   * sending in that direction, set the ghost ghost communication flag 
+   * for transfer in that direction for every local atom in the group, 
+   * and also add each such atom to sendArray(i, j) for that direction.
    */
    template <int N> void 
    GroupStorage<N>::markGhosts(AtomStorage& atomStorage, 
@@ -722,6 +740,15 @@ namespace DdMd
       Atom* atomPtr;
       Plan* planPtr;
       int i, j, k, nAtom;
+      bool choose, isPeriodic;
+
+      // Set isPeriodic=true if there is only one processor in any direction
+      isPeriodic = false;
+      for (i = 0; i < Dimension; ++i) {
+         if (!gridFlags[i]) {
+            isPeriodic = true;
+         }
+      }
 
       // Loop over groups
       begin(groupIter);
@@ -737,19 +764,18 @@ namespace DdMd
             atomPtr = groupIter->atomPtr(k);
             atomId  = groupIter->atomId(k);
             if (atomPtr != 0) {
-               if (atomPtr != atomMap.find(atomId)) {
-                  UTIL_THROW("Error in atom pointer in group");
-               }
                if (atomPtr->isGhost()) {
                   UTIL_THROW("Pointer to ghost atom in group");
-               } else {
-                  ++nAtom;
                }
+               if (atomPtr != atomMap.find(atomId)) {
+                  UTIL_THROW("Inconsistent pointer to local atom in group");
+               }
+               ++nAtom;
             } else { // if atomPtr == 0
                atomPtr = atomMap.find(atomId);
                if (atomPtr) {
                   if (!atomPtr->isGhost()) {
-                     UTIL_THROW("Missing pointer to local atom in group");
+                     UTIL_THROW("Null pointer in group to existing local atom");
                   }
                }
             }
@@ -761,27 +787,45 @@ namespace DdMd
          #endif // ifdef DDMD_GROUP_STORAGE_DEBUG
          #endif // ifdef UTIL_DEBUG
 
-         // If this group is incomplete, set ghost flags for atoms 
+         // Choose this group if it is incomplete or not compact 
+         choose = false;
          nAtom = groupIter->nPtr();
-         if (nAtom < N) {
+         if (nAtom < N) { // if incomplete
+            choose = true; 
+         } else 
+         if (isPeriodic) { // If the grid has one processor in any direction
             for (i = 0; i < Dimension; ++i) {
-               // if (gridFlags[i]) {
-                  for (j = 0; j < 2; ++j) {
-                     if (groupIter->plan().ghost(i, j)) {
-                        for (k = 0; k < N; ++k) {
-                           atomPtr = groupIter->atomPtr(k);
-                           if (atomPtr) {
-                              assert(!atomPtr->isGhost());
-                              planPtr = &atomPtr->plan();
-                              if (!planPtr->ghost(i, j)) { 
-                                 planPtr->setGhost(i, j);
-                                 sendArray(i, j).append(*atomPtr);
-                              }
+               if (!gridFlags[i]) {
+                  if (groupIter->plan().ghost(i, 0)) {
+                     choose = true;
+                  }
+               }
+            }
+         }
+
+         /*
+         * If this group is chosen, for each direction (i,j) in which 
+         * group ghost is set, loop over atoms in group. For each atom,
+         * if ghost flag (i, j) is not already set, set ghost flag (i,j) 
+         * and add the atom to the sendArray.
+         */ 
+         if (choose) {
+            for (i = 0; i < Dimension; ++i) {
+               for (j = 0; j < 2; ++j) {
+                  if (groupIter->plan().ghost(i, j)) {
+                     for (k = 0; k < N; ++k) {
+                        atomPtr = groupIter->atomPtr(k);
+                        if (atomPtr) {
+                           assert(!atomPtr->isGhost());
+                           planPtr = &atomPtr->plan();
+                           if (!planPtr->ghost(i, j)) { 
+                              planPtr->setGhost(i, j);
+                              sendArray(i, j).append(*atomPtr);
                            }
                         }
                      }
                   }
-               // }
+               }
             }
          }
 
@@ -798,9 +842,7 @@ namespace DdMd
       GroupIterator<N> groupIter;
       const AtomMap& atomMap = atomStorage.map();
       for (begin(groupIter); groupIter.notEnd(); ++groupIter) {
-         // if (groupIter->nPtr() < N) {
          atomMap.findGroupGhostAtoms(*groupIter, boundary);
-         //}
       }
    }
 

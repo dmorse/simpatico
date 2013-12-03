@@ -268,31 +268,27 @@ namespace DdMd
       int bi;     // atom id for atom b (permanent global identifier)
       int bj;     // Index of atom b in group (0 or 1)
 
-      // Identify atom a (must be local)
+      // Identify atoms a and b
       aPtr = group.atomPtr(0);
       if (aPtr) {
-         assert(aPtr->id() == group.atomId(0));
          bj = 1;
       } else {
          aPtr = group.atomPtr(1);
          assert(aPtr);
-         assert(aPtr->id() == group.atomId(1));
          bj = 0;
       }
-      assert(!aPtr->isGhost());
       bi = group.atomId(bj);
-
-      // Find first image of atom b, and check minimum image
       bPtr = atomPtrs_[bi];
       assert(bPtr);
-      assert(bPtr->id() == bi);
+
+      // Find first image of atom b, and check minimum image
       dr.subtract(aPtr->position(), bPtr->position());
       if (boundary.isMinImageGen(dr)) {
          group.setAtomPtr(bj, bPtr);
          return;
       }
         
-      // Check further ghosts images of b if necessary
+      // If necesary, check further ghosts images of atom b
       std::pair < GhostMap::const_iterator, GhostMap::const_iterator > ret;
       ret = ghostMap_.equal_range(bi); 
       GhostMap::const_iterator iter = ret.first;
@@ -300,7 +296,6 @@ namespace DdMd
       for ( ; iter != last; ++iter) {
          assert(iter->first == bi);
          bPtr = iter->second;
-         assert(bPtr->id() == bi);
          dr.subtract(aPtr->position(), bPtr->position());
          if (boundary.isMinImageGen(dr)) {
             group.setAtomPtr(bj, bPtr);

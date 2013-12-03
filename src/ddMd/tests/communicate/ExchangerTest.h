@@ -240,11 +240,13 @@ void ExchangerTest::testExchange()
    //nAtom = atomStorage.nAtom();
    //nGhost = atomStorage.nGhost();
 
-   // Displace atoms and then exchange atoms and ghosts
-   double range = 0.4;
-   displaceAtoms(range);
+   // Initial exchange of atoms and ghosts
    exchanger.exchange();
    exchangeNotify();
+
+
+
+
 
    // Check that all atoms are accounted for after ghost exchange.
    nAtom = atomStorage.nAtom();
@@ -281,6 +283,11 @@ void ExchangerTest::testExchange()
                domain.communicator(), true));
    #endif
 
+   // Displace atoms and then exchange atoms and ghosts
+   double range = 0.1;
+   displaceAtoms(range);
+   exchanger.exchange();
+   exchangeNotify();
 }
 
 void ExchangerTest::testGhostUpdate()
@@ -613,11 +620,11 @@ bool ExchangerTest::isExchangeNeeded(double skin)
 }
 
 TEST_BEGIN(ExchangerTest)
-TEST_ADD(ExchangerTest, testDistribute)
+//TEST_ADD(ExchangerTest, testDistribute)
 TEST_ADD(ExchangerTest, testExchange)
-TEST_ADD(ExchangerTest, testGhostUpdate)
-TEST_ADD(ExchangerTest, testGhostUpdateCycle)
-TEST_ADD(ExchangerTest, testExchangeUpdateCycle)
+//TEST_ADD(ExchangerTest, testGhostUpdate)
+//TEST_ADD(ExchangerTest, testGhostUpdateCycle)
+//TEST_ADD(ExchangerTest, testExchangeUpdateCycle)
 TEST_END(ExchangerTest)
 
 #endif /* EXCHANGER_TEST_H */
