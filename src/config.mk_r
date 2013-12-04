@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------
-# file: src/config.mk
+# file: $(OBJ_DIR)/config.mk
 #
 # This makefile fragment is included by all other makefiles. It contains
 # definitions of makefile variables that specify:
@@ -7,23 +7,25 @@
 #  - Absolute paths for the simpatico directory and some subdirectories
 #  - Identifiers for the choice of compiler and MPI library
 #  - Compiler options and flags for specific compilers
-#  - A variable UTIL_MPI that defines MPI if defined
+#  - A variable UTIL_MPI that enables MPI if it is defined
 #  - A variable MAKEDEP that enables automatic dependency generation
 #
 # MPI and automatic dependency generation may be enabled or disabled by
 # commenting out or uncommenting the definitions of UTIL_MPI and MAKEDEP.
 #
-# Users may edit the file src/config.mk, but should avoid modifying 
-# the file src/config.mk_r, which is repository versions. An initial 
-# version of src/config.mk configuration file is created by the setup 
-# script by copying src/config.mk_r. 
+# Users may edit the file config.mk in the source directory and in each
+# object directory (obj/parallel and obj/serial), but should avoid modifying 
+# the file src/config.mk_r, which is a default repository version. Initial
+# versions of src/config.mk, obj/parallel/config.mk and obj/serial/config.mk
+# are created by the setup script by copying src/config.mk_r and modifying 
+# a few lines to set paths correctly for each location.
 #
-# Some common changes to this file may be made by invoking configure 
-# script from the root simpatico directory with appropriate options.
-# This script may be used to enable (option -m1) or disable (-m0) MPI, 
-# to enable (-k1) or disable (-k0) automatic dependency generation, or
-# or choose the compiler identifier string (the -h option). For example,
-# the command:
+# After setup, some common changes to this file may be made by invoking 
+# configure script from the directory that contains the config.mk file 
+# with # appropriate options.  Speficially, this script may be used to 
+# enable (option -m1) or disable (-m0) MPI, to enable (-k1) or disable 
+# (-k0) automatic dependency generation, or or choose the compiler 
+# identifier string (the -h option). For example, the command:
 #
 # ./configure -m1 -h gcc
 #
@@ -32,8 +34,23 @@
 # Absolute directory paths
 #
 # The setup script should set the value of ROOT_DIR in config.mk to 
-# the absolute path to the root simpatico/ directory. In the repository
-# file config.mk_r, ROOT_DIR is assigned a placeholder value "PWD". 
+# the absolute path to the root simpatico/ directory, and OBJ_DIR 
+# should be set to the path to the directory that contains this 
+# config.mk file, which is the root of the directory in which object
+# *.o files will be placed during compilation. In the repository
+# file config.mk_r, the absolute path for ROOT_DIR and the relative 
+# path to OBJ_DIR are assigned placeholder values of "PWD" and "OWD", 
+# respectively. These placeholders are replaced by actual paths by
+# the setup script when it creates a config.mk file in the src/ 
+# directory and each obj directory.
+# 
+# OBJ_DIR = path to the object directory that will contain *.o files
+# SRC_DIR = path to the src/ directory, which contains source files
+# BIN_DIR = path to the directory in which executables are installed
+#
+# For the config.mk file in the src/ directory OBJ_DIR and SRC_DIR
+# will be the same, and will both point to the src/ directory. This
+# copy of the file is used for in-source builds.
 
 ROOT_DIR=PWD
 OBJ_DIR=$(ROOT_DIR)/=OWD
@@ -68,21 +85,28 @@ COMPILER=gcc
 MPI_LIB=mpicxx
 
 # ------------------------------------------------------------------------
-# Compiler settings:
+# Compiler and linker executables and options:
 #
 # Each of the following blocks sets values of the following variables for
 # for a particular compiler and mpi library:
 #
-# CXX        - C++ compiler executable name (must be in PATH)
-# CXXFLAGS   - flags used to compile source files, without linking
-# INCLUDES   - Directories to search for included header files
-# CXXSTD     - flag to define standard (c++98 or c++11)
-# WINLINE    - flag to warn for ignored inline directives
-# TESTFLAGS  - flags used to compile unit test programs
-# LDFLAGS    - flags used to compile and link a main program
-# AR         - path to archiver, to create library (*.a) files
-# ARFLAGS    - flags used by archiver
-# MPIRUN     - command to start mpi, with np option, e.g. "mpirun -np"
+# CXX         - C++ compiler executable name (must be in users PATH)
+# CXXFLAGS    - flags used to compile source files, without linking
+# INCLUDES    - Directories to search for included header files
+# CXXSTD      - flag to define standard (c++98 or c++11)
+# NDEBUGFLAGS - flag to warn for ignored inline directives
+# TESTFLAGS   - flags used to compile unit test programs
+# LDFLAGS     - flags used to compile and link a main program
+# AR          - path to archiver, to create library (*.a) files
+# ARFLAGS     - flags used by archiver
+# MPIRUN      - command to start mpi, with np option, e.g. "mpirun -np"
+#
+# The CXXSTD flag is normally included within the definition of CXXFLAGS.
+# The string NDEBUGFLAGS should contain compiler options that are desired
+# in production code but not for debug versions (e.g., warnings of ignored
+# inline directives, which can produce excessive warnings in debug mode). 
+# It is automatically appended to CXXFLAGS if UTIL_DEBUG is not defined 
+# in the file util/config.mk. 
 #
 # Pattern rules for compiling source files in the util/, inter, mcMd/ and 
 # ddMd/ directories are defined in the patterns.mk files in each of these 
@@ -92,9 +116,11 @@ MPI_LIB=mpicxx
 #	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
 #
 # The variable $(CPPDEFS), which contains is a list of C preprocessor
-# macro definitions, is assigned a different value in each of namespace
-# level patterns.mk files. The value of $(CPPDEFS) used in each namespace
-# contains only the macro definitions used in that namespace. 
+# macro definitions, is not defined in this file, and is assigned a 
+# different value in each of namespace level patterns.mk files. The 
+# value of $(CPPDEFS) for each namespace contains a string of compiler
+# ptions that define only the preprocessor macro definitions used in 
+# that namespace. 
 # ------------------------------------------------------------------------
 
 # Default values (modified for particular compilers below)
@@ -151,7 +177,17 @@ ifeq ($(COMPILER),intel)
 endif
 
 #-----------------------------------------------------------------------
-# Automatic dependency generation (can be disabled by commenting out)
+# Automatic dependency generation (comment out to disabled)
+#
+# Automatic dependency should normally be left enabled. You should
+# consider disabling it only if you are having trouble with the 
+# system for generating dependency files (e.g., because of trouble
+# with the python module it requires) and cannot figure out how to 
+# get it to work. If automatic dependency generation is disabled, 
+# you can compile each program once, but need to invoke "make clean" 
+# from the object directory before re-compiling after modifying any 
+# configuration option, config.mk file or source file in order to
+# force recompilation of all files. 
  
 MAKEDEP=$(ROOT_DIR)/bin/makeDep
 
