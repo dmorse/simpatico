@@ -60,9 +60,9 @@ namespace DdMd
          UTIL_THROW("Cannot allocate with capacity <= 0");
       }
       if (sizeof(Atom) != 64) {
-         std::cout << "Warning: sizeof(Atom) != 64" << std::endl;
-         std::cout << "Size of Atom  = " << sizeof(Atom)  << std::endl;
-         std::cout << "Size of Atom* = " << sizeof(Atom*) << std::endl;
+         Log::file() << "Warning: sizeof(Atom) != 64" << std::endl;
+         Log::file() << "Size of Atom  = " << sizeof(Atom)  << std::endl;
+         Log::file() << "Size of Atom* = " << sizeof(Atom*) << std::endl;
       }
 
       // Allocate memory
