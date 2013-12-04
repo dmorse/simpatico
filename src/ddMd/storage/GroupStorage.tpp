@@ -240,11 +240,11 @@ namespace DdMd
    template <int N>
    bool GroupStorage<N>::isValid()
    {
-      
-      if (size() + reservoir_.size() != capacity_) 
+      if (size() + reservoir_.size() != capacity_) {
          UTIL_THROW("nGroup + reservoir size != local capacity"); 
+      }
 
-      // Check consitency of pointers to atoms and atom ids
+      // Check consistency of group ids and indexing in groupPtrs_
       Group<N>* ptr;
       int       i, j;
       j = 0;
@@ -274,6 +274,18 @@ namespace DdMd
 
       return true;
    }
+
+   #if 0
+   /*
+   * Check validity of this GroupStorage, including validity of groups.
+   *
+   * Returns true if all is ok, or throws an Exception.
+   */
+   template <int N>
+   bool GroupStorage<N>::isValid(const Domain& domain)
+   {
+   }
+   #endif
 
    /**
    * Compute and store total number of atoms on all processors.

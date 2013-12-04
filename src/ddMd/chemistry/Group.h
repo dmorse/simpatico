@@ -9,7 +9,8 @@
 */
 
 #include <ddMd/communicate/Plan.h>     // member
-#include <ddMd/communicate/Buffer.h>   // method implementation
+#include <ddMd/communicate/Buffer.h>   // method definition
+#include <util/boundary/Boundary.h>    // typdef, method definition
 
 
 namespace DdMd
@@ -108,6 +109,28 @@ namespace DdMd
       */
       Plan& plan();
 
+      // Communication
+ 
+      /**
+      * Pack a Group into a send buffer.
+      *
+      * \param buffer Buffer object into which data should be packed.
+      */
+      void pack(Buffer& buffer);
+
+      /**
+      * Unpack a Group from the recv buffer.
+      *
+      * Upon return:
+      *
+      *  - all atom ids are set
+      *  - group type id and global id are set
+      *  - all atom pointers are null.
+      *
+      * \param buffer Buffer object from which data should be unpacked.
+      */
+      void unpack(Buffer& buffer);
+
       // Accessors
  
       /**
@@ -145,24 +168,30 @@ namespace DdMd
       const Plan& plan() const;
 
       /**
-      * Pack a Group into a send buffer.
+      * Is this group compact ? (generalized coordinates)
       *
-      * \param buffer Buffer object into which data should be packed.
+      * A group is compact if every separation between atoms with
+      * subsequent indices is its own minimum image. This version
+      * assumes generalized / scaled atomic coordinates.
+      *
+      * Throws an Exception if the group is incomplete (nPtr != N)
+      *
+      * \return true if compact, false otherwise.
       */
-      void pack(Buffer& buffer);
+      bool isCompactGen(Boundary& boundary) const;
 
       /**
-      * Unpack a Group from the recv buffer.
+      * Is this group compact ? (Cartesian coordinates)
       *
-      * Upon return:
+      * A group is compact if every separation between atoms with
+      * subsequent indices is its own minimum image. This version
+      * assumes Cartesian atomic coordinates.
       *
-      *  - all atom ids are set
-      *  - group type id and global id are set
-      *  - all atom pointers are null.
+      * Throws an Exception if the group is incomplete (nPtr != N)
       *
-      * \param buffer Buffer object from which data should be unpacked.
+      * \return true if compact, false otherwise.
       */
-      void unpack(Buffer& buffer);
+      bool isCompactCart(Boundary& boundary) const;
 
    private:
       
@@ -368,6 +397,67 @@ namespace DdMd
    template <int N>
    inline const Plan& Group<N>::plan() const
    {  return plan_; }
+
+   /*
+   * Is this group compact? (generalized atomic coordinates).
+   */
+   template <int N>
+   bool Group<N>::isCompactGen(Boundary& boundary) const
+   {
+      if (nPtr_ != N) {
+         UTIL_THROW("Group is incomplete");
+      }
+      Vector dr;
+      Atom* aPtr;
+      Atom* bPtr;
+      for (int i = 0; i < N - 1; ++i) {
+         aPtr = atomPtr(i);
+         bPtr = atomPtr(i+1);
+         dr.subtract(aPtr->position(), bPtr->position());
+         if (!boundary.isMinImageCart(dr)) {
+            Log::file() << std::endl
+                        << "Noncompact atom pair positions (generalized)"
+                        << std::endl;
+            Log::file() << "Pos(" <<  i   << ") = " 
+                        <<  aPtr->position() << std::endl;
+            Log::file() << "Pos(" <<  i+1 << ") = " 
+                        <<  bPtr->position() << std::endl;
+            UTIL_THROW("Non compact Group");
+         }
+      }
+      return true;
+   }
+
+   /*
+   * Is this group compact (Cartesian coordinates)? 
+   */
+   template <int N>
+   bool Group<N>::isCompactCart(Boundary& boundary) const
+   {
+      if (nPtr_ != N) {
+         UTIL_THROW("Group is incomplete");
+      }
+      Vector dr;
+      Atom* aPtr;
+      Atom* bPtr;
+      bool min;
+      for (int i = 0; i < N - 1; ++i) {
+         aPtr = atomPtr(i);
+         bPtr = atomPtr(i+1);
+         dr.subtract(aPtr->position(), bPtr->position());
+         if (!boundary.isMinImageCart(dr)) {
+            Log::file() << std::endl
+                        << "Noncompact atom pair positions (Cartesian):"
+                        << std::endl;
+            Log::file() << "Pos(" <<  i   << ") = " 
+                        <<  aPtr->position() << std::endl;
+            Log::file() << "Pos(" <<  i+1 << ") = " 
+                        <<  bPtr->position() << std::endl;
+            UTIL_THROW("Non compact Group");
+         }
+      }
+      return true;
+   }
 
    // Friend function definitions.
 
