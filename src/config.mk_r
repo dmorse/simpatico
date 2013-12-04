@@ -14,18 +14,18 @@
 # commenting out or uncommenting the definitions of UTIL_MPI and MAKEDEP.
 #
 # Users may edit the file src/config.mk, but should avoid modifying 
-# the file src/config.mk_r, which is a repository version. An initial 
-# version of the config.mk configuration file is created by the setup 
-# script by copying config.mk_r. 
+# the file src/config.mk_r, which is repository versions. An initial 
+# version of src/config.mk configuration file is created by the setup 
+# script by copying src/config.mk_r. 
 #
 # Some common changes to this file may be made by invoking configure 
 # script from the root simpatico directory with appropriate options.
 # This script may be used to enable (option -m1) or disable (-m0) MPI, 
 # to enable (-k1) or disable (-k0) automatic dependency generation, or
-# or choose the compiler identifier string (the -c option). For example,
+# or choose the compiler identifier string (the -h option). For example,
 # the command:
 #
-# ./configure -m1 -c gcc
+# ./configure -m1 -h gcc
 #
 # would enable MPI and select the gcc compiler.
 #-----------------------------------------------------------------------
@@ -47,6 +47,7 @@ BIN_DIR=$(ROOT_DIR)/bin
 
 #-----------------------------------------------------------------------
 # C++11 Standard (Disable/enable by commenting out or uncommenting).
+# If this is not defined, the code uses only C++ 1998 standard features.
 
 #UTIL_CXX11=1
 
@@ -74,10 +75,11 @@ MPI_LIB=mpicxx
 #
 # CXX        - C++ compiler executable name (must be in PATH)
 # CXXFLAGS   - flags used to compile source files, without linking
-# CXXSTD     - flag to define standard (c++98 or c++11)
-# LDFLAGS    - flags used to compile and link a main program
-# TESTFLAGS  - flags used to compile unit test programs
 # INCLUDES   - Directories to search for included header files
+# CXXSTD     - flag to define standard (c++98 or c++11)
+# WINLINE    - flag to warn for ignored inline directives
+# TESTFLAGS  - flags used to compile unit test programs
+# LDFLAGS    - flags used to compile and link a main program
 # AR         - path to archiver, to create library (*.a) files
 # ARFLAGS    - flags used by archiver
 # MPIRUN     - command to start mpi, with np option, e.g. "mpirun -np"
@@ -95,22 +97,23 @@ MPI_LIB=mpicxx
 # contains only the macro definitions used in that namespace. 
 # ------------------------------------------------------------------------
 
-# Search simpatico/src directory for header files (all compilers)
+# Default values (modified for particular compilers below)
 INCLUDES= -I$(SRC_DIR)
+ifdef UTIL_CXX11
+   CXX_STD = --std=c++11
+else
+   CXX_STD = --std=c++98
+endif
 LDFLAGS=
+ARFLAGS=rcs
+MPIRUN=mpirun -np
 
 #-- Gnu GCC compiler ------
 ifeq ($(COMPILER),gcc)
-   ifdef UTIL_CXX11
-      CXX_STD = --std=c++11
-   else
-      CXX_STD = --std=c++98
-   endif
-   CXXFLAGS= -O3 -ffast-math -Wall -Winline $(CXX_STD)
+   CXXFLAGS= -O3 -ffast-math -Wall $(CXX_STD)
+   WINLINE= -Winline
    TESTFLAGS= -Wall $(CXX_STD)
    AR=ar
-   ARFLAGS=rcs
-   MPIRUN=mpirun -np
    ifneq ($(UTIL_MPI),1)
       # Gnu g++ (no mpi)
       CXX=g++
@@ -131,14 +134,7 @@ endif
 # -- Intel ICC compiler ---
 ifeq ($(COMPILER),intel)
    AR=xiar
-   ARFLAGS=rcs
-   MPIRUN=mpirun -np
-   LDFLAGS=
-   ifdef UTIL_CXX11
-      CXX_STD = --std=c++11
-   else
-      CXX_STD = --std=c++98
-   endif
+   WINLINE=
    ifneq ($(UTIL_MPI),1)
       # Serial intel icpc compiler (no mpi)
       CXX=icpc
