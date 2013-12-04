@@ -5,26 +5,30 @@
 * This program runs all unit tests in the DdMd directory.
 */ 
 
-#include "storage/StorageTestComposite.h"
-#include "configIos/ConfigIoTest.h"
-#include "communicate/CommunicateTestComposite.h"
-#include "neighbor/NeighborTestComposite.h"
-#include "simulation/SimulationTest.h"
-
 #ifdef UTIL_MPI
 #ifndef TEST_MPI
 #define TEST_MPI
 #endif
 #endif
 
+#include "chemistry/ChemistryTestComposite.h"
+#include "storage/StorageTestComposite.h"
+#include "configIos/ConfigIoTest.h"
+#include "communicate/CommunicateTestComposite.h"
+#include "neighbor/NeighborTestComposite.h"
+#include "simulation/SimulationTest.h"
+
 #include <test/CompositeTestRunner.h>
 
 TEST_COMPOSITE_BEGIN(DdMdNsTestComposite)
+addChild(new ChemistryTestComposite, "chemistry/");
 addChild(new StorageTestComposite, "storage/");
+addChild(new NeighborTestComposite, "neighbor/");
+#ifdef TEST_MPI
 addChild(new TEST_RUNNER(ConfigIoTest), "configIos/");
 addChild(new CommunicateTestComposite, "communicate/");
-addChild(new NeighborTestComposite, "neighbor/");
 addChild(new TEST_RUNNER(SimulationTest), "simulation/");
+#endif
 TEST_COMPOSITE_END
 
 int main(int argc, char* argv[])
@@ -34,10 +38,11 @@ int main(int argc, char* argv[])
       UTIL_THROW("Too many arguments");
    }
 
-   #ifdef UTIL_MPI 
+   #ifdef TEST_MPI 
    MPI::Init();
    Util::IntVector::commitMpiType();
    Util::Vector::commitMpiType();
+   #endif
 
    DdMdNsTestComposite runner;
    if (argc == 2) {
@@ -45,6 +50,7 @@ int main(int argc, char* argv[])
     }
    runner.run();
 
+   #ifdef TEST_MPI 
    MPI::Finalize();
    #endif
 

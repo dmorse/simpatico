@@ -496,8 +496,22 @@ namespace DdMd
                   #ifdef UTIL_DEBUG
                   // Check bounds on atom coordinate
                   coordinate = atomPtr->position()[i];
-                  assert(coordinate > domainPtr_->domainBound(i, 0));
-                  assert(coordinate < domainPtr_->domainBound(i, 1));
+                  //assert(coordinate > domainPtr_->domainBound(i, 0));
+                  if (coordinate < domainPtr_->domainBound(i, 0)) {
+                     std::cout << std::endl
+                               << "direction " << i << ",  " << j 
+                               << "coordinate =" << coordinate
+                               << " < bound(i,0) =" << domainPtr_->domainBound(i, 0)
+                               << std::endl;
+                  }
+                  //assert(coordinate < domainPtr_->domainBound(i, 1));
+                  if (coordinate > domainPtr_->domainBound(i, 1)) {
+                     std::cout << std::endl
+                               << "direction " << i << ",  " << j 
+                               << "coordinate =" << coordinate
+                               << "> bound(i,1) =" << domainPtr_->domainBound(i, 1)
+                               << std::endl;
+                  }
 
                   // Check ghost plan
                   assert(!planPtr->ghost(i, j));

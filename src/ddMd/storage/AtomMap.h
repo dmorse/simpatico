@@ -157,8 +157,8 @@ namespace DdMd
       * called after all pointers have been set for all local atoms
       * and after this AtomMap contains all ghost atoms. 
       *
-      * On exit, pointers are set for all ghost atoms present in this
-      * AtomMap. 
+      * On exit, pointers are set for all ghost atoms present in
+      * this AtomMap.
       *
       * \param group Group<N> object with known atom ids
       * \param boundary Boundary object used to check min-image convention
@@ -293,18 +293,17 @@ namespace DdMd
    {
       Atom* ptr;
       int nAtom = 0;
-      int atomId;
       for (int i = 0; i < N; ++i) {
          ptr = group.atomPtr(i);
          if (ptr) {
             assert(!ptr->isGhost());
             ++nAtom;
          } else {
-            atomId = group.atomId(i);
+            int atomId = group.atomId(i);
             ptr = atomPtrs_[atomId];
             if (ptr) {
                assert(ptr->isGhost());
-               assert(ptr->atomId() == atomId);
+               assert(ptr->id() == atomId);
                group.setAtomPtr(i, ptr);
                ++nAtom;
             }

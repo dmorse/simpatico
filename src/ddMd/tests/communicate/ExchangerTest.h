@@ -375,9 +375,6 @@ void ExchangerTest::testGhostUpdateCycle()
    AtomIterator   atomIter;
    GhostIterator  ghostIter;
 
-   double range = 0.4;
-   displaceAtoms(range);
-
    exchanger.exchange();
    exchangeNotify();
    nAtom = atomStorage.nAtom();
@@ -399,24 +396,29 @@ void ExchangerTest::testGhostUpdateCycle()
    TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                true));
 
-   // Transform to Cartesian coordinates
-   atomStorage.transformGenToCart(boundary);
+   /*
+   * Note: total displacment in this test must remain modest or
+   * the bonds will become too long and ghosts will not be findable.
+   */ 
 
-   range = 0.1;
-   for (int i=0; i < 3; ++i) {
+   double range = 0.01;
+   for (int i = 0; i < 5; ++i) {
+
+      // Transform to Cartesian coordinates
+      atomStorage.transformGenToCart(boundary);
 
       displaceAtoms(range);
 
-      for (int j=0; j < 3; ++j) {
+      // Update several times without exchanging
+      for (int j=0; j < 4; ++j) {
          exchanger.update();
          TEST_ASSERT(nGhost == atomStorage.nGhost());
          TEST_ASSERT(nAtom == atomStorage.nAtom());
          displaceAtoms(range);
       }
 
-      // Transform to Cartesian coordinates
+      // Transform and exchange
       atomStorage.transformCartToGen(boundary);
-
       exchanger.exchange();
       exchangeNotify();
       nAtom  = atomStorage.nAtom();
@@ -446,9 +448,6 @@ void ExchangerTest::testGhostUpdateCycle()
                   domain.communicator(), true));
       #endif
 
-      // Transform to Cartesian coordinates
-      atomStorage.transformGenToCart(boundary);
-
    }
 
 }
@@ -462,13 +461,6 @@ void ExchangerTest::testExchangeUpdateCycle()
 
    AtomIterator   atomIter;
    GhostIterator  ghostIter;
-
-   double range = 0.2;
-
-   #if 0
-   atomStorage.makeSnapshot();
-   displaceAtoms(range);
-   #endif
 
    atomStorage.clearSnapshot();
    exchanger.exchange();
@@ -504,24 +496,22 @@ void ExchangerTest::testExchangeUpdateCycle()
 
    TEST_ASSERT(!atomStorage.isCartesian());
    atomStorage.transformGenToCart(boundary);
-   TEST_ASSERT(atomStorage.isCartesian());
    atomStorage.makeSnapshot();
 
-   #if 0
-   if (domain.gridRank() == 0) {
-      std::cout << std::endl;
-   }
-   #endif
-
-   range = 0.02;
+   double range = 0.01;
    double skin = 0.10;
    int  nExchange = 0;
    int  nUpdate = 0;
    int  i, j;
    bool  needExchange;
 
+   /*
+   * Note: total displacment in this test must remain modest or
+   * the bonds will become too long and ghosts will not be findable.
+   */ 
+
    j = 0;
-   for (i=0; i < 200; ++i) {
+   for (i = 0; i < 10; ++i) {
 
       TEST_ASSERT(atomStorage.isCartesian());
       displaceAtoms(range);
@@ -529,12 +519,6 @@ void ExchangerTest::testExchangeUpdateCycle()
 
       needExchange = isExchangeNeeded(skin);
       if (needExchange || j > 10) {
-
-         #if 0
-         if (domain.gridRank() == 0) {
-            std::cout << "step i = " << i << "  E" << std::endl;
-         }
-         #endif
 
          atomStorage.clearSnapshot();
          atomStorage.transformCartToGen(boundary);
@@ -569,13 +553,6 @@ void ExchangerTest::testExchangeUpdateCycle()
          TEST_ASSERT(nAtom == atomStorage.nAtom());
 
          ++ nUpdate;
- 
-         #if 0
-         if (domain.gridRank() == 0) {
-            std::cout << "step i = " << i << "  U" << std::endl;
-         }
-         #endif
-
       }
 
       TEST_ASSERT(atomStorage.isValid());
@@ -620,11 +597,11 @@ bool ExchangerTest::isExchangeNeeded(double skin)
 }
 
 TEST_BEGIN(ExchangerTest)
-//TEST_ADD(ExchangerTest, testDistribute)
+TEST_ADD(ExchangerTest, testDistribute)
 TEST_ADD(ExchangerTest, testExchange)
-//TEST_ADD(ExchangerTest, testGhostUpdate)
-//TEST_ADD(ExchangerTest, testGhostUpdateCycle)
-//TEST_ADD(ExchangerTest, testExchangeUpdateCycle)
+TEST_ADD(ExchangerTest, testGhostUpdate)
+TEST_ADD(ExchangerTest, testGhostUpdateCycle)
+TEST_ADD(ExchangerTest, testExchangeUpdateCycle)
 TEST_END(ExchangerTest)
 
 #endif /* EXCHANGER_TEST_H */

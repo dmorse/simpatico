@@ -303,6 +303,32 @@ namespace DdMd
          }
       }
 
+      #ifdef UTIL_DEBUG
+      // Output information about problematic group
+      std::stringstream stream;
+      stream << "ai =" << aPtr->id() 
+             << "isGhost = " << aPtr->isGhost()
+             << " position = " << aPtr->position()
+             << std::endl;
+      bPtr = atomPtrs_[bi];
+      assert(bi = bPtr->id());
+      stream << "bi =" << bi
+             << "isGhost = " << bPtr->isGhost()
+             << " position = " << bPtr->position()
+             << std::endl;
+      iter = ret.first;
+      last = ret.second;
+      for ( ; iter != last; ++iter) {
+         assert(iter->first == bi);
+         bPtr = iter->second;
+         stream << "bi =" << bi
+                << "isGhost = " << bPtr->isGhost()
+                << " position = " << bPtr->position()
+                << std::endl;
+      }
+      std::cout << stream.str();
+      #endif
+
       UTIL_THROW("Incomplete Group<2> at end of findGroupGhostAtoms");
    }
 

@@ -13,6 +13,8 @@
 #include <util/format/Int.h>
 #include <util/mpi/MpiLoader.h>  
 
+//#define DDMD_GROUP_STORAGE_DEBUG
+
 namespace DdMd
 {
  

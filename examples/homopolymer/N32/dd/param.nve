@@ -11,8 +11,8 @@ Simulation{
   nBondType           1
   atomTypes           A    1.0
   AtomStorage{
-    atomCapacity      20000
-    ghostCapacity     20000
+    atomCapacity       4000
+    ghostCapacity     15000
     totalAtomCapacity 20000
   }
   BondStorage{
@@ -54,19 +54,19 @@ Simulation{
     seed              8012457890
   }
   AnalyzerManager{
-     baseInterval     1000
+     baseInterval     1
 
      LogEnergy{
-        interval        1000
+        interval        1
      }
 
      OutputEnergy{
-        interval        1000
+        interval        10
         outputFileName  energy
      }
 
      OutputPressure{
-        interval        1000
+        interval        10
         outputFileName  pressure
      }
 
