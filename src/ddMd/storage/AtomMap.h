@@ -173,36 +173,6 @@ namespace DdMd
       int findGroupLocalAtoms(Group<N>& group) const;
 
       /**
-      * Set handles to ghost atoms in a Group<N> object.
-      *
-      * On entry, group is a Group<N> object for which the atom ids
-      * for all N atoms in the Group have been set to valid values, 
-      * in the range 0 <= atomId < totalAtomCapacity, and in which
-      * all pointers to local atoms have been set, but in which no
-      * pointers to ghosts have been set. This function may only be
-      * called after all pointers have been set for all local atoms
-      * and after this AtomMap contains all ghost atoms. 
-      *
-      * On exit, pointers are set for all ghost atoms present in
-      * this AtomMap.
-      *
-      * \param group Group<N> object with known atom ids
-      * \param boundary Boundary object used to check min-image convention
-      */ 
-      template <int N> 
-      void findGroupGhostAtoms(Group<N>& group, const Boundary& boundary) 
-      const;
-
-      /**
-      * Explict specialization of findGroupGhostAtoms<N> for N=2 (bonds).
-      *
-      * \param group Group<N> object with known atom ids
-      * \param boundary Boundary object used to check min-image convention
-      */ 
-      void findGroupGhostAtoms(Group<2>& group, const Boundary& boundary) 
-      const;
-
-      /**
       * Check validity of this AtomMap.
       *
       * Returns true if all is ok, or throws an Exception.

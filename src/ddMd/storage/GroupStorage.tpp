@@ -846,18 +846,63 @@ namespace DdMd
       }
    }
 
+
+
    /*
-   * Find ghost members of groups after exchanging all ghosts.
+   * Find ghost members of bonds after exchanging all ghosts.
+   *
+   * Generic template, used for N=3 and N=4.
    */
    template <int N>
    void GroupStorage<N>::findGhosts(AtomStorage& atomStorage, 
                                     const Boundary& boundary)
    {
-      GroupIterator<N> groupIter;
       const AtomMap& atomMap = atomStorage.map();
+      GroupIterator<N> groupIter;
+      Atom* aPtr;  // Pointer to atom a (must be local)
+      Atom* bPtr;  // Pointer to atom b (may be local or ghost)
+      int i, j, k; // ids for atom within group
+
+      // Loop over all groups
       for (begin(groupIter); groupIter.notEnd(); ++groupIter) {
-         atomMap.findGroupGhostAtoms(*groupIter, boundary);
-      }
+
+         // Identify root i = index of first local atom
+         for (i = 0; i < N; ++i) {
+            aPtr = groupIter->atomPtr(i);
+            if (aPtr) {
+              if (!aPtr->isGhost()) {
+                break;
+              }
+            }
+         }
+         if (aPtr == 0 || aPtr->isGhost()) {
+            UTIL_THROW("No local atom found");
+         }
+ 
+         // Iterate up from root 
+         if (j < N-1) {
+            for (j = i; j < N-1; ++j) {
+               k = j+1;
+               atomMap.findNearestImage(groupIter->atomId(k), 
+                                        aPtr->position(), boundary, bPtr);
+               groupIter->setAtomPtr(k, bPtr);
+               aPtr = bPtr;
+            } 
+         }
+
+         // Iterate down from root 
+         if (j > 0) {
+            for (j = i; j > 0; --j) {
+               k = j-1;
+               atomMap.findNearestImage(groupIter->atomId(k), 
+                                        aPtr->position(), boundary, bPtr);
+               groupIter->setAtomPtr(k, bPtr);
+               aPtr = bPtr;
+            } 
+         }
+
+      } // end loop over groups
+
    }
 
 } // namespace DdMd

@@ -329,10 +329,11 @@ namespace DdMd
       * Usage: This called after all ghosts have been exchanged.
       *
       * \param atomStorage AtomStorage object used to find atom pointers
+      * \param boundary    Boundary, needed for minimum image convention
       */
       virtual
       void findGhosts(AtomStorage& atomStorage, const Boundary& boundary);
-   
+
       /**
       * Return true if the container is valid, or throw an Exception.
       *
@@ -394,17 +395,21 @@ namespace DdMd
 
    private:
 
-      // Memory pool that holds all available group objects.
+      /// Memory pool that holds all available group objects.
       DArray< Group<N> >  groups_;
 
-      // Set of pointers to local groups.
+      /// Set of pointers to groups on this processor.
       ArraySet< Group<N> >  groupSet_;
 
-      // Stack of pointers to unused local Group objects.
+      /// Stack of pointers to unused elements in groups_ array.
       ArrayStack< Group<N> >  reservoir_;
 
-      // Array of pointers to groups, indexed by global group Id.
-      // Elements corresponding to absent groups hold null pointers.
+      /**
+      * Array of pointers to groups, indexed by global group Id.
+      *
+      * Each element for present groups hold pointer to group.
+      * Each element for absent group holds null (0) pointers.
+      */
       DArray< Group<N>* >  groupPtrs_;
 
       // Array identifying empty groups, marked for later removal 
@@ -435,41 +440,46 @@ namespace DdMd
     
    };
 
+   /**
+   * Explicit specialization of GroupStorage<N>::findGhosts for N = 2.
+   */
+   template <>
+   void GroupStorage<2>::findGhosts(AtomStorage& atomStorage, const Boundary& boundary);
+
+ 
    // Inline method definitions
 
+   // Return number of groups in this storage.
    template <int N>
    inline int GroupStorage<N>::size() const
    {  return groupSet_.size(); }
 
+   // Return maximum number of groups on this processor.
    template <int N>
    inline int GroupStorage<N>::capacity() const
    {  return capacity_; }
 
+   // Return maximum allowed group id + 1.
    template <int N>
    inline int GroupStorage<N>::totalCapacity() const
    {  return totalCapacity_; }
 
+   // Return total number of groups 
    template <int N>
    inline int GroupStorage<N>::nTotal() const
    {  return nTotal_.value(); }
 
-   /*
-   * Return pointer to Group with specified id.
-   */
+   // Return pointer to Group with specified id.
    template <int N>
    inline Group<N>* GroupStorage<N>::find(int id) const
    {  return groupPtrs_[id]; }
 
-   /*
-   * Set iterator to beginning of the set of local groups.
-   */
+   // Set iterator to beginning of the set of local groups.
    template <int N>
    inline void GroupStorage<N>::begin(GroupIterator<N>& iterator)
    {  groupSet_.begin(iterator); }
  
-   /*
-   * Set const iterator to beginning of the set of local groups.
-   */
+   // Set const iterator to beginning of the set of local groups.
    template <int N>
    inline 
    void GroupStorage<N>::begin(ConstGroupIterator<N>& iterator) const

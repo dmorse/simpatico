@@ -257,29 +257,6 @@ namespace DdMd
    }
 
    /*
-   * Set pointers to atoms in a Group<2> object.
-   */
-   void AtomMap::findGroupGhostAtoms(Group<2>& group, const Boundary& boundary) 
-   const
-   {
-      Atom* aPtr; // Pointer to atom a (root atom - must be local)
-      Atom* bPtr; // Pointer to atom b (must be nearest image of a)
-      int bj; // Index of atom b in group (0 or 1)
-
-      // Identify atoms a and b
-      aPtr = group.atomPtr(0);
-      if (aPtr) {
-         bj = 1;
-      } else {
-         aPtr = group.atomPtr(1);
-         assert(aPtr);
-         bj = 0;
-      }
-      findNearestImage(group.atomId(bj), aPtr->position(), boundary, bPtr);
-      group.setAtomPtr(bj, bPtr);
-   }
-
-   /*
    * Find image of an atom whose position is image nearest specified position.
    *
    * On return, imagePtr contains pointer to the closet atom image. 
