@@ -58,6 +58,9 @@ public:
    void testFindGroupGhostAtoms1();
    void testFindGroupGhostAtoms2();
    void testFindGroupGhostAtoms3();
+   void testFindNearestImage1();
+   void testFindNearestImage2();
+   void testFindNearestImage3();
 
 };
 
@@ -322,6 +325,12 @@ inline void AtomMapTest::testFindGroupGhostAtoms2()
    TEST_ASSERT(bond.atomPtr(1) == &array_[4]);
 }
 
+
+
+
+
+
+
 inline void AtomMapTest::testFindGroupGhostAtoms3()
 {
    printMethod(TEST_FUNC);
@@ -362,6 +371,95 @@ inline void AtomMapTest::testFindGroupGhostAtoms3()
    TEST_ASSERT(bond.atomPtr(1) == &array_[5]);
 }
 
+inline void AtomMapTest::testFindNearestImage1()
+{
+   printMethod(TEST_FUNC);
+
+   Vector L(1.0, 1.0, 1.0);
+   OrthorhombicBoundary boundary;
+   boundary.setOrthorhombic(L);
+
+   array_[2].position() = Vector(0.1, 0.5, 0.5);
+   array_[3].setId(2);
+   array_[3].position() = Vector(1.1, 0.5, 0.5);  // ghost of 2
+   TEST_ASSERT(array_[2].id() == 2);
+   TEST_ASSERT(array_[3].id() == 2);
+
+   // One atom local only, one local and ghost.
+   map_.addLocal(&array_[2]);
+   map_.addGhost(&array_[3]);
+   TEST_ASSERT(map_.nLocal() == 1);
+   TEST_ASSERT(map_.nGhost() == 1);
+   TEST_ASSERT(map_.nGhostDistinct() == 0);
+   TEST_ASSERT(map_.isValid());
+
+   Vector p(0.9, 0.4, 0.4);
+   Atom* imagePtr = 0;
+   Atom* localPtr = 0;
+   localPtr = map_.findNearestImage(2, p, boundary, imagePtr);
+   TEST_ASSERT(imagePtr = &array_[3]);
+   TEST_ASSERT(localPtr = &array_[2]);
+}
+
+inline void AtomMapTest::testFindNearestImage2()
+{
+   printMethod(TEST_FUNC);
+
+   Vector L(1.0, 1.0, 1.0);
+   OrthorhombicBoundary boundary;
+   boundary.setOrthorhombic(L);
+
+   array_[2].position() = Vector(1.1, 0.5, 0.5);
+   array_[3].setId(2);
+   array_[3].position() = Vector(0.1, 0.5, 0.5);  // ghost of 2
+   TEST_ASSERT(array_[2].id() == 2);
+   TEST_ASSERT(array_[3].id() == 2);
+
+   // One atom local only, one local and ghost.
+   map_.addLocal(&array_[2]);
+   map_.addGhost(&array_[3]);
+   TEST_ASSERT(map_.nLocal() == 1);
+   TEST_ASSERT(map_.nGhost() == 1);
+   TEST_ASSERT(map_.nGhostDistinct() == 0);
+   TEST_ASSERT(map_.isValid());
+
+   Vector p(0.9, 0.4, 0.4);
+   Atom* imagePtr = 0;
+   Atom* localPtr = 0;
+   localPtr = map_.findNearestImage(2, p, boundary, imagePtr);
+   TEST_ASSERT(imagePtr = &array_[2]);
+   TEST_ASSERT(!imagePtr->isGhost());
+   TEST_ASSERT(localPtr == 0);
+}
+
+inline void AtomMapTest::testFindNearestImage3()
+{
+   printMethod(TEST_FUNC);
+
+   Vector L(1.0, 1.0, 1.0);
+   OrthorhombicBoundary boundary;
+   boundary.setOrthorhombic(L);
+
+   array_[3].setId(2);
+   array_[3].position() = Vector(1.1, 0.5, 0.5);  // ghost of 2
+   TEST_ASSERT(array_[3].id() == 2);
+
+   // One atom local only, one local and ghost.
+   map_.addGhost(&array_[3]);
+   TEST_ASSERT(map_.nLocal() == 0);
+   TEST_ASSERT(map_.nGhost() == 1);
+   TEST_ASSERT(map_.nGhostDistinct() == 1);
+   TEST_ASSERT(map_.isValid());
+
+   Vector p(0.9, 0.4, 0.4);
+   Atom* imagePtr = 0;
+   Atom* localPtr = 0;
+   localPtr = map_.findNearestImage(2, p, boundary, imagePtr);
+   TEST_ASSERT(imagePtr = &array_[2]);
+   TEST_ASSERT(!imagePtr->isGhost());
+   TEST_ASSERT(localPtr == 0);
+}
+
 TEST_BEGIN(AtomMapTest)
 TEST_ADD(AtomMapTest, testAdd)
 TEST_ADD(AtomMapTest, testAddRemove)
@@ -371,6 +469,9 @@ TEST_ADD(AtomMapTest, testClearGhosts)
 TEST_ADD(AtomMapTest, testFindGroupGhostAtoms1)
 TEST_ADD(AtomMapTest, testFindGroupGhostAtoms2)
 TEST_ADD(AtomMapTest, testFindGroupGhostAtoms3)
+TEST_ADD(AtomMapTest, testFindNearestImage1)
+TEST_ADD(AtomMapTest, testFindNearestImage2)
+TEST_ADD(AtomMapTest, testFindNearestImage3)
 TEST_END(AtomMapTest)
 
 #endif

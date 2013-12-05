@@ -262,11 +262,9 @@ namespace DdMd
    void AtomMap::findGroupGhostAtoms(Group<2>& group, const Boundary& boundary) 
    const
    {
-      Vector dr;
-      Atom* aPtr; // Pointer to atom a (must be local)
-      Atom* bPtr; // Pointer to atom b (may be local or ghost)
-      int bi;     // atom id for atom b (permanent global identifier)
-      int bj;     // Index of atom b in group (0 or 1)
+      Atom* aPtr; // Pointer to atom a (root atom - must be local)
+      Atom* bPtr; // Pointer to atom b (must be nearest image of a)
+      int bj; // Index of atom b in group (0 or 1)
 
       // Identify atoms a and b
       aPtr = group.atomPtr(0);
@@ -277,59 +275,70 @@ namespace DdMd
          assert(aPtr);
          bj = 0;
       }
-      bi = group.atomId(bj);
-      bPtr = atomPtrs_[bi];
-      assert(bPtr);
+      findNearestImage(group.atomId(bj), aPtr->position(), boundary, bPtr);
+      group.setAtomPtr(bj, bPtr);
+   }
 
-      // Find first image of atom b, and check minimum image
-      dr.subtract(aPtr->position(), bPtr->position());
+   /*
+   * Find image of an atom whose position is image nearest specified position.
+   *
+   * On return, imagePtr contains pointer to the closet atom image. 
+   *
+   * If there is a local atom that is not the closest image, return a pointer
+   * to this local atom. Otherwise return null. 
+   */
+   Atom* AtomMap::findNearestImage(int atomId, const Vector& position, 
+                                   const Boundary& boundary, Atom*& imagePtr) 
+   const
+   {
+      // Check first image, from atomPtrs
+      imagePtr = atomPtrs_[atomId];
+      assert(imagePtr);
+      Atom* localPtr = imagePtr->isGhost() ? 0 : imagePtr;
+      Vector dr;
+      dr.subtract(position, imagePtr->position());
       if (boundary.isMinImageGen(dr)) {
-         group.setAtomPtr(bj, bPtr);
-         return;
+         return 0;
       }
         
-      // If necesary, check further ghosts images of atom b
+      // If necesary, check further ghosts images in atomMap
       std::pair < GhostMap::const_iterator, GhostMap::const_iterator > ret;
-      ret = ghostMap_.equal_range(bi); 
+      ret = ghostMap_.equal_range(atomId); 
       GhostMap::const_iterator iter = ret.first;
       GhostMap::const_iterator last = ret.second;
       for ( ; iter != last; ++iter) {
-         assert(iter->first == bi);
-         bPtr = iter->second;
-         dr.subtract(aPtr->position(), bPtr->position());
+         imagePtr = iter->second;
+         dr.subtract(position, imagePtr->position());
          if (boundary.isMinImageGen(dr)) {
-            group.setAtomPtr(bj, bPtr);
-            return;
+            return localPtr;
          }
       }
 
       #ifdef UTIL_DEBUG
-      // Output information about problematic group
+      // Output information about problematic atom
       std::stringstream stream;
-      stream << "ai =" << aPtr->id() 
-             << "isGhost = " << aPtr->isGhost()
-             << " position = " << aPtr->position()
-             << std::endl;
-      bPtr = atomPtrs_[bi];
-      assert(bi = bPtr->id());
-      stream << "bi =" << bi
-             << "isGhost = " << bPtr->isGhost()
-             << " position = " << bPtr->position()
+      stream << std::endl;
+      stream << "reference = " 
+             << position << std::endl;
+      stream << "atomId    = " << atomId << std::endl;
+      imagePtr = atomPtrs_[atomId];
+      assert(atomId = imagePtr->id());
+      stream << "isGhost   = " << imagePtr->isGhost()
+             << " position = " << imagePtr->position()
              << std::endl;
       iter = ret.first;
       last = ret.second;
       for ( ; iter != last; ++iter) {
-         assert(iter->first == bi);
-         bPtr = iter->second;
-         stream << "bi =" << bi
-                << "isGhost = " << bPtr->isGhost()
-                << " position = " << bPtr->position()
+         imagePtr = iter->second;
+         stream << "isGhost   = " << imagePtr->isGhost()
+                << " position = " << imagePtr->position()
                 << std::endl;
       }
       std::cout << stream.str();
       #endif
 
-      UTIL_THROW("Incomplete Group<2> at end of findGroupGhostAtoms");
+      UTIL_THROW("No nearest image found");
+      return 0;
    }
 
 } // namespace DdMd

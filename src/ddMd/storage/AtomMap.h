@@ -103,29 +103,55 @@ namespace DdMd
       //@{
 
       /**
-      * Return pointer to Atom with specified id.
-      *
-      * This method returns a pointer to an Atom with the specified
-      * id if it is present, or returns a null pointer otherwise.
-      *
-      * \param atomId integer index of atom
-      */
-      Atom* find(int atomId) const;  
-
-      /**
       * Return the number of local atoms.
       */ 
       int nLocal() const;
 
       /**
-      * Return the number of ghosts with distinct ids.
+      * Return the number of ghosts atoms, including all images.
+      */ 
+      int nGhost() const;
+
+      /**
+      * Return number of ghost atom ids that are distinct from any 
+      * local atom id.
       */ 
       int nGhostDistinct() const;
 
       /**
-      * Return the number of ghosts, including images.
-      */ 
-      int nGhost() const;
+      * Return a pointer to an Atom with specified id.
+      *
+      * This method returns a pointer to an Atom with the specified id if
+      * one is present, or returns a null pointer otherwise. If a local 
+      * atom with the specfied id is present. If no such local atom exists,
+      * but one more ghosts atoms exist, it returns a pointer to one of the
+      * ghost atoms, chosen arbitrarily. 
+      *
+      * \param atomId integer index of desired atom
+      */
+      Atom* find(int atomId) const;  
+
+      /**
+      * Find image of an atom nearest a specified position.
+      *
+      * This function searches for an image of atom number id for which the
+      * atom position is the image of itself nearest to the position parameter.
+      * On return, imagePtr points to the desired atom image. If the map 
+      * contains a local atom with this id whose position is not the nearest
+      * image, the function returns a pointer to that local atom, and returns
+      * a null pointer otherwise. Atomic coordinates must be in scaled form.
+      *
+      * Throws an Exception if there is no atom with specified id, or if there 
+      * is no such atom with the nearest image position.
+      *
+      * \param atomId global identifier of required atom
+      * \param position position that atom should be near
+      * \param boundary Boundary, to implement nearest-image convention
+      * \param imagPtr  on return, pointer to nearest image (output)
+      * \return pointer to local atom that is not nearest image, or null.
+      */
+      Atom* findNearestImage(int atomId, const Vector& position, 
+                             const Boundary& boundary, Atom*& imagePtr) const;
 
       /**
       * Set handles to local atoms in a Group<N> object.
