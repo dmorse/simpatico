@@ -129,8 +129,8 @@ namespace DdMd
    *    - Add local atoms that will be retained by this processor but
    *      sent as ghosts to appropriate send arrays.
    *
-   *    - Call GroupExchanger::markSpanningGroups for each type (bond, angle, dihedral).
-   *      markSpanningGroups<N>{
+   *    - Call GroupExchanger::beginAtomExchange for each type (bond, angle, dihedral).
+   *      beginAtomExchange<N>{
    *         For each group{
    *            - Set ghost communication flags for groups that span
    *              or may span boundaries.
@@ -169,8 +169,8 @@ namespace DdMd
    *
    *      }
    *
-   *    - Call GroupExchanger::markGhosts each type of group (bond, angle, dihedral).
-   *      markGhosts<N> {
+   *    - Call GroupExchanger::beginGhostExchange each type of group (bond, angle, dihedral).
+   *      beginGhostExchange<N> {
    *         for each group{
    *            if group is incomplete{
    *               for each direction (i and j) {
@@ -323,8 +323,8 @@ namespace DdMd
 
       // Set ghost communication flags for groups (see above)
       for (k = 0; k < groupExchangers_.size(); ++k) {
-         groupExchangers_[k].markSpanningGroups(bound_, inner_, outer_,
-                                                gridFlags_);
+         groupExchangers_[k].beginAtomExchange(bound_, inner_, outer_,
+                                               gridFlags_);
       }
       stamp(INIT_GROUP_PLAN);
 
@@ -590,8 +590,8 @@ namespace DdMd
 
       // Set ghost communication flags for atoms in incomplete groups
       for (k = 0; k < groupExchangers_.size(); ++k) {
-         groupExchangers_[k].markGhosts(*atomStoragePtr_, sendArray_,
-                                        gridFlags_);
+         groupExchangers_[k].beginGhostExchange(*atomStoragePtr_, sendArray_,
+                                                gridFlags_);
       }
       stamp(MARK_GROUP_GHOSTS);
    }
@@ -798,9 +798,10 @@ namespace DdMd
       } // end for Cartesian index i
 
 
-      // Find ghost atoms for all incomplete groups
+      // Set atom pointers in all incomplete groups
       for (k = 0; k < groupExchangers_.size(); ++k) {
-         groupExchangers_[k].findGhosts(*atomStoragePtr_, *boundaryPtr_);
+         groupExchangers_[k].finishGhostExchange(atomStoragePtr_->map(), 
+                                                 *boundaryPtr_);
       }
 
       #ifdef UTIL_DEBUG

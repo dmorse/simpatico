@@ -44,6 +44,7 @@ public:
    void testIterator();
    void testFindBonds();
    void testClear();
+   void testFinishGhostExchange();
 
 };
 
@@ -254,6 +255,56 @@ inline void BondStorageTest::testClear()
 
 }
 
+inline void BondStorageTest::testFinishGhostExchange()
+{
+   printMethod(TEST_FUNC);
+
+   // Atoms
+   AtomStorage atomStorage;
+   atomStorage.initialize(20, 20, 20);
+
+   Atom* ptr2L = atomStorage.addAtom(2);
+   ptr2L->position() = Vector(0.9, 0.4, 0.5);
+   Atom* ptr2G = atomStorage.addGhost(2);
+   ptr2G->position() = Vector(-0.1, 0.4, 0.5);
+
+   Atom* ptr3L = atomStorage.addAtom(3);
+   ptr3L->position() = Vector(0.1, 0.4, 0.5);
+   Atom* ptr3G = atomStorage.addGhost(3);
+   ptr3G->position() = Vector(1.1, 0.4, 0.5);
+
+   Atom* ptr4L = atomStorage.addAtom(4);
+   ptr4L->position() = Vector(0.3, 0.4, 0.5);
+
+   // Bonds
+   
+   DArray<Bond*> bonds;
+   bonds.allocate(bondStorage_.capacity());
+
+   bonds[3] = bondStorage_.add(3); 
+   bonds[3]->setAtomId(0, 3);
+   bonds[3]->setAtomId(1, 4);
+   bonds[3]->setAtomPtr(0, ptr3L);
+   bonds[3]->setAtomPtr(1, ptr4L);
+
+   bonds[4] = bondStorage_.add(4); 
+   bonds[4]->setAtomId(0, 2);
+   bonds[4]->setAtomId(1, 3);
+   bonds[4]->setAtomPtr(0, ptr2L);
+   bonds[4]->setAtomPtr(1, ptr3L);
+
+   Boundary boundary;
+   boundary.setCubic(3.0);
+
+   bondStorage_.finishGhostExchange(atomStorage.map(), boundary);
+   TEST_ASSERT(bonds[3]->atomPtr(0) == ptr3L);
+   TEST_ASSERT(bonds[3]->atomPtr(1) == ptr4L);
+   TEST_ASSERT(bonds[4]->atomPtr(0) == ptr2L);
+   TEST_ASSERT(bonds[4]->atomPtr(1) == ptr3G);
+   TEST_ASSERT(bondStorage_.size() == 3);
+
+}
+
 TEST_BEGIN(BondStorageTest)
 TEST_ADD(BondStorageTest, testReadParam)
 TEST_ADD(BondStorageTest, testAdd)
@@ -261,6 +312,7 @@ TEST_ADD(BondStorageTest, testAddRemove)
 TEST_ADD(BondStorageTest, testIterator)
 TEST_ADD(BondStorageTest, testFindBonds)
 TEST_ADD(BondStorageTest, testClear)
+TEST_ADD(BondStorageTest, testFinishGhostExchange)
 TEST_END(BondStorageTest)
 
 #endif

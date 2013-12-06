@@ -23,6 +23,7 @@ namespace DdMd
 
    class Atom;
    class AtomStorage;
+   class AtomMap;
    class Buffer;
    using namespace Util;
 
@@ -55,10 +56,10 @@ namespace DdMd
       * \param gridFlags  element i is 0 iff gridDimension[i] == 1, 1 otherwise
       */
       virtual
-      void markSpanningGroups(FMatrix<double, Dimension, 2>& bound, 
-                              FMatrix<double, Dimension, 2>& inner, 
-                              FMatrix<double, Dimension, 2>& outer, 
-                              IntVector& gridFlags) = 0;
+      void beginAtomExchange(FMatrix<double, Dimension, 2>& bound, 
+                             FMatrix<double, Dimension, 2>& inner, 
+                             FMatrix<double, Dimension, 2>& outer, 
+                             IntVector& gridFlags) = 0;
    
       #ifdef UTIL_MPI
       /**
@@ -88,31 +89,46 @@ namespace DdMd
       #endif // ifdef UTIL_MPI
    
       /**
-      * Set ghost communication plans for all atoms in incomplete groups.
+      * Setup communication plans for exchanging ghosts required by groups.
       *
-      * Usage: This is called after exchanging all atoms and groups between 
-      * processors, but before exchanging ghosts. At this point, atom
-      * ownership is finalized, but there are no ghosts.
+      * This function is called after exchanging all atoms and groups but
+      * before exchanging any ghosts. It sets flags in ghost communication 
+      * plans for all atoms in groups that are incomplete at this point.
       *
-      * \param atomStorage AtomStorage object
-      * \param sendArray   Matrix of arrays of pointers to ghosts to send
-      * \param gridFlags   element i is 0 iff gridDimension[i] == 1, 1 otherwise
+      * \param atomStorage  AtomStorage object
+      * \param sendArray  Matrix of arrays of pointers to ghosts to send
+      * \param gridFlags  element i is 0 iff gridDimension[i] == 1, 1 otherwise
       */
       virtual
-      void markGhosts(AtomStorage& atomStorage, 
-                      FMatrix< GPArray<Atom>, Dimension, 2 >&  sendArray,
-                      IntVector& gridFlags) = 0;
+      void beginGhostExchange(AtomStorage& atomStorage, 
+                              FMatrix< GPArray<Atom>, Dimension, 2 >&  sendArray,
+                              IntVector& gridFlags) = 0;
    
       /**
-      * Find all ghost members of groups.
+      * Finalize assignment of pointers to atoms in all groups.
       *
-      * Usage: This called after all ghosts have been exchanged.
+      * This function must be called after all ghosts have been exchanged. It
+      * sets pointers to atoms for all groups, and checks that the group are
+      * compact. 
       *
-      * \param atomStorage AtomStorage object used to find atom pointers
-      * \param boundary    Boundary object used to check minimum image convention
+      * If the processor grid contains only one processor in some directions, 
+      * one processor may contain one or more atom images with the same atom
+      * index. In this case, the function chooses among these "images" so
+      * as to create spatially compact groups, in which the separation of 
+      * each pair of sequentially numbered atoms within a group satisfies 
+      * the minimum image convention. To do this, it may create additional
+      * images of some groups ("ghost" groups) and divide the local atoms 
+      * of each group among two or more images, so that every local atom
+      * belongs to one image of the group. These additional ghost groups 
+      * are destroyed at beginning of the next atom exchange by the 
+      * beginAtomExchange method. Ghost groups are never created if the 
+      * processor grid contains at least two processors in every direction.
+      *
+      * \param map AtomMap object used to find atom pointers
+      * \param boundary Boundary object used to check minimum image convention
       */
-      virtual
-      void findGhosts(AtomStorage& atomStorage, const Boundary& boundary) = 0;
+      virtual void 
+      finishGhostExchange(const AtomMap& map, const Boundary& boundary) = 0;
    
       /**
       * Return true if the container is valid, or throw an Exception.

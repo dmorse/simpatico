@@ -10,6 +10,7 @@
 
 #include "GroupStorage.h"
 #include "AtomStorage.h"
+#include "AtomMap.h"
 #include <util/format/Int.h>
 #include <util/mpi/MpiLoader.h>  
 
@@ -99,6 +100,7 @@ namespace DdMd
       groups_.allocate(capacity_);
       reservoir_.allocate(capacity_);
       groupSet_.allocate(groups_);
+      ghostSet_.allocate(groups_);
       groupPtrs_.allocate(totalCapacity_);
 
       // Push all groups onto reservoir stack, in reverse order.
@@ -226,7 +228,7 @@ namespace DdMd
       }
 
       if (groupSet_.size() != 0) {
-         UTIL_THROW("Nonzero ghostSet size at end of clearGhosts");
+         UTIL_THROW("Nonzero groupSet size at end of clearGhosts");
       }
    }
 
@@ -497,17 +499,26 @@ namespace DdMd
    * method will clear the actual ghost atoms from the AtomStorage.
    */
    template <int N> void 
-   GroupStorage<N>::markSpanningGroups(FMatrix<double, Dimension, 2>& bound, 
+   GroupStorage<N>::beginAtomExchange(FMatrix<double, Dimension, 2>& bound, 
                                        FMatrix<double, Dimension, 2>& inner, 
                                        FMatrix<double, Dimension, 2>& outer, 
                                        IntVector& gridFlags)
    {
       double coordinate;
       GroupIterator<N> groupIter;
+      Group<N>* groupPtr;
       Atom* atomPtr;
       int nIn, nOut, i, j, k;
       bool isComplete;
       bool choose;
+
+      // Clear ghost groups (if any)
+      while (ghostSet_.size() > 0) {
+         groupPtr = &ghostSet_.pop();
+         groupSet_.remove(*groupPtr);
+         groupPtr->setId(-1);
+         reservoir_.push(*groupPtr);
+      }
 
       // Loop over groups
       begin(groupIter);
@@ -746,9 +757,9 @@ namespace DdMd
    * and also add each such atom to sendArray(i, j) for that direction.
    */
    template <int N> void 
-   GroupStorage<N>::markGhosts(AtomStorage& atomStorage, 
-                               FMatrix<GPArray<Atom>, Dimension, 2>& sendArray,
-                               IntVector& gridFlags)
+   GroupStorage<N>::beginGhostExchange(AtomStorage& atomStorage, 
+                          FMatrix<GPArray<Atom>, Dimension, 2>& sendArray,
+                          IntVector& gridFlags)
    {
       GroupIterator<N> groupIter;
       Atom* atomPtr;
@@ -854,10 +865,9 @@ namespace DdMd
    * Generic template, used for N=3 and N=4.
    */
    template <int N>
-   void GroupStorage<N>::findGhosts(AtomStorage& atomStorage, 
-                                    const Boundary& boundary)
+   void GroupStorage<N>::finishGhostExchange(const AtomMap& map, 
+                                             const Boundary& boundary)
    {
-      const AtomMap& atomMap = atomStorage.map();
       GroupIterator<N> groupIter;
       Atom* aPtr;  // Pointer to atom a (must be local)
       Atom* bPtr;  // Pointer to atom b (may be local or ghost)
@@ -880,28 +890,84 @@ namespace DdMd
          }
  
          // Iterate up from root 
-         if (j < N-1) {
+         if (i < N-1) {
             for (j = i; j < N-1; ++j) {
-               k = j+1;
-               atomMap.findNearestImage(groupIter->atomId(k), 
-                                        aPtr->position(), boundary, bPtr);
+               k = j + 1;
+               map.findNearestImage(groupIter->atomId(k), 
+                                    aPtr->position(), boundary, bPtr);
                groupIter->setAtomPtr(k, bPtr);
                aPtr = bPtr;
             } 
          }
 
          // Iterate down from root 
-         if (j > 0) {
+         if (i > 0) {
+            aPtr = groupIter->atomPtr(i);
             for (j = i; j > 0; --j) {
-               k = j-1;
-               atomMap.findNearestImage(groupIter->atomId(k), 
-                                        aPtr->position(), boundary, bPtr);
+               k = j - 1;
+               map.findNearestImage(groupIter->atomId(k), 
+                                    aPtr->position(), boundary, bPtr);
                groupIter->setAtomPtr(k, bPtr);
                aPtr = bPtr;
             } 
          }
 
       } // end loop over groups
+
+   }
+
+   /*
+   * Make a new image of a group.
+   */
+   template <int N>
+   void GroupStorage<N>::makeGroupImage(Group<N>& group, int root,
+                                        const AtomMap& map, 
+                                        const Boundary& boundary)
+   {
+
+      // Get a new group object and add to group and ghost sets
+      Group<N>* newPtr = &reservoir_.pop();
+      groupSet_.append(*newPtr);
+      ghostSet_.append(*newPtr);
+      if (groupSet_.size() > maxNGroupLocal_) {
+         maxNGroupLocal_ = groupSet_.size();
+      }
+
+      // Copy group id, atomIds, root pointer from old to new group
+      newPtr->setId(group.id());
+      for (int k=0; k < N; ++k) {
+          newPtr->setAtomId(k, group.atomId(k));
+          newPtr->clearAtomPtr(k);
+      }
+      newPtr->setAtomPtr(root, group.atomPtr(root));
+
+      Atom* aPtr;
+      Atom* bPtr;
+      int j, k;
+
+      // Set pointers, iterating up from root 
+      if (root < N-1) {
+         aPtr = group.atomPtr(root);
+         for (j = root; j < N - 1; ++j) {
+            k = j + 1;
+            map.findNearestImage(newPtr->atomId(k), 
+                                 aPtr->position(), boundary, bPtr);
+            newPtr->setAtomPtr(k, bPtr);
+            aPtr = bPtr;
+         } 
+      }
+
+      // Set pointers, iterating down from root 
+      if (root > 0) {
+         aPtr = group.atomPtr(root);
+         for (j = root; j > 0; --j) {
+            k = j - 1;
+            map.findNearestImage(newPtr->atomId(k), 
+                                 aPtr->position(), boundary, bPtr);
+            newPtr->setAtomPtr(k, bPtr);
+            aPtr = bPtr;
+         } 
+      }
 
    }
 

@@ -26,11 +26,15 @@
 namespace DdMd
 {
 
+   class AtomMap;
    class AtomStorage;
    using namespace Util;
 
    /**
    * A container for all the Group<N> objects on this processor.
+   *
+   * A GroupStorage is a container that holds a set of Group<N> objects
+   * on this processor, and provides an interface to add or remove groups.
    *
    * \ingroup DdMd_Storage_Module
    */
@@ -67,7 +71,7 @@ namespace DdMd
       /**
       * Read parameters, allocate memory and initialize.
       *
-      * Call on all processors. Call either this or initialize, but not both.
+      * Call on all processors. Call this or initialize(), but not both.
       *
       * Parameter file format:
       *  - capacity      [int]  max number of groups owned by processor.
@@ -179,6 +183,11 @@ namespace DdMd
       */
       void clearGroups(); 
 
+      /**
+      * Remove all ghost groups images.
+      */
+      void clearGhosts(); 
+
       //@}
       /// \name Iterator Interface
       //@{
@@ -277,7 +286,7 @@ namespace DdMd
       * \param gridFlags  element i is 0 iff gridDimension[i] == 1, 1 otherwise
       */
       virtual
-      void markSpanningGroups(FMatrix<double, Dimension, 2>& bound, 
+      void beginAtomExchange(FMatrix<double, Dimension, 2>& bound, 
                               FMatrix<double, Dimension, 2>& inner, 
                               FMatrix<double, Dimension, 2>& outer, 
                               IntVector& gridFlags);
@@ -319,20 +328,20 @@ namespace DdMd
       * \param gridFlags   element i is 0 iff gridDimension[i] == 1, 1 otherwise
       */
       virtual
-      void markGhosts(AtomStorage& atomStorage, 
-                      FMatrix<GPArray<Atom>, Dimension, 2>&  sendArray,
-                      IntVector& gridFlags);
+      void beginGhostExchange(AtomStorage& atomStorage, 
+                              FMatrix<GPArray<Atom>, Dimension, 2>&  sendArray,
+                              IntVector& gridFlags);
    
       /**
       * Find all ghost members of groups.
       *
       * Usage: This called after all ghosts have been exchanged.
       *
-      * \param atomStorage AtomStorage object used to find atom pointers
-      * \param boundary    Boundary, needed for minimum image convention
+      * \param map  AtomMap object used to find atom pointers
+      * \param boundary  Boundary, needed for minimum image convention
       */
       virtual
-      void findGhosts(AtomStorage& atomStorage, const Boundary& boundary);
+      void finishGhostExchange(const AtomMap& map, const Boundary& boundary);
 
       /**
       * Return true if the container is valid, or throw an Exception.
@@ -404,6 +413,9 @@ namespace DdMd
       /// Stack of pointers to unused elements in groups_ array.
       ArrayStack< Group<N> >  reservoir_;
 
+      /// Set of ghost images of groups on this processor.
+      ArraySet< Group<N> >  ghostSet_;
+
       /**
       * Array of pointers to groups, indexed by global group Id.
       *
@@ -437,14 +449,34 @@ namespace DdMd
       * Allocate and initialize all private containers.
       */
       void allocate();
-    
+
+      /*
+      * Make a new image of a Group.
+      *
+      * \param group  parent version of group, which will be cloned
+      * \param root  index of root atom within the group
+      * \param map  AtomMap used to find minimum images
+      * \param boundary Boundary, used for minimum image convention
+      */
+      void makeGroupImage(Group<N>& group, int root, const AtomMap& map, 
+                          const Boundary& boundary);
+
    };
 
    /**
-   * Explicit specialization of GroupStorage<N>::findGhosts for N = 2.
+   * Explicit N=2 specialization of GroupStorage<N>::finishGhostExchange.
    */
    template <>
-   void GroupStorage<2>::findGhosts(AtomStorage& atomStorage, const Boundary& boundary);
+   void GroupStorage<2>::finishGhostExchange(const AtomMap& map, 
+                                             const Boundary& boundary);
+
+   /**
+   * Explicit N=2 specialization of GroupStorage<N>::makeGroupImage.
+   */
+   template <>
+   void GroupStorage<2>::makeGroupImage(Group<2>& group, int root, 
+                                        const AtomMap& map, 
+                                        const Boundary& boundary);
 
  
    // Inline method definitions
