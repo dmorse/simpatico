@@ -60,7 +60,7 @@ namespace DdMd
       // Get a new group object and add to group and ghost sets
       Group<2>* newPtr = &reservoir_.pop();
       groupSet_.append(*newPtr);
-      ghostSet_.append(*newPtr);
+      ghosts_.append(*newPtr);
       if (groupSet_.size() > maxNGroupLocal_) {
          maxNGroupLocal_ = groupSet_.size();
       }

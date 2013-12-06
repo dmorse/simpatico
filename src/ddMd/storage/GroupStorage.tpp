@@ -100,7 +100,6 @@ namespace DdMd
       groups_.allocate(capacity_);
       reservoir_.allocate(capacity_);
       groupSet_.allocate(groups_);
-      ghostSet_.allocate(groups_);
       groupPtrs_.allocate(totalCapacity_);
 
       // Push all groups onto reservoir stack, in reverse order.
@@ -513,12 +512,13 @@ namespace DdMd
       bool choose;
 
       // Clear ghost groups (if any)
-      while (ghostSet_.size() > 0) {
-         groupPtr = &ghostSet_.pop();
-         groupSet_.remove(*groupPtr);
+      for (k = 0; k < ghosts_.size(); ++k) {
+         groupPtr = &ghosts_[k];
          groupPtr->setId(-1);
+         groupSet_.remove(*groupPtr);
          reservoir_.push(*groupPtr);
       }
+      ghosts_.clear();
 
       // Loop over groups
       begin(groupIter);
@@ -928,12 +928,12 @@ namespace DdMd
       // Get a new group object and add to group and ghost sets
       Group<N>* newPtr = &reservoir_.pop();
       groupSet_.append(*newPtr);
-      ghostSet_.append(*newPtr);
+      ghosts_.append(*newPtr);
       if (groupSet_.size() > maxNGroupLocal_) {
          maxNGroupLocal_ = groupSet_.size();
       }
 
-      // Copy group id, atomIds, root pointer from old to new group
+      // Copy group id, atomIds, & root pointer to new group
       newPtr->setId(group.id());
       for (int k=0; k < N; ++k) {
           newPtr->setAtomId(k, group.atomId(k));

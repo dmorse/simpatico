@@ -413,8 +413,8 @@ namespace DdMd
       /// Stack of pointers to unused elements in groups_ array.
       ArrayStack< Group<N> >  reservoir_;
 
-      /// Set of ghost images of groups on this processor.
-      ArraySet< Group<N> >  ghostSet_;
+      /// Pointer array of ghost images of groups on this processor.
+      GPArray< Group<N> >  ghosts_;
 
       /**
       * Array of pointers to groups, indexed by global group Id.
