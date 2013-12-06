@@ -292,6 +292,7 @@ inline void BondStorageTest::testFinishGhostExchange()
    bonds[4]->setAtomId(1, 3);
    bonds[4]->setAtomPtr(0, ptr2L);
    bonds[4]->setAtomPtr(1, ptr3L);
+   TEST_ASSERT(bondStorage_.size() == 2);
 
    Boundary boundary;
    boundary.setCubic(3.0);

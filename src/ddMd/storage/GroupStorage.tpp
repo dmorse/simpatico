@@ -265,13 +265,18 @@ namespace DdMd
       for (begin(iter); iter.notEnd(); ++iter) {
          ++j;
          ptr = find(iter->id());
-         if (ptr == 0)
+         if (ptr == 0) {
             UTIL_THROW("Unable to find local group returned by iterator"); 
-         if (ptr != iter.get())
-            UTIL_THROW("Inconsistent find(iter->id()"); 
+         }
+         if (ghosts_.size() == 0) {
+            if (ptr != iter.get()) {
+               UTIL_THROW("Inconsistent find(iter->id()"); 
+            }
+         }
       }
-      if (j != size())
+      if (j != size()) {
          UTIL_THROW("Number from iterator != size()"); 
+      }
 
       return true;
    }
@@ -283,7 +288,7 @@ namespace DdMd
    * Returns true if all is ok, or throws an Exception.
    */
    template <int N>
-   bool GroupStorage<N>::isValid(const Domain& domain)
+   bool GroupStorage<N>::isValid(const Domain& domain, bool hasGhosts)
    {
    }
    #endif
@@ -499,9 +504,10 @@ namespace DdMd
    */
    template <int N> void 
    GroupStorage<N>::beginAtomExchange(FMatrix<double, Dimension, 2>& bound, 
-                                       FMatrix<double, Dimension, 2>& inner, 
-                                       FMatrix<double, Dimension, 2>& outer, 
-                                       IntVector& gridFlags)
+                                      FMatrix<double, Dimension, 2>& inner, 
+                                      FMatrix<double, Dimension, 2>& outer, 
+                                      IntVector& gridFlags, 
+                                      const AtomMap& map)
    {
       double coordinate;
       GroupIterator<N> groupIter;
@@ -631,8 +637,24 @@ namespace DdMd
             if (atomPtr) {
                if (atomPtr->isGhost()) {
                   groupIter->clearAtomPtr(k);
+                  atomPtr = map.find(groupIter->atomId(k));
+                  if (atomPtr) {
+                     if (!atomPtr->isGhost()) {
+                        groupIter->setAtomPtr(k, atomPtr);
+                     }
+                  }
                }
+               #ifdef UTIL_DEBUG
+               else {
+                  assert(atomPtr == map.find(groupIter->atomId(k)));
+               }
+               #endif
             }
+            #ifdef UTIL_DEBUG
+            else {
+               assert(0 == map.find(groupIter->atomId(k)));
+            }
+            #endif
          }
 
       }

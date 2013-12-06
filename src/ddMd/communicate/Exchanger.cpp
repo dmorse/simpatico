@@ -324,7 +324,8 @@ namespace DdMd
       // Set ghost communication flags for groups (see above)
       for (k = 0; k < groupExchangers_.size(); ++k) {
          groupExchangers_[k].beginAtomExchange(bound_, inner_, outer_,
-                                               gridFlags_);
+                                               gridFlags_, 
+                                               atomStoragePtr_->map());
       }
       stamp(INIT_GROUP_PLAN);
 

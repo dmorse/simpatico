@@ -284,12 +284,14 @@ namespace DdMd
       * \param inner  inner slab boundaries (extended domain of neighbors)
       * \param outer  outer slab boundaries (extended domain of this processor)
       * \param gridFlags  element i is 0 iff gridDimension[i] == 1, 1 otherwise
+      * \param map  AtomMap, to find local atoms after clearing ptrs to ghosts
       */
       virtual
       void beginAtomExchange(FMatrix<double, Dimension, 2>& bound, 
-                              FMatrix<double, Dimension, 2>& inner, 
-                              FMatrix<double, Dimension, 2>& outer, 
-                              IntVector& gridFlags);
+                             FMatrix<double, Dimension, 2>& inner, 
+                             FMatrix<double, Dimension, 2>& outer, 
+                             IntVector& gridFlags, 
+                             const AtomMap& map);
    
       #ifdef UTIL_MPI
       /**
