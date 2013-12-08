@@ -30,6 +30,7 @@ namespace DdMd
       groupSet_(),
       reservoir_(),
       newPtr_(0),
+      nGroupDistinct_(0),
       capacity_(0),
       totalCapacity_(0),
       nTotal_(0)
@@ -166,6 +167,7 @@ namespace DdMd
       // Add Group<N> object to container
       groupSet_.append(*newPtr_);
       groupPtrs_[groupId] = newPtr_;
+      ++nGroupDistinct_;
 
       // Release newPtr_ for reuse.
       Group<N>* ptr = newPtr_;
@@ -207,6 +209,7 @@ namespace DdMd
       reservoir_.push(*groupPtr);
       groupSet_.remove(*groupPtr);
       groupPtrs_[groupId] = 0;
+      --nGroupDistinct_;
       groupPtr->setId(-1);
    }
 
@@ -225,73 +228,14 @@ namespace DdMd
          groupPtr->setId(-1);
          reservoir_.push(*groupPtr);
       }
-
       if (groupSet_.size() != 0) {
          UTIL_THROW("Nonzero groupSet size at end of clearGhosts");
       }
+      nGroupDistinct_ = 0;
+      ghosts_.clear();
    }
 
    // Accessors
-
-   /*
-   * Check validity of this GroupStorage.
-   *
-   * Returns true if all is ok, or throws an Exception.
-   */
-   template <int N>
-   bool GroupStorage<N>::isValid()
-   {
-      if (size() + reservoir_.size() != capacity_) {
-         UTIL_THROW("nGroup + reservoir size != local capacity"); 
-      }
-
-      // Check consistency of group ids and indexing in groupPtrs_
-      Group<N>* ptr;
-      int       i, j;
-      j = 0;
-      for (i = 0; i < totalCapacity_ ; ++i) {
-         ptr = groupPtrs_[i];
-         if (ptr != 0) {
-            ++j;
-            if (ptr->id() != i) {
-               UTIL_THROW("ptr->id() != i"); 
-            }
-         }
-      }
-
-      // Count local groups
-      GroupIterator<N> iter;
-      j = 0;
-      for (begin(iter); iter.notEnd(); ++iter) {
-         ++j;
-         ptr = find(iter->id());
-         if (ptr == 0) {
-            UTIL_THROW("Unable to find local group returned by iterator"); 
-         }
-         if (ghosts_.size() == 0) {
-            if (ptr != iter.get()) {
-               UTIL_THROW("Inconsistent find(iter->id()"); 
-            }
-         }
-      }
-      if (j != size()) {
-         UTIL_THROW("Number from iterator != size()"); 
-      }
-
-      return true;
-   }
-
-   #if 0
-   /*
-   * Check validity of this GroupStorage, including validity of groups.
-   *
-   * Returns true if all is ok, or throws an Exception.
-   */
-   template <int N>
-   bool GroupStorage<N>::isValid(const Domain& domain, bool hasGhosts)
-   {
-   }
-   #endif
 
    /**
    * Compute and store total number of atoms on all processors.
@@ -306,8 +250,8 @@ namespace DdMd
       // If nTotal is already known, return and do nothing.
       if (nTotal_.isSet()) return;
 
-      // Loop over groups on this processor. 
-      // Increment nLocal only if atom 0 is owned by this processor
+      // Loop over all groups on this processor (including ghosts).
+      // Increment nLocal only if atom 0 is local on this processor
       GroupIterator<N> iterator;
       Atom* atomPtr;
       int nLocal = 0;
@@ -322,14 +266,13 @@ namespace DdMd
       }
 
       // Reduce data on all processors and set nTotal_ on master.
-      int nTot;
+      int sum;
       #ifdef UTIL_MPI
-      communicator.Reduce(&nLocal, &nTot, 1, 
-                          MPI::INT, MPI::SUM, 0);
+      communicator.Reduce(&nLocal, &sum, 1, MPI::INT, MPI::SUM, 0);
       if (communicator.Get_rank() !=0) {
-         nTot = -1;
+         sum = -1;
       }
-      nTotal_.set(nTot);
+      nTotal_.set(sum);
       #else
       nTotal_.set(nLocal);
       #endif
@@ -382,28 +325,76 @@ namespace DdMd
    }
 
    /*
+   * Check validity of this GroupStorage (minimal checks).
+   *
+   * Returns true if all is ok, or throws an Exception.
+   */
+   template <int N>
+   bool GroupStorage<N>::isValid()
+   {
+      if (size() + reservoir_.size() != capacity_) {
+         UTIL_THROW("nGroup + reservoir size != local capacity"); 
+      }
+
+      // Check consistency of group ids and indexing in groupPtrs_
+      Group<N>* ptr;
+      int       i, j;
+      j = 0;
+      for (i = 0; i < totalCapacity_ ; ++i) {
+         ptr = groupPtrs_[i];
+         if (ptr != 0) {
+            ++j;
+            if (ptr->id() != i) {
+               UTIL_THROW("ptr->id() != i"); 
+            }
+         }
+      }
+
+      // Count local groups
+      GroupIterator<N> iter;
+      j = 0;
+      for (begin(iter); iter.notEnd(); ++iter) {
+         ++j;
+         ptr = find(iter->id());
+         if (ptr == 0) {
+            UTIL_THROW("Unable to find local group returned by iterator"); 
+         }
+         if (ghosts_.size() == 0) {
+            if (ptr != iter.get()) {
+               UTIL_THROW("Inconsistent find(iter->id()"); 
+            }
+         }
+      }
+      if (j != size()) {
+         UTIL_THROW("Number from iterator != size()"); 
+      }
+
+      return true;
+   }
+
+   /*
    * Check validity of all groups on this processor.
    */
    template <int N>
+   bool
    #ifdef UTIL_MPI
-   bool GroupStorage<N>::isValid(AtomStorage& atomStorage, 
-                                 MPI::Intracomm& communicator,
-                                 bool hasGhosts)
+   GroupStorage<N>::isValid(const AtomStorage& atomStorage, 
+                            MPI::Intracomm& communicator, bool hasGhosts)
    #else
-   bool GroupStorage<N>::isValid(AtomStorage& atomStorage, bool hasGhosts)
+   GroupStorage<N>::isValid(const AtomStorage& atomStorage, bool hasGhosts)
    #endif
    {
+      // Call simple isValid() function to check only GroupStorage data.
+      isValid();
+
       int i;
       int atomId;
-      int nAtom;  // Number of nonnull pointers to atoms in particular group.
-      int nLocal; // Number of local atoms in particular group.
-      int nGroupLocal = 0; // Number of local atoms in all groups on processor
+      int nAtom;  // # of nonnull pointers to atoms in one group
+      int nLocal; // # of local atoms in one group
+      int nGroupLocal = 0; // # of local atoms in all groups on processor
       Atom* atomPtr;
       Atom* findPtr;
       ConstGroupIterator<N> groupIter;
-
-      // Call simpler function that only checks storage data structures.
-      isValid();
 
       // Loop over groups.
       const AtomMap& atomMap = atomStorage.map();
@@ -423,17 +414,26 @@ namespace DdMd
                   UTIL_THROW("Inconsistent id for atom pointer in Group");
                }
                if (findPtr == 0) {
-                  UTIL_THROW("Pointer to atom with id that is not in the map");
+                  UTIL_THROW("Pointer to atom that is not in the map");
                }
                if (!atomPtr->isGhost()) {
+                  ++nLocal; 
                   if (atomPtr != findPtr) {
                      UTIL_THROW("Inconsistent pointer to local atom");
                   }
+               } else { // if atomPtr points to a ghost
+                  if (!hasGhosts) {
+                     UTIL_THROW("Unexpected pointer to ghost atom");
+                  }
                }
-            }
-            if (findPtr) {
-               if (!findPtr->isGhost()) {
-                  ++nLocal; 
+            } else { // if atomPtr is null
+               if (hasGhosts) {
+                  UTIL_THROW("Unexpected null pointer in group");
+               }
+               if (findPtr) {
+                  if (!findPtr->isGhost()) {
+                     UTIL_THROW("Null atomPtr but local atom in map");
+                  }
                }
             }
          }
@@ -446,29 +446,81 @@ namespace DdMd
          nGroupLocal += nLocal;
       }
 
-      // Count number distinct groups.
+      // Count number of distinct groups.
       #ifdef UTIL_MPI
       unsetNTotal();
       computeNTotal(communicator);
       #endif
 
       #ifdef UTIL_MPI
-      // Count & return number of local atoms in groups on all processors.
-      int nGroupLocalTotal;
-      const int source = 0;
-      communicator.Reduce(&nGroupLocal, &nGroupLocalTotal, 1, 
+      // Compute number of local atoms in groups on all processors.
+      int sum; // Total number of local atoms
+      const int source = 0; // source processor id for reduce
+      communicator.Reduce(&nGroupLocal, &sum, 1, 
                           MPI::INT, MPI::SUM, source);
       if (communicator.Get_rank() == source) {
          if (!nTotal_.isSet()) {
             UTIL_THROW("nTotal not set");
          }
-         if (nGroupLocalTotal != N*nTotal()) {
-            Log::file() << "nGroupLocalTotal = " << nGroupLocalTotal << std::endl;
-            Log::file() << "nTotal*N         = " << N*nTotal() << std::endl;
-            UTIL_THROW("Discrepancy in number of local atoms in Group objects");
+         if (sum != N*nTotal()) {
+            Log::file() << "# of local atoms = " << sum << std::endl;
+            Log::file() << "nTotal*N         = " 
+                        << N*nTotal() << std::endl;
+            UTIL_THROW("Wrong number of local atoms in Groups");
          }
       }
       #endif
+
+      return true;
+   }
+
+   /*
+   * Check validity, after atom exchange but before ghost exchange.
+   *
+   * This function may only be called after exchange of atoms and groups,
+   * but before exchange and creation of ghosts.
+   */
+   template <int N>
+   bool
+   #ifdef UTIL_MPI
+   GroupStorage<N>::isValid(const AtomStorage& atomStorage, 
+                            MPI::Intracomm& communicator)
+   {  return isValid(atomStorage, communicator, false); }
+   #else
+   isValid(const AtomStorage& atomStorage)
+   {  return isValid(atomStorage, false); }
+   #endif
+
+   /*
+   * Check validity, after ghost exchange is complete.
+   */
+   template <int N>
+   bool
+   #ifdef UTIL_MPI
+   GroupStorage<N>::isValid(const AtomStorage& atomStorage, 
+                            const Boundary& boundary,
+                            MPI::Intracomm& communicator)
+   #else
+   GroupStorage<N>::isValid(const AtomStorage& atomStorage, 
+                            const Boundary& boundary);
+   #endif
+   {
+      assert(!atomStorage.isCartesian());
+
+      bool hasGhosts = true;
+      #ifdef UTIL_MPI
+      isValid(atomStorage, communicator, hasGhosts);
+      #else
+      isValid(atomStorage, hasGhosts);
+      #endif
+
+      // Check that all groups are spatially compact.
+      ConstGroupIterator<N> groupIter;
+      for (begin(groupIter); groupIter.notEnd(); ++groupIter) {
+         if (!groupIter->isCompactGen(boundary)) {
+            UTIL_THROW("Noncompact group");
+         }
+      }
 
       return true;
    }
@@ -518,11 +570,17 @@ namespace DdMd
       bool choose;
 
       // Clear ghost groups (if any)
-      for (k = 0; k < ghosts_.size(); ++k) {
-         groupPtr = &ghosts_[k];
-         groupPtr->setId(-1);
+      for (j = 0; j < ghosts_.size(); ++j) {
+         groupPtr = &ghosts_[j];
          groupSet_.remove(*groupPtr);
          reservoir_.push(*groupPtr);
+         groupPtr->setId(-1);
+         #if 0
+         for (k = 0; k < N; ++k) {
+            groupPtr->setAtomId(k, -1);
+            groupPtr->clearAtomPtr(k);
+         }
+         #endif
       }
       ghosts_.clear();
 
@@ -680,6 +738,7 @@ namespace DdMd
       int k, nAtom;
       bool choose;
       emptyGroups_.clear();
+      assert(ghosts_.size() == 0);
 
       // Pack Groups
       buffer.beginSendBlock(Buffer::GROUP2 + N - 2);
@@ -942,7 +1001,8 @@ namespace DdMd
    * Make a new image of a group.
    */
    template <int N>
-   void GroupStorage<N>::makeGroupImage(Group<N>& group, int root,
+   void GroupStorage<N>::makeGroupImage(Group<N>& group, 
+                                        int rootId, Atom* rootPtr,
                                         const AtomMap& map, 
                                         const Boundary& boundary)
    {
@@ -961,34 +1021,41 @@ namespace DdMd
           newPtr->setAtomId(k, group.atomId(k));
           newPtr->clearAtomPtr(k);
       }
-      newPtr->setAtomPtr(root, group.atomPtr(root));
+      newPtr->setAtomPtr(rootId, rootPtr);
 
-      Atom* aPtr;
-      Atom* bPtr;
-      int j, k;
+      Atom* aPtr; // first atom of each bond (already known)
+      Atom* bPtr; // second atom of each bond (searched for)
+      Atom* cPtr; // unused local image of second atom, if any
+      int j, k;   // ids within group of first and second atoms
 
-      // Set pointers, iterating up from root 
-      if (root < N-1) {
-         aPtr = group.atomPtr(root);
-         for (j = root; j < N - 1; ++j) {
+      // Set pointers, iterating up from rootId 
+      if (rootId < N-1) {
+         aPtr = rootPtr;
+         for (j = rootId; j < N - 1; ++j) {
             k = j + 1;
-            map.findNearestImage(newPtr->atomId(k), 
-                                 aPtr->position(), boundary, bPtr);
+            cPtr = map.findNearestImage(newPtr->atomId(k), 
+                                        aPtr->position(), boundary, bPtr);
             newPtr->setAtomPtr(k, bPtr);
             aPtr = bPtr;
-         } 
+            if (cPtr) {
+               makeGroupImage(*newPtr, k, cPtr, map, boundary);
+            }
+         }
       }
 
-      // Set pointers, iterating down from root 
-      if (root > 0) {
-         aPtr = group.atomPtr(root);
-         for (j = root; j > 0; --j) {
+      // Set pointers, iterating down from rootId
+      if (rootId > 0) {
+         aPtr = rootPtr;
+         for (j = rootId; j > 0; --j) {
             k = j - 1;
-            map.findNearestImage(newPtr->atomId(k), 
-                                 aPtr->position(), boundary, bPtr);
+            cPtr = map.findNearestImage(newPtr->atomId(k), 
+                                        aPtr->position(), boundary, bPtr);
             newPtr->setAtomPtr(k, bPtr);
             aPtr = bPtr;
-         } 
+            if (cPtr) {
+               makeGroupImage(*newPtr, k, cPtr, map, boundary);
+            }
+         }
       }
 
    }

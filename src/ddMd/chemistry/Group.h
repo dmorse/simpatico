@@ -178,7 +178,7 @@ namespace DdMd
       *
       * \return true if compact, false otherwise.
       */
-      bool isCompactGen(Boundary& boundary) const;
+      bool isCompactGen(const Boundary& boundary) const;
 
       /**
       * Is this group compact ? (Cartesian coordinates)
@@ -191,7 +191,7 @@ namespace DdMd
       *
       * \return true if compact, false otherwise.
       */
-      bool isCompactCart(Boundary& boundary) const;
+      bool isCompactCart(const Boundary& boundary) const;
 
    private:
       
@@ -402,7 +402,7 @@ namespace DdMd
    * Is this group compact? (generalized atomic coordinates).
    */
    template <int N>
-   bool Group<N>::isCompactGen(Boundary& boundary) const
+   bool Group<N>::isCompactGen(const Boundary& boundary) const
    {
       if (nPtr_ != N) {
          UTIL_THROW("Group is incomplete");
@@ -432,7 +432,7 @@ namespace DdMd
    * Is this group compact (Cartesian coordinates)? 
    */
    template <int N>
-   bool Group<N>::isCompactCart(Boundary& boundary) const
+   bool Group<N>::isCompactCart(const Boundary& boundary) const
    {
       if (nPtr_ != N) {
          UTIL_THROW("Group is incomplete");

@@ -343,7 +343,7 @@ namespace DdMd
       }
       for (k = 0; k < groupExchangers_.size(); ++k) {
          groupExchangers_[k].isValid(*atomStoragePtr_,
-                                     domainPtr_->communicator(), false);
+                                     domainPtr_->communicator());
       }
       #endif
       #endif
@@ -584,7 +584,7 @@ namespace DdMd
       atomStoragePtr_->isValid();
       for (k = 0; k < groupExchangers_.size(); ++k) {
          groupExchangers_[k].isValid(*atomStoragePtr_,
-                                      domainPtr_->communicator(), false);
+                                     domainPtr_->communicator());
       }
       #endif // ifdef DDMD_EXCHANGER_DEBUG
       #endif // ifdef UTIL_DEBUG
@@ -809,8 +809,8 @@ namespace DdMd
       #ifdef DDMD_EXCHANGER_DEBUG
       atomStoragePtr_->isValid();
       for (k = 0; k < groupExchangers_.size(); ++k) {
-         groupExchangers_[k].isValid(*atomStoragePtr_,
-                                     domainPtr_->communicator(), true);
+         groupExchangers_[k].isValid(*atomStoragePtr_, *boundaryPtr_,
+                                     domainPtr_->communicator());
       }
       #endif // ifdef DDMD_EXCHANGER_DEBUG
       #endif // ifdef UTIL_DEBUG

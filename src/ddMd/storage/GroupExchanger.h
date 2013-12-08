@@ -134,22 +134,37 @@ namespace DdMd
       /**
       * Return true if the container is valid, or throw an Exception.
       *
-      * Calls overloaded isValid() method, then checks consistency of atom 
-      * pointers with those in an asociated AtomStorage. If hasGhosts is
-      * false, the method requires that no group contain a pointer to a ghost 
-      * atom. If hasGhosts is true, requires that every Group be complete.
+      * This function may be called after completion of atom and group exchange,
+      * but before ghost exchange.
       *
       * \param atomStorage  associated AtomStorage object
+      * \param communicator domain communicator 
       * \param hasGhosts    true if the atomStorage has ghosts, false otherwise
+      */
+      virtual bool
+      #ifdef UTIL_MPI
+      isValid(const AtomStorage& atomStorage, 
+              MPI::Intracomm& communicator) = 0;
+      #else
+      isValid(const AtomStorage& atomStorage) = 0;
+      #endif
+
+      /**
+      * Return true if the container is valid, or throw an Exception.
+      *
+      * This function should only be called after completion of ghost exchange,
+      * when all groups should be complete.
+      *
+      * \param atomStorage  associated AtomStorage object
+      * \param boundary  Boundary object, used to check spatial compactness
       * \param communicator domain communicator 
       */
+      virtual bool
       #ifdef UTIL_MPI
-      virtual 
-      bool isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator, 
-                   bool hasGhosts) = 0;
+      isValid(const AtomStorage& atomStorage, const Boundary& boundary, 
+                   MPI::Intracomm& communicator) = 0;
       #else
-      virtual 
-      bool isValid(AtomStorage& atomStorage, bool hasGhosts) = 0;
+      isValid(const AtomStorage& atomStorage, const Boundary& boundary) = 0;
       #endif
 
    }; // class GroupExchanger

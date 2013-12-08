@@ -218,9 +218,14 @@ namespace DdMd
       Group<N>* find(int id) const;
 
       /**
-      * Return current number of groups on this processor.
+      * Return number of groups on this processor, including ghost images.
       */
       int size() const;
+
+      /**
+      * Return number of distinct groups, excluding ghosts.
+      */
+      int nGroupDistinct() const;
 
       /**
       * Return capacity for groups on this processor.
@@ -270,8 +275,31 @@ namespace DdMd
 
       /**
       * Return true if the container is valid, or throw an Exception.
+      *
+      * This function only checks internal consistency of private members
+      * of this class. It does not check validity of individual Groups.
       */
       bool isValid();
+
+      /**
+      * Return true if the container is valid, or throw an Exception.
+      *
+      * Calls overloaded isValid() method, then checks consistency of atom 
+      * pointers with those in an asociated AtomStorage. If hasGhosts is
+      * false, the method requires that no group contain a pointer to a ghost 
+      * atom. If hasGhosts is true, requires that every Group be complete.
+      *
+      * \param atomStorage  associated AtomStorage object
+      * \param hasGhosts    true if the atomStorage has ghosts, false otherwise
+      * \param communicator domain communicator 
+      */
+      virtual
+      #ifdef UTIL_MPI
+      bool isValid(const AtomStorage& atomStorage, MPI::Intracomm& communicator, 
+                   bool hasGhosts);
+      #else
+      bool isValid(const AtomStorage& atomStorage, bool hasGhosts);
+      #endif
 
       //@}
       /// \name GroupExchanger Intervace (Interprocessor Communication)
@@ -348,24 +376,37 @@ namespace DdMd
       /**
       * Return true if the container is valid, or throw an Exception.
       *
-      * Calls overloaded isValid() method, then checks consistency of atom 
-      * pointers with those in an asociated AtomStorage. If hasGhosts is
-      * false, the method requires that no group contain a pointer to a ghost 
-      * atom. If hasGhosts is true, requires that every Group be complete.
+      * This function may only be called after exchange of atoms and groups,
+      * but before exchange and creation of ghosts.
       *
       * \param atomStorage  associated AtomStorage object
-      * \param hasGhosts    true if the atomStorage has ghosts, false otherwise
       * \param communicator domain communicator 
       */
+      virtual bool
       #ifdef UTIL_MPI
-      virtual
-      bool isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator, 
-                   bool hasGhosts);
+      isValid(const AtomStorage& atomStorage, MPI::Intracomm& communicator);
       #else
-      virtual
-      bool isValid(AtomStorage& atomStorage, bool hasGhosts);
+      isValid(const AtomStorage& atomStorage);
       #endif
 
+      /**
+      * Return true if the container is valid, or throw an Exception.
+      *
+      * This function may only be called after atom and ghost exchange, 
+      * when all groups should be complete and spatially compact.  
+      *
+      * \param atomStorage  associated AtomStorage object
+      * \param communicator domain communicator 
+      */
+      virtual bool
+      #ifdef UTIL_MPI
+      isValid(const AtomStorage& atomStorage, const Boundary& boundary,
+                   MPI::Intracomm& communicator);
+      #else
+      isValid(const AtomStorage& atomStorage, const Boundary& boundary);
+      #endif
+
+      //@}
       //@}
       /// \name Statistics
       //@{
@@ -432,6 +473,9 @@ namespace DdMd
       // Pointer to space for a new local Group
       Group<N>* newPtr_;
 
+      // Number of distinct groups on this processor.
+      int nGroupDistinct_;
+
       // Capacity for local groups on this processor.
       int capacity_;
 
@@ -456,12 +500,13 @@ namespace DdMd
       * Make a new image of a Group.
       *
       * \param group  parent version of group, which will be cloned
-      * \param root  index of root atom within the group
+      * \param rootId  index of root atom within the group image
+      * \param rootPtr  pointer to root atom within the group image
       * \param map  AtomMap used to find minimum images
       * \param boundary Boundary, used for minimum image convention
       */
-      void makeGroupImage(Group<N>& group, int root, const AtomMap& map, 
-                          const Boundary& boundary);
+      void makeGroupImage(Group<N>& group, int rootId, Atom* rootPtr,
+                          const AtomMap& map, const Boundary& boundary);
 
    };
 
@@ -476,44 +521,51 @@ namespace DdMd
    * Explicit N=2 specialization of GroupStorage<N>::makeGroupImage.
    */
    template <>
-   void GroupStorage<2>::makeGroupImage(Group<2>& group, int root, 
-                                        const AtomMap& map, 
-                                        const Boundary& boundary);
+   void 
+   GroupStorage<2>::makeGroupImage(Group<2>& group, 
+                                   int rootId, Atom* rootPtr,
+                                   const AtomMap& map, 
+                                   const Boundary& boundary);
 
  
    // Inline method definitions
 
-   // Return number of groups in this storage.
+   // Return number of groups on this processor (including ghost images).
    template <int N>
    inline int GroupStorage<N>::size() const
    {  return groupSet_.size(); }
 
-   // Return maximum number of groups on this processor.
+   // Return number of distinc groups (excluding ghost images).
+   template <int N>
+   inline int GroupStorage<N>::nGroupDistinct() const
+   {  return nGroupDistinct_; }
+
+   // Return maximum allowed number of groups on this processor.
    template <int N>
    inline int GroupStorage<N>::capacity() const
    {  return capacity_; }
 
-   // Return maximum allowed group id + 1.
+   // Return one more than maximum allowed group id.
    template <int N>
    inline int GroupStorage<N>::totalCapacity() const
    {  return totalCapacity_; }
 
-   // Return total number of groups 
+   // Return total number of groups on all processors.
    template <int N>
    inline int GroupStorage<N>::nTotal() const
    {  return nTotal_.value(); }
 
-   // Return pointer to Group with specified id.
+   // Return pointer to a Group with specified id, or null if absent.
    template <int N>
    inline Group<N>* GroupStorage<N>::find(int id) const
    {  return groupPtrs_[id]; }
 
-   // Set iterator to beginning of the set of local groups.
+   // Set iterator to beginning of the set of groups.
    template <int N>
    inline void GroupStorage<N>::begin(GroupIterator<N>& iterator)
    {  groupSet_.begin(iterator); }
  
-   // Set const iterator to beginning of the set of local groups.
+   // Set const iterator to beginning of the set of groups.
    template <int N>
    inline 
    void GroupStorage<N>::begin(ConstGroupIterator<N>& iterator) const

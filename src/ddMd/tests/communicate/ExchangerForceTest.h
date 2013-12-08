@@ -440,18 +440,18 @@ void ExchangerForceTest::testGhostUpdate()
    }
 
    TEST_ASSERT(atomStorage.isValid());
-   TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
-               true));
+   TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
+                                   domain.communicator()));
    #ifdef INTER_ANGLE
    if (hasAngles) {
-      TEST_ASSERT(angleStorage.isValid(atomStorage, 
-                  domain.communicator(), true));
+      TEST_ASSERT(angleStorage.isValid(atomStorage, boundary, 
+                                       domain.communicator()));
    }
    #endif
    #ifdef INTER_DIHEDRAL
    if (hasDihedrals) {
-      TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
-                  domain.communicator(), true));
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, boundary, 
+                                          domain.communicator()));
    }
    #endif
 
@@ -500,8 +500,8 @@ void ExchangerForceTest::testGhostUpdateCycle()
    }
 
    TEST_ASSERT(atomStorage.isValid());
-   TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
-               true));
+   TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
+                                   domain.communicator()));
 
    // Transform to Cartesian coordinates
    atomStorage.transformGenToCart(boundary);
@@ -542,18 +542,18 @@ void ExchangerForceTest::testGhostUpdateCycle()
       }
 
       TEST_ASSERT(atomStorage.isValid());
-      TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
-                                      true)); 
+      TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
+                                      domain.communicator())); 
       #ifdef INTER_ANGLE
       if (hasAngles) {
-         TEST_ASSERT(angleStorage.isValid(atomStorage, 
-                     domain.communicator(), true));
+         TEST_ASSERT(angleStorage.isValid(atomStorage, boundary, 
+                                          domain.communicator()));
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (hasDihedrals) {
-         TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
-                     domain.communicator(), true));
+         TEST_ASSERT(dihedralStorage.isValid(atomStorage, boundary, 
+                                             domain.communicator()));
       }
       #endif
 
@@ -630,18 +630,18 @@ void ExchangerForceTest::testInitialForces()
    }
 
    TEST_ASSERT(atomStorage.isValid());
-   TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
-               true));
+   TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
+                                   domain.communicator()));
    #ifdef INTER_ANGLE
    if (hasAngles) {
-      TEST_ASSERT(angleStorage.isValid(atomStorage, 
-                  domain.communicator(), true));
+      TEST_ASSERT(angleStorage.isValid(atomStorage, boundary, 
+                                       domain.communicator()));
    }
    #endif
    #ifdef INTER_DIHEDRAL
    if (hasDihedrals) {
-      TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
-                  domain.communicator(), true));
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, boundary, 
+                                          domain.communicator()));
    }
    #endif
 
@@ -843,8 +843,8 @@ void ExchangerForceTest::testForceCycle()
    }
 
    TEST_ASSERT(atomStorage.isValid());
-   TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
-               true));
+   TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
+                                   domain.communicator()));
 
    // Calculate forces with PairList
    TEST_ASSERT(!atomStorage.isCartesian());
@@ -923,18 +923,18 @@ void ExchangerForceTest::testForceCycle()
       // nGhost = atomStorage.nGhost();
 
       TEST_ASSERT(atomStorage.isValid());
-      TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
-                                      true)); 
+      TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
+                                      domain.communicator())); 
       #ifdef INTER_ANGLE
       if (hasAngles) {
-         TEST_ASSERT(angleStorage.isValid(atomStorage, 
-                     domain.communicator(), true));
+         TEST_ASSERT(angleStorage.isValid(atomStorage, boundary, 
+                                          domain.communicator()));
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (hasDihedrals) {
-         TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
-                     domain.communicator(), true));
+         TEST_ASSERT(dihedralStorage.isValid(atomStorage, boundary, 
+                                             domain.communicator()));
       }
       #endif
 

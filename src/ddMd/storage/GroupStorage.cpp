@@ -40,12 +40,13 @@ namespace DdMd
             assert(aPtr);
             k = 0;
          }
+         assert(!aPtr->isGhost());
          cPtr = map.findNearestImage(iter->atomId(k), aPtr->position(), 
                                      boundary, bPtr);
-         iter->setAtomPtr(k, bPtr);
          if (cPtr) {
-            makeGroupImage(*iter, k, map, boundary);
+            makeGroupImage(*iter, k, cPtr, map, boundary);
          }
+         iter->setAtomPtr(k, bPtr);
       }
    }
 
@@ -53,7 +54,8 @@ namespace DdMd
    * Make a new image of a group.
    */
    template <>
-   void GroupStorage<2>::makeGroupImage(Group<2>& group, int root,
+   void GroupStorage<2>::makeGroupImage(Group<2>& group, 
+                                        int rootId, Atom* rootPtr,
                                         const AtomMap& map, 
                                         const Boundary& boundary)
    {
@@ -67,22 +69,21 @@ namespace DdMd
 
       // Copy group id, atomIds, & root pointer to new group
       newPtr->setId(group.id());
-      for (int k=0; k < 2; ++k) {
-          newPtr->setAtomId(k, group.atomId(k));
-          newPtr->clearAtomPtr(k);
+      for (int j = 0; j < 2; ++j) {
+         newPtr->setAtomId(j, group.atomId(j));
+         newPtr->clearAtomPtr(j);
       }
-      newPtr->setAtomPtr(root, group.atomPtr(root));
+      newPtr->setAtomPtr(rootId, rootPtr);
 
       Atom* bPtr; // pointer to non-root atom
       int k;      // index of non-root atom within the group
-      k = (root == 0) ? 1 : 0;
-      map.findNearestImage(newPtr->atomId(k), 
-                           newPtr->atomPtr(root)->position(), 
+      k = (rootId == 0) ? 1 : 0;
+      map.findNearestImage(newPtr->atomId(k), rootPtr->position(), 
                            boundary, bPtr);
       newPtr->setAtomPtr(k, bPtr);
 
-      // Note: Their can be atom most one image of a Group<2>, so 
-      // there is no need for makeGroupImage to call itself.
+      // Note: Their can be atom most one image of a Group<2>, 
+      // so makeGroupImage does not need to call itself for N=2.
    }
 
 } // namespace DdMd
