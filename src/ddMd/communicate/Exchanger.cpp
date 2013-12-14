@@ -129,24 +129,19 @@ namespace DdMd
    *    - Add local atoms that will be retained by this processor but
    *      sent as ghosts to appropriate send arrays.
    *
-   *    - Call GroupExchanger::beginAtomExchange for each type (bond, angle, dihedral).
-   *      beginAtomExchange<N>{
-   *         For each group{
-   *            - Set ghost communication flags for groups that span
-   *              or may span boundaries.
-   *            - Clear pointers to ghost atoms in the group.
-   *         }
-   *      }
+   *    - Call GroupExchanger::beginAtomExchange for each Group type.
+   *      This identifies groups that span boundaries, and sets group
+   *      communication plans.
    *
-   *      Clear all ghosts from the AtomStorage
+   *    - Clear all ghosts from the AtomStorage
    *
-   *      For each transfer directions (i and j) {
+   *    - For each transfer directions (i and j) {
    *
    *         For each local atom {
    *            if marked for exchange(i, j) {
    *               if gridDimension[i] > 1 {
-   *                  - add to sendAtoms array for removal
-   *                  - pack into send buffer
+   *                  add to sendAtoms array for removal.
+   *                  pack into send buffer.
    *               } else {
    *                  shift position to apply periodic b.c.
    *               }
@@ -154,35 +149,22 @@ namespace DdMd
    *         }
    *
    *         if gridDimension[i] > 1 {
-   *            - Call packGroups for each group type.
-   *              This packs groups containing atoms that are sent.
-   *            - Remove exchanged atoms and empty groups
-   *            - Send and receive data buffers
+   *            Pack groups containing atoms that are sent.
+   *            Remove exchanged atoms and empty groups.
+   *            Send and receive data buffers.
    *            for each atom in the receive buffer {
-   *               - Unpack atom into AtomStorage
-   *               - shift periodic boundary conditions
-   *               - Determine if this is new home (or way station)
-   *               - If atom is home, add to appropriate ghost arrays.
+   *               unpack atom into AtomStorage.
+   *               shift periodic boundary conditions.
+   *               determine if this is new home (or way station)
+   *               If atom is home, add to appropriate ghost arrays.
    *            }
-   *            - Call unpackGroups for each group type.
+   *            Call unpackGroups for each group type.
    *         }
    *
    *      }
    *
-   *    - Call GroupExchanger::beginGhostExchange each type of group (bond, angle, dihedral).
-   *      beginGhostExchange<N> {
-   *         for each group{
-   *            if group is incomplete{
-   *               for each direction (i and j) {
-   *                  if group is marked for ghost communication {
-   *                     mark local atoms in group for ghost communication
-   *                  }
-   *               }
-   *            }
-   *         }
-   *      }
-   *
-   *   }
+   *    - Call GroupExchanger::beginGhostExchange each type of Group.
+   *      This identifies atoms that must be sent to complete groups.
    *
    *  Postconditions. Upon return:
    *     Each processor owns all atoms in its domain.
@@ -324,7 +306,7 @@ namespace DdMd
       // Set ghost communication flags for groups (see above)
       for (k = 0; k < groupExchangers_.size(); ++k) {
          groupExchangers_[k].beginAtomExchange(bound_, inner_, outer_,
-                                               gridFlags_, 
+                                               *boundaryPtr_, gridFlags_,
                                                atomStoragePtr_->map());
       }
       stamp(INIT_GROUP_PLAN);
@@ -589,7 +571,7 @@ namespace DdMd
       #endif // ifdef DDMD_EXCHANGER_DEBUG
       #endif // ifdef UTIL_DEBUG
 
-      // Set ghost communication flags for atoms in incomplete groups
+      // Identify atoms that should be sent as ghosts to complete groups
       for (k = 0; k < groupExchangers_.size(); ++k) {
          groupExchangers_[k].beginGhostExchange(*atomStoragePtr_, sendArray_,
                                                 gridFlags_);
@@ -686,16 +668,18 @@ namespace DdMd
             }
             #endif
 
-            // Pack atoms in sendArray_(i, j)
+            // Pack ghost atoms in sendArray_(i, j)
             size = sendArray_(i, j).size();
             for (k = 0; k < size; ++k) {
 
                sendPtr = &sendArray_(i, j)[k];
 
                #ifdef UTIL_MPI
-               if (gridFlags_[i]) {
-                  // If grid dimension > 1, pack atom for sending
+               if (gridFlags_[i]) { // if grid dimension > 1
+
+                  // Pack atom for sending as ghost
                   sendPtr->packGhost(*bufferPtr_);
+
                } else
                #endif
                {  // if grid dimension == 1
@@ -722,7 +706,7 @@ namespace DdMd
                   }
                   #endif
 
-                  // Add to send arrays for any remaining directions
+                  // Add to send arrays for remaining directions
                   if (i < Dimension - 1) {
                      for (ip = i + 1; ip < Dimension; ++ip) {
                         for (jp = 0; jp < 2; ++jp) {
@@ -733,17 +717,22 @@ namespace DdMd
                      }
                   }
 
+                  // Note: For j=0, newly arrive ghosts are not added to 
+                  // send array for the remaining transfer, j=1, with the 
+                  // same Cartesian axis i. This prevents a new ghost 
+                  // from being copied directly back to its source.
+
                }
 
             }
             stamp(PACK_GHOSTS);
 
             #ifdef UTIL_MPI
-            // Send and receive buffers
             if (gridFlags_[i]) {
 
                bufferPtr_->endSendBlock();
 
+               // Send and receive buffers
                source = domainPtr_->sourceRank(i, j);
                dest   = domainPtr_->destRank(i, j);
                bufferPtr_->sendRecv(domainPtr_->communicator(), source, dest);
@@ -761,7 +750,7 @@ namespace DdMd
                   recvArray_(i, j).append(*atomPtr);
                   atomStoragePtr_->addNewGhost();
 
-                  // Prohibit sending back ghost in reverse direction
+                  // Note prohibition on rebounding ghosts
                   if (j == 0) {
                      atomPtr->plan().clearGhost(i, 1);
                   }
@@ -776,6 +765,11 @@ namespace DdMd
                         }
                      }
                   }
+
+                  // Note: For j=0, newly arrive ghosts are not added to 
+                  // send array for the remaining transfer, j=1, with the 
+                  // same Cartesian axis i. This prevents a new ghost 
+                  // from being copied directly back to its source.
 
                   #ifdef UTIL_DEBUG
                   // Validate ghost coordinate on the receiving processor.
@@ -798,8 +792,7 @@ namespace DdMd
 
       } // end for Cartesian index i
 
-
-      // Set atom pointers in all incomplete groups
+      // Finalize assignment of Atom* pointers in groups
       for (k = 0; k < groupExchangers_.size(); ++k) {
          groupExchangers_[k].finishGhostExchange(atomStoragePtr_->map(), 
                                                  *boundaryPtr_);

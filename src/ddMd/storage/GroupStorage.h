@@ -315,10 +315,11 @@ namespace DdMd
       * \param map  AtomMap, to find local atoms after clearing ptrs to ghosts
       */
       virtual
-      void beginAtomExchange(FMatrix<double, Dimension, 2>& bound, 
-                             FMatrix<double, Dimension, 2>& inner, 
-                             FMatrix<double, Dimension, 2>& outer, 
-                             IntVector& gridFlags, 
+      void beginAtomExchange(const FMatrix<double, Dimension, 2>& bound, 
+                             const FMatrix<double, Dimension, 2>& inner, 
+                             const FMatrix<double, Dimension, 2>& outer, 
+                             const Boundary& boundary,
+                             const IntVector& gridFlags, 
                              const AtomMap& map);
    
       #ifdef UTIL_MPI

@@ -57,10 +57,12 @@ namespace DdMd
       * \param map AtomMap object
       */
       virtual
-      void beginAtomExchange(FMatrix<double, Dimension, 2>& bound, 
-                             FMatrix<double, Dimension, 2>& inner, 
-                             FMatrix<double, Dimension, 2>& outer, 
-                             IntVector& gridFlags, const AtomMap& map) = 0;
+      void beginAtomExchange(const FMatrix<double, Dimension, 2>& bound, 
+                             const FMatrix<double, Dimension, 2>& inner, 
+                             const FMatrix<double, Dimension, 2>& outer, 
+                             const Boundary& boundary,
+                             const IntVector& gridFlags, 
+                             const AtomMap& map) = 0;
    
       #ifdef UTIL_MPI
       /**

@@ -28,25 +28,27 @@ private:
 
 public:
 
-   virtual void setUp()
-   { 
-      #ifdef UTIL_MPI 
-      bondStorage_.setIoCommunicator(communicator());
-      #endif
-
-      openFile("in/BondStorage"); 
-      bondStorage_.readParam(file()); 
-   }
-
+   virtual void setUp();
    void testReadParam();
    void testAdd();
    void testAddRemove();
    void testIterator();
    void testFindBonds();
    void testClear();
+   void testBeginAtomExchange1();
    void testFinishGhostExchange();
 
 };
+
+inline void BondStorageTest::setUp()
+{ 
+   #ifdef UTIL_MPI 
+   bondStorage_.setIoCommunicator(communicator());
+   #endif
+
+   openFile("in/BondStorage"); 
+   bondStorage_.readParam(file()); 
+}
 
 inline void BondStorageTest::testReadParam()
 {  
@@ -255,6 +257,83 @@ inline void BondStorageTest::testClear()
 
 }
 
+inline void BondStorageTest::testBeginAtomExchange1()
+{
+   printMethod(TEST_FUNC);
+
+   FMatrix<double, Dimension, 2> bound;
+   FMatrix<double, Dimension, 2> inner;
+   FMatrix<double, Dimension, 2> outer;
+   IntVector gridFlags;
+   double epsilon;
+
+   // Emulate 2 x 1 x 2 processor grid
+   bound(0,0) = 0.5;
+   bound(0,1) = 1.0;
+   bound(1,0) = 0.0;
+   bound(1,1) = 1.0;
+   bound(2,0) = 0.0;
+   bound(2,1) = 0.5;
+   gridFlags[0] = 1;
+   gridFlags[1] = 0;
+   gridFlags[2] = 1;
+   epsilon = 0.05;
+   for (int i = 0; i < Dimension; ++i) {
+      inner(i, 0) = bound(i, 0) + epsilon;
+      outer(i, 0) = bound(i, 0) - epsilon;
+      inner(i, 1) = bound(i, 1) - epsilon;
+      outer(i, 1) = bound(i, 1) + epsilon;
+   }
+   Boundary boundary;
+   boundary.setCubic(3.0);
+
+   // Atoms
+   AtomStorage atomStorage;
+   atomStorage.initialize(20, 20, 20);
+
+   Atom* ptr2 = atomStorage.addAtom(2);
+   ptr2->position() = Vector(0.8, 0.15, 0.2);
+
+   Atom* ptr3 = atomStorage.addAtom(3);
+   ptr2->position() = Vector(0.8, 0.85, 0.2);
+
+   Atom* ptr4 = atomStorage.addAtom(4);
+   ptr4->position() = Vector(0.7, 0.85, 0.3);
+
+   // Bonds
+   Bond* bondPtr2;
+   bondPtr2 = bondStorage_.add(2); 
+   bondPtr2->setAtomId(0, 2);
+   bondPtr2->setAtomId(1, 3);
+   bondPtr2->setAtomPtr(0, ptr2);
+   bondPtr2->setAtomPtr(1, ptr3);
+
+   Bond* bondPtr4;
+   bondPtr4 = bondStorage_.add(4); 
+   bondPtr4->setAtomId(0, 4);
+   bondPtr4->setAtomId(1, 5);
+   bondPtr4->setAtomPtr(0, ptr4);
+   bondPtr4->clearAtomPtr(1);
+   TEST_ASSERT(bondStorage_.size() == 2);
+
+   bondStorage_.beginAtomExchange(bound, inner, outer, boundary, 
+                                  gridFlags, atomStorage.map());
+
+   TEST_ASSERT(!bondPtr2->plan().ghost(0,0));
+   TEST_ASSERT(!bondPtr2->plan().ghost(0,1));
+   TEST_ASSERT(bondPtr2->plan().ghost(1,0));
+   TEST_ASSERT(bondPtr2->plan().ghost(1,1));
+   TEST_ASSERT(!bondPtr2->plan().ghost(2,0));
+   TEST_ASSERT(!bondPtr2->plan().ghost(2,1));
+
+   TEST_ASSERT(bondPtr4->plan().ghost(0,0));
+   TEST_ASSERT(bondPtr4->plan().ghost(0,1));
+   TEST_ASSERT(bondPtr4->plan().ghost(1,0));
+   TEST_ASSERT(bondPtr4->plan().ghost(1,1));
+   TEST_ASSERT(bondPtr4->plan().ghost(2,0));
+   TEST_ASSERT(bondPtr4->plan().ghost(2,1));
+}
+
 inline void BondStorageTest::testFinishGhostExchange()
 {
    printMethod(TEST_FUNC);
@@ -313,6 +392,7 @@ TEST_ADD(BondStorageTest, testAddRemove)
 TEST_ADD(BondStorageTest, testIterator)
 TEST_ADD(BondStorageTest, testFindBonds)
 TEST_ADD(BondStorageTest, testClear)
+TEST_ADD(BondStorageTest, testBeginAtomExchange1)
 TEST_ADD(BondStorageTest, testFinishGhostExchange)
 TEST_END(BondStorageTest)
 

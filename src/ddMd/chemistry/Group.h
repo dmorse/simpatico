@@ -414,15 +414,8 @@ namespace DdMd
          aPtr = atomPtr(i);
          bPtr = atomPtr(i+1);
          dr.subtract(aPtr->position(), bPtr->position());
-         if (!boundary.isMinImageCart(dr)) {
-            Log::file() << std::endl
-                        << "Noncompact atom pair positions (generalized)"
-                        << std::endl;
-            Log::file() << "Pos(" <<  i   << ") = " 
-                        <<  aPtr->position() << std::endl;
-            Log::file() << "Pos(" <<  i+1 << ") = " 
-                        <<  bPtr->position() << std::endl;
-            UTIL_THROW("Non compact Group");
+         if (!boundary.isMinImageGen(dr)) {
+            return false;
          }
       }
       return true;
@@ -446,14 +439,7 @@ namespace DdMd
          bPtr = atomPtr(i+1);
          dr.subtract(aPtr->position(), bPtr->position());
          if (!boundary.isMinImageCart(dr)) {
-            Log::file() << std::endl
-                        << "Noncompact atom pair positions (Cartesian):"
-                        << std::endl;
-            Log::file() << "Pos(" <<  i   << ") = " 
-                        <<  aPtr->position() << std::endl;
-            Log::file() << "Pos(" <<  i+1 << ") = " 
-                        <<  bPtr->position() << std::endl;
-            UTIL_THROW("Non compact Group");
+            return false;
          }
       }
       return true;

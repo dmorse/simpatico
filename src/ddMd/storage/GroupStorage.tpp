@@ -555,10 +555,11 @@ namespace DdMd
    * method will clear the actual ghost atoms from the AtomStorage.
    */
    template <int N> void 
-   GroupStorage<N>::beginAtomExchange(FMatrix<double, Dimension, 2>& bound, 
-                                      FMatrix<double, Dimension, 2>& inner, 
-                                      FMatrix<double, Dimension, 2>& outer, 
-                                      IntVector& gridFlags, 
+   GroupStorage<N>::beginAtomExchange(const FMatrix<double, Dimension, 2>& bound, 
+                                      const FMatrix<double, Dimension, 2>& inner, 
+                                      const FMatrix<double, Dimension, 2>& outer, 
+                                      const Boundary& boundary,
+                                      const IntVector& gridFlags,
                                       const AtomMap& map)
    {
       double coordinate;
@@ -568,6 +569,16 @@ namespace DdMd
       int nIn, nOut, i, j, k;
       bool isComplete;
       bool choose;
+      bool isWrapped;
+      bool isCompact;
+
+      // If grid dimension == 1 for any direction, isWrapped == true
+      isWrapped = false;
+      for (i = 0; i < Dimension; ++i) {
+         if (!gridFlags[i]) {
+            isWrapped = true;
+         }
+      }
 
       // Clear ghost groups (if any)
       for (j = 0; j < ghosts_.size(); ++j) {
@@ -575,12 +586,6 @@ namespace DdMd
          groupSet_.remove(*groupPtr);
          reservoir_.push(*groupPtr);
          groupPtr->setId(-1);
-         #if 0
-         for (k = 0; k < N; ++k) {
-            groupPtr->setAtomId(k, -1);
-            groupPtr->clearAtomPtr(k);
-         }
-         #endif
       }
       ghosts_.clear();
 
@@ -592,6 +597,14 @@ namespace DdMd
          isComplete = (groupIter->nPtr() == N); 
          if (isComplete) { // if group is complete
 
+            // If there is 1 processor in one or more directions,
+            // then check if this group is compact
+            isCompact = true;
+            if (isWrapped) {
+               isCompact = groupIter->isCompactGen(boundary);
+            }
+
+            // Check which boundaries this group may span
             for (i = 0; i < Dimension; ++i) {
                for (j = 0; j < 2; ++j) {
  
@@ -666,8 +679,13 @@ namespace DdMd
                   UTIL_THROW("Group spans both upper and lower boundaries");
                }
 
-               // For directions with one processor, send in both directions or neither
+               // For directions with one processor:
+               //  - send if not compact
+               //  - send in both directions or neither
                if (!gridFlags[i]) {
+                  if (!isCompact) {
+                     groupIter->plan().setGhost(i,0);
+                  }
                   if (groupIter->plan().ghost(i,0)) {
                      groupIter->plan().setGhost(i,1);
                   } else 
@@ -677,6 +695,7 @@ namespace DdMd
                }
 
             } // end for i (Cartesian axes)
+
 
          } else { // if group is not complete
 
@@ -937,8 +956,6 @@ namespace DdMd
 
       }
    }
-
-
 
    /*
    * Find ghost members of bonds after exchanging all ghosts.
