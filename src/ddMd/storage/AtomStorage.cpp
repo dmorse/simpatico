@@ -275,6 +275,9 @@ namespace DdMd
       }
    }
 
+   /*
+   * Add a new ghost with a specified atom id.
+   */ 
    Atom* AtomStorage::addGhost(int id)
    {
       Atom* ptr = newGhostPtr();
@@ -308,7 +311,7 @@ namespace DdMd
       // Clear ghosts from the map
       map_.clearGhosts(ghostSet_);
 
-      // Transfer ghosts from the set to the reservoir
+      // Transfer ghosts from the ghost set to the reservoir
       Atom* atomPtr;
       while (ghostSet_.size() > 0) {
          atomPtr = &ghostSet_.pop();

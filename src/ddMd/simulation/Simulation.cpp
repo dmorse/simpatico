@@ -1180,7 +1180,7 @@ namespace DdMd
                // Output detailed statistics about time usage by Exchanger.
                integrator().computeStatistics();
                #ifdef UTIL_MPI
-               exchanger().timer().reduce(domain().communicator());
+               exchanger().computeStatistics();
                #endif
                if (domain_.isMaster()) {
                   int iStep = integrator().iStep();

@@ -212,6 +212,8 @@ namespace DdMd
       * Unpack a ghost Atom from a recv buffer.
       *
       * Unpacks required data, decrements buffer recvSize counter.
+      * This function is called by Exchanger::exchange() during
+      * ghost exchange.
       *
       * \param buffer communication buffer
       */
@@ -221,6 +223,8 @@ namespace DdMd
       * Pack updated ghost position into send buffer.
       *
       * Packs position Vector, increments buffer sendSize counter.
+      * This function is called by Exchanger::update() on sending
+      * processor to update ghost positions.
       *
       * \param buffer communication buffer
       */
@@ -230,27 +234,33 @@ namespace DdMd
       * Unpack updated ghost position from recv buffer.
       *
       * Unpacks position Vector, decrements buffer recvSize counter.
+      * This function is called by Exchanger::update() on receiving
+      * processor to update ghost positions.
       *
       * \param buffer communication buffer
       */
       void unpackUpdate(Buffer& buffer);
 
       /**
-      * Pack update of ghost Atom force into send buffer.
+      * Pack ghost Atom force into a send buffer.
       *
       * Packs force Vector, increments buffer sendSize counter.
+      * This function is called by Exchanger::reverseUpdate() on 
+      * the sending processor to update forces.
       *
-      * \param buffer communication buffer
+      * \param buffer buffer for sending
       */
       void packForce(Buffer& buffer);
 
       /**
-      * Unpack updated position of ghost Atom from recv buffer.
+      * Unpack ghost force from a recv buffer.
       *
-      * Reads force from buffer and increments the atomic force
+      * Reads force from buffer and increments the force for this atom
       * (rather than overwriting), then decrements recvSize counter.
+      * This function is called by Exchanger::reverseUpdate() on the
+      * receiving processor to update forces.
       *
-      * \param buffer communication buffer
+      * \param buffer buffer for receiving
       */
       void unpackForce(Buffer& buffer);
 
@@ -276,9 +286,8 @@ namespace DdMd
       * which is 1 if this atom is a ghost, and 0 if it is a local atom. 
       * The remaining bits, which can be accessed as localId_ >> 1, store
       * the array index of this atom in the parent AtomArray. The array
-      * index is set during allocation, and never changed thereafter.
-      * The ghost flag may be changed at any time by the public function
-      * void Atom::setIsGhost(bool).  
+      * index is set during allocation, and never changed thereafter. The
+      * ghost flag may be changed by the public function setIsGhost(bool).
       */
       unsigned int localId_;
 
@@ -302,9 +311,10 @@ namespace DdMd
       /**
       * Constructor.
       *
-      * An Atom may be constructed only as an element of an AtomArray.
-      * The AtomArray class is a friend of Atom, and may thus call this 
-      * private constructor.
+      * Private to prevent instantiation of individual atoms. An Atom 
+      * may be instantiated only as an element of an AtomArray. The 
+      * AtomArray class is a friend of Atom, and may thus call this 
+      * private default constructor.
       */
       Atom();
 
@@ -315,6 +325,8 @@ namespace DdMd
       */
       Atom(const Atom& other);
 
+   // friends:
+   
       friend class AtomArray;
       friend class Util::Memory;
 
@@ -382,20 +394,23 @@ namespace DdMd
    {  return force_; }
 
    /*
-   * Accessors for pseudo-members stored in separate arrays.
+   * Accessor functions for pseudo-members stored in separate arrays.
    *
+   * Pseudo-members of an atom are variables that are associated with a
+   * specific atom, and that are accessed via member accessor functions,
+   * as if they were true members, but that are stored in separate arrays.
    * An atom can be constructed only as an element of a parent AtomArray
-   * (see documentation for private default constructor). Some data owned
-   * by an Atom is stored in a set of private array that are allocated by
-   * its AtomArray. In each such array, the element associated with this 
-   * Atom is indexed by the localId_ of this atom, without the least 
+   * (see documentation for private default constructor). A pseudo-member
+   * of an Atom is stored in an array that is owned and allocated by its 
+   * parent AtomArray. In each such array, the element associated with
+   * this Atom is indexed by the localId_ of this atom, without the least 
    * signficant bit (see documentation of the localId_ member). The bit 
    * shift operation "localId_ >> 1" in each of the following functions 
-   * strips off the least signficant bit, which is used to store the isGhost 
-   * flag, and returns the relevant array index. Each arrays that stores
-   * pseudo-member data is a private member of the parent AtomArray (e.g.,
-   * AtomArray::velocities_, AtomArray::masks_, etc.) that is accessible
-   * because Atom is a friend class of AtomArray.
+   * strips off the least signficant bit (which stores the isGhost flag)
+   * and returns the relevant array index for this atom. Each array that 
+   * stores pseudo-member data is a private member of the parent AtomArray 
+   * (e.g., AtomArray::velocities_, AtomArray::masks_, etc.) that is 
+   * accessible because AtomArray is a friend class of Atom. 
    */
   
    /* 

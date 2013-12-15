@@ -61,7 +61,7 @@ namespace DdMd
 
       // Main MD loop
       timer().start();
-      exchanger().timer().start();
+      exchanger().startTimer();
       int  beginStep = iStep_;
       int  endStep = iStep_ + nStep;
       bool needExchange;
@@ -153,7 +153,7 @@ namespace DdMd
          #endif
 
       }
-      exchanger().timer().stop();
+      exchanger().stopTimer();
       timer().stop();
 
       // Final analyzers and restart file, if scheduled.

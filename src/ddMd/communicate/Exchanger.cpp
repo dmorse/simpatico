@@ -81,6 +81,9 @@ namespace DdMd
    void Exchanger::allocate()
    {
       // Preconditions
+      if (!bufferPtr_) {
+         UTIL_THROW("No associated Buffer: associated not called");
+      }
       if (!bufferPtr_->isInitialized()) {
          UTIL_THROW("Buffer must be allocated before Exchanger");
       }
@@ -104,14 +107,19 @@ namespace DdMd
    {  pairCutoff_ = pairCutoff; }
 
    #ifdef UTIL_MPI
-   /**
+   /*
    * Exchange local atoms and ghosts.
    */
    void Exchanger::exchange()
    {
-      if (atomStoragePtr_->isCartesian()) {
-         UTIL_THROW("Error: Coordinates are Cartesian on entry to exchange");
+      // Preconditions
+      if (!atomStoragePtr_) {
+         UTIL_THROW("No associated AtomStorage on entry to exchange()");
       }
+      if (atomStoragePtr_->isCartesian()) {
+         UTIL_THROW("Coordinates are Cartesian on entry to exchange()");
+      }
+
       exchangeAtoms();
       exchangeGhosts();
    }
@@ -168,7 +176,7 @@ namespace DdMd
    *
    *  Postconditions. Upon return:
    *     Each processor owns all atoms in its domain.
-   *     Each processor owns all atoms containing one or more local atoms.
+   *     Each processor owns all groups containing one or more local atoms.
    *     Ghost plans are set for all local atoms.
    *     Send arrays contain local atoms marked for sending as ghosts.
    *     The AtomStorage contains no ghost atoms.
@@ -309,7 +317,7 @@ namespace DdMd
                                                *boundaryPtr_, gridFlags_,
                                                atomStoragePtr_->map());
       }
-      stamp(INIT_GROUP_PLAN);
+      stamp(GROUP_BEGIN_ATOM);
 
       // Clear all ghost atoms from AtomStorage
       atomStoragePtr_->clearGhosts();
@@ -571,20 +579,20 @@ namespace DdMd
       #endif // ifdef DDMD_EXCHANGER_DEBUG
       #endif // ifdef UTIL_DEBUG
 
-      // Identify atoms that should be sent as ghosts to complete groups
+      // Mark atoms that must be sent as ghosts to complete groups
       for (k = 0; k < groupExchangers_.size(); ++k) {
-         groupExchangers_[k].beginGhostExchange(*atomStoragePtr_, sendArray_,
-                                                gridFlags_);
+         groupExchangers_[k].beginGhostExchange(*atomStoragePtr_, 
+                                                sendArray_, gridFlags_);
       }
-      stamp(MARK_GROUP_GHOSTS);
+      stamp(GROUP_BEGIN_GHOST);
    }
 
    /*
    * Exchange ghost atoms.
    *
    * Call immediately after exchangeAtoms and before rebuilding the
-   * neighbor list on time steps that require reneighboring. Uses
-   * ghost communication plans computed in exchangeAtoms.
+   * cell list on time steps that require reneighboring. Uses ghost
+   * communication plans computed in exchangeAtoms.
    */
    void Exchanger::exchangeGhosts()
    {
@@ -808,7 +816,7 @@ namespace DdMd
       #endif // ifdef DDMD_EXCHANGER_DEBUG
       #endif // ifdef UTIL_DEBUG
 
-      stamp(FIND_GROUP_GHOSTS);
+      stamp(GROUP_FINISH_GHOST);
    }
 
    /*
@@ -824,12 +832,11 @@ namespace DdMd
       }
 
       Atom*  atomPtr;
-      int    i, j, k, source, dest, size, shift;
-
+      int  i, j, k, source, dest, size, shift;
       for (i = 0; i < Dimension; ++i) {
          for (j = 0; j < 2; ++j) {
 
-            // Shift on receiving processor for periodic boundary conditions
+            // Compute int shift on receiving processor for periodic b.c.'s
             shift = domainPtr_->shift(i, j);
 
             if (gridFlags_[i]) {
@@ -891,8 +898,8 @@ namespace DdMd
    /*
    * Update ghost atom forces.
    *
-   * Call on time steps for which no reneighboring is required,
-   * if reverse communication is enabled.
+   * Call on time steps for which no reneighboring is required, if
+   * reverse communication is enabled.
    */
    void Exchanger::reverseUpdate()
    {
@@ -905,7 +912,9 @@ namespace DdMd
 
             if (gridFlags_[i]) {
 
-               // Pack ghost forces for sending
+               // If grid().dimension(i) > 1
+
+               // Pack forces on atoms in the recvArray for sending
                bufferPtr_->clearSendBuffer();
                bufferPtr_->beginSendBlock(Buffer::FORCE);
                size = recvArray_(i, j).size();
@@ -916,14 +925,15 @@ namespace DdMd
                bufferPtr_->endSendBlock();
                stamp(PACK_FORCE);
 
-               // Send and receive buffers (reverse direction)
-               source  = domainPtr_->destRank(i, j);
-               dest    = domainPtr_->sourceRank(i, j);
+               // Send and receive buffers (reverse usual direction)
+               source = domainPtr_->destRank(i, j);
+               dest = domainPtr_->sourceRank(i, j);
                bufferPtr_->sendRecv(domainPtr_->communicator(),
                                     source, dest);
                stamp(SEND_RECV_FORCE);
 
-               // Unpack ghost forces
+               // Unpack ghost forces to atoms in send array
+               // Note: Atom::unpackForces() increments the force
                bufferPtr_->beginRecvBlock();
                size = sendArray_(i, j).size();
                for (k = 0; k < size; ++k) {
@@ -935,8 +945,8 @@ namespace DdMd
 
             } else {
 
-               // If grid().dimension(i) == 1, then copy forces of atoms
-               // listed in sendArray to those listed in the recvArray.
+               // If grid().dimension(i) == 1, add forces for atoms
+               // listed in recvArray to those listed in the sendArray.
 
                size = recvArray_(i, j).size();
                assert(size == sendArray_(i, j).size());
@@ -948,16 +958,28 @@ namespace DdMd
 
             }
 
-         } // transmit direction j = 1 or 0
-
-      } // Cartesian direction i
+         } // for transmit direction j = 0, 1
+      } // for Cartesian direction i
 
    }
+
+   /*
+   * Clear timing statistics.
+   */
+   void Exchanger::clearStatistics()
+   {  timer_.clear(); }
+
+   /*
+   * Output timing statistics.
+   */
+   void Exchanger::computeStatistics()
+   {  timer_.reduce(domainPtr_->communicator()); }
 
    /*
    * Output statistics.
    */
    void Exchanger::outputStatistics(std::ostream& out, double time, int nStep)
+   const
    {
       // Precondition
       if (!domainPtr_->isMaster()) {
@@ -976,7 +998,7 @@ namespace DdMd
       double AtomPlanT =  timer_.time(Exchanger::ATOM_PLAN);
       out << "AtomPlan              " << Dbl(AtomPlanT*ratio, 12, 6)
           << " sec   " << Dbl(AtomPlanT/time, 12, 6, true) << std::endl;
-      double InitGroupPlanT =  timer_.time(Exchanger::INIT_GROUP_PLAN);
+      double InitGroupPlanT =  timer_.time(Exchanger::GROUP_BEGIN_ATOM);
       out << "InitGroupPlan         " << Dbl(InitGroupPlanT*ratio, 12, 6)
           << " sec   " << Dbl(InitGroupPlanT/time, 12, 6, true) << std::endl;
       double ClearGhostsT =  timer_.time(Exchanger::CLEAR_GHOSTS);
@@ -1000,9 +1022,9 @@ namespace DdMd
       double UnpackGroupsT =  timer_.time(Exchanger::UNPACK_GROUPS);
       out << "UnpackGroups          " << Dbl(UnpackGroupsT*ratio, 12, 6)
           << " sec   " << Dbl(UnpackGroupsT/time, 12, 6, true) << std::endl;
-      double MarkGroupGhostsT =  timer_.time(Exchanger::MARK_GROUP_GHOSTS);
-      out << "MarkGroupGhosts       " << Dbl(MarkGroupGhostsT*ratio, 12, 6)
-          << " sec   " << Dbl(MarkGroupGhostsT/time, 12, 6, true) << std::endl;
+      double GroupBeginGhostT =  timer_.time(Exchanger::GROUP_BEGIN_GHOST);
+      out << "GroupBeginGhost       " << Dbl(GroupBeginGhostT*ratio, 12, 6)
+          << " sec   " << Dbl(GroupBeginGhostT/time, 12, 6, true) << std::endl;
       double SendArraysT =  timer_.time(Exchanger::INIT_SEND_ARRAYS);
       out << "SendArrays            " << Dbl(SendArraysT*ratio, 12, 6)
           << " sec   " << Dbl(SendArraysT/time, 12, 6, true) << std::endl;
@@ -1015,9 +1037,9 @@ namespace DdMd
       double UnpackGhostsT =  timer_.time(Exchanger::UNPACK_GHOSTS);
       out << "UnpackGhosts          " << Dbl(UnpackGhostsT*ratio, 12, 6)
           << " sec   " << Dbl(UnpackGhostsT/time, 12, 6, true) << std::endl;
-      double FindGroupGhostsT =  timer_.time(Exchanger::FIND_GROUP_GHOSTS);
-      out << "FindGroupGhosts       " << Dbl(FindGroupGhostsT*ratio, 12, 6)
-          << " sec   " << Dbl(FindGroupGhostsT/time, 12, 6, true) << std::endl;
+      double GroupFinishGhostT = timer_.time(Exchanger::GROUP_FINISH_GHOST);
+      out << "GroupFinishGhost      " << Dbl(GroupFinishGhostT*ratio, 12, 6)
+          << " sec   " << Dbl(GroupFinishGhostT/time, 12, 6, true) << std::endl;
       double PackUpdateT =  timer_.time(Exchanger::PACK_UPDATE);
       out << "PackUpdate            " << Dbl(PackUpdateT*ratio, 12, 6)
           << " sec   " << Dbl(PackUpdateT/time, 12, 6, true) << std::endl;

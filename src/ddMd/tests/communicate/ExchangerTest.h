@@ -173,9 +173,11 @@ void ExchangerTest::displaceAtoms(double range)
 {
    Vector ranges;
 
-   // Set ranges for random diplacements in each direction.
+   if (!atomStorage.isCartesian()) {
+      UTIL_THROW("Coordinates must be Cartesian");
+   }
    for (int i = 0; i < Dimension; ++i) {
-      ranges[i] = range/boundary.length(i);
+      ranges[i] = range;
    }
 
    // Iterate over atoms, adding random displacements.
@@ -210,6 +212,7 @@ void ExchangerTest::displaceAtoms(double range)
          }
       }
    }
+
 }
 
 void ExchangerTest::exchangeNotify() 
@@ -284,7 +287,6 @@ void ExchangerTest::testExchange()
       TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
    }
 
-   #if 0
    // Call isValid() methods of all storage containers.
    TEST_ASSERT(atomStorage.isValid());
    TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
@@ -299,11 +301,27 @@ void ExchangerTest::testExchange()
    #endif
 
    // Displace atoms and then exchange atoms and ghosts
-   double range = 0.1;
+   atomStorage.transformGenToCart(boundary);
+   double range = 0.10;
    displaceAtoms(range);
+   atomStorage.transformCartToGen(boundary);
+
    exchanger.exchange();
    exchangeNotify();
+
+   // Call isValid() methods of all storage containers.
+   TEST_ASSERT(atomStorage.isValid());
+   TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
+               domain.communicator()));
+   #ifdef INTER_ANGLE
+   TEST_ASSERT(angleStorage.isValid(atomStorage, boundary, 
+               domain.communicator()));
    #endif
+   #ifdef INTER_DIHEDRAL
+   TEST_ASSERT(dihedralStorage.isValid(atomStorage, boundary,
+               domain.communicator()));
+   #endif
+
 }
 
 void ExchangerTest::testGhostUpdate()
@@ -319,8 +337,10 @@ void ExchangerTest::testGhostUpdate()
    GhostIterator  ghostIter;
    DArray<Vector> ghostPositions;
 
-   double range = 0.1;
+   atomStorage.transformGenToCart(boundary);
+   double range = 0.05;
    displaceAtoms(range);
+   atomStorage.transformCartToGen(boundary);
 
    atomStorage.clearSnapshot();
    exchanger.exchange();
@@ -334,7 +354,8 @@ void ExchangerTest::testGhostUpdate()
    atomStorage.transformGenToCart(boundary);
    atomStorage.makeSnapshot();
 
-   //displaceAtoms(range);
+   displaceAtoms(range);
+   // atomStorage.transformCartToGen(boundary);
 
    // Update ghost positions
    exchanger.update();
@@ -343,6 +364,9 @@ void ExchangerTest::testGhostUpdate()
    TEST_ASSERT(nAtom == atomStorage.nAtom());
    TEST_ASSERT(nGhost == atomStorage.nGhost());
 
+   // Transform back to generalized coordinates
+   atomStorage.transformCartToGen(boundary);
+
    // Check that all atoms are accounted for after atom and ghost exchanges.
    communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
    if (myRank == 0) {
@@ -350,9 +374,6 @@ void ExchangerTest::testGhostUpdate()
       //           << nAtomAll << std::endl;
       TEST_ASSERT(nAtomAll == atomCount);
    }
-
-   // Transform back to generalized coordinates
-   atomStorage.transformCartToGen(boundary);
 
    // Check that all atoms are within the processor domain.
    atomStorage.begin(atomIter);
@@ -374,7 +395,6 @@ void ExchangerTest::testGhostUpdate()
    #ifdef INTER_DIHEDRAL
    TEST_ASSERT(dihedralStorage.isValid(atomStorage, boundary, domain.communicator()));
    #endif
-
 
 }
 
@@ -415,7 +435,7 @@ void ExchangerTest::testGhostUpdateCycle()
    */ 
 
    double range = 0.01;
-   for (int i = 0; i < 5; ++i) {
+   for (int i = 0; i < 100; ++i) {
 
       // Transform to Cartesian coordinates
       atomStorage.transformGenToCart(boundary);
@@ -423,7 +443,7 @@ void ExchangerTest::testGhostUpdateCycle()
       displaceAtoms(range);
 
       // Update several times without exchanging
-      for (int j=0; j < 4; ++j) {
+      for (int j=0; j < 5; ++j) {
          exchanger.update();
          TEST_ASSERT(nGhost == atomStorage.nGhost());
          TEST_ASSERT(nAtom == atomStorage.nAtom());
@@ -524,7 +544,7 @@ void ExchangerTest::testExchangeUpdateCycle()
    */ 
 
    j = 0;
-   for (i = 0; i < 10; ++i) {
+   for (i = 0; i < 100; ++i) {
 
       TEST_ASSERT(atomStorage.isCartesian());
       displaceAtoms(range);
@@ -560,6 +580,8 @@ void ExchangerTest::testExchangeUpdateCycle()
 
       } else {
 
+         TEST_ASSERT(atomStorage.isCartesian());
+
          exchanger.update();
 
          TEST_ASSERT(nGhost == atomStorage.nGhost());
@@ -568,6 +590,9 @@ void ExchangerTest::testExchangeUpdateCycle()
          ++ nUpdate;
       }
 
+      if (atomStorage.isCartesian()) {
+         atomStorage.transformCartToGen(boundary);
+      }
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
                                       domain.communicator())); 
@@ -579,6 +604,7 @@ void ExchangerTest::testExchangeUpdateCycle()
       TEST_ASSERT(dihedralStorage.isValid(atomStorage, boundary, 
                                           domain.communicator()));
       #endif
+      atomStorage.transformGenToCart(boundary);
 
    }
 
@@ -612,9 +638,9 @@ bool ExchangerTest::isExchangeNeeded(double skin)
 TEST_BEGIN(ExchangerTest)
 TEST_ADD(ExchangerTest, testDistribute)
 TEST_ADD(ExchangerTest, testExchange)
-//TEST_ADD(ExchangerTest, testGhostUpdate)
-//TEST_ADD(ExchangerTest, testGhostUpdateCycle)
-//TEST_ADD(ExchangerTest, testExchangeUpdateCycle)
+TEST_ADD(ExchangerTest, testGhostUpdate)
+TEST_ADD(ExchangerTest, testGhostUpdateCycle)
+TEST_ADD(ExchangerTest, testExchangeUpdateCycle)
 TEST_END(ExchangerTest)
 
 #endif /* EXCHANGER_TEST_H */

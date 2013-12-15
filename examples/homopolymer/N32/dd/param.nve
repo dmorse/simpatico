@@ -54,19 +54,19 @@ Simulation{
     seed              8012457890
   }
   AnalyzerManager{
-     baseInterval     1
+     baseInterval     1000
 
      LogEnergy{
-        interval        1
+        interval        1000
      }
 
      OutputEnergy{
-        interval        10
+        interval        1000
         outputFileName  energy
      }
 
      OutputPressure{
-        interval        10
+        interval        1000
         outputFileName  pressure
      }
 

@@ -342,6 +342,8 @@ namespace DdMd
          type = iter->typeId();
          atom0Ptr = iter->atomPtr(0);
          atom1Ptr = iter->atomPtr(1);
+         assert(atom0Ptr);
+         assert(atom1Ptr);
          isLocal0 = !(atom0Ptr->isGhost());
          isLocal1 = !(atom1Ptr->isGhost());
         
@@ -353,7 +355,7 @@ namespace DdMd
  
          // Set f = r0 - r1, minimum image separation between atoms
          //rsq = boundary().distanceSq(atom0Ptr->position(), 
-         //                              atom1Ptr->position(), f);
+         //                            atom1Ptr->position(), f);
          
          // Set force = (r0-r1)*(forceOverR)
          f *= interactionPtr_->forceOverR(rsq, type);
@@ -450,7 +452,7 @@ namespace DdMd
          isLocal0 = !(atom0Ptr->isGhost());
          isLocal1 = !(atom1Ptr->isGhost());
          rsq = boundary().distanceSq(atom0Ptr->position(), 
-                                        atom1Ptr->position(), dr);
+                                     atom1Ptr->position(), dr);
          f = dr;
          assert(isLocal0 || isLocal1);
          if (isLocal0 && isLocal1) {

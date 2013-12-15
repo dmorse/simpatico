@@ -239,10 +239,13 @@ namespace DdMd
       }
 
       // Validate ghostMap_
-      GhostMap::const_iterator it;  
+      GhostMap::const_iterator it;
       for (it = ghostMap_.begin(); it != ghostMap_.end(); ++it) {
          id  = it->first;
          ptr = it->second;
+         if (ptr == 0) {
+            UTIL_THROW("Null pointer in ghostMap_");
+         }
          if (id != ptr->id()) {
             Log::file() << std::endl;
             Log::file() << "key ghostMap " << id << std::endl;
@@ -250,8 +253,11 @@ namespace DdMd
             UTIL_THROW("Inconsistent key in ghostMap");
          }
          if (atomPtrs_[id] == 0) {
-            UTIL_THROW("Id in ghostMap_ does not appear in atomPtrs_");
+            UTIL_THROW("Id in ghostMap_ does not exist in atomPtrs_");
          } 
+         if (!ptr->isGhost()) {
+            UTIL_THROW("Atom in ghostMap_ is not marked as a ghost");
+         }
       }
       return true;
    }

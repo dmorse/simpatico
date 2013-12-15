@@ -104,6 +104,7 @@ private:
 public:
 
    void setUp();
+   void testExchange();
    void testGhostUpdateF();
    void testGhostUpdateR();
    void testGhostUpdateCycleF();
@@ -258,26 +259,50 @@ void ExchangerForceTest::initialize()
 
 void ExchangerForceTest::displaceAtoms(double range)
 {
+   if (!atomStorage.isCartesian()) {
+      UTIL_THROW("Atom coordinates not Cartesian in displaceAtoms");
+   }
 
-   // Set displacement ranges in appropriate coordinate system
    Vector ranges;
    for (int i = 0; i < Dimension; ++i) {
-      ranges[i] = range/boundary.length(i);
+      ranges[i] = range;
    }
-  
-   // Displace local atoms
-   AtomIterator atomIter;
+
+   // Iterate over atoms, adding random displacements.
    double min, max;
-   for (int i = 0; i < Dimension; ++i) {
-      max = ranges[i];
-      min = -max;
-      atomStorage.begin(atomIter);
-      for ( ; atomIter.notEnd(); ++atomIter) {
+   AtomIterator atomIter;
+   for (atomStorage.begin(atomIter); atomIter.notEnd(); ++atomIter) {
+      for (int i = 0; i < Dimension; ++i) {
+         max = ranges[i];
+         min = -max;
          atomIter->position()[i] += random.uniform(min, max);
       }
    }
 
+   // Adjust bond lengths.
+   Vector dr;
+   double drAbs;
+   GroupIterator<2> iter;
+   Atom* ptr0;
+   Atom* ptr1;
+   for (bondStorage.begin(iter); iter.notEnd(); ++iter) {
+      if (iter->nPtr() == 2) {
+         ptr0 = iter->atomPtr(0);
+         ptr1 = iter->atomPtr(1);
+         assert(ptr0);
+         assert(ptr1);
+         dr.subtract(ptr1->position(), ptr0->position());
+         drAbs = dr.abs();
+         dr *= 0.2*(drAbs - 1.0)/drAbs;
+         for (int i = 0; i < Dimension; ++i) {
+            ptr0->position()[i] += 0.5*dr[i];
+            ptr1->position()[i] -= 0.5*dr[i];
+         }
+      }
+   }
+
 }
+
 
 void ExchangerForceTest::zeroForces()
 {
@@ -372,6 +397,103 @@ void ExchangerForceTest::exchangeNotify() {
    #endif
 }
 
+void ExchangerForceTest::testExchange()
+{
+   printMethod(TEST_FUNC);
+
+   reverseUpdateFlag = false;
+   initialize();
+
+   int  nAtom = 0;    // Number received on this processor.
+   int  nAtomAll = 0; // Number received on all processors.
+   int  myRank = domain.gridRank();
+
+   // Check that all atoms are within the processor domain.
+   AtomIterator  atomIter;
+   atomStorage.begin(atomIter);
+   for ( ; atomIter.notEnd(); ++atomIter) {
+      TEST_ASSERT(domain.isInDomain(atomIter->position()));
+   }
+
+   // Check validity of all storage
+   TEST_ASSERT(atomStorage.isValid());
+   TEST_ASSERT(!atomStorage.isCartesian());
+   TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator()));
+   #ifdef INTER_ANGLE
+   if (hasAngles) {
+      TEST_ASSERT(angleStorage.isValid(atomStorage, domain.communicator()));
+   }
+   #endif
+   #ifdef INTER_DIHEDRAL
+   if (hasDihedrals) {
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, domain.communicator()));
+   }
+   #endif
+
+   // Initial exchange of atoms and ghosts
+   exchanger.exchange();
+   exchangeNotify();
+
+   // Check that all atoms are accounted for after ghost exchange.
+   nAtom = atomStorage.nAtom();
+   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
+   if (myRank == 0) {
+      TEST_ASSERT(nAtomAll == atomCount);
+   }
+
+   // Check that all local atoms are within the processor domain.
+   atomStorage.begin(atomIter);
+   for ( ; atomIter.notEnd(); ++atomIter) {
+      TEST_ASSERT(domain.isInDomain(atomIter->position()));
+   }
+
+   // Check that all ghosts are outside the processor domain.
+   GhostIterator ghostIter;
+   atomStorage.begin(ghostIter);
+   for ( ; ghostIter.notEnd(); ++ghostIter) {
+      TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
+   }
+
+   // Call isValid() methods of all storage containers.
+   TEST_ASSERT(atomStorage.isValid());
+   TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
+               domain.communicator()));
+   #ifdef INTER_ANGLE
+   if (hasAngles) {
+      TEST_ASSERT(angleStorage.isValid(atomStorage, boundary, 
+                  domain.communicator()));
+   }
+   #endif
+   #ifdef INTER_DIHEDRAL
+   if (hasDihedrals) {
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, boundary,
+                  domain.communicator()));
+   }
+   #endif
+
+   // Displace atoms and then exchange atoms and ghosts
+   atomStorage.transformGenToCart(boundary);
+   double range = 0.10;
+   displaceAtoms(range);
+   atomStorage.transformCartToGen(boundary);
+
+   exchanger.exchange();
+   exchangeNotify();
+
+   // Call isValid() methods of all storage containers.
+   TEST_ASSERT(atomStorage.isValid());
+   TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
+               domain.communicator()));
+   #ifdef INTER_ANGLE
+   TEST_ASSERT(angleStorage.isValid(atomStorage, boundary, 
+               domain.communicator()));
+   #endif
+   #ifdef INTER_DIHEDRAL
+   TEST_ASSERT(dihedralStorage.isValid(atomStorage, boundary,
+               domain.communicator()));
+   #endif
+
+}
 
 void ExchangerForceTest::testGhostUpdateF() {
    printMethod(TEST_FUNC);
@@ -389,41 +511,15 @@ void ExchangerForceTest::testGhostUpdate()
 {
    initialize();
 
-   int  nAtom  = 0;    // Number of atoms on this processor.
-   int  nGhost = 0;    // Number of ghosts on this processor.
+   int  nAtom  = 0;   // Number of atoms on this processor.
+   int  nGhost = 0;   // Number of ghosts on this processor.
    int  nAtomAll = 0; // Number received on all processors.
    int  myRank = domain.gridRank();
 
-   double range = 0.4;
-   displaceAtoms(range);
+   TEST_ASSERT(!atomStorage.isCartesian());
+
    exchanger.exchange();
    exchangeNotify();
-
-   // Record number of atoms and ghosts after exchange
-   nAtom = atomStorage.nAtom();
-   nGhost = atomStorage.nGhost();
-
-   // Transform to Cartesian coordinates
-   atomStorage.transformGenToCart(boundary);
-
-   // Update ghost positions
-   exchanger.update();
-
-   // Check number of atoms and ghosts on each processor is unchanged.
-   TEST_ASSERT(nAtom == atomStorage.nAtom());
-   TEST_ASSERT(nGhost == atomStorage.nGhost());
-
-   // Check that all atoms are accounted for after atom and ghost exchanges.
-   nAtom = atomStorage.nAtom();
-   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
-   if (myRank == 0) {
-      // std::cout << "Total atom count (post ghost exchange) = " 
-      //           << nAtomAll << std::endl;
-      TEST_ASSERT(nAtomAll == atomCount);
-   }
-
-   // Transform to generalized coordinates
-   atomStorage.transformCartToGen(boundary);
 
    // Check that all atoms are within the processor domain.
    AtomIterator   atomIter;
@@ -437,6 +533,50 @@ void ExchangerForceTest::testGhostUpdate()
    atomStorage.begin(ghostIter);
    for ( ; ghostIter.notEnd(); ++ghostIter) {
       TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
+   }
+
+   TEST_ASSERT(atomStorage.isValid());
+   TEST_ASSERT(bondStorage.isValid(atomStorage, boundary,
+                                   domain.communicator()));
+   #ifdef INTER_ANGLE
+   if (hasAngles) {
+      TEST_ASSERT(angleStorage.isValid(atomStorage, boundary,
+                                       domain.communicator()));
+   }
+   #endif
+   #ifdef INTER_DIHEDRAL
+   if (hasDihedrals) {
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, boundary, 
+                                          domain.communicator()));
+   }
+   #endif
+
+   // Record number of atoms and ghosts after exchange
+   nAtom = atomStorage.nAtom();
+   nGhost = atomStorage.nGhost();
+
+   // Displace atoms
+   atomStorage.transformGenToCart(boundary);
+   double range = 0.05;
+   displaceAtoms(range);
+
+   // Update ghost positions
+   exchanger.update();
+
+   // Transform to generalized coordinates
+   atomStorage.transformCartToGen(boundary);
+
+   // Check number of atoms and ghosts on each processor is unchanged.
+   TEST_ASSERT(nAtom == atomStorage.nAtom());
+   TEST_ASSERT(nGhost == atomStorage.nGhost());
+
+   // Check that all atoms are accounted for after atom and ghost exchanges.
+   nAtom = atomStorage.nAtom();
+   communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
+   if (myRank == 0) {
+      // std::cout << "Total atom count (post ghost exchange) = " 
+      //           << nAtomAll << std::endl;
+      TEST_ASSERT(nAtomAll == atomCount);
    }
 
    TEST_ASSERT(atomStorage.isValid());
@@ -478,9 +618,7 @@ void ExchangerForceTest::testGhostUpdateCycle()
 
    AtomIterator   atomIter;
    GhostIterator  ghostIter;
-
-   double range = 0.05;
-   //displaceAtoms(range);
+   double range;
 
    exchanger.exchange();
    exchangeNotify();
@@ -502,17 +640,29 @@ void ExchangerForceTest::testGhostUpdateCycle()
    TEST_ASSERT(atomStorage.isValid());
    TEST_ASSERT(bondStorage.isValid(atomStorage, boundary, 
                                    domain.communicator()));
+   #ifdef INTER_ANGLE
+   if (hasAngles) {
+      TEST_ASSERT(angleStorage.isValid(atomStorage, boundary, 
+                                       domain.communicator()));
+   }
+   #endif
+   #ifdef INTER_DIHEDRAL
+   if (hasDihedrals) {
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, boundary, 
+                                          domain.communicator()));
+   }
+   #endif
 
    // Transform to Cartesian coordinates
    atomStorage.transformGenToCart(boundary);
 
-   range = 0.05;
-   for (int i=0; i < 4; ++i) {
+   range = 0.01;
+   for (int i = 0; i < 4; ++i) {
 
       TEST_ASSERT(atomStorage.isCartesian());
       displaceAtoms(range);
 
-      for (int j=0; j < 2; ++j) {
+      for (int j=0; j < 5; ++j) {
          exchanger.update();
          TEST_ASSERT(nGhost == atomStorage.nGhost());
          TEST_ASSERT(nAtom == atomStorage.nAtom());
@@ -583,6 +733,7 @@ void ExchangerForceTest::testInitialForces()
    int  nAtom  = 0;    // Number of atoms on this processor.
    int  nGhost = 0;    // Number of ghosts on this processor.
 
+   TEST_ASSERT(!atomStorage.isCartesian());
    atomStorage.clearSnapshot();
    exchanger.exchange();
    exchangeNotify();
@@ -613,6 +764,7 @@ void ExchangerForceTest::testInitialForces()
 
    // Update ghost positions
    exchanger.update();
+   atomStorage.transformCartToGen(boundary);
 
    // Check number of atoms and ghosts on each processor is unchanged.
    TEST_ASSERT(nAtom == atomStorage.nAtom());
@@ -647,9 +799,13 @@ void ExchangerForceTest::testInitialForces()
 
    TEST_ASSERT(pairPotential.reverseUpdateFlag() == reverseUpdateFlag);
 
-   // Compute forces etc. with N^2 loop (MethodId = 2)
+   // Transform back to Cartesian
+   atomStorage.transformGenToCart(boundary);
+
+   // Compute pair forces etc. with N^2 loop (MethodId = 2)
    pairPotential.setMethodId(2);
-   computeForces();
+   zeroForces();
+   pairPotential.computeForces();
    if (reverseUpdateFlag) {
       exchanger.reverseUpdate();
    }
@@ -666,9 +822,10 @@ void ExchangerForceTest::testInitialForces()
       pairEnergyNSq = pairPotential.energy();
    }
 
-   // Compute forces etc. with pair list (MethodId = 0)
+   // Compute pair forces etc. with pair list (MethodId = 0)
    pairPotential.setMethodId(0); 
-   computeForces();
+   zeroForces();
+   pairPotential.computeForces();
    if (reverseUpdateFlag) {
       exchanger.reverseUpdate();
    }
@@ -683,6 +840,8 @@ void ExchangerForceTest::testInitialForces()
    if (domain.communicator().Get_rank() == 0) {
       energyList = pairPotential.energy();
    }
+
+   #if 0
    Tensor pairStress;
    pairPotential.unsetStress();
    pairPotential.computeStress(domain.communicator());
@@ -714,6 +873,7 @@ void ExchangerForceTest::testInitialForces()
       }
    }
    #endif
+   #endif
 
    // Compare Nsq and PairList values of nPair and Energy
    if (domain.communicator().Get_rank() == 0) {
@@ -721,7 +881,7 @@ void ExchangerForceTest::testInitialForces()
       TEST_ASSERT(eq(pairEnergyNSq, energyList));
    }
 
-   // Compare NSq and pairlist forces, accumulate total
+   // Compare NSq and pairlist pair forces, accumulate total
    Vector totForce;
    Vector nodeForce;
    int id, i;
@@ -751,6 +911,25 @@ void ExchangerForceTest::testInitialForces()
       TEST_ASSERT(eq(totForce[2], 0.0));
    }
 
+   // Calculate bond force and check that the total is zero
+   zeroForces();
+   bondPotential.computeForces();
+   if (reverseUpdateFlag) {
+      exchanger.reverseUpdate();
+   }
+   nodeForce.zero();
+   atomStorage.begin(atomIter);
+   for ( ; atomIter.notEnd(); ++atomIter) {
+      nodeForce += atomIter->force();
+   }
+   communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI::DOUBLE, MPI::SUM, 0);
+   if (communicator().Get_rank() == 0) {
+      TEST_ASSERT(eq(totForce[0], 0.0));
+      TEST_ASSERT(eq(totForce[1], 0.0));
+      TEST_ASSERT(eq(totForce[2], 0.0));
+   }
+
+   #if 0
    // Test computeForcesAndStress methods 
    pairPotential.setMethodId(0); // PairList
    zeroForces();
@@ -792,6 +971,7 @@ void ExchangerForceTest::testInitialForces()
       TEST_ASSERT(eq(forces[id][1], atomIter->force()[1]));
       TEST_ASSERT(eq(forces[id][2], atomIter->force()[2]));
    }
+   #endif
 
 }
 
@@ -1079,14 +1259,15 @@ bool ExchangerForceTest::isExchangeNeeded(double skin)
 }
 
 TEST_BEGIN(ExchangerForceTest)
+TEST_ADD(ExchangerForceTest, testExchange)
 TEST_ADD(ExchangerForceTest, testGhostUpdateF)
 TEST_ADD(ExchangerForceTest, testGhostUpdateR)
 TEST_ADD(ExchangerForceTest, testGhostUpdateCycleF)
 TEST_ADD(ExchangerForceTest, testGhostUpdateCycleR)
 TEST_ADD(ExchangerForceTest, testInitialForcesF)
-TEST_ADD(ExchangerForceTest, testInitialForcesR)
-TEST_ADD(ExchangerForceTest, testForceCycleF)
-TEST_ADD(ExchangerForceTest, testForceCycleR)
+//TEST_ADD(ExchangerForceTest, testInitialForcesR)
+//TEST_ADD(ExchangerForceTest, testForceCycleF)
+//TEST_ADD(ExchangerForceTest, testForceCycleR)
 TEST_END(ExchangerForceTest)
 
 #endif /* EXCHANGER_TEST_H */

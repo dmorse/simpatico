@@ -188,7 +188,7 @@ namespace DdMd
    }
 
    /*
-   * Pack ghost force.
+   * Pack ghost atom force.
    */
    void Atom::packForce(Buffer& buffer)
    {
@@ -197,7 +197,7 @@ namespace DdMd
    }
 
    /*
-   * Unpack data ghost Atom force, and add to on this processor.
+   * Unpack ghost Atom force, and add to force for this Atom.
    */
    void Atom::unpackForce(Buffer& buffer)
    {

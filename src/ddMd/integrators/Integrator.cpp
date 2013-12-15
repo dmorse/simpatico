@@ -508,7 +508,8 @@ namespace DdMd
       iStep_ = 0;
       initDynamicalState();
       timer().clear(); 
-      simulation().exchanger().timer().clear();
+      //simulation().exchanger().timer().clear();
+      simulation().exchanger().clearStatistics();
       simulation().buffer().clearStatistics();
       atomStorage().clearStatistics();
       pairPotential().pairList().clearStatistics();

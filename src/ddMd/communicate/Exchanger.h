@@ -8,19 +8,18 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/misc/DdTimer.h>
-#include <util/space/IntVector.h>
-#include <util/boundary/Boundary.h>
-#include <util/containers/FMatrix.h>
-#include <util/containers/GPArray.h>
-
+#include <ddMd/misc/DdTimer.h>            // member
+#include <util/space/IntVector.h>         // member
+#include <util/containers/FMatrix.h>      // member template
+#include <util/containers/GPArray.h>      // member template
+#include <util/boundary/Boundary.h>       // typedef
 
 namespace DdMd
 {
 
-   class Domain;
    class Atom;
    class AtomStorage;
+   class Domain;
    class Buffer;
    class GroupExchanger;
 
@@ -49,53 +48,64 @@ namespace DdMd
       /**
       * Set pointers to associated objects.
       *
-      * \param domain      associated Domain object
-      * \param boundary    associated Boundary object
-      * \param atomStorage associated AtomStorage object
-      * \param buffer      associated Buffer object
+      * \param domain  associated Domain (processor grid) object
+      * \param boundary  associated Boundary (periodic boundary) object
+      * \param atomStorage  associated AtomStorage (atom container) object
+      * \param buffer  associated Buffer (MPI communication buffer) object
       */
       void associate(const Domain& domain, const Boundary& boundary, 
                      AtomStorage& atomStorage, Buffer& buffer);
 
       /**
-      * Add a GroupExchanger to an internal list.
+      * Reserve memory for send and receive arrays.
       *
-      * \param groupExchanger GroupExchanger object to add to list.
-      */
-      void addGroupExchanger(GroupExchanger& groupExchanger);
-
-      /**
-      * Allocate all required memory.
-      *
-      * Must be called after Buffer is initialized.
+      * \pre Exchanger::associate() must have been called.
+      * \pre associated Buffer must be initialized.
       */
       void allocate();
 
       /**
+      * Add a GroupExchanger to an internal list.
+      *
+      * \param groupExchanger GroupExchanger object to be added
+      */
+      void addGroupExchanger(GroupExchanger& groupExchanger);
+
+      /**
       * Set width of slab for ghosts.
       *
-      * \param pairCutoff cutoff radius for pair list (potential + skin).
+      * \param pairCutoff cutoff radius for pair list (potential + skin)
       */
       void setPairCutoff(double pairCutoff);
 
       /**
       * Exchange local atoms and ghosts.
       * 
-      * This method should be called just before rebuilding the neighbor
-      * list on each processor, to exchange ownership of local atoms and
-      * to exchange ghost atoms. The lists of which atoms were sent and
-      * received as ghosts by this method are used in subsequent calls
-      * to update. 
+      * This method exchanges ownership of local atoms between neighboring
+      * processors, exchanges groups that contain migrating atoms, and
+      * exchanges ghosts. It should be called whenever atoms have moved far
+      * enough to require rebuilding the neighbor list (see AtomStorage),
+      * just before rebuilding the cell list.  Lists of which atoms were 
+      * sent and received as ghosts during communication step during 
+      * exchange of ghosts by this function are used in subsequent calls 
+      * to Exchanger::update(), to update positions.
+      *
+      * \pre  Atom coordinates are scaled/generalized.
+      * \post  Atom coordinates are scaled/generalized.
       */
       void exchange();
 
       /**
       * Update ghost atom coordinates.
       * 
-      * This method should be called every time step for which there is
-      * no exhange of atom ownership. It communicates ghost coordinates
-      * for the same ghosts as those sent by the most recent call to
-      * the exchangeGhosts() methods.
+      * This method should be called every time step except those when
+      * Exchanger::exchange() is called.  It communicates updated atomic
+      * coordinates for ghost atoms by following the same communication
+      * pattern as that used to exchange the ghosts during the most 
+      * recent call to Exchanger::exchange().
+      *
+      * \pre Atom coordinates are Cartesian.
+      * \post  Atom coordinates are Cartesian.
       */
       void update();
 
@@ -108,27 +118,51 @@ namespace DdMd
       * communication is enabled, in which case it should be called after
       * all force calculation on every time step for which update() is 
       * called.
+      *
+      * \pre   Atom coordinates are Cartesian.
+      * \post  Atom coordinates are Cartesian.
       */
       void reverseUpdate();
 
       /**
-      * Output statistics.
+      * Start internal timer.
       */
-      void outputStatistics(std::ostream& out, double time, int nStep);
+      void startTimer();
 
       /**
-      * Return internal timer by reference
+      * Stop internal timer.
       */
-      DdTimer& timer();
+      void stopTimer();
+
+      /**
+      * Clear timing statistics.
+      */
+      void clearStatistics();
+
+      /**
+      * Compute timing statistics (reduce operation).  
+      */
+      void computeStatistics();
+
+      /**
+      * Output statistics.
+      */
+      void outputStatistics(std::ostream& out, double time, int nStep) 
+      const;
+
+      /**
+      * Return internal timer by const reference.
+      */
+      const DdTimer& timer() const;
 
       /**
       * Enumeration of time stamp identifiers.
       */
-      enum timeId {START, ATOM_PLAN, INIT_GROUP_PLAN, CLEAR_GHOSTS,
+      enum timeId {START, ATOM_PLAN, GROUP_BEGIN_ATOM, CLEAR_GHOSTS,
                    PACK_ATOMS, PACK_GROUPS, REMOVE_ATOMS, 
                    SEND_RECV_ATOMS, UNPACK_ATOMS, UNPACK_GROUPS, 
-                   MARK_GROUP_GHOSTS, INIT_SEND_ARRAYS, PACK_GHOSTS, 
-                   SEND_RECV_GHOSTS, UNPACK_GHOSTS, FIND_GROUP_GHOSTS, 
+                   GROUP_BEGIN_GHOST, INIT_SEND_ARRAYS, PACK_GHOSTS, 
+                   SEND_RECV_GHOSTS, UNPACK_GHOSTS, GROUP_FINISH_GHOST, 
                    PACK_UPDATE, SEND_RECV_UPDATE, UNPACK_UPDATE, 
                    LOCAL_UPDATE, PACK_FORCE, SEND_RECV_FORCE, 
                    UNPACK_FORCE, LOCAL_FORCE, NTime};
@@ -229,8 +263,16 @@ namespace DdMd
 
    // Inline methods.
 
-   // Return internal timer by reference (public).
-   inline DdTimer& Exchanger::timer()
+   // Start internal timer (public).
+   void Exchanger::startTimer()
+   {  timer_.start(); }
+
+   // Stop internal timer (public).
+   void Exchanger::stopTimer()
+   {  timer_.stop(); }
+
+   // Return internal timer by const reference (public).
+   inline const DdTimer& Exchanger::timer() const
    {  return timer_; }
 
    // Stamp internal timer (private)

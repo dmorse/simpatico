@@ -1,6 +1,7 @@
 ddMd_tests_communicate_= \
     ddMd/tests/communicate/Test.cc \
-    ddMd/tests/communicate/ExchangerTest.cc 
+    ddMd/tests/communicate/ExchangerTest.cc \
+    ddMd/tests/communicate/ExchangerForceTest.cc 
 #    ddMd/tests/communicate/BufferTest.cc \
 #    ddMd/tests/communicate/DomainTest.cc \
 #    ddMd/tests/communicate/AtomDistributorTest.cc \
