@@ -6,6 +6,8 @@ ddMd_analyzers_=\
      ddMd/analyzers/WriteConfig.cpp\
      ddMd/analyzers/OutputEnergy.cpp\
      ddMd/analyzers/OutputPressure.cpp\
+     ddMd/analyzers/OutputStressTensor.cpp\
+     ddMd/analyzers/VirialStressTensorAverage.cpp\
      ddMd/analyzers/OutputBoxdim.cpp \
      ddMd/analyzers/OutputTemperature.cpp\
      ddMd/analyzers/OutputPairEnergies.cpp\
