@@ -153,15 +153,15 @@ namespace DdMd
             Tensor virial  = sys.virialStress();
             Tensor kinetic = sys.kineticStress();
             Tensor total = total.add(virial, kinetic); 
-            sxxAccumulator_.sample(virial(1,1));
-            sxyAccumulator_.sample(virial(1,2));
-            sxzAccumulator_.sample(virial(1,3));
-            syxAccumulator_.sample(virial(2,1));
-            syyAccumulator_.sample(virial(2,2));
-            syzAccumulator_.sample(virial(2,3));
-            szxAccumulator_.sample(virial(3,1));
-            szyAccumulator_.sample(virial(3,2));
-            szzAccumulator_.sample(virial(3,3));
+            sxxAccumulator_.sample(virial(0,0));
+            sxyAccumulator_.sample(virial(0,1));
+            sxzAccumulator_.sample(virial(0,2));
+            syxAccumulator_.sample(virial(1,0));
+            syyAccumulator_.sample(virial(1,1));
+            syzAccumulator_.sample(virial(1,2));
+            szxAccumulator_.sample(virial(2,0));
+            szyAccumulator_.sample(virial(2,1));
+            szzAccumulator_.sample(virial(2,2));
          }
          ++nSample_;
       }
