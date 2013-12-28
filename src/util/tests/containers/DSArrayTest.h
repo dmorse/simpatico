@@ -20,6 +20,7 @@ public:
    void testConstructor();
    void testSubscript();
    void testCopyConstructor();
+   void testAssignment();
    void testSerialize1File();
 
 };
@@ -96,6 +97,36 @@ void DSArrayTest::testCopyConstructor()
    TEST_ASSERT(Memory::total() == 0);
 }
 
+void DSArrayTest::testAssignment()
+{
+   printMethod(TEST_FUNC);
+   {
+      DSArray<int> v;
+      TEST_ASSERT(v.capacity() == 0);
+      TEST_ASSERT(!v.isAllocated());
+   
+      v.allocate(5);
+      TEST_ASSERT(v.capacity() == 5);
+      TEST_ASSERT(v.isAllocated());
+      v.append(3);
+      v.append(4);
+      v.append(5);
+   
+      DSArray<int> u;
+      u = v;
+      TEST_ASSERT(u.capacity() == 5);
+      TEST_ASSERT(u.isAllocated());
+      TEST_ASSERT(u.size() == 3);
+      TEST_ASSERT(v.size() == 3);
+      TEST_ASSERT(v[0] == 3);
+      TEST_ASSERT(v[1] == 4);
+      TEST_ASSERT(v[2] == 5);
+      TEST_ASSERT(u[0] == 3);
+      TEST_ASSERT(u[1] == 4);
+      TEST_ASSERT(u[2] == 5);
+   }
+   TEST_ASSERT(Memory::total() == 0);
+}
 
 void DSArrayTest::testSerialize1File()
 {
@@ -177,6 +208,7 @@ TEST_ADD(DSArrayTest, testAllocate)
 TEST_ADD(DSArrayTest, testConstructor)
 TEST_ADD(DSArrayTest, testSubscript)
 TEST_ADD(DSArrayTest, testCopyConstructor)
+TEST_ADD(DSArrayTest, testAssignment)
 TEST_ADD(DSArrayTest, testSerialize1File)
 TEST_END(DSArrayTest)
 
