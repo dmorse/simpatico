@@ -316,7 +316,7 @@ namespace DdMd
            nSystem = atoi(sArg);
            break;
          case '?':
-           std::cout << "Unknown option -" << optopt << std::endl;
+           Log::file() << "Unknown option -" << optopt << std::endl;
          }
       }
 

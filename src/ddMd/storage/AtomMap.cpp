@@ -63,14 +63,14 @@ namespace DdMd
       // Preconditions
       int atomId = ptr->id();
       if (atomId < 0 || atomId >= totalAtomCapacity_) {
-         std::cout << "atomId = " << atomId << std::endl;
+         Log::file() << "atomId = " << atomId << std::endl;
          UTIL_THROW("atomId is out of range");
       }
       if (atomPtrs_[atomId]) {
-         std::cout << "atomId       = " << atomId << std::endl;
-         std::cout << "New Position = " << ptr->position() 
+         Log::file() << "atomId       = " << atomId << std::endl;
+         Log::file() << "New Position = " << ptr->position() 
                    << std::endl;
-         std::cout << "Old Position = " << atomPtrs_[atomId]->position() 
+         Log::file() << "Old Position = " << atomPtrs_[atomId]->position() 
                    << std::endl;
          UTIL_THROW("Local atom with specified id is already present");
       }
@@ -87,7 +87,7 @@ namespace DdMd
    {
       int atomId = ptr->id();
       if (atomId < 0 || atomId >= totalAtomCapacity_) {
-         std::cout << "atomId = " << atomId << std::endl;
+         Log::file() << "atomId = " << atomId << std::endl;
          UTIL_THROW("atomId is out of range");
       }
       if (ptr == atomPtrs_[atomId]) {
@@ -227,9 +227,9 @@ namespace DdMd
          if (ptr != 0) {
             id = ptr->id();
             if (id != i) {
-               std::cout << std::endl;
-               std::cout << "Index i in atomPtrs_  " << i << std::endl;
-               std::cout << "atomPtrs_[i]->id()    " << id << std::endl;
+               Log::file() << std::endl;
+               Log::file() << "Index i in atomPtrs_  " << i << std::endl;
+               Log::file() << "atomPtrs_[i]->id()    " << id << std::endl;
                UTIL_THROW("ptr->id() != i");
             }
             ++nAtom;
@@ -245,9 +245,9 @@ namespace DdMd
          id  = it->first;
          ptr = it->second;
          if (id != ptr->id()) {
-            std::cout << std::endl;
-            std::cout << "key ghostMap " << id << std::endl;
-            std::cout << "Atom::id()   " << ptr->id() << std::endl;
+            Log::file() << std::endl;
+            Log::file() << "key ghostMap " << id << std::endl;
+            Log::file() << "Atom::id()   " << ptr->id() << std::endl;
             UTIL_THROW("Inconsistent key in ghostMap");
          }
          if (atomPtrs_[id] == 0) {

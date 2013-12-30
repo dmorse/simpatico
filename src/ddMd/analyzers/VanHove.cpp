@@ -230,13 +230,12 @@ namespace DdMd
    {
       if (simulation().domain().isMaster()) {
          // Write parameters to a *.prm file
-         simulation().fileMaster().openOutputFile(outputFileName(".prm"),
-                                                  outputFile_);
+         simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
          writeParam(outputFile_);
          outputFile_.close();
         
          // Output structure factors to one *.dat file
-         simulation().fileMaster().openOutputFile(outputFileName(".dat"),                                                                                         outputFile_);
+         simulation().fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
         
          int i, j;
 
