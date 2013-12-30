@@ -120,8 +120,8 @@ namespace McMd
       /// Atom capacity of parent simulation.
       int atomCapacity_;
 
-      /// Has internal memory been allocated?
-      bool isAllocated_;
+      /// Has this object been initialized?
+      bool isInitialized_;
 
       /*
       * Calculate random and dissipative DPD forces.

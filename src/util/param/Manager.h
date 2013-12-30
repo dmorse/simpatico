@@ -353,7 +353,7 @@ namespace Util
    template <typename Data>
    void Manager<Data>::loadParameters(Serializable::IArchive &ar)
    {
-      int size;
+      int size = 0;
       Data* typePtr;
       std::string name;
 

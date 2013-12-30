@@ -47,7 +47,7 @@ namespace Util
       /**
       * Assignment, element by element.
       *
-      * Capacity of LHS DSArray must be >= size of RHS DSArray.
+      * Capacity of LHS must be either zero or equal that of RHS DSArray.
       *
       * \param other the RHS DSArray 
       */
@@ -136,14 +136,15 @@ namespace Util
 
    protected:
 
-      /// Array of Data elements.
+      /// C array of Data elements.
       Data *data_;
 
       /// Logical size of array (number of elements used).
-      int  size_;
+      int size_;
 
-      /// Maxium size of array
+      /// Capacity (physical size) of underlying C array.
       int capacity_;
+
    };
 
    // Method definitions
@@ -183,18 +184,18 @@ namespace Util
    /*
    * Assignment, element by element.
    *
-   * Capacity of LHS DSArray must be >= size of RHS DSArray.
+   * Capacity of LHS DSArray must be zero or == capacity of RHS DSArray.
    */
    template <class Data>
    DSArray<Data>& DSArray<Data>::operator=(const DSArray<Data>& other) 
    {
+      // Check for self assignment
+      if (this == &other) return *this;
+
       // Precondition
       if (!other.isAllocated()) {
          UTIL_THROW("Other DSArray must be allocated.");
       }
-
-      // Check for self assignment
-      if (this == &other) return *this;
 
       if (!isAllocated()) {
          allocate(other.capacity_);
@@ -202,11 +203,11 @@ namespace Util
          UTIL_THROW("Cannot assign DSArrays of unequal capacity");
       }
 
-      // Copy elements
-      for (int i = 0; i < size_; ++i) {
+      // Copy elements and set size
+      for (int i = 0; i < other.size_; ++i) {
          data_[i] = other[i];
       }
-      size = other.size_;
+      size_ = other.size_;
 
       return *this;
    }
