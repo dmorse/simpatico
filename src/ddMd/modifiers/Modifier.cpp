@@ -47,7 +47,8 @@ namespace DdMd
    * Constructor.
    */
    Modifier::Modifier(Simulation& simulation)
-    : flags_(0),
+    : ParamComposite(),
+      flags_(0),
       interval_(1),
       simulationPtr_(&simulation)
    {}
@@ -70,7 +71,6 @@ namespace DdMd
    void Modifier::readInterval(std::istream &in)
    {  read<long>(in, "interval", interval_); }
 
-   #if 0
    /*
    * Return true if a flag is set, false otherwise.
    */
@@ -88,7 +88,6 @@ namespace DdMd
    */
    void Modifier::set(Bit flag)
    {  flag.set(flags_); }
-   #endif
 
 }
 #endif

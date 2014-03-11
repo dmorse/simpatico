@@ -9,7 +9,7 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/tests/modifiers/sources.mk
 
-all: $(ddMd_tests_modifiers_OBJS)  Test
+all: $(ddMd_tests_modifiers_OBJS)
 
 clean:
 	rm -f $(ddMd_tests_modifiers_OBJS) Test $(ddMd_tests_modifiers_OBJS:.o=.d)

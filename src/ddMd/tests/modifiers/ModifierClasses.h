@@ -18,6 +18,9 @@ namespace DdMd {
          //set(Modifier::Flags::PostIntegrate1); 
       }
    
+      ~ModifierA() 
+      {} 
+
       #if 0 
       void readParameters(std::istream& in) 
       {

@@ -24,7 +24,10 @@ class ModifierTest : public UnitTest
 public:
 
    void setUp()
-   {}
+   {
+      Label::clear();
+      ParamComponent::setEcho(false);
+   }
 
    void tearDown()
    {}
@@ -32,15 +35,14 @@ public:
    void testConstructor()
    {
       printMethod(TEST_FUNC);
-      ModifierA modifier;
-      //TEST_ASSERT(modifier.isSet(Modifier::Flags::PostIntegrate1));
-      //TEST_ASSERT(!modifier.isSet(Modifier::Flags::PreIntegrate1));
+      DdMd::ModifierA modifier;
+      // TEST_ASSERT(modifier.isSet(Modifier::Flags::PostIntegrate1));
+      // TEST_ASSERT(!modifier.isSet(Modifier::Flags::PreIntegrate1));
 
       //std::cout << std::endl;
       //std::cout << modifier.flags() << std::endl;
    }
 
-   #if 0
    void testReadParam()
    {
       printMethod(TEST_FUNC);
@@ -52,7 +54,6 @@ public:
       std::cout << std::endl;
       modifier.writeParam(std::cout);
    }
-   #endif
 
 };
 

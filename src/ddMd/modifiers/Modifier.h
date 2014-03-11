@@ -99,10 +99,10 @@ namespace DdMd
       virtual void unpackReverseUpdate() {};
 
       //@} 
-      #if 0
       /// \name Bit Flags 
       //@{
 
+      #if 1
       /**
       * Bit flag constants associated with particular actions.
       *
@@ -138,6 +138,7 @@ namespace DdMd
          static const Bit Update;
          static const Bit ReverseUpdate;
       };
+      #endif
 
       /**
       * Return true if a flag is set, false otherwise.
@@ -148,7 +149,6 @@ namespace DdMd
       * Return unsigned int representation of all bit flags.
       */
       unsigned int flags() const;
-      #endif
 
       //@} 
       /// \name Interval methods
@@ -186,12 +186,10 @@ namespace DdMd
       */
       Simulation& simulation();
 
-      #if 0
       /**
       * Set the flag associated with a particular action.
       */
       void set(Bit flag);
-      #endif
 
    private:
 

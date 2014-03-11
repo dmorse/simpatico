@@ -9,9 +9,9 @@ include $(SRC_DIR)/inter/tests/sources.mk
 
 TEST=inter/tests/Test
 
-all: $(inter_tests_OBJS) $(OBJ_DIR)/$(TEST)
+all: $(inter_tests_OBJS)
 
-run: $(inter_tests_OBJS) $(OBJ_DIR)/$(TEST)
+run: $(inter_tests_OBJS)
 	$(OBJ_DIR)/$(TEST) $(SRC_DIR)/inter/tests/ > log
 	@echo `grep failed log` ", "\
               `grep successful log` "in inter/tests/log" > count

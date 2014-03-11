@@ -12,7 +12,8 @@ include $(SRC_DIR)/ddMd/tests/chemistry/sources.mk
 all: $(ddMd_tests_chemistry_OBJS) $(ddMd_tests_chemistry_OBJS:.o=) 
 
 clean:
-	rm -f $(ddMd_tests_chemistry_OBJS) $(ddMd_tests_chemistry_OBJS:.o=.d)
+	rm -f $(ddMd_tests_chemistry_OBJS) 
+	rm -f $(ddMd_tests_chemistry_OBJS:.o=.d)
 	rm -f $(ddMd_tests_chemistry_OBJS:.o=)
 
 clean-outputs:

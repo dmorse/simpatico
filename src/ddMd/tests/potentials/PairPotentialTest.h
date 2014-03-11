@@ -230,7 +230,6 @@ public:
       printMethod(TEST_FUNC);
 
       const int nAtom = 120;
-      const int pairCapacity = 1000;
       double cutoff   = 1.2;
       Vector lower(0.0);
       Vector upper(2.0, 3.0, 4.0);

@@ -7,13 +7,12 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/tests/dihedral/sources.mk
 
-TEST=inter/tests/dihedral/Test
-
-all: $(inter_tests_dihedral_OBJS) $(OBJ_DIR)/$(TEST)
+all: $(inter_tests_dihedral_OBJS)
 
 clean:
-	rm -f $(inter_tests_dihedral_OBJS) $(inter_tests_dihedral_OBJS:.o=.d)
-	rm -f $(OBJ_DIR)/$(TEST) 
+	rm -f $(inter_tests_dihedral_OBJS)
+	rm -f $(inter_tests_dihedral_OBJS:.o=.d)
+	rm -f $(inter_tests_dihedral_OBJS:.o=)
 
 -include $(inter_tests_dihedral_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)

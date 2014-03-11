@@ -637,7 +637,7 @@ namespace Util
       * Add a new ParamComponent object to the format array.
       *
       * \param param Parameter object
-      * \param isLeaf Is this a leaf object or a a ParamComposite node?
+      * \param isLeaf Is this a leaf or a ParamComposite node?
       */
       void addComponent(ParamComponent& param, bool isLeaf = true);
 

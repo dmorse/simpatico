@@ -20,8 +20,8 @@
 #include <ddMd/configIos/SerializeConfigIo.h>
 #include <ddMd/analyzers/AnalyzerManager.h>
 #ifdef DDMD_MODIFIERS
-#endif
 #include <ddMd/modifiers/ModifierManager.h>
+#endif
 
 #ifndef DDMD_NOPAIR
 #include <ddMd/potentials/pair/PairPotential.h>
@@ -200,7 +200,7 @@ namespace DdMd
       energyEnsemblePtr_ = new EnergyEnsemble;
       boundaryEnsemblePtr_ = new BoundaryEnsemble;
       #ifdef DDMD_MODIFIERS
-      modifierManagerPtr_ = new ModifierManager(*this);
+      // modifierManagerPtr_ = new ModifierManager(*this);
       #endif
       analyzerManagerPtr_ = new AnalyzerManager(*this);
    }
@@ -268,7 +268,7 @@ namespace DdMd
       }
       #ifdef DDMD_MODIFIERS
       if (modifierManagerPtr_) {
-         delete modifierManagerPtr_;
+         // delete modifierManagerPtr_;
       }
       #endif
       if (fileMasterPtr_) {
@@ -541,7 +541,7 @@ namespace DdMd
          UTIL_THROW("msg.c_str()");
       }
       #ifdef DDMD_MODIFIERS
-      readParamComposite(in, *modifierManagerPtr_);
+      // readParamComposite(in, *modifierManagerPtr_);
       #endif
       readParamComposite(in, random_);
       readParamComposite(in, *analyzerManagerPtr_);
@@ -733,7 +733,7 @@ namespace DdMd
          UTIL_THROW("msg.c_str()");
       }
       #ifdef DDMD_MODIFIERS
-      loadParamComposite(ar, *modifierManagerPtr_);
+      // loadParamComposite(ar, *modifierManagerPtr_);
       #endif
       loadParamComposite(ar, random_);
       loadParamComposite(ar, *analyzerManagerPtr_);
@@ -896,7 +896,7 @@ namespace DdMd
       ar << name;
       integrator().save(ar);
       #ifdef DDMD_MODIFIERS
-      modifierManager().save(ar);
+      //modifierManager().save(ar);
       #endif
       random_.save(ar);
       analyzerManager().save(ar);

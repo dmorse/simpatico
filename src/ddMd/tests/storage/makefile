@@ -9,10 +9,11 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/tests/storage/sources.mk
 
-all: $(ddMd_tests_storage_OBJS) $(ddMd_tests_storage_OBJS:.o=) 
+all: $(ddMd_tests_storage_OBJS)
 
 clean:
-	rm -f $(ddMd_tests_storage_OBJS) $(ddMd_tests_storage_OBJS:.o=.d)
+	rm -f $(ddMd_tests_storage_OBJS) 
+	rm -f $(ddMd_tests_storage_OBJS:.o=.d)
 	rm -f $(ddMd_tests_storage_OBJS:.o=)
 
 -include $(ddMd_tests_storage_OBJS:.o=.d)

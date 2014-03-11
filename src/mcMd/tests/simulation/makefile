@@ -9,13 +9,12 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/tests/simulation/sources.mk
 
-TEST=mcMd/tests/simulation/Test
-
-all: $(mcMd_tests_simulation_OBJS) $(OBJ_DIR)/$(TEST)
+all: $(mcMd_tests_simulation_OBJS)
 
 clean:
-	rm -f $(mcMd_tests_simulation_OBJS) $(mcMd_tests_simulation_OBJS:.o=.d)
-	rm -f $(OBJ_DIR)/$(TEST) 
+	rm -f $(mcMd_tests_simulation_OBJS) 
+	rm -f $(mcMd_tests_simulation_OBJS:.o=.d)
+	rm -f $(mcMd_tests_simulation_OBJS:.o=)
 
 -include $(mcMd_tests_simulation_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)

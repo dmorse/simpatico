@@ -31,6 +31,8 @@ namespace DdMd
       newPtr_(0),
       capacity_(0),
       totalCapacity_(0),
+      maxNGroupLocal_(0),
+      maxNGroup_(0),
       nTotal_(0)
    {  emptyGroups_.reserve(128); }
  
