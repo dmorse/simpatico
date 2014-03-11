@@ -33,13 +33,14 @@ public:
    {
       printMethod(TEST_FUNC);
       ModifierA modifier;
-      TEST_ASSERT(modifier.isSet(Modifier::Flags::PostIntegrate1));
-      TEST_ASSERT(!modifier.isSet(Modifier::Flags::PreIntegrate1));
+      //TEST_ASSERT(modifier.isSet(Modifier::Flags::PostIntegrate1));
+      //TEST_ASSERT(!modifier.isSet(Modifier::Flags::PreIntegrate1));
 
-      std::cout << std::endl;
-      std::cout << modifier.flags() << std::endl;
+      //std::cout << std::endl;
+      //std::cout << modifier.flags() << std::endl;
    }
 
+   #if 0
    void testReadParam()
    {
       printMethod(TEST_FUNC);
@@ -51,12 +52,13 @@ public:
       std::cout << std::endl;
       modifier.writeParam(std::cout);
    }
+   #endif
 
 };
 
 TEST_BEGIN(ModifierTest)
 TEST_ADD(ModifierTest, testConstructor)
-TEST_ADD(ModifierTest, testReadParam)
+//TEST_ADD(ModifierTest, testReadParam)
 TEST_END(ModifierTest)
 
 #endif //ifndef DDMD_MODIFIER_TEST_H

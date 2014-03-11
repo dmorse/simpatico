@@ -45,7 +45,7 @@ DDMD_SUFFIX:=
 # operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_c. 
 
 
-# Enable bond potential
+# Enable modifiers
 ifdef DDMD_MODIFIERS
 DDMD_DEFS+= -DDDMD_MODIFIERS
 #DDMD_SUFFIX:=$(DDMD_SUFFIX)_u

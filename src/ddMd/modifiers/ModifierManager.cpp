@@ -80,6 +80,7 @@ namespace DdMd
       Modifier* ptr;
       for  (int i = 0; i < size(); ++i) {
          ptr = &(*this)[i];
+         #if 0
          if (ptr->isSet(Modifier::Flags::Setup)) { 
             setupModifiers_.append(*ptr); 
          }
@@ -125,6 +126,7 @@ namespace DdMd
          if (ptr->isSet(Modifier::Flags::ReverseUpdate)) { 
             reverseUpdateModifiers_.append(*ptr); 
          }
+         #endif
       } // end for i
    }
 

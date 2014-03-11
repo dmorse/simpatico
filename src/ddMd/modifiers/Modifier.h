@@ -16,11 +16,11 @@
 namespace DdMd
 {
 
-   using namespace Util;
    class Simulation;
+   using namespace Util;
 
    /**
-   * An Modifier can modify the Simulation during MD integration.
+   * A Modifier can modify the Simulation during MD integration.
    *
    * The Modifier base class declares a variety of virtual "action" methods 
    * that may be re-implemented by subclasses to define actions that can
@@ -99,6 +99,7 @@ namespace DdMd
       virtual void unpackReverseUpdate() {};
 
       //@} 
+      #if 0
       /// \name Bit Flags 
       //@{
 
@@ -147,6 +148,7 @@ namespace DdMd
       * Return unsigned int representation of all bit flags.
       */
       unsigned int flags() const;
+      #endif
 
       //@} 
       /// \name Interval methods
@@ -184,10 +186,12 @@ namespace DdMd
       */
       Simulation& simulation();
 
+      #if 0
       /**
       * Set the flag associated with a particular action.
       */
       void set(Bit flag);
+      #endif
 
    private:
 

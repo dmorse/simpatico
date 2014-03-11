@@ -15,6 +15,7 @@ namespace DdMd
 
    using namespace Util;
 
+   #if 0
    const Bit Modifier::Flags::Setup = 0;
    const Bit Modifier::Flags::PreIntegrate1 = 1;
    const Bit Modifier::Flags::PostIntegrate1 = 2;
@@ -30,12 +31,14 @@ namespace DdMd
    const Bit Modifier::Flags::Exchange = 12;
    const Bit Modifier::Flags::Update = 13;
    const Bit Modifier::Flags::ReverseUpdate = 14;
+   #endif
 
    /*
    * Default constructor.
    */
    Modifier::Modifier()
-    : flags_(0),
+    : ParamComposite(),
+      flags_(0),
       interval_(1),
       simulationPtr_(0)
    {}
@@ -67,6 +70,7 @@ namespace DdMd
    void Modifier::readInterval(std::istream &in)
    {  read<long>(in, "interval", interval_); }
 
+   #if 0
    /*
    * Return true if a flag is set, false otherwise.
    */
@@ -84,6 +88,7 @@ namespace DdMd
    */
    void Modifier::set(Bit flag)
    {  flag.set(flags_); }
+   #endif
 
 }
 #endif

@@ -55,7 +55,10 @@ namespace DdMd
       * Return reference to parent Simulation.
       */
       Simulation& simulation() const
-      {  return *simulationPtr_; }
+      {
+         assert(simulationPtr_);  
+         return *simulationPtr_; 
+      }
 
    private:
 

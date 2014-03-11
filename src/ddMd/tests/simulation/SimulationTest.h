@@ -9,6 +9,7 @@
 #include <util/random/Random.h>
 #include <util/format/Dbl.h>
 #include <util/mpi/MpiLogger.h>
+#include <util/misc/FileMaster.h>
 
 #ifdef UTIL_MPI
 #ifndef TEST_MPI
