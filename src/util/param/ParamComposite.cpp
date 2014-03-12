@@ -225,9 +225,9 @@ namespace Util
                                     bool isRequired)
    {
       Begin* ptr = new Begin(label, isRequired);
+      setParent(*ptr, false);
       ptr->readParam(in);
       if (ptr->isActive()) {
-         setParent(*ptr, false);
          addComponent(*ptr);
       }
       return *ptr;

@@ -9,7 +9,10 @@
 */
 
 #include "Begin.h"
-#include "Label.h"
+#ifdef UTIL_MPI
+#include <util/mpi/MpiSendRecv.h>
+#endif
+
 #include <util/global.h>
 
 namespace Util
