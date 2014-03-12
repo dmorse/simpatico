@@ -1,0 +1,35 @@
+      if (isIoProcessor()) {
+         in >> label_;
+
+         // If this parameter is required and the 
+         // label doesn't match an exception will 
+         // be thrown by the >> operator.
+
+         if (Label::isClear()) {
+            // If the label string matches
+            isActive_ = true;
+            if (ParamComponent::echo()) {
+               writeParam(Log::file());
+            }
+         } else {
+            // If label does not match and this isOptional
+            isActive_ = false;
+         }
+      } else {
+         #ifdef UTIL_MPI
+         if (!hasIoCommunicator()) {
+            UTIL_THROW("Error: not isIoProcessor and not hasIoCommunicator");
+         }
+         #else
+         UTIL_THROW("Error: not isIoProcessor and no MPI");
+         #endif
+      }
+      #ifdef UTIL_MPI
+      if (hasIoCommunicator()) {
+         if (isRequired_) {
+            isActive_ = true;
+         } else {
+            bcast<bool>(ioCommunicator(), isActive_, 0); 
+         }
+      }
+      #endif
