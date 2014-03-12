@@ -372,9 +372,11 @@ namespace Util
       *
       * \param in  input stream for reading
       * \param label  class name string, without trailing bracket
+      * \param isRequired Is this the beginning of a required element?
       * \return reference to the new Begin object
       */
-      Begin& readBegin(std::istream &in, const char* label);
+      Begin& readBegin(std::istream &in, const char* label, 
+                       bool isRequired = true);
 
       /**
       * Add and read the closing bracket.

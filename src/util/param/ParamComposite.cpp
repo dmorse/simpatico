@@ -221,10 +221,15 @@ namespace Util
    /*
    * Read the opening line of a ParamComposite.
    */
-   Begin& ParamComposite::readBegin(std::istream &in, const char *label)
+   Begin& ParamComposite::readBegin(std::istream &in, const char *label,
+                                    bool isRequired)
    {
-      Begin* ptr = &addBegin(label);
+      Begin* ptr = new Begin(label, isRequired);
       ptr->readParam(in);
+      if (ptr->isActive()) {
+         setParent(*ptr, false);
+         addComponent(*ptr);
+      }
       return *ptr;
    }
 
