@@ -23,14 +23,16 @@
 #-----------------------------------------------------------------------
 # Makefile variables to define preprocessor macros.
 
-# Define DDMD_MODIFIERS, enable 2-body bond potentials
+# Define DDMD_MODIFIERS, enable addition of ModifierManager to Simulation
+# Modifiers take actions at regular intervals that modify the system.
 # DDMD_MODIFIERS=1
 
 #-----------------------------------------------------------------------
 # The following code defines the variables DDMD_DEFS and DDMD_SUFFIX.
+# Most uers should not need to modify anything below this point.
 #
-# The variable DDMD_DEFS is used to pass preprocessor definitions to
-# the compiler, using the "-D" compiler option.
+# The variable DDMD_DEFS is a string containg preprocessor definitions as
+# command line options for the compiler, using the "-D" compiler option.
 #
 # The variable DDMD_SUFFIX is appended to the names of the ddMd library
 # and (by default) of the ddSim executable.
@@ -44,11 +46,10 @@ DDMD_SUFFIX:=
 # non-recursive makefile variable, which may be extended using the := 
 # operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_c. 
 
-
 # Enable modifiers
 ifdef DDMD_MODIFIERS
 DDMD_DEFS+= -DDDMD_MODIFIERS
-#DDMD_SUFFIX:=$(DDMD_SUFFIX)_u
+DDMD_SUFFIX:=$(DDMD_SUFFIX)_u
 endif
 
 #-----------------------------------------------------------------------

@@ -28,8 +28,10 @@ namespace Util
       list_(),
       isLeaf_(),
       size_(0),
-      className_("ParamComposite")
-   {}
+      className_()
+   {
+      setClassName("ParamComposite");
+   }
 
    /*
    * Constructor.
@@ -84,7 +86,8 @@ namespace Util
    */
    void ParamComposite::readParam(std::istream &in)
    {
-      readBegin(in, className().c_str());
+      assert(className_.size() > 0);
+      readBegin(in, className_.c_str());
       readParameters(in);
       readEnd(in);
    }
@@ -104,7 +107,8 @@ namespace Util
    */
    void ParamComposite::load(Serializable::IArchive& ar)
    {
-      Begin* beginPtr = &addBegin(className().c_str());
+      assert(className_.size() > 0);
+      Begin* beginPtr = &addBegin(className_.c_str());
       if (ParamComponent::echo()) {
          if (isIoProcessor()) {
             beginPtr->writeParam(Log::file());

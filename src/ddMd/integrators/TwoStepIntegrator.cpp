@@ -13,7 +13,7 @@
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/communicate/Exchanger.h>
 #ifdef DDMD_MODIFIERS
-//#include <ddMd/modifiers/ModifierManager.h>
+#include <ddMd/modifiers/ModifierManager.h>
 #endif
 #include <ddMd/analyzers/AnalyzerManager.h>
 #include <ddMd/potentials/pair/PairPotential.h>
@@ -53,7 +53,7 @@ namespace DdMd
 
       // References to managers
       #ifdef DDMD_MODIFIERS 
-      //ModifierManager& modifierManager = simulation().modifierManager();
+      ModifierManager& modifierManager = simulation().modifierManager();
       #endif
       AnalyzerManager& analyzerManager = simulation().analyzerManager();
 
@@ -69,8 +69,8 @@ namespace DdMd
       // Atomic forces should be set on exit from Integrator::setup().
       setup();
       #ifdef DDMD_MODIFIERS 
-      //modifierManager.setup();
-      //timer().stamp(MODIFIERS);;
+      modifierManager.setup();
+      timer().stamp(MODIFIERS);;
       #endif
       analyzerManager.setup();
 
@@ -101,8 +101,8 @@ namespace DdMd
          timer().stamp(ANALYZER);
  
          #ifdef DDMD_MODIFIERS 
-         //modifierManager.preIntegrate1(iStep_);
-         //timer().stamp(MODIFIERS);
+         modifierManager.preIntegrate1(iStep_);
+         timer().stamp(MODIFIERS);
          #endif
    
          // First step of integration: Update positions, half velocity 
@@ -118,8 +118,8 @@ namespace DdMd
          #endif
 
          #ifdef DDMD_MODIFIERS 
-         //modifierManager.postIntegrate1(iStep_);
-         //timer().stamp(MODIFIERS);
+         modifierManager.postIntegrate1(iStep_);
+         timer().stamp(MODIFIERS);
          #endif
    
          // Check if exchange and reneighboring is necessary
@@ -133,8 +133,8 @@ namespace DdMd
          if (needExchange) {
 
             #ifdef DDMD_MODIFIERS 
-            //modifierManager.preTransform(iStep_);
-            //timer().stamp(MODIFIERS);
+            modifierManager.preTransform(iStep_);
+            timer().stamp(MODIFIERS);
             #endif
       
             // Exchange atom ownership, reidentify ghosts
@@ -145,13 +145,13 @@ namespace DdMd
             timer().stamp(Integrator::EXCHANGE);
 
             #ifdef DDMD_MODIFIERS 
-            //modifierManager.preExchange(iStep_);
-            //timer().stamp(MODIFIERS);
+            modifierManager.preExchange(iStep_);
+            timer().stamp(MODIFIERS);
             #endif
       
             #ifdef DDMD_MODIFIERS 
-            //modifierManager.postExchange(iStep_);
-            //timer().stamp(MODIFIERS);
+            modifierManager.postExchange(iStep_);
+            timer().stamp(MODIFIERS);
             #endif
    
             // Reneighbor - rebuild cell and neighbor lists
@@ -164,15 +164,15 @@ namespace DdMd
             timer().stamp(Integrator::PAIRLIST);
 
             #ifdef DDMD_MODIFIERS 
-            //modifierManager.postNeighbor(iStep_);
-            //timer().stamp(MODIFIERS);
+            modifierManager.postNeighbor(iStep_);
+            timer().stamp(MODIFIERS);
             #endif
    
          } else { // Update step (no exchange)
 
             #ifdef DDMD_MODIFIERS 
-            //modifierManager.preUpdate(iStep_);
-            //timer().stamp(MODIFIERS);
+            modifierManager.preUpdate(iStep_);
+            timer().stamp(MODIFIERS);
             #endif
      
             // Update all ghost atom positions 
@@ -180,8 +180,8 @@ namespace DdMd
             timer().stamp(UPDATE);
 
             #ifdef DDMD_MODIFIERS 
-            //modifierManager.postUpdate(iStep_);
-            //timer().stamp(MODIFIERS);
+            modifierManager.postUpdate(iStep_);
+            timer().stamp(MODIFIERS);
             #endif
    
          }
@@ -197,8 +197,8 @@ namespace DdMd
          }
 
          #ifdef DDMD_MODIFIERS 
-         //modifierManager.preForce(iStep_);
-         //timer().stamp(MODIFIERS);
+         modifierManager.preForce(iStep_);
+         timer().stamp(MODIFIERS);
          #endif
    
          // Calculate new forces for all local atoms. If constant pressure
@@ -211,8 +211,8 @@ namespace DdMd
          }
 
          #ifdef DDMD_MODIFIERS 
-         //modifierManager.postForce(iStep_);
-         //timer().stamp(MODIFIERS);
+         modifierManager.postForce(iStep_);
+         timer().stamp(MODIFIERS);
          #endif
    
          // 2nd step of integration. This finishes the velocity update.
@@ -226,8 +226,8 @@ namespace DdMd
          #endif
 
          #ifdef DDMD_MODIFIERS 
-         //modifierManager.endOfStep(iStep_);
-         //timer().stamp(MODIFIERS);
+         modifierManager.endOfStep(iStep_);
+         timer().stamp(MODIFIERS);
          #endif
 
       }

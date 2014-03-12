@@ -14,22 +14,22 @@ namespace DdMd {
       ModifierA() 
        : Modifier()
       {
-         //setClassName("ModifierA"); 
-         //set(Modifier::Flags::PostIntegrate1); 
+         setClassName("ModifierA"); 
+         set(Modifier::Flags::PostIntegrate1); 
       }
    
       ~ModifierA() 
       {} 
 
-      #if 0 
       void readParameters(std::istream& in) 
       {
          readInterval(in);
       }
-      #endif
 
       void postIntegrate1(long iStep)
-      {}
+      {
+         std::cout << "Calling ModifierA::postIntegrate1" << std::endl;
+      }
    
    };
 

@@ -1,5 +1,5 @@
-#ifndef DDMD_VIRIAL_STRESSTENSOR_AVERAGE_H
-#define DDMD_VIRIAL_STRESSTENSOR_AVERAGE_H
+#ifndef DDMD_VIRIAL_STRESS_TENSOR_AVERAGE_H
+#define DDMD_VIRIAL_STRESS_TENSOR_AVERAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

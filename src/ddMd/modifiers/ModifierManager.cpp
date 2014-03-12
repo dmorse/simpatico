@@ -60,7 +60,9 @@ namespace DdMd
      exchangeModifiers_(),
      updateModifiers_(),
      reverseUpdateModifiers_()
-   { setClassName("ModifierManager"); }
+   { 
+      setClassName("ModifierManager"); 
+   }
 
    /*
    * Destructor.
@@ -77,7 +79,6 @@ namespace DdMd
    {
       Manager<Modifier>::readParam(in);
 
-      #if 0
       Modifier* ptr;
       for  (int i = 0; i < size(); ++i) {
          ptr = &(*this)[i];
@@ -127,7 +128,6 @@ namespace DdMd
             reverseUpdateModifiers_.append(*ptr); 
          }
       } // end for i 
-      #endif
    }
 
    // Setup
@@ -149,7 +149,7 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &preIntegrate1Modifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->preIntegrate1();
+            ptr->preIntegrate1(iStep);
          }
       }
    }
@@ -161,8 +161,9 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &postIntegrate1Modifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->postIntegrate1();
-         }
+            //std::cout << "Calling " << ptr->className() << std::endl;
+            ptr->postIntegrate1(iStep);
+         } 
       }
    }
  
@@ -173,7 +174,7 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &preTransformModifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->preTransform();
+            ptr->preTransform(iStep);
          }
       }
    }
@@ -185,7 +186,7 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &preExchangeModifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->preExchange();
+            ptr->preExchange(iStep);
          }
       }
    }
@@ -197,7 +198,7 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &postExchangeModifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->postExchange();
+            ptr->postExchange(iStep);
          }
       }
    }
@@ -209,7 +210,7 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &postNeighborModifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->postNeighbor();
+            ptr->postNeighbor(iStep);
          }
       }
    }
@@ -221,7 +222,7 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &preUpdateModifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->preUpdate();
+            ptr->preUpdate(iStep);
          }
       }
    }
@@ -233,7 +234,7 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &postUpdateModifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->postUpdate();
+            ptr->postUpdate(iStep);
          }
       }
    }
@@ -245,7 +246,7 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &preForceModifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->preForce();
+            ptr->preForce(iStep);
          }
       }
    }
@@ -257,7 +258,7 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &postForceModifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->postForce();
+            ptr->postForce(iStep);
          }
       }
    }
@@ -269,7 +270,7 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &endOfStepModifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->endOfStep();
+            ptr->endOfStep(iStep);
          }
       }
    }

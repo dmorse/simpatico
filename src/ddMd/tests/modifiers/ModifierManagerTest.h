@@ -26,7 +26,10 @@ class ModifierManagerTest : public UnitTest
 public:
 
    void setUp()
-   {}
+   {
+      Label::clear();
+      ParamComponent::setEcho(false);
+   }
 
    void tearDown()
    {}
@@ -48,12 +51,15 @@ public:
 
       std::ifstream in;
       openInputFile("in/ModifierManager", in);
-      // ParamComponent::setEcho(true);
+      //ParamComponent::setEcho(true);
       manager.readParam(in);
       in.close();
 
       std::cout << std::endl;
       manager.writeParam(std::cout);
+
+      long iStep = 10;
+      manager.postIntegrate1(iStep);
    }
 
 };
@@ -63,4 +69,4 @@ TEST_ADD(ModifierManagerTest, testConstructor)
 TEST_ADD(ModifierManagerTest, testReadParam)
 TEST_END(ModifierManagerTest)
 
-#endif //ifndef DDMD_MODIFIER_MANAGER_TEST_H
+#endif 

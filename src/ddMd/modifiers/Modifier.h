@@ -75,17 +75,17 @@ namespace DdMd
       //@{ 
    
       virtual void setup(){};
-      virtual void preIntegrate1() {};
-      virtual void postIntegrate1() {};
-      virtual void preTransform() {};
-      virtual void preExchange() {};
-      virtual void postExchange() {};
-      virtual void postNeighbor() {};
-      virtual void preUpdate() {};
-      virtual void postUpdate() {};
-      virtual void preForce() {};
-      virtual void postForce() {};
-      virtual void endOfStep() {};
+      virtual void preIntegrate1(long iStep) {};
+      virtual void postIntegrate1(long iStep) {};
+      virtual void preTransform(long iStep) {};
+      virtual void preExchange(long iStep) {};
+      virtual void postExchange(long iStep) {};
+      virtual void postNeighbor(long iStep) {};
+      virtual void preUpdate(long iStep) {};
+      virtual void postUpdate(long iStep) {};
+      virtual void preForce(long iStep) {};
+      virtual void postForce(long iStep) {};
+      virtual void endOfStep(long iStep) {};
 
       //@} 
       /// \name Interprocessor communication actions 
@@ -102,7 +102,6 @@ namespace DdMd
       /// \name Bit Flags 
       //@{
 
-      #if 1
       /**
       * Bit flag constants associated with particular actions.
       *
@@ -138,7 +137,6 @@ namespace DdMd
          static const Bit Update;
          static const Bit ReverseUpdate;
       };
-      #endif
 
       /**
       * Return true if a flag is set, false otherwise.
@@ -167,6 +165,11 @@ namespace DdMd
       bool isAtInterval(long iStep) const;
 
       //@} 
+
+      /**
+      * Call this to guarantee initialization of static variables.
+      */
+      static void initStatic();
 
    protected:
 

@@ -33,14 +33,14 @@ namespace Util
       // Default destructor.
 
       /**
-      * Read a comment
+      * Read the opening line.
       *
       * \param in input stream
       */
       virtual void readParam(std::istream &in);
 
       /**
-      * Read a comment
+      * Write the opening line.
       *
       * \param out output stream
       */

@@ -37,7 +37,7 @@ namespace DdMd
       /**
       * Constructor.
       *
-      * \param simulation     parent Simulation
+      * \param simulation parent Simulation object
       */
       ModifierFactory(Simulation& simulation);
 

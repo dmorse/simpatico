@@ -36,8 +36,8 @@ public:
    {
       printMethod(TEST_FUNC);
       DdMd::ModifierA modifier;
-      // TEST_ASSERT(modifier.isSet(Modifier::Flags::PostIntegrate1));
-      // TEST_ASSERT(!modifier.isSet(Modifier::Flags::PreIntegrate1));
+      TEST_ASSERT(modifier.isSet(Modifier::Flags::PostIntegrate1));
+      TEST_ASSERT(!modifier.isSet(Modifier::Flags::PreIntegrate1));
 
       //std::cout << std::endl;
       //std::cout << modifier.flags() << std::endl;
@@ -50,7 +50,12 @@ public:
       std::ifstream in;
       openInputFile("in/ModifierA", in);
       modifier.readParam(in);
+
       TEST_ASSERT(modifier.interval() == 10);
+      TEST_ASSERT(modifier.isAtInterval(10));
+      TEST_ASSERT(modifier.isAtInterval(20));
+      TEST_ASSERT(!modifier.isAtInterval(5));
+
       std::cout << std::endl;
       modifier.writeParam(std::cout);
    }
@@ -59,7 +64,7 @@ public:
 
 TEST_BEGIN(ModifierTest)
 TEST_ADD(ModifierTest, testConstructor)
-//TEST_ADD(ModifierTest, testReadParam)
+TEST_ADD(ModifierTest, testReadParam)
 TEST_END(ModifierTest)
 
 #endif //ifndef DDMD_MODIFIER_TEST_H

@@ -1,6 +1,4 @@
-#include "ModifierTest.h"
-// #include "ModifierManagerTest.h"
-// #include "ModifierTestComposite.h"
+#include "ModifierTestComposite.h"
 
 using namespace Util;
 using namespace DdMd;
@@ -11,17 +9,12 @@ int main()
    #ifdef UTIL_MPI 
    #ifdef TEST_MPI
    MPI::Init();
-   //IntVector::commitMpiType();
-   //Vector::commitMpiType();
+   DdMd::Modifier::initStatic();
    #endif
    #endif
 
-   //ModifierTestComposite runner;
-   TEST_RUNNER(ModifierTest) runner;
+   ModifierTestComposite runner;
    runner.run();
-
-   // TEST_RUNNER(ModifierManagerTest) runner2;
-   // runner2.run();
 
    #ifdef UTIL_MPI 
    #ifdef TEST_MPI

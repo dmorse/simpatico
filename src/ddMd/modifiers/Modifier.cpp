@@ -15,7 +15,6 @@ namespace DdMd
 
    using namespace Util;
 
-   #if 0
    const Bit Modifier::Flags::Setup = 0;
    const Bit Modifier::Flags::PreIntegrate1 = 1;
    const Bit Modifier::Flags::PostIntegrate1 = 2;
@@ -31,7 +30,21 @@ namespace DdMd
    const Bit Modifier::Flags::Exchange = 12;
    const Bit Modifier::Flags::Update = 13;
    const Bit Modifier::Flags::ReverseUpdate = 14;
-   #endif
+
+   /*
+   * This static method exists to guarantee initialization of static 
+   * constants that are defined in the same file.  Call it somewhere 
+   * in the program to guarantee that the contents of this file will 
+   * be linked, rather than optimized away.
+   */
+   void Modifier::initStatic()
+   {  
+      // This function can only be called once.
+      static int nCall = 0;
+      if (nCall == 0) {
+         ++nCall;
+      }
+   }
 
    /*
    * Default constructor.

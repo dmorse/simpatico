@@ -10,7 +10,7 @@
 
 #include <util/param/Manager.h>        // base class template
 #include <util/containers/GPArray.h>   // member template
-#include "Modifier.h"                     // template parameter
+#include "Modifier.h"                  // template parameter
 
 namespace DdMd
 {
@@ -35,12 +35,12 @@ namespace DdMd
    public:
 
       /**
-      * Default constructor.
+      * Default constructor (for unit testing).
       */
       ModifierManager();
 
       /**
-      * Constructor.
+      * Constructor (for use in Simulation).
       */
       ModifierManager(Simulation& simulation);
 

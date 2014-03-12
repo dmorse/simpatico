@@ -18,7 +18,6 @@
 #include <ddMd/storage/DihedralStorage.h>        // member 
 #include <ddMd/chemistry/AtomType.h>             // member (template param)
 #include <ddMd/chemistry/MaskPolicy.h>           // member
-//#include <ddMd/analyzers/AnalyzerManager.h>      // member
 #include <util/random/Random.h>                  // member 
 #include <util/boundary/Boundary.h>              // member 
 #include <util/space/Tensor.h>                   // member (template param)
@@ -43,9 +42,11 @@ namespace DdMd
    class Integrator;
    class ConfigIo;
    class SerializeConfigIo;
-   class PairPotential;
+   #ifdef DDMD_MODIFIERS
    class ModifierManager;
+   #endif
    class AnalyzerManager;
+   class PairPotential;
    #ifdef INTER_BOND
    class BondPotential;
    #endif 
@@ -629,11 +630,13 @@ namespace DdMd
       * Get the Buffer by reference.
       */
       Buffer& buffer();
-  
+ 
+      #ifdef DDMD_MODIFIERS 
       /**
       * Return the ModifierManager by reference.
       */
       ModifierManager& modifierManager();
+      #endif
 
       /**
       * Return the AnalyzerManager by reference.
@@ -875,9 +878,11 @@ namespace DdMd
    
       /// Pointer to a configuration reader/writer for restart.
       SerializeConfigIo* serializeConfigIoPtr_;
-   
+  
+      #ifdef DDMD_MODIFIERS 
       /// ModifierManager
       ModifierManager* modifierManagerPtr_;
+      #endif
 
       /// AnalyzerManager
       AnalyzerManager* analyzerManagerPtr_;
@@ -1127,6 +1132,7 @@ namespace DdMd
       return *fileMasterPtr_;
    }
 
+   #ifdef DDMD_MODIFIERS
    /*
    * Get the ModifierManager by reference.
    */
@@ -1135,6 +1141,7 @@ namespace DdMd
       assert(modifierManagerPtr_);
       return *modifierManagerPtr_;
    }
+   #endif
 
    /*
    * Get the AnalyzerManager by reference.
