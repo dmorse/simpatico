@@ -22,13 +22,17 @@ namespace McMd
 
    using namespace Util;
 
-   /// Constructor.
+   /*
+   * Constructor.
+   */
    RadiusGyration::RadiusGyration(System& system) 
     : SystemAnalyzer<System>(system),
       isInitialized_(false)
    {  setClassName("RadiusGyration"); }
 
-   /// Read parameters from file, and allocate data array.
+   /*
+   * Read parameters, allocate memory, and initialize accumulator.
+   */
    void RadiusGyration::readParameters(std::istream& in) 
    {
       readInterval(in);
@@ -89,13 +93,13 @@ namespace McMd
    }
 
    /*
-   * Save to archive.
+   * Save state to archive.
    */
    void RadiusGyration::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
-   * Clear accumulator.
+   * Clear accumulator (public method).
    */
    void RadiusGyration::setup() 
    {
@@ -106,7 +110,7 @@ namespace McMd
    }
 
    /* 
-   * Evaluate end-to-end vectors of all chains, add to ensemble.
+   * Evaluate squared radii of gyration of all chains, add to ensemble.
    */
    void RadiusGyration::sample(long iStep) 
    { 
@@ -147,7 +151,7 @@ namespace McMd
    }
 
    /*
-   * Output results to file after simulation is completed.
+   * Output final results to file, after simulation is completed.
    */
    void RadiusGyration::output() 
    { 

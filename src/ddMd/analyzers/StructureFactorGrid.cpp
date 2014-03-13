@@ -202,7 +202,7 @@ namespace DdMd
             g[0] = h;
             for (k = 0; k <= hMax_; ++k) {
                g[1] = k;
-               for (l = 0; l <= k; ++l) {
+               for (l = 0; l <= hMax_; ++l) {
                   g[2] = l;
                   starIds_[i] = j;
                   group.makeStar(g, star);
