@@ -106,11 +106,13 @@ namespace Util
       assert(className_.size() > 0);
       isRequired_ = false;
       isActive_ = false;
-      Begin& begin = readBegin(in, className_.c_str(), isRequired_);
-      if (begin.isActive()) {
+      Begin* beginPtr = &readBegin(in, className_.c_str(), isRequired_);
+      if (beginPtr->isActive()) {
          readParameters(in);
          readEnd(in);
          isActive_ = true;
+      } else {
+         delete beginPtr;
       }
    }
 
@@ -148,10 +150,11 @@ namespace Util
    }
 
    /*
-   * Load an optional object.
+   * Optionally load this object.
    */
    void ParamComposite::loadOptional(Serializable::IArchive& ar)
    {
+      // Load and broadcast isActive_ flag
       if (isIoProcessor()) {
          ar & isActive_;
          if (!isActive_) {
@@ -175,6 +178,8 @@ namespace Util
          bcast<bool>(ioCommunicator(), isActive_, 0); 
       }
       #endif
+
+      // Load object data iff isActive_
       if (isActive_) {
          load(ar);
       }
@@ -242,7 +247,7 @@ namespace Util
    // ParamComposite object
 
    /*
-   * Add a ParamComposite node to the tree.
+   * Add a required ParamComposite node.
    */
    void ParamComposite::addParamComposite(ParamComposite &child, bool next)
    {
@@ -252,7 +257,7 @@ namespace Util
    }
 
    /*
-   * Add a ParamComposite Node, and read the contents of that ParamComposite.
+   * Add a required ParamComposite node, and call its readParam() method.
    */
    void
    ParamComposite::readParamComposite(std::istream &in, ParamComposite &child, 
@@ -263,7 +268,7 @@ namespace Util
    }
 
    /*
-   * Add an optional ParamComposite Node, and attempt to read contents.
+   * Add an optional ParamComposite, and call its readParamOptional method.
    */
    void
    ParamComposite::readParamCompositeOptional(std::istream &in, 
@@ -274,7 +279,7 @@ namespace Util
    }
 
    /*
-   * Add a ParamComposite Node, and load the contents of that ParamComposite.
+   * Add a required ParamComposite node and load its data from archive ar.
    */
    void
    ParamComposite::loadParamComposite(Serializable::IArchive &ar, 
@@ -285,45 +290,20 @@ namespace Util
    }
 
    /*
-   * Add a optional ParamComposite Node, and load contents if isActive.
+   * Add an optional ParamComposite node, and load data if isActive.
    */
    void
    ParamComposite::loadParamCompositeOptional(Serializable::IArchive &ar, 
                                       ParamComposite &child, bool next)
    {
       addParamComposite(child, next);
-      if (isIoProcessor()) {
-         ar >> isActive_;
-         if (!isActive_) {
-            if (ParamComponent::echo()) {
-               Log::file() << child.indent() 
-                           << child.className() << "{ [absent] }"
-                           << std::endl;
-            }
-         }
-      } else {
-         #ifdef UTIL_MPI
-         if (!hasIoCommunicator()) {
-            UTIL_THROW("Error: not isIoProcessor and !hasIoCommunicator");
-         }
-         #else
-         UTIL_THROW("Error: not isIoProcessor and no MPI");
-         #endif
-      }
-      #ifdef UTIL_MPI
-      if (hasIoCommunicator()) {
-         bcast<bool>(ioCommunicator(), isActive_, 0); 
-      }
-      #endif
-      if (isActive_) {
-         child.load(ar);
-      }
+      child.loadOptional(ar);
    }
 
    // Begin
 
    /*
-   * Add a new Begin object.
+   * Create and add a new Begin object.
    */
    Begin& ParamComposite::addBegin(const char *label)
    {
@@ -351,7 +331,7 @@ namespace Util
    // End
 
    /*
-   * Add a new End object.
+   * Create and add a new End object.
    */
    End& ParamComposite::addEnd()
    {
@@ -374,7 +354,7 @@ namespace Util
    // Blank
 
    /*
-   * Add a Blank object (a blank line).
+   * Create and add a new Blank object (a blank line).
    */
    Blank& ParamComposite::addBlank()
    {
@@ -395,7 +375,7 @@ namespace Util
    }
 
    /*
-   * Set class name string.
+   * Set the class name string.
    */
    void ParamComposite::setClassName(const char * className)
    {  className_ = className; }
@@ -404,13 +384,23 @@ namespace Util
    * Set or unset the isActive flag.
    */
    void ParamComposite::setIsRequired(bool isRequired)
-   { isRequired_ = isRequired; }
+   {  
+      isRequired_ = isRequired; 
+      if (isRequired_) {
+         isActive_ = true;
+      }
+   }
 
    /*
    * Set or unset the isActive flag.
    */
    void ParamComposite::setIsActive(bool isActive)
-   { isActive_ = isActive; }
+   {
+      if (isRequired_ && !isActive) {
+         UTIL_THROW("Error: cannot be required but not active");
+      }
+      isActive_ = isActive; 
+   }
 
 }
 #endif

@@ -620,7 +620,7 @@ namespace Util
       void addParamComposite(ParamComposite& child, bool next = true);
 
       /**
-      * Add a class label and opening bracket.
+      * Create and add a class label and opening bracket.
       *
       * \param label class name string, without trailing bracket
       * \return reference to the new begin object.
@@ -628,14 +628,14 @@ namespace Util
       Begin& addBegin(const char* label);
 
       /**
-      * Add a closing bracket.
+      * Create and add a closing bracket.
       *
       * \return reference to the new End object.
       */
       End& addEnd();
 
       /**
-      * Add a new Blank object, representing a blank line.
+      * Create and add a new Blank object, representing a blank line.
       *
       * \return reference to the new Blank object
       */

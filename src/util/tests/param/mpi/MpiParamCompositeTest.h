@@ -139,6 +139,37 @@ public:
 
    }
 
+   void testReadWrite4() 
+   {
+      printMethod(TEST_FUNC);
+
+      BComposite optional;
+
+      object.setIoCommunicator(communicator()); 
+      optional.setIoCommunicator(communicator()); 
+      ParamComponent::setEcho(true);
+
+      openFile("in/ParamComposite");
+      if (ParamComponent::echo()) {
+         Log::file() << std::endl;
+      }
+      optional.readParamOptional(file());
+      object.readParam(file());
+      file().close();
+
+      TEST_ASSERT(object.isRequired());
+      TEST_ASSERT(object.isActive());
+      TEST_ASSERT(!optional.isRequired());
+      TEST_ASSERT(!optional.isActive());
+
+      if (mpiRank() == 1) {
+         std::cout << std::endl;
+         optional.writeParam(std::cout);
+         object.writeParam(std::cout);
+      }
+
+   }
+
 };
 
 
@@ -146,6 +177,7 @@ TEST_BEGIN(MpiParamCompositeTest)
 TEST_ADD(MpiParamCompositeTest, testReadWrite1)
 TEST_ADD(MpiParamCompositeTest, testReadWrite2)
 TEST_ADD(MpiParamCompositeTest, testReadWrite3)
+TEST_ADD(MpiParamCompositeTest, testReadWrite4)
 TEST_END(MpiParamCompositeTest)
 
 #endif // ifdef UTIL_MPI

@@ -4,6 +4,7 @@
 #ifdef UTIL_MPI
 
 #include <util/global.h>
+#include <util/param/ParamComponent.h>
 #include <util/param/ParamComposite.h>
 #include <util/param/Manager.h>
 #include <util/param/Factory.h>
@@ -29,8 +30,10 @@ public:
       Label::clear();
    }
 
-   void breakDown() {
+   void breakDown() 
+   {
       Label::clear();
+      ParamComponent::setEcho(false);
    }
 
    /**
@@ -95,9 +98,42 @@ public:
       manager.addSubfactory(factory);
 
       std::ifstream in;
-      if (mpiRank() == 0) 
+      if (mpiRank() == 0) {
          in.open("in/Manager");
+         if (ParamComponent::echo()) printEndl();
+      }
       manager.readParam(in);
+      TEST_ASSERT(manager.isRequired());
+      TEST_ASSERT(manager.isActive());
+      if (mpiRank() == 1) {
+         std::cout << std::endl;
+         manager.writeParam(std::cout);
+         std::cout.flush();
+      }
+
+   }
+
+   /**
+   * Read optional manager from single file in/Manager.
+   */
+   void testManager2() 
+   {
+      printMethod(TEST_FUNC);
+      AManager       manager;
+      CustomAFactory factory;
+      manager.setIoCommunicator(communicator());
+      manager.addSubfactory(factory);
+      TEST_ASSERT(manager.isRequired());
+      TEST_ASSERT(manager.isActive());
+
+      std::ifstream in;
+      if (mpiRank() == 0) {
+         in.open("in/Manager");
+         if (ParamComponent::echo()) printEndl();
+      }
+      manager.readParamOptional(in);
+      TEST_ASSERT(!manager.isRequired());
+      TEST_ASSERT(manager.isActive());
       if (mpiRank() == 1) {
          std::cout << std::endl;
          manager.writeParam(std::cout);
@@ -109,7 +145,7 @@ public:
    /**
    * Read multiple files n/Manager, where n=mpiRank().
    */
-   void testManager2() 
+   void testManager3() 
    {
       printMethod(TEST_FUNC);
 
@@ -121,6 +157,7 @@ public:
       fileMaster.setDirectoryId(mpiRank());
       fileMaster.openInputFile("Manager", in);
       fileMaster.openOutputFile("Manager.log", log);
+      if (ParamComponent::echo()) printEndl();
 
       manager.readParam(in);
 
@@ -143,6 +180,7 @@ TEST_ADD(MpiManagerTest, testFactory)
 TEST_ADD(MpiManagerTest, testFactoryReadObject)
 TEST_ADD(MpiManagerTest, testManager1)
 TEST_ADD(MpiManagerTest, testManager2)
+TEST_ADD(MpiManagerTest, testManager3)
 TEST_END(MpiManagerTest)
 
 #endif

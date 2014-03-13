@@ -1,11 +1,6 @@
 #ifndef MPI_PARAMETER_TEST_H
 #define MPI_PARAMETER_TEST_H
 
-#ifndef TEST_MPI
-#define TEST_MPI
-#endif
-
-#include <test/UnitTestRunner.h>
 
 #include <util/param/Parameter.h>
 #include <util/param/ScalarParam.h>
@@ -14,6 +9,13 @@
 #include <util/param/FArrayParam.h>
 #include <util/param/CArray2DParam.h>
 #include <util/param/DMatrixParam.h>
+
+#ifndef TEST_MPI
+#define TEST_MPI
+#endif
+
+#include <test/UnitTest.h>
+#include <test/UnitTestRunner.h>
 
 using namespace Util;
 

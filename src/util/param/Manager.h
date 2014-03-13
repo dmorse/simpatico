@@ -162,7 +162,7 @@ namespace Util
    protected:
 
       /**
-      * Read opening line: "ManagerName{"
+      * Read (or attempt to read) opening line: "ManagerName{"
       */
       void beginReadManager(std::istream& in);
 
@@ -292,7 +292,7 @@ namespace Util
    }
 
    /*
-   * Read instructions for creating objects from file.
+   * Read Manager parameter block.
    */
    template <typename Data>
    void Manager<Data>::readParam(std::istream &in)
@@ -305,7 +305,7 @@ namespace Util
    }
 
    /*
-   * Read instructions for creating objects from file.
+   * Attempt to read parameter block for optional Manager.
    */
    template <typename Data>
    void Manager<Data>::readParamOptional(std::istream &in)
@@ -320,20 +320,25 @@ namespace Util
    }
 
    /*
-   * Read instructions for creating objects from file.
+   * Read (or attempt to read) opening line. 
    */
    template <typename Data>
    void Manager<Data>::beginReadManager(std::istream &in)
    {
       std::string managerName = ParamComposite::className();
-      Begin& begin = readBegin(in, managerName.c_str(), isRequired());
-      if (!isRequired() && begin.isActive()) {
-         setIsActive(true);
+      Begin* beginPtr = &readBegin(in, managerName.c_str(), isRequired());
+      if (!isRequired()) { 
+         if (beginPtr->isActive()) {
+            setIsActive(true);
+         } else {
+            setIsActive(false);
+            delete beginPtr;
+         }
       }
    }
 
    /*
-   * Read instructions for creating objects from file.
+   * Read a sequence of child objects, return when closing bracket found.
    */
    template <typename Data>
    void Manager<Data>::readChildren(std::istream &in)
@@ -350,7 +355,8 @@ namespace Util
          // Read a blank line before each object
          readBlank(in);
 
-         // Read and instantiate a new object *typePtr
+         // Attempt to read and instantiate a new object *typePtr.
+         // This sets isEnd = true if a closing bracket is encountered.
          typePtr = factoryPtr_->readObject(in, *this, name, isEnd);
 
          if (!isEnd) {

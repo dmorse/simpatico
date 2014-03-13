@@ -52,13 +52,18 @@ Simulation{
     tauT              0.5
     tauP              0.5
     mode              cubic
-    saveInterval      0
+    saveInterval      10000
+    saveFileName      restart
   }
   Random{
     seed              8012457890
   }
   AnalyzerManager{
      baseInterval     100
+
+     LogEnergy{
+        interval        1000
+     }
 
      OutputEnergy{
         interval         1000
@@ -69,6 +74,7 @@ Simulation{
         interval         1000
         outputFileName   pressure
      }
+
      OutputBoxdim{
         interval         1000
         outputFileName   boxdim
@@ -83,7 +89,8 @@ Simulation{
      OutputTemperature{
         interval         1000
         outputFileName   temperature
-      }
+     }
+
   }
 }
 
