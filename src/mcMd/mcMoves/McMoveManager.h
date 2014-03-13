@@ -50,7 +50,7 @@ namespace McMd
       *
       * \param in input parameter stream
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /**
       * Load internal state from an archive.

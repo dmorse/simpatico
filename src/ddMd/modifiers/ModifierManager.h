@@ -50,11 +50,11 @@ namespace DdMd
       ~ModifierManager();
 
       /**
-      * Read parameter file. 
+      * Read main block of parameter file. 
       *
       * \param in input parameter file stream.
       */
-      void readParam(std::istream &in);
+      void readParameters(std::istream &in);
 
       /**
       * Return pointer to a new default factory.
@@ -97,7 +97,7 @@ namespace DdMd
       /// Pointer to parent Simulation.
       Simulation* simulationPtr_;
 
-      // Arrays of modifiers for specific actions.
+      /// Arrays of modifiers for specific actions.
       GPArray<Modifier> setupModifiers_;
       GPArray<Modifier> preIntegrate1Modifiers_;
       GPArray<Modifier> postIntegrate1Modifiers_;

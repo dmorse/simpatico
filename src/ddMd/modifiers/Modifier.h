@@ -24,30 +24,41 @@ namespace DdMd
    *
    * The Modifier base class declares a variety of virtual "action" methods 
    * that may be re-implemented by subclasses to define actions that can
-   * modify the system, and that, if activated, should be executed as specific 
-   * points during, or after the main integration loop. The name of each such 
-   * action method describes when it will be invoked if activated. For example, 
-   * the postForce() method is invoked within the main integration loop 
-   * immediately after evaluation of all forces. 
+   * modify the system, each of which will be executed at a specific points 
+   * during or after the main integration loop. The name of each such action
+   * method describes when it will be invoked. For example, the postForce() 
+   * method will be invoked (if at all) immediately after evaluation of all 
+   * forces within the main integration loop. The Modifier base class 
+   * buffer declares several virtual communication methods that may be 
+   * reimplemented by sublcasses to pack additional information into the
+   * messages that are communicated between processors during exchange and
+   * update steps.
    *
-   * Each action method may be activated by setting a corresponding flag.
-   * Each action method is executed if and only if the corresponding flag
-   * has is set.  All flags are cleared in the base class constructor.
-   * Subclasses that implement specific methods must set the corresponding
-   * flag for each such method in the subclass constructor to activate all 
-   * re-implemented methods. 
+   * Each subclass of Modifier will generally implement only a few of many
+   * possible action and communication methods. To record which such methods 
+   * have been implemented, each subclass must "activate" each re-implemented
+   * method by invoking the set() method within its constructor, and 
+   * passing set() a named constant that identifies the name of the method.
+   * Thus, for example, a sublclass that provides an implementation of the
+   * virtual postForce() function should also invoke set(Flags::PostForce) 
+   * in its constructor. The constant Flags::PostForce and other named 
+   * constants are defined as static constant members of the Modifier::Flags 
+   * nested class. The name of the constant that is used to activate a
+   * corresponding virtual method is generally a capitalized version of 
+   * the name of the corresponding method.
    *
-   * Each Modifier also has an associated interval integer member. 
-   * An activated action method of an Modifier will be executed only on 
-   * time steps that are multiples of this interval. Different intervals 
-   * are not defined for different action methods: a single interval 
-   * value is defined for each Modifier object. The value of the interval 
-   * is initialized to 1 (every time step) in the base Modifier class 
-   * constructor, but may be reset to a greater value in the subclass 
-   * readParam method, by calling the protected readInterval() method.
+   * Each Modifier also has an associated interval integer member. An
+   * activated action method of a Modifier will be executed only on time 
+   * steps that are multiples of this interval. Each Modifier object has 
+   * a single interval value that applies to all action methods that it
+   * implements.  The value of the interval is initialized to 1 (once per 
+   * time step) in the base Modifier class constructor, but may be reset 
+   * in the subclass readParameters method by invoking the readInterval() 
+   * method.
    *
-   * The design of the Modifer class is inspired by the Lammps "Fix" 
-   * class, which it closely resembles. 
+   * The design of the Modifier class was inspired by the Lammps "Fix" 
+   * base class, which provides a very flexible framework for designing
+   * algorithms that can modify the state of a system.
    *
    * \ingroup DdMd_Modifier_Module
    */
@@ -71,10 +82,14 @@ namespace DdMd
       */
       virtual ~Modifier();
 
-      /// \name Setup and integration actions 
+      /**
+      * Setup before entering the main loop.
+      */ 
+      virtual void setup(){};
+
+      /// \name Integration action functions
       //@{ 
    
-      virtual void setup(){};
       virtual void preIntegrate1(long iStep) {};
       virtual void postIntegrate1(long iStep) {};
       virtual void preTransform(long iStep) {};
@@ -88,7 +103,7 @@ namespace DdMd
       virtual void endOfStep(long iStep) {};
 
       //@} 
-      /// \name Interprocessor communication actions 
+      /// \name Interprocessor communication action functions
       //@{ 
 
       virtual void packExchange() {};
@@ -144,7 +159,7 @@ namespace DdMd
       bool isSet(Bit flag) const;
 
       /**
-      * Return unsigned int representation of all bit flags.
+      * Return the unsigned int representation of all bit flags.
       */
       unsigned int flags() const;
 
@@ -196,6 +211,7 @@ namespace DdMd
 
    private:
 
+      /// Unsigned int that stores a bitmap of all flags (one per bit).
       unsigned int flags_;
 
       /// Number of simulation steps between subsequent actions.

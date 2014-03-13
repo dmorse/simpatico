@@ -105,6 +105,13 @@ namespace Util
       virtual void readParamOptional(std::istream &in);
 
       /**
+      * Read child blocks, return when closing bracket encountered.
+      *  
+      * \param in input stream
+      */ 
+      virtual void readParameters(std::istream &in);
+
+      /**
       * Load a set of objects to an output archive.
       *
       * \param ar input/loading archive
@@ -165,11 +172,6 @@ namespace Util
       * Read (or attempt to read) opening line: "ManagerName{"
       */
       void beginReadManager(std::istream& in);
-
-      /**
-      * Read child blocks, return when closing bracket encountered.
-      */ 
-      void readChildren(std::istream &in);
 
       /**
       * Add closing bracket to output format.
@@ -300,7 +302,7 @@ namespace Util
       setIsRequired(true);
       setIsActive(true);
       beginReadManager(in);
-      readChildren(in);
+      readParameters(in);
       endReadManager();
    }
 
@@ -314,7 +316,7 @@ namespace Util
       setIsActive(false);
       beginReadManager(in);
       if (isActive()) {
-         readChildren(in);
+         readParameters(in);
          endReadManager();
       }
    }
@@ -341,7 +343,7 @@ namespace Util
    * Read a sequence of child objects, return when closing bracket found.
    */
    template <typename Data>
-   void Manager<Data>::readChildren(std::istream &in)
+   void Manager<Data>::readParameters(std::istream &in)
    {
       // Check if a Factory exists, create one if necessary.
       initFactory();
@@ -371,7 +373,7 @@ namespace Util
 
       }
    }
-   
+
    /*
    * Add closing bracket.
    */
