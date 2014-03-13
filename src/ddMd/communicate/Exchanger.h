@@ -264,11 +264,11 @@ namespace DdMd
    // Inline methods.
 
    // Start internal timer (public).
-   void Exchanger::startTimer()
+   inline void Exchanger::startTimer()
    {  timer_.start(); }
 
    // Stop internal timer (public).
-   void Exchanger::stopTimer()
+   inline void Exchanger::stopTimer()
    {  timer_.stop(); }
 
    // Return internal timer by const reference (public).
