@@ -12,14 +12,12 @@ include $(SRC_DIR)/ddMd/tests/modifiers/sources.mk
 all: $(ddMd_tests_modifiers_OBJS)
 
 clean:
-	rm -f $(ddMd_tests_modifiers_OBJS) Test $(ddMd_tests_modifiers_OBJS:.o=.d)
+	rm -f $(ddMd_tests_modifiers_OBJS) 
+	rm -f $(ddMd_tests_modifiers_OBJS:.o=.d)
+	rm -f $(ddMd_tests_modifiers_OBJS:.o=)
 
 clean-deps:
 	rm -f $(ddMd_tests_modifiers_OBJS:.o=.d)
-
-#Test: Test.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
-#	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-#	       $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 
 -include $(ddMd_tests_modifiers_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)

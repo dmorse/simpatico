@@ -21,6 +21,13 @@ namespace DdMd
    /*
    * Constructor.
    */
+   ModifierFactory::ModifierFactory()
+    : simulationPtr_(0)
+   {}
+
+   /*
+   * Constructor.
+   */
    ModifierFactory::ModifierFactory(Simulation& simulation)
     : simulationPtr_(&simulation)
    {}
