@@ -16,6 +16,9 @@
 #include "configIos/ConfigIoTest.h"
 #include "communicate/CommunicateTestComposite.h"
 #include "neighbor/NeighborTestComposite.h"
+#ifdef DDMD_MODIFIERS
+#include "modifiers/ModifierTestComposite.h"
+#endif
 #include "simulation/SimulationTest.h"
 
 #include <test/CompositeTestRunner.h>
@@ -24,6 +27,9 @@ TEST_COMPOSITE_BEGIN(DdMdNsTestComposite)
 addChild(new ChemistryTestComposite, "chemistry/");
 addChild(new StorageTestComposite, "storage/");
 addChild(new NeighborTestComposite, "neighbor/");
+#ifdef DDMD_MODIFIERS
+addChild(new ModifierTestComposite, "modifiers/");
+#endif
 #ifdef TEST_MPI
 addChild(new TEST_RUNNER(ConfigIoTest), "configIos/");
 addChild(new CommunicateTestComposite, "communicate/");

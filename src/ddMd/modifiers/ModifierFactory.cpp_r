@@ -1,0 +1,57 @@
+#ifndef DDMD_MODIFIER_FACTORY_CPP
+#define DDMD_MODIFIER_FACTORY_CPP
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "ModifierFactory.h" // Class header
+
+// Modifiers 
+// #include "Modifier1.h"
+
+namespace DdMd
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor.
+   */
+   ModifierFactory::ModifierFactory()
+    : simulationPtr_(0)
+   {}
+
+   /*
+   * Constructor.
+   */
+   ModifierFactory::ModifierFactory(Simulation& simulation)
+    : simulationPtr_(&simulation)
+   {}
+
+   /* 
+   * Return a pointer to an instance of Modifier subclass className.
+   */
+   Modifier* ModifierFactory::factory(const std::string &className) const
+   {
+      Modifier* ptr = 0;
+
+      // Try subfactories first (if any)
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
+
+      #if 0
+      // Simulation Modifiers
+      if (className == "Modifier1") {
+         ptr = new Modifier1(simulation());
+      } // else 
+      #endif
+
+      return ptr;
+   }
+
+}
+#endif

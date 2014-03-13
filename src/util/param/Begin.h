@@ -9,6 +9,7 @@
 */
 
 #include <util/param/ParamComponent.h>
+#include <util/param/Label.h>
 
 #include <string>
 
@@ -28,28 +29,33 @@ namespace Util
       /**
       * Constructor.
       */
-      Begin(const char* label);
+      Begin(const char* label, bool isRequired = true);
 
       // Default destructor.
 
       /**
-      * Read a comment
+      * Read the opening line.
       *
       * \param in input stream
       */
       virtual void readParam(std::istream &in);
 
       /**
-      * Read a comment
+      * Write the opening line.
       *
       * \param out output stream
       */
       virtual void writeParam(std::ostream &out);
 
       /**
-      * Return comment string
+      * Is this the beginning line for a required element?
       */
-      std::string string();
+      bool isRequired() const;
+
+      /**
+      * Is this an active element (has it been read from file)?
+      */
+      bool isActive() const;
 
       /**
       * Do-nothing implementation of virtual resetParam function.
@@ -58,16 +64,25 @@ namespace Util
 
    private:
 
-      /// Classname string
-      std::string label_;
+      /// Classname label string (classname + "{")
+      Label label_;
+
+      /// Is this active (always true if isRequired).
+      bool isActive_;
 
    };
 
    /*
-   * Return comment string
+   * Is this the beginning line for a required element?
    */
-   inline std::string Begin::string()
-   {  return label_; }
+   inline bool Begin::isRequired() const
+   {  return label_.isRequired(); }
+
+   /*
+   * Is this element active (has it been read from file)?
+   */
+   inline bool Begin::isActive() const
+   {  return isActive_; }
 
 } 
 #endif

@@ -14,6 +14,7 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GroupStorage.tpp>
 #include <ddMd/communicate/Exchanger.h>
+#include <ddMd/analyzers/AnalyzerManager.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #ifdef INTER_BOND
 #include <ddMd/potentials/bond/BondPotential.h>

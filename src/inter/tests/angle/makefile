@@ -7,13 +7,12 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/tests/angle/sources.mk
 
-TEST=inter/tests/angle/Test
-
-all: $(inter_tests_angle_OBJS) $(OBJ_DIR)/$(TEST)
+all: $(inter_tests_angle_OBJS)
 
 clean:
-	rm -f $(inter_tests_angle_OBJS) $(inter_tests_angle_OBJS:.o=.d)
-	rm -f $(OBJ_DIR)/$(TEST) 
+	rm -f $(inter_tests_angle_OBJS) 
+	rm -f $(inter_tests_angle_OBJS:.o=.d)
+	rm -f $(inter_tests_angle_OBJS:.o=)
 
 -include $(inter_tests_angle_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)

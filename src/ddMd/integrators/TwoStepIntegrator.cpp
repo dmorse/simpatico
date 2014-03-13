@@ -12,6 +12,10 @@
 #include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/communicate/Exchanger.h>
+#ifdef DDMD_MODIFIERS
+#include <ddMd/modifiers/ModifierManager.h>
+#endif
+#include <ddMd/analyzers/AnalyzerManager.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/ensembles/BoundaryEnsemble.h>
 #include <util/misc/Log.h>
@@ -47,6 +51,12 @@ namespace DdMd
          UTIL_THROW("Error: Atom coordinates are Cartesian");
       }
 
+      // References to managers
+      #ifdef DDMD_MODIFIERS 
+      ModifierManager& modifierManager = simulation().modifierManager();
+      #endif
+      AnalyzerManager& analyzerManager = simulation().analyzerManager();
+
       // Unset all stored computations.
       simulation().modifySignal().notify();
 
@@ -54,10 +64,15 @@ namespace DdMd
       atomStorage().unsetNAtomTotal();
       atomStorage().computeNAtomTotal(domain().communicator());
 
-      // Setup required before main loop (ghosts, forces, etc)
-      // Atomic coordinates are Cartesian on exit from setup.
+      // Setup required before main loop (atoms, ghosts, groups, forces, etc)
+      // Atomic coordinates are Cartesian on exit from Integrator::setup().
+      // Atomic forces should be set on exit from Integrator::setup().
       setup();
-      simulation().analyzerManager().setup();
+      #ifdef DDMD_MODIFIERS 
+      modifierManager.setup();
+      timer().stamp(MODIFIERS);;
+      #endif
+      analyzerManager.setup();
 
       // Main MD loop
       timer().start();
@@ -73,7 +88,7 @@ namespace DdMd
          }
 
          // Sample analyzers, if scheduled.
-         simulation().analyzerManager().sample(iStep_);
+         analyzerManager.sample(iStep_);
 
          // Write restart file, if scheduled.
          if (saveInterval() > 0) {
@@ -85,6 +100,11 @@ namespace DdMd
          }
          timer().stamp(ANALYZER);
  
+         #ifdef DDMD_MODIFIERS 
+         modifierManager.preIntegrate1(iStep_);
+         timer().stamp(MODIFIERS);
+         #endif
+   
          // First step of integration: Update positions, half velocity 
          integrateStep1();
          timer().stamp(INTEGRATE1);
@@ -97,6 +117,11 @@ namespace DdMd
          simulation().isValid();
          #endif
 
+         #ifdef DDMD_MODIFIERS 
+         modifierManager.postIntegrate1(iStep_);
+         timer().stamp(MODIFIERS);
+         #endif
+   
          // Check if exchange and reneighboring is necessary
          needExchange = isExchangeNeeded(pairPotential().skin());
 
@@ -106,11 +131,30 @@ namespace DdMd
 
          // Exchange atoms if necessary
          if (needExchange) {
+
+            #ifdef DDMD_MODIFIERS 
+            modifierManager.preTransform(iStep_);
+            timer().stamp(MODIFIERS);
+            #endif
+      
+            // Exchange atom ownership, reidentify ghosts
             atomStorage().clearSnapshot();
             atomStorage().transformCartToGen(boundary());
             timer().stamp(Integrator::TRANSFORM_F);
             exchanger().exchange();
             timer().stamp(Integrator::EXCHANGE);
+
+            #ifdef DDMD_MODIFIERS 
+            modifierManager.preExchange(iStep_);
+            timer().stamp(MODIFIERS);
+            #endif
+      
+            #ifdef DDMD_MODIFIERS 
+            modifierManager.postExchange(iStep_);
+            timer().stamp(MODIFIERS);
+            #endif
+   
+            // Reneighbor - rebuild cell and neighbor lists
             pairPotential().buildCellList();
             timer().stamp(Integrator::CELLLIST);
             atomStorage().transformGenToCart(boundary());
@@ -118,9 +162,28 @@ namespace DdMd
             atomStorage().makeSnapshot();
             pairPotential().buildPairList();
             timer().stamp(Integrator::PAIRLIST);
-         } else {
+
+            #ifdef DDMD_MODIFIERS 
+            modifierManager.postNeighbor(iStep_);
+            timer().stamp(MODIFIERS);
+            #endif
+   
+         } else { // Update step (no exchange)
+
+            #ifdef DDMD_MODIFIERS 
+            modifierManager.preUpdate(iStep_);
+            timer().stamp(MODIFIERS);
+            #endif
+     
+            // Update all ghost atom positions 
             exchanger().update();
             timer().stamp(UPDATE);
+
+            #ifdef DDMD_MODIFIERS 
+            modifierManager.postUpdate(iStep_);
+            timer().stamp(MODIFIERS);
+            #endif
+   
          }
          simulation().exchangeSignal().notify();
    
@@ -133,6 +196,11 @@ namespace DdMd
             UTIL_THROW("Error: Atomic coordinates are not Cartesian");
          }
 
+         #ifdef DDMD_MODIFIERS 
+         modifierManager.preForce(iStep_);
+         timer().stamp(MODIFIERS);
+         #endif
+   
          // Calculate new forces for all local atoms. If constant pressure
          // ensembles (not rigid), calculate virial stress. Both methods 
          // send the modifyForce signal.
@@ -142,6 +210,11 @@ namespace DdMd
             computeForcesAndVirial();
          }
 
+         #ifdef DDMD_MODIFIERS 
+         modifierManager.postForce(iStep_);
+         timer().stamp(MODIFIERS);
+         #endif
+   
          // 2nd step of integration. This finishes the velocity update.
          // This method normally calls simulation().velocitySignal().notify()
          integrateStep2();
@@ -152,12 +225,17 @@ namespace DdMd
          simulation().isValid();
          #endif
 
+         #ifdef DDMD_MODIFIERS 
+         modifierManager.endOfStep(iStep_);
+         timer().stamp(MODIFIERS);
+         #endif
+
       }
       exchanger().stopTimer();
       timer().stop();
 
       // Final analyzers and restart file, if scheduled.
-      simulation().analyzerManager().sample(iStep_);
+      analyzerManager.sample(iStep_);
       if (saveInterval() > 0) {
          if (iStep_ % saveInterval() == 0) {
             simulation().save(saveFileName());

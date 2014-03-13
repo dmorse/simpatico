@@ -17,16 +17,17 @@
 # options takes 0 or 1 as a required argument, using 1 to denote "enable"
 # and 0 to denote "disable".
 #
-#   -m (0|1)   mpi parallelization      (defines/undefines UTIL_MPI)
-#   -g (0|1)   debugging                (defines/undefines UTIL_DEBUG)
-#   -b (0|1)   bond potentials          (defines/undefines INTER_ANGLE)
-#   -a (0|1)   angle potentials         (defines/undefines INTER_ANGLE)
-#   -d (0|1)   dihedral potentials      (defines/undefines INTER_DIHEDRAL)
-#   -e (0|1)   external potentials      (defines/undefines INTER_EXTERNAL)
-#   -l (0|1)   links (mutable bonds)    (defines/undefines MCMD_LINK)
-#   -s (0|1)   shift                    (defines/undefines MCMD_SHIFT)
-#   -f (0|1)   free energy perturbation (defines/undefines MCMD_PERTURB)
-#   -k (0|1)   dependency generation    (defines/undefines MAKEDEP)
+#   -m (0|1)   mpi parallelization         (defines/undefines UTIL_MPI)
+#   -g (0|1)   debugging                   (defines/undefines UTIL_DEBUG)
+#   -b (0|1)   bond potentials             (defines/undefines INTER_ANGLE)
+#   -a (0|1)   angle potentials            (defines/undefines INTER_ANGLE)
+#   -d (0|1)   dihedral potentials         (defines/undefines INTER_DIHEDRAL)
+#   -e (0|1)   external potentials         (defines/undefines INTER_EXTERNAL)
+#   -l (0|1)   McMd links (mutable bonds)  (defines/undefines MCMD_LINK)
+#   -s (0|1)   McMd shift                  (defines/undefines MCMD_SHIFT)
+#   -f (0|1)   McMd perturbation           (defines/undefines MCMD_PERTURB)
+#   -u (0|1)   DdMd modifiers              (defines/undefines DDMD_MODIFIERS)
+#   -k (0|1)   dependency generation       (defines/undefines MAKEDEP)
 #
 # Other Command Line Options:
 #
@@ -44,7 +45,7 @@
 #   >  ./configure -h intel
 #
 #-----------------------------------------------------------------------
-while getopts "m:g:b:a:d:e:f:l:s:k:c:h:q" opt; do
+while getopts "m:g:b:a:d:e:f:l:s:u:k:c:h:q" opt; do
 
   if [ -n "$MACRO" ]; then 
     MACRO=""
@@ -98,6 +99,11 @@ while getopts "m:g:b:a:d:e:f:l:s:k:c:h:q" opt; do
       MACRO=MCMD_SHIFT
       VALUE=1
       FILE=mcMd/config.mk
+      ;;
+    u)
+      MACRO=DDMD_MODIFIERS
+      VALUE=1
+      FILE=ddMd/config.mk
       ;;
     k)
       case $OPTARG in
@@ -164,21 +170,26 @@ while getopts "m:g:b:a:d:e:f:l:s:k:c:h:q" opt; do
          echo "-e OFF - external potential" >&2
       fi
       if [ `grep "^ *MCMD_LINK *= *1" mcMd/config.mk` ]; then
-         echo "-l ON  - links (mutable bonds)" >&2
+         echo "-l ON  - McMd links (mutable bonds)" >&2
       else
-         echo "-l OFF - links (mutable bonds)" >&2
+         echo "-l OFF - McMd links (mutable bonds)" >&2
       fi
       if [ `grep "^ *MCMD_SHIFT *= *1" mcMd/config.mk` ]; then
-         echo "-s ON  - shift" >&2
+         echo "-s ON  - McMd shift" >&2
       else
-         echo "-s OFF - shift" >&2
+         echo "-s OFF - McMd shift" >&2
       fi
       if [ -n "$MPI" ]; then
          if [ `grep "^ *MCMD_PERTURB *= *1" mcMd/config.mk` ]; then
-            echo "-f ON  - free energy perturbation" >&2
+            echo "-f ON  - McMd free energy perturbation" >&2
          else
-            echo "-f OFF - free energy perturbation" >&2
+            echo "-f OFF - McMd free energy perturbation" >&2
          fi
+      fi
+      if [ `grep "^ *DDMD_MODIFIERS *= *1" ddMd/config.mk` ]; then
+         echo "-u ON  - DdMd modifiers" >&2
+      else
+         echo "-u OFF - DdMd modifiers" >&2
       fi
       if [ `grep "^ *MAKEDEP" config.mk` ]; then
          echo "-k ON  - automatic dependency tracking" >&2

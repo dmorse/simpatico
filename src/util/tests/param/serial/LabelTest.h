@@ -18,10 +18,12 @@ class LabelTest : public UnitTest
 public:
 
    void setUp()
-   { }
+   { 
+      Label::clear();
+   }
 
    void tearDown()
-   { }
+   {}
 
    void testLabelConstructor1() 
    {
@@ -62,6 +64,7 @@ public:
       in.close();
    }
 
+   #ifndef UTIL_MPI
    void testExtractor3() 
    {
       printMethod(TEST_FUNC);
@@ -81,6 +84,7 @@ public:
       }
       in.close();
    }
+   #endif
 
    void testInserter() 
    {
@@ -99,7 +103,9 @@ TEST_ADD(LabelTest, testLabelConstructor1)
 TEST_ADD(LabelTest, testLabelConstructor2)
 TEST_ADD(LabelTest, testExtractor1)
 TEST_ADD(LabelTest, testExtractor2)
+#ifndef UTIL_MPI
 TEST_ADD(LabelTest, testExtractor3)
+#endif
 TEST_ADD(LabelTest, testInserter)
 TEST_END(LabelTest)
 

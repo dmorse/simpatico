@@ -306,4 +306,51 @@
    
    };
 
+   class BComposite : public ParamComposite
+   {
+   
+   public:
+   
+      BComposite()
+      {  
+         setClassName("BComposite");
+      }
+   
+      virtual void readParameters(std::istream& in)
+      {
+         read<int>(in, "value0", value0_);
+         read<int>(in, "optInt", optInt_, false);
+         read<long>(in, "value1", value1_);
+         read<double>(in, "value2", value2_);
+         read<std::string>(in, "str", str_);
+      }
+   
+      virtual void loadParameters(Serializable::IArchive& ar)
+      {
+         loadParameter<int>(ar, "value0", value0_);
+         loadParameter<int>(ar, "optInt", optInt_, false); // optional
+         loadParameter<long>(ar, "value1", value1_);
+         loadParameter<double>(ar, "value2", value2_);
+         loadParameter<std::string>(ar, "str", str_);
+      }
+
+      virtual void save(Serializable::OArchive& ar) 
+      {
+         ar & value0_;
+         Parameter::saveOptional(ar, optInt_, false);
+         ar & value1_;
+         ar & value2_;
+         ar & str_;
+      }
+
+   private:
+   
+      int     value0_;
+      int     optInt_;
+      long    value1_;
+      double  value2_;
+      std::string str_;
+   
+   };
+
 #endif

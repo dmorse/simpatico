@@ -48,7 +48,7 @@ namespace DdMd
       // Non-static Methods
 
       /**
-      * Default constructor.
+      * Constructor.
       */
       Analyzer(Simulation& simulation);
 

@@ -37,6 +37,8 @@ namespace McMd
    */
    void AnalyzerManager::readParam(std::istream &in)
    {
+      setIsRequired(true);
+      setIsActive(true);
       beginReadManager(in);
       read<long>(in,"baseInterval", Analyzer::baseInterval);
       readChildren(in);

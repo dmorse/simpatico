@@ -57,6 +57,10 @@ Simulation{
   AnalyzerManager{
      baseInterval     100
 
+     LogEnergy{
+        interval        1000
+     }
+
      OutputEnergy{
         interval         1000
         outputFileName   energy

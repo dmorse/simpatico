@@ -11,7 +11,7 @@ include $(SRC_DIR)/ddMd/tests/sources.mk
 
 TEST=ddMd/tests/Test
 
-all: $(ddMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
+all: $(ddMd_tests_OBJS)
 
 run: $(ddMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
 	$(MPIRUN) 6 $(OBJ_DIR)/$(TEST) $(SRC_DIR)/ddMd/tests/ > log

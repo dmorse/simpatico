@@ -36,7 +36,10 @@ class ParamCompositeTest : public UnitTest
 public:
 
    void setUp()
-   {}
+   {
+      Label::clear();
+      ParamComponent::setEcho(false);
+   }
 
    void testConstructor() 
    {}
@@ -92,7 +95,7 @@ public:
    }
    #endif
 
-   void testReadWrite() 
+   void testReadWrite1() 
    {
       printMethod(TEST_FUNC);
       int     value0;
@@ -137,6 +140,25 @@ public:
 
       printEndl();
       paramComposite_.writeParam(std::cout);
+   }
+
+   void testReadWrite2() 
+   {
+      printMethod(TEST_FUNC);
+
+      ParamComponent::setEcho(true);
+      if (ParamComponent::echo()) std::cout << std::endl;
+
+      BComposite bcomp;
+      AComposite acomp;
+
+      openInputFile("in/ParamComposite", file_);
+      bcomp.readParamOptional(file_);
+      acomp.readParam(file_);
+
+      printEndl();
+      bcomp.writeParam(std::cout);
+      acomp.writeParam(std::cout);
    }
 
    void testSaveLoadWrite() 
@@ -339,7 +361,12 @@ public:
 
       openInputFile("in/ParamComposite", file_);
 
+      ParamComponent::setEcho(true);
+      printEndl();
+
+      BComposite absent;
       AComposite original;
+      absent.readParamOptional(file_);
       original.readParam(file_);
 
       // printEndl();
@@ -347,17 +374,20 @@ public:
 
       Serializable::OArchive oar;
       openOutputFile("out/save1.bin", oar.file());
+      absent.saveOptional(oar);
       original.save(oar);
       oar.file().close();
 
+      BComposite absentClone;
       AComposite clone;
       Serializable::IArchive iar;
       openInputFile("out/save1.bin", iar.file());
+      absentClone.loadOptional(iar);
       clone.load(iar);
 
       printEndl();
+      absentClone.writeParam(std::cout);
       clone.writeParam(std::cout);
-
    }
 
    void testMemoryArchiveSerialize() 
@@ -393,7 +423,8 @@ public:
 TEST_BEGIN(ParamCompositeTest)
 TEST_ADD(ParamCompositeTest, testConstructor)
 //TEST_ADD(ParamCompositeTest, testAddWrite)
-TEST_ADD(ParamCompositeTest, testReadWrite)
+TEST_ADD(ParamCompositeTest, testReadWrite1)
+TEST_ADD(ParamCompositeTest, testReadWrite2)
 TEST_ADD(ParamCompositeTest, testSaveLoadWrite)
 TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite1)
 TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite2)

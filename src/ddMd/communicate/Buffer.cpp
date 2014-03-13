@@ -315,6 +315,7 @@ namespace DdMd
       recvType_ = NONE;
    }
 
+   #ifdef UTIL_MPI
    /*
    * Send and receive buffer.
    */
@@ -442,6 +443,7 @@ namespace DdMd
       }
 
    }
+   #endif
 
    /*
    * Compute maximum message size among all processors.

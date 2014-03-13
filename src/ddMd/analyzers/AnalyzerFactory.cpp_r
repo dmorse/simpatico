@@ -17,6 +17,8 @@
 #include "WriteConfig.h"
 #include "OutputEnergy.h"
 #include "OutputPressure.h"
+#include "OutputStressTensor.h"
+#include "VirialStressTensorAverage.h"
 #include "OutputBoxdim.h"
 #include "OutputTemperature.h"
 #include "OutputPairEnergies.h"
@@ -59,6 +61,12 @@ namespace DdMd
       } else 
       if (className == "OutputPressure") {
          ptr = new OutputPressure(simulation());
+      } else
+      if (className == "OutputStressTensor") {
+         ptr = new OutputPressure(simulation());
+      } else
+      if (className == "VirialStressTensorAverage") {
+         ptr = new VirialStressTensorAverage(simulation());
       } else
       if (className == "OutputBoxdim") {
          ptr = new OutputBoxdim(simulation());
