@@ -173,6 +173,15 @@ namespace Util
       virtual void load(Serializable::IArchive &ar);
 
       /**
+      * Load an optional ParamComposite.
+      *
+      * Loads isActive, and calls load(ar) if active.
+      *
+      * \param ar input/loading archive.
+      */
+      virtual void loadOptional(Serializable::IArchive &ar);
+
+      /**
       * Load state from archive, without adding Begin and End lines.
       *
       * This default implementation is empty, and should be re-implemented

@@ -148,6 +148,39 @@ namespace Util
    }
 
    /*
+   * Load an optional object.
+   */
+   void ParamComposite::loadOptional(Serializable::IArchive& ar)
+   {
+      if (isIoProcessor()) {
+         ar & isActive_;
+         if (!isActive_) {
+            if (ParamComponent::echo()) {
+               Log::file() << indent() 
+                           << className() << "{ [absent] }"
+                           << std::endl; 
+            }
+         }
+      } else {
+         #ifdef UTIL_MPI
+         if (!hasIoCommunicator()) {
+            UTIL_THROW("Error: not isIoProcessor and not hasIoCommunicator");
+         }
+         #else
+         UTIL_THROW("Error: not isIoProcessor and no MPI");
+         #endif
+      }
+      #ifdef UTIL_MPI
+      if (hasIoCommunicator()) {
+         bcast<bool>(ioCommunicator(), isActive_, 0); 
+      }
+      #endif
+      if (isActive_) {
+         load(ar);
+      }
+   }
+
+   /*
    * Default save implementation.
    */
    void ParamComposite::save(Serializable::OArchive& ar)
@@ -162,7 +195,7 @@ namespace Util
    */
    void ParamComposite::saveOptional(Serializable::OArchive& ar)
    {
-      ar << isActive_;
+      ar & isActive_;
       if (isActive_) {
          save(ar);
       }
@@ -263,8 +296,8 @@ namespace Util
          ar >> isActive_;
          if (!isActive_) {
             if (ParamComponent::echo()) {
-               Log::file() << indent() 
-                           << "[ absent " << className() << "{ } ]"
+               Log::file() << child.indent() 
+                           << child.className() << "{ [absent] }"
                            << std::endl;
             }
          }

@@ -36,7 +36,10 @@ class ParamCompositeTest : public UnitTest
 public:
 
    void setUp()
-   {}
+   {
+      Label::clear();
+      ParamComponent::setEcho(false);
+   }
 
    void testConstructor() 
    {}
@@ -358,7 +361,12 @@ public:
 
       openInputFile("in/ParamComposite", file_);
 
+      ParamComponent::setEcho(true);
+      printEndl();
+
+      BComposite absent;
       AComposite original;
+      absent.readParamOptional(file_);
       original.readParam(file_);
 
       // printEndl();
@@ -366,17 +374,20 @@ public:
 
       Serializable::OArchive oar;
       openOutputFile("out/save1.bin", oar.file());
+      absent.saveOptional(oar);
       original.save(oar);
       oar.file().close();
 
+      BComposite absentClone;
       AComposite clone;
       Serializable::IArchive iar;
       openInputFile("out/save1.bin", iar.file());
+      absentClone.loadOptional(iar);
       clone.load(iar);
 
       printEndl();
+      absentClone.writeParam(std::cout);
       clone.writeParam(std::cout);
-
    }
 
    void testMemoryArchiveSerialize() 

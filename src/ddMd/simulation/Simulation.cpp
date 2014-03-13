@@ -733,7 +733,7 @@ namespace DdMd
          UTIL_THROW("msg.c_str()");
       }
       #ifdef DDMD_MODIFIERS
-      loadParamComposite(ar, *modifierManagerPtr_);
+      loadParamCompositeOptional(ar, *modifierManagerPtr_);
       #endif
       loadParamComposite(ar, random_);
       loadParamComposite(ar, *analyzerManagerPtr_);
@@ -890,13 +890,13 @@ namespace DdMd
       }
       #endif
 
-      // Save ensembles, integrator, random, analyzers
+      // Save ensembles, integrator, modifiers, random, analyzers
       saveEnsembles(ar);
       std::string name = integrator().className();
       ar << name;
       integrator().save(ar);
       #ifdef DDMD_MODIFIERS
-      modifierManager().save(ar);
+      modifierManager().saveOptional(ar);
       #endif
       random_.save(ar);
       analyzerManager().save(ar);
