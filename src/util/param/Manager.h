@@ -94,6 +94,17 @@ namespace Util
       virtual void readParam(std::istream &in);
 
       /**
+      * Optioanlly read and create a set of objects.
+      *
+      * Equivalent to readParam(), except that this function does
+      * nothing if the first line does not match the expected label,
+      * whereas readParam() throws an Exception
+      *
+      * \param in input stream
+      */
+      virtual void readParamOptional(std::istream &in);
+
+      /**
       * Load a set of objects to an output archive.
       *
       * \param ar input/loading archive
@@ -286,6 +297,8 @@ namespace Util
    template <typename Data>
    void Manager<Data>::readParam(std::istream &in)
    {
+      setIsRequired(true);
+      setIsActive(true);
       beginReadManager(in);
       readChildren(in);
       endReadManager();
@@ -295,10 +308,28 @@ namespace Util
    * Read instructions for creating objects from file.
    */
    template <typename Data>
+   void Manager<Data>::readParamOptional(std::istream &in)
+   {
+      setIsRequired(false);
+      setIsActive(false);
+      beginReadManager(in);
+      if (isActive()) {
+         readChildren(in);
+         endReadManager();
+      }
+   }
+
+   /*
+   * Read instructions for creating objects from file.
+   */
+   template <typename Data>
    void Manager<Data>::beginReadManager(std::istream &in)
    {
       std::string managerName = ParamComposite::className();
-      readBegin(in, managerName.c_str());
+      Begin& begin = readBegin(in, managerName.c_str(), isRequired());
+      if (!isRequired() && begin.isActive()) {
+         setIsActive(true);
+      }
    }
 
    /*

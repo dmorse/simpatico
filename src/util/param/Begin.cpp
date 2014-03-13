@@ -51,6 +51,11 @@ namespace Util
          } else {
             // If label does not match and this isOptional
             isActive_ = false;
+            if (ParamComponent::echo()) {
+               Log::file() << indent() 
+                           << label_.string() << " [absent] }"
+                           << std::endl; 
+            }
          }
       } else {
          #ifdef UTIL_MPI

@@ -92,7 +92,7 @@ public:
    }
    #endif
 
-   void testReadWrite() 
+   void testReadWrite1() 
    {
       printMethod(TEST_FUNC);
       int     value0;
@@ -137,6 +137,25 @@ public:
 
       printEndl();
       paramComposite_.writeParam(std::cout);
+   }
+
+   void testReadWrite2() 
+   {
+      printMethod(TEST_FUNC);
+
+      ParamComponent::setEcho(true);
+      if (ParamComponent::echo()) std::cout << std::endl;
+
+      BComposite bcomp;
+      AComposite acomp;
+
+      openInputFile("in/ParamComposite", file_);
+      bcomp.readParamOptional(file_);
+      acomp.readParam(file_);
+
+      printEndl();
+      bcomp.writeParam(std::cout);
+      acomp.writeParam(std::cout);
    }
 
    void testSaveLoadWrite() 
@@ -393,7 +412,8 @@ public:
 TEST_BEGIN(ParamCompositeTest)
 TEST_ADD(ParamCompositeTest, testConstructor)
 //TEST_ADD(ParamCompositeTest, testAddWrite)
-TEST_ADD(ParamCompositeTest, testReadWrite)
+TEST_ADD(ParamCompositeTest, testReadWrite1)
+TEST_ADD(ParamCompositeTest, testReadWrite2)
 TEST_ADD(ParamCompositeTest, testSaveLoadWrite)
 TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite1)
 TEST_ADD(ParamCompositeTest, testReadSaveLoadWrite2)

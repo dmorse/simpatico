@@ -28,10 +28,10 @@ namespace Util
       list_(),
       isLeaf_(),
       size_(0),
-      className_()
-   {
-      setClassName("ParamComposite");
-   }
+      className_("ParamComposite"),
+      isRequired_(true),
+      isActive_(true)
+   {}
 
    /*
    * Constructor.
@@ -41,7 +41,9 @@ namespace Util
       list_(),
       isLeaf_(),
       size_(0),
-      className_("ParamComposite")
+      className_("ParamComposite"),
+      isRequired_(true),
+      isActive_(true)
    {
       if (capacity <= 0 ) {
          UTIL_THROW("Attempt to reserve capacity <= 0");
@@ -58,7 +60,9 @@ namespace Util
       list_(),
       isLeaf_(),
       size_(0),
-      className_(other.className_)
+      className_(other.className_),
+      isRequired_(true),
+      isActive_(true)
    {}
 
    /*
@@ -82,14 +86,32 @@ namespace Util
    }
 
    /*
-   * Read parameter block, including begin and end.
+   * Read required parameter block, including begin and end.
    */
    void ParamComposite::readParam(std::istream &in)
    {
       assert(className_.size() > 0);
+      isRequired_ = true;
+      isActive_ = true;
       readBegin(in, className_.c_str());
       readParameters(in);
       readEnd(in);
+   }
+
+   /*
+   * Read optional parameter block, including begin and end.
+   */
+   void ParamComposite::readParamOptional(std::istream &in)
+   {
+      assert(className_.size() > 0);
+      isRequired_ = false;
+      isActive_ = false;
+      Begin& begin = readBegin(in, className_.c_str(), isRequired_);
+      if (begin.isActive()) {
+         readParameters(in);
+         readEnd(in);
+         isActive_ = true;
+      }
    }
 
    /*
@@ -97,8 +119,10 @@ namespace Util
    */
    void ParamComposite::writeParam(std::ostream &out)
    {
-      for (int i=0; i < size_; ++i) {
-         list_[i]->writeParam(out);
+      if (isActive_) {
+         for (int i=0; i < size_; ++i) {
+            list_[i]->writeParam(out);
+         }
       }
    }
 
@@ -130,6 +154,17 @@ namespace Util
    {
       for (int i=0; i < size_; ++i) {
          list_[i]->save(ar);
+      }
+   }
+
+   /*
+   * Save this optional ParamComposite.
+   */
+   void ParamComposite::saveOptional(Serializable::OArchive& ar)
+   {
+      ar << isActive_;
+      if (isActive_) {
+         save(ar);
       }
    }
 
@@ -195,6 +230,17 @@ namespace Util
    }
 
    /*
+   * Add an optional ParamComposite Node, and attempt to read contents.
+   */
+   void
+   ParamComposite::readParamCompositeOptional(std::istream &in, 
+                                              ParamComposite &child, bool next)
+   {
+      addParamComposite(child, next);
+      child.readParamOptional(in);
+   }
+
+   /*
    * Add a ParamComposite Node, and load the contents of that ParamComposite.
    */
    void
@@ -203,6 +249,42 @@ namespace Util
    {
       addParamComposite(child, next);
       child.load(ar);
+   }
+
+   /*
+   * Add a optional ParamComposite Node, and load contents if isActive.
+   */
+   void
+   ParamComposite::loadParamCompositeOptional(Serializable::IArchive &ar, 
+                                      ParamComposite &child, bool next)
+   {
+      addParamComposite(child, next);
+      if (isIoProcessor()) {
+         ar >> isActive_;
+         if (!isActive_) {
+            if (ParamComponent::echo()) {
+               Log::file() << indent() 
+                           << "[ absent " << className() << "{ } ]"
+                           << std::endl;
+            }
+         }
+      } else {
+         #ifdef UTIL_MPI
+         if (!hasIoCommunicator()) {
+            UTIL_THROW("Error: not isIoProcessor and !hasIoCommunicator");
+         }
+         #else
+         UTIL_THROW("Error: not isIoProcessor and no MPI");
+         #endif
+      }
+      #ifdef UTIL_MPI
+      if (hasIoCommunicator()) {
+         bcast<bool>(ioCommunicator(), isActive_, 0); 
+      }
+      #endif
+      if (isActive_) {
+         child.load(ar);
+      }
    }
 
    // Begin
@@ -284,6 +366,18 @@ namespace Util
    */
    void ParamComposite::setClassName(const char * className)
    {  className_ = className; }
+
+   /*
+   * Set or unset the isActive flag.
+   */
+   void ParamComposite::setIsRequired(bool isRequired)
+   { isRequired_ = isRequired; }
+
+   /*
+   * Set or unset the isActive flag.
+   */
+   void ParamComposite::setIsActive(bool isActive)
+   { isActive_ = isActive; }
 
 }
 #endif

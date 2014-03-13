@@ -541,7 +541,7 @@ namespace DdMd
          UTIL_THROW("msg.c_str()");
       }
       #ifdef DDMD_MODIFIERS
-      readParamComposite(in, *modifierManagerPtr_);
+      readParamCompositeOptional(in, *modifierManagerPtr_);
       #endif
       readParamComposite(in, random_);
       readParamComposite(in, *analyzerManagerPtr_);
