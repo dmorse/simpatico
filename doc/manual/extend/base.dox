@@ -33,8 +33,9 @@ The BondPotential, AnglePotential, DihedralPotential, and ExternalPotential clas
 The base classes used by the ddSim parallel MD program are defined in the DdMd namespace. Many of them have names that are similar or identical to names of analogous classes in the McMd namespace. They include:
 <ul>
  <li> DdMd::Integrator, a parallel MD integration algorithm </li>
+ <li> DdMd::Modifier, a object that can modify the system during integration </li>
  <li> DdMd::Analyzer, a data analysis or output operation </li>
- <li> DdMd::ConfigIo,   a configuration file format </li>
+ <li> DdMd::ConfigIo, a configuration file format </li>
 </ul>
 and potential energy classes
 <ul>
