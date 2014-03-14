@@ -59,10 +59,6 @@ The implementation of each covalent potential energy class uses an associated st
 
 See also: \ref DdMd_Potential_Module "Potential Module"
 
-\section DdMd_Integrator_sec Molecular dynamics integrators
-
-DdMd molecular dynamics integration algorithms are represented by subclasses of Integrator.  Each Integrator implements a method run(int nStep) method that runs a simulation of a prescribed number of steps.  An Integrator may store internal state variables that are specific to the algorithm and that must be retained between steps. 
-
 \section DdMd_communicate_sec Interprocessor communication
 
 The src/ddMd/communicate directory contains a set of classes that are used to communicate between processors, to transfer ownership of atoms and groups between processors, and to update positions of ghosts. 
@@ -73,40 +69,56 @@ The AtomDistributor, AtomCollector classes, and the GroupDistributor < N > and G
 
 The Buffer class provides an interface for blocks of memory that are used for MPI communication. The Buffer class is used by all of the other communication classes discussed above.
 
+\section DdMd_Integrator_sec Molecular dynamics integrators
+
+DdMd molecular dynamics integration algorithms are represented by subclasses of Integrator.  Each Integrator implements a method run(int nStep) method that runs a simulation of a prescribed number of steps.  An Integrator may store internal state variables that are specific to the algorithm and that must be retained between steps. 
+
+\section DdMd_Analyzer_sec Data Analysis 
+
+The src/ddMd/analyzer directory contains a set of classes that are used for data analysis. DdMd::Analyzer is an abstract base class for classes that implement data analysis and/or data output operations. AnalyzerManager is a container for all of the Analyzer objects associated with a particular simulation. 
+
+\section DdMd_Modifier_sec Modifier Algorithms
+
+The src/ddMd/analyzer directory contains a set of classes that can be used to modify the MD integration algorithm by modifying the state of the system during the integration loop. Analyzer is an abstract base class for classes that implement algorithms that modify the system. ModifierManager is a container for Modifier objects.
+
 \section DdMd_Simulation_sec Simulation
 
 A Simulation object is the top level object in a DdMd simulation.  There is no distinction in the DdMd namespace between a "System" and a "Simulation". Every Simulation has:
  
-   - An AtomStorage that stores both local and ghost atoms
+   - an AtomStorage that stores both local and ghost atoms
     
-   - GroupStorage < N > objects that can store bonds, angles and dihedrals
+   - GroupStorage < N > objects that can store bonds (N=2), angles (N=3), and dihedrals (N=4)
 
-   - A set of potential energy classes for nonbonded, bonded, and external potentials
+   - a set of potential energy classes for nonbonded, bonded, and external potentials
 
    - a Util::Boundary object, which defines periodic boundary conditions
 
-   - a Util::EnergyEnsemble object
+   - a Util::EnergyEnsemble object, which defines the energy ensemble
 
-   - a Util::BoundaryEnsemble object
+   - a Util::BoundaryEnsemble object, which defines the volume/pressure ensemble
 
-   - An Integrator, which integrates the equations of motion
+   - an Integrator, which integrates the equations of motion
 
-   - A Domain, which defines the spatial decomposition
+   - a Domain, which defines the spatial decomposition among processors
 
-   - An Exchanger, which implements interprocessor communication
+   - an Exchanger, which implements interprocessor communication
 
-   - A ConfigIo, which read and write configuration files
+   - a ConfigIo, which read and write configuration files
 
-   - A Buffer to provide memory for communication
+   - a Buffer to provide memory for communication
 
-   - A Util::Random random number generator object
+   - a Util::Random random number generator object
+
+   - an AnalyzerManager container for associated Analyzer data analysis objects
+
+   - an ModifierManager container for associated Modifier objects
 
 See also: \ref DdMd_Simulation_Module "Simulation Module"
 
 <BR>
 \ref McMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_page  (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref extend_page  (Next)    
+\ref extend_page  (Next)
 
 */
 } 
