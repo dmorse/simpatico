@@ -4,17 +4,15 @@
 \ref inter_page  (Next)
 <BR>
 
-A set of examples are provided with Simpatico in the examples/ 
-directory. Examining and running these examples is the easiest
-way to start becoming familiar with the program.
+Input files for a set of example simulations are provided with Simpatico in the simpatico/examples/ directory. Examining and running these examples is the easiest way to become familiar with the program.
 
-\section examples_subdirectories_sec Directory structure
+\section examples_subdirectories_sec Examples Directory Tree
 
-Subdirectories of the examples/ directory contain different types of examples that use different features of Simpatico.  Some directories contain examples that are designed to work with versions of the code enabled or disabled by preprocessor macros.  The file examples/README describes the examples in different subdirectories, and explains which features must be enabled or disabled at compile time run the examples in each subdirectory.  The examples in the atomic/, dimer/ and chain/ subdirectories are designed to work with the default versions of the code, which contains only nonbonded pair and covalent bond potentials, but no angle, dihedral or external potentials.  Many subdirectories also contain README files that explain their contents in greater detail.  Subdirectories that contain similar examples designed for use with mcSim, mdSim and ddSim are often labelled mc/, md/ and dd/, respectively.
+Subdirectories of the examples/ directory contain different types of examples that use different features of Simpatico.  Some directories contain examples that are designed to work with versions of the code enabled or disabled by preprocessor macros.  The file examples/README describes the examples in different subdirectories, and explains which features must be enabled or disabled at compile time run the examples in each subdirectory.  The examples in the atomic/, dimer/, homopolymer/, blend/ and diblock/ subdirectories are designed to work with the default versions of the code, which contains no angle, dihedral or external potentials.  Many subdirectories also contain README files that explain their contents in greater detail.  Subdirectories that contain similar examples designed for use with mcSim, mdSim and ddSim are often labelled mc/, md/ and dd/, respectively.
 
-\section examples_layout_sec Example layout
+\section examples_layout_sec Typical File Layout
 
-The input files for each example are in a separate directory.  In the simplest examples for the single-processor versions of mcSim and mdSim, the parameter file is named "param" and the command file is named "commands". In some examples, the parameter file and command file names also have suffixes that denote which version of the program they should be used with, as explained in detail in the file examples/README.
+The input files for each example are in a separate directory.  In the simplest examples, the parameter file is named "param" and the command file is named "commands". In some examples, the parameter file and command file names also have suffixes that denote which version of the program they should be used with, as explained in detail in the file examples/README.
 
 The directory structure for the simplest example directories looks like this:
 \code
@@ -31,7 +29,7 @@ Here, in/config is the input configuration file that is used to initialize the s
 
 All of the output files except restart files are written to a subdirectory out/ of the directory containing the example.  Most of the files that are created in the out/ directory are created by analyzers that are declared in the parameter file. The parameter file required for this directory structure would define inputPrefix = in/ and outputPrefix = out/.
 
-When two or more examples use the same input configuration file, the input configuration file may instead be in a subdirectory named in/ of the parent directory of the example directories.
+When two or more examples use the same input configuration file, the input configuration file may instead be in a subdirectory named in/ of the common parent directory of the directories that contain these examples.
 
 \section examples_usage_sec Usage
 

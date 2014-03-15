@@ -47,7 +47,7 @@ Each storage provides an interface for adding and removing Atom or Group objects
 
 See also: \ref DdMd_Storage_Module "Storage Module"
 
-\section DdMd_Potential_sec Potential energies
+\section DdMd_Potential_sec Potential energy classes
 
 The "potential" classes in the DdMd namespace are closely analogous to those in the McMd namespace: Each potential class is a polymorphic classes that provide virtual methods to calculate specific contributions to energies and atomic forces for an entire System. The classes PairPotential, BondPotential, AnglePotential, DihedralPotential and ExternalPotential in the DdMd namespace provide interfaces for nonbonded pair, bond, angle, dihedral, and external potentials, respectively. Each potential energy class provides an addForces() method that adds forces arising from the corresponding potential energy to every local atom on this processor. 
 
@@ -73,13 +73,13 @@ The Buffer class provides an interface for blocks of memory that are used for MP
 
 DdMd molecular dynamics integration algorithms are represented by subclasses of Integrator.  Each Integrator implements a method run(int nStep) method that runs a simulation of a prescribed number of steps.  An Integrator may store internal state variables that are specific to the algorithm and that must be retained between steps. 
 
+\section DdMd_Modifier_sec Modifier algorithms
+
+The src/ddMd/modifier directory contains a set of classes that can be used to modify the basic integration algorithm by periodically modifying the state of the system during integration. Modifier is an abstract base class for classes that implement such algorithms. ModifierManager is a container for Modifier objects. Modifiers are disabled by default, but may be enabled by invoking ./configure -u1. 
+
 \section DdMd_Analyzer_sec Data Analysis 
 
 The src/ddMd/analyzer directory contains a set of classes that are used for data analysis. DdMd::Analyzer is an abstract base class for classes that implement data analysis and/or data output operations. AnalyzerManager is a container for all of the Analyzer objects associated with a particular simulation. 
-
-\section DdMd_Modifier_sec Modifier Algorithms
-
-The src/ddMd/analyzer directory contains a set of classes that can be used to modify the MD integration algorithm by modifying the state of the system during the integration loop. Analyzer is an abstract base class for classes that implement algorithms that modify the system. ModifierManager is a container for Modifier objects.
 
 \section DdMd_Simulation_sec Simulation
 
@@ -111,7 +111,7 @@ A Simulation object is the top level object in a DdMd simulation.  There is no d
 
    - an AnalyzerManager container for associated Analyzer data analysis objects
 
-   - an ModifierManager container for associated Modifier objects
+   - an ModifierManager container for associated Modifier objects (if enabled at compile time).
 
 See also: \ref DdMd_Simulation_Module "Simulation Module"
 

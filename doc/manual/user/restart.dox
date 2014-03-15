@@ -4,13 +4,13 @@
 \ref user_multi_page (Next)
 <BR>
 
-The -r command line option can be used to restart mcSim, mdSim, or ddSim simulation from a binary restart file. This allows a user to either recover from a failure (caused, e.g., by a hardware failure or a wall-clock limit on a queue) or to continue a simulation that completed successfully. 
+All simpatico simulation programs can be restarted from a binary restart file, if such a  restart files was output periodically during the original simulation. The option to restart is designed to allow a user to either recover from a failure (caused, e.g., by a hardware failure or a wall-clock limit on a queue) or to continue a simulation that completed successfully. 
 
 A restart file preserves the full internal state of a simulation. This includes a great deal of information that is not preserved in a configuration file, including the internal state of statistical accumulators used by on-the-fly analyzers, the internal state of some MD integrators that are based on an extended dynamical system (e.g., Nose-Hoover), and the state of the random number generator. It is designed to allow the simulation to continue as if had not been interrupted. 
 
 \section user_restart_page_restart Writing restart files
 
-For a simulation to be restartable, the original run must periodically write a restart file.  Each time a restart file is written, the previous version of the file is overwritten, so that only the most recent verion is available at any instant. The interval (number of time steps) between subsequent file writes is given in the parameter file by an integer parameter named "saveInterval". Output of the restart file may be completely suppressed by setting this parameter to zero. If saveInterval is not zero, the base name of the output file is given by a string parameter "saveFileName."  The full name of the output restart file is constructed by appending a suffix ".rst" to this base name. 
+For a simulation to be restartable, the original run periodically write a restart file.  Each time a restart file is written, the previous version of the file is overwritten, so that only the most recent verion is available at any instant. The interval (number of time steps) between subsequent file writes is given in the parameter file by an integer parameter named "saveInterval". Output of the restart file may be completely suppressed by setting this parameter to zero. If saveInterval is not zero, the base name of the output file is given by a string parameter "saveFileName."  The full name of the output restart file is constructed by appending a suffix ".rst" to this base name. 
 
 In parameter files for mcSim or mdSim simulations, the parameters "saveInterval" and (if present) "saveFileName" are the last parameters in main block of the parameter file. They appear just before the closing bracket of the main block, and just after the closing bracket of the AnalyzerManager block.  For example, an mcSim or mdSim parameter file that requires the restart file to be written every 10000 time steps to a file named "restart.rst" would thus look in part like this
 \code
@@ -35,7 +35,7 @@ MdSimulation{
 }
 \endcode
 
-In parameter files for ddSim simulations, the parameters saveInterval and (if appropriate) saveFileName appear within the integrator parameter file block. For example, the relevant part of the parameter file for a simulation that saves to a file named restart.rst every 10000 steps, using a DdMd::NveIntegator, would look like this:
+In parameter files for ddSim simulations, the parameters saveInterval and (if present) saveFileName appear within the integrator parameter file block. For example, the relevant part of the parameter file for a simulation that write a file named restart.rst every 10000 steps, using a DdMd::NveIntegator, would look like this:
 \code
 Simulation{
   ...
@@ -51,7 +51,7 @@ As for mcSim and mdSim simulations, writing of restart files may be suppressed b
 
 \section user_restart_page_command Command file
 
-When a simulation is restarted, it first reads the restart (*.rst) file to recreate the internal state of the simulation, and then begins reading a separated command file. The name of the command file for a restarted simulation must begin with the same base name as the corresponding *.rst restart file, followed by a file extension ".cmd" (for "command"). For example, these two files might be named "restart.rst" and "restart.cmd". Because the paths to the restart (*.rst) file and command (*.cmd) file can only differ by the file extension, they must be in the same directory. For either single-processor or parallel MD simulations of a single system, both files are normally in the directory from which the program is executed.
+When a simulation is restarted, it first reads the restart (*.rst) file to recreate the internal state of the simulation, and then begins reading a separate command file. The name of the command file for a restarted simulation must begin with the same base name as the corresponding *.rst restart file, followed by a file extension ".cmd" (for "command"). For example, these two files might be named "restart.rst" and "restart.cmd". Because the paths to the restart (*.rst) file and command (*.cmd) file can only differ by the file extension, they must be in the same directory. For either single-processor or parallel MD simulations of a single system, both files are normally in the directory from which the program is executed.
 
 The first line of command file for a restarted simulation must contain a RESTART command. The RESTART takes an integer argument, which is the desired final value of the step counter. This command causes the simulation to re-enter the main simulation loop at the point at which the restart file was written, with the step counter set to the value it had when that file was written, and then run until the counter reaches the final value given as an argument to RESTART command. The RESTART command may be followed by any number of other commands. As in any command file, the last command must be a "FINISH" command, which terminates execution.  
 
