@@ -18,7 +18,7 @@ Because of this use of templates, the procedure required to add a new potential 
 
 <li> Implement a new interaction class to calculate forces and energies for a new functional form of one of the potential energy contributions (e.g., for the bond potential).  This class should be defined in the Inter namespace, and should be placed in a subdirectory of the src/inter directory. The header and source files for a class that is intended only for personal use should be placed in the directory src/inter/user. If you decide to contribute the new interaction class to the project, these files should be moved to the subdirectory of src/inter that contains interactions of the same type (e.g., inter/bond) before proposing the new class for inclusion. </li>
 
-<li> Add the name of the *.cpp source file for the new interaction class to the sources.mk file in the subdirectory of src/inter that contains the header and source files. This will automatically cause the new interaction class to be compiled and added to the appropriate library by the build system. <\li>
+<li> Add the name of the *.cpp source file for the new interaction class to the sources.mk file in the subdirectory of src/inter that contains the header and source files. This will automatically cause the new interaction class to be compiled and added to the appropriate library by the build system. </li>
 
 <li> Modify the factory class for the associated potential energy class in the McMd and/or DdMd namespace so as to recognize a "style" string value that identifies the new interaction, and to construct the appropriate template instantiation when this string is passed to the factory function. The value of this string identifier should normally be the same as the name of the new interaction class.</li>
 
@@ -85,16 +85,62 @@ For the special case of non-bonded pair potentials, the McMd namespace contains 
 
 Simpatico provides a default factory class for each of the above types of potential energy. The BondFactory, AngleFactory, DihedralFactory, and ExternalFactory classes in the McMd namespace, and analogous classes in the DdMd namesapce, are derived from instantiations of the Util::Factory template.  Like other factory classes, these classes each provide a factory() method that takes a string argument and that (if possible) returns a pointer to a new instance of a subclass of the associated base class.  In all of the potential energy factory classes, the string that is passed as an argument to the factory method is actually the value of an associated "style" string parameter, such as "pairStyle". The value of the style string is generally the same as the name of the interaction class that implements the relevant potential energy function. For example, if the DdMd::BondFactory::factory(std::string&) method is passed the string "HarmonicBond", it constructs an instance of DdMd::BondPotentialImpl<HarmonicBond>, and returns a "DdMd::HarmonicBond* base class pointer to this newly constructed object.  
 
+As an example, here is the relevant part of the source code for the DdMd::BondFactory class:
+\code
+
+#include <ddMd/potentials/bond/BondFactory.h>
+#include <ddMd/simulation/Simulation.h>
+
+// BondPotential base class and implementation template
+#include <ddMd/potentials/bond/BondPotential.h>
+#include <ddMd/potentials/bond/BondPotentialImpl.h>
+
+// Bond interaction classes
+#include <inter/bond/HarmonicBond.h>
+#include <inter/bond/HarmonicL0Bond.h>
+
+namespace DdMd
+{
+
+   using namespace Inter;
+
+   // Return a pointer to a new BondPotential, if possible.
+   BondPotential* BondFactory::factory(const std::string& name) const
+   {
+      BondPotential* ptr = 0;
+
+      // Try subfactories first.
+      ptr = trySubfactories(name);
+      if (ptr) return ptr;
+
+      if (name == "HarmonicBond") {
+         ptr = new BondPotentialImpl<HarmonicBond>(*simulationPtr_);
+      } else
+      if (name == "HarmonicL0Bond") {
+         ptr = new BondPotentialImpl<HarmonicL0Bond>(*simulationPtr_);
+      } else
+      if (name == "FeneBond") {
+         ptr = new BondPotentialImpl<FeneBond>(*simulationPtr_);
+      }
+      return ptr;
+   }
+
+}
+\endcode
+Except for the use of templates for subclasses, the implementation of most potential energy factory classes is quite similar to those of other factory classes.
+
+\section potentials_factory_McMd_sec McMd::PairFactory class
+
 The McMd::PairFactory class is slightly different from the other potential energy factories. This class provides two methods, named mdFactory() and mcFactory(), that each take the name of a pair style string, such as "LJPair", and return an MdPairPotential* or McPairPotential* pointer to a new object, respectively.  The signatures of these methods are:
 \code
-   McMd::McPairPotential* mcFactory(std::string className);
-   McMd::MdPairPotential* mdFactory(std::string className);
+   McMd::McPairPotential* mcFactory(std::string& className, McMd::System& );
+   McMd::MdPairPotential* mdFactory(std::string& className, McMd::System& );
 \endcode
-Because McMd::PairFactory does not implement the same interface as the standard Util::Factory template, it is not derived from an instantiation of the Util::Factory template. 
+Because McMd::PairFactory does not implement the same interface as the Util::Factory template, it is not derived from an instantiation of the Util::Factory template. 
 
 McMd::PairFactory also provides a third factory method that takes an McMd::McPairPotential by reference and returns a pointer to a corresponding McMd::MdPairPotential. This method is used to implement hybrid MC simulations, in which short MD simulations are used as proposed MC moves. It is used to construct an McMd::MdPairPotential for use in the required MD simulations that implements the same pair interaction as the McMd::McPairPotential used by the parent MC simulation. 
 
-The implementations of the potential energy factory classes are otherwise quite similar to those of other factory classes. Developers should consult the implementations of the default factory classes for different types of potential in the src/mcMd/potential/ and src/ddMd/potentials/ directories for further guidance. 
+Developers should consult the implementations of the default McMd::PairFactory method for further guidance. It is straightforward to add new pair potentials to this factory by imitation of the existing code.
 
 <BR>
 \ref extend_factory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
