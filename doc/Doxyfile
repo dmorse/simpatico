@@ -1591,6 +1591,7 @@ INCLUDE_FILE_PATTERNS  =
 # instead of the = operator.
 
 PREDEFINED             = UTIL_MPI \
+                         INTER_BOND \
                          INTER_ANGLE \
                          INTER_DIHEDRAL \
                          INTER_EXTERNAL \
