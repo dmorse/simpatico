@@ -9,6 +9,7 @@
 */
 
 #include <util/containers/Array.h>   // base class template
+#include "AtomContext.h"             // context structure.
 
 namespace Util {
    class Vector;
@@ -75,6 +76,15 @@ namespace DdMd
       * Data associated with the Atom in element i of the main data_
       * array is stored in element i in each of these arrays.
       */
+
+      #ifdef DDMD_MOLECULES
+
+      /**
+      * C-array of Atom velocities.
+      */
+      AtomContext*  contexts_;
+
+      #endif
 
       /**
       * C-array of Atom velocities.

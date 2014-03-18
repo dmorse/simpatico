@@ -89,6 +89,40 @@ namespace DdMd
       */
       void clear();
 
+      #ifdef DDMD_MOLECULES
+
+      /**
+      * Set context of the molecules: specieId, moleculeId, atomId.
+      *
+      * specieId is to identify different type of species might exist
+      * in the system. The moleculeId is to distinguish different 
+      * molecules. AtomId is number associated with each atom in the 
+      * molecule.
+      */
+
+      /**
+      * Set Specie Id of the molecule.
+      *
+      * \param specieId
+      */ 
+      void setSpecieId(int specieId);
+
+      /**
+      * Set Molecule Id of the molecule.
+      *
+      * \param moleculeId
+      */ 
+      void setMoleculeId(int moleculeId);
+
+      /**
+      * Set Atom Id of the molecule.
+      *
+      * \param atomId
+      */ 
+      void setAtomId(int atomId);
+ 
+      #endif
+
       /**
       * Set unique global id for this Atom.
       *
@@ -121,6 +155,15 @@ namespace DdMd
       * Get position Vector by reference.
       */
       Vector& position();
+
+      #ifdef DDMD_MOLECULES
+
+      /**
+      * Get velocity Vector by reference.
+      */
+      AtomContext& context();
+
+      #endif      
 
       /**
       * Get velocity Vector by reference.
@@ -157,6 +200,13 @@ namespace DdMd
 
       /// Get the position Vector (const reference).
       const Vector& position() const;
+
+      #ifdef DDMD_MOLECULES      
+
+      /// Get the context by reference (const reference).
+      const AtomContext& context() const;
+
+      #endif
 
       /// Get the velocity Vector (const reference).
       const Vector& velocity() const;
@@ -397,7 +447,41 @@ namespace DdMd
    * AtomArray::velocities_, AtomArray::masks_, etc.) that is accessible
    * because Atom is a friend class of AtomArray.
    */
-  
+
+   #ifdef DDMD_MOLECULES   
+
+   /* 
+   * Get reference to context.
+   */
+   inline AtomContext& Atom::context()
+   {  return arrayPtr_->contexts_[localId_ >> 1]; }
+
+   /*
+   * Get context by const reference.
+   */
+   inline const AtomContext& Atom::context() const
+   { return arrayPtr_->contexts_[localId_ >> 1]; }
+
+   /*
+   * Get specieId.
+   */
+   inline int Atom::specieId() const
+   { return arrayPtr_->contexts_[localId_ >> 1].specieId; }
+
+   /*
+   * Get moleculeId.
+   */
+   inline int Atom::moleculeId() const
+   { return arrayPtr_->contexts_[localId_ >> 1].moleculeId; }
+
+   /*
+   * Get context by const reference.
+   */
+   inline int Atom::AtomId() const
+   { return arrayPtr_->contexts_[localId_ >> 1].AtomId; }
+
+   #endif
+
    /* 
    * Get reference to velocity.
    */
@@ -446,5 +530,35 @@ namespace DdMd
    inline void Atom::setId(int id)
    {  arrayPtr_->ids_[localId_ >> 1] = id; }
 
+   #ifdef DDMD_MOLECULES
+
+   /*
+   * Set the context of an Atom.
+   */
+   inline void Atom::setContext(AtomContext c)
+   {  arrayPtr_->context_[localId_ >> 1].specieId = c.specieId;  
+      arrayPtr_->context_[localId_ >> 1].moleculeId = c.moleculeId;
+      arrayPtr_->context_[localId_ >> 1].atomId = c.atomId;
+   }
+
+   /*
+   * Set the specie of an Atom.
+   */
+   inline void Atom::setSpecie(int sId)
+   {  arrayPtr_->context_[localId_ >> 1].specieId = sId;}
+
+   /*
+   * Set the molecule of an Atom.
+   */
+   inline void Atom::setMolecule(int mId)
+   {  arrayPtr_->context_[localId_ >> 1].moleculeId = mId;}
+
+   /*
+   * Set the bead of an Atom.
+   */
+   inline void Atom::setAtom(int aId)
+   {  arrayPtr_->context_[localId_ >> 1].atomId = aId;}
+
+   #endif
 }
 #endif
