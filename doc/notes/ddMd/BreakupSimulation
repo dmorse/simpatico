@@ -1,5 +1,4 @@
-A Simulation has:
-
+A Simulation currently has:
    
    Storage: atomStorage, GroupStorage containers
 
@@ -31,29 +30,100 @@ A Simulation has:
 -----------------------------------------------------------------------
 Proposed Smaller Classes, Alternative #1:
 
-    1) Storage / Configuration -> composite of storage classes 
+   Idea: Define a PotentialManager that is basically a chemical force 
+   field plus associated Group storage objects.
 
-       -> Only requires nType values for validity checking. 
-       -> Configuration needs parameters only for allocation.
-       -> Add Configuration::isEmpty member to check if initialized.
 
-    2) ForceField:
+   2) PotentialManager (aka ForceField)
 
-       nAtomType           
-       AtomTypes  (Note: includes charge, which is part of force field)
-       nBondType, nAngleType  
-       potential style strings
-       MaskedPairPolicy
-       Potential classes 
-       Potential factory classes
+      nAtomType           
+      AtomTypes  (Note: includes charge, which is part of force field)
+      Potential classes 
+      MaskedPairPolicy
+      Potential factory
 
-       Could ALSO have GroupType<N>, but this is not necessary.
+      Each covalent potential has:
+        - nGroupType (e.g., nBondType, nAngleType, etc.)
+        - style string
+        - GroupStorage<N>
 
-       Kinetic energy and stress must be calculated, also make members.
-      
+      Comments:
+
+        - Make PotentialManager a subclass of Manager<Potential>
+
+        - Make the relevant storage a member of the potential.
+
+        - Example of the parameter file format
+
+          BondPotential<HarmonicBond> {
+             nBondType  .....
+             Interaction parameters
+             BondStorage{
+             }
+          }
+
+        - Create a PotentialFactory that reads the first line to 
+          determine the type of the potential, and that separates
+          the generic type and style if it is one of the generic
+          potential types. If it is one of the generic types, pass
+          the style string to a more specialized factory, e.g., a
+          BondPotentialFactory. 
+
+   A Simulation has:
+     
+      - AtomStorage
+      - Boundary
+      - PotentialManager (PairPotential, BondPotential, etc.)
+      - Communication Utilities:
+         Domain
+         Exchanger
+         Buffer
+      - Random
+      - ConfigIo
+      - Integrator
+      - AnalyzerManager
+      - ModifierManager
+   
+-----------------------------------------------------------------------
+Proposed Smaller Classes, Alternative #2:
+
+  Idea: Put all storage classes into one object called a Configuration.
+
+  A Simulation has:
+
+      - Configuration
+        - Boundary
+        - AtomStorage
+        - List of GroupStorage<N> objects
+        - ConfigIo
+        - ConfigIoFactory
+
+      - ForceField or PotentialManager
+        - nAtomType           
+        - AtomTypes  (Note: includes charge, which is part of force field)
+        - Potential classes 
+        - MaskedPairPolicy
+        - Potential factory
+
+      - Communication Utilities:
+         Domain
+         Exchanger
+         Buffer
+
+      - Integrator
+        - AnalyzerManager
+        - ModifierManager
+
+      - Random
+
 Comments:
 
-    1) Configuration and Force Field can be initialized separately.
+    1) Configuration and ForceField are logically separate.
+
+       -> Force field members don't change during simulation, 
+          are all set in the parameter file
+       -> Configuration data is all in the configuration file
+       -> Configuration only requires nType values for validity checking. 
 
     2) Force field members don't change during simulation. 
 
@@ -63,91 +133,28 @@ Comments:
        -> Add "hasConfiguration" member to check association.
        -> Only allow association after both initialized.
 
-Other categories:
+    4) Problem: Potentially hard codes the allowed types of storage, 
+       thus hard coding the form of the potential. This is appropriate
+       for a code that will always use a standard form for the
+       force field, but not for a code that is intended to be more
+       generic. 
 
-    1) Communication classes: Buffer, Exchanger, Domain 
-    2) RNG
+    5) Possible solution: Use templates to define an interface
+       for GroupStorage units, and allow them to be added to 
+       the configuration by the associated potential.
+       The configuration would then hold one AtomStorage and
+       a set of pointers to GroupStorage units. This would allow
+       the existence of more than one type of GroupStorage<N>
+       units each value of N.
 
------------------------------------------------------------------------
-Proposed Smaller Classes, Alternative #1:
+    6) Potential problem: This is arguably too generic. We need
+       a way to implement analyzer and modifier algorithms that
+       know which potential is the pair potential, which is the
+       bond potential etc. Need a way to register a potential
+       as, e.g., the pair potential, and provide access to the more 
+       specialized interface of that potential via a PairPotential
+       pointer.
 
-     Master Potential, has
+    7) Possible solution: Let ForceField provide accessors for
+       specific potential types, as done currently by Simulation.
 
-        - PairPotential
-        - BondPotential 
-        - AnglePotential
-        - ....
-        - maskedPairPolicy
-
-     Each covalent potential has:
-        - nGroupType
-        - style string
-        - GroupStorage<N>
-        - factory
-
-     BondPotential {
-        nBondType  .....
-        bondStyle  .....
-        Interaction parameters
-        BondStorage{
-        }
-     }
-
-   A Simulation has:
-     
-      - nAtomType
-      - atomTypes 
-      - AtomStorage
-      - Boundary
-      - MasterPotential (PairPotential, BondPotential, etc.)
-      - Communication Utilities:
-         Domain
-         Exchanger
-         Buffer
-      - Random
-      - ConfigIo
-      - Integrator
-      - AnalyzerManager
-   
-      Properties:    kinetic energy, stress, etc.
-
-      Notes: Methods of exchanger that involve groups would become
-      methods of the potential.
-
-      Perhaps introduce requiresExchange() method to Potential. 
-
--------------------------------------------------------------------
-Class Hierarchy for Interactions, Potentials, ForceFields:
-
-      Hierarchy #1)
-      -------------
-
-      DdMd::IPotential      Inter::IPairInteraction         
-                     \          /                  \               
-                  DdMd::PairPotential             McMd::MdPairPotential
-                          |                               | 
-               DdMd::PairPotentialImpl<T>      McMd::MdPairPotentialImpl<T>
-
-
-      Pro: Avoids repeated declaration of IPairInteraction in 
-           McMd and DdMd
-      Con: Doesn't avoid repeated declaration of IPairPotential.
-
-      No need for a pointer to a IPairInteraction, but is conceptually 
-      well defined.
-
-      Hierarchy #2)
-      -------------
-
-      DdMd::IPotential    Inter::IPairInteraction            
-                   \           /             \                      
-               DdMd::PairInteraction       Inter::PairInteractionImpl<T>   
-                              \               /           
-                          DdMd::PairPotentialImpl<T>
-
-     
-      Pro: Avoids repetition of IPairInteraction interface
-           and implementation
-      Con: Multiple inheritance with diamond topology
-
-      This would require virtual inheritance of Inter::IPairInteraction. 
