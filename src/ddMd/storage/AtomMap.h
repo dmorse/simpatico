@@ -93,7 +93,7 @@ namespace DdMd
       /**
       * Clear all ghosts from this map.  
       *
-      * \param Set of all ghosts on this processor.
+      * \param ghostSet Set containing all ghosts on this processor.
       */
       void clearGhosts(const ArraySet<Atom>& ghostSet);
 

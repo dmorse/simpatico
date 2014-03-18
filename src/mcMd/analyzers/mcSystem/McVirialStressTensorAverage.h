@@ -32,7 +32,7 @@ namespace McMd
       /**
       * Constructor.
       *
-      * \param simulation parent Simulation object. 
+      * \param system parent McSystem object. 
       */
       McVirialStressTensorAverage(McSystem& system);
    
