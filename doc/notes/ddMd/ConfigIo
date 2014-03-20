@@ -32,25 +32,20 @@ Comments:
 --------------------------------------------------------------------------
 Proposal:
 
-   - Create a class IdGroup with an int* array and a capacity N:
-
-     class IdGroup {
-     private:
-        int* data_;
-        int  N_;
-     }
+   - Change interface and implementation of GroupDistributor and
+     GroupCollector to use IdGroup objects rather than Group<N>* pointers.
 
    - Create a class IdGroupArray that allocates an array of IntGroup objects.
      Make this a friend of IdGroup, and provide IdGroup a private constructor
      and associate function that can be used to make an array.
 
-   - Create non-template classes GroupDistributor and GroupCollector that implement 
-     the interfaces:
+   - Change GroupDistributor and GroupCollector to non-template classes that
+     implement the interfaces:
 
      GroupDistributor:
      void associate(Domain& , GroupExchanger&, Buffer& )
      void setup();
-     IdGroup* newPtr();
+     IdGroup newPtr();
      void add();
      void send();
      void receive();
@@ -59,7 +54,7 @@ Proposal:
      GroupCollector:   
      void associate(Domain& , int N, GroupExchanger&, Buffer& )
      void setup();
-     IdGroup* newPtr()
+     IdGroup newPtr()
      void add();
      void send();
      int groupSize() const;
