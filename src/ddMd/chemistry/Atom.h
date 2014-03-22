@@ -462,24 +462,6 @@ namespace DdMd
    inline const AtomContext& Atom::context() const
    { return arrayPtr_->contexts_[localId_ >> 1]; }
 
-   /*
-   * Get specieId.
-   */
-   inline int Atom::specieId() const
-   { return arrayPtr_->contexts_[localId_ >> 1].specieId; }
-
-   /*
-   * Get moleculeId.
-   */
-   inline int Atom::moleculeId() const
-   { return arrayPtr_->contexts_[localId_ >> 1].moleculeId; }
-
-   /*
-   * Get context by const reference.
-   */
-   inline int Atom::AtomId() const
-   { return arrayPtr_->contexts_[localId_ >> 1].AtomId; }
-
    #endif
 
    /* 
