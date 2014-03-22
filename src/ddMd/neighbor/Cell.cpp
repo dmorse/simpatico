@@ -1,8 +1,6 @@
 #ifndef DDMD_CELL_CPP
 #define DDMD_CELL_CPP
 
-// THIS CLASS IS UNFINISHED, UNTESTED, AND UNUSED
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
