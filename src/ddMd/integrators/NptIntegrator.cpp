@@ -16,6 +16,9 @@
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/ensembles/EnergyEnsemble.h>
 #include <util/ensembles/BoundaryEnsemble.h>
+#ifdef DDMD_NPT_INTEGRATOR_CHECK
+#include <util/misc/FileMaster.h>
+#endif
 #include <util/mpi/MpiLoader.h>
 #include <util/space/Vector.h>
 #include <util/format/Dbl.h>
@@ -255,9 +258,17 @@ namespace DdMd
          dv[2] = dv[2] * exp_v_fac_[2]*sinhx_fac_v_[2];
 
          Vector& v = atomIter->velocity();
+         #ifndef DDMD_NPT_INTEGRATOR_CHECK
          v[0] = v[0] * exp_v_fac_2[0] + dv[0];
          v[1] = v[1] * exp_v_fac_2[1] + dv[1];
          v[2] = v[2] * exp_v_fac_2[2] + dv[2];
+         #endif
+
+         #ifdef DDMD_NPT_INTEGRATOR_CHECK
+         if(v[0] * exp_v_fac_2[0] + dv[0] > vMax_) {v[0] = vMax_; file<< else  
+         v[1] = std::min(v[1] * exp_v_fac_2[1] + dv[1], vMax_);
+         v[2] = std::min(v[2] * exp_v_fac_2[2] + dv[2], vMax_);
+         #endif
 
          vtmp[0] = v[0]*exp_r_fac[0] *sinhx_fac_r[0];
          vtmp[1] = v[1]*exp_r_fac[1] *sinhx_fac_r[1];
