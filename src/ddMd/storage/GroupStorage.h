@@ -146,10 +146,8 @@ namespace DdMd
       * 1) newPtr() must have been called since the last add().
       * 2) A valid global group id for this pointer must have been set.
       * 3) A Group with the specified id must not already be in the set.
-      *
-      * \return pointer to newly added Group.
       */
-      Group<N>* add();
+      void add();
 
       /**
       * Add a new Group with a specified id.
