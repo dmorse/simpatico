@@ -1,12 +1,15 @@
 --------------------------------------------------------------------------------
 Proposal:
 
-   - Rational: Interface of GroupStorage is generic except for functions that return 
-     a pointer to Group<N>*. Some of these functions are used by the GroupDistributor
-     and GroupExchanger classes to distribute and gather groups.
+   - Rational: Interface of GroupStorage is generic except for functions that 
+     return a pointer to Group<N>*. 
 
-   - Proposal: Create a new class IdGroup which is a generic wrapper around a Group<N>,
-     use this in the interface of GroupStorage rather than Group<N>.
+   - Functions used by the GroupDistributor and GroupCollector classes only
+     need access to atom indices, not pointers.
+
+   - Proposal: Create a new class IdGroup which is a generic wrapper around a 
+     Group<N>, use instances of this in the interface required by GroupDistributor 
+     and GroupCollector classes, rather than pointers to Group<N> objects.
 
    - Proposed class:
 
@@ -16,29 +19,29 @@ Proposal:
        int  N_;
      }
 
-   - Add functions to assign and copy construct from Group<N> objects. Assignment
-     to / from a Group<N> should copy the pointer and assign the correct value to N_.
+   - Functions currently used by GroupDistributor
 
-   - Assignment to / from other IdGroups should copy data.
+         IdGroup newIdGroup();
+         void GroupExchanger::add();
+         void GroupExchanger::returnPtr();
 
-   - In GroupStorage interface, replace or supplment functions that return Group<N>*
-     pointers and that are used by GroupDistributor and GroupCollector by functions
-     that return instances of a new IdGroup.
+         void GroupExchanger::unsetNTotal();
+         void GroupExchanger::computeNTotal();
+         int  GroupExchanger::nTotal();
+         bool GroupExchanger::isValid();
 
-   - Declare all functions required by GroupDistributor and GroupCollector in the
-     GroupExchanger interface.
+   - Functions currently used by GroupCollector:
 
-   - Add functions to abstract GroupStorage class:
+         void begin(GroupIterator<N> iterator);
+
+   - Add functions to abstract GroupExchanger class:
+
+     // Replacement for newPtr();
+     void getNewGroup(IdGroup& idGroup);
+
+     // Replacement for iterator, access by index
+     IdGroup group(int i);
 
      // Get size N of group
      virtual int GroupExchanger::groupSize() const;
-
-     // Add an IdGroup to the underlying GroupStorage<N>
-     virtual void GroupExchanger::addIdGroup(IdGroup& group);
-
-     // Instantiate an IdGroupIterator of the appropriate subclass.
-     virtual IdGroupIterator* GroupExchanger::iterator();
-
-     // Initialize an IdGroupIterator
-     virtual void GroupExchanger::begin(IdGroupIterator& );
 
