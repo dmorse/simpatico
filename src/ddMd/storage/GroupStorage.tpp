@@ -13,6 +13,8 @@
 #include <util/format/Int.h>
 #include <util/mpi/MpiLoader.h>  
 
+//#define DDMD_GROUP_STORAGE_DEBUG
+
 namespace DdMd
 {
  
@@ -29,6 +31,8 @@ namespace DdMd
       newPtr_(0),
       capacity_(0),
       totalCapacity_(0),
+      maxNGroupLocal_(0),
+      maxNGroup_(0),
       nTotal_(0)
    {  emptyGroups_.reserve(128); }
  
@@ -153,7 +157,7 @@ namespace DdMd
       }
       int groupId = newPtr_->id();
       if (groupId < 0 || groupId >= totalCapacity_) {
-         std::cout << "groupId = " << groupId << std::endl;
+         Log::file() << "groupId = " << groupId << std::endl;
          UTIL_THROW("Invalid group id");
       }
       if (groupPtrs_[groupId] != 0) {
@@ -196,7 +200,7 @@ namespace DdMd
    {
       int groupId = groupPtr->id();
       if (groupId < 0 || groupId >= totalCapacity_) {
-         std::cout << "Group id = " << groupId << std::endl;
+         Log::file() << "Group id = " << groupId << std::endl;
          UTIL_THROW("Invalid group id, out of range");
       } else if (groupPtrs_[groupId] == 0) {
          UTIL_THROW("Group does not exist on this processor");
@@ -443,8 +447,8 @@ namespace DdMd
             UTIL_THROW("nTotal not set");
          }
          if (nAtomGroupTotal != N*nTotal()) {
-            std::cout << "nAtomGroupTotal = " << nAtomGroupTotal << std::endl;
-            std::cout << "nTotal*N        = " << N*nTotal() << std::endl;
+            Log::file() << "nAtomGroupTotal = " << nAtomGroupTotal << std::endl;
+            Log::file() << "nTotal*N        = " << N*nTotal() << std::endl;
             UTIL_THROW("Discrepancy in number of local atoms in Group objects");
          }
       }
@@ -556,25 +560,25 @@ namespace DdMd
                   #if 0 
                   // A complete group may not span both lower (j=0) and upper (j=1) boundaries
                   if (groupIter->plan().ghost(i, 0) && groupIter->plan().ghost(i, 1)) {
-                     std::cout << "Direction " << i << std::endl;
-                     std::cout << "Inner / outer (j=0) = " << inner(i,0) 
+                     Log::file() << "Direction " << i << std::endl;
+                     Log::file() << "Inner / outer (j=0) = " << inner(i,0) 
                                << "  " << outer(i, 0) << std::endl;
-                     std::cout << "Inner / outer (j=1) = " << inner(i,1) 
+                     Log::file() << "Inner / outer (j=1) = " << inner(i,1) 
                                << "  " << outer(i, 1) << std::endl;
                      for (k = 0; k < N; ++k) {
                         atomPtr = groupIter->atomPtr(k);
                         assert(atomPtr);
                         coordinate = atomPtr->position()[i];
-                        std::cout << k << "  " << coordinate;
+                        Log::file() << k << "  " << coordinate;
                         if (atomPtr->isGhost()) {
-                           std::cout << " ghost  ";
+                           Log::file() << " ghost  ";
                         } else {
-                           std::cout << " local  "
+                           Log::file() << " local  "
                                      << atomPtr->plan().exchange(i, 0) << "  "
                                      << atomPtr->plan().exchange(i, 1);
                         }
-                        std::cout << std::endl;
-                        std::cout << std::endl;
+                        Log::file() << std::endl;
+                        Log::file() << std::endl;
                      }
                      UTIL_THROW("Group spans both upper and lower boundaries");
                   }

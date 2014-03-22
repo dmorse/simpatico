@@ -11,17 +11,18 @@ include $(SRC_DIR)/mcMd/tests/sources.mk
 
 TEST=mcMd/tests/Test
 
-all: $(mcMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
+all: $(mcMd_tests_OBJS)
 
-run: $(mcMd_tests_OBJS) $(OBJ_DIR)/$(TEST)
+run: $(mcMd_tests_OBJS)
 	$(OBJ_DIR)/$(TEST) $(SRC_DIR)/mcMd/tests/ > log
 	@echo `grep failed log` ", "\
              `grep successful log` "in mcMd/tests/log" > count
 	@cat count
 
 clean:
-	rm -f $(mcMd_tests_OBJS) $(mcMd_tests_OBJS:.o=.d)
-	rm -f $(OBJ_DIR)/$(TEST) 
+	rm -f $(mcMd_tests_OBJS)
+	rm -f $(mcMd_tests_OBJS:.o=.d)
+	rm -f $(mcMd_tests_OBJS:.o=)
 	rm -f *.cfg log count
 	cd chemistry; make clean
 	cd mcSimulation; make clean

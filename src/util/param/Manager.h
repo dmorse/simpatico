@@ -94,6 +94,24 @@ namespace Util
       virtual void readParam(std::istream &in);
 
       /**
+      * Optioanlly read and create a set of objects.
+      *
+      * Equivalent to readParam(), except that this function does
+      * nothing if the first line does not match the expected label,
+      * whereas readParam() throws an Exception
+      *
+      * \param in input stream
+      */
+      virtual void readParamOptional(std::istream &in);
+
+      /**
+      * Read child blocks, return when closing bracket encountered.
+      *  
+      * \param in input stream
+      */ 
+      virtual void readParameters(std::istream &in);
+
+      /**
       * Load a set of objects to an output archive.
       *
       * \param ar input/loading archive
@@ -151,14 +169,9 @@ namespace Util
    protected:
 
       /**
-      * Read opening line: "ManagerName{"
+      * Read (or attempt to read) opening line: "ManagerName{"
       */
       void beginReadManager(std::istream& in);
-
-      /**
-      * Read child blocks, return when closing bracket encountered.
-      */ 
-      void readChildren(std::istream &in);
 
       /**
       * Add closing bracket to output format.
@@ -281,31 +294,56 @@ namespace Util
    }
 
    /*
-   * Read instructions for creating objects from file.
+   * Read Manager parameter block.
    */
    template <typename Data>
    void Manager<Data>::readParam(std::istream &in)
    {
+      setIsRequired(true);
+      setIsActive(true);
       beginReadManager(in);
-      readChildren(in);
+      readParameters(in);
       endReadManager();
    }
 
    /*
-   * Read instructions for creating objects from file.
+   * Attempt to read parameter block for optional Manager.
+   */
+   template <typename Data>
+   void Manager<Data>::readParamOptional(std::istream &in)
+   {
+      setIsRequired(false);
+      setIsActive(false);
+      beginReadManager(in);
+      if (isActive()) {
+         readParameters(in);
+         endReadManager();
+      }
+   }
+
+   /*
+   * Read (or attempt to read) opening line. 
    */
    template <typename Data>
    void Manager<Data>::beginReadManager(std::istream &in)
    {
       std::string managerName = ParamComposite::className();
-      readBegin(in, managerName.c_str());
+      Begin* beginPtr = &readBegin(in, managerName.c_str(), isRequired());
+      if (!isRequired()) { 
+         if (beginPtr->isActive()) {
+            setIsActive(true);
+         } else {
+            setIsActive(false);
+            delete beginPtr;
+         }
+      }
    }
 
    /*
-   * Read instructions for creating objects from file.
+   * Read a sequence of child objects, return when closing bracket found.
    */
    template <typename Data>
-   void Manager<Data>::readChildren(std::istream &in)
+   void Manager<Data>::readParameters(std::istream &in)
    {
       // Check if a Factory exists, create one if necessary.
       initFactory();
@@ -319,7 +357,8 @@ namespace Util
          // Read a blank line before each object
          readBlank(in);
 
-         // Read and instantiate a new object *typePtr
+         // Attempt to read and instantiate a new object *typePtr.
+         // This sets isEnd = true if a closing bracket is encountered.
          typePtr = factoryPtr_->readObject(in, *this, name, isEnd);
 
          if (!isEnd) {
@@ -334,7 +373,7 @@ namespace Util
 
       }
    }
-   
+
    /*
    * Add closing bracket.
    */
@@ -353,7 +392,7 @@ namespace Util
    template <typename Data>
    void Manager<Data>::loadParameters(Serializable::IArchive &ar)
    {
-      int size;
+      int size = 0;
       Data* typePtr;
       std::string name;
 

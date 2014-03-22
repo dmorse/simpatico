@@ -4,7 +4,7 @@
 \ref user_param_page (Next) 
 <BR>
 
-This section describes how to execute the simpatico programs mcSim, mdSim and ddSim. The command line interface is similar for all three programs. Differences among the three programs are discussed explicitly below as needed. This page gives instructions for using any of these three programs to simulate a single physical system. Multi-system simulations, such as those used for replica exchange algorithms, are discussed separately (see \ref user_multi_page).
+This section describes how to execute the simpatico programs mcSim, mdSim and ddSim. The command line interface is similar for all three programs. Differences among the three programs are discussed explicitly below. This page gives instructions for using any of these three programs to simulate a single physical system. Multi-system simulations, such as those used for replica exchange algorithms, are discussed separately (see \ref user_multi_page).
 
 \section usage_inputs Input files 
 A simpatico simulation normally requires the three input files: 
@@ -13,16 +13,16 @@ A simpatico simulation normally requires the three input files:
    <li> a \ref usage_command_section "command" file </li>
    <li> a \ref usage_cfgfile_section "configuration" file </li>
 </ul>
-The contents and formats of these different types of file are discussed briefly below and in more detail in several separate pages (see \ref user_param_page , \ref user_commands_page and \ref user_cfgfile_page).
+The contents and formats of these different types of file are discussed briefly below and in more detail in several separate pages (see \ref user_param_page , \ref user_commands_page and \ref user_cfgfile_page). All three programs use similar formats for the parameter and command files, but ddSim uses a different default format for configuration files than that used by mcSim and mdSim.
 
-When a simulation is executed, the parameter file is read from standard input. The parameter file contains the name of the command file, which is read after the parameter file.  The command file contains a list of commands that are interpreted and executed in sequence. Among these is normally a command that instructs the program to read a specific input configuration file, a command that runs a simulation of a specified number of steps, and a command to write the final configuration to a file. 
+When a simulation is executed, the parameter file is immediately read from standard input.  The command file is read after the parameter file.  The name of the command file is specified in the the parameter file. The command file is a script that contains a list of commands that are interpreted and executed in sequence. Among these are normally a command to read a specific input configuration file, a command to run a simulation of a specified number of steps, and a command to write the final configuration to a file. 
 
 \section usage_running_section Running a simulation 
-To run a simulation, one invokes the executable name and reads the parameter file from standard input. For example, to run a single-processor mdSim MD simulation, using a parameter file named "param" in the current working directory, one would enter:
+To run a simulation, one invokes the nane of the binary executable file and reads the parameter file from standard input. For example, to run the default version of the single-processor mdSim MD simulation, using a parameter file named "param" in the current working directory, one would enter:
 \code
    mdSim < param
 \endcode
-To run a single-processor MC simulation, one would instead enter "mcSim < param".  During execution, some information is sent to standard output (i.e., the screen). This log output can be directed to a file using, for example, 
+To run a single-processor MC simulation, one would instead enter "mcSim < param".  During execution, some log information is written to standard output (i.e., the screen). This log output can be directed to a file using, for example, 
 \code
   mdSim < param > log
 \endcode
@@ -63,15 +63,15 @@ int main(int argc, char** argv)
 }
 
 \endcode
-This program has only four executable lines:
+This simplified version of the program has only four executable lines:
 
-  - The first executable line creates an object named simulation that is an instance of the class McMd::McSimulation.  An McSimulation object represents a complete Monte Carlo simulation. 
+  - The first line creates an object named simulation that is an instance of the class McMd::McSimulation.  An McSimulation object represents a complete Monte Carlo simulation. 
 
-  - The setOptions() method processes any command line options that are passed to the program.  The available command line options are discussed \ref section_options "below".
+  - In the second line, the McSimulation::setOptions() method processes any command line options that are passed to the program.  Some of the available command line options are discussed \ref section_options "below".
 
-  - The readParam() method reads a parameter file and initializes the simulation.  Invoking readParam() with no argument (as here) reads the parameter file from standard input. 
+  - In the third line, readParam() method reads a parameter file and initializes the simulation.  Invoking readParam() with no argument (as here) reads the parameter file from standard input. 
 
-  - The readCommands() method reads the command file, and executes each command as it is read. 
+  - In the fourth line, the readCommands() method reads the command file, and executes each command in sequence. 
 
 The readParam() method does more than read parameters: It is an initialization function that reads parameters, allocates any required memory, and leaves the main simulation object ready for use. The name of the command file is specified in the param file. 
 

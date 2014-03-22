@@ -212,13 +212,13 @@ namespace DdMd
             }
          }
          if (i != nStar_) {
-            std::cout << "no of stars is" << " " <<  i << std::endl;
-            std::cout << "nStar is " <<  nStar_ << std::endl;
+            Log::file() << "no of stars is" << " " <<  i << std::endl;
+            Log::file() << "nStar is " <<  nStar_ << std::endl;
             //UTIL_THROW("Error");
          }
          if (j != nWave_) {
-            std::cout << "no of waves is" << " " <<  j << std::endl;
-            std::cout << "nWave is " <<  nWave_ << std::endl;
+            Log::file() << "no of waves is" << " " <<  j << std::endl;
+            Log::file() << "nWave is " <<  nWave_ << std::endl;
             UTIL_THROW("Error");
          }
       }

@@ -7,13 +7,12 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/tests/pair/sources.mk
 
-TEST=inter/tests/pair/Test
-
-all: $(inter_tests_pair_OBJS) $(OBJ_DIR)/$(TEST)
+all: $(inter_tests_pair_OBJS) 
 
 clean:
-	rm -f $(inter_tests_pair_OBJS) $(inter_tests_pair_OBJS:.o=.d)
-	rm -f $(OBJ_DIR)/$(TEST) 
+	rm -f $(inter_tests_pair_OBJS)
+	rm -f $(inter_tests_pair_OBJS:.o=.d)
+	rm -f $(inter_tests_pair_OBJS:.o=)
 	make clean-outputs
 
 clean-outputs:

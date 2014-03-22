@@ -11,11 +11,12 @@ include $(SRC_DIR)/mcMd/tests/mcSimulation/sources.mk
 
 TEST=mcMd/tests/mcSimulation/Test
 
-all: $(mcMd_tests_mcSimulation_OBJS) $(OBJ_DIR)/$(TEST)
+all: $(mcMd_tests_mcSimulation_OBJS)
 
 clean:
-	rm -f $(mcMd_tests_mcSimulation_OBJS) $(mcMd_tests_mcSimulation_OBJS:.o=.d)
-	rm -f $(OBJ_DIR)/$(TEST) 
+	rm -f $(mcMd_tests_mcSimulation_OBJS) 
+	rm -f $(mcMd_tests_mcSimulation_OBJS:.o=.d)
+	rm -f $(mcMd_tests_mcSimulation_OBJS:.o=)
 	make clean-outputs
 
 clean-outputs:

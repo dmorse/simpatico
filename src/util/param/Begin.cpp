@@ -9,7 +9,10 @@
 */
 
 #include "Begin.h"
-#include "Label.h"
+#ifdef UTIL_MPI
+#include <util/mpi/MpiSendRecv.h>
+#endif
+
 #include <util/global.h>
 
 namespace Util
@@ -18,9 +21,14 @@ namespace Util
    /* 
    * Begin constructor
    */
-   Begin::Begin(const char *label)
-    : label_(label)
-   {} 
+   Begin::Begin(const char *label, bool isRequired)
+    : label_(isRequired),
+      isActive_(false)
+   {
+      std::string expected = label;
+      expected += "{";
+      label_.setString(expected);
+   }
 
    /* 
    * Read label, check against expected value
@@ -28,20 +36,52 @@ namespace Util
    void Begin::readParam(std::istream &in)
    {
       if (isIoProcessor()) {
-         std::string expected;
-         expected = label_ + "{";
-         in >> Label(expected.c_str());
-         if (ParamComponent::echo()) {
-            writeParam(Log::file());
+         in >> label_;
+
+         // If this parameter is required and the label string
+         // doesn't match, an Exception will be thrown by the
+         // operator >> for a Label, terminating this function.
+
+         if (Label::isClear()) {
+            // If the label string matches
+            isActive_ = true;
+            if (ParamComponent::echo()) {
+               writeParam(Log::file());
+            }
+         } else {
+            // If label does not match and this isOptional
+            isActive_ = false;
+            if (ParamComponent::echo()) {
+               Log::file() << indent() 
+                           << label_.string() << " [absent] }"
+                           << std::endl; 
+            }
+         }
+      } else {
+         #ifdef UTIL_MPI
+         if (!hasIoCommunicator()) {
+            UTIL_THROW("Error: not isIoProcessor and not hasIoCommunicator");
+         }
+         #else
+         UTIL_THROW("Error: not isIoProcessor and no MPI");
+         #endif
+      }
+      #ifdef UTIL_MPI
+      if (hasIoCommunicator()) {
+         if (isRequired()) {
+            isActive_ = true;
+         } else {
+            bcast<bool>(ioCommunicator(), isActive_, 0); 
          }
       }
+      #endif
    }
 
    /* 
    * Begin::writeParam() template
    */
    void Begin::writeParam(std::ostream &out)
-   {  out << indent() << label_ << "{" << std::endl; }
+   {  out << indent() << label_.string() << std::endl; }
 
    /*
    * Do-nothing implementation of virtual resetIo function.

@@ -224,6 +224,7 @@ namespace DdMd
       void endRecvBlock();
 
       //@}
+      #ifdef UTIL_MPI
       /// \name Interprocessor Communication
       //@{
       
@@ -271,6 +272,7 @@ namespace DdMd
       void bcast(MPI::Intracomm& comm, int source);
 
       //@}
+      #endif
       /// \name Statistics
       //@{
     

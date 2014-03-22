@@ -15,11 +15,12 @@ else
 TEST=mcMd/tests/chemistry/Test
 endif
 
-all: $(mcMd_tests_chemistry_OBJS) $(OBJ_DIR)/$(TEST)
+all: $(mcMd_tests_chemistry_OBJS) 
 
 clean:
-	rm -f $(mcMd_tests_chemistry_OBJS) $(mcMd_tests_chemistry_OBJS:.o=.d)
-	rm -f $(OBJ_DIR)/$(TEST) 
+	rm -f $(mcMd_tests_chemistry_OBJS)
+	rm -f $(mcMd_tests_chemistry_OBJS:.o=.d)
+	rm -f $(mcMd_tests_chemistry_OBJS:.o=)
 	make clean-outputs
 
 clean-outputs:

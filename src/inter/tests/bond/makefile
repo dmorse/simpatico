@@ -7,13 +7,12 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/tests/bond/sources.mk
 
-TEST=inter/tests/bond/Test
-
-all: $(inter_tests_bond_OBJS) $(OBJ_DIR)/$(TEST)
+all: $(inter_tests_bond_OBJS)
 
 clean:
-	rm -f $(inter_tests_bond_OBJS) $(inter_tests_bond_OBJS:.o=.d)
-	rm -f $(OBJ_DIR)/$(TEST) 
+	rm -f $(inter_tests_bond_OBJS)
+	rm -f $(inter_tests_bond_OBJS:.o=.d)
+	rm -f $(inter_tests_bond_OBJS:.o=)
 
 -include $(inter_tests_bond_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)

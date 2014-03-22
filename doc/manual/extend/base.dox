@@ -30,13 +30,14 @@ In order to implement, for instance, a new data analysis operation in mcSim and/
 The BondPotential, AnglePotential, DihedralPotential, and ExternalPotential classes are used in both MC and MD simulations. Two different classes, McPairPotential and MdPairPotential, are provided for nonbonded interations in MC and MD simulations, respectively, because of differences in the algorithms and calculations required in these two contexts.
 
 \section extend_base_ddMd_section Base classes for ddSim 
-The base classes used by the ddSim parallel MD program are defined in the DdMd namespace. Many of them have names that are similar or identical to names of analogous classes in the McMd namespace. They include:
+The base classes used by the ddSim parallel MD program are defined in the DdMd namespace. Several have names identical to names of analogous classes in the McMd namespace. These base classes include:
 <ul>
- <li> DdMd::Integrator, a parallel MD integration algorithm </li>
+ <li> DdMd::ConfigIo, a configuration file format </li>
  <li> DdMd::Analyzer, a data analysis or output operation </li>
- <li> DdMd::ConfigIo,   a configuration file format </li>
+ <li> DdMd::Integrator, an MD integration algorithm </li>
+ <li> DdMd::Modifier, a algorithm that can modify the system during integration </li>
 </ul>
-and potential energy classes
+The DdMd namespace also contains the following potential energy classes
 <ul>
  <li> DdMd::PairPotential, a nonbonded pair interaction for MD simulations </li>
  <li> DdMd::BondPotential, a covalent two-body bond potential </li>
@@ -46,8 +47,8 @@ and potential energy classes
 </ul>
 Implementation of subclasses of these DdMd base classes generally require interprocessor communication.
 
-\section extend_base_potential_section Potential Energy Classes and Class Templates
-Subclasses of the McMd and DdMd potential energy classes are implemented differently than the other base classes discussed above. Each subclass of these "potential" classes is implemented as an instantiations of a class template that takes a simpler "interaction" class as an argument. An "interaction" class is a non-polymorphic class that defines a potential energy function (e.g., a Lennard-Jones pair interaction) and is responsible for the core calculations of forces and energies for a small group of atoms (e.g., for a single nonbonded pair). The interaction classes are all defined in the Inter namespace, and are located in the src/inter directory. The potential energy classes listed above use an associated interaction class for the core calculations, but can also calculate energies and (in MD simulations) forces for an entire system, and (in MC simulations) energies for individual atoms and molecules. Because the potential energy classes are implemented using templates, the procedure for extending the potential classes so as to implement new interactions is somewhat different than the procedure for extending the other base classes. These peculiarities of the potential energy classes are discussed in more detail \ref extend_potential_page "here".
+\section extend_base_potential_section Potential energy classes
+Subclasses of the potential energy classes in either the McMd or DdMd namespaces are implemented differently than the other base classes discussed above. Each subclass of a "potential" classes is implemented as an instantiation of a class template that takes a simpler "interaction" class as an argument. Consequences of this peculiarity are discussed in more detail \ref extend_potential_page "here".
 
 <BR> 
 \ref extend_page  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;

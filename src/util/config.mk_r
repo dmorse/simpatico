@@ -67,6 +67,8 @@ endif
 ifdef UTIL_DEBUG
 UTIL_DEFS+= -DUTIL_DEBUG
 UTIL_SUFFIX:=$(UTIL_SUFFIX)_g
+else
+CXXFLAGS+= $(WINLINE)
 endif
 
 # Enable features that require features of the C++11 standard

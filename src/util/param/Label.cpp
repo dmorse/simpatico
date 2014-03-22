@@ -42,9 +42,17 @@ namespace Util
    /*
    * Constructor.
    */
-   Label::Label(const char* label, bool isRequired)
+   Label::Label(bool isRequired)
     : isRequired_(isRequired),
-      label_(label)
+      string_()
+   {}
+
+   /*
+   * Constructor.
+   */
+   Label::Label(const char* string, bool isRequired)
+    : isRequired_(isRequired),
+      string_(string)
    {}
 
    /*
@@ -52,7 +60,7 @@ namespace Util
    */
    Label::Label(const Label& other)
     : isRequired_(other.isRequired_),
-      label_(other.label_)
+      string_(other.string_)
    {}
 
    /*
@@ -62,10 +70,16 @@ namespace Util
    {}
 
    /*
+   * Set the label string.
+   */
+   void Label::setString(std::string string) 
+   {  string_ = string; }
+
+   /*
    * Return label string.
    */
    std::string Label::string() const
-   {  return label_; }
+   {  return string_; }
 
    /*
    * Extract a label from an input stream.
@@ -77,12 +91,12 @@ namespace Util
          in >> label.input_;
          label.isClear_ = false;
       }
-      if (label.input_ == label.label_) {
+      if (label.input_ == label.string_) {
          label.clear(); // Clear label input buffer
       } else {
          if (label.isRequired_) {
             Log::file() << "Error reading label"        << std::endl;
-            Log::file() << "Expected: " << label.label_ << std::endl;
+            Log::file() << "Expected: " << label.string_ << std::endl;
             Log::file() << "Scanned:  " << label.input_ << std::endl;
             UTIL_THROW("Incorrect label");
          }
@@ -96,7 +110,7 @@ namespace Util
    std::ostream& operator<<(std::ostream& out, Label label)
    {
       out << std::left << std::setw(Label::LabelWidth) 
-          << label.label_; 
+          << label.string_; 
       out << std::right;
       return out;
    }

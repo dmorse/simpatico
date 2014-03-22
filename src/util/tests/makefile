@@ -7,7 +7,7 @@ include $(SRC_DIR)/util/tests/sources.mk
 
 TEST=util/tests/Test
 
-all: $(util_tests_OBJS) $(OBJ_DIR)/$(TEST)
+all: $(util_tests_OBJS)
 
 run: $(util_tests_OBJS) $(OBJ_DIR)/$(TEST)
 	$(OBJ_DIR)/$(TEST) $(SRC_DIR)/util/tests/ > log

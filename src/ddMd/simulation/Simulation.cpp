@@ -19,6 +19,9 @@
 #include <ddMd/configIos/DdMdConfigIo.h>
 #include <ddMd/configIos/SerializeConfigIo.h>
 #include <ddMd/analyzers/AnalyzerManager.h>
+#ifdef DDMD_MODIFIERS
+#include <ddMd/modifiers/ModifierManager.h>
+#endif
 
 #ifndef DDMD_NOPAIR
 #include <ddMd/potentials/pair/PairPotential.h>
@@ -115,6 +118,9 @@ namespace DdMd
       fileMasterPtr_(0),
       configIoPtr_(0),
       serializeConfigIoPtr_(0),
+      #ifdef DDMD_MODIFIERS
+      modifierManagerPtr_(0),
+      #endif
       analyzerManagerPtr_(0),
       #ifndef DDMD_NOPAIR
       pairFactoryPtr_(0),
@@ -193,6 +199,9 @@ namespace DdMd
       fileMasterPtr_ = new FileMaster;
       energyEnsemblePtr_ = new EnergyEnsemble;
       boundaryEnsemblePtr_ = new BoundaryEnsemble;
+      #ifdef DDMD_MODIFIERS
+      modifierManagerPtr_ = new ModifierManager(*this);
+      #endif
       analyzerManagerPtr_ = new AnalyzerManager(*this);
    }
 
@@ -257,6 +266,11 @@ namespace DdMd
       if (analyzerManagerPtr_) {
          delete analyzerManagerPtr_;
       }
+      #ifdef DDMD_MODIFIERS
+      if (modifierManagerPtr_) {
+         delete modifierManagerPtr_;
+      }
+      #endif
       if (fileMasterPtr_) {
          delete fileMasterPtr_;
       }
@@ -302,7 +316,7 @@ namespace DdMd
            nSystem = atoi(sArg);
            break;
          case '?':
-           std::cout << "Unknown option -" << optopt << std::endl;
+           Log::file() << "Unknown option -" << optopt << std::endl;
          }
       }
 
@@ -526,7 +540,9 @@ namespace DdMd
          msg += className;
          UTIL_THROW("msg.c_str()");
       }
-
+      #ifdef DDMD_MODIFIERS
+      readParamCompositeOptional(in, *modifierManagerPtr_);
+      #endif
       readParamComposite(in, random_);
       readParamComposite(in, *analyzerManagerPtr_);
 
@@ -716,7 +732,9 @@ namespace DdMd
          msg += className;
          UTIL_THROW("msg.c_str()");
       }
-
+      #ifdef DDMD_MODIFIERS
+      loadParamCompositeOptional(ar, *modifierManagerPtr_);
+      #endif
       loadParamComposite(ar, random_);
       loadParamComposite(ar, *analyzerManagerPtr_);
 
@@ -872,13 +890,16 @@ namespace DdMd
       }
       #endif
 
-      // Save ensembles, integrator, random, analyzers
+      // Save ensembles, integrator, modifiers, random, analyzers
       saveEnsembles(ar);
       std::string name = integrator().className();
       ar << name;
       integrator().save(ar);
+      #ifdef DDMD_MODIFIERS
+      modifierManager().saveOptional(ar);
+      #endif
       random_.save(ar);
-      analyzerManagerPtr_->save(ar);
+      analyzerManager().save(ar);
    }
 
    /*

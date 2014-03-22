@@ -93,7 +93,7 @@ namespace DdMd
       /**
       * Clear all ghosts from this map.  
       *
-      * \param Set of all ghosts on this processor.
+      * \param ghostSet Set containing all ghosts on this processor.
       */
       void clearGhosts(const ArraySet<Atom>& ghostSet);
 
@@ -122,7 +122,7 @@ namespace DdMd
       int nGhostDistinct() const;
 
       /**
-      * Return the number of ghosts images.
+      * Return the number of ghosts, including images.
       */ 
       int nGhost() const;
 
@@ -156,8 +156,8 @@ namespace DdMd
       * called after all pointers have been set for all local atoms
       * and after this AtomMap contains all ghost atoms. 
       *
-      * On exit, pointers are set for all ghost atoms present in this
-      * AtomMap. 
+      * On exit, pointers are set for all ghost atoms present in
+      * this AtomMap.
       *
       * \param group Group<N> object with known atom ids. 
       * \return number of atoms found on this processor.
@@ -192,7 +192,7 @@ namespace DdMd
       /// Number of local atoms in this map.
       int nLocal_;
 
-      /// Number of ghost atoms in this map.
+      /// Number of ghost atom with distinct ids in this map.
       int nGhostDistinct_;
 
       // Maximum number of atoms on all processors, maximum id + 1
@@ -200,6 +200,25 @@ namespace DdMd
 
       // Has this map been initialized (i.e., allocated)?
       bool isInitialized_;
+
+      /*
+      *  Design / invariants:
+      *
+      *  - If a local atom with id i is present, atomPtrs_[i]
+      *    contains a pointer to that atom.
+      *
+      *  - If one or more ghosts with an atom id i are present,
+      *    but there is no local atom with that id, atomPtrs_[i]
+      *    contains a pointer to one such ghost.
+      *
+      *  - ghostMap_ contains pointers to all ghosts except those
+      *    in atomPtrs_, stored using atom indices as keys. 
+      *
+      * One image of each physical atom, identified by id, is thus 
+      * stored * in atomPtrs_, while ghostMap_ holds any "extra"
+      * ghost images of atoms. If this processor does not contain
+      * multiple images of any particle, ghostMap_ will be empty.
+      */
 
    };
 
@@ -224,7 +243,7 @@ namespace DdMd
    { return nGhostDistinct_; }
 
    /*
-   * Return the number of ghosts with distinct ids.
+   * Return the total number of ghosts, including images.
    */ 
    inline int AtomMap::nGhost() const
    { return nGhostDistinct_ + ghostMap_.size(); }
@@ -243,7 +262,7 @@ namespace DdMd
          ptr = atomPtrs_[group.atomId(i)];
          if (ptr) {
             assert(!ptr->isGhost());
-            assert(ptr->atomId() == group.atomId(i));
+            assert(ptr->id() == group.atomId(i));
             group.setAtomPtr(i, ptr);
             ++nAtom;
          } else {
@@ -260,19 +279,17 @@ namespace DdMd
    int AtomMap::findGroupGhostAtoms(Group<N>& group) const
    {
       Atom* ptr;
-      GhostMap::const_iterator iter;
       int nAtom = 0;
-      int atomId;
       for (int i = 0; i < N; ++i) {
-         if (group.atomPtr(i)) {
-            assert(!ptr->isGhost());
+         if (group.atomPtr(i) != 0) {
+            // assert(!(ptr->isGhost()));
             ++nAtom;
          } else {
-            atomId = group.atomId(i);
+            int atomId = group.atomId(i);
             ptr = atomPtrs_[atomId];
             if (ptr) {
                assert(ptr->isGhost());
-               assert(ptr->atomId() == atomId);
+               assert(ptr->id() == atomId);
                group.setAtomPtr(i, ptr);
                ++nAtom;
             } else {

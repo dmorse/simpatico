@@ -39,8 +39,8 @@ The optional features are:
   <tr> 
     <td> <b>description</b> </td>
     <td> <b>option </b> </td>
-    <td> <b>suffix </b> </td>
     <td> <b>default </b> </td>
+    <td> <b>suffix </b> </td>
     <td> <b>macro</b> </td>
     <td> <b>file  </b> </td>
     <td> <b>notes </b> </td>
@@ -117,36 +117,35 @@ The optional features are:
     <td> mcMd/config.mk </td>
     <td> (4), (5) </td>
   </tr>
+  <tr> 
+    <td> DdMd Modifiers </td>
+    <td> -u </td>
+    <td> OFF </td>
+    <td> _u </td>
+    <td> DDMD_MODIFIERS </td>
+    <td> ddMd/config.mk </td>
+    <td> (6) </td>
+  </tr>
 </table>
 Notes:
 <ol>
   <li> 
-    The MPI option is off by default in the src/ and obj/serial directories but on by
-    default in the obj/parallel directory. Also see notes (2) and (3).
+    The MPI option is off by default in the src/ and obj/serial directories but on by default in the obj/parallel directory. Also see notes (2) and (3).
   </li>
   <li> 
-    The commands associated with the makefile targets mcMd, mcMd-mpi, and ddMd all
-    invoke the configure script to enable or disable MPI, as appropriate, before 
-    compiling any code. Specifically "make mcMd" invokes "configure -m0" and the
-    other two targets invoke "configure -m1" to ensure that the MPI option is set 
-    correctly for a particular program. When compiling using these targets, from 
-    either the root directory or the object directory, it is thus not necessary 
-    for the user to explicitly enable or disable MPI.
+    The commands associated with the makefile targets mcMd, mcMd-mpi, and ddMd all invoke the configure script to enable or disable MPI, as appropriate, before compiling any code. Specifically "make mcMd" invokes "configure -m0" and the other two targets invoke "configure -m1" to ensure that the MPI option is set correctly for a particular program. When compiling using these targets, from either the root directory or the object directory, it is thus not necessary for the user to explicitly enable or disable MPI.
   </li>
   <li> 
-    The suffix _m is added the names of MPI-enabled versions of the mcSim and mdSim 
-    executables, and to MPI-enabled versions of the libutil.a, libinter.a and libmcMd.a
-    libraries. The suffix _m is not, however, added to the name of the ddSim executable 
-    or the libddMd.a library, because MPI is required for ddSim to function and is thus 
-    not really an optional feature.
+    The suffix _m is added the names of MPI-enabled versions of the mcSim and mdSim executables, and to MPI-enabled versions of the libutil.a, libinter.a and libmcMd.a  libraries. The suffix _m is not, however, added to the name of the ddSim executable or the libddMd.a library, because MPI is required for ddSim to function and is thus not really an optional feature.
   </li>
   <li>
     The -f free energy perturbation option is not available in ddSim. 
   </li>
   <li>
-    The -f free energy perturbation option can only be used if MPI is also enabled. 
-    If MPI is enabled, free energy perturbation is enabled by default, but may be
-    explicitly disabled. 
+    The -f free energy perturbation option can only be used if MPI is also enabled.  If MPI is enabled, free energy perturbation is enabled by default, but may be explicitly disabled. 
+  </li>
+  <li>
+    Enabling -u option enables the addition of modifiers to a ddSim program. Modifiers are classes that can modify the state of the system during simulation, and thereby change its time evolution. When modifiers are enabled, the parameter file may contain an optional ModifierManager{...} block immediately after the integrator block. If this feature is enabled at compile time but this block is absent from the parameter file, it will be assumed that there are no modifiers. 
   </li>
 </ol>
 

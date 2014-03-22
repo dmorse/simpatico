@@ -40,11 +40,11 @@ namespace DdMd
       virtual ~AnalyzerManager();
 
       /**
-      * Read parameter file. 
+      * Read parameter block (without begin and end).
       *
       * \param in input parameter file stream.
       */
-      virtual void readParam(std::istream &in);
+      virtual void readParameters(std::istream &in);
 
       /**
       * Load internal state from an archive.

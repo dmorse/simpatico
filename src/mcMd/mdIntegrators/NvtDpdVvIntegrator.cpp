@@ -46,7 +46,7 @@ namespace McMd
      randomPtr_(&system.simulation().random()),
      energyEnsemblePtr_(&system.energyEnsemble()),
      atomCapacity_(system.simulation().atomCapacity()),
-     isAllocated_(false)
+     isInitialized_(false)
    {
       // Note: Within the constructor, the method parameter "system" 
       // hides the MdIntegrator::system() method name.
@@ -71,6 +71,11 @@ namespace McMd
    */
    void NvtDpdVvIntegrator::readParameters(std::istream &in) 
    {
+      // Precondition
+      if (isInitialized_) {
+         UTIL_THROW("NvtDpdVvIntegrator already initialized");
+      }
+
       read<double>(in, "dt", dt_);
       read<double>(in, "cutoff", cutoff_);
       #ifndef INTER_NOPAIR
@@ -85,6 +90,7 @@ namespace McMd
       randomForces_.allocate(atomCapacity_);
       dtMinvFactors_.allocate(simulation().nAtomType());
 
+      isInitialized_ = true;
    }
 
    /*
@@ -92,6 +98,11 @@ namespace McMd
    */
    void NvtDpdVvIntegrator::loadParameters(Serializable::IArchive& ar)
    {  
+      // Precondition
+      if (isInitialized_) {
+         UTIL_THROW("NvtDpdVvIntegrator already initialized");
+      }
+
       loadParameter<double>(ar, "dt", dt_);
       loadParameter<double>(ar, "cutoff", cutoff_);
       #ifndef INTER_NOPAIR
@@ -107,6 +118,8 @@ namespace McMd
       ar & dtMinvFactors_;
       ar & dissipativeForces_;
       ar & randomForces_;
+
+      isInitialized_ = true;
    }
 
    /*
@@ -131,6 +144,10 @@ namespace McMd
    */
    void NvtDpdVvIntegrator::setup() 
    {
+      if (!isInitialized_) {
+         UTIL_THROW("Object must be initialized before use");
+      }
+
       // Calculate dtMinvFactors_ array.
       double mass;
       int nAtomType = simulation().nAtomType();

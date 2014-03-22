@@ -6,9 +6,28 @@ namespace McMd
 \ref extend_factory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_subfactory_page  (Next)
 <BR>
- 
-\section potentials_base_sec Potential Energy Base Classes
-The mcSim and mdSim programs use the following set of abstract base classes for different types of potential energy:
+
+\section potentials_howto_sec Overview
+
+Subclass of potential energy classes are implemented somewhat differently than other polymorphic classes.  Each subclass of a potential energy class is implemented by a class template that takes a simpler "interaction" class as an argument. Each "interaction" class defines a specific potential energy function (e.g., a harmonic bond potential) and provides functions that implement the core calculations of forces and energies for a small group of atoms (e.g., a single bonded pair). The class templates that are used to define potential energy subclasses implement algorithms that require looping over such groups (e.g., over all bonds or all nonbonded pairs) in order to calculate contributions to the system energy or forces on all atoms. 
+
+For example, the subclass of DdMd::BondPotential that implements a harmonic bond potential is given by a template instantiation DdMd::BondPotentialImpl<Inter::HarmonicBond>. In this example, Inter::HarmonicBond is an interaction class that implements the calculation of harmonic bond energy and forces for a single pair of bonded atoms. DdMd::BondPotentialImpl is a class template that implements the loops over bonds required calculate total bond energy for a system, or to calculate bond forces on all atoms. Analogous sets of potential energy abstract base classes and implementation templates are defined in the McMd and DdMd namespaces for different types of potential energy (pair, angle, etc.), as discussed below in more detail.
+
+Because of this use of templates, the procedure required to add a new potential energy class is slightly different than the procedure required for other abstract base classes. Briefly, one must:
+<ul>
+
+<li> Implement a new interaction class to calculate forces and energies for a new functional form of one of the potential energy contributions (e.g., for the bond potential).  This class should be defined in the Inter namespace, and should be placed in a subdirectory of the src/inter directory. The header and source files for a class that is intended only for personal use should be placed in the directory src/inter/user. If you decide to contribute the new interaction class to the project, these files should be moved to the subdirectory of src/inter that contains interactions of the same type (e.g., inter/bond) before proposing the new class for inclusion. </li>
+
+<li> Add the name of the *.cpp source file for the new interaction class to the sources.mk file in the subdirectory of src/inter that contains the header and source files. This will automatically cause the new interaction class to be compiled and added to the appropriate library by the build system. </li>
+
+<li> Modify the factory class for the associated potential energy class in the McMd and/or DdMd namespace so as to recognize a "style" string value that identifies the new interaction, and to construct the appropriate template instantiation when this string is passed to the factory function. The value of this string identifier should normally be the same as the name of the new interaction class.</li>
+
+</ul>
+Each of these steps is discussed in greater detail below. 
+
+\section potentials_base_sec Potential energy base classes
+
+The mcSim and mdSim programs use the following set of abstract base classes for potential energies, which are defined in the McMd namespace:
 <ul>
 
  <li> McMd::McPairPotential </li>
@@ -24,9 +43,7 @@ The mcSim and mdSim programs use the following set of abstract base classes for 
  <li> McMd::ExternalPotential </li>
 
 </ul>
-The names are self-explanatory: Bond, Angle, and Dihedral potentials represent 2-body bond, 3-body angle, and 4-body dihedral covalent interactions.  An ExternalPotential represents a one-body potential in which the energy depends upon the position and type of a single atom. The McPairPotential and MdPairPotential classes both represent nonbonded pair interactions, but define slightly different interfaces for MC and MD simulations. For all other potential energy types (i.e., for bond, angle, dihedral, and external potentials) the same base class is used in both MC and MD simulations.
-
-The ddSim program uses an analogous set of base classes defined in the DdMd namespace:
+The ddSim program uses an analogous set of base classes, which are defined in the DdMd namespace:
 <ul>
  <li> DdMd::PairPotential </li>
 
@@ -38,40 +55,92 @@ The ddSim program uses an analogous set of base classes defined in the DdMd name
 
  <li> DdMd::ExternalPotential </li>
 </ul>
-with names similar to those of the corresponding McMd classes.
+Most names are self-explanatory: Pair potentials represented non-bonded two body interactions. Bond, Angle, and Dihedral potentials represent 2-body bond, 3-body angle, and 4-body dihedral covalent interactions.  An ExternalPotential represents a one-body potential in which the energy depends upon the position and type of a single atom. 
 
-Each of the above potential energy base classes declare two different types of methods to calculate energies and forces:
+The main difference between the sets of potential energy classes in the DdMd and McMd namespaces is that that McMd namespace contains two different base classes for nonbonded pair interactions for MC and MD simulations, named McPairPotential and MdPairPotential, while the DdMd contains only a single such class, named PairPotential. Different base classes are defined in the McMd namespace because MC and MD simulations require different interfaces and different underlying data structures. Only MC requires the ability to efficiently calculate the pair energy of a single atom, and the Verlet-list data structure used in the implementation of McMd::MdPairPotential MD does not provide an efficient way to implement this calculation. For all other potential energy types (i.e., for bond, angle, dihedral, and external potentials), a single McMd base provides an interface suitable for both MD and MC simulations. 
 
-  - Global methods, which calculate the contribution from a particular type of potential to the total energy and total stress of an associated system, 
+Each of the above potential energy base classes declare two different types of functions to calculate energies and forces:
 
-  - Group methods, which calculate energies and forces arising from single groups of atoms, such as a single pair of nonbonded atoms.  
+  - %System functions, which calculate the contribution from a particular type of potential to the total energy and/or total stress of an entire system, 
 
-Every classes that is intended for use in MD simualtion (i.e., all the DdMd potentials and all of the McMd potentials except McPairPotential) provides a method to calculate the the forces exerted on all atoms in a System by a particular type of potential energy (e.g., all nonbonded pair forces).  All of the McMd potential classes that are intended for us in MC simulations (i.e,. all except MdPairPotential) provide methods to calculate a corresponding energy contribution for a specific atom.
+  - %Group functions, which calculate energies and forces arising from a small group of interacting atoms, such as a single pair of nonbonded atoms.  
 
-\section potentials_interaction_sec Interaction Classes and Potential Energy Class Templates
+Every class that is intended for use in MD simulation (i.e., all the DdMd potentials and all of the McMd potentials except McPairPotential) declares a function that calculate the forces exerted on all atoms in a System by the associated potential energy (e.g., all nonbonded pair forces).  Every McMd potential energy classes that is intended for use in MC simulations (i.e,. all except MdPairPotential) declares a function that calculates the corresponding energy contribution for a specific atom.
 
-Subclasses of these abstract potential energy classes are constructed using a simpler set of "interaction" classes. The interaction classes are defined in the Inter namespace. Each interaction class represents a specific functional form for a specific type of potential energy contribution that involves only a small group of 2, 3, or 4 atoms. For example, Inter::LJPair is a pair interaction class the implements a Lennard-Jones part potential, while Inter::HarmonicBond is a covalent bond interaction that implements a harmonic bond potential. The interaction classes are simple, non-polymorphic classes, which provide non-virtual methods to calculate the energy and forces for a single group of interacting atoms, such as a single pair of nonbonded or bonded atoms, or a group of three atoms that interact via an angle potential. Unlike the polymorphic potential energy classes discussed above, interaction classes do not provide global methods to do calculations that involve, e.g., looping over atoms or covalent groups of an associated system.
+\section potentials_interaction_sec Interaction classes
 
-Subclasses of the potential energy base classes that use particular interaction functions are implemented by class templates. Each such class template takes an interaction class as a template argument, and is derived from an associated abstract potential class. The name of each class template is given in all but a few cases by the name of the associated base class followed by the suffix "Impl" (for implementation). For example, the template that implements the McMd::BondPotential interface is called McMd::BondPotentialImpl. The template instantiation McMd::BondPotentialImpl<Inter::HarmonicBond> is a subclass of BondPotential that represents a harmonic bond potential.  The template McMd::BondPotentialImpl defines methods that implement a loop over all bonds in a system, as required to calculate the total bond energy of a System and to calculate bond forces for all atoms in a system, and that calls the methods of the associated interaction class within that loop to calculate forces and/or energies for individual bonds.  Analogous templates are provided in both the McMd and DdMd namespaces for angle, dihedral, link and external forces. 
+Concrete subclasses of these abstract potential energy classes are implemented using a set of "interaction" classes. The interaction classes are defined in the Inter namespace. Each interaction class represents a specific functional form for a specific type of potential energy contribution that involves a small group of 1, 2, 3, or 4 atoms. For example, Inter::LJPair is a pair interaction class the implements a Lennard-Jones part potential, while Inter::HarmonicBond is a covalent bond interaction that implements a harmonic bond potential. The interaction classes provide non-virtual functions to calculate the energy and forces for a single group of interacting atoms, such as a single pair of nonbonded or bonded atoms. Different interaction classes of the same type are not descended from a common base class, and are thus not polymorphic, but must implement the same interface in order to be used in the same potential energy templates. Unlike potential energy classes, interaction classes do not provide system-wide calculations that involve, e.g., looping over nonbonded-pairs or covalent groups of an associated system.
 
-In the special case of non-bonded pair potentials, the McMd namespace contains two different implementation templates, named McMd::McPairPotentialImpl and McMd::MdPairPotentialImpl, which are designed for MC and MD simulations, respectively. These use different algorithms to do the energy and force calculations required in MC and MD simulations, and implement slightly different interfaces: The McPairPotentialImpl uses a cell list that is optimized for use in MC simulations. The MdPairPotentialImpl uses a Verlet pair list to implement the force loop required in MD simulations. 
+Interaction classes should be derived from ParamComposite. Each such class must invoke ParamComposite::setClassName(std::string& ) in its constructor.
 
-The DdMd namespace contains an analogous set of abstract base classes, e.g., DdMd::BondPotential, and implementation templates, such as DdMd::BondPotentialImpl. Their is no need in this case to distinguish between MC and MD variants of the pair potential, because this namespace only contains the code for parallel MD simulations. 
+\section potentials_template_sec Implementation templates
 
-\section potentials_factory_sec Factory Classes 
+Subclasses of the potential energy base classes are implemented by templates. The name of each such class template ends with the suffix "Impl", for "implementation". Each such class template takes an interaction class as a template argument, and is defined as a subclass of the associated potential energy base class. The McMd and DdMd namespaces contain separate but analogous sets of potential energy implementation templates. 
 
-Simpatico provides a default factory class for each of the above types of potential energy. The BondFactory, AngleFactory, DihedralFactory, and ExternalFactory classes in the McMd namespace, and analogous classes with the same names in the DdMd namesapce, are derived from the Factory template, and use an interface similar to that of other factory classes.  Like other factory classes, they all provide 
-a single factory() method that takes a string argument and that (if possible) returns a pointer to a new instance of a subclass of the associated potential energy base class.  In all of the potential energy factory classes, the name string that is passed as an argument to the factory method is actually the name of the required interaction classes (which is also a name for the potential energy function).  For example, if the BondFactory::factory(std::string&) method is passed the string "HarmonicBond", it constructs an instance of BondPotentialImpl<HarmonicBond>, and returns a "HarmonicBond* base class pointer to this new object.  
+For example, the template that implements the DdMd::BondPotential interface is called DdMd::BondPotentialImpl. The template instantiation DdMd::BondPotentialImpl<Inter::HarmonicBond> is a subclass of DdMd::BondPotential that can calculate forces, energies, and stress contributions arising from a harmonic bond potential for use in ddSim simulations.  This template implements functions that can loop over all bonds in a system, as required to calculate the total bond energy of a system or to calculate bond forces for all atoms. These functions call member functions of the associated interaction class to calculate forces and/or energies for individual bonds.  Analogous templates are provided in the McMd and DdMd namespaces for pair, bond, angle, dihedral, and external forces. 
 
-The McMd::PairFactory class is slightly different. This class provides two methods, named mdFactory() and mcFactory(), that each take the name of a pair interaction, such as "LJPair", and return a pointer to a new MdPairPotential or McPairPotential object that is constructed using the appropriate implementation 
-template.  The signatures of these methods are:
+For the special case of non-bonded pair potentials, the McMd namespace contains two different class templates, named McMd::McPairPotentialImpl and McMd::MdPairPotentialImpl, that are designed for use in MC and MD simulations, respectively. These use different data structures and algorithms to do the energy and force calculations required in MC and MD simulations. The McPairPotentialImpl template uses a cell list that is optimized for use in MC simulations, while MdPairPotentialImpl uses a Verlet pair list. 
+
+\section potentials_factory_sec Factory classes 
+
+Simpatico provides a default factory class for each of the above types of potential energy. The BondFactory, AngleFactory, DihedralFactory, and ExternalFactory classes in the McMd namespace, and analogous classes in the DdMd namesapce, are derived from instantiations of the Util::Factory template.  Like other factory classes, these classes each provide a factory() method that takes a string argument and that (if possible) returns a pointer to a new instance of a subclass of the associated base class.  In all of the potential energy factory classes, the string that is passed as an argument to the factory method is actually the value of an associated "style" string parameter, such as "pairStyle". The value of the style string is generally the same as the name of the interaction class that implements the relevant potential energy function. For example, if the DdMd::BondFactory::factory(std::string&) method is passed the string "HarmonicBond", it constructs an instance of DdMd::BondPotentialImpl<HarmonicBond>, and returns a "DdMd::HarmonicBond* base class pointer to this newly constructed object.  
+
+As an example, here is the relevant part of the source code for the DdMd::BondFactory class:
 \code
-   McMd::McPairPotential* mcFactory(std::string className);
-   McMd::MdPairPotential* mdFactory(std::string className);
-\endcode
-Because McMd::PairFactory does not implement the interface defined by the standard Factory template, it is not derived from the Factory template. PairFactory also provides a third factory method that takes an McPairPotential by reference and returns a pointer to a corresponding MdPairPotential.  This method is required for hybrid MC simulations, in which short MD simulations are used as proposed MC moves, and is used to construct an MdPairPotential for use in MD simulation that implements the same pair interaction as the McPairPotential used by the parent MC simulation. 
 
-The implementations of the potential energy factory classes are generally very similar to those of other factory classes.  Developers should consult the implementations of the default factory classes for different types of potential in the src/mcMd/potential/ and/or src/ddMd/potentials/ directories for further guidance. 
+#include <ddMd/potentials/bond/BondFactory.h>
+#include <ddMd/simulation/Simulation.h>
+
+// BondPotential base class and implementation template
+#include <ddMd/potentials/bond/BondPotential.h>
+#include <ddMd/potentials/bond/BondPotentialImpl.h>
+
+// Bond interaction classes
+#include <inter/bond/HarmonicBond.h>
+#include <inter/bond/HarmonicL0Bond.h>
+
+namespace DdMd
+{
+
+   using namespace Inter;
+
+   // Return a pointer to a new BondPotential, if possible.
+   BondPotential* BondFactory::factory(const std::string& name) const
+   {
+      BondPotential* ptr = 0;
+
+      // Try subfactories first.
+      ptr = trySubfactories(name);
+      if (ptr) return ptr;
+
+      if (name == "HarmonicBond") {
+         ptr = new BondPotentialImpl<HarmonicBond>(*simulationPtr_);
+      } else
+      if (name == "HarmonicL0Bond") {
+         ptr = new BondPotentialImpl<HarmonicL0Bond>(*simulationPtr_);
+      } else
+      if (name == "FeneBond") {
+         ptr = new BondPotentialImpl<FeneBond>(*simulationPtr_);
+      }
+      return ptr;
+   }
+
+}
+\endcode
+Except for the use of templates for subclasses, the implementation of most potential energy factory classes is quite similar to those of other factory classes.
+
+\section potentials_factory_McMd_sec McMd::PairFactory class
+
+The McMd::PairFactory class is slightly different from the other potential energy factories. This class provides two methods, named mdFactory() and mcFactory(), that each take the name of a pair style string, such as "LJPair", and return an MdPairPotential* or McPairPotential* pointer to a new object, respectively.  The signatures of these methods are:
+\code
+   McMd::McPairPotential* mcFactory(std::string& className, McMd::System& );
+   McMd::MdPairPotential* mdFactory(std::string& className, McMd::System& );
+\endcode
+Because McMd::PairFactory does not implement the same interface as the Util::Factory template, it is not derived from an instantiation of the Util::Factory template. 
+
+McMd::PairFactory also provides a third factory method that takes an McMd::McPairPotential by reference and returns a pointer to a corresponding McMd::MdPairPotential. This method is used to implement hybrid MC simulations, in which short MD simulations are used as proposed MC moves. It is used to construct an McMd::MdPairPotential for use in the required MD simulations that implements the same pair interaction as the McMd::McPairPotential used by the parent MC simulation. 
+
+Developers should consult the implementations of the default McMd::PairFactory method for further guidance. It is straightforward to add new pair potentials to this factory by imitation of the existing code.
 
 <BR>
 \ref extend_factory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
