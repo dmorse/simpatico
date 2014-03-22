@@ -32,44 +32,35 @@ Comments:
 --------------------------------------------------------------------------
 Proposal:
 
-   - Create a class IdGroup with an int* array and a capacity N:
-
-     class IdGroup {
-     private:
-        int* data_;
-        int  N_;
-     }
+   - Change interface and implementation of GroupDistributor and
+     GroupCollector to use IdGroup objects rather than Group<N>* pointers.
 
    - Create a class IdGroupArray that allocates an array of IntGroup objects.
      Make this a friend of IdGroup, and provide IdGroup a private constructor
-     and associate function that can be used to make an array.
+     and associate function that can be used to make an array, for use in the
+     GroupCollector and GroupDistributor classes.
 
-   - Create non-template classes GroupDistributor and GroupCollector that implement 
-     the interfaces:
+   - Change GroupDistributor and GroupCollector to non-template classes that
+     implement the interfaces:
 
      GroupDistributor:
      void associate(Domain& , GroupExchanger&, Buffer& )
      void setup();
-     IdGroup* newPtr();
+     void getNewGroup(IdGroup& idGroup);
      void add();
      void send();
      void receive();
-     int groupSize() const;
+     int  groupSize() const;
   
      GroupCollector:   
      void associate(Domain& , int N, GroupExchanger&, Buffer& )
      void setup();
-     IdGroup* newPtr()
+     void getNewGroup(IdGroup& idGroup);
      void add();
      void send();
      int groupSize() const;
 
-   - Create IdGroupIterator that can iterates through a GroupExchanger and 
-     returns IdGroups.  This may require a template IdGroupIteratorImpl<N>
-     subclass and a factory method that returns an instance of the appropriate
-     subclass.
-
-   - Add functions to GroupExchanger:
+   - Add all required functions to GroupExchanger abstract base class:
 
      // Get size N of group
      virtual int GroupExchanger::groupSize() const;

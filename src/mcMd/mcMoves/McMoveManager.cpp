@@ -41,9 +41,9 @@ namespace McMd
    /* 
    * Read instructions for creating objects from file.
    */
-   void McMoveManager::readParam(std::istream &in)
+   void McMoveManager::readParameters(std::istream &in)
    {
-      Manager<McMove>::readParam(in);
+      Manager<McMove>::readParameters(in);
 
       // Allocate and store probabilities
       probabilities_.allocate(size());

@@ -27,6 +27,7 @@ namespace McMd
    /// Constructor.
    CompositionProfile::CompositionProfile(System& system) 
     : SystemAnalyzer<System>(system),
+      isFirstStep_(true),
       isInitialized_(false)
    {  setClassName("CompositionProfile"); }
 
@@ -44,9 +45,13 @@ namespace McMd
       intVectors_.allocate(nDirection_);
       readDArray<IntVector>(in, "intVectors", intVectors_, nDirection_);
 
+      read<int>(in, "nBins", nBins_);
+
       nAtomType_ = system().simulation().nAtomType();
       waveVectors_.allocate(nDirection_);
       accumulators_.allocate(nDirection_*nAtomType_);
+      currentAccumulators_.allocate(nDirection_*nAtomType_);
+      logFiles_.allocate(nDirection_*nAtomType_);
 
       isInitialized_ = true;
    }
@@ -84,14 +89,23 @@ namespace McMd
    * Save internal state to an archive.
    */
    void CompositionProfile::save(Serializable::OArchive &ar)
-   {  ar << *this; }
+      {
+      Analyzer::save(ar);
+      ar & nDirection_;
+      ar & intVectors_;
+      ar & waveVectors_;
+      ar & accumulators_;
+      ar & nSample_;
+      ar & nAtomType_;
+      ar & nBins_;
+      ar & isFirstStep_;
+      }
 
    /*
    * Clear accumulators.
    */
    void CompositionProfile::setup() 
    {  
-      int bin;
       double min, max;
       
       for (int i=0; i < nDirection_; ++i) {
@@ -100,10 +114,8 @@ namespace McMd
             min = 0.0;
             max = 1.0;
 
-            // number of bins in histogram = int(((max-min)/0.05));
-            bin = 500;
-
-            accumulators_[i+j*nDirection_].setParam(min, max, bin);
+            accumulators_[i+j*nDirection_].setParam(min, max, nBins_);
+            currentAccumulators_[i+j*nDirection_].setParam(min, max, nBins_);
          }
       }
 
@@ -126,12 +138,33 @@ namespace McMd
       blengths = system().boundary().lengths();
 
       if (isAtInterval(iStep))  {
-
          Vector  position;
          double  product;
          System::ConstMoleculeIterator  molIter;
          Molecule::ConstAtomIterator  atomIter;
          int  nSpecies, iSpecies, typeId;
+
+         // Clear accumulators for the current timestep
+         for (int i = 0; i < nDirection_; ++i) {
+            for (int j = 0; j < nAtomType_; ++j){
+               currentAccumulators_[i+j*nDirection_].clear();
+            }
+         } 
+
+         // Open log files
+         for (int i = 0; i < nDirection_; ++i) {
+            for (int j = 0; j < nAtomType_; ++j){
+                std::ostringstream oss;
+                oss << outputFileName();
+                
+                for (int k = 0; k < Dimension; ++k) {
+                    oss << "_" << intVectors_[i][k];
+                }
+                oss << "_type" << j << ".log";
+
+                fileMaster().openOutputFile(oss.str(), logFiles_[i+j*nDirection_], !isFirstStep_);
+            }
+         }
 
          // Loop over all atoms
          nSpecies = system().simulation().nSpecies();
@@ -147,11 +180,12 @@ namespace McMd
                   for (int i = 0; i < Dimension; ++i) {
                      position[i] /= blengths[i];
                   }
-		  // Loop over direction vectors
+	              // Loop over direction vectors
                   for (int i = 0; i < nDirection_; ++i) {
                      product = position.dot(waveVectors_[i]);
                      product /= waveVectors_[i].abs();
                      accumulators_[i+typeId*nDirection_].sample(product);
+                     currentAccumulators_[i+typeId*nDirection_].sample(product);
                   }
 		 
                }
@@ -161,6 +195,22 @@ namespace McMd
 
       ++nSample_;
 
+      // Output to log files
+      for (int i = 0; i < nDirection_; ++i) {
+         for (int j = 0; j < nAtomType_; ++j){
+            currentAccumulators_[i+j*nDirection_].output(logFiles_[i+j*nDirection_]);
+            logFiles_[i+j*nDirection_] << std::endl;
+         }
+      }
+
+      // Close log files
+      for (int i = 0; i < nDirection_; ++i) {
+         for (int j = 0; j < nAtomType_; ++j){
+            logFiles_[i+j*nDirection_].close();
+         }
+      }
+
+      isFirstStep_ = false;
       }
 
    }
@@ -206,7 +256,6 @@ namespace McMd
       
          for (k = 0; k < nAtomType_; ++k) {
             accumulators_[i+k*nDirection_].output(outputFile_);
-            outputFile_ << std::endl;
             outputFile_ << std::endl;
          }
       }

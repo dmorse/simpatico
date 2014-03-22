@@ -103,7 +103,7 @@ namespace DdMd
       *
       * \param domain        associated Domain object defines the processor grid
       * \param atomStorage   associated AtomStorage manages memory for atoms
-      * \param groupsStorage associated AtomStorage manages memory for groups
+      * \param groupStorage  associated GroupStorage manages memory for groups
       * \param buffer        associated buffer provides memory for communication
       */
       void associate(Domain& domain, 

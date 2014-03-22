@@ -29,9 +29,9 @@ Plan (order of changes):
    to methods of GroupStorage<N> (Done).
 
 3) Create an appropriate abstraction for use of GroupStorage by
-   GroupDistributor and GroupCollector (not begun)
+   GroupDistributor and GroupCollector (not begun, see below and IdGroup)
 
-4) Move GroupStorage to be a member of corresponding Potential.
+4) Move GroupStorage to be a member of the corresponding Potential.
 
 5) Create PotentialMaster. This can read PairPotential, etc., then
    read the pair style. 
@@ -46,5 +46,8 @@ Next Step:
     Group<N> objects, and that the use of templates makes it very
     difficult to write generic interfaces or virtual functions.
 
-    See proposal for this ConfigIo file.
+    Proposal: Create a new class IdGroup to act as a generic wrapper
+    for a group.
+
+    See proposal in the IdGroup file.
 

@@ -20,49 +20,47 @@ namespace DdMd
    * Default constructor.
    */
    ModifierManager::ModifierManager()
-   : Manager<Modifier>(),
-     simulationPtr_(0),
-     setupModifiers_(),
-     preIntegrate1Modifiers_(),
-     postIntegrate1Modifiers_(),
-     preTransformModifiers_(),
-     preExchangeModifiers_(),
-     postExchangeModifiers_(),
-     postNeighborModifiers_(),
-     preUpdateModifiers_(),
-     postUpdateModifiers_(),
-     preForceModifiers_(),
-     postForceModifiers_(),
-     endOfStepModifiers_(),
-     exchangeModifiers_(),
-     updateModifiers_(),
-     reverseUpdateModifiers_()
+    : Manager<Modifier>(),
+      simulationPtr_(0),
+      setupModifiers_(),
+      preIntegrate1Modifiers_(),
+      postIntegrate1Modifiers_(),
+      preTransformModifiers_(),
+      preExchangeModifiers_(),
+      postExchangeModifiers_(),
+      postNeighborModifiers_(),
+      preUpdateModifiers_(),
+      postUpdateModifiers_(),
+      preForceModifiers_(),
+      postForceModifiers_(),
+      endOfStepModifiers_(),
+      exchangeModifiers_(),
+      updateModifiers_(),
+      reverseUpdateModifiers_()
    { setClassName("ModifierManager"); }
 
    /*
    * Constructor.
    */
    ModifierManager::ModifierManager(Simulation& simulation)
-   : Manager<Modifier>(),
-     simulationPtr_(&simulation),
-     setupModifiers_(),
-     preIntegrate1Modifiers_(),
-     postIntegrate1Modifiers_(),
-     preTransformModifiers_(),
-     preExchangeModifiers_(),
-     postExchangeModifiers_(),
-     postNeighborModifiers_(),
-     preUpdateModifiers_(),
-     postUpdateModifiers_(),
-     preForceModifiers_(),
-     postForceModifiers_(),
-     endOfStepModifiers_(),
-     exchangeModifiers_(),
-     updateModifiers_(),
-     reverseUpdateModifiers_()
-   { 
-      setClassName("ModifierManager"); 
-   }
+    : Manager<Modifier>(),
+      simulationPtr_(&simulation),
+      setupModifiers_(),
+      preIntegrate1Modifiers_(),
+      postIntegrate1Modifiers_(),
+      preTransformModifiers_(),
+      preExchangeModifiers_(),
+      postExchangeModifiers_(),
+      postNeighborModifiers_(),
+      preUpdateModifiers_(),
+      postUpdateModifiers_(),
+      preForceModifiers_(),
+      postForceModifiers_(),
+      endOfStepModifiers_(),
+      exchangeModifiers_(),
+      updateModifiers_(),
+      reverseUpdateModifiers_()
+   {  setClassName("ModifierManager"); }
 
    /*
    * Destructor.
@@ -75,9 +73,9 @@ namespace DdMd
    *
    * \param in input parameter file stream.
    */
-   void ModifierManager::readParam(std::istream &in)
+   void ModifierManager::readParameters(std::istream &in)
    {
-      Manager<Modifier>::readParam(in);
+      Manager<Modifier>::readParameters(in);
 
       Modifier* ptr;
       for  (int i = 0; i < size(); ++i) {
@@ -140,7 +138,7 @@ namespace DdMd
       }
    }
  
-   // Integration
+   // Integration actions
 
    void ModifierManager::preIntegrate1(long iStep)
    {
@@ -161,7 +159,6 @@ namespace DdMd
       for (int i = 0; i < n; ++i) {
          ptr = &postIntegrate1Modifiers_[i];
          if (ptr->isAtInterval(iStep)) {
-            //std::cout << "Calling " << ptr->className() << std::endl;
             ptr->postIntegrate1(iStep);
          } 
       }
@@ -283,9 +280,7 @@ namespace DdMd
       int n = exchangeModifiers_.size();
       for (int i = 0; i < n; ++i) {
          ptr = &exchangeModifiers_[i];
-         if (ptr->isAtInterval(iStep)) {
-            ptr->packExchange();
-         }
+         ptr->packExchange();
       }
    }
  
@@ -295,9 +290,7 @@ namespace DdMd
       int n = exchangeModifiers_.size();
       for (int i = 0; i < n; ++i) {
          ptr = &exchangeModifiers_[i];
-         if (ptr->isAtInterval(iStep)) {
-            ptr->unpackExchange();
-         }
+         ptr->unpackExchange();
       }
    }
  
@@ -307,9 +300,7 @@ namespace DdMd
       int n = updateModifiers_.size();
       for (int i = 0; i < n; ++i) {
          ptr = &updateModifiers_[i];
-         if (ptr->isAtInterval(iStep)) {
-            ptr->packUpdate();
-         }
+         ptr->packUpdate();
       }
    }
  
@@ -319,9 +310,7 @@ namespace DdMd
       int n = updateModifiers_.size();
       for (int i = 0; i < n; ++i) {
          ptr = &updateModifiers_[i];
-         if (ptr->isAtInterval(iStep)) {
-            ptr->unpackUpdate();
-         }
+         ptr->unpackUpdate();
       }
    }
 
@@ -331,9 +320,7 @@ namespace DdMd
       int n = reverseUpdateModifiers_.size();
       for (int i = 0; i < n; ++i) {
          ptr = &reverseUpdateModifiers_[i];
-         if (ptr->isAtInterval(iStep)) {
-            ptr->packReverseUpdate();
-         }
+         ptr->packReverseUpdate();
       }
    }
  
@@ -343,9 +330,7 @@ namespace DdMd
       int n = reverseUpdateModifiers_.size();
       for (int i = 0; i < n; ++i) {
          ptr = &reverseUpdateModifiers_[i];
-         if (ptr->isAtInterval(iStep)) {
-            ptr->unpackReverseUpdate();
-         }
+         ptr->unpackReverseUpdate();
       }
    }
 

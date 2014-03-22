@@ -7,31 +7,35 @@ namespace McMd
 \ref extend_module_page  (Next)
 <BR>
  
-A Factory may contain one or more subfactories. Creating a subfactories is an alternative way of adding new classes to the set that can be recognized by a Factory, without modifying the Factory implementation. The main use of subfactories is in the construction of \ref extend_module_page "modules", which are classes that encapsulate a set of related classes that are needed for an application area.
+A Util::Factory may contain one or more subfactories. Creating a subfactories is an alternative way of adding new classes to the set that can be recognized by a Factory, without modifying the Factory implementation. Subfactories are useful for unit testing and for the construction of \ref extend_module_page "modules".
 
-Every subfactory of a Factory<Base> object is another Factory<Base> object. A factory and its subfactories (if any) form a tree that is searched in a depth first manner: The factory() method of the parent calls the factory method of each subfactory in a attempt to match a class name, before attempting to match it against its own explicit list of names. 
-
-A subfactory may be added to a parent factory by calling the Factory<Base>::addSubfactory() method of the Factory class template. This has a signature:
+A subfactory may be added to a parent factory by calling the Util::Factory<Base>::addSubfactory() method of the Util::Factory class template. This has a signature:
 \code
    template <class Base>
-   void Factory<Base>::addSubfactory(Factory<Base>& subfactory);
+   void Util::Factory<Base>::addSubfactory(Factory<Base>& subfactory);
 \endcode
 Any number of subfactories can be added to a parent factory class.
 
-A recursive, depth-first search of subfactories is implemented by the trySubfactories() method. This has a signature:
+\section extend_subfactory_impl_sec Subfactory implementation
+
+Every subfactory of a Util::Factory<Base> object is another Util::Factory<Base> object. The implementation of a subfactory is thus very similar to that of the original default factory. 
+
+A factory and its subfactories (if any) form a tree that is searched in a depth first manner: The factory() method of the parent calls the factory method of each subfactory in a attempt to match a class name, before attempting to match it against its own explicit list of names. A recursive, depth-first search of subfactories is implemented by the trySubfactories() method. This has a signature:
 \code
    template <class Base>
-   void Factory<Base>::trySubfactories(std::string& classname);
+   void Util::Factory<Base>::trySubfactories(std::string& classname);
 \endcode
-The value of the "classname" parameter is the name of a subclass of Base. This method should be called by the factory() method of every factory class. It calls the factory() method of every subfactory that has been added to that factory, passing the classname string as argument. The factory() method of each subfactory attempts to match this class name, and creates a new object of the desired subclass if it recognizes the name. If a match is found by any subfactory, trySubfactories() immediately stops the search and returns a Base* pointer to the new object. If no match is found by any subfactory, trySubfactories() returns a null pointer.
+The value of the "classname" parameter is the name of a subclass of Base. This method should be called by the factory() method of every factory class (including subfactories), near the beginning of the method. It calls the factory() method of every subfactory that has been added to that factory, passing the classname string as argument. The factory() method of each subfactory attempts to match this class name, and creates a new object of the desired subclass if it recognizes the name. If a match is found by any subfactory, trySubfactories() immediately stops the search and returns a Base* pointer to the new object. If no match is found by any subfactory, trySubfactories() returns a null pointer.
 
-As an example, imagine that you have written an NvtLangevinIntegrator subclass of MdIntegrator, because no Langevin integrator is (thus far) distributed with Simpatico. You would then also define a subclass of Factory<MdIntegrator>, which we will called "MyMdIntegratorFactory", with a factory() method that can recognize the name "NvtLangevinIntegrator" and instantiate an object of this new class.  Here is an example of the required class definition:
+As an example, imagine that you have written an NvtLangevinIntegrator subclass of McMd::MdIntegrator, because no Langevin integrator is (thus far) distributed with Simpatico. You would then also define a subclass of Factory<MdIntegrator>, which we will called "MyMdIntegratorFactory", with a factory() method that can recognize the name "NvtLangevinIntegrator" and instantiate an object of this new class.  Here is an example of the required class definition:
 \code
-#include "MdIntegratorFactory.h"
-#include "NvtLangevinIntegrator.h"
+#include <src/mcMd/mdIntegrators/MdIntegratorFactory.h>
+#include <src/mcMd/user/NvtLangevinIntegrator.h>
 
 namespace McMd 
 {
+
+   using namespace Util;
 
    class MyMdIntegratorFactory : public Factory<MdIntegrator>
    {
@@ -59,7 +63,8 @@ namespace McMd
 \endcode
 The factory method for this subclass returns a pointer to a new NvtLangevinIntegrator, if the subclassName string is "NvtLangevinIntegrator". It returns a null pointer otherwise. 
 
-\section set_factory_extend_sec Adding a Custom Factory 
+\section extend_subfactory_main_sec Changes to the main program
+
 After writing a custom factory, one must invoke the addSubfactory() method of the default factory to register the new Factory as a subfactory of the default Factory. This must be done in the main program, before the readParam() method is invoked.  
 
 Below, we show an example of a main program for an MdSimulation that adds a custom factory MyMdIntegratorFactory as a subfactory to the MdIntegratorFactory. 
@@ -69,11 +74,11 @@ namespace McMd
 
    int main 
    {
-      MdSimulation sim;
-      MyMdIntegratorFactory myFactory;
+      DdMd::Simulation sim;
+      DdMd::MyIntegratorFactory myFactory;
  
       \\ Register the custom Factory with the MdSystem
-      sim.system().mdIntegratorFactory().addSubfactory(myFactory);
+      sim.integratorFactory().addSubfactory(myFactory);
 
       \\ Read the parameter file from standard input.
       sim.readParam();
@@ -85,45 +90,78 @@ namespace McMd
 
 }
 \endcode
-The addSubfactory() method must be invoked before MdSimulation::readParam() in order for the subfactory to be available for use when the parameter file is read. A similar pattern is used to set user defined Factory classes for subclasses of Species, McMove, and Analyzer. The SpeciesFactory and AnalyzerFactory are accessed through methods of the Simulation class. The McMoveFactory is accessible through a method of McSimulation.
+The addSubfactory() method must be invoked before readParam() in order for the subfactory to be available for use during processing of the parameter file. 
 
-\section custom_factory_accessor_sec Access to Factory Classes
+When a factory is associated with a Manager object, the parent Manager class also provides an "addSubfactory()" method that has the same effect. This method simply calls the "addSubfactory() method of the associated Factory. For example, to add an analyzer subfactory named myFactory to a ddSim simulation in which the main object is named sim, one could invoke
+\code
+     sim.analyzerManager().addSubfactory(myFactory);
+\endcode
+Here, DdMd::Simulation::analyzerManager() is an accessor that returns the DdMd::AnalyzerManager by reference. This
+command is equivalent to the longer command sim.analyzerManager().factory().addSubfactory(myFactory), in which "factory()" is a member function of the Util::Manager<T> template that returns the associated Util::Factory<T> object by reference.
 
-The default Factory object for each of the polymorphic base classes in an mcSim or mdSim simulation can be accessed by reference via a method of either the Simulation or McMd::System classes, or of the McSimulation, MdSimulation, McSystem or MdSystem subclasses. The required accessor methods for the factory classes used by mcSim and mdSim are: 
+\section extend_subfactory_accessor_ddSim_sec Accessors for Factory and Manager objects (ddSim)
 
-  - McMd::Factory<Species>&            McMd::Simulation::speciesFactory() 
+The modification of the main program described above requires that the user have access to the relevant factory or Manager object, in order to be able to invoke "addSubfactory()". 
 
-  - McMd::Factory<Analyzer>&         McMd::Simulation::analyzerFactory() 
+In ddSim simulations, access to Factory and Manager classes is provided by the following member functions of DdMd::Simulation:
 
-  - McMd::Factory<McMove>&             McMd::McSimulation::mcMoveFactory() 
+  - DdMd::Factory<ConfigIo>&              DdMd::Simulation::configIoFactory() 
 
-  - McMd::Factory<MdIntegrator>&       McMd::MdSystem::mdIntegratorFactory() 
+  - DdMd::Manager<Analyzer>&              DdMd::Simulation::analyzerManager() 
 
-  - McMd::Factory<ConfigIo>&           McMd::System::configIoFactory() 
+  - DdMd::Factory<Integrator>&            DdMd::Simulation::integratorFactory() 
 
-  - McMd::Factory<TrajectoryIo>&       McMd::MdSystem::trajectoryIoFactory() 
+  - DdMd::Manager<Modifier>&              DdMd::Simulation::modifierManager()
 
-  - McMd::Factory<Perturbation>&       McMd::System::perturbationFactory() 
+  - DdMd::Factory<DdMd::PairPotential>&   DdMd::Simulation::pairFactory() 
 
-  - McMd::PairFactory&                 McMd::System::pairFactory() 
+  - DdMd::Factory<DdMd::BondPotential>&   DdMd::Simulation::bondFactory() 
 
-  - McMd::Factory<BondPotential>&      McMd::System::bondFactory() 
+  - DdMd::Factory<AnglePotential>&        DdMd::Simulation::angleFactory() 
 
-  - McMd::Factory<AnglePotential>&     McMd::System::angleFactory() 
+  - DdMd::Factory<DihedralPotential>&     DdMd::Simulation::dihedralFactory() 
 
-  - McMd::Factory<DihedralPotential>&  McMd::System::dihedralFactory() 
+  - DdMd::Factory<ExternalPotential>&     DdMd::Simulation::externalFactory() 
 
-  - McMd::Factory<BondPotential>&      McMd::System::linkFactory() 
+To access some factories that are associated with Manager classes, such as the Analyzer and Modifier factories, one must call the DdMd::Simulation accessor for the Manager class (listed above), and then call the addSubfactory() method of the parent Manager.
 
-  - McMd::Factory<ExternalPotential>&  McMd::System::externalFactory() 
+\section extend_subfactory_accessor_mcmdSim_sec Accessors for Factory and Manager objects (mcSim and mdSim)
 
-Methods of Simulation and System are also available in the MC and MD subclasses of these classes, and so can be used in either MC or MD simulations. See the page about \ref extend_potential_page for a more detailed discussion of the potential energy and potential energy factory classes.
+In mcSim and mdSim simulations, access to different factories and managers is provided by member functions of the McMd::Simulation or McMd::System classes, or of the McSimulation, MdSimulation, McSystem or MdSystem subclasses. The required accessor methods are: 
 
-When a factory must be accessed via an instance of System or one of its subclasesses, a reference to the required McSystem or MdSystem object can be obtained using the system() method of the parent McSimulation or MdSimulation object. This is done in the above example, in which the MdIntegratorFactory is accessed via the line 
+  - Util::Factory<McMd::Species>&            McMd::Simulation::speciesFactory() 
+
+  - Util::Factory<McMd::Analyzer>&           McMd::Simulation::analyzerFactory() 
+
+  - Util::Factory<McMd::McMove>&             McMd::McSimulation::mcMoveFactory() 
+
+  - Util::Factory<McMd::ConfigIo>&           McMd::System::configIoFactory() 
+
+  - Util::Factory<McMd::Perturbation>&       McMd::System::perturbationFactory() 
+
+  - Util::Factory<McMd::MdIntegrator>&       McMd::MdSystem::mdIntegratorFactory() 
+
+  - Util::Factory<McMd::TrajectoryIo>&       McMd::MdSystem::trajectoryIoFactory() 
+
+  - %McMd::PairFactory&                       McMd::System::pairFactory() 
+
+  - Util::Factory<McMd::BondPotential>&      McMd::System::bondFactory() 
+
+  - Util::Factory<McMd::AnglePotential>&     McMd::System::angleFactory() 
+
+  - Util::Factory<McMd::DihedralPotential>&  McMd::System::dihedralFactory() 
+
+  - Util::Factory<McMd::BondPotential>&      McMd::System::linkFactory() 
+
+  - Util::Factory<McMd::ExternalPotential>&  McMd::System::externalFactory() 
+
+Member functions of the McMd::Simulation and McMd::System base classes are also available in subclasses of these classes, and so can be used in either MC or MD simulations. See the page about \ref extend_potential_page for a more detailed discussion of the peculiarities of the potential energy base and factory classes.
+
+When a factory must be accessed via a member function McMd::System or one of its subclasesses, a reference to the required McSystem or MdSystem object can be obtained using the system() method of the parent McSimulation or MdSimulation object. For example, to add an MdIntegrator factory named myFactory to an mdSim simulation, one might invoke
 \code
     sim.system().mdIntegratorFactory().addSubfactory(myFactory);
 \endcode
-Here, sim is an instance of MdSimulation. The method MdSimulation::system() returns a reference to the associated MdSystem object. The method MdSystem::mdIntegratorFactory() then returns a reference to the default Factory<MdIntegrator>.  Invoking the method Factory<MdIntegrator>::addSubFactory() of this factory object then adds the user-defined subfactory to the default MdIntegratorFactory.
+Here, sim is an instance of MdSimulation. Here, the method McMd::MdSimulation::system() returns a reference to the associated McMd::MdSystem object. 
 
 <BR>
 \ref extend_potential_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;

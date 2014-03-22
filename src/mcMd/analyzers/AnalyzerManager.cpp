@@ -35,14 +35,10 @@ namespace McMd
    *
    * \param in input parameter file stream.
    */
-   void AnalyzerManager::readParam(std::istream &in)
+   void AnalyzerManager::readParameters(std::istream &in)
    {
-      setIsRequired(true);
-      setIsActive(true);
-      beginReadManager(in);
       read<long>(in,"baseInterval", Analyzer::baseInterval);
-      readChildren(in);
-      endReadManager();
+      Manager<Analyzer>::readParameters(in);
    }
 
    /*
