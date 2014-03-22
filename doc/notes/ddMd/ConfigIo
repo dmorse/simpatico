@@ -32,54 +32,29 @@ Comments:
 --------------------------------------------------------------------------
 Proposal:
 
-   - Create a class IdGroup with an int* array and a capacity N:
-
-     class IdGroup {
-     private:
-        int* data_;
-        int  N_;
-     }
-
-   - Create a class IdGroupArray that allocates an array of IntGroup objects.
-     Make this a friend of IdGroup, and provide IdGroup a private constructor
-     and associate function that can be used to make an array.
-
-   - Create non-template classes GroupDistributor and GroupCollector that implement 
-     the interfaces:
+   - Change GroupDistributor and GroupCollector to non-template classes that
+     implement the interfaces:
 
      GroupDistributor:
      void associate(Domain& , GroupExchanger&, Buffer& )
      void setup();
-     IdGroup* newPtr();
+     void getNewGroup(GroupReference& group);
      void add();
      void send();
      void receive();
-     int groupSize() const;
+     int  groupSize() const;
   
      GroupCollector:   
      void associate(Domain& , int N, GroupExchanger&, Buffer& )
      void setup();
-     IdGroup* newPtr()
+     void getNewGroup(GroupReference& group);
      void add();
      void send();
      int groupSize() const;
 
-   - Create IdGroupIterator that can iterates through a GroupExchanger and 
-     returns IdGroups.  This may require a template IdGroupIteratorImpl<N>
-     subclass and a factory method that returns an instance of the appropriate
-     subclass.
-
-   - Add functions to GroupExchanger:
-
-     // Get size N of group
-     virtual int GroupExchanger::groupSize() const;
-
-     // Add an IdGroup to the underlying GroupStorage<N>
-     virtual void GroupExchanger::addIdGroup(IdGroup& group);
-
-     // Instantiate an IdGroupIterator of the appropriate subclass.
-     virtual IdGroupIterator* GroupExchanger::iterator();
-
-     // Initialize an IdGroupIterator
-     virtual void GroupExchanger::begin(IdGroupIterator& );
+   - Change implementation of GroupDistributor and GroupCollector classes to use 
+     GroupReference objects rather than Group<N>* pointers or iterators.
+ 
+   - In GroupCollector, use GroupExchanger::getGroup(GroupReference& group, int id) 
+     function inside a simple for (int = 0; ...) loop rather than an GroupIterator.
 

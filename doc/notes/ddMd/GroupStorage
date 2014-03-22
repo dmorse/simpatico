@@ -14,10 +14,8 @@ Ideas:
 
 1) Make each GroupStorage a member of the associated potential.
 
-2) Abstract communication of groups in a manner that can be generalized
-   to other potentials. This requires an analysis of how the groups 
-   storage containers are currently used in exchanges, distribution,
-   and collection.
+2) Abstract distribution and collection of groups in a manner that can 
+   be generalized to other potentials. 
 
 ------------------------------------------------------------------------
 Plan (order of changes):
@@ -28,23 +26,24 @@ Plan (order of changes):
 2) Change all methods of Exchanger that involve GroupStorage 
    to methods of GroupStorage<N> (Done).
 
-3) Create an appropriate abstraction for use of GroupStorage by
-   GroupDistributor and GroupCollector (not begun)
+3) Create a GroupReference class as a generic group type for use by
+   GroupExchanger, GroupDistributor and GroupCollector (not begun).
 
-4) Move GroupStorage to be a member of corresponding Potential.
+   This requires:
 
-5) Create PotentialMaster. This can read PairPotential, etc., then
-   read the pair style. 
+   - Modification of GroupExchanger and GroupStorage classes to provide
+     functions that provide GroupReference objects.
+
+   - Modifications of GroupDistributor and GroupCollector to use the
+     new abstraction in implementation and interface.
+
+4) Move GroupStorage to be a member of the corresponding Potential.
 
 ------------------------------------------------------------------------
 Next Step:
 
-  - Figure out how to abstract the association between ConfigIos,
-    GroupDistributor and GroupCollector and GroupStorage<N> classes. 
+  - See GroupReference for new generic group class.
 
-    The problem is that these classes interact using pointers to
-    Group<N> objects, and that the use of templates makes it very
-    difficult to write generic interfaces or virtual functions.
-
-    See proposal for this ConfigIo file.
+  - See ConfigIos for discussion of changes in interface of 
+    GroupCollector and GroupDistributor used in a ConfigIo.
 
