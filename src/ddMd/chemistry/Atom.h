@@ -92,9 +92,9 @@ namespace DdMd
       #ifdef DDMD_MOLECULES
 
       /**
-      * Set context of the molecules: specieId, moleculeId, atomId.
+      * Set context of the molecules: speciesId, moleculeId, atomId.
       *
-      * specieId is to identify different type of species might exist
+      * speciesId is to identify different type of species might exist
       * in the system. The moleculeId is to distinguish different 
       * molecules. AtomId is number associated with each atom in the 
       * molecule.
@@ -103,9 +103,9 @@ namespace DdMd
       /**
       * Set Specie Id of the molecule.
       *
-      * \param specieId
+      * \param speciesId
       */ 
-      void setSpecieId(int specieId);
+      void setSpecieId(int speciesId);
 
       /**
       * Set Molecule Id of the molecule.
@@ -518,16 +518,16 @@ namespace DdMd
    * Set the context of an Atom.
    */
    inline void Atom::setContext(AtomContext c)
-   {  arrayPtr_->context_[localId_ >> 1].specieId = c.specieId;  
+   {  arrayPtr_->context_[localId_ >> 1].speciesId = c.speciesId;  
       arrayPtr_->context_[localId_ >> 1].moleculeId = c.moleculeId;
       arrayPtr_->context_[localId_ >> 1].atomId = c.atomId;
    }
 
    /*
-   * Set the specie of an Atom.
+   * Set the species of an Atom.
    */
    inline void Atom::setSpecie(int sId)
-   {  arrayPtr_->context_[localId_ >> 1].specieId = sId;}
+   {  arrayPtr_->context_[localId_ >> 1].speciesId = sId;}
 
    /*
    * Set the molecule of an Atom.
