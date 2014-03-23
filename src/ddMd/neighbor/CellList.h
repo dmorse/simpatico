@@ -129,10 +129,11 @@ namespace DdMd
       * \param atomCapacity dimension of global array of atoms
       * \param lower        lower coordinate bounds for this processor
       * \param upper        upper coordinate bounds for this processor
-      * \param cutoffs      minimum dimensions of a cell in each direction
+      * \param cutoffs      pair cutoff distance in each direction
+      * \param nCellCut     number of cells per cutoff length
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    const Vector& cutoffs);
+                    const Vector& cutoffs, int nCellCut);
 
       /**
       * Allocate memory for this CellList (Cartesian coordinates).
@@ -145,10 +146,11 @@ namespace DdMd
       * \param atomCapacity dimension of global array of atoms
       * \param lower        lower bound for this processor in maximum boundary
       * \param upper        upper bound for this processor in maximum boundary
-      * \param cutoff       minimum dimension of a cell in any direction
+      * \param cutoff       pair cutoff distance in each direction
+      * \param nCellCut     number of cells per cutoff length
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    double cutoff);
+                    double cutoff, int nCellCut);
 
       /**
       * Make the cell grid (using generalized coordinates).
@@ -169,10 +171,12 @@ namespace DdMd
       *
       * \param lower    lower bound of local atom coordinates.
       * \param upper    upper bound of local atom coordinates.
-      * \param cutoffs  minimum dimension of cell in each direction
+      * \param cutoffs  pair cutoff length in each direction
+      * \param nCellCut number of cells per cutoff length
       */
       void 
-      makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs);
+      makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs, 
+               int nCellCut);
 
       /**
       * Make the cell grid (Cartesian coordinates).
@@ -186,8 +190,10 @@ namespace DdMd
       * \param lower    lower bound of local atom coordinates.
       * \param upper    upper bound of local atom coordinates.
       * \param cutoff   minimum dimension of a cell in any direction
+      * \param nCellCut maximum of cells per cutoff length
       */
-      void makeGrid(const Vector& lower, const Vector& upper, double cutoff);
+      void makeGrid(const Vector& lower, const Vector& upper, double cutoff, 
+                    int nCellCut);
 
       /**
       * Determine the appropriate cell for an Atom, based on its position.
@@ -327,7 +333,7 @@ namespace DdMd
       DArray<AtomTag> tags_;
 
       /// Array of Atom handles, sorted by cell (dimension atomCapacity_).
-      DArray<Atom*>   handles_;
+      DArray<Atom*>  handles_;
 
       /// Array of Cell objects.
       GArray<Cell>  cells_;
@@ -371,12 +377,13 @@ namespace DdMd
       * match size of new grid. Does not link cells or calculate offsets to 
       * neighbors.
       *
-      * \param lower lower bound used to allocate array of cells.
+      * \param lower  lower bound used to allocate array of cells.
       * \param uppper  upper bound used to allocate array of cells.
       * \param cutoffs  minimum dimension of a cell in each direction
+      * \param nCellCut  number of cells per cutoff length
       */
       void setGridDimensions(const Vector& lower, const Vector& upper, 
-                             const Vector& cutoffs);
+                             const Vector& cutoffs, int nCellCut);
 
       /**
       * Return true if atomId is valid, i.e., if 0 <= 0 < atomCapacity.
