@@ -57,25 +57,17 @@ namespace DdMd
    }
 
    /*
-   * Allocate memory for this CellList.
-   */
-   void CellList::allocate(int atomCapacity, const Vector& lower, 
-                           const Vector& upper, double cutoff, int nCellCut)
-   {
-      Vector cutoffs;
-      for (int i = 0; i < Dimension; ++i) {
-         cutoffs[i] = cutoff;
-      }
-      allocate(atomCapacity, lower, upper, cutoffs, nCellCut);
-   }
-
-   /*
    * Calculate number of cells in each direction of grid, resize cells_ array if needed.
    */
    void CellList::setGridDimensions(const Vector& lower, const Vector& upper, 
                                     const Vector& cutoffs, int nCellCut)
    {
-      assert(nCellCut >=1);
+      if (nCellCut < 1) {
+         UTIL_THROW("Error: nCellCut < 1");
+      }
+      if (nCellCut > Cell::MaxNCellCut) {
+         UTIL_THROW("Error: nCellCut > Cell::MaxNCellCut");
+      }
       upper_ = upper;
       lower_ = lower;
 
@@ -84,9 +76,11 @@ namespace DdMd
       for (int i = 0; i < Dimension; ++i) {
   
          lengths[i] = upper_[i] - lower_[i];
-         assert(lengths[i] > 0.0);
+         if (lengths[i] < 0) {
+            UTIL_THROW("Processor length[i] < 0.0");
+         }
          if (lengths[i] < cutoffs[i]) {
-            UTIL_THROW("Processor length < cutoff");
+            UTIL_THROW("Processor length[i] < cutoff[i]");
          }
          gridDimensions[i] = int(lengths[i]*nCellCut/cutoffs[i]);
          cellLengths_[i] = lengths[i]/double(gridDimensions[i]);
@@ -97,6 +91,7 @@ namespace DdMd
          gridDimensions[i] += 2*nCellCut;
 
       }
+      //std::cout << "Grid dimensions = " << gridDimensions << std::endl;
       grid_.setDimensions(gridDimensions);
 
       if (grid_.size() < 1) {
@@ -126,19 +121,20 @@ namespace DdMd
    /*
    * Construct grid of cells, build linked list and identify neighbors.
    */
-   void CellList::makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs, int nCellCut)
+   void CellList::makeGrid(const Vector& lower, const Vector& upper, 
+                           const Vector& cutoffs, int nCellCut)
    {
 
       // Calculate required grid dimensions, resize cells_ array if needed.
       setGridDimensions(lower, upper, cutoffs, nCellCut);
 
-      // Mark all cells to as ghost cells by default.
+      // Initially mark all cells as ghost cells by default.
       int ic;
       for (ic = 0; ic < grid_.size(); ++ic) {
          cells_[ic].setIsGhostCell(true);
       }
 
-      // Build linked list of local cells.
+      // Build linked list of local cells, mark all as local.
       IntVector p;
       Cell* prevPtr = 0;
       Cell* cellPtr = 0;
@@ -159,57 +155,66 @@ namespace DdMd
       }
       cellPtr->setLastCell();
 
-      // Calculate range of displacements to neighbor cells
-      IntVector dmin, dmax;
-      for (int i = 0; i < Dimension; ++i) {
-         dmin[i] = -nCellCut;
-         dmax[i] =  nCellCut;
-      }
-
-      // Construct array of integer offsets to neighbors
-      IntVector span;
-      IntVector d, e;
-      Vector f;
-      int offset;
-      span[2] = 1;
-      span[1] = grid_.dimension(2);
-      span[0] = grid_.dimension(2)*grid_.dimension(1);
-      offsets_.clear();
-      offsets_.append(0);
-      for (d[0] = dmin[0]; d[0] <= dmax[0]; ++d[0]) {
-         e[0] = (d[0] != 0) ? std::abs(d[0]) - 1 : 0;
-         f[0] = e[0]*cellLengths_[0]/cutoffs[0];
-         f[0] = f[0]*f[0];
-         for (d[1] = dmin[1]; d[1] <= dmax[1]; ++d[1]) {
-            e[1] = (d[1] != 0) ? std::abs(d[1]) - 1 : 0;
-            f[1] = e[1]*cellLengths_[1]/cutoffs[1];
-            f[1] = f[0] + f[1]*f[1];
-            for (d[2] = dmin[2]; d[2] <= dmax[2]; ++d[2]) {
-               e[2] = (d[2] != 0) ? std::abs(d[2]) - 1 : 0;
-               f[2] = e[2]*cellLengths_[2]/cutoffs[2];
-               f[2] = f[1] + f[2]*f[2];
-               if (f[2] <= 1.0) {
-                  offset = d[0]*span[0] + d[1]*span[1] + d[2];
-                  if (offset != 0) {
-                     offsets_.append(offset);
-                  }
-               }
+      // Construct e array (used to identify cutoffs)
+      FArray<Vector, 17> e;
+      int i, j, k;
+      {
+         Vector ratio;
+         double r;
+         for (j = 0; j < Dimension; ++j) {
+            ratio[j] = cellLengths_[j]/cutoffs[j];
+            e[nCellCut][j] = 0.0;
+         }
+         for (i = 1; i <= nCellCut; ++i) {
+            for (j = 0; j < Dimension; ++j) {
+               r = ratio[j]*double(i-1);
+               r = r*r;
+               e[nCellCut + i][j] = r;
+               e[nCellCut - i][j] = r;
             }
          }
       }
 
-   }
-
-   /*
-   * Construct grid of cells, build linked list and identify neighbors (Cartesian).
-   */
-   void CellList::makeGrid(const Vector& lower, const Vector& upper, double cutoff, int nCellCut)
-   {
-      Vector cutoffs;
-      for (int i = 0; i < Dimension; ++i) {
-         cutoffs[i] = cutoff;
+      // Construct array of integer offsets to neighbors
+      double e0, e1, e2;
+      int offset0, offset1, offset;
+      int span0 = grid_.dimension(2)*grid_.dimension(1);
+      int span1 = grid_.dimension(2);
+      offsets_.clear();
+      offsets_.append(0); // Make offset = 0 (self) the first element
+      //int nAccepted = 0; 
+      //int nRejected = 0;
+      //std::cout << std::endl;
+      for (i = -nCellCut; i <= nCellCut; ++i) {
+         e0 = e[i+nCellCut][0];
+         offset0 = i*span0;
+         for (j = -nCellCut; j <= nCellCut; ++j) {
+            e1 = e0 + e[j + nCellCut][1];
+            offset1 = offset0 + j*span1;
+            for (k = -nCellCut; k <= nCellCut; ++k) {
+               offset = offset1 + k;
+               e2 = e1 + e[k + nCellCut][2];
+               // std::cout << nAccepted + nRejected
+               //          << "  " << i << "  " << j << "  " << k 
+               //          << "  " << offset
+               //          << "  " << e2;
+               if (e2 <= 1.0) {
+                  // ++nAccepted;
+                  if (offset != 0) { // Exclude offset = 0 (already added)
+                     offsets_.append(offset);
+                     // std::cout << " accepted";
+                  }
+               } 
+               else {
+                  // ++nRejected;
+               }
+               //std::cout << std::endl;
+            }
+         }
       }
-      makeGrid(lower, upper, cutoffs, nCellCut);
+      // std::cout << "nAccepted = " << nAccepted << std::endl;
+      // std::cout << "nRejected = " << nRejected << std::endl;
+
    }
 
    /*

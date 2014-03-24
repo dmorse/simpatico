@@ -73,9 +73,14 @@ namespace DdMd
       // Static members
 
       /**
+      * Maximum number of cell per cutoff length.
+      */
+      static const int MaxNCellCut = 4;
+      
+      /**
       * Maximum allowed number of neighboring cells. 
       */
-      static const int MaxNeighborCell = 27;
+      static const int MaxNeighborCell = (2*MaxNCellCut + 1)*(2*MaxNCellCut + 1)*(2*MaxNCellCut + 1);
       
       /**
       * Maximum possible number of atoms in this an neighboring cells.

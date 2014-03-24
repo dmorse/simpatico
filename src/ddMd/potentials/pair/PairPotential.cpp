@@ -92,6 +92,8 @@ namespace DdMd
    void PairPotential::readParameters(std::istream& in)
    {
       read<double>(in, "skin", skin_);
+      nCellCut_ = 1; // Default value
+      read<int>(in, "nCellCut", nCellCut_, false);  // optional parameter
       read<int>(in, "pairCapacity", pairCapacity_);
       read<Boundary>(in, "maxBoundary", maxBoundary_);
       cutoff_ = maxPairCutoff() + skin_;
@@ -149,7 +151,7 @@ namespace DdMd
 
       // Allocate CellList
       int totalCapacity = localCapacity + storage().ghostCapacity();
-      cellList_.allocate(totalCapacity, lower, upper, cutoffs);
+      cellList_.allocate(totalCapacity, lower, upper, cutoffs, nCellCut_);
    }
 
    /*
@@ -170,7 +172,7 @@ namespace DdMd
          lower[i] = domain().domainBound(i, 0);
          upper[i] = domain().domainBound(i, 1);
       }
-      cellList_.makeGrid(lower, upper, cutoffs);
+      cellList_.makeGrid(lower, upper, cutoffs, nCellCut_);
       cellList_.clear();
 
       // Add all atoms to the cell list. 

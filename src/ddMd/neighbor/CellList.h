@@ -40,7 +40,6 @@ namespace DdMd
    *    Vector   lower;        // Vector of lower bounds (local atoms)
    *    Vector   upper;        // Vector of upper bounds (local atoms)
    *    Vector   cutoffs;      // Vector of cutoff lengths for each axis.
-   *    double   cutoff;       // minimum cell dimension
    *    int      atomCapacity  // max number of atoms on this processor
    *
    *    // Set elements of cutoffs vector to same value
@@ -133,7 +132,7 @@ namespace DdMd
       * \param nCellCut     number of cells per cutoff length
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    const Vector& cutoffs, int nCellCut);
+                    const Vector& cutoffs, int nCellCut = 1);
 
       /**
       * Allocate memory for this CellList (Cartesian coordinates).
@@ -150,7 +149,7 @@ namespace DdMd
       * \param nCellCut     number of cells per cutoff length
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    double cutoff, int nCellCut);
+                    double cutoff, int nCellCut = 1);
 
       /**
       * Make the cell grid (using generalized coordinates).
@@ -176,8 +175,9 @@ namespace DdMd
       */
       void 
       makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs, 
-               int nCellCut);
+               int nCellCut = 1);
 
+      #if 0
       /**
       * Make the cell grid (Cartesian coordinates).
       *
@@ -193,7 +193,8 @@ namespace DdMd
       * \param nCellCut maximum of cells per cutoff length
       */
       void makeGrid(const Vector& lower, const Vector& upper, double cutoff, 
-                    int nCellCut);
+                    int nCellCut = 1);
+      #endif
 
       /**
       * Determine the appropriate cell for an Atom, based on its position.
@@ -401,17 +402,13 @@ namespace DdMd
    {
       IntVector r;
       for (int i = 0; i < Dimension; ++i) {
-         if (position[i] < lowerOuter_[i]) {
+         if (position[i] <= lowerOuter_[i]) {
             return -1;
          }
-         if (position[i] > upperOuter_[i]) {
+         if (position[i] >= upperOuter_[i]) {
             return -1;
          }
-         if (position[i] < lower_[i]) {
-            r[i] = 0;
-         } else {
-            r[i] = int( (position[i] - lower_[i])/ cellLengths_[i] ) + 1;
-         }
+         r[i] = int( (position[i] - lowerOuter_[i])/ cellLengths_[i] );
          assert(r[i] < grid_.dimension(i));
       }
       return grid_.rank(r);

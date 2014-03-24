@@ -293,6 +293,9 @@ namespace DdMd
       // Minimum cell size = pair potential cutoff + skin.
       double cutoff_;
 
+      // Approximate number of cells per cutoff distance in each direction.
+      int nCellCut_;
+
       // Maximum number of nonbonded pairs in pair list. 
       int pairCapacity_;
 
