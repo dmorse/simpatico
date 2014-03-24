@@ -147,7 +147,8 @@ namespace Inter
       read<double>(in, "C", C_);
       waveVectors_.allocate(nWaveVectors_);
       readDArray<Vector>(in, "waveVectors", waveVectors_, nWaveVectors_);
-      
+
+      phases_.allocate(nWaveVectors_);
       readDArray<double>(in, "phases", phases_, nWaveVectors_);
       read<Vector>(in, "shift", shift_);
       read<double>(in, "interfaceWidth", interfaceWidth_);
