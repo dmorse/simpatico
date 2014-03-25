@@ -74,8 +74,6 @@ public:
       cellList.allocate(10, lower, upper, cutoffs, nCellCut);
 
       TEST_ASSERT(cellList.atomCapacity() == 10);
-      //std::cout << std::endl;
-      //std::cout << cellList.grid().dimensions() << std::endl;
       TEST_ASSERT(cellList.cellCapacity() == 11*13*16);
    }
 
@@ -103,16 +101,7 @@ public:
       // Test length of linked list
       int n = 0;
       const Cell* cellPtr = cellList.begin();
-      int nNeighbor;
-
-      // Loop over local cells
-      //std::cout << std::endl;
       while (cellPtr) {
-         nNeighbor = cellPtr->nNeighborCell();
-         //std::cout << "n = " << n 
-         //          << " id = " << cellPtr->id()
-         //          << " nNeighbor = " << nNeighbor << std::endl;
-         TEST_ASSERT(nNeighbor == 27);
          cellPtr = cellPtr->nextCellPtr();
          ++n;
       }
@@ -144,20 +133,12 @@ public:
 
 
       // Loop over local cells, test length of linked list.
-      int nNeighbor;
-      //std::cout << std::endl;
       const Cell* cellPtr = cellList.begin();
       int n = 0;
       while (cellPtr) {
-         nNeighbor = cellPtr->nNeighborCell();
-         //std::cout << "n = " << n 
-         //          << " id = " << cellPtr->id()
-         //          << " nNeighbor = " << nNeighbor << std::endl;
-         TEST_ASSERT(nNeighbor == 311);
          cellPtr = cellPtr->nextCellPtr();
          ++n;
       }
-      //std::cout << "number of local cells = " << n << std::endl;
       TEST_ASSERT(n == 5*7*10);
 
    }
@@ -485,7 +466,7 @@ public:
       printMethod(TEST_FUNC);
 
       // Define cutoff
-      double cutoff = 1.2;
+      double cutoff = 1.19;
       double pairCutoffSq = cutoff - 1.0E-10;
       pairCutoffSq = pairCutoffSq*pairCutoffSq;
 
@@ -494,7 +475,7 @@ public:
       Vector lower(2.0, 0.0, 4.0);
       Vector upper(4.0, 3.0, 8.0);
       Vector cutoffs;
-      for (int i=0; i < 3; ++i) {
+      for (int i=0; i < Dimension; ++i) {
          lower[i] = lower[i]/lengths[i]; 
          upper[i] = upper[i]/lengths[i]; 
          cutoffs[i] = cutoff/lengths[i]; 

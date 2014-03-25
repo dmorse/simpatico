@@ -91,7 +91,6 @@ namespace DdMd
          gridDimensions[i] += 2*nCellCut;
 
       }
-      //std::cout << "Grid dimensions = " << gridDimensions << std::endl;
       grid_.setDimensions(gridDimensions);
 
       if (grid_.size() < 1) {
@@ -175,16 +174,17 @@ namespace DdMd
          }
       }
 
-      // Construct array of integer offsets to neighbors
+      // Construct array of integer offset strips 
       double e0, e1, e2;
       int offset0, offset1, offset;
       int span0 = grid_.dimension(2)*grid_.dimension(1);
       int span1 = grid_.dimension(2);
       offsets_.clear();
-      offsets_.append(0); // Make offset = 0 (self) the first element
-      //int nAccepted = 0; 
-      //int nRejected = 0;
-      //std::cout << std::endl;
+      std::pair<int, int> strip;
+      strip.first  = 0;
+      strip.second = 0;
+      offsets_.append(strip); // Make offset = 0 (self) the first element
+      bool isActive = false;
       for (i = -nCellCut; i <= nCellCut; ++i) {
          e0 = e[i+nCellCut][0];
          offset0 = i*span0;
@@ -194,26 +194,39 @@ namespace DdMd
             for (k = -nCellCut; k <= nCellCut; ++k) {
                offset = offset1 + k;
                e2 = e1 + e[k + nCellCut][2];
-               // std::cout << nAccepted + nRejected
-               //          << "  " << i << "  " << j << "  " << k 
-               //          << "  " << offset
-               //          << "  " << e2;
                if (e2 <= 1.0) {
-                  // ++nAccepted;
                   if (offset != 0) { // Exclude offset = 0 (already added)
-                     offsets_.append(offset);
-                     // std::cout << " accepted";
+                     if (isActive) {
+                        if (offset == strip.second + 1) {
+                           strip.second = offset;
+                        } else {
+                           offsets_.append(strip);
+                           strip.first  = offset;
+                           strip.second = offset;
+                        }
+                     } else {
+                        strip.first  = offset;
+                        strip.second = offset;
+                        isActive = true;
+                     }
+                  } else {
+                     if (isActive) {
+                        offsets_.append(strip);
+                        isActive = false;
+                     }
                   }
-               } 
-               else {
-                  // ++nRejected;
+               } else {
+                  if (isActive) {
+                     offsets_.append(strip);
+                     isActive = false;
+                  }
                }
-               //std::cout << std::endl;
             }
          }
       }
-      // std::cout << "nAccepted = " << nAccepted << std::endl;
-      // std::cout << "nRejected = " << nRejected << std::endl;
+      if (isActive) {
+         offsets_.append(strip);
+      }
 
    }
 
