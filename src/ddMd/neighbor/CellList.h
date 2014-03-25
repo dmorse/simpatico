@@ -177,25 +177,6 @@ namespace DdMd
       makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs, 
                int nCellCut = 1);
 
-      #if 0
-      /**
-      * Make the cell grid (Cartesian coordinates).
-      *
-      * This function is designed for use with orthogonal unit cells and Cartesian 
-      * coordinates, for which the lower, upper and cutoff parameters all have 
-      * dimensions of length. The function calls the allocate() method with a 
-      * Vector of cutoffs internally, after setting every element of the cutoffs
-      * Vector to the same cutoff value.
-      *
-      * \param lower    lower bound of local atom coordinates.
-      * \param upper    upper bound of local atom coordinates.
-      * \param cutoff   minimum dimension of a cell in any direction
-      * \param nCellCut maximum of cells per cutoff length
-      */
-      void makeGrid(const Vector& lower, const Vector& upper, double cutoff, 
-                    int nCellCut = 1);
-      #endif
-
       /**
       * Determine the appropriate cell for an Atom, based on its position.
       *
@@ -324,35 +305,35 @@ namespace DdMd
          int cellRank;
       };
 
-      /// Array of offsets to neighbors.
+      /// Array of strips of relative offsets to neighboring cells.
       Cell::OffsetArray offsets_;
 
       /// Grid for cells.
-      Grid   grid_;
+      Grid grid_;
 
       /// Array of atom tags (dimension atomCapacity_)
       DArray<AtomTag> tags_;
 
       /// Array of Atom handles, sorted by cell (dimension atomCapacity_).
-      DArray<Atom*>  handles_;
+      DArray<Atom*> handles_;
 
       /// Array of Cell objects.
-      GArray<Cell>  cells_;
+      GArray<Cell> cells_;
 
       /// Lower coordinate bounds (local atoms).
-      Vector  lower_; 
+      Vector lower_; 
 
       /// Upper coordinate bounds (local atoms).
-      Vector  upper_; 
+      Vector upper_; 
 
       /// Length of each cell in grid
-      Vector  cellLengths_; 
+      Vector cellLengths_; 
 
       /// Lower bound for nonbonded ghosts.
-      Vector  lowerOuter_; 
+      Vector lowerOuter_; 
 
       /// Upper coordinate bound for nonbonded ghosts.
-      Vector  upperOuter_; 
+      Vector upperOuter_; 
 
       /// Pointer to first local cell (to initialize iterator).
       Cell* begin_;

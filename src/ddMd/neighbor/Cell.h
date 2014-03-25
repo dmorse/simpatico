@@ -75,6 +75,11 @@ namespace DdMd
       // Static members
 
       /**
+      * Maximum possible number of atoms in this an neighboring cells.
+      */
+      static const int MaxNeighborAtom = 2000;
+
+      /**
       * Maximum number of cell per cutoff length.
       */
       static const int MaxNCellCut = 4;
@@ -82,27 +87,26 @@ namespace DdMd
       /**
       * Maximum allowed number of neighboring cells. 
       */
-      static const int MaxNeighborCell = (2*MaxNCellCut + 1)*(2*MaxNCellCut + 1) + 3;
+      static const int OffSetArrayCapacity = (2*MaxNCellCut + 1)*(2*MaxNCellCut + 1) + 3;
     
       /**
-      * Maximum possible number of atoms in this an neighboring cells.
+      * An array of strips of relative ids for columns of neighboring cells.
+      *
+      * Every cell has a pointer to an OffsetArray, which uses relative 
+      * cell indices (offsets relative to the cell id of the primary cell) 
+      * to identify neighboring cells. Each std::pair<int, int> element in 
+      * in an OffsetArra contains relative addresses for the the first 
+      * (pair.first) and last (pair.second) cells in a contiguous strip of 
+      * cells that could contain atoms that lie within a cutoff length of 
+      * some point in the primary cell. The contents of the OffsetArray
+      * are calculated in the CellList::makeGrid() function.
       */
-      static const int MaxNeighborAtom = 2000;
+      typedef FSArray< std::pair<int,int>, OffSetArrayCapacity> OffsetArray;
 
       /**
       * Static array for holding neighbors in a cell list.
       */
       typedef FSArray<Atom*, MaxNeighborAtom> NeighborArray;
-
-      /**
-      * An array of strips of integer offsets to neighboring cells.
-      */
-      typedef FSArray< std::pair<int,int>, MaxNeighborCell> OffsetArray;
-
-      /**
-      * Identifier type for an Atom.
-      */
-      typedef Atom* Handle;
 
       /**
       * Constructor.
