@@ -150,8 +150,8 @@ namespace DdMd
                         }
                         // Append Id of 2nd atom in pair to atom2Ptrs_[]
                         atom2Ptrs_.append(atom2Ptr);
-                    }
-                 }
+                     }
+                  }
       
                }
      
