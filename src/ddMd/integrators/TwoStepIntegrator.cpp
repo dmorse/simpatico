@@ -123,6 +123,7 @@ namespace DdMd
          #endif
    
          // Check if exchange and reneighboring is necessary
+         // Note: Integrate::isExchangeNeeded uses timer.
          needExchange = isExchangeNeeded(pairPotential().skin());
 
          if (!atomStorage().isCartesian()) {
@@ -203,7 +204,8 @@ namespace DdMd
    
          // Calculate new forces for all local atoms. If constant pressure
          // ensembles (not rigid), calculate virial stress. Both methods 
-         // send the modifyForce signal.
+         // send the modifyForce signal. The Integrate::computeForces* 
+         // function user timer() internally. 
          if (simulation().boundaryEnsemble().isRigid()) {
             computeForces();
          } else {

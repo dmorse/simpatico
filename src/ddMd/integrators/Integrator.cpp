@@ -150,6 +150,7 @@ namespace DdMd
       }
 
       simulation().zeroForces();
+      timer_.stamp(ZERO_FORCE);
       pairPotential().computeForces();
       timer_.stamp(PAIR_FORCE);
       #ifdef INTER_BOND
@@ -430,6 +431,13 @@ namespace DdMd
           << "   "
           << Dbl(updateT*factor2, 12, 6)
           << "   " << Dbl(100.0*updateT/time, 12, 6, true) << std::endl;
+      double zeroForceT = timer().time(ZERO_FORCE);
+      totalT += zeroForceT;
+      out << "Zero Forces          " 
+          << Dbl(zeroForceT*factor1, 12, 6)
+          << "   "
+          << Dbl(zeroForceT*factor2, 12, 6)
+          << "   " << Dbl(100.0*zeroForceT/time, 12 , 6, true) << std::endl;
       double pairForceT = timer().time(PAIR_FORCE);
       totalT += pairForceT;
       out << "Pair Forces          " 

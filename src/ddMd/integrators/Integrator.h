@@ -117,7 +117,7 @@ namespace DdMd
 
       /// Timestamps for loop timing.
       enum TimeId {ANALYZER, INTEGRATE1, CHECK, ALLREDUCE, TRANSFORM_F, 
-                   EXCHANGE, CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, 
+                   EXCHANGE, CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, ZERO_FORCE,
                    PAIR_FORCE, BOND_FORCE, ANGLE_FORCE, DIHEDRAL_FORCE,
                    EXTERNAL_FORCE, INTEGRATE2, MODIFIERS, NTime};
 
