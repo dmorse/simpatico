@@ -1,24 +1,11 @@
-Possible ways to sort atoms:
-----------------------------
+Proposal: Allow periodic sorting local atoms by the order in which they
+appear in the cell list, ordering cells by conventional grid order. This
+corresponds to the use of strips in construction of the pair list. 
 
-1) Sort by cells, in conventional order.
+Question: Is it possible or advisable to try to sort ghost atoms, since 
+these are recreated after every reneighboring anyway? If we don't sort
+the ghosts, much of the advantage of sorting is lost.
 
-2) Sort by cells, in order cells are accessed during pairlist 
-   construction
+Question: Should sorting occur during the exchange, after exchanging atoms
+but before exchanging ghosts, to minimize the cost of the sort?
 
-3) Sort by order atoms are accessed when reading the pairlist.
-
-Ways to improve sequencing of cells
------------------------------------
-
-1) Hilbert curve
-
-2) Blocks of cells, each explored exhaustively.
-
-3) Layers (does it already do this?)
-
-   Question: Can three layers fit in L1 cache simultaneously?
-
-   Example: 32,000 particles over 8 processors, 4k each.
-
-   4000*64 = 256k - larger than typical L1 data cache.
