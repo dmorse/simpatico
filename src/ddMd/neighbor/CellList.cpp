@@ -22,7 +22,8 @@ namespace DdMd
    * Constructor.
    */
    CellList::CellList()
-    : nAtom_(0),
+    : begin_(0),
+      nAtom_(0),
       nReject_(0),
       #ifdef UTIL_DEBUG
       maxNAtomCell_(0),
@@ -44,7 +45,7 @@ namespace DdMd
    * Allocate memory for this CellList (generalized coordinates).
    */
    void CellList::allocate(int atomCapacity, const Vector& lower, 
-                           const Vector& upper, const Vector& cutoffs)
+                           const Vector& upper, const Vector& cutoffs, int nCellCut)
    {
 
       // Allocate arrays of tag and handle objects
@@ -52,158 +53,204 @@ namespace DdMd
       handles_.allocate(atomCapacity);
 
       // Set grid dimensions and allocate an array of Cell objects
-      setGridDimensions(lower, upper, cutoffs);
-   }
-
-   /*
-   * Allocate memory for this CellList.
-   */
-   void CellList::allocate(int atomCapacity, const Vector& lower, 
-                           const Vector& upper, double cutoff)
-   {
-      Vector cutoffs;
-      for (int i = 0; i < Dimension; ++i) {
-         cutoffs[i] = cutoff;
-      }
-      allocate(atomCapacity, lower, upper, cutoffs);
+      setGridDimensions(lower, upper, cutoffs, nCellCut);
    }
 
    /*
    * Calculate number of cells in each direction of grid, resize cells_ array if needed.
    */
    void CellList::setGridDimensions(const Vector& lower, const Vector& upper, 
-                                    const Vector& cutoffs)
+                                    const Vector& cutoffs, int nCellCut)
    {
-      Vector    lengths;
-      IntVector gridDimensions;
+      if (nCellCut < 1) {
+         UTIL_THROW("Error: nCellCut < 1");
+      }
+      if (nCellCut > Cell::MaxNCellCut) {
+         UTIL_THROW("Error: nCellCut > Cell::MaxNCellCut");
+      }
       upper_ = upper;
       lower_ = lower;
 
-      for (int i = 0; i < Dimension; ++i) {
+      bool isNewGrid;
+      if (grid_.size() < 27) {
+         isNewGrid = true;
+      } else {
+         isNewGrid = false;
+      }
 
+      Vector lengths;
+      IntVector gridDimensions;
+      for (int i = 0; i < Dimension; ++i) {
+ 
          lengths[i] = upper_[i] - lower_[i];
-         assert(lengths[i] > 0.0);
-         gridDimensions[i] = int(lengths[i]/cutoffs[i]);
-         if (gridDimensions[i] < 1) {
-            gridDimensions[i] = 1;
+         if (lengths[i] < 0) {
+            UTIL_THROW("Processor length[i] < 0.0");
          }
+         if (lengths[i] < cutoffs[i]) {
+            UTIL_THROW("Processor length[i] < cutoff[i]");
+         }
+         gridDimensions[i] = int(lengths[i]*nCellCut/cutoffs[i]);
          cellLengths_[i] = lengths[i]/double(gridDimensions[i]);
-         lowerOuter_[i] = lower_[i] - cellLengths_[i];
-         upperOuter_[i] = upper_[i] + cellLengths_[i];
+         lowerOuter_[i] = lower_[i] - nCellCut*cellLengths_[i];
+         upperOuter_[i] = upper_[i] + nCellCut*cellLengths_[i];
 
          // Add two extra layers of cells for ghosts.
-         gridDimensions[i] += 2;
-   
-      }
-      grid_.setDimensions(gridDimensions);
+         gridDimensions[i] += 2*nCellCut;
 
-      if (grid_.size() < 1) {
-         UTIL_THROW("totCells_ must be >= 1");
+         if (gridDimensions[i] != grid_.dimension(i)) {
+            isNewGrid = true;   
+         }
       }
 
-      // Allocate or resize cells_ array, if needed
-      // Initialize any added elements, if needed
+      // Set new grid dimensions if necessary
+      if (isNewGrid) {
+         grid_.setDimensions(gridDimensions);
+      }
+
+      // Resize and initialize cells_ array, if necessary
       int oldSize = cells_.size();
       int newSize = grid_.size();
       if (newSize != oldSize) {
          cells_.resize(newSize);
          if (newSize > oldSize) {
-            for (int i = oldSize; i < newSize; ++i) {
+            for (int i = 0; i < newSize; ++i) {
                cells_[i].setOffsetArray(offsets_);
                cells_[i].setId(i);
             }
          }
+         // Indicate that cell list must be rebuilt
+         isNewGrid = true; 
       }
+      assert(newSize >= 27);
+      assert(newSize == cells_.size());
 
-      if (grid_.size() != cells_.size()) {
-         UTIL_THROW("grid_.size() != cells_.size()");
-      }
-
+      // Build linked cell list, if necessary
+      if (isNewGrid) {
+         int ic;
+         // Initially mark all cells as ghost cells
+         for (ic = 0; ic < newSize; ++ic) {
+            cells_[ic].setIsGhostCell(true);
+         }
+         // Loop over local cells, linking and marking each as a local cell.
+         IntVector p;
+         Cell* prevPtr = 0;
+         Cell* cellPtr = 0;
+         for (p[0] = nCellCut; p[0] < grid_.dimension(0) - nCellCut; ++p[0]) {
+            for (p[1] = nCellCut; p[1] < grid_.dimension(1) - nCellCut; ++p[1]) {
+               for (p[2] = nCellCut; p[2] < grid_.dimension(2) - nCellCut; ++p[2]) {
+                  ic = grid_.rank(p);
+                  cellPtr = &cells_[ic];
+                  cellPtr->setIsGhostCell(false);
+                  if (prevPtr) {
+                     prevPtr->setNextCell(*cellPtr);
+                  } else {
+                     begin_ = cellPtr;
+                  }
+                  prevPtr = cellPtr;
+               }
+            }
+         }
+         cellPtr->setLastCell();
+      } 
+      
    }
 
    /*
    * Construct grid of cells, build linked list and identify neighbors.
    */
-   void CellList::makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs)
+   void CellList::makeGrid(const Vector& lower, const Vector& upper, 
+                           const Vector& cutoffs, int nCellCut)
    {
 
-      // Calculate required grid dimensions, resize cells_ array.
-      setGridDimensions(lower, upper, cutoffs);
+      // Calculate required grid dimensions, reinitialize cells_ array if needed.
+      setGridDimensions(lower, upper, cutoffs, nCellCut);
 
-      // Mark all cells to as ghost cells by default.
-      int ic;
-      for (ic = 0; ic < grid_.size(); ++ic) {
-         cells_[ic].setIsGhostCell(true);
-      }
-
-      // Build linked list of local cells.
-      IntVector p;
-      Cell* prevPtr = 0;
-      Cell* cellPtr = 0;
-      for (p[0] = 1; p[0] < grid_.dimension(0) - 1; ++p[0]) {
-         for (p[1] = 1; p[1] < grid_.dimension(1) - 1; ++p[1]) {
-            for (p[2] = 1; p[2] < grid_.dimension(2) - 1; ++p[2]) {
-               ic = grid_.rank(p);
-               cellPtr = &cells_[ic];
-               cellPtr->setIsGhostCell(false);
-               if (prevPtr) {
-                  prevPtr->setNextCell(*cellPtr);
-               } else {
-                  begin_ = cellPtr;
-               }
-               prevPtr = cellPtr;
+      // Construct e array, to help identify cells within the cutoff.
+      // Definition: For i in the range -nCellCut <= i <= nCellCut,
+      // let e[i+nCellCut][j] = ( m[i]*celllengths_[j]/cutoffs[j] )**2, 
+      // where m[i] = abs(i) - 1 for abs(i) > 0, and m[0] = 0.
+      FArray<Vector, 17> e;
+      {
+         double q, r;
+         int i, j;
+         for (j = 0; j < Dimension; ++j) {
+            q = cellLengths_[j]/cutoffs[j];
+            for (i = 1; i <= nCellCut; ++i) {
+               r = q*double(i-1);
+               r = r*r;
+               e[nCellCut + i][j] = r;
+               e[nCellCut - i][j] = r;
             }
-         }
-      }
-      cellPtr->setLastCell();
-
-      // Calculate range of displacements to neighbor cells
-      IntVector dmin, dmax;
-      for (int i = 0; i < Dimension; ++i) {
-         if (grid_.dimension(i) > 2) {
-            dmin[i] = -1;
-            dmax[i] =  1;
-         } else if (grid_.dimension(i) == 2) {
-            dmin[i] =  0;
-            dmax[i] =  1;
-         } else if (grid_.dimension(i) == 1) {
-            dmin[i] =  0;
-            dmax[i] =  0;
+            e[nCellCut][j] = 0.0;
          }
       }
 
-      // Construct array of integer offsets to neighbors
-      IntVector span;
-      IntVector d;
-      int       offset;
-      span[2] = 1;
-      span[1] = grid_.dimension(2);
-      span[0] = grid_.dimension(2)*grid_.dimension(1);
+      // Construct Cell::OffsetArray offsets_ of integer offset strips 
+      // Each element strip contains the cell index for the first cell
+      // strip.first and the cell index strip.second for the last cell
+      // in a contiguous strip of cells for which at least some of the
+      // cell lies within a cutoff distance of the primary cell.
       offsets_.clear();
-      offsets_.append(0);
-      for (d[0] = dmin[0]; d[0] <= dmax[0]; ++d[0]) {
-         for (d[1] = dmin[1]; d[1] <= dmax[1]; ++d[1]) {
-            for (d[2] = dmin[2]; d[2] <= dmax[2]; ++d[2]) {
-               offset = d[0]*span[0] + d[1]*span[1] + d[2];
-               if (offset != 0) {
-                  offsets_.append(offset);
+      std::pair<int, int> strip;
+
+      // Add strip (0,0) (self) as the first element of offsets_ array.
+      // This guarantees that first nAtom elements in neighborArray are 
+      // in the primary cell, allowing for simple self-interaction check.
+      strip.first  = 0;
+      strip.second = 0;
+      offsets_.append(strip); 
+
+      // Loop over all cells within box -nCellCut <= i, j, k <= nCellCut
+      double e0, e1, e2;              // Partial sums of distance^2/cutoff^2
+      int offset0, offset1, offset;   // Partial sums for cell id offset
+      int i, j, k;                    // relative cell coordinates
+      const int span0 = grid_.dimension(2)*grid_.dimension(1);
+      const int span1 = grid_.dimension(2);
+      bool isActive = false; // True iff this cell is within a valid strip
+      for (i = -nCellCut; i <= nCellCut; ++i) {
+         e0 = e[i+nCellCut][0];
+         offset0 = i*span0;
+         for (j = -nCellCut; j <= nCellCut; ++j) {
+            e1 = e0 + e[j + nCellCut][1];
+            offset1 = offset0 + j*span1;
+            for (k = -nCellCut; k <= nCellCut; ++k) {
+               offset = offset1 + k;
+               e2 = e1 + e[k + nCellCut][2];
+               if (e2 <= 1.0) {
+                  if (offset != 0) { // Exclude offset = 0 (already added)
+                     if (isActive) {
+                        if (offset == strip.second + 1) {
+                           strip.second = offset;
+                        } else {
+                           offsets_.append(strip);
+                           strip.first  = offset;
+                           strip.second = offset;
+                        }
+                     } else {
+                        strip.first  = offset;
+                        strip.second = offset;
+                        isActive = true;
+                     }
+                  } else {
+                     if (isActive) {
+                        offsets_.append(strip);
+                        isActive = false;
+                     }
+                  }
+               } else {
+                  if (isActive) {
+                     offsets_.append(strip);
+                     isActive = false;
+                  }
                }
             }
          }
       }
-
-   }
-
-   /*
-   * Construct grid of cells, build linked list and identify neighbors (Cartesian).
-   */
-   void CellList::makeGrid(const Vector& lower, const Vector& upper, double cutoff)
-   {
-      Vector cutoffs;
-      for (int i = 0; i < Dimension; ++i) {
-         cutoffs[i] = cutoff;
+      // Append last strip to offsets_, if still active at end of loop.
+      if (isActive) {
+         offsets_.append(strip);
       }
-      makeGrid(lower, upper, cutoffs);
+
    }
 
    /*

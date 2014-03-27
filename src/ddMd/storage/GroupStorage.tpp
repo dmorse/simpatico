@@ -148,7 +148,7 @@ namespace DdMd
    * Register new local Group in internal data structures.
    */ 
    template <int N>
-   Group<N>* GroupStorage<N>::add()
+   void GroupStorage<N>::add()
    {
 
       // Preconditions
@@ -169,15 +169,12 @@ namespace DdMd
       groupPtrs_[groupId] = newPtr_;
 
       // Release newPtr_ for reuse.
-      Group<N>* ptr = newPtr_;
       newPtr_ = 0;
 
       // Check maximum.
       if (groupSet_.size() > maxNGroupLocal_) {
          maxNGroupLocal_ = groupSet_.size();
       }
-
-      return ptr;
    }
 
    /*
