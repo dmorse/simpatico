@@ -1,24 +1,64 @@
-Possible ways to sort atoms:
-----------------------------
+What to sort, and when
 
-1) Sort by cells, in conventional order.
+  -------------------------------------------------------------
 
-2) Sort by cells, in order cells are accessed during pairlist 
-   construction
+  Proposal 1) Sort all local and ghost atoms, after they all
+  exist. 
 
-3) Sort by order atoms are accessed when reading the pairlist.
+  When: This could be done immediately after exchange. 
 
-Ways to improve sequencing of cells
------------------------------------
+  Pro: Comparatively simple to program, separate from exchange.
 
-1) Hilbert curve
+  Con: The sorting of ghost atoms is pointless, since new
+  memory addresses will be chosen during the next exchange.
 
-2) Blocks of cells, each explored exhaustively.
+  -------------------------------------------------------------
+  Proposal 2) Only sort local atoms.
 
-3) Layers (does it already do this?)
+  When: This would have to be done after private exchangeAtoms
+  and before exchangeGhosts.
 
-   Question: Can three layers fit in L1 cache simultaneously?
+  Pro: Avoid pointless sorting of ghost atoms.
 
-   Example: 32,000 particles over 8 processors, 4k each.
+  Con: Requires careful integration with exchange operation.
+  The communication plans calculated during exchangeAtoms would
+  remain valid, and could be copied to new locations. The 
+  pointers to local atoms added to the sendArray would, however,
+  be invalidated by the sort. This is the main problem.
 
-   4000*64 = 256k - larger than typical L1 data cache.
+  Conclusion: No immediate solution. More thought required.
+
+------------------------------------------------------------
+Algorithm (outline)
+
+   - Proposed functions for AtomArray:
+
+        void addGroupExchanger(GroupExchanger& exchanger);
+
+        void AtomArray::sort(Array<Atom*>& sequence, 
+                             AtomStorage& atomStorage);
+
+        The sequence would be an array of pointers to local atoms
+        in the desired order.
+
+   - Copy all local atom data to new arrays, from bottom. 
+
+   - Copy all ghost atom data to new arrays, from top. Since the
+     sequence is less important, this can use the list of ghost
+     atoms from the AtomStorage, and fill the new array starting 
+     from the top.
+
+   - Swap array addresses.
+
+   - Clear all local and ghost atoms from the AtomStorage.
+     Add clearAll(AtomArray& method) ?
+
+   - Add new local addresses to AtomStorage, adding sequentially 
+     from the bottom of the AtomArray.
+
+   - Add new ghost addresses to AtomStorage, adding sequentially 
+     from the bottom of the AtomArray.
+
+   - For each registered GroupExchanger, reset all Atom* pointers 
+     in groups.
+
