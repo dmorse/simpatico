@@ -1,0 +1,5 @@
+Auto-merging src/ddMd/communicate/Exchanger.cpp
+Auto-merging src/ddMd/integrators/Integrator.cpp
+Auto-merging src/ddMd/integrators/TwoStepIntegrator.cpp
+Auto-merging src/ddMd/storage/GroupStorage.h
+Auto-merging src/ddMd/storage/GroupStorage.tpp
