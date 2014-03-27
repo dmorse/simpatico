@@ -86,6 +86,18 @@ namespace DdMd
    }
 
    /*
+   * Set all forces to zero.
+   */
+   void AtomArray::zeroForces() 
+   {
+      for (int i = 0; i < capacity_; ++i) {
+        data_[i].force_[0] = 0.0;
+        data_[i].force_[1] = 0.0;
+        data_[i].force_[2] = 0.0;
+      }
+   }
+
+   /*
    * Return true if this is already allocated, false otherwise.
    */
    bool AtomArray::isAllocated() const 

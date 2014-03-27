@@ -149,6 +149,7 @@ namespace DdMd
          UTIL_THROW("Atom coordinates are not Cartesian");
       }
 
+      timer_.stamp(MISC);
       simulation().zeroForces();
       timer_.stamp(ZERO_FORCE);
       pairPotential().computeForces();
@@ -197,7 +198,9 @@ namespace DdMd
          UTIL_THROW("Atom coordinates are not Cartesian");
       }
 
+      timer_.stamp(MISC);
       simulation().zeroForces();
+      timer_.stamp(ZERO_FORCE);
       pairPotential().computeForcesAndStress(domain().communicator());
       timer_.stamp(PAIR_FORCE);
       #ifdef INTER_BOND

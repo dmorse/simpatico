@@ -137,6 +137,41 @@ namespace DdMd
       isInitialized_ = true;
    }
 
+   /*
+   * Zero forces on all local atoms and optionally on ghosts.
+   */
+   void AtomStorage::zeroForces(bool zeroGhosts)
+   {
+      int factor = 2;
+
+      // Zero forces for all local atoms
+      if (nAtom() > atomCapacity_/factor) {
+         atoms_.zeroForces();
+         // Optimization to allow sequential access
+      } else {
+         AtomIterator atomIter;
+         begin(atomIter);
+         for( ; atomIter.notEnd(); ++atomIter){
+            atomIter->force().zero();
+         }
+      }
+   
+      // If using reverse communication, zero ghost atoms
+      if (zeroGhosts && nGhost()) {
+         if (nGhost() > ghostCapacity_/factor) {
+            ghosts_.zeroForces();
+            // Optimization to allow sequential access
+         } else {
+            GhostIterator ghostIter;
+            begin(ghostIter);
+            for( ; ghostIter.notEnd(); ++ghostIter){
+               ghostIter->force().zero();
+            }
+         }
+      }
+
+   }
+
    // Local atom mutators
 
    /*

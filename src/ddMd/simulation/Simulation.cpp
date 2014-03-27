@@ -1402,23 +1402,7 @@ namespace DdMd
    * If reverseUpdateFlag(), also zero ghost atom forces.
    */
    void Simulation::zeroForces()
-   {
-      // Zero local atoms
-      AtomIterator atomIter;
-      atomStorage_.begin(atomIter);
-      for( ; atomIter.notEnd(); ++atomIter){
-         atomIter->force().zero();
-      }
-
-      // If using reverse communication, zero ghost atoms
-      if (reverseUpdateFlag_) {
-         GhostIterator ghostIter;
-         atomStorage_.begin(ghostIter);
-         for( ; ghostIter.notEnd(); ++ghostIter){
-            ghostIter->force().zero();
-         }
-      }
-   }
+   {  atomStorage_.zeroForces(reverseUpdateFlag_); }
 
    /*
    * Compute forces for all atoms.
