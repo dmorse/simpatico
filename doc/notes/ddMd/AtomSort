@@ -26,10 +26,12 @@ What to sort, and when
   pointers to local atoms added to the sendArray would, however,
   be invalidated by the sort. This is the main problem.
 
-  Conclusion: No immediate solution. More thought required.
+  Solution: Add bool "sort" parameter to exchangeAtoms and
+  exchangeGhosts. If bool is true, don't add atoms to the send 
+  list in exchangeAtoms, and do add them in exchangeGhosts.
 
 ------------------------------------------------------------
-Algorithm (outline)
+Algorithm (for either proposal, with slight differences)
 
    - Proposed functions for AtomArray:
 
@@ -43,22 +45,29 @@ Algorithm (outline)
 
    - Copy all local atom data to new arrays, from bottom. 
 
-   - Copy all ghost atom data to new arrays, from top. Since the
-     sequence is less important, this can use the list of ghost
-     atoms from the AtomStorage, and fill the new array starting 
-     from the top.
+   - If we are sorting ghosts: Copy all ghost atom data to new 
+     arrays, from top. Since the sequence is less important, this 
+     can use the list of ghost atoms from the AtomStorage, and 
+     fill the new array starting from the top.
 
    - Swap array addresses.
 
-   - Clear all local and ghost atoms from the AtomStorage.
+   - Clear all local (and possibly ghost atoms) from the AtomStorage.
      Add clearAll(AtomArray& method) ?
 
    - Add new local addresses to AtomStorage, adding sequentially 
      from the bottom of the AtomArray.
 
-   - Add new ghost addresses to AtomStorage, adding sequentially 
-     from the bottom of the AtomArray.
+   - If we are sorting ghotss, add new ghost addresses to AtomStorage, 
+     adding sequentially from the top.
 
    - For each registered GroupExchanger, reset all Atom* pointers 
      in groups.
 
+---------------------------------------------------------------------
+Proposal: 
+
+     Change the AtomStorage reservoir from a stack to a double ended 
+     queue. 
+
+     Create a container ArrayDQueue for use as a reservoir.
