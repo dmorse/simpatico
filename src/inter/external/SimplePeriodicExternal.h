@@ -1,5 +1,5 @@
-#ifndef INTER_PERIODIC_EXTERNAL_H
-#define INTER_PERIODIC_EXTERNAL_H
+#ifndef INTER_SIMPLE_PERIODIC_EXTERNAL_H
+#define INTER_SIMPLE_PERIODIC_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -24,9 +24,9 @@ namespace Inter
    * A clipped cosine potential that induces ordering
    * along directions specified by waveIntVectors, w_i.
    *
-   *                                                 /              /          /     /      w_i.(x-shift_[0])    w_i.(y-shift_[1])    w_i.(z-shift_[2])            \  \  \ \
-   * u = prefactor[atomType] externalParameter tanh | clipParameter| C_ +  Sum | cos | 2 pi ------------------ + ------------------ + ------------------ + phase_i  |  |  | |
-   *                                                 \              \      i   \     \             Lx               Ly                       Lz                    /  /  / /
+   *                                                 /                   /     /      w_i.x     w_i.y     w_i.z  \  \  \
+   * u = prefactor[atomType] externalParameter tanh | clipParameter Sum | cos | 2 pi ------- + ------- + -------  |  |  |
+   *                                                 \               i   \     \        Lx        Ly        Lz   /  /  /
    *
    * Prefactor (which depends on the atomType), externalParameter, waveIntVectors, interfaceWidth and periodicity
    * are given as inputs in the parameter file. 
@@ -34,7 +34,7 @@ namespace Inter
    *
    * \ingroup Inter_External_Module
    */
-   class PeriodicExternal : public ParamComposite 
+   class SimplePeriodicExternal : public ParamComposite 
    {
    
    public:
@@ -42,17 +42,17 @@ namespace Inter
       /**
       * Default constructor.
       */
-      PeriodicExternal();
+      SimplePeriodicExternal();
 
       /**
       * Copy constructor.
       */
-      PeriodicExternal(const PeriodicExternal& other);
+      SimplePeriodicExternal(const SimplePeriodicExternal& other);
 
       /**
       * Assignment.
       */
-      PeriodicExternal& operator = (const PeriodicExternal& other);
+      SimplePeriodicExternal& operator = (const SimplePeriodicExternal& other);
 
       /**  
       * Set nAtomType value.
@@ -125,14 +125,14 @@ namespace Inter
       void getForce(const Vector& position, int type, Vector& force) const;
  
       /**
-      * Return name string "PeriodicExternal".
+      * Return name string "SimplePeriodicExternal".
       */
       std::string className() const;
  
    private:
    
       /// Maximum allowed value for nAtomType (# of particle types).
-      static const int MaxAtomType = 3;
+      static const int MaxAtomType = 2;
 
       /// Prefactor array ofsize nAtomType.
       DArray<double> prefactor_;
@@ -144,16 +144,7 @@ namespace Inter
       int  nWaveVectors_;
 
       /// Array of Miller index IntVectors for the reciprocal lattice vectors.
-      DArray<Vector>  waveVectors_;
-
-      /// Phases for the different plane waves.
-      DArray<double> phases_;
-
-      /// Prefactor array ofsize nAtomType.
-      Vector shift_;
-
-      /// Prefactor array ofsize nAtomType.
-      double C_;
+      DArray<IntVector>  waveIntVectors_;
 
       /// Number of unit cells in box
       int periodicity_;
@@ -177,47 +168,43 @@ namespace Inter
    /* 
    * Calculate external potential energy for a single atom.
    */
-   inline double PeriodicExternal::energy(const Vector& position, int type) const
+   inline double SimplePeriodicExternal::energy(const Vector& position, int type) const
    {
       const Vector cellLengths = boundaryPtr_->lengths();
       double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);
-      
-      Vector r = position;
-      r -= shift_;
+
       double cosine = 0.0;
       for (int i = 0; i < nWaveVectors_; ++i) {
          Vector q;
-         q[0] = 2.0*M_PI*periodicity_*waveVectors_[i][0]/cellLengths[0];
-         q[1] = 2.0*M_PI*periodicity_*waveVectors_[i][1]/cellLengths[1]; 
-         q[2] = 2.0*M_PI*periodicity_*waveVectors_[i][2]/cellLengths[2];
-         double arg = q.dot(r)+phases_[i];
+         q[0] = 2.0*M_PI*periodicity_*waveIntVectors_[i][0]/cellLengths[0];
+         q[1] = 2.0*M_PI*periodicity_*waveIntVectors_[i][1]/cellLengths[1]; 
+         q[2] = 2.0*M_PI*periodicity_*waveIntVectors_[i][2]/cellLengths[2];
+         double arg = q.dot(position);
          cosine += cos(arg);
       }
       cosine *= clipParameter;
-      return prefactor_[type]*externalParameter_*tanh(C_+cosine);
+      return prefactor_[type]*externalParameter_*tanh(cosine);
    }
 
    /* 
    * Calculate external force for a single atom.
    */
    inline 
-   void PeriodicExternal::getForce(const Vector& position, int type, 
+   void SimplePeriodicExternal::getForce(const Vector& position, int type, 
                                      Vector& force) const
    {
       const Vector cellLengths = boundaryPtr_->lengths();
       double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);
- 
-      Vector r = position;
-      r -= shift_;
+
       double cosine = 0.0;
       Vector deriv;
       deriv.zero();
       for (int i = 0; i < nWaveVectors_; ++i) {
          Vector q;
-         q[0] = 2.0*M_PI*periodicity_*waveVectors_[i][0]/cellLengths[0];
-         q[1] = 2.0*M_PI*periodicity_*waveVectors_[i][1]/cellLengths[1]; 
-         q[2] = 2.0*M_PI*periodicity_*waveVectors_[i][2]/cellLengths[2];
-         double arg = q.dot(r)+phases_[i];
+         q[0] = 2.0*M_PI*periodicity_*waveIntVectors_[i][0]/cellLengths[0];
+         q[1] = 2.0*M_PI*periodicity_*waveIntVectors_[i][1]/cellLengths[1]; 
+         q[2] = 2.0*M_PI*periodicity_*waveIntVectors_[i][2]/cellLengths[2];
+         double arg = q.dot(position);
          cosine += cos(arg);
          double sine = -1.0*sin(arg);
          q *= sine;
@@ -225,7 +212,7 @@ namespace Inter
       }
       cosine *= clipParameter;
       deriv *= clipParameter;
-      double tanH = tanh(C_+cosine);
+      double tanH = tanh(cosine);
       double sechSq = (1.0 - tanH*tanH);
       double f = prefactor_[type]*externalParameter_*sechSq;
       deriv *= f;
