@@ -103,62 +103,65 @@ namespace DdMd
       // Find all neighbors (cell list)
       cellPtr = cellList.begin();
       while (cellPtr) {
-         cellPtr->getNeighbors(neighbors, reverseUpdateFlag);
          na = cellPtr->nAtom();
-         nn = neighbors.size();
-
-         // Loop over primary atoms (atom1) in primary cell
-         for (i = 0; i < na; ++i) {
-            atom1Ptr = neighbors[i];
-            maskPtr  = &(atom1Ptr->mask());
-            foundNeighbor = false;
-
-            // Loop over secondary atoms (atom2) in primary cell
-            for (j = 0; j < na; ++j) {
-               atom2Ptr = neighbors[j];
-               if (atom2Ptr > atom1Ptr) {
+         if (na) {
+            cellPtr->getNeighbors(neighbors, reverseUpdateFlag);
+            nn = neighbors.size();
+   
+            // Loop over primary atoms (atom1) in primary cell
+            for (i = 0; i < na; ++i) {
+               atom1Ptr = neighbors[i];
+               maskPtr  = &(atom1Ptr->mask());
+               foundNeighbor = false;
+   
+               // Loop over secondary atoms (atom2) in primary cell
+               for (j = 0; j < na; ++j) {
+                  atom2Ptr = neighbors[j];
+                  if (atom2Ptr > atom1Ptr) {
+                     atom2Id  = atom2Ptr->id();
+                     if (!maskPtr->isMasked(atom2Id)) {
+                        dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+                        dRSq = dr.square();
+                        if (dRSq < cutoffSq) {
+                           // If first neighbor of atom1, add atom1 to atom1Ptrs_
+                           if (!foundNeighbor) {
+                              atom1Ptrs_.append(atom1Ptr);
+                              foundNeighbor = true;
+                           }
+                           // Append 2nd atom to atom2Ptrs_[]
+                           atom2Ptrs_.append(atom2Ptr);
+                        }
+                     }
+                  }
+               }
+   
+               // Atoms in neighboring cells
+               for (j = na; j < nn; ++j) {
+                  atom2Ptr = neighbors[j];
                   atom2Id  = atom2Ptr->id();
                   if (!maskPtr->isMasked(atom2Id)) {
                      dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
                      dRSq = dr.square();
                      if (dRSq < cutoffSq) {
-                        // If first neighbor of atom1, add atom1 to atom1Ptrs_
+                        // If first_ neighbor, record iAtomId in atom1Ptrs_
                         if (!foundNeighbor) {
                            atom1Ptrs_.append(atom1Ptr);
                            foundNeighbor = true;
                         }
-                        // Append 2nd atom to atom2Ptrs_[]
+                        // Append Id of 2nd atom in pair to atom2Ptrs_[]
                         atom2Ptrs_.append(atom2Ptr);
                      }
                   }
+      
                }
-            }
+     
+               // When finished with atom1, set next element of first_ array.
+               if (foundNeighbor) {
+                  first_.append(atom2Ptrs_.size());
+               }
 
-            // Atoms in neighboring cells
-            for (j = na; j < nn; ++j) {
-               atom2Ptr = neighbors[j];
-               atom2Id  = atom2Ptr->id();
-               if (!maskPtr->isMasked(atom2Id)) {
-                  dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
-                  dRSq = dr.square();
-                  if (dRSq < cutoffSq) {
-                     // If first_ neighbor, record iAtomId in atom1Ptrs_
-                     if (!foundNeighbor) {
-                        atom1Ptrs_.append(atom1Ptr);
-                        foundNeighbor = true;
-                     }
-                     // Append Id of 2nd atom in pair to atom2Ptrs_[]
-                     atom2Ptrs_.append(atom2Ptr);
-                 }
-              }
-   
-            }
-  
-            // When finished with atom1, set next element of first_ array.
-            if (foundNeighbor) {
-               first_.append(atom2Ptrs_.size());
-            }
-         }
+            } // for ia 
+         } // if (na)
 
          // Advance to next cell in a linked list
          cellPtr = cellPtr->nextCellPtr();

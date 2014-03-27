@@ -40,7 +40,6 @@ namespace DdMd
    *    Vector   lower;        // Vector of lower bounds (local atoms)
    *    Vector   upper;        // Vector of upper bounds (local atoms)
    *    Vector   cutoffs;      // Vector of cutoff lengths for each axis.
-   *    double   cutoff;       // minimum cell dimension
    *    int      atomCapacity  // max number of atoms on this processor
    *
    *    // Set elements of cutoffs vector to same value
@@ -129,10 +128,11 @@ namespace DdMd
       * \param atomCapacity dimension of global array of atoms
       * \param lower        lower coordinate bounds for this processor
       * \param upper        upper coordinate bounds for this processor
-      * \param cutoffs      minimum dimensions of a cell in each direction
+      * \param cutoffs      pair cutoff distance in each direction
+      * \param nCellCut     number of cells per cutoff length
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    const Vector& cutoffs);
+                    const Vector& cutoffs, int nCellCut = 1);
 
       /**
       * Allocate memory for this CellList (Cartesian coordinates).
@@ -145,10 +145,11 @@ namespace DdMd
       * \param atomCapacity dimension of global array of atoms
       * \param lower        lower bound for this processor in maximum boundary
       * \param upper        upper bound for this processor in maximum boundary
-      * \param cutoff       minimum dimension of a cell in any direction
+      * \param cutoff       pair cutoff distance in each direction
+      * \param nCellCut     number of cells per cutoff length
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    double cutoff);
+                    double cutoff, int nCellCut = 1);
 
       /**
       * Make the cell grid (using generalized coordinates).
@@ -169,25 +170,12 @@ namespace DdMd
       *
       * \param lower    lower bound of local atom coordinates.
       * \param upper    upper bound of local atom coordinates.
-      * \param cutoffs  minimum dimension of cell in each direction
+      * \param cutoffs  pair cutoff length in each direction
+      * \param nCellCut number of cells per cutoff length
       */
       void 
-      makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs);
-
-      /**
-      * Make the cell grid (Cartesian coordinates).
-      *
-      * This function is designed for use with orthogonal unit cells and Cartesian 
-      * coordinates, for which the lower, upper and cutoff parameters all have 
-      * dimensions of length. The function calls the allocate() method with a 
-      * Vector of cutoffs internally, after setting every element of the cutoffs
-      * Vector to the same cutoff value.
-      *
-      * \param lower    lower bound of local atom coordinates.
-      * \param upper    upper bound of local atom coordinates.
-      * \param cutoff   minimum dimension of a cell in any direction
-      */
-      void makeGrid(const Vector& lower, const Vector& upper, double cutoff);
+      makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs, 
+               int nCellCut = 1);
 
       /**
       * Determine the appropriate cell for an Atom, based on its position.
@@ -317,35 +305,35 @@ namespace DdMd
          int cellRank;
       };
 
-      /// Array of offsets to neighbors.
+      /// Array of strips of relative offsets to neighboring cells.
       Cell::OffsetArray offsets_;
 
       /// Grid for cells.
-      Grid   grid_;
+      Grid grid_;
 
       /// Array of atom tags (dimension atomCapacity_)
       DArray<AtomTag> tags_;
 
       /// Array of Atom handles, sorted by cell (dimension atomCapacity_).
-      DArray<Atom*>   handles_;
+      DArray<Atom*> handles_;
 
       /// Array of Cell objects.
-      GArray<Cell>  cells_;
+      GArray<Cell> cells_;
 
       /// Lower coordinate bounds (local atoms).
-      Vector  lower_; 
+      Vector lower_; 
 
       /// Upper coordinate bounds (local atoms).
-      Vector  upper_; 
+      Vector upper_; 
 
       /// Length of each cell in grid
-      Vector  cellLengths_; 
+      Vector cellLengths_; 
 
       /// Lower bound for nonbonded ghosts.
-      Vector  lowerOuter_; 
+      Vector lowerOuter_; 
 
       /// Upper coordinate bound for nonbonded ghosts.
-      Vector  upperOuter_; 
+      Vector upperOuter_; 
 
       /// Pointer to first local cell (to initialize iterator).
       Cell* begin_;
@@ -371,12 +359,13 @@ namespace DdMd
       * match size of new grid. Does not link cells or calculate offsets to 
       * neighbors.
       *
-      * \param lower lower bound used to allocate array of cells.
+      * \param lower  lower bound used to allocate array of cells.
       * \param uppper  upper bound used to allocate array of cells.
       * \param cutoffs  minimum dimension of a cell in each direction
+      * \param nCellCut  number of cells per cutoff length
       */
       void setGridDimensions(const Vector& lower, const Vector& upper, 
-                             const Vector& cutoffs);
+                             const Vector& cutoffs, int nCellCut);
 
       /**
       * Return true if atomId is valid, i.e., if 0 <= 0 < atomCapacity.
@@ -394,17 +383,13 @@ namespace DdMd
    {
       IntVector r;
       for (int i = 0; i < Dimension; ++i) {
-         if (position[i] < lowerOuter_[i]) {
+         if (position[i] <= lowerOuter_[i]) {
             return -1;
          }
-         if (position[i] > upperOuter_[i]) {
+         if (position[i] >= upperOuter_[i]) {
             return -1;
          }
-         if (position[i] < lower_[i]) {
-            r[i] = 0;
-         } else {
-            r[i] = int( (position[i] - lower_[i])/ cellLengths_[i] ) + 1;
-         }
+         r[i] = int( (position[i] - lowerOuter_[i])/ cellLengths_[i] );
          assert(r[i] < grid_.dimension(i));
       }
       return grid_.rank(r);

@@ -12,8 +12,6 @@
 #include "Domain.h"
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/GroupStorage.tpp>
-#include <ddMd/storage/GroupIterator.h>
-#include <ddMd/storage/ConstGroupIterator.h>
 
 #include <algorithm>
 

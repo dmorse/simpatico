@@ -17,7 +17,6 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/storage/GroupExchanger.h>
-#include <ddMd/storage/GroupIterator.h>
 #include <util/format/Dbl.h>
 #include <util/global.h>
 
