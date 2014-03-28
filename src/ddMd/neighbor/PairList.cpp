@@ -118,21 +118,23 @@ namespace DdMd
                foundNeighbor = false;
    
                // Loop over secondary atoms (atom2) in primary cell
-               for (j = 0; j < na; ++j) {
-                  atom2Ptr = neighbors[j];
-                  if (atom2Ptr > atom1Ptr) {
-                     atom2Id = atom2Ptr->id();
-                     if (!maskPtr->isMasked(atom2Id)) {
-                        dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
-                        dRSq = dr.square();
-                        if (dRSq < cutoffSq) {
-                           // If first neighbor of atom1, add atom1 to atom1Ptrs_
-                           if (!foundNeighbor) {
-                              atom1Ptrs_.append(atom1Ptr->ptr());
-                              foundNeighbor = true;
+               if (na > 1) {
+                  for (j = 0; j < na; ++j) {
+                     atom2Ptr = neighbors[j];
+                     if (atom2Ptr > atom1Ptr) {
+                        atom2Id = atom2Ptr->id();
+                        if (!maskPtr->isMasked(atom2Id)) {
+                           dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+                           dRSq = dr.square();
+                           if (dRSq < cutoffSq) {
+                              // If first neighbor of atom1, add atom1 to atom1Ptrs_
+                              if (!foundNeighbor) {
+                                 atom1Ptrs_.append(atom1Ptr->ptr());
+                                 foundNeighbor = true;
+                              }
+                              // Append 2nd atom to atom2Ptrs_[]
+                              atom2Ptrs_.append(atom2Ptr->ptr());
                            }
-                           // Append 2nd atom to atom2Ptrs_[]
-                           atom2Ptrs_.append(atom2Ptr->ptr());
                         }
                      }
                   }
