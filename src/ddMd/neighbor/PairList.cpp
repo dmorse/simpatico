@@ -80,16 +80,16 @@ namespace DdMd
  
       Cell::NeighborArray neighbors;
       double dRSq, cutoffSq;
-      const Cell*  cellPtr;
-      Atom*  atom1Ptr;
-      Atom*  atom2Ptr;
-      Mask*  maskPtr;
+      const Cell* cellPtr;
+      CellAtom* atom1Ptr;
+      CellAtom* atom2Ptr;
+      Mask* maskPtr;
       Vector dr;
-      int    na;      // number of atoms in this cell
-      int    nn;      // number of neighbors for a cell
-      int    atom2Id; // atom Id for second atom
-      int    i, j;
-      bool   foundNeighbor;
+      int na;                 // number of atoms in this cell
+      int nn;                 // number of neighbors for a cell
+      int atom2Id;   // atom Id for 1st and 2nd atoms
+      int i, j;
+      bool foundNeighbor;
   
       // Set maximum squared-separation for pairs in Pairlist
       cutoffSq = cutoff_*cutoff_;
@@ -99,6 +99,9 @@ namespace DdMd
       atom2Ptrs_.clear();
       first_.clear();
       first_.append(0);
+
+      // Copy positions and ids into cell list
+      cellList.update();
    
       // Find all neighbors (cell list)
       cellPtr = cellList.begin();
@@ -111,25 +114,25 @@ namespace DdMd
             // Loop over primary atoms (atom1) in primary cell
             for (i = 0; i < na; ++i) {
                atom1Ptr = neighbors[i];
-               maskPtr  = &(atom1Ptr->mask());
+               maskPtr  = atom1Ptr->maskPtr();
                foundNeighbor = false;
    
                // Loop over secondary atoms (atom2) in primary cell
                for (j = 0; j < na; ++j) {
                   atom2Ptr = neighbors[j];
                   if (atom2Ptr > atom1Ptr) {
-                     atom2Id  = atom2Ptr->id();
+                     atom2Id = atom2Ptr->id();
                      if (!maskPtr->isMasked(atom2Id)) {
                         dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
                         dRSq = dr.square();
                         if (dRSq < cutoffSq) {
                            // If first neighbor of atom1, add atom1 to atom1Ptrs_
                            if (!foundNeighbor) {
-                              atom1Ptrs_.append(atom1Ptr);
+                              atom1Ptrs_.append(atom1Ptr->ptr());
                               foundNeighbor = true;
                            }
                            // Append 2nd atom to atom2Ptrs_[]
-                           atom2Ptrs_.append(atom2Ptr);
+                           atom2Ptrs_.append(atom2Ptr->ptr());
                         }
                      }
                   }
@@ -145,11 +148,11 @@ namespace DdMd
                      if (dRSq < cutoffSq) {
                         // If first_ neighbor, record iAtomId in atom1Ptrs_
                         if (!foundNeighbor) {
-                           atom1Ptrs_.append(atom1Ptr);
+                           atom1Ptrs_.append(atom1Ptr->ptr());
                            foundNeighbor = true;
                         }
                         // Append Id of 2nd atom in pair to atom2Ptrs_[]
-                        atom2Ptrs_.append(atom2Ptr);
+                        atom2Ptrs_.append(atom2Ptr->ptr());
                      }
                   }
       

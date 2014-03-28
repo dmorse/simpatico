@@ -111,8 +111,8 @@ namespace DdMd
       *
       * This function:
       *
-      *   - Allocates an array of atomCapacity Tag objects.
-      *   - Allocates an array of atomCapacity Atom* objects.
+      *   - Allocates an array of atomCapacity CellAtom::Tag objects.
+      *   - Allocates an array of atomCapacity CellAtom objects.
       *   - Allocates an array of Cell objects sized for this boundary.
       *
       * The elements of the lower, upper, and cutoffs parameters should 
@@ -203,6 +203,14 @@ namespace DdMd
       void build();
 
       /**
+      * Update the cell list.
+      *
+      * This method must be called after the cell list is built, and after
+      * transformation back to Cartesian coordinates.
+      */
+      void update();
+
+      /**
       * Reset the cell list to its empty state (no Atoms).
       */
       void clear();
@@ -289,22 +297,6 @@ namespace DdMd
 
    private:
 
-      /**
-      * Struct containing an Atom* pointer and cell id for that atom.
-      *
-      * The CellList::placeAtom(&Atom) method calculates the cell rank
-      * for an atom, and stores the rank and a pointer in an AtomTag.
-      * It also increments the number of atoms in the relevant cell.
-      * The number of atoms in each cell is known only after a loop
-      * over all atoms. The CellList::build() method then sorts the
-      * Atom* pointers into contiguous blocks of the handles_ array.
-      */
-      struct AtomTag 
-      {
-         Atom* handle;
-         int cellRank;
-      };
-
       /// Array of strips of relative offsets to neighboring cells.
       Cell::OffsetArray offsets_;
 
@@ -312,10 +304,10 @@ namespace DdMd
       Grid grid_;
 
       /// Array of atom tags (dimension atomCapacity_)
-      DArray<AtomTag> tags_;
+      DArray<CellAtom::Tag> tags_;
 
-      /// Array of Atom handles, sorted by cell (dimension atomCapacity_).
-      DArray<Atom*> handles_;
+      /// Array of CellAtom objects, sorted by cell (dimension atomCapacity_).
+      DArray<CellAtom> atoms_;
 
       /// Array of Cell objects.
       GArray<Cell> cells_;
@@ -406,7 +398,7 @@ namespace DdMd
       int rank = cellIndexFromPosition(atom.position());
       if (rank >= 0) {
          tags_[nAtom_].cellRank = rank;
-         tags_[nAtom_].handle = &atom;
+         tags_[nAtom_].ptr = &atom;
          cells_[rank].incrementCapacity();
          ++nAtom_;
       } else {
