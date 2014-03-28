@@ -101,7 +101,7 @@ namespace DdMd
  
          #ifdef DDMD_MODIFIERS 
          modifierManager.preIntegrate1(iStep_);
-         timer().stamp(MODIFIERS);
+         timer().stamp(MODIFIER);
          #endif
    
          // First step of integration: Update positions, half velocity 
@@ -119,7 +119,7 @@ namespace DdMd
 
          #ifdef DDMD_MODIFIERS 
          modifierManager.postIntegrate1(iStep_);
-         timer().stamp(MODIFIERS);
+         timer().stamp(MODIFIER);
          #endif
    
          // Check if exchange and reneighboring is necessary
@@ -135,7 +135,7 @@ namespace DdMd
 
             #ifdef DDMD_MODIFIERS 
             modifierManager.preTransform(iStep_);
-            timer().stamp(MODIFIERS);
+            timer().stamp(MODIFIER);
             #endif
       
             // Transform to scaled [0,1] coordinates
@@ -145,7 +145,7 @@ namespace DdMd
 
             #ifdef DDMD_MODIFIERS 
             modifierManager.preExchange(iStep_);
-            timer().stamp(MODIFIERS);
+            timer().stamp(MODIFIER);
             #endif
       
             // Exchange atom ownership, reidentify ghosts
@@ -154,7 +154,7 @@ namespace DdMd
 
             #ifdef DDMD_MODIFIERS 
             modifierManager.postExchange(iStep_);
-            timer().stamp(MODIFIERS);
+            timer().stamp(MODIFIER);
             #endif
    
             // Build cell list 
@@ -172,14 +172,14 @@ namespace DdMd
 
             #ifdef DDMD_MODIFIERS 
             modifierManager.postNeighbor(iStep_);
-            timer().stamp(MODIFIERS);
+            timer().stamp(MODIFIER);
             #endif
    
          } else { // Update step (no exchange)
 
             #ifdef DDMD_MODIFIERS 
             modifierManager.preUpdate(iStep_);
-            timer().stamp(MODIFIERS);
+            timer().stamp(MODIFIER);
             #endif
      
             // Update all ghost atom positions 
@@ -188,7 +188,7 @@ namespace DdMd
 
             #ifdef DDMD_MODIFIERS 
             modifierManager.postUpdate(iStep_);
-            timer().stamp(MODIFIERS);
+            timer().stamp(MODIFIER);
             #endif
    
          }
@@ -206,7 +206,7 @@ namespace DdMd
 
          #ifdef DDMD_MODIFIERS 
          modifierManager.preForce(iStep_);
-         timer().stamp(MODIFIERS);
+         timer().stamp(MODIFIER);
          #endif
   
          // Calculate forces: 
@@ -222,7 +222,7 @@ namespace DdMd
 
          #ifdef DDMD_MODIFIERS 
          modifierManager.postForce(iStep_);
-         timer().stamp(MODIFIERS);
+         timer().stamp(MODIFIER);
          #endif
    
          // 2nd step of velocity-Verlet integration. This finishes the velocity 
@@ -238,7 +238,7 @@ namespace DdMd
 
          #ifdef DDMD_MODIFIERS 
          modifierManager.endOfStep(iStep_);
-         timer().stamp(MODIFIERS);
+         timer().stamp(MODIFIER);
          #endif
 
       }

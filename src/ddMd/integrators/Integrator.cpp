@@ -364,13 +364,6 @@ namespace DdMd
           << "   "
           << Dbl(time*factor2, 12, 6)
           << "   " << Dbl(100.0, 12, 6, true) << std::endl;
-      double analyzerT = timer().time(ANALYZER);
-      totalT += analyzerT;
-      out << "Analyzers            " 
-          << Dbl(analyzerT*factor1, 12, 6)
-          << "   "
-          << Dbl(analyzerT*factor2, 12, 6)
-          << "   " << Dbl(100.0*analyzerT/time, 12, 6, true) << std::endl;
       double integrate1T = timer().time(INTEGRATE1);
       totalT += integrate1T;
       out << "Integrate1           " 
@@ -453,7 +446,7 @@ namespace DdMd
          double bondForceT = timer().time(BOND_FORCE);
          totalT += bondForceT;
          out << "Bond Forces          " 
-             << Dbl(bondForceT, 12, 6)
+             << Dbl(bondForceT*factor1, 12, 6)
              << "   "
              << Dbl(bondForceT*factor2, 12, 6)
              << "   " << Dbl(100.0*bondForceT/time, 12 , 6, true) << std::endl;
@@ -464,7 +457,7 @@ namespace DdMd
          double angleForceT = timer().time(ANGLE_FORCE);
          totalT += angleForceT;
          out << "Angle Forces         " 
-             << Dbl(angleForceT, 12, 6)
+             << Dbl(angleForceT*factor1, 12, 6)
              << "   "
              << Dbl(angleForceT*factor2, 12, 6)
              << "   " << Dbl(100.0*angleForceT/time, 12 , 6, true) << std::endl;
@@ -475,7 +468,7 @@ namespace DdMd
          double dihedralForceT = timer().time(DIHEDRAL_FORCE);
          totalT += dihedralForceT;
          out << "Dihedral Forces      " 
-             << Dbl(dihedralForceT, 12, 6) 
+             << Dbl(dihedralForceT*factor1, 12, 6) 
              << "   "
              << Dbl(dihedralForceT*factor2, 12, 6)
              << "   " << Dbl(100.0*dihedralForceT/time, 12 , 6, true) << std::endl;
@@ -486,7 +479,7 @@ namespace DdMd
          double externalForceT = timer().time(DIHEDRAL_FORCE);
          totalT += externalForceT;
          out << "External Forces      " 
-             << Dbl(externalForceT, 12, 6) 
+             << Dbl(externalForceT*factor1, 12, 6) 
              << "   "
              << Dbl(externalForceT*factor2, 12, 6)
              << "   " << Dbl(100.0*externalForceT/time, 12 , 6, true) << std::endl;
@@ -495,18 +488,45 @@ namespace DdMd
       double integrate2T = timer().time(INTEGRATE2);
       totalT += integrate2T;
       out << "Integrate2           " 
-          << Dbl(integrate2T, 12, 6) 
+          << Dbl(integrate2T*factor1, 12, 6) 
           << "   "
           << Dbl(integrate2T*factor2, 12, 6) 
           << "   " << Dbl(100.0*integrate2T/time, 12, 6, true) << std::endl;
+      double analyzerT = timer().time(ANALYZER);
+      totalT += analyzerT;
+      out << "Analyzers            " 
+          << Dbl(analyzerT*factor1, 12, 6)
+          << "   "
+          << Dbl(analyzerT*factor2, 12, 6)
+          << "   " << Dbl(100.0*analyzerT/time, 12, 6, true) << std::endl;
+      #ifdef DDMD_MODIFIERS
+      double modifierT = timer().time(MODIFIER);
+      totalT += modifierT;
+      out << "Modifiers            " 
+          << Dbl(modifierT*factor1, 12, 6)
+          << "   "
+          << Dbl(modifierT*factor2, 12, 6)
+          << "   " << Dbl(100.0*modifierT/time, 12, 6, true) << std::endl;
+      #endif
       out << std::endl;
 
+      // Output info about timer resolution
+      double tick = MPI::Wtick();
+      out << "Timer resolution     " 
+          << Dbl(tick, 12, 6) 
+          << "   "
+          << Dbl(tick*double(nProc)/double(nAtomTot), 12, 6) 
+          << "   " << Dbl(100.0*tick*double(iStep_)/time, 12, 6, true) 
+          << std::endl;
+      out << std::endl;
+
+      // Output exchange / reneighbor statistics
       int buildCounter = pairPotential().pairList().buildCounter(); 
-      out << "buildCounter             " 
-                  << Int(buildCounter, 10)
+      out << "buildCounter         " 
+                  << Int(buildCounter, 12)
                   << std::endl;
-      out << "steps / build            "
-                  << double(iStep_)/double(buildCounter)
+      out << "steps per build      "
+                  << Dbl(double(iStep_)/double(buildCounter), 12, 6)
                   << std::endl;
       out << std::endl;
 

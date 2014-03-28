@@ -120,7 +120,7 @@ namespace DdMd
                    EXCHANGE, CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, 
                    ZERO_FORCE, PAIR_FORCE, BOND_FORCE, ANGLE_FORCE, 
                    DIHEDRAL_FORCE, EXTERNAL_FORCE, INTEGRATE2, 
-                   MODIFIERS, DEBUG, SIGNAL, MISC, NTime};
+                   MODIFIER, DEBUG, SIGNAL, MISC, NTime};
 
       /**
       * Set any internal dynamical to default initial values.
