@@ -180,9 +180,9 @@ namespace DdMd
       CellAtom* initialize(CellAtom* begin);
 
       /**
-      * Append a CellAtom to an initialized cell.
+      * Append an Atom to an initialized cell.
       */
-      void append(const CellAtom::Tag& tag);
+      void append(Atom* atomPtr);
 
       // Accessors
 
@@ -279,11 +279,11 @@ namespace DdMd
       return (begin_ + atomCapacity_);
    }
 
-   inline void Cell::append(const CellAtom::Tag& tag)
+   inline void Cell::append(Atom* atomPtr)
    {
       assert(begin_ != 0);
       assert(nAtom_ < atomCapacity_);
-      begin_[nAtom_] = tag;
+      begin_[nAtom_].setPtr(atomPtr);
       ++nAtom_;
    }
 

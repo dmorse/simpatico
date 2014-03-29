@@ -186,6 +186,7 @@ public:
       cellList.placeAtom(atoms[atomId]);
       cellList.build();
       TEST_ASSERT(cellList.isValid());
+      cellList.update();
 
       int size, capacity;
       for (int i = 0; i < cellList.grid().size(); ++i) {
@@ -244,6 +245,7 @@ public:
          cellList.placeAtom(atoms[i]);
       }
       cellList.build();
+      cellList.update();
 
       TEST_ASSERT( cellList.nAtom() == nAtom );
       for (i = 0; i < nAtom; ++i){
@@ -340,6 +342,7 @@ public:
 
       }
       cellList.build();
+      cellList.update();
 
       int na = 0;
       int nc = 0;
@@ -442,6 +445,7 @@ public:
 
       }
       cellList.build();
+      cellList.update();
 
       int na = 0;
       int nc = 0;
@@ -582,11 +586,12 @@ public:
             atoms[i].position()[j] *= lengths[j];
          }
       }
+      cellList.update();
 
       // Find all neighbor pairs within a cutoff (use cell list)
       Cell::NeighborArray neighbors;
-      Atom* atomPtr1;
-      Atom* atomPtr2;
+      CellAtom* cellAtomPtr1;
+      CellAtom* cellAtomPtr2;
       Vector dr;
       int    nn;      // number of neighbors in a cell
       int    np = 0;  // Number of pairs within cutoff
@@ -597,19 +602,19 @@ public:
          ic = cellPtr->id();
          nn = neighbors.size();
          for (i = 0; i < na; ++i) {
-            atomPtr1 = neighbors[i];
+            cellAtomPtr1 = neighbors[i];
             for (j = 0; j < na; ++j) {
-               atomPtr2 = neighbors[j];
-               if (atomPtr2 > atomPtr1) {
-                  dr.subtract(atomPtr2->position(), atomPtr1->position()); 
+               cellAtomPtr2 = neighbors[j];
+               if (cellAtomPtr2 > cellAtomPtr1) {
+                  dr.subtract(cellAtomPtr2->position(), cellAtomPtr1->position()); 
                   if (dr.square() < pairCutoffSq) {
                      ++np;
                   }
                }
             }
             for (j = na; j < nn; ++j) {
-               atomPtr2 = neighbors[j];
-               dr.subtract(atomPtr2->position(), atomPtr1->position()); 
+               cellAtomPtr2 = neighbors[j];
+               dr.subtract(cellAtomPtr2->position(), cellAtomPtr1->position()); 
                if (dr.square() < pairCutoffSq) {
                   ++np;
                }
@@ -619,6 +624,8 @@ public:
       }
 
       // Count neighbor pairs directly (N^2 loop)
+      Atom* atomPtr1;
+      Atom* atomPtr2;
       int nq = 0;
       for (i = 0; i < locals.size(); ++i) {
          atomPtr1 = &locals[i];
@@ -766,11 +773,12 @@ public:
             atoms[i].position()[j] *= lengths[j];
          }
       }
+      cellList.update();
 
       // Find all neighbor pairs within a cutoff (use cell list)
       Cell::NeighborArray neighbors;
-      Atom* atomPtr1;
-      Atom* atomPtr2;
+      CellAtom* cellAtomPtr1;
+      CellAtom* cellAtomPtr2;
       Vector dr;
       int    nn;      // number of neighbors in a cell
       int    np = 0;  // Number of pairs within cutoff
@@ -781,19 +789,19 @@ public:
          ic = cellPtr->id();
          nn = neighbors.size();
          for (i = 0; i < na; ++i) {
-            atomPtr1 = neighbors[i];
+            cellAtomPtr1 = neighbors[i];
             for (j = 0; j < na; ++j) {
-               atomPtr2 = neighbors[j];
-               if (atomPtr2 > atomPtr1) {
-                  dr.subtract(atomPtr2->position(), atomPtr1->position()); 
+               cellAtomPtr2 = neighbors[j];
+               if (cellAtomPtr2 > cellAtomPtr1) {
+                  dr.subtract(cellAtomPtr2->position(), cellAtomPtr1->position()); 
                   if (dr.square() < pairCutoffSq) {
                      ++np;
                   }
                }
             }
             for (j = na; j < nn; ++j) {
-               atomPtr2 = neighbors[j];
-               dr.subtract(atomPtr2->position(), atomPtr1->position()); 
+               cellAtomPtr2 = neighbors[j];
+               dr.subtract(cellAtomPtr2->position(), cellAtomPtr1->position()); 
                if (dr.square() < pairCutoffSq) {
                   ++np;
                }
@@ -803,6 +811,8 @@ public:
       }
 
       // Count neighbor pairs directly (N^2 loop)
+      Atom* atomPtr1;
+      Atom* atomPtr2;
       int nq = 0;
       for (i = 0; i < locals.size(); ++i) {
          atomPtr1 = &locals[i];

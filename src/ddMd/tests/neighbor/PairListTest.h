@@ -171,6 +171,7 @@ public:
             atoms[i].position()[j] *= lengths[j];
          }
       }
+      cellList.update();
 
    }
 
@@ -183,13 +184,13 @@ public:
       // Find all neighbors (cell list)
       Cell::NeighborArray neighbors;
       const Cell* cellPtr = cellList.begin();
-      Atom* atom1Ptr;
-      Atom* atom2Ptr;
+      CellAtom* cellAtom1Ptr;
+      CellAtom* cellAtom2Ptr;
       Vector dr;
-      int    na;      // number of atoms in a cell
-      int    nn;      // number of neighbors for a cell
-      int    np = 0;  // Number of pairs within cutoff
-      int    i, j;
+      int na;      // number of atoms in a cell
+      int nn;      // number of neighbors for a cell
+      int np = 0;  // Number of pairs within cutoff
+      int i, j;
 
       cellPtr = cellList.begin();
       while (cellPtr) {
@@ -197,19 +198,19 @@ public:
          na = cellPtr->nAtom();
          nn = neighbors.size();
          for (i = 0; i < na; ++i) {
-            atom1Ptr = neighbors[i];
+            cellAtom1Ptr = neighbors[i];
             for (j = 0; j < na; ++j) {
-               atom2Ptr = neighbors[j];
-               if (atom2Ptr > atom1Ptr) {
-                  dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+               cellAtom2Ptr = neighbors[j];
+               if (cellAtom2Ptr > cellAtom1Ptr) {
+                  dr.subtract(cellAtom2Ptr->position(), cellAtom1Ptr->position()); 
                   if (dr.square() <= cutoffSq) {
                      ++np;
                   }
                }
             }
             for (j = na; j < nn; ++j) {
-               atom2Ptr = neighbors[j];
-               dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+               cellAtom2Ptr = neighbors[j];
+               dr.subtract(cellAtom2Ptr->position(), cellAtom1Ptr->position()); 
                if (dr.square() <= cutoffSq) {
                   ++np;
                }
@@ -220,6 +221,8 @@ public:
       //std::cout << "Total number of pairs = " << np << std::endl;
 
       // Count neighbor pairs (N^2 loop)
+      Atom* atom1Ptr;
+      Atom* atom2Ptr;
       int nq = 0;
       for (i = 0; i < locals.size(); ++i) {
          atom1Ptr = &locals[i];
@@ -258,8 +261,8 @@ public:
       // Find all neighbors (cell list)
       Cell::NeighborArray neighbors;
       const Cell* cellPtr = cellList.begin();
-      Atom* atom1Ptr;
-      Atom* atom2Ptr;
+      CellAtom* cellAtom1Ptr;
+      CellAtom* cellAtom2Ptr;
       Vector dr;
       int    na;      // number of atoms in a cell
       int    nn;      // number of neighbors for a cell
@@ -272,19 +275,19 @@ public:
          na = cellPtr->nAtom();
          nn = neighbors.size();
          for (i = 0; i < na; ++i) {
-            atom1Ptr = neighbors[i];
+            cellAtom1Ptr = neighbors[i];
             for (j = 0; j < na; ++j) {
-               atom2Ptr = neighbors[j];
-               if (atom2Ptr > atom1Ptr) {
-                  dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+               cellAtom2Ptr = neighbors[j];
+               if (cellAtom2Ptr > cellAtom1Ptr) {
+                  dr.subtract(cellAtom2Ptr->position(), cellAtom1Ptr->position()); 
                   if (dr.square() <= cutoffSq) {
                      ++np;
                   }
                }
             }
             for (j = na; j < nn; ++j) {
-               atom2Ptr = neighbors[j];
-               dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+               cellAtom2Ptr = neighbors[j];
+               dr.subtract(cellAtom2Ptr->position(), cellAtom1Ptr->position()); 
                if (dr.square() <= cutoffSq) {
                   ++np;
                }
@@ -295,6 +298,8 @@ public:
       //std::cout << "Total number of pairs = " << np << std::endl;
 
       // Count neighbor pairs (N^2 loop)
+      Atom* atom1Ptr;
+      Atom* atom2Ptr;
       int nq = 0;
       for (i = 0; i < locals.size(); ++i) {
          atom1Ptr = &locals[i];

@@ -33,7 +33,7 @@ Simulation{
     cutoff            1.122462048
     skin              0.4
     nCellCut          1
-    pairCapacity      100000
+    pairCapacity      20000
     maxBoundary       orthorhombic   30.0   30.0   30.0
   }
   BondPotential{
@@ -59,12 +59,15 @@ Simulation{
   }
 }
 
-    saveInterval       4000
-    saveFileName    restart
+    cutoff            2.5
 
      LogEnergy{
         interval        1000
      }
+
+    saveInterval       4000
+    saveFileName    restart
+
 
      OutputEnergy{
         interval        1000

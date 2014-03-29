@@ -289,7 +289,7 @@ namespace DdMd
 
       // Add all atoms to cells.
       for (int i = 0; i < nAtom_; ++i) {
-         cells_[tags_[i].cellRank].append(tags_[i]);
+         cells_[tags_[i].cellRank].append(tags_[i].ptr);
       }
 
       #ifdef UTIL_DEBUG
@@ -387,6 +387,7 @@ namespace DdMd
             if (nAtomCell != cellPtr->atomCapacity()) {
                UTIL_THROW("Cell nAtom != atomCapacity");
             }
+            #if 0
             if (nAtomCell > 0) {
                for (int i = 0; i < nAtomCell; ++i) {
                   atomPtr = cellPtr->atomPtr(i);
@@ -395,6 +396,7 @@ namespace DdMd
                   }
                }
             }
+            #endif
             nAtomSum += nAtomCell;
          }
    

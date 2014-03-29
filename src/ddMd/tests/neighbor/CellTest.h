@@ -1,4 +1,5 @@
 #include <ddMd/neighbor/Cell.h>
+#include <ddMd/neighbor/CellAtom.h>
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/AtomArray.h>
 #include <util/containers/RArray.h>
@@ -21,20 +22,18 @@ class CellTest : public UnitTest
 
 private:
 
-   typedef Atom* Handle;
-
    static const int nAtom  = 10;
 
-   Cell           cell;
-   AtomArray      atoms;
-   DArray<Atom*>  handles;
+   Cell  cell;
+   AtomArray  atoms;
+   DArray<CellAtom>  cellAtoms;
 
 public:
 
    void setUp()
    {
       atoms.allocate(nAtom);
-      handles.allocate(nAtom);
+      cellAtoms.allocate(nAtom);
    }
 
    void tearDown()
@@ -49,7 +48,7 @@ public:
       for (int i = 0; i < nAtom; ++i) {
          cell.incrementCapacity();
       }
-      cell.initialize(&(handles[0]));
+      cell.initialize(&(cellAtoms[0]));
       TEST_ASSERT(cell.nAtom() == 0);
       TEST_ASSERT(cell.atomCapacity() == nAtom);
    }
@@ -62,19 +61,19 @@ public:
       for (int i = 0; i < nAtom; ++i) {
          cell.incrementCapacity();
       }
-      cell.initialize(&(handles[0]));
+      cell.initialize(&(cellAtoms[0]));
       TEST_ASSERT(cell.nAtom() == 0);
       TEST_ASSERT(cell.atomCapacity() == nAtom);
       for (int i = 0; i < nAtom; ++i) {
          TEST_ASSERT(cell.nAtom() == i);
          cell.append(&(atoms[i]));
-         TEST_ASSERT(cell.atomPtr(i) == &(atoms[i]));
+         TEST_ASSERT(cell.atomPtr(i) == &(cellAtoms[i]));
       }
       TEST_ASSERT(cell.nAtom() == nAtom);
       TEST_ASSERT(cell.atomCapacity() == nAtom);
       for (int i = 0; i < nAtom; ++i) {
-         TEST_ASSERT(cell.atomPtr(i) == &(atoms[i]));
-         TEST_ASSERT(handles[i] == &(atoms[i]));
+         TEST_ASSERT(cell.atomPtr(i) == &(cellAtoms[i]));
+         TEST_ASSERT(cellAtoms[i].ptr() == &(atoms[i]));
       }
       
    }

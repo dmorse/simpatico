@@ -111,7 +111,7 @@ namespace DdMd
       *
       * This function:
       *
-      *   - Allocates an array of atomCapacity CellAtom::Tag objects.
+      *   - Allocates an array of atomCapacity CellList::Tag objects.
       *   - Allocates an array of atomCapacity CellAtom objects.
       *   - Allocates an array of Cell objects sized for this boundary.
       *
@@ -297,6 +297,14 @@ namespace DdMd
 
    private:
 
+      /*
+      * Temporary storage for atom pointers, before copying to cells. 
+      */
+      struct Tag {
+         Atom* ptr;
+         int cellRank;
+      };
+
       /// Array of strips of relative offsets to neighboring cells.
       Cell::OffsetArray offsets_;
 
@@ -304,7 +312,7 @@ namespace DdMd
       Grid grid_;
 
       /// Array of atom tags (dimension atomCapacity_)
-      DArray<CellAtom::Tag> tags_;
+      DArray<Tag> tags_;
 
       /// Array of CellAtom objects, sorted by cell (dimension atomCapacity_).
       DArray<CellAtom> atoms_;

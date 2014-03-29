@@ -23,16 +23,15 @@ namespace DdMd
 
    public:
 
+      #if 0
       struct Tag {
          Atom* ptr;
          int cellRank;
       };
+      #endif
 
-      CellAtom& operator = (const CellAtom::Tag& tag) 
-      {
-         ptr_ = tag.ptr; 
-         return *this;
-      }
+      void setPtr(Atom* atomPtr) 
+      {  ptr_ = atomPtr; }
 
       void update() 
       {
