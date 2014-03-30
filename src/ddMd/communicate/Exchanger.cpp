@@ -116,29 +116,38 @@ namespace DdMd
    }
 
    /*
+   * void Exchanger::exchangeAtoms()
+   *
    * Exchange ownership of local atoms and groups, set ghost plan.
    *
-   * Atomic coordinates must be in scaled / generalized form on entry.
+   * ------------------------------------------------------------------
+   * Precondition:
    *
+   * Atomic coordinates must be in scaled [0,1] form on entry.
+   *
+   * ------------------------------------------------------------------
    * Algorithm:
    *
-   *    - Loop over local atoms, set exchange and ghost communication
-   *      flags for those beyond or near processor domain boundaries.
+   *    - Loop over local atoms, create exchange and ghost communication
+   *      plans for those beyond or near processor domain boundaries.
    *
    *    - Add local atoms that will be retained by this processor but
-   *      sent as ghosts to appropriate send arrays.
+   *      sent as ghosts to appropriate ghost send arrays.
    *
-   *    - Call GroupExchanger::markSpanningGroups for each type (bond, angle, dihedral).
-   *      markSpanningGroups<N>{
-   *         For each group{
+   *    - Call GroupExchanger::markSpanningGroups for each registered
+   *      GroupExchanger (e.g., bond, angle, dihedral). In this function:
+   *
+   *         For each Group<N> {
    *            - Set ghost communication flags for groups that span
    *              or may span boundaries.
    *            - Clear pointers to ghost atoms in the group.
    *         }
    *      }
    *
-   *      Clear all ghosts from the AtomStorage
-   *
+   *    - Clear all ghosts from the AtomStorage
+   * 
+   *    - Main loop over transfer directions:
+   * 
    *      For each transfer directions (i and j) {
    *
    *         For each local atom {
@@ -166,29 +175,31 @@ namespace DdMd
    *            - Call unpackGroups for each group type.
    *         }
    *
-   *      }
+   *      } // end loop over transfer directions
    *
-   *    - Call GroupExchanger::markGhosts each type of group (bond, angle, dihedral).
-   *      markGhosts<N> {
-   *         for each group{
+   *    - Call GroupExchanger::markGhosts each type of group, to create
+   *      ghost plans for local atoms that must be transferred because
+   *      they belong to imcomplete groups. Within this function:
+   *
+   *         for each Group<N>{
    *            if group is incomplete{
    *               for each direction (i and j) {
    *                  if group is marked for ghost communication {
-   *                     mark local atoms in group for ghost communication
+   *                     set ghost flags in plan for local atoms in group 
    *                  }
    *               }
    *            }
    *         }
-   *      }
    *
-   *   }
-   *
-   *  Postconditions. Upon return:
-   *     Each processor owns all atoms in its domain.
-   *     Each processor owns all atoms containing one or more local atoms.
+   * ------------------------------------------------------------------
+   *  Postconditions: Upon return:
+   *     Each processor owns all atoms in its domain, and no others.
+   *     Each processor owns all groups containing one or more local atoms.
    *     Ghost plans are set for all local atoms.
    *     Send arrays contain local atoms marked for sending as ghosts.
    *     The AtomStorage contains no ghost atoms.
+   * 
+   * ------------------------------------------------------------------
    */
    void Exchanger::exchangeAtoms()
    {
@@ -453,7 +464,7 @@ namespace DdMd
             */
 
             #ifdef UTIL_MPI
-            // Send and receive buffers only if processor grid dimension(i) > 1
+            // Send & receive buffers iff processor grid dimension(i) > 1
             if (gridFlags_[i]) {
 
                // End atom send block
@@ -500,9 +511,11 @@ namespace DdMd
                   // Check ghost plan
                   assert(!planPtr->ghost(i, j));
                   if (j == 0) {
-                     assert(planPtr->ghost(i, 1) == (coordinate > inner_(i, 1)) );
+                     assert(planPtr->ghost(i, 1) 
+                            == (coordinate > inner_(i, 1)));
                   } else {
-                     assert(planPtr->ghost(i, 0) == (coordinate < inner_(i, 0)) );
+                     assert(planPtr->ghost(i, 0) 
+                            == (coordinate < inner_(i, 0)));
                   }
                   #endif
 
@@ -550,10 +563,10 @@ namespace DdMd
 
       /*
       * At this point:
-      *    No ghost atoms exist.
-      *    All atoms are on correct processor.
+      *    No ghost atoms exist in AtomStorage.
+      *    All local atoms are on correct processor.
       *    No Groups are empty.
-      *    All pointer to local atoms in Groups are set.
+      *    All pointers to local atoms in Groups are set correctly.
       *    All pointers to ghost atoms in Groups are null.
       */
 
