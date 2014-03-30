@@ -61,6 +61,11 @@ namespace DdMd
       void allocate(int capacity); 
 
       /**
+      * Set force vector to zero for all atoms in this array.
+      */
+      void zeroForces(); 
+
+      /**
       * Return true if this is already allocated, false otherwise.
       */
       bool isAllocated() const;
