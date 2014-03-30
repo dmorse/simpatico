@@ -11,8 +11,8 @@ Simulation{
   nBondType           1
   atomTypes           A    1.0
   AtomStorage{
-    atomCapacity       4000
-    ghostCapacity     15000
+    atomCapacity       8000
+    ghostCapacity     20000
     totalAtomCapacity 20000
   }
   BondStorage{

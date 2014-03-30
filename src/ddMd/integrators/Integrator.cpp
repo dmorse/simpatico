@@ -348,7 +348,7 @@ namespace DdMd
 
 
       double factor1 = 1.0/double(iStep_);
-      double factor2 = double(nProc)/double(iStep_*nAtomTot);
+      double factor2 = double(nProc)/(double(iStep_)*double(nAtomTot));
       double totalT = 0.0;
 
       out << std::endl;
@@ -422,7 +422,7 @@ namespace DdMd
           << "   " << Dbl(100.0*pairListT/time, 12, 6, true) << std::endl;
       double updateT = timer().time(UPDATE);
       totalT += updateT;
-      out << "Update               " 
+      out << "Update               "
           << Dbl(updateT*factor1, 12, 6)
           << "   "
           << Dbl(updateT*factor2, 12, 6)
