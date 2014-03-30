@@ -93,6 +93,16 @@ namespace DdMd
       * \param ar output/saving archive
       */
       virtual void save(Serializable::OArchive &ar);
+
+      /**
+      * Set all forces to zero.
+      *
+      * Sets forces on all local atoms to zero. Also zeros forces for 
+      * ghost atoms iff parameter zeroGhosts is true.
+      *
+      * \param zeroGhosts if true, zero forces on ghost atoms.
+      */
+      void zeroForces(bool zeroGhosts);
   
       /// \name Local Atom Management
       //@{

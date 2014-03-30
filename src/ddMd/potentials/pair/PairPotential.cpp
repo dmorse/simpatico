@@ -328,11 +328,11 @@ namespace DdMd
          na = cellPtr->nAtom();
          nn = neighbors.size();
          for (i = 0; i < na; ++i) {
-            atomPtr0 = neighbors[i];
+            atomPtr0 = neighbors[i]->ptr();
 
             // Loop over atoms in this cell
             for (j = 0; j < na; ++j) {
-               atomPtr1 = neighbors[j];
+               atomPtr1 = neighbors[j]->ptr();
                if (atomPtr1 > atomPtr0) {
                   f.subtract(atomPtr0->position(), atomPtr1->position());
                   rsq = f.square();
@@ -345,7 +345,7 @@ namespace DdMd
             // Loop over atoms in neighboring cells.
             if (reverseUpdateFlag()) {
                for (j = na; j < nn; ++j) {
-                  atomPtr1 = neighbors[j];
+                  atomPtr1 = neighbors[j]->ptr();
                   f.subtract(atomPtr0->position(), atomPtr1->position());
                   rsq = f.square();
                   if (rsq < cutoffSq) {
@@ -354,7 +354,7 @@ namespace DdMd
                }
             } else {
                for (j = na; j < nn; ++j) {
-                  atomPtr1 = neighbors[j];
+                  atomPtr1 = neighbors[j]->ptr();
                   f.subtract(atomPtr0->position(), atomPtr1->position());
                   rsq = f.square();
                   if (rsq < cutoffSq) {

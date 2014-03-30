@@ -70,7 +70,6 @@ namespace DdMd
       setup();
       #ifdef DDMD_MODIFIERS 
       modifierManager.setup();
-      timer().stamp(MODIFIERS);;
       #endif
       analyzerManager.setup();
 
@@ -102,7 +101,7 @@ namespace DdMd
  
          #ifdef DDMD_MODIFIERS 
          modifierManager.preIntegrate1(iStep_);
-         timer().stamp(MODIFIERS);
+         timer().stamp(MODIFIER);
          #endif
    
          // First step of integration: Update positions, half velocity 
@@ -115,14 +114,16 @@ namespace DdMd
          #ifdef DDMD_INTEGRATOR_DEBUG
          // Sanity check
          simulation().isValid();
+         timer().stamp(DEBUG);
          #endif
 
          #ifdef DDMD_MODIFIERS 
          modifierManager.postIntegrate1(iStep_);
-         timer().stamp(MODIFIERS);
+         timer().stamp(MODIFIER);
          #endif
    
          // Check if exchange and reneighboring is necessary
+         // Note: Integrate::isExchangeNeeded uses timer.
          needExchange = isExchangeNeeded(pairPotential().skin());
 
          if (!atomStorage().isCartesian()) {
@@ -134,45 +135,51 @@ namespace DdMd
 
             #ifdef DDMD_MODIFIERS 
             modifierManager.preTransform(iStep_);
-            timer().stamp(MODIFIERS);
+            timer().stamp(MODIFIER);
             #endif
       
-            // Exchange atom ownership, reidentify ghosts
+            // Transform to scaled [0,1] coordinates
             atomStorage().clearSnapshot();
             atomStorage().transformCartToGen(boundary());
             timer().stamp(Integrator::TRANSFORM_F);
+
+            #ifdef DDMD_MODIFIERS 
+            modifierManager.preExchange(iStep_);
+            timer().stamp(MODIFIER);
+            #endif
+      
+            // Exchange atom ownership, reidentify ghosts
             exchanger().exchange();
             timer().stamp(Integrator::EXCHANGE);
 
             #ifdef DDMD_MODIFIERS 
-            modifierManager.preExchange(iStep_);
-            timer().stamp(MODIFIERS);
-            #endif
-      
-            #ifdef DDMD_MODIFIERS 
             modifierManager.postExchange(iStep_);
-            timer().stamp(MODIFIERS);
+            timer().stamp(MODIFIER);
             #endif
    
-            // Reneighbor - rebuild cell and neighbor lists
+            // Build cell list 
             pairPotential().buildCellList();
             timer().stamp(Integrator::CELLLIST);
+
+            // Transform from scaled [0,1] to Cartesian coordinates.
             atomStorage().transformGenToCart(boundary());
             timer().stamp(Integrator::TRANSFORM_R);
+
+            // Build pair list
             atomStorage().makeSnapshot();
             pairPotential().buildPairList();
             timer().stamp(Integrator::PAIRLIST);
 
             #ifdef DDMD_MODIFIERS 
             modifierManager.postNeighbor(iStep_);
-            timer().stamp(MODIFIERS);
+            timer().stamp(MODIFIER);
             #endif
    
          } else { // Update step (no exchange)
 
             #ifdef DDMD_MODIFIERS 
             modifierManager.preUpdate(iStep_);
-            timer().stamp(MODIFIERS);
+            timer().stamp(MODIFIER);
             #endif
      
             // Update all ghost atom positions 
@@ -181,7 +188,7 @@ namespace DdMd
 
             #ifdef DDMD_MODIFIERS 
             modifierManager.postUpdate(iStep_);
-            timer().stamp(MODIFIERS);
+            timer().stamp(MODIFIER);
             #endif
    
          }
@@ -190,6 +197,7 @@ namespace DdMd
          #ifdef DDMD_INTEGRATOR_DEBUG
          // Sanity check
          simulation().isValid();
+         timer().stamp(DEBUG);
          #endif
 
          if (!atomStorage().isCartesian()) {
@@ -198,12 +206,14 @@ namespace DdMd
 
          #ifdef DDMD_MODIFIERS 
          modifierManager.preForce(iStep_);
-         timer().stamp(MODIFIERS);
+         timer().stamp(MODIFIER);
          #endif
-   
+  
+         // Calculate forces: 
          // Calculate new forces for all local atoms. If constant pressure
-         // ensembles (not rigid), calculate virial stress. Both methods 
-         // send the modifyForce signal.
+         // ensemble (not rigid), also calculate the virial stress. Both 
+         // methods use the timer() internall, and both send the modifyForce 
+         // signal. 
          if (simulation().boundaryEnsemble().isRigid()) {
             computeForces();
          } else {
@@ -212,22 +222,23 @@ namespace DdMd
 
          #ifdef DDMD_MODIFIERS 
          modifierManager.postForce(iStep_);
-         timer().stamp(MODIFIERS);
+         timer().stamp(MODIFIER);
          #endif
    
-         // 2nd step of integration. This finishes the velocity update.
-         // This method normally calls simulation().velocitySignal().notify()
+         // 2nd step of velocity-Verlet integration. This finishes the velocity 
+         // update, and normally calls simulation().velocitySignal().notify()
          integrateStep2();
          timer().stamp(INTEGRATE2);
    
          #ifdef DDMD_INTEGRATOR_DEBUG
          // Sanity check
          simulation().isValid();
+         timer().stamp(DEBUG);
          #endif
 
          #ifdef DDMD_MODIFIERS 
          modifierManager.endOfStep(iStep_);
-         timer().stamp(MODIFIERS);
+         timer().stamp(MODIFIER);
          #endif
 
       }

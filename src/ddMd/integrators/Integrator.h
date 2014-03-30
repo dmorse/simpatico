@@ -118,8 +118,9 @@ namespace DdMd
       /// Timestamps for loop timing.
       enum TimeId {ANALYZER, INTEGRATE1, CHECK, ALLREDUCE, TRANSFORM_F, 
                    EXCHANGE, CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, 
-                   PAIR_FORCE, BOND_FORCE, ANGLE_FORCE, DIHEDRAL_FORCE,
-                   EXTERNAL_FORCE, INTEGRATE2, MODIFIERS, NTime};
+                   ZERO_FORCE, PAIR_FORCE, BOND_FORCE, ANGLE_FORCE, 
+                   DIHEDRAL_FORCE, EXTERNAL_FORCE, INTEGRATE2, 
+                   MODIFIER, DEBUG, SIGNAL, MISC, NTime};
 
       /**
       * Set any internal dynamical to default initial values.

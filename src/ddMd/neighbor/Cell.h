@@ -8,9 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/global.h>
+#include <ddMd/neighbor/CellAtom.h>
 #include <ddMd/chemistry/Atom.h>
 #include <util/containers/FSArray.h>
+#include <util/global.h>
 
 #include <utility>
 
@@ -22,7 +23,7 @@ namespace DdMd
    /**
    * A single Cell in a CellList.
    *
-   * An initialized Cell has an array of Atom* pointers, a pointer to 
+   * An initialized Cell has an array of CellAtom objects, a pointer to 
    * the next Cell in a linked list, and a pointer to an array of integer
    * offsets to neighboring cells. 
    *
@@ -106,7 +107,7 @@ namespace DdMd
       /**
       * Static array for holding neighbors in a cell list.
       */
-      typedef FSArray<Atom*, MaxNeighborAtom> NeighborArray;
+      typedef FSArray<CellAtom*, MaxNeighborAtom> NeighborArray;
 
       /**
       * Constructor.
@@ -137,8 +138,7 @@ namespace DdMd
       *
       * \param id integer identifier for this Cell
       */
-      void setId(int id) 
-      {  id_ = id; }
+      void setId(int id);
 
       /**
       * Set the pointer to an array of integer offsets.
@@ -167,7 +167,7 @@ namespace DdMd
       void incrementCapacity();
 
       /**
-      * Associate the Cell with an array of Atom* pointers.
+      * Associate the Cell with an array of CellAtom objects.
       *
       * The final capacity of the cell must be known when this method
       * is called. It associate the Cell with a C array of capacity 
@@ -177,10 +177,10 @@ namespace DdMd
       * \param begin first element in associated array segment.
       * \return end of array segment (element one past the end)
       */
-      Atom** initialize(Atom** begin);
+      CellAtom* initialize(CellAtom* begin);
 
       /**
-      * Append an Atom* pointer to an initialized cell.
+      * Append an Atom to an initialized cell.
       */
       void append(Atom* atomPtr);
 
@@ -189,8 +189,7 @@ namespace DdMd
       /**
       * Get identifier for this Cell.
       */
-      int id() const
-      {  return id_; }
+      int id() const;
   
       /**
       * Number of atoms in cell.
@@ -205,7 +204,7 @@ namespace DdMd
       /**
       * Return a pointer to atom i.
       */
-      Atom* atomPtr(int i) const;
+      CellAtom* atomPtr(int i) const;
 
       /**
       * Is this a ghost cell?
@@ -232,7 +231,7 @@ namespace DdMd
    private:
 
       /// Pointer to first Atom* pointer for this cell.
-      Atom**  begin_;         
+      CellAtom*  begin_;         
 
       /// Pointer to neighbor offset array.
       OffsetArray*  offsetsPtr_;
@@ -254,6 +253,9 @@ namespace DdMd
 
    };
 
+   inline void Cell::setId(int id) 
+   {  id_ = id; }
+
    inline void Cell::incrementCapacity()
    {
       assert(begin_ == 0);
@@ -267,7 +269,7 @@ namespace DdMd
       atomCapacity_ = 0;
    }
 
-   inline Atom** Cell::initialize(Atom** begin)
+   inline CellAtom* Cell::initialize(CellAtom* begin)
    {
       assert(begin_ == 0);
       assert(nAtom_ == 0);
@@ -281,10 +283,16 @@ namespace DdMd
    {
       assert(begin_ != 0);
       assert(nAtom_ < atomCapacity_);
-      begin_[nAtom_] = atomPtr;
+      begin_[nAtom_].setPtr(atomPtr);
       ++nAtom_;
    }
 
+   /*
+   * Get identifier for this Cell.
+   */
+   inline int Cell::id() const
+   {  return id_; }
+  
    /*
    * Return number of atoms in this cell.
    */
@@ -294,11 +302,11 @@ namespace DdMd
    /*
    * Return pointer to atom i.
    */
-   inline Atom* Cell::atomPtr(int i) const
+   inline CellAtom* Cell::atomPtr(int i) const
    {
       assert(i >= 0);
       assert(i < nAtom_);
-      return begin_[i];
+      return &begin_[i];
    }
 
    /*
