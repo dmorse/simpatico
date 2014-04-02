@@ -9,7 +9,6 @@
 */
 
 #include "Constants.h"
-#include <util/global.h>
 #include <cmath>
 
 namespace Util

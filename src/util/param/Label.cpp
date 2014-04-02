@@ -9,7 +9,6 @@
 */
 
 #include "Label.h"
-#include <util/global.h>
 
 #include <iomanip>
 
