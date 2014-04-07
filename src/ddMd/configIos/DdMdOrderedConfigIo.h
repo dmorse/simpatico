@@ -82,6 +82,9 @@ namespace DdMd
          Vector velocity;
          int typeId;
          int id;
+         #ifdef DDMD_MOLECULES
+         AtomContext context;
+         #endif
 
          IoAtom()
           : position(0.0),

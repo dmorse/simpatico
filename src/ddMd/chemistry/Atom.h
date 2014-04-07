@@ -105,22 +105,29 @@ namespace DdMd
       *
       * \param speciesId
       */ 
-      void setSpecieId(int speciesId);
+      void setSpeciesId(int sId);
 
       /**
       * Set Molecule Id of the molecule.
       *
       * \param moleculeId
       */ 
-      void setMoleculeId(int moleculeId);
+      void setMoleculeId(int mId);
 
       /**
       * Set Atom Id of the molecule.
       *
       * \param atomId
       */ 
-      void setAtomId(int atomId);
+      void setAtomId(int aId);
  
+      /**
+      * Set Atom Id of the molecule.
+      *
+      * \param atomId
+      */ 
+      void setContext(AtomContext c);
+
       #endif
 
       /**
@@ -518,28 +525,28 @@ namespace DdMd
    * Set the context of an Atom.
    */
    inline void Atom::setContext(AtomContext c)
-   {  arrayPtr_->context_[localId_ >> 1].speciesId = c.speciesId;  
-      arrayPtr_->context_[localId_ >> 1].moleculeId = c.moleculeId;
-      arrayPtr_->context_[localId_ >> 1].atomId = c.atomId;
+   {  arrayPtr_->contexts_[localId_ >> 1].speciesId = c.speciesId;  
+      arrayPtr_->contexts_[localId_ >> 1].moleculeId = c.moleculeId;
+      arrayPtr_->contexts_[localId_ >> 1].atomId = c.atomId;
    }
 
    /*
    * Set the species of an Atom.
    */
-   inline void Atom::setSpecie(int sId)
-   {  arrayPtr_->context_[localId_ >> 1].speciesId = sId;}
+   inline void Atom::setSpeciesId(int sId)
+   {  arrayPtr_->contexts_[localId_ >> 1].speciesId = sId;}
 
    /*
    * Set the molecule of an Atom.
    */
-   inline void Atom::setMolecule(int mId)
-   {  arrayPtr_->context_[localId_ >> 1].moleculeId = mId;}
+   inline void Atom::setMoleculeId(int mId)
+   {  arrayPtr_->contexts_[localId_ >> 1].moleculeId = mId;}
 
    /*
    * Set the bead of an Atom.
    */
-   inline void Atom::setAtom(int aId)
-   {  arrayPtr_->context_[localId_ >> 1].atomId = aId;}
+   inline void Atom::setAtomId(int aId)
+   {  arrayPtr_->contexts_[localId_ >> 1].atomId = aId;}
 
    #endif
 }

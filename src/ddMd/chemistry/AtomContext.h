@@ -13,8 +13,8 @@
 namespace DdMd{
    struct AtomContext{
       int speciesId;
-      int moleculeId:
-      int AtomId;
+      int moleculeId;
+      int atomId;
    };
 }
 

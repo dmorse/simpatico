@@ -135,17 +135,48 @@ namespace DdMd
          Atom* atomPtr;
          int id;
          int typeId;
+
+         #ifdef DDMD_MOLECULES
+         int aId;
+         int mId;
+         int sId;
+         #endif
+
          for (int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
-
+            
+            #ifndef DDMD_MOLECULES   
             file >> id >> typeId;
             if (id < 0 || id >= totalAtomCapacity) {
                UTIL_THROW("Invalid atom id");
             }
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
+            #endif
+ 
+            #ifdef DDMD_MOLECULES
+            file >> id >> typeId >> aId >> mId >> sId;
+            if (id < 0 || id >= totalAtomCapacity) {
+               UTIL_THROW("Invalid atom id");
+            }
+            if (aId < 0) {
+               UTIL_THROW("Invalid Atom");
+            }
+            if (mId < 0) {
+               UTIL_THROW("Invalid Molecule");
+            }
+            if (sId < 0) {
+               UTIL_THROW("Invalid Specie");
+            }
+            atomPtr->setId(id);
+            atomPtr->setTypeId(typeId);
+            atomPtr->setAtomId(aId);
+            atomPtr->setMoleculeId(mId);
+            atomPtr->setSpeciesId(sId);
+            #endif 
+  
             file >> r;
             boundary().transformCartToGen(r, atomPtr->position());
             file >> atomPtr->velocity();
@@ -303,6 +334,9 @@ namespace DdMd
             atoms_[id].velocity = atomPtr->velocity();
             atoms_[id].typeId = atomPtr->typeId();
             atoms_[id].id = id;
+            #ifdef DDMD_MOLECULES
+            atoms_[id].context = atomPtr->context();
+            #endif
             atomPtr = atomCollector().nextPtr();
             ++n;
          } 
@@ -311,6 +345,7 @@ namespace DdMd
          }
 
          // Iterate through atoms_ array to write atoms data.
+         #ifndef DDMD_MOLECULES
          for (id = 0; id < nAtom; ++id) {
             if (id != atoms_[id].id) {
                UTIL_THROW("Something is rotten in Denmark");
@@ -320,6 +355,22 @@ namespace DdMd
                  << "                " << atoms_[id].velocity;
             file << std::endl;
          }
+         #endif
+             
+         #ifdef DDMD_MOLECULES
+         for (id = 0; id < nAtom; ++id) {
+            if (id != atoms_[id].id) {
+               UTIL_THROW("Yeah, Something is rotten in Denmark. I can smell from here!");
+            }
+            file << Int(id, 10) << Int(atoms_[id].typeId, 6)
+                 << Int(atoms_[id].context.atomId, 6) 
+                 << Int(atoms_[id].context.moleculeId, 6)
+                 << Int(atoms_[id].context.speciesId, 6)
+                 << atoms_[id].position << std::endl
+                 << "                " << atoms_[id].velocity;
+            file << std::endl;
+         }
+         #endif
 
       } else { 
          atomCollector().send();

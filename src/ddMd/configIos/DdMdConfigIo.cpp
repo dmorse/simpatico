@@ -173,7 +173,7 @@ namespace DdMd
             atomPtr->setTypeId(typeId);
             atomPtr->setAtomId(aId);
             atomPtr->setMoleculeId(mId);
-            atomPtr->setSpecieId(sId);
+            atomPtr->setSpeciesId(sId);
             #endif
 
             file >> r;
@@ -306,8 +306,8 @@ namespace DdMd
          #ifdef DDMD_MOLECULES
          while (atomPtr) {
             file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6)
-            << Int(atomPtr->atomId(), 6) << Int(atomPtr->moleculeId(), 6)
-            << Int(atomPtr->specieId(), 6);
+            << Int(atomPtr->context().speciesId, 6) << Int(atomPtr->context().moleculeId, 6)
+            << Int(atomPtr->context().atomId, 6);
             if (isCartesian) {
                r = atomPtr->position();
             } else {
