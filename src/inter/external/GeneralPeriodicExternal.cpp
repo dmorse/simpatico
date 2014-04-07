@@ -56,6 +56,7 @@ namespace Inter
       for (int i=0; i < nWaveVectors_; ++i) {
         phases_[i] = other.phases_[i];
       }
+      prefactor_.allocate(Dimension * nWaveVectors_);
       for (int i=0; i < Dimension * nWaveVectors_; ++i) {
         shift_[i] = other.shift_[i];
       }
@@ -81,7 +82,6 @@ namespace Inter
           waveVectors_[i][j] = other.waveVectors_[i][j];
         }
       }
-      phases_.allocate(nWaveVectors_);
       for (int i=0; i < nWaveVectors_; ++i) {
         phases_[i] = other.phases_[i];
       }
@@ -146,7 +146,10 @@ namespace Inter
 
       phases_.allocate(nWaveVectors_);
       readDArray<double>(in, "phases", phases_, nWaveVectors_);
+
+      shift_.allocate(Dimension * nWaveVectors_);
       readDArray<double>(in, "shift", shift_, Dimension * nWaveVectors_);
+
       read<double>(in, "interfaceWidth", interfaceWidth_);
       read<int>(in, "periodicity", periodicity_);
 
@@ -164,12 +167,18 @@ namespace Inter
       }
       prefactor_.allocate(nAtomType_ * nWaveVectors_);
       loadDArray<double>(ar, "prefactor", prefactor_, nAtomType_ * nWaveVectors_);
+
       loadParameter<double>(ar, "externalParameter", externalParameter_);
+
       waveVectors_.allocate(nWaveVectors_);
       loadDArray<Vector>(ar, "waveVectors", waveVectors_, nWaveVectors_);
+
+      phases_.allocate(nWaveVectors_);
       loadDArray<double>(ar, "phases", phases_, nWaveVectors_);
+
       shift_.allocate(Dimension * nWaveVectors_);
       loadDArray<double>(ar, "shift", shift_, Dimension * nWaveVectors_);
+
       loadParameter<double>(ar, "interfaceWidth", interfaceWidth_);
       loadParameter<int>(ar, "periodicity", periodicity_);
       isInitialized_ = true;
