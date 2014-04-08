@@ -9,6 +9,8 @@
 */
 
 #include "initStatic.h"
+#include <util/global.h>
+
 #include <util/misc/Log.h>
 #include <util/misc/Memory.h>
 #include <util/format/Format.h>
@@ -17,7 +19,6 @@
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
 #include <util/space/Tensor.h>
-#include <util/global.h>
 
 namespace Util
 {

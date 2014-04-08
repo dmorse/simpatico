@@ -50,7 +50,7 @@ namespace DdMd
 
       // Allocate arrays of tag and handle objects
       tags_.allocate(atomCapacity);
-      handles_.allocate(atomCapacity);
+      atoms_.allocate(atomCapacity);
 
       // Set grid dimensions and allocate an array of Cell objects
       setGridDimensions(lower, upper, cutoffs, nCellCut);
@@ -280,16 +280,16 @@ namespace DdMd
    void CellList::build()
    {
       // Initialize all cells, by associating each with a
-      // block of the handles_ array.
+      // block of the atoms_ array.
 
-      Atom** handlePtr = &handles_[0];
+      CellAtom* cellAtomPtr = &atoms_[0];
       for (int i = 0; i < grid_.size(); ++i) {
-         handlePtr = cells_[i].initialize(handlePtr);
+         cellAtomPtr = cells_[i].initialize(cellAtomPtr);
       }
 
       // Add all atoms to cells.
       for (int i = 0; i < nAtom_; ++i) {
-         cells_[tags_[i].cellRank].append(tags_[i].handle);
+         cells_[tags_[i].cellRank].append(tags_[i].ptr);
       }
 
       #ifdef UTIL_DEBUG
@@ -305,6 +305,16 @@ namespace DdMd
       #endif
 
       isBuilt_ = true;
+   }
+
+   /*
+   * Update position information in all CellAtom objects.
+   */
+   void CellList::update()
+   {
+      for (int i = 0; i < nAtom_; ++i) {
+         atoms_[i].update();
+      }
    }
 
    /*
@@ -355,8 +365,8 @@ namespace DdMd
          if (tags_.capacity() <= 0) {
             UTIL_THROW("CellList is allocated but tags_.capacity() <= 0");
          }
-         if (handles_.capacity() <= 0) {
-            UTIL_THROW("CellList is allocated but handles_.capacity() <= 0");
+         if (atoms_.capacity() <= 0) {
+            UTIL_THROW("CellList is allocated but atoms_.capacity() <= 0");
          }
       }
 
@@ -367,7 +377,7 @@ namespace DdMd
          }
 
          // Check validity of all cells individually. 
-         const Atom* atomPtr;
+         const CellAtom* atomPtr;
          const Cell* cellPtr;
          int   nAtomCell;
          int   nAtomSum = 0;
@@ -377,16 +387,16 @@ namespace DdMd
             if (nAtomCell != cellPtr->atomCapacity()) {
                UTIL_THROW("Cell nAtom != atomCapacity");
             }
+            #if 0
             if (nAtomCell > 0) {
                for (int i = 0; i < nAtomCell; ++i) {
                   atomPtr = cellPtr->atomPtr(i);
-                  if (atomPtr == 0)
-                      UTIL_THROW("Null Atom* in a Cell");
                   if (icell != cellIndexFromPosition(atomPtr->position())) {
                       UTIL_THROW("Inconsistent position");
                   }
                }
             }
+            #endif
             nAtomSum += nAtomCell;
          }
    

@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include "ioUtil.h"
 #include "Log.h"
-#include <util/global.h>
 
 namespace Util
 {

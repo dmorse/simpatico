@@ -1,175 +1,38 @@
 ------------------------------------------------------------------------
 Util::Boundary
 
-     1) Add method shiftGen(Vector&) and shiftGen(Vector& , intVector&)
-       to shift generalized coordinate vectors.
+      1) Add method shiftGen(Vector&) and shiftGen(Vector& , intVector&)
+         to shift generalized coordinate vectors. (Done)
 
-     Status: Done
+
+      2) Add method to transform coordinate systems (Done).
+
+      3) Add method to calculate cell offsets and/or distances for use
+      in CellList (not done). 
 
 ------------------------------------------------------------------------
 DdMd::Domain:
 
-     if (UTIL_ORTHOGONAL) {
-        1) Change domainBound to return generalized coordinates.
-        2) Change ownerRank(Vector& ) to use generalized coordinates
-        3) Change isInDomain(Vector& ) to use generalized coordinates.
+     1) Change domainBound to return generalized coordinates (Done)
+     2) Change ownerRank(Vector& ) to use generalized coordinates (Done)
+     3) Change isInDomain(Vector& ) to use generalized coordinates (Done)
 
         In each method, change line defining dL to following:
 
-        if (UTIL_ORTHOGONAL) {
-           dL = boundaryPtr_->length(i) / double(gridDimensions_[i]);
-        } else {
-           dL = 1.0 / double(gridDimensions_[i]);
-        }
-     }
+        dL = 1.0 / double(gridDimensions_[i]);
 
-     4) Update unit tests and test
+     4) Update unit tests and test (Done, I think, but double check)
 
      5) IF we move to consistent use of generalized coordinates in Domain,
-        then remove boundaryPtr_ (Used only in above functions)
-
-     Status: Changed functions, have not changed tests or retested.
-------------------------------------------------------------------------
-DdMd::AtomStorage
-
-     1) Add methods
-
-     void transformCartToGen(const Boundary& boundary);
-     void transformGenToCart(const Boundary& boundary);
-
-     2) Add bool member and accessor to mark state and method 
-  
-     bool isCartesian() const;
-     bool isCartesion_;
-
-     3) In initializer list of constructor:
-
-        #ifdef UTIL_ORTHOGONAL 
-        isCartesian_ = false,
-        #else
-        isCartesian_ = true,
-        #endif
-
-     Status: Done, but not tested
-------------------------------------------------------------------------
-DdMd::Distributor
-
-     #ifdef (UTIL_ORTHOGONAL) -> use generalized coordinates throughout.
-     Change addAtom to use generalized coordinates
-   
-     #ifdef (UTIL_ORTHOGONAL) { 
-        1) In addAtom, call shiftGen rather than Shift.
-        2) Call of domainPtr_->ownerRank unchanged.
-     }
-     #endif
-------------------------------------------------------------------------
-DdMd::ConfigIo
-
-     Policies / Decisions:
-
-     1) Coordinates in file will be Cartesian
-        Motivation: Allows format more similiar to single processor codes.
-
-     2) Atom coordinates will be generalized upon exit from readConfigIo.
-        Motivation: Allows a CelList to be built immediately after reading.
-                    Leaves coordinates in form used internally
-                    Delay transformation to Cartesian until needed.
-
-     3) Coordinates will be Cartesian throughout writeConfigIo.
-        Motivation: Coordinates will be Cartesian throughout most time steps.
-                    Cartesian coordinates are needed in output file.
-
-     Changes, in readConfig:
-
-     2) If (!UTIL_ORTHOGONAL) transform each position to generalized 
-        coordinates immediately after reading.
-
-     Status: Done, haven't tested compilation or function.
-------------------------------------------------------------------------
-DdMd::Exchanger:
-
-     if (UTIL_ORTHOGONAL) use generalized coordinates throughout:
-
-     1) Within loop over i to define limiting coordinate values:
-        Define local variable  length = boundary.length()[i];
-        Define local variable  cut = cutoff_/length
-        Define inner_ and outer_ as bound +- cut
-    
-     2) In exchangeAtoms, exchangeGhosts, update, wherever particle 
-        positions are shifted, if (!UTIL_ORTHOGONAL) use generalized 
-        coordinate shift. In each of these methods:
-
-        a) Outside loop over i and j, add variable declaration:
-
-        double rshift;
-
-        b) Within each loop over i, j, inside the j loop, define:
-
-        if (UTIL_ORTHOGONAL) {
-           rshift = shift*boundaryPtr_->lengths()[i];
-        } else {
-           rshift = 1.0;
-        }
-
-        c) Change shift execution for each atom:
-
-        if (shift) {
-           coordinate += rshift 
-        }
-
-     3) Update ExchangerTest and retest.
-
-        Tests should also have if (UTIL_ORTHOGONAL) { ... } blocks so 
-        that they work correctly in either mode.
-
-     Status: Changes made, but no tests written.
-------------------------------------------------------------------------
-DdMd::Collector
-
-     Algorithm appears to be completely unchanged: All particles are sent
-     to the master processor without using information about positions.
+        then remove boundaryPtr_ (Used only in above functions) 
+        (Not sure of status)
 
 ------------------------------------------------------------------------
 CellList:
 
-     if (UTIL_ORTHOGONAL) use generalized coordinates throughout:
-
-     1) Define allocate and makeGrid methods that takes a Vector of 
-     cutoff lengths. Each should be defined externally as a ratio
-     cutoff_/boundary.length()[i] for generalized coordinates or
-     cutoff_ for Cartesian coordinates.
-
-     2) If we later decide on consistent use of generalized coordinates, 
-     remove boundaryPtr_ (it will have become unnecessary).
-
-    Status: Not started
-------------------------------------------------------------------------
-PairPotential:
-
-     1) Separate buildCellList and buildPairList methods.
-
-     2) If (UTIL_ORTHOGONAL) use generalized coordinates throughout 
-     buildCellList and Cartesian throughout buildPairList.
+     Because of use of small cells necessitates nontrivial distance calculations, we need to move calculation of closest distance between cells to Boundary class. 
 
      Status: Not started
-------------------------------------------------------------------------
-Integrators:
-
-     1) Invoke methods to transform atomic coordinate systems.
-     2) Call buildCellList and buildPairList separately.
-
-     if (!UTIL_ORTHOGONAL) {
-        atomStoragePtr_->.transformCartToGen(boundary()); 
-     }
-     exchangerPtr_->exchange();
-     pairPotentialPtr_->buildCellList();
-     if (!UTIL_ORTHOGONAL) {
-        atomStoragePtr_->.transformGenToCart(boundary()); 
-     }
-     pairPotentialPtr_->buildPairList();
-
-     Status: Not started
-------------------------------------------------------------------------
 ------------------------------------------------------------------------
 I am adding wherever I have found something that seems to need change:
 
@@ -184,30 +47,6 @@ alized forms.
 
 and so forth.
 ------------------------------------------------------------------------
-Domain.h
-
-inline int Domain::shift(int i, int j)
-
-seems to need change.
-------------------------------------------------------------------------
-Domain.h
-
-bool Domain::isInDomain(const Vector& position) const
-
-seems also needs change.
-------------------------------------------------------------------------
-CellList.h
-
-inline int CellList::cellIndexFromPosition(const Vector &pos)
-
-also needs to be considered for change.
-------------------------------------------------------------------------
-CellList.h
-
-inline void CellList::addAtom(Atom &atom)
-
-need also change due to use of position in it.
-------------------------------------------------------------------------
 CellList.h
 
 CellList::getNeighbors(const Vector &pos, NeighborArray &neighbors) const
@@ -218,119 +57,8 @@ inline int CellList::cellIndexFromPosition(const Vector &pos)
 
 be changed properly.
 ------------------------------------------------------------------------
-CellList.cpp
-
-CellList::setCellsAxis(const Boundary &boundary, int axis, double cutoff)
-
-needs to be considered both due to implement the right cutoff since now,
-the coordinates are tilted and also formely since now we ae in tilted
-coordinates.
-------------------------------------------------------------------------
-Atom.h(mcMd)
-
-in line 223 there was a dictation error (shfits---->shifts) in the docu-
-ments I fixed it.
-------------------------------------------------------------------------
-the readParamComposite also requires change to take the tilt in for the
-MonoclinicBoundary.
-------------------------------------------------------------------------
 McSimulation.cpp
 
 the command "GENERATE_MOLECULES" in the readCommads method only impliments
 for the cubic Box. I am not sure if it is intended to be like.
 ------------------------------------------------------------------------
-MdSimulation.cpp
-
-the command "GENERATE_MOLECULES" in the readCommads method only impliments
-for the cubic Box. I am not sure if it is intended to be like.
-------------------------------------------------------------------------
-there is one method call in the Mdsimulation to the:
-
-in line 424:
-system.shiftAtoms()
-
-I assumed to keep this as place which might need modification also, to 
-included the MonoclinicBoundary.
-------------------------------------------------------------------------
-in PairPotential.h(ddMd)
-
-in line 118
-virtual double maxPairCutoff() const=0;
-
-we have to modify for the MonoclinicBoundary. I am not sure how to find 
-which inherited class implementation of the maxPairCutoff will be used
-instead. I added previously the maxvalidityRange to the Monoclinic,
-but I guess it is cleared now.
-
-I guess MonclinicBoundary must also modify for returning this.
-------------------------------------------------------------------------
-Pairpotential.cpp
-
-void PairPotential::readPairListParam(std::istream& in)
-
-in line 72:
-
-reads maxBoundary I mention this to check the Consistency for the Monoc-
-linic case and also in line 75 there is a mention of the maxBoundary_.-
-lengths().
------------------------------------------------------------------------- 
-Exchanger.cpp
-
-here I am just mentioning the places the coordinate is named and also other 
-coordinate related parameters.
-
-in all 
-atomPtr->position()[i]
-callings
-
-if we add the generalized coordinate as a data member to atom, I guess there 
-will be very little changes required.
-
-the inner_ and outer_ variables also need consideration to implement the generalized
-coordinates.
-
-in line 406 is also a mention of the boundaryPtr->lengths();
-which needs to be reconsidered.
--------------------------------------------------------------------------
-Exchanger.cpp
-
-in line 619:
-shift must be modified as talked before. which you did it. I am just mentioning 
-it for the sake of completeness(hopefully!!!).
--------------------------------------------------------------------------
-Exchanger.cpp
-
-in line 700:
-again use of shift.
-
-in line 850:
-boundaryPtr_->lengths();
-
-also need consideration.
--------------------------------------------------------------------------
-Exchanger.cpp
-
-there was an omition in line 868 you had specified in comments I did it.
--------------------------------------------------------------------------
-Exchanger.cpp
-
-in line 962 in my old printings, 
-the use of shift that is suppose to be changed.
-
-also bound_(i,j) must be changed for the generalized coordinates.
-and also the atomPtr->position()[i]. must be changed to generalized coor-
-dinates.
-
-and another shift call which must be modified was in the line 1013.
-------------------------------------------------------------------------
-Exchanger.cpp
-
-the domainPtr_->shift(i,j) must also be reconsidered for the Monoclinic-
-Boundary.
-------------------------------------------------------------------------
-Exchanger.cpp
-
-and another use of the shift in line 1131.
-------------------------------------------------------------------------
- 
-

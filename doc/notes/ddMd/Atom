@@ -28,16 +28,13 @@ Integration:                   position, force, velocity
 
 Notes: 
 
-1) Atom Id is currently used only during pair list building (to identify bonded neighbors), and during exchange, to locate an atom in a storage and to set 
-pointers in associated groups.
+1) Atom Id is currently used only during pair list building (to identify bonded neighbors), and during exchange, to locate an atom in a storage and to set pointers in associated groups.
 
 2) isGhost is absolutely essential only in inner bonded force loop.
 
-3) Different
-
 
 Proposal 1 - Many arrays indexed by a common array index
-----------
+--------------------------------------------------------
 
 Atom (64 bytes object):
     position_          24 bytes

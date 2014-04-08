@@ -55,8 +55,8 @@ namespace DdMd
 
       const Cell* cellBegin;
       const Cell* cellEnd;
-      Atom** atomBegin;
-      Atom** atomEnd;
+      CellAtom* atomBegin;
+      CellAtom* atomEnd;
       int  is, ns;
       bool bg, eg;
 
@@ -71,7 +71,7 @@ namespace DdMd
                atomBegin = cellBegin->begin_;
                atomEnd = cellEnd->begin_ + cellEnd->nAtom_;
                for ( ; atomBegin < atomEnd; ++atomBegin) {
-                  neighbors.append(*atomBegin);
+                  neighbors.append(atomBegin);
                }
             }
          }
@@ -83,7 +83,7 @@ namespace DdMd
                atomBegin = cellBegin->begin_;
                atomEnd = cellEnd->begin_ + cellEnd->nAtom_;
                for ( ; atomBegin < atomEnd; ++atomBegin) {
-                  neighbors.append(*atomBegin);
+                  neighbors.append(atomBegin);
                }
             } else {
                bg = cellBegin->isGhostCell();
@@ -101,7 +101,7 @@ namespace DdMd
                   atomBegin = cellBegin->begin_;
                   atomEnd = cellEnd->begin_ + cellEnd->nAtom_;
                   for ( ; atomBegin < atomEnd; ++atomBegin) {
-                     neighbors.append(*atomBegin);
+                     neighbors.append(atomBegin);
                   }
                }
             }

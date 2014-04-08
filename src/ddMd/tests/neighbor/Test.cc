@@ -7,8 +7,8 @@ int main()
 
    #ifdef UTIL_MPI 
    MPI::Init();
-   IntVector::commitMpiType();
-   Vector::commitMpiType();
+   //IntVector::commitMpiType();
+   //Vector::commitMpiType();
    #endif
 
    NeighborTestComposite runner;
