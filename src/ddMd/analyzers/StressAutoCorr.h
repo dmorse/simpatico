@@ -88,7 +88,9 @@ namespace DdMd
       std::ofstream outputFile_;
       
       /// Statistical accumulator.
-      AutoCorrArray<Tensor, double> accumulator_;
+      AutoCorrArray<double, double> accumulatorxy_;
+      AutoCorrArray<double, double> accumulatoryz_;
+      AutoCorrArray<double, double> accumulatorzx_;
 
       /// Number of samples per block average output
       int capacity_;
