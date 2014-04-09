@@ -22,7 +22,9 @@
 #include <inter/external/SlitExternal.h>
 #include <inter/external/LamellarOrderingExternal.h>
 #include <inter/external/LocalLamellarOrderingExternal.h>
+#include <inter/external/SimplePeriodicExternal.h>
 #include <inter/external/PeriodicExternal.h>
+#include <inter/external/GeneralPeriodicExternal.h>
 
 namespace DdMd
 {
@@ -64,8 +66,14 @@ namespace DdMd
       if (name == "LocalLamellarOrderingExternal") {
          ptr = new ExternalPotentialImpl<LocalLamellarOrderingExternal>(*simulationPtr_);
       } else
+      if (name == "SimplePeriodicExternal") {
+         ptr = new ExternalPotentialImpl<SimplePeriodicExternal>(*simulationPtr_);
+      }
       if (name == "PeriodicExternal") {
          ptr = new ExternalPotentialImpl<PeriodicExternal>(*simulationPtr_);
+      }
+      if (name == "GeneralPeriodicExternal") {
+         ptr = new ExternalPotentialImpl<GeneralPeriodicExternal>(*simulationPtr_);
       }
       return ptr;
    }
