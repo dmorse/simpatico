@@ -1,5 +1,5 @@
 The directory tree rooted at src/mcMd contains all of the classes in the 
-McMd namespace. 
+McMd namespace, which are used in single-processor MC and MD programs.
 
 Subdirectories:
 ----------------------
@@ -21,7 +21,7 @@ mcSimulation   Monte Carlo (MC) Simulation and System subclasses
 mcMoves        classes for specific MC moves (derived from McMove)
 mdSimulation   molecular dynamics (MD) Simulation and System subclasses
 mdIntegrators  specific MD integrators (derived from MdIntegrator)
-analyzers    data analysis (classes derived from Analyzer)
+analyzers      data analysis (classes derived from Analyzer)
 configIos      configuration file IO 
 trajectoryIos  MD trajectory (multi-configuration) file IO.
 perturb        free energy perturbation theory
