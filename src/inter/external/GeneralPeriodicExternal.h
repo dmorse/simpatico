@@ -24,7 +24,7 @@ namespace Inter
    * A clipped cosine potential that induces ordering
    * along directions specified by waveIntVectors, w_i.
    *
-   *                                                 /              /                    /     /      w_i.(x-shift_[0])    w_i.(y-shift_[1])    w_i.(z-shift_[2])            \  \  \ \
+   *                                                 /              /                    /     /      w_i.(x-shifts_[0])    w_i.(y-shifts_[1])    w_i.(z-shifts_[2])            \  \  \ \
    * u = prefactor[atomType] externalParameter tanh | clipParameter|  Sum Prefactor_[i] | cos | 2 pi ------------------ + ------------------ + ------------------ + phase_i  |  |  | |
    *                                                 \              \  i                 \     \             Lx               Ly                       Lz                    /  /  / /
    *
@@ -150,7 +150,7 @@ namespace Inter
       DArray<double> phases_;
 
       /// Prefactor array ofsize nAtomType.
-      DArray<double> shift_;
+      DArray<double> shifts_;
 
       /// Number of unit cells in box
       int periodicity_;
@@ -187,7 +187,7 @@ namespace Inter
       for (int i = 0; i < nWaveVectors_; ++i) {
          r = position;
          for (int j = 0; j < Dimension; j++) {
-            a[j] = shift_[i*Dimension + j];
+            a[j] = shifts_[i*Dimension + j];
          }
          r -= a;
          Vector q;
@@ -221,7 +221,7 @@ namespace Inter
       for (int i = 0; i < nWaveVectors_; ++i) {
          r = position;
          for (int j = 0; j < Dimension; j++) {
-            a[j] = shift_[i*Dimension + j];
+            a[j] = shifts_[i*Dimension + j];
          }
          r -= a;
          Vector q;
