@@ -1,0 +1,11 @@
+boundary    cubic  10.5000
+HarmonicBond{
+   kappa  2000.0
+   length   1.0
+}
+Random{
+  seed   10314761
+}
+nMolecule         1000
+nAtomPerMolecule  32
+McMd

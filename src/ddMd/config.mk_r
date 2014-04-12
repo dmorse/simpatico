@@ -26,6 +26,7 @@
 # Define DDMD_MODIFIERS, enable addition of ModifierManager to Simulation
 # Modifiers take actions at regular intervals that modify the system.
 # DDMD_MODIFIERS=1
+  DDMD_MOLECULES=1
 
 #-----------------------------------------------------------------------
 # The following code defines the variables DDMD_DEFS and DDMD_SUFFIX.
@@ -50,6 +51,12 @@ DDMD_SUFFIX:=
 ifdef DDMD_MODIFIERS
 DDMD_DEFS+= -DDDMD_MODIFIERS
 DDMD_SUFFIX:=$(DDMD_SUFFIX)_u
+endif
+
+# Enable molecules
+ifdef DDMD_MOLECULES
+DDMD_DEFS+= -DDDMD_MOLECULES
+DDMD_SUFFIX:=$(DDMD_SUFFIX)_c
 endif
 
 #-----------------------------------------------------------------------

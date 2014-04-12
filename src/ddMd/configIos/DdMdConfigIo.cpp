@@ -134,17 +134,48 @@ namespace DdMd
          Atom*  atomPtr;
          int  id;
          int  typeId;
+
+         #ifdef DDMD_MOLECULES
+         int aId;
+         int mId;
+         int sId;
+         #endif
+
          for (int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
-
+            
+            #ifndef DDMD_MOLECULES
             file >> id >> typeId;
             if (id < 0 || id >= totalAtomCapacity) {
                UTIL_THROW("Invalid atom id");
             }
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
+            #endif
+
+            #ifdef DDMD_MOLECULES
+            file >> id >> typeId >> aId >> mId >> sId;
+            if (id < 0 || id >= totalAtomCapacity) {
+               UTIL_THROW("Invalid atom id");
+            }
+            if (aId < 0) {
+               UTIL_THROW("Invalid Atom");
+            }
+            if (mId < 0) {
+               UTIL_THROW("Invalid Molecule");
+            }
+            if (sId < 0) {
+               UTIL_THROW("Invalid Specie");
+            }
+            atomPtr->setId(id);
+            atomPtr->setTypeId(typeId);
+            atomPtr->setAtomId(aId);
+            atomPtr->setMoleculeId(mId);
+            atomPtr->setSpeciesId(sId);
+            #endif
+
             file >> r;
             boundary().transformCartToGen(r, atomPtr->position());
             file >> atomPtr->velocity();
@@ -258,6 +289,7 @@ namespace DdMd
          Vector r;
          bool isCartesian = atomStorage().isCartesian();
          Atom* atomPtr = atomCollector().nextPtr();
+         #ifndef DDMD_MOLECULES
          while (atomPtr) {
             file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6);
             if (isCartesian) {
@@ -270,6 +302,23 @@ namespace DdMd
             file << std::endl;
             atomPtr = atomCollector().nextPtr();
          }
+         #endif
+         #ifdef DDMD_MOLECULES
+         while (atomPtr) {
+            file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6)
+            << Int(atomPtr->context().speciesId, 6) << Int(atomPtr->context().moleculeId, 6)
+            << Int(atomPtr->context().atomId, 6);
+            if (isCartesian) {
+               r = atomPtr->position();
+            } else {
+               boundary().transformGenToCart(atomPtr->position(), r);
+            }
+            file << r << std::endl
+                 << "                " << atomPtr->velocity();
+            file << std::endl;
+            atomPtr = atomCollector().nextPtr();
+         }
+         #endif
 
       } else { 
          atomCollector().send();

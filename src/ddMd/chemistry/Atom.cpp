@@ -44,6 +44,9 @@ namespace DdMd
       setIsGhost(other.isGhost());
       force_ = other.force_;
       velocity() = other.velocity();
+      #ifdef DDMD_MOLECULES
+      context() = other.context();
+      #endif
       mask() = other.mask();
       plan() = other.plan();
       setId(other.id());
@@ -72,6 +75,9 @@ namespace DdMd
       buffer.pack<int>(typeId());
       buffer.pack<Vector>(position());
       buffer.pack<Vector>(velocity());
+      #ifdef DDMD_MOLECULES
+      buffer.pack<AtomContext>(context());
+      #endif
       buffer.pack<unsigned int>(plan().flags());
 
       // Pack Mask
@@ -97,6 +103,9 @@ namespace DdMd
       setTypeId(i);
       buffer.unpack<Vector>(position());
       buffer.unpack<Vector>(velocity());
+      #ifdef DDMD_MOLECULES
+      buffer.unpack<AtomContext>(context());
+      #endif
       unsigned int ui;
       buffer.unpack<unsigned int>(ui);
       plan().setFlags(ui);
@@ -119,7 +128,10 @@ namespace DdMd
    int Atom::packedAtomSize()
    {  
       int size = 0;
-      size += 2*sizeof(int); 
+      size += 2*sizeof(int);
+      #ifdef DDMD_MOLECULES 
+      size += sizeof(AtomContext);
+      #endif 
       size += 2*sizeof(Vector); 
       size += sizeof(unsigned int);
       size += sizeof(int);
