@@ -1,4 +1,3 @@
-
 ----------------------------------------------------------------------
 Proposal: Create a stand-alone single-processor program for analyzing
 results of of parallel domain-decomposition molecular dynamics 
@@ -66,72 +65,4 @@ MdPp::Processor class:
    2) To allow for missing ids, a processor will also provide iterators.
    3) Groups will only store ids, rather than pointers.
 
-namespace MdPp 
-{
-
-   using namespace Util;
-   using namespace Inter;
-
-   class Processor : public ParamComposite 
-   {
-
-      /**
-      * Read capacities used to allocate arrays and other
-      * info that is not in the input file. 
-      */
-      readParam(std::istream& in);
-
-      /**
-      * Analyze a sequence of dump files.
-      */
-      analyzeDumps(std::string& filename);
-
-      /**
-      * Analyze a trajectory file.
-      */
-      analyzeTrajectory(std::string& filename);
-
-      // Accessors, for use in Analyzer and ConfigIo classes.
-
-      /// Access to atom by global id.
-      Atom& atom(int id);
-
-      /// Initialize a PArray iterator for atoms.
-      void  initAtomIterator(PArrayIterator<Atom>& iter);
- 
-      /// Access a bond by id.
-      Group<2>& bond(int i);
-   
-      /// Initialize a bond iterator.
-      void  initBondIterator(ArrayIterator<Atom>& iter);
-
-      etc.
-  
-   private:
-     
-      // Array of atoms, indexed by id.
-      DArray<Atom> atoms_;
-
-      // Array of bonds, indexed by id.
-      DArray<Group<2>> bonds_;
-      etc.
-
-      // Container for atoms that have been read from file.
-      PArray<Atom> atomStorage_;
-
-      // Container for groups that have been read from file.
-      PArray<Group<2>> bondStorage_;
-
-      // Boundary object defines periodic boundary conditions.
-      Util::Boundary boundary_;
-
-      ConfigIo* configIoPtr_;
-
-      ConfigIoFactory configIoFactoryPtr_;
-
-      AnalyzerManager analyzerManager_;
-
-   };
-
-}
-
+   see Processor.h for draft.
