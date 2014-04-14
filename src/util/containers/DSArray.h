@@ -69,6 +69,27 @@ namespace Util
       void allocate(int capacity);
 
       /**
+      * Append data to the end of the array.
+      *
+      * \param data Data to add to end of array.
+      */
+      void append(const Data &data);
+
+      /**
+      * Modify logical size without modifying data.
+      *
+      * The size parameter must be non-negative and may not exceed
+      * the physical allocated capacity.
+      *
+      * This function simply changes the logical size of without 
+      * modifying any elements of the underlying physical array. 
+      * When the size increases, added elements are uninitialized.
+      * 
+      * \param size new logical size, 0 <= size < capacity.
+      */
+      void resize(int size);
+
+      /**
       * Set logical size to zero.
       */
       void clear();
@@ -111,13 +132,6 @@ namespace Util
       * \return const reference to element i
       */
       const Data& operator[] (int i) const;
-
-      /**
-      * Append data to the end of the array.
-      *
-      * \param data Data to add to end of array.
-      */
-      void append(const Data &data);
 
       /**
       * Return physical capacity of array.
@@ -336,6 +350,22 @@ namespace Util
       data_[size_] = data;
       ++size_;
    }
+
+   /**
+   * Modify logical size without modifying data.
+   *
+   * The size parameter must be non-negative and may not exceed
+   * the capacity.
+   *
+   * This function simply changes the logical size of without 
+   * modifying any elements of the underlying physical array. 
+   * If the size increases, added elements are uninitialized.
+   * 
+   * \param size new logical size, 0 <= size < capacity.
+   */
+   template <class Data>
+   inline void DSArray<Data>::resize(int size)
+   {  size_ = size; }
 
    /*
    * Set logical size to zero.
