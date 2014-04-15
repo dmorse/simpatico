@@ -121,8 +121,8 @@ namespace Inter
       *
       * This function returns a bond angle chosen from the Boltzmann
       * distribution of angle for bonds of random orientation. The
-      * distribution P(\theta) of values of the angle \theta is proportional 
-      * to sin(\theta)*exp[-beta*phi(\theta) ], where phi(\theta) 
+      * distribution P(theta) of values of the angle theta is proportional 
+      * to sin(theta)*exp[-beta*phi(theta) ], where phi(theta) 
       * is the bond energy. 
       *
       * \param random pointer to random number generator object.
@@ -137,8 +137,8 @@ namespace Inter
       *
       * This function returns a bond angle chosen from the Boltzmann
       * distribution of angle for bonds of random orientation. The
-      * distribution P(\theta) of values of the angle \theta is proportional 
-      * to sin(\theta)*exp[-beta*phi(\theta) ], where phi(\theta) 
+      * distribution P(theta) of values of the angle theta is proportional 
+      * to sin(theta)*exp[-beta*phi(theta) ], where phi(theta) 
       * is the bond energy. 
       *
       * \param random pointer to random number generator object.
