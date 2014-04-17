@@ -26,7 +26,7 @@
 # Define DDMD_MODIFIERS, enable addition of ModifierManager to Simulation
 # Modifiers take actions at regular intervals that modify the system.
 # DDMD_MODIFIERS=1
-  DDMD_MOLECULES=1
+# DDMD_MOLECULES=1
 
 #-----------------------------------------------------------------------
 # The following code defines the variables DDMD_DEFS and DDMD_SUFFIX.

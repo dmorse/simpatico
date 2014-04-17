@@ -90,7 +90,6 @@ namespace DdMd
       void clear();
 
       #ifdef DDMD_MOLECULES
-
       /**
       * Set context of the molecules: speciesId, moleculeId, atomId.
       *
@@ -127,7 +126,6 @@ namespace DdMd
       * \param atomId
       */ 
       void setContext(AtomContext c);
-
       #endif
 
       /**
@@ -163,15 +161,6 @@ namespace DdMd
       */
       Vector& position();
 
-      #ifdef DDMD_MOLECULES
-
-      /**
-      * Get velocity Vector by reference.
-      */
-      AtomContext& context();
-
-      #endif      
-
       /**
       * Get velocity Vector by reference.
       */
@@ -192,40 +181,63 @@ namespace DdMd
       */
       Plan& plan();
 
+      #ifdef DDMD_MOLECULES
+      /**
+      * Get velocity Vector by reference.
+      */
+      AtomContext& context();
+      #endif      
+
       //@}
       /// \name Accessors (return values and const references).
       //@{
 
-      /// Get unique global atom index.
+      /**
+      * Get unique global index for this atom.
+      */
       int  id() const;
 
-      /// Get atom type index.
+      /**
+      * Get atom type index.
+      */
       int  typeId() const;
 
-      /// Is this atom a ghost?
+      /**
+      * Is this atom a ghost?
+      */
       bool isGhost() const;
 
-      /// Get the position Vector (const reference).
+      /**
+      * Get the position Vector (const reference).
+      */
       const Vector& position() const;
 
-      #ifdef DDMD_MOLECULES      
-
-      /// Get the context by reference (const reference).
-      const AtomContext& context() const;
-
-      #endif
-
-      /// Get the velocity Vector (const reference).
+      /**
+      * Get the velocity Vector (const reference).
+      */
       const Vector& velocity() const;
 
-      /// Get the force Vector (const reference).
+      /**
+      * Get the force Vector (const reference).
+      */
       const Vector& force() const;
 
-      /// Get communication plan (const reference).
+      /**
+      * Get the associated Mask by const reference.
+      */
+      const Mask& mask() const;
+
+      /**
+      * Get communication plan (const reference).
+      */
       const Plan& plan() const;
 
-      /// Get the associated Mask by const reference.
-      const Mask& mask() const;
+      #ifdef DDMD_MOLECULES      
+      /**
+      * Get the context by reference (const reference).
+      */
+      const AtomContext& context() const;
+      #endif
 
       //@}
       #if 0
@@ -455,22 +467,6 @@ namespace DdMd
    * because Atom is a friend class of AtomArray.
    */
 
-   #ifdef DDMD_MOLECULES   
-
-   /* 
-   * Get reference to context.
-   */
-   inline AtomContext& Atom::context()
-   {  return arrayPtr_->contexts_[localId_ >> 1]; }
-
-   /*
-   * Get context by const reference.
-   */
-   inline const AtomContext& Atom::context() const
-   { return arrayPtr_->contexts_[localId_ >> 1]; }
-
-   #endif
-
    /* 
    * Get reference to velocity.
    */
@@ -519,7 +515,18 @@ namespace DdMd
    inline void Atom::setId(int id)
    {  arrayPtr_->ids_[localId_ >> 1] = id; }
 
-   #ifdef DDMD_MOLECULES
+   #ifdef DDMD_MOLECULES   
+   /* 
+   * Get non-const reference to context.
+   */
+   inline AtomContext& Atom::context()
+   {  return arrayPtr_->contexts_[localId_ >> 1]; }
+
+   /*
+   * Get context by const reference.
+   */
+   inline const AtomContext& Atom::context() const
+   { return arrayPtr_->contexts_[localId_ >> 1]; }
 
    /*
    * Set the context of an Atom.
@@ -547,7 +554,6 @@ namespace DdMd
    */
    inline void Atom::setAtomId(int aId)
    {  arrayPtr_->contexts_[localId_ >> 1].atomId = aId;}
-
    #endif
 }
 #endif
