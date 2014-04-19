@@ -27,6 +27,7 @@
 #   -s (0|1)   McMd shift                  (defines/undefines MCMD_SHIFT)
 #   -f (0|1)   McMd perturbation           (defines/undefines MCMD_PERTURB)
 #   -u (0|1)   DdMd modifiers              (defines/undefines DDMD_MODIFIERS)
+#   -z (0|1)   molecule ids for atoms      (defines/undefines MCMD_MOLECULES)
 #   -k (0|1)   dependency generation       (defines/undefines MAKEDEP)
 #
 # Other Command Line Options:
@@ -45,7 +46,7 @@
 #   >  ./configure -h intel
 #
 #-----------------------------------------------------------------------
-while getopts "m:g:b:a:d:e:f:l:s:u:k:c:h:q" opt; do
+while getopts "m:g:b:a:d:e:f:l:s:u:z:k:c:h:q" opt; do
 
   if [ -n "$MACRO" ]; then 
     MACRO=""
@@ -102,6 +103,11 @@ while getopts "m:g:b:a:d:e:f:l:s:u:k:c:h:q" opt; do
       ;;
     u)
       MACRO=DDMD_MODIFIERS
+      VALUE=1
+      FILE=ddMd/config.mk
+      ;;
+    z)
+      MACRO=DDMD_MOLECULES
       VALUE=1
       FILE=ddMd/config.mk
       ;;

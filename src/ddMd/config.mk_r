@@ -47,7 +47,7 @@ DDMD_SUFFIX:=
 # Note that DDMD_DEFS is a recursive (normal) makefile variable, and so
 # may be extended using the += operator, but that DDMD_SUFFIX is a 
 # non-recursive makefile variable, which may be extended using the := 
-# operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_c. 
+# operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_u. 
 
 # Enable modifiers
 ifdef DDMD_MODIFIERS
@@ -58,7 +58,7 @@ endif
 # Enable molecules / atom context
 ifdef DDMD_MOLECULES
 DDMD_DEFS+= -DDDMD_MOLECULES
-DDMD_SUFFIX:=$(DDMD_SUFFIX)_c
+DDMD_SUFFIX:=$(DDMD_SUFFIX)_z
 endif
 
 #-----------------------------------------------------------------------
