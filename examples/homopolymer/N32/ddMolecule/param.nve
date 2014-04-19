@@ -11,32 +11,31 @@ Simulation{
   nBondType           1
   atomTypes           A    1.0
   AtomStorage{
-    atomCapacity       4000
-    ghostCapacity     15000
-    totalAtomCapacity 20000
+    atomCapacity       20000
+    ghostCapacity      80000
+    totalAtomCapacity  80000
   }
   BondStorage{
-    capacity          10000
-    totalCapacity     20000
+    capacity          20000
+    totalCapacity     80000
   }
   Buffer{
-    atomCapacity       4000
-    ghostCapacity      4000
+    atomCapacity      20000
+    ghostCapacity     20000
   }
-  pairStyle           LJPair
+  pairStyle           DpdPair
   bondStyle           HarmonicBond
-  maskedPairPolicy    maskBonded
+  maskedPairPolicy    maskNone
   reverseUpdateFlag   0
   PairPotential{
-    epsilon           1.0
+    epsilon           20.0
     sigma             1.0
-    cutoff            1.122462048
     skin              0.4
     pairCapacity      40000
     maxBoundary       orthorhombic   30.0   30.0   30.0
   }
   BondPotential{
-    kappa             400.0
+    kappa             10.0
     length            1.000
   }
   EnergyEnsemble{
@@ -54,24 +53,25 @@ Simulation{
     seed              8012457890
   }
   AnalyzerManager{
-     baseInterval     1000
+     baseInterval     100
 
      LogEnergy{
-        interval        1000
+        interval        100
      }
 
      OutputEnergy{
-        interval        1000
+        interval        200
         outputFileName  energy
      }
 
      OutputPressure{
-        interval        1000
+        interval        200
         outputFileName  pressure
      }
 
   }
 }
 
+  cutoff            1.122462048
   nAngleType         0
   hasExternal        0

@@ -377,7 +377,7 @@ namespace DdMd
          }
 
          // Check validity of all cells individually. 
-         const CellAtom* atomPtr;
+         // const CellAtom* atomPtr;
          const Cell* cellPtr;
          int   nAtomCell;
          int   nAtomSum = 0;

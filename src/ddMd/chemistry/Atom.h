@@ -89,45 +89,6 @@ namespace DdMd
       */
       void clear();
 
-      #ifdef DDMD_MOLECULES
-      /**
-      * Set context of the molecules: speciesId, moleculeId, atomId.
-      *
-      * speciesId is to identify different type of species might exist
-      * in the system. The moleculeId is to distinguish different 
-      * molecules. AtomId is number associated with each atom in the 
-      * molecule.
-      */
-
-      /**
-      * Set Specie Id of the molecule.
-      *
-      * \param speciesId
-      */ 
-      void setSpeciesId(int sId);
-
-      /**
-      * Set Molecule Id of the molecule.
-      *
-      * \param moleculeId
-      */ 
-      void setMoleculeId(int mId);
-
-      /**
-      * Set Atom Id of the molecule.
-      *
-      * \param atomId
-      */ 
-      void setAtomId(int aId);
- 
-      /**
-      * Set Atom Id of the molecule.
-      *
-      * \param atomId
-      */ 
-      void setContext(AtomContext c);
-      #endif
-
       /**
       * Set unique global id for this Atom.
       *
@@ -183,7 +144,12 @@ namespace DdMd
 
       #ifdef DDMD_MOLECULES
       /**
-      * Get velocity Vector by reference.
+      * Get the AtomContext struct.
+      *
+      * A DdMd::AtomContext struct contains public members speciesId,
+      * moleculeId and atomId that identify the species of molecule
+      * to which this atom belongs, the index of the molecule within
+      * it species, and the index of the atom with the molecule. 
       */
       AtomContext& context();
       #endif      
@@ -195,12 +161,12 @@ namespace DdMd
       /**
       * Get unique global index for this atom.
       */
-      int  id() const;
+      int id() const;
 
       /**
       * Get atom type index.
       */
-      int  typeId() const;
+      int typeId() const;
 
       /**
       * Is this atom a ghost?
@@ -527,33 +493,6 @@ namespace DdMd
    */
    inline const AtomContext& Atom::context() const
    { return arrayPtr_->contexts_[localId_ >> 1]; }
-
-   /*
-   * Set the context of an Atom.
-   */
-   inline void Atom::setContext(AtomContext c)
-   {  arrayPtr_->contexts_[localId_ >> 1].speciesId = c.speciesId;  
-      arrayPtr_->contexts_[localId_ >> 1].moleculeId = c.moleculeId;
-      arrayPtr_->contexts_[localId_ >> 1].atomId = c.atomId;
-   }
-
-   /*
-   * Set the species of an Atom.
-   */
-   inline void Atom::setSpeciesId(int sId)
-   {  arrayPtr_->contexts_[localId_ >> 1].speciesId = sId;}
-
-   /*
-   * Set the molecule of an Atom.
-   */
-   inline void Atom::setMoleculeId(int mId)
-   {  arrayPtr_->contexts_[localId_ >> 1].moleculeId = mId;}
-
-   /*
-   * Set the bead of an Atom.
-   */
-   inline void Atom::setAtomId(int aId)
-   {  arrayPtr_->contexts_[localId_ >> 1].atomId = aId;}
    #endif
 }
 #endif
