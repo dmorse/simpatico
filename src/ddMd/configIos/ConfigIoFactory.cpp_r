@@ -42,8 +42,14 @@ namespace DdMd
       if (className == "DdMdConfigIo") {
          ptr = new DdMdConfigIo(*simulationPtr_);
       } else 
+      if (className == "DdMdConfigIo_Molecule") {
+         ptr = new DdMdConfigIo(*simulationPtr_, true);
+      } else 
       if (className == "DdMdOrderedConfigIo") {
          ptr = new DdMdOrderedConfigIo(*simulationPtr_);
+      } else
+      if (className == "DdMdOrderedConfigIo_Molecule") {
+         ptr = new DdMdConfigIo(*simulationPtr_, true);
       } else
       if (className == "LammpsConfigIo") {
          ptr = new LammpsConfigIo(*simulationPtr_);

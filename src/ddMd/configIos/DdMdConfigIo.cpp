@@ -44,15 +44,29 @@ namespace DdMd
    /*
    * Constructor.
    */
+   #ifndef DDMD_MOLECULES
    DdMdConfigIo::DdMdConfigIo()
+   #else
+   DdMdConfigIo::DdMdConfigIo(bool hasMolecules)
+   #endif
     : ConfigIo()
+      #ifdef DDMD_MOLECULES
+      , hasMolecules_(hasMolecules)
+      #endif
    {  setClassName("DdMdConfigIo"); }
 
    /*
    * Constructor.
    */
+   #ifndef DDMD_MOLECULES
    DdMdConfigIo::DdMdConfigIo(Simulation& simulation)
+   #else
+   DdMdConfigIo::DdMdConfigIo(Simulation& simulation, bool hasMolecules)
+   #endif
     : ConfigIo(simulation)
+      #ifdef DDMD_MOLECULES
+      , hasMolecules_(hasMolecules)
+      #endif
    {  setClassName("DdMdConfigIo"); }
 
    /*
@@ -153,19 +167,21 @@ namespace DdMd
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
             #ifdef DDMD_MOLECULES
-            file >> sId >> mId >> aId;
-            if (aId < 0) {
-               UTIL_THROW("Invalid Atom");
+            if (hasMolecules_) {
+               file >> sId >> mId >> aId;
+               if (aId < 0) {
+                  UTIL_THROW("Invalid Atom");
+               }
+               if (mId < 0) {
+                  UTIL_THROW("Invalid Molecule");
+               }
+               if (sId < 0) {
+                  UTIL_THROW("Invalid Specie");
+               }
+               atomPtr->context().atomId = aId;
+               atomPtr->context().moleculeId = mId;
+               atomPtr->context().speciesId = sId;
             }
-            if (mId < 0) {
-               UTIL_THROW("Invalid Molecule");
-            }
-            if (sId < 0) {
-               UTIL_THROW("Invalid Specie");
-            }
-            atomPtr->context().atomId = aId;
-            atomPtr->context().moleculeId = mId;
-            atomPtr->context().speciesId = sId;
             #endif
             file >> r;
             boundary().transformCartToGen(r, atomPtr->position());
@@ -289,9 +305,11 @@ namespace DdMd
                boundary().transformGenToCart(atomPtr->position(), r);
             }
             #ifdef DDMD_MOLECULES
-            file << Int(atomPtr->context().speciesId, 6) 
-                 << Int(atomPtr->context().moleculeId, 6)
-                 << Int(atomPtr->context().atomId, 6);
+            if (hasMolecules_) {
+               file << Int(atomPtr->context().speciesId, 6) 
+                    << Int(atomPtr->context().moleculeId, 10)
+                    << Int(atomPtr->context().atomId, 6);
+            }
             #endif
             file << "\n" << r 
                  << "\n" << atomPtr->velocity() << "\n";

@@ -44,15 +44,29 @@ namespace DdMd
    /*
    * Constructor.
    */
+   #ifndef DDMD_MOLECULES
    DdMdOrderedConfigIo::DdMdOrderedConfigIo()
+   #else
+   DdMdOrderedConfigIo::DdMdOrderedConfigIo(bool hasMolecules)
+   #endif
     : ConfigIo()
+      #ifdef DDMD_MOLECULES
+      , hasMolecules_(false)
+      #endif
    {  setClassName("DdMdOrderedConfigIo"); }
 
    /*
    * Constructor.
    */
+   #ifndef DDMD_MOLECULES
    DdMdOrderedConfigIo::DdMdOrderedConfigIo(Simulation& simulation)
+   #else
+   DdMdOrderedConfigIo::DdMdOrderedConfigIo(Simulation& simulation, bool hasMolecules)
+   #endif
     : ConfigIo(simulation)
+      #ifdef DDMD_MOLECULES
+      , hasMolecules_(hasMolecules)
+      #endif
    {  setClassName("DdMdOrderedConfigIo"); }
 
    /*
@@ -147,39 +161,29 @@ namespace DdMd
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
             
-            // #ifndef DDMD_MOLECULES   
             file >> id >> typeId;
             if (id < 0 || id >= totalAtomCapacity) {
                UTIL_THROW("Invalid atom id");
             }
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
-            // #endif
  
             #ifdef DDMD_MOLECULES
-            file >> sId >> mId >> aId;
-            #if 0
-            if (id < 0 || id >= totalAtomCapacity) {
-               UTIL_THROW("Invalid atom id");
+            if (hasMolecules_) {
+               file >> sId >> mId >> aId;
+               if (sId < 0) {
+                  UTIL_THROW("species Id < 0");
+               }
+               if (mId < 0) {
+                  UTIL_THROW("molecule Id < 0");
+               }
+               if (aId < 0) {
+                  UTIL_THROW("atom Id < 0");
+               }
+               atomPtr->context().speciesId = sId;
+               atomPtr->context().moleculeId = mId;
+               atomPtr->context().atomId = aId;
             }
-            if (aId < 0) {
-               UTIL_THROW("Invalid Atom");
-            }
-            if (mId < 0) {
-               UTIL_THROW("Invalid Molecule");
-            }
-            if (sId < 0) {
-               UTIL_THROW("Invalid Specie");
-            }
-            atomPtr->setId(id);
-            atomPtr->setTypeId(typeId);
-            #endif
-            //atomPtr->setAtomId(aId);
-            //atomPtr->setMoleculeId(mId);
-            //atomPtr->setSpeciesId(sId);
-            atomPtr->context().speciesId = sId;
-            atomPtr->context().moleculeId = mId;
-            atomPtr->context().atomId = aId;
             #endif 
   
             file >> r;
@@ -356,9 +360,11 @@ namespace DdMd
             }
             file << Int(id, 10) << Int(atoms_[id].typeId, 6);
             #ifdef DDMD_MOLECULES
-            file << Int(atoms_[id].context.speciesId, 6)
-                 << Int(atoms_[id].context.moleculeId, 6)
-                 << Int(atoms_[id].context.atomId, 6);
+            if (hasMolecules_) {
+               file << Int(atoms_[id].context.speciesId, 6)
+                    << Int(atoms_[id].context.moleculeId, 6)
+                    << Int(atoms_[id].context.atomId, 6);
+            }
             #endif
             file << "\n" << atoms_[id].position 
                  << "\n" << atoms_[id].velocity 

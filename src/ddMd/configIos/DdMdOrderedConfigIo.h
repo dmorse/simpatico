@@ -37,14 +37,22 @@ namespace DdMd
       /**
       * Default constructor.
       */
+      #ifndef DDMD_MOLECULES
       DdMdOrderedConfigIo();
+      #else
+      DdMdOrderedConfigIo(bool hasMolecules = false);
+      #endif
 
       /**
       * Constructor.
       *
       * \param simulation parent Simulation object.
       */
+      #ifndef DDMD_MOLECULES
       DdMdOrderedConfigIo(Simulation& simulation);
+      #else
+      DdMdOrderedConfigIo(Simulation& simulation, bool hasMolecules = false);
+      #endif
 
       /**
       * Read configuration file.
@@ -76,6 +84,9 @@ namespace DdMd
    
    private:
 
+      /*
+      * Struct for atom data required in file format.  
+      */
       struct IoAtom {
 
          Vector position;
@@ -95,16 +106,24 @@ namespace DdMd
 
       };
 
-      /**
-      * Array of atoms, ordered by global index.
+      /*
+      * Struct containing a Group<N> and a group id.
       */
-      std::vector<IoAtom> atoms_;
-
       template <int N>
       struct IoGroup {
          int    id;
          Group<N> group;
       };
+
+      /**
+      * Array of atoms, ordered by global index.
+      */
+      std::vector<IoAtom> atoms_;
+
+      /**
+      * Flag to determine if molecule info is included in file format
+      */
+      bool hasMolecules_;
 
       /**
       * Read Group<N> objects from file. 
