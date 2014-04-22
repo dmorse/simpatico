@@ -26,6 +26,9 @@
 # Define DDMD_MODIFIERS, enable addition of ModifierManager to Simulation
 # Modifiers take actions at regular intervals that modify the system.
 # DDMD_MODIFIERS=1
+ 
+# Define DDMD_MOLECULES to include molecule, species atom context info.
+# DDMD_MOLECULES=1
 
 #-----------------------------------------------------------------------
 # The following code defines the variables DDMD_DEFS and DDMD_SUFFIX.
@@ -44,12 +47,18 @@ DDMD_SUFFIX:=
 # Note that DDMD_DEFS is a recursive (normal) makefile variable, and so
 # may be extended using the += operator, but that DDMD_SUFFIX is a 
 # non-recursive makefile variable, which may be extended using the := 
-# operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_c. 
+# operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_u. 
 
 # Enable modifiers
 ifdef DDMD_MODIFIERS
 DDMD_DEFS+= -DDDMD_MODIFIERS
 DDMD_SUFFIX:=$(DDMD_SUFFIX)_u
+endif
+
+# Enable molecules / atom context
+ifdef DDMD_MOLECULES
+DDMD_DEFS+= -DDDMD_MOLECULES
+DDMD_SUFFIX:=$(DDMD_SUFFIX)_z
 endif
 
 #-----------------------------------------------------------------------

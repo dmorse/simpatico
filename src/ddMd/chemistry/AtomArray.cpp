@@ -26,6 +26,9 @@ namespace DdMd
    */
    AtomArray::AtomArray() 
     : Array<Atom>(),
+      #ifdef DDMD_MOLECULES
+      contexts_(0),
+      #endif
       velocities_(0),
       masks_(0),
       plans_(0),
@@ -40,6 +43,9 @@ namespace DdMd
       if (data_) {
          // free(data_);
          Memory::deallocate<Atom>(data_, capacity_);
+         #ifdef DDMD_MOLECULES
+         Memory::deallocate<AtomContext>(contexts_, capacity_);
+         #endif
          Memory::deallocate<Vector>(velocities_, capacity_);
          Memory::deallocate<Mask>(masks_, capacity_);
          Memory::deallocate<Plan>(plans_, capacity_);
@@ -68,6 +74,9 @@ namespace DdMd
       // Allocate memory
       //posix_memalign((void**) &data_, 64, capacity*sizeof(Atom));
       Memory::allocate<Atom>(data_, capacity);
+      #ifdef DDMD_MOLECULES
+      Memory::allocate<AtomContext>(contexts_, capacity);
+      #endif
       Memory::allocate<Vector>(velocities_, capacity);
       Memory::allocate<Mask>(masks_, capacity);
       Memory::allocate<Plan>(plans_, capacity);

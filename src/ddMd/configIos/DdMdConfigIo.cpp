@@ -44,15 +44,29 @@ namespace DdMd
    /*
    * Constructor.
    */
+   #ifndef DDMD_MOLECULES
    DdMdConfigIo::DdMdConfigIo()
+   #else
+   DdMdConfigIo::DdMdConfigIo(bool hasMolecules)
+   #endif
     : ConfigIo()
+      #ifdef DDMD_MOLECULES
+      , hasMolecules_(hasMolecules)
+      #endif
    {  setClassName("DdMdConfigIo"); }
 
    /*
    * Constructor.
    */
+   #ifndef DDMD_MOLECULES
    DdMdConfigIo::DdMdConfigIo(Simulation& simulation)
+   #else
+   DdMdConfigIo::DdMdConfigIo(Simulation& simulation, bool hasMolecules)
+   #endif
     : ConfigIo(simulation)
+      #ifdef DDMD_MOLECULES
+      , hasMolecules_(hasMolecules)
+      #endif
    {  setClassName("DdMdConfigIo"); }
 
    /*
@@ -134,17 +148,41 @@ namespace DdMd
          Atom*  atomPtr;
          int  id;
          int  typeId;
+
+         #ifdef DDMD_MOLECULES
+         int aId;
+         int mId;
+         int sId;
+         #endif
+
          for (int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
-
+            
             file >> id >> typeId;
             if (id < 0 || id >= totalAtomCapacity) {
                UTIL_THROW("Invalid atom id");
             }
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
+            #ifdef DDMD_MOLECULES
+            if (hasMolecules_) {
+               file >> sId >> mId >> aId;
+               if (aId < 0) {
+                  UTIL_THROW("Invalid Atom");
+               }
+               if (mId < 0) {
+                  UTIL_THROW("Invalid Molecule");
+               }
+               if (sId < 0) {
+                  UTIL_THROW("Invalid Specie");
+               }
+               atomPtr->context().atomId = aId;
+               atomPtr->context().moleculeId = mId;
+               atomPtr->context().speciesId = sId;
+            }
+            #endif
             file >> r;
             boundary().transformCartToGen(r, atomPtr->position());
             file >> atomPtr->velocity();
@@ -259,15 +297,22 @@ namespace DdMd
          bool isCartesian = atomStorage().isCartesian();
          Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
-            file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6);
+            file << Int(atomPtr->id(), 10) 
+                 << Int(atomPtr->typeId(), 6);
             if (isCartesian) {
                r = atomPtr->position();
             } else {
                boundary().transformGenToCart(atomPtr->position(), r);
             }
-            file << r << std::endl
-                 << "                " << atomPtr->velocity();
-            file << std::endl;
+            #ifdef DDMD_MOLECULES
+            if (hasMolecules_) {
+               file << Int(atomPtr->context().speciesId, 6) 
+                    << Int(atomPtr->context().moleculeId, 10)
+                    << Int(atomPtr->context().atomId, 6);
+            }
+            #endif
+            file << "\n" << r 
+                 << "\n" << atomPtr->velocity() << "\n";
             atomPtr = atomCollector().nextPtr();
          }
 

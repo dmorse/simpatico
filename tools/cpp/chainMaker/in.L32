@@ -8,4 +8,4 @@ Random{
 }
 nMolecule         1000
 nAtomPerMolecule  32
-McMd
+DdMdMolecule

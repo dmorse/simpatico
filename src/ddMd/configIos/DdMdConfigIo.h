@@ -33,14 +33,22 @@ namespace DdMd
       /**
       * Default constructor.
       */
+      #ifndef DDMD_MOLECULES
       DdMdConfigIo();
+      #else
+      DdMdConfigIo(bool hasMolecules = false);
+      #endif
 
       /**
       * Constructor.
       *
       * \param simulation parent Simulation object.
       */
+      #ifndef DDMD_MOLECULES
       DdMdConfigIo(Simulation& simulation);
+      #else
+      DdMdConfigIo(Simulation& simulation, bool hasMolecules = false);
+      #endif
 
       /**
       * Read configuration file.
@@ -72,6 +80,10 @@ namespace DdMd
       virtual void writeConfig(std::ofstream& file);
    
    private:
+
+      #ifdef DDMD_MOLECULES
+      bool hasMolecules_;
+      #endif
 
       /**
       * Read Group<N> objects from file. 

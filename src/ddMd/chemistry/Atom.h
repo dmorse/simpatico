@@ -142,33 +142,68 @@ namespace DdMd
       */
       Plan& plan();
 
+      #ifdef DDMD_MOLECULES
+      /**
+      * Get the AtomContext struct.
+      *
+      * A DdMd::AtomContext struct contains public members speciesId,
+      * moleculeId and atomId that identify the species of molecule
+      * to which this atom belongs, the index of the molecule within
+      * it species, and the index of the atom with the molecule. 
+      */
+      AtomContext& context();
+      #endif      
+
       //@}
       /// \name Accessors (return values and const references).
       //@{
 
-      /// Get unique global atom index.
-      int  id() const;
+      /**
+      * Get unique global index for this atom.
+      */
+      int id() const;
 
-      /// Get atom type index.
-      int  typeId() const;
+      /**
+      * Get atom type index.
+      */
+      int typeId() const;
 
-      /// Is this atom a ghost?
+      /**
+      * Is this atom a ghost?
+      */
       bool isGhost() const;
 
-      /// Get the position Vector (const reference).
+      /**
+      * Get the position Vector (const reference).
+      */
       const Vector& position() const;
 
-      /// Get the velocity Vector (const reference).
+      /**
+      * Get the velocity Vector (const reference).
+      */
       const Vector& velocity() const;
 
-      /// Get the force Vector (const reference).
+      /**
+      * Get the force Vector (const reference).
+      */
       const Vector& force() const;
 
-      /// Get communication plan (const reference).
+      /**
+      * Get the associated Mask by const reference.
+      */
+      const Mask& mask() const;
+
+      /**
+      * Get communication plan (const reference).
+      */
       const Plan& plan() const;
 
-      /// Get the associated Mask by const reference.
-      const Mask& mask() const;
+      #ifdef DDMD_MOLECULES      
+      /**
+      * Get the context by reference (const reference).
+      */
+      const AtomContext& context() const;
+      #endif
 
       //@}
       #if 0
@@ -397,7 +432,7 @@ namespace DdMd
    * AtomArray::velocities_, AtomArray::masks_, etc.) that is accessible
    * because Atom is a friend class of AtomArray.
    */
-  
+
    /* 
    * Get reference to velocity.
    */
@@ -446,5 +481,18 @@ namespace DdMd
    inline void Atom::setId(int id)
    {  arrayPtr_->ids_[localId_ >> 1] = id; }
 
+   #ifdef DDMD_MOLECULES   
+   /* 
+   * Get non-const reference to context.
+   */
+   inline AtomContext& Atom::context()
+   {  return arrayPtr_->contexts_[localId_ >> 1]; }
+
+   /*
+   * Get context by const reference.
+   */
+   inline const AtomContext& Atom::context() const
+   { return arrayPtr_->contexts_[localId_ >> 1]; }
+   #endif
 }
 #endif
