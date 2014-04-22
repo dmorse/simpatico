@@ -126,6 +126,15 @@ The optional features are:
     <td> ddMd/config.mk </td>
     <td> (6) </td>
   </tr>
+  <tr> 
+    <td> DdMd molecules </td>
+    <td> -z </td>
+    <td> OFF </td>
+    <td> _z </td>
+    <td> DDMD_MOLECULES </td>
+    <td> ddMd/config.mk </td>
+    <td> (6) </td>
+  </tr>
 </table>
 Notes:
 <ol>
@@ -145,13 +154,16 @@ Notes:
     The -f free energy perturbation option can only be used if MPI is also enabled.  If MPI is enabled, free energy perturbation is enabled by default, but may be explicitly disabled. 
   </li>
   <li>
-    Enabling -u option enables the addition of modifiers to a ddSim program. Modifiers are classes that can modify the state of the system during simulation, and thereby change its time evolution. When modifiers are enabled, the parameter file may contain an optional ModifierManager{...} block immediately after the integrator block. If this feature is enabled at compile time but this block is absent from the parameter file, it will be assumed that there are no modifiers. 
+    Enabling -u option, or defining DDMD_MODIFIERS, enables the addition of modifiers to a ddSim program. Modifiers are classes that can modify the state of the system during simulation, and thereby change its time evolution. When modifiers are enabled, the parameter file may contain an optional ModifierManager{...} block immediately after the Integrator block. If this feature is enabled at compile time but this block is absent from the parameter file, it will be assumed that there are no modifiers. 
+  </li>
+  <li>
+    Enabling the -z option, or defining DDMD_MOLECULES, enables the permanent association of each atom with a parent molecule, if this information is included in the input file. This information is not used or required by the force or integration algorithms, but is useful for some types of data analysis. Defining DDMD_MOLECULES associates a DdMd::AtomContext struct with each atom that contains a speciesId integer index for a species of molecule, a moleculeId index for the parent molecule within its species, and an atomId index for the atom within its parent molecule. Values for these three indices are included in the file format used SET_CONFIGIO passed the argument "DdMdConfig_Molecule" or "DdMdOrderedConfigIo_Molecule".
   </li>
 </ol>
 
-The source code for Simpatico is divided into four namespaces named Util, Inter, McMd and DdMd. Classes in these namespaces are located in corresponding directories src/util, src/inter, src/mcMd and src/ddMd, respectively. There is a strict hierarchy of dependencies among the namespaces. One namespace is said to depend upon a second if any code in the first namespace uses classes or other names defined in the second namespace. The Util namespace does not depend on any other namespace. The Inter namespace depends only upon Util. The McMd namespace depends on Util and Inter, but not DdMd. The DdMd namespace depends on Util and Inter, but not on McMd.
+The source code for Simpatico is divided into four namespaces named Util, Inter, McMd and DdMd. Classes in these namespaces are located in corresponding directories src/util, src/inter, src/mcMd and src/ddMd, respectively. A namespace A is said to depend upon a second namespace B if any code in the namespace A uses classes or other names defined in the namespace B. There is a strict hierarchy of dependencies among the four namespaces: The Util namespace does not depend on any other namespace. The Inter namespace depends only upon Util. The McMd namespace depends on Util and Inter, but not DdMd. The DdMd namespace depends on Util and Inter, but not on McMd.
 
-The names of the macro names associated with different compile time options reflect which namespaces they effect.  Those whose names begin with MCMD_ only appear in the McMd namespace. Macros with names that begin with INTER_, are defined in inter/config.mk, are not used in the Util namespace, but can appear in the Inter, McMd and DdMd namespaces (or the src/inter/, src/mcMd/ and src/dMd/ directories). Macros with names that begin with MCMD_, which are defined in src/mcMd/config.mk, are used only in the McMd namespace (the src/mcMd directory).  Macros whose names begin with DDMD_, which are defined in src/dMd/config.mk, are used only in the DdMd namespace (the src/ddMd directory).
+The names of the macro names associated with different compile time options reflect which namespaces they effect.  Preprocessor macros whose names begin with DDMD_, which are defined in src/dMd/config.mk, only appear in the DdMd namespace (the src/ddMd directory).  Preprocessor macros whose names begin with MCMD_, which are defined in /src/mcMd/config.mk, only appear in the source code of the McMd namespace. Macros with names that begin with INTER_ are defined in inter/config.mk, and can appear in the source code of the Inter, McMd and DdMd namespaces (or the src/inter/, src/mcMd/ and src/dMd/ directories), but not in the Util namespace (the src/util directory). Macros with names that begin with UTIL_ can appear in the source code in any of the four namespaces, and thus can effect any source file.
 
 \section user_option_suffix File name suffixes 
 
@@ -162,7 +174,7 @@ dihedral potentials would be "mcSim_m_a_d".
 
 The same file name suffixes are also appended to the base names of libraries that contain code with particular features enabled. Thus, for example, a version of the libutil library that was compiled with MPI and debugging enabled would be called libutil_m_g.a by default. 
 
-Suffixes are added to executable and library names only for non-default features that affect code in that executable or library. Thus, for example, when MPI is enabled, no "_m" suffix is added to the name of the ddSim executable or the libddMd.a library, because MPI is a default, required feature of ddSim. Because the only optional features of the classes in the Util namespace are those enabled by UTIL_MPI and UTIL_DEBUG, the only suffixes added to the name of this library are those associated with these features.
+Suffixes are added to executable and library names for optional non-default compile-time features that affect code in that executable or library. When MPI is enabled, however, no "_m" suffix is added to the name of the ddSim executable or the libddMd.a library, because MPI is not an optional feature, but is required for ddSim to function. 
  
 \section user_options_boundary Boundary Type
 
