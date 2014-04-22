@@ -52,7 +52,7 @@ namespace DdMd
       } else
       #ifdef DDMD_MOLECULES
       if (className == "DdMdOrderedConfigIo_Molecule") {
-         ptr = new DdMdConfigIo(*simulationPtr_, true);
+         ptr = new DdMdOrderedConfigIo(*simulationPtr_, true);
       } else
       #endif
       if (className == "LammpsConfigIo") {

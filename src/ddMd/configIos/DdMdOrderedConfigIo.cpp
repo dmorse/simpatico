@@ -51,7 +51,7 @@ namespace DdMd
    #endif
     : ConfigIo()
       #ifdef DDMD_MOLECULES
-      , hasMolecules_(false)
+      , hasMolecules_(hasMolecules)
       #endif
    {  setClassName("DdMdOrderedConfigIo"); }
 
