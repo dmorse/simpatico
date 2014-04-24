@@ -14,7 +14,7 @@
 #include <mdPp/chemistry/Atom.h>              // member (template argument)
 #include <mdPp/chemistry/Group.h>             // member (template argument)
 #include <mdPp/configIos/ConfigIoFactory.h>   // member 
-//#include <mdPp/analyzer/AnalyzerManager.h>    // member 
+#include <mdPp/analyzers/AnalyzerManager.h>   // member 
 
 namespace MdPp 
 {
@@ -44,8 +44,7 @@ namespace MdPp
       ~Processor();
 
       /**
-      * Read capacities used to allocate arrays and other
-      * info that is not in the input file. 
+      * Read parameters and analyze.
       */
       void readParameters(std::istream& in);
 
@@ -76,12 +75,14 @@ namespace MdPp
       */
       Group<2>* addBond();
 
-      /// Access a bond by id.
-      Group<2>& bond(int i);
-   
-      // etc.
+      // etc. for angles and dihedrals
   
       // Accessors, for use in Analyzer and ConfigIo classes.
+
+      /**
+      * Get the Boundary by non-const reference
+      */
+      Boundary& boundary();
 
       /**
       * Get number of atoms.
@@ -91,7 +92,7 @@ namespace MdPp
       /**
       * Get an atom reference by global id.
       */
-      const Atom& atom(int id) const;
+      Atom& atom(int id);
 
       /**
       * Initialize an iterator for atoms.
@@ -104,29 +105,37 @@ namespace MdPp
       int nBond() const;
 
       /**
+      * Access a bond by id.
+      */
+      Group<2>& bond(int i);
+   
+      /**
       * Initialize a bond iterator.
       */
       void initBondIterator(ArrayIterator< Group<2> >& iter);
 
    private:
      
-      // Array of atoms, added in order read from file.
+      /// Array of atom objects, added in order read from file.
       DSArray<Atom> atoms_;
 
-      // Array of bonds, added in order read from file.
+      /// Array of bond objects, added in order read from file.
       DSArray< Group<2> > bonds_;
 
       /// Pointers to atoms indexed by ids. Missing atoms are null pointers.
       DArray<Atom*> atomPtrs_;
 
-      // Boundary object defines periodic boundary conditions.
+      /// Boundary object defines periodic boundary conditions.
       Boundary boundary_;
 
+      /// Pointer to current ConfigIo object.
       ConfigIo* configIoPtr_;
 
+      /// Factory for generating ConfigIo at run time.
       ConfigIoFactory configIoFactory_;
 
-      // AnalyzerManager analyzerManager_;
+      /// Manager for analyzers
+      AnalyzerManager analyzerManager_;
 
       /// Maximum allowed atom id + 1 (used to allocate arrays).
       int atomCapacity_;
@@ -159,8 +168,26 @@ namespace MdPp
       return ptr;
    }
 
+   /*
+   * Return pointer to location for new bond, and add to container.
+   *
+   * \return pointer to location of new bond
+   */
+   inline Group<2>* Processor::addBond()
+   {
+      int size = bonds_.size();
+      bonds_.resize(size + 1);
+      return &bonds_[size];
+   }
+
+   inline Boundary& Processor::boundary() 
+   {  return boundary_; }
+  
    inline int Processor::nAtom() const
    {  return atoms_.size(); }
+  
+   inline Atom& Processor::atom(int id)
+   {  return *atomPtrs_[id]; }
   
    inline int Processor::nBond() const
    {  return bonds_.size(); }

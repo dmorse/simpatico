@@ -18,7 +18,8 @@ namespace MdPp
     */
     Processor::Processor()
      : configIoPtr_(0),
-       configIoFactory_(*this)
+       configIoFactory_(*this),
+       analyzerManager_(*this)
     {}
 
     /*

@@ -63,9 +63,9 @@ clean-bin:
  
 veryclean:
 	cd obj/serial; make veryclean; rm -f makefile configure
-	cd obj/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile
+	cd obj/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile mdPp/makefile
 	cd obj/parallel; make veryclean; rm -f makefile configure
-	cd obj/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile
+	cd obj/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile mdPp/makefile
 	cd doc; make clean
 	make clean-bin
 	cd src; make veryclean

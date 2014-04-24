@@ -1,4 +1,7 @@
 mdPp_analyzers_=\
+     mdPp/analyzers/Analyzer.cpp \
+     mdPp/analyzers/AnalyzerFactory.cpp \
+     mdPp/analyzers/AnalyzerManager.cpp
 
 mdPp_analyzers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mdPp_analyzers_))
