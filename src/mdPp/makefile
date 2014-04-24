@@ -10,21 +10,16 @@ SRC_DIR_REL =..
 include $(SRC_DIR_REL)/config.mk
 include $(OBJ_DIR)/util/config.mk
 include $(OBJ_DIR)/inter/config.mk
+include $(OBJ_DIR)/mdPp/config.mk
 include $(SRC_DIR)/mdPp/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/mdPp/sources.mk
-
-#-----------------------------------------------------------------------
-# Variable definition
-
-MDPP=$(OBJ_DIR)/mdPp/mdPp
-
 #-----------------------------------------------------------------------
 # Main targets
 
 #all: $(mdPp_OBJS) $(mdPp_LIB) $(MDPP).o $(MDPP_EXE)
-all: $(mdPp_OBJS) 
+all: $(mdPp_OBJS) $(mdPp_LIB)
 
 clean:
 	rm -f $(mdPp_OBJS) $(mdPp_OBJS:.o=.d) $(mdPp_LIB)
@@ -50,5 +45,5 @@ veryclean:
 -include $(util_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
 -include $(mdPp_OBJS:.o=.d)
--include $(MDPP).d
+#-include $(MDPP).d
 

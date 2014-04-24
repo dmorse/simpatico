@@ -1,9 +1,9 @@
 # ---------------------------------------------------------------------
-# File: src/ddMd/patterns.mk
+# File: src/mdPp/patterns.mk
 #
 # This makefile contains the pattern rule used to compile all sources
-# files in the directory tree rooted at directory src/ddMd, which
-# contains the source code for the DdMd namespace. It is included by
+# files in the directory tree rooted at directory src/mdPp, which
+# contains the source code for the DdPp namespace. It is included by
 # all makefile files in this directory tree. 
 #
 # This file should be included in other makefiles after inclusion of
@@ -25,14 +25,14 @@ MAKE_DEPS+= -A$(OBJ_DIR)/inter/config.mk
 MAKE_DEPS+= -A$(OBJ_DIR)/mcMd/config.mk
 MAKE_DEPS+= -A$(OBJ_DIR)/ddMd/config.mk
 
-# Pattern rule to compile all class source (*.cpp) files in src/ddMd
+# Pattern rule to compile all class source (*.cpp) files in src/mdPp
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(CXX_STD) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
 endif
 
-# Pattern rule to compile all test source (*.cc) files in src/ddMd
+# Pattern rule to compile all test source (*.cc) files in src/mdPp
 $(OBJ_DIR)/% $(OBJ_DIR)/%.o:$(SRC_DIR)/%.cc $(LIBS)
 	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o $(@:.o=) $@ $(LIBS)
