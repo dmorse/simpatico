@@ -13,7 +13,25 @@
 namespace MdPp 
 {
 
-    /**
+    /*
+    * Constructor.
+    */
+    Processor::Processor()
+     : configIoPtr_(0),
+       configIoFactory_(*this)
+    {}
+
+    /*
+    * Destructor.
+    */
+    Processor::~Processor()
+    {
+       if (configIoPtr_) {
+          delete configIoPtr_;
+       }
+    }
+
+    /*
     * Read parameters from file.
     */
     void Processor::readParameters(std::istream& in)
@@ -23,6 +41,7 @@ namespace MdPp
        // etc. for angles dihedrals
 
        atoms_.allocate(atomCapacity_);
+       atomPtrs_.allocate(atomCapacity_);
        bonds_.allocate(bondCapacity_);
        // etc. for angles dihedrals
 

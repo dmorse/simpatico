@@ -23,7 +23,7 @@ all: $(mdPp_OBJS) $(mdPp_LIB)
 
 clean:
 	rm -f $(mdPp_OBJS) $(mdPp_OBJS:.o=.d) $(mdPp_LIB)
-	rm -f $(MDPP).o $(MDPP).d
+#	rm -f $(MDPP).o $(MDPP).d
 
 veryclean:
 	make clean

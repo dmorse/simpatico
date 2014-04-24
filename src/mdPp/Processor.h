@@ -34,6 +34,16 @@ namespace MdPp
       using ParamComposite::readParam;
 
       /**
+      * Constructor
+      */
+      Processor();
+
+      /**
+      * Destructor
+      */
+      ~Processor();
+
+      /**
       * Read capacities used to allocate arrays and other
       * info that is not in the input file. 
       */
@@ -123,6 +133,8 @@ namespace MdPp
 
       /// Maximum allowed bond id + 1 (used to allocate arrays).
       int bondCapacity_;
+
+      /// etc. for angles and dihedrals
 
       /// String identifier for ConfigIo class name
       std::string configIoName_;
