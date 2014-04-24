@@ -1,5 +1,5 @@
 include $(SRC_DIR)/mdPp/configIos/sources.mk
-#include $(SRC_DIR)/mdPp/analyzers/sources.mk
+include $(SRC_DIR)/mdPp/analyzers/sources.mk
 
 mdPp_= \
     $(mdPp_configIos_) \

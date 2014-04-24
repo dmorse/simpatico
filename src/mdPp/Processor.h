@@ -8,19 +8,18 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComposite.h>    // base class
-#include <util/boundary/Boundary.h>       // member 
-#include <util/containers/DSArray.h>      // member (template)
-#include <mdPp/chemistry/Atom.h>          // member (template argument)
-#include <mdPp/chemistry/Group.h>         // member (template argument)
+#include <util/param/ParamComposite.h>        // base class
+#include <util/boundary/Boundary.h>           // member 
+#include <util/containers/DSArray.h>          // member (template)
+#include <mdPp/chemistry/Atom.h>              // member (template argument)
+#include <mdPp/chemistry/Group.h>             // member (template argument)
+#include <mdPp/configIos/ConfigIoFactory.h>   // member 
+//#include <mdPp/analyzer/AnalyzerManager.h>    // member 
 
 namespace MdPp 
 {
 
    class ConfigIo;
-   class ConfigIoFactory;
-   //class AnalyzerFactory;
-   //class AnalyzerManager;
 
    using namespace Util;
 
@@ -60,19 +59,17 @@ namespace MdPp
       */
       Atom* addAtom(int id);
 
-      #if 0
       /**
       * Add bond to list of those read from file.
       *
       * \return pointer to location of new atom
       */
-      Bond* addBond();
+      Group<2>* addBond();
 
       /// Access a bond by id.
       Group<2>& bond(int i);
    
       // etc.
-      #endif
   
       // Accessors, for use in Analyzer and ConfigIo classes.
 
@@ -117,7 +114,7 @@ namespace MdPp
 
       ConfigIo* configIoPtr_;
 
-      ConfigIoFactory* configIoFactoryPtr_;
+      ConfigIoFactory configIoFactory_;
 
       // AnalyzerManager analyzerManager_;
 
@@ -126,6 +123,12 @@ namespace MdPp
 
       /// Maximum allowed bond id + 1 (used to allocate arrays).
       int bondCapacity_;
+
+      /// String identifier for ConfigIo class name
+      std::string configIoName_;
+
+      /// Name of configuration or trajectory input file
+      std::string configFileName_;
 
    };
 

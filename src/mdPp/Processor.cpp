@@ -19,8 +19,20 @@ namespace MdPp
     void Processor::readParameters(std::istream& in)
     {
        read<int>(in, "atomCapacity", atomCapacity_); 
-    }
+       read<int>(in, "bondCapacity", bondCapacity_); 
+       // etc. for angles dihedrals
 
+       atoms_.allocate(atomCapacity_);
+       bonds_.allocate(bondCapacity_);
+       // etc. for angles dihedrals
+
+       //readParamComposite(in, "AnalyzerManager", AnalyzerManager_);
+
+       read<std::string>(in, "configIoName", configIoName_);
+       configIoPtr_ = configIoFactory_.factory(configIoName_);
+
+       read<std::string>(in, "configFileName", configFileName_);
+    }
    
 }
 #endif
