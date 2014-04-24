@@ -1,9 +1,10 @@
-#include $(SRC_DIR)/mdPp/chemistry/sources.mk
-#include $(SRC_DIR)/mdPp/configIos/sources.mk
+include $(SRC_DIR)/mdPp/configIos/sources.mk
 #include $(SRC_DIR)/mdPp/analyzers/sources.mk
 
-#mdPp_= $(mdPp_configIos_) $(mdPp_analyzers_) $(mdPp_chemistry_)
-mdPp_ = mdPp/Processor.cpp
+mdPp_= \
+    $(mdPp_configIos_) \
+    mdPp/Processor.cpp
+    #$(mdPp_analyzers_) $(mdPp_chemistry_)
 
 # Add user source files, if any
 # include $(SRC_DIR)/mdPp/user/sources.mk

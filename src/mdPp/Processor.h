@@ -18,7 +18,9 @@ namespace MdPp
 {
 
    class ConfigIo;
-   class AnalyzerManager;
+   class ConfigIoFactory;
+   //class AnalyzerFactory;
+   //class AnalyzerManager;
 
    using namespace Util;
 
@@ -41,12 +43,12 @@ namespace MdPp
       /**
       * Analyze a sequence of dump files.
       */
-      // void analyzeDumps(std::string& filename);
+      void analyzeDumps(std::string& filename);
 
       /**
       * Analyze a trajectory file.
       */
-      // void analyzeTrajectory(std::string& filename);
+      void analyzeTrajectory(std::string& filename);
 
       // Mutators for use in ConfigIo classes.
 
@@ -113,9 +115,9 @@ namespace MdPp
       // Boundary object defines periodic boundary conditions.
       Boundary boundary_;
 
-      // ConfigIo* configIoPtr_;
+      ConfigIo* configIoPtr_;
 
-      // ConfigIoFactory configIoFactoryPtr_;
+      ConfigIoFactory* configIoFactoryPtr_;
 
       // AnalyzerManager analyzerManager_;
 
