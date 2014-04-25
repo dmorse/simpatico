@@ -1,13 +1,19 @@
 #-----------------------------------------------------------------------
-# Path to postprocessor main file
-
-MDPP=$(OBJ_DIR)/mdPp/mdPp
-
 # Path to mdPp library
-MDPP_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MDPP_SUFFIX)
+
+MDPP_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)
+
 mdPp_LIBNAME=mdPp$(MDPP_ALL_SUFFIX)
 mdPp_LIB=$(OBJ_DIR)/mdPp/lib$(mdPp_LIBNAME).a
 
-# Path to executable 
+#-----------------------------------------------------------------------
+# Path for postprocessor main program files
+
+MDPP=$(OBJ_DIR)/mdPp/mdPp
+
+#-----------------------------------------------------------------------
+# Path to postprocessor executable 
+
 MDPP_EXE=$(BIN_DIR)/mdPp$(MDPP_ALL_SUFFIX)
+
 #-----------------------------------------------------------------------

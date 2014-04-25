@@ -1,6 +1,7 @@
 mdPp_configIos_=\
    mdPp/configIos/ConfigIo.cpp \
-   mdPp/configIos/ConfigIoFactory.cpp 
+   mdPp/configIos/ConfigIoFactory.cpp \
+   mdPp/configIos/DdMdConfigIo.cpp 
 
 mdPp_configIos_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mdPp_configIos_))

@@ -11,6 +11,7 @@
 #include <util/param/ParamComposite.h>        // base class
 #include <util/boundary/Boundary.h>           // member 
 #include <util/containers/DSArray.h>          // member (template)
+#include <util/containers/ArrayIterator.h>    // inline function
 #include <mdPp/chemistry/Atom.h>              // member (template argument)
 #include <mdPp/chemistry/Group.h>             // member (template argument)
 #include <mdPp/configIos/ConfigIoFactory.h>   // member 
@@ -31,7 +32,8 @@ namespace MdPp
 
    public:
 
-      using ParamComposite::readParam;
+      typedef ArrayIterator<Atom> AtomIterator;
+      typedef ArrayIterator<Group <2> > BondIterator;
 
       /**
       * Constructor
@@ -42,6 +44,8 @@ namespace MdPp
       * Destructor
       */
       ~Processor();
+
+      using ParamComposite::readParam;
 
       /**
       * Read parameters and analyze.
@@ -61,12 +65,17 @@ namespace MdPp
       // Mutators for use in ConfigIo classes.
 
       /**
-      * Return pointer to location for new atom, and add to container.
+      * Return pointer to location for new atom.
       *
       * \param  global id for new atom
       * \return pointer to location of new atom
       */
-      Atom* addAtom(int id);
+      Atom* newAtomPtr();
+
+      /**
+      * Finalize addition of atom (allows lookup by id).
+      */
+      void addAtom();
 
       /**
       * Add bond to list of those read from file.
@@ -92,12 +101,12 @@ namespace MdPp
       /**
       * Get an atom reference by global id.
       */
-      Atom& atom(int id);
+      Atom* atomPtr(int id);
 
       /**
       * Initialize an iterator for atoms.
       */
-      void initAtomIterator(ArrayIterator<Atom>& iter);
+      void initAtomIterator(AtomIterator& iter);
 
       /**
       * Get number of bonds.
@@ -105,14 +114,9 @@ namespace MdPp
       int nBond() const;
 
       /**
-      * Access a bond by id.
-      */
-      Group<2>& bond(int i);
-   
-      /**
       * Initialize a bond iterator.
       */
-      void initBondIterator(ArrayIterator< Group<2> >& iter);
+      void initBondIterator(BondIterator& iter);
 
    private:
      
@@ -137,6 +141,9 @@ namespace MdPp
       /// Manager for analyzers
       AnalyzerManager analyzerManager_;
 
+      /// Pointer to new atom.
+      Atom* newAtomPtr_;
+
       /// Maximum allowed atom id + 1 (used to allocate arrays).
       int atomCapacity_;
 
@@ -153,44 +160,45 @@ namespace MdPp
 
    };
 
-   /*
-   * Return pointer to location for new atom, and add to container.
-   *
-   * \param  global id for new atom
-   * \return pointer to location of new atom
-   */
-   inline Atom* Processor::addAtom(int id)
-   {
-      int size = atoms_.size();
-      atoms_.resize(size + 1);
-      Atom* ptr = &atoms_[size];
-      atomPtrs_[id] = ptr;
-      return ptr;
-   }
+   // inline functions
 
    /*
-   * Return pointer to location for new bond, and add to container.
-   *
-   * \return pointer to location of new bond
+   * Return the Boundary by reference.
    */
-   inline Group<2>* Processor::addBond()
-   {
-      int size = bonds_.size();
-      bonds_.resize(size + 1);
-      return &bonds_[size];
-   }
-
    inline Boundary& Processor::boundary() 
    {  return boundary_; }
-  
+
+   /*
+   * Return number of atoms.
+   */
    inline int Processor::nAtom() const
    {  return atoms_.size(); }
-  
-   inline Atom& Processor::atom(int id)
-   {  return *atomPtrs_[id]; }
-  
+
+   /*
+   * Return a pointer to an atom with a specific id.
+   */
+   inline Atom* Processor::atomPtr(int id)
+   {  return atomPtrs_[id]; }
+
+   /*
+   * Return number of bonds.
+   */
    inline int Processor::nBond() const
    {  return bonds_.size(); }
    
+   /*
+   * Initialize an iterator for atoms.
+   */
+   inline 
+   void Processor::initAtomIterator(Processor::AtomIterator& iter)
+   {  atoms_.begin(iter); }
+
+   /*
+   * Initialize an iterator for bonds.
+   */
+   inline 
+   void Processor::initBondIterator(Processor::BondIterator& iter)
+   {  bonds_.begin(iter); }
+
 }
 #endif

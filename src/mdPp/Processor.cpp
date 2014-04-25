@@ -13,46 +13,87 @@
 namespace MdPp 
 {
 
-    /*
-    * Constructor.
-    */
-    Processor::Processor()
-     : configIoPtr_(0),
-       configIoFactory_(*this),
-       analyzerManager_(*this)
-    {}
+   /*
+   * Constructor.
+   */
+   Processor::Processor()
+    : configIoPtr_(0),
+      configIoFactory_(*this),
+      analyzerManager_(*this),
+      newAtomPtr_(0)
+   {  setClassName("Processor"); }
 
-    /*
-    * Destructor.
-    */
-    Processor::~Processor()
-    {
-       if (configIoPtr_) {
-          delete configIoPtr_;
-       }
-    }
+   /*
+   * Destructor.
+   */
+   Processor::~Processor()
+   {
+      if (configIoPtr_) {
+         delete configIoPtr_;
+      }
+   }
 
-    /*
-    * Read parameters from file.
-    */
-    void Processor::readParameters(std::istream& in)
-    {
-       read<int>(in, "atomCapacity", atomCapacity_); 
-       read<int>(in, "bondCapacity", bondCapacity_); 
-       // etc. for angles dihedrals
+   /*
+   * Read parameters from file.
+   */
+   void Processor::readParameters(std::istream& in)
+   {
+      read<int>(in, "atomCapacity", atomCapacity_); 
+      read<int>(in, "bondCapacity", bondCapacity_); 
+      // etc. for angles dihedrals
 
-       atoms_.allocate(atomCapacity_);
-       atomPtrs_.allocate(atomCapacity_);
-       bonds_.allocate(bondCapacity_);
-       // etc. for angles dihedrals
+      atoms_.allocate(atomCapacity_);
+      atomPtrs_.allocate(atomCapacity_);
+      for (int i = 0; i < atomCapacity_; ++i) {
+         atomPtrs_[i] = 0;
+      }
+      bonds_.allocate(bondCapacity_);
+      // etc. for angles dihedrals
 
-       //readParamComposite(in, "AnalyzerManager", AnalyzerManager_);
+      readParamComposite(in, analyzerManager_);
 
-       read<std::string>(in, "configIoName", configIoName_);
-       configIoPtr_ = configIoFactory_.factory(configIoName_);
+      read<std::string>(in, "configIoName", configIoName_);
+      configIoPtr_ = configIoFactory_.factory(configIoName_);
 
-       read<std::string>(in, "configFileName", configFileName_);
-    }
+      read<std::string>(in, "configFileName", configFileName_);
+   }
+
+   /*
+   * Return pointer to location for new atom.
+   */
+   Atom* Processor::newAtomPtr()
+   {
+      if (newAtomPtr_) {
+         UTIL_THROW("Error: an new atom is still active");
+      }
+      int size = atoms_.size() + 1;
+      atoms_.resize(size);
+      newAtomPtr_ = &atoms_[size - 1];
+      return newAtomPtr_;
+   }
+
+   /*
+   * Finalize addition of new atom.
+   */
+   void Processor::addAtom()
+   {
+      if (!newAtomPtr_) {
+         UTIL_THROW("Error: No active new atom");
+      }
+      int id = newAtomPtr_->id;
+      atomPtrs_[id] = newAtomPtr_;
+      newAtomPtr_ = 0;
+   }
+
+   /*
+   * Return pointer to location for new bond, and add to container.
+   */
+   Group<2>* Processor::addBond()
+   {
+      int size = bonds_.size();
+      bonds_.resize(size + 1);
+      return &bonds_[size];
+   }
    
 }
 #endif

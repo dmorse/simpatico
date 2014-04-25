@@ -36,5 +36,49 @@ namespace MdPp
 
    };
 
+
+   // Associated function declarations
+
+   /**
+   * istream extractor (>>) for a Group.
+   *
+   * \param in        input stream
+   * \param group  Group to be read from stream
+   * \return modified input stream
+   */
+   template <int N>
+   std::istream& operator>>(std::istream& in, Group<N> &group)
+   {
+      in >> group.id;
+      in >> group.typeId;
+      for (int i=0; i < N; ++i) {
+         in >> group.atomIds[i];
+      }
+      return in;
+   }
+   
+   /**
+   * ostream inserter (<<) for a Group.
+   *
+   * Format on one line with no line break:
+   *
+   * \param  out   output stream
+   * \param  group Group to be written to stream
+   * \return modified output stream
+   */
+   template <int N>
+   std::ostream& operator << (std::ostream& out, const Group<N> &group) 
+   {
+      out.width(10);
+      out << group.id;
+      out.width(10);
+      out << group.typeId;
+      for (int i = 0; i < N; ++i) {
+         out.width(10);
+         out << group.atomIds[i];
+      }
+      return out;
+   }
+
 } 
 #endif

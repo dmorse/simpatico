@@ -60,6 +60,11 @@ namespace MdPp
       */
       virtual void writeConfig(std::ofstream& file) = 0;
 
+   protected:
+
+      Processor& processor()
+      { return *processorPtr_; }
+
    private:
 
       Processor* processorPtr_;
