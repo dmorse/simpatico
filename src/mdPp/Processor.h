@@ -53,6 +53,18 @@ namespace MdPp
       void readParameters(std::istream& in);
 
       /**
+      * Read a single configuration file.
+      */
+      void readConfig(std::ifstream& in)
+      {  configIoPtr_->readConfig(in); }
+
+      /**
+      * Read a single configuration file.
+      */
+      void writeConfig(std::ofstream& out)
+      {  configIoPtr_->writeConfig(out); }
+
+      /**
       * Analyze a sequence of dump files.
       */
       void analyzeDumps(std::string& filename);
@@ -82,7 +94,7 @@ namespace MdPp
       *
       * \return pointer to location of new atom
       */
-      Group<2>* addBond();
+      Group<2>* newBondPtr();
 
       // etc. for angles and dihedrals
   

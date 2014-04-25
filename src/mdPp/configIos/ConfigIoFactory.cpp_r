@@ -35,11 +35,9 @@ namespace MdPp
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
-      #if 0
       if (className == "DdMdConfigIo") {
          ptr = new DdMdConfigIo(*processorPtr_);
       } 
-      #endif
  
       return ptr;
    }

@@ -52,7 +52,7 @@ namespace MdPp
       file >> Label(nGroupLabel) >> nGroup;
       Group<2>* groupPtr;
       for (int i = 0; i < nGroup; ++i) {
-         groupPtr = processor().addBond();
+         groupPtr = processor().newBondPtr();
          file >> *groupPtr;
       }
       return nGroup;
@@ -117,25 +117,22 @@ namespace MdPp
             atomPtr->moleculeId = mId;
             atomPtr->speciesId = sId;
          }
-         file >> r;
+         file >> atomPtr->position;
          file >> atomPtr->velocity;
 
          processor().addAtom();
       }
 
       // Read Covalent Groups
-      #if 0
-      bool hasGhosts = false;
       #ifdef INTER_BOND
-      if (processor().bondCapacity()) {
+      //if (processor().bondCapacity()) {
          readBonds(file, "BONDS", "nBond");
-         // processor().isValid(atomStorage(), domain().communicator(), hasGhosts);
+         // processor().isValid();
          // Set atom "mask" values
          //if (maskPolicy == MaskBonded) {
          //   setAtomMasks();
          //}
-      }
-      #endif
+      //}
       #endif
    }
 
@@ -192,12 +189,12 @@ namespace MdPp
               << "\n" << iter->velocity << "\n";
       }
 
-      #if 0
+      #if 1
       // Write the groups
       #ifdef INTER_BOND
-      if (processor().bondCapacity()) {
-         writeBonds(file, "BONDS", "nBond", processor());
-      }
+      //if (processor().bondCapacity()) {
+         writeBonds(file, "BONDS", "nBond");
+      //}
       #endif
       #endif
 

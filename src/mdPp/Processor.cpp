@@ -54,6 +54,9 @@ namespace MdPp
 
       read<std::string>(in, "configIoName", configIoName_);
       configIoPtr_ = configIoFactory_.factory(configIoName_);
+      if (configIoPtr_ == 0) {
+         UTIL_THROW("Unrecognized ConfigIo subclass name");
+      }
 
       read<std::string>(in, "configFileName", configFileName_);
    }
@@ -88,7 +91,7 @@ namespace MdPp
    /*
    * Return pointer to location for new bond, and add to container.
    */
-   Group<2>* Processor::addBond()
+   Group<2>* Processor::newBondPtr()
    {
       int size = bonds_.size();
       bonds_.resize(size + 1);
