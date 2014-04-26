@@ -27,8 +27,7 @@ public:
 
    virtual void setUp()
    { 
-      openFile("in/Processor"); 
-      processor_.readParam(file()); 
+      processor_.readParam("in/Processor"); 
    }
 
    void testReadParam();

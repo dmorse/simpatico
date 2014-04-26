@@ -49,7 +49,12 @@ namespace MdPp
       using ParamComposite::readParam;
 
       /**
-      * Read parameters and analyze.
+      * Open, read, and close parameter file.
+      */
+      void readParam(const char* filename);
+
+      /**
+      * Read parameters.
       */
       void readParameters(std::istream& in);
 
@@ -68,6 +73,11 @@ namespace MdPp
       */
       void readConfig(std::ifstream& in);
 
+      /**
+      * Open, read and close a configuration file.
+      */
+      void readConfig(const char* filename);
+   
       /**
       * Open, read and close a configuration file.
       */

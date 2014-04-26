@@ -54,6 +54,17 @@ namespace MdPp
       readParamComposite(in, analyzerManager_);
    }
 
+   /*
+   * Open, read and close a parameter file.
+   */
+   void Processor::readParam(const char* filename)
+   {
+      std::ifstream in;
+      in.open(filename);
+      readParam(in);
+      in.close();
+   }
+
    // ConfigIo management
 
    /*
@@ -96,13 +107,19 @@ namespace MdPp
    /*
    * Open, read and close a configuration file.
    */
-   void Processor::readConfig(const std::string& filename)
+   void Processor::readConfig(const char* filename)
    {
       std::ifstream inputFile;
-      inputFile.open(filename.c_str());
+      inputFile.open(filename);
       readConfig(inputFile);
       inputFile.close();
    }
+
+   /*
+   * Open, read and close a configuration file.
+   */
+   void Processor::readConfig(const std::string& filename)
+   { readConfig(filename.c_str()); }
 
    /*
    * Write a single configuration file (must be open)

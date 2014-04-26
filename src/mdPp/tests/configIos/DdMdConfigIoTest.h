@@ -26,10 +26,7 @@ public:
 
    virtual void setUp()
    { 
-      std::ifstream in;
-      openInputFile("in/Processor", in); 
-      processor_.readParam(in); 
-      in.close();
+      processor_.readParam("in/Processor"); 
       setVerbose(2);
    }
 
@@ -51,18 +48,15 @@ inline void DdMdConfigIoTest::testReadConfig()
 {
    printMethod(TEST_FUNC);
 
-   processor_.setConfigIo(std::string("DdMdConfigIo"));
+   //processor_.setConfigIo(std::string("DdMdConfigIo"));
 
-   std::ifstream in;
-   openInputFile("in/config", in);
-   processor_.readConfig(in);
-   in.close();
+   processor_.readConfig("in/config");
 
    TEST_ASSERT(processor_.nAtom() == 40);
-   //TEST_ASSERT(processor_.nBond() == 35);
-   std::cout << "nAtom = " << processor_.nAtom() << "\n";
-   std::cout << "nBond = " << processor_.nBond() << "\n";
-   std::cout << processor_.boundary() << "\n";
+   TEST_ASSERT(processor_.nBond() == 35);
+   // std::cout << "nAtom = " << processor_.nAtom() << "\n";
+   // std::cout << "nBond = " << processor_.nBond() << "\n";
+   // std::cout << processor_.boundary() << "\n";
 
    std::ofstream out;
    openOutputFile("out/config", out);
