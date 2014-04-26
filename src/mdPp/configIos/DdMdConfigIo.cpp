@@ -10,9 +10,9 @@
 
 #include "DdMdConfigIo.h"
 
-#include <mdPp/Processor.h>
 #include <mdPp/chemistry/Atom.h>
 #include <mdPp/chemistry/Group.h>
+#include <mdPp/processor/Processor.h>
 //#include <mdPp/chemistry/MaskPolicy.h>
 
 #include <util/space/Vector.h>
@@ -23,14 +23,6 @@ namespace MdPp
 {
 
    using namespace Util;
-
-   /*
-   * Constructor.
-   */
-   DdMdConfigIo::DdMdConfigIo(bool hasMolecules)
-    : ConfigIo(),
-      hasMolecules_(hasMolecules)
-   {  setClassName("DdMdConfigIo"); }
 
    /*
    * Constructor.
@@ -62,7 +54,6 @@ namespace MdPp
    * Read a configuration file.
    */
    void DdMdConfigIo::readConfig(std::ifstream& file)
-   // , MaskPolicy maskPolicy)
    {
       // Precondition
       if (!file.is_open()) {  
@@ -73,49 +64,36 @@ namespace MdPp
       file >> Label("BOUNDARY");
       file >> processor().boundary();
 
-      // Atoms 
-      int nAtom;  // Total number of atoms in file
-
       // Read and distribute atoms
-      file >> Label("ATOMS");
-      file >> Label("nAtom") >> nAtom;
-
-      // int atomCapacity = processor().atomCapacity();
 
       // Read atoms
-      Vector r;
       Atom* atomPtr;
-      int id;
-      int typeId;
-      int aId;
-      int mId;
-      int sId;
-
+      int atomCapacity = processor().atomCapacity(); // Maximum allowed id + 1
+      int nAtom;          
+      file >> Label("ATOMS");
+      file >> Label("nAtom") >> nAtom;
       for (int i = 0; i < nAtom; ++i) {
 
          // Get pointer to new atom 
          atomPtr = processor().newAtomPtr();
  
-         file >> id >> typeId;
-         //if (id < 0 || id >= atomCapacity) {
-         //   UTIL_THROW("Invalid atom id");
-         //}
-         atomPtr->id = id;
-         atomPtr->typeId = typeId;
+         file >> atomPtr->id >> atomPtr->typeId;
+         if (atomPtr->id < 0 || atomPtr->id >= atomCapacity) {
+            UTIL_THROW("Invalid atom id");
+         }
          if (hasMolecules_) {
-            file >> sId >> mId >> aId;
-            if (aId < 0) {
-               UTIL_THROW("Invalid Atom");
+            file >> atomPtr->speciesId 
+                 >> atomPtr->moleculeId 
+                 >> atomPtr->atomId;
+            if (atomPtr->speciesId < 0) {
+               UTIL_THROW("Invalid species id");
             }
-            if (mId < 0) {
-               UTIL_THROW("Invalid Molecule");
+            if (atomPtr->moleculeId < 0) {
+               UTIL_THROW("Invalid molecule id");
             }
-            if (sId < 0) {
-               UTIL_THROW("Invalid Specie");
+            if (atomPtr->atomId < 0) {
+               UTIL_THROW("Invalid atom id");
             }
-            atomPtr->atomId = aId;
-            atomPtr->moleculeId = mId;
-            atomPtr->speciesId = sId;
          }
          file >> atomPtr->position;
          file >> atomPtr->velocity;
@@ -125,14 +103,12 @@ namespace MdPp
 
       // Read Covalent Groups
       #ifdef INTER_BOND
-      //if (processor().bondCapacity()) {
+      if (processor().bondCapacity()) {
          readBonds(file, "BONDS", "nBond");
-         // processor().isValid();
-         // Set atom "mask" values
          //if (maskPolicy == MaskBonded) {
          //   setAtomMasks();
          //}
-      //}
+      }
       #endif
    }
 
@@ -189,13 +165,11 @@ namespace MdPp
               << "\n" << iter->velocity << "\n";
       }
 
-      #if 1
       // Write the groups
       #ifdef INTER_BOND
-      //if (processor().bondCapacity()) {
+      if (processor().bondCapacity()) {
          writeBonds(file, "BONDS", "nBond");
-      //}
-      #endif
+      }
       #endif
 
    }

@@ -149,6 +149,11 @@ namespace MdPp
       Boundary& boundary();
 
       /**
+      * Get atom capacity (maximum id + 1).
+      */ 
+      int atomCapacity() const;
+
+      /**
       * Get number of atoms.
       */ 
       int nAtom() const;
@@ -162,6 +167,11 @@ namespace MdPp
       * Initialize an iterator for atoms.
       */
       void initAtomIterator(AtomIterator& iter);
+
+      /**
+      * Get bond capacity.
+      */ 
+      int bondCapacity() const;
 
       /**
       * Get number of bonds.
@@ -254,6 +264,20 @@ namespace MdPp
    inline 
    void Processor::initBondIterator(Processor::BondIterator& iter)
    {  bonds_.begin(iter); }
+
+   /*
+   * Get atom capacity (maximum id + 1).
+   */ 
+   inline
+   int Processor::atomCapacity() const
+   { return atoms_.capacity(); }
+
+   /*
+   * Get bond capacity.
+   */ 
+   inline
+   int Processor::bondCapacity() const
+   { return bonds_.capacity(); }
 
 }
 #endif

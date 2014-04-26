@@ -1,9 +1,9 @@
 #ifndef MDPP_DDMD_CONFIGIO_TEST_H
 #define MDPP_DDMD_CONFIGIO_TEST_H
 
-#include <mdPp/Processor.h>
-//#include <mdPp/chemistry/Atom.h>
-//#include <mdPp/chemistry/Group.h>
+#include <mdPp/processor/Processor.h>
+#include <mdPp/chemistry/Atom.h>
+#include <mdPp/chemistry/Group.h>
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>

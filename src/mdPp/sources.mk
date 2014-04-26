@@ -1,10 +1,11 @@
 include $(SRC_DIR)/mdPp/configIos/sources.mk
 include $(SRC_DIR)/mdPp/analyzers/sources.mk
+include $(SRC_DIR)/mdPp/processor/sources.mk
 
 mdPp_= \
     $(mdPp_configIos_) \
     $(mdPp_analyzers_) \
-    mdPp/Processor.cpp 
+    $(mdPp_processor_) 
 
 # Add user source files, if any
 # include $(SRC_DIR)/mdPp/user/sources.mk

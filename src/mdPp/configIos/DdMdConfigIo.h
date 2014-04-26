@@ -49,7 +49,6 @@ namespace MdPp
       * \param maskPolicy MaskPolicy to be used in setting atom masks
       */
       virtual void readConfig(std::ifstream& file);
-      // , MaskPolicy maskPolicy);
 
       /**
       * Write configuration file.
@@ -64,9 +63,11 @@ namespace MdPp
 
       bool hasMolecules_;
 
-      int readBonds(std::ifstream& file, const char* sectionLabel, const char* nGroupLabel);
-      int writeBonds(std::ofstream& file, const char* sectionLabel, const char* nGroupLabel);
-   
+      int readBonds(std::ifstream& file, 
+                    const char* sectionLabel, const char* nGroupLabel);
+      int writeBonds(std::ofstream& file, 
+                    const char* sectionLabel, const char* nGroupLabel);
+
    };
 
 }

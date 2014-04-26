@@ -1,10 +1,9 @@
 #ifndef MDPP_PROCESSOR_TEST_H
 #define MDPP_PROCESSOR_TEST_H
 
-#include <mdPp/Processor.h>
-//#include <mdPp/chemistry/Atom.h>
-//#include <mdPp/chemistry/Group.h>
-//#include <util/containers/DArray.h>
+#include <mdPp/processor/Processor.h>
+#include <mdPp/chemistry/Atom.h>
+#include <mdPp/chemistry/Group.h>
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
