@@ -11,6 +11,7 @@
 #include "ConfigIoFactory.h"  
 
 // Subclasses of ConfigIo 
+#include "DdMdConfigIo.h"
 
 namespace MdPp
 {

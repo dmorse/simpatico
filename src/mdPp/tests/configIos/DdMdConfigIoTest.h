@@ -50,9 +50,14 @@ inline void DdMdConfigIoTest::testReadParam()
 inline void DdMdConfigIoTest::testReadConfig()
 {
    printMethod(TEST_FUNC);
-   openFile("in/config");
-   processor_.readConfig(file());
-   file().close();
+
+   processor_.setConfigIo(std::string("DdMdConfigIo"));
+
+   std::ifstream in;
+   openInputFile("in/config", in);
+   processor_.readConfig(in);
+   in.close();
+
    TEST_ASSERT(processor_.nAtom() == 40);
    //TEST_ASSERT(processor_.nBond() == 35);
    std::cout << "nAtom = " << processor_.nAtom() << "\n";
