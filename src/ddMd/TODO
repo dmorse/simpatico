@@ -1,5 +1,5 @@
-Exchanger
----------
+Exchanger:
+----------
 
 - Add memory usage statistics, to see which communication step (atom
   exchange or ghost exchange) uses the most memory.
@@ -9,20 +9,14 @@ Exchanger
 
 - Consider moving allocation of Buffer to Exchanger.
 
-Cell List and Pair List:
-------------------------
-
-- Modify Cell::OffsetArray object to use strips of cells, to allow efficient 
-  use of smaller cells.
-
-- Modify OffsetArray to include all cells for which the closest corner is 
-  within the pair list cutoff.
-
-Flexible Unit Cells:
---------------------
+Non-orthogonal boundaries:
+--------------------------
 
 - Generalize makeSnapShot and needsExchange methods in AtomStorage to
-  allow for deforming boundaries (requires further changes to Boundary).
+  allow for non-orthogonal boundaries (requires changes to Boundary).
+
+- Modify calculation of distances between cells in construction of Offset
+  array in DdMd::CellList. Perhaps move calculation to Boundary class.
 
 Buffer:
 -------
@@ -30,12 +24,21 @@ Buffer:
 - Allocate in bytes, remove atomCapacity and ghostCapacity 
   (see doc/notes/ddMd/Buffer)
 
+- Make sure memory statistics include all usage, including setup.
+
+AtomStorage:
+------------
+
+- Make sure memory statistics include all usage, including setup, so
+  that the user has a better indication of when the ghost capacity 
+  needs to be increased.
+
 Moving GroupStorage to Potential class:
 ---------------------------------------
 
-- Make each GroupStorage a member of the associated potential.
-
 - see doc/notes/ddMd/GroupStorage
+
+- Make each GroupStorage a member of the associated potential.
 
 Hybrid MD
 ---------
@@ -51,20 +54,20 @@ Single Processor Operation
   work ifndef UTIL_MPI, continue with other classes, to enable single 
   processor operation with no MPI.
 
-Atom
-----
-
-- Add speciesId, moleculeId, localId to each atom.
-
 Files
 -----
 
-- Modify default file format to store speciesId, moleculeId, molAtomId indices.
+- Add ConfigIo that can read and write hoomd XML format.
+
+- Add mechanism to output trajectory files in a standard format.
+
+- Add ConfigIo that can read and write McMd format, to allow McMd 
+  codes to be used for analysis.
 
 - Think about separating topology and configuration files. 
 
-Testing
--------
+Analysis
+--------
 
-- Test angle and dihedral stress calculations more thoroughly.
+- Write stand-alone single processor framework for analysis.
 

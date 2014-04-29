@@ -11,8 +11,8 @@ Simulation{
   nBondType           1
   atomTypes           A    1.0
   AtomStorage{
-    atomCapacity       4000
-    ghostCapacity     15000
+    atomCapacity       8000
+    ghostCapacity     20000
     totalAtomCapacity 20000
   }
   BondStorage{
@@ -32,7 +32,8 @@ Simulation{
     sigma             1.0
     cutoff            1.122462048
     skin              0.4
-    pairCapacity      40000
+    nCellCut          1
+    pairCapacity      20000
     maxBoundary       orthorhombic   30.0   30.0   30.0
   }
   BondPotential{
@@ -47,8 +48,7 @@ Simulation{
   }
   NveIntegrator{
     dt                0.005
-    saveInterval       4000
-    saveFileName    restart
+    saveInterval          0
   }
   Random{
     seed              8012457890
@@ -56,9 +56,18 @@ Simulation{
   AnalyzerManager{
      baseInterval     1000
 
+  }
+}
+
+    cutoff            2.5
+
      LogEnergy{
         interval        1000
      }
+
+    saveInterval       4000
+    saveFileName    restart
+
 
      OutputEnergy{
         interval        1000
@@ -70,8 +79,7 @@ Simulation{
         outputFileName  pressure
      }
 
-  }
-}
+    cutoff            2.5
 
   nAngleType         0
   hasExternal        0

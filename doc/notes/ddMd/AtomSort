@@ -1,24 +1,78 @@
-Possible ways to sort atoms:
-----------------------------
+Proposal: Allow periodic sorting local atoms by the order in which they
+appear in the cell list, ordering cells by conventional grid order. This
+corresponds to the use of strips in construction of the pair list. 
 
-1) Sort by cells, in conventional order.
+Rationale/Comments:
 
-2) Sort by cells, in order cells are accessed during pairlist 
-   construction
+1) There is not much point to sorting ghosts, because they are 
+destroyed and recreated after each exchange.
 
-3) Sort by order atoms are accessed when reading the pairlist.
+2) Atoms can be sorted completely independently of ghosts because
+they are stored in different instances of AtomArray.
 
-Ways to improve sequencing of cells
------------------------------------
+3) Sorting of local atoms can be done immediately after atom and
+ghost exchange(). This would require that we add all the new atoms
+to the atomStorage() and reset all pointers to local atoms within
+the groups.
 
-1) Hilbert curve
+Question: Is it possible or advisable to try to sort ghost atoms, since 
+these are recreated after every reneighboring anyway? If we don't sort
+the ghosts, much of the advantage of sorting is lost.
 
-2) Blocks of cells, each explored exhaustively.
+Question: Should sorting occur during the exchange, after exchanging atoms
+but before exchanging ghosts, to minimize the cost of the sort?
 
-3) Layers (does it already do this?)
+What to sort, and when
 
-   Question: Can three layers fit in L1 cache simultaneously?
+  -------------------------------------------------------------
 
-   Example: 32,000 particles over 8 processors, 4k each.
+  Proposal 1) Sort all local and ghost atoms, after they all exist. 
 
-   4000*64 = 256k - larger than typical L1 data cache.
+  When: This could be done immediately after exchange. 
+
+  Pro: Comparatively simple to program, separate from exchange.
+
+  Con: The sorting of ghost atoms is pointless, since new
+  memory addresses will be chosen during the next exchange.
+
+  -------------------------------------------------------------
+  Proposal 2) Only sort local atoms.
+
+  When: This would have to be done after private exchangeAtoms
+  and before exchangeGhosts.
+
+  Pro: Avoid pointless sorting of ghost atoms.
+
+  Con: Requires careful integration with exchange operation.
+  The communication plans calculated during exchangeAtoms would
+  remain valid, and could be copied to new locations. The 
+  pointers to local atoms added to the sendArray would, however,
+  be invalidated by the sort. This is the main problem.
+
+  Solution: Add bool "sort" parameter to exchangeAtoms and
+  exchangeGhosts. If bool is true, don't add atoms to the send 
+  list in exchangeAtoms, and do add them in exchangeGhosts.
+
+------------------------------------------------------------
+Algorithm:
+
+   - Proposed functions for AtomArray:
+
+        void addGroupExchanger(GroupExchanger& exchanger);
+
+        void AtomArray::sort(Array<Atom*>& sequence, 
+                             AtomStorage& atomStorage);
+
+        The sequence would be an array of pointers to local 
+        atoms in the desired order.
+
+   - Copy all local atom data to new arrays, from bottom. 
+
+   - Swap array addresses.
+
+   - Clear all local atoms from the AtomStorage, and add back
+     new pointers.
+
+   - For each registered GroupExchanger, reset all Atom* 
+     pointers in groups.
+

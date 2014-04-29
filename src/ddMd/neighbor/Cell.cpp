@@ -1,8 +1,6 @@
 #ifndef DDMD_CELL_CPP
 #define DDMD_CELL_CPP
 
-// THIS CLASS IS UNFINISHED, UNTESTED, AND UNUSED
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -51,34 +49,60 @@ namespace DdMd
    void Cell::getNeighbors(NeighborArray &neighbors, 
                            bool reverseUpdateFlag) const
    {
-
       // Preconditions
       assert(offsetsPtr_);
       assert(!isGhostCell_);
 
-      const Cell* cellPtr;
-      int   ia, nc, na;
+      const Cell* cellBegin;
+      const Cell* cellEnd;
+      CellAtom* atomBegin;
+      CellAtom* atomEnd;
+      int  is, ns;
+      bool bg, eg;
 
       neighbors.clear();
-      nc = offsetsPtr_->size();
+      ns = offsetsPtr_->size();
 
       if (reverseUpdateFlag) {
-         for (int ic = 0; ic < nc; ++ic) {
-            cellPtr = this + (*offsetsPtr_)[ic];
-            if (cellPtr->id() >= id_) {
-               na = cellPtr->nAtom();
-               for (ia = 0; ia < na; ++ia) {
-                  neighbors.append(cellPtr->atomPtr(ia));
+         for (is = 0; is < ns; ++is) {
+            cellBegin = this + (*offsetsPtr_)[is].first;
+            cellEnd   = this + (*offsetsPtr_)[is].second;
+            if (cellBegin->id() >= id_) {
+               atomBegin = cellBegin->begin_;
+               atomEnd = cellEnd->begin_ + cellEnd->nAtom_;
+               for ( ; atomBegin < atomEnd; ++atomBegin) {
+                  neighbors.append(atomBegin);
                }
             }
          }
       } else {
-         for (int ic = 0; ic < nc; ++ic) {
-            cellPtr = this + (*offsetsPtr_)[ic];
-            if (cellPtr->id() >= id_ || cellPtr->isGhostCell()) {
-               na = cellPtr->nAtom();
-               for (ia = 0; ia < na; ++ia) {
-                  neighbors.append(cellPtr->atomPtr(ia));
+         for (is = 0; is < ns; ++is) {
+            cellBegin = this + (*offsetsPtr_)[is].first;
+            cellEnd = this + (*offsetsPtr_)[is].second;
+            if (cellBegin->id() >= id_) {
+               atomBegin = cellBegin->begin_;
+               atomEnd = cellEnd->begin_ + cellEnd->nAtom_;
+               for ( ; atomBegin < atomEnd; ++atomBegin) {
+                  neighbors.append(atomBegin);
+               }
+            } else {
+               bg = cellBegin->isGhostCell();
+               eg = cellEnd->isGhostCell();
+               if (bg || eg) {
+                  while (!bg){
+                     ++cellBegin;
+                     bg = cellBegin->isGhostCell();
+                  }
+                  while (!eg){
+                     --cellEnd;
+                     eg = cellEnd->isGhostCell();
+                  }
+                  assert(cellEnd >= cellBegin);
+                  atomBegin = cellBegin->begin_;
+                  atomEnd = cellEnd->begin_ + cellEnd->nAtom_;
+                  for ( ; atomBegin < atomEnd; ++atomBegin) {
+                     neighbors.append(atomBegin);
+                  }
                }
             }
          }

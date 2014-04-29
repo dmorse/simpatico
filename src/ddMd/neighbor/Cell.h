@@ -8,9 +8,12 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/global.h>
+#include <ddMd/neighbor/CellAtom.h>
 #include <ddMd/chemistry/Atom.h>
 #include <util/containers/FSArray.h>
+#include <util/global.h>
+
+#include <utility>
 
 namespace DdMd
 {
@@ -20,7 +23,7 @@ namespace DdMd
    /**
    * A single Cell in a CellList.
    *
-   * An initialized Cell has an array of Atom* pointers, a pointer to 
+   * An initialized Cell has an array of CellAtom objects, a pointer to 
    * the next Cell in a linked list, and a pointer to an array of integer
    * offsets to neighboring cells. 
    *
@@ -73,29 +76,38 @@ namespace DdMd
       // Static members
 
       /**
-      * Maximum allowed number of neighboring cells. 
-      */
-      static const int MaxNeighborCell = 27;
-      
-      /**
       * Maximum possible number of atoms in this an neighboring cells.
       */
       static const int MaxNeighborAtom = 2000;
 
       /**
+      * Maximum number of cell per cutoff length.
+      */
+      static const int MaxNCellCut = 4;
+      
+      /**
+      * Maximum allowed number of neighboring cells. 
+      */
+      static const int OffSetArrayCapacity = (2*MaxNCellCut + 1)*(2*MaxNCellCut + 1) + 3;
+    
+      /**
+      * An array of strips of relative ids for columns of neighboring cells.
+      *
+      * Every cell has a pointer to an OffsetArray, which uses relative 
+      * cell indices (offsets relative to the cell id of the primary cell) 
+      * to identify neighboring cells. Each std::pair<int, int> element in 
+      * in an OffsetArra contains relative addresses for the the first 
+      * (pair.first) and last (pair.second) cells in a contiguous strip of 
+      * cells that could contain atoms that lie within a cutoff length of 
+      * some point in the primary cell. The contents of the OffsetArray
+      * are calculated in the CellList::makeGrid() function.
+      */
+      typedef FSArray< std::pair<int,int>, OffSetArrayCapacity> OffsetArray;
+
+      /**
       * Static array for holding neighbors in a cell list.
       */
-      typedef FSArray<Atom*, MaxNeighborAtom> NeighborArray;
-
-      /**
-      * An array of integer offsets to neighboring cells.
-      */
-      typedef FSArray<int, MaxNeighborCell> OffsetArray;
-
-      /**
-      * Identifier type for an Atom.
-      */
-      typedef Atom* Handle;
+      typedef FSArray<CellAtom*, MaxNeighborAtom> NeighborArray;
 
       /**
       * Constructor.
@@ -126,8 +138,7 @@ namespace DdMd
       *
       * \param id integer identifier for this Cell
       */
-      void setId(int id) 
-      {  id_ = id; }
+      void setId(int id);
 
       /**
       * Set the pointer to an array of integer offsets.
@@ -156,7 +167,7 @@ namespace DdMd
       void incrementCapacity();
 
       /**
-      * Associate the Cell with an array of Atom* pointers.
+      * Associate the Cell with an array of CellAtom objects.
       *
       * The final capacity of the cell must be known when this method
       * is called. It associate the Cell with a C array of capacity 
@@ -166,10 +177,10 @@ namespace DdMd
       * \param begin first element in associated array segment.
       * \return end of array segment (element one past the end)
       */
-      Atom** initialize(Atom** begin);
+      CellAtom* initialize(CellAtom* begin);
 
       /**
-      * Append an Atom* pointer to an initialized cell.
+      * Append an Atom to an initialized cell.
       */
       void append(Atom* atomPtr);
 
@@ -178,8 +189,7 @@ namespace DdMd
       /**
       * Get identifier for this Cell.
       */
-      int id() const
-      {  return id_; }
+      int id() const;
   
       /**
       * Number of atoms in cell.
@@ -194,22 +204,12 @@ namespace DdMd
       /**
       * Return a pointer to atom i.
       */
-      Atom* atomPtr(int i) const;
-
-      /**
-      * Return the number of neighboring cells.
-      */
-      int nNeighborCell() const;
+      CellAtom* atomPtr(int i) const;
 
       /**
       * Is this a ghost cell?
       */
       bool isGhostCell() const;
-
-      /**
-      * Return a pointer to neighbor cell i.
-      */
-      const Cell* neighborCellPtr(int i) const;
 
       /**
       * Fill an array with pointers to atoms in a cell and neighboring cells.
@@ -231,7 +231,7 @@ namespace DdMd
    private:
 
       /// Pointer to first Atom* pointer for this cell.
-      Atom**  begin_;         
+      CellAtom*  begin_;         
 
       /// Pointer to neighbor offset array.
       OffsetArray*  offsetsPtr_;
@@ -245,9 +245,6 @@ namespace DdMd
       /// Maximum number of atoms in cell.
       int  atomCapacity_;  
 
-      /// Number of neighboring cells.
-      int  nNeighborCell_;
-
       /// Id of cell in grid.
       int id_;
 
@@ -256,10 +253,13 @@ namespace DdMd
 
    };
 
+   inline void Cell::setId(int id) 
+   {  id_ = id; }
+
    inline void Cell::incrementCapacity()
    {
       assert(begin_ == 0);
-      ++atomCapacity_; 
+      ++atomCapacity_;
    }
 
    inline void Cell::clear()
@@ -269,10 +269,10 @@ namespace DdMd
       atomCapacity_ = 0;
    }
 
-   inline Atom** Cell::initialize(Atom** begin)
+   inline CellAtom* Cell::initialize(CellAtom* begin)
    {
       assert(begin_ == 0);
-      assert(nAtom_  == 0);
+      assert(nAtom_ == 0);
       assert(atomCapacity_  >= 0);
 
       begin_ = begin; 
@@ -283,10 +283,16 @@ namespace DdMd
    {
       assert(begin_ != 0);
       assert(nAtom_ < atomCapacity_);
-      begin_[nAtom_] = atomPtr;
+      begin_[nAtom_].setPtr(atomPtr);
       ++nAtom_;
    }
 
+   /*
+   * Get identifier for this Cell.
+   */
+   inline int Cell::id() const
+   {  return id_; }
+  
    /*
    * Return number of atoms in this cell.
    */
@@ -296,29 +302,11 @@ namespace DdMd
    /*
    * Return pointer to atom i.
    */
-   inline Atom* Cell::atomPtr(int i) const
+   inline CellAtom* Cell::atomPtr(int i) const
    {
       assert(i >= 0);
       assert(i < nAtom_);
-      return begin_[i];
-   }
-
-   /*
-   * Return number of neighboring cells. 
-   */
-   inline int Cell::nNeighborCell() const
-   {
-      assert(offsetsPtr_);  
-      return offsetsPtr_->size(); 
-   }
-
-   /*
-   * Pointer to neighboring cell number i. 
-   */
-   inline const Cell* Cell::neighborCellPtr(int i) const
-   { 
-      assert(offsetsPtr_);  
-      return (this + (*offsetsPtr_)[i]); 
+      return &begin_[i];
    }
 
    /*

@@ -1,15 +1,17 @@
 
 SRC_DIR_REL=../../../src
-SRC_DIR=../../../src
 
 include $(SRC_DIR_REL)/config.mk
-include $(SRC_DIR_REL)/util/config.mk
-include $(SRC_DIR_REL)/inter/config.mk
-include $(SRC_DIR_REL)/mcMd/config.mk
-include $(SRC_DIR_REL)/mcMd/patterns.mk
-include $(SRC_DIR_REL)/util/sources.mk
-include $(SRC_DIR_REL)/inter/sources.mk
-include $(SRC_DIR_REL)/mcMd/sources.mk
+include $(OBJ_DIR)/util/config.mk
+include $(OBJ_DIR)/inter/config.mk
+
+LIBS= $(inter_LIB) $(util_LIB)
+DEFINES=$(UTIL_DEFS) $(INTER_DEFS)
+
+# Dependencies of source files in src/inter on makefile fragments
+MAKE_DEPS= -A$(OBJ_DIR)/config.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/util/config.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/inter/config.mk
 
 all: ChainMaker.o ChainMaker
 
@@ -18,8 +20,10 @@ clean:
 	-rm -f ChainMaker.d
 	-rm -f ChainMaker
 
--include ChainMaker.d
+ChainMaker.o: ChainMaker.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o ChainMaker.o ChainMaker.cpp 
+	
+ChainMaker: ChainMaker.o $(LIBS)
+	$(CXX) $(LDFLAGS) $(DEFINES) $(INCLUDES) -o ChainMaker ChainMaker.o $(LIBS)
 
-ChainMaker: ChainMaker.cpp $(inter_OBJS) $(util_OBJS)
-	$(CXX) $(LDFLAGS) $(DEFINES) $(INCLUDES) -o ChainMaker ChainMaker.o \
-               $(inter_OBJS) $(util_OBJS)
+-include ChainMaker.d

@@ -79,7 +79,7 @@ namespace DdMd
       /**	
       * Constructor.
       *
-      * \param system reference to parent System object
+      * \param simulation reference to parent Simulation object
       */
       VanHove(Simulation &simulation);
 

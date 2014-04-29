@@ -109,16 +109,27 @@ namespace Util
       */
       virtual ~ParamComposite();
 
-      /// \name Initialization methods
+      /**
+      * Resets ParamComposite to its empty state.
+      *
+      * This method deletes Parameter, Begin, End, and Blank objects in the
+      * format array (i.e., all "leaf" objects in the format tree), invokes
+      * the resetParam() for any child ParamComposite in the format array
+      * (the nodes in the true), and clears the array of pointers.
+      */
+      void resetParam();
+
+      /// \name Read and write functions for the composite
       //@{
 
       /**
-      * Read a parameter file block.
+      * Read the parameter file block.
       *
       * Inherited from ParamComponent. This method reads the entire parameter
-      * block, including the opening line "ClassName{" and the closing bracket
-      * "}". The default implementation calls the virtual readParameters
-      * method to read the body of the block, and adds Begin and End objects.
+      * block for this ParamComposite, including the opening line "ClassName{" 
+      * and the closing bracket "}". The default implementation calls the virtual 
+      * readParameters method to read the body of the block, and adds Begin and 
+      * End objects.
       *
       * \param in input stream for reading
       */
@@ -127,10 +138,10 @@ namespace Util
       /**
       * Read optional parameter file block.
       *
-      * Read an optional ParamComposite. This meethod attempts to reads the
+      * Read an optional ParamComposite. This function attempts to reads the
       * beginning "ClassName{" line, and then continues to read the parameter
-      * block and closing bracket line only if the beginning line matches.
-      * The default implementation calls the readParametersst::istream&()
+      * block and closing bracket line if only if the beginning line matches.
+      * The default implementation calls the readParameters(std::istream&)
       * member function to read the enclosed parameter block.
       *
       * \param in input stream for reading
@@ -138,10 +149,10 @@ namespace Util
       virtual void readParamOptional(std::istream &in);
 
       /**
-      * Read body of parameter block, without opening and closing lines.
+      * Read the body of parameter block, without begin and end lines.
       *
-      * Most subclasses of ParamComposite should overload readParameters.
-      * The default implementation is empty. All subclasses must overload
+      * Most subclasses of ParamComposite should overload this function.
+      * The default implementation is empty. Each subclass must overload
       * either readParameters or readParam, but not both.
       *
       * \param in input stream for reading
@@ -154,19 +165,23 @@ namespace Util
       *
       * The default implementation iterates through the format array, and
       * calls the readParam member function of each ReadComponent in the
-      * array.  This is sufficient for most subclasses.
+      * array.  This implementation is sufficient for most subclasses.
       *
       * \param out output stream for reading
       */
       virtual void writeParam(std::ostream &out);
 
+      //@}
+      /// \name Serialization: Load and save methods for this composite
+      //@{
+
       /**
-      * Load all parameters from an archive.
+      * Load all parameters from an input archive.
       *
       * This function is inherited from Serializable. The default
       * implementation for a ParamComposite calls loadParameters, and
       * adds Begin and End lines. All subclasses of ParamComposite
-      * should overload loadParameters.
+      * should overload the virtual loadParameters member function.
       *
       * \param ar input/loading archive.
       */
@@ -216,28 +231,18 @@ namespace Util
       virtual void save(Serializable::OArchive &ar);
 
       /**
-      * Saves isActive flag, then calls save() iff isActive is true.
+      * Saves isActive flag, and then calls save() iff isActive is true.
       *
       * \param ar output/saving archive.
       */
       void saveOptional(Serializable::OArchive &ar);
 
-      /**
-      * Resets ParamComposite to its empty state.
-      *
-      * This method deletes Parameter, Begin, End, and Blank objects in the
-      * format array (i.e., all "leaf" objects in the format tree), invokes
-      * the resetParam() for any child ParamComposite in the format array
-      * (the nodes in the true), and clears the array of pointers.
-      */
-      void resetParam();
-
       //@}
-      /// \name read* methods
-      /// \brief Each of these methods invokes an associated add* method to
+      /// \name read* functions for child components
+      /// \brief Each of these functions invokes an associated add* method to
       /// create a new ParamComponent object, and then invoke the readParam()
-      /// method of the new object to read the associated line or block of a
-      /// parameter file.
+      /// function of the new object to read the associated line or block of 
+      /// a parameter file.
       //@{
 
       /**
@@ -431,7 +436,7 @@ namespace Util
       Blank& readBlank(std::istream &in);
 
       //@}
-      /// \name load* methods
+      /// \name load* functions for child components
       /// \brief Each of these methods invokes an associated add* method to
       /// create a new ParamComponent object, and then invokes the load()
       /// method of the new object to load the associated parameter value
@@ -450,7 +455,10 @@ namespace Util
                          bool next = true);
 
       /**
-      * Add and load contents of optional child ParamComposite if isActive.
+      * Add and load an optional child ParamComposite if isActive.
+      *
+      * This functional loads the isActive flag, and then calls the load
+      * method of the child iff isActive is true.
       *
       * \param ar  input archive for loading
       * \param child  child ParamComposite object
@@ -461,13 +469,13 @@ namespace Util
                                  ParamComposite &child, bool next = true);
 
       /**
-      * Add a new Param < Type > object, and load its value.
+      * Add and load a new ScalarParam < Type > object.
       *
       * \param ar  archive for loading
       * \param label  Label string
       * \param value  reference to the Type variable
       * \param isRequired Is this a required parameter?
-      * \return reference to the new CArrayParam<Type> object
+      * \return reference to the new ScalarParam < Type > object
       */
       template <typename Type>
       ScalarParam<Type>& loadParameter(Serializable::IArchive &ar,
@@ -476,6 +484,13 @@ namespace Util
 
       /**
       * Add and load new required ScalarParam < Type >  object.
+      *
+      * Equivalent to loadParameter < Type > (ar, label, value, true).
+      *
+      * \param ar  archive for loading
+      * \param label  label string
+      * \param value  reference to the Type variable
+      * \return reference to the new ScalarParam < Type > object
       */
       template <typename Type>
       ScalarParam<Type>& loadParameter(Serializable::IArchive &ar,
@@ -483,10 +498,10 @@ namespace Util
       {  return loadParameter<Type>(ar, label, value, true); }
 
       /**
-      * Add a C array parameter, and load its elements.
+      * Add a C array parameter and load its elements.
       *
       * \param ar  archive for loading
-      * \param label  Label string for new array
+      * \param label  label string for new array
       * \param value  pointer to array
       * \param n  number of elements
       * \param isRequired Is this a required parameter?
@@ -499,6 +514,14 @@ namespace Util
 
       /**
       * Add and load a required CArrayParam< Type > array parameter.
+      * 
+      * Equivalent to loadCArray < Type > (ar, label, value, n, true).
+      * 
+      * \param ar  archive for loading
+      * \param label  label string for new array
+      * \param value  pointer to array
+      * \param n  number of elements
+      * \return reference to the new CArrayParam<Type> object
       */
       template <typename Type>
       CArrayParam<Type>&
@@ -523,6 +546,14 @@ namespace Util
 
       /**
       * Add and load a required DArray< Type > array parameter.
+      *
+      * Equivalent to loadDArrayParam < Type > (ar, label, array, n, true).
+      *
+      * \param ar  archive for loading
+      * \param label  Label string for new array
+      * \param array  DArray object
+      * \param n  number of elements (logical size)
+      * \return reference to the new DArrayParam<Type> object
       */
       template <typename Type>
       DArrayParam<Type>&
@@ -534,7 +565,7 @@ namespace Util
       * Add and load an FArray < Type, N > fixed-size array parameter.
       *
       * \param ar  archive for loading
-      * \param label  Label string for new array
+      * \param label  label string for new array
       * \param array  FArray object
       * \param isRequired  Is this a required parameter?
       * \return reference to the new FArrayParam<Type, N> object
@@ -546,6 +577,13 @@ namespace Util
 
       /**
       * Add and load a required FArray < Type > array parameter.
+      *
+      * Equivalent to loadFArrayParam < Type > (ar, label, array, true).
+      *
+      * \param ar  archive for loading
+      * \param label  label string for new array
+      * \param array  FArray object
+      * \return reference to the new FArrayParam<Type, N> object
       */
       template <typename Type, int N>
       FArrayParam<Type, N>&
@@ -572,6 +610,16 @@ namespace Util
 
       /**
       * Add and load a required < Type > matrix parameter.
+      * 
+      * Equivalent to loadCArray2DParam < Type > (ar, label, value, m, n, np, true).
+      *
+      * \param ar  archive for loading
+      * \param label  Label string for new array
+      * \param value  pointer to array
+      * \param m  number of rows (1st dimension)
+      * \param n  logical number of columns (2nd dimension)
+      * \param np  physical number of columns (elements allocated per row)
+      * \return reference to the CArray2DParam<Type> object
       */
       template <typename Type>
       CArray2DParam<Type>&
@@ -580,7 +628,7 @@ namespace Util
       {  return loadCArray2D<Type>(ar, label, value, m, n, np, true); }
 
       /**
-      * Add and load a DMatrix < Type > matrix parameter.
+      * Add and load a DMatrixParam < Type > matrix parameter.
       *
       * \param ar  archive for loading
       * \param label  Label string for new array
@@ -596,7 +644,16 @@ namespace Util
                   DMatrix<Type>& matrix, int m, int n, bool isRequired);
 
       /**
-      * Add and load a required < Type > matrix parameter.
+      * Add and load a required DMatrixParam < Type > parameter.
+      * 
+      * Equivalent to loadDMatrix < Type > (ar, label, value, m, n, true).
+      *
+      * \param ar  archive for loading
+      * \param label  Label string for new array
+      * \param matrix  DMatrix object
+      * \param m  number of rows (1st dimension)
+      * \param n  number of columns (2nd dimension)
+      * \return reference to the DMatrixParam<Type> object
       */
       template <typename Type>
       DMatrixParam<Type>&
@@ -606,9 +663,9 @@ namespace Util
 
       //@}
 
-      /// \name add* methods
-      /// \brief These methods add a ParamComponent object to the format
-      /// array, but do not read any data from an input stream.
+      /// \name add* functions for child components
+      /// \brief These methods each add a ParamComponent object to the
+      /// format array, but do not read any data from an input stream.
       //@{
 
       /**
@@ -620,7 +677,7 @@ namespace Util
       void addParamComposite(ParamComposite& child, bool next = true);
 
       /**
-      * Create and add a class label and opening bracket.
+      * Create and add a Begin object representing a class name and bracket.
       *
       * \param label class name string, without trailing bracket
       * \return reference to the new begin object.
@@ -642,6 +699,8 @@ namespace Util
       Blank& addBlank();
 
       //@}
+      /// \name Accessors
+      //@{
 
       /**
       * Get class name string.
@@ -657,6 +716,8 @@ namespace Util
       * Is this parameter active?
       */
       bool isActive() const;
+
+      //@}
 
    protected:
 

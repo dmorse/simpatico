@@ -1,9 +1,11 @@
 boundary  orthorhombic 6.0 3.0 9.0
+HarmonicBond{
 kappa  400.0
 length 1.0
+}
 Random{
   seed   10314761
 }
 nMolecule          5
 nAtomPerMolecule   8
-DdMd
+DdMdMole

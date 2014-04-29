@@ -14,37 +14,33 @@ Ideas:
 
 1) Make each GroupStorage a member of the associated potential.
 
-2) Abstract communication of groups in a manner that can be generalized
-   to other potentials. This requires an analysis of how the groups 
-   storage containers are currently used in exchanges, distribution,
-   and collection.
+2) Create a more abstract interface for GroupStorage, to allow use in
+   other potentials and generic interface for config file Io.
 
 ------------------------------------------------------------------------
 Plan (order of changes):
 
-1) Make changes to Buffer first, to first move (pack|unpack)Group
-   methods to Group<N> template, where they belong (Done).
+1) Create a GroupReference class as a generic group type for use by
+   GroupExchanger, GroupDistributor and GroupCollector (not begun).
 
-2) Change all methods of Exchanger that involve GroupStorage 
-   to methods of GroupStorage<N> (Done).
+2) Modify GroupExchanger and GroupStorage classes to provide
+   functions that provide GroupReference objects.
 
-3) Create an appropriate abstraction for use of GroupStorage by
-   GroupDistributor and GroupCollector (not begun)
+   - See GroupReference files for details
 
-4) Move GroupStorage to be a member of corresponding Potential.
+3) Modify GroupDistributor and GroupCollector to use the new class
+   in implementation and interface. Change from templates to concrete 
+   classes.
 
-5) Create PotentialMaster. This can read PairPotential, etc., then
-   read the pair style. 
+3) Modify ConfigIos to use the new interfaces of GroupDistributor and
+   GroupCollector.
+
+  - See GroupReference ConfigIos file for required interfaces of 
+    GroupCollector and GroupDistributor, as used in a ConfigIo.
+
+4) Move GroupStorage to be a member of the corresponding Potential.
 
 ------------------------------------------------------------------------
 Next Step:
 
-  - Figure out how to abstract the association between ConfigIos,
-    GroupDistributor and GroupCollector and GroupStorage<N> classes. 
-
-    The problem is that these classes interact using pointers to
-    Group<N> objects, and that the use of templates makes it very
-    difficult to write generic interfaces or virtual functions.
-
-    See proposal for this ConfigIo file.
 

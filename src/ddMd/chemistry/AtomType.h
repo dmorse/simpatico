@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <string>
 #include <iostream>
-#include <util/global.h>
 
 namespace DdMd
 {

@@ -35,8 +35,10 @@ private:
    AtomArray     atoms;
    DPArray<Atom> locals;
    DPArray<Atom> ghosts;
+   Vector        lengths;
    Vector        lower;
    Vector        upper;
+   Vector        cutoffs;
    double        cutoff;
    double        cutoffSq;
    int           nAtom;
@@ -45,8 +47,10 @@ private:
 public:
 
    PairListTest()
-    : lower(0.0),
-      upper(2.0, 3.0, 4.0),
+    : lengths(4.0, 6.0, 8.0),
+      lower(2.0, 0.0, 4.0),
+      upper(4.0, 3.0, 8.0),
+      cutoffs(),
       cutoff(1.2),
       cutoffSq(1.44),
       nAtom(200),
@@ -54,24 +58,36 @@ public:
    {}
    
    void setUp()
+   {}
+
+
+   void tearDown()
+   {}
+
+   void makeConfiguration(int nCutCell = 1)
    {
+      for (int i=0; i < Dimension; ++i) {
+         lower[i] = lower[i]/lengths[i];
+         upper[i] = upper[i]/lengths[i];
+         cutoffs[i] = cutoff/lengths[i];
+      }
 
       // Setup CellList
-      cellList.allocate(nAtom, lower, upper, cutoff);
-      cellList.makeGrid(lower, upper, cutoff);
+      cellList.allocate(nAtom, lower, upper, cutoffs, nCutCell);
+      cellList.makeGrid(lower, upper, cutoffs, nCutCell);
       pairList.allocate(nAtom, pairCapacity, cutoff);
 
       #if 0
       TEST_ASSERT(cellList.grid().dimension(0) == 3);
       TEST_ASSERT(cellList.grid().dimension(1) == 4);
       TEST_ASSERT(cellList.grid().dimension(2) == 5);
-      TEST_ASSERT(eq(cellList.cellLength(0), 2.0));
-      TEST_ASSERT(eq(cellList.cellLength(1), 1.5));
-      TEST_ASSERT(eq(cellList.cellLength(2), 4.0/3.0));
+      TEST_ASSERT(eq(cellList.cellLength(0), 0.5));
+      TEST_ASSERT(eq(cellList.cellLength(1), 0.25));
+      TEST_ASSERT(eq(cellList.cellLength(2), 1.0/6.0));
       TEST_ASSERT(cellList.grid().size() == 60);
       #endif
 
-      // Allocate Atom 
+      // Allocate atom arrays
       atoms.allocate(nAtom);
       locals.allocate(nAtom);
       ghosts.allocate(nAtom);
@@ -80,20 +96,12 @@ public:
          atoms[i].setId(i);
       }
 
-   }
-
-
-   void tearDown()
-   {}
-
-   void makeConfiguration()
-   {
       Vector lowerGhost;
       Vector upperGhost;
-      int    i, j;
+      int  i, j;
       for (i = 0; i < Dimension; ++i) {
-          lowerGhost[i] = lower[i] - cutoff;
-          upperGhost[i] = upper[i] + cutoff;
+          lowerGhost[i] = lower[i] - cutoffs[i];
+          upperGhost[i] = upper[i] + cutoffs[i];
       }
 
       // Create new random number generator
@@ -107,6 +115,8 @@ public:
       int ic;
       bool ghost;
       cellList.clear();
+      locals.clear();
+      ghosts.clear();
       for (i = 0; i < nAtom; ++i) {
          atoms[i].setTypeId(1);
          ghost = false;
@@ -154,6 +164,15 @@ public:
       }
       TEST_ASSERT(na == locals.size());
       #endif
+
+      // Transform coordinates to Cartesian
+      for (i = 0; i < nAtom; ++i) {
+         for (j = 0; j < Dimension; ++j) {
+            atoms[i].position()[j] *= lengths[j];
+         }
+      }
+      cellList.update();
+
    }
 
    void testCountNeighbors()
@@ -165,8 +184,85 @@ public:
       // Find all neighbors (cell list)
       Cell::NeighborArray neighbors;
       const Cell* cellPtr = cellList.begin();
+      CellAtom* cellAtom1Ptr;
+      CellAtom* cellAtom2Ptr;
+      Vector dr;
+      int na;      // number of atoms in a cell
+      int nn;      // number of neighbors for a cell
+      int np = 0;  // Number of pairs within cutoff
+      int i, j;
+
+      cellPtr = cellList.begin();
+      while (cellPtr) {
+         cellPtr->getNeighbors(neighbors);
+         na = cellPtr->nAtom();
+         nn = neighbors.size();
+         for (i = 0; i < na; ++i) {
+            cellAtom1Ptr = neighbors[i];
+            for (j = 0; j < na; ++j) {
+               cellAtom2Ptr = neighbors[j];
+               if (cellAtom2Ptr > cellAtom1Ptr) {
+                  dr.subtract(cellAtom2Ptr->position(), cellAtom1Ptr->position()); 
+                  if (dr.square() <= cutoffSq) {
+                     ++np;
+                  }
+               }
+            }
+            for (j = na; j < nn; ++j) {
+               cellAtom2Ptr = neighbors[j];
+               dr.subtract(cellAtom2Ptr->position(), cellAtom1Ptr->position()); 
+               if (dr.square() <= cutoffSq) {
+                  ++np;
+               }
+            }
+         }
+         cellPtr = cellPtr->nextCellPtr();
+      }
+      //std::cout << "Total number of pairs = " << np << std::endl;
+
+      // Count neighbor pairs (N^2 loop)
       Atom* atom1Ptr;
       Atom* atom2Ptr;
+      int nq = 0;
+      for (i = 0; i < locals.size(); ++i) {
+         atom1Ptr = &locals[i];
+         for (j = 0; j < locals.size(); ++j) {
+            atom2Ptr = &locals[j];
+            if (atom2Ptr > atom1Ptr) {
+               dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+               if (dr.square() <= cutoffSq) {
+                  ++nq;
+               }
+            }
+         }
+         for (j = 0; j < ghosts.size(); ++j) {
+            atom2Ptr = &ghosts[j];
+            dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+            if (dr.square() <= cutoffSq) {
+               ++nq;
+            }
+         }
+      }
+      //std::cout << "Total number of pairs = " << nq << std::endl;
+
+      TEST_ASSERT(np == nq);
+
+      pairList.build(cellList);
+      TEST_ASSERT(np == pairList.nPair());
+
+   }
+
+   void testCountNeighbors2()
+   {
+      printMethod(TEST_FUNC);
+
+      makeConfiguration(3);
+
+      // Find all neighbors (cell list)
+      Cell::NeighborArray neighbors;
+      const Cell* cellPtr = cellList.begin();
+      CellAtom* cellAtom1Ptr;
+      CellAtom* cellAtom2Ptr;
       Vector dr;
       int    na;      // number of atoms in a cell
       int    nn;      // number of neighbors for a cell
@@ -179,19 +275,19 @@ public:
          na = cellPtr->nAtom();
          nn = neighbors.size();
          for (i = 0; i < na; ++i) {
-            atom1Ptr = neighbors[i];
+            cellAtom1Ptr = neighbors[i];
             for (j = 0; j < na; ++j) {
-               atom2Ptr = neighbors[j];
-               if (atom2Ptr > atom1Ptr) {
-                  dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+               cellAtom2Ptr = neighbors[j];
+               if (cellAtom2Ptr > cellAtom1Ptr) {
+                  dr.subtract(cellAtom2Ptr->position(), cellAtom1Ptr->position()); 
                   if (dr.square() <= cutoffSq) {
                      ++np;
                   }
                }
             }
             for (j = na; j < nn; ++j) {
-               atom2Ptr = neighbors[j];
-               dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+               cellAtom2Ptr = neighbors[j];
+               dr.subtract(cellAtom2Ptr->position(), cellAtom1Ptr->position()); 
                if (dr.square() <= cutoffSq) {
                   ++np;
                }
@@ -202,6 +298,8 @@ public:
       //std::cout << "Total number of pairs = " << np << std::endl;
 
       // Count neighbor pairs (N^2 loop)
+      Atom* atom1Ptr;
+      Atom* atom2Ptr;
       int nq = 0;
       for (i = 0; i < locals.size(); ++i) {
          atom1Ptr = &locals[i];
@@ -269,6 +367,7 @@ public:
 
 TEST_BEGIN(PairListTest)
 TEST_ADD(PairListTest, testCountNeighbors)
+TEST_ADD(PairListTest, testCountNeighbors2)
 TEST_ADD(PairListTest, testPairIterator)
 TEST_END(PairListTest)
 

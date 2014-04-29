@@ -54,13 +54,15 @@ public:
    * Children added by this method are owned by the parent CompositeTestRunner,
    * and so are destroyed by its destructor.  
    *
-   * \param childPtr   pointer to child TestRunner
-   * \param filePrefix prefix to append to file names in all descendants
+   * \param childPtr  pointer to child TestRunner
+   * \param prefix  prefix to append to file names in all descendants
    */
    void addChild(TestRunner* childPtr, const std::string& prefix);
 
    /**
    * Prepend argument prefix to existing filePrefix.
+   *
+   * \param prefix string to prepend to existing filePrefix.
    */
    virtual void addFilePrefix(const std::string& prefix);
 

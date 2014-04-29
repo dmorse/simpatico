@@ -24,6 +24,8 @@ public:
 
    void writeChainsDdMd(std::ostream& out);
 
+   void writeChainsDdMdMole(std::ostream& out);
+
 private:
 
    Boundary       boundary_;

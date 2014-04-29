@@ -1,44 +1,54 @@
-/*! \page inter_page 2.7 Interactions
+/*! \page inter_page 2.7 Potential Energies (Interactions)
 
 \ref user_examples_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
 \ref user_analysis_page (Next)
 <BR>
+
+The potential energy used by a Simpatico simulation may contain:
+
+ - a non-bonded pair interaction
+
+ - bond, angle and dihedral 2,3 and 4-body covalent interactions
+
+ - an external 1-body potential
+
+Specific functional form for each type of interaction implemented by "interaction" classes, which are defined in the Inter namespace. The choice of which functional form to use for potential energy contribution is specified in the parameter file by "style" string parameter (e.g., pairStyle or bondStyle) whose value is given by the name of the associated interaction class. 
  
 <h2> Contents: </h2>
 <ul style="list-style: none;">
   <li> \subpage inter_pair_page 
      <ul style="list-style: none;">
-       <li> \ref inter_pair_LJPair_page </li>
-       <li> \ref inter_pair_WcaPair_page </li>
-       <li> \ref inter_pair_DpdPair_page </li>
+       <li> \ref inter_pair_LJPair_page - truncated Lennard-Jones </li>
+       <li> \ref inter_pair_WcaPair_page - Weeks-Chandler-Anderson (purely repulsive Lennard-Jones)</li>
+       <li> \ref inter_pair_DpdPair_page - soft potential typical of dissipative particle dynamics (DPD) simulations </li>
      </ul>
   </li>
   <li> \subpage inter_bond_page 
      <ul style="list-style: none;">
-       <li> \ref inter_bond_HarmonicBond_page </li>
-       <li> \ref inter_bond_HarmonicL0Bond_page </li>
-       <li> \ref inter_bond_FeneBond_page </li>
+       <li> \ref inter_bond_HarmonicBond_page - harmonic bond </li>
+       <li> \ref inter_bond_HarmonicL0Bond_page - harmonic bond with zero rest length (i.e., a Gaussian spring)</li>
+       <li> \ref inter_bond_FeneBond_page - finitely extensible bond </li>
      </ul>
   </li>
   <li> \subpage inter_angle_page 
      <ul style="list-style: none;">
-       <li> \ref inter_angle_CosineAngle_page </li>
-       <li> \ref inter_angle_CosineSqAngle_page </li>
-       <li> \ref inter_angle_HarmonicAngle_page </li>
+       <li> \ref inter_angle_CosineAngle_page - proportional to the cosine of the bending angle </li>
+       <li> \ref inter_angle_CosineSqAngle_page - proportional to the square of cosine of bending angle</li>
+       <li> \ref inter_angle_HarmonicAngle_page - harmonic in bending angle </li>
      </ul>
   </li>
   <li> \subpage inter_dihedral_page 
      <ul style="list-style: none;">
-       <li> \ref inter_dihedral_CosineDihedral_page </li>
-       <li> \ref inter_dihedral_MultiHarmonicDihedral_page </li>
+       <li> \ref inter_dihedral_CosineDihedral_page - proportional to cosine of dihedral angle </li>
+       <li> \ref inter_dihedral_MultiHarmonicDihedral_page - Fourier expansion in dihedral angle </li>
      </ul>
   </li>
   <li> \subpage inter_external_page 
      <ul style="list-style: none;">
-       <li> \ref inter_external_LamellarOrderExternal_page </li>
-       <li> \ref inter_external_SlitExternal_page </li>
-       <li> \ref inter_external_BoxExternal_page </li>
-       <li> \ref inter_external_OrthoBoxExternal_page </li>
+       <li> \ref inter_external_LamellarOrderExternal_page - designed to induce layers </li>
+       <li> \ref inter_external_SlitExternal_page - 1D confinement to a slit</li>
+       <li> \ref inter_external_BoxExternal_page - 3D confinement to a box </li>
+       <li> \ref inter_external_OrthoBoxExternal_page - 3D confinement to a box (orthorhombic variant) </li>
      </ul>
   </li>
 </ul>

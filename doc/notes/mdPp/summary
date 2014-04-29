@@ -1,0 +1,68 @@
+----------------------------------------------------------------------
+Proposal: Create a stand-alone single-processor program for analyzing
+results of of parallel domain-decomposition molecular dynamics 
+simulations.
+
+Rationale: Some data analysis operations are much easier to implement 
+in a serial single-processor code, in which all information about the 
+system is available in memory. Examples include analyses that require 
+processing entire molecules, which is difficult to do in a parallel 
+code because molecules can span multiple processors.
+
+----------------------------------------------------------------------
+Proposal: Create a new name space, named MdPp (molecular dynamics post
+processor) for the classes used to construct this post-processor
+analysis program or programs.
+
+Rationale:  The new code will require data structures to store 
+information about atoms and groups of atoms, classes that can read
+particular file formats, and classes that can do analysis. All of
+the required classes are analogous to ones that are already defined
+in DdMd, but it appears that almost none of the DdMd classes can 
+actually be reused for this purpose, because of differences in the 
+data structure and interfaces appropriate for a multi-processor 
+simulation program and a single-processor analysis program. We cannot 
+directly reuse classes that read file formats, because they include 
+code to distribute particles among processors, and because they call
+methods of AtomStorage and GroupStorage objects that were designed
+specifically for use in a multi-processor program. We also cannot
+directly reuse the DdMd Analyzer classes, because they call methods
+of a Simulation and Storage classes that will not exist in a post
+processor. We could reuse the Atom and Group classes, but there are
+differences even in these between the optimal data structures for 
+use in a simulation and for use in a post-processor that makes it
+seem easier to simply define new version of these in a new namespace.
+
+--------------------------------------------------------------------
+Proposed Classes in MdPp:
+
+   Processor - a master class, analogous to DdMd Simulation
+   Analyzer  - an abstract base class, analogous to DdMd::Analyzer
+   ConfigIo  - an abstract base class, analogous to DdMd::ConfigIo
+   Atom      - analogous to DdMd::Atom
+   Group     - analogous to DdMd::Group
+
+   We may consider adding potentials later, but can start with this.
+
+--------------------------------------------------------------------
+MdPp::Atom:
+
+    Similar to DdMd::Atom, but without pseudo-members. All members
+    are real members of the object. 
+--------------------------------------------------------------------
+MdPp::Group<N>
+
+    Similar to DdMd::Group<N>, but stores only atom ids, rather than
+    pointers to atoms. Atoms will be accessible by id. 
+
+--------------------------------------------------------------------
+MdPp::Processor class:
+
+   Data structures (differences from DdMd):
+
+   1) A Processor will store both atoms and groups in simple arrays,
+      and will access by id.
+   2) To allow for missing ids, a processor will also provide iterators.
+   3) Groups will only store ids, rather than pointers.
+
+   see Processor.h for draft.

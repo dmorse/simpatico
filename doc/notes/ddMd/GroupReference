@@ -1,0 +1,122 @@
+--------------------------------------------------------------------------------
+Analysis / Rationale:
+
+   (1) GroupStorage is used only for communication (exchange, distribution, and
+   collection) and force/energy calculations. 
+
+   (2) The interface for force calculation is used inside of potential implementation
+   class templates that are designed for specific values of N (bonds, angles, etc). 
+   There would be no real advantage to making these generic. 
+
+   (3) The interface for Exchange has already been made generic, using an abstract
+   base class GroupExchanger.
+
+   (4) Interface of GroupStorage used by GroupDistributor and GroupCollector classes 
+   is largely generic except for the newPtr() function that returns a pointer to 
+   Group<N> and (in GroupCollector) the begin() function that initializes a 
+   GroupIterator<N>. 
+
+   - Functions currently used by GroupDistributor
+
+         newPtr* newPtr();
+         void GroupExchanger::add();
+         void GroupExchanger::returnPtr();
+
+         void GroupExchanger::unsetNTotal();
+         void GroupExchanger::computeNTotal();
+         int  GroupExchanger::nTotal();
+         bool GroupExchanger::isValid();
+
+   - Functions currently used by GroupCollector:
+
+         void begin(GroupIterator<N> iterator);
+
+   (5) Functions used by the GroupDistributor and GroupCollector classes only need 
+   access to atom indices, not atom pointers.
+
+--------------------------------------------------------------------------------
+Proposal:
+
+   (1) Create a new class GroupReference which is a generic wrapper around a Group<N>, 
+   which uses instances of this in the interface required by GroupDistributor and 
+   GroupCollector classes, rather than pointers to Group<N> objects.
+
+   (2) Add a function to GroupExchanger that returns an GroupReference by index, as a 
+   replacement for the use of an iterator by GroupCollector.
+
+   - Proposed class:
+
+     class GroupReference {
+
+       // Default constructor.
+       GroupReference();
+
+       // Assignment makes this a reference to a Group<N> object.
+       template <int N>
+       GroupReference& operator = (Group<N>& group);
+
+       void setId(int typeId);
+       void setTypeId(int typeId);
+       void setAtomId(int atomId, int i);
+
+       int id() const;
+       int typeId() const;
+       int atomId(int i) const;
+       int size() const;
+
+     private:
+
+       // Pointer to atomId array in associated Group<N>
+       int* atomIds_;
+
+       // Pointer to type id member in associated Group<N>
+       int* typeIdPtr_;
+
+       // Pointer to global id member in associated Group<N>
+       int* idPtr_;
+
+       // Size of group.
+       int  size_;
+
+     }
+
+   - Functions currently used by GroupDistributor
+
+         newPtr* newPtr();
+         void GroupExchanger::add();
+         void GroupExchanger::returnPtr();
+
+         void GroupExchanger::unsetNTotal();
+         void GroupExchanger::computeNTotal();
+         int  GroupExchanger::nTotal();
+         bool GroupExchanger::isValid();
+
+   - Functions currently used by GroupCollector:
+
+         void begin(GroupIterator<N> iterator);
+
+   - Add the following member functions to GroupExchanger.
+
+     // Replacement for newPtr():
+     void getNewGroup(GroupReference& group);
+
+     // Replacement for iterator, access by index.
+     void getGroup(GroupReference& group, int i);
+
+     // Get size of each group (number of atoms per group)
+     virtual int GroupExchanger::groupSize() const;
+
+   - Add the following other declarations to GroupExchanger:
+
+     virtual void GroupExchanger::add() = 0;
+     virtual void GroupExchanger::returnPtr() = 0;
+
+     virtual void GroupExchanger::unsetNTotal() = 0;
+     virtual void GroupExchanger::computeNTotal() = 0;
+     virtual int  GroupExchanger::nTotal() = 0;
+     virtual bool GroupExchanger::isValid() = 0;
+
+     Consider wrapping all of the code to check validity into a separate 
+     function that can be implemented by GroupExchanger. Ideally, this 
+     should consolidate the last 4 functions above.
+

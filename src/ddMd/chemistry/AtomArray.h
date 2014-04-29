@@ -9,6 +9,7 @@
 */
 
 #include <util/containers/Array.h>   // base class template
+#include "AtomContext.h"             // context structure.
 
 namespace Util {
    class Vector;
@@ -61,6 +62,11 @@ namespace DdMd
       void allocate(int capacity); 
 
       /**
+      * Set force vector to zero for all atoms in this array.
+      */
+      void zeroForces(); 
+
+      /**
       * Return true if this is already allocated, false otherwise.
       */
       bool isAllocated() const;
@@ -75,6 +81,15 @@ namespace DdMd
       * Data associated with the Atom in element i of the main data_
       * array is stored in element i in each of these arrays.
       */
+
+      #ifdef DDMD_MOLECULES
+
+      /**
+      * C-array of Atom velocities.
+      */
+      AtomContext*  contexts_;
+
+      #endif
 
       /**
       * C-array of Atom velocities.
