@@ -24,7 +24,7 @@ namespace DdMd
    *
    * \ingroup DdMd_Analyzer_Module
    */
-   class StressAutoCorr : public Analyzer
+   class StressAutoCorrelation : public Analyzer
    {
    
    public:
@@ -34,12 +34,12 @@ namespace DdMd
       *
       * \param simulation parent Simulation object. 
       */
-      StressAutoCorr(Simulation& simulation);
+      StressAutoCorrelation(Simulation& simulation);
    
       /**
       * Destructor.
       */
-      virtual ~StressAutoCorr()
+      virtual ~StressAutoCorrelation()
       {} 
    
       /**
@@ -88,16 +88,11 @@ namespace DdMd
       std::ofstream outputFile_;
       
       /// Statistical accumulator.
-      AutoCorrArray<double, double> accumulatorxy_;
-      AutoCorrArray<double, double> accumulatoryz_;
-      AutoCorrArray<double, double> accumulatorzx_;
+      AutoCorrArray<double, double> accumulator_;
 
       /// Number of samples per block average output
       int capacity_;
 
-      /// Number of configurations dumped thus far (first dump is zero).
-      long    nSample_;
-   
       /// Has readParam been called?
       long    isInitialized_;
    
