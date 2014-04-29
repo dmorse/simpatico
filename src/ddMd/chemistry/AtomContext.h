@@ -11,14 +11,6 @@
 #ifdef DDMD_MOLECULES
 
 namespace DdMd{
-<<<<<<< HEAD
-   struct AtomContext{
-      int speciesId;
-      int moleculeId:
-      int AtomId;
-   };
-=======
-
    /**
    * Descriptor for context of an Atom within a molecule and species.
    *
@@ -50,10 +42,6 @@ namespace DdMd{
       int atomId;
 
    };
-
->>>>>>> TAnalyzers
 }
-
-#endif
 
 #endif
