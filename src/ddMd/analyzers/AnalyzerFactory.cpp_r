@@ -27,6 +27,7 @@
 #include "StructureFactor.h"
 #include "StructureFactorGrid.h"
 #include "OrderParamNucleation.h"
+#include "VanHove.h"
 
 namespace DdMd
 {
@@ -93,6 +94,9 @@ namespace DdMd
       } else
       if (className == "OrderParamNucleation") {
          ptr = new OrderParamNucleation(simulation());
+      }
+      if (className == "VanHove") {
+         ptr = new VanHove(simulation());
       }
       return ptr;
    }
