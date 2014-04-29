@@ -62,11 +62,24 @@ Simulation{
     seed              8012457890
   }
   AnalyzerManager{
-     baseInterval     1000
+     baseInterval     1
 
      OutputEnergy{
         interval        2000
         outputFileName  energy
+     }
+
+     PairEnergyAverage{
+        interval         1
+        outputFileName   pairEnergy
+        pairs            0 1
+        nSamplePerBlock  1
+     }
+
+     ExternalPotentialAverage{
+        interval         1
+        outputFileName   externalPotential
+        nSamplePerBlock  1
      }
 
      OutputPressure{
@@ -77,43 +90,3 @@ Simulation{
   }
 }
 
-  AnalyzerManager{
-     baseInterval     1000
-
-     OutputEnergy{
-        interval         2000
-        outputFileName   energy
-     }
-
-     OutputPressure{
-        interval         2000
-        outputFileName   pressure
-     }
-     OutputBoxdim{
-        interval         2000
-        outputFileName   boxdim
-     }
-     OutputTemperature{
-        interval         2000
-        outputFileName   temperature
-      }
-  }
-}
-
-
-
-
-     WriteConfig{
-        interval         2000
-        outputFileName   config
-     }
-
-  nAngleType         0
-  hasExternal        0
-     WriteConfig{
-        interval          2000
-        outputFileName  config
-     }
-
-  nAngleType         0
-  hasExternal        0
