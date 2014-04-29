@@ -15,6 +15,7 @@
 
 #include <mdPp/chemistry/Atom.h>              // member (template argument)
 #include <mdPp/chemistry/Group.h>             // member (template argument)
+//#include <mdPp/processor/GroupStorage.h>      // member 
 #include <mdPp/configIos/ConfigIoFactory.h>   // member 
 #include <mdPp/analyzers/AnalyzerManager.h>   // member 
 
