@@ -9,6 +9,10 @@
 */
 
 #include <mdPp/configIos/ConfigIo.h>
+#include <mdPp/processor/GroupStorage.h>
+#include <mdPp/processor/Processor.h>
+
+#include <util/format/Int.h>
 
 namespace MdPp
 {
@@ -63,12 +67,56 @@ namespace MdPp
 
       bool hasMolecules_;
 
-      int readBonds(std::ifstream& file, 
-                    const char* sectionLabel, const char* nGroupLabel);
-      int writeBonds(std::ofstream& file, 
-                    const char* sectionLabel, const char* nGroupLabel);
+      template <int N>
+      int readGroups(std::ifstream& file, const char* sectionLabel, 
+                     const char* nGroupLabel, GroupStorage<N>& groups);
+
+      template <int N>
+      int writeGroups(std::ofstream& file, const char* sectionLabel, 
+                      const char* nGroupLabel, GroupStorage<N>& groups);
 
    };
+
+   // Member functions templates
+
+   /*
+   * Private method to read Group<N> objects.
+   */
+   template <int N>
+   int DdMdConfigIo::readGroups(std::ifstream& file, 
+                  const char* sectionLabel,
+                  const char* nGroupLabel,
+                  GroupStorage<N>& groups)
+   {
+      int nGroup;  // Total number of groups in file
+      file >> Label(sectionLabel);
+      file >> Label(nGroupLabel) >> nGroup;
+      Group<N>* groupPtr;
+      for (int i = 0; i < nGroup; ++i) {
+         groupPtr = groups.newPtr();
+         file >> *groupPtr;
+      }
+      return nGroup;
+   }
+
+   /*
+   * Private method to write Group<N> objects.
+   */
+   template <int N>
+   int DdMdConfigIo::writeGroups(std::ofstream& file, const char* sectionLabel,
+                  const char* nGroupLabel, GroupStorage<N>& groups)
+   {
+      Processor::BondIterator iter;
+      int nGroup = processor().bonds().size();
+
+      file << std::endl;
+      file << sectionLabel << std::endl;
+      file << nGroupLabel << Int(nGroup, 10) << std::endl;
+      for (groups.begin(iter); iter.notEnd(); ++iter) {
+         file << *iter << std::endl;
+      }
+      return nGroup;
+   }
 
 }
 #endif

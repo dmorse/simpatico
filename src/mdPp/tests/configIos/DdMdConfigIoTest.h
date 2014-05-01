@@ -53,9 +53,9 @@ inline void DdMdConfigIoTest::testReadConfig()
    processor_.readConfig("in/config");
 
    TEST_ASSERT(processor_.nAtom() == 40);
-   TEST_ASSERT(processor_.nBond() == 35);
+   TEST_ASSERT(processor_.bonds().size() == 35);
    // std::cout << "nAtom = " << processor_.nAtom() << "\n";
-   // std::cout << "nBond = " << processor_.nBond() << "\n";
+   // std::cout << "nBond = " << processor_.bonds().size() << "\n";
    // std::cout << processor_.boundary() << "\n";
 
    std::ofstream out;

@@ -13,6 +13,7 @@
 #include <mdPp/chemistry/Atom.h>
 #include <mdPp/chemistry/Group.h>
 #include <mdPp/processor/Processor.h>
+#include <mdPp/processor/GroupStorage.h>
 //#include <mdPp/chemistry/MaskPolicy.h>
 
 #include <util/space/Vector.h>
@@ -31,24 +32,6 @@ namespace MdPp
     : ConfigIo(processor),
       hasMolecules_(hasMolecules)
    {  setClassName("DdMdConfigIo"); }
-
-   /*
-   * Private method to read Group<N> objects.
-   */
-   int DdMdConfigIo::readBonds(std::ifstream& file, 
-                  const char* sectionLabel,
-                  const char* nGroupLabel)
-   {
-      int nGroup;  // Total number of groups in file
-      file >> Label(sectionLabel);
-      file >> Label(nGroupLabel) >> nGroup;
-      Group<2>* groupPtr;
-      for (int i = 0; i < nGroup; ++i) {
-         groupPtr = processor().newBondPtr();
-         file >> *groupPtr;
-      }
-      return nGroup;
-   }
 
    /*
    * Read a configuration file.
@@ -103,29 +86,13 @@ namespace MdPp
 
       // Read Covalent Groups
       #ifdef INTER_BOND
-      if (processor().bondCapacity()) {
-         readBonds(file, "BONDS", "nBond");
+      if (processor().bonds().capacity()) {
+         readGroups(file, "BONDS", "nBond", processor().bonds());
          //if (maskPolicy == MaskBonded) {
          //   setAtomMasks();
          //}
       }
       #endif
-   }
-
-   int DdMdConfigIo::writeBonds(std::ofstream& file, 
-                  const char* sectionLabel,
-                  const char* nGroupLabel)
-   {
-      Processor::BondIterator iter;
-      int nGroup = processor().nBond();
-
-      file << std::endl;
-      file << sectionLabel << std::endl;
-      file << nGroupLabel << Int(nGroup, 10) << std::endl;
-      for (processor().initBondIterator(iter); iter.notEnd(); ++iter) {
-         file << *iter << std::endl;
-      }
-      return nGroup;
    }
 
    /* 
@@ -167,8 +134,8 @@ namespace MdPp
 
       // Write the groups
       #ifdef INTER_BOND
-      if (processor().bondCapacity()) {
-         writeBonds(file, "BONDS", "nBond");
+      if (processor().bonds().capacity()) {
+         writeGroups(file, "BONDS", "nBond", processor().bonds());
       }
       #endif
 

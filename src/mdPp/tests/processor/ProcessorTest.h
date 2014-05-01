@@ -55,7 +55,6 @@ inline void ProcessorTest::testAddAtoms()
    TEST_ASSERT(0 == processor_.atomPtr(15));
    TEST_ASSERT(0 == processor_.atomPtr(13));
    TEST_ASSERT(processor_.nAtom() == 1);
-   TEST_ASSERT(processor_.nBond() == 0);
 
    Atom* atomPtr13;
    atomPtr13 = processor_.newAtomPtr();
@@ -74,7 +73,6 @@ inline void ProcessorTest::testAddAtoms()
    TEST_ASSERT(atomPtr13 == processor_.atomPtr(13));
    TEST_ASSERT(atomPtr22 == processor_.atomPtr(22));
    TEST_ASSERT(processor_.nAtom() == 3);
-   TEST_ASSERT(processor_.nBond() == 0);
 }
 
 TEST_BEGIN(ProcessorTest)

@@ -15,7 +15,7 @@
 
 #include <mdPp/chemistry/Atom.h>              // member (template argument)
 #include <mdPp/chemistry/Group.h>             // member (template argument)
-//#include <mdPp/processor/GroupStorage.h>      // member 
+#include <mdPp/processor/GroupStorage.h>      // member 
 #include <mdPp/configIos/ConfigIoFactory.h>   // member 
 #include <mdPp/analyzers/AnalyzerManager.h>   // member 
 
@@ -113,7 +113,17 @@ namespace MdPp
       */
       void analyzeTrajectory(std::string& filename);
 
-      // Mutators for use in ConfigIo classes.
+      /**
+      * Clear all atoms and groups.
+      */
+      void clear();
+  
+      /**
+      * Get the Boundary by non-const reference
+      */
+      Boundary& boundary();
+
+      // Atom container interface
 
       /**
       * Return pointer to location for new atom.
@@ -129,25 +139,14 @@ namespace MdPp
       void addAtom();
 
       /**
-      * Add bond to list of those read from file.
-      *
-      * \return pointer to location of new atom
+      * Get a pointer to an atom by global id.
       */
-      Group<2>* newBondPtr();
-
-      // etc. for angles and dihedrals
+      Atom* atomPtr(int id);
 
       /**
-      * Clear all atoms and groups.
+      * Initialize an iterator for atoms.
       */
-      void clear();
-  
-      // Accessors, for use in Analyzer and ConfigIo classes.
-
-      /**
-      * Get the Boundary by non-const reference
-      */
-      Boundary& boundary();
+      void initAtomIterator(AtomIterator& iter);
 
       /**
       * Get atom capacity (maximum id + 1).
@@ -159,44 +158,49 @@ namespace MdPp
       */ 
       int nAtom() const;
 
-      /**
-      * Get an atom reference by global id.
-      */
-      Atom* atomPtr(int id);
+      // Group storage interface
 
-      /**
-      * Initialize an iterator for atoms.
-      */
-      void initAtomIterator(AtomIterator& iter);
+      #ifdef INTER_BOND
+      GroupStorage<2>& bonds();
+      #endif
 
-      /**
-      * Get bond capacity.
-      */ 
-      int bondCapacity() const;
+      #ifdef INTER_ANGLE
+      GroupStorage<3>& angles();
+      #endif
 
-      /**
-      * Get number of bonds.
-      */ 
-      int nBond() const;
+      #ifdef INTER_DIHEDRAL
+      GroupStorage<4>& dihedrals();
+      #endif
 
-      /**
-      * Initialize a bond iterator.
-      */
-      void initBondIterator(BondIterator& iter);
+      // etc. for angles and dihedrals
+
+      // Accessors, for use in Analyzer and ConfigIo classes.
 
    private:
      
+      /// Boundary object defines periodic boundary conditions.
+      Boundary boundary_;
+
       /// Array of atom objects, added in order read from file.
       DSArray<Atom> atoms_;
-
-      /// Array of bond objects, added in order read from file.
-      DSArray< Group<2> > bonds_;
 
       /// Pointers to atoms indexed by ids. Missing atoms are null pointers.
       DArray<Atom*> atomPtrs_;
 
-      /// Boundary object defines periodic boundary conditions.
-      Boundary boundary_;
+      #ifdef INTER_BOND
+      /// Array of bond objects, added in order read from file.
+      GroupStorage<2> bonds_;
+      #endif
+
+      #ifdef INTER_ANGLE
+      /// Array of angle objects, added in order read from file.
+      GroupStorage<3> angles_;
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      /// Array of dihedral objects, added in order read from file.
+      GroupStorage<4> dihedrals_;
+      #endif
 
       /// Pointer to current ConfigIo object.
       ConfigIo* configIoPtr_;
@@ -213,10 +217,20 @@ namespace MdPp
       /// Maximum allowed atom id + 1 (used to allocate arrays).
       int atomCapacity_;
 
-      /// Maximum allowed bond id + 1 (used to allocate arrays).
+      #ifdef INTER_BOND
+      /// Maximum number of bonds (used to allocate array).
       int bondCapacity_;
+      #endif
 
-      /// etc. for angles and dihedrals
+      #ifdef INTER_ANGLE
+      /// Maximum number of angles (used to allocate array).
+      int angleCapacity_;
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      /// Maximum number of dihedrals (used to allocate array).
+      int dihedralCapacity_;
+      #endif
 
       /// String identifier for ConfigIo class name
       std::string configIoName_;
@@ -241,32 +255,6 @@ namespace MdPp
    {  return atoms_.size(); }
 
    /*
-   * Return a pointer to an atom with a specific id.
-   */
-   inline Atom* Processor::atomPtr(int id)
-   {  return atomPtrs_[id]; }
-
-   /*
-   * Return number of bonds.
-   */
-   inline int Processor::nBond() const
-   {  return bonds_.size(); }
-   
-   /*
-   * Initialize an iterator for atoms.
-   */
-   inline 
-   void Processor::initAtomIterator(Processor::AtomIterator& iter)
-   {  atoms_.begin(iter); }
-
-   /*
-   * Initialize an iterator for bonds.
-   */
-   inline 
-   void Processor::initBondIterator(Processor::BondIterator& iter)
-   {  bonds_.begin(iter); }
-
-   /*
    * Get atom capacity (maximum id + 1).
    */ 
    inline
@@ -274,11 +262,32 @@ namespace MdPp
    { return atoms_.capacity(); }
 
    /*
-   * Get bond capacity.
-   */ 
-   inline
-   int Processor::bondCapacity() const
-   { return bonds_.capacity(); }
+   * Return a pointer to an atom with a specific id.
+   */
+   inline Atom* Processor::atomPtr(int id)
+   {  return atomPtrs_[id]; }
+
+   /*
+   * Initialize an iterator for atoms.
+   */
+   inline 
+   void Processor::initAtomIterator(Processor::AtomIterator& iter)
+   {  atoms_.begin(iter); }
+
+   #ifdef INTER_BOND
+   inline GroupStorage<2>& Processor::bonds()
+   {  return bonds_; }
+   #endif
+
+   #ifdef INTER_ANGLE
+   inline GroupStorage<3>& Processor::angles()
+   {  return angles_; }
+   #endif
+
+   #ifdef INTER_DIHEDRAL
+   inline GroupStorage<4>& Processor::dihedrals()
+   {  return dihedrals_; }
+   #endif
 
 }
 #endif

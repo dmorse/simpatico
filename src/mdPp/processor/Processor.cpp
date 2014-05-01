@@ -21,7 +21,17 @@ namespace MdPp
     : configIoPtr_(0),
       configIoFactory_(*this),
       analyzerManager_(*this),
-      newAtomPtr_(0)
+      newAtomPtr_(0),
+      atomCapacity_(0)
+      #ifdef INTER_BOND
+      , bondCapacity_(0)
+      #endif
+      #ifdef INTER_ANGLE
+      , angleCapacity_(0)
+      #endif
+      #ifdef INTER_DIHEDRAL
+      , dihedralCapacity_(0)
+      #endif
    {  setClassName("Processor"); }
 
    /*
@@ -165,16 +175,6 @@ namespace MdPp
       int id = newAtomPtr_->id;
       atomPtrs_[id] = newAtomPtr_;
       newAtomPtr_ = 0;
-   }
-
-   /*
-   * Return pointer to location for new bond, and add to container.
-   */
-   Group<2>* Processor::newBondPtr()
-   {
-      int size = bonds_.size();
-      bonds_.resize(size + 1);
-      return &bonds_[size];
    }
 
    /*

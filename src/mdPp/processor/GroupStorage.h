@@ -36,6 +36,11 @@ namespace MdPp
       using Base::capacity;
 
       /**
+      * Destructor.
+      */
+      ~GroupStorage();
+
+      /**
       * Append a new element to container and return its address.
       *
       * \return pointer to location of new Group
@@ -59,6 +64,13 @@ namespace MdPp
       resize(size() + 1);
       return &(*this)[size()-1];
    }
+
+   /*
+   * Destructor
+   */
+   template <int N>
+   GroupStorage<N>::~GroupStorage()
+   {}
 
 }
 #endif
