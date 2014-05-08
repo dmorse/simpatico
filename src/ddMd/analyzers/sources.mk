@@ -15,7 +15,9 @@ ddMd_analyzers_=\
      ddMd/analyzers/StructureFactor.cpp\
      ddMd/analyzers/StructureFactorGrid.cpp\
      ddMd/analyzers/VanHove.cpp\
-     ddMd/analyzers/OrderParamNucleation.cpp
+     ddMd/analyzers/OrderParamNucleation.cpp\
+     ddMd/analyzers/PairEnergyAverage.cpp\
+     ddMd/analyzers/ExternalEnergyAverage.cpp
 
 ddMd_analyzers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_analyzers_))

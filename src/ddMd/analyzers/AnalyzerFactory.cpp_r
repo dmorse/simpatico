@@ -20,8 +20,6 @@
 #include "OutputStressTensor.h"
 #include "StressAutoCorrelation.h"
 #include "VirialStressTensorAverage.h"
-#include "ExternalPotentialAverage.h"
-#include "PairEnergyAverage.h"
 #include "OutputBoxdim.h"
 #include "OutputTemperature.h"
 #include "OutputPairEnergies.h"
@@ -29,6 +27,8 @@
 #include "StructureFactorGrid.h"
 #include "OrderParamNucleation.h"
 #include "VanHove.h"
+#include "ExternalEnergyAverage.h"
+#include "PairEnergyAverage.h"
 
 namespace DdMd
 {
@@ -75,12 +75,6 @@ namespace DdMd
       if (className == "VirialStressTensorAverage") {
          ptr = new VirialStressTensorAverage(simulation());
       } else
-      if (className == "ExternalPotentialAverage") {
-         ptr = new ExternalPotentialAverage(simulation());
-      } else
-      if (className == "PairEnergyAverage") {
-         ptr = new PairEnergyAverage(simulation());
-      } else
       if (className == "OutputBoxdim") {
          ptr = new OutputBoxdim(simulation());
       } else
@@ -102,6 +96,12 @@ namespace DdMd
       if (className == "VanHove") {
          ptr = new VanHove(simulation());
       }
+      if (className == "ExternalEnergyAverage") {
+         ptr = new ExternalEnergyAverage(simulation());
+      } else
+      if (className == "PairEnergyAverage") {
+         ptr = new PairEnergyAverage(simulation());
+      } else
       return ptr;
    }
 
