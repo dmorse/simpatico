@@ -1,5 +1,5 @@
-#ifndef DDMD_EXTERNAL_POTENTIAL_AVERAGE_CPP
-#define DDMD_EXTERNAL_POTENTIAL_AVERAGE_CPP
+#ifndef DDMD_EXTERNAL_ENERGY_AVERAGE_CPP
+#define DDMD_EXTERNAL_ENERGY_AVERAGE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ExternalPotentialAverage.h"
+#include "ExternalEnergyAverage.h"
 #include <ddMd/potentials/pair/PairPotential.h>
-#include <ddMd/potentials/external/ExternalPotential.h>
+#include <ddMd/potentials/external/ExternalEnergy.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/accumulators/Average.h>                    // member template 
@@ -27,18 +27,18 @@ namespace DdMd
    /*
    * Constructor.
    */
-   ExternalPotentialAverage::ExternalPotentialAverage(Simulation& simulation) 
+   ExternalEnergyAverage::ExternalEnergyAverage(Simulation& simulation) 
     : Analyzer(simulation),
       outputFile_(),
       accumulator_(),
       nSamplePerBlock_(1),
       isInitialized_(false)
-   {  setClassName("ExternalPotentialAverage"); }
+   {  setClassName("ExternalEnergyAverage"); }
 
    /*
    * Read interval and outputFileName. 
    */
-   void ExternalPotentialAverage::readParameters(std::istream& in) 
+   void ExternalEnergyAverage::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);
@@ -52,7 +52,7 @@ namespace DdMd
    /*
    * Load internal state from an archive.
    */
-   void ExternalPotentialAverage::loadParameters(Serializable::IArchive &ar)
+   void ExternalEnergyAverage::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
       MpiLoader<Serializable::IArchive> loader(*this, ar);
@@ -69,7 +69,7 @@ namespace DdMd
    /*
    * Save internal state to an archive.
    */
-   void ExternalPotentialAverage::save(Serializable::OArchive &ar)
+   void ExternalEnergyAverage::save(Serializable::OArchive &ar)
    {
       ar & *this;
    }
@@ -77,13 +77,13 @@ namespace DdMd
    /*
    * Reset nSample.
    */
-   void ExternalPotentialAverage::clear() 
+   void ExternalEnergyAverage::clear() 
    {  accumulator_.clear();  }
 
    /*
    * Dump configuration to file
    */
-   void ExternalPotentialAverage::sample(long iStep) 
+   void ExternalEnergyAverage::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
          Simulation& sys = simulation();
@@ -92,7 +92,7 @@ namespace DdMd
 
             #ifdef INTER_EXTERNAL
             if (sys.nExternalType()) {
-               double external  = sys.externalPotential().energy();
+               double external  = sys.ExternalEnergy().energy();
                potential += external;
             }
             #endif
@@ -105,7 +105,7 @@ namespace DdMd
    /*
    * Output results to file after simulation is completed.
    */
-   void ExternalPotentialAverage::output()
+   void ExternalEnergyAverage::output()
    {
       Simulation& sys = simulation();
       if (sys.domain().isMaster()) {
@@ -122,4 +122,4 @@ namespace DdMd
 
 
 }
-#endif 
+#endif

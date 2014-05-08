@@ -1,5 +1,5 @@
-#ifndef DDMD_EXTERNAL_POTENTIAL_AVERAGE_H
-#define DDMD_EXTERNAL_POTENTIAL_AVERAGE_H
+#ifndef DDMD_EXTERNAL_ENERGY_AVERAGE_H
+#define DDMD_EXTERNAL_ENERGY_AVERAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -22,7 +22,7 @@ namespace DdMd
    *
    * \ingroup DdMd_Analyzer_Module
    */
-   class ExternalPotentialAverage : public Analyzer
+   class ExternalEnergyAverage : public Analyzer
    {
    
    public:
@@ -32,12 +32,12 @@ namespace DdMd
       *
       * \param simulation parent Simulation object. 
       */
-      ExternalPotentialAverage(Simulation& simulation);
+      ExternalEnergyAverage(Simulation& simulation);
    
       /**
       * Destructor.
       */
-      virtual ~ExternalPotentialAverage()
+      virtual ~ExternalEnergyAverage()
       {} 
    
       /**
