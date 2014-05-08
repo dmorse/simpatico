@@ -12,7 +12,7 @@
 #include <ddMd/simulation/Simulation.h>
 #include <util/mpi/MpiLoader.h>
 #include <util/space/Tensor.h>
-#include <util/accumulators/AutoCorrArray.h>     // member template
+#include <util/accumulators/AutoCorr.h>     // member template
 
 namespace DdMd
 {
@@ -88,7 +88,7 @@ namespace DdMd
       std::ofstream outputFile_;
       
       /// Statistical accumulator.
-      AutoCorrArray<double, double> accumulator_;
+      AutoCorr<double, double> accumulator_;
 
       /// Number of samples per block average output
       int capacity_;

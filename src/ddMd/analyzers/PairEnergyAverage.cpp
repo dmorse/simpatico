@@ -50,6 +50,10 @@ namespace DdMd
       accumulator_.setNSamplePerBlock(nSamplePerBlock_);
       accumulator_.clear();
 
+      if (sys.domain().isMaster()) {
+      simulation().fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      }
+
       isInitialized_ = true;
    }
 
@@ -99,10 +103,10 @@ namespace DdMd
                }
             }
 
+            outputFile_ << Dbl(pair(pairs_[0],pairs_[1]), 15);
             accumulator_.sample(pair(pairs_[0],pairs_[1]));
          }
       }
-
    }
 
    /*
@@ -112,7 +116,7 @@ namespace DdMd
    {
       Simulation& sys = simulation();
       if (sys.domain().isMaster()) {
-      // Write parameters to file
+      outputFile_.close();
       simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
       ParamComposite::writeParam(outputFile_);
       outputFile_.close();

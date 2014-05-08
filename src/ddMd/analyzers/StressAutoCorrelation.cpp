@@ -40,7 +40,7 @@ namespace DdMd
       readOutputFileName(in);
       read<int>(in,"capacity", capacity_);
       // Allocate memory
-      accumulator_.setParam(1, capacity_);
+      accumulator_.setParam(capacity_);
 
       isInitialized_ = true;
    }
@@ -98,8 +98,7 @@ namespace DdMd
    */
    void StressAutoCorrelation::sample(long iStep) 
    {  
-      double pressure;
-      double diag;
+      double element;
  
       if (isAtInterval(iStep))  {
          Simulation& sys = simulation();
@@ -110,9 +109,9 @@ namespace DdMd
             Tensor kinetic = sys.kineticStress();
             Tensor total = total.add(virial, kinetic);
             pressure = sys.kineticPressure()+sys.virialPressure();
-            diag = (total(0,0)-pressure)
              
-            accumulator_.sample(0.5*(total(0,1)+total(1,0)));
+            element = 0.5*(total(0,1)+total(1,0));
+            accumulator_.sample(element);
          }
       }
    }
@@ -124,10 +123,9 @@ namespace DdMd
    {
 
       if (simulation().domain().isMaster()) {
-         fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
+         simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
          writeParam(outputFile_);
          outputFile_ << std::endl;
-         outputFile_ << "nMolecule       " << accumulator_.nEnsemble() << std::endl;
          outputFile_ << "bufferCapacity  " << accumulator_.bufferCapacity() << std::endl;
          outputFile_ << "nSample         " << accumulator_.nSample() << std::endl;
          outputFile_ << std::endl;
@@ -140,7 +138,7 @@ namespace DdMd
          outputFile_.close();
 
          // Write xy autocorrelation function to data file
-         fileMaster().openOutputFile(outputFileName(".corr"), outputFile_);
+         simulation().fileMaster().openOutputFile(outputFileName(".corr"), outputFile_);
          accumulator_.output(outputFile_);
          outputFile_.close();
       }     
