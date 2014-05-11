@@ -48,11 +48,10 @@ namespace DdMd
 
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
       accumulator_.setNSamplePerBlock(nSamplePerBlock_);
-      accumulator_.clear();
 
-      if (sys.domain().isMaster()) {
-      simulation().fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
-      }
+      std::string filename;
+      filename  = outputFileName();
+      simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
 
       isInitialized_ = true;
    }
@@ -65,7 +64,13 @@ namespace DdMd
       loadInterval(ar);
       MpiLoader<Serializable::IArchive> loader(*this, ar);
       loader.load(nSamplePerBlock_);
-      ar & accumulator_;
+
+      if (simulation().domain().isMaster()) {
+         accumulator_.loadParameters(ar);
+         std::string filename;
+         filename  = outputFileName();
+         simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
+      }
 
       if (nSamplePerBlock_ != accumulator_.nSamplePerBlock()) {
          UTIL_THROW("Inconsistent values of nSamplePerBlock");
@@ -78,7 +83,14 @@ namespace DdMd
    * Save internal state to an archive.
    */
    void PairEnergyAverage::save(Serializable::OArchive &ar)
-   { ar & *this; }
+   {       
+      saveInterval(ar);
+      saveOutputFileName(ar);
+
+      if (simulation().domain().isMaster()){
+         ar << accumulator_;
+      } 
+   }
 
    /*
    * Reset nSample.
@@ -114,9 +126,8 @@ namespace DdMd
    */
    void PairEnergyAverage::output()
    {
-      Simulation& sys = simulation();
-      if (sys.domain().isMaster()) {
-      outputFile_.close();
+
+      if (simulation().domain().isMaster()) {
       simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
       ParamComposite::writeParam(outputFile_);
       outputFile_.close();

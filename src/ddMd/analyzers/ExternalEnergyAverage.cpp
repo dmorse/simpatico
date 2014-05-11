@@ -10,7 +10,7 @@
 
 #include "ExternalEnergyAverage.h"
 #include <ddMd/potentials/pair/PairPotential.h>
-#include <ddMd/potentials/external/ExternalEnergy.h>
+#include <ddMd/potentials/external/ExternalPotential.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 #include <util/accumulators/Average.h>                    // member template 
@@ -43,8 +43,11 @@ namespace DdMd
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
-
       accumulator_.setNSamplePerBlock(nSamplePerBlock_);
+
+      std::string filename;
+      filename  = outputFileName();
+      simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
 
       isInitialized_ = true;
    }
@@ -57,7 +60,13 @@ namespace DdMd
       loadInterval(ar);
       MpiLoader<Serializable::IArchive> loader(*this, ar);
       loader.load(nSamplePerBlock_);
-      ar & accumulator_;
+
+      if (simulation().domain().isMaster()) {
+         accumulator_.loadParameters(ar);
+         std::string filename;
+         filename  = outputFileName();
+         simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
+      }
 
       if (nSamplePerBlock_ != accumulator_.nSamplePerBlock()) {
          UTIL_THROW("Inconsistent values of nSamplePerBlock");
@@ -71,7 +80,12 @@ namespace DdMd
    */
    void ExternalEnergyAverage::save(Serializable::OArchive &ar)
    {
-      ar & *this;
+      saveInterval(ar);
+      saveOutputFileName(ar);
+
+      if (simulation().domain().isMaster()){
+         ar << accumulator_;
+      }
    }
 
    /*
@@ -91,8 +105,8 @@ namespace DdMd
             double potential = 0.0;
 
             #ifdef INTER_EXTERNAL
-            if (sys.nExternalType()) {
-               double external  = sys.ExternalEnergy().energy();
+            if (sys.hasExternal()) {
+               double external  = sys.externalPotential().energy();
                potential += external;
             }
             #endif
@@ -107,9 +121,7 @@ namespace DdMd
    */
    void ExternalEnergyAverage::output()
    {
-      Simulation& sys = simulation();
-      if (sys.domain().isMaster()) {
-      // Write parameters to file
+      if (simulation().domain().isMaster()) {
       simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
       ParamComposite::writeParam(outputFile_);
       outputFile_.close();

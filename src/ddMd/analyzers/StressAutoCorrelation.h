@@ -85,16 +85,16 @@ namespace DdMd
    private:
  
       /// Output file stream
-      std::ofstream outputFile_;
+      std::ofstream  outputFile_;
       
       /// Statistical accumulator.
-      AutoCorr<double, double> accumulator_;
+      AutoCorr<double, double>  accumulator_;
 
       /// Number of samples per block average output
-      int capacity_;
+      int  capacity_;
 
       /// Has readParam been called?
-      long    isInitialized_;
+      long  isInitialized_;
    
    };
 

@@ -99,6 +99,7 @@ namespace DdMd
    void StressAutoCorrelation::sample(long iStep) 
    {  
       double element;
+      double pressure;
  
       if (isAtInterval(iStep))  {
          Simulation& sys = simulation();

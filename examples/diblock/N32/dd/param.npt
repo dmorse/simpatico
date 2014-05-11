@@ -69,6 +69,20 @@ Simulation{
         outputFileName  energy
      }
 
+     VirialStressTensorAverage{
+        interval        2000
+        outputFileName  Virial
+        nSamplePerBlock 10
+     }
+
+     OutputPressure{
+        interval        2000
+        outputFileName  pressure
+     }
+
+  }
+}
+
      PairEnergyAverage{
         interval         1
         outputFileName   pairEnergy
@@ -81,12 +95,3 @@ Simulation{
         outputFileName   externalPotential
         nSamplePerBlock  1
      }
-
-     OutputPressure{
-        interval        2000
-        outputFileName  pressure
-     }
-
-  }
-}
-
