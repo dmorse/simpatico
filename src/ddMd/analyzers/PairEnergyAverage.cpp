@@ -49,10 +49,6 @@ namespace DdMd
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
       accumulator_.setNSamplePerBlock(nSamplePerBlock_);
 
-      std::string filename;
-      filename  = outputFileName();
-      simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
-
       isInitialized_ = true;
    }
 
@@ -126,7 +122,6 @@ namespace DdMd
    */
    void PairEnergyAverage::output()
    {
-
       if (simulation().domain().isMaster()) {
       simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
       ParamComposite::writeParam(outputFile_);
@@ -137,6 +132,5 @@ namespace DdMd
       outputFile_.close();
       }
    }
-
 }
 #endif

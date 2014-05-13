@@ -44,11 +44,7 @@ namespace DdMd
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
       accumulator_.setNSamplePerBlock(nSamplePerBlock_);
-
-      std::string filename;
-      filename  = outputFileName();
-      simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
-
+      
       isInitialized_ = true;
    }
 

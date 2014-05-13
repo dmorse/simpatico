@@ -95,7 +95,7 @@ namespace DdMd
       int  nSamplePerBlock_;
 
       /// Has readParam been called?
-      long  isInitialized_;
+      bool  isInitialized_;
    
    };
 

@@ -83,16 +83,16 @@ namespace DdMd
    private:
 
       /// Output file stream.
-      std::ofstream outputFile_;
+      std::ofstream  outputFile_;
 
       /// Average object - statistical accumulator
       Average  accumulator_;
 
       /// Number of samples per block average output.
-      int nSamplePerBlock_;
+      int  nSamplePerBlock_;
    
       /// Has readParam been called?
-      long    isInitialized_;
+      bool  isInitialized_;
    
    };
 
