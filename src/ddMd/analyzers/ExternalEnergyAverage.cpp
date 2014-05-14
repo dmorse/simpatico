@@ -30,10 +30,20 @@ namespace DdMd
    ExternalEnergyAverage::ExternalEnergyAverage(Simulation& simulation) 
     : Analyzer(simulation),
       outputFile_(),
-      accumulator_(),
+      accumulator_(NULL),
       nSamplePerBlock_(1),
       isInitialized_(false)
    {  setClassName("ExternalEnergyAverage"); }
+
+   /*
+   * Destructor.
+   */
+   ExternalEnergyAverage::~ExternalEnergyAverage() 
+   {  
+      if(accumulator_ != NULL) {
+         delete accumulator_;
+      }
+   }
 
    /*
    * Read interval and outputFileName. 
@@ -43,8 +53,12 @@ namespace DdMd
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
-      accumulator_.setNSamplePerBlock(nSamplePerBlock_);
-      
+
+      if(simulation().domain().isMaster()) {
+         accumulator_ = new Average;
+         accumulator_->setNSamplePerBlock(nSamplePerBlock_);
+      }
+
       isInitialized_ = true;
    }
 
@@ -58,13 +72,11 @@ namespace DdMd
       loader.load(nSamplePerBlock_);
 
       if (simulation().domain().isMaster()) {
-         accumulator_.loadParameters(ar);
-         std::string filename;
-         filename  = outputFileName();
-         simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
+         accumulator_ = new Average;
+         accumulator_->loadParameters(ar);
       }
 
-      if (nSamplePerBlock_ != accumulator_.nSamplePerBlock()) {
+      if (nSamplePerBlock_ != accumulator_->nSamplePerBlock()) {
          UTIL_THROW("Inconsistent values of nSamplePerBlock");
       }
 
@@ -80,7 +92,7 @@ namespace DdMd
       saveOutputFileName(ar);
 
       if (simulation().domain().isMaster()){
-         ar << accumulator_;
+         ar << *accumulator_;
       }
    }
 
@@ -88,7 +100,11 @@ namespace DdMd
    * Reset nSample.
    */
    void ExternalEnergyAverage::clear() 
-   {  accumulator_.clear();  }
+   {   
+      if (simulation().domain().isMaster()){ 
+         accumulator_->clear();
+      }
+   }
 
    /*
    * Dump configuration to file
@@ -96,18 +112,15 @@ namespace DdMd
    void ExternalEnergyAverage::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
-         Simulation& sys = simulation();
-         if (sys.domain().isMaster()) {
-            double potential = 0.0;
-
-            #ifdef INTER_EXTERNAL
-            if (sys.hasExternal()) {
-               double external  = sys.externalPotential().energy();
-               potential += external;
-            }
-            #endif
-
-            accumulator_.sample(potential);
+         double external = 0.0;
+         simulation().computePotentialEnergies();
+         #ifdef INTER_EXTERNAL
+         if (simulation().hasExternal()) {
+            external =  simulation().externalPotential().energy();
+         }
+         #endif
+         if (simulation().domain().isMaster()) {
+            accumulator_->sample(external);
          }
       }
    }
@@ -123,7 +136,7 @@ namespace DdMd
       outputFile_.close();
 
       simulation().fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
-      accumulator_.output(outputFile_);
+      accumulator_->output(outputFile_);
       outputFile_.close();
       }
    }

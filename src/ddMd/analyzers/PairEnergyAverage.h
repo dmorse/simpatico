@@ -37,8 +37,7 @@ namespace DdMd
       /**
       * Destructor.
       */
-      virtual ~PairEnergyAverage()
-      {} 
+      virtual ~PairEnergyAverage();
    
       /**
       * Read dumpPrefix and interval.
@@ -89,7 +88,7 @@ namespace DdMd
       DArray<int>  pairs_;
 
       /// Average object - statistical accumulator
-      Average  accumulator_;
+      Average  *accumulator_;
 
       /// Number of samples per block average output.
       int  nSamplePerBlock_;

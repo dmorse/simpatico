@@ -92,16 +92,16 @@ namespace DdMd
       } else
       if (className == "OrderParamNucleation") {
          ptr = new OrderParamNucleation(simulation());
-      }
+      } else
       if (className == "VanHove") {
          ptr = new VanHove(simulation());
-      }
+      } else
       if (className == "ExternalEnergyAverage") {
          ptr = new ExternalEnergyAverage(simulation());
       } else
       if (className == "PairEnergyAverage") {
          ptr = new PairEnergyAverage(simulation());
-      } else
+      }
       return ptr;
    }
 

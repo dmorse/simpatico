@@ -37,8 +37,7 @@ namespace DdMd
       /**
       * Destructor.
       */
-      virtual ~ExternalEnergyAverage()
-      {} 
+      virtual ~ExternalEnergyAverage(); 
    
       /**
       * Read dumpPrefix and interval.
@@ -85,8 +84,8 @@ namespace DdMd
       /// Output file stream.
       std::ofstream  outputFile_;
 
-      /// Average object - statistical accumulator
-      Average  accumulator_;
+      /// Average object is to be set in the master processor!
+      Average  *accumulator_;
 
       /// Number of samples per block average output.
       int  nSamplePerBlock_;
