@@ -23,17 +23,21 @@ namespace Util
    /**
    * Provides methods for MPI-aware loading of data from input archive.
    *
-   * Each MpiLoader is associated with an IArchive input archive, and with
-   * a MpiFileIo, which are passed as arguments to the constructor. Because
-   * ParamComposite is derived from MpiFileIo, the MpiFileIo can (and
-   * usually is) a parent ParamComposite. 
+   * Each MpiLoader is associated with an IArchive input archive, and 
+   * with a MpiFileIo, which are passed as arguments to the constructor. 
+   * The MpiFileIo argument is often a ParamComposite, which is derived 
+   * from MpiFileIo.
    *
-   * Each of the "load" method templates causes the ioProcessor of the
-   * MpiFileIo to load a variable or container from an archive. If the 
-   * MpiFileIo has an MPI communicator, it then broadcasts the data to 
-   * all other processors in the communicator. 
+   * The "load" function templates all load data from the archive and (if
+   * appropriate) broadcast data among processors. If MPI is not enabled
+   * (i.e., if UTIL_MPI is not defined), then the data is simply loaded
+   * from the archive. If MPI is enabled and a parameter communicator is 
+   * set, data is loaded from the archive by the ioProcessor and then 
+   * broadcast to all other processors in the IO communicator. If MPI is 
+   * enabled but no parameter communicator is set, every processor loads 
+   * data independently.
    *
-   *  \ingroup Mpi_Module
+   * \ingroup Mpi_Module
    */
    template <class IArchive>
    class MpiLoader 

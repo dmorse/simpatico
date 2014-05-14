@@ -12,9 +12,9 @@
 #include <util/crystal/LatticeSystem.h> // member
 #include <util/containers/FSArray.h>    // member template
 #include <util/space/Vector.h>          // member template argument
-#include <util/space/IntVector.h>       // inline methods
+#include <util/space/IntVector.h>       // inline functions
 #include <util/space/Dimension.h>       // member template argument
-#include <util/global.h>                // asserts in inline methods
+#include <util/global.h>                // asserts in inline functions
 
 #include <cmath>
 #include <iostream>
@@ -95,7 +95,7 @@ namespace Util
       /**
       * Shift Cartesian Vector r to its primary image.
       *
-      * This method maps an atomic position to its primary image, and
+      * This function maps an atomic position to its primary image, and
       * also increments the atomic shift IntVector:
       *
       * If    r[i]     ->  r[i] - t*length_[i], 
@@ -111,7 +111,7 @@ namespace Util
       /**
       * Shift Cartesian Vector r by multiple t of a Bravais lattice vector.
       *
-      * This method shifts the Vector r by a specified amount:
+      * This function shifts the Vector r by a specified amount:
       *
       *   r ->  r + t*a'[i]
       *
@@ -139,7 +139,7 @@ namespace Util
       /**
       * Shift generalized Vector r to its image within the primary unit cell.
       *
-      * This method maps a vector of generalized coordinates to lie in the 
+      * This function maps a vector of generalized coordinates to lie in the 
       * primary cell, and also increments the atomic shift IntVector:
       *
       * If r[i] -> r[i] - t, then shift[i] -> shift[i] + t.
@@ -362,7 +362,28 @@ namespace Util
 
    };
 
-   // Inline method definitions
+   // Friend function declarations
+
+   /**
+   * istream extractor for a OrthorhombicBoundary.
+   *
+   * \param  in        input stream
+   * \param  boundary  OrthorhombicBoundary to be read from stream
+   * \return modified input stream
+   */
+   std::istream& operator >> (std::istream& in, OrthorhombicBoundary& boundary);
+
+   /**
+   * ostream inserter for an OrthorhombicBoundary.
+   *
+   * \param  out      output stream
+   * \param  boundary OrthorhombicBoundary to be written to stream
+   * \return modified output stream
+   */
+   std::ostream& operator << (std::ostream& out, 
+                              const OrthorhombicBoundary& boundary);
+
+   // Inline member function definitions
 
    /* 
    * Return Vector of lengths by const reference.
@@ -552,26 +573,7 @@ namespace Util
       return ( dr[0]*dr[0] + dr[1]*dr[1] + dr[2]*dr[2] );
    }
 
-   /**
-   * istream extractor for a OrthorhombicBoundary.
-   *
-   * \param  in        input stream
-   * \param  boundary  OrthorhombicBoundary to be read from stream
-   * \return modified input stream
-   */
-   std::istream& operator >> (std::istream& in, OrthorhombicBoundary& boundary);
-
-   /**
-   * ostream inserter for an OrthorhombicBoundary.
-   *
-   * \param  out      output stream
-   * \param  boundary OrthorhombicBoundary to be written to stream
-   * \return modified output stream
-   */
-   std::ostream& operator << (std::ostream& out, 
-                              const OrthorhombicBoundary& boundary);
-
-   /**
+   /*
    * Return actual lattice system.
    */
    inline LatticeSystem OrthorhombicBoundary::latticeSystem()
@@ -629,6 +631,7 @@ namespace Util
       return true;
    }
 
+   // Member function template
 
    /*
    * Serialize an OrthorhombicBoundary to/from an archive.
