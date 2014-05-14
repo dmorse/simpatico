@@ -8,6 +8,7 @@ ddMd_analyzers_=\
      ddMd/analyzers/OutputPressure.cpp\
      ddMd/analyzers/OutputStressTensor.cpp\
      ddMd/analyzers/VirialStressTensorAverage.cpp\
+     ddMd/analyzers/VirialStressTensor.cpp\
      ddMd/analyzers/StressAutoCorrelation.cpp\
      ddMd/analyzers/OutputBoxdim.cpp \
      ddMd/analyzers/OutputTemperature.cpp\
