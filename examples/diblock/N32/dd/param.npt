@@ -1,6 +1,6 @@
 Simulation{
   Domain{
-    gridDimensions    2    1    3
+    gridDimensions    2    1    1
   }
   FileMaster{
     commandFileName   commands
@@ -29,18 +29,18 @@ Simulation{
   maskedPairPolicy    maskBonded
   reverseUpdateFlag   0
   PairPotential{
-    epsilon           1.0  1.6
-                      1.6  1.0
+    epsilon           1.0  1.1
+                      1.1  1.0
     sigma             1.0  1.0
                       1.0  1.0
     cutoff            1.122462048 1.122462048
                       1.122462048 1.122462048
     skin              0.4
     pairCapacity      40000
-    maxBoundary       orthorhombic   30.0   30.0   30.0
+    maxBoundary       orthorhombic   100   10   10
   }
   BondPotential{
-    kappa             400.0
+    kappa             300.0
     length            1.000
   }
   EnergyEnsemble{
