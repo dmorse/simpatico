@@ -12,7 +12,7 @@
 #include <ddMd/simulation/Simulation.h>
 #include <util/mpi/MpiLoader.h>
 #include <util/space/Tensor.h>
-#include <util/accumulators/AutoCorr.h>     // member template
+#include <util/accumulators/AutoCorrArray.h>     // member template
 
 namespace DdMd
 {
@@ -67,6 +67,11 @@ namespace DdMd
       * Clear nSample counter.
       */
       virtual void clear();
+
+      /**
+      * Setup accumulator!
+      */
+      virtual void setup();
   
       /**
       * Sample virial stress to accumulators
@@ -88,7 +93,7 @@ namespace DdMd
       std::ofstream  outputFile_;
       
       /// Statistical accumulator.
-      AutoCorr<double, double>  accumulator_;
+      AutoCorrArray<double, double>  accumulator_;
 
       /// Number of samples per block average output
       int  capacity_;

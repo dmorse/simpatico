@@ -40,7 +40,10 @@ namespace DdMd
       readOutputFileName(in);
       read<int>(in,"capacity", capacity_);
       // Allocate memory
-      accumulator_.setParam(capacity_);
+      // Autocorrelation accumulator allocation is so to work for
+      // a symmetric matrix, 6 is number of independent elements in 
+      // a symmetric matrix.
+      accumulator_.setParam(6, capacity_);
 
       isInitialized_ = true;
    }
@@ -93,26 +96,59 @@ namespace DdMd
       }
    }
 
+
+   /*
+ *    * Set actual number of molecules and clear accumulator.
+ *       */
+   void StressAutoCorrelation::setup()
+   {
+      if (!isInitialized_) {
+         UTIL_THROW("Object not initialized.");
+      }
+
+       // Set number of molecules and clear accumulator
+       accumulator_.setNEnsemble(6);
+       accumulator_.clear();
+   }
+
    /*
    * Sample the stress tensor.
    */
    void StressAutoCorrelation::sample(long iStep) 
    {  
-      double element;
+      DArray<double> elements;
+      elements.allocate(9);
       double pressure;
+      double temprature;
  
       if (isAtInterval(iStep))  {
          Simulation& sys = simulation();
          sys.computeVirialStress();
          sys.computeKineticStress();
+         sys.computeKineticEnergy();
+         simulation().atomStorage().computeNAtomTotal(simulation().domain().communicator());
+
          if (sys.domain().isMaster()) {
             Tensor virial  = sys.virialStress();
             Tensor kinetic = sys.kineticStress();
             Tensor total = total.add(virial, kinetic);
             pressure = sys.kineticPressure()+sys.virialPressure();
+            double ndof = simulation().atomStorage().nAtomTotal()*3;
+            temprature = sys.kineticEnergy()*2.0/ndof;
+
              
-            element = 0.5*(total(0,1)+total(1,0));
-            accumulator_.sample(element);
+            elements[0] = total(0,0) - pressure / 3.0 / (10.0 * temprature);
+            elements[4] = total(1,1) - pressure / 3.0 / (10.0 * temprature);
+            elements[8] = total(2,2) - pressure / 3.0 / (10.0 * temprature);
+            elements[1] = (total(0,1) + total(1,0)) / 2.0 / (10.0 * temprature);
+            elements[2] = (total(0,2) + total(2,0)) / 2.0 / (10.0 * temprature);
+            elements[5] = (total(1,2) + total(2,1)) / 2.0 / (10.0 * temprature);
+            elements[3] = elements[1];
+            elements[6] = elements[2];
+            elements[7] = elements[5];
+             
+          
+            accumulator_.sample(elements);
          }
       }
    }
