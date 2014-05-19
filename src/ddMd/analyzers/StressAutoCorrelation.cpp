@@ -137,9 +137,9 @@ namespace DdMd
             temprature = sys.kineticEnergy()*2.0/ndof;
 
              
-            elements[0] = total(0,0) - pressure / 3.0 / (10.0 * temprature);
-            elements[4] = total(1,1) - pressure / 3.0 / (10.0 * temprature);
-            elements[8] = total(2,2) - pressure / 3.0 / (10.0 * temprature);
+            elements[0] = (total(0,0) - pressure / 3.0) / (10.0 * temprature);
+            elements[4] = (total(1,1) - pressure / 3.0) / (10.0 * temprature);
+            elements[8] = (total(2,2) - pressure / 3.0) / (10.0 * temprature);
             elements[1] = (total(0,1) + total(1,0)) / 2.0 / (10.0 * temprature);
             elements[2] = (total(0,2) + total(2,0)) / 2.0 / (10.0 * temprature);
             elements[5] = (total(1,2) + total(2,1)) / 2.0 / (10.0 * temprature);

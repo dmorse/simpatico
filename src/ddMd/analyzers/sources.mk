@@ -9,7 +9,6 @@ ddMd_analyzers_=\
      ddMd/analyzers/OutputStressTensor.cpp\
      ddMd/analyzers/VirialStressTensorAverage.cpp\
      ddMd/analyzers/VirialStressTensor.cpp\
-     ddMd/analyzers/StressAutoCorrelation.cpp\
      ddMd/analyzers/OutputBoxdim.cpp \
      ddMd/analyzers/OutputTemperature.cpp\
      ddMd/analyzers/OutputPairEnergies.cpp\
@@ -18,7 +17,8 @@ ddMd_analyzers_=\
      ddMd/analyzers/VanHove.cpp\
      ddMd/analyzers/OrderParamNucleation.cpp\
      ddMd/analyzers/PairEnergyAverage.cpp\
-     ddMd/analyzers/ExternalEnergyAverage.cpp
+     ddMd/analyzers/ExternalEnergyAverage.cpp\
+     ddMd/analyzers/StressAutoCorrelation.cpp
 
 ddMd_analyzers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_analyzers_))
