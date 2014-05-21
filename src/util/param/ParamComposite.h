@@ -759,6 +759,25 @@ namespace Util
       */
       void setIsActive(bool isActive);
 
+      /**
+      * Set this to the parent of a child component.
+      *
+      * This function sets the indent and (ifdef UTIL_MPI)
+      * the ioCommunicator of the child component.
+      *
+      * \param param child ParamComponent
+      * \param next  if true, set indent level one higher than for parent.
+      */
+      void setParent(ParamComponent& param, bool next = true);
+
+      /**
+      * Add a new ParamComponent object to the format array.
+      *
+      * \param param Parameter object
+      * \param isLeaf Is this a leaf or a ParamComposite node?
+      */
+      void addComponent(ParamComponent& param, bool isLeaf = true);
+
    private:
 
       /// Array of pointers to ParamComponent objects.
@@ -778,25 +797,6 @@ namespace Util
 
       /// Is this parameter active ?
       bool isActive_;
-
-      /**
-      * Set this to the parent of a child component.
-      *
-      * This function sets the indent and (ifdef UTIL_MPI)
-      * the ioCommunicator of the child component.
-      *
-      * \param param child ParamComponent
-      * \param next  if true, set indent level one higher than that of parent.
-      */
-      void setParent(ParamComponent& param, bool next = true);
-
-      /**
-      * Add a new ParamComponent object to the format array.
-      *
-      * \param param Parameter object
-      * \param isLeaf Is this a leaf or a ParamComposite node?
-      */
-      void addComponent(ParamComponent& param, bool isLeaf = true);
 
    };
 
