@@ -134,7 +134,8 @@ namespace DdMd
             Tensor total = total.add(virial, kinetic);
             pressure = sys.kineticPressure()+sys.virialPressure();
             double ndof = simulation().atomStorage().nAtomTotal()*3;
-            temprature = sys.kineticEnergy()*2.0/ndof;
+            //temprature = sys.kineticEnergy()*2.0/ndof;
+            temprature = 1;
 
              
             elements[0] = (total(0,0) - pressure / 3.0) / (10.0 * temprature);

@@ -26,6 +26,7 @@ Simulation{
   pairStyle          LJPair
   bondStyle          HarmonicBond
   maskedPairPolicy   maskBonded
+  reverseUpdateFlag   0
   PairPotential{
     epsilon          1.0
     sigma            1.0
@@ -48,24 +49,24 @@ Simulation{
   NvtIntegrator{
     dt               0.005
     tauT             1.000
+    saveInterval     0
   }
   Random{
     seed        8012457890
   }
   AnalyzerManager{
-     baseInterval  1000
+     baseInterval  1
 
      OutputEnergy{
         interval          1000
         outputFileName  energy
      }
+
+     StressAutoCorrelation{
+        interval             1
+        outputFileName  stress
+        capacity         10000
+     }
   }
 }
 
-     WriteConfig{
-        interval          2000
-        outputFileName  config
-     }
-
-  nAngleType         0
-  hasExternal        0

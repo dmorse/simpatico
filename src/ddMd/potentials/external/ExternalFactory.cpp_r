@@ -25,6 +25,7 @@
 #include <inter/external/SimplePeriodicExternal.h>
 #include <inter/external/PeriodicExternal.h>
 #include <inter/external/GeneralPeriodicExternal.h>
+#include <inter/external/NucleationExternal.h>
 
 namespace DdMd
 {
@@ -68,12 +69,15 @@ namespace DdMd
       } else
       if (name == "SimplePeriodicExternal") {
          ptr = new ExternalPotentialImpl<SimplePeriodicExternal>(*simulationPtr_);
-      }
+      } else
       if (name == "PeriodicExternal") {
          ptr = new ExternalPotentialImpl<PeriodicExternal>(*simulationPtr_);
-      }
+      } else
       if (name == "GeneralPeriodicExternal") {
          ptr = new ExternalPotentialImpl<GeneralPeriodicExternal>(*simulationPtr_);
+      } else
+      if (name == "NucleationExternal") {
+         ptr = new ExternalPotentialImpl<NucleationExternal>(*simulationPtr_);
       }
       return ptr;
    }
