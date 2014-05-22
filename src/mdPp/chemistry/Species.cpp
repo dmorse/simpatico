@@ -9,6 +9,7 @@
 */
 
 #include "Species.h"
+#include "Atom.h"
 
 namespace MdPp
 {
@@ -28,32 +29,115 @@ namespace MdPp
    void Species::setId(int id)
    {  id_ = id; }
  
+   void Species::initialize(int capacity, int nAtom)
+   {
+      capacity_ = capacity;
+      nAtom_ = nAtom;
+      initialize();
+   }
+ 
    void Species::initialize()
-   {}
+   {
+      // Preconditions
+      if (capacity_ <= 0) {
+         UTIL_THROW("Capacity <= 0: Not initialized");
+      }
+      if (nAtom_ <= 0) {
+         UTIL_THROW("nAtom_ <= 0: Not initialized");
+      }
+
+      // Allocate and initialize atomPtrs_ array
+      atomPtrs_.allocate(capacity_*nAtom_);
+      for (int i=0; i < atomPtrs_.capacity(); ++i) {
+         atomPtrs_[i] = 0;
+      }
+
+      // Allocate and initialize molecules_ array
+      molecules_.allocate(capacity_);
+      Atom** atomPtr = &atomPtrs_[0];
+      for (int i=0; i < capacity_; ++i) {
+         molecules_[i].atoms_ = atomPtr;
+         molecules_[i].id_ = i;
+         molecules_[i].nAtom_ = 0;
+         molecules_[i].speciesPtr_ = this;
+         atomPtr += nAtom_;
+      }
+   }
+ 
+   void Species::clear()
+   {
+      for (int i=0; i < atomPtrs_.capacity(); ++i) {
+         atomPtrs_[i] = 0;
+      }
+      for (int i=0; i < capacity_; ++i) {
+         molecules_[i].nAtom_ = 0;
+      }
+   }
  
    void Species::addAtom(Atom& atom) 
    {
-      // Check that atom.speciesId = id_;
-      // Check that moleculeId >= 0 and < capacity_
-      // Check that atomId >=0 and < nAtom_
-      // int i = (moleculeId*nAtom_) + atomId_;
-      // atomPtrs_[i] = &atom;
-      // if (moleculeId > size_) {
-      //    size_ = moleculeId;
-      //}
+      if (atom.speciesId != id_) {
+         UTIL_THROW("Inconsistent speciesId");
+      }
+      int mId = atom.moleculeId;
+      int aId = atom.id;
+      if (mId < 0) {
+         UTIL_THROW("atom.moleculeId < 0");
+      }
+      if (mId >= capacity_) {
+         UTIL_THROW("atom.moleculeId >= capacity_");
+      }
+      if (aId < 0) {
+         UTIL_THROW("atom.id < 0");
+      }
+      if (aId >= nAtom_) {
+         UTIL_THROW("atom.id >= nAtom_");
+      }
+      atomPtrs_[mId*nAtom_ + aId] = &atom;
+      ++molecules_[mId].nAtom_;
+      if (mId > size_) {
+         size_ = mId;
+      }
    }
    
-   void Species::clear()
-   {}
- 
    void Species::begin(MoleculeIterator& iterator)
    {  molecules_.begin(iterator); }
  
    void Species::isValid() 
    {
-      // Check that atom pointers have been set for all atoms in all
-      // molecules with moleculeId < size_, and that AtomContext info
-      // in each atom is consistent with data in Species and Molecule.
+      Molecule* mPtr;
+      Atom* aPtr;
+      int ia, im;
+      for (im = 0; im < size_; ++im) {
+         mPtr = &molecules_[im];
+         if (mPtr->nAtom_ != nAtom_) {
+            UTIL_THROW("molecule nAtom != species nAtom");
+         }  
+         if (mPtr->atoms_ != &atomPtrs_[0] + im*nAtom_) {
+            UTIL_THROW("Incorrect assignment of atoms_ in molecule");
+         }
+         if (mPtr->id() != im) {
+            UTIL_THROW("Incorrect molecule id");
+         }
+         if (mPtr->speciesPtr_ != this) {
+            UTIL_THROW("Incorrect species pointer in molecule");
+         }
+         for (ia = 0; ia < nAtom_; ++ia) {
+            aPtr = mPtr->atoms_[ia];
+            if (aPtr == 0) {
+               UTIL_THROW("Null atom ptr in molecule");
+            }
+            if (aPtr->id != ia) {
+               UTIL_THROW("Inconsistent atom index");
+            }
+            if (aPtr->moleculeId != im) {
+               UTIL_THROW("Inconsistent molecule index");
+            }
+            if (aPtr->speciesId != id_) {
+               UTIL_THROW("Inconsistent species index");
+            }
+         }
+      }
    }
  
    std::istream& operator >> (std::istream& in, Species& species);

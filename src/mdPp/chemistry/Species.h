@@ -27,6 +27,8 @@ namespace MdPp
    
      void setId(int id);
    
+     void initialize(int capacity, int nAtom);
+   
      void initialize();
    
      void addAtom(Atom& atom);
