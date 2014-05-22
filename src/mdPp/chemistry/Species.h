@@ -22,6 +22,8 @@ namespace MdPp
    public:
    
      typedef ArrayIterator<Molecule> MoleculeIterator;
+
+     Species();
    
      void setId(int id);
    
@@ -33,8 +35,7 @@ namespace MdPp
    
      void begin(MoleculeIterator& iterator);
    
-     Molecule& molecule(int i)
-     {  return molecules_[i]; }
+     Molecule& molecule(int i);
    
      /// Return integer id for this species.
      int id() const;
@@ -68,5 +69,21 @@ namespace MdPp
    
    };
 
+   /// Return a specific molecule. 
+   inline Molecule& Species::molecule(int i)
+   {
+      assert(i >=0);
+      assert(i < size_);
+      return molecules_[i]; 
+   }
+ 
+   /// Return integer id for this species.
+   inline int Species::id() const
+   {  return id_; }
+ 
+   /// Number of molecules.
+   inline int Species::size() const
+   {  return size_; }
+ 
 }
 #endif

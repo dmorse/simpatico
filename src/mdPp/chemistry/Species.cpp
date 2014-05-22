@@ -14,10 +14,25 @@ namespace MdPp
 {
 
    using namespace Util;
-   
+  
+   // Constructor.
+   Species::Species()
+    : atomPtrs_(),
+      molecules_(),
+      id_(-1),
+      nAtom_(0),
+      capacity_(0),
+      size_(0)
+   {}
+ 
+   void Species::setId(int id)
+   {  id_ = id; }
+ 
+   void Species::initialize()
+   {}
+ 
    void Species::addAtom(Atom& atom) 
    {
-   
       // Check that atom.speciesId = id_;
       // Check that moleculeId >= 0 and < capacity_
       // Check that atomId >=0 and < nAtom_
@@ -28,12 +43,21 @@ namespace MdPp
       //}
    }
    
+   void Species::clear()
+   {}
+ 
+   void Species::begin(MoleculeIterator& iterator)
+   {  molecules_.begin(iterator); }
+ 
    void Species::isValid() 
    {
       // Check that atom pointers have been set for all atoms in all
       // molecules with moleculeId < size_, and that AtomContext info
       // in each atom is consistent with data in Species and Molecule.
    }
-
+ 
+   std::istream& operator >> (std::istream& in, Species& species);
+   std::ostream& operator << (std::ostream& out, Species& species);
+  
 }
 #endif
