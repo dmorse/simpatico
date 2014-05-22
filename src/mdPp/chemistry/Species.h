@@ -23,45 +23,82 @@ namespace MdPp
    
      typedef ArrayIterator<Molecule> MoleculeIterator;
 
+     /**
+     * Constructor.
+     */
      Species();
-   
+  
+     /**
+     * Set the index for this species.
+     *
+     * \param id species index
+     */ 
      void setId(int id);
    
+     /**
+     * Initialize memory for this species and set sizes.
+     *
+     * \param capacity maximum number of molecules in species
+     * \param capacity number of atoms per molecule (exact)
+     */ 
      void initialize(int capacity, int nAtom);
-   
+  
+     /**
+     * Initialize memory for this species.
+     */ 
      void initialize();
    
+     /**
+     * Add an atom to the species.
+     *
+     * \param atom Atom object to be added, must have AtomContext info.
+     */ 
      void addAtom(Atom& atom);
 
+     /**
+     * Clear all molecules, reset to empty.
+     */ 
      void clear();
-   
+  
+     /**
+     * Initialize an iterator over molecules.
+     */ 
      void begin(MoleculeIterator& iterator);
-   
+  
+     /**
+     * Return a specific molecule by reference
+     *
+     * \param i molecule index
+     */ 
      Molecule& molecule(int i);
-   
-     /// Return integer id for this species.
+  
+     /** 
+     * Return integer id for this species.
+     */
      int id() const;
-   
-     /// Number of molecules.
+  
+     /** 
+     * Return number of molecules in this species (=maximum id + 1)
+     */
      int size() const;
    
-     void isValid();
+     bool isValid() const;
    
    private:
    
      DArray<Atom*> atomPtrs_;
      DArray<Molecule> molecules_;
    
-     /// Species index
+     /// Species index.
      int id_;
     
-     /// Number of atoms per molecule
+     /// Number of atoms per molecule.
      int nAtom_;
    
-     /// Maximum number of molecules.
+     /// Maximum number of molecules in this species.
      int capacity_;
    
-     /// Actual number of molecules = maximum molecule id + 1
+     /// Actual number of molecules = maximum molecule id + 1.
      int size_;
    
    //friends:

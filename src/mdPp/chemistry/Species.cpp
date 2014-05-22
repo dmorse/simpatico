@@ -15,7 +15,7 @@ namespace MdPp
 {
 
    using namespace Util;
-  
+
    // Constructor.
    Species::Species()
     : atomPtrs_(),
@@ -25,20 +25,23 @@ namespace MdPp
       capacity_(0),
       size_(0)
    {}
- 
+
    void Species::setId(int id)
    {  id_ = id; }
- 
+
    void Species::initialize(int capacity, int nAtom)
    {
       capacity_ = capacity;
       nAtom_ = nAtom;
       initialize();
    }
- 
+
    void Species::initialize()
    {
       // Preconditions
+      if (molecules_.capacity() > 0) {
+         UTIL_THROW("Species already initialized");
+      }
       if (capacity_ <= 0) {
          UTIL_THROW("Capacity <= 0: Not initialized");
       }
@@ -62,8 +65,10 @@ namespace MdPp
          molecules_[i].speciesPtr_ = this;
          atomPtr += nAtom_;
       }
+      size_ = 0;
+
    }
- 
+
    void Species::clear()
    {
       for (int i=0; i < atomPtrs_.capacity(); ++i) {
@@ -72,15 +77,16 @@ namespace MdPp
       for (int i=0; i < capacity_; ++i) {
          molecules_[i].nAtom_ = 0;
       }
+      size_ = 0;
    }
- 
-   void Species::addAtom(Atom& atom) 
+
+   void Species::addAtom(Atom& atom)
    {
       if (atom.speciesId != id_) {
          UTIL_THROW("Inconsistent speciesId");
       }
       int mId = atom.moleculeId;
-      int aId = atom.id;
+      int aId = atom.atomId;
       if (mId < 0) {
          UTIL_THROW("atom.moleculeId < 0");
       }
@@ -88,10 +94,10 @@ namespace MdPp
          UTIL_THROW("atom.moleculeId >= capacity_");
       }
       if (aId < 0) {
-         UTIL_THROW("atom.id < 0");
+         UTIL_THROW("atom.atomId < 0");
       }
       if (aId >= nAtom_) {
-         UTIL_THROW("atom.id >= nAtom_");
+         UTIL_THROW("atom.atomId >= nAtom_");
       }
       atomPtrs_[mId*nAtom_ + aId] = &atom;
       ++molecules_[mId].nAtom_;
@@ -99,20 +105,20 @@ namespace MdPp
          size_ = mId;
       }
    }
-   
+
    void Species::begin(MoleculeIterator& iterator)
    {  molecules_.begin(iterator); }
- 
-   void Species::isValid() 
+
+   bool Species::isValid() const
    {
-      Molecule* mPtr;
-      Atom* aPtr;
+      const Molecule* mPtr;
+      const Atom* aPtr;
       int ia, im;
       for (im = 0; im < size_; ++im) {
-         mPtr = &molecules_[im];
+         mPtr = &(molecules_[im]);
          if (mPtr->nAtom_ != nAtom_) {
             UTIL_THROW("molecule nAtom != species nAtom");
-         }  
+         }
          if (mPtr->atoms_ != &atomPtrs_[0] + im*nAtom_) {
             UTIL_THROW("Incorrect assignment of atoms_ in molecule");
          }
@@ -127,7 +133,7 @@ namespace MdPp
             if (aPtr == 0) {
                UTIL_THROW("Null atom ptr in molecule");
             }
-            if (aPtr->id != ia) {
+            if (aPtr->atomId != ia) {
                UTIL_THROW("Inconsistent atom index");
             }
             if (aPtr->moleculeId != im) {
@@ -138,10 +144,11 @@ namespace MdPp
             }
          }
       }
+      return true;
    }
- 
+
    std::istream& operator >> (std::istream& in, Species& species);
    std::ostream& operator << (std::ostream& out, Species& species);
-  
+
 }
 #endif
