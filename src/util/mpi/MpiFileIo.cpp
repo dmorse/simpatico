@@ -49,7 +49,7 @@ namespace Util
    void MpiFileIo::clearCommunicator()
    {  
       communicatorPtr_ = 0; 
-      isIoProcessor_   = true;
+      isIoProcessor_  = true;
    }
    #endif
 
