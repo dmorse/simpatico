@@ -26,8 +26,8 @@ namespace Inter
       C_(),
       periodicity_(),
       interfaceWidth_(),
-      nucleationSeed_(),
-      nucleationInterfaceWidth_(),
+      nucleationClip_(),
+      bias_(),
       boundaryPtr_(0),
       nAtomType_(0), 
       isInitialized_(false)
@@ -42,7 +42,8 @@ namespace Inter
       C_(other.C_),
       periodicity_(other.periodicity_),
       interfaceWidth_(other.interfaceWidth_),
-      nucleationInterfaceWidth_(other.nucleationInterfaceWidth_),
+      nucleationClip_(other.nucleationClip_),
+      bias_(other.bias_),
       boundaryPtr_(other.boundaryPtr_),
       nAtomType_(other.nAtomType_),
       isInitialized_(other.isInitialized_)
@@ -64,9 +65,6 @@ namespace Inter
       for (int i=0; i < Dimension; ++i) {
         shift_[i] = other.shift_[i];
       }
-      for (int i=0; i < Dimension; ++i) {
-        nucleationSeed_[i] = other.nucleationSeed_[i];
-      }
    } 
      
    /* 
@@ -79,7 +77,8 @@ namespace Inter
       C_                   = other.C_;
       periodicity_         = other.periodicity_;
       interfaceWidth_      = other.interfaceWidth_;
-      nucleationInterfaceWidth_  = other.nucleationInterfaceWidth_;
+      nucleationClip_      = other.nucleationClip_;
+      bias_                = other.bias_;
       boundaryPtr_         = other.boundaryPtr_;
       nAtomType_           = other.nAtomType_;
       isInitialized_       = other.isInitialized_;
@@ -97,9 +96,6 @@ namespace Inter
       }
       for (int i=0; i < Dimension; ++i) {
         shift_[i] = other.shift_[i];
-      }
-      for (int i=0; i < Dimension; ++i) {
-        nucleationSeed_[i] = other.nucleationSeed_[i];
       }
       return *this;
    }
@@ -163,8 +159,8 @@ namespace Inter
       read<Vector>(in, "shift", shift_);
       read<double>(in, "interfaceWidth", interfaceWidth_);
       read<int>(in, "periodicity", periodicity_);
-      read<Vector>(in, "nucleationSeed", nucleationSeed_);
-      read<double>(in, "nucleationInterfaceWidth", nucleationInterfaceWidth_);
+      read<double>(in, "nucleationClip", nucleationClip_);
+      read<double>(in, "bias", bias_);
 
       isInitialized_ = true;
    }
@@ -188,8 +184,8 @@ namespace Inter
       loadParameter<Vector>(ar, "shift", shift_);
       loadParameter<double>(ar, "interfaceWidth", interfaceWidth_);
       loadParameter<int>(ar, "periodicity", periodicity_);
-      loadParameter<Vector>(ar, "nucleationSeed", nucleationSeed_);
-      loadParameter<double>(ar, "nucleationInterfaceWidth", nucleationInterfaceWidth_);
+      loadParameter<double>(ar, "nucleationClip", nucleationClip_);
+      loadParameter<double>(ar, "bias", bias_);
       isInitialized_ = true;
    }
 
@@ -207,8 +203,8 @@ namespace Inter
       ar << shift_;
       ar << interfaceWidth_;
       ar << periodicity_;
-      ar << nucleationSeed_;
-      ar << nucleationInterfaceWidth_;
+      ar << nucleationClip_;
+      ar << bias_;
    }
 
 

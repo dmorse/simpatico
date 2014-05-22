@@ -162,10 +162,10 @@ namespace Inter
       double interfaceWidth_;
 
       /// Prefactor array ofsize nAtomType.
-      Vector nucleationSeed_;
+      double nucleationClip_;
 
       /// Prefactor array ofsize nAtomType.
-      double nucleationInterfaceWidth_;
+      double bias_;
 
       /// Pointer to associated Boundary object.
       Boundary *boundaryPtr_;
@@ -200,11 +200,13 @@ namespace Inter
          double arg = q.dot(r)+phases_[i];
          cosine += cos(arg);
       }
+
       cosine *= clipParameter;
       e = prefactor_[type]*externalParameter_*tanh(C_+cosine) * 
-      1/(1+exp(nucleationInterfaceWidth_*(position[0]/nucleationSeed_[0]-1))) * 
-      1/(1+exp(nucleationInterfaceWidth_*(position[1]/nucleationSeed_[1]-1))) * 
-      1/(1+exp(nucleationInterfaceWidth_*(position[2]/nucleationSeed_[2]-1)));
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))))+1)/2 *
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))))+1)/2 * 
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))))+1)/2 ;
+
       return e;
    }
 
@@ -217,13 +219,12 @@ namespace Inter
    {
       const Vector cellLengths = boundaryPtr_->lengths();
       double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);
-      double oe;
       double ne;
 
       ne = 
-      1/(1+exp(nucleationInterfaceWidth_*(position[0]/nucleationSeed_[0]-1))) *
-      1/(1+exp(nucleationInterfaceWidth_*(position[1]/nucleationSeed_[1]-1))) * 
-      1/(1+exp(nucleationInterfaceWidth_*(position[2]/nucleationSeed_[2]-1)));
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))))+1)/2 * 
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))))+1)/2 * 
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))))+1)/2 ;
 
       Vector r = position;
       r -= shift_;
@@ -242,7 +243,6 @@ namespace Inter
          deriv += q;
       }
       cosine *= clipParameter;
-      oe = prefactor_[type]*externalParameter_*tanh(C_+cosine);
 
       deriv *= clipParameter;
       double tanH = tanh(C_+cosine);
@@ -250,12 +250,23 @@ namespace Inter
       double f = prefactor_[type]*externalParameter_*sechSq;
       deriv *= f;
       deriv *= ne;
-      deriv[0] = deriv[0] - (nucleationInterfaceWidth_/nucleationSeed_[0]*exp(nucleationInterfaceWidth_*(position[0]/nucleationSeed_[0]-1)) 
-                            / (1+exp(nucleationInterfaceWidth_*(position[0]/nucleationSeed_[0]-1))))*ne*oe;
-      deriv[1] = deriv[1] - (nucleationInterfaceWidth_/nucleationSeed_[1]*exp(nucleationInterfaceWidth_*(position[1]/nucleationSeed_[1]-1)) 
-                            / (1+exp(nucleationInterfaceWidth_*(position[1]/nucleationSeed_[1]-1))))*ne*oe;
-      deriv[2] = deriv[2] - (nucleationInterfaceWidth_/nucleationSeed_[2]*exp(nucleationInterfaceWidth_*(position[2]/nucleationSeed_[2]-1)) 
-                            / (1+exp(nucleationInterfaceWidth_*(position[2]/nucleationSeed_[2]-1))))*ne*oe;
+      deriv[0] = deriv[0] + nucleationClip_*(M_PI/cellLengths[0]*sin(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_)))/
+                            cosh(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))/
+                            cosh(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))))+1)/2*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))))+1)/2;
+
+      deriv[1] = deriv[1] + nucleationClip_*(M_PI/cellLengths[1]*sin(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_)))/
+                            cosh(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))/
+                            cosh(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))))+1)/2*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))))+1)/2;
+
+      deriv[2] = deriv[2] + nucleationClip_*(M_PI/cellLengths[2]*sin(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_)))/
+                            cosh(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))/
+                            cosh(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))))+1)/2*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))))+1)/2;
       force = deriv;
    }
  
