@@ -1,0 +1,204 @@
+Goal: 
+
+Add data structures that are accessible from a MdPp::Processor that allow 
+access of atoms via the identifier speciesId, moleculeId, atomId that is 
+stored in a DdMd::AtomContext.
+
+-----------------------------------------------------------------------------
+Design constraints / decisions:
+
+1) The use of AtomContext information must be optional. Not all file formats
+for DdMd contain AtomContext information. The processor must be able to read 
+and analyze atoms and groups, and carry out operations that do not require 
+AtomContext information when the input file format does not contain this
+information. This means, specifically, that the data structures involving
+species and molecules should be created after all atoms and groups are 
+read from file. 
+
+2) Code in the MdPp namespace should not depend on any code or preprocessor
+macros defined in the DdMd namespace, though it does depend on Util and Iter
+namespace. The code for processing molecules and species should thus 
+always be compiled, rather than being conditionally compiled under the 
+control of a preprocessor. Since some file formats will not contain this
+information, the user must then have a way of enabling or disabling this 
+feature at run time. Proposal: The parameter file for a processor should 
+contain a declaration of the number of species, which is an integer one 
+greater than the maximum speciesId. Setting this parameter is set to zero
+should disable use of context info. All code in the processor that uses
+context info should thus be inside a loop that checks if this value is
+greater than zero. (A negative value for this parameter should be treated
+as an error when reading the parameter file). 
+
+3) For simplicity, when AtomContext information is available, we will require
+that the number of atoms in each molecule of a species be the same, and that
+all atoms be present, with sequential local atom ids. We will also require
+that molecule ids within each species be sequential, from 0 up to some
+maximum. Since the ids are stored with each atom in the file format, and may
+or may not satisfy these conditions, these preconditions should be checked
+after reading a file format. 
+
+4) We will not always require that groups contain only atoms in the same 
+molecule.  This is to allow inter-molecular links (e.g., for polymer 
+networks), and to simplify the required validity checks. We could consider 
+giving users the option of declaring that this constraint should be
+satisfied - if declared, it could be checked after reading an input file.
+The initial version of the code should, however, not assume anything 
+about the relationship between covalent groups and molecules. 
+
+5) Wouldn't it be cool if we had some code that could infer molecules and
+species of identical molecules from bond information, and then modify the
+AtomContext info accordingly? This should be considered for later addition, 
+but not included in the initial version.
+
+---------------------------------------------------------------------------
+Proposed additions to MdPp::Processor class:
+
+class Processor 
+{
+public:
+
+      .... 
+
+   int nSpecies() const;
+
+private:
+
+   /// This already exists (just a reminder)
+   DSArray<Atoms> atoms_;
+
+   DArray<Species> species_;
+
+   /// Number of species = maximum allowed speciesId + 1
+   int nSpecies_;
+
+   void makeContextInfo();
+
+};
+
+void Processor::readParameters(std::ifstream& in)
+{
+
+   // Existing code:
+   // read atomCapacity, bondCapacity, etc. 
+   // allocate atoms_, atomPtrs_, bonds_ etc.
+
+   read<int>(in, "nSpecies", nSpecies_);
+
+   // Note: A user can disable use of Species and Molecules at run time
+   // by setting nSpecies_ = 0,  and should do so if they are not using 
+   // an appropriate file format.
+
+   if  (nSpecies > 0) {
+      species_.allocate(nSpecies);
+
+      // Note: readDArray<Species> requires a Species to have 
+      // << and >> operators, so it can be treated like a built in type.
+      // Build allocation into the >> operator, so it happens automatically.
+
+      readDArray<Species>(in, "species", species_,  nSpecies_);
+
+      // Add all atoms to species
+      nAtom = atoms_.size();
+      for (int i=0; i < nAtom; ++i) {
+         speciesId = atoms_[i].speciesId();
+         // Check validity of speciesId
+         species_[speciesId].addAtom(atoms_[i]);
+      }
+
+   }
+
+}
+
+----------------------------------------------------------------------------
+
+class Species {
+public:
+
+  typedef ArrayIterator<Molecule> MoleculeIterator;
+
+  void setId(int id)
+  {  id_ = id; }
+
+  void initialize();
+
+  void addAtom(Atom& atom);
+
+  void isValid();
+
+  void begin(MoleculeIterator& iterator);
+
+  Molecule& molecule(int i);
+  {  return molecules_[i]; }
+
+  /// Return integer id for this species.
+  int id() const;
+
+  /// Number of molecules.
+  int size() const;
+
+private:
+
+  DArray<Atom*> atomPtrs_;
+  DArray<Molecule> molecules_;
+
+  /// Species index
+  int id_;
+ 
+  /// Number of atoms per molecule
+  int nAtom_;
+
+  /// Maximum number of molecules.
+  int capacity_;
+
+  /// Actual number of molecules = maximum molecule id + 1
+  int size_;
+
+//friends:
+
+  friend std::istream& operator >> (std::istream& in, Species& species);
+  friend std::ostream& operator << (std::ostream& out, Species& species);
+
+};
+
+void Species::addAtom(Atom& atom) 
+{
+
+   // Check that atom.speciesId = id_;
+   // Check that moleculeId >= 0 and < capacity_
+   // Check that atomId >=0 and < nAtom_
+   int i = (moleculeId*nAtom_) + atomId_;
+   atomPtrs_[i] = &atom;
+   if (moleculeId > size_) {
+      size_ = moleculeId;
+   }
+}
+
+void Species::isValid() {
+    // Check that atom pointers have been set for all atoms in all
+    // molecules with moleculeId < size_, and that AtomContext info
+    // in each atom is consistent with data in Species and Molecule.
+}
+
+class Molecule
+{
+public:
+
+    Atom& atom(int id)
+    { 
+        // check bounds on id
+        return *(first_[id]);
+    }
+
+private:
+
+    Atom** first_;
+    Species** speciesPtr_;
+    int   moleculeId_;
+
+//friends:
+
+    // Let the Species class set speciesPtr_, first_, moleculeId_ directly.
+    friend class Species;
+
+}
+
