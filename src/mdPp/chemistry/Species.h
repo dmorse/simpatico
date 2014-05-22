@@ -104,11 +104,33 @@ namespace MdPp
    //friends:
    
      friend std::istream& operator >> (std::istream& in, Species& species);
-     friend std::ostream& operator << (std::ostream& out, Species& species);
+     friend std::ostream& operator << (std::ostream& out, const Species& species);
    
    };
 
-   /// Return a specific molecule. 
+   /**
+   * istream extractor (>>) for a Species.
+   *
+   * \param in  input stream
+   * \param species  Species to be read from stream
+   * \return modified  input stream
+   */
+   std::istream& operator>>(std::istream& in, Species &species);
+
+   /**
+   * ostream inserter (<<) for a Species.
+   *
+   * Format on one line with no line break:
+   *
+   * \param out  output stream
+   * \param species  Species to be written to stream
+   * \return modified output stream
+   */
+   std::ostream& operator << (std::ostream& out, const Species &species);
+
+   // Inline function definitions
+
+   // Return a specific molecule. 
    inline Molecule& Species::molecule(int i)
    {
       assert(i >=0);
@@ -116,11 +138,11 @@ namespace MdPp
       return molecules_[i]; 
    }
  
-   /// Return integer id for this species.
+   // Return integer id for this species.
    inline int Species::id() const
    {  return id_; }
  
-   /// Number of molecules.
+   // Number of molecules.
    inline int Species::size() const
    {  return size_; }
  

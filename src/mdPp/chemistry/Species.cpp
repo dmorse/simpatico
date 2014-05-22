@@ -147,8 +147,28 @@ namespace MdPp
       return true;
    }
 
-   std::istream& operator >> (std::istream& in, Species& species);
-   std::ostream& operator << (std::ostream& out, Species& species);
+   /*
+   * istream extractor (>>) for a Species.
+   */
+   std::istream& operator >> (std::istream& in, Species &species)
+   {
+      in >> species.nAtom_;
+      in >> species.capacity_;
+      species.initialize();
+      return in;
+   }
+
+   /*
+   * ostream inserter (<<) for a Species.
+   */
+   std::ostream& operator << (std::ostream& out, const Species &species) 
+   {
+      out.width(10);
+      out << species.nAtom_;
+      out.width(10);
+      out << species.capacity_;
+      return out;
+   }
 
 }
 #endif
