@@ -22,17 +22,20 @@ namespace MdPp
       molecules_(),
       id_(-1),
       nAtom_(0),
-      capacity_(0),
-      size_(0)
+      capacity_(0)
    {}
 
    void Species::setId(int id)
    {  id_ = id; }
 
-   void Species::initialize(int capacity, int nAtom)
+   void Species::initialize(int nAtom, int capacity)
    {
-      capacity_ = capacity;
+      assert(molecules_.capacity() == 0);
+      assert(atomPtrs_.capacity() == 0);
+      assert(capacity_ == 0);
+      assert(nAtom_ == 0);
       nAtom_ = nAtom;
+      capacity_ = capacity;
       initialize();
    }
 
@@ -42,11 +45,13 @@ namespace MdPp
       if (molecules_.capacity() > 0) {
          UTIL_THROW("Species already initialized");
       }
+      assert(molecules_.capacity() == 0);
+      assert(atomPtrs_.capacity() == 0);
       if (capacity_ <= 0) {
-         UTIL_THROW("Capacity <= 0: Not initialized");
+         UTIL_THROW("Capacity <= 0: Value not set");
       }
       if (nAtom_ <= 0) {
-         UTIL_THROW("nAtom_ <= 0: Not initialized");
+         UTIL_THROW("nAtom_ <= 0: Value not set");
       }
 
       // Allocate and initialize atomPtrs_ array
@@ -57,6 +62,7 @@ namespace MdPp
 
       // Allocate and initialize molecules_ array
       molecules_.allocate(capacity_);
+      molecules_.resize(capacity_);
       Atom** atomPtr = &atomPtrs_[0];
       for (int i=0; i < capacity_; ++i) {
          molecules_[i].atoms_ = atomPtr;
@@ -65,10 +71,13 @@ namespace MdPp
          molecules_[i].speciesPtr_ = this;
          atomPtr += nAtom_;
       }
-      size_ = 0;
+      molecules_.resize(0);
 
    }
 
+   /*
+   * Reset to empty state.
+   */
    void Species::clear()
    {
       for (int i=0; i < atomPtrs_.capacity(); ++i) {
@@ -77,9 +86,12 @@ namespace MdPp
       for (int i=0; i < capacity_; ++i) {
          molecules_[i].nAtom_ = 0;
       }
-      size_ = 0;
+      molecules_.resize(0);
    }
 
+   /*
+   * Add an atom to this Species.
+   */
    void Species::addAtom(Atom& atom)
    {
       if (atom.speciesId != id_) {
@@ -100,21 +112,27 @@ namespace MdPp
          UTIL_THROW("atom.atomId >= nAtom_");
       }
       atomPtrs_[mId*nAtom_ + aId] = &atom;
-      ++molecules_[mId].nAtom_;
-      if (mId > size_) {
-         size_ = mId;
+      if (mId >= molecules_.size()) {
+         molecules_.resize(mId+1);
       }
+      ++molecules_[mId].nAtom_;
    }
 
+   /*
+   * Initialized an iterator over molecules in species.
+   */
    void Species::begin(MoleculeIterator& iterator)
    {  molecules_.begin(iterator); }
 
+   /*
+   * Return true if valid, throw Exception otherwise.
+   */
    bool Species::isValid() const
    {
       const Molecule* mPtr;
       const Atom* aPtr;
       int ia, im;
-      for (im = 0; im < size_; ++im) {
+      for (im = 0; im < molecules_.size(); ++im) {
          mPtr = &(molecules_[im]);
          if (mPtr->nAtom_ != nAtom_) {
             UTIL_THROW("molecule nAtom != species nAtom");

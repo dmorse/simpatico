@@ -10,6 +10,7 @@
 
 #include "Molecule.h"
 #include <util/containers/DArray.h>
+#include <util/containers/DSArray.h>
 #include <util/containers/ArrayIterator.h>
 
 namespace MdPp
@@ -38,10 +39,10 @@ namespace MdPp
      /**
      * Initialize memory for this species and set sizes.
      *
-     * \param capacity maximum number of molecules in species
      * \param capacity number of atoms per molecule (exact)
+     * \param capacity maximum number of molecules in species
      */ 
-     void initialize(int capacity, int nAtom);
+     void initialize(int nAtom, int capacity);
   
      /**
      * Initialize memory for this species.
@@ -95,9 +96,12 @@ namespace MdPp
      bool isValid() const;
    
    private:
-   
+  
+     // Array of pointers to atoms, ordered by molecule 
      DArray<Atom*> atomPtrs_;
-     DArray<Molecule> molecules_;
+
+     // Array of molecules, each associated with a block in atomPtrs_.
+     DSArray<Molecule> molecules_;
    
      /// Species index.
      int id_;
@@ -107,9 +111,6 @@ namespace MdPp
    
      /// Maximum number of molecules in this species.
      int capacity_;
-   
-     /// Actual number of molecules = maximum molecule id + 1.
-     int size_;
    
    //friends:
    
@@ -143,8 +144,6 @@ namespace MdPp
    // Return a specific molecule. 
    inline Molecule& Species::molecule(int i)
    {
-      assert(i >=0);
-      assert(i < size_);
       return molecules_[i]; 
    }
  
@@ -158,7 +157,7 @@ namespace MdPp
  
    // Number of molecules.
    inline int Species::size() const
-   {  return size_; }
+   {  return molecules_.size(); }
  
    // Maximum number of molecules.
    inline int Species::capacity() const
