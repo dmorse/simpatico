@@ -60,8 +60,15 @@ inline void SpeciesTest::testAddAtoms()
 
    Species::MoleculeIterator iter;
    species_.begin(iter);
+   i = 0;
    for ( ; iter.notEnd(); ++iter) {
-      std::cout << "\n" << iter->id();
+      TEST_ASSERT(iter->id() == i);
+      for (j = 0; j < species_.nAtom(); ++j) {
+         TEST_ASSERT(iter->atom(j).atomId == j);
+         TEST_ASSERT(iter->atom(j).moleculeId == i);
+         TEST_ASSERT(iter->atom(j).speciesId == 3);
+      }
+      ++i;
    }
 
    species_.clear();
