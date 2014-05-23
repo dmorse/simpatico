@@ -78,9 +78,19 @@ namespace MdPp
      int id() const;
   
      /** 
+     * Return number of atoms per molecule.
+     */
+     int nAtom() const;
+  
+     /** 
      * Return number of molecules in this species (=maximum id + 1)
      */
      int size() const;
+   
+     /** 
+     * Return maximum number of molecules in this species.
+     */
+     int capacity() const;
    
      bool isValid() const;
    
@@ -142,9 +152,17 @@ namespace MdPp
    inline int Species::id() const
    {  return id_; }
  
+   // Return number of atoms per molecule.
+   inline int Species::nAtom() const
+   {  return nAtom_; }
+ 
    // Number of molecules.
    inline int Species::size() const
    {  return size_; }
+ 
+   // Maximum number of molecules.
+   inline int Species::capacity() const
+   {  return capacity_; }
  
 }
 #endif
