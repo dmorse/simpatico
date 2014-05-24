@@ -13,8 +13,8 @@
 #include <mdPp/chemistry/Atom.h>
 #include <mdPp/chemistry/Group.h>
 #include <mdPp/chemistry/Species.h>
-#include <mdPp/processor/Processor.h>
 //#include <mdPp/chemistry/MaskPolicy.h>
+#include <mdPp/storage/Storage.h>
 
 #include <util/space/Vector.h>
 #include <util/format/Int.h>
@@ -28,8 +28,8 @@ namespace MdPp
    /*
    * Constructor.
    */
-   DdMdConfigIo::DdMdConfigIo(Processor& processor, bool hasMolecules)
-    : ConfigIo(processor),
+   DdMdConfigIo::DdMdConfigIo(Storage& storage, bool hasMolecules)
+    : ConfigIo(storage),
       hasMolecules_(hasMolecules)
    {  setClassName("DdMdConfigIo"); }
 
@@ -45,20 +45,20 @@ namespace MdPp
 
       // Read and broadcast boundary
       file >> Label("BOUNDARY");
-      file >> processor().boundary();
+      file >> storage().boundary();
 
       // Read and distribute atoms
 
       // Read atoms
       Atom* atomPtr;
-      int atomCapacity = processor().atomCapacity(); // Maximum allowed id + 1
+      int atomCapacity = storage().atomCapacity(); // Maximum allowed id + 1
       int nAtom;          
       file >> Label("ATOMS");
       file >> Label("nAtom") >> nAtom;
       for (int i = 0; i < nAtom; ++i) {
 
          // Get pointer to new atom 
-         atomPtr = processor().newAtomPtr();
+         atomPtr = storage().newAtomPtr();
  
          file >> atomPtr->id >> atomPtr->typeId;
          if (atomPtr->id < 0 || atomPtr->id >= atomCapacity) {
@@ -81,27 +81,27 @@ namespace MdPp
          file >> atomPtr->position;
          file >> atomPtr->velocity;
 
-         processor().addAtom();
+         storage().addAtom();
       }
 
       // Read Covalent Groups
       #ifdef INTER_BOND
-      if (processor().bonds().capacity()) {
-         readGroups(file, "BONDS", "nBond", processor().bonds());
+      if (storage().bonds().capacity()) {
+         readGroups(file, "BONDS", "nBond", storage().bonds());
          //if (maskPolicy == MaskBonded) {
          //   setAtomMasks();
          //}
       }
       #endif
 
-      if (hasMolecules_ && processor().nSpecies() > 0) {
+      if (hasMolecules_ && storage().nSpecies() > 0) {
          int speciesId;
          for (int i = 0; i < nAtom; ++i) {
-            Processor::AtomIterator iter;
-            processor().initAtomIterator(iter);
+            Storage::AtomIterator iter;
+            storage().initAtomIterator(iter);
             for ( ; iter.notEnd(); ++iter) {
                speciesId = iter->speciesId;
-               processor().species(speciesId).addAtom(*iter);
+               storage().species(speciesId).addAtom(*iter);
             }
          }
       }
@@ -119,18 +119,18 @@ namespace MdPp
 
       // Write Boundary dimensions
       file << "BOUNDARY" << std::endl << std::endl;
-      file << processor().boundary() << std::endl;
+      file << storage().boundary() << std::endl;
       file << std::endl;
 
       // Atoms
-      int nAtom = processor().nAtom();
+      int nAtom = storage().nAtom();
       file << "ATOMS" << std::endl;
       file << "nAtom" << Int(nAtom, 10) << std::endl;
 
       // Write atoms
       Vector r;
-      Processor::AtomIterator iter;
-      processor().initAtomIterator(iter);
+      Storage::AtomIterator iter;
+      storage().initAtomIterator(iter);
       for (; iter.notEnd(); ++iter) {
          file << Int(iter->id, 10) 
               << Int(iter->typeId, 6);
@@ -146,8 +146,8 @@ namespace MdPp
 
       // Write the groups
       #ifdef INTER_BOND
-      if (processor().bonds().capacity()) {
-         writeGroups(file, "BONDS", "nBond", processor().bonds());
+      if (storage().bonds().capacity()) {
+         writeGroups(file, "BONDS", "nBond", storage().bonds());
       }
       #endif
 

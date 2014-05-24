@@ -17,7 +17,7 @@ namespace MdPp
 {
 
    using namespace Util;
-   class Processor;
+   class Storage;
 
    /**
    * Default Factory for subclasses of ConfigIo.
@@ -30,9 +30,9 @@ namespace MdPp
       /**
       * Constructor
       *
-      * \param processor parent Processor post-processor object
+      * \param storage parent Storage object
       */
-      ConfigIoFactory(Processor& processor);
+      ConfigIoFactory(Storage& storage);
 
       /**
       * Create an instance of a specified subclass of ConfigIo.
@@ -54,8 +54,8 @@ namespace MdPp
 
    private:
 
-      /// Pointer to a parent Processor.
-      Processor* processorPtr_;
+      /// Pointer to a parent Storage.
+      Storage* storagePtr_;
 
    };
 

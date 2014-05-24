@@ -19,14 +19,14 @@ namespace MdPp
    * Constructor.
    */
    ConfigIo::ConfigIo()
-     : processorPtr_(0)
+     : storagePtr_(0)
    {  setClassName("ConfigIo"); }
 
    /*
    * Constructor.
    */
-   ConfigIo::ConfigIo(Processor& processor)
-     : processorPtr_(&processor)
+   ConfigIo::ConfigIo(Storage& storage)
+     : storagePtr_(&storage)
    {
       setClassName("ConfigIo"); 
    }

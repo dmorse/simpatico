@@ -20,18 +20,7 @@ namespace MdPp
    Processor::Processor()
     : configIoPtr_(0),
       configIoFactory_(*this),
-      analyzerManager_(*this),
-      newAtomPtr_(0),
-      atomCapacity_(0)
-      #ifdef INTER_BOND
-      , bondCapacity_(0)
-      #endif
-      #ifdef INTER_ANGLE
-      , angleCapacity_(0)
-      #endif
-      #ifdef INTER_DIHEDRAL
-      , dihedralCapacity_(0)
-      #endif
+      analyzerManager_(*this)
    {  setClassName("Processor"); }
 
    /*
@@ -60,35 +49,7 @@ namespace MdPp
    */
    void Processor::readParameters(std::istream& in)
    {
-      read<int>(in, "atomCapacity", atomCapacity_); 
-
-      atoms_.allocate(atomCapacity_);
-      atomPtrs_.allocate(atomCapacity_);
-      for (int i = 0; i < atomCapacity_; ++i) {
-         atomPtrs_[i] = 0;
-      }
-
-      bondCapacity_ = 0;
-      bool isRequired = false;
-      read<int>(in, "bondCapacity", bondCapacity_, isRequired); 
-      if (bondCapacity_ > 0) {
-         bonds_.allocate(bondCapacity_);
-      }
-
-      // etc. for angles, dihedrals
-      // etc. for angles dihedrals
-  
-      nSpecies_ = 0;
-      isRequired = false;
-      read<int>(in, "nSpecies", nSpecies_, isRequired);
-      if (nSpecies_ > 0) {
-         species_.allocate(nSpecies_);
-         for (int i = 0; i < nSpecies_; ++i) {
-            in >> species_[i];
-            species_[i].setId(i);
-         }
-      }
-
+      Storage::readParameters(in);
       readParamComposite(in, analyzerManager_);
    }
 
@@ -163,47 +124,6 @@ namespace MdPp
       outputFile.open(filename.c_str());
       configIo().writeConfig(outputFile);
       outputFile.close();
-   }
-
-   // Mutators required by ConfigIos to read files.
-
-   /*
-   * Return pointer to location for new atom.
-   */
-   Atom* Processor::newAtomPtr()
-   {
-      if (newAtomPtr_) {
-         UTIL_THROW("Error: an new atom is still active");
-      }
-      int size = atoms_.size() + 1;
-      atoms_.resize(size);
-      newAtomPtr_ = &atoms_[size - 1];
-      return newAtomPtr_;
-   }
-
-   /*
-   * Finalize addition of new atom.
-   */
-   void Processor::addAtom()
-   {
-      if (!newAtomPtr_) {
-         UTIL_THROW("Error: No active new atom");
-      }
-      int id = newAtomPtr_->id;
-      atomPtrs_[id] = newAtomPtr_;
-      newAtomPtr_ = 0;
-   }
-
-   /*
-   * Remove all atoms and bonds - set to empty state.
-   */
-   void Processor::clear()
-   {
-      atoms_.clear();
-      bonds_.clear();
-      for (int i = 0; i < atomCapacity_; ++i) {
-         atomPtrs_[i] = 0;
-      }
    }
 
    // Analysis

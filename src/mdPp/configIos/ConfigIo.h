@@ -13,7 +13,7 @@
 namespace MdPp
 {
 
-   class Processor;
+   class Storage;
    using namespace Util;
 
    /**
@@ -39,7 +39,7 @@ namespace MdPp
       *
       * \param simulation parent Simulation object.
       */
-      ConfigIo(Processor& processor);
+      ConfigIo(Storage& storage);
 
       /**
       * Destructor.
@@ -62,12 +62,12 @@ namespace MdPp
 
    protected:
 
-      Processor& processor()
-      { return *processorPtr_; }
+      Storage& storage()
+      { return *storagePtr_; }
 
    private:
 
-      Processor* processorPtr_;
+      Storage* storagePtr_;
 
    };
 

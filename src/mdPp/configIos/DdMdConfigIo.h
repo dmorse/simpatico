@@ -2,7 +2,7 @@
 #define MDPP_DDMD_CONFIG_IO_H
 
 /*
-* Simpatico - Processor Package for Polymeric and Molecular Liquids
+* Simpatico - Storage Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
@@ -10,14 +10,14 @@
 
 #include <mdPp/configIos/ConfigIo.h>
 #include <mdPp/storage/GroupStorage.h>
-#include <mdPp/processor/Processor.h>
+#include <mdPp/storage/Storage.h>
 
 #include <util/format/Int.h>
 
 namespace MdPp
 {
 
-   class Processor;
+   class Storage;
 
    using namespace Util;
 
@@ -39,25 +39,19 @@ namespace MdPp
       /**
       * Constructor.
       *
-      * \param processor parent Processor object.
+      * \param storage parent Storage object.
       */
-      DdMdConfigIo(Processor& processor, bool hasMolecules = false);
+      DdMdConfigIo(Storage& storage, bool hasMolecules = false);
 
       /**
-      * Read configuration file.
-      *
-      * This routine opens and reads a file on the master, and distributes
-      * atom data among the processors.
+      * Read configuration file in DdMd default format.
       *
       * \param file input file stream
-      * \param maskPolicy MaskPolicy to be used in setting atom masks
       */
       virtual void readConfig(std::ifstream& file);
 
       /**
-      * Write configuration file.
-      *
-      * This routine writes a file in DdMd default format.
+      * Write configuration file in DdMd default format.
       *
       * \param file output file stream (must be open on master)
       */
@@ -106,8 +100,8 @@ namespace MdPp
    int DdMdConfigIo::writeGroups(std::ofstream& file, const char* sectionLabel,
                   const char* nGroupLabel, GroupStorage<N>& groups)
    {
-      Processor::BondIterator iter;
-      int nGroup = processor().bonds().size();
+      Storage::BondIterator iter;
+      int nGroup = storage().bonds().size();
 
       file << std::endl;
       file << sectionLabel << std::endl;
