@@ -14,7 +14,6 @@
 #include <mdPp/chemistry/Group.h>
 #include <mdPp/chemistry/Species.h>
 #include <mdPp/processor/Processor.h>
-#include <mdPp/processor/GroupStorage.h>
 //#include <mdPp/chemistry/MaskPolicy.h>
 
 #include <util/space/Vector.h>

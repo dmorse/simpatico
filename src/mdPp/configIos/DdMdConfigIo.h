@@ -9,7 +9,7 @@
 */
 
 #include <mdPp/configIos/ConfigIo.h>
-#include <mdPp/processor/GroupStorage.h>
+#include <mdPp/storage/GroupStorage.h>
 #include <mdPp/processor/Processor.h>
 
 #include <util/format/Int.h>

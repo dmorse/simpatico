@@ -1,10 +1,12 @@
 include $(SRC_DIR)/mdPp/chemistry/sources.mk
+include $(SRC_DIR)/mdPp/storage/sources.mk
 include $(SRC_DIR)/mdPp/configIos/sources.mk
 include $(SRC_DIR)/mdPp/analyzers/sources.mk
 include $(SRC_DIR)/mdPp/processor/sources.mk
 
 mdPp_= \
     $(mdPp_chemistry_) \
+    $(mdPp_storage_) \
     $(mdPp_configIos_) \
     $(mdPp_analyzers_) \
     $(mdPp_processor_) 

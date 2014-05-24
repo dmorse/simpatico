@@ -1,0 +1,7 @@
+Storage{
+   atomCapacity 100
+   bondCapacity 100
+}
+
+   configIoName    DdMdConfigIo
+   configFileName  in
