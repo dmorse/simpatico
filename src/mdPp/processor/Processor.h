@@ -9,15 +9,19 @@
 */
 
 #include <util/param/ParamComposite.h>        // base class
-#include <util/boundary/Boundary.h>           // member 
-#include <util/containers/DSArray.h>          // member (template)
-#include <util/containers/ArrayIterator.h>    // inline function
 
 #include <mdPp/chemistry/Atom.h>              // member (template argument)
 #include <mdPp/chemistry/Group.h>             // member (template argument)
-#include <mdPp/processor/GroupStorage.h>      // member 
+#include <mdPp/processor/GroupStorage.h>      // member (template)
+#include <mdPp/chemistry/Species.h>           // member (template argument)
 #include <mdPp/configIos/ConfigIoFactory.h>   // member 
 #include <mdPp/analyzers/AnalyzerManager.h>   // member 
+
+#include <util/boundary/Boundary.h>           // member 
+#include <util/containers/DArray.h>           // member (template)
+#include <util/containers/DSArray.h>          // member (template)
+#include <util/containers/ArrayIterator.h>    // inline function
+
 
 namespace MdPp 
 {
@@ -174,7 +178,9 @@ namespace MdPp
 
       // etc. for angles and dihedrals
 
-      // Accessors, for use in Analyzer and ConfigIo classes.
+      int nSpecies() const;
+
+      Species& species(int i);
 
    private:
      
@@ -201,6 +207,9 @@ namespace MdPp
       /// Array of dihedral objects, added in order read from file.
       GroupStorage<4> dihedrals_;
       #endif
+
+      /// Array of Species objects.
+      DArray<Species> species_;
 
       /// Pointer to current ConfigIo object.
       ConfigIo* configIoPtr_;
@@ -237,6 +246,9 @@ namespace MdPp
 
       /// Name of configuration or trajectory input file
       std::string configFileName_;
+
+      /// Number of species (set to zero to disable)
+      int nSpecies_;
 
    };
 
@@ -288,6 +300,12 @@ namespace MdPp
    inline GroupStorage<4>& Processor::dihedrals()
    {  return dihedrals_; }
    #endif
+
+   inline int Processor::nSpecies() const
+   {  return nSpecies_; }
+
+   inline Species& Processor::species(int i)
+   {  return species_[i]; }
 
 }
 #endif

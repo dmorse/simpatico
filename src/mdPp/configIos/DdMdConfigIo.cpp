@@ -12,6 +12,7 @@
 
 #include <mdPp/chemistry/Atom.h>
 #include <mdPp/chemistry/Group.h>
+#include <mdPp/chemistry/Species.h>
 #include <mdPp/processor/Processor.h>
 #include <mdPp/processor/GroupStorage.h>
 //#include <mdPp/chemistry/MaskPolicy.h>
@@ -93,6 +94,18 @@ namespace MdPp
          //}
       }
       #endif
+
+      if (hasMolecules_ && processor().nSpecies() > 0) {
+         int speciesId;
+         for (int i = 0; i < nAtom; ++i) {
+            Processor::AtomIterator iter;
+            processor().initAtomIterator(iter);
+            for ( ; iter.notEnd(); ++iter) {
+               speciesId = iter->speciesId;
+               processor().species(speciesId).addAtom(*iter);
+            }
+         }
+      }
    }
 
    /* 

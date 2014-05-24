@@ -41,6 +41,7 @@ inline void ProcessorTest::testReadParam()
    if (verbose() > 0) {
       processor_.writeParam(std::cout);
    }
+   TEST_ASSERT(processor_.nSpecies() == 0);
 }
 
 inline void ProcessorTest::testAddAtoms()

@@ -45,26 +45,6 @@ namespace MdPp
    }
 
    /*
-   * Read parameters from file.
-   */
-   void Processor::readParameters(std::istream& in)
-   {
-      read<int>(in, "atomCapacity", atomCapacity_); 
-      read<int>(in, "bondCapacity", bondCapacity_); 
-      // etc. for angles, dihedrals
-
-      atoms_.allocate(atomCapacity_);
-      atomPtrs_.allocate(atomCapacity_);
-      for (int i = 0; i < atomCapacity_; ++i) {
-         atomPtrs_[i] = 0;
-      }
-      bonds_.allocate(bondCapacity_);
-      // etc. for angles dihedrals
-
-      readParamComposite(in, analyzerManager_);
-   }
-
-   /*
    * Open, read and close a parameter file.
    */
    void Processor::readParam(const char* filename)
@@ -73,6 +53,43 @@ namespace MdPp
       in.open(filename);
       readParam(in);
       in.close();
+   }
+
+   /*
+   * Read parameters from file.
+   */
+   void Processor::readParameters(std::istream& in)
+   {
+      read<int>(in, "atomCapacity", atomCapacity_); 
+
+      atoms_.allocate(atomCapacity_);
+      atomPtrs_.allocate(atomCapacity_);
+      for (int i = 0; i < atomCapacity_; ++i) {
+         atomPtrs_[i] = 0;
+      }
+
+      bondCapacity_ = 0;
+      bool isRequired = false;
+      read<int>(in, "bondCapacity", bondCapacity_, isRequired); 
+      if (bondCapacity_ > 0) {
+         bonds_.allocate(bondCapacity_);
+      }
+
+      // etc. for angles, dihedrals
+      // etc. for angles dihedrals
+  
+      nSpecies_ = 0;
+      isRequired = false;
+      read<int>(in, "nSpecies", nSpecies_, isRequired);
+      if (nSpecies_ > 0) {
+         species_.allocate(nSpecies_);
+         for (int i = 0; i < nSpecies_; ++i) {
+            in >> species_[i];
+            species_[i].setId(i);
+         }
+      }
+
+      readParamComposite(in, analyzerManager_);
    }
 
    // ConfigIo management
