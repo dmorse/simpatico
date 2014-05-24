@@ -52,7 +52,7 @@ namespace DdMd
    {}
 
    /*
-   * Retain pointers to associated objects.
+   * Retain pointers to associated objects (call on all domain processors).
    */
    void AtomDistributor::associate(Domain& domain, Boundary& boundary, 
                                    AtomStorage& storage, Buffer& buffer)
@@ -88,6 +88,7 @@ namespace DdMd
 
    /*
    * Allocate memory and initialize state (private method).
+   * Called on all processors.
    */
    void AtomDistributor::allocate()
    {
@@ -344,7 +345,7 @@ namespace DdMd
    /*
    * Send any atoms that have not be sent previously.
    *
-   * This method should be called only by the master processor.
+   * Called only on the master processor.
    */
    void AtomDistributor::send()
    {
@@ -422,7 +423,7 @@ namespace DdMd
    /*
    * Receive all atoms sent by the master processor.
    *
-   * Called by all processors except the master.
+   * Called by all domain processors except the master.
    */ 
    void AtomDistributor::receive()
    {
@@ -471,6 +472,7 @@ namespace DdMd
 
    /*
    * Validate distribution of atoms, return total number of atoms.
+   * Called on all processors. Correct return value only on master.
    */
    int AtomDistributor::validate()
    {

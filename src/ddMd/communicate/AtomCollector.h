@@ -112,16 +112,16 @@ namespace DdMd
       /// Temporary array of atoms, allocated only on master.
       AtomArray recvArray_;
 
-      /// Iterator for atoms in a AtomStorage (master and slaves).
+      /// Iterator for atoms in a AtomStorage (on all domain nodes).
       AtomIterator iterator_;
 
-      /// Pointer to associated Domain object (on master).
+      /// Pointer to associated Domain object (on all domain nodes).
       Domain* domainPtr_;
 
-      /// Pointer to associated Domain object (on master).
+      /// Pointer to associated AtomStorage object (on all domain nodes).
       AtomStorage* storagePtr_;
 
-      /// Pointer to associated Buffer object (on master).
+      /// Pointer to associated Buffer object (on all domain nodes).
       Buffer* bufferPtr_;
 
       /// Rank of processor from which atoms are being received (on master).
@@ -136,7 +136,7 @@ namespace DdMd
       /// Index of current item in recvArray_ (on master).
       int recvArrayId_;
 
-      /// Have all atoms been processed from current source? (all).
+      /// Have all atoms been processed from current source? (all domain nodes).
       bool isComplete_;
 
    };
