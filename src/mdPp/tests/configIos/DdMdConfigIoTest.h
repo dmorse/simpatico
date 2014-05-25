@@ -50,8 +50,8 @@ inline void DdMdConfigIoTest::testReadConfig1()
    printMethod(TEST_FUNC);
 
    processor_.readParam("in/Processor"); 
-   //processor_.setConfigIo(std::string("DdMdConfigIo"));
 
+   //processor_.setConfigIo(std::string("DdMdConfigIo"));
    processor_.readConfig("in/config");
 
    TEST_ASSERT(processor_.nAtom() == 40);
@@ -71,7 +71,8 @@ inline void DdMdConfigIoTest::testReadConfig2()
    printMethod(TEST_FUNC);
 
    processor_.readParam("in/Processor.2"); 
-   processor_.setConfigIo(std::string("DdMdConfigIo_Molecule"));
+   //processor_.setConfigIo(std::string("DdMdConfigIo_Molecule"));
+   processor_.setConfigIo("DdMdConfigIo_Molecule");
    processor_.readConfig("in/config.2");
 
    TEST_ASSERT(processor_.nAtom() == 256);
