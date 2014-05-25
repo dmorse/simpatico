@@ -26,28 +26,30 @@ public:
 
    virtual void setUp()
    { 
-      processor_.readParam("in/Processor"); 
       setVerbose(2);
    }
 
    void testReadParam();
-   void testReadConfig();
+   void testReadConfig1();
+   void testReadConfig2();
 
 };
 
 inline void DdMdConfigIoTest::testReadParam()
 {  
    printMethod(TEST_FUNC); 
+   processor_.readParam("in/Processor"); 
    if (verbose() > 0) {
       std::cout << "\n";
       processor_.writeParam(std::cout);
    }
 }
 
-inline void DdMdConfigIoTest::testReadConfig()
+inline void DdMdConfigIoTest::testReadConfig1()
 {
    printMethod(TEST_FUNC);
 
+   processor_.readParam("in/Processor"); 
    //processor_.setConfigIo(std::string("DdMdConfigIo"));
 
    processor_.readConfig("in/config");
@@ -64,9 +66,31 @@ inline void DdMdConfigIoTest::testReadConfig()
    out.close();
 }
 
+inline void DdMdConfigIoTest::testReadConfig2()
+{
+   printMethod(TEST_FUNC);
+
+   processor_.readParam("in/Processor.2"); 
+   processor_.setConfigIo(std::string("DdMdConfigIo_Molecule"));
+   processor_.readConfig("in/config.2");
+
+   TEST_ASSERT(processor_.nAtom() == 256);
+   TEST_ASSERT(processor_.bonds().size() == 248);
+   // std::cout << "nAtom = " << processor_.nAtom() << "\n";
+   // std::cout << "nBond = " << processor_.bonds().size() << "\n";
+   // std::cout << processor_.boundary() << "\n";
+
+   std::ofstream out;
+   openOutputFile("out/config.2", out);
+   processor_.writeConfig(out);
+   out.close();
+}
+
+
 TEST_BEGIN(DdMdConfigIoTest)
 TEST_ADD(DdMdConfigIoTest, testReadParam)
-TEST_ADD(DdMdConfigIoTest, testReadConfig)
+TEST_ADD(DdMdConfigIoTest, testReadConfig1)
+TEST_ADD(DdMdConfigIoTest, testReadConfig2)
 TEST_END(DdMdConfigIoTest)
 
 #endif
