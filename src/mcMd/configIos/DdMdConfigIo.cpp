@@ -32,8 +32,9 @@ namespace McMd
    /* 
    * Constructor.   
    */
-   DdMdConfigIo::DdMdConfigIo(System &system) 
-   : ConfigIo(system)
+   DdMdConfigIo::DdMdConfigIo(System &system, bool hasMolecules) 
+   : ConfigIo(system),
+     hasMolecules_(hasMolecules)
    {}
  
    /* 
@@ -71,9 +72,10 @@ namespace McMd
       if (nAtom != atomCapacity) {
          UTIL_THROW("nAtom != atomCapacity");
       }
-      Molecule*                molPtr;
-      Molecule::AtomIterator   atomIter;
-      int iMol, nMolecule, atomId, atomTypeId;
+      Molecule* molPtr;
+      Molecule::AtomIterator atomIter;
+      int iMol, iAtom, nMolecule, atomId, atomTypeId;
+      int sId, mId, aId;
       for (iSpec=0; iSpec < nSpecies; ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
          nMolecule  = speciesPtr->capacity();
@@ -81,17 +83,31 @@ namespace McMd
             molPtr = &(speciesPtr->reservoir().pop());
             system().addMolecule(*molPtr);
    
-            // Read positions.
+            // Read positions
+            iAtom = 0;
             for (molPtr->begin(atomIter); atomIter.notEnd(); ++atomIter) {
 
                in >> atomId >> atomTypeId;
                if (atomId != atomIter->id()) {
                   UTIL_THROW("Atom tags not ordered");
                }
+               if (hasMolecules_) {
+                  in >> sId >> mId >> aId;
+                  if (sId != iSpec) {
+                     UTIL_THROW("Invalid species id");
+                  }
+                  if (mId != iMol) {
+                     UTIL_THROW("Invalid molecule id");
+                  }
+                  if (aId != iAtom) {
+                     UTIL_THROW("Invalid local atom id");
+                  }
+               }
 
                in >> atomIter->position();
                in >> atomIter->velocity();
- 
+
+               ++iAtom;
             }
          }
       }
@@ -133,20 +149,30 @@ namespace McMd
       out << "ATOMS" << std::endl;
       out << "nAtom  " << nAtom << std::endl;
       System::MoleculeIterator molIter;
-      Molecule::AtomIterator   atomIter;
+      Molecule::AtomIterator atomIter;
       int i = 0;
+      int iMol, iAtom;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
+         iMol = 0;
          system().begin(iSpec, molIter); 
          for ( ; molIter.notEnd(); ++molIter) {
+            iAtom = 0;
             molIter->begin(atomIter); 
             for ( ; atomIter.notEnd(); ++atomIter) {
                out << Int(atomIter->id(), 10);
                out << Int(atomIter->typeId(), 5);
-               out << atomIter->position();
-               out << atomIter->velocity();
-               out << std::endl;
+               if (hasMolecules_) {
+                  out << Int(iSpec, 6);
+                  out << Int(iMol, 10);
+                  out << Int(iAtom, 6);
+               }
+               out << "\n" << atomIter->position();
+               out << "\n" << atomIter->velocity();
+               out << "\n";
                ++i;
+               ++iAtom;
             }
+            ++iMol;
          }
       }
       out << std::endl;

@@ -51,7 +51,7 @@ namespace McMd
    public:
 
       /// Constructor. 
-      DdMdConfigIo(System& system);
+      DdMdConfigIo(System& system, bool hasMolecules = false);
  
       /// Destructor.   
       virtual ~DdMdConfigIo();
@@ -69,6 +69,10 @@ namespace McMd
       * \param out output file stream.
       */
       void write(std::ostream &out);
+
+   private:
+
+      bool hasMolecules_;
 
    }; 
 

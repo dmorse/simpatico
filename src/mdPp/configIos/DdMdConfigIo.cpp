@@ -94,15 +94,20 @@ namespace MdPp
       }
       #endif
 
-      if (hasMolecules_ && storage().nSpecies() > 0) {
+      // Optionally add atoms to species
+      if (storage().nSpecies() > 0) {
+         if (!hasMolecules_) {
+            UTIL_THROW("No atom context info in chosen ConfigIo");
+         }
          int speciesId;
-         for (int i = 0; i < nAtom; ++i) {
-            Storage::AtomIterator iter;
-            storage().initAtomIterator(iter);
-            for ( ; iter.notEnd(); ++iter) {
-               speciesId = iter->speciesId;
-               storage().species(speciesId).addAtom(*iter);
-            }
+         Storage::AtomIterator iter;
+         storage().initAtomIterator(iter);
+         for ( ; iter.notEnd(); ++iter) {
+            speciesId = iter->speciesId;
+            storage().species(speciesId).addAtom(*iter);
+         }
+         for (int i = 0; storage().nSpecies(); ++i) {
+            storage().species(i).isValid();
          }
       }
    }
