@@ -1,6 +1,7 @@
 
 mdPp_storage_= \
-    mdPp/storage/Storage.cpp 
+    mdPp/storage/Storage.cpp \
+    mdPp/storage/AtomStorage.cpp 
 
 # Create lists of source (*.cpp) and object (*.o) files
 mdPp_storage_SRCS=\

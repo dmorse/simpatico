@@ -28,6 +28,7 @@ namespace MdPp
       #ifdef INTER_DIHEDRAL
       , dihedralCapacity_(0)
       #endif
+      , nSpecies_(0)
    {  setClassName("Storage"); }
 
    /*
@@ -60,16 +61,37 @@ namespace MdPp
          atomPtrs_[i] = 0;
       }
 
+      bool isRequired; // Used to label optional arguments
+
+      #ifdef INTER_BOND
       bondCapacity_ = 0;
-      bool isRequired = false;
+      isRequired = false;
       read<int>(in, "bondCapacity", bondCapacity_, isRequired); 
+      // If bondCapacity is absent, it is set to zero by default
       if (bondCapacity_ > 0) {
          bonds_.allocate(bondCapacity_);
       }
+      #endif
 
-      // etc. for angles, dihedrals
-      // etc. for angles dihedrals
-  
+      #ifdef INTER_ANGLE
+      angleCapacity_ = 0;
+      isRequired = false;
+      read<int>(in, "angleCapacity", angleCapacity_, isRequired); 
+      if (angleCapacity_ > 0) {
+         angles_.allocate(angleCapacity_);
+      }
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      dihedralCapacity_ = 0;
+      isRequired = false;
+      read<int>(in, "dihedralCapacity", dihedralCapacity_, isRequired); 
+      if (dihedralCapacity_ > 0) {
+         dihedrals_.allocate(dihedralCapacity_);
+      }
+      #endif
+
+      // Optionally read species info
       nSpecies_ = 0;
       isRequired = false;
       read<int>(in, "nSpecies", nSpecies_, isRequired);
@@ -81,7 +103,6 @@ namespace MdPp
          }
       }
 
-      // readParamComposite(in, analyzerManager_);
    }
 
    // Atom Management
@@ -119,7 +140,21 @@ namespace MdPp
    void Storage::clear()
    {
       atoms_.clear();
-      bonds_.clear();
+      #ifdef INTER_BOND
+      if (bondCapacity_ > 0) {
+         bonds_.clear();
+      }
+      #endif
+      #ifdef INTER_ANGLE
+      if (angleCapacity_ > 0) {
+         angles_.clear();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (dihedralCapacity_ > 0) {
+         dihedrals_.clear();
+      }
+      #endif
       for (int i = 0; i < atomCapacity_; ++i) {
          atomPtrs_[i] = 0;
       }

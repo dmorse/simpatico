@@ -27,7 +27,12 @@ namespace MdPp
    using namespace Util;
 
    /**
-   * A post-processor for analyzing outputs of MD simulations.
+   * A molecular dynamics system configuration.
+   *
+   * A Storage has:
+   *   - a Boundary
+   *   - an array of atoms
+   *   - a GroupStorage for each type of covalent group
    */
    class Storage : public ParamComposite 
    {
