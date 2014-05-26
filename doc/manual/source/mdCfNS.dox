@@ -1,0 +1,46 @@
+namespace MdCf
+{
+
+/*! \page MdCf_NS_page 3.6 MdCf namespace
+
+\ref DdMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref extend_page  (Next)    
+<BR>
+
+The MdCf namespace contains classes used for serial (one-processor) processing of molecular dynamics configurations produced by a parallel MD program. These classes are designed to be used for postprocessing of trajectories that have been written to file, or for on the fly analysis or modification algorithms that require an entire system configuration in memory on one processor.
+
+Many classes in the MdCf namespace have names that are similar or identical to those of analogous classes in the DdMd namespace.
+
+See also: \ref MdCf_Module "MdCf Module"
+
+\section MdCf_chemistry_sec Chemical structure
+
+The src/mdCf/chemistry directory contains a set of classes that describe atoms and covalent groups that are (for the most part) closely analogous to classes introduced in the DdMd namespace.  Corresponding classes often have the same names: McMd::Atom and MdCf::Atom are both classes that represent a point particle. 
+
+A MdCf::Atom is simple struct that contains position, velocity and force vectors, an integer atom type index (typeId), a global index (id), and (optionally) the information in a DdMd::AtomContext (species index, molecule index and index of the atom within its parent molecule).
+
+The Group < int N > class template is a class template for objects that represent a small group of N covalently interacting atoms.  Specializations with N=2, 3, and 4 are used to represent 2-body covalent bonds, 3-body angle interaction groups, and 4-body dihedral interaction groups, respectively. A group also has an integer group type id for the group.
+
+A Species is a container for molecules of the same species, and their constituent atoms. The species and molecule classes are used only if the atoms contain the AtomContext indices. 
+
+\section MdCf_Storage_sec Storage classes
+
+Storage classes are classes that manage and provide access to sets of Atom < N > and Group < N > objects for one processor. The AtomStorage class manages all Atom objects. The GroupStorage<int N> class manages a set of Group < N > objects (i.e., bonds, angles, or dihedrals).
+
+A Storage object represents an entire configuration. It contains a Util::Boundary, an AtomStorage and GroupStorage objects for each type of Group.
+
+\section MdCf_Analyzer_sec Data Analysis 
+
+The src/mdCf/analyzer directory contains a set of classes that are used for data analysis. MdCf::Analyzer is an abstract base class for classes that implement data analysis and/or data output operations. AnalyzerManager is a container for all of the Analyzer objects associated with a particular simulation. 
+
+\section MdCf_Processor_sec Processor
+
+A Processor object is is a top level object for postprocessing of MD configurations and trajectories.
+
+<BR>
+\ref DdMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_page  (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref extend_page  (Next)
+
+*/
+} 
