@@ -1,11 +1,17 @@
 # ==============================================================================
-.PHONY: mcMd mcMd-mpi ddMd clean veryclean
+.PHONY: mcMd mdCf mcMd-mpi ddMd clean veryclean
 
 mcMd: 
 	./configure -m0
 	cd util;  make all
 	cd inter; make all
 	cd mcMd;  make all
+
+mdCf:
+	./configure -m0
+	cd util;  make all
+	cd inter; make all
+	cd mdCf;  make all
 
 mcMd-mpi: 
 	./configure -m1
