@@ -97,9 +97,6 @@ namespace MdCf
       /// Pointer to new atom.
       Atom* newPtr_;
 
-      /// Maximum allowed atom id + 1 (used to allocate arrays).
-      int atomCapacity_;
-
    };
 
    // inline functions
