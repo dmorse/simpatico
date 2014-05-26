@@ -54,9 +54,9 @@ inline void DdMdConfigIoTest::testReadConfig1()
    //processor_.setConfigIo(std::string("DdMdConfigIo"));
    processor_.readConfig("in/config");
 
-   TEST_ASSERT(processor_.nAtom() == 40);
+   TEST_ASSERT(processor_.atoms().size() == 40);
    TEST_ASSERT(processor_.bonds().size() == 35);
-   // std::cout << "nAtom = " << processor_.nAtom() << "\n";
+   // std::cout << "nAtom = " << processor_.atoms().size() << "\n";
    // std::cout << "nBond = " << processor_.bonds().size() << "\n";
    // std::cout << processor_.boundary() << "\n";
 
@@ -75,9 +75,9 @@ inline void DdMdConfigIoTest::testReadConfig2()
    processor_.setConfigIo("DdMdConfigIo_Molecule");
    processor_.readConfig("in/config.2");
 
-   TEST_ASSERT(processor_.nAtom() == 256);
+   TEST_ASSERT(processor_.atoms().size() == 256);
    TEST_ASSERT(processor_.bonds().size() == 248);
-   // std::cout << "nAtom = " << processor_.nAtom() << "\n";
+   // std::cout << "nAtom = " << processor_.atoms().size() << "\n";
    // std::cout << "nBond = " << processor_.bonds().size() << "\n";
    // std::cout << processor_.boundary() << "\n";
 

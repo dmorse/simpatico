@@ -39,7 +39,7 @@ inline void AtomStorageTest::testAddAtoms()
    Atom* atomPtr22;
    atomPtr22 = storage_.newPtr();
    atomPtr22->id = 22;
-   storage_.addAtom();
+   storage_.add();
    TEST_ASSERT(atomPtr22 == storage_.ptr(22));
    TEST_ASSERT(0 == storage_.ptr(15));
    TEST_ASSERT(0 == storage_.ptr(13));
@@ -48,7 +48,7 @@ inline void AtomStorageTest::testAddAtoms()
    Atom* atomPtr13;
    atomPtr13 = storage_.newPtr();
    atomPtr13->id = 13;
-   storage_.addAtom();
+   storage_.add();
    TEST_ASSERT(atomPtr13 == storage_.ptr(13));
    TEST_ASSERT(atomPtr22 == storage_.ptr(22));
    TEST_ASSERT(0 == storage_.ptr(15));
@@ -57,7 +57,7 @@ inline void AtomStorageTest::testAddAtoms()
    Atom* atomPtr15;
    atomPtr15 = storage_.newPtr();
    atomPtr15->id = 15;
-   storage_.addAtom();
+   storage_.add();
    TEST_ASSERT(atomPtr15 == storage_.ptr(15));
    TEST_ASSERT(atomPtr13 == storage_.ptr(13));
    TEST_ASSERT(atomPtr22 == storage_.ptr(22));

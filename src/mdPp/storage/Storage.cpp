@@ -56,10 +56,6 @@ namespace MdPp
       read<int>(in, "atomCapacity", atomCapacity_); 
 
       atoms_.allocate(atomCapacity_);
-      atomPtrs_.allocate(atomCapacity_);
-      for (int i = 0; i < atomCapacity_; ++i) {
-         atomPtrs_[i] = 0;
-      }
 
       bool isRequired; // Used to label optional arguments
 
@@ -105,37 +101,8 @@ namespace MdPp
 
    }
 
-   // Atom Management
-
    /*
-   * Return pointer to location for new atom.
-   */
-   Atom* Storage::newAtomPtr()
-   {
-      if (newAtomPtr_) {
-         UTIL_THROW("Error: an new atom is still active");
-      }
-      int size = atoms_.size() + 1;
-      atoms_.resize(size);
-      newAtomPtr_ = &atoms_[size - 1];
-      return newAtomPtr_;
-   }
-
-   /*
-   * Finalize addition of new atom.
-   */
-   void Storage::addAtom()
-   {
-      if (!newAtomPtr_) {
-         UTIL_THROW("Error: No active new atom");
-      }
-      int id = newAtomPtr_->id;
-      atomPtrs_[id] = newAtomPtr_;
-      newAtomPtr_ = 0;
-   }
-
-   /*
-   * Remove all atoms and bonds - set to empty state.
+   * Remove all atoms and groups - set to empty state.
    */
    void Storage::clear()
    {
@@ -155,9 +122,6 @@ namespace MdPp
          dihedrals_.clear();
       }
       #endif
-      for (int i = 0; i < atomCapacity_; ++i) {
-         atomPtrs_[i] = 0;
-      }
    }
 
 }

@@ -59,7 +59,7 @@ namespace MdPp
       /**
       * Finalize addition of atom (allows lookup by id).
       */
-      void addAtom();
+      void add();
 
       /**
       * Clear all atoms and groups.

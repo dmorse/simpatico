@@ -51,14 +51,14 @@ namespace MdPp
 
       // Read atoms
       Atom* atomPtr;
-      int atomCapacity = storage().atomCapacity(); // Maximum allowed id + 1
+      int atomCapacity = storage().atoms().capacity(); // Maximum allowed id + 1
       int nAtom;          
       file >> Label("ATOMS");
       file >> Label("nAtom") >> nAtom;
       for (int i = 0; i < nAtom; ++i) {
 
          // Get pointer to new atom 
-         atomPtr = storage().newAtomPtr();
+         atomPtr = storage().atoms().newPtr();
  
          file >> atomPtr->id >> atomPtr->typeId;
          if (atomPtr->id < 0 || atomPtr->id >= atomCapacity) {
@@ -81,7 +81,7 @@ namespace MdPp
          file >> atomPtr->position;
          file >> atomPtr->velocity;
 
-         storage().addAtom();
+         storage().atoms().add();
       }
 
       // Read Covalent Groups
@@ -100,8 +100,8 @@ namespace MdPp
             UTIL_THROW("No atom context info in chosen ConfigIo");
          }
          int speciesId;
-         Storage::AtomIterator iter;
-         storage().initAtomIterator(iter);
+         AtomStorage::Iterator iter;
+         storage().atoms().begin(iter);
          for ( ; iter.notEnd(); ++iter) {
             speciesId = iter->speciesId;
             storage().species(speciesId).addAtom(*iter);
@@ -128,14 +128,14 @@ namespace MdPp
       file << std::endl;
 
       // Atoms
-      int nAtom = storage().nAtom();
+      int nAtom = storage().atoms().size();
       file << "ATOMS" << std::endl;
       file << "nAtom" << Int(nAtom, 10) << std::endl;
 
       // Write atoms
       Vector r;
-      Storage::AtomIterator iter;
-      storage().initAtomIterator(iter);
+      AtomStorage::Iterator iter;
+      storage().atoms().begin(iter);
       for (; iter.notEnd(); ++iter) {
          file << Int(iter->id, 10) 
               << Int(iter->typeId, 6);

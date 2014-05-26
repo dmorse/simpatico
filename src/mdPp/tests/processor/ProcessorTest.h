@@ -49,31 +49,31 @@ inline void ProcessorTest::testAddAtoms()
    printMethod(TEST_FUNC);
 
    Atom* atomPtr22;
-   atomPtr22 = processor_.newAtomPtr();
+   atomPtr22 = processor_.atoms().newPtr();
    atomPtr22->id = 22;
-   processor_.addAtom();
-   TEST_ASSERT(atomPtr22 == processor_.atomPtr(22));
-   TEST_ASSERT(0 == processor_.atomPtr(15));
-   TEST_ASSERT(0 == processor_.atomPtr(13));
-   TEST_ASSERT(processor_.nAtom() == 1);
+   processor_.atoms().add();
+   TEST_ASSERT(atomPtr22 == processor_.atoms().ptr(22));
+   TEST_ASSERT(0 == processor_.atoms().ptr(15));
+   TEST_ASSERT(0 == processor_.atoms().ptr(13));
+   TEST_ASSERT(processor_.atoms().size() == 1);
 
    Atom* atomPtr13;
-   atomPtr13 = processor_.newAtomPtr();
+   atomPtr13 = processor_.atoms().newPtr();
    atomPtr13->id = 13;
-   processor_.addAtom();
-   TEST_ASSERT(atomPtr13 == processor_.atomPtr(13));
-   TEST_ASSERT(atomPtr22 == processor_.atomPtr(22));
-   TEST_ASSERT(0 == processor_.atomPtr(15));
-   TEST_ASSERT(processor_.nAtom() == 2);
+   processor_.atoms().add();
+   TEST_ASSERT(atomPtr13 == processor_.atoms().ptr(13));
+   TEST_ASSERT(atomPtr22 == processor_.atoms().ptr(22));
+   TEST_ASSERT(0 == processor_.atoms().ptr(15));
+   TEST_ASSERT(processor_.atoms().size() == 2);
 
    Atom* atomPtr15;
-   atomPtr15 = processor_.newAtomPtr();
+   atomPtr15 = processor_.atoms().newPtr();
    atomPtr15->id = 15;
-   processor_.addAtom();
-   TEST_ASSERT(atomPtr15 == processor_.atomPtr(15));
-   TEST_ASSERT(atomPtr13 == processor_.atomPtr(13));
-   TEST_ASSERT(atomPtr22 == processor_.atomPtr(22));
-   TEST_ASSERT(processor_.nAtom() == 3);
+   processor_.atoms().add();
+   TEST_ASSERT(atomPtr15 == processor_.atoms().ptr(15));
+   TEST_ASSERT(atomPtr13 == processor_.atoms().ptr(13));
+   TEST_ASSERT(atomPtr22 == processor_.atoms().ptr(22));
+   TEST_ASSERT(processor_.atoms().size() == 3);
 }
 
 TEST_BEGIN(ProcessorTest)

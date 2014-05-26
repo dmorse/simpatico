@@ -12,8 +12,9 @@
 
 #include <mdPp/chemistry/Atom.h>              // member (template argument)
 #include <mdPp/chemistry/Group.h>             // member (template argument)
-#include <mdPp/storage/GroupStorage.h>        // member (template)
 #include <mdPp/chemistry/Species.h>           // member (template argument)
+#include <mdPp/storage/AtomStorage.h>         // member 
+#include <mdPp/storage/GroupStorage.h>        // member (template)
 
 #include <util/boundary/Boundary.h>           // member 
 #include <util/containers/DArray.h>           // member (template)
@@ -41,6 +42,8 @@ namespace MdPp
 
       typedef ArrayIterator<Atom> AtomIterator;
       typedef ArrayIterator<Group <2> > BondIterator;
+      typedef ArrayIterator<Group <3> > AngleIterator;
+      typedef ArrayIterator<Group <4> > DihedralIterator;
 
       /**
       * Constructor
@@ -69,47 +72,14 @@ namespace MdPp
       */
       void clear();
   
+      // Accessors for members (non-const reference)
+
       /**
       * Get the Boundary by non-const reference
       */
       Boundary& boundary();
 
-      // Atom container interface
-
-      /**
-      * Return pointer to location for new atom.
-      *
-      * \param  global id for new atom
-      * \return pointer to location of new atom
-      */
-      Atom* newAtomPtr();
-
-      /**
-      * Finalize addition of atom (allows lookup by id).
-      */
-      void addAtom();
-
-      /**
-      * Get a pointer to an atom by global id.
-      */
-      Atom* atomPtr(int id);
-
-      /**
-      * Initialize an iterator for atoms.
-      */
-      void initAtomIterator(AtomIterator& iter);
-
-      /**
-      * Get atom capacity (maximum id + 1).
-      */ 
-      int atomCapacity() const;
-
-      /**
-      * Get number of atoms.
-      */ 
-      int nAtom() const;
-
-      // Group storage interface
+      AtomStorage& atoms();
 
       #ifdef INTER_BOND
       GroupStorage<2>& bonds();
@@ -123,8 +93,6 @@ namespace MdPp
       GroupStorage<4>& dihedrals();
       #endif
 
-      // etc. for angles and dihedrals
-
       int nSpecies() const;
 
       Species& species(int i);
@@ -134,11 +102,8 @@ namespace MdPp
       /// Boundary object defines periodic boundary conditions.
       Boundary boundary_;
 
-      /// Array of atom objects, added in order read from file.
-      DSArray<Atom> atoms_;
-
-      /// Pointers to atoms indexed by ids. Missing atoms are null pointers.
-      DArray<Atom*> atomPtrs_;
+      /// AtomStorage object
+      AtomStorage atoms_;
 
       #ifdef INTER_BOND
       /// Array of bond objects, added in order read from file.
@@ -192,31 +157,8 @@ namespace MdPp
    inline Boundary& Storage::boundary() 
    {  return boundary_; }
 
-   /*
-   * Return number of atoms.
-   */
-   inline int Storage::nAtom() const
-   {  return atoms_.size(); }
-
-   /*
-   * Get atom capacity (maximum id + 1).
-   */ 
-   inline
-   int Storage::atomCapacity() const
-   { return atoms_.capacity(); }
-
-   /*
-   * Return a pointer to an atom with a specific id.
-   */
-   inline Atom* Storage::atomPtr(int id)
-   {  return atomPtrs_[id]; }
-
-   /*
-   * Initialize an iterator for atoms.
-   */
-   inline 
-   void Storage::initAtomIterator(Storage::AtomIterator& iter)
-   {  atoms_.begin(iter); }
+   inline AtomStorage& Storage::atoms()
+   {  return atoms_; }
 
    #ifdef INTER_BOND
    inline GroupStorage<2>& Storage::bonds()

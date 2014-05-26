@@ -53,7 +53,7 @@ namespace MdPp
    /*
    * Finalize addition of new atom.
    */
-   void AtomStorage::addAtom()
+   void AtomStorage::add()
    {
       if (!newPtr_) {
          UTIL_THROW("Error: No active new atom");

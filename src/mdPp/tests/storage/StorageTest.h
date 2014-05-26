@@ -49,31 +49,31 @@ inline void StorageTest::testAddAtoms()
    printMethod(TEST_FUNC);
 
    Atom* atomPtr22;
-   atomPtr22 = storage_.newAtomPtr();
+   atomPtr22 = storage_.atoms().newPtr();
    atomPtr22->id = 22;
-   storage_.addAtom();
-   TEST_ASSERT(atomPtr22 == storage_.atomPtr(22));
-   TEST_ASSERT(0 == storage_.atomPtr(15));
-   TEST_ASSERT(0 == storage_.atomPtr(13));
-   TEST_ASSERT(storage_.nAtom() == 1);
+   storage_.atoms().add();
+   TEST_ASSERT(atomPtr22 == storage_.atoms().ptr(22));
+   TEST_ASSERT(0 == storage_.atoms().ptr(15));
+   TEST_ASSERT(0 == storage_.atoms().ptr(13));
+   TEST_ASSERT(storage_.atoms().size() == 1);
 
    Atom* atomPtr13;
-   atomPtr13 = storage_.newAtomPtr();
+   atomPtr13 = storage_.atoms().newPtr();
    atomPtr13->id = 13;
-   storage_.addAtom();
-   TEST_ASSERT(atomPtr13 == storage_.atomPtr(13));
-   TEST_ASSERT(atomPtr22 == storage_.atomPtr(22));
-   TEST_ASSERT(0 == storage_.atomPtr(15));
-   TEST_ASSERT(storage_.nAtom() == 2);
+   storage_.atoms().add();
+   TEST_ASSERT(atomPtr13 == storage_.atoms().ptr(13));
+   TEST_ASSERT(atomPtr22 == storage_.atoms().ptr(22));
+   TEST_ASSERT(0 == storage_.atoms().ptr(15));
+   TEST_ASSERT(storage_.atoms().size() == 2);
 
    Atom* atomPtr15;
-   atomPtr15 = storage_.newAtomPtr();
+   atomPtr15 = storage_.atoms().newPtr();
    atomPtr15->id = 15;
-   storage_.addAtom();
-   TEST_ASSERT(atomPtr15 == storage_.atomPtr(15));
-   TEST_ASSERT(atomPtr13 == storage_.atomPtr(13));
-   TEST_ASSERT(atomPtr22 == storage_.atomPtr(22));
-   TEST_ASSERT(storage_.nAtom() == 3);
+   storage_.atoms().add();
+   TEST_ASSERT(atomPtr15 == storage_.atoms().ptr(15));
+   TEST_ASSERT(atomPtr13 == storage_.atoms().ptr(13));
+   TEST_ASSERT(atomPtr22 == storage_.atoms().ptr(22));
+   TEST_ASSERT(storage_.atoms().size() == 3);
 }
 
 TEST_BEGIN(StorageTest)
