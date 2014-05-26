@@ -1,5 +1,5 @@
-#ifndef MDPP_ATOM_STORAGE_H
-#define MDPP_ATOM_STORAGE_H
+#ifndef MDCF_ATOM_STORAGE_H
+#define MDCF_ATOM_STORAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

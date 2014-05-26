@@ -1,5 +1,5 @@
-#ifndef MDPP_ANALYZER_H
-#define MDPP_ANALYZER_H
+#ifndef MDCF_ANALYZER_H
+#define MDCF_ANALYZER_H
 
 /*
 * Simpatico - Processor Package for Polymeric and Molecular Liquids

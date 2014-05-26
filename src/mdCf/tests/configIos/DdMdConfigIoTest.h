@@ -1,5 +1,5 @@
-#ifndef MDPP_DDMD_CONFIGIO_TEST_H
-#define MDPP_DDMD_CONFIGIO_TEST_H
+#ifndef MDCF_DDMD_CONFIGIO_TEST_H
+#define MDCF_DDMD_CONFIGIO_TEST_H
 
 #include <mdCf/processor/Processor.h>
 #include <mdCf/chemistry/Atom.h>

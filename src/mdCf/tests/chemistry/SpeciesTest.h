@@ -1,5 +1,5 @@
-#ifndef MDPP_SPECIES_TEST_H
-#define MDPP_SPECIES_TEST_H
+#ifndef MDCF_SPECIES_TEST_H
+#define MDCF_SPECIES_TEST_H
 
 #include <mdCf/chemistry/Species.h>
 #include <mdCf/chemistry/Atom.h>

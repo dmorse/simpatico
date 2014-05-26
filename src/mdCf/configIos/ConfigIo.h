@@ -1,5 +1,5 @@
-#ifndef MDPP_CONFIG_IO_H
-#define MDPP_CONFIG_IO_H
+#ifndef MDCF_CONFIG_IO_H
+#define MDCF_CONFIG_IO_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

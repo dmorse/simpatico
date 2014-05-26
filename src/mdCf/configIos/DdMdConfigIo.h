@@ -1,5 +1,5 @@
-#ifndef MDPP_DDMD_CONFIG_IO_H
-#define MDPP_DDMD_CONFIG_IO_H
+#ifndef MDCF_DDMD_CONFIG_IO_H
+#define MDCF_DDMD_CONFIG_IO_H
 
 /*
 * Simpatico - Storage Package for Polymeric and Molecular Liquids

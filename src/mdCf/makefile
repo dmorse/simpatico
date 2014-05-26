@@ -36,7 +36,7 @@ endif
 #$(MDPP_EXE): $(MDPP).o $(LIBS)
 #	$(CXX) $(LDFLAGS) -o $(MDPP_EXE) $(MDPP).o $(LIBS)
 
-#mdCf:
+#mdPp:
 #	make $(MDPP_EXE)
 
 #-----------------------------------------------------------------------

@@ -1,5 +1,5 @@
-#ifndef MDPP_ATOM_STORAGE_TEST_H
-#define MDPP_ATOM_STORAGE_TEST_H
+#ifndef MDCF_ATOM_STORAGE_TEST_H
+#define MDCF_ATOM_STORAGE_TEST_H
 
 #include <mdCf/storage/AtomStorage.h>
 #include <mdCf/chemistry/Atom.h>

@@ -1,5 +1,5 @@
-#ifndef MDPP_ANALYZER_MANAGER_CPP
-#define MDPP_ANALYZER_MANAGER_CPP
+#ifndef MDCF_ANALYZER_MANAGER_CPP
+#define MDCF_ANALYZER_MANAGER_CPP
 
 /*
 * Simpatico - Processor Package for Polymeric and Molecular Liquids

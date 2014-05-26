@@ -1,5 +1,5 @@
-#ifndef MDPP_PROCESSOR_TEST_H
-#define MDPP_PROCESSOR_TEST_H
+#ifndef MDCF_PROCESSOR_TEST_H
+#define MDCF_PROCESSOR_TEST_H
 
 #include <mdCf/processor/Processor.h>
 #include <mdCf/chemistry/Atom.h>

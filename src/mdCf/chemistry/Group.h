@@ -1,5 +1,5 @@
-#ifndef MDPP_GROUP_H
-#define MDPP_GROUP_H
+#ifndef MDCF_GROUP_H
+#define MDCF_GROUP_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

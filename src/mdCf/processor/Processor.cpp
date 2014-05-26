@@ -1,5 +1,5 @@
-#ifndef MDPP_PROCESSOR_CPP
-#define MDPP_PROCESSOR_CPP
+#ifndef MDCF_PROCESSOR_CPP
+#define MDCF_PROCESSOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
