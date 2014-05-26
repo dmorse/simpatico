@@ -1,0 +1,19 @@
+#-----------------------------------------------------------------------
+# Path to mdCf library
+
+MDCF_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)
+
+mdCf_LIBNAME=mdCf$(MDCF_ALL_SUFFIX)
+mdCf_LIB=$(OBJ_DIR)/mdCf/lib$(mdCf_LIBNAME).a
+
+#-----------------------------------------------------------------------
+# Path for postprocessor main program files
+
+MDCF=$(OBJ_DIR)/mdCf/mdPp
+
+#-----------------------------------------------------------------------
+# Path to postprocessor executable 
+
+MDCF_EXE=$(BIN_DIR)/mdPp$(MDCF_ALL_SUFFIX)
+
+#-----------------------------------------------------------------------
