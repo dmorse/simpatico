@@ -40,6 +40,7 @@ namespace MdCf
       * Constructor.
       *
       * \param storage parent Storage object.
+      * \param hasMolecules true if file format has DdMd::AtomContext info
       */
       DdMdConfigIo(Storage& storage, bool hasMolecules = false);
 

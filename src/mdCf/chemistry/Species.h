@@ -44,7 +44,7 @@ namespace MdCf
      /**
      * Initialize memory for this species and set sizes.
      *
-     * \param capacity number of atoms per molecule (exact)
+     * \param nAtom number of atoms per molecule (exact)
      * \param capacity maximum number of molecules in species
      */ 
      void initialize(int nAtom, int capacity);

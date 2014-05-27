@@ -37,7 +37,7 @@ namespace MdCf
       /**
       * Constructor.
       *
-      * \param simulation parent Simulation object.
+      * \param storage parent Storage object
       */
       ConfigIo(Storage& storage);
 

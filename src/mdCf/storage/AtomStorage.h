@@ -46,14 +46,13 @@ namespace MdCf
       /**
       * Allocate and initialize memory.
       *
-      * \int capacity Maximum number of atoms
+      * \param capacity Maximum number of atoms
       */
       void allocate(int capacity);
 
       /**
       * Return pointer to location for new atom.
       *
-      * \param  global id for new atom
       * \return pointer to location of new atom
       */
       Atom* newPtr();

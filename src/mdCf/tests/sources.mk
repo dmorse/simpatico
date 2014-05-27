@@ -9,7 +9,7 @@ mdCf_tests_= \
     $(mdCf_tests_configIos_) \
     $(mdCf_tests_processor_) 
 
-# Create lists of source (*.cpp) and object (*.o) files
+# Create lists of source (*.cc) and object (*.o) files
 mdCf_tests_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mdCf_tests_))
 mdCf_tests_OBJS=\

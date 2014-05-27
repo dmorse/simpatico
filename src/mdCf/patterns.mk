@@ -23,7 +23,7 @@ MAKE_DEPS= -A$(OBJ_DIR)/config.mk
 MAKE_DEPS+= -A$(OBJ_DIR)/util/config.mk
 MAKE_DEPS+= -A$(OBJ_DIR)/inter/config.mk
 MAKE_DEPS+= -A$(OBJ_DIR)/mcMd/config.mk
-MAKE_DEPS+= -A$(OBJ_DIR)/ddMd/config.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/mdcf/config.mk
 
 # Pattern rule to compile all class source (*.cpp) files in src/mdCf
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp

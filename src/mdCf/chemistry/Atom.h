@@ -8,8 +8,6 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-//#define UTIL_32BIT
-
 #include <util/space/Vector.h>            // members
 
 namespace MdCf
@@ -27,13 +25,31 @@ namespace MdCf
 
    public:
 
-      Vector position;
-      Vector velocity;
-      int typeId;
-      int id;
-      int speciesId;
-      int moleculeId;
-      int atomId;
+      /// Atom position
+      Vector position;    
+
+      /// Atom velocity
+      Vector velocity;    
+
+      /// Atom type index
+      int typeId;         
+
+      /// Unique global index (tag)
+      int id;             
+
+      /// Index for species of parent molecule
+      int speciesId;      
+
+      /// Index of molecule with its species
+      int moleculeId;     
+
+      /// Index of atom within its molecule
+      int atomId;         
+
+      /*
+      * The speciesId, moleculeId and atomId indices are not contained
+      * in all configuration file formats, and are thus optional.
+      */
 
    };
 
