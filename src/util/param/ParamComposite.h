@@ -31,52 +31,57 @@ namespace Util
    /**
    * An object that can read multiple parameters from file.
    *
-   * A ParamComposite has a private array of pointers to ParamComponent
-   * objects. These are stored in the order in which they are read from
-   * file by the ParamComposite::readParam() method. We will refer to this
-   * array as the format array. Each element of the format array may point
-   * to a Parameter object (which represents a single parameter), a Begin
-   * object (which represents a line containing the class name and an
-   * opening bracket) and End object (which represents a line containing
-   * only a closing bracket), a Blank object (i.e., a blank line), or
-   * another ParamComposite object.
+   * Any class that reads a block of parameters from a parameter file must
+   * be derived from ParamComposite. Each such class must implement either
+   * the readParameters() function or the readParam() function, but not both. 
+   * The readParameters(), if reimplemented, should read the body of the
+   * associated parameter file block, without opening or closing lines.
+   * The readParam() function reads the the entire block, including opening
+   * line and closing lines.  The default implementation of readParam() 
+   * reads the opening line of the block, calls readParameters() to 
+   * read the body of the block, and then reads the closing line. Most
+   * subclasses of ParamComposite re-implement the readParameters() 
+   * function, and rely on the default implementation of readParam() to 
+   * add the Begin and End lines.
    *
-   * Any class that reads a block of parameters from the input parameter file
-   * must be derived from ParamComposite. The readParam() method must read
-   * the associated parameter file block. The virtual readParameters() method,
-   * if re-implemented, should read only the body of the parameter file
-   * block, without opening and closing lines. The default implementation of
-   * ParamComposite::readParam() reads the opening line of the block, calls
-   * readParameters() to read the body of the  parameter file block, and then
-   * reads the closing line. Almost all subclasses of ParamComposite should
-   * re-implement the readParameters() method, and rely on the default
-   * implementation of ParamComposite::readParam() to add the Begin and
-   * End lines.
+   * The writeParam() function, if called after readParam(), writes the 
+   * associated parameter block using the same file format as that used
+   * to read the data in the earlier call to readParam().
+   *
+   * Implementation details:
+   * -----------------------
+   *
+   * After parameter file block is read from file, the file format is 
+   * stored as a private array of ParaComponent* pointers. We will refer 
+   * to this in what follows as the format_ array. Each pointer in this 
+   * array may point to a Parameter, ParamComposite, Begin, End, or Blank
+   * object. Pointers to these objects are added to the format array as
+   * the associated objects are read from file, and are stored in the same
+   * order as they appear in the parameter file. The default implementation
+   * of the writeParam() function simply calls the writeParam() function 
+   * of each child ParamComponent.
+   *
+   * Subclass implementation details:
+   * --------------------------------
+   *
+   * The readParameters() function of each subclass of ParamComposite should 
+   * be implemented using protected member functions of ParamComposite with
+   * names that begin with "read". The read<T>() function template can be 
+   * used to read an individual parameter, while readParamComposite reads 
+   * the nested subblock associated with a child ParamComposite. There are
+   * also more specialized methods (e.g., readDArray<T>to read different 
+   * types of arrays and matrices of parameters, and to read optional 
+   * parameters. See the users manual for further details. 
    *
    * The setClassName() and className() functions may be used to set and get
-   * a std::string containing the class name. The setClassName() method
+   * a std::string containing the subclass name. The setClassName() function 
    * should be called in the constructor of each subclass of ParamComposite.
    * The class name set in the constructor of a subclass will replace any
    * name set by a base class, because of the order in which constructors
-   * are called. The class name string is used by the default implementation
-   * of ParamComposite::readParam() in order to check that the opening line
-   * of a parameter block contains the correct class name.
-   *
-   * The readParameters() method of each subclass should be implemented
-   * using protected methods provided by ParamComposite to read individual
-   * parameters and "child" ParamComposite objects.  The implementation of
-   * readParameters() normally uses read< T >, which reads an individual
-   * parameter, and readParamComposite, which reads a nested subblock.
-   * There are also more specialized methods (e.g., readDArray<T>to read
-   * different types of arrays and matrices of parameters.  Each of these
-   * methods creates a new ParamComponent of a specific type, adds a
-   * pointer to the new object to the format array, and invokes the
-   * readParam method of the new object in order to read the associated
-   * line or block of the parameter file.
-   *
-   * The ParamComposite::writeParam() method uses the format array to write
-   * data to an output parameter file in the same format in which it was
-   * read by a previous call to readParam().
+   * are called. The default implementation of ParamComposite::readParam()
+   * checks if the class name that appears in the opening line of a parameter
+   * block agrees with the class name returned by the className() function,
+   * and throws an exception if it does not. 
    *
    * \ingroup Param_Module
    */
@@ -112,10 +117,10 @@ namespace Util
       /**
       * Resets ParamComposite to its empty state.
       *
-      * This method deletes Parameter, Begin, End, and Blank objects in the
+      * This function deletes Parameter, Begin, End, and Blank objects in the
       * format array (i.e., all "leaf" objects in the format tree), invokes
-      * the resetParam() for any child ParamComposite in the format array
-      * (the nodes in the true), and clears the array of pointers.
+      * the resetParam() function of any child ParamComposite in the format 
+      * array, and clears the format array.
       */
       void resetParam();
 
@@ -125,11 +130,13 @@ namespace Util
       /**
       * Read the parameter file block.
       *
-      * Inherited from ParamComponent. This method reads the entire parameter
+      * Inherited from ParamComponent. This function reads the entire parameter
       * block for this ParamComposite, including the opening line "ClassName{" 
       * and the closing bracket "}". The default implementation calls the virtual 
-      * readParameters method to read the body of the block, and adds Begin and 
+      * readParameters function to read the body of the block, and adds Begin and 
       * End objects.
+      *
+      * \throw Throws if the string in the opening line does not match classname().
       *
       * \param in input stream for reading
       */
@@ -139,10 +146,10 @@ namespace Util
       * Read optional parameter file block.
       *
       * Read an optional ParamComposite. This function attempts to reads the
-      * beginning "ClassName{" line, and then continues to read the parameter
-      * block and closing bracket line if only if the beginning line matches.
-      * The default implementation calls the readParameters(std::istream&)
-      * member function to read the enclosed parameter block.
+      * beginning "ClassName{" line, and then continues to read the rest of
+      * the block if and only if the beginning line matches.  The default 
+      * implementation calls the readParameters(std::istream&) member 
+      * function to read the body of the block.
       *
       * \param in input stream for reading
       */
@@ -152,7 +159,7 @@ namespace Util
       * Read the body of parameter block, without begin and end lines.
       *
       * Most subclasses of ParamComposite should overload this function.
-      * The default implementation is empty. Each subclass must overload
+      * The default implementation is empty. Every subclass must overload
       * either readParameters or readParam, but not both.
       *
       * \param in input stream for reading
@@ -164,15 +171,15 @@ namespace Util
       * Write all parameters to an output stream.
       *
       * The default implementation iterates through the format array, and
-      * calls the readParam member function of each ReadComponent in the
-      * array.  This implementation is sufficient for most subclasses.
+      * calls the readParam member function of each ParamComponent in the
+      * array.  
       *
       * \param out output stream for reading
       */
       virtual void writeParam(std::ostream &out);
 
       //@}
-      /// \name Serialization: Load and save methods for this composite
+      /// \name Serialization: Load and save functions for this composite
       //@{
 
       /**
@@ -180,8 +187,9 @@ namespace Util
       *
       * This function is inherited from Serializable. The default
       * implementation for a ParamComposite calls loadParameters, and
-      * adds Begin and End lines. All subclasses of ParamComposite
-      * should overload the virtual loadParameters member function.
+      * adds Begin and End lines to the format array.. All subclasses 
+      * of ParamComposite should overload the virtual loadParameters 
+      * member function.
       *
       * \param ar input/loading archive.
       */
@@ -213,14 +221,14 @@ namespace Util
       /**
       * Saves all parameters to an archive.
       *
-      * This simple default implementation calls the save method for all items
+      * This simple default implementation calls the save function for all items
       * in the parameter file format array. This is not sufficient for classes
       * that contain any persistent private data that does not appear in the
       * parameter file format.
       *
-      * If a class also defines a serialize method template, which allows
+      * If a class also defines a serialize function template, which allows
       * instances to be serialized to any type of archive, then the save
-      * method can be implemented as follows:
+      * function can be implemented as follows:
       * \code
       *    void save(Serializable::OArchive& ar)
       *    { ar & *this; }
@@ -239,7 +247,7 @@ namespace Util
 
       //@}
       /// \name read* functions for child components
-      /// \brief Each of these functions invokes an associated add* method to
+      /// \brief Each of these functions invokes an associated add* function to
       /// create a new ParamComponent object, and then invoke the readParam()
       /// function of the new object to read the associated line or block of 
       /// a parameter file.
@@ -281,10 +289,15 @@ namespace Util
 
       /**
       * Add and read a new required ScalarParam < Type > object.
+      *
+      * This is equivalent to ScalarParam<Type>(in, label, value, true).
+      *
+      * \param in     input stream for reading
+      * \param label  Label string
+      * \param value  reference to new ScalarParam< Type >
       */
       template <typename Type>
-      ScalarParam<Type>& read(std::istream &in, const char *label, Type &value)
-      {  return read<Type>(in, label, value, true); }
+      ScalarParam<Type>& read(std::istream &in, const char *label, Type &value);
 
       /**
       * Add and read a C array parameter.
@@ -437,9 +450,9 @@ namespace Util
 
       //@}
       /// \name load* functions for child components
-      /// \brief Each of these methods invokes an associated add* method to
-      /// create a new ParamComponent object, and then invokes the load()
-      /// method of the new object to load the associated parameter value
+      /// \brief Each of these functions invokes an associated add*() function
+      /// to create a new ParamComponent object, and then invokes the load()
+      /// function of the new object to load the associated parameter value
       /// from an input archive.
       //@{
 
@@ -458,7 +471,7 @@ namespace Util
       * Add and load an optional child ParamComposite if isActive.
       *
       * This functional loads the isActive flag, and then calls the load
-      * method of the child iff isActive is true.
+      * function of the child iff isActive is true.
       *
       * \param ar  input archive for loading
       * \param child  child ParamComposite object
@@ -664,7 +677,7 @@ namespace Util
       //@}
 
       /// \name add* functions for child components
-      /// \brief These methods each add a ParamComponent object to the
+      /// \brief These function each add a ParamComponent object to the
       /// format array, but do not read any data from an input stream.
       //@{
 
@@ -746,6 +759,25 @@ namespace Util
       */
       void setIsActive(bool isActive);
 
+      /**
+      * Set this to the parent of a child component.
+      *
+      * This function sets the indent and (ifdef UTIL_MPI)
+      * the ioCommunicator of the child component.
+      *
+      * \param param child ParamComponent
+      * \param next  if true, set indent level one higher than for parent.
+      */
+      void setParent(ParamComponent& param, bool next = true);
+
+      /**
+      * Add a new ParamComponent object to the format array.
+      *
+      * \param param Parameter object
+      * \param isLeaf Is this a leaf or a ParamComposite node?
+      */
+      void addComponent(ParamComponent& param, bool isLeaf = true);
+
    private:
 
       /// Array of pointers to ParamComponent objects.
@@ -766,28 +798,29 @@ namespace Util
       /// Is this parameter active ?
       bool isActive_;
 
-      /**
-      * Set this to the parent of a child component.
-      *
-      * This function sets the indent and (ifdef UTIL_MPI)
-      * the ioCommunicator of the child component.
-      *
-      * \param param child ParamComponent
-      * \param next  if true, set indent level one higher than that of parent.
-      */
-      void setParent(ParamComponent& param, bool next = true);
-
-      /**
-      * Add a new ParamComponent object to the format array.
-      *
-      * \param param Parameter object
-      * \param isLeaf Is this a leaf or a ParamComposite node?
-      */
-      void addComponent(ParamComponent& param, bool isLeaf = true);
-
    };
 
-   // Method templates for scalar parameters
+   // Inline accessor functions
+
+   /*
+   * Get class name string.
+   */
+   inline std::string ParamComposite::className() const
+   {  return className_; }
+
+   /*
+   * Is this ParamComposite required in the input file?
+   */
+   inline bool ParamComposite::isRequired() const
+   { return isRequired_; }
+
+   /*
+   * Is this parameter active?
+   */
+   inline bool ParamComposite::isActive() const
+   { return isActive_; }
+
+   // Function templates for scalar parameters
 
    /*
    * Add a ScalarParam to the format array, and read its contents from file.
@@ -804,6 +837,14 @@ namespace Util
       addComponent(*ptr);
       return *ptr;
    }
+
+   /*
+   * Add and read a new required ScalarParam < Type > object.
+   */
+   template <typename Type>
+   ScalarParam<Type>& 
+   ParamComposite::read(std::istream &in, const char *label, Type &value)
+   {  return read<Type>(in, label, value, true); }
 
    /*
    * Add a new ScalarParam< Type > object, and load its value.
@@ -994,24 +1035,6 @@ namespace Util
       addComponent(*ptr);
       return *ptr;
    }
-
-   /*
-   * Get class name string.
-   */
-   inline std::string ParamComposite::className() const
-   {  return className_; }
-
-   /*
-   * Is this ParamComposite required in the input file?
-   */
-   inline bool ParamComposite::isRequired() const
-   { return isRequired_; }
-
-   /*
-   * Is this parameter active?
-   */
-   inline bool ParamComposite::isActive() const
-   { return isActive_; }
 
 }
 #endif

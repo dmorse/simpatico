@@ -50,6 +50,10 @@ namespace McMd
       } else
       if (className == "DdMdConfigIo") {
          ptr = new DdMdConfigIo(*systemPtr_);
+      } else
+      if (className == "DdMdConfigIo_Molecule") {
+         bool hasMolecules = true;
+         ptr = new DdMdConfigIo(*systemPtr_, hasMolecules);
       }
       return ptr;
    }

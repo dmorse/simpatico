@@ -1,0 +1,5 @@
+config.mk
+makefile
+*.a
+*.o
+*.d

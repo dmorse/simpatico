@@ -41,6 +41,8 @@ namespace DdMd
 
    /*
    * Retain pointers to associated objects.
+   *
+   * Call on all domain notes.
    */
    void AtomCollector::associate(Domain& domain, AtomStorage& storage, 
                                  Buffer& buffer)
@@ -92,9 +94,9 @@ namespace DdMd
 
    #ifdef UTIL_MPI
    /*
-   * Returns address for a new Atom.
+   * Return address for a new Atom, or null when all are received.
    *
-   * Called only on master.
+   * Call this function only on the master processor.
    */ 
    Atom* AtomCollector::nextPtr()
    {
@@ -123,7 +125,7 @@ namespace DdMd
             isComplete_ = true;
          }
       }
-     
+
       // While at end of recvArray_, or while array is empty.
       while (recvArrayId_ == recvArraySize_) {
 
@@ -190,7 +192,7 @@ namespace DdMd
    /*
    * Send all atoms from this process.
    *
-   * Call on every processor except the master.
+   * Call on every domain processor except the master.
    */
    void 
    AtomCollector::send()

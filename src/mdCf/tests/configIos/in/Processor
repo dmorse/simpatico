@@ -1,0 +1,10 @@
+Processor{
+   atomCapacity 100
+   bondCapacity 100
+   AnalyzerManager{
+
+   }
+}
+
+   configIoName    DdMdConfigIo
+   configFileName  in
