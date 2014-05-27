@@ -109,7 +109,7 @@ namespace MdCf
       /**
       * Get a particular species identified by index.
       *
-      * \int i species index
+      * \param i species index
       */
       Species& species(int i);
 

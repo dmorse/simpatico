@@ -16,13 +16,13 @@ The classes used in simpatico are divided into five namespaces. The source code 
 
  - namespace MdCf (in directory src/MdCf) contains classes for a serial processing of MD configurations and trajectories. These are used for postprocessing of trajectories produced by ddSim.
 
-The code in some namespaces depends on symbols defined in others. A namespace The code in some namespaces depends on symbols defined in others. A namespace named D is said to "depend" on another namespace C if any class in namespace D uses any classes or other symbols defined in C. The Inter, McMd and DdMd namespaces all depend on the Util namespace, in this sense. The dependencies are:
+The code in some namespaces depends on symbols defined in others. A namespace The code in some namespaces depends on symbols defined in others. A namespace named D is said to "depend" on another namespace C if any class in namespace D uses any classes or other symbols defined in C. The Inter, McMd, DdMd, and MdCf namespaces all depend on the Util namespace, in this sense. The dependencies are:
 
  - Util does not depend on any other namespace
 
  - Inter depends only on Util
 
- - DdMd and McMd depends on Util and Inter, but not on each other.
+ - McMd, DdMd and MdCf each depends on Util and Inter, but not on each other.
 
 A few of the most important classes in each namespace are introduced in the following pages. An alternate, and more complete, view of all of the classes in each namespace may be obtained clicking on the "Modules" link above and browsing a hierarchy of modules. Each module contain a sets of functionally related classes.
 
