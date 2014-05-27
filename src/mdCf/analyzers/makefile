@@ -3,7 +3,7 @@ SRC_DIR_REL =../..
 include $(SRC_DIR_REL)/config.mk
 include $(OBJ_DIR)/util/config.mk
 include $(OBJ_DIR)/inter/config.mk
-include $(OBJ_DIR)/ddMd/config.mk
+include $(OBJ_DIR)/mdCf/config.mk
 include $(SRC_DIR)/mdCf/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk

@@ -6,19 +6,18 @@
 # contains the source code for the DdPp namespace. It is included by
 # all makefile files in this directory tree. 
 #
-# This file should be included in other makefiles after inclusion of
-# the files src/config.mk, src/util/config.mk, src/inter/config.mk, 
-# and src/ddMd/config.mk, because this file uses makefile variables
-# defined in those files.
+# This file should be included in other makefiles after inclusion of 
+# the files src/config.mk, src/util/config.mk, and src/inter/config.mk, 
+# because this file uses makefile variables defined in those files.
 #-----------------------------------------------------------------------
 
 # All libraries needed in this namespace
 LIBS=$(mdCf_LIB) $(inter_LIB) $(util_LIB)
 
 # All C preprocessor macro definitions for this namespace
-DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS)
+DEFINES=$(UTIL_DEFS) $(INTER_DEFS)
 
-# Dependencies of source files in src/ddMd on makefile fragments
+# Dependencies of source files src/mdCf on makefile fragments
 MAKE_DEPS= -A$(OBJ_DIR)/config.mk
 MAKE_DEPS+= -A$(OBJ_DIR)/util/config.mk
 MAKE_DEPS+= -A$(OBJ_DIR)/inter/config.mk
