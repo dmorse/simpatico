@@ -1,6 +1,6 @@
 include src/config.mk
 # ==============================================================================
-.PHONY: mcMd ddMd mcMd-mpi \
+.PHONY: all mcMd mcMd-mpi ddMd mdCf\
         test-serial test-parallel \
         clean-serial clean-parallel clean clean-bin veryclean \
         html clean-html

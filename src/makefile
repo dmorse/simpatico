@@ -37,7 +37,7 @@ veryclean:
 	cd inter; make veryclean
 	cd mcMd;  make veryclean
 	cd ddMd;  make veryclean
-	cd mdCf;  make clean
+	cd mdCf;  make veryclean
 	rm -f util/config.mk
 	rm -f inter/config.mk
 	rm -f mcMd/config.mk
