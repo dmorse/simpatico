@@ -32,7 +32,7 @@ namespace MdCf
    *
    * A Storage has:
    *   - a Boundary
-   *   - an array of atoms
+   *   - an AtomStorage container for atoms
    *   - a GroupStorage for each type of covalent group
    *
    * \ingroup MdCf_Storage_Module
@@ -81,22 +81,36 @@ namespace MdCf
       */
       Boundary& boundary();
 
+      /// Get the AtomStorage.
       AtomStorage& atoms();
 
       #ifdef INTER_BOND
+      /// Get the Bond Storage.
       GroupStorage<2>& bonds();
       #endif
 
       #ifdef INTER_ANGLE
+      /// Get the Angle Storage.
       GroupStorage<3>& angles();
       #endif
 
       #ifdef INTER_DIHEDRAL
+      /// Get the Dihedral Storage.
       GroupStorage<4>& dihedrals();
       #endif
 
+      /**
+      * Number of species.
+      *
+      * If nSpecies == 0, all species and molecule info is disabled.
+      */
       int nSpecies() const;
 
+      /**
+      * Get a particular species identified by index.
+      *
+      * \int i species index
+      */
       Species& species(int i);
 
    private:
@@ -104,7 +118,7 @@ namespace MdCf
       /// Boundary object defines periodic boundary conditions.
       Boundary boundary_;
 
-      /// AtomStorage object
+      /// AtomStorage object.
       AtomStorage atoms_;
 
       #ifdef INTER_BOND
@@ -125,10 +139,7 @@ namespace MdCf
       /// Array of Species objects.
       DArray<Species> species_;
 
-      /// Pointer to new atom.
-      Atom* newAtomPtr_;
-
-      /// Maximum allowed atom id + 1 (used to allocate arrays).
+      /// Maximum number of atoms = max id + 1 (used to allocate arrays).
       int atomCapacity_;
 
       #ifdef INTER_BOND
@@ -151,7 +162,7 @@ namespace MdCf
 
    };
 
-   // inline functions
+   // Inline functions
 
    /*
    * Return the Boundary by reference.

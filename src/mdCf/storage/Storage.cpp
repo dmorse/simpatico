@@ -17,8 +17,7 @@ namespace MdCf
    * Constructor.
    */
    Storage::Storage()
-    : newAtomPtr_(0),
-      atomCapacity_(0)
+    : atomCapacity_(0)
       #ifdef INTER_BOND
       , bondCapacity_(0)
       #endif
