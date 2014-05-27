@@ -22,8 +22,7 @@ DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS)
 MAKE_DEPS= -A$(OBJ_DIR)/config.mk
 MAKE_DEPS+= -A$(OBJ_DIR)/util/config.mk
 MAKE_DEPS+= -A$(OBJ_DIR)/inter/config.mk
-MAKE_DEPS+= -A$(OBJ_DIR)/mcMd/config.mk
-MAKE_DEPS+= -A$(OBJ_DIR)/mdcf/config.mk
+MAKE_DEPS+= -A$(OBJ_DIR)/mdCf/config.mk
 
 # Pattern rule to compile all class source (*.cpp) files in src/mdCf
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp
