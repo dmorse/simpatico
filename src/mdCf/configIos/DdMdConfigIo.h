@@ -24,7 +24,7 @@ namespace MdCf
    /**
    * Native / default DdMd format for configuration files.
    *
-   * \ingroup DdMd_ConfigIo_Module
+   * \ingroup MdCf_ConfigIo_Module
    */
    class DdMdConfigIo  : public ConfigIo
    {

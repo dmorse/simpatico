@@ -22,7 +22,9 @@ namespace MdCf
    using namespace Util;
 
    /**
-   * Container for a set fo atoms.
+   * Container for a set of atoms.
+   *
+   * \ingroup MdCf_Storage_Module
    */
    class AtomStorage 
    {

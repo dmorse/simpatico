@@ -19,6 +19,11 @@ namespace MdCf
    class Atom;
    using namespace Util;
 
+   /**
+   * A set of identical molecules.
+   *
+   * \ingroup MdCf_Chemistry_Module
+   */
    class Species {
    public:
    

@@ -19,6 +19,8 @@ namespace MdCf
 
    /**
    * A point particle in an MD simulation.
+   *
+   * \ingroup MdCf_Chemistry_Module
    */
    struct Atom
    {

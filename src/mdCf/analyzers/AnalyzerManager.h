@@ -21,7 +21,6 @@ namespace MdCf
    /**
    * Manager for a list of Analyzer objects.
    *
-   * \ingroup MdCf_Manager_Module
    * \ingroup MdCf_Analyzer_Module
    */
    class AnalyzerManager : public Manager<Analyzer>

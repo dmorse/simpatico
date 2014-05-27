@@ -28,12 +28,14 @@ namespace MdCf
    using namespace Util;
 
    /**
-   * A molecular dynamics system configuration.
+   * A snapshot of a molecular dynamics system configuration.
    *
    * A Storage has:
    *   - a Boundary
    *   - an array of atoms
    *   - a GroupStorage for each type of covalent group
+   *
+   * \ingroup MdCf_Storage_Module
    */
    class Storage : public ParamComposite 
    {

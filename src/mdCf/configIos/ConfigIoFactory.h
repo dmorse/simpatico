@@ -21,6 +21,8 @@ namespace MdCf
 
    /**
    * Default Factory for subclasses of ConfigIo.
+   *
+   * \ingroup MdCf_ConfigIo_Module
    */
    class ConfigIoFactory : public Factory<ConfigIo> 
    {

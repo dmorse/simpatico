@@ -22,6 +22,8 @@ namespace MdCf
 
    /**
    * A post-processor for analyzing outputs of MD simulations.
+   *
+   * \ingroup MdCf_Module
    */
    class Processor : public Storage
    {

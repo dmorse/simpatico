@@ -19,6 +19,8 @@ namespace MdCf
 
    /**
    * A container for Group<N> objects.
+   *
+   * \ingroup MdCf_Storage_Module
    */
    template <int N>
    class GroupStorage : private DSArray< Group<N> >

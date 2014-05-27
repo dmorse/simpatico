@@ -13,6 +13,8 @@ namespace MdCf
 
    /**
    * A group of covalently interacting atoms.
+   *
+   * \ingroup MdCf_Chemistry_Module
    */
    template <int N>
    class Group

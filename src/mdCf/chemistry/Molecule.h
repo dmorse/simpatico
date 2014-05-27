@@ -19,6 +19,11 @@ namespace MdCf
    class Atom;
    class Species;
 
+   /**
+   * A Molecules has a sequence of atoms, and belongs to a Species.
+   *
+   * \ingroup MdCf_Chemistry_Module
+   */
    class Molecule
    {
    public:
