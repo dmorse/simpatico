@@ -19,14 +19,14 @@ namespace MdCf
    * Constructor.
    */
    ConfigIo::ConfigIo()
-     : storagePtr_(0)
+     : systemPtr_(0)
    {  setClassName("ConfigIo"); }
 
    /*
    * Constructor.
    */
-   ConfigIo::ConfigIo(Storage& storage)
-     : storagePtr_(&storage)
+   ConfigIo::ConfigIo(System& system)
+     : systemPtr_(&system)
    {
       setClassName("ConfigIo"); 
    }

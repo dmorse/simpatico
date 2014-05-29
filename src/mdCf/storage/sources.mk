@@ -1,7 +1,7 @@
 
 mdCf_storage_= \
-    mdCf/storage/Storage.cpp \
-    mdCf/storage/AtomStorage.cpp 
+    mdCf/storage/AtomStorage.cpp \
+    mdCf/storage/System.cpp 
 
 # Create lists of source (*.cpp) and object (*.o) files
 mdCf_storage_SRCS=\

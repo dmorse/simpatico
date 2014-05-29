@@ -49,7 +49,7 @@ namespace MdCf
    */
    void Processor::readParameters(std::istream& in)
    {
-      Storage::readParameters(in);
+      System::readParameters(in);
       readParamComposite(in, analyzerManager_);
    }
 

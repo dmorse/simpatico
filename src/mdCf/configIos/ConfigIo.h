@@ -13,7 +13,7 @@
 namespace MdCf
 {
 
-   class Storage;
+   class System;
    using namespace Util;
 
    /**
@@ -37,9 +37,9 @@ namespace MdCf
       /**
       * Constructor.
       *
-      * \param storage parent Storage object
+      * \param system parent System object
       */
-      ConfigIo(Storage& storage);
+      ConfigIo(System& system);
 
       /**
       * Destructor.
@@ -62,12 +62,12 @@ namespace MdCf
 
    protected:
 
-      Storage& storage()
-      { return *storagePtr_; }
+      System& system()
+      { return *systemPtr_; }
 
    private:
 
-      Storage* storagePtr_;
+      System* systemPtr_;
 
    };
 

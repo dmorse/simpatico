@@ -30,14 +30,14 @@ namespace MdCf
    /**
    * A snapshot of a molecular dynamics system configuration.
    *
-   * A Storage has:
+   * A System has:
    *   - a Boundary
    *   - an AtomStorage container for atoms
    *   - a GroupStorage for each type of covalent group
    *
    * \ingroup MdCf_Storage_Module
    */
-   class Storage : public ParamComposite 
+   class System : public ParamComposite 
    {
 
    public:
@@ -50,12 +50,12 @@ namespace MdCf
       /**
       * Constructor
       */
-      Storage();
+      System();
 
       /**
       * Destructor
       */
-      ~Storage();
+      ~System();
 
       using ParamComposite::readParam;
 
@@ -85,17 +85,17 @@ namespace MdCf
       AtomStorage& atoms();
 
       #ifdef INTER_BOND
-      /// Get the Bond Storage.
+      /// Get the Bond System.
       GroupStorage<2>& bonds();
       #endif
 
       #ifdef INTER_ANGLE
-      /// Get the Angle Storage.
+      /// Get the Angle System.
       GroupStorage<3>& angles();
       #endif
 
       #ifdef INTER_DIHEDRAL
-      /// Get the Dihedral Storage.
+      /// Get the Dihedral System.
       GroupStorage<4>& dihedrals();
       #endif
 
@@ -167,31 +167,31 @@ namespace MdCf
    /*
    * Return the Boundary by reference.
    */
-   inline Boundary& Storage::boundary() 
+   inline Boundary& System::boundary() 
    {  return boundary_; }
 
-   inline AtomStorage& Storage::atoms()
+   inline AtomStorage& System::atoms()
    {  return atoms_; }
 
    #ifdef INTER_BOND
-   inline GroupStorage<2>& Storage::bonds()
+   inline GroupStorage<2>& System::bonds()
    {  return bonds_; }
    #endif
 
    #ifdef INTER_ANGLE
-   inline GroupStorage<3>& Storage::angles()
+   inline GroupStorage<3>& System::angles()
    {  return angles_; }
    #endif
 
    #ifdef INTER_DIHEDRAL
-   inline GroupStorage<4>& Storage::dihedrals()
+   inline GroupStorage<4>& System::dihedrals()
    {  return dihedrals_; }
    #endif
 
-   inline int Storage::nSpecies() const
+   inline int System::nSpecies() const
    {  return nSpecies_; }
 
-   inline Species& Storage::species(int i)
+   inline Species& System::species(int i)
    {  return species_[i]; }
 
 }

@@ -2,7 +2,7 @@
 #define MDCF_ANALYZER_H
 
 /*
-* Simpatico - Processor Package for Polymeric and Molecular Liquids
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
@@ -19,7 +19,7 @@ namespace MdCf
 {
 
    using namespace Util;
-   class Processor;
+   class System;
 
    /**
    * Abstract base for periodic output and/or analysis actions.
@@ -30,11 +30,11 @@ namespace MdCf
    * implemented by the pure virtual sample() method.
    *
    * The sample() method should take the desired action only when the
-   * processor step index is an integer multiple of the associated 
+   * system step index is an integer multiple of the associated 
    * interval parameter.  
    *
    * The virtual sample() method does not take any parameters. An 
-   * Analyzer must thus access its parent Processor via a pointer, 
+   * Analyzer must thus access its parent System via a pointer, 
    * which is usually initialized in its subclass constructor.
    *
    * \ingroup MdCf_Analyzer_Module
@@ -49,7 +49,7 @@ namespace MdCf
       /**
       * Constructor.
       */
-      Analyzer(Processor& processor);
+      Analyzer(System& system);
 
       /**
       * Destructor.
@@ -57,7 +57,7 @@ namespace MdCf
       virtual ~Analyzer();
 
       /**
-      * Setup before processor.
+      * Setup before system.
       *
       * This method is called just before the beginning of the
       * main loop. It may be used to complete any initialization 
@@ -103,7 +103,7 @@ namespace MdCf
       /**
       * Return true iff counter is a multiple of the interval.
       *
-      * \param counter processor step counter
+      * \param counter system step counter
       */
       bool isAtInterval(long counter) const;
 
@@ -130,9 +130,9 @@ namespace MdCf
       void readOutputFileName(std::istream &in);
 
       /**
-      * Get the parent Processor by reference.
+      * Get the parent System by reference.
       */
-      Processor& processor();
+      System& system();
 
       /**
       * Return outputFileName string.
@@ -149,10 +149,10 @@ namespace MdCf
       /// Base name of output file(s).
       std::string outputFileName_;
 
-      /// Pointer to parent Processor
-      Processor* processorPtr_;
+      /// Pointer to parent System
+      System* systemPtr_;
 
-      /// Number of processor steps between subsequent actions.
+      /// Number of system steps between subsequent actions.
       long interval_;
 
    };
@@ -178,10 +178,10 @@ namespace MdCf
    {  return outputFileName_; }
 
    /*
-   * Get the parent Processor by reference.
+   * Get the parent System by reference.
    */
-   inline Processor& Analyzer::processor()
-   {  return *processorPtr_; }
+   inline System& Analyzer::system()
+   {  return *systemPtr_; }
 
 
 }

@@ -2,7 +2,7 @@
 #define MDCF_ANALYZER_MANAGER_CPP
 
 /*
-* Simpatico - Processor Package for Polymeric and Molecular Liquids
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
@@ -19,9 +19,9 @@ namespace MdCf
    /*
    * Constructor.
    */
-   AnalyzerManager::AnalyzerManager(Processor& processor)
+   AnalyzerManager::AnalyzerManager(System& system)
    : Manager<Analyzer>(),
-     processorPtr_(&processor)
+     systemPtr_(&system)
    {  setClassName("AnalyzerManager"); }
 
    /*
@@ -87,7 +87,7 @@ namespace MdCf
    */
    Factory<Analyzer>* AnalyzerManager::newDefaultFactory() const
    {
-      return new AnalyzerFactory(*processorPtr_);
+      return new AnalyzerFactory(*systemPtr_);
    }
  
 }

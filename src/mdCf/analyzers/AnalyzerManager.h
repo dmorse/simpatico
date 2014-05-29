@@ -16,7 +16,7 @@ namespace MdCf
 
    using namespace Util;
 
-   class Processor;
+   class System;
 
    /**
    * Manager for a list of Analyzer objects.
@@ -31,7 +31,7 @@ namespace MdCf
       /**
       * Constructor.
       */
-      AnalyzerManager(Processor& processor);
+      AnalyzerManager(System& system);
 
       /**
       * Destructor.
@@ -77,8 +77,8 @@ namespace MdCf
 
    private:
 
-      /// Pointer to parent Processor.
-      Processor* processorPtr_;
+      /// Pointer to parent System.
+      System* systemPtr_;
  
    };
 

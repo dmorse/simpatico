@@ -2,7 +2,7 @@
 #define MDCF_DDMD_CONFIG_IO_H
 
 /*
-* Simpatico - Storage Package for Polymeric and Molecular Liquids
+* Simpatico - System Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
@@ -10,14 +10,14 @@
 
 #include <mdCf/configIos/ConfigIo.h>
 #include <mdCf/storage/GroupStorage.h>
-#include <mdCf/storage/Storage.h>
+#include <mdCf/storage/System.h>
 
 #include <util/format/Int.h>
 
 namespace MdCf
 {
 
-   class Storage;
+   class System;
 
    using namespace Util;
 
@@ -39,10 +39,10 @@ namespace MdCf
       /**
       * Constructor.
       *
-      * \param storage parent Storage object.
+      * \param system parent System object.
       * \param hasMolecules true if file format has DdMd::AtomContext info
       */
-      DdMdConfigIo(Storage& storage, bool hasMolecules = false);
+      DdMdConfigIo(System& system, bool hasMolecules = false);
 
       /**
       * Read configuration file in DdMd default format.
@@ -101,8 +101,8 @@ namespace MdCf
    int DdMdConfigIo::writeGroups(std::ofstream& file, const char* sectionLabel,
                   const char* nGroupLabel, GroupStorage<N>& groups)
    {
-      Storage::BondIterator iter;
-      int nGroup = storage().bonds().size();
+      System::BondIterator iter;
+      int nGroup = system().bonds().size();
 
       file << std::endl;
       file << sectionLabel << std::endl;

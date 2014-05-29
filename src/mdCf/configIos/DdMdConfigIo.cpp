@@ -14,7 +14,7 @@
 #include <mdCf/chemistry/Group.h>
 #include <mdCf/chemistry/Species.h>
 //#include <mdCf/chemistry/MaskPolicy.h>
-#include <mdCf/storage/Storage.h>
+#include <mdCf/storage/System.h>
 
 #include <util/space/Vector.h>
 #include <util/format/Int.h>
@@ -28,8 +28,8 @@ namespace MdCf
    /*
    * Constructor.
    */
-   DdMdConfigIo::DdMdConfigIo(Storage& storage, bool hasMolecules)
-    : ConfigIo(storage),
+   DdMdConfigIo::DdMdConfigIo(System& system, bool hasMolecules)
+    : ConfigIo(system),
       hasMolecules_(hasMolecules)
    {  setClassName("DdMdConfigIo"); }
 
@@ -45,20 +45,20 @@ namespace MdCf
 
       // Read and broadcast boundary
       file >> Label("BOUNDARY");
-      file >> storage().boundary();
+      file >> system().boundary();
 
       // Read and distribute atoms
 
       // Read atoms
       Atom* atomPtr;
-      int atomCapacity = storage().atoms().capacity(); // Maximum allowed id + 1
+      int atomCapacity = system().atoms().capacity(); // Maximum allowed id + 1
       int nAtom;          
       file >> Label("ATOMS");
       file >> Label("nAtom") >> nAtom;
       for (int i = 0; i < nAtom; ++i) {
 
          // Get pointer to new atom 
-         atomPtr = storage().atoms().newPtr();
+         atomPtr = system().atoms().newPtr();
  
          file >> atomPtr->id >> atomPtr->typeId;
          if (atomPtr->id < 0 || atomPtr->id >= atomCapacity) {
@@ -81,13 +81,13 @@ namespace MdCf
          file >> atomPtr->position;
          file >> atomPtr->velocity;
 
-         storage().atoms().add();
+         system().atoms().add();
       }
 
       // Read Covalent Groups
       #ifdef INTER_BOND
-      if (storage().bonds().capacity()) {
-         readGroups(file, "BONDS", "nBond", storage().bonds());
+      if (system().bonds().capacity()) {
+         readGroups(file, "BONDS", "nBond", system().bonds());
          //if (maskPolicy == MaskBonded) {
          //   setAtomMasks();
          //}
@@ -95,19 +95,19 @@ namespace MdCf
       #endif
 
       // Optionally add atoms to species
-      if (storage().nSpecies() > 0) {
+      if (system().nSpecies() > 0) {
          if (!hasMolecules_) {
             UTIL_THROW("No atom context info in chosen ConfigIo");
          }
          int speciesId;
          AtomStorage::Iterator iter;
-         storage().atoms().begin(iter);
+         system().atoms().begin(iter);
          for ( ; iter.notEnd(); ++iter) {
             speciesId = iter->speciesId;
-            storage().species(speciesId).addAtom(*iter);
+            system().species(speciesId).addAtom(*iter);
          }
-         for (int i = 0; storage().nSpecies(); ++i) {
-            storage().species(i).isValid();
+         for (int i = 0; system().nSpecies(); ++i) {
+            system().species(i).isValid();
          }
       }
    }
@@ -124,18 +124,18 @@ namespace MdCf
 
       // Write Boundary dimensions
       file << "BOUNDARY" << std::endl << std::endl;
-      file << storage().boundary() << std::endl;
+      file << system().boundary() << std::endl;
       file << std::endl;
 
       // Atoms
-      int nAtom = storage().atoms().size();
+      int nAtom = system().atoms().size();
       file << "ATOMS" << std::endl;
       file << "nAtom" << Int(nAtom, 10) << std::endl;
 
       // Write atoms
       Vector r;
       AtomStorage::Iterator iter;
-      storage().atoms().begin(iter);
+      system().atoms().begin(iter);
       for (; iter.notEnd(); ++iter) {
          file << Int(iter->id, 10) 
               << Int(iter->typeId, 6);
@@ -151,8 +151,8 @@ namespace MdCf
 
       // Write the groups
       #ifdef INTER_BOND
-      if (storage().bonds().capacity()) {
-         writeGroups(file, "BONDS", "nBond", storage().bonds());
+      if (system().bonds().capacity()) {
+         writeGroups(file, "BONDS", "nBond", system().bonds());
       }
       #endif
 

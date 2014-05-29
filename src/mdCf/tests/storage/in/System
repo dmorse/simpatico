@@ -1,4 +1,4 @@
-Storage{
+System{
    atomCapacity 100
    bondCapacity 100
 }

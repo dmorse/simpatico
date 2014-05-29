@@ -17,7 +17,7 @@ namespace MdCf
 {
 
    using namespace Util;
-   class Storage;
+   class System;
 
    /**
    * Default Factory for subclasses of ConfigIo.
@@ -32,9 +32,9 @@ namespace MdCf
       /**
       * Constructor
       *
-      * \param storage parent Storage object
+      * \param system parent System object
       */
-      ConfigIoFactory(Storage& storage);
+      ConfigIoFactory(System& system);
 
       /**
       * Create an instance of a specified subclass of ConfigIo.
@@ -56,8 +56,8 @@ namespace MdCf
 
    private:
 
-      /// Pointer to a parent Storage.
-      Storage* storagePtr_;
+      /// Pointer to a parent System.
+      System* systemPtr_;
 
    };
 

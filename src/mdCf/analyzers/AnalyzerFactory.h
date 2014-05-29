@@ -2,7 +2,7 @@
 #define MDCF_ANALYZER_FACTORY_H
 
 /*
-* Simpatico - Processor Package for Polymeric and Molecular Liquids
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
@@ -16,7 +16,7 @@ namespace MdCf
 
    using namespace Util;
 
-   class Processor;
+   class System;
 
    /**
    * Factory for MdCf::Analyzer objects.
@@ -31,9 +31,9 @@ namespace MdCf
       /**
       * Constructor.
       *
-      * \param processor     parent Processor
+      * \param system associated physical System
       */
-      AnalyzerFactory(Processor& processor);
+      AnalyzerFactory(System& system);
 
       /** 
       * Return pointer to a new Analyzer object.
@@ -46,15 +46,15 @@ namespace MdCf
    protected:
 
       /**
-      * Return reference to parent Processor.
+      * Return reference to parent System.
       */
-      Processor& processor() const
-      {  return *processorPtr_; }
+      System& system() const
+      {  return *systemPtr_; }
 
    private:
 
-      /// Pointer to parent Processor.
-      Processor* processorPtr_;
+      /// Pointer to parent System.
+      System* systemPtr_;
 
    };
 

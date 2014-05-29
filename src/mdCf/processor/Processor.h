@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mdCf/storage/Storage.h>             // base class
+#include <mdCf/storage/System.h>             // base class
 #include <mdCf/configIos/ConfigIoFactory.h>   // member 
 #include <mdCf/analyzers/AnalyzerManager.h>   // member 
 
@@ -25,7 +25,7 @@ namespace MdCf
    *
    * \ingroup MdCf_Module
    */
-   class Processor : public Storage
+   class Processor : public System
    {
 
    public:
