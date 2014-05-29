@@ -12,8 +12,8 @@ mdCf_= \
     $(mdCf_processor_) 
 
 # Add user source files, if any
-# include $(SRC_DIR)/mdCf/user/sources.mk
-# mdCf_+= $(mdCf_user_) 
+include $(SRC_DIR)/mdCf/user/sources.mk
+mdCf_+= $(mdCf_user_) 
 
 # Create lists of source (*.cpp) and object (*.o) files
 mdCf_SRCS=\
