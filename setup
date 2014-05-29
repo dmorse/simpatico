@@ -73,6 +73,7 @@ cp  src/mdCf/makefile obj/parallel/mdCf/makefile
 cp  src/inter/user/sources.mk_r src/inter/user/sources.mk
 cp  src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
 cp  src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
+cp  src/mdCf/user/sources.mk_r src/mdCf/user/sources.mk
 
 # ------------------------------------------------------------------------
 # Copy repository version of Factory implementation files to user versions.
