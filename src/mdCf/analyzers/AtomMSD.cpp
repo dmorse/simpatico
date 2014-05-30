@@ -12,7 +12,7 @@
 #include <mdCf/chemistry/Molecule.h>
 #include <mdCf/chemistry/Atom.h>
 #include <mdCf/chemistry/Species.h>
-#include <mdCf/storage/System.h>
+#include <mdCf/processor/Processor.h>
 #include <util/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/archives/Serializable_includes.h>
@@ -27,7 +27,7 @@ namespace MdCf
    /*
    * Constructor.
    */
-   AtomMSD::AtomMSD(System& system) 
+   AtomMSD::AtomMSD(Processor& system) 
     : Analyzer(system),
       outputFile_(),
       accumulator_(),
@@ -57,14 +57,14 @@ namespace MdCf
       // Validate parameters
       if (speciesId_ < 0)
          UTIL_THROW("Negative speciesId");
-      if (speciesId_ >= system().nSpecies()) 
+      if (speciesId_ >= processor().nSpecies()) 
          UTIL_THROW("speciesId > nSpecies");
       if (atomId_ < 0)
          UTIL_THROW("Negative atomId");
       if (capacity_ <= 0)       
          UTIL_THROW("Negative capacity");
 
-      Species* speciesPtr = &system().species(speciesId_);
+      Species* speciesPtr = &processor().species(speciesId_);
 
       if (atomId_ >= speciesPtr->nAtom()) 
          UTIL_THROW("atomId >= nAtom");
@@ -92,8 +92,8 @@ namespace MdCf
          UTIL_THROW("Error: object is not initialized");
       }
 
-      // Set number of molecules of this species in the System. 
-      nMolecule_ = system().species(speciesId_).size();
+      // Set number of molecules of this species in the Processor. 
+      nMolecule_ = processor().species(speciesId_).size();
       accumulator_.setNEnsemble(nMolecule_);
       accumulator_.clear();
 
@@ -103,10 +103,10 @@ namespace MdCf
       Species::MoleculeIterator iter;
       int i = 0;
 
-      system().species(speciesId_).begin(iter);
+      processor().species(speciesId_).begin(iter);
       for ( ; iter.notEnd(); ++iter) {
          r = iter->atom(atomId_).position;
-         system().boundary().shift(r);
+         processor().boundary().shift(r);
          oldPositions_[i] = r;
          shifts_[i] = zero;
          ++i;
@@ -124,25 +124,25 @@ namespace MdCf
       if (nMolecule_ <= 0) {
          UTIL_THROW("nMolecule <= 0");
       }
-      if (nMolecule_ != system().species(speciesId_).size()) {
+      if (nMolecule_ != processor().species(speciesId_).size()) {
          UTIL_THROW("Number of molecules has changed.");
       }
 
       Vector r;
       IntVector shift;
-      Vector lengths = system().boundary().lengths();
+      Vector lengths = processor().boundary().lengths();
       int i, j;
       Species::MoleculeIterator iter;
 
       i = 0;
-      system().species(speciesId_).begin(iter);
+      processor().species(speciesId_).begin(iter);
       for ( ; iter.notEnd(); ++iter) {
 
          r = iter->atom(atomId_).position;
-         system().boundary().shift(r);
+         processor().boundary().shift(r);
 
          // Compare current r to previous position, oldPositions_[i]
-         system().boundary().distanceSq(r, oldPositions_[i], shift);
+         processor().boundary().distanceSq(r, oldPositions_[i], shift);
 
          // If this atom crossed a boundary, increment its shift vector
          shifts_[i] += shift;
@@ -161,13 +161,18 @@ namespace MdCf
 
    }
 
-   #if 0
+   #if 1
    /// Output results to file after simulation is completed.
    void AtomMSD::output() 
    {  
 
       // Output parameters
-      fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
+      if (processor().hasFileMaster()) {
+         processor().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
+      } else {
+         outputFile_.open(outputFileName(".prm").c_str());
+      }
+
       writeParam(outputFile_); 
       outputFile_ << std::endl;
       outputFile_ << std::endl;
@@ -183,7 +188,11 @@ namespace MdCf
       outputFile_.close();
 
       // Output statistical analysis to separate data file
-      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      if (processor().hasFileMaster()) {
+         processor().fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      } else {
+         outputFile_.open(outputFileName(".dat").c_str());
+      }
       accumulator_.output(outputFile_); 
       outputFile_.close();
 
