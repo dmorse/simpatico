@@ -34,6 +34,7 @@
 #include "RingRouseAutoCorr.h"
 #include "LinearRouseAutoCorr.h"
 #include "BoundaryAverage.h"
+#include "StressAutoCorrelation.h"
 
 #ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
