@@ -19,9 +19,9 @@ namespace MdCf
    /*
    * Constructor.
    */
-   AnalyzerManager::AnalyzerManager(System& system)
+   AnalyzerManager::AnalyzerManager(Processor& processor)
    : Manager<Analyzer>(),
-     systemPtr_(&system)
+     processorPtr_(&processor)
    {  setClassName("AnalyzerManager"); }
 
    /*
@@ -87,7 +87,7 @@ namespace MdCf
    */
    Factory<Analyzer>* AnalyzerManager::newDefaultFactory() const
    {
-      return new AnalyzerFactory(*systemPtr_);
+      return new AnalyzerFactory(*processorPtr_);
    }
  
 }

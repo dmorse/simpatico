@@ -16,7 +16,7 @@ namespace MdCf
 
    using namespace Util;
 
-   class System;
+   class Processor;
 
    /**
    * Factory for MdCf::Analyzer objects.
@@ -31,9 +31,9 @@ namespace MdCf
       /**
       * Constructor.
       *
-      * \param system associated physical System
+      * \param processor associated physical Processor
       */
-      AnalyzerFactory(System& system);
+      AnalyzerFactory(Processor& processor);
 
       /** 
       * Return pointer to a new Analyzer object.
@@ -46,15 +46,15 @@ namespace MdCf
    protected:
 
       /**
-      * Return reference to parent System.
+      * Return reference to parent Processor.
       */
-      System& system() const
-      {  return *systemPtr_; }
+      Processor& processor() const
+      {  return *processorPtr_; }
 
    private:
 
-      /// Pointer to parent System.
-      System* systemPtr_;
+      /// Pointer to parent Processor.
+      Processor* processorPtr_;
 
    };
 

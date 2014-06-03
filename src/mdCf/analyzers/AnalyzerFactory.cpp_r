@@ -2,7 +2,7 @@
 #define MDCF_ANALYZER_FACTORY_CPP
 
 /*
-* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+* Simpatico - Processor Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.

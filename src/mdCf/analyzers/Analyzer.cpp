@@ -20,10 +20,10 @@ namespace MdCf
    /*
    * Constructor.
    */
-   Analyzer::Analyzer(System& system)
+   Analyzer::Analyzer(Processor& processor)
     : ParamComposite(),
       outputFileName_(),
-      systemPtr_(&system),
+      processorPtr_(&processor),
       interval_(1)
    {}
 

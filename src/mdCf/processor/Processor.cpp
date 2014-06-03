@@ -50,7 +50,19 @@ namespace MdCf
    void Processor::readParameters(std::istream& in)
    {
       System::readParameters(in);
+      readParamCompositeOptional(in, fileMaster_);
       readParamComposite(in, analyzerManager_);
+   }
+
+   bool Processor::hasFileMaster() const
+   {  return fileMaster_.isActive(); }
+
+   FileMaster& Processor::fileMaster()
+   {
+      if (!fileMaster_.isActive()) {
+         UTIL_THROW(" Attempt to use inactive FileMaster");
+      } 
+      return fileMaster_;
    }
 
    // ConfigIo management

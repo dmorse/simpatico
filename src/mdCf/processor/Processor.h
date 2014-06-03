@@ -8,9 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mdCf/storage/System.h>             // base class
+#include <mdCf/storage/System.h>              // base class
 #include <mdCf/configIos/ConfigIoFactory.h>   // member 
 #include <mdCf/analyzers/AnalyzerManager.h>   // member 
+#include <util/misc/FileMaster.h>             // member 
 
 
 namespace MdCf 
@@ -106,6 +107,16 @@ namespace MdCf
       */
       void analyzeTrajectory(std::string& filename);
 
+      /**
+      * Return true if the FileMaster is active.
+      */
+      bool hasFileMaster() const;
+
+      /**
+      * Return FileMaster if active, or throw Exception.
+      */
+      FileMaster& fileMaster();
+
    private:
 
       /// Pointer to current ConfigIo object.
@@ -116,6 +127,9 @@ namespace MdCf
 
       /// Manager for analyzers
       AnalyzerManager analyzerManager_;
+
+      /// FileMaster (optionally activated)
+      FileMaster fileMaster_;
 
       /// String identifier for ConfigIo class name
       std::string configIoName_;

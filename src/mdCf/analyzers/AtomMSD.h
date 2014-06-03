@@ -10,7 +10,7 @@
 
 #include <mdCf/analyzers/Analyzer.h>            // base class template
 #include <util/accumulators/MeanSqDispArray.h>  // member template 
-#include <util/space/Vector.h>                   // member template parameter
+#include <util/space/Vector.h>                  // member template parameter
 #include <util/containers/DArray.h>             // member template
 
 namespace MdCf
@@ -19,7 +19,7 @@ namespace MdCf
    using namespace Util;
 
    /**
-   * Autocorrelation for vector separation of two atoms on a molecule.  
+   * Mean-squared displacement of specific atom in molecules of specific species.
    *
    * \ingroup MdCf_Analyzer_Module
    */
@@ -31,9 +31,9 @@ namespace MdCf
       /**
       * Constructor.
       *
-      * \param system reference to parent System
+      * \param processor reference to parent Processor
       */
-      AtomMSD(System &system);
+      AtomMSD(Processor &processor);
   
       /** 
       * Read parameters from file.
