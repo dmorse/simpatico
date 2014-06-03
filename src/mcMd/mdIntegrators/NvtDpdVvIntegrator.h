@@ -15,8 +15,8 @@
 #include <iostream>
 
 namespace Util
-{ 
-   class Random; 
+{
+   class Random;
    class EnergyEnsemble;
 }
 
@@ -28,7 +28,7 @@ namespace McMd
    class PairList;
 
    /**
-   * A velocity-Verlet DPD integerator.
+   * A velocity-Verlet dissipative particle dynamics (DPD) integrator.
    *
    * This class implements a simple velocity-Verlet (VV) algorithm for
    * the dissipitative particle dynamics (DPD) equations of motion.
@@ -37,13 +37,19 @@ namespace McMd
    */
    class NvtDpdVvIntegrator : public MdIntegrator
    {
-   
+
    public:
 
-      /// Constructor. 
+      /**
+      * Constructor.
+      *
+      * \param system parent MdSystem object
+      */
       NvtDpdVvIntegrator(MdSystem& system);
- 
-      /// Destructor.   
+
+      /**
+      * Destructor.
+      */
       virtual ~NvtDpdVvIntegrator();
 
       /**
@@ -102,19 +108,19 @@ namespace McMd
       /// Target absolute temperature (units of energy).
       double temperature_;
 
-      /// Square of cutoff_. 
+      /// Square of cutoff_.
       double cutoffSq_;
 
       /// Pointer to pair list
       const PairList* pairListPtr_;
 
-      /// Pointer to boundary object. 
+      /// Pointer to boundary object.
       const Boundary* boundaryPtr_;
 
-      /// Pointer to random object. 
+      /// Pointer to random object.
       Random* randomPtr_;
 
-      /// Pointer to random object. 
+      /// Pointer to random object.
       const EnergyEnsemble* energyEnsemblePtr_;
 
       /// Atom capacity of parent simulation.
@@ -126,7 +132,7 @@ namespace McMd
       /*
       * Calculate random and dissipative DPD forces.
       *
-      * This method computes and stores dissipative forces on all
+      * This function computes and stores dissipative forces on all
       * atoms, and computes and random forces iff computeRandom is
       * true. Dissipative and random forces are stored in separate
       * arrays from the conservative atomic forces.
@@ -137,5 +143,5 @@ namespace McMd
 
    };
 
-} 
+}
 #endif

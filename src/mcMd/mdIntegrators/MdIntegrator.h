@@ -31,10 +31,16 @@ namespace McMd
    
    public:
 
-      /// Constructor. 
+      /**
+      * Constructor. 
+      *
+      * \param system parent MdSystem object
+      */
       MdIntegrator(MdSystem& system);
- 
-      /// Destructor.   
+
+      /** 
+      * Destructor.
+      */
       virtual ~MdIntegrator();
 
       /**
@@ -52,17 +58,17 @@ namespace McMd
       virtual void step() = 0;
 
       /**
-      * Get Boundary of parent System.
+      * Get Boundary of parent System by reference.
       */
-      Boundary&   boundary();
+      Boundary& boundary();
 
       /**
       * Get parent MdSystem by reference.
       */
-      MdSystem&   system();
+      MdSystem& system();
 
       /**
-      * Get parent Simulation.
+      * Get parent Simulation by reference.
       */
       Simulation& simulation();
 
@@ -74,31 +80,31 @@ namespace McMd
    private:
 
       /// Pointer to a Boundary.
-      Boundary*    boundaryPtr_;
+      Boundary* boundaryPtr_;
    
       /// Pointer to parent MdSystem
-      MdSystem*    systemPtr_;
+      MdSystem* systemPtr_;
 
       /// Pointer to parent Simulation.
-      Simulation*  simulationPtr_;
+      Simulation* simulationPtr_;
 
    }; 
 
    // Inline methods
 
-   /**
+   /*
    * Get Boundary of parent System.
    */
    inline Boundary&   MdIntegrator::boundary()
    {  return *boundaryPtr_; }
 
-   /**
+   /*
    * Get parent MdSystem.
    */
    inline MdSystem&   MdIntegrator::system()
    {  return *systemPtr_; }
 
-   /**
+   /*
    * Get parent Simulation.
    */
    inline Simulation& MdIntegrator::simulation()

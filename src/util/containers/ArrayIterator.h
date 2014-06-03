@@ -11,8 +11,8 @@
 namespace Util
 {
 
-   template <typename Data> class Array;
-   template <typename Data, int Capacity> class FSArray;
+   //template <typename Data> class Array;
+   //template <typename Data, int Capacity> class FSArray;
 
    /**
    * Forward iterator for an Array or a C array.

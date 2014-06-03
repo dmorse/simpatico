@@ -436,25 +436,21 @@ namespace McMd
          read<std::string>(in, "angleStyle", angleStyle_);
       }
       #endif
-
       #ifdef INTER_DIHEDRAL
       if (simulation().nDihedralType() > 0) {
          read<std::string>(in, "dihedralStyle", dihedralStyle_);
       }
       #endif
-
       #ifdef MCMD_LINK
       if (simulation().nLinkType() > 0) {
          read<std::string>(in, "linkStyle", linkStyle_);
       }
       #endif
-
       #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
          read<std::string>(in, "externalStyle", externalStyle_);
       }
       #endif
-
       #ifdef INTER_TETHER
       if (simulation().hasTether()) {
          read<std::string>(in, "tetherStyle", tetherStyle_);
@@ -657,7 +653,7 @@ namespace McMd
    }
 
    /*
-   * Save internal state to an archive.
+   * Save configuration to an archive.
    */
    void System::saveConfig(Serializable::OArchive& ar)
    {
