@@ -1,9 +1,9 @@
 #ifndef DDMD_SP_PROCESSOR_TEST_H
 #define DDMD_SP_PROCESSOR_TEST_H
 
-#include <mdCf/processor/Processor.h>
-#include <mdCf/chemistry/SpAtom.h>
-#include <mdCf/chemistry/SpGroup.h>
+#include <ddMd/ps/processor/Processor.h>
+#include <ddMd/ps/chemistry/SpAtom.h>
+#include <ddMd/ps/chemistry/SpGroup.h>
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>

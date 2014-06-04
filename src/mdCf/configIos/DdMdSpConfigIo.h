@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mdCf/configIos/SpConfigIo.h>
-#include <mdCf/storage/SpGroupStorage.h>
-#include <mdCf/storage/SpConfiguration.h>
+#include <ddMd/ps/configIos/SpConfigIo.h>
+#include <ddMd/ps/storage/SpGroupStorage.h>
+#include <ddMd/ps/storage/SpConfiguration.h>
 
 #include <util/format/Int.h>
 

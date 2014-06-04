@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mdCf/analyzers/SpAnalyzer.h>            // base class template
+#include <ddMd/ps/analyzers/SpAnalyzer.h>            // base class template
 #include <util/accumulators/MeanSqDispArray.h>  // member template 
 #include <util/space/Vector.h>                  // member template parameter
 #include <util/containers/DArray.h>             // member template

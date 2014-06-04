@@ -9,7 +9,7 @@
 */
 
 #include "Processor.h"
-#include <mdCf/configIos/DdMdSpConfigIo.h>
+#include <ddMd/ps/configIos/DdMdSpConfigIo.h>
 
 namespace MdCf 
 {

@@ -1,9 +1,9 @@
 #ifndef DDMD_SP_SPECIES_TEST_H
 #define DDMD_SP_SPECIES_TEST_H
 
-#include <mdCf/chemistry/SpSpecies.h>
-#include <mdCf/chemistry/SpAtom.h>
-#include <mdCf/chemistry/SpMolecule.h>
+#include <ddMd/ps/chemistry/SpSpecies.h>
+#include <ddMd/ps/chemistry/SpAtom.h>
+#include <ddMd/ps/chemistry/SpMolecule.h>
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>

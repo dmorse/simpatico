@@ -1,9 +1,9 @@
 #ifndef DDMD_SP_STORAGE_TEST_H
 #define DDMD_SP_STORAGE_TEST_H
 
-#include <mdCf/storage/SpConfiguration.h>
-#include <mdCf/chemistry/SpAtom.h>
-#include <mdCf/chemistry/SpGroup.h>
+#include <ddMd/ps/storage/SpConfiguration.h>
+#include <ddMd/ps/chemistry/SpAtom.h>
+#include <ddMd/ps/chemistry/SpGroup.h>
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>

@@ -10,11 +10,11 @@
 
 #include <util/param/ParamComposite.h>        // base class
 
-#include <mdCf/chemistry/SpAtom.h>              // member (template argument)
-#include <mdCf/chemistry/SpGroup.h>             // member (template argument)
-#include <mdCf/chemistry/SpSpecies.h>           // member (template argument)
-#include <mdCf/storage/SpAtomStorage.h>         // member 
-#include <mdCf/storage/SpGroupStorage.h>        // member (template)
+#include <ddMd/ps/chemistry/SpAtom.h>              // member (template argument)
+#include <ddMd/ps/chemistry/SpGroup.h>             // member (template argument)
+#include <ddMd/ps/chemistry/SpSpecies.h>           // member (template argument)
+#include <ddMd/ps/storage/SpAtomStorage.h>         // member 
+#include <ddMd/ps/storage/SpGroupStorage.h>        // member (template)
 
 #include <util/boundary/Boundary.h>           // member 
 #include <util/containers/DArray.h>           // member (template)

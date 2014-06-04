@@ -9,7 +9,7 @@
 */
 
 #include <util/containers/DSArray.h>       // member (template)
-#include <mdCf/chemistry/SpGroup.h>        // member (template argument)
+#include <ddMd/ps/chemistry/SpGroup.h>        // member (template argument)
 #include <util/containers/ArrayIterator.h> // inline function
 
 namespace MdCf 
