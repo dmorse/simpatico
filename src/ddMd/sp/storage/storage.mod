@@ -1,12 +1,12 @@
 
-namespace MdCf
+namespace DdMd
 {
 
 /**
-* \defgroup MdCf_Storage_Module Storage
+* \defgroup DdMd_Sp_Storage_Module Single-Processor Storage
 *
 * \brief Classes that manage atoms and groups.
-* \ingroup MdCf_Module
+* \ingroup DdMd_Sp_Module
 */
 
 }

@@ -14,13 +14,14 @@ A few files that use classes from the Inter namespace also contain a
 Subdirectories:
 
 chemistry/    - atoms and covalent groups (bonds, etc.)
+storage/      - containers that manage Atom and Group objects
 communicate/  - interprocessor communication
 configIos/    - configuration file reader/writers
-analyzers/  - classes for data analysis and output
-integrators/  - molecular dynamics integrator algorithms
-neighbor/     - cell list and pair list data structures
 potentials/   - potential energy classes
+neighbor/     - cell list and pair list data structures
+integrators/  - molecular dynamics integrator algorithms
 simulation/   - main Simulation class
-storage/      - containers that manage Atom and Group objects
+analyzers/    - classes for data analysis and output
 misc/         - miscellaneous utility classes
+sp/           - classes for single-processor (sp) processing 
 

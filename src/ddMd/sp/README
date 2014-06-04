@@ -13,21 +13,3 @@ processor      a master class for analysis of trajectories
 user           space for user-provided classes
 tests          unit tests
 
-Makefile targets 
-----------------
-
-The src/mdCf directory contains a makefile that can be used to execute 
-in-source compilation of all of the classes in the directory tree rooted 
-at mdCf, and build a corresponding static library. The most important 
-targets are:
-
-make all      make all *.o files in src/mdCf and its subdirectories, build
-              a static library mdCf<suffix>.a in lib/, and install two
-              executables named mdSim<suffix> and mcSim<suffix> in bin/.
-
-make clean    remove all *.o files in src/mdCf and its subdirectories and
-              the static library file.
-
-Corresponding makefiles in the src/mdCf subdirectory of obj/serial or
-obj/parallel can be used for out-of-source builds. Because it does not
-use MPI, by convention, the MdCf namespace code is built in obj/serial.

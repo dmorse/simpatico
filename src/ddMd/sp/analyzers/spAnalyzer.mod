@@ -1,12 +1,12 @@
-namespace MdCf 
+namespace DdMd 
 {
 
    /**
-   * \defgroup MdCf_Analyzer_Module Analyzers
-   * \ingroup  MdCf_Module
+   * \defgroup DdMd_Sp_Analyzer_Module Single-processor analyzers
+   * \ingroup  DdMd_Sp_Module
    *  
-   * An Analyzer object represents a data analysis or data output operation
-   * that is carried out periodically during a simulation. 
+   * An SpAnalyzer object represents a data analysis or data output operation
+   * for a SpConfiguration single-processor MD configuration.
    */
 
 }

@@ -1,12 +1,12 @@
 
-namespace MdCf
+namespace DdMd
 {
 
 /**
-* \defgroup MdCf_Chemistry_Module Chemical Structure
+* \defgroup DdMd_SP_Chemistry_Module Single-Processor Chemical Structure
 *
 * \brief Classes that describe atoms, molecules, and groups of atoms.
-* \ingroup MdCf_Module
+* \ingroup DdMd_Sp_Module
 */
 
 }
