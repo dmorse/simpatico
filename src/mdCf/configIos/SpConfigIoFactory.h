@@ -9,7 +9,7 @@
 */
 
 #include <util/param/Factory.h>  
-#include <ddMd/ps/configIos/SpConfigIo.h>
+#include <ddMd/sp/configIos/SpConfigIo.h>
 
 #include <string>
 

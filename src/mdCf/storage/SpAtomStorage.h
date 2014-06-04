@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/ps/chemistry/SpAtom.h>              // member (template argument)
-#include <ddMd/ps/chemistry/SpGroup.h>             // member (template argument)
+#include <ddMd/sp/chemistry/SpAtom.h>              // member (template argument)
+#include <ddMd/sp/chemistry/SpGroup.h>             // member (template argument)
 
 #include <util/containers/DArray.h>           // member (template)
 #include <util/containers/DSArray.h>          // member (template)

@@ -1,6 +1,6 @@
 
 ddMd_sp_processor_= \
-    mdCf/processor/Processor.cpp 
+    ddMd/sp/processor/Processor.cpp 
 
 # Create lists of source (*.cpp) and object (*.o) files
 ddMd_sp_processor_SRCS=\

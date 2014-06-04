@@ -1,8 +1,8 @@
 ddMd_sp_analyzers_=\
-     mdCf/analyzers/SpAnalyzer.cpp \
-     mdCf/analyzers/SpAnalyzerFactory.cpp \
-     mdCf/analyzers/SpAnalyzerManager.cpp \
-     mdCf/analyzers/AtomMSD.cpp 
+     ddMd/sp/analyzers/SpAnalyzer.cpp \
+     ddMd/sp/analyzers/SpAnalyzerFactory.cpp \
+     ddMd/sp/analyzers/SpAnalyzerManager.cpp \
+     ddMd/sp/analyzers/AtomMSD.cpp 
 
 ddMd_sp_analyzers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_sp_analyzers_))

@@ -1,8 +1,8 @@
-include $(SRC_DIR)/mdCf/chemistry/sources.mk
-include $(SRC_DIR)/mdCf/storage/sources.mk
-include $(SRC_DIR)/mdCf/configIos/sources.mk
-include $(SRC_DIR)/mdCf/analyzers/sources.mk
-include $(SRC_DIR)/mdCf/processor/sources.mk
+include $(SRC_DIR)/ddMd/sp/chemistry/sources.mk
+include $(SRC_DIR)/ddMd/sp/storage/sources.mk
+include $(SRC_DIR)/ddMd/sp/configIos/sources.mk
+include $(SRC_DIR)/ddMd/sp/analyzers/sources.mk
+include $(SRC_DIR)/ddMd/sp/processor/sources.mk
 
 ddMd_sp_= \
     $(ddMd_sp_chemistry_) \

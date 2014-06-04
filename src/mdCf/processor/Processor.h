@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/ps/storage/SpConfiguration.h>              // base class
-#include <ddMd/ps/configIos/SpConfigIoFactory.h>   // member 
-#include <ddMd/ps/analyzers/SpAnalyzerManager.h>   // member 
+#include <ddMd/sp/storage/SpConfiguration.h>              // base class
+#include <ddMd/sp/configIos/SpConfigIoFactory.h>   // member 
+#include <ddMd/sp/analyzers/SpAnalyzerManager.h>   // member 
 #include <util/misc/FileMaster.h>             // member 
 
 

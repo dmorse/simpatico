@@ -9,10 +9,10 @@
 */
 
 #include "AtomMSD.h"
-#include <ddMd/ps/chemistry/SpMolecule.h>
-#include <ddMd/ps/chemistry/SpAtom.h>
-#include <ddMd/ps/chemistry/SpSpecies.h>
-#include <ddMd/ps/processor/Processor.h>
+#include <ddMd/sp/chemistry/SpMolecule.h>
+#include <ddMd/sp/chemistry/SpAtom.h>
+#include <ddMd/sp/chemistry/SpSpecies.h>
+#include <ddMd/sp/processor/Processor.h>
 #include <util/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/archives/Serializable_includes.h>

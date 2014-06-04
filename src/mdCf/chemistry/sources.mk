@@ -1,7 +1,7 @@
 
 ddMd_sp_chemistry_= \
-    mdCf/chemistry/SpMolecule.cpp \
-    mdCf/chemistry/SpSpecies.cpp 
+    ddMd/sp/chemistry/SpMolecule.cpp \
+    ddMd/sp/chemistry/SpSpecies.cpp 
 
 # Create lists of source (*.cpp) and object (*.o) files
 ddMd_sp_chemistry_SRCS=\

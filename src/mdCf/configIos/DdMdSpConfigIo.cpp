@@ -10,11 +10,11 @@
 
 #include "DdMdSpConfigIo.h"
 
-#include <ddMd/ps/chemistry/SpAtom.h>
-#include <ddMd/ps/chemistry/SpGroup.h>
-#include <ddMd/ps/chemistry/SpSpecies.h>
-//#include <ddMd/ps/chemistry/MaskPolicy.h>
-#include <ddMd/ps/storage/SpConfiguration.h>
+#include <ddMd/sp/chemistry/SpAtom.h>
+#include <ddMd/sp/chemistry/SpGroup.h>
+#include <ddMd/sp/chemistry/SpSpecies.h>
+//#include <ddMd/sp/chemistry/MaskPolicy.h>
+#include <ddMd/sp/storage/SpConfiguration.h>
 
 #include <util/space/Vector.h>
 #include <util/format/Int.h>

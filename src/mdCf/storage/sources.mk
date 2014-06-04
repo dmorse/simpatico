@@ -1,7 +1,7 @@
 
 ddMd_sp_storage_= \
-    mdCf/storage/SpAtomStorage.cpp \
-    mdCf/storage/SpConfiguration.cpp 
+    ddMd/sp/storage/SpAtomStorage.cpp \
+    ddMd/sp/storage/SpConfiguration.cpp 
 
 # Create lists of source (*.cpp) and object (*.o) files
 ddMd_sp_storage_SRCS=\

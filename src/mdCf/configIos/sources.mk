@@ -1,7 +1,7 @@
 ddMd_sp_configIos_=\
-   mdCf/configIos/SpConfigIo.cpp \
-   mdCf/configIos/SpConfigIoFactory.cpp \
-   mdCf/configIos/DdMdSpConfigIo.cpp 
+   ddMd/sp/configIos/SpConfigIo.cpp \
+   ddMd/sp/configIos/SpConfigIoFactory.cpp \
+   ddMd/sp/configIos/DdMdSpConfigIo.cpp 
 
 ddMd_sp_configIos_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_sp_configIos_))

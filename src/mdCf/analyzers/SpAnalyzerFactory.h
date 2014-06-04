@@ -9,7 +9,7 @@
 */
 
 #include <util/param/Factory.h>        // base class template
-#include <ddMd/ps/analyzers/SpAnalyzer.h>   // base template parameter
+#include <ddMd/sp/analyzers/SpAnalyzer.h>   // base template parameter
 
 namespace MdCf
 {

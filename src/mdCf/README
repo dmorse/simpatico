@@ -1,8 +1,6 @@
-The directory tree rooted at src/mdCf contains all source and header 
-files for all classes in the MdCf namespace. These are designed for 
-single-processor analysis of MD configurations, and are intended to 
-be used for analysis of trajectories produced by the parallel ddSim 
-molecular dynamics program.
+The directory tree rooted at src/ddMd/sp contains all classes for
+single-processor analysis of MD configurations. These are intended to 
+be used for analysis of trajectories produced by ddSim.
 
 Subdirectories:
 ---------------
