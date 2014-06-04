@@ -12,7 +12,7 @@
 #include <ddMd/chemistry/AtomArray.h>    // member
 #include <ddMd/storage/AtomMap.h>        // member
 #include <ddMd/chemistry/Atom.h>         // member template argument
-#include <ddMd/chemistry/Group.h>        // used in template methods
+#include <ddMd/chemistry/Group.h>        // used in function templates
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
@@ -110,15 +110,15 @@ namespace DdMd
       /**
       * Returns pointer an address available for a new Atom.
       *
-      * This method returns the address of an Atom object that can 
-      * be used for a new local Atom. The Atom::clear() method is
+      * This function returns the address of an Atom object that can 
+      * be used for a new local Atom. The Atom::clear() function is
       * applied to the new atom before it is returned, so that the
       * id, typeId, isGhost flag, mask, and plan have default values.
-      * After this method is called, the storage retains the address
+      * After this function is called, the storage retains the address
       * of the new atom.  This new atom pointer remains ``active"
       * until a matching call to addNewAtom(), as discussed below.
       *
-      * This method does not add the new Atom to the atom set, and so 
+      * This function does not add the new Atom to the atom set, and so 
       * must be followed by a matching call to addNewAtom() to do so.
       * Usage:
       * \code
@@ -142,7 +142,7 @@ namespace DdMd
       /**
       * Finalize addition of the most recent new atom.
       *
-      * This method adds the atom that was returned by the most 
+      * This function adds the atom that was returned by the most 
       * recent call to newAtomPtr to the atom set. Upon return
       * there is no active new atom pointer. The global atom 
       * id must be set before calling this function, by calling 
@@ -154,7 +154,7 @@ namespace DdMd
       /**
       * Add atom with specified global id.
       * 
-      * This method adds a new atom to the atom set with a specified
+      * This function adds a new atom to the atom set with a specified
       * atom id, and returns a pointer to the address of the new atom. 
       * It is equivalent to the following, in which storage is an 
       * instance of AtomStorage and ptr is an Atom pointer:
@@ -163,7 +163,7 @@ namespace DdMd
       * ptr->setId(id);
       * storage.addNewAtom();
       * \endcode
-      * The pointer returned by this method can then be used to set
+      * The pointer returned by this function can then be used to set
       * other properties of the new atom. 
       *
       * \param id global index for the new Atom.
@@ -192,7 +192,7 @@ namespace DdMd
       /**
       * Returns pointer an address available for a new ghost Atom.
       *
-      * This method returns the address of an Atom object that can 
+      * This function returns the address of an Atom object that can 
       * be used for a new ghost Atom. It must be followed by a call
       * to addNewGhost(). Usage:
       * \code
@@ -214,7 +214,7 @@ namespace DdMd
       /**
       * Register the most recent new ghost atom.
       *
-      * This method adds the atom that was returned by the most recent 
+      * This function adds the atom that was returned by the most recent 
       * call to newGhostPtr to the ghost atom set. The global atom 
       * id must be set before calling this function, by calling 
       * Atom::setId(int), because an data structure uses the global
@@ -225,7 +225,7 @@ namespace DdMd
       /**
       * Add ghost atom with specified global id.
       * 
-      * This method adds a new atom to the ghost atom set and returns
+      * This function adds a new atom to the ghost atom set and returns
       * a pointer to the address of the new atom. It is equivalent to
       * the following, in which storage is an AtomStorage object and 
       * ptr is an Atom pointer:
@@ -288,7 +288,7 @@ namespace DdMd
       /**
       * Record current positions of all local atoms and lock storage.
       * 
-      * This method stores positions of local atoms and locks the storage, 
+      * This function stores positions of local atoms and locks the storage, 
       * prohibiting addition or removal of atoms or ghosts until clearSnapshot 
       * is called.
       */
@@ -297,7 +297,7 @@ namespace DdMd
       /**
       * Clear previous snapshot.
       *
-      * This method removes the lock imposed by a previous call to
+      * This function removes the lock imposed by a previous call to
       * makeSnapshot(), allowing changes to atom and ghost sets.
       */
       void clearSnapshot();
@@ -386,7 +386,7 @@ namespace DdMd
       *
       * This is an MPI reduce operation. The correct result is stored and
       * returned only on the rank 0 processor. On other processors, the
-      * method stores a null value of -1.
+      * function stores a null value of -1.
       *
       * \param  communicator MPI communicator for this system.
       * \return on master node, return total number of atoms.
@@ -404,7 +404,7 @@ namespace DdMd
       /**
       * Get total number of atoms on all processors.
       *
-      * This method should only be called on the master node (rank = 0).
+      * This function should only be called on the master node (rank = 0).
       * The return value is computed by a previous call of computeNAtomTotal.
       */
       int nAtomTotal() const;
@@ -551,7 +551,7 @@ namespace DdMd
     
    };
 
-   // Inline method definitions
+   // Inline member function definitions
 
    inline int AtomStorage::nAtom() const
    { return atomSet_.size(); }

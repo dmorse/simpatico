@@ -76,7 +76,7 @@ namespace DdMd
       /**
       * Unpack groups from buffer and find available associated atoms.
       *
-      * This method should unpack groups, add new ones to a GroupStorage,
+      * This function should unpack groups, add new ones to a GroupStorage,
       * set pointers to all Group atoms that are in the AtomStorage, and
       * nullify pointers to atoms that are not present.
       *
@@ -114,9 +114,9 @@ namespace DdMd
       /**
       * Return true if the container is valid, or throw an Exception.
       *
-      * Calls overloaded isValid() method, then checks consistency of atom 
+      * Calls overloaded isValid() function, then checks consistency of atom 
       * pointers with those in an asociated AtomStorage. If hasGhosts is
-      * false, the method requires that no group contain a pointer to a ghost 
+      * false, the function requires that no group contain a pointer to a ghost 
       * atom. If hasGhosts is true, requires that every Group be complete.
       *
       * \param atomStorage  associated AtomStorage object

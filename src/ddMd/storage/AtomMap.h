@@ -83,7 +83,7 @@ namespace DdMd
       /**
       * Remove a ghost Atom.
       *
-      * This method throws an exception if no atom with this
+      * This function throws an exception if no atom with this
       * id is present, but not if it does not match this pointer.
       *
       * \param ptr Pointer to Atom to be removed.
@@ -104,7 +104,7 @@ namespace DdMd
       /**
       * Return pointer to Atom with specified id.
       *
-      * This method returns a pointer to an Atom with the specified
+      * This function returns a pointer to an Atom with the specified
       * id if it is present, or returns a null pointer otherwise.
       *
       * \param atomId integer index of atom
@@ -222,7 +222,7 @@ namespace DdMd
 
    };
 
-   // Inline method definitions
+   // Inline function definitions
 
    /*
    * Return pointer to an Atom with specified id.
@@ -248,7 +248,7 @@ namespace DdMd
    inline int AtomMap::nGhost() const
    { return nGhostDistinct_ + ghostMap_.size(); }
 
-   // Template method definition
+   // Function template definitions
 
    /*
    * Set pointers to all atoms in a Group<N> object.

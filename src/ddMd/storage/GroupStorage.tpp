@@ -245,7 +245,7 @@ namespace DdMd
 
       // Check consitency of pointers to atoms and atom ids
       Group<N>* ptr;
-      int       i, j;
+      int i, j;
       j = 0;
       for (i = 0; i < totalCapacity_ ; ++i) {
          ptr = groupPtrs_[i];
@@ -464,7 +464,7 @@ namespace DdMd
    /*
    * Identify groups that span boundaries.
    *
-   * This method is called by exchangeAtoms, after computing plans for
+   * This function is called by exchangeAtoms, after computing plans for
    * exchanging atoms, based on their position, but before exchanging
    * atoms, and before clearing ghosts from any previous exchange.
    *
@@ -481,7 +481,7 @@ namespace DdMd
    *
    * After calculating a ghost communication plan for each group, clear 
    * the pointers to all ghost atoms in the group. The exchangeAtoms 
-   * method will clear the actual ghost atoms from the AtomStorage.
+   * function will clear the actual ghost atoms from the AtomStorage.
    */
    template <int N> void 
    GroupStorage<N>::markSpanningGroups(FMatrix<double, Dimension, 2>& bound, 
