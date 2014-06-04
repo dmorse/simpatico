@@ -15,10 +15,18 @@ Files:
 
 makefile      main makefile
 compiler.mk_r compiler settings (repository version)
+compiler.mk   compiler settings (user version, created by setup script)
+configure     configure script (for en|dis-abling compile time options)
 LICENSE       GPL license
 
-The setup script also creates a file compiler.mk, which is created by
-copying and modifying compiler.mk_r (the default version).
+The setup script creates an initial version of compiler.mk by copying and 
+modifying compiler.mk_r (the default repository version). 
 
-For compilation instructions, see the file doc/manual/user/compile.dox, or 
-the README file in the root directory (the parent of this directory).
+The configure script may be used to modify the choice of which features are 
+enabled before compiling or recompiling the code. Calling the configure script 
+in the src/ directory only effects options for code compiled in the src/ 
+directory (i.e., in-source builds).
+
+For compilation instructions, see the file doc/manual/user/compile.dox, 
+the README file in the root directory (the parent of this directory), or
+user guide section of the web documentation in doc/html.
