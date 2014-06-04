@@ -1,5 +1,5 @@
-#ifndef MDCF_ANALYZER_MANAGER_H
-#define MDCF_ANALYZER_MANAGER_H
+#ifndef DDMD_SP_ANALYZER_MANAGER_H
+#define DDMD_SP_ANALYZER_MANAGER_H
 
 /*
 * Simpatico - Processor Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Analyzer.h"                 // template parameter
+#include "SpAnalyzer.h"                 // template parameter
 #include <util/param/Manager.h>         // base class template
 
 namespace MdCf
@@ -19,11 +19,11 @@ namespace MdCf
    class Processor;
 
    /**
-   * Manager for a list of Analyzer objects.
+   * Manager for a list of SpAnalyzer objects.
    *
-   * \ingroup MdCf_Analyzer_Module
+   * \ingroup MdCf_SpAnalyzer_Module
    */
-   class AnalyzerManager : public Manager<Analyzer>
+   class SpAnalyzerManager : public Manager<SpAnalyzer>
    {
 
    public:
@@ -31,12 +31,12 @@ namespace MdCf
       /**
       * Constructor.
       */
-      AnalyzerManager(Processor& processor);
+      SpAnalyzerManager(Processor& processor);
 
       /**
       * Destructor.
       */
-      virtual ~AnalyzerManager();
+      virtual ~SpAnalyzerManager();
 
       /**
       * Read parameter block (without begin and end).
@@ -46,17 +46,17 @@ namespace MdCf
       virtual void readParameters(std::istream &in);
 
       /**
-      * Call setup method of each Analyzer.
+      * Call setup method of each SpAnalyzer.
       */
       void setup();
  
       /**
-      * Call clear method of each Analyzer.
+      * Call clear method of each SpAnalyzer.
       */
       void clear();
  
       /**
-      * Call sample method of each Analyzer, if scheduled.
+      * Call sample method of each SpAnalyzer, if scheduled.
       *
       * Calls sample methods of each analyzer only if
       * iStep is a multiple of the analyzer interval
@@ -73,7 +73,7 @@ namespace MdCf
       /**
       * Return pointer to a new default factory.
       */
-      virtual Factory<Analyzer>* newDefaultFactory() const;
+      virtual Factory<SpAnalyzer>* newDefaultFactory() const;
 
    private:
 

@@ -1,5 +1,5 @@
-#ifndef MDCF_GROUP_H
-#define MDCF_GROUP_H
+#ifndef DDMD_SP_GROUP_H
+#define DDMD_SP_GROUP_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -17,7 +17,7 @@ namespace MdCf
    * \ingroup MdCf_Chemistry_Module
    */
    template <int N>
-   class Group
+   class SpGroup
    {
    public: 
    
@@ -42,14 +42,14 @@ namespace MdCf
    // Associated function declarations
 
    /**
-   * istream extractor (>>) for a Group.
+   * istream extractor (>>) for a SpGroup.
    *
    * \param in        input stream
-   * \param group  Group to be read from stream
+   * \param group  SpGroup to be read from stream
    * \return modified input stream
    */
    template <int N>
-   std::istream& operator>>(std::istream& in, Group<N> &group)
+   std::istream& operator>>(std::istream& in, SpGroup<N> &group)
    {
       in >> group.id;
       in >> group.typeId;
@@ -60,16 +60,16 @@ namespace MdCf
    }
    
    /**
-   * ostream inserter (<<) for a Group.
+   * ostream inserter (<<) for a SpGroup.
    *
    * Format on one line with no line break:
    *
    * \param  out   output stream
-   * \param  group Group to be written to stream
+   * \param  group SpGroup to be written to stream
    * \return modified output stream
    */
    template <int N>
-   std::ostream& operator << (std::ostream& out, const Group<N> &group) 
+   std::ostream& operator << (std::ostream& out, const SpGroup<N> &group) 
    {
       out.width(10);
       out << group.id;

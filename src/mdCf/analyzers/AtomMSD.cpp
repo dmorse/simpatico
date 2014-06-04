@@ -1,5 +1,5 @@
-#ifndef MDCF_ATOM_MSD_CPP
-#define MDCF_ATOM_MSD_CPP
+#ifndef DDMD_SP_ATOM_MSD_CPP
+#define DDMD_SP_ATOM_MSD_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,9 +9,9 @@
 */
 
 #include "AtomMSD.h"
-#include <mdCf/chemistry/Molecule.h>
-#include <mdCf/chemistry/Atom.h>
-#include <mdCf/chemistry/Species.h>
+#include <mdCf/chemistry/SpMolecule.h>
+#include <mdCf/chemistry/SpAtom.h>
+#include <mdCf/chemistry/SpSpecies.h>
 #include <mdCf/processor/Processor.h>
 #include <util/boundary/Boundary.h>
 #include <util/space/Dimension.h>
@@ -27,8 +27,8 @@ namespace MdCf
    /*
    * Constructor.
    */
-   AtomMSD::AtomMSD(Processor& system) 
-    : Analyzer(system),
+   AtomMSD::AtomMSD(Processor& configuration) 
+    : SpAnalyzer(configuration),
       outputFile_(),
       accumulator_(),
       truePositions_(),
@@ -64,7 +64,7 @@ namespace MdCf
       if (capacity_ <= 0)       
          UTIL_THROW("Negative capacity");
 
-      Species* speciesPtr = &processor().species(speciesId_);
+      SpSpecies* speciesPtr = &processor().species(speciesId_);
 
       if (atomId_ >= speciesPtr->nAtom()) 
          UTIL_THROW("atomId >= nAtom");
@@ -100,7 +100,7 @@ namespace MdCf
       // Store initial positions, and set initial shift vectors.
       Vector r;
       IntVector zero(0);
-      Species::MoleculeIterator iter;
+      SpSpecies::SpMoleculeIterator iter;
       int i = 0;
 
       processor().species(speciesId_).begin(iter);
@@ -132,7 +132,7 @@ namespace MdCf
       IntVector shift;
       Vector lengths = processor().boundary().lengths();
       int i, j;
-      Species::MoleculeIterator iter;
+      SpSpecies::SpMoleculeIterator iter;
 
       i = 0;
       processor().species(speciesId_).begin(iter);

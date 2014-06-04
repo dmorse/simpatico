@@ -1,32 +1,32 @@
-#ifndef MDCF_DDMD_CONFIG_IO_H
-#define MDCF_DDMD_CONFIG_IO_H
+#ifndef DDMD_SP_DDMD_CONFIG_IO_H
+#define DDMD_SP_DDMD_CONFIG_IO_H
 
 /*
-* Simpatico - System Package for Polymeric and Molecular Liquids
+* Simpatico - SpConfiguration Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mdCf/configIos/ConfigIo.h>
-#include <mdCf/storage/GroupStorage.h>
-#include <mdCf/storage/System.h>
+#include <mdCf/configIos/SpConfigIo.h>
+#include <mdCf/storage/SpGroupStorage.h>
+#include <mdCf/storage/SpConfiguration.h>
 
 #include <util/format/Int.h>
 
 namespace MdCf
 {
 
-   class System;
+   class SpConfiguration;
 
    using namespace Util;
 
    /**
    * Native / default DdMd format for configuration files.
    *
-   * \ingroup MdCf_ConfigIo_Module
+   * \ingroup MdCf_SpConfigIo_Module
    */
-   class DdMdConfigIo  : public ConfigIo
+   class DdMdSpConfigIo  : public SpConfigIo
    {
 
    public:
@@ -34,15 +34,15 @@ namespace MdCf
       /**
       * Default constructor.
       */
-      DdMdConfigIo(bool hasMolecules = false);
+      DdMdSpConfigIo(bool hasMolecules = false);
 
       /**
       * Constructor.
       *
-      * \param system parent System object.
+      * \param configuration parent SpConfiguration object.
       * \param hasMolecules true if file format has DdMd::AtomContext info
       */
-      DdMdConfigIo(System& system, bool hasMolecules = false);
+      DdMdSpConfigIo(SpConfiguration& configuration, bool hasMolecules = false);
 
       /**
       * Read configuration file in DdMd default format.
@@ -64,29 +64,29 @@ namespace MdCf
 
       template <int N>
       int readGroups(std::ifstream& file, const char* sectionLabel, 
-                     const char* nGroupLabel, GroupStorage<N>& groups);
+                     const char* nGroupLabel, SpGroupStorage<N>& groups);
 
       template <int N>
       int writeGroups(std::ofstream& file, const char* sectionLabel, 
-                      const char* nGroupLabel, GroupStorage<N>& groups);
+                      const char* nGroupLabel, SpGroupStorage<N>& groups);
 
    };
 
    // Member functions templates
 
    /*
-   * Private method to read Group<N> objects.
+   * Private method to read SpGroup<N> objects.
    */
    template <int N>
-   int DdMdConfigIo::readGroups(std::ifstream& file, 
+   int DdMdSpConfigIo::readGroups(std::ifstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
-                  GroupStorage<N>& groups)
+                  SpGroupStorage<N>& groups)
    {
       int nGroup;  // Total number of groups in file
       file >> Label(sectionLabel);
       file >> Label(nGroupLabel) >> nGroup;
-      Group<N>* groupPtr;
+      SpGroup<N>* groupPtr;
       for (int i = 0; i < nGroup; ++i) {
          groupPtr = groups.newPtr();
          file >> *groupPtr;
@@ -95,14 +95,14 @@ namespace MdCf
    }
 
    /*
-   * Private method to write Group<N> objects.
+   * Private method to write SpGroup<N> objects.
    */
    template <int N>
-   int DdMdConfigIo::writeGroups(std::ofstream& file, const char* sectionLabel,
-                  const char* nGroupLabel, GroupStorage<N>& groups)
+   int DdMdSpConfigIo::writeGroups(std::ofstream& file, const char* sectionLabel,
+                  const char* nGroupLabel, SpGroupStorage<N>& groups)
    {
-      System::BondIterator iter;
-      int nGroup = system().bonds().size();
+      SpConfiguration::BondIterator iter;
+      int nGroup = configuration().bonds().size();
 
       file << std::endl;
       file << sectionLabel << std::endl;

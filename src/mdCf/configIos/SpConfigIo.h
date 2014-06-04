@@ -1,5 +1,5 @@
-#ifndef MDCF_CONFIG_IO_H
-#define MDCF_CONFIG_IO_H
+#ifndef DDMD_SP_CONFIG_IO_H
+#define DDMD_SP_CONFIG_IO_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -13,18 +13,18 @@
 namespace MdCf
 {
 
-   class System;
+   class SpConfiguration;
    using namespace Util;
 
    /**
    * Abstract reader/writer for configuration files.
    *
-   * Each concrete subclass of ConfigIo implements a specific file format
+   * Each concrete subclass of SpConfigIo implements a specific file format
    * by implementing the pure virtual readConfig and writeConfig methods. 
    *
-   * \ingroup MdCf_ConfigIo_Module
+   * \ingroup MdCf_SpConfigIo_Module
    */
-   class ConfigIo  : public ParamComposite
+   class SpConfigIo  : public ParamComposite
    {
 
    public:
@@ -32,19 +32,19 @@ namespace MdCf
       /**
       * Default constructor.
       */
-      ConfigIo();
+      SpConfigIo();
 
       /**
       * Constructor.
       *
-      * \param system parent System object
+      * \param configuration parent SpConfiguration object
       */
-      ConfigIo(System& system);
+      SpConfigIo(SpConfiguration& configuration);
 
       /**
       * Destructor.
       */
-      virtual ~ConfigIo();
+      virtual ~SpConfigIo();
 
       /**
       * Read a configuration file.
@@ -62,12 +62,12 @@ namespace MdCf
 
    protected:
 
-      System& system()
-      { return *systemPtr_; }
+      SpConfiguration& configuration()
+      { return *configurationPtr_; }
 
    private:
 
-      System* systemPtr_;
+      SpConfiguration* configurationPtr_;
 
    };
 

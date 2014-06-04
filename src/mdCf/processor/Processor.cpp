@@ -1,5 +1,5 @@
-#ifndef MDCF_PROCESSOR_CPP
-#define MDCF_PROCESSOR_CPP
+#ifndef DDMD_SP_PROCESSOR_CPP
+#define DDMD_SP_PROCESSOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,7 +9,7 @@
 */
 
 #include "Processor.h"
-#include <mdCf/configIos/DdMdConfigIo.h>
+#include <mdCf/configIos/DdMdSpConfigIo.h>
 
 namespace MdCf 
 {
@@ -49,7 +49,7 @@ namespace MdCf
    */
    void Processor::readParameters(std::istream& in)
    {
-      System::readParameters(in);
+      SpConfiguration::readParameters(in);
       readParamCompositeOptional(in, fileMaster_);
       readParamComposite(in, analyzerManager_);
    }
@@ -65,29 +65,29 @@ namespace MdCf
       return fileMaster_;
    }
 
-   // ConfigIo management
+   // SpConfigIo management
 
    /*
-   * Set ConfigIo style.
+   * Set SpConfigIo style.
    */
-   void Processor::setConfigIo(std::string configIoName)
+   void Processor::setSpConfigIo(std::string configIoName)
    {
       configIoPtr_ = configIoFactory_.factory(configIoName);
       if (configIoPtr_ == 0) {
          std::string msg;
-         msg = "Unrecognized ConfigIo subclass name: ";
+         msg = "Unrecognized SpConfigIo subclass name: ";
          msg += configIoName;
          UTIL_THROW(msg.c_str());
       }
    }
 
    /**
-   * Return the ConfigIo (create default if necessary).
+   * Return the SpConfigIo (create default if necessary).
    */
-   ConfigIo& Processor::configIo() 
+   SpConfigIo& Processor::configIo() 
    {
       if (configIoPtr_ == 0) {
-         configIoPtr_ = new DdMdConfigIo(*this);
+         configIoPtr_ = new DdMdSpConfigIo(*this);
          assert(configIoPtr_);
       }
       return *configIoPtr_;
@@ -173,7 +173,7 @@ namespace MdCf
 
          #if 0
          #ifndef INTER_NOPAIR
-         // Build the system CellList
+         // Build the configuration CellList
          pairPotential().buildCellList();
          #endif
 

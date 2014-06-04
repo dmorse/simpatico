@@ -18,11 +18,11 @@ include $(SRC_DIR)/mdCf/sources.mk
 #-----------------------------------------------------------------------
 # Main targets
 
-all: $(mdCf_OBJS) $(mdCf_LIB)
-#all: $(mdCf_OBJS) $(mdCf_LIB) $(MDPP).o $(MDPP_EXE)
+all: $(ddMd_sp_OBJS) $(ddMd_sp_LIB)
+#all: $(ddMd_sp_OBJS) $(ddMd_sp_LIB) $(MDPP).o $(MDPP_EXE)
 
 clean:
-	rm -f $(mdCf_OBJS) $(mdCf_OBJS:.o=.d) $(mdCf_LIB)
+	rm -f $(ddMd_sp_OBJS) $(ddMd_sp_OBJS:.o=.d) $(ddMd_sp_LIB)
 #	rm -f $(MDPP).o $(MDPP).d
 
 veryclean:
@@ -44,6 +44,6 @@ endif
  
 -include $(util_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
--include $(mdCf_OBJS:.o=.d)
+-include $(ddMd_sp_OBJS:.o=.d)
 #-include $(MDPP).d
 

@@ -1,5 +1,5 @@
-#ifndef MDCF_ANALYZER_H
-#define MDCF_ANALYZER_H
+#ifndef DDMD_SP_ANALYZER_H
+#define DDMD_SP_ANALYZER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -24,7 +24,7 @@ namespace MdCf
    /**
    * Abstract base for periodic output and/or analysis actions.
    *
-   * The periodic action of an Analyzer can involve sampling of a
+   * The periodic action of an SpAnalyzer can involve sampling of a
    * physical property and adding it to statistical accumulator, 
    * outputting it to file, or both. This periodic action must be 
    * implemented by the pure virtual sample() method.
@@ -34,12 +34,12 @@ namespace MdCf
    * interval parameter.  
    *
    * The virtual sample() method does not take any parameters. An 
-   * Analyzer must thus access its parent Processor via a pointer, 
+   * SpAnalyzer must thus access its parent Processor via a pointer, 
    * which is usually initialized in its subclass constructor.
    *
-   * \ingroup MdCf_Analyzer_Module
+   * \ingroup MdCf_SpAnalyzer_Module
    */
-   class Analyzer : public ParamComposite
+   class SpAnalyzer : public ParamComposite
    {
 
    public:
@@ -49,12 +49,12 @@ namespace MdCf
       /**
       * Constructor.
       */
-      Analyzer(Processor& processor);
+      SpAnalyzer(Processor& processor);
 
       /**
       * Destructor.
       */
-      virtual ~Analyzer();
+      virtual ~SpAnalyzer();
 
       /**
       * Setup before processor.
@@ -115,7 +115,7 @@ namespace MdCf
       * Read parameter interval from file.
       *
       * This function throws an exception if the value of interval
-      * is not a multiple of Analyzer::baseInterval, or if
+      * is not a multiple of SpAnalyzer::baseInterval, or if
       * baseInterval has not been set to a nonzero positive value.
       *
       * \param in input parameter file stream.
@@ -162,25 +162,25 @@ namespace MdCf
    /*
    * Return interval value.
    */
-   inline int Analyzer::interval() const
+   inline int SpAnalyzer::interval() const
    {  return interval_; }
 
    /*
    * Return true iff the counter parameter is a multiple of the interval.
    */
-   inline bool Analyzer::isAtInterval(long counter) const
+   inline bool SpAnalyzer::isAtInterval(long counter) const
    {  return (counter%interval_ == 0); }
 
    /*
    * Get the outputFileName string.
    */
-   inline const std::string& Analyzer::outputFileName() const
+   inline const std::string& SpAnalyzer::outputFileName() const
    {  return outputFileName_; }
 
    /*
    * Get the parent Processor by reference.
    */
-   inline Processor& Analyzer::processor()
+   inline Processor& SpAnalyzer::processor()
    {  return *processorPtr_; }
 
 

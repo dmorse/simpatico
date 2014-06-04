@@ -1,5 +1,5 @@
-#ifndef MDCF_PROCESSOR_H
-#define MDCF_PROCESSOR_H
+#ifndef DDMD_SP_PROCESSOR_H
+#define DDMD_SP_PROCESSOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,16 +8,16 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mdCf/storage/System.h>              // base class
-#include <mdCf/configIos/ConfigIoFactory.h>   // member 
-#include <mdCf/analyzers/AnalyzerManager.h>   // member 
+#include <mdCf/storage/SpConfiguration.h>              // base class
+#include <mdCf/configIos/SpConfigIoFactory.h>   // member 
+#include <mdCf/analyzers/SpAnalyzerManager.h>   // member 
 #include <util/misc/FileMaster.h>             // member 
 
 
 namespace MdCf 
 {
 
-   class ConfigIo;
+   class SpConfigIo;
 
    using namespace Util;
 
@@ -26,7 +26,7 @@ namespace MdCf
    *
    * \ingroup MdCf_Module
    */
-   class Processor : public System
+   class Processor : public SpConfiguration
    {
 
    public:
@@ -54,14 +54,14 @@ namespace MdCf
       void readParameters(std::istream& in);
 
       /**
-      * Set ConfigIo style.
+      * Set SpConfigIo style.
       */
-      void setConfigIo(std::string configIoName);
+      void setSpConfigIo(std::string configIoName);
 
       /**
-      * Return the ConfigIo (create default if necessary).
+      * Return the SpConfigIo (create default if necessary).
       */
-      ConfigIo& configIo();
+      SpConfigIo& configIo();
    
       /**
       * Read a single configuration file.
@@ -119,19 +119,19 @@ namespace MdCf
 
    private:
 
-      /// Pointer to current ConfigIo object.
-      ConfigIo* configIoPtr_;
+      /// Pointer to current SpConfigIo object.
+      SpConfigIo* configIoPtr_;
 
-      /// Factory for generating ConfigIo at run time.
-      ConfigIoFactory configIoFactory_;
+      /// Factory for generating SpConfigIo at run time.
+      SpConfigIoFactory configIoFactory_;
 
       /// Manager for analyzers
-      AnalyzerManager analyzerManager_;
+      SpAnalyzerManager analyzerManager_;
 
       /// FileMaster (optionally activated)
       FileMaster fileMaster_;
 
-      /// String identifier for ConfigIo class name
+      /// String identifier for SpConfigIo class name
       std::string configIoName_;
 
       /// Name of configuration or trajectory input file

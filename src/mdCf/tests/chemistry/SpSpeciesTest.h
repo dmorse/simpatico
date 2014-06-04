@@ -1,9 +1,9 @@
-#ifndef MDCF_SPECIES_TEST_H
-#define MDCF_SPECIES_TEST_H
+#ifndef DDMD_SP_SPECIES_TEST_H
+#define DDMD_SP_SPECIES_TEST_H
 
-#include <mdCf/chemistry/Species.h>
-#include <mdCf/chemistry/Atom.h>
-#include <mdCf/chemistry/Molecule.h>
+#include <mdCf/chemistry/SpSpecies.h>
+#include <mdCf/chemistry/SpAtom.h>
+#include <mdCf/chemistry/SpMolecule.h>
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
@@ -11,16 +11,16 @@
 using namespace Util;
 using namespace MdCf;
 
-class SpeciesTest : public ParamFileTest
+class SpSpeciesTest : public ParamFileTest
 {
 
 private:
 
-   Species species_;
+   SpSpecies species_;
 
 public:
 
-   SpeciesTest() 
+   SpSpeciesTest() 
     : species_()
    {}
 
@@ -31,7 +31,7 @@ public:
 
 };
 
-inline void SpeciesTest::testAddAtoms()
+inline void SpSpeciesTest::testAddAtoms()
 {
    printMethod(TEST_FUNC);
 
@@ -40,7 +40,7 @@ inline void SpeciesTest::testAddAtoms()
    TEST_ASSERT(species_.nAtom() == 2);
    TEST_ASSERT(species_.capacity() == 3);
 
-   DArray<Atom> atoms;
+   DArray<SpAtom> atoms;
    atoms.allocate(6);
    int i, j, k;
    k = 0;
@@ -59,7 +59,7 @@ inline void SpeciesTest::testAddAtoms()
    TEST_ASSERT(species_.size() == 2);
    TEST_ASSERT(species_.isValid());
 
-   Species::MoleculeIterator iter;
+   SpSpecies::SpMoleculeIterator iter;
    species_.begin(iter);
    i = 0;
    for ( ; iter.notEnd(); ++iter) {
@@ -76,7 +76,7 @@ inline void SpeciesTest::testAddAtoms()
    TEST_ASSERT(species_.size() == 0);
 }
 
-inline void SpeciesTest::testRead()
+inline void SpSpeciesTest::testRead()
 {
    printMethod(TEST_FUNC);
 
@@ -88,7 +88,7 @@ inline void SpeciesTest::testRead()
    TEST_ASSERT(species_.capacity() == 3);
    std::cout << species_;
 
-   DArray<Atom> atoms;
+   DArray<SpAtom> atoms;
    atoms.allocate(6);
    int i, j, k;
    k = 0;
@@ -107,7 +107,7 @@ inline void SpeciesTest::testRead()
    TEST_ASSERT(species_.size() == 2);
    TEST_ASSERT(species_.isValid());
 
-   Species::MoleculeIterator iter;
+   SpSpecies::SpMoleculeIterator iter;
    species_.begin(iter);
    i = 0;
    for ( ; iter.notEnd(); ++iter) {
@@ -125,9 +125,9 @@ inline void SpeciesTest::testRead()
 }
 
 
-TEST_BEGIN(SpeciesTest)
-TEST_ADD(SpeciesTest, testAddAtoms)
-TEST_ADD(SpeciesTest, testRead)
-TEST_END(SpeciesTest)
+TEST_BEGIN(SpSpeciesTest)
+TEST_ADD(SpSpeciesTest, testAddAtoms)
+TEST_ADD(SpSpeciesTest, testRead)
+TEST_END(SpSpeciesTest)
 
 #endif

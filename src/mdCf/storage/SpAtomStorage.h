@@ -1,5 +1,5 @@
-#ifndef MDCF_ATOM_STORAGE_H
-#define MDCF_ATOM_STORAGE_H
+#ifndef DDMD_SP_ATOM_STORAGE_H
+#define DDMD_SP_ATOM_STORAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mdCf/chemistry/Atom.h>              // member (template argument)
-#include <mdCf/chemistry/Group.h>             // member (template argument)
+#include <mdCf/chemistry/SpAtom.h>              // member (template argument)
+#include <mdCf/chemistry/SpGroup.h>             // member (template argument)
 
 #include <util/containers/DArray.h>           // member (template)
 #include <util/containers/DSArray.h>          // member (template)
@@ -26,22 +26,22 @@ namespace MdCf
    *
    * \ingroup MdCf_Storage_Module
    */
-   class AtomStorage 
+   class SpAtomStorage 
    {
 
    public:
 
-      typedef ArrayIterator<Atom> Iterator;
+      typedef ArrayIterator<SpAtom> Iterator;
 
       /**
       * Constructor
       */
-      AtomStorage();
+      SpAtomStorage();
 
       /**
       * Destructor
       */
-      ~AtomStorage();
+      ~SpAtomStorage();
 
       /**
       * Allocate and initialize memory.
@@ -55,7 +55,7 @@ namespace MdCf
       *
       * \return pointer to location of new atom
       */
-      Atom* newPtr();
+      SpAtom* newPtr();
 
       /**
       * Finalize addition of atom (allows lookup by id).
@@ -70,7 +70,7 @@ namespace MdCf
       /**
       * Get a pointer to an atom by global id.
       */
-      Atom* ptr(int id);
+      SpAtom* ptr(int id);
 
       /**
       * Initialize an iterator for atoms.
@@ -90,13 +90,13 @@ namespace MdCf
    private:
      
       /// Array of atom objects, added in order read from file.
-      DSArray<Atom> atoms_;
+      DSArray<SpAtom> atoms_;
 
       /// Pointers to atoms indexed by ids. Missing atoms are null pointers.
-      DArray<Atom*> atomPtrs_;
+      DArray<SpAtom*> atomPtrs_;
 
       /// Pointer to new atom.
-      Atom* newPtr_;
+      SpAtom* newPtr_;
 
    };
 
@@ -105,27 +105,27 @@ namespace MdCf
    /*
    * Return number of atoms.
    */
-   inline int AtomStorage::size() const
+   inline int SpAtomStorage::size() const
    {  return atoms_.size(); }
 
    /*
    * Get atom capacity (maximum id + 1).
    */ 
    inline
-   int AtomStorage::capacity() const
+   int SpAtomStorage::capacity() const
    {  return atoms_.capacity(); }
 
    /*
    * Return a pointer to an atom with a specific id.
    */
-   inline Atom* AtomStorage::ptr(int id)
+   inline SpAtom* SpAtomStorage::ptr(int id)
    {  return atomPtrs_[id]; }
 
    /*
    * Initialize an iterator for atoms.
    */
    inline 
-   void AtomStorage::begin(AtomStorage::Iterator& iter)
+   void SpAtomStorage::begin(SpAtomStorage::Iterator& iter)
    {  atoms_.begin(iter); }
 
 }

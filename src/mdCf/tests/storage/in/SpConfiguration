@@ -1,4 +1,4 @@
-System{
+SpConfiguration{
    atomCapacity 100
    bondCapacity 100
 }

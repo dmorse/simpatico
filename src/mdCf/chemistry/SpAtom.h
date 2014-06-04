@@ -1,5 +1,5 @@
-#ifndef MDCF_ATOM_H
-#define MDCF_ATOM_H
+#ifndef DDMD_SP_ATOM_H
+#define DDMD_SP_ATOM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -20,7 +20,7 @@ namespace MdCf
    *
    * \ingroup MdCf_Chemistry_Module
    */
-   struct Atom
+   struct SpAtom
    {
 
    public:

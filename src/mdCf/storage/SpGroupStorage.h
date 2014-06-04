@@ -1,5 +1,5 @@
-#ifndef MDCF_GROUP_STORAGE_H
-#define MDCF_GROUP_STORAGE_H
+#ifndef DDMD_SP_GROUP_STORAGE_H
+#define DDMD_SP_GROUP_STORAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,7 +9,7 @@
 */
 
 #include <util/containers/DSArray.h>       // member (template)
-#include <mdCf/chemistry/Group.h>          // member (template argument)
+#include <mdCf/chemistry/SpGroup.h>        // member (template argument)
 #include <util/containers/ArrayIterator.h> // inline function
 
 namespace MdCf 
@@ -18,19 +18,19 @@ namespace MdCf
    using namespace Util;
 
    /**
-   * A container for Group<N> objects.
+   * A container for SpGroup<N> objects.
    *
    * \ingroup MdCf_Storage_Module
    */
    template <int N>
-   class GroupStorage : private DSArray< Group<N> >
+   class SpGroupStorage : private DSArray< SpGroup<N> >
    {
 
    public:
 
-      typedef ArrayIterator< Group <N> > Iterator;
+      typedef ArrayIterator< SpGroup <N> > Iterator;
 
-      typedef DSArray< Group<N> > Base;
+      typedef DSArray< SpGroup<N> > Base;
       using Base::allocate;
       using Base::begin;
       using Base::clear;
@@ -40,14 +40,14 @@ namespace MdCf
       /**
       * Destructor.
       */
-      ~GroupStorage();
+      ~SpGroupStorage();
 
       /**
       * Append a new element to container and return its address.
       *
-      * \return pointer to location of new Group
+      * \return pointer to location of new SpGroup
       */
-      Group<N>* newPtr();
+      SpGroup<N>* newPtr();
 
    private:
 
@@ -61,7 +61,7 @@ namespace MdCf
    * Return pointer to location for new group, and add to container.
    */
    template <int N>
-   Group<N>* GroupStorage<N>::newPtr()
+   SpGroup<N>* SpGroupStorage<N>::newPtr()
    {
       resize(size() + 1);
       return &(*this)[size()-1];
@@ -71,7 +71,7 @@ namespace MdCf
    * Destructor
    */
    template <int N>
-   GroupStorage<N>::~GroupStorage()
+   SpGroupStorage<N>::~SpGroupStorage()
    {}
 
 }

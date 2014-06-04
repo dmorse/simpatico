@@ -1,5 +1,5 @@
-#ifndef MDCF_SPECIES_H
-#define MDCF_SPECIES_H
+#ifndef DDMD_SP_SPECIES_H
+#define DDMD_SP_SPECIES_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Molecule.h"
+#include "SpMolecule.h"
 #include <util/containers/DArray.h>
 #include <util/containers/DSArray.h>
 #include <util/containers/ArrayIterator.h>
@@ -16,7 +16,7 @@
 namespace MdCf
 {
 
-   class Atom;
+   class SpAtom;
    using namespace Util;
 
    /**
@@ -24,15 +24,15 @@ namespace MdCf
    *
    * \ingroup MdCf_Chemistry_Module
    */
-   class Species {
+   class SpSpecies {
    public:
    
-     typedef ArrayIterator<Molecule> MoleculeIterator;
+     typedef ArrayIterator<SpMolecule> SpMoleculeIterator;
 
      /**
      * Constructor.
      */
-     Species();
+     SpSpecies();
   
      /**
      * Set the index for this species.
@@ -57,9 +57,9 @@ namespace MdCf
      /**
      * Add an atom to the species.
      *
-     * \param atom Atom object to be added, must have AtomContext info.
+     * \param atom SpAtom object to be added, must have AtomContext info.
      */ 
-     void addAtom(Atom& atom);
+     void addAtom(SpAtom& atom);
 
      /**
      * Clear all molecules, reset to empty.
@@ -69,14 +69,14 @@ namespace MdCf
      /**
      * Initialize an iterator over molecules.
      */ 
-     void begin(MoleculeIterator& iterator);
+     void begin(SpMoleculeIterator& iterator);
   
      /**
      * Return a specific molecule by reference
      *
      * \param i molecule index
      */ 
-     Molecule& molecule(int i);
+     SpMolecule& molecule(int i);
   
      /** 
      * Return integer id for this species.
@@ -103,12 +103,12 @@ namespace MdCf
    private:
   
      // Array of pointers to atoms, ordered by molecule 
-     DArray<Atom*> atomPtrs_;
+     DArray<SpAtom*> atomPtrs_;
 
      // Array of molecules, each associated with a block in atomPtrs_.
-     DSArray<Molecule> molecules_;
+     DSArray<SpMolecule> molecules_;
    
-     /// Species index.
+     /// SpSpecies index.
      int id_;
     
      /// Number of atoms per molecule.
@@ -119,53 +119,53 @@ namespace MdCf
    
    //friends:
    
-     friend std::istream& operator >> (std::istream& in, Species& species);
-     friend std::ostream& operator << (std::ostream& out, const Species& species);
+     friend std::istream& operator >> (std::istream& in, SpSpecies& species);
+     friend std::ostream& operator << (std::ostream& out, const SpSpecies& species);
    
    };
 
    /**
-   * istream extractor (>>) for a Species.
+   * istream extractor (>>) for a SpSpecies.
    *
    * \param in  input stream
-   * \param species  Species to be read from stream
+   * \param species  SpSpecies to be read from stream
    * \return modified  input stream
    */
-   std::istream& operator>>(std::istream& in, Species &species);
+   std::istream& operator>>(std::istream& in, SpSpecies &species);
 
    /**
-   * ostream inserter (<<) for a Species.
+   * ostream inserter (<<) for a SpSpecies.
    *
    * Format on one line with no line break:
    *
    * \param out  output stream
-   * \param species  Species to be written to stream
+   * \param species  SpSpecies to be written to stream
    * \return modified output stream
    */
-   std::ostream& operator << (std::ostream& out, const Species &species);
+   std::ostream& operator << (std::ostream& out, const SpSpecies &species);
 
    // Inline function definitions
 
    // Return a specific molecule. 
-   inline Molecule& Species::molecule(int i)
+   inline SpMolecule& SpSpecies::molecule(int i)
    {
       return molecules_[i]; 
    }
  
    // Return integer id for this species.
-   inline int Species::id() const
+   inline int SpSpecies::id() const
    {  return id_; }
  
    // Return number of atoms per molecule.
-   inline int Species::nAtom() const
+   inline int SpSpecies::nAtom() const
    {  return nAtom_; }
  
    // Number of molecules.
-   inline int Species::size() const
+   inline int SpSpecies::size() const
    {  return molecules_.size(); }
  
    // Maximum number of molecules.
-   inline int Species::capacity() const
+   inline int SpSpecies::capacity() const
    {  return capacity_; }
  
 }

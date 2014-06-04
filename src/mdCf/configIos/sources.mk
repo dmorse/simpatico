@@ -1,10 +1,10 @@
-mdCf_configIos_=\
-   mdCf/configIos/ConfigIo.cpp \
-   mdCf/configIos/ConfigIoFactory.cpp \
-   mdCf/configIos/DdMdConfigIo.cpp 
+ddMd_sp_configIos_=\
+   mdCf/configIos/SpConfigIo.cpp \
+   mdCf/configIos/SpConfigIoFactory.cpp \
+   mdCf/configIos/DdMdSpConfigIo.cpp 
 
-mdCf_configIos_SRCS=\
-     $(addprefix $(SRC_DIR)/, $(mdCf_configIos_))
-mdCf_configIos_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mdCf_configIos_:.cpp=.o))
+ddMd_sp_configIos_SRCS=\
+     $(addprefix $(SRC_DIR)/, $(ddMd_sp_configIos_))
+ddMd_sp_configIos_OBJS=\
+     $(addprefix $(OBJ_DIR)/, $(ddMd_sp_configIos_:.cpp=.o))
 

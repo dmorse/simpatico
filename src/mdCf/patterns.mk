@@ -12,7 +12,7 @@
 #-----------------------------------------------------------------------
 
 # All libraries needed in this namespace
-LIBS=$(mdCf_LIB) $(inter_LIB) $(util_LIB)
+LIBS=$(ddMd_sp_LIB) $(inter_LIB) $(util_LIB)
 
 # All C preprocessor macro definitions for this namespace
 DEFINES=$(UTIL_DEFS) $(INTER_DEFS)

@@ -1,5 +1,5 @@
-#ifndef MDCF_ATOM_MSD_H
-#define MDCF_ATOM_MSD_H
+#ifndef DDMD_SP_ATOM_MSD_H
+#define DDMD_SP_ATOM_MSD_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mdCf/analyzers/Analyzer.h>            // base class template
+#include <mdCf/analyzers/SpAnalyzer.h>            // base class template
 #include <util/accumulators/MeanSqDispArray.h>  // member template 
 #include <util/space/Vector.h>                  // member template parameter
 #include <util/containers/DArray.h>             // member template
@@ -21,9 +21,9 @@ namespace MdCf
    /**
    * Mean-squared displacement of specific atom in molecules of specific species.
    *
-   * \ingroup MdCf_Analyzer_Module
+   * \ingroup MdCf_SpAnalyzer_Module
    */
-   class AtomMSD : public Analyzer
+   class AtomMSD : public SpAnalyzer
    {
    
    public:
@@ -76,7 +76,7 @@ namespace MdCf
       /// Array of shift vectors, one per molecule of species.
       DArray<IntVector> shifts_;
    
-      /// Index of relevant Species.
+      /// Index of relevant SpSpecies.
       int speciesId_;
    
       /// Local index of atom1

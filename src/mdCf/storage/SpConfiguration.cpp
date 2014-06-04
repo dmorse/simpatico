@@ -1,5 +1,5 @@
-#ifndef MDCF_SYSTEM_CPP
-#define MDCF_SYSTEM_CPP
+#ifndef DDMD_SP_SYSTEM_CPP
+#define DDMD_SP_SYSTEM_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "System.h"
+#include "SpConfiguration.h"
 
 namespace MdCf 
 {
@@ -16,7 +16,7 @@ namespace MdCf
    /*
    * Constructor.
    */
-   System::System()
+   SpConfiguration::SpConfiguration()
     : atomCapacity_(0)
       #ifdef INTER_BOND
       , bondCapacity_(0)
@@ -28,18 +28,18 @@ namespace MdCf
       , dihedralCapacity_(0)
       #endif
       , nSpecies_(0)
-   {  setClassName("System"); }
+   {  setClassName("SpConfiguration"); }
 
    /*
    * Destructor.
    */
-   System::~System()
+   SpConfiguration::~SpConfiguration()
    {}
 
    /*
    * Open, read and close a parameter file.
    */
-   void System::readParam(const char* filename)
+   void SpConfiguration::readParam(const char* filename)
    {
       std::ifstream in;
       in.open(filename);
@@ -50,7 +50,7 @@ namespace MdCf
    /*
    * Read parameters from file.
    */
-   void System::readParameters(std::istream& in)
+   void SpConfiguration::readParameters(std::istream& in)
    {
       read<int>(in, "atomCapacity", atomCapacity_); 
 
@@ -103,7 +103,7 @@ namespace MdCf
    /*
    * Remove all atoms and groups - set to empty state.
    */
-   void System::clear()
+   void SpConfiguration::clear()
    {
       atoms_.clear();
       #ifdef INTER_BOND

@@ -1,5 +1,5 @@
-#ifndef MDCF_MOLECULE_H
-#define MDCF_MOLECULE_H
+#ifndef DDMD_SP_MOLECULE_H
+#define DDMD_SP_MOLECULE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -16,52 +16,52 @@ namespace MdCf
 
    using namespace Util;
 
-   class Atom;
-   class Species;
+   class SpAtom;
+   class SpSpecies;
 
    /**
-   * A Molecules has a sequence of atoms, and belongs to a Species.
+   * An SpMolecule has a sequence of atoms, and belongs to an SpSpecies.
    *
    * \ingroup MdCf_Chemistry_Module
    */
-   class Molecule
+   class SpMolecule
    {
    public:
 
       /**
       * Default constructor.
       */
-      Molecule();
+      SpMolecule();
 
       /**
-      * Return parent Species by reference.
+      * Return parent SpSpecies by reference.
       */
-      Species& species() const;
+      SpSpecies& species() const;
 
       /**
-      * Return id of this Molecule within its species.
+      * Return id of this SpMolecule within its species.
       */
       int id() const;
 
       /**
       * Return Atom number id by reference.
       */
-      Atom& atom(int id) const;
+      SpAtom& atom(int id) const;
 
    private:
 
       /**
       * Pointer to an array of pointers to atoms.
       */
-      Atom** atoms_;
+      SpAtom** atoms_;
 
       /**
-      * Pointer to parent Species.
+      * Pointer to parent SpSpecies.
       */
-      Species* speciesPtr_;
+      SpSpecies* speciesPtr_;
 
       /**
-      * Index of molecule within its Species.
+      * Index of molecule within its SpSpecies.
       */
       int id_;
 
@@ -72,23 +72,23 @@ namespace MdCf
 
    //friends:
 
-      friend class Species;
+      friend class SpSpecies;
 
    };
 
    // Inline functions
 
-   inline Species& Molecule::species() const
+   inline SpSpecies& SpMolecule::species() const
    {
       assert(speciesPtr_);
       assert(id < nAtom_);
       return *speciesPtr_;
    }
 
-   inline int Molecule::id() const
+   inline int SpMolecule::id() const
    {  return id_; }
 
-   inline Atom& Molecule::atom(int id) const
+   inline SpAtom& SpMolecule::atom(int id) const
    {
       assert(id >=0);
       assert(id < nAtom_);

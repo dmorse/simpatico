@@ -1,9 +1,9 @@
-#ifndef MDCF_PROCESSOR_TEST_H
-#define MDCF_PROCESSOR_TEST_H
+#ifndef DDMD_SP_PROCESSOR_TEST_H
+#define DDMD_SP_PROCESSOR_TEST_H
 
 #include <mdCf/processor/Processor.h>
-#include <mdCf/chemistry/Atom.h>
-#include <mdCf/chemistry/Group.h>
+#include <mdCf/chemistry/SpAtom.h>
+#include <mdCf/chemistry/SpGroup.h>
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
@@ -48,7 +48,7 @@ inline void ProcessorTest::testAddAtoms()
 {
    printMethod(TEST_FUNC);
 
-   Atom* atomPtr22;
+   SpAtom* atomPtr22;
    atomPtr22 = processor_.atoms().newPtr();
    atomPtr22->id = 22;
    processor_.atoms().add();
@@ -57,7 +57,7 @@ inline void ProcessorTest::testAddAtoms()
    TEST_ASSERT(0 == processor_.atoms().ptr(13));
    TEST_ASSERT(processor_.atoms().size() == 1);
 
-   Atom* atomPtr13;
+   SpAtom* atomPtr13;
    atomPtr13 = processor_.atoms().newPtr();
    atomPtr13->id = 13;
    processor_.atoms().add();
@@ -66,7 +66,7 @@ inline void ProcessorTest::testAddAtoms()
    TEST_ASSERT(0 == processor_.atoms().ptr(15));
    TEST_ASSERT(processor_.atoms().size() == 2);
 
-   Atom* atomPtr15;
+   SpAtom* atomPtr15;
    atomPtr15 = processor_.atoms().newPtr();
    atomPtr15->id = 15;
    processor_.atoms().add();

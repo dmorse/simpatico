@@ -1,5 +1,5 @@
-#ifndef MDCF_ANALYZER_FACTORY_H
-#define MDCF_ANALYZER_FACTORY_H
+#ifndef DDMD_SP_ANALYZER_FACTORY_H
+#define DDMD_SP_ANALYZER_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,7 +9,7 @@
 */
 
 #include <util/param/Factory.h>        // base class template
-#include <mdCf/analyzers/Analyzer.h>   // base template parameter
+#include <mdCf/analyzers/SpAnalyzer.h>   // base template parameter
 
 namespace MdCf
 {
@@ -19,11 +19,11 @@ namespace MdCf
    class Processor;
 
    /**
-   * Factory for MdCf::Analyzer objects.
+   * Factory for MdCf::SpAnalyzer objects.
    *
-   * \ingroup MdCf_Analyzer_Module
+   * \ingroup MdCf_SpAnalyzer_Module
    */
-   class AnalyzerFactory : public Factory<Analyzer>
+   class SpAnalyzerFactory : public Factory<SpAnalyzer>
    {
 
    public:
@@ -33,15 +33,15 @@ namespace MdCf
       *
       * \param processor associated physical Processor
       */
-      AnalyzerFactory(Processor& processor);
+      SpAnalyzerFactory(Processor& processor);
 
       /** 
-      * Return pointer to a new Analyzer object.
+      * Return pointer to a new SpAnalyzer object.
       *
-      * \param  className name of a subclass of Analyzer.
+      * \param  className name of a subclass of SpAnalyzer.
       * \return base class pointer to a new instance of className.
       */
-      virtual Analyzer* factory(const std::string& className) const;
+      virtual SpAnalyzer* factory(const std::string& className) const;
 
    protected:
 

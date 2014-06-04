@@ -1,14 +1,14 @@
-#include "AtomStorageTest.h"
-#include "SystemTest.h"
+#include "SpAtomStorageTest.h"
+#include "SpConfigurationTest.h"
 
 int main()
 {
-   //SystemTestComposite runner;
+   //SpConfigurationTestComposite runner;
    //runner.run();
 
-   TEST_RUNNER(AtomStorageTest) runner1;
+   TEST_RUNNER(SpAtomStorageTest) runner1;
    runner1.run();
 
-   TEST_RUNNER(SystemTest) runner2;
+   TEST_RUNNER(SpConfigurationTest) runner2;
    runner2.run();
 } 

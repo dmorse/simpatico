@@ -1,5 +1,5 @@
-#ifndef MDCF_SPECIES_CPP
-#define MDCF_SPECIES_CPP
+#ifndef DDMD_SP_SPECIES_CPP
+#define DDMD_SP_SPECIES_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Species.h"
-#include "Atom.h"
+#include "SpSpecies.h"
+#include "SpAtom.h"
 
 namespace MdCf
 {
@@ -17,7 +17,7 @@ namespace MdCf
    using namespace Util;
 
    // Constructor.
-   Species::Species()
+   SpSpecies::SpSpecies()
     : atomPtrs_(),
       molecules_(),
       id_(-1),
@@ -25,10 +25,10 @@ namespace MdCf
       capacity_(0)
    {}
 
-   void Species::setId(int id)
+   void SpSpecies::setId(int id)
    {  id_ = id; }
 
-   void Species::initialize(int nAtom, int capacity)
+   void SpSpecies::initialize(int nAtom, int capacity)
    {
       assert(molecules_.capacity() == 0);
       assert(atomPtrs_.capacity() == 0);
@@ -39,7 +39,7 @@ namespace MdCf
       initialize();
    }
 
-   void Species::initialize()
+   void SpSpecies::initialize()
    {
       // Preconditions
       if (molecules_.capacity() > 0) {
@@ -63,7 +63,7 @@ namespace MdCf
       // Allocate and initialize molecules_ array
       molecules_.allocate(capacity_);
       molecules_.resize(capacity_);
-      Atom** atomPtr = &atomPtrs_[0];
+      SpAtom** atomPtr = &atomPtrs_[0];
       for (int i=0; i < capacity_; ++i) {
          molecules_[i].atoms_ = atomPtr;
          molecules_[i].id_ = i;
@@ -78,7 +78,7 @@ namespace MdCf
    /*
    * Reset to empty state.
    */
-   void Species::clear()
+   void SpSpecies::clear()
    {
       for (int i=0; i < atomPtrs_.capacity(); ++i) {
          atomPtrs_[i] = 0;
@@ -90,9 +90,9 @@ namespace MdCf
    }
 
    /*
-   * Add an atom to this Species.
+   * Add an atom to this SpSpecies.
    */
-   void Species::addAtom(Atom& atom)
+   void SpSpecies::addAtom(SpAtom& atom)
    {
       if (atom.speciesId != id_) {
          UTIL_THROW("Inconsistent speciesId");
@@ -121,16 +121,16 @@ namespace MdCf
    /*
    * Initialized an iterator over molecules in species.
    */
-   void Species::begin(MoleculeIterator& iterator)
+   void SpSpecies::begin(SpMoleculeIterator& iterator)
    {  molecules_.begin(iterator); }
 
    /*
    * Return true if valid, throw Exception otherwise.
    */
-   bool Species::isValid() const
+   bool SpSpecies::isValid() const
    {
-      const Molecule* mPtr;
-      const Atom* aPtr;
+      const SpMolecule* mPtr;
+      const SpAtom* aPtr;
       int ia, im;
       for (im = 0; im < molecules_.size(); ++im) {
          mPtr = &(molecules_[im]);
@@ -166,9 +166,9 @@ namespace MdCf
    }
 
    /*
-   * istream extractor (>>) for a Species.
+   * istream extractor (>>) for a SpSpecies.
    */
-   std::istream& operator >> (std::istream& in, Species &species)
+   std::istream& operator >> (std::istream& in, SpSpecies &species)
    {
       in >> species.nAtom_;
       in >> species.capacity_;
@@ -177,9 +177,9 @@ namespace MdCf
    }
 
    /*
-   * ostream inserter (<<) for a Species.
+   * ostream inserter (<<) for a SpSpecies.
    */
-   std::ostream& operator << (std::ostream& out, const Species &species) 
+   std::ostream& operator << (std::ostream& out, const SpSpecies &species) 
    {
       out.width(10);
       out << species.nAtom_;

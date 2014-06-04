@@ -8,13 +8,13 @@ include $(SRC_DIR_REL)/mdCf/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/mdCf/user/sources.mk
 
-all: $(mdCf_user_OBJS)
+all: $(ddMd_sp_user_OBJS)
 
 clean:
-	rm -f $(mdCf_user_OBJS) $(mdCf_user_OBJS:.o=.d)
+	rm -f $(ddMd_sp_user_OBJS) $(ddMd_sp_user_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(mdCf_user_OBJS:.o=.d)
+	rm -f $(ddMd_sp_user_OBJS:.o=.d)
 
--include $(mdCf_user_OBJS:.o=.d)
+-include $(ddMd_sp_user_OBJS:.o=.d)
 

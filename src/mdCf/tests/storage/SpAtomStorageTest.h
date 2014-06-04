@@ -1,9 +1,9 @@
-#ifndef MDCF_ATOM_STORAGE_TEST_H
-#define MDCF_ATOM_STORAGE_TEST_H
+#ifndef DDMD_SP_ATOM_STORAGE_TEST_H
+#define DDMD_SP_ATOM_STORAGE_TEST_H
 
-#include <mdCf/storage/AtomStorage.h>
-#include <mdCf/chemistry/Atom.h>
-#include <mdCf/chemistry/Group.h>
+#include <mdCf/storage/SpAtomStorage.h>
+#include <mdCf/chemistry/SpAtom.h>
+#include <mdCf/chemistry/SpGroup.h>
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
@@ -11,16 +11,16 @@
 using namespace Util;
 using namespace MdCf;
 
-class AtomStorageTest : public ParamFileTest
+class SpAtomStorageTest : public ParamFileTest
 {
 
 private:
 
-   AtomStorage storage_;
+   SpAtomStorage storage_;
 
 public:
 
-   AtomStorageTest() 
+   SpAtomStorageTest() 
     : storage_()
    {}
 
@@ -30,13 +30,13 @@ public:
 
 };
 
-inline void AtomStorageTest::testAddAtoms()
+inline void SpAtomStorageTest::testAddAtoms()
 {
    printMethod(TEST_FUNC);
 
    storage_.allocate(100);
 
-   Atom* atomPtr22;
+   SpAtom* atomPtr22;
    atomPtr22 = storage_.newPtr();
    atomPtr22->id = 22;
    storage_.add();
@@ -45,7 +45,7 @@ inline void AtomStorageTest::testAddAtoms()
    TEST_ASSERT(0 == storage_.ptr(13));
    TEST_ASSERT(storage_.size() == 1);
 
-   Atom* atomPtr13;
+   SpAtom* atomPtr13;
    atomPtr13 = storage_.newPtr();
    atomPtr13->id = 13;
    storage_.add();
@@ -54,7 +54,7 @@ inline void AtomStorageTest::testAddAtoms()
    TEST_ASSERT(0 == storage_.ptr(15));
    TEST_ASSERT(storage_.size() == 2);
 
-   Atom* atomPtr15;
+   SpAtom* atomPtr15;
    atomPtr15 = storage_.newPtr();
    atomPtr15->id = 15;
    storage_.add();
@@ -64,8 +64,8 @@ inline void AtomStorageTest::testAddAtoms()
    TEST_ASSERT(storage_.size() == 3);
 }
 
-TEST_BEGIN(AtomStorageTest)
-TEST_ADD(AtomStorageTest, testAddAtoms)
-TEST_END(AtomStorageTest)
+TEST_BEGIN(SpAtomStorageTest)
+TEST_ADD(SpAtomStorageTest, testAddAtoms)
+TEST_END(SpAtomStorageTest)
 
 #endif

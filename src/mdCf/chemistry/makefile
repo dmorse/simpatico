@@ -9,13 +9,13 @@ include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/mdCf/sources.mk
 
-all: $(mdCf_chemistry_OBJS)
+all: $(ddMd_sp_chemistry_OBJS)
 
 clean:
-	rm -f $(mdCf_chemistry_OBJS) $(mdCf_chemistry_OBJS:.o=.d)
+	rm -f $(ddMd_sp_chemistry_OBJS) $(ddMd_sp_chemistry_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(mdCf_chemistry_OBJS:.o=.d)
+	rm -f $(ddMd_sp_chemistry_OBJS:.o=.d)
 
--include $(mdCf_chemistry_OBJS:.o=.d)
+-include $(ddMd_sp_chemistry_OBJS:.o=.d)
 

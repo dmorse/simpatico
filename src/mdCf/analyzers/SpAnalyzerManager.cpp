@@ -1,5 +1,5 @@
-#ifndef MDCF_ANALYZER_MANAGER_CPP
-#define MDCF_ANALYZER_MANAGER_CPP
+#ifndef DDMD_SP_ANALYZER_MANAGER_CPP
+#define DDMD_SP_ANALYZER_MANAGER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "AnalyzerManager.h" 
-#include "AnalyzerFactory.h" 
+#include "SpAnalyzerManager.h" 
+#include "SpAnalyzerFactory.h" 
 
 namespace MdCf
 {
@@ -19,15 +19,15 @@ namespace MdCf
    /*
    * Constructor.
    */
-   AnalyzerManager::AnalyzerManager(Processor& processor)
-   : Manager<Analyzer>(),
+   SpAnalyzerManager::SpAnalyzerManager(Processor& processor)
+   : Manager<SpAnalyzer>(),
      processorPtr_(&processor)
-   {  setClassName("AnalyzerManager"); }
+   {  setClassName("SpAnalyzerManager"); }
 
    /*
    * Destructor.
    */
-   AnalyzerManager::~AnalyzerManager()
+   SpAnalyzerManager::~SpAnalyzerManager()
    {} 
 
    /*
@@ -35,15 +35,15 @@ namespace MdCf
    *
    * \param in input parameter file stream.
    */
-   void AnalyzerManager::readParameters(std::istream &in)
+   void SpAnalyzerManager::readParameters(std::istream &in)
    {
-      Manager<Analyzer>::readParameters(in);
+      Manager<SpAnalyzer>::readParameters(in);
    }
 
    /*
    * Call setup method of each analyzer.
    */
-   void AnalyzerManager::setup() 
+   void SpAnalyzerManager::setup() 
    {
       for (int i = 0; i < size(); ++i) {
          (*this)[i].setup();
@@ -53,7 +53,7 @@ namespace MdCf
    /*
    * Call clear method of each analyzer.
    */
-   void AnalyzerManager::clear() 
+   void SpAnalyzerManager::clear() 
    {
       for (int i = 0; i < size(); ++i) {
          (*this)[i].clear();
@@ -63,7 +63,7 @@ namespace MdCf
    /*
    * Call sample method of each analyzer.
    */
-   void AnalyzerManager::sample(long iStep) 
+   void SpAnalyzerManager::sample(long iStep) 
    {
       for (int i=0; i < size(); ++i) {
          if ((*this)[i].isAtInterval(iStep)) {
@@ -75,7 +75,7 @@ namespace MdCf
    /*
    * Call output method of each analyzer.
    */
-   void AnalyzerManager::output() 
+   void SpAnalyzerManager::output() 
    {
       for (int i=0; i < size(); ++i) {
          (*this)[i].output();
@@ -85,9 +85,9 @@ namespace MdCf
    /*
    * Return pointer to default factory.
    */
-   Factory<Analyzer>* AnalyzerManager::newDefaultFactory() const
+   Factory<SpAnalyzer>* SpAnalyzerManager::newDefaultFactory() const
    {
-      return new AnalyzerFactory(*processorPtr_);
+      return new SpAnalyzerFactory(*processorPtr_);
    }
  
 }

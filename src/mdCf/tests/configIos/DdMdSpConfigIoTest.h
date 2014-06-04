@@ -1,9 +1,9 @@
-#ifndef MDCF_DDMD_CONFIGIO_TEST_H
-#define MDCF_DDMD_CONFIGIO_TEST_H
+#ifndef DDMD_SP_DDMD_CONFIGIO_TEST_H
+#define DDMD_SP_DDMD_CONFIGIO_TEST_H
 
 #include <mdCf/processor/Processor.h>
-#include <mdCf/chemistry/Atom.h>
-#include <mdCf/chemistry/Group.h>
+#include <mdCf/chemistry/SpAtom.h>
+#include <mdCf/chemistry/SpGroup.h>
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
@@ -11,7 +11,7 @@
 using namespace Util;
 using namespace MdCf;
 
-class DdMdConfigIoTest : public ParamFileTest
+class DdMdSpConfigIoTest : public ParamFileTest
 {
 
 private:
@@ -20,7 +20,7 @@ private:
 
 public:
 
-   DdMdConfigIoTest() 
+   DdMdSpConfigIoTest() 
     : processor_()
    {}
 
@@ -35,7 +35,7 @@ public:
 
 };
 
-inline void DdMdConfigIoTest::testReadParam()
+inline void DdMdSpConfigIoTest::testReadParam()
 {  
    printMethod(TEST_FUNC); 
    processor_.readParam("in/Processor"); 
@@ -45,13 +45,13 @@ inline void DdMdConfigIoTest::testReadParam()
    }
 }
 
-inline void DdMdConfigIoTest::testReadConfig1()
+inline void DdMdSpConfigIoTest::testReadConfig1()
 {
    printMethod(TEST_FUNC);
 
    processor_.readParam("in/Processor"); 
 
-   //processor_.setConfigIo(std::string("DdMdConfigIo"));
+   //processor_.setSpConfigIo(std::string("DdMdSpConfigIo"));
    processor_.readConfig("in/config");
 
    TEST_ASSERT(processor_.atoms().size() == 40);
@@ -66,13 +66,13 @@ inline void DdMdConfigIoTest::testReadConfig1()
    out.close();
 }
 
-inline void DdMdConfigIoTest::testReadConfig2()
+inline void DdMdSpConfigIoTest::testReadConfig2()
 {
    printMethod(TEST_FUNC);
 
    processor_.readParam("in/Processor.2"); 
-   //processor_.setConfigIo(std::string("DdMdConfigIo_Molecule"));
-   processor_.setConfigIo("DdMdConfigIo_Molecule");
+   //processor_.setSpConfigIo(std::string("DdMdSpConfigIo_Molecule"));
+   processor_.setSpConfigIo("DdMdSpConfigIo_Molecule");
    processor_.readConfig("in/config.2");
 
    TEST_ASSERT(processor_.atoms().size() == 256);
@@ -88,10 +88,10 @@ inline void DdMdConfigIoTest::testReadConfig2()
 }
 
 
-TEST_BEGIN(DdMdConfigIoTest)
-TEST_ADD(DdMdConfigIoTest, testReadParam)
-TEST_ADD(DdMdConfigIoTest, testReadConfig1)
-TEST_ADD(DdMdConfigIoTest, testReadConfig2)
-TEST_END(DdMdConfigIoTest)
+TEST_BEGIN(DdMdSpConfigIoTest)
+TEST_ADD(DdMdSpConfigIoTest, testReadParam)
+TEST_ADD(DdMdSpConfigIoTest, testReadConfig1)
+TEST_ADD(DdMdSpConfigIoTest, testReadConfig2)
+TEST_END(DdMdSpConfigIoTest)
 
 #endif

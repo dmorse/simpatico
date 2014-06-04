@@ -1,7 +1,7 @@
-#include "SpeciesTest.h"
+#include "SpSpeciesTest.h"
 
 int main()
 {
-   TEST_RUNNER(SpeciesTest) runner1;
+   TEST_RUNNER(SpSpeciesTest) runner1;
    runner1.run();
 } 

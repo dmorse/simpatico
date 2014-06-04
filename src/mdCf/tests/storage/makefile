@@ -9,15 +9,15 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mdCf/tests/storage/sources.mk
 
-all: $(mdCf_tests_storage_OBJS)
+all: $(ddMd_tests_sp_storage_OBJS)
 
 clean:
-	rm -f $(mdCf_tests_storage_OBJS) 
-	rm -f $(mdCf_tests_storage_OBJS:.o=.d)
-	rm -f $(mdCf_tests_storage_OBJS:.o=)
+	rm -f $(ddMd_tests_sp_storage_OBJS) 
+	rm -f $(ddMd_tests_sp_storage_OBJS:.o=.d)
+	rm -f $(ddMd_tests_sp_storage_OBJS:.o=)
 
--include $(mdCf_tests_storage_OBJS:.o=.d)
--include $(mdCf_OBJS:.o=.d)
+-include $(ddMd_tests_sp_storage_OBJS:.o=.d)
+-include $(ddMd_sp_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
 -include $(util_OBJS:.o=.d)
 

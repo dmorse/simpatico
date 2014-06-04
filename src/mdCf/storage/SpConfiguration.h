@@ -1,5 +1,5 @@
-#ifndef MDCF_STORAGE_H
-#define MDCF_STORAGE_H
+#ifndef DDMD_SP_STORAGE_H
+#define DDMD_SP_STORAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -10,11 +10,11 @@
 
 #include <util/param/ParamComposite.h>        // base class
 
-#include <mdCf/chemistry/Atom.h>              // member (template argument)
-#include <mdCf/chemistry/Group.h>             // member (template argument)
-#include <mdCf/chemistry/Species.h>           // member (template argument)
-#include <mdCf/storage/AtomStorage.h>         // member 
-#include <mdCf/storage/GroupStorage.h>        // member (template)
+#include <mdCf/chemistry/SpAtom.h>              // member (template argument)
+#include <mdCf/chemistry/SpGroup.h>             // member (template argument)
+#include <mdCf/chemistry/SpSpecies.h>           // member (template argument)
+#include <mdCf/storage/SpAtomStorage.h>         // member 
+#include <mdCf/storage/SpGroupStorage.h>        // member (template)
 
 #include <util/boundary/Boundary.h>           // member 
 #include <util/containers/DArray.h>           // member (template)
@@ -28,34 +28,34 @@ namespace MdCf
    using namespace Util;
 
    /**
-   * A snapshot of a molecular dynamics system configuration.
+   * A snapshot of a molecular dynamics configuration configuration.
    *
-   * A System has:
+   * A SpConfiguration has:
    *   - a Boundary
-   *   - an AtomStorage container for atoms
-   *   - a GroupStorage for each type of covalent group
+   *   - an SpAtomStorage container for atoms
+   *   - a SpGroupStorage for each type of covalent group
    *
    * \ingroup MdCf_Storage_Module
    */
-   class System : public ParamComposite 
+   class SpConfiguration : public ParamComposite 
    {
 
    public:
 
-      typedef ArrayIterator<Atom> AtomIterator;
-      typedef ArrayIterator<Group <2> > BondIterator;
-      typedef ArrayIterator<Group <3> > AngleIterator;
-      typedef ArrayIterator<Group <4> > DihedralIterator;
+      typedef ArrayIterator<SpAtom> AtomIterator;
+      typedef ArrayIterator<SpGroup <2> > BondIterator;
+      typedef ArrayIterator<SpGroup <3> > AngleIterator;
+      typedef ArrayIterator<SpGroup <4> > DihedralIterator;
 
       /**
       * Constructor
       */
-      System();
+      SpConfiguration();
 
       /**
       * Destructor
       */
-      ~System();
+      ~SpConfiguration();
 
       using ParamComposite::readParam;
 
@@ -81,22 +81,22 @@ namespace MdCf
       */
       Boundary& boundary();
 
-      /// Get the AtomStorage.
-      AtomStorage& atoms();
+      /// Get the SpAtomStorage.
+      SpAtomStorage& atoms();
 
       #ifdef INTER_BOND
-      /// Get the Bond System.
-      GroupStorage<2>& bonds();
+      /// Get the Bond SpConfiguration.
+      SpGroupStorage<2>& bonds();
       #endif
 
       #ifdef INTER_ANGLE
-      /// Get the Angle System.
-      GroupStorage<3>& angles();
+      /// Get the Angle SpConfiguration.
+      SpGroupStorage<3>& angles();
       #endif
 
       #ifdef INTER_DIHEDRAL
-      /// Get the Dihedral System.
-      GroupStorage<4>& dihedrals();
+      /// Get the Dihedral SpConfiguration.
+      SpGroupStorage<4>& dihedrals();
       #endif
 
       /**
@@ -111,33 +111,33 @@ namespace MdCf
       *
       * \param i species index
       */
-      Species& species(int i);
+      SpSpecies& species(int i);
 
    private:
      
       /// Boundary object defines periodic boundary conditions.
       Boundary boundary_;
 
-      /// AtomStorage object.
-      AtomStorage atoms_;
+      /// SpAtomStorage object.
+      SpAtomStorage atoms_;
 
       #ifdef INTER_BOND
       /// Array of bond objects, added in order read from file.
-      GroupStorage<2> bonds_;
+      SpGroupStorage<2> bonds_;
       #endif
 
       #ifdef INTER_ANGLE
       /// Array of angle objects, added in order read from file.
-      GroupStorage<3> angles_;
+      SpGroupStorage<3> angles_;
       #endif
 
       #ifdef INTER_DIHEDRAL
       /// Array of dihedral objects, added in order read from file.
-      GroupStorage<4> dihedrals_;
+      SpGroupStorage<4> dihedrals_;
       #endif
 
-      /// Array of Species objects.
-      DArray<Species> species_;
+      /// Array of SpSpecies objects.
+      DArray<SpSpecies> species_;
 
       /// Maximum number of atoms = max id + 1 (used to allocate arrays).
       int atomCapacity_;
@@ -167,31 +167,31 @@ namespace MdCf
    /*
    * Return the Boundary by reference.
    */
-   inline Boundary& System::boundary() 
+   inline Boundary& SpConfiguration::boundary() 
    {  return boundary_; }
 
-   inline AtomStorage& System::atoms()
+   inline SpAtomStorage& SpConfiguration::atoms()
    {  return atoms_; }
 
    #ifdef INTER_BOND
-   inline GroupStorage<2>& System::bonds()
+   inline SpGroupStorage<2>& SpConfiguration::bonds()
    {  return bonds_; }
    #endif
 
    #ifdef INTER_ANGLE
-   inline GroupStorage<3>& System::angles()
+   inline SpGroupStorage<3>& SpConfiguration::angles()
    {  return angles_; }
    #endif
 
    #ifdef INTER_DIHEDRAL
-   inline GroupStorage<4>& System::dihedrals()
+   inline SpGroupStorage<4>& SpConfiguration::dihedrals()
    {  return dihedrals_; }
    #endif
 
-   inline int System::nSpecies() const
+   inline int SpConfiguration::nSpecies() const
    {  return nSpecies_; }
 
-   inline Species& System::species(int i)
+   inline SpSpecies& SpConfiguration::species(int i)
    {  return species_[i]; }
 
 }

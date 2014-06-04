@@ -1,5 +1,5 @@
-#ifndef MDCF_ATOM_STORAGE_CPP
-#define MDCF_ATOM_STORAGE_CPP
+#ifndef DDMD_SP_ATOM_STORAGE_CPP
+#define DDMD_SP_ATOM_STORAGE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "AtomStorage.h"
+#include "SpAtomStorage.h"
 
 namespace MdCf 
 {
@@ -16,20 +16,20 @@ namespace MdCf
    /*
    * Constructor.
    */
-   AtomStorage::AtomStorage()
+   SpAtomStorage::SpAtomStorage()
     : newPtr_(0)
    {}
 
    /*
    * Destructor.
    */
-   AtomStorage::~AtomStorage()
+   SpAtomStorage::~SpAtomStorage()
    {}
 
    /*
    * Allocate and initialize memory.
    */
-   void AtomStorage::allocate(int capacity)
+   void SpAtomStorage::allocate(int capacity)
    {
       atoms_.allocate(capacity);
       atomPtrs_.allocate(capacity);
@@ -39,7 +39,7 @@ namespace MdCf
    /*
    * Return pointer to location for new atom.
    */
-   Atom* AtomStorage::newPtr()
+   SpAtom* SpAtomStorage::newPtr()
    {
       if (newPtr_) {
          UTIL_THROW("Error: an new atom is still active");
@@ -53,7 +53,7 @@ namespace MdCf
    /*
    * Finalize addition of new atom.
    */
-   void AtomStorage::add()
+   void SpAtomStorage::add()
    {
       if (!newPtr_) {
          UTIL_THROW("Error: No active new atom");
@@ -66,7 +66,7 @@ namespace MdCf
    /*
    * Remove all atoms and bonds - set to empty state.
    */
-   void AtomStorage::clear()
+   void SpAtomStorage::clear()
    {
       atoms_.clear();
       int capacity = atomPtrs_.capacity();

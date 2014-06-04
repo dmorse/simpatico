@@ -1,5 +1,5 @@
-#ifndef MDCF_MOLECULE_CPP
-#define MDCF_MOLECULE_CPP
+#ifndef DDMD_SP_MOLECULE_CPP
+#define DDMD_SP_MOLECULE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,14 +8,14 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Molecule.h"
+#include "SpMolecule.h"
 
 //#define UTIL_32BIT
 
 namespace MdCf
 {
 
-   Molecule::Molecule()
+   SpMolecule::SpMolecule()
     : atoms_(0),
       speciesPtr_(0),
       id_(-1),

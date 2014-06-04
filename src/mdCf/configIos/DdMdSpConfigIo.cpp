@@ -1,5 +1,5 @@
-#ifndef MDCF_DDMD_CONFIG_IO_CPP
-#define MDCF_DDMD_CONFIG_IO_CPP
+#ifndef DDMD_SP_DDMD_CONFIG_IO_CPP
+#define DDMD_SP_DDMD_CONFIG_IO_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,13 +8,13 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "DdMdConfigIo.h"
+#include "DdMdSpConfigIo.h"
 
-#include <mdCf/chemistry/Atom.h>
-#include <mdCf/chemistry/Group.h>
-#include <mdCf/chemistry/Species.h>
+#include <mdCf/chemistry/SpAtom.h>
+#include <mdCf/chemistry/SpGroup.h>
+#include <mdCf/chemistry/SpSpecies.h>
 //#include <mdCf/chemistry/MaskPolicy.h>
-#include <mdCf/storage/System.h>
+#include <mdCf/storage/SpConfiguration.h>
 
 #include <util/space/Vector.h>
 #include <util/format/Int.h>
@@ -28,15 +28,15 @@ namespace MdCf
    /*
    * Constructor.
    */
-   DdMdConfigIo::DdMdConfigIo(System& system, bool hasMolecules)
-    : ConfigIo(system),
+   DdMdSpConfigIo::DdMdSpConfigIo(SpConfiguration& configuration, bool hasMolecules)
+    : SpConfigIo(configuration),
       hasMolecules_(hasMolecules)
-   {  setClassName("DdMdConfigIo"); }
+   {  setClassName("DdMdSpConfigIo"); }
 
    /*
    * Read a configuration file.
    */
-   void DdMdConfigIo::readConfig(std::ifstream& file)
+   void DdMdSpConfigIo::readConfig(std::ifstream& file)
    {
       // Precondition
       if (!file.is_open()) {  
@@ -45,20 +45,20 @@ namespace MdCf
 
       // Read and broadcast boundary
       file >> Label("BOUNDARY");
-      file >> system().boundary();
+      file >> configuration().boundary();
 
       // Read and distribute atoms
 
       // Read atoms
-      Atom* atomPtr;
-      int atomCapacity = system().atoms().capacity(); // Maximum allowed id + 1
+      SpAtom* atomPtr;
+      int atomCapacity = configuration().atoms().capacity(); // Maximum allowed id + 1
       int nAtom;          
       file >> Label("ATOMS");
       file >> Label("nAtom") >> nAtom;
       for (int i = 0; i < nAtom; ++i) {
 
          // Get pointer to new atom 
-         atomPtr = system().atoms().newPtr();
+         atomPtr = configuration().atoms().newPtr();
  
          file >> atomPtr->id >> atomPtr->typeId;
          if (atomPtr->id < 0 || atomPtr->id >= atomCapacity) {
@@ -81,13 +81,13 @@ namespace MdCf
          file >> atomPtr->position;
          file >> atomPtr->velocity;
 
-         system().atoms().add();
+         configuration().atoms().add();
       }
 
-      // Read Covalent Groups
+      // Read Covalent SpGroups
       #ifdef INTER_BOND
-      if (system().bonds().capacity()) {
-         readGroups(file, "BONDS", "nBond", system().bonds());
+      if (configuration().bonds().capacity()) {
+         readGroups(file, "BONDS", "nBond", configuration().bonds());
          //if (maskPolicy == MaskBonded) {
          //   setAtomMasks();
          //}
@@ -95,19 +95,19 @@ namespace MdCf
       #endif
 
       // Optionally add atoms to species
-      if (system().nSpecies() > 0) {
+      if (configuration().nSpecies() > 0) {
          if (!hasMolecules_) {
-            UTIL_THROW("No atom context info in chosen ConfigIo");
+            UTIL_THROW("No atom context info in chosen SpConfigIo");
          }
          int speciesId;
-         AtomStorage::Iterator iter;
-         system().atoms().begin(iter);
+         SpAtomStorage::Iterator iter;
+         configuration().atoms().begin(iter);
          for ( ; iter.notEnd(); ++iter) {
             speciesId = iter->speciesId;
-            system().species(speciesId).addAtom(*iter);
+            configuration().species(speciesId).addAtom(*iter);
          }
-         for (int i = 0; system().nSpecies(); ++i) {
-            system().species(i).isValid();
+         for (int i = 0; configuration().nSpecies(); ++i) {
+            configuration().species(i).isValid();
          }
       }
    }
@@ -115,7 +115,7 @@ namespace MdCf
    /* 
    * Write the configuration file.
    */
-   void DdMdConfigIo::writeConfig(std::ofstream& file)
+   void DdMdSpConfigIo::writeConfig(std::ofstream& file)
    {
       // Precondition
       if (!file.is_open()) {  
@@ -124,18 +124,18 @@ namespace MdCf
 
       // Write Boundary dimensions
       file << "BOUNDARY" << std::endl << std::endl;
-      file << system().boundary() << std::endl;
+      file << configuration().boundary() << std::endl;
       file << std::endl;
 
       // Atoms
-      int nAtom = system().atoms().size();
+      int nAtom = configuration().atoms().size();
       file << "ATOMS" << std::endl;
       file << "nAtom" << Int(nAtom, 10) << std::endl;
 
       // Write atoms
       Vector r;
-      AtomStorage::Iterator iter;
-      system().atoms().begin(iter);
+      SpAtomStorage::Iterator iter;
+      configuration().atoms().begin(iter);
       for (; iter.notEnd(); ++iter) {
          file << Int(iter->id, 10) 
               << Int(iter->typeId, 6);
@@ -151,8 +151,8 @@ namespace MdCf
 
       // Write the groups
       #ifdef INTER_BOND
-      if (system().bonds().capacity()) {
-         writeGroups(file, "BONDS", "nBond", system().bonds());
+      if (configuration().bonds().capacity()) {
+         writeGroups(file, "BONDS", "nBond", configuration().bonds());
       }
       #endif
 

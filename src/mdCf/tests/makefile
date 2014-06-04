@@ -9,7 +9,7 @@ include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mdCf/sources.mk
 include $(SRC_DIR)/mdCf/tests/sources.mk
 
-all: $(mdCf_tests_OBJS)
+all: $(ddMd_tests_sp_OBJS)
 
 run:
 	cd chemistry; ./Test
@@ -23,8 +23,8 @@ clean:
 	cd configIos; make clean
 	cd processor; make clean
 
--include $(mdCf_tests_OBJS:.o=.d)
--include $(mdCf_OBJS:.o=.d)
+-include $(ddMd_tests_sp_OBJS:.o=.d)
+-include $(ddMd_sp_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
 -include $(util_OBJS:.o=.d)
 
