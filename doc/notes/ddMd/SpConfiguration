@@ -1,0 +1,80 @@
+Goal: Allow the system configuration to be stored on one processor.
+
+Questions: 
+
+  - Can/should we reuse any of the code used in McCf namespace?
+  - If so, how do we manage dependencies and name collisions? 
+
+Shared needs, for both on-the-fly and post-process analysis:
+
+  - Versions of MdCf Atom, Group, Molecule and Species classes
+  - Versions of MdCf AtomStorage and GroupStorage classes
+  - Something like MdCf::System to store a configuration.
+  - Single processor analyzers and modifiers
+
+  Differences: We might get away without velocities, but that is
+  also true for postprocessing. Handle with preprocessor macro?
+
+Needed only for postprocessing:
+
+  - Single processor ConfigIo
+  - Processor master class
+
+Design options:
+
+  A. Let DdMd namespace depend on MdCf namespace, use names from 
+     MdCf explicitly.
+
+     Con: Reuse of names and the need to explicitly qualify some names
+     is error-prone and potentially very confusing.
+
+  B. Move shared classes into DdMd namespace, give distinctive names.
+
+  Choose option B. 
+
+Names:
+
+  Use Prefix "Sp" = Single-Processor as a qualifier for new versions
+
+  New classes:
+
+       MdCf::Atom          ->  DdMd::SpAtom
+       MdCf::Group         ->  DdMd::SpGroup
+       MdCf::Molecule      ->  DdMd::SpMolecule
+       MdCf::DdMd::Species ->  DdMd::SpSpecies
+       MdCf::AtomStorage   ->  DdMd::SpAtomStorage
+       MdCf::GroupStorage  ->  DdMd::SpGroupStorage
+       MdCf::System        ->  DdMd::SpConfiguration
+       MdCf::Analyzer      ->  DdMd::SpAnalyzer
+       MdCf::Modifier      ->  DdMd::SpModifier
+
+  New ddMd subdirectories:
+
+       sp/
+       sp/chemistry
+       sp/storage
+       sp/analyzers
+       sp/modifiers
+
+Communication design:
+
+  - All nodes get a set of collectors and distributor classes
+    that can be used by either ConfigIos or to create CfSystem.
+    
+  - Idea: Make each collectors and distributor a member of a
+    corresponding storage object.
+
+  - Simulation on master node instantiates an SpConfiguration
+
+Development Plan:
+
+  - Add collectors and distributors to Storage classes
+
+  - Modify ConfigIos to use these collectors and distributors
+
+  - Write and test required classes in spConfiguration directory
+
+  - Add option to add SpConfiguration on master node
+
+  - Add methods to DdMd::Configuration to update SpConfiguration
+
