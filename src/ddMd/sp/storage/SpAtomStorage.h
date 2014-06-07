@@ -24,7 +24,7 @@ namespace DdMd
    /**
    * Container for a set of atoms.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Sp_Storage_Module
    */
    class SpAtomStorage 
    {

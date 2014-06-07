@@ -22,7 +22,7 @@ namespace DdMd
    /**
    * A set of identical molecules.
    *
-   * \ingroup DdMd_Chemistry_Module
+   * \ingroup DdMd_Sp_Chemistry_Module
    */
    class SpSpecies {
    public:

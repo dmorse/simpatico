@@ -20,7 +20,7 @@ namespace DdMd
    /**
    * A container for SpGroup<N> objects.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Sp_Storage_Module
    */
    template <int N>
    class SpGroupStorage : private DSArray< SpGroup<N> >

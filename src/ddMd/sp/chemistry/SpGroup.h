@@ -14,7 +14,7 @@ namespace DdMd
    /**
    * A group of covalently interacting atoms.
    *
-   * \ingroup DdMd_Chemistry_Module
+   * \ingroup DdMd_Sp_Chemistry_Module
    */
    template <int N>
    class SpGroup

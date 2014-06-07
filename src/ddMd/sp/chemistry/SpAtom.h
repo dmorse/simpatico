@@ -18,7 +18,7 @@ namespace DdMd
    /**
    * A point particle in an MD simulation.
    *
-   * \ingroup DdMd_Chemistry_Module
+   * \ingroup DdMd_Sp_Chemistry_Module
    */
    struct SpAtom
    {

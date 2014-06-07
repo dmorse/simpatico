@@ -35,7 +35,7 @@ namespace DdMd
    *   - an SpAtomStorage container for atoms
    *   - a SpGroupStorage for each type of covalent group
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Sp_Storage_Module
    */
    class SpConfiguration : public ParamComposite 
    {

@@ -22,7 +22,7 @@ namespace DdMd
    /**
    * An SpMolecule has a sequence of atoms, and belongs to an SpSpecies.
    *
-   * \ingroup DdMd_Chemistry_Module
+   * \ingroup DdMd_Sp_Chemistry_Module
    */
    class SpMolecule
    {
