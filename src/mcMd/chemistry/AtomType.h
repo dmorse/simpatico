@@ -199,7 +199,7 @@ namespace Util
    *
    * \param comm MPI communicator
    * \param data AtomType data
-   * \param source MPI rank of root processor from which data is broadcast
+   * \param root MPI rank of root processor from which data is broadcast
    */
    template <>
    void bcast<McMd::AtomType>(MPI::Intracomm& comm, McMd::AtomType& data, int root);
