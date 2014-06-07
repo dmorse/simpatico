@@ -21,7 +21,7 @@ namespace DdMd
    /**
    * Factory for DdMd::SpAnalyzer objects.
    *
-   * \ingroup DdMd_SpAnalyzer_Module
+   * \ingroup DdMd_Sp_Analyzer_Module
    */
    class SpAnalyzerFactory : public Factory<SpAnalyzer>
    {

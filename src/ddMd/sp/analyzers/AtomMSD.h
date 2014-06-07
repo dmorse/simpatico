@@ -21,7 +21,7 @@ namespace DdMd
    /**
    * Mean-squared displacement of specific atom in molecules of specific species.
    *
-   * \ingroup DdMd_SpAnalyzer_Module
+   * \ingroup DdMd_Sp_Analyzer_Module
    */
    class AtomMSD : public SpAnalyzer
    {

@@ -21,7 +21,7 @@ namespace DdMd
    /**
    * Manager for a list of SpAnalyzer objects.
    *
-   * \ingroup DdMd_SpAnalyzer_Module
+   * \ingroup DdMd_Sp_Analyzer_Module
    */
    class SpAnalyzerManager : public Manager<SpAnalyzer>
    {

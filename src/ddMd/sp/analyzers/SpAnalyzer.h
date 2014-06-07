@@ -37,7 +37,7 @@ namespace DdMd
    * SpAnalyzer must thus access its parent Processor via a pointer, 
    * which is usually initialized in its subclass constructor.
    *
-   * \ingroup DdMd_SpAnalyzer_Module
+   * \ingroup DdMd_Sp_Analyzer_Module
    */
    class SpAnalyzer : public ParamComposite
    {
