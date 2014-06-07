@@ -1,19 +1,19 @@
-#ifndef MDCF_CONFIG_IO_FACTORY_CPP
-#define MDCF_CONFIG_IO_FACTORY_CPP
+#ifndef MDCF_SP_CONFIG_IO_FACTORY_CPP
+#define MDCF_SP_CONFIG_IO_FACTORY_CPP
 
 /*
-* Simpatico - System Package for Polymeric and Molecular Liquids
+* Simpatico - SpConfiguration Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ConfigIoFactory.h"  
+#include "SpConfigIoFactory.h"  
 
-// Subclasses of ConfigIo 
-#include "DdMdConfigIo.h"
+// Subclasses of SpConfigIo 
+#include "DdMdSpConfigIo.h"
 
-namespace MdCf
+namespace DdMd
 {
 
    using namespace Util;
@@ -21,27 +21,27 @@ namespace MdCf
    /*
    * Constructor
    */
-   ConfigIoFactory::ConfigIoFactory(System& system)
-    : systemPtr_(&system)
+   SpConfigIoFactory::SpConfigIoFactory(SpConfiguration& configuration)
+    : configurationPtr_(&configuration)
    {}
 
    /* 
-   * Return a pointer to a instance of ConfigIo subclass className.
+   * Return a pointer to a instance of SpConfigIo subclass className.
    */
-   ConfigIo* ConfigIoFactory::factory(const std::string &className) const
+   SpConfigIo* SpConfigIoFactory::factory(const std::string &className) const
    {
-      ConfigIo *ptr = 0;
+      SpConfigIo *ptr = 0;
 
       // Try subfactories first.
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
-      if (className == "DdMdConfigIo") {
-         ptr = new DdMdConfigIo(*systemPtr_);
+      if (className == "DdMdSpConfigIo") {
+         ptr = new DdMdSpConfigIo(*configurationPtr_);
       } else 
-      if (className == "DdMdConfigIo_Molecule") {
+      if (className == "DdMdSpConfigIo_Molecule") {
          bool hasMolecules = true;
-         ptr = new DdMdConfigIo(*systemPtr_, hasMolecules);
+         ptr = new DdMdSpConfigIo(*configurationPtr_, hasMolecules);
       }
  
       return ptr;

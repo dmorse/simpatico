@@ -9,7 +9,7 @@
 #include <test/UnitTestRunner.h>
 
 using namespace Util;
-using namespace MdCf;
+using namespace DdMd;
 
 class DdMdSpConfigIoTest : public ParamFileTest
 {

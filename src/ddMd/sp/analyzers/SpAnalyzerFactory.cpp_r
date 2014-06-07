@@ -8,14 +8,14 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "AnalyzerFactory.h" // Class header
+#include "SpAnalyzerFactory.h" // Class header
 
-//#include <mdCf/processor/Processor.h>
+#include <ddMd/sp/processor/Processor.h>
 
-// Analyzers 
+// SpAnalyzers 
 //#include "LogEnergy.h"
 
-namespace MdCf
+namespace DdMd
 {
 
    using namespace Util;
@@ -23,22 +23,22 @@ namespace MdCf
    /*
    * Constructor.
    */
-   AnalyzerFactory::AnalyzerFactory(Processor& processor)
+   SpAnalyzerFactory::SpAnalyzerFactory(Processor& processor)
     : processorPtr_(&processor)
    {}
 
    /* 
-   * Return a pointer to an instance of Analyzer subclass className.
+   * Return a pointer to an instance of SpAnalyzer subclass className.
    */
-   Analyzer* AnalyzerFactory::factory(const std::string &className) const
+   SpAnalyzer* SpAnalyzerFactory::factory(const std::string &className) const
    {
-      Analyzer* ptr = 0;
+      SpAnalyzer* ptr = 0;
 
       // Try subfactories first (if any)
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
-      // Processor Analyzers
+      // SpAnalyzers
       //if (className == "WriteConfig") {
       //   ptr = new WriteConfig(processor());
       //}
