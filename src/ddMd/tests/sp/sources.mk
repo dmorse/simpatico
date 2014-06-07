@@ -7,7 +7,8 @@ ddMd_tests_sp_= \
     $(ddMd_tests_sp_chemistry_) \
     $(ddMd_tests_sp_storage_) \
     $(ddMd_tests_sp_configIos_) \
-    $(ddMd_tests_sp_processor_) 
+    $(ddMd_tests_sp_processor_) \
+    ddMd/tests/sp/Test.cc
 
 # Create lists of source (*.cc) and object (*.o) files
 ddMd_tests_sp_SRCS=\

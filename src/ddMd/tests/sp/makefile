@@ -7,21 +7,20 @@ include $(SRC_DIR)/ddMd/patterns.mk
 include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/ddMd/sources.mk
-include $(SRC_DIR)/ddMd/tests/sources.mk
+include $(SRC_DIR)/ddMd/tests/sp/sources.mk
 
 all: $(ddMd_tests_sp_OBJS)
 
 run:
-	cd chemistry; ./Test
-	cd storage; ./Test
+	./Test
 	cd configIos; ./Test
-	cd processor; ./Test
 
 clean:
 	cd chemistry; make clean
 	cd storage; make clean
 	cd configIos; make clean
 	cd processor; make clean
+	rm -f Test Test.d Test.o
 
 -include $(ddMd_tests_sp_OBJS:.o=.d)
 -include $(ddMd_sp_OBJS:.o=.d)

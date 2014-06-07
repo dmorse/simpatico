@@ -26,7 +26,11 @@ public:
 
    virtual void setUp()
    { 
-      processor_.readParam("in/Processor"); 
+      std::ifstream file;
+      openInputFile("in/Processor", file);
+      processor_.readParam(file); 
+      file.close(); 
+      //processor_.readParam("in/Processor"); 
    }
 
    void testReadParam();

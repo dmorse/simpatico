@@ -26,7 +26,11 @@ public:
 
    virtual void setUp()
    { 
-      configuration_.readParam("in/SpConfiguration"); 
+      std::ifstream file;
+      openInputFile("in/SpConfiguration", file);
+      configuration_.readParam(file); 
+      file.close(); 
+      //configuration_.readParam("in/SpConfiguration"); 
    }
 
    void testReadParam();

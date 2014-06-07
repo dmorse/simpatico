@@ -38,7 +38,10 @@ public:
 inline void DdMdSpConfigIoTest::testReadParam()
 {  
    printMethod(TEST_FUNC); 
-   processor_.readParam("in/Processor"); 
+   std::ifstream file;
+   openInputFile("in/Processor", file);
+   processor_.readParam(file); 
+   file.close(); 
    if (verbose() > 0) {
       std::cout << "\n";
       processor_.writeParam(std::cout);
@@ -49,7 +52,10 @@ inline void DdMdSpConfigIoTest::testReadConfig1()
 {
    printMethod(TEST_FUNC);
 
-   processor_.readParam("in/Processor"); 
+   std::ifstream file;
+   openInputFile("in/Processor", file);
+   processor_.readParam(file); 
+   file.close(); 
 
    //processor_.setSpConfigIo(std::string("DdMdSpConfigIo"));
    processor_.readConfig("in/config");
