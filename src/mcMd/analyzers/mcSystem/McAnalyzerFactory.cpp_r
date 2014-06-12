@@ -18,7 +18,7 @@
 #include "McBondEnergyAverage.h"
 #include "McPressureAverage.h"
 #include "McVirialStressTensorAverage.h"
-#include "McStressAutoCorr.h"
+#include "McStressAutoCorrelation.h"
 #include "McIntraBondStressAutoCorr.h"
 #include "McIntraBondTensorAutoCorr.h"
 
@@ -82,8 +82,8 @@ namespace McMd
       if (className == "McNVTChemicalPotential") {
          ptr = new McNVTChemicalPotential(system());
       } else
-      if (className == "McStressAutoCorr") {
-         ptr = new McStressAutoCorr(system());
+      if (className == "McStressAutoCorrelation") {
+         ptr = new McStressAutoCorrelation(system());
       } else
       if (className == "McIntraBondStressAutoCorr") {
          ptr = new McIntraBondStressAutoCorr(system());
