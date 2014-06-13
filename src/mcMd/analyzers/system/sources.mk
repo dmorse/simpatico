@@ -18,7 +18,6 @@ mcMd_analyzers_system_=\
     mcMd/analyzers/system/StructureFactorPGrid.cpp \
     mcMd/analyzers/system/SystemAnalyzerFactory.cpp \
     mcMd/analyzers/system/VanHove.cpp \
-    mcMd/analyzers/system/StressAutoCorrelation.cpp \
     mcMd/analyzers/system/BoundaryAverage.cpp 
 
 ifdef MCMD_PERTURB

@@ -5,7 +5,6 @@ mcMd_analyzers_mcSystem_=\
     mcMd/analyzers/mcSystem/McPairEnergyAverage.cpp \
     mcMd/analyzers/mcSystem/McPressureAverage.cpp \
     mcMd/analyzers/mcSystem/McVirialStressTensorAverage.cpp \
-    mcMd/analyzers/mcSystem/McStressAutoCorrelation.cpp \
     mcMd/analyzers/mcSystem/McIntraBondStressAutoCorr.cpp \
     mcMd/analyzers/mcSystem/McIntraBondTensorAutoCorr.cpp \
     mcMd/analyzers/mcSystem/McNVTChemicalPotential.cpp \

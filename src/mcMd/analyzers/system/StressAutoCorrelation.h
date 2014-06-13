@@ -9,8 +9,6 @@
 */
 
 #include <mcMd/analyzers/SystemAnalyzer.h>
-//#include <mcMd/simulation/System.h>
-//#include <util/mpi/MpiLoader.h>
 #include <util/space/Tensor.h>
 #include <util/ensembles/EnergyEnsemble.h>
 #include <util/accumulators/AutoCorrArray.h>     // member template
@@ -75,11 +73,6 @@ namespace McMd
       void serialize(Archive& ar, const unsigned int version);
   
       /**
-      * Clear nSample counter.
-      */
-      virtual void clear();
-
-      /**
       * Setup accumulator!
       */
       virtual void setup();
@@ -91,7 +84,6 @@ namespace McMd
       */
       virtual void sample(long iStep);
 
-      virtual void Test(long iStep);
       /**
       * Dump configuration to file
       *
@@ -147,7 +139,8 @@ namespace McMd
       readOutputFileName(in);
       read(in,"capacity", capacity_);
 
-      accumulator_.setParam(6, capacity_);
+      accumulator_.setParam(9, capacity_);
+      accumulator_.clear();
 
       isInitialized_ = true;
    }
@@ -254,9 +247,6 @@ namespace McMd
       outputFile_ << "nSample         " << accumulator_.nSample() << std::endl;
       outputFile_ << std::endl;
       outputFile_ << "average   " << accumulator_.average() << std::endl;
-      outputFile_ << std::endl;
-      outputFile_ << "Format of *.dat file" << std::endl;
-      outputFile_ << "[int time in samples]  [double autocorrelation function]" << std::endl;
       outputFile_ << std::endl;
       outputFile_.close();
 
