@@ -54,23 +54,12 @@ namespace DdMd
       readParamComposite(in, analyzerManager_);
    }
 
-   bool Processor::hasFileMaster() const
-   {  return fileMaster_.isActive(); }
-
-   FileMaster& Processor::fileMaster()
-   {
-      if (!fileMaster_.isActive()) {
-         UTIL_THROW(" Attempt to use inactive FileMaster");
-      } 
-      return fileMaster_;
-   }
-
-   // SpConfigIo management
+   // SpConfigIo Functions
 
    /*
    * Set SpConfigIo style.
    */
-   void Processor::setSpConfigIo(std::string configIoName)
+   void Processor::setConfigIo(const std::string& configIoName)
    {
       configIoPtr_ = configIoFactory_.factory(configIoName);
       if (configIoPtr_ == 0) {
@@ -81,7 +70,7 @@ namespace DdMd
       }
    }
 
-   /**
+   /*
    * Return the SpConfigIo (create default if necessary).
    */
    SpConfigIo& Processor::configIo() 
@@ -92,8 +81,6 @@ namespace DdMd
       }
       return *configIoPtr_;
    }
-
-   // Reading and writing single configurations
 
    /*
    * Read a single configuration file.
@@ -107,19 +94,13 @@ namespace DdMd
    /*
    * Open, read and close a configuration file.
    */
-   void Processor::readConfig(const char* filename)
-   {
+   void Processor::readConfig(const std::string& filename)
+   { 
       std::ifstream inputFile;
-      inputFile.open(filename);
+      inputFile.open(filename.c_str());
       readConfig(inputFile);
       inputFile.close();
    }
-
-   /*
-   * Open, read and close a configuration file.
-   */
-   void Processor::readConfig(const std::string& filename)
-   { readConfig(filename.c_str()); }
 
    /*
    * Write a single configuration file (must be open)
@@ -138,7 +119,7 @@ namespace DdMd
       outputFile.close();
    }
 
-   // Analysis
+   // Trajectory Analysis
    
    /*
    * Read and analyze a sequence of configuration files.
@@ -209,5 +190,23 @@ namespace DdMd
       #endif
 
    }
+
+   /*
+   * Does this processor have a FileMaster? 
+   */
+   bool Processor::hasFileMaster() const
+   {  return fileMaster_.isActive(); }
+
+   /*
+   * Return FileMaster.
+   */
+   FileMaster& Processor::fileMaster()
+   {
+      if (!fileMaster_.isActive()) {
+         UTIL_THROW(" Attempt to use inactive FileMaster");
+      } 
+      return fileMaster_;
+   }
+
 }
 #endif

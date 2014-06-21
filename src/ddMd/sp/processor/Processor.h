@@ -41,6 +41,9 @@ namespace DdMd
       */
       ~Processor();
 
+      /// \name Initialization
+      //@{
+      
       using ParamComposite::readParam;
 
       /**
@@ -53,13 +56,17 @@ namespace DdMd
       */
       void readParameters(std::istream& in);
 
+      //@}
+      /// \name ConfigIo Interface 
+      //@{
+      
       /**
-      * Set SpConfigIo style.
+      * Set SpConfigIo style  (creates a ConfigIo).
       */
-      void setSpConfigIo(std::string configIoName);
+      void setConfigIo(const std::string& configIoName);
 
       /**
-      * Return the SpConfigIo (create default if necessary).
+      * Return the current SpConfigIo (create default if necessary).
       */
       SpConfigIo& configIo();
    
@@ -68,11 +75,6 @@ namespace DdMd
       */
       void readConfig(std::ifstream& in);
 
-      /**
-      * Open, read and close a configuration file.
-      */
-      void readConfig(const char* filename);
-   
       /**
       * Open, read and close a configuration file.
       */
@@ -87,6 +89,10 @@ namespace DdMd
       * Open, write and close a configuration file.
       */
       void writeConfig(const std::string& filename);
+
+      //@}
+      /// \name Trajectory analysis
+      //@{
 
       /**
       * Read and analyze a sequence of numbered configuration files.
@@ -107,6 +113,8 @@ namespace DdMd
       */
       void analyzeTrajectory(std::string& filename);
 
+      //@}
+      
       /**
       * Return true if the FileMaster is active.
       */
