@@ -11,7 +11,7 @@ The directory tree rooted at src/ddMd/sp contains classes that are defined in th
 
 Most of the classes in this sub-directory tree have names that begin with the prefix "Sp", which stands for "single processor". Many of these classes that are "single-processor" analogs of other classes in the DdMd namespace, and have names that are identical to the names of other classes except for the addition of a prefix "Sp". Thus, for example DdMd::SpAtom is a variant of the DdMd::Atom class that is designed for use in single-processor algorithms.
 
-See also: \ref DdMd_Sp_Module "DdMd Single-Processor Module"
+See also: \ref DdMd_Sp_Module "DdMd Single-Processor (SP) Module"
 
 \section DdMd_Sp_chemistry_sec Chemical structure
 
@@ -25,7 +25,7 @@ An SpMolecule represents a molecule that contains a sequence of SpAtom objects.
 
 An SpSpecies is a container that holds a set structurally identical molecules.
 
-See also: \ref DdMd_Sp_Chemistry_Module "DdMd Single-Processor Chemistry Module"
+See also: \ref DdMd_Sp_Chemistry_Module "DdMd SP Chemistry Module"
 
 \section DdMd_Sp_Storage_sec Storage classes
 
@@ -37,13 +37,13 @@ The SpGroupStorage  < int N > class templates is a container for SpGroup objects
 
 An SpConfiguration contains an entire instantaneous system configuration. An SpConfiguration has a Boundary, an SpAtomStorage, separate SpGroupStorage containers for bonds, angles, and dihedrals, and a set of SpSpecies obejcts for different chemical species.
 
-See also: \ref DdMd_Sp_Storage_Module "DdMd Single-Processor Storage Module"
+See also: \ref DdMd_Sp_Storage_Module "DdMd SP Storage Module"
 
 \section DdMd_Sp_Analyzer_sec Data Analysis 
 
 The src/ddMd/sp/analyzer subdirectory contains a set of classes that are used for analysis of single-processor configurations. DdMd::SpAnalyzer is an abstract base class for classes that implement data analysis and/or data output operations. SpAnalyzerManager is a container for a set of SpAnalyzer objects.
 
-See also: \ref DdMd_Sp_Analyzer_Module "DdMd Single-Processor Analyzer Module"
+See also: \ref DdMd_Sp_Analyzer_Module "DdMd SP Analyzer Module"
 
 \section DdMd_Sp_Processor_sec Processor
 

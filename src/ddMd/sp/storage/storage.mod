@@ -3,9 +3,9 @@ namespace DdMd
 {
 
 /**
-* \defgroup DdMd_Sp_Storage_Module Single-Processor Storage
+* \defgroup DdMd_Sp_Storage_Module SP Storage
 *
-* \brief Classes that manage atoms and groups.
+* \brief Single-processor (SP) classes that store atoms and groups.
 * \ingroup DdMd_Sp_Module
 */
 

@@ -3,9 +3,9 @@ namespace DdMd
 {
 
 /**
-* \defgroup DdMd_Sp_Chemistry_Module Single-Processor Chemical Structure
+* \defgroup DdMd_Sp_Chemistry_Module SP Chemical Structure
 *
-* \brief Classes that describe atoms, covalent groups, molecules, and molecule species.
+* \brief Single-processor (SP) classes that model atoms, groups, molecules, and species.
 * \ingroup DdMd_Sp_Module
 */
 

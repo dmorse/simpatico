@@ -3,9 +3,9 @@ namespace DdMd
 {
 
    /**
-   * \defgroup DdMd_Sp_Module DdMd Single-Processor Classes
+   * \defgroup DdMd_Sp_Module Single-Processor (SP) Classes
    *
-   * \brief Classes in the DdMd namespace that are used for serial processing of MD configurations.
+   * \brief Classes for storing and analyzing MD configurations on a single processor.
    * \ingroup DdMd_Module 
    */
 

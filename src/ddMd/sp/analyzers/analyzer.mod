@@ -2,11 +2,10 @@ namespace DdMd
 {
 
    /**
-   * \defgroup DdMd_Sp_Analyzer_Module Single-Processor Analyzers
+   * \defgroup DdMd_Sp_Analyzer_Module SP Analyzers
    * \ingroup  DdMd_Sp_Module
    *  
-   * An SpAnalyzer object represents a data analysis or data output operation
-   * for an SpConfiguration single-processor MD configuration.
+   * Single-processor (SP) classes for data analysis or data output operations.
    */
 
 }

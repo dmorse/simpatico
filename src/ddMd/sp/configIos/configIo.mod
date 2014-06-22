@@ -2,9 +2,9 @@ namespace DdMd
 {
 
 /**
-* \defgroup DdMd_Sp_ConfigIo_Module Single-Processor ConfigIos
+* \defgroup DdMd_Sp_ConfigIo_Module SP ConfigIos
 *
-* \brief Config file reader / writers.
+* \brief Single-processor (SP) config file reader / writers.
 * \ingroup DdMd_Sp_Module
 */
 
