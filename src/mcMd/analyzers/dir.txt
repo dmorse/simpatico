@@ -1,3 +1,0 @@
-subDirectories = util system mcSystem mdSystem simulation perturb mutable
-pathFromSrc = mcMd/analyzers
-pathToSrc = ../..

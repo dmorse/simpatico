@@ -1,3 +1,0 @@
-subDirectories = pair bond angle dihedral link tether external
-pathFromSrc = mcMd/potentials
-pathToSrc = ../..

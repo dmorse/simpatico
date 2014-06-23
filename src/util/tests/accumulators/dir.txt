@@ -1,3 +1,0 @@
-subDirectories = unit stochastic
-pathFromSrc = tests/util/accumulators
-pathToSrc = ../../..

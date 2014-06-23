@@ -1,3 +1,0 @@
-subDirectories = boundary ensembles potentials chemistry species neighbor tethers links simulation mcSimulation mdSimulation configIos trajectoryIos mdIntegrators mcMoves analyzers perturb util
-pathFromSrc = mcMd
-pathToSrc = ..

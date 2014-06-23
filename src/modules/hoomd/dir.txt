@@ -1,4 +1,0 @@
-subDirectories = potentials mcMoves
-pathFromSrc = modules/hoomd
-pathToSrc = ../..
-

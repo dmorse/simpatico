@@ -1,3 +1,0 @@
-subDirectories = bond pair
-pathFromSrc = ddMd/potentials
-pathToSrc = ../..
