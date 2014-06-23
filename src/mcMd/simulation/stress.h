@@ -17,7 +17,7 @@ namespace McMd
    using namespace Util;
 
    /*
-   * The functions defined in this file are used by template methods that calculate
+   * The functions defined in this file are used by function templates that calculate
    * the isotropic pressure (double), x-y-z diagonal stress components (Vector),
    * and the full stress tensor (Tensor) using a common template. 
    *
@@ -25,7 +25,7 @@ namespace McMd
    * contribution from the force between a pair of particles to either a double
    * precision pressure or to a Vector or Tensor of stress components. 
    *
-   * The overloaded normalizeStress method divides the trace of the stress tensor 
+   * The overloaded normalizeStress function divides the trace of the stress tensor 
    * by 3.0 (the dimensionality of space) for a double precision pressure, but does
    * nothing when called with a Vector or Tensor of stress components.
    */

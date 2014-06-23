@@ -45,8 +45,8 @@ namespace McMd
    *
    *    - A reservoir, which holds pointers to unused Molecule objects.
    *
-   * The chemical structure is initialized in the readParam method and may be
-   * queried by several accessor methods. The capacity specifies the number 
+   * The chemical structure is initialized in the readParam function and may be
+   * queried by several accessor functions. The capacity specifies the number 
    * of Molecules of this of this species for which space should be allocated 
    * by the parent Simulation.  The reservoir is a stack that is used to hold
    * pointers to Molecules of this Species that are not currently owned by 
@@ -57,7 +57,7 @@ namespace McMd
    * angle and dihedral covalent groups. Information about covalent groups 
    * is stored internally in a set of SpeciesGroup<N> objects with N=2,3, 
    * and 4. This chemical structure is defined within the virtual protected 
-   * readSpeciesParam(std::istream&) method, which is called by readParam.
+   * readSpeciesParam(std::istream&) function, which is called by readParam.
    *
    * Implementations of readSpeciesParam() may read any parameters that are 
    * required to define the chemical structure of an particular Species.
@@ -69,7 +69,7 @@ namespace McMd
    * amount of information that must be read from file. For example, if a 
    * subclass of Species represents a unique chemical structure, such as
    * water or some other specific molecule, then the entire structure can 
-   * be hard-coded into the method implementtion. In other cases, in which
+   * be hard-coded into the function implemenation. In other cases, in which
    * a subclass is used to describe a category of molecular species, a more
    * limited amount of information must be read from file in order to
    * specify a unique structure. For example, a class that represents a 
@@ -82,10 +82,10 @@ namespace McMd
    * structure is slightly different in different states. A pseudo-molecule
    * could, for example, be used implement a semi-grand ensemble for a
    * polymer mixture, in which each polymer can be of either of two types.
-   * The readMoleculeState() and writeMoleculeState() methods are provided
+   * The readMoleculeState() and writeMoleculeState() functions are provided
    * to allow information about the internal state of each molecules in
    * such an ensemble to be read from and written to a configuration file.
-   * The default implementations of these methods do nothing.
+   * The default implementations of these functions do nothing.
    *
    * \ingroup McMd_Species_Module
    */
@@ -141,11 +141,11 @@ namespace McMd
       /**
       * Read parameters and allocate molecules for this species.
       *
-      * This method reads the parameter moleculeCapacity (the number 
+      * This function reads the parameter moleculeCapacity (the number 
       * of Molecule objects allocated for this Species) and invokes 
-      * virtual Species::readSpeciesParam() method to define the chemical
+      * virtual Species::readSpeciesParam() function to define the chemical
       * structure of the Species, and read any parameters required to do 
-      * so. The method also allocates memory for an associated reservoir.
+      * so. The function also allocates memory for an associated reservoir.
       *
       * \param in input stream.
       */
@@ -337,7 +337,7 @@ namespace McMd
       // Non-static protected variables
       
       // These variables are protected, rather than private, so that they can 
-      // be read and written by the (read|write)Param() methods of subclasses.
+      // be read and written by the (read|write)Param() functions of subclasses.
 
       /**
       * Array of atom type Ids, indexed by local atom id.
@@ -410,13 +410,13 @@ namespace McMd
       /**
       * Define chemical structure for this Species.
       *
-      * This virtual method must define the structure of a molecule
+      * This virtual function must define the structure of a molecule
       * of this species, and read any data required to do so. 
       * The default implementation Species::readSpeciesParam reads 
       * nAtom_, nBond_, nAngle_, and the elements of 
       * the arrays atomTypeIds_ and speciesBonds_, speciesAngles_.
       *
-      * Re-implementations of this method by subclasses may 
+      * Re-implementations of this function by subclasses may 
       * hard-code some or all of the information contained in these 
       * variables, and may define a more compact file format for 
       * any parameters that are read from file.
@@ -430,7 +430,7 @@ namespace McMd
       *
       * Analogous to readSpeciesParam, but reads data from a
       * Serializable::IArchive rather than an input stream.
-      * This method must define the same parameter file format 
+      * This function must define the same parameter file format 
       * as readSpeciesParam.
       *
       * \param ar input parameter file stream.
@@ -440,7 +440,7 @@ namespace McMd
       /**
       * Allocate chemical structure arrays.
       *
-      * This method allocates the arrays that are used to define the
+      * This function allocates the arrays that are used to define the
       * chemical structure of a generic molecule, such as atomTypeIds_, 
       * speciesBonds_, atomBondIdArrays_, speciesAngles_, etc.
       * 
@@ -460,7 +460,7 @@ namespace McMd
       /**
       * Add a bond to the chemical structure of a generic molecule.
       *
-      * This method creates and adds a SpeciesBond object, and also adds 
+      * This function creates and adds a SpeciesBond object, and also adds 
       * a reference to the list of bonds that are connected to each atom.
       *
       * \param bondId   local index of bond within a molecule
@@ -474,7 +474,7 @@ namespace McMd
       /**
       * Add an angle to the chemical structure of a generic molecule.
       *
-      * This method creates and adds a SpeciesAngle object, and also adds 
+      * This function creates and adds a SpeciesAngle object, and also adds 
       * a reference to the list of angles that are connected to each atom.
       *
       * \param angleId   local index of angle within a molecule
@@ -491,7 +491,7 @@ namespace McMd
       /**
       * Add a dihedral to the chemical structure of a generic molecule.
       *
-      * This method creates and adds a SpeciesDihedral object, and also adds 
+      * This function creates and adds a SpeciesDihedral object, and also adds 
       * a reference to the list of dihedrals that are connected to each atom.
       *
       * \param dihedralId  local index of dihedral within a molecule
@@ -513,7 +513,7 @@ namespace McMd
       * setMutatorPtr(this) to give the address of the SpeciesMutator subobject
       * to the Species subobject. If an instance of such a class is accessed
       * through a Species* pointer, the SpeciesMutator is then be accessible 
-      * via the Species::mutator() method.
+      * via the Species::mutator() function.
       *
       * \param mutatorPtr pointer to an associated SpeciesMutator object
       */
@@ -569,7 +569,7 @@ namespace McMd
 
    };
 
-   // Inline method definitions
+   // Inline member function definitions
 
    /*
    * Get integer id for this Species.

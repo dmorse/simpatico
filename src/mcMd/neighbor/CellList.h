@@ -47,7 +47,7 @@ namespace McMd
    * be large enough to accomodate the maximum number of atoms 
    * that will ever be encountered in an individual cell.
    *
-   * CellList is a non-polymorphic class, with no virtual methods, 
+   * CellList is a non-polymorphic class, with no virtual functions, 
    * and a non-virtual destructor. Do not derive subclasses from it.
    *
    * \ingroup McMd_Neighbor_Module
@@ -74,7 +74,7 @@ namespace McMd
       */
       typedef FSArray<Atom*, MaxNeighbor> NeighborArray;
 
-      // public methods
+      // Public member functions
 
       /**
       * Constructor.
@@ -102,7 +102,7 @@ namespace McMd
       * the maximum range of the nonbonded pair potential. 
       *
       * This function does not populate the CellList with atoms. See the
-      * CellList::addAtom() methods.
+      * CellList::addAtom() functions.
       *
       * \param atomCapacity dimension of global array of atoms
       * \param boundary     maximum Boundary for allocation of array of cells
@@ -168,9 +168,9 @@ namespace McMd
       * object and add it to the new one. If the new cell is the same as the
       * old one (icell == atom.CellId), do nothing and return.
       *
-      * This method updates the CellList, but does not update the coordinates
+      * This function updates the CellList, but does not update the coordinates
       * stored in the pos member of the associated Atom object. To update
-      * both, use the System::moveAtom() method.
+      * both, use the System::moveAtom() function.
       *
       * \param atom Atom object to be moved
       * \param pos  new Atom position
@@ -349,7 +349,7 @@ namespace McMd
    }; 
 
 
-   // Public inline method definitions:
+   // Public inline function definitions:
 
    /*
    * Get total number of cells in this CellList.
@@ -432,7 +432,7 @@ namespace McMd
       getCellNeighbors(ic, neighbors, nInCell);
    }
 
-   // Private inline methods:
+   // Private inline member functions
 
    /*
    * Return value of integer cell coordinate x for axis i shifted to the range

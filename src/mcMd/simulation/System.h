@@ -162,7 +162,7 @@ namespace McMd
       *
       * Only reads parameters if this System is not a copy (i.e.,
       * was not constructed with the copy constructor). If it is a 
-      * copy, this method does nothing and returns normally.
+      * copy, this function does nothing and returns normally.
       *
       * \param in pararameter file input stream
       */
@@ -194,7 +194,7 @@ namespace McMd
       /**
       * Create a new configuration file reader/writer.
       *
-      * This method allows one to choose from among several subclasses
+      * This function allows one to choose from among several subclasses
       * of ConfigIo, identified by subclass name. The implementation
       * uses a Factory<ConfigIo> object to instantiate a new object. 
       * If setConfigIoFactory() has not been called, an instance of
@@ -212,14 +212,14 @@ namespace McMd
       * the atomic positions for all atoms of all molecules in 
       * this System. 
       *
-      * This method uses a ConfigIo object that is registered
+      * This function uses a ConfigIo object that is registered
       * with this System. If a ConfigIo object has not been
       * registered by calling setConfigIo(std::string&), this 
-      * method creates and uses an instance of the ConfigIo 
+      * function creates and uses an instance of the ConfigIo 
       * base class.
       *
       * Precondition: The System and its Parent Simulation must
-      * have been initialized by calling their readParam methods. 
+      * have been initialized by calling their readParam function. 
       *
       * \param in configuration file input stream
       */
@@ -228,7 +228,7 @@ namespace McMd
       /**
       * Write system configuration to a specified ostream.
       *
-      * Like readConfig(), this method will create and use 
+      * Like readConfig(), this function will create and use 
       * a ConfigIo object if none has been registered 
       * previously. 
       *
@@ -266,7 +266,7 @@ namespace McMd
       /**
       * Add a Molecule to this System.  
       *
-      * This method adds a Molecule to the set of Molecules of the same
+      * This function adds a Molecule to the set of Molecules of the same
       * Species in this System, and calls Molecule::setSystem(*this). 
       * 
       * The molecule to be added should first be popped off the Species 
@@ -279,7 +279,7 @@ namespace McMd
       /**
       * Remove a specific molecule from this System.  
       *
-      * This method removes a Molecule from the set of molecules of the
+      * This function removes a Molecule from the set of molecules of the
       * same Species in this System, and calls Molecule::unsetSystem().
       *
       * The removed Molecule should be pushed onto the Species reservoir
@@ -336,7 +336,7 @@ namespace McMd
       /** 
       * Get the index of a Molecule within its Species in this System.
       *
-      * This method returns the current (mutable) index of the molecule 
+      * This function returns the current (mutable) index of the molecule 
       * within the set of molecules of the same Species in this System, 
       * in the range 0 <= moleculeId < nMolecule(speciesId). This is 
       * the index required as the second argument of molecule(int, int).
@@ -650,7 +650,7 @@ namespace McMd
       /**
       * Allocate and initialize molecule sets for all species.
       *
-      * This method is called within the Simulation::initialize() 
+      * This function is called within the Simulation::initialize() 
       * private member function to allocate and initialize an 
       * array of MoleculeSet objects for all Species for this 
       * System.

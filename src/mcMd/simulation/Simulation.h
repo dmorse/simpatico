@@ -137,7 +137,7 @@ namespace McMd
       /**
       * Set MPI job to read one parameter file and one command file.
       *
-      * Call this method before readParam() to allow a single parameter
+      * Call this function before readParam() to allow a single parameter
       * and command file to be used in multi-processor free energy 
       * perturbation simulations, and to read the parameter file from
       * std in. It calls Util::ParamComposite:setIoCommunicator()
@@ -158,8 +158,8 @@ namespace McMd
       /**
       * Allocate and initialize a molecule set for one Species.
       * 
-      * This method is called during initialization by the readParam
-      * method of an associated System.
+      * This function is called during initialization by the readParam()
+      * function of an associated System.
       *
       * \param set       molecule set for one Species in a System.
       * \param speciesId integer index of the relevant Species.
@@ -642,7 +642,7 @@ namespace McMd
    }; // end class Simulation
 
 
-   // Public inline accessor methods
+   // Public inline accessor member functions
 
    inline int Simulation::nAtomType() const
    {  return nAtomType_; }
@@ -714,7 +714,7 @@ namespace McMd
    }
    #endif
 
-   // Protected inline methods
+   // Protected inline member functions
    
    inline FileMaster& Simulation::fileMaster()
    {  return fileMaster_; }

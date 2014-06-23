@@ -330,7 +330,7 @@ namespace McMd
    }
 
    /*
-   * Allocate and initialize all private data (private method).
+   * Allocate and initialize all private data (private function).
    *
    * Allocates global arrays (molecules_, atoms_, bonds_, angles_) and the
    * arrays first<class>Ids_ of integers to species blocks. Initializes:
@@ -517,7 +517,7 @@ namespace McMd
    *
    * For each atom, it sets the molecule pointer and an integer typeId.
    *
-   * This method also pushes all molecules of the species onto the
+   * This function also pushes all molecules of the species onto the
    * reservoir, pushing them in order of decreasing molecule id.
    */
    void Simulation::initializeSpecies(int iSpecies)

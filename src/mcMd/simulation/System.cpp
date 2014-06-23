@@ -831,20 +831,20 @@ namespace McMd
    /*
    * If a perturbation is expected, read the polymorphic perturbation block. 
    *
-   * This method reads the array of perturbation parameters, and then
+   * This function reads the array of perturbation parameters, and then
    * modifies the appropriate system parameters accordingly. This function
    * is not called by System::readParameters, but should be called by the 
-   * readParameters method of subclasses (e.g., MdSystem and McSystem). It 
+   * readParameters function of subclasses (e.g., MdSystem and McSystem). It 
    * should be called after all of the potentials, ensmebles, and other 
    * physical parameters, which provide a set of baseline parameters that 
-   * this method can then modify.
+   * this function can then modify.
    *
    * The parameter value used for this system is determined by the rank
    * of this System, which is a parameter of the Perturbation constructor.
    * The rank must thus be known to the perturbation factory that creates 
    * an instance of a subclass of Perturbation. Subclasses of system must
    * re-implement the virtual System::newDefaultPerturbationFactory()
-   * method to create an appropriate Factory object.
+   * function to create an appropriate Factory object.
    */
    void System::readPerturbation(std::istream& in) 
    {
