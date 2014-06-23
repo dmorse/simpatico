@@ -1,15 +1,15 @@
-The directory tree rooted at src/ddMd/sp contains all classes for
-single-processor analysis of MD configurations. These are intended to 
-be used for analysis of trajectories produced by ddSim.
+The directory tree rooted at src/ddMd/sp contains classes for storage and 
+analysis of MD configurations on a single processor. These are intended 
+to be used for analysis of trajectories produced by ddSim, either during 
+post-processing of MD trajectory files or on-the-fly, for operations that
+are most easily carried out on a single processor.
 
 Subdirectories:
 ---------------
 
-chemistry      atoms, covalent groups (bonds, etc.), molecules and species
-storage        containers for atoms and groups. System represent a configuration
-analyzers      data analysis (classes derived from Analyzer)
-configIos      configuration file IO 
-processor      a master class for analysis of trajectories
-user           space for user-provided classes
-tests          unit tests
+chemistry   atoms, covalent groups (bonds, etc.), molecules and species
+storage     containers for atoms and groups. System represent a configuration
+analyzers   data analysis (classes derived from Analyzer)
+configIos   configuration file IO 
+processor   a master class for analysis of trajectories
 

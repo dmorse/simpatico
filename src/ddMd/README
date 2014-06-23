@@ -1,15 +1,16 @@
-This directory contains source code for a parallel domain-decomposition 
-(DD) molecular dynamics (MD) program. All of the code in this directory
-is defined in the DdMd namespace. The code uses a parallelization strategy 
-similiar to that used in LAMMPS and several other parallel MD codes. 
+This directory contains source code for a domain-decomposition (DD)
+parallel molecular dynamics (MD) program and associated analysis tools. 
+All of the code in this directory is defined in the DdMd namespace. 
+The ddSim parallel MD code uses a domain-decomposition parallelization 
+strategy similiar to that used in LAMMPS and many other parallel MD codes. 
 
-The code in the DdMd namespace (or ddMd/ directory) uses classes defined 
-in the Util and Inter namespaces (or the util/ and inter/ directories), 
-but does not use any code from the McMD namespace (or mcMd/ directory).  
-Most files in the DdMd namespace contain a "using namespace Util" directive 
-that brings the entire Util namespace into scope within the DdMd namespace.
-A few files that use classes from the Inter namespace also contain a
-"using namespace Inter" directive. 
+Source files in the DdMd namespace (or src/ddMd/ directory) uses classes and 
+other names defined in the Util and Inter namespaces (or the src/util/ and 
+sr/inter/ directories), but do not use any names from the McMD namespace (or 
+the src/mcMd/ subdirectory). Most files in the DdMd namespace contain a 
+"using namespace Util" directive that brings the entire Util namespace into 
+scope.  The few source files that use classes from the Inter namespace also 
+contain a "using namespace Inter" directive. 
 
 Subdirectories:
 
@@ -21,7 +22,7 @@ potentials/   - potential energy classes
 neighbor/     - cell list and pair list data structures
 integrators/  - molecular dynamics integrator algorithms
 simulation/   - main Simulation class
-analyzers/    - classes for data analysis and output
+analyzers/    - classes for on-the-fly parallel data analysis and output
 misc/         - miscellaneous utility classes
-sp/           - classes for single-processor (sp) processing 
+sp/           - classes for single-processor (sp) configuration analysis 
 
