@@ -12,7 +12,7 @@ draft      unfinished or proposed classes
 Files:
 ------
 
-makefile      main makefile
+makefile      main makefile for in source builds
 compiler.mk_r compiler settings (repository version)
 compiler.mk   compiler settings (user version, created by setup script)
 configure     configure script (for en|dis-abling compile time options)
