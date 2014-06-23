@@ -30,12 +30,11 @@ public:
       openInputFile("in/Processor", file);
       processor_.readParam(file); 
       file.close(); 
-      //processor_.readParam("in/Processor"); 
    }
 
    void testReadParam();
-
    void testAddAtoms();
+   void testReadConfig();
 
 };
 
@@ -80,9 +79,17 @@ inline void ProcessorTest::testAddAtoms()
    TEST_ASSERT(processor_.atoms().size() == 3);
 }
 
+inline void ProcessorTest::testReadConfig()
+{
+  printMethod(TEST_FUNC);
+  processor_.readConfig("in/config");
+  processor_.writeConfig("out/config.out");
+}
+
 TEST_BEGIN(ProcessorTest)
 TEST_ADD(ProcessorTest, testReadParam)
 TEST_ADD(ProcessorTest, testAddAtoms)
+TEST_ADD(ProcessorTest, testReadConfig)
 TEST_END(ProcessorTest)
 
 #endif

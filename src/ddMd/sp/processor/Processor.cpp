@@ -11,6 +11,11 @@
 #include "Processor.h"
 #include <ddMd/sp/configIos/DdMdSpConfigIo.h>
 
+// std headers
+#include <fstream>
+#include <unistd.h>
+#include <stdlib.h>
+
 namespace DdMd 
 {
 

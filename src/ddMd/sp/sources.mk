@@ -6,10 +6,11 @@ include $(SRC_DIR)/ddMd/sp/analyzers/sources.mk
 
 ddMd_sp_= \
     $(ddMd_sp_chemistry_) \
-    $(ddMd_sp_storage_)   \
+    $(ddMd_sp_storage_) \
     $(ddMd_sp_configIos_) \
     $(ddMd_sp_processor_) \
-    $(ddMd_sp_analyzers_) 
+    $(ddMd_sp_analyzers_) \
+    ddMd/sp/mdProcess.cpp
 
 # Create lists of source (*.cpp) and object (*.o) files
 ddMd_sp_SRCS=\

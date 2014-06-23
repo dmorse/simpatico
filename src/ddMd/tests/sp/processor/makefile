@@ -15,6 +15,7 @@ clean:
 	rm -f $(ddMd_tests_sp_processor_OBJS) 
 	rm -f $(ddMd_tests_sp_processor_OBJS:.o=.d)
 	rm -f $(ddMd_tests_sp_processor_OBJS:.o=)
+	rm -f out/*
 
 -include $(ddMd_tests_sp_processor_OBJS:.o=.d)
 -include $(ddMd_sp_OBJS:.o=.d)

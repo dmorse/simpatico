@@ -44,6 +44,14 @@ namespace DdMd
       /// \name Initialization
       //@{
       
+      /**
+      * Process command line options.
+      *  
+      * \param arcgc number of arguments
+      * \param argv array of argument C-strings
+      */
+      void setOptions(int argc, char * const * argv);
+
       using ParamComposite::readParam;
 
       /**
@@ -114,7 +122,9 @@ namespace DdMd
       void analyzeTrajectory(std::string& filename);
 
       //@}
-      
+      /// \name Miscellaneous functions
+      //@{
+ 
       /**
       * Return true if the FileMaster is active.
       */
@@ -124,6 +134,8 @@ namespace DdMd
       * Return FileMaster if active, or throw Exception.
       */
       FileMaster& fileMaster();
+
+      //@}
 
    private:
 
@@ -141,9 +153,6 @@ namespace DdMd
 
       /// String identifier for SpConfigIo class name
       std::string configIoName_;
-
-      /// Name of configuration or trajectory input file
-      std::string configFileName_;
 
    };
 
