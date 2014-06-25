@@ -9,6 +9,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <iostream>
 #include <vector>
 
@@ -60,7 +61,7 @@ namespace McMd
       * Return a pointer to a new McPairPotential, if possible.
       *
       * \param subclass name of desired subclass of McPairPotential
-      * \param system   associated System
+      * \param system associated System
       */
       virtual McPairPotential* mcFactory(const std::string& subclass, System& system) const;
 

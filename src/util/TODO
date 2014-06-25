@@ -1,6 +1,12 @@
 Boundary classes
 ----------------
 
+- Add typedef Vector Deformation;
+
+- Add void deform(Deformation& deformation) method.
+
+- Add DEFORM command to ddSim command script.
+
 - Add applyShift(Vector& r, IntVector &t) to boundary classes.
 
 - Add minimumDeformRatio method to Boundary classes.

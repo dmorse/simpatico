@@ -7,8 +7,7 @@ namespace McMd
 \ref extend_page  (Next) 
 <BR>
 
-These pages present an overview of the organization of the source
-code, and of the class library design.
+These pages present an overview of the organization of the source code, and of the class library design.
 
 <h2> Contents:</h2> 
    <ul style="list-style: none;">
@@ -18,6 +17,7 @@ code, and of the class library design.
    <li> \subpage Inter_NS_page </li>
    <li> \subpage McMd_NS_page  </li>
    <li> \subpage DdMd_NS_page  </li>
+   <li> \subpage DdMd_Sp_page  </li>
    </ul>
 
 <BR> 

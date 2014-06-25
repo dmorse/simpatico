@@ -40,12 +40,19 @@ namespace McMd
    */
    class NphIntegrator : public MdIntegrator
    {
-   
+
    public:
-      /// Constructor. 
+
+      /**
+      * Constructor.
+      *
+      * \param system parent MdSystem object
+      */
       NphIntegrator(MdSystem& system);
- 
-      /// Destructor.   
+
+      /**
+      * Destructor.
+      */
       virtual ~NphIntegrator();
 
       /**
@@ -83,22 +90,22 @@ namespace McMd
       * Get the barostat energy.
       */
       virtual double barostatEnergy();
-      
+
       /**
       * Get the barostat mass.
       */
       virtual double barostatMass() const;
-      
+
       /**
       * Get the integrator mode.
       */
       virtual LatticeSystem mode() const;
-      
+
       /**
       * Get the barostat momentum.
       */
       //virtual Vector& eta();
-      
+
       /**
       * Set the barostat momentum component of an index to a value eta
       *
@@ -106,7 +113,7 @@ namespace McMd
       * \param eta value to which momentum component must be set.
       */
       virtual void setEta(unsigned int index, double eta);
-      
+
    private:
 
       /// Factors of 0.5*dt/mass for different atom types.
@@ -124,7 +131,7 @@ namespace McMd
       /// integration mode
       LatticeSystem mode_;
 
-   }; 
+   };
 
-} 
+}
 #endif

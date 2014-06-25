@@ -100,8 +100,7 @@ namespace McMd
       Vector dr;
       System::MoleculeIterator molIter;
       double prefactor;
-      //double dtHalf = 0.5*dt_;
-      int    iSpecies, nSpecies;
+      int iSpecies, nSpecies;
 
       nSpecies = simulation().nSpecies();
 

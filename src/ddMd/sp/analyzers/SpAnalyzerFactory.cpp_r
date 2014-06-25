@@ -1,0 +1,53 @@
+#ifndef MDCF_ANALYZER_FACTORY_CPP
+#define MDCF_ANALYZER_FACTORY_CPP
+
+/*
+* Simpatico - Processor Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "SpAnalyzerFactory.h" // Class header
+
+#include <ddMd/sp/processor/Processor.h>
+
+// SpAnalyzers 
+//#include "LogEnergy.h"
+#include "SpLogStep.h"
+
+namespace DdMd
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor.
+   */
+   SpAnalyzerFactory::SpAnalyzerFactory(Processor& processor)
+    : processorPtr_(&processor)
+   {}
+
+   /* 
+   * Return a pointer to an instance of SpAnalyzer subclass className.
+   */
+   SpAnalyzer* SpAnalyzerFactory::factory(const std::string &className) const
+   {
+      SpAnalyzer* ptr = 0;
+
+      // Try subfactories first (if any)
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
+
+      // SpAnalyzers
+      if (className == "SpLogStep") {
+         ptr = new SpLogStep(processor());
+      }
+      //if (className == "WriteConfig") {
+      //   ptr = new WriteConfig(processor());
+      //}
+      return ptr;
+   }
+
+}
+#endif

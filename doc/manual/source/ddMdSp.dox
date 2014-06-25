@@ -1,0 +1,58 @@
+namespace DdMd
+{
+
+/*! \page DdMd_Sp_page 3.7 DdMd Single-Processor Classes
+
+\ref DdMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref extend_page  (Next)    
+<BR>
+
+The directory tree rooted at src/ddMd/sp contains classes that are defined in the DdMd namespace, but that are designed to allow storage and processing of entire molecular dynamics system configurations on a single processor. These classes are designed to be used either for serial postprocessing trajectories that have been written to file by ddSim, or for on-the-fly analysis or integration algorithms that require an entire system configuration to collected into memory on one processor. 
+
+Most of the classes in this sub-directory tree have names that begin with the prefix "Sp", which stands for "single processor". Many of these classes that are "single-processor" analogs of other classes in the DdMd namespace, and have names that are identical to the names of other classes except for the addition of a prefix "Sp". Thus, for example DdMd::SpAtom is a variant of the DdMd::Atom class that is designed for use in single-processor algorithms.
+
+See also: \ref DdMd_Sp_Module "DdMd Single-Processor (SP) Module"
+
+\section DdMd_Sp_chemistry_sec Chemical structure
+
+The src/ddMd/sp/chemistry subdirectory contains a set of classes that describe atoms and covalent groups that are (for the most part) closely analogous to classes in the ddMd/chemistry directory, but are designed for single-processor configurations.
+
+An SpAtom is an analog of SpAtom designed for us on a single processor. It contains most (but not all) of the information stored in an Atom.  
+
+The SpGroup < int N > group template is a variant of the Group template, which represents a small set of covalently interacting atoms).  
+
+An SpMolecule represents a molecule that contains a sequence of SpAtom objects.
+
+An SpSpecies is a container that holds a set structurally identical molecules.
+
+See also: \ref DdMd_Sp_Chemistry_Module "DdMd SP Chemistry Module"
+
+\section DdMd_Sp_Storage_sec Storage classes
+
+The src/ddMd/sp/storage subdirectory contains a set of containers, several of which are analogous to those in src/ddMd/storage. 
+
+The SpAtomStorage class is a container for SpAtom objects.
+
+The SpGroupStorage  < int N > class templates is a container for SpGroup objects.
+
+An SpConfiguration contains an entire instantaneous system configuration. An SpConfiguration has a Boundary, an SpAtomStorage, separate SpGroupStorage containers for bonds, angles, and dihedrals, and a set of SpSpecies obejcts for different chemical species.
+
+See also: \ref DdMd_Sp_Storage_Module "DdMd SP Storage Module"
+
+\section DdMd_Sp_Analyzer_sec Data Analysis 
+
+The src/ddMd/sp/analyzer subdirectory contains a set of classes that are used for analysis of single-processor configurations. DdMd::SpAnalyzer is an abstract base class for classes that implement data analysis and/or data output operations. SpAnalyzerManager is a container for a set of SpAnalyzer objects.
+
+See also: \ref DdMd_Sp_Analyzer_Module "DdMd SP Analyzer Module"
+
+\section DdMd_Sp_Processor_sec Processor
+
+A Processor object is is a top level object for postprocessing of MD configurations and trajectories.
+
+<BR>
+\ref DdMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref source_page  (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref extend_page  (Next)
+
+*/
+} 

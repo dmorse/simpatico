@@ -225,14 +225,12 @@ namespace McMd
       }
       #endif
 
-      #ifndef MCMD_NOATOMTYPES
       // Allocate and read an array of AtomType objects
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
       }
       readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
-      #endif
 
       read<MaskPolicy>(in, "maskedPairPolicy", maskedPairPolicy_);
 
@@ -278,14 +276,13 @@ namespace McMd
       loadParameter<int>(ar, "hasTether", hasTether_, false);
       #endif
 
-      #ifndef MCMD_NOATOMTYPES
       // Allocate and load an array of AtomType objects
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
       }
       loadDArray<AtomType>(ar, "atomTypes", atomTypes_, nAtomType_);
-      #endif
+
       loadParameter<MaskPolicy>(ar, "maskedPairPolicy", maskedPairPolicy_);
       loadParamComposite(ar, *speciesManagerPtr_);
       for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
@@ -326,16 +323,14 @@ namespace McMd
       Parameter::saveOptional(ar, hasTether_, hasTether_);
       #endif
 
-      #ifndef MCMD_NOATOMTYPES
       ar << atomTypes_;
-      #endif
       ar & maskedPairPolicy_;
       (*speciesManagerPtr_).save(ar);
       random_.save(ar);
    }
 
    /*
-   * Allocate and initialize all private data (private method).
+   * Allocate and initialize all private data (private function).
    *
    * Allocates global arrays (molecules_, atoms_, bonds_, angles_) and the
    * arrays first<class>Ids_ of integers to species blocks. Initializes:
@@ -522,7 +517,7 @@ namespace McMd
    *
    * For each atom, it sets the molecule pointer and an integer typeId.
    *
-   * This method also pushes all molecules of the species onto the
+   * This function also pushes all molecules of the species onto the
    * reservoir, pushing them in order of decreasing molecule id.
    */
    void Simulation::initializeSpecies(int iSpecies)

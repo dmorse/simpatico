@@ -48,7 +48,7 @@ namespace McMd
    *
    * A completed PairList is guaranteed to remain valid as long as no Atom 
    * in the system has moved more than a distance skin/2 from its position 
-   * when the PairList was last built. The method isCurrent() determines if 
+   * when the PairList was last built. The isCurrent() function determines if 
    * this criterion is satisfied, by comparing current atomic positions to
    * positions that were stored when the PairList was last built. In an MD
    * simulation, isCurrent() should be called after every time step, and 

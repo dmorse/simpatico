@@ -196,5 +196,21 @@ namespace Util
       }
    }
 
+   #ifdef UTIL_MPI
+   /*
+   * Reduce (add) distributions from multiple MPI processors.
+   */
+   void Distribution::reduce(MPI::Intracomm& communicator, int root)
+   {
+   
+      long* buffer = new long[nBin_]; 
+      communicator.Reduce(histogram_.cArray(), buffer, nBin_, MPI::LONG, MPI::SUM, root);
+      for (int i=0; i < nBin_; ++i) {
+         histogram_[i] = buffer[i];
+      }
+      delete buffer;
+   }
+   #endif
+        
 }
 #endif

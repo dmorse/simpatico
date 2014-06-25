@@ -1,3 +1,0 @@
-subDirectories =
-pathFromSrc = tests/ddMd/configIo
-pathToSrc = ../../..

@@ -211,59 +211,87 @@ namespace DdMd
 
    private:
 
-      /// Array that holds cached Atom objects to be sent to other processors.
-      /// Allocated only on the master processor.
-      AtomArray  cache_;
+      /**
+      * Array that holds cached Atom objects to be sent to other processors.
+      * Allocated only on the master processor.
+      */
+      AtomArray cache_;
 
-      /// Stack of pointers to unused elements of cache_ array.
-      /// Allocated only on the master processor.
-      ArrayStack<Atom>  reservoir_;
-
-      #ifdef UTIL_MPI
-      /// Matrix of ptrs to elements of cache_ array. Each row contains
-      /// pointers to atoms to be sent to one processor.
-      /// Allocated only on the master processor.
-      DMatrix<Atom*>  sendArrays_;
-
-      /// Array of sendArrays_ row sizes.
-      /// Allocated only on the master processor.
-      DArray<int>  sendSizes_;
-      #endif
-
-      /// Pointer to associated Boundary object.
-      Boundary*  boundaryPtr_;
-
-      /// Pointer to associated Domain object.
-      Domain*  domainPtr_;
-
-      /// Pointer to associated Domain object.
-      AtomStorage*  storagePtr_;
+      /**
+      * Stack of pointers to unused elements of cache_ array.
+      * Allocated only on the master processor.
+      */
+      ArrayStack<Atom> reservoir_;
 
       #ifdef UTIL_MPI
-      /// Pointer to associated Buffer object.
-      Buffer*  bufferPtr_;
+      /**
+      * Matrix of ptrs to elements of cache_ array. Each row contains
+      * pointers to atoms to be sent to one processor.
+      * Allocated only on the master processor.
+      */
+      DMatrix<Atom*> sendArrays_;
+
+      /**
+      * Array of sendArrays_ row sizes.
+      * Allocated only on the master processor.
+      */
+      DArray<int> sendSizes_;
       #endif
 
-      /// Pointer to space for a new local Atom. Null when inactive.
-      Atom*  newPtr_;
+      /**
+      * Pointer to associated Boundary object (all domain processors).
+      */
+      Boundary* boundaryPtr_;
 
-      /// Maximum number of items that can be cached on master.
-      int  cacheCapacity_;
+      /**
+      * Pointer to associated Domain object (all domain processors).
+      */
+      Domain* domainPtr_;
 
-      /// Maximum allowed number of items per transmission to one processor.
-      int  sendCapacity_;
+      /**
+      * Pointer to associated Domain object (all domain processors).
+      */
+      AtomStorage* storagePtr_;
 
-      /// Rank of processor with the maximum current buffer size.
-      /// Used only on the master processor.
-      int  rankMaxSendSize_;
+      #ifdef UTIL_MPI
+      /**
+      * Pointer to associated Buffer object (all domain processors).
+      */
+      Buffer* bufferPtr_;
+      #endif
 
-      /// Total number of items cached for sending in addAtom()
-      /// Used only on the master processor.
-      int  nCachedTotal_;
+      /**
+      * Pointer to space for a new local Atom. Null when inactive.
+      */
+      Atom* newPtr_;
 
-      /// Total number of items actually sent.
-      /// Used only on the master processor.
-      int  nSentTotal_;
+      /**
+      * Maximum number of items that can be cached on master.
+      */
+      int cacheCapacity_;
+
+      /**
+      * Maximum allowed number of items per transmission to one processor.
+      */
+      int sendCapacity_;
+
+      /**
+      * Rank of processor with the maximum current buffer size.
+      * Used only on the master processor.
+      */
+      int rankMaxSendSize_;
+
+      /**
+      * Total number of items cached for sending in addAtom()
+      * Used only on the master processor.
+      */
+      int nCachedTotal_;
+
+      /**
+      * Total number of items actually sent.
+      * Used only on the master processor.
+      */
+      int nSentTotal_;
 
       /**
       * Allocate memory and initialize object.

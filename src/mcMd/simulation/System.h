@@ -162,7 +162,7 @@ namespace McMd
       *
       * Only reads parameters if this System is not a copy (i.e.,
       * was not constructed with the copy constructor). If it is a 
-      * copy, this method does nothing and returns normally.
+      * copy, this function does nothing and returns normally.
       *
       * \param in pararameter file input stream
       */
@@ -194,7 +194,7 @@ namespace McMd
       /**
       * Create a new configuration file reader/writer.
       *
-      * This method allows one to choose from among several subclasses
+      * This function allows one to choose from among several subclasses
       * of ConfigIo, identified by subclass name. The implementation
       * uses a Factory<ConfigIo> object to instantiate a new object. 
       * If setConfigIoFactory() has not been called, an instance of
@@ -212,14 +212,14 @@ namespace McMd
       * the atomic positions for all atoms of all molecules in 
       * this System. 
       *
-      * This method uses a ConfigIo object that is registered
+      * This function uses a ConfigIo object that is registered
       * with this System. If a ConfigIo object has not been
       * registered by calling setConfigIo(std::string&), this 
-      * method creates and uses an instance of the ConfigIo 
+      * function creates and uses an instance of the ConfigIo 
       * base class.
       *
       * Precondition: The System and its Parent Simulation must
-      * have been initialized by calling their readParam methods. 
+      * have been initialized by calling their readParam function. 
       *
       * \param in configuration file input stream
       */
@@ -228,7 +228,7 @@ namespace McMd
       /**
       * Write system configuration to a specified ostream.
       *
-      * Like readConfig(), this method will create and use 
+      * Like readConfig(), this function will create and use 
       * a ConfigIo object if none has been registered 
       * previously. 
       *
@@ -266,7 +266,7 @@ namespace McMd
       /**
       * Add a Molecule to this System.  
       *
-      * This method adds a Molecule to the set of Molecules of the same
+      * This function adds a Molecule to the set of Molecules of the same
       * Species in this System, and calls Molecule::setSystem(*this). 
       * 
       * The molecule to be added should first be popped off the Species 
@@ -279,7 +279,7 @@ namespace McMd
       /**
       * Remove a specific molecule from this System.  
       *
-      * This method removes a Molecule from the set of molecules of the
+      * This function removes a Molecule from the set of molecules of the
       * same Species in this System, and calls Molecule::unsetSystem().
       *
       * The removed Molecule should be pushed onto the Species reservoir
@@ -336,7 +336,7 @@ namespace McMd
       /** 
       * Get the index of a Molecule within its Species in this System.
       *
-      * This method returns the current (mutable) index of the molecule 
+      * This function returns the current (mutable) index of the molecule 
       * within the set of molecules of the same Species in this System, 
       * in the range 0 <= moleculeId < nMolecule(speciesId). This is 
       * the index required as the second argument of molecule(int, int).
@@ -485,10 +485,10 @@ namespace McMd
       #endif
 
       //@}
-
       #ifdef MCMD_PERTURB
       /// \name Free Energy Perturbation Theory
       //@{
+
       /**
       * Get the perturbation factory by reference.
       */
@@ -528,26 +528,37 @@ namespace McMd
 
       //@}
       #endif // MCMD_PERTURB
-
       /// \name Accessors (Miscellaneous)
       //@{
-     
-      /// Get integer Id for this System.
+    
+      /**
+      * Get integer index for this System.
+      */ 
       int id() const;
   
-      /// Get the parent Simulation by reference.
+      /**
+      * Get the parent Simulation by reference.
+      */ 
       Simulation& simulation() const;
 
-      /// Get the Boundary by reference.
+      /**
+      * Get the Boundary by reference.
+      */ 
       Boundary& boundary() const;
 
-      /// Get the EnergyEnsemble by reference.
+      /**
+      * Get the EnergyEnsemble by reference.
+      */ 
       EnergyEnsemble& energyEnsemble() const;
 
-      /// Get the BoundaryEnsemble by reference.
+      /**
+      * Get the BoundaryEnsemble by reference.
+      */ 
       BoundaryEnsemble& boundaryEnsemble() const;
 
-      /// Get the associated FileMaster by reference.
+      /**
+      * Get the associated FileMaster by reference.
+      */ 
       FileMaster& fileMaster() const;
 
       /**
@@ -639,18 +650,23 @@ namespace McMd
       /**
       * Allocate and initialize molecule sets for all species.
       *
-      * This method is called within Simulation::initialize() private 
-      * method to allocate and initialize an array of MoleculeSet objects 
-      * for all Species for this System.
+      * This function is called within the Simulation::initialize() 
+      * private member function to allocate and initialize an 
+      * array of MoleculeSet objects for all Species for this 
+      * System.
       *
       * Preconditions: This System must be associated with a parent
-      * Simulation, and all of the Species objects must have been
-      * initialized by calling SpeciesManager::readParameters().
+      * Simulation, and all Species objects must have been initialized
+      * by calling SpeciesManager::readParameters().
       */
       void allocateMoleculeSets();
 
       /**
-      * If no FileMaster exists, create and initialize one. 
+      * Read FileMaster parameters, if none yet exists.
+      *
+      * If no FileMaster exists, this function creates one and 
+      * reads paramters to initialize one. If there is already
+      * a FileMaster, it does nothing.
       *
       * Invoked in implementation of readParameters().
       *
@@ -659,7 +675,7 @@ namespace McMd
       void readFileMaster(std::istream& in);
 
       /**
-      * If no FileMaster exists, create and initialize one. 
+      * Load FileMaster data from archive, if necessary.
       *
       * \param ar input/loading archive
       */
@@ -673,39 +689,35 @@ namespace McMd
       void saveFileMaster(Serializable::OArchive& ar);
 
       /**
-      * Read potential styles, initialize LinkMaster or TetherMaster if needed.
-      *
-      * Invoked in implementation of readParameters().
+      * Read potential style parameter strings.
       *
       * \param in input parameter stream
       */
       void readPotentialStyles(std::istream& in);
 
       /**
-      * Load potential styles, initialize LinkMaster or TetherMaster if needed.
+      * Load potential style strings from an archive.
       *
       * \param ar input/loading archive
       */
       void loadPotentialStyles(Serializable::IArchive& ar);
 
       /**
-      * Load potential styles, initialize LinkMaster or TetherMaster if needed.
+      * Save potential style strings.
       *
       * \param ar output/saving archive
       */
       void savePotentialStyles(Serializable::OArchive& ar);
 
       /**
-      * Read energy and boundary ensembles.
-      *
-      * Invoked in implementation of readParameters().
+      * Read energy and boundary ensemble parameters.
       *
       * \param in input parameter stream
       */
       void readEnsembles(std::istream& in);
 
       /**
-      * Load energy and boundary ensembles.
+      * Load energy and boundary ensembles from archive.
       *
       * \param ar input/loading archive
       */
@@ -720,9 +732,7 @@ namespace McMd
 
       #ifdef MCMD_LINK
       /**
-      * Read the LinkMaster.
-      *
-      * Invoked in implementation of readParameters().
+      * Read the LinkMaster parameters.
       *
       * \param in input parameter stream
       */
@@ -746,8 +756,6 @@ namespace McMd
       #ifdef INTER_TETHER
       /**
       * Read the TetherMaster.
-      *
-      * Invoked in implementation of readParameters().
       *
       * \param in input parameter stream
       */
@@ -773,68 +781,68 @@ namespace McMd
       /**
       * Pointer to DArray containing one MoleculeSet for each Species.
       *
-      * The MoleculeSet (*moleculeSetsPtr_)[i] contains the molecules in
+      * MoleculeSet (*moleculeSetsPtr_)[i] contains all molecules in
       * this System that belong to Species i of the parent simulation.
       */
-      DArray< MoleculeSet >* moleculeSetsPtr_;
-  
-      /// Pointer to Boundary object for actual boundary.
-      Boundary*         boundaryPtr_;
+      DArray<MoleculeSet>* moleculeSetsPtr_;
+ 
+      /// Pointer to Boundary object.
+      Boundary* boundaryPtr_;
  
       #ifdef MCMD_LINK
-      /// TetherMaster object to manage Tethers
-      LinkMaster*       linkMasterPtr_;
+      /// LinkMaster object to manage Links.
+      LinkMaster* linkMasterPtr_;
       #endif
 
       #ifdef INTER_TETHER
-      /// TetherMaster object to manage Tethers
-      TetherMaster*     tetherMasterPtr_;
+      /// TetherMaster object to manage Tethers.
+      TetherMaster* tetherMasterPtr_;
       #endif
 
       /// Pointer to parent Simulation.
-      Simulation*       simulationPtr_;
+      Simulation* simulationPtr_;
 
-      /// Pointer to an EnergyEnsemble.
-      EnergyEnsemble*   energyEnsemblePtr_;
+      /// Pointer to the EnergyEnsemble.
+      EnergyEnsemble* energyEnsemblePtr_;
    
-      /// Pointer to an BoundaryEnsemble.
+      /// Pointer to the BoundaryEnsemble.
       BoundaryEnsemble* boundaryEnsemblePtr_;
   
       #ifndef INTER_NOPAIR 
-      /// Pointer to a PairPotential factory.
-      PairFactory*  pairFactoryPtr_;
+      /// Pointer to the PairPotential factory.
+      PairFactory* pairFactoryPtr_;
       #endif
    
-      /// Pointer to a Factory<BondPotential>.
-      Factory<BondPotential>*  bondFactoryPtr_;
+      /// Pointer to the Factory<BondPotential>.
+      Factory<BondPotential>* bondFactoryPtr_;
   
       #ifdef INTER_ANGLE 
       /// Pointer to the AnglePotential Factory.
-      Factory<AnglePotential>*  angleFactoryPtr_;
+      Factory<AnglePotential>* angleFactoryPtr_;
       #endif
    
       #ifdef INTER_DIHEDRAL
       /// Pointer to DihedralPotential Factory
-      Factory<DihedralPotential>*  dihedralFactoryPtr_;
+      Factory<DihedralPotential>* dihedralFactoryPtr_;
       #endif
   
       #ifdef MCMD_LINK
       /// Pointer to Link Factory
-      Factory<BondPotential>*  linkFactoryPtr_;
+      Factory<BondPotential>* linkFactoryPtr_;
       #endif
    
       #ifdef INTER_EXTERNAL
       /// Pointer to ExternalPotential factory
-      Factory<ExternalPotential>*  externalFactoryPtr_;
+      Factory<ExternalPotential>* externalFactoryPtr_;
       #endif
   
       #ifdef INTER_TETHER
-      /// Pointer to TetherFactory
-      TetherFactory*  tetherFactoryPtr_;
+      /// Pointer to TetherFactory.
+      TetherFactory* tetherFactoryPtr_;
       #endif
    
       /// Pointer to a configuration reader/writer.
-      ConfigIo*         configIoPtr_;
+      ConfigIo* configIoPtr_;
    
       /// Pointer to a configuration reader/writer factory.
       Factory<ConfigIo>* configIoFactoryPtr_;
@@ -843,7 +851,7 @@ namespace McMd
       Factory<TrajectoryIo>* trajectoryIoFactoryPtr_;
 
       /// Pointer to a FileMaster.
-      FileMaster*       fileMasterPtr_;
+      FileMaster* fileMasterPtr_;
    
       #ifdef MCMD_PERTURB
       /// Pointer to a perturbation object.
@@ -861,7 +869,6 @@ namespace McMd
 
       #endif  // UTIL_MPI
       #endif  // MCMD_PERTURB
-
       #ifndef INTER_NOPAIR
       /// Name of pair potential style.
       std::string pairStyle_;
@@ -896,43 +903,39 @@ namespace McMd
       #endif
 
       /// Integer index for this System.
-      int     id_;
+      int id_;
 
       /// Was this System instantiated with the copy constructor?
-      bool    isCopy_;
+      bool isCopy_;
 
       /// Did this System instantiate a FileMaster object?
-      bool    createdFileMaster_;
+      bool createdFileMaster_;
 
       #ifdef MCMD_PERTURB
       /// Should this system read a Perturbation in the param file?
-      bool    expectPerturbationParam_;
+      bool expectPerturbationParam_;
 
       /// Has this System instantiated a Perturbation?
-      bool    createdPerturbation_;
+      bool createdPerturbation_;
 
       /// Has this System instantiated a PerturbationFactory?
-      bool    createdPerturbationFactory_;
+      bool createdPerturbationFactory_;
       
       #ifdef UTIL_MPI
       /// Has this System instantiated a ReplicaMove?
-      bool    createdReplicaMove_;
+      bool createdReplicaMove_;
       #endif // ifdef UTIL_MPI
-
       #endif // ifdef MCMD_PERTURB
-
 
       /// list of observers
       std::set<MoleculeSetObserver*> observers_;
 
       /// notify all observers
-      void    notifyMoleculeSetObservers() const;
+      void notifyMoleculeSetObservers() const;
 
    //friends:
 
-
       friend class SubSystem;
-
       friend class ::SystemTest;
 
    }; 

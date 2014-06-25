@@ -81,5 +81,18 @@ namespace Util
    
    };
 
+   #ifdef UTIL_MPI
+   /**
+   * Function to throw exception in MPI code.
+   *
+   * If MPI is not initialized, this function writes the message and 
+   * calls MPI Abort. If MPI is not initialized, it simply throws the
+   * Exception.
+   *
+   * \param e Exception to be thrown.
+   */
+   void MpiThrow(Exception& e);
+   #endif
+
 }
 #endif

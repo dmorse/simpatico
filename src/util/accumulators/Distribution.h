@@ -136,6 +136,16 @@ namespace Util
       * Get the number of bins
       */
       int nBin() const;
+
+      #ifdef UTIL_MPI
+      /**
+      * Reduce (add) distributions from multiple MPI processors.
+      *
+      * \param communicator MPI communicator
+      * \param root rank of MPI root processor for reduction
+      */
+      void reduce(MPI::Intracomm& communicator, int root);
+      #endif
         
    protected:
    

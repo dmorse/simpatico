@@ -8,6 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#ifdef UTIL_MPI
+#include <mpi.h>
+#endif
 #include "Exception.h"
 #include "Log.h"
 
@@ -83,6 +86,20 @@ namespace Util
    std::string& Exception::message()
    {  return message_; }
 
-
+   #ifdef UTIL_MPI
+   /*
+   * Throws exception for code linked to MPI
+   */
+   void MpiThrow(Exception& e) {
+      if (MPI::Is_initialized()) {
+         std::cerr << e.message() << std::endl; 
+         Log::file().flush(); 
+         Log::close(); 
+         MPI::COMM_WORLD.Abort(65); 
+      } else { 
+         throw e; 
+      } 
+   }
+   #endif
 } 
 #endif

@@ -4,7 +4,7 @@ namespace DdMd
 /*! \page DdMd_NS_page 3.6 DdMd namespace
 
 \ref McMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref extend_page  (Next)    
+\ref DdMd_Sp_page (Next)    
 <BR>
 
 The DdMd namespace contains classes used to construct parallel domain decomposition molecular dynamics simulations.  All class names mentioned on this web page that are not explicitly qualified by a namespace identifier are defined in the  DdMd namespace.  
@@ -118,7 +118,7 @@ See also: \ref DdMd_Simulation_Module "Simulation Module"
 <BR>
 \ref McMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref source_page  (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref extend_page  (Next)
+\ref DdMd_Sp_page (Next) 
 
 */
 } 

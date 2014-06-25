@@ -9,6 +9,7 @@
 */
 
 #include "MemoryOArchive.h"
+#include <util/misc/Memory.h>
 
 #include <sstream>
 
@@ -43,7 +44,8 @@ namespace Util
       if (begin_) {
          UTIL_THROW("Re-allocation is prohibited");
       }
-      buffer_ = new Byte[capacity + sizeof(size_t)];
+      // buffer_ = new Byte[capacity + sizeof(size_t)];
+      Memory::allocate<Byte>(buffer_, capacity + sizeof(size_t));
       begin_  = buffer_ + sizeof(size_t);
       cursor_ = begin();
       endAllocated_ = begin_ + capacity; 

@@ -28,7 +28,12 @@ namespace McMd
    int        Atom::capacity_     = 0;
 
    // Static functions
-   
+
+   /*
+   * Initialize static variables 
+   * 
+   * The only purpose of this function is to guarantee inclusion of file in static library.
+   */   
    void Atom::initStatic()
    {
       atoms_        = 0;
@@ -115,19 +120,21 @@ namespace McMd
       }
    }
   
-   // Methods
-   
-   // Constructor.
+   // Nonstatic member functions
+  
+   /* 
+   * Constructor.
+   */
    Atom::Atom() :
      typeId_(NullIndex),
      id_(NullIndex)
    {}
 
-   // Set pointer to parent molecule.
+   /*
+   * Set pointer to parent molecule.
+   */
    void Atom::setMolecule(Molecule &molecule)
-   { 
-      moleculePtrs_[id_] = &molecule; 
-   }
+   {  moleculePtrs_[id_] = &molecule; }
 
-} 
+}
 #endif

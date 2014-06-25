@@ -45,7 +45,7 @@ cp  src/inter/config.mk_r obj/serial/inter/config.mk
 cp  src/mcMd/config.mk_r obj/serial/mcMd/config.mk
 cp  src/ddMd/config.mk_r obj/serial/ddMd/config.mk
 
-# Namespace config.mk in obj/parallel (for out-of-source builds with no MPI)
+# Namespace config.mk in obj/parallel (for out-of-source builds with MPI)
 cp  src/util/config.mk_r obj/parallel/util/config.mk
 cp  src/inter/config.mk_r obj/parallel/inter/config.mk
 cp  src/mcMd/config.mk_r obj/parallel/mcMd/config.mk
@@ -87,6 +87,7 @@ cp  src/mcMd/perturb/mcSystem/McPerturbationFactory.cpp_r src/mcMd/perturb/mcSys
 cp  src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp_r src/mcMd/analyzers/mcSystem/McAnalyzerFactory.cpp
 cp  src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp_r src/mcMd/analyzers/mdSystem/MdAnalyzerFactory.cpp
 cp  src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp_r src/mcMd/analyzers/system/SystemAnalyzerFactory.cpp
+
 cp  src/ddMd/configIos/ConfigIoFactory.cpp_r src/ddMd/configIos/ConfigIoFactory.cpp
 cp  src/ddMd/potentials/angle/AngleFactory.cpp_r src/ddMd/potentials/angle/AngleFactory.cpp
 cp  src/ddMd/potentials/bond/BondFactory.cpp_r src/ddMd/potentials/bond/BondFactory.cpp
@@ -96,6 +97,8 @@ cp  src/ddMd/potentials/pair/PairFactory.cpp_r src/ddMd/potentials/pair/PairFact
 cp  src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/IntegratorFactory.cpp
 cp  src/ddMd/analyzers/AnalyzerFactory.cpp_r src/ddMd/analyzers/AnalyzerFactory.cpp
 cp  src/ddMd/modifiers/ModifierFactory.cpp_r src/ddMd/modifiers/ModifierFactory.cpp
+cp  src/ddMd/sp/configIos/SpConfigIoFactory.cpp_r src/ddMd/sp/configIos/SpConfigIoFactory.cpp
+cp  src/ddMd/sp/analyzers/SpAnalyzerFactory.cpp_r src/ddMd/sp/analyzers/SpAnalyzerFactory.cpp
 
 # Copy typedef for the class that defines boundary conditions
 cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h

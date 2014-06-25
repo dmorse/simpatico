@@ -30,14 +30,15 @@ misc           miscellaneous utilities
 Makefile targets 
 ----------------
 
-The mcMd directory contains a makefile that can be used to compile all of 
-the classes in the directory tree rooted at mcMd. This includes all of the
-classes in the McMd namespace.  The most important targets are:
+The src/mcMd directory contains a makefile that can be used to execute 
+in-source compilation of all of the classes in the directory tree rooted 
+at mcMd, which include the entire McMc namespace, and build the corresponding 
+library. The most important targets are:
 
-make all      make all *.o files in src/mcMd and its subdirectories, 
-              a static library mcMd<suffix>.a in lib/, and the two
-              executables mdSim<suffix> and mcSim<suffix> in bin/.
+make all      make all *.o files in src/mcMd and its subdirectories, build
+              a static library mcMd<suffix>.a in lib/, and install two
+              executables named mdSim<suffix> and mcSim<suffix> in bin/.
 
-make clean    remove all *.o files in src/mcMd and its subdirectories, 
-              the static library file, and the two executables.
+make clean    remove all *.o files in src/mcMd and its subdirectories and
+              the static library file.
 

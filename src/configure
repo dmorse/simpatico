@@ -197,6 +197,11 @@ while getopts "m:g:b:a:d:e:f:l:s:u:z:k:c:h:q" opt; do
       else
          echo "-u OFF - DdMd modifiers" >&2
       fi
+      if [ `grep "^ *DDMD_MOLECULES *= *1" ddMd/config.mk` ]; then
+         echo "-z ON  - DdMd molecules" >&2
+      else
+         echo "-z OFF - DdMd molecules " >&2
+      fi
       if [ `grep "^ *MAKEDEP" config.mk` ]; then
          echo "-k ON  - automatic dependency tracking" >&2
       else

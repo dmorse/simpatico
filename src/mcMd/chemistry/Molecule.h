@@ -71,12 +71,16 @@ namespace McMd
       /// Null value for molecule id.
       static const int NullIndex = -1;
 
-      // Methods
-      
-      /// Constructor.
+      // Member functions
+     
+      /** 
+      * Constructor.
+      */
       Molecule();
 
-      /// \name Mutators
+      /**
+      * \name Mutators
+      */
       //@{
       
       /**
@@ -84,54 +88,54 @@ namespace McMd
       *
       * \param species parent Species object.
       */
-      void  setSpecies(Species &species);
+      void setSpecies(Species &species);
  
       /**
       * Set the parent System.
       *
       * \param system parent System object.
       */
-      void  setSystem(System &system);
+      void setSystem(System &system);
  
       /**
       * Set the parent System pointer to null (no System).
       */
-      void  unsetSystem();
+      void unsetSystem();
  
       /**
       * Set the integer index for this molecule.
       *
       * \param id integer array index.
       */
-      void  setId(int id);
+      void setId(int id);
 
       /**
       * Set the first Atom.
       *
       * \param atom first Atom in molecule.
       */
-      void  setFirstAtom(Atom &atom);
+      void setFirstAtom(Atom &atom);
  
       /**
       * Set the number of Atoms per molecule.
       *
       * \param nAtom number of Atoms in the molecule.
       */
-      void  setNAtom(int nAtom);
+      void setNAtom(int nAtom);
      
       /**
       * Set the first Bond.
       *
       * \param bond first Bond in molecule.
       */
-      void  setFirstBond(Bond &bond);
+      void setFirstBond(Bond &bond);
  
       /**
       * Set the number of Bonds per molecule.
       *
       * \param nBond number of Bonds in the molecule.
       */
-      void  setNBond(int nBond);
+      void setNBond(int nBond);
 
       #ifdef INTER_ANGLE
       /**
@@ -139,14 +143,14 @@ namespace McMd
       *
       * \param angle first Angle in molecule.
       */
-      void  setFirstAngle(Angle &angle);
+      void setFirstAngle(Angle &angle);
  
       /**
       * Set the number of Angles per molecule.
       *
       * \param nAngle number of Angles in molecule.
       */
-      void  setNAngle(int nAngle);
+      void setNAngle(int nAngle);
       #endif
 
       #ifdef INTER_DIHEDRAL
@@ -155,14 +159,14 @@ namespace McMd
       *
       * \param dihedral first Dihedral in molecule.
       */
-      void  setFirstDihedral(Dihedral &dihedral);
+      void setFirstDihedral(Dihedral &dihedral);
  
       /**
       * Set the number of Dihedrals per molecule.
       *
       * \param nDihedral number of Dihedrals in molecule.
       */
-      void  setNDihedral(int nDihedral);
+      void setNDihedral(int nDihedral);
       #endif
 
       //@}
@@ -173,25 +177,25 @@ namespace McMd
       Species& species() const;
 
       /// Get the parent System.
-      System&  system() const;
+      System& system() const;
 
       /// Get the index for this Molecule (unique in species).
-      int  id() const;
+      int id() const;
 
       /// Get the number of Atoms in this Molecule.
-      int  nAtom() const;
+      int nAtom() const;
 
       /// Get the number of Bonds in this Molecule.
-      int  nBond() const;
+      int nBond() const;
 
       #ifdef INTER_ANGLE
       /// Get the number of Angles in this Molecule.
-      int  nAngle() const;
+      int nAngle() const;
       #endif
 
       #ifdef INTER_DIHEDRAL
       /// Get the number of Dihedrals in this Molecule.
-      int  nDihedral() const;
+      int nDihedral() const;
       #endif
 
       /**
@@ -343,17 +347,17 @@ namespace McMd
 
       /// Pointer to System containing this molecule, if any.
       /// This pointer should be null when the molecule is in no System.
-      System*  systemPtr_;  
+      System* systemPtr_;  
 
       /// Pointer to first atom in molecule.
-      Atom*    firstAtomPtr_; 
+      Atom* firstAtomPtr_; 
 
       /// Pointer to first bond in molecule.
-      Bond*    firstBondPtr_;    
+      Bond* firstBondPtr_;    
 
       #ifdef INTER_ANGLE
       /// Pointer to first angle in molecule.
-      Angle*   firstAnglePtr_;
+      Angle* firstAnglePtr_;
       #endif
 
       #ifdef INTER_DIHEDRAL
@@ -382,7 +386,7 @@ namespace McMd
 
    };
 
-   // Inline methods
+   // Inline member functions
 
    /// Constructor.
    inline Molecule::Molecule()
@@ -719,12 +723,12 @@ namespace McMd
    inline void Molecule::setId(int id)
    {  id_ = id; }
 
-   // Inline method of Atom class.
+   // Inline member function of Atom class.
 
    /*
    * Return local id of an Atom within its parent molecule.
    *
-   * This method is defined here, rather than in Atom.h, because its 
+   * This function is defined here, rather than in Atom.h, because its 
    * implementation requires the inline method Molecule::atom(int).
    */
    inline int Atom::indexInMolecule() const

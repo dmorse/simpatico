@@ -20,8 +20,8 @@
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
 
-#include "GroupIterator.h"               // inline methods
-#include "ConstGroupIterator.h"          // inline methods
+#include "GroupIterator.h"               // inline functions
+#include "ConstGroupIterator.h"          // inline functions
 
 namespace DdMd
 {
@@ -100,35 +100,33 @@ namespace DdMd
       //@{
 
       /**
-      * Returns pointer to an address available for a new Group.
+      * Returns an address available for addition of a new Group.
       *
-      * This method returns the address of an empty Group<N> object that
-      * can be used for a new local Group<N>. The pointer that it returns
-      * is popped off the reservoir of unused objects. This method does 
-      * not modify the object id or add the Group to the set of local 
-      * Group<N> objects, and so must be followed by either a call to 
-      * add(), which adds the object to the set, or returnPtr(), which
-      * pushes the new pointer back onto the reservoir.
+      * This function begins a transaction that adds a new Group<N> 
+      * object by returning the address of a currently unused Group<N>
+      * object. The address of this new object is popped off the 
+      * reservoir of unused objects and assigned to an internal "new"
+      * pointer (newPtr_) before the function returns. This function 
+      * does not modify the object id or add the Group to the set of 
+      * local Group<N> objects. It must thus be followed by either a
+      * call to add(), which completes the transaction by adding the
+      * object to the local set, or by a call to returnPtr(), which
+      * reverts the transaction and pushes the new pointer back onto 
+      * the reservoir.
       *
       * \return address available for a new group.
       */
       Group<N>* newPtr();
 
       /**
-      * Reverses the action of newPtr.
+      * Complete addition of a new Group.
       *
-      * This method pushes the pointer returned by a previous call to
-      * newPtr back onto the reservoir, without adding it to the local
-      * group set.
-      */
-      void returnPtr();
-
-      /**
-      * Adds the most recent new Group to the set of local groups.
-      *
-      * This method adds the Group that is pointed at by the pointer
-      * returned by the most recent call to newPtr(). This method
-      * thus completes the process initiated by newPtr().
+      * This function completes the transaction begun by a previous
+      * call to newPtr() by adding the new Group whose address was
+      * returned by newPtr() to the set of local groups and nullifying
+      * the new Ptr. The invoking function must assign the new group a
+      * valid, previously unused global group id before calling the 
+      * add() function.
       *
       * Usage:
       * \code
@@ -139,29 +137,39 @@ namespace DdMd
       * storage.add();
       *
       * \endcode
-      * The Group id must be set before calling add(), but other
+      * The group id must be set before calling add(), but other
       * properties may be set either before or after calling add().
       *
       * Preconditions:
       * 1) newPtr() must have been called since the last add().
-      * 2) A valid global group id for this pointer must have been set.
-      * 3) A Group with the specified id must not already be in the set.
+      * 2) The new Group must have been a assigned a valid global group id.
+      * 3) A Group with the specified id may not already be in the set.
       */
       void add();
 
       /**
-      * Add a new Group with a specified id.
+      * Add a new Group with a specified id, in a single step.
       *
-      * Adds a new Group<N> to the set owned by this method, with a
+      * Adds a new Group<N> to the set owned by this function, with a
       * specified global id, and returns a pointer to the new Group.
-      * This method calls newPtr(), and sets the id of the new group,
-      * and calls add().  Other member variables must be set after
-      * calling this method, using the returned pointer.
+      * Internally, this function calls newPtr(), and sets the id of 
+      * the new group, and calls add().  Other member variables must 
+      * be set after calling this function, using the returned pointer.
       * 
       * \param id  global id for the new Group.
       * \return pointer to the new Group.
       */
       Group<N>* add(int id); 
+
+      /**
+      * Reverts a transaction begun by the newPtr() function.
+      *
+      * This function pushes the pointer returned by a previous call 
+      * to newPtr() back onto the reservoir of unused objects, without 
+      * adding it to the local group set, and the nullifies the "new" 
+      * pointer.
+      */
+      void returnPtr();
 
       /**
       * Remove a specific Group.
@@ -174,13 +182,17 @@ namespace DdMd
 
       /**
       * Remove all groups.
+      *
+      * This function resets the GroupStorage to an empty state by
+      * pushing the addresses of existing groups onto the reservoir 
+      * and then clearing the set of groups.
       */
       void clearGroups(); 
 
       //@}
       /// \name Iterator Interface
       //@{
-      
+ 
       /**
       * Set iterator to beginning of the set of groups.
       *
@@ -263,7 +275,7 @@ namespace DdMd
       bool isValid();
 
       //@}
-      /// \name GroupExchanger Intervace (Interprocessor Communication)
+      /// \name GroupExchanger Interface (Interprocessor Communication)
       //@{
       
       /**
@@ -334,14 +346,15 @@ namespace DdMd
       /**
       * Return true if the container is valid, or throw an Exception.
       *
-      * Calls overloaded isValid() method, then checks consistency of atom 
-      * pointers with those in an asociated AtomStorage. If hasGhosts is
-      * false, the method requires that no group contain a pointer to a ghost 
-      * atom. If hasGhosts is true, requires that every Group be complete.
+      * This calls the overloaded isValid() function and then checks 
+      * consistency of atom pointers in all groups with those in an
+      * asociated AtomStorage. If hasGhosts is false, the function 
+      * requires that no group contain a pointer to a ghost atom. If 
+      * hasGhosts is true, it requires that every Group be complete.
       *
       * \param atomStorage  associated AtomStorage object
-      * \param hasGhosts    true if the atomStorage has ghosts, false otherwise
-      * \param communicator domain communicator 
+      * \param hasGhosts  true if the atomStorage has ghosts, false otherwise
+      * \param communicator  domain communicator 
       */
       #ifdef UTIL_MPI
       virtual
@@ -433,7 +446,7 @@ namespace DdMd
     
    };
 
-   // Inline method definitions
+   // Inline member function definitions
 
    template <int N>
    inline int GroupStorage<N>::size() const

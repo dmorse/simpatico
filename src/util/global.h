@@ -50,10 +50,7 @@
   #else
     #define UTIL_THROW(msg) { \
       Exception e(UTIL_FUNC, msg, __FILE__, __LINE__); \
-      std::cerr   << e.message() << std::endl; \
-      Log::file().flush(); \
-      Log::close(); \
-      MPI::COMM_WORLD.Abort(65); }
+      MpiThrow(e); }
   #endif
 #else
   #ifndef UTIL_MPI
@@ -61,10 +58,7 @@
   #else
     #define UTIL_THROW(msg) { \
       Exception e(msg, __FILE__, __LINE__); \
-      std::cerr   << e.message() << std::endl; \
-      Log::file().flush(); \
-      Log::close(); \
-      MPI::COMM_WORLD.Abort(65); }
+      MpiThrow(e); }
   #endif
 #endif
 

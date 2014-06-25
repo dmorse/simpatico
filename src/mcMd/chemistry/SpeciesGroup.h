@@ -31,7 +31,7 @@ namespace McMd
    /**
    * Serialize one SpeciesGroup<NAtom>.
    *
-   * Default implementation calls serialize method of data object.
+   * Default implementation calls serialize member function of data object.
    * Can be overridden by any explicit specialization.
    *
    * \param ar            archive object

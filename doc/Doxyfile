@@ -672,6 +672,7 @@ INPUT                  = ../src/util \
                          ../src/inter \
                          ../src/mcMd \
                          ../src/ddMd \
+                         ../src/mdCf \
                          ../src/test \
                          manual
 

@@ -1,3 +1,0 @@
-subDirectories = mtrand
-pathFromSrc = util/random
-pathToSrc = ../..

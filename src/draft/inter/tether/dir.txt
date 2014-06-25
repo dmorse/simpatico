@@ -1,3 +1,0 @@
-subDirectories =
-pathFromSrc = mcMd/potentials/tether
-pathToSrc = ../../..

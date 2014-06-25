@@ -1,0 +1,51 @@
+#ifndef MDCF_SP_CONFIG_IO_FACTORY_CPP
+#define MDCF_SP_CONFIG_IO_FACTORY_CPP
+
+/*
+* Simpatico - SpConfiguration Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "SpConfigIoFactory.h"  
+
+// Subclasses of SpConfigIo 
+#include "DdMdSpConfigIo.h"
+
+namespace DdMd
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor
+   */
+   SpConfigIoFactory::SpConfigIoFactory(SpConfiguration& configuration)
+    : configurationPtr_(&configuration)
+   {}
+
+   /* 
+   * Return a pointer to a instance of SpConfigIo subclass className.
+   */
+   SpConfigIo* SpConfigIoFactory::factory(const std::string &className) const
+   {
+      SpConfigIo *ptr = 0;
+
+      // Try subfactories first.
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
+
+      if (className == "DdMdSpConfigIo") {
+         ptr = new DdMdSpConfigIo(*configurationPtr_);
+      } else 
+      if (className == "DdMdSpConfigIo_Molecule") {
+         bool hasMolecules = true;
+         ptr = new DdMdSpConfigIo(*configurationPtr_, hasMolecules);
+      }
+ 
+      return ptr;
+   }
+
+}
+#endif

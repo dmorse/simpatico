@@ -22,7 +22,7 @@ namespace McMd
    /**
    * A Nose-Hoover NVT molecular dynamics integrator.
    *
-   * The step() method implements a reversible velocity-verlet MD NVT 
+   * The step() function implements a reversible velocity-verlet MD NVT 
    * integrator step for the Nose-Hoover equations, as described by
    * Winkler, Kraus, and Reineker, J. Chem. Phys. 102, 9018 (1995).
    *
@@ -37,10 +37,16 @@ namespace McMd
    
    public:
 
-      /// Constructor. 
+      /**
+      * Constructor. 
+      *
+      * \param system parent MdSystem object
+      */
       NvtNhIntegrator(MdSystem& system);
- 
-      /// Destructor.   
+
+      /** 
+      * Destructor.   
+      */
       virtual ~NvtNhIntegrator();
 
       /**

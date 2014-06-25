@@ -1,3 +1,0 @@
-subDirectories = util format containers mpi signal param math space random crystal accumulators
-pathFromSrc = util
-pathToSrc = ..
