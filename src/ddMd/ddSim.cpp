@@ -33,6 +33,8 @@ using namespace Util;
 *   Split communicator into nSystem processor groups, each for a different 
 *   physical system. The original communicator rank must be a multiple of 
 *   nSystem.
+*
+* \ingroup DdMd_Module
 */
 int main(int argc, char **argv)
 {

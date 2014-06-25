@@ -22,17 +22,13 @@ all: $(ddMd_sp_OBJS)
 clean:
 	rm -f $(ddMd_sp_OBJS) $(ddMd_sp_OBJS:.o=.d) 
 
-veryclean:
-	make clean
-ifeq ($(OBJ_DIR),$(SRC_DIR))
-	rm -f configIos/ConfigIoFactory.cpp
-	rm -f analyzers/AnalyzerFactory.cpp
-endif
+clean-deps:
+	rm -f $(ddMd_sp_OBJS:.o=.d) 
 
 #-----------------------------------------------------------------------
 # Include dependency files
  
 -include $(util_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
--include $(ddMd_sp_OBJS:.o=.d)
+-include $(ddMd_OBJS:.o=.d)
 
