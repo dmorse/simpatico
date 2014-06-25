@@ -248,7 +248,7 @@ namespace Inter
       double tanH = tanh(C_+cosine);
       double sechSq = (1.0 - tanH*tanH);
       double f = prefactor_[type]*externalParameter_*sechSq;
-      deriv *= f;
+      deriv *= -1.0*f;
       deriv *= ne;
       deriv[0] = deriv[0] + nucleationClip_*(M_PI/cellLengths[0]*sin(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_)))/
                             cosh(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))/

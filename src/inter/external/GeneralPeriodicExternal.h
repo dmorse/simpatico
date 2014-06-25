@@ -239,7 +239,7 @@ namespace Inter
       double tanH = tanh(cosine);
       double sechSq = (1.0 - tanH*tanH);
       double f = externalParameter_*sechSq;
-      deriv *= f;
+      deriv *= -1.0*f;
       force = deriv;
    }
  
