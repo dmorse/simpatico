@@ -14,15 +14,13 @@
 using namespace Util;
 
 /**
-* @file ddSim.cpp
-*/
-
-/**
+* \page ddSim ddSim parallel MD program
+*
 * Program for parallel domain-decomposition molecular dynamics simulation.
 *
 * Usage:
 *
-*    mpirun -np NP ddSim [options] < paramFile
+*    mpirun -np NP ddSim [-e] [-s nSystem] < paramFile
 *
 *    Here, NP is the number of processors and paramFile is a parameter 
 *    file that is read from standard input.
@@ -30,16 +28,17 @@ using namespace Util;
 * Options:
 *
 *   -e  
+
 *    Enable echoing of parameter file to log file as it is read. 
 *    This is sometimes useful for debugging the parameter file.
 *
 *  -s nSystem 
+
 *   Split communicator into nSystem processor groups, each for a different 
 *   physical system. The original communicator rank must be a multiple of 
 *   nSystem.
-*
-* \ingroup DdMd_Module
 */
+
 int main(int argc, char **argv)
 {
 

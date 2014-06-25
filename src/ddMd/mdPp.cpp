@@ -15,41 +15,44 @@
 using namespace Util;
 
 /**
-* @file mdPp.cpp
- */
-
-/**
-* Program for postprocessing ddSim MD trajectories.
+* \page  mdPp mdPp MD postprocessing program
 *
-* USAGE:
+* Single-processor program for MD postprocessing analysis.
+* 
+* Usage:
 *
-*    mdProcess [-t] [-i inputConfigIo]  param config first last
+*    mdPp [-t] [-i inputConfigIo]  param config first last
 *
 * Required arguments:
 *
 *     param  - name of parameter file
+*
 *     config - base name of configuration file(s)
+*
 *     first  - index of first configuration or frame
+*
 *     last   - index of last configuration or frame
 *
-* Options and option arguments:
+* Options:
 *
 *     -t
+*
 *        Sets to read a trajectory file. If not set, reads a sequence
 *        of configuration files.
 *
 *     -i inputConfigIo
+*
 *        Specify input configuration/trajectory format. The required
 *        argument inputConfigIo is the name of a SpConfigIo subclass.
 *
-* \ingroup DdMd_Module
 */
+
 int main(int argc, char** argv)
 {
 
    DdMd::Processor processor;
 
-   // Read command-line arguments
+   // Parse command-line arguments
    bool tFlag = false;
    bool iFlag = false;
    std::string configIoName = "SpDdMdConfigIo";
@@ -68,6 +71,8 @@ int main(int argc, char** argv)
          Log::file() << "Unknown option -" << optopt << std::endl;
       }
    }
+
+   // Read required arguments
    if (argc - optind != 4) {
       std::cout << "optind = " << optind << std::endl;
       std::cout << "argc   = " << argc << std::endl;
