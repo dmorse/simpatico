@@ -14,6 +14,10 @@
 using namespace Util;
 
 /**
+* @file ddSim.cpp
+*/
+
+/**
 * Program for parallel domain-decomposition molecular dynamics simulation.
 *
 * Usage:

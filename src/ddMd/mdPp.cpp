@@ -15,6 +15,10 @@
 using namespace Util;
 
 /**
+* @file mdPp.cpp
+ */
+
+/**
 * Program for postprocessing ddSim MD trajectories.
 *
 * USAGE:
