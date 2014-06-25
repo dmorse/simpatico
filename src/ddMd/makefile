@@ -19,16 +19,33 @@ include $(SRC_DIR)/ddMd/sources.mk
 #-----------------------------------------------------------------------
 # Variable definition
 
+# Main program location
 DDSIM=$(OBJ_DIR)/ddMd/ddSim
+
+# MD postprocessor program location
+MDPP=$(OBJ_DIR)/ddMd/mdPp
 
 #-----------------------------------------------------------------------
 # Main targets
 
-all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE)
+all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE) $(MDPP).o $(MDPP_EXE)
+
+$(DDSIM_EXE): $(DDSIM).o $(LIBS)
+	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o $(LIBS)
+
+ddSim:
+	make $(DDSIM_EXE)
+
+$(MDPP_EXE): $(MDPP).o $(LIBS)
+	$(CXX) $(LDFLAGS) -o $(MDPP_EXE) $(MDPP).o $(LIBS)
+
+mdPp:
+	make $(MDPP_EXE)
 
 clean:
 	rm -f $(ddMd_OBJS) $(ddMd_OBJS:.o=.d) $(ddMd_LIB)
 	rm -f $(DDSIM).o $(DDSIM).d
+	rm -f $(MDPP).o $(MDPP).d
 	cd tests; make clean
 	rm -f *.o */*.o */*/*.o
 	rm -f *.d */*.d */*/*.d
@@ -45,13 +62,9 @@ ifeq ($(OBJ_DIR),$(SRC_DIR))
 	rm -f potentials/dihedral/DihedralFactory.cpp
 	rm -f potentials/external/ExternalFactory.cpp
 	rm -f potentials/pair/PairFactory.cpp
+	rm -f sp/configIos/SpConfigIoFactory.cpp
+	rm -f sp/analyzers/SpAnalyzerFactory.cpp
 endif
-
-$(DDSIM_EXE): $(DDSIM).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o $(LIBS)
-
-ddSim:
-	make $(DDSIM_EXE)
 
 #-----------------------------------------------------------------------
 # Include dependency files

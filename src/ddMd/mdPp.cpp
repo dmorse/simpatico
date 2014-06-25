@@ -24,7 +24,7 @@ using namespace Util;
    * Required arguments:
    *
    *     param  - name of parameter file
-   *     config - name or base name of configuration file(s)
+   *     config - base name of configuration file(s)
    *     first  - index of first configuration or frame
    *     last   - index of last configuration or frame
    *

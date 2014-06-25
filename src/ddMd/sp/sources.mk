@@ -9,8 +9,7 @@ ddMd_sp_= \
     $(ddMd_sp_storage_) \
     $(ddMd_sp_configIos_) \
     $(ddMd_sp_processor_) \
-    $(ddMd_sp_analyzers_) \
-    ddMd/sp/mdProcess.cpp
+    $(ddMd_sp_analyzers_) 
 
 # Create lists of source (*.cpp) and object (*.o) files
 ddMd_sp_SRCS=\

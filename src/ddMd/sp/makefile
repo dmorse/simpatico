@@ -17,13 +17,7 @@ MD_PROCESS_EXE=$(BIN_DIR)/mdProcess
 
 # Main targets
 
-all: $(ddMd_sp_OBJS) $(MD_PROCESS_EXE)
-
-$(MD_PROCESS_EXE): $(MD_PROCESS_OBJ) $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(MD_PROCESS_EXE) $(MD_PROCESS_OBJ) $(LIBS)
-
-mdProcess:
-	make $(MD_PROCESS_EXE)
+all: $(ddMd_sp_OBJS)
 
 clean:
 	rm -f $(ddMd_sp_OBJS) $(ddMd_sp_OBJS:.o=.d) 
