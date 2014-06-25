@@ -149,6 +149,11 @@ namespace DdMd
          filename = baseFileName;
          filename += indexString.str();
          configFile.open(filename.c_str());
+         if (!configFile.is_open()) {
+            std::string msg = "Configuration file is not open. Filename =";
+            msg += filename;
+            UTIL_THROW(msg.c_str());
+         }
 
          // Clear the stringstream
          indexString.str("");

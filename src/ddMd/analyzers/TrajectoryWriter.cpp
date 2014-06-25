@@ -1,5 +1,5 @@
-#ifndef DDMD_WRITE_TRAJECTORY_CPP
-#define DDMD_WRITE_TRAJECTORY_CPP
+#ifndef DDMD_TRAJECTORY_WRITER_CPP
+#define DDMD_TRAJECTORY_WRITER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "WriteTrajectory.h"
+#include "TrajectoryWriter.h"
 #include <util/mpi/MpiLoader.h>
 #include <util/misc/ioUtil.h>
 
@@ -22,16 +22,16 @@ namespace DdMd
    /*
    * Constructor.
    */
-   WriteTrajectory::WriteTrajectory(Simulation& simulation) 
+   TrajectoryWriter::TrajectoryWriter(Simulation& simulation) 
     : Analyzer(simulation),
       nSample_(0),
       isInitialized_(false)
-   {  setClassName("WriteTrajectory"); }
+   {  setClassName("TrajectoryWriter"); }
 
    /*
    * Read interval and outputFileName. 
    */
-   void WriteTrajectory::readParameters(std::istream& in) 
+   void TrajectoryWriter::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);
@@ -41,7 +41,7 @@ namespace DdMd
    /*
    * Load internal state from an archive.
    */
-   void WriteTrajectory::loadParameters(Serializable::IArchive &ar)
+   void TrajectoryWriter::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
       loadOutputFileName(ar);
@@ -55,7 +55,7 @@ namespace DdMd
    /*
    * Save internal state to an archive.
    */
-   void WriteTrajectory::save(Serializable::OArchive &ar)
+   void TrajectoryWriter::save(Serializable::OArchive &ar)
    {
       saveInterval(ar);
       saveOutputFileName(ar);
@@ -65,7 +65,7 @@ namespace DdMd
    /*
    * Clear sample counter and close file.
    */
-   void WriteTrajectory::clear() 
+   void TrajectoryWriter::clear() 
    {  
       nSample_ = 0; 
       if (outputFile_.is_open()) {
@@ -76,7 +76,7 @@ namespace DdMd
    /*
    * Write frame to file, header on first sample.
    */
-   void WriteTrajectory::sample(long iStep) 
+   void TrajectoryWriter::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
          if (nSample_ == 0) {
@@ -91,7 +91,7 @@ namespace DdMd
    /*
    * Clear sample counter and close output file.
    */
-   void WriteTrajectory::output()
+   void TrajectoryWriter::output()
    {  clear(); }
 
 }

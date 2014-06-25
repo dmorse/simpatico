@@ -16,6 +16,27 @@ using namespace Util;
 
    /**
    * Program for postprocessing ddSim MD trajectories.
+   *
+   * USAGE:
+   *
+   *    mdProcess [-t] [-i inputConfigIo]  param config first last
+   *
+   * Required arguments:
+   *
+   *     param  - name of parameter file
+   *     config - name or base name of configuration file(s)
+   *     first  - index of first configuration or frame
+   *     last   - index of last configuration or frame
+   *
+   * Options and option arguments:
+   *
+   *     -t 
+   *        Sets to read a trajectory file. If not set, reads a sequence
+   *        of configuration files.
+   *
+   *     -i inputConfigIo
+   *        Specify input configuration/trajectory format. The required
+   *        argument inputConfigIo is the name of a SpConfigIo subclass.
    */
    int main(int argc, char** argv)
    {
@@ -24,20 +45,26 @@ using namespace Util;
 
       // Read command-line arguments
       bool tFlag = false;
+      bool iFlag = false;
+      std::string configIoName = "SpDdMdConfigIo";
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "t")) != -1) {
+      while ((c = getopt(argc, argv, "ti:")) != -1) {
          switch (c) {
          case 't':
-           tFlag = true;
-           break;
+            tFlag = true;
+            break;
+         case 'i':
+            iFlag = true;
+            configIoName = optarg;
+            break;
          case '?':
-           Log::file() << "Unknown option -" << optopt << std::endl;
+            Log::file() << "Unknown option -" << optopt << std::endl;
          }
       }
       if (argc - optind != 4) {
-        std::cout << "optind = " << optind << std::endl;
-        std::cout << "argc   = " << argc << std::endl;
+         std::cout << "optind = " << optind << std::endl;
+         std::cout << "argc   = " << argc << std::endl;
          UTIL_THROW("Wrong number of arguments");
       }
       const char* paramFileName = argv[optind];
@@ -55,8 +82,13 @@ using namespace Util;
       processor.readParam(paramFile);
       paramFile.close();
 
+      if (iFlag) {
+         std::cout << "Setting ConfigIo " << configIoName << std::endl;
+         processor.setConfigIo(configIoName);
+      }
+
       // Process dumps
-      processor.analyzeDumps(first, last, paramFileName);
+      processor.analyzeDumps(first, last, configFileName);
 
       return 0;
    }

@@ -60,27 +60,38 @@ namespace DdMd
          // Get pointer to new atom 
          atomPtr = configuration().atoms().newPtr();
  
-         file >> atomPtr->id >> atomPtr->typeId;
-         if (atomPtr->id < 0 || atomPtr->id >= atomCapacity) {
+         file >> atomPtr->id;
+         if (atomPtr->id < 0) {
+            std::cout << "atom id =" << atomPtr->id << std::endl;
+            UTIL_THROW("Negative atom id");
+         }
+         if (atomPtr->id >= atomCapacity) {
+            std::cout << "atom id      =" << atomPtr->id << std::endl;
+            std::cout << "atomCapacity =" << atomCapacity << std::endl;
             UTIL_THROW("Invalid atom id");
          }
+         file >> atomPtr->typeId;
          if (hasMolecules_) {
-            file >> atomPtr->speciesId 
-                 >> atomPtr->moleculeId 
-                 >> atomPtr->atomId;
+            file >> atomPtr->speciesId;
             if (atomPtr->speciesId < 0) {
-               UTIL_THROW("Invalid species id");
+               std::cout << "species Id  =" << atomPtr->speciesId << std::endl;
+               UTIL_THROW("Negative species id");
             }
+            file >> atomPtr->moleculeId; 
             if (atomPtr->moleculeId < 0) {
-               UTIL_THROW("Invalid molecule id");
+               std::cout << "molecule Id =" << atomPtr->moleculeId << std::endl;
+               UTIL_THROW("Negative molecule id");
             }
+            file >> atomPtr->atomId;
             if (atomPtr->atomId < 0) {
-               UTIL_THROW("Invalid atom id");
+               std::cout << "atom id     =" << atomPtr->atomId << std::endl;
+               UTIL_THROW("Negative atom id in molecule");
             }
          }
          file >> atomPtr->position;
          file >> atomPtr->velocity;
 
+         // Finalize addition of new atom
          configuration().atoms().add();
       }
 

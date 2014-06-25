@@ -32,17 +32,17 @@ namespace McMd
 
    using namespace Util;
 
-   /* 
-   * Constructor.   
+   /*
+   * Constructor.
    */
-   DCDTrajectoryIo::DCDTrajectoryIo(System &system) 
+   DCDTrajectoryIo::DCDTrajectoryIo(System &system)
    : TrajectoryIo(system)
    {}
- 
-   /* 
-   * Destructor.   
+
+   /*
+   * Destructor.
    */
-   DCDTrajectoryIo::~DCDTrajectoryIo() 
+   DCDTrajectoryIo::~DCDTrajectoryIo()
    {}
 
    static unsigned int read_int(std::fstream &file)
@@ -62,33 +62,33 @@ namespace McMd
       int iSpec,iMol;
       Species* speciesPtr;
       Molecule* molPtr;
-   
+
       for (iSpec = 0; iSpec < nSpecies; ++iSpec) {
-        speciesPtr = &simulation().species(iSpec);
-        speciesCapacity = speciesPtr->capacity();
-    
-        // Add molecules to system
-        for (iMol = 0; iMol < speciesCapacity; ++iMol) {
-          molPtr = &(speciesPtr->reservoir().pop());
-          system().addMolecule(*molPtr);
-        }
-        atomCapacity   += speciesCapacity*speciesPtr->nAtom();
-        bondCapacity   += speciesCapacity*speciesPtr->nBond();
-       }
-    
+         speciesPtr = &simulation().species(iSpec);
+         speciesCapacity = speciesPtr->capacity();
+
+         // Add molecules to system
+         for (iMol = 0; iMol < speciesCapacity; ++iMol) {
+            molPtr = &(speciesPtr->reservoir().pop());
+            system().addMolecule(*molPtr);
+         }
+         atomCapacity += speciesCapacity*speciesPtr->nAtom();
+         bondCapacity += speciesCapacity*speciesPtr->nBond();
+      }
+
       // read number of frames
       file.seekp(NFILE_POS);
       nFrames_ = read_int(file);
-    
+
       file.seekp(NATOMS_POS);
       nAtoms_ = read_int(file);
       if (nAtoms_ != atomCapacity) {
-        std::ostringstream oss;
-        oss << "Number of atoms in DCD file (" << nAtoms_ << ") does not "
-             << "match allocated number of atoms (" << atomCapacity  << ")!";
-        UTIL_THROW(oss.str().c_str());
+         std::ostringstream oss;
+         oss << "Number of atoms in DCD file (" << nAtoms_ << ") does not "
+              << "match allocated number of atoms (" << atomCapacity  << ")!";
+         UTIL_THROW(oss.str().c_str());
       }
-    
+
       file.seekp(FRAMEDATA_POS);
 
       xBuffer_.allocate(nAtoms_);
@@ -125,13 +125,13 @@ namespace McMd
          oss << "Unkown file format!";
          UTIL_THROW(oss.str().c_str());
       }
-   
+
       if (!file.good()) {
          std::ostringstream oss;
          oss << "Error reading trajectory file!";
          UTIL_THROW(oss.str().c_str());
       }
-   
+
       lengths[0]=lx;
       lengths[1]=ly;
       lengths[2]=lz;
@@ -140,44 +140,44 @@ namespace McMd
       // Read frame data
       int blockSize;
 
-      // read cords
+      // read coords
       blockSize = read_int(file);
       file.read((char *) xBuffer_.cArray(), sizeof(float) * nAtoms_);
       read_int(file); // blockSize
-    
+
       if (blockSize != (int)sizeof(float)*nAtoms_) {
          std::ostringstream oss;
          oss << "Invalid frame size (got " << blockSize << ", expected " << nAtoms_ << ")";
          UTIL_THROW(oss.str().c_str());
       }
-    
+
       blockSize = read_int(file);
       file.read((char *) yBuffer_.cArray(), sizeof(float) * nAtoms_);
       read_int(file); // blockSize
-    
+
       if (blockSize != (int)sizeof(float)*nAtoms_) {
          std::ostringstream oss;
          oss << "Invalid frame size (got " << blockSize << ", expected " << nAtoms_ << ")";
          UTIL_THROW(oss.str().c_str());
       }
-    
+
       blockSize = read_int(file);
       file.read((char *) zBuffer_.cArray(), sizeof(float) * nAtoms_);
       read_int(file); // blockSize
-      
+
       if (blockSize != (int)sizeof(float)* nAtoms_) {
          std::ostringstream oss;
          oss << "Invalid frame size (got " << blockSize << ", expected " << nAtoms_ << ")";
          UTIL_THROW(oss.str().c_str());
       }
-    
+
       // Load positions, assume they are ordered according to species
       int iSpecies,iMol;
       int bufferIdx=0;
       Species *speciesPtr;
       Molecule::AtomIterator atomIter;
       Molecule *molPtr;
-    
+
       for (iSpecies = 0; iSpecies < simulation().nSpecies(); ++iSpecies) {
          speciesPtr = &simulation().species(iSpecies);
          for (iMol = 0; iMol < speciesPtr->capacity(); ++iMol) {
@@ -186,14 +186,14 @@ namespace McMd
                atomIter->position()[0] = (double) xBuffer_[bufferIdx];
                atomIter->position()[1] = (double) yBuffer_[bufferIdx];
                atomIter->position()[2] = (double) zBuffer_[bufferIdx];
-    
+
                // shift into simulation cell
                boundary().shift(atomIter->position());
-    
+
                bufferIdx++;
             }
          }
       }
    }
-} 
+}
 #endif

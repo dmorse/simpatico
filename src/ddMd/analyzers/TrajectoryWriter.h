@@ -1,5 +1,5 @@
-#ifndef DDMD_WRITE_TRAJECTORY_H
-#define DDMD_WRITE_TRAJECTORY_H
+#ifndef DDMD_TRAJECTORY_WRITER_H
+#define DDMD_TRAJECTORY_WRITER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -21,7 +21,7 @@ namespace DdMd
    *
    * \ingroup DdMd_Analyzer_Module
    */
-   class WriteTrajectory : public Analyzer
+   class TrajectoryWriter : public Analyzer
    {
    
    public:
@@ -31,12 +31,12 @@ namespace DdMd
       *
       * \param simulation parent Simulation object. 
       */
-      WriteTrajectory(Simulation& simulation);
+      TrajectoryWriter(Simulation& simulation);
    
       /**
       * Destructor.
       */
-      virtual ~WriteTrajectory()
+      virtual ~TrajectoryWriter()
       {} 
    
       /**
