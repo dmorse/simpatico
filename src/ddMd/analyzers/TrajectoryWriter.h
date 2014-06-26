@@ -95,14 +95,14 @@ namespace DdMd
       *
       * Called by sample when iStep == 0.
       */
-      virtual void writeHeader(std::ostream& out, long iStep) = 0;
+      virtual void writeHeader(std::ofstream& out, long iStep) = 0;
 
       /**
       * Write data that should appear in every frame.
       * 
       * Called by sample on every step.
       */
-      virtual void writeFrame(std::ostream& out, long iStep) = 0;
+      virtual void writeFrame(std::ofstream& out, long iStep) = 0;
 
       /**
       * Get the Domain by reference.
@@ -171,81 +171,29 @@ namespace DdMd
       /// Has readParam been called?
       long isInitialized_;
    
-      // Distributors and collectors
-      AtomCollector atomCollector_;
-      #ifdef INTER_BOND
-      GroupCollector<2> bondCollector_;
-      #endif
-      #ifdef INTER_ANGLE
-      GroupCollector<3> angleCollector_;
-      #endif
-      #ifdef INTER_DIHEDRAL
-      GroupCollector<4> dihedralCollector_;
-      #endif
-
       // Pointers to associated objects.
       Domain* domainPtr_;
       Boundary* boundaryPtr_;
+
+      // Storage and collectors
+      AtomCollector atomCollector_;
       AtomStorage* atomStoragePtr_;
+      int atomCacheCapacity_;
       #ifdef INTER_BOND
+      GroupCollector<2> bondCollector_;
       BondStorage* bondStoragePtr_;
+      int bondCacheCapacity_;
       #endif
       #ifdef INTER_ANGLE
+      GroupCollector<3> angleCollector_;
       AngleStorage* angleStoragePtr_;
+      int angleCacheCapacity_;
       #endif
       #ifdef INTER_DIHEDRAL
+      GroupCollector<4> dihedralCollector_;
       DihedralStorage* dihedralStoragePtr_;
+      int dihedralCacheCapacity_;
       #endif
-
-      // Cache capacities
-      int  atomCacheCapacity_;
-      #ifdef INTER_BOND
-      int  bondCacheCapacity_;
-      #endif
-      #ifdef INTER_ANGLE
-      int  angleCacheCapacity_;
-      #endif
-      #ifdef INTER_DIHEDRAL
-      int  dihedralCacheCapacity_;
-      #endif
-
-      /**
-      * Associate with related objects.
-      *
-      * Required iff instantiated with default constructor.
-      */
-      void associate(Domain& domain, Boundary& boundary,
-                     AtomStorage& atomStorage,
-                     #ifdef INTER_BOND
-                     BondStorage& bondStorage,
-                     #endif
-                     #ifdef INTER_ANGLE
-                     AngleStorage& angleStorage,
-                     #endif
-                     #ifdef INTER_DIHEDRAL
-                     DihedralStorage& dihedralStorage,
-                     #endif
-                     Buffer& buffer);
-
-      /**
-      * Set cache sizes and allocate memory.
-      *
-      * \param atomCacheCapacity size of internal atom cache. 
-      * \param bondCacheCapacity size of internal bond cache. 
-      * \param angleCacheCapacity size of internal angle cache. 
-      * \param dihedralCacheCapacity size of internal dihedral cache. 
-      */
-      virtual void initialize(int atomCacheCapacity = 100
-                              #ifdef INTER_BOND
-                              , int bondCacheCapacity = 100
-                              #endif
-                              #ifdef INTER_ANGLE
-                              , int angleCacheCapacity = 100
-                              #endif
-                              #ifdef INTER_DIHEDRAL                             
-                              , int dihedralCacheCapacity = 100
-                              #endif
-                              );
 
       /**
       * Write Group<N> objects to file. 

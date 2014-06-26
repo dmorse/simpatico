@@ -51,47 +51,44 @@ namespace DdMd
       isInitialized_(false),
       domainPtr_(0),
       boundaryPtr_(0),
+      atomCollector_(),
       atomStoragePtr_(0),
-      #ifdef INTER_BOND
-      bondStoragePtr_(0),
-      #endif
-      #ifdef INTER_ANGLE
-      angleStoragePtr_(0),
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_(0),
-      #endif
       atomCacheCapacity_(0)
       #ifdef INTER_BOND
+      , bondCollector_()
+      , bondStoragePtr_(0)
       , bondCacheCapacity_(0)
       #endif
       #ifdef INTER_ANGLE
+      , angleCollector_()
+      , angleStoragePtr_(0)
       , angleCacheCapacity_(0)
       #endif
       #ifdef INTER_DIHEDRAL
+      , dihedralCollector_()
+      , dihedralStoragePtr_(0)
       , dihedralCacheCapacity_(0)
       #endif
    {  
       setClassName("TrajectoryWriter"); 
       domainPtr_ = &simulation.domain();
       boundaryPtr_ = &simulation.boundary();
+      Buffer* bufferPtr = &simulation.buffer();
 
       atomStoragePtr_ = &simulation.atomStorage();
-      atomCollector_.associate(*domainPtr_, *atomStoragePtr_, buffer);
-
+      atomCollector_.associate(*domainPtr_, *atomStoragePtr_, *bufferPtr);
       #ifdef INTER_BOND
       bondStoragePtr_ = &simulation.bondStorage();
-      bondCollector_.associate(*domainPtr_, *bondStoragePtr_, buffer);
+      bondCollector_.associate(*domainPtr_, *bondStoragePtr_, *bufferPtr);
       #endif
       #ifdef INTER_ANGLE
       angleStoragePtr_ = &simulation.angleStorage();
-      angleCollector_.associate(*domainPtr_, *angleStoragePtr_, buffer);
+      angleCollector_.associate(*domainPtr_, *angleStoragePtr_, *bufferPtr);
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralStoragePtr_ = &simulation.dihedralStorage();
-      dihedralCollector_.associate(*domainPtr_, *dihedralStoragePtr_, buffer);
+      dihedralCollector_.associate(*domainPtr_, *dihedralStoragePtr_, *bufferPtr);
       #endif
-
    }
 
    /*
@@ -132,24 +129,23 @@ namespace DdMd
       loadInterval(ar);
       loadOutputFileName(ar);
 
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(nSample_);
-
-      loader.load(atomCacheCapacity_);
+      loadParameter(ar, "atomCacheCapacity", atomCacheCapacity_);
       atomCollector_.allocate(atomCacheCapacity_);
-
       #ifdef INTER_BOND
-      loader.load(bondCacheCapacity_);
+      loadParameter(ar, "bondCacheCapacity", bondCacheCapacity_);
       bondCollector_.allocate(bondCacheCapacity_);
       #endif
       #ifdef INTER_ANGLE
-      loader.load(angleCacheCapacity_);
+      loadParameter(ar, "angleCacheCapacity", angleCacheCapacity_);
       angleCollector_.allocate(angleCacheCapacity_);
       #endif
       #ifdef INTER_DIHEDRAL
-      loader.load(dihedralCacheCapacity_);
+      loadParameter(ar, "dihedralCacheCapacity", dihedralCacheCapacity_);
       dihedralCollector_.allocate(dihedralCacheCapacity_);
       #endif
+
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(nSample_);
 
       isInitialized_ = true;
    }
@@ -161,17 +157,17 @@ namespace DdMd
    {
       saveInterval(ar);
       saveOutputFileName(ar);
-      ar << nSample_;
-      ar & atomCacheCapacity_;
+      ar << atomCacheCapacity_;
       #ifdef INTER_BOND
-      ar & bondCacheCapacity_;
+      ar << bondCacheCapacity_;
       #endif
       #ifdef INTER_ANGLE
-      ar & angleCacheCapacity_;
+      ar << angleCacheCapacity_;
       #endif
       #ifdef INTER_DIHEDRAL
-      ar & dihedralCacheCapacity_;
+      ar << dihedralCacheCapacity_;
       #endif
+      ar << nSample_;
    } 
 
    /*
@@ -206,6 +202,7 @@ namespace DdMd
    void TrajectoryWriter::output()
    {  clear(); }
 
+   #if 0
    /*
    * Private method to write Group<N> objects.
    */
@@ -235,6 +232,7 @@ namespace DdMd
       }
       return nGroup;
    }
+   #endif
 
 }
 #endif 
