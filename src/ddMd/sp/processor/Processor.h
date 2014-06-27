@@ -47,7 +47,7 @@ namespace DdMd
       /**
       * Process command line options.
       *  
-      * \param arcgc number of arguments
+      * \param argc number of arguments
       * \param argv array of argument C-strings
       */
       void setOptions(int argc, char * const * argv);

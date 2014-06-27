@@ -25,7 +25,7 @@ namespace Util
    /**
    * Saving archive for character based ostream.
    *
-   * \ingroup Archive_Module
+   * \ingroup Serialize_Module
    */
    class TextFileOArchive
    {

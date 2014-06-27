@@ -25,7 +25,7 @@ namespace Util
    /**
    * Saving / output archive for binary ostream.
    *
-   * \ingroup Archive_Module
+   * \ingroup Serialize_Module
    */
    class BinaryFileOArchive
    {

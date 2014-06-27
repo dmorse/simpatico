@@ -25,7 +25,7 @@ namespace Util
    /**
    * Saving archive for binary istream.
    *
-   * \ingroup Archive_Module
+   * \ingroup Serialize_Module
    */
    class BinaryFileIArchive
    {

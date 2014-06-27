@@ -25,7 +25,7 @@ namespace Util
    /**
    * Loading archive for text istream.
    *
-   * \ingroup Archive_Module
+   * \ingroup Serialize_Module
    */
    class TextFileIArchive
    {
