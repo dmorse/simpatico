@@ -98,9 +98,9 @@ namespace McMd
                }
                structureFactors_(i, j) += (double) h_sq[j*nWave_ + i];
             }
-            maximumValue_[j].insert(maximumValue_[j].end(), 1, maxValue);
-            maximumWaveIntVector_[j].insert(maximumWaveIntVector_[j].end(), 1, maxIntVector);
-            maximumQ_[j].insert(maximumQ_[j].end(), 1, maxQ);
+          //maximumValue_[j].insert(maximumValue_[j].end(), 1, maxValue);
+          //maximumWaveIntVector_[j].insert(maximumWaveIntVector_[j].end(), 1, maxIntVector);
+          //maximumQ_[j].insert(maximumQ_[j].end(), 1, maxQ);
          }
 
          delete [] h_wave_vectors;
