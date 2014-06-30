@@ -1,4 +1,3 @@
-
 include $(SRC_DIR)/modules/hoomd/analyzers/sources.mk
 include $(SRC_DIR)/modules/hoomd/mcMoves/sources.mk
 include $(SRC_DIR)/modules/hoomd/potentials/pair/sources.mk
