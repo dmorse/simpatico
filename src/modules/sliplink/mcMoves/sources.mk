@@ -8,5 +8,5 @@ modules_sliplink_mcMoves_=\
 modules_sliplink_mcMoves_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_sliplink_mcMoves_))
 modules_sliplink_mcMoves_OBJS=\
-    $(addprefix $(OBJ_DIR)/, $(modules_sliplink_mcMoves_:.cpp=.o))
+    $(addprefix $(BLD_DIR)/, $(modules_sliplink_mcMoves_:.cpp=.o))
 

@@ -30,5 +30,5 @@ endif
 mcMd_potentials_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_potentials_))
 mcMd_potentials_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_potentials_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_potentials_:.cpp=.o))
 

@@ -17,5 +17,5 @@ modules_sliplink_analyzers_= \
 modules_sliplink_analyzers_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_sliplink_analyzers_))
 modules_sliplink_analyzers_OBJS=\
-    $(addprefix $(OBJ_DIR)/, $(modules_sliplink_analyzers_:.cpp=.o))
+    $(addprefix $(BLD_DIR)/, $(modules_sliplink_analyzers_:.cpp=.o))
 

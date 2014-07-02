@@ -108,5 +108,5 @@ endif
 INTER_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)
 
 inter_LIBNAME=inter$(INTER_ALL_SUFFIX)
-inter_LIB=$(OBJ_DIR)/inter/lib$(inter_LIBNAME).a
+inter_LIB=$(BLD_DIR)/inter/lib$(inter_LIBNAME).a
 #-----------------------------------------------------------------------

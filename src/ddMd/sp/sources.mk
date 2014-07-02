@@ -15,5 +15,5 @@ ddMd_sp_= \
 ddMd_sp_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_sp_))
 ddMd_sp_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_sp_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_sp_:.cpp=.o))
 

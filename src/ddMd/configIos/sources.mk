@@ -9,5 +9,5 @@ ddMd_configIos_=\
 ddMd_configIos_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_configIos_))
 ddMd_configIos_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_configIos_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_configIos_:.cpp=.o))
 

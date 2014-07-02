@@ -6,5 +6,5 @@ ddMd_modifiers_=\
 ddMd_modifiers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_modifiers_))
 ddMd_modifiers_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_modifiers_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_modifiers_:.cpp=.o))
 

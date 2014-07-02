@@ -12,5 +12,5 @@ mcMd_analyzers_mdSystem_=\
 mcMd_analyzers_mdSystem_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_analyzers_mdSystem_))
 mcMd_analyzers_mdSystem_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_analyzers_mdSystem_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_analyzers_mdSystem_:.cpp=.o))
 

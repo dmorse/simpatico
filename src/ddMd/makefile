@@ -1,6 +1,6 @@
 #-----------------------------------------------------------------------
 # The copy of this namespace-level makefile in the src/ directory is 
-# copied to the obj/serial and obj/parallel directories by the setup
+# copied to the bld/serial and bld/parallel directories by the setup
 # script to create the copies in those directories. Only the copy in
 # the src/ directory is stored in the repository.
 #-----------------------------------------------------------------------
@@ -8,9 +8,9 @@
 
 SRC_DIR_REL =..
 include $(SRC_DIR_REL)/config.mk
-include $(OBJ_DIR)/util/config.mk
-include $(OBJ_DIR)/inter/config.mk
-include $(OBJ_DIR)/ddMd/config.mk
+include $(BLD_DIR)/util/config.mk
+include $(BLD_DIR)/inter/config.mk
+include $(BLD_DIR)/ddMd/config.mk
 include $(SRC_DIR)/ddMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk
@@ -20,10 +20,10 @@ include $(SRC_DIR)/ddMd/sources.mk
 # Variable definition
 
 # Main program location
-DDSIM=$(OBJ_DIR)/ddMd/ddSim
+DDSIM=$(BLD_DIR)/ddMd/ddSim
 
 # MD postprocessor program location
-MDPP=$(OBJ_DIR)/ddMd/mdPp
+MDPP=$(BLD_DIR)/ddMd/mdPp
 
 #-----------------------------------------------------------------------
 # Main targets
@@ -53,7 +53,7 @@ clean:
 veryclean:
 	make clean
 	rm -f lib*.a
-ifeq ($(OBJ_DIR),$(SRC_DIR))
+ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f configIos/ConfigIoFactory.cpp
 	rm -f analyzers/AnalyzerFactory.cpp
 	rm -f integrators/IntegratorFactory.cpp

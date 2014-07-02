@@ -8,5 +8,5 @@ mcMd_mcMoves_linear_=\
 mcMd_mcMoves_linear_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_mcMoves_linear_))
 mcMd_mcMoves_linear_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_mcMoves_linear_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_mcMoves_linear_:.cpp=.o))
 

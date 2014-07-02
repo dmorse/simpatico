@@ -9,5 +9,5 @@ mcMd_mcMoves_common_=\
 mcMd_mcMoves_common_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_mcMoves_common_))
 mcMd_mcMoves_common_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_mcMoves_common_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_mcMoves_common_:.cpp=.o))
 

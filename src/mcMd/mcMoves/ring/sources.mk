@@ -6,5 +6,5 @@ mcMd_mcMoves_ring_=\
 mcMd_mcMoves_ring_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_mcMoves_ring_))
 mcMd_mcMoves_ring_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_mcMoves_ring_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_mcMoves_ring_:.cpp=.o))
 

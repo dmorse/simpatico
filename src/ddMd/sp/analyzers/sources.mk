@@ -7,5 +7,5 @@ ddMd_sp_analyzers_=\
 ddMd_sp_analyzers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_sp_analyzers_))
 ddMd_sp_analyzers_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_sp_analyzers_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_sp_analyzers_:.cpp=.o))
 
