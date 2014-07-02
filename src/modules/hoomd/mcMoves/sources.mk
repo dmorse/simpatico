@@ -6,10 +6,10 @@ modules_hoomd_mcMoves_=\
 modules_hoomd_mcMoves_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_hoomd_mcMoves_))
 modules_hoomd_mcMoves_OBJS=\
-    $(addprefix $(OBJ_DIR)/, $(modules_hoomd_mcMoves_:.cpp=.o))
+    $(addprefix $(BLD_DIR)/, $(modules_hoomd_mcMoves_:.cpp=.o))
 
 #modules_hoomd_mcMoves_NVCC_SRCS=\
 #    $(addprefix $(SRC_DIR)/, $(modules_hoomd_mcMoves_NVCC_))
 #modules_hoomd_mcMoves_NVCC_OBJS=\
-#    $(addprefix $(OBJ_DIR)/, $(modules_hoomd_mcMoves_NVCC_:.cpp=.o))
+#    $(addprefix $(BLD_DIR)/, $(modules_hoomd_mcMoves_NVCC_:.cpp=.o))
 

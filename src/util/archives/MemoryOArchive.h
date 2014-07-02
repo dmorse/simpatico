@@ -26,7 +26,7 @@ namespace Util
    /**
    * Save archive for packed heterogeneous binary data.
    *
-   * \ingroup Archive_Module
+   * \ingroup Serialize_Module
    */
    class MemoryOArchive
    {

@@ -10,19 +10,19 @@
 
 using namespace Util;
 
-class GPArrayTest : public UnitTest 
+class GPArrayTest : public UnitTest
 {
 
 private:
 
-   const static int capacity = 10;
-
    typedef int Data;
 
-   DArray<Data>* arrayPtr; 
+   const static int capacity = 10;
+   DArray<Data>* arrayPtr;
    GPArray<Data>* parrayPtr;
    PArrayIterator<Data> iterator;
-   
+   int memory_;
+
    DArray<Data>& array()
    { return *arrayPtr; }
 
@@ -33,7 +33,7 @@ public:
 
    void setUp();
    void tearDown();
-  
+
    void testAppend();
    void testAppendEmpty();
    void testModify();
@@ -54,7 +54,7 @@ void GPArrayTest::setUp()
 
 void GPArrayTest::tearDown()
 {}
-  
+
 void GPArrayTest::testAppend()
 {
    printMethod(TEST_FUNC);
@@ -85,118 +85,123 @@ void GPArrayTest::testAppend()
 
    delete arrayPtr;
    delete parrayPtr;
-   TEST_ASSERT(Memory::total() == 0);
-} 
+   TEST_ASSERT(Memory::total() == memory_);
+}
 
 void GPArrayTest::testAppendEmpty()
 {
    printMethod(TEST_FUNC);
+   {
 
-   TEST_ASSERT(parray().size() == 0);
-   TEST_ASSERT(parray().capacity() == 0);
+      TEST_ASSERT(parray().size() == 0);
+      TEST_ASSERT(parray().capacity() == 0);
 
-   parray().append(array()[8]); // 0
-   TEST_ASSERT(parray().capacity() == 64);
-   parray().append(array()[4]); // 1
-   TEST_ASSERT(parray().capacity() == 64);
-   parray().append(array()[3]); // 2
-   parray().append(array()[5]); // 3
-   parray().append(array()[6]); // 4
-   parray().append(array()[9]); // 5
-   TEST_ASSERT(parray().capacity() == 64);
+      parray().append(array()[8]); // 0
+      TEST_ASSERT(parray().capacity() == 64);
+      parray().append(array()[4]); // 1
+      TEST_ASSERT(parray().capacity() == 64);
+      parray().append(array()[3]); // 2
+      parray().append(array()[5]); // 3
+      parray().append(array()[6]); // 4
+      parray().append(array()[9]); // 5
+      TEST_ASSERT(parray().capacity() == 64);
 
-   TEST_ASSERT(parray().size() == 6);
-   TEST_ASSERT(parray()[0] == array()[8]);
-   TEST_ASSERT(parray()[1] == array()[4]);
-   TEST_ASSERT(parray()[2] == array()[3]);
-   TEST_ASSERT(parray()[3] == array()[5]);
-   TEST_ASSERT(parray()[4] == array()[6]);
-   TEST_ASSERT(parray()[5] == array()[9]);
+      TEST_ASSERT(parray().size() == 6);
+      TEST_ASSERT(parray()[0] == array()[8]);
+      TEST_ASSERT(parray()[1] == array()[4]);
+      TEST_ASSERT(parray()[2] == array()[3]);
+      TEST_ASSERT(parray()[3] == array()[5]);
+      TEST_ASSERT(parray()[4] == array()[6]);
+      TEST_ASSERT(parray()[5] == array()[9]);
 
-   delete arrayPtr;
-   delete parrayPtr;
-   TEST_ASSERT(Memory::total() == 0);
-} 
+      delete arrayPtr;
+      delete parrayPtr;
+   }
+   TEST_ASSERT(Memory::total() == memory_);
+}
 
 void GPArrayTest::testModify()
 {
    printMethod(TEST_FUNC);
+   {
+      parray().reserve(2);
+      parray().append(array()[8]); // 0
+      parray().append(array()[4]); // 1
+      parray().append(array()[3]); // 2
+      parray().append(array()[5]); // 3
+      parray().append(array()[6]); // 4
+      parray().append(array()[9]); // 5
+      TEST_ASSERT(parray().size() == 6);
 
-   parray().reserve(2);
-   parray().append(array()[8]); // 0
-   parray().append(array()[4]); // 1
-   parray().append(array()[3]); // 2
-   parray().append(array()[5]); // 3
-   parray().append(array()[6]); // 4
-   parray().append(array()[9]); // 5
-   TEST_ASSERT(parray().size() == 6);
+      try {
+         parray()[1] = 13;
+      } catch (Exception e) {
+         TEST_ASSERT(0);
+      }
 
-   try {
-      parray()[1] = 13;
-   } catch (Exception e) {
-      TEST_ASSERT(0);
+      TEST_ASSERT(parray()[1] == 13);
+      TEST_ASSERT(array()[4]  == 13);
+      TEST_ASSERT(&parray()[1]  == &array()[4]);
+      TEST_ASSERT(parray()[2] == array()[3]);
+      TEST_ASSERT(&parray()[2] == &array()[3]);
+      TEST_ASSERT(parray()[3] == array()[5]);
+      TEST_ASSERT(&parray()[3] == &array()[5]);
+
+      delete arrayPtr;
+      delete parrayPtr;
    }
-
-   TEST_ASSERT(parray()[1] == 13);
-   TEST_ASSERT(array()[4]  == 13);
-   TEST_ASSERT(&parray()[1]  == &array()[4]);
-   TEST_ASSERT(parray()[2] == array()[3]);
-   TEST_ASSERT(&parray()[2] == &array()[3]);
-   TEST_ASSERT(parray()[3] == array()[5]);
-   TEST_ASSERT(&parray()[3] == &array()[5]);
-
-   delete arrayPtr;
-   delete parrayPtr;
-   TEST_ASSERT(Memory::total() == 0);
-} 
+   TEST_ASSERT(Memory::total() == memory_);
+}
 
 void GPArrayTest::testIterator()
 {
    printMethod(TEST_FUNC);
+   {
 
-   parray().begin(iterator);
-   TEST_ASSERT(iterator.isEnd());
-   TEST_ASSERT(!iterator.notEnd());
+      parray().begin(iterator);
+      TEST_ASSERT(iterator.isEnd());
+      TEST_ASSERT(!iterator.notEnd());
 
-   parray().reserve(2);
-   parray().append(array()[8]);
-   parray().append(array()[4]);
-   parray().append(array()[3]);
-   parray().append(array()[5]);
-   TEST_ASSERT(parray().size() == 4);
+      parray().reserve(2);
+      parray().append(array()[8]);
+      parray().append(array()[4]);
+      parray().append(array()[3]);
+      parray().append(array()[5]);
+      TEST_ASSERT(parray().size() == 4);
 
-   parray().begin(iterator);
+      parray().begin(iterator);
 
-   TEST_ASSERT(!iterator.isEnd());
-   TEST_ASSERT(iterator.notEnd());
-   TEST_ASSERT(*iterator == array()[8]);
-   TEST_ASSERT(iterator.get() == &array()[8]);
-   TEST_ASSERT(&(*iterator) == &array()[8]);
-   ++iterator;
+      TEST_ASSERT(!iterator.isEnd());
+      TEST_ASSERT(iterator.notEnd());
+      TEST_ASSERT(*iterator == array()[8]);
+      TEST_ASSERT(iterator.get() == &array()[8]);
+      TEST_ASSERT(&(*iterator) == &array()[8]);
+      ++iterator;
 
-   TEST_ASSERT(!iterator.isEnd());
-   TEST_ASSERT(iterator.notEnd());
-   TEST_ASSERT(*iterator == array()[4]);
-   TEST_ASSERT(iterator.get() == &array()[4]);
-   TEST_ASSERT(&(*iterator) == &array()[4]);
-   ++iterator;
+      TEST_ASSERT(!iterator.isEnd());
+      TEST_ASSERT(iterator.notEnd());
+      TEST_ASSERT(*iterator == array()[4]);
+      TEST_ASSERT(iterator.get() == &array()[4]);
+      TEST_ASSERT(&(*iterator) == &array()[4]);
+      ++iterator;
 
-   TEST_ASSERT(!iterator.isEnd());
-   TEST_ASSERT(iterator.notEnd());
-   TEST_ASSERT(*iterator == array()[3]);
-   ++iterator;
+      TEST_ASSERT(!iterator.isEnd());
+      TEST_ASSERT(iterator.notEnd());
+      TEST_ASSERT(*iterator == array()[3]);
+      ++iterator;
 
-   TEST_ASSERT(!iterator.isEnd());
-   TEST_ASSERT(iterator.notEnd());
-   TEST_ASSERT(*iterator == array()[5]);
-   ++iterator;
+      TEST_ASSERT(!iterator.isEnd());
+      TEST_ASSERT(iterator.notEnd());
+      TEST_ASSERT(*iterator == array()[5]);
+      ++iterator;
 
-   TEST_ASSERT(iterator.isEnd());
-   TEST_ASSERT(!iterator.notEnd());
+      TEST_ASSERT(iterator.isEnd());
+      TEST_ASSERT(!iterator.notEnd());
 
-   delete arrayPtr;
-   delete parrayPtr;
-   TEST_ASSERT(Memory::total() == 0);
+      delete arrayPtr;
+      delete parrayPtr;
+   }
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 TEST_BEGIN(GPArrayTest)

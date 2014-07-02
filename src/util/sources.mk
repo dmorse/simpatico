@@ -23,7 +23,7 @@ util_=$(util_misc_) $(util_format_) \
 util_SRCS=\
      $(addprefix $(SRC_DIR)/, $(util_))
 util_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(util_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(util_:.cpp=.o))
 
 $(util_LIB): $(util_OBJS)
 	$(AR) rcs $(util_LIB) $(util_OBJS)

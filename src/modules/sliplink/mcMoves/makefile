@@ -4,14 +4,14 @@
 #  - BIN_DIR, to change the directory for executables
 
 # Directory containing Simpatico library source files
-OBJ_DIR_REL=../../..
+BLD_DIR_REL=../../..
 
 #-----------------------------------------------------------------------
 # Include master makefiles
 
-include $(OBJ_DIR_REL)/config.mk
-include $(OBJ_DIR)/util/config.mk
-include $(OBJ_DIR)/mcMd/config.mk
+include $(BLD_DIR_REL)/config.mk
+include $(BLD_DIR)/util/config.mk
+include $(BLD_DIR)/mcMd/config.mk
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/mcMd/sources.mk

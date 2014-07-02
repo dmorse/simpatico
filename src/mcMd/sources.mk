@@ -45,7 +45,7 @@ endif
 mcMd_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_))
 mcMd_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_:.cpp=.o))
 
 $(mcMd_LIB): $(mcMd_OBJS)
 	$(AR) rcs $(mcMd_LIB) $(mcMd_OBJS)

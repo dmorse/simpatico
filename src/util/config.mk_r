@@ -86,8 +86,8 @@ endif
 
 #-----------------------------------------------------------------------
 # Path to the util library 
-# Note: OBJ_DIR is defined in config.mk
+# Note: BLD_DIR is defined in config.mk
 
 util_LIBNAME=util$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)
-util_LIB=$(OBJ_DIR)/util/lib$(util_LIBNAME).a
+util_LIB=$(BLD_DIR)/util/lib$(util_LIBNAME).a
 #-----------------------------------------------------------------------

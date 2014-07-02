@@ -28,6 +28,8 @@ namespace Util
    * included in the file Serializable_includes.h. The file
    * Serializable_includes.h should be included in source files
    * that implement that load and save methods for subclasses.
+   *
+   * \ingroup Serialize_Module
    */
    class Serializable
    {

@@ -18,10 +18,12 @@ ddMd_analyzers_=\
      ddMd/analyzers/OrderParamNucleation.cpp\
      ddMd/analyzers/PairEnergyAverage.cpp\
      ddMd/analyzers/ExternalEnergyAverage.cpp\
+     ddMd/analyzers/TrajectoryWriter.cpp\
+     ddMd/analyzers/DdMdTrajectoryWriter.cpp\
      ddMd/analyzers/StressAutoCorrelation.cpp
 
 ddMd_analyzers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_analyzers_))
 ddMd_analyzers_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_analyzers_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_analyzers_:.cpp=.o))
 

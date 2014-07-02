@@ -9,5 +9,5 @@ mcMd_mdIntegrators_=\
 mcMd_mdIntegrators_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_mdIntegrators_))
 mcMd_mdIntegrators_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_mdIntegrators_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_mdIntegrators_:.cpp=.o))
 

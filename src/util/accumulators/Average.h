@@ -122,13 +122,18 @@ namespace Util
       * \param out output stream
       */
       void output(std::ostream& out);
-  
+ 
+      /**
+      * Return estimated error on average from blocking analysis.
+      */
+      double blockingError() const;
+ 
       /**
       * Get nSamplePerBlock. 
       *
       * A zero value indicates that no block averages will be output.
       */
-      int nSamplePerBlock();
+      int nSamplePerBlock() const;
 
       /**
       * Add pointer to a descendant to an array.
@@ -178,7 +183,7 @@ namespace Util
    /*
    * Get nSamplePerBlock. 
    */
-   inline int Average::nSamplePerBlock()
+   inline int Average::nSamplePerBlock() const
    {  return nSamplePerBlock_; }
 
    /*

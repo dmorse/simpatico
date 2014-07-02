@@ -13,5 +13,5 @@ ddMd_tests_communicate_= \
 ddMd_tests_communicate_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_tests_communicate_))
 ddMd_tests_communicate_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_tests_communicate_:.cc=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_tests_communicate_:.cc=.o))
 

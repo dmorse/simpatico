@@ -10,5 +10,5 @@ ddMd_integrators_=\
 ddMd_integrators_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_integrators_))
 ddMd_integrators_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_integrators_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_integrators_:.cpp=.o))
 

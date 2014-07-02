@@ -9,5 +9,5 @@ util_archives_=\
     util/archives/TextFileIArchive.cpp 
 
 util_archives_SRCS=$(addprefix $(SRC_DIR)/, $(util_archives_))
-util_archives_OBJS=$(addprefix $(OBJ_DIR)/, $(util_archives_:.cpp=.o))
+util_archives_OBJS=$(addprefix $(BLD_DIR)/, $(util_archives_:.cpp=.o))
 

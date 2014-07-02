@@ -5,5 +5,5 @@ ddMd_tests_configIos_=\
 ddMd_tests_configIos_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_tests_configIos_))
 ddMd_tests_configIos_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_tests_configIos_:.cc=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_tests_configIos_:.cc=.o))
 

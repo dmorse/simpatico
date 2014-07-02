@@ -13,5 +13,5 @@ mcMd_species_=mcMd/species/Diblock.cpp \
 mcMd_species_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_species_))
 mcMd_species_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_species_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_species_:.cpp=.o))
 

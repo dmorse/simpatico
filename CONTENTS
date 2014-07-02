@@ -1,0 +1,19 @@
+Subdirectories:
+---------------
+
+src/       C++ source files, including both implementation and header files
+bld/       build directories, to hold files generated during compilation
+bin/       location for installing executables
+tools/     tools for manipulating data, using several programming languages
+examples/  simulation usage examples 
+doc/       documentation
+
+Files:
+------
+
+README        brief introduction to package 
+LICENSE       GPL license
+CONTENTS      this file
+setup         bash script for initial setup (README and documentation)
+makefile      main makefile
+

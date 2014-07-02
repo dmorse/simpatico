@@ -1,6 +1,6 @@
-OBJ_DIR_REL =../..
-include $(OBJ_DIR_REL)/config.mk
-include $(OBJ_DIR)/util/config.mk
+BLD_DIR_REL =../..
+include $(BLD_DIR_REL)/config.mk
+include $(BLD_DIR)/util/config.mk
 include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/util/tests/sources.mk
@@ -9,15 +9,15 @@ TEST=util/tests/Test
 
 all: $(util_tests_OBJS)
 
-run: $(util_tests_OBJS) $(OBJ_DIR)/$(TEST)
-	$(OBJ_DIR)/$(TEST) $(SRC_DIR)/util/tests/ > log
+run: $(util_tests_OBJS) $(BLD_DIR)/$(TEST)
+	$(BLD_DIR)/$(TEST) $(SRC_DIR)/util/tests/ > log
 	@echo `grep failed log` ", "\
               `grep successful log` "in util/tests/log" > count
 	@cat count
 
 clean:
 	rm -f $(util_tests_OBJS) $(util_tests_OBJS:.o=.d)
-	rm -f $(OBJ_DIR)/$(TEST) $(OBJ_DIR)/$(TEST).d
+	rm -f $(BLD_DIR)/$(TEST) $(BLD_DIR)/$(TEST).d
 	rm -f dummy log count
 	cd accumulators/unit; make clean
 	cd archives; make clean
