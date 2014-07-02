@@ -197,7 +197,7 @@ namespace Inter
    private:
    
       /// Maximum allowed value for nAtomType (# of particle types)
-      static const int MaxAtomType = 2;
+      static const int MaxAtomType = 3;
    
       // Parameters for different types of particle pairs
       double epsilon_[MaxAtomType][MaxAtomType];   ///< energy parameter

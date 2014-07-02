@@ -25,6 +25,10 @@
 #include "StructureFactor.h"
 #include "StructureFactorGrid.h"
 #include "OrderParamNucleation.h"
+#include "VanHove.h"
+#include "ExternalEnergyAverage.h"
+#include "PairEnergyAverage.h"
+#include "StressAutoCorrelation.h"
 
 namespace DdMd
 {
@@ -63,7 +67,7 @@ namespace DdMd
          ptr = new OutputPressure(simulation());
       } else
       if (className == "OutputStressTensor") {
-         ptr = new OutputPressure(simulation());
+         ptr = new OutputStressTensor(simulation());
       } else
       if (className == "VirialStressTensorAverage") {
          ptr = new VirialStressTensorAverage(simulation());
@@ -85,6 +89,18 @@ namespace DdMd
       } else
       if (className == "OrderParamNucleation") {
          ptr = new OrderParamNucleation(simulation());
+      } else
+      if (className == "VanHove") {
+         ptr = new VanHove(simulation());
+      } else
+      if (className == "ExternalEnergyAverage") {
+         ptr = new ExternalEnergyAverage(simulation());
+      } else
+      if (className == "PairEnergyAverage") {
+         ptr = new PairEnergyAverage(simulation());
+      } else
+      if (className == "StressAutoCorrelation") {
+         ptr = new StressAutoCorrelation(simulation());
       }
       return ptr;
    }
