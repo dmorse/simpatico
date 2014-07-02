@@ -6,5 +6,5 @@ util_param_=util/param/Begin.cpp \
     util/param/Parameter.cpp 
 
 util_param_SRCS=$(addprefix $(SRC_DIR)/, $(util_param_))
-util_param_OBJS=$(addprefix $(OBJ_DIR)/, $(util_param_:.cpp=.o))
+util_param_OBJS=$(addprefix $(BLD_DIR)/, $(util_param_:.cpp=.o))
 

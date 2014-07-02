@@ -6,5 +6,5 @@ ddMd_tests_chemistry_=\
 ddMd_tests_chemistry_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_tests_chemistry_))
 ddMd_tests_chemistry_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_tests_chemistry_:.cc=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_tests_chemistry_:.cc=.o))
 

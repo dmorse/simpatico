@@ -6,5 +6,5 @@ mcMd_neighbor_=mcMd/neighbor/Cell.cpp \
 mcMd_neighbor_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_neighbor_))
 mcMd_neighbor_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_neighbor_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_neighbor_:.cpp=.o))
 

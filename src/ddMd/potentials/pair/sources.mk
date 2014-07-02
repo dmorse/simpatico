@@ -5,5 +5,5 @@ ddMd_potentials_pair_= \
 ddMd_potentials_pair_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_potentials_pair_))
 ddMd_potentials_pair_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_potentials_pair_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_potentials_pair_:.cpp=.o))
 

@@ -9,38 +9,38 @@ include src/config.mk
 # Main build targets
 
 all:
-	cd obj/serial; make mcMd
-	cd obj/parallel; make ddMd
-	cd obj/parallel; make mcMd-mpi
+	cd bld/serial; make mcMd
+	cd bld/parallel; make ddMd
+	cd bld/parallel; make mcMd-mpi
 
-# Build serial mcSim and mdSim MC and MD programs in obj/serial
+# Build serial mcSim and mdSim MC and MD programs in bld/serial
 mcMd:
-	cd obj/serial; make mcMd
+	cd bld/serial; make mcMd
 
-# Build embarassingly parallel mcSim and mdSim programs in obj/parallel
+# Build embarassingly parallel mcSim and mdSim programs in bld/parallel
 mcMd-mpi: 
-	cd obj/parallel; make mcMd-mpi
+	cd bld/parallel; make mcMd-mpi
 
-# Build parallel mdSim MD program in obj/parallel
+# Build parallel mdSim MD program in bld/parallel
 ddMd:
-	cd obj/parallel; make ddMd
+	cd bld/parallel; make ddMd
 
 # ==============================================================================
 # Test targets
 
 test-serial:
-	@cd obj/serial/util/tests; make all; make run
-	@cd obj/serial/inter/tests; make all; make run
-	@cd obj/serial/mcMd/tests; make all; make run
-	@cat obj/serial/util/tests/count > count
-	@cat obj/serial/inter/tests/count >> count
-	@cat obj/serial/mcMd/tests/count >> count
+	@cd bld/serial/util/tests; make all; make run
+	@cd bld/serial/inter/tests; make all; make run
+	@cd bld/serial/mcMd/tests; make all; make run
+	@cat bld/serial/util/tests/count > count
+	@cat bld/serial/inter/tests/count >> count
+	@cat bld/serial/mcMd/tests/count >> count
 	@cat count
 	@rm -f count
 
 test-parallel:
-	cd obj/parallel/ddMd/tests; make all; make run
-	@cat obj/parallel/ddMd/tests/count >> count
+	cd bld/parallel/ddMd/tests; make all; make run
+	@cat bld/parallel/ddMd/tests/count >> count
 	@cat count
 	@rm -f count
 
@@ -49,15 +49,15 @@ test-parallel:
 # Clean targets
 
 clean-serial:
-	cd obj/serial; make clean
+	cd bld/serial; make clean
 
 clean-parallel:
-	cd obj/parallel; make clean
+	cd bld/parallel; make clean
 
 clean:
 	cd src; make clean
-	cd obj/serial; make clean
-	cd obj/parallel; make clean
+	cd bld/serial; make clean
+	cd bld/parallel; make clean
 
 clean-bin:
 	-rm -f $(BIN_DIR)/mcSim*
@@ -65,10 +65,10 @@ clean-bin:
 	-rm -f $(BIN_DIR)/ddSim*
  
 veryclean:
-	cd obj/serial; make veryclean; rm -f makefile configure
-	cd obj/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile 
-	cd obj/parallel; make veryclean; rm -f makefile configure
-	cd obj/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile 
+	cd bld/serial; make veryclean; rm -f makefile configure
+	cd bld/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile 
+	cd bld/parallel; make veryclean; rm -f makefile configure
+	cd bld/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile 
 	cd doc; make clean
 	make clean-bin
 	cd src; make veryclean
