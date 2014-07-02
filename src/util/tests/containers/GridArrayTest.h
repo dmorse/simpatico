@@ -12,9 +12,11 @@ using namespace Util;
 class GridArrayTest : public UnitTest 
 {
 
+   int memory_;
+
 public:
 
-   void setUp() { TEST_ASSERT(Memory::total() == 0); }
+   void setUp() { memory_ = Memory::total(); }
 
    void tearDown() {}
   

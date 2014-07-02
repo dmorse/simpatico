@@ -12,9 +12,11 @@ using namespace Util;
 class DSArrayTest : public UnitTest 
 {
 
+   int memory_;
+
 public:
 
-   void setUp(){ TEST_ASSERT(Memory::total() == 0); };
+   void setUp(){ memory_ = Memory::total(); }
    void tearDown(){};
    void testAllocate();
    void testConstructor();
@@ -34,7 +36,7 @@ void DSArrayTest::testConstructor()
       TEST_ASSERT(v.capacity() == 0);
       TEST_ASSERT(!v.isAllocated() );
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 } 
 
 void DSArrayTest::testAllocate()
@@ -47,7 +49,7 @@ void DSArrayTest::testAllocate()
       TEST_ASSERT(v.isAllocated() );
       TEST_ASSERT(v.size() == 0 );
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 void DSArrayTest::testSubscript()
@@ -64,7 +66,7 @@ void DSArrayTest::testSubscript()
       TEST_ASSERT(v[1] == 4);
       TEST_ASSERT(v[2] == 5);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 } 
 
 void DSArrayTest::testCopyConstructor()
@@ -94,7 +96,7 @@ void DSArrayTest::testCopyConstructor()
       TEST_ASSERT(u[1] == 4 );
       TEST_ASSERT(u[2] == 5 );
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 void DSArrayTest::testAssignment()
@@ -125,7 +127,7 @@ void DSArrayTest::testAssignment()
       TEST_ASSERT(u[1] == 4);
       TEST_ASSERT(u[2] == 5);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 void DSArrayTest::testSerialize1File()
@@ -200,7 +202,7 @@ void DSArrayTest::testSerialize1File()
       TEST_ASSERT(u.capacity() == 3);
       #endif
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 TEST_BEGIN(DSArrayTest)

@@ -15,14 +15,15 @@ class RingBufferTest : public UnitTest
 {
 private:
 
-   const static int capacity = 3;
-
    typedef std::complex<double> Data;
 
+   const static int capacity = 3;
+
+   int memory_;
 
 public:
 
-   void setUp() { TEST_ASSERT(Memory::total() == 0); }
+   void setUp() { memory_ = Memory::total(); }
    void tearDown() {}
 
    void testConstructor();
@@ -43,7 +44,7 @@ void RingBufferTest::testConstructor()
       TEST_ASSERT(v.capacity() == 0);
       TEST_ASSERT(v.size()     == 0);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 void RingBufferTest::testAllocate()
@@ -55,7 +56,7 @@ void RingBufferTest::testAllocate()
       TEST_ASSERT(v.capacity() == 3);
       TEST_ASSERT(v.size()     == 0);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 void RingBufferTest::testSubscript1()
@@ -71,7 +72,7 @@ void RingBufferTest::testSubscript1()
       TEST_ASSERT(imag(v[0]) == 20.1);
       TEST_ASSERT(real(v[1]) == 10);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 void RingBufferTest::testSubscript2()
@@ -101,7 +102,7 @@ void RingBufferTest::testSubscript2()
       TEST_ASSERT(v.isFull());
       TEST_ASSERT(v.size() == 3);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 void RingBufferTest::testSerialize1()
@@ -158,7 +159,7 @@ void RingBufferTest::testSerialize1()
       TEST_ASSERT(u.size() == 3);
 
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 void RingBufferTest::testSerialize2()
@@ -217,7 +218,7 @@ void RingBufferTest::testSerialize2()
       TEST_ASSERT(imag(u[2]) == 10.1);
 
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 TEST_BEGIN(RingBufferTest)
 TEST_ADD(RingBufferTest, testConstructor)
