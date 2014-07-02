@@ -80,29 +80,33 @@ point a browser at the file simpatico/doc/html/index.html.
 Compiling:
 ----------
 
-The code is standard C++ and must be compiled from source. 
-Multi-processor programs (ddSim and multi-processor versions of 
-mcSim and mdSim) require an MPI library. By default, the build
-system requires access to a python interpreter, though this
-dependence can be removed. Complete instructions for compiling 
-various versions of Simpatico are given in the text file 
-simpatico/doc/manual/user/compile.dox, or in the corresponding 
-html web page in the doc/html directory.
+The code is ansi standard C++ and must be compiled from source. 
+Multi-processor programs (ddSim and multi-processor versions 
+of mcSim and mdSim) require an MPI library. The build system 
+requires access to a python interpreter. 
 
+Complete instructions for compiling various versions of Simpatico 
+are given in the text file simpatico/doc/manual/user/compile.dox, 
+or in the corresponding html web page in the doc/html directory.
 Short instructions for compiling the default single-processor 
 versions of mcSim and mdSim (for the impatient) are:
 
-- Add the simpatico/tools/python directory to your PYTHONPATH
-  environment variable.
+- Add the simpatico/bin directory to your linux command search
+  PATH environment variable, and add the simpatico/tools/python 
+  directory to your PYTHONPATH environment variable.
 
-- cd to the simpatico root directory
+- cd to the simpatico/ root directory
 
-- Enter "./setup" to run a setup script
+- Enter "./setup" from this root directory to run a setup script
 
-- Enter "make mcMd"
+- Enter "make mcMd" from the same directory
 
 The resulting executables, named "mcSim" and "mdSim", will be 
-installed in the simpatico bin/ directory. Further instructions
-for compiling multi-processor programs, and for enabling or
-disabling various compile-time features, are given in the text
-and html documentation.
+installed in the simpatico bin/ directory. Please see the text 
+files and html documentation mentioned above for further 
+instructions for compiling multi-processor programs, which 
+may require modification of the users programming environment 
+and/or simpatico makefile variables to provide access to an MPI 
+library.  Instructions for enabling or disabling various optional
+compile-time features are also given in the html documentation. 
+
