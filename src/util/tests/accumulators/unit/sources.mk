@@ -4,5 +4,5 @@ util_tests_accumulators_unit_= \
 util_tests_accumulators_unit_SRCS=\
      $(addprefix $(SRC_DIR)/, $(util_tests_accumulators_unit_))
 util_tests_accumulators_unit_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(util_tests_accumulators_unit_:.cc=.o))
+     $(addprefix $(BLD_DIR)/, $(util_tests_accumulators_unit_:.cc=.o))
 

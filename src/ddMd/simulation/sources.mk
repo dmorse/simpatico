@@ -5,5 +5,5 @@ ddMd_simulation_= \
 ddMd_simulation_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_simulation_))
 ddMd_simulation_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_simulation_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_simulation_:.cpp=.o))
 

@@ -6,5 +6,5 @@ ddMd_sp_processor_= \
 ddMd_sp_processor_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_sp_processor_))
 ddMd_sp_processor_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_sp_processor_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_sp_processor_:.cpp=.o))
 

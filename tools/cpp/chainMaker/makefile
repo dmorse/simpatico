@@ -2,16 +2,16 @@
 SRC_DIR_REL=../../../src
 
 include $(SRC_DIR_REL)/config.mk
-include $(OBJ_DIR)/util/config.mk
-include $(OBJ_DIR)/inter/config.mk
+include $(BLD_DIR)/util/config.mk
+include $(BLD_DIR)/inter/config.mk
 
 LIBS= $(inter_LIB) $(util_LIB)
 DEFINES=$(UTIL_DEFS) $(INTER_DEFS)
 
 # Dependencies of source files in src/inter on makefile fragments
-MAKE_DEPS= -A$(OBJ_DIR)/config.mk
-MAKE_DEPS+= -A$(OBJ_DIR)/util/config.mk
-MAKE_DEPS+= -A$(OBJ_DIR)/inter/config.mk
+MAKE_DEPS= -A$(BLD_DIR)/config.mk
+MAKE_DEPS+= -A$(BLD_DIR)/util/config.mk
+MAKE_DEPS+= -A$(BLD_DIR)/inter/config.mk
 
 all: ChainMaker.o ChainMaker
 

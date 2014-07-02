@@ -19,5 +19,5 @@ endif
 mcMd_analyzers_mcSystem_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_analyzers_mcSystem_))
 mcMd_analyzers_mcSystem_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_analyzers_mcSystem_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_analyzers_mcSystem_:.cpp=.o))
 

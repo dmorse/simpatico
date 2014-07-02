@@ -18,21 +18,21 @@ LIBS=$(util_LIB)
 DEFINES=$(UTIL_DEFS)
 
 # Dependencies of source files in src/util on makefile fragments
-MAKE_DEPS= -A$(OBJ_DIR)/config.mk
-MAKE_DEPS+= -A$(OBJ_DIR)/util/config.mk
+MAKE_DEPS= -A$(BLD_DIR)/config.mk
+MAKE_DEPS+= -A$(BLD_DIR)/util/config.mk
 
 # Pattern rule to compile *.cpp class source files in src/util
-$(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp
+$(BLD_DIR)/%.o:$(SRC_DIR)/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
 # Pattern rule to compile *.cc test source files in src/util/tests
-$(OBJ_DIR)/% $(OBJ_DIR)/%.o:$(SRC_DIR)/%.cc $(LIBS)
+$(BLD_DIR)/% $(BLD_DIR)/%.o:$(SRC_DIR)/%.cc $(LIBS)
 	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o $(@:.o=) $@ $(LIBS)
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(OBJ_DIR) $<
+	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
