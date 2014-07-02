@@ -110,9 +110,9 @@ namespace Util
    }
 
    /*
-   * Output statistical properties to file
+   * Return estimate of error on average from blocking analysis.
    */
-   void Average::output(std::ostream& out)
+   double Average::blockingError() const
    {
       // Find first stage (descending) with nSample >= 16
       AverageStage* ptr = 0;
@@ -151,6 +151,56 @@ namespace Util
             next = false;
          }
       }
+      return aveErr;
+   }
+
+
+   /*
+   * Output statistical properties to file
+   */
+   void Average::output(std::ostream& out)
+   {
+      double aveErr = blockingError();
+ 
+      #if 0
+      // Find first stage (descending) with nSample >= 16
+      AverageStage* ptr = 0;
+      int n = descendants_.size();
+      int i = n;
+      int nSample = 1;
+      while (nSample < 16 && i > 0) {
+         --i;
+         ptr = descendants_[i];
+         nSample = ptr->nSample();
+      }
+
+      double error  = ptr->error();
+      double sigma  = error/sqrt(2.0*double(nSample-1));
+      double weight = 1.0/(sigma*sigma);
+      double sum    = error*weight;
+      double norm   = weight;
+      double aveErr = error;
+      double oldSig;
+
+      // Find weighted average within plateau
+      bool next = true;
+      while (next && i > 0) {
+         oldSig = sigma;
+         --i;
+         ptr = descendants_[i];
+         error = ptr->error();
+         if (fabs(error - aveErr) < 2.0*oldSig) {
+            nSample = ptr->nSample();
+            sigma  = error/sqrt(2.0*double(nSample-1));
+            weight = 1.0/(sigma*sigma);
+            sum   += error*weight;
+            norm  += weight;
+            aveErr = sum/norm;
+         } else {
+            next = false;
+         }
+      }
+      #endif
 
       out <<  "Average   " << Dbl(average())         
           <<  "  +- "      << Dbl(aveErr, 9, 2) << std::endl;
@@ -159,7 +209,11 @@ namespace Util
       out <<  std::endl;
 
       out << "Hierarchichal Error Analysis:" << std::endl;
+      AverageStage* ptr = 0;
+      double error;
       int interval;
+      int nSample;
+      int n = descendants_.size();
       for (int i = 0; i < n; ++i) {
          ptr = descendants_[i];
          error    = ptr->error();
