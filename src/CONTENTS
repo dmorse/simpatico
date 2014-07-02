@@ -1,0 +1,42 @@
+Subdirectories:
+---------------
+
+util       utility classes for scientific computation (namespace Util)
+inter      classes defining potential energy functions (namespace Inter)
+mcMd       serial Monte Carlo (MC) / molecular dynamics (MD) (namespace McMd)
+ddMd       parallel domain-decomposition MD simulation (namespace DdMd)
+modules    add-on components for particular applications
+tests      unit test framework
+draft      unfinished or proposed classes
+
+Files (before running the setup script):
+----------------------------------------
+
+makefile      main makefile for in-source builds
+compiler.mk_r compiler settings (default repository version)
+compiler.mk   compiler settings (user version, created by setup script)
+configure     configure script (for en|dis-abling compile time options)
+CONTENTS      this file
+
+Setup and configuration:
+------------------------
+
+The setup script in the root directory creates a file compiler.mk by 
+copying and modifying a few lines of compiler.mk_r.  The file compiler.mk_r 
+(the repository version) is under version control but is not actually used 
+by the build system. The generated file config.mk (the user version) is not 
+kept under version control and is used by the makefile system, so that users
+may modify config.mk as needed without effecting synchronization with the a 
+remote git repository.
+
+The configure script in this directory may be used to modify the choice of 
+which features are enabled before compiling or recompiling the code. Enter
+"configure -q" to get a list of options indicating which are currently
+enabled or disabled. Further directions for using the configure script are
+given in the html documentaiton. Calling the configure script in the src/ 
+directory only effects options for code compiled in the src/ directory 
+(i.e., in-source builds).
+
+For compilation instructions, see the file doc/manual/user/compile.dox, 
+the README file in the root directory (the parent of this directory), or
+user guide section of the web documentation in doc/html.
