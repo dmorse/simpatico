@@ -1,6 +1,6 @@
 Simulation{
   Domain{
-    gridDimensions    2    1    1
+    gridDimensions    2    1    3
   }
   FileMaster{
     commandFileName   commands
@@ -29,18 +29,18 @@ Simulation{
   maskedPairPolicy    maskBonded
   reverseUpdateFlag   0
   PairPotential{
-    epsilon           1.0  1.1
-                      1.1  1.0
+    epsilon           1.0  1.6
+                      1.6  1.0
     sigma             1.0  1.0
                       1.0  1.0
     cutoff            1.122462048 1.122462048
                       1.122462048 1.122462048
     skin              0.4
     pairCapacity      40000
-    maxBoundary       orthorhombic   100   10   10
+    maxBoundary       orthorhombic   30.0   30.0   30.0
   }
   BondPotential{
-    kappa             300.0
+    kappa             400.0
     length            1.000
   }
   EnergyEnsemble{
@@ -62,17 +62,11 @@ Simulation{
     seed              8012457890
   }
   AnalyzerManager{
-     baseInterval     1
+     baseInterval     1000
 
      OutputEnergy{
         interval        2000
         outputFileName  energy
-     }
-
-     VirialStressTensorAverage{
-        interval        2000
-        outputFileName  Virial
-        nSamplePerBlock 10
      }
 
      OutputPressure{
@@ -83,15 +77,43 @@ Simulation{
   }
 }
 
-     PairEnergyAverage{
-        interval         1
-        outputFileName   pairEnergy
-        pairs            0 1
-        nSamplePerBlock  1
+  AnalyzerManager{
+     baseInterval     1000
+
+     OutputEnergy{
+        interval         2000
+        outputFileName   energy
      }
 
-     ExternalPotentialAverage{
-        interval         1
-        outputFileName   externalPotential
-        nSamplePerBlock  1
+     OutputPressure{
+        interval         2000
+        outputFileName   pressure
      }
+     OutputBoxdim{
+        interval         2000
+        outputFileName   boxdim
+     }
+     OutputTemperature{
+        interval         2000
+        outputFileName   temperature
+      }
+  }
+}
+
+
+
+
+     WriteConfig{
+        interval         2000
+        outputFileName   config
+     }
+
+  nAngleType         0
+  hasExternal        0
+     WriteConfig{
+        interval          2000
+        outputFileName  config
+     }
+
+  nAngleType         0
+  hasExternal        0
