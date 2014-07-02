@@ -26,8 +26,8 @@ private:
    DArray<Data>& array()
    { return *arrayPtr; }
 
-  GPArray<Data>& parray()
-  { return *parrayPtr; }
+   GPArray<Data>& parray()
+   { return *parrayPtr; }
 
 public:
 
@@ -43,7 +43,7 @@ public:
 
 void GPArrayTest::setUp()
 {
-   TEST_ASSERT(Memory::total() == 0);
+   memory_ = Memory::total();
    arrayPtr = new DArray<Data>;
    parrayPtr = new GPArray<Data>;
    array().allocate(capacity);

@@ -34,7 +34,12 @@ namespace Util
    * Destructor.
    */
    MemoryOArchive::~MemoryOArchive()
-   {  if (buffer_ && ownsData_) delete buffer_; }
+   {  
+      if (buffer_ && ownsData_) {
+         //delete buffer_; 
+         Memory::deallocate<Byte>(buffer_, capacity_ + sizeof(size_t));
+      }
+   }
 
    /*
    * Allocate a block of memory.
