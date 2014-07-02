@@ -1,5 +1,5 @@
-#ifndef INTER_PERIODIC_EXTERNAL_CPP
-#define INTER_PERIODIC_EXTERNAL_CPP
+#ifndef INTER_NUCLEATION_EXTERNAL_CPP
+#define INTER_NUCLEATION_EXTERNAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "PeriodicExternal.h"
+#include "NucleationExternal.h"
 
 #include <iostream>
 
@@ -20,26 +20,30 @@ namespace Inter
    /* 
    * Constructor.
    */
-   PeriodicExternal::PeriodicExternal() 
+   NucleationExternal::NucleationExternal() 
     : externalParameter_(),
       nWaveVectors_(),
       C_(),
       periodicity_(),
       interfaceWidth_(),
+      nucleationClip_(),
+      bias_(),
       boundaryPtr_(0),
       nAtomType_(0), 
       isInitialized_(false)
-   { setClassName("PeriodicExternal"); }
+   { setClassName("NucleationExternal"); }
    
    /* 
    * Copy constructor.
    */
-   PeriodicExternal::PeriodicExternal(const PeriodicExternal& other)
+   NucleationExternal::NucleationExternal(const NucleationExternal& other)
     : externalParameter_(other.externalParameter_),
       nWaveVectors_(other.nWaveVectors_),
       C_(other.C_),
       periodicity_(other.periodicity_),
       interfaceWidth_(other.interfaceWidth_),
+      nucleationClip_(other.nucleationClip_),
+      bias_(other.bias_),
       boundaryPtr_(other.boundaryPtr_),
       nAtomType_(other.nAtomType_),
       isInitialized_(other.isInitialized_)
@@ -66,13 +70,15 @@ namespace Inter
    /* 
    * Assignment operator.
    */
-   PeriodicExternal& PeriodicExternal::operator = (const PeriodicExternal& other)
+   NucleationExternal& NucleationExternal::operator = (const NucleationExternal& other)
    {
       externalParameter_   = other.externalParameter_;
       nWaveVectors_        = other.nWaveVectors_;
       C_                   = other.C_;
       periodicity_         = other.periodicity_;
       interfaceWidth_      = other.interfaceWidth_;
+      nucleationClip_      = other.nucleationClip_;
+      bias_                = other.bias_;
       boundaryPtr_         = other.boundaryPtr_;
       nAtomType_           = other.nAtomType_;
       isInitialized_       = other.isInitialized_;
@@ -97,22 +103,22 @@ namespace Inter
    /* 
    * Set nAtomType
    */
-   void PeriodicExternal::setNAtomType(int nAtomType) 
+   void NucleationExternal::setNAtomType(int nAtomType) 
    {  
       if (nAtomType <= 0) {
          UTIL_THROW("nAtomType <= 0");
       }
       if (nAtomType > MaxAtomType) {
-         UTIL_THROW("nAtomType > PeriodicExternal::MaxAtomType");
+         UTIL_THROW("nAtomType > NucleationExternal::MaxAtomType");
       }
       nAtomType_ = nAtomType;
    }
 
-   void PeriodicExternal::setExternalParameter(double externalParameter) 
+   void NucleationExternal::setExternalParameter(double externalParameter) 
    {  
       // Preconditions
       if (!isInitialized_) {
-         UTIL_THROW("PeriodicExternal potential is not initialized");
+         UTIL_THROW("NucleationExternal potential is not initialized");
       }
      
       externalParameter_ = externalParameter;
@@ -122,13 +128,13 @@ namespace Inter
    /* 
    * Set pointer to the Boundary.
    */
-   void PeriodicExternal::setBoundary(Boundary &boundary)
+   void NucleationExternal::setBoundary(Boundary &boundary)
    {  boundaryPtr_ = &boundary; }
    
    /* 
    * Read potential parameters from file.
    */
-   void PeriodicExternal::readParameters(std::istream &in) 
+   void NucleationExternal::readParameters(std::istream &in) 
    {
       if (nAtomType_ == 0) {
          UTIL_THROW("nAtomType must be set before readParam");
@@ -153,6 +159,8 @@ namespace Inter
       read<Vector>(in, "shift", shift_);
       read<double>(in, "interfaceWidth", interfaceWidth_);
       read<int>(in, "periodicity", periodicity_);
+      read<double>(in, "nucleationClip", nucleationClip_);
+      read<double>(in, "bias", bias_);
 
       isInitialized_ = true;
    }
@@ -160,7 +168,7 @@ namespace Inter
    /*
    * Load internal state from an archive.
    */
-   void PeriodicExternal::loadParameters(Serializable::IArchive &ar)
+   void NucleationExternal::loadParameters(Serializable::IArchive &ar)
    {
       ar >> nAtomType_;
       if (nAtomType_ <= 0) {
@@ -176,13 +184,15 @@ namespace Inter
       loadParameter<Vector>(ar, "shift", shift_);
       loadParameter<double>(ar, "interfaceWidth", interfaceWidth_);
       loadParameter<int>(ar, "periodicity", periodicity_);
+      loadParameter<double>(ar, "nucleationClip", nucleationClip_);
+      loadParameter<double>(ar, "bias", bias_);
       isInitialized_ = true;
    }
 
    /*
    * Save internal state to an archive.
    */
-   void PeriodicExternal::save(Serializable::OArchive &ar)
+   void NucleationExternal::save(Serializable::OArchive &ar)
    {
       ar << nAtomType_;
       ar << prefactor_;
@@ -193,19 +203,21 @@ namespace Inter
       ar << shift_;
       ar << interfaceWidth_;
       ar << periodicity_;
+      ar << nucleationClip_;
+      ar << bias_;
    }
 
 
-   double PeriodicExternal::externalParameter() const
+   double NucleationExternal::externalParameter() const
    { 
      return externalParameter_; 
    }
 
    /*
-   * Return name string "PeriodicExternal".
+   * Return name string "NucleationExternal".
    */
-   std::string PeriodicExternal::className() const
-   {  return std::string("PeriodicExternal"); }
+   std::string NucleationExternal::className() const
+   {  return std::string("NucleationExternal"); }
  
 } 
 #endif

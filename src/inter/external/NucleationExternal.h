@@ -1,5 +1,5 @@
-#ifndef INTER_PERIODIC_EXTERNAL_H
-#define INTER_PERIODIC_EXTERNAL_H
+#ifndef INTER_NUCLEATION_EXTERNAL_H
+#define INTER_NUCLEATION_EXTERNAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -34,7 +34,7 @@ namespace Inter
    *
    * \ingroup Inter_External_Module
    */
-   class PeriodicExternal : public ParamComposite 
+   class NucleationExternal : public ParamComposite 
    {
    
    public:
@@ -42,17 +42,17 @@ namespace Inter
       /**
       * Default constructor.
       */
-      PeriodicExternal();
+      NucleationExternal();
 
       /**
       * Copy constructor.
       */
-      PeriodicExternal(const PeriodicExternal& other);
+      NucleationExternal(const NucleationExternal& other);
 
       /**
       * Assignment.
       */
-      PeriodicExternal& operator = (const PeriodicExternal& other);
+      NucleationExternal& operator = (const NucleationExternal& other);
 
       /**  
       * Set nAtomType value.
@@ -125,7 +125,7 @@ namespace Inter
       void getForce(const Vector& position, int type, Vector& force) const;
  
       /**
-      * Return name string "PeriodicExternal".
+      * Return name string "NucleationExternal".
       */
       std::string className() const;
  
@@ -161,6 +161,12 @@ namespace Inter
       /// Interface width
       double interfaceWidth_;
 
+      /// Prefactor array ofsize nAtomType.
+      double nucleationClip_;
+
+      /// Prefactor array ofsize nAtomType.
+      double bias_;
+
       /// Pointer to associated Boundary object.
       Boundary *boundaryPtr_;
    
@@ -177,10 +183,11 @@ namespace Inter
    /* 
    * Calculate external potential energy for a single atom.
    */
-   inline double PeriodicExternal::energy(const Vector& position, int type) const
+   inline double NucleationExternal::energy(const Vector& position, int type) const
    {
       const Vector cellLengths = boundaryPtr_->lengths();
       double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);
+      double e;
       
       Vector r = position;
       r -= shift_;
@@ -193,20 +200,32 @@ namespace Inter
          double arg = q.dot(r)+phases_[i];
          cosine += cos(arg);
       }
+
       cosine *= clipParameter;
-      return prefactor_[type]*externalParameter_*tanh(C_+cosine);
+      e = prefactor_[type]*externalParameter_*tanh(C_+cosine) * 
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))))+1)/2 *
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))))+1)/2 * 
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))))+1)/2 ;
+
+      return e;
    }
 
    /* 
    * Calculate external force for a single atom.
    */
    inline 
-   void PeriodicExternal::getForce(const Vector& position, int type, 
+   void NucleationExternal::getForce(const Vector& position, int type, 
                                      Vector& force) const
    {
       const Vector cellLengths = boundaryPtr_->lengths();
       double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);
- 
+      double ne;
+
+      ne = 
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))))+1)/2 * 
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))))+1)/2 * 
+      (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))))+1)/2 ;
+
       Vector r = position;
       r -= shift_;
       double cosine = 0.0;
@@ -224,11 +243,30 @@ namespace Inter
          deriv += q;
       }
       cosine *= clipParameter;
+
       deriv *= clipParameter;
       double tanH = tanh(C_+cosine);
       double sechSq = (1.0 - tanH*tanH);
       double f = prefactor_[type]*externalParameter_*sechSq;
       deriv *= -1.0*f;
+      deriv *= ne;
+      deriv[0] = deriv[0] + nucleationClip_*(M_PI/cellLengths[0]*sin(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_)))/
+                            cosh(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))/
+                            cosh(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))))+1)/2*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))))+1)/2;
+
+      deriv[1] = deriv[1] + nucleationClip_*(M_PI/cellLengths[1]*sin(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_)))/
+                            cosh(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))/
+                            cosh(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))))+1)/2*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))))+1)/2;
+
+      deriv[2] = deriv[2] + nucleationClip_*(M_PI/cellLengths[2]*sin(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_)))/
+                            cosh(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))/
+                            cosh(2.0*M_PI*position[2]/cellLengths[2]+acos(bias_))*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[0]/cellLengths[0]+acos(bias_))))+1)/2*
+                            (tanh(nucleationClip_*(-bias_+cos(2.0*M_PI*position[1]/cellLengths[1]+acos(bias_))))+1)/2;
       force = deriv;
    }
  
