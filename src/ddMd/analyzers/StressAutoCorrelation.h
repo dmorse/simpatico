@@ -82,8 +82,6 @@ namespace DdMd
 
       /**
       * Dump configuration to file
-      *
-      * \param iStep MD step index
       */
       virtual void output();
 

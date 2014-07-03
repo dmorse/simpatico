@@ -21,6 +21,8 @@ namespace McMd
    /**
    * Periodically write (tensor) StressTensor to file.
    *
+   * Typename SystemType can be McSystem or MdSystem.
+   *
    * \ingroup DdMd_Analyzer_Module
    */
    template <class SystemType>
@@ -32,7 +34,7 @@ namespace McMd
       /**
       * Constructor.
       *
-      * \param simulation parent Simulation object. 
+      * \param system parent SystemType object. 
       */
       StressAutoCorrelation(SystemType& system);
    
@@ -73,21 +75,19 @@ namespace McMd
       void serialize(Archive& ar, const unsigned int version);
   
       /**
-      * Setup accumulator!
+      * Setup accumulator.
       */
       virtual void setup();
   
       /**
       * Sample virial stress to accumulators
       *
-      * \param iStep MD step index
+      * \param iStep MD or MC step index
       */
       virtual void sample(long iStep);
 
       /**
       * Dump configuration to file
-      *
-      * \param iStep MD step index
       */
       virtual void output();
 

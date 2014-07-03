@@ -32,7 +32,7 @@ namespace McMd
       /**
       * Constructor.
       *
-      * \param simulation parent Simulation object. 
+      * \param system parent SystemType object. 
       */
       StressTensorAverage(SystemType& system);
    
@@ -83,16 +83,14 @@ namespace McMd
       virtual void setup();
   
       /**
-      * Sample virial stress to accumulators
+      * Sample virial stress components to accumulators
       *
-      * \param iStep MD step index
+      * \param iStep MD or MC step index
       */
       virtual void sample(long iStep);
 
       /**
-      * Dump configuration to file
-      *
-      * \param iStep MD step index
+      * Output final results to file
       */
       virtual void output();
 

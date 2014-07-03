@@ -68,14 +68,12 @@ namespace DdMd
       /**
       * Dump configuration to file
       *
-      * \param iStep MC step index
+      * \param iStep MD step index
       */
       virtual void sample(long iStep);
 
       /**
       * Dump configuration to file
-      *
-      * \param iStep MC step index
       */
       virtual void output();
 
