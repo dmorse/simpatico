@@ -1,5 +1,5 @@
-#ifndef DDMD_CELL_ATOM_H
-#define DDMD_CELL_ATOM_H
+#ifndef DDMD_SP_CELL_ATOM_H
+#define DDMD_SP_CELL_ATOM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/chemistry/Atom.h>
+#include <ddMd/sp/chemistry/SpAtom.h>
 #include <util/space/Vector.h>
 #include <util/global.h>
 
@@ -16,30 +16,23 @@ namespace DdMd
 {
 
    /**
-   * Data for an atom in a CellList.
+   * Data for an atom in a SpCellList.
    */
-   class CellAtom
+   class SpCellAtom
    {
 
    public:
 
-      #if 0
-      struct Tag {
-         Atom* ptr;
-         int cellRank;
-      };
-      #endif
-
-      void setPtr(Atom* atomPtr) 
+      void setPtr(SpAtom* atomPtr) 
       {  ptr_ = atomPtr; }
 
       void update() 
       {
-         position_ = ptr_->position();
-         id_ = ptr_->id();
+         position_ = ptr_->position;
+         id_ = ptr_->id;
       }
 
-      Atom* ptr() const
+      SpAtom* ptr() const
       {  return ptr_; }
 
       int id() const
@@ -54,15 +47,10 @@ namespace DdMd
          return position_;
       }
 
-      Mask* maskPtr() const
-      {  
-         return &(ptr_->mask()); 
-      }
-
    private:
 
       Vector position_;
-      Atom* ptr_;
+      SpAtom* ptr_;
       int id_;
 
    };

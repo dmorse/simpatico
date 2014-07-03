@@ -8,8 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/neighbor/Cell.h>
-#include <ddMd/chemistry/Atom.h>
+#include <ddMd/sp/neighbor/SpCell.h>
+#include <ddMd/sp/neighbor/SpCellAtom.h>
+#include <ddMd/sp/chemistry/SpAtom.h>
 #include <util/boundary/Boundary.h>
 #include <util/space/Grid.h>
 #include <util/containers/DArray.h>
@@ -28,17 +29,15 @@ namespace DdMd
    * such that the length of each cell in each direction is greater than 
    * a specified cutoff distance. 
    *
-   * All operations of this class are local (no MPI).
-   *
-   * Building a SpCellList (Cartesian coordinates);
+   * Building an SpCellList (Cartesian coordinates);
    * \code
    *
-   *    AtomStorage storage;
+   *    SpAtomStorage storage;
    *    SpCellList cellList;
-   *    Vector   lower;        // Vector of lower bounds (local atoms)
-   *    Vector   upper;        // Vector of upper bounds (local atoms)
-   *    Vector   cutoffs;      // Vector of cutoff lengths for each axis.
-   *    int      atomCapacity  // max number of atoms on this processor
+   *    Vector lower;        // Vector of lower bounds (local atoms)
+   *    Vector upper;        // Vector of upper bounds (local atoms)
+   *    Vector cutoffs;      // Vector of cutoff lengths for each axis.
+   *    int atomCapacity     // max number of atoms on this processor
    *
    *    // Set elements of cutoffs vector to same value
    *    for (int i = 0; i < Dimension; ++i) {
@@ -52,18 +51,12 @@ namespace DdMd
    *    cellList.makeGrid(lower, upper, cutoffs);
    *    cellList.clear();
    *
-   *    // Place all local atoms.
-   *    AtomStorage::AtomIterator  atomIter;
+   *    // Place all atoms.
+   *    SpAtomStorage::AtomIterator  atomIter;
    *    for (storage.begin(atomIter); atomIter.notEnd(); ++atomIter) {
    *       cellList.placeAtom(*atomIter);
    *    }
    *
-   *    // Place all ghost atoms
-   *    AtomStorage::GhostIterator ghostIter;
-   *    for (storage.begin(ghostIter); ghostIter.notEnd(); ++ghostIter){
-   *       cellList.placeAtom(*ghostIter);
-   *    }
-   *    
    *    // Build cell list
    *    cellList.build();
    *
@@ -77,7 +70,7 @@ namespace DdMd
    * generalized coordinates, which span 0.0 - 1.0 over the primitive periodic
    * cell in each direction, each element of the cutoffs vector is given by a
    * ratio cutoffs[i] = cutoff/length[i], where length[i] is the Cartesian
-   * distance across the unit cell along a direciton parallel to reciprocal 
+   * distance across the unit cell along a direction parallel to reciprocal 
    * basis vector i. 
    *
    * See Cell documentation for an example of how to iterate over local cells 
@@ -110,7 +103,7 @@ namespace DdMd
       * This function:
       *
       *   - Allocates an array of atomCapacity SpCellList::Tag objects.
-      *   - Allocates an array of atomCapacity CellAtom objects.
+      *   - Allocates an array of atomCapacity SpCellAtom objects.
       *   - Allocates an array of Cell objects sized for this boundary.
       *
       * The elements of the lower, upper, and cutoffs parameters should 
@@ -176,19 +169,17 @@ namespace DdMd
                int nCellCut = 1);
 
       /**
-      * Determine the appropriate cell for an Atom, based on its position.
+      * Determine the appropriate cell for an SpAtom, based on its position.
       *
-      * This method does not place the atom in a cell, but calculates a cell
-      * index and retains the value, which is used to place atoms in the build() 
-      * method.
+      * This method does not place the atom in a cell, but calculates a 
+      * cell index and retains the value, which is used to place atoms in
+      * the build() method.
       *
-      * The method quietly does nothing if the atom is outside the expanded 
-      * domain for nonbonded ghosts, which extends one cutoff length beyond
-      * the domain boundaries the domain boundaries in each direction.
+      * The method quietly does nothing if the atom is outside the domain.
       *
-      * \param atom  Atom object to be added.
+      * \param atom  SpAtom object to be added.
       */
-      void placeAtom(Atom &atom);
+      void placeAtom(SpAtom &atom);
 
       /**
       * Build the cell list.
@@ -209,7 +200,7 @@ namespace DdMd
       void update();
 
       /**
-      * Reset the cell list to its empty state (no Atoms).
+      * Reset the cell list to its empty state (no atoms).
       */
       void clear();
 
@@ -299,7 +290,7 @@ namespace DdMd
       * Temporary storage for atom pointers, before copying to cells. 
       */
       struct Tag {
-         Atom* ptr;
+         SpAtom* ptr;
          int cellRank;
       };
 
@@ -312,8 +303,8 @@ namespace DdMd
       /// Array of atom tags (dimension atomCapacity_)
       DArray<Tag> tags_;
 
-      /// Array of CellAtom objects, sorted by cell (dimension atomCapacity_).
-      DArray<CellAtom> atoms_;
+      /// Array of SpCellAtom objects, sorted by cell (dimension atomCapacity_).
+      DArray<SpCellAtom> atoms_;
 
       /// Array of Cell objects.
       GArray<Cell> cells_;
@@ -364,12 +355,12 @@ namespace DdMd
       */
       bool isValidAtomId(int atomId);
 
-   }; 
+   };
 
    // Public inline method definitions:
 
    /*
-   * Identify the cell for an Atom, based on its position.
+   * Identify the cell within which a position lies.
    */
    inline int SpCellList::cellIndexFromPosition(const Vector& position) const
    {
@@ -388,14 +379,14 @@ namespace DdMd
    }
 
    /*
-   * Add an Atom to the appropriate cell, based on its position.
+   * Add an atom to the appropriate cell, based on its position.
    */
-   inline void SpCellList::placeAtom(Atom &atom)
+   inline void SpCellList::placeAtom(SpAtom &atom)
    {
       // Preconditon
       assert(nAtom_ < tags_.capacity());
 
-      int rank = cellIndexFromPosition(atom.position());
+      int rank = cellIndexFromPosition(atom.position);
       if (rank >= 0) {
          tags_[nAtom_].cellRank = rank;
          tags_[nAtom_].ptr = &atom;
@@ -410,7 +401,7 @@ namespace DdMd
    * Return true iff atomId is valid, i.e., if 0 <= 0 < atomCapacity.
    */
    inline bool SpCellList::isValidAtomId(int atomId)
-   { return ( (0 <= atomId) && (atomId < tags_.capacity()) ); }
+   {  return ( (0 <= atomId) && (atomId < tags_.capacity()) ); }
 
    /*
    * Return associated Grid object.
@@ -428,10 +419,7 @@ namespace DdMd
    * Return reference to cell number i.
    */
    inline const Cell& SpCellList::cell(int i) const
-   {
-      assert(i < cells_.size());  
-      return cells_[i]; 
-   }
+   {  return cells_[i]; }
 
    /*
    * Return pointer to first Cell.

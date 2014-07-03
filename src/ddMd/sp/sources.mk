@@ -1,6 +1,7 @@
 include $(SRC_DIR)/ddMd/sp/chemistry/sources.mk
 include $(SRC_DIR)/ddMd/sp/storage/sources.mk
 include $(SRC_DIR)/ddMd/sp/configIos/sources.mk
+include $(SRC_DIR)/ddMd/sp/neighbor/sources.mk
 include $(SRC_DIR)/ddMd/sp/processor/sources.mk
 include $(SRC_DIR)/ddMd/sp/analyzers/sources.mk
 
@@ -8,6 +9,7 @@ ddMd_sp_= \
     $(ddMd_sp_chemistry_) \
     $(ddMd_sp_storage_) \
     $(ddMd_sp_configIos_) \
+    $(ddMd_sp_neighbor_) \
     $(ddMd_sp_processor_) \
     $(ddMd_sp_analyzers_) 
 

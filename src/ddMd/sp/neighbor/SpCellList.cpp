@@ -45,9 +45,9 @@ namespace DdMd
    * Allocate memory for this SpCellList (generalized coordinates).
    */
    void SpCellList::allocate(int atomCapacity, const Vector& lower, 
-                           const Vector& upper, const Vector& cutoffs, int nCellCut)
+                             const Vector& upper, const Vector& cutoffs, 
+                             int nCellCut)
    {
-
       // Allocate arrays of tag and handle objects
       tags_.allocate(atomCapacity);
       atoms_.allocate(atomCapacity);
@@ -57,10 +57,10 @@ namespace DdMd
    }
 
    /*
-   * Calculate number of cells in each direction of grid, resize cells_ array if needed.
+   * Calculate number of cells in each direction, resize cells_ array if needed.
    */
    void SpCellList::setGridDimensions(const Vector& lower, const Vector& upper, 
-                                    const Vector& cutoffs, int nCellCut)
+                                      const Vector& cutoffs, int nCellCut)
    {
       if (nCellCut < 1) {
          UTIL_THROW("Error: nCellCut < 1");
@@ -78,24 +78,21 @@ namespace DdMd
          isNewGrid = false;
       }
 
+      // Calculate gridDimensions = number of cells in each direction
+      // If any differ from current grid dimension, isNewGrid = false.
       Vector lengths;
       IntVector gridDimensions;
       for (int i = 0; i < Dimension; ++i) {
  
          lengths[i] = upper_[i] - lower_[i];
          if (lengths[i] < 0) {
-            UTIL_THROW("Processor length[i] < 0.0");
+            UTIL_THROW("Error: length[i] < 0.0");
          }
          if (lengths[i] < cutoffs[i]) {
-            UTIL_THROW("Processor length[i] < cutoff[i]");
+            UTIL_THROW("Error: length[i] < cutoff[i]");
          }
          gridDimensions[i] = int(lengths[i]*nCellCut/cutoffs[i]);
          cellLengths_[i] = lengths[i]/double(gridDimensions[i]);
-
-         #if 0
-         // Add two extra layers of cells for ghosts.
-         gridDimensions[i] += 2*nCellCut;
-         #endif
 
          if (gridDimensions[i] != grid_.dimension(i)) {
             isNewGrid = true;   
@@ -126,23 +123,16 @@ namespace DdMd
 
       // Build linked cell list, if necessary
       if (isNewGrid) {
-         int ic;
-         #if 0
-         // Initially mark all cells as ghost cells
-         for (ic = 0; ic < newSize; ++ic) {
-            cells_[ic].setIsGhostCell(true);
-         }
-         #endif
-         // Loop over local cells, linking and marking each as a local cell.
+         // Loop over local cells, linking cells.
          IntVector p;
          Cell* prevPtr = 0;
          Cell* cellPtr = 0;
-         for (p[0] = nCellCut; p[0] < grid_.dimension(0) - nCellCut; ++p[0]) {
-            for (p[1] = nCellCut; p[1] < grid_.dimension(1) - nCellCut; ++p[1]) {
-               for (p[2] = nCellCut; p[2] < grid_.dimension(2) - nCellCut; ++p[2]) {
+         int ic;
+         for (p[0] = 0; p[0] < grid_.dimension(0); ++p[0]) {
+            for (p[1] = 0; p[1] < grid_.dimension(1); ++p[1]) {
+               for (p[2] = 0; p[2] < grid_.dimension(2); ++p[2]) {
                   ic = grid_.rank(p);
                   cellPtr = &cells_[ic];
-                  //cellPtr->setIsGhostCell(false);
                   if (prevPtr) {
                      prevPtr->setNextCell(*cellPtr);
                   } else {
@@ -333,7 +323,7 @@ namespace DdMd
 
    #ifdef UTIL_DEBUG
    /*
-   * Get number of atoms that were rejected (not added to cells).
+   * Get maximum number of atoms in any cell. 
    */
    int SpCellList::maxNAtomCell() const
    {  return maxNAtomCell_; }
