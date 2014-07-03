@@ -36,7 +36,6 @@ namespace DdMd
       szyAccumulator_(),
       szzAccumulator_(),
       nSamplePerBlock_(1),
-      nSample_(0),
       isInitialized_(false)
    {  setClassName("VirialStressTensorAverage"); }
 
@@ -74,9 +73,6 @@ namespace DdMd
       loadInterval(ar);
       loadOutputFileName(ar);
 
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(nSample_);
-
       if (simulation().domain().isMaster()) {
          sxxAccumulator_.loadParameters(ar);
          sxyAccumulator_.loadParameters(ar);
@@ -91,6 +87,7 @@ namespace DdMd
          filename  = outputFileName();
          simulation().fileMaster().openOutputFile(outputFileName(), outputFile_);
       }
+
       isInitialized_ = true;
    }
 
@@ -101,7 +98,6 @@ namespace DdMd
    {
       saveInterval(ar);
       saveOutputFileName(ar);
-      ar << nSample_;
 
       if (simulation().domain().isMaster()) {
          ar << sxxAccumulator_;

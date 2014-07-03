@@ -1,5 +1,5 @@
-tests_util_accumulators_stochastic_average_SRCS=\
-    $(TESTS_DIR)/util/accumulators/stochastic/average/AverageTest.cc 
+util_tests_accumulators_stochastic_average_SRCS=\
+    $(SRC_DIR)/util/tests/accumulators/stochastic/average/AverageTest.cc 
 
-tests_util_accumulators_stochastic_average_OBJS=$(tests_util_accumulators_stochastic_average_SRCS:.cc=.o)
+util_tests_accumulators_stochastic_average_OBJS=$(util_tests_accumulators_stochastic_average_SRCS:.cc=.o)
 

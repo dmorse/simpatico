@@ -24,9 +24,9 @@ namespace Inter
    * A clipped cosine potential that induces ordering
    * along directions specified by waveIntVectors, w_i.
    *
-   *                                                 /                   /     /      w_i.x     w_i.y     w_i.z  \  \  \
-   * u = prefactor[atomType] externalParameter tanh | clipParameter Sum | cos | 2 pi ------- + ------- + -------  |  |  |
-   *                                                 \               i   \     \        Lx        Ly        Lz   /  /  /
+   *                                                 /              /          /     /      w_i.(x-shift_[0])    w_i.(y-shift_[1])    w_i.(z-shift_[2])            \  \  \ \
+   * u = prefactor[atomType] externalParameter tanh | clipParameter| C_ +  Sum | cos | 2 pi ------------------ + ------------------ + ------------------ + phase_i  |  |  | |
+   *                                                 \              \      i   \     \             Lx               Ly                       Lz                    /  /  / /
    *
    * Prefactor (which depends on the atomType), externalParameter, waveIntVectors, interfaceWidth and periodicity
    * are given as inputs in the parameter file. 
@@ -132,7 +132,7 @@ namespace Inter
    private:
    
       /// Maximum allowed value for nAtomType (# of particle types).
-      static const int MaxAtomType = 2;
+      static const int MaxAtomType = 3;
 
       /// Prefactor array ofsize nAtomType.
       DArray<double> prefactor_;
@@ -144,7 +144,16 @@ namespace Inter
       int  nWaveVectors_;
 
       /// Array of Miller index IntVectors for the reciprocal lattice vectors.
-      DArray<IntVector>  waveIntVectors_;
+      DArray<Vector>  waveVectors_;
+
+      /// Phases for the different plane waves.
+      DArray<double> phases_;
+
+      /// Prefactor array ofsize nAtomType.
+      Vector shift_;
+
+      /// Prefactor array ofsize nAtomType.
+      double C_;
 
       /// Number of unit cells in box
       int periodicity_;
@@ -172,18 +181,20 @@ namespace Inter
    {
       const Vector cellLengths = boundaryPtr_->lengths();
       double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);
-
+      
+      Vector r = position;
+      r -= shift_;
       double cosine = 0.0;
       for (int i = 0; i < nWaveVectors_; ++i) {
          Vector q;
-         q[0] = 2.0*M_PI*periodicity_*waveIntVectors_[i][0]/cellLengths[0];
-         q[1] = 2.0*M_PI*periodicity_*waveIntVectors_[i][1]/cellLengths[1]; 
-         q[2] = 2.0*M_PI*periodicity_*waveIntVectors_[i][2]/cellLengths[2];
-         double arg = q.dot(position);
+         q[0] = 2.0*M_PI*periodicity_*waveVectors_[i][0]/cellLengths[0];
+         q[1] = 2.0*M_PI*periodicity_*waveVectors_[i][1]/cellLengths[1]; 
+         q[2] = 2.0*M_PI*periodicity_*waveVectors_[i][2]/cellLengths[2];
+         double arg = q.dot(r)+phases_[i];
          cosine += cos(arg);
       }
       cosine *= clipParameter;
-      return prefactor_[type]*externalParameter_*tanh(cosine);
+      return prefactor_[type]*externalParameter_*tanh(C_+cosine);
    }
 
    /* 
@@ -195,16 +206,18 @@ namespace Inter
    {
       const Vector cellLengths = boundaryPtr_->lengths();
       double clipParameter = 1.0/(2.0*M_PI*periodicity_*interfaceWidth_);
-
+ 
+      Vector r = position;
+      r -= shift_;
       double cosine = 0.0;
       Vector deriv;
       deriv.zero();
       for (int i = 0; i < nWaveVectors_; ++i) {
          Vector q;
-         q[0] = 2.0*M_PI*periodicity_*waveIntVectors_[i][0]/cellLengths[0];
-         q[1] = 2.0*M_PI*periodicity_*waveIntVectors_[i][1]/cellLengths[1]; 
-         q[2] = 2.0*M_PI*periodicity_*waveIntVectors_[i][2]/cellLengths[2];
-         double arg = q.dot(position);
+         q[0] = 2.0*M_PI*periodicity_*waveVectors_[i][0]/cellLengths[0];
+         q[1] = 2.0*M_PI*periodicity_*waveVectors_[i][1]/cellLengths[1]; 
+         q[2] = 2.0*M_PI*periodicity_*waveVectors_[i][2]/cellLengths[2];
+         double arg = q.dot(r)+phases_[i];
          cosine += cos(arg);
          double sine = -1.0*sin(arg);
          q *= sine;
@@ -212,10 +225,10 @@ namespace Inter
       }
       cosine *= clipParameter;
       deriv *= clipParameter;
-      double tanH = tanh(cosine);
+      double tanH = tanh(C_+cosine);
       double sechSq = (1.0 - tanH*tanH);
       double f = prefactor_[type]*externalParameter_*sechSq;
-      deriv *= f;
+      deriv *= -1.0*f;
       force = deriv;
    }
  

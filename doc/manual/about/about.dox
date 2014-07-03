@@ -4,11 +4,11 @@
 \ref user_page  (Next)  
 <BR>
 
-Simpatico is a library of C++ classes and programs for Monte Carlo (MC), molecular dynamics (MD), and hybrid MC simulations of molecular and polymer liquids.  It has thus far been used to simulate coarse-grained models of polymer liquids, but is suitable for a much wider range of problems. It contains the following main programs:
+Simpatico is a library of C++ classes and programs for molecular dynamics (MD), Monte Carlo (MC) and hybrid MC simulations of molecular and polymer liquids.  It has thus far been used to simulate coarse-grained models of polymer liquids, but is suitable for a much wider range of problems. It contains the following main programs:
+
+- A program for parallel domain-decomposition MD simulations, named ddSim.
 
 - Programs for MC and MD simulations on a single processor, named mcSim and mdSim.
-
-- An efficient program for parallel domain-decomposition MD simulations, named ddSim.
 
 The single-processor mcSim and mdSim programs can also be compiled with MPI to execute embarassingly parallel multi-processor algorithms, such as replica-exchange, in which each processor simulates a different system.
 

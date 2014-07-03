@@ -29,7 +29,7 @@ ddMd_+= $(ddMd_user_)
 ddMd_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_))
 ddMd_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_:.cpp=.o))
 
 $(ddMd_LIB): $(ddMd_OBJS)
 	$(AR) rcs $(ddMd_LIB) $(ddMd_OBJS)

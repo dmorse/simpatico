@@ -199,7 +199,7 @@ namespace Inter
    protected:
    
       /// Maximum allowed value for nAtomType (# of atom types)
-      static const int MaxAtomType = 2;
+      static const int MaxAtomType = 3;
    
       // Lennard-Jones parameters for different types of atom pairs
       double epsilon_[MaxAtomType][MaxAtomType];  ///< LJ interaction energies.

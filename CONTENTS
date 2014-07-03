@@ -1,0 +1,26 @@
+Subdirectories:
+---------------
+
+src/            C++ source files, including implementation and header files
+bld/            build directories, to hold files generated during compilation
+  serial/       build directory for serial programs
+  parallel/     build directory for parallel programs
+bin/            location for installing executables
+tools/          tools for manipulating input and output files
+  bin/          bash script tools
+  python/       python tools
+  mathematica/  mathematica tools
+examples/       simulation usage examples 
+doc/            documentation
+  manual/       ascii *.dox source files for manual pages
+  html/         location for installing *.html web manual pages
+
+Files:
+------
+
+README        brief introduction to package 
+LICENSE       GPL license
+CONTENTS      this file
+setup         bash script for initial setup (README and documentation)
+makefile      main makefile
+

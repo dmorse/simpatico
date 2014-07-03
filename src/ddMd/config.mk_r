@@ -63,12 +63,12 @@ endif
 
 #-----------------------------------------------------------------------
 # Path to ddMd library
-# Note: OBJ_DIR is defined in src/config.mk.
+# Note: BLD_DIR is defined in src/config.mk.
 
 DDMD_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(DDMD_SUFFIX)
 
 ddMd_LIBNAME=ddMd$(DDMD_ALL_SUFFIX)
-ddMd_LIB=$(OBJ_DIR)/ddMd/lib$(ddMd_LIBNAME).a
+ddMd_LIB=$(BLD_DIR)/ddMd/lib$(ddMd_LIBNAME).a
 
 #-----------------------------------------------------------------------
 # Path to executables

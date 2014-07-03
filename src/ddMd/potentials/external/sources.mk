@@ -5,5 +5,5 @@ ddMd_potentials_external_=\
 ddMd_potentials_external_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_potentials_external_))
 ddMd_potentials_external_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_potentials_external_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_potentials_external_:.cpp=.o))
 

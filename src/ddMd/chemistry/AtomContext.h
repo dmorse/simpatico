@@ -11,7 +11,6 @@
 #ifdef DDMD_MOLECULES
 
 namespace DdMd{
-
    /**
    * Descriptor for context of an Atom within a molecule and species.
    *
@@ -43,9 +42,7 @@ namespace DdMd{
       int atomId;
 
    };
-
 }
 
 #endif
-
 #endif

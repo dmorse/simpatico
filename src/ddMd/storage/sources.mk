@@ -15,5 +15,5 @@ endif
 ddMd_storage_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_storage_))
 ddMd_storage_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(ddMd_storage_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(ddMd_storage_:.cpp=.o))
 

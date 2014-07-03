@@ -7,5 +7,5 @@ modules_sliplink_= \
     modules/sliplink/SliplinkMcModule.cpp 
 
 modules_sliplink_SRCS=$(addprefix $(SRC_DIR)/, $(modules_sliplink_))
-modules_sliplink_OBJS=$(addprefix $(OBJ_DIR)/, $(modules_sliplink_:.cpp=.o))
+modules_sliplink_OBJS=$(addprefix $(BLD_DIR)/, $(modules_sliplink_:.cpp=.o))
 

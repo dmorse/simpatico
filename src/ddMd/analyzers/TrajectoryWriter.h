@@ -94,6 +94,9 @@ namespace DdMd
       * Write data that should appear once, at beginning of the file. 
       *
       * Called by sample when iStep == 0.
+      *
+      * \param out output file stream
+      * \param iStep MD time step index
       */
       virtual void writeHeader(std::ofstream& out, long iStep) = 0;
 
@@ -101,6 +104,9 @@ namespace DdMd
       * Write data that should appear in every frame.
       * 
       * Called by sample on every step.
+      *
+      * \param out output file stream
+      * \param iStep MD time step index
       */
       virtual void writeFrame(std::ofstream& out, long iStep) = 0;
 

@@ -1,12 +1,12 @@
 #-----------------------------------------------------------------------
-# file: $(OBJ_DIR)/config.mk
+# file: $(BLD_DIR)/config.mk
 #
 # A copy of this makefile fragment is included by all other makefiles. 
 # The copy of this file named config.mk_r in the src/ directory is a
 # default version that is kept under repository control (the suffix _r 
 # denotes "repository"), but is not used by the makefile system. The 
 # makefile system uses copies of this file named config.mk in the src/, 
-# obj/parallel, and obj/serial directories, which will be referred to 
+# bld/parallel, and bld/serial directories, which will be referred to 
 # as user copies. Initial versions of these three user copies are 
 # created by the setup setup script by copying the repository version
 # src/config.mk_r and modifying a few lines to set paths correctly for 
@@ -48,26 +48,26 @@
 # Absolute directory paths
 #
 # The setup script should set the value of ROOT_DIR in config.mk to 
-# the absolute path to the root simpatico/ directory, and OBJ_DIR 
+# the absolute path to the root simpatico/ directory, and BLD_DIR 
 # should be set to the path to the directory that contains this 
-# config.mk file. The value of OBJ_DIR is the root of the directory 
+# config.mk file. The value of BLD_DIR is the root of the directory 
 # in which object *.o files will be placed during compilation. In the 
 # repository file config.mk_r, the absolute path for ROOT_DIR and the 
-# relative path to OBJ_DIR are assigned placeholder values of "PWD" 
+# relative path to BLD_DIR are assigned placeholder values of "PWD" 
 # and "OWD", respectively. These placeholders are replaced by actual 
 # paths by the setup script when it creates user copies of config.mk
-# in the src/, obj/parallel and obj/serial directory.
+# in the src/, bld/parallel and bld/serial directory.
 # 
-# OBJ_DIR = path to the object directory that will contain *.o files
+# BLD_DIR = path to the object directory that will contain *.o files
 # SRC_DIR = path to the src/ directory, which contains source files
 # BIN_DIR = path to the directory in which executables are installed
 #
-# For the config.mk file in the src/ directory, OBJ_DIR and SRC_DIR
+# For the config.mk file in the src/ directory, BLD_DIR and SRC_DIR
 # will be the same, and will both point to the src/ directory. This
 # copy of config.mk is used for in-source builds.
 
 ROOT_DIR=PWD
-OBJ_DIR=$(ROOT_DIR)/=OWD
+BLD_DIR=$(ROOT_DIR)/=OWD
 SRC_DIR=$(ROOT_DIR)/src
 BIN_DIR=$(ROOT_DIR)/bin
 

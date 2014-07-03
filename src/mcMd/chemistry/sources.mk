@@ -6,5 +6,5 @@ mcMd_chemistry_=mcMd/chemistry/Atom.cpp \
 mcMd_chemistry_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_chemistry_))
 mcMd_chemistry_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_chemistry_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_chemistry_:.cpp=.o))
 

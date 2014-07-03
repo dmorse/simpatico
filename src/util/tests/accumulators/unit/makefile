@@ -1,11 +1,11 @@
-OBJ_DIR_REL =../../../..
-include $(OBJ_DIR_REL)/config.mk
-include $(OBJ_DIR)/util/config.mk
+BLD_DIR_REL =../../../..
+include $(BLD_DIR_REL)/config.mk
+include $(BLD_DIR)/util/config.mk
 include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/util/tests/accumulators/unit/sources.mk
 
-TEST=$(OBJ_DIR)/util/tests/accumulators/unit/Test
+TEST=$(BLD_DIR)/util/tests/accumulators/unit/Test
 
 all: $(util_tests_accumulators_unit_OBJS) $(TEST)
 
