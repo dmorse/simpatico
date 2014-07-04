@@ -10,25 +10,25 @@
 # because this file uses makefile variables defined in those files.
 #-----------------------------------------------------------------------
 
-# All libraries needed in this namespace
+# All libraries needed in for files in src/inter
 LIBS= $(inter_LIB) $(util_LIB)
 
-# C preprocessor macro definitions
+# C preprocessor macro definitions needed in src/inter
 DEFINES=$(UTIL_DEFS) $(INTER_DEFS)
 
-# Dependencies of source files in src/inter on makefile fragments
+# Dependencies on build configuration files
 MAKE_DEPS= -A$(BLD_DIR)/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/util/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/inter/config.mk
 
-# Pattern rule to compile all class source (*.cpp) files in src/inter
+# Pattern rule to compile all *.cpp class source files in src/inter
 $(BLD_DIR)/%.o:$(SRC_DIR)/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
-# Pattern rule to compile all class test (*.cpp) files in src/inter
+# Pattern rule to compile all *.cpp test programs in src/inter/tests
 $(BLD_DIR)/% $(BLD_DIR)/%.o:$(SRC_DIR)/%.cc $(LIBS)
 	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o $(@:.o=) $@ $(LIBS)

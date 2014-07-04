@@ -12,26 +12,26 @@
 # defined in those files. 
 #-----------------------------------------------------------------------
 
-# All libraries needed in this namespace
+# All libraries needed for files in src/mcMd
 LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB)
 
-# C preprocessor macro definitions need in this namespace
+# C preprocessor macro definitions needed by files in src/mcMd
 DEFINES=$(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS)
 
-# Dependencies of source files in src/mcMd on makefile fragments
+# Dependencies on config.mk build configuration files
 MAKE_DEPS= -A$(BLD_DIR)/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/util/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/inter/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/mcMd/config.mk
 
-# Pattern rule to compile all class source (*.cpp) files in src/mcMd
+# Pattern rule to compile all *.cpp class source files in src/mcMd
 $(BLD_DIR)/%.o:$(SRC_DIR)/%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
-# Pattern rule to compile all test source (*.cc) files in src/mcMd/tests
+# Pattern rule to compile all *.cc test programs in src/mcMd/tests
 $(BLD_DIR)/% $(BLD_DIR)/%.o:$(SRC_DIR)/%.cc $(LIBS)
 	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o $(@:.o=) $@ $(LIBS)

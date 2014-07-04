@@ -11,13 +11,13 @@
 # uses makefile variables defined in those files.
 #-----------------------------------------------------------------------
 
-# All libraries needed in this namespace
+# All libraries needed in src/util
 LIBS=$(util_LIB)
 
-# Preprocessor macro definitions
+# Preprocessor macro definitions needed in src/util
 DEFINES=$(UTIL_DEFS)
 
-# Dependencies of source files in src/util on makefile fragments
+# Dependencies on build configuration files
 MAKE_DEPS= -A$(BLD_DIR)/config.mk
 MAKE_DEPS+= -A$(BLD_DIR)/util/config.mk
 
@@ -28,7 +28,7 @@ ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) $(DEFINES) $(MAKE_DEPS) -S$(SRC_DIR) -B$(BLD_DIR) $<
 endif
 
-# Pattern rule to compile *.cc test source files in src/util/tests
+# Pattern rule to compile *.cc test programs in src/util/tests
 $(BLD_DIR)/% $(BLD_DIR)/%.o:$(SRC_DIR)/%.cc $(LIBS)
 	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o $(@:.o=) $@ $(LIBS)
