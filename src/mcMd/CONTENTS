@@ -1,5 +1,11 @@
 The directory tree rooted at src/mcMd contains all of the classes in the 
-McMd namespace, which are used in single-processor MC and MD programs.
+McMd namespace, which are used in single-processor MC and MD programs, as
+well as main programs mcSim.cpp and mdSim.cpp.
+
+Source files in this directory tree, and in the McMd namespace, can use
+classes and other names defined in the Util namespace (src/util directory) 
+and the Inter namespace (src/inter directory), but may not use any names
+defined in the DdMd namespace (src/ddMd directory). 
 
 Subdirectories:
 ----------------------
@@ -30,15 +36,16 @@ misc           miscellaneous utilities
 Makefile targets 
 ----------------
 
-The src/mcMd directory contains a makefile that can be used to execute 
-in-source compilation of all of the classes in the directory tree rooted 
-at mcMd, which include the entire McMc namespace, and build the corresponding 
-library. The most important targets are:
+The makefile in src/mcMd directory can be used to execute in-source compilation 
+of all of the classes in the directory tree rooted at src/mcMd, which include 
+the entire McMc namespace, and build the corresponding library and executables. 
+The most important targets are:
 
-make all      make all *.o files in src/mcMd and its subdirectories, build
-              a static library mcMd<suffix>.a in lib/, and install two
-              executables named mdSim<suffix> and mcSim<suffix> in bin/.
+make all      make all *.o files for source files in the src/mcMd tree, build
+              a static library mcMd<suffix>.a, and install two executables 
+              named mdSim<suffix> and mcSim<suffix> in simpatico/bin/.
 
-make clean    remove all *.o files in src/mcMd and its subdirectories and
-              the static library file.
+make clean    remove all files generated in src/mcMd by "make all", including
+              object files, dependency files and the static library. Does not
+              remove the resulting executable files from simpatico/bin/.
 
