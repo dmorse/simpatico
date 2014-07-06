@@ -92,14 +92,18 @@ namespace McMd
       * Allocate memory for this CellList.
       *
       * This function:
+      *
       *   - Allocates an array of atomCapacity CellTag objects.
       *   - Allocates an array of Cell objects sized for this boundary.
       *
-      * The capacity of the array of Cells is chosen such that, if
-      * each dimension of the system increases by the parameter 
-      * "scale", all dimensions of each cell will remain greater than the 
-      * parameter "cutoff". The cutoff should be greater than or equal to 
-      * the maximum range of the nonbonded pair potential. 
+      * The capacity of the array of Cells is chosen such that the dimension
+      * each cell within the specified Boundary is greater than or equal to the 
+      * parameter "cutoff". The cutoff parameter must be greater than or equal 
+      * to the maximum range of the nonbonded pair potential. The Boundary object 
+      * passed to this function should be chosen, for simulations with variable
+      * boundary dimensions, to contain more cells than the maximum you expect 
+      * to encounter during the simulation. In simulations with a rigid boundary,
+      * the actual boundary dimensions can be used.
       *
       * This function does not populate the CellList with atoms. See the
       * CellList::addAtom() functions.
