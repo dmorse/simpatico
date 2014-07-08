@@ -6,35 +6,23 @@ namespace McMd
 \ref user_multi_DdMd_page  (Next) &nbsp; &nbsp; &nbsp; &nbsp; 
 <BR>
 
-The mcSim and mdSim programs can be compiled for use on multiple processors. The resulting multi-processor versions of these programs due not divide a single system among multiple processors, as done by ddSim, but simply allow a different system to be simulated on different processors. This capability can be used for replica 
-exchange simulations, for free energy perturbations, or simply as a way to submit multiple independent simulations as an MPI job. 
+MPI-enabled versions of mcSim and mdSim allow different processors within an MPI communicator to simulate different systems, with one system per processor. The names of MPI-enabled versions of these programs include a suffix _m (for MPI), and are called mcSim_m and mdSim_m if no other optional features are enabled. 
 
-\section parallel_compile_sec Compilation
+The multi-processor versions of mcSim or mdSim can be invoked in either "independent" mode or "perturbation" mode. In "independent" mode, these programs simply run a set of completely independent simulations, with completely separate input files for every processor. In "perturbation" mode, these programs use different input configuration files for different processors but use a single parameter and command file to control all processors. In perturbation mode, the parameter file contains instructions for assigning a sequence of slightly different set of parameter values to different processors.  Both modes are described in more detail below. 
 
-Instructions for compiling the multi-processor versions of mcSim and mdSim are given \ref user_compile_page "elsewhere". Briefly, one must choose compiler settings that link to an MPI library, by choosing an appropriate value for the COMPILER variable in the file src/config.mk. 
+In either mode, conventions for paths to input and ouput file names are different for multi-system simulations than those for single-system simulations. Each processor in an MPI job is assigned a integer "rank" in the range n = 0, ..., np-1, where np is the total number of processors.  In a multiprocessor mcSim or mdSim simulation, all or many of the files associated with a processor with rank "n" are placed in a numbered subdirectory of the working directory named "n/", e.g., in a directory named "3/" for the processor with MPI rank 3. 
 
-When simpatico is compiled with mpi and free energy perturbation enabled, but no other preprocessor macros defined, the default names of the resulting MC and MD executables are mcSim_m_f and mdSim_m_f. The _m suffix stands for "mpi" and _f for "free energy perturbation". By default, the free energy perturbation feature is enabled when MPI is enabled, though it can be explicitly disabled by invoking "./configure -f0". Enabling free energy perturbation when the program is compiled allows the user to use a command line option to choose at run time whether or not to use this feature in a particular simulation, as discussed below.
+\section parallel_independent_sec Independent Simulation Mode
 
-\section parallel_file_sec Directory Conventions
-Conventions for paths to input and ouput file names are different for multi-system simulations than those for single-system simulations. Each processor in an MPI job involving np processors is assigned a integer "rank" in the range n = 0, ..., np-1.  In a multiprocessor mcSim or mdSim simulation, the input config file and all output files associated with a processor with rank "n" are put in a subdirectory of the working directory named "n/", e.g., in a directory named "3/" for the processor with rank 3 in the MPI communicator. To do this, the FileMaster class for processor 3 prepends the string "3/" to the paths for all of the input and and output configuration and data files used by processor 3, with an analogous convention for other processors.
+To use a parallel version of mcSim or mdSim to run n completely independent simulations, one simply enters the name of the executable from, such as "mcSim_m" or "mdSim_m", from a directory that contains a set of numbered directories named 0/, 1/, 2/, .. n-1/ associated with different processors. In this mode of operation, every processor reads a completely different set of param, command and configuration input files, all of which are located in a numbered directory associated with that processor. This file convention is enforced by prepending the name of the numbered directory to the names of all input and output files that are opened by the progam, e.g., by prepending a prefix "3/" to the names of any files that are open by the processor with MPI rank 3. This manipulation of file names is done by the FileMaster class. 
 
-The treatment of parameter and command files in an MPI mcSim or mdSim job depends upon whether or not the executable is invoked with the "-f" command line, which enables free energy perturbation. 
+In independent mode, parameter files cannot be read from standard input, since that would cause every processor to read the same param file. By convention, the parameter file for processor n in a set of independent simulations is instead read from the file named "param" in directory "n/" of the working directory. The command file must also be in the appropriate numbered directory, and must have the base name specified by the commandFileName given in this parameter file. Paths to other input files (such as the input configuration file) and output files (such as those created by analyzer classes) are also obtained by adding a the name "n/" of a numbered subdirectory before the inputPrefix or outputPrefix strings that are specified in the parameter file. 
 
-\section parallel_independent_sec Independent Simulations
-
-To use a parallel version of mcSim or mdSim to run a set of completely independent simulations, one simply enters the name of the executable from, such as "mcSim_m_f" or "mdSim_m_f", from a directory that contains a set of numbered directories associated with different processors, without using the command line option "-f" that invokes the perturbation theory feature.  In this mode of operation, every processor reads a completely different set of param and command files, which are located in a directory associated with that processor.
-
-In this mode, it is not possible to read the parameter file from standard input, as done single-system simulations, since that would cause every processor to read the same param file. By convention, the parameter file for processor n in a set of independent simulations is instead read from the file "n/param". The command file processor n is read from a file name obtained by adding  "n/" as a prefix to the commandFileName given in this parameter file. Paths to other input and ouput files are also obtained by adding a string "n/" before the inputPrefix or outputPrefix.  
-
-For example: If the inputPrefix is set to "in/" and the outputPrefix is set to "out/" in the file "3/param", the command "WRITE_CONFIG config" in the command file for processor 3 will cause that processor to read 
-the input configuration file "3/in/config", and all of analyzer and configuration output files for processor 3 will be written to the directory "3/out". 
-
-To run independent MC simulations on 3 processors, using an executable mcSim_m_f, one might thus enter
+As an example, consider a set of MC simulations on 3 processors. Assume that the param file for each processor sets the inputPrefix string to "in/", the outputPrefix to "out/", and the commandfileName to "commands". Also assume that each command file contains a command "READ_CONFIG config" that read the initial configuration from a file named "config" in the appropriate input directory. Such a simulation can be run by entering
 \code
     mpirun -np 3 mSim_m_f 
 \endcode
-from the root directory of a directory tree (i.e., the directory above 
-the numbered subdirectories) with a structure
+from root of a directory tree with a structure
 \code
     0/
       param
@@ -55,15 +43,14 @@ the numbered subdirectories) with a structure
         config
       out/
 \endcode
-We have assumed here that the commandFileName pararameter is set to 
-the string "commands" in each of the param files.
+The command "READ_CONFIG config" in each command file will cause each processor to read the input configuration file "in/config" in the appropriate numbered directory for that processor. When the simulation is run, all configuration and data analysis output files for each processor will be written to the "out" of the corresponding numbered directory. 
 
 \section Replicated Simulations
-Invoking the exectuable mcSim_m_f or mdSim_m_f with the "-p" option instead runs a "replicated" free energy perturbation simulation.  This command line option only functions in versions of the code that were compiled with both MPI and free energy perturbation enabled.  In this mode, "replicas" on several processors are controlled by a single parameter file and a single command file, but different parameter values are assigned to different processors.  This mode of operation is required for either free energy perturbation or replica exchange simulations.
+To invoke an parallel version of mcSim or mdSim in "perturbation" mode, simply invoke the program with the "-p" option. This command line option only functions in versions of the code that were compiled with both MPI enabled.  In this mode, simulations carried out on different processors are controlled by a single parameter file and a single command file, but different parameter values are assigned to different processors.  This mode of operation is required for either free energy perturbation or replica exchange simulations.
 
 For example, to run a MC program in this mode on 3 processors, one might thus enter 
 \code
-    mpirun -np 2 mSim_m_f -p < param
+    mpirun -np 2 mSim_m -p < param
 \endcode
 from the root directory of a directory tree with a structure
 \code
@@ -82,31 +69,23 @@ from the root directory of a directory tree with a structure
         config
       out/
 \endcode
-assuming that commandFileName=="commands" in the param file. Note that in this case the parameter file is read from standard input, and that only a single command file is used, as in a simulation of a single system, but that input configuration files and all output files are placed in subdirectories associated with particular 
-processors.
+assuming that commandFileName=="commands" in the param file. Note that in this case the parameter file is read from standard input, and that only a single command file is used, as in a simulation of a single system, but that input configuration files and all output files are placed in numbered subdirectories associated with particular processors.
 
 The method by which a single parameter file is used to set different parameter values on different processors involves the use of a Perturbation class, and is discussed below.
 
 \section parallel_perturb_sec Perturbation Classes
 
-In a replicated simulation, the master processor reads a parameter file, and broadcasts the contents of that file to all the other processors. This establishes a baseline set of parameters that are the same on all processors. The parameter file used in such simulations must also, however, contain polymorphic block associated with a subclass of the McMd::Perturbation abstract base class, which defines how a sequence of different parameter values should be set on different processors. This block appears at the end of the block associated 
-with the McSystem or MdSystem.
+In perturbation mode, the master processor reads a parameter file, and broadcasts the contents of that file to all the other processors. This establishes a baseline set of parameters that are the same on all processors. The parameter file used in such simulations must also, however, contain a polymorphic block associated with a subclass of the McMd::Perturbation abstract base class. The "Pertubation" object must define how a sequence of different parameter values should be assigned on different processors. The block appears at the end of the block associated with the McSystem or MdSystem.
 
-Each subclass of Perturbation defines how a sequence of slightly different sets of different physical parameters should be assigned to different processors in an MPI communicator. A subclass of Perturbation may assign different values to different processors for any parameters that effect the statistical weight for a 
-microstate. This may include macroscopic state variables such as temperature (for constant temperature simulations) or pressure (for constant pressure simulations), or parameters in the potential energy. The default implementation of the parameter file block associated with a Perturbation reads in an array of values for some 
-parameter, with a different value is assigned to each processor. The implementation of each subclass of Perturbation must define how these input parameters should be used to reset values of one more more of the physical parameters of a simulation. Different parameters are set on different processors by first
-setting the parameters on all processors to common baseline values, which are determined by the value given for quantities such as the potential energy parameters and temperature in the rest of the parameter block, and then calling a virtual method of the Perturbation object to reset specific parameters to different values on different processors. 
+Each subclass of Perturbation defines how a sequence of slightly different sets of different physical parameters should be assigned to different processors in an MPI communicator, using the parameters set in the remainder of the parameter file as a common starting point. A subclass of Perturbation may assign different values to different processors for any parameters that effect the statistical weight for a microstate. To do so, it may modify values of either macroscopic state variables such as temperature or pressure, or parameters in the potential energy. The default implementation of the parameter file block associated with a Perturbation reads in an array of values for some parameter, with a different value is assigned to each processor. The implementation of each subclass of Perturbation must define how these input parameters should be used to reset values of one more more of the physical parameters of a simulation. Different parameters are set on different processors by first setting the parameters on all processors to common baseline values, which are determined by the value given for quantities such as the potential energy parameters and temperature in the rest of the parameter block, and then calling a virtual method of the Perturbation object to reset specific parameters to different values on different processors. 
 
-As a simple example of this, McEnergyPerturbation is a subclass of Perturbation that sets every processor in an MC simulation to a different temperature, or inverse temperature beta, while using the same values for all potential energy parameters on all processors.  The required values of inverse temperature for different processors are input as an array in the parameter file block that is read by McEnergyPerturbation::readParam(), 
-listed in order of the MPI ranks of corresponding processors. The contents of this entire array is broadcast to all processors, and each processor then resets its temperature to a value obtained from the appropriate elements of the array (i.e., processor 4 resets its temperature to the value 
-corresponding to element 4 in this array). 
+As a simple example of this, McEnergyPerturbation is a subclass of Perturbation that sets every processor in an MC simulation to a different temperature, or inverse temperature beta, while using the same values for all potential energy parameters on all processors.  The required values of inverse temperature for different processors are input as an array in the parameter file block that is read by McEnergyPerturbation::readParam(), listed in order of the MPI ranks of corresponding processors. The contents of this entire array is broadcast to all processors, and each processor then resets its temperature to a value obtained from the appropriate elements of the array (i.e., processor 4 resets its temperature to the value corresponding to element 4 in this array). 
 
 \section parallel_exchange_sec Replica Exchange 
 
-Simpatico provides a replica exchange algorithm, which can be used in replicated MC simulations with any associated Perburbation. The replica exchange algorithm is implemented by the class McMd::ReplicaMove, which implements a Monte Carlo move that exchanges configurations between processors with neighboring 
-MPI ranks. Please see the documentation of the "ReplicaMove" class for further information.
+Simpatico provides a replica exchange algorithm, which can be used in multiprocessor MC simulations with any associated Perburbation. The replica exchange algorithm is implemented by the class McMd::ReplicaMove, which implements a Monte Carlo move that exchanges configurations between processors with neighboring MPI ranks. Please see the documentation of the "ReplicaMove" class for further information.
 
-In the parameter file format for a replicated MC simulation, the block associated with the Perturbation must be followed by a line containing a boolean parameter "hasReplicaMove", which may take on values 1 (true) or 0 (false). This parameter is required only in multi-system replicated simulations. If "hasReplicaMove" is true (1), it must be followed by a parameter block associated with the ReplicaMove class. The ReplicaMove parameter file block a single "interval" parameter that specifies the interval (in MC steps) between subsequent attempted MC moves. 
+In the parameter file format for an MC simulation in perturbation mode, the block associated with the Perturbation must be followed by a line containing a boolean parameter "hasReplicaMove", which may take on values 1 (true) or 0 (false). This parameter is required only in multi-system replicated simulations. If "hasReplicaMove" is true (1), it must be followed by a parameter block associated with the ReplicaMove class. The ReplicaMove parameter file block a single "interval" parameter that specifies the interval (in MC steps) between subsequent attempted MC moves. 
 
 \section parallel_example_sec Example Parameter File
 Show below is an example of a parameter file for a replicated mcSim simulation of a polymer blend, which is simulated on three processors. This example uses the McPairPerturbation subclass of Perturbation to define a sequence of systems with different values of the epsilon parameter for interactions between A and B atoms, and uses a replica exchange move. The parameter block associated with the McPairPerturbation and ReplicaMove appear at the end of the McSystem block.

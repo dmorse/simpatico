@@ -52,12 +52,10 @@ MCMD_SUFFIX:=
 # extended using the := operator, as MCMD_SUFFIX:=$(MCMD_SUFFIX)_f.
  
 
-# Enable free energy perturbation (_f for "free energy")
+# Enable free energy perturbation 
 ifdef UTIL_MPI
 ifdef MCMD_PERTURB
 MCMD_DEFS+= -DMCMD_PERTURB
-else
-MCMD_SUFFIX:=$(MCMD_SUFFIX)_nf
 endif
 endif
 
