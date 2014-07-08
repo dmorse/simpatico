@@ -11,6 +11,8 @@
 #include <util/param/ParamComposite.h>   // base class
 #include <ddMd/chemistry/AtomArray.h>    // member
 #include <ddMd/storage/AtomMap.h>        // member
+#include <ddMd/communicate/AtomDistributor.h>   // member
+#include <ddMd/communicate/AtomCollector.h>     // member
 #include <ddMd/chemistry/Atom.h>         // member template argument
 #include <ddMd/chemistry/Group.h>        // used in function templates
 #include <util/containers/DArray.h>      // member template
@@ -399,6 +401,17 @@ namespace DdMd
       * Must be called simultaneously on all processors.
       */
       void unsetNAtomTotal();
+
+      /**
+      * Get the AtomDistributor by reference.
+      */
+      AtomDistributor& atomDistributor();
+
+      /**
+      * Get the AtomCollector by reference.
+      */
+      AtomCollector& atomCollector();
+
       #endif
    
       /**
@@ -520,8 +533,8 @@ namespace DdMd
       int  maxNAtomLocal_; 
    
       /// Maximum number of ghosts on this proc since stats cleared.
-      int  maxNGhostLocal_; 
-   
+      int  maxNGhostLocal_;
+
       #ifdef UTIL_MPI
       // Total number of local atoms on all processors.
       Setable<int>  nAtomTotal_;
@@ -531,6 +544,11 @@ namespace DdMd
 
       /// Maximum of maxNGhostLocal_ on all procs (defined on master).
       Setable<int>  maxNGhost_;     
+
+      // Distributors and collectors
+      AtomDistributor atomDistributor_;
+      AtomCollector atomCollector_;
+
       #endif
 
       // Is addition or removal of atoms forbidden?
@@ -558,6 +576,14 @@ namespace DdMd
 
    inline int AtomStorage::nGhost() const
    { return ghostSet_.size(); }
+
+   #ifdef UTIL_MPI
+   inline AtomDistributor& AtomStorage::atomDistributor()
+   {  return atomDistributor_; }
+
+   inline AtomCollector& AtomStorage::atomCollector()
+   {  return atomCollector_; }
+   #endif
 
    inline int AtomStorage::atomCapacity() const
    { return atomCapacity_; }

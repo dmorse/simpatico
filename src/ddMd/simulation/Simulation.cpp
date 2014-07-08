@@ -461,6 +461,34 @@ namespace DdMd
       readParamComposite(in, buffer_);
       readPotentialStyles(in);
 
+      // Now that the domain and buffer have been initialized the Distributor
+      // and Collector objects can be associated and initialized
+      atomStorage_.atomDistributor().associate(domain_, boundary_, atomStorage_, buffer_);
+      atomStorage_.atomCollector().associate(domain_, atomStorage_, buffer_);
+      atomStorage_.atomDistributor().initialize(100);
+      atomStorage_.atomCollector().allocate(100);
+
+      #ifdef INTER_BOND
+      bondStorage_.distributor().associate(domain_, atomStorage_, bondStorage_, buffer_);
+      bondStorage_.collector().associate(domain_, bondStorage_, buffer_);
+      bondStorage_.distributor().initialize(100);
+      bondStorage_.collector().allocate(100);
+      #endif
+
+      #ifdef INTER_ANGLE
+      angleStorage_.distributor().associate(domain_, atomStorage_, angleStorage_, buffer_);
+      angleStorage_.collector().associate(domain_, angleStorage_, buffer_);
+      angleStorage_.distributor().initialize(100);
+      angleStorage_.collector().allocate(100);
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage_.distributor().associate(domain_, atomStorage_, dihedralStorage_, buffer_);
+      dihedralStorage_.collector().associate(domain_, dihedralStorage_, buffer_);
+      dihedralStorage_.distributor().initialize(100);
+      dihedralStorage_.collector().allocate(100);
+      #endif
+
       // Create and read potential energy classes
 
       #ifndef DDMD_NOPAIR

@@ -350,5 +350,16 @@ namespace DdMd
    }
    #endif
 
+   #ifdef INTER_BOND
+   template class GroupDistributor<2>;
+   #endif
+
+   #ifdef INTER_ANGLE
+   template class GroupDistributor<3>;
+   #endif
+
+   #ifdef INTER_DIHEDRAL
+   template class GroupDistributor<4>;
+   #endif
 }
 #endif
