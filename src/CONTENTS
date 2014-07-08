@@ -6,7 +6,7 @@ inter      classes defining potential energy functions (namespace Inter)
 mcMd       serial Monte Carlo (MC) / molecular dynamics (MD) (namespace McMd)
 ddMd       parallel domain-decomposition MD simulation (namespace DdMd)
 modules    add-on components for particular applications
-tests      unit test framework
+test       unit test framework
 draft      unfinished or proposed classes
 
 Files (before running the setup script):
@@ -39,4 +39,4 @@ directory only effects options for code compiled in the src/ directory
 
 For compilation instructions, see the file doc/manual/user/compile.dox, 
 the README file in the root directory (the parent of this directory), or
-user guide section of the web documentation in doc/html.
+the user guide section of the web documentation in doc/html.
