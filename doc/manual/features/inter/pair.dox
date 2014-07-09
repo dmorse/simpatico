@@ -1,4 +1,4 @@
-/*! \page inter_pair_page 2.7.1 Pair Interactions
+/*! \page inter_pair_page 3.1.1 Pair Interactions
 
 Each of the pair potential interaction classes calculates the nonbonded interaction energy and force for pairs of particles. Each class defines a functional form for the potential function \f$V(r)\f$ of a particle pair as a function of the distance \f$r\f$ between the two particles, using parameters that depend upon the type ids of the two atoms.  This function is always set to zero for \f$r\f$ greater than some cutoff distance.
 

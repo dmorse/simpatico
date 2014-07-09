@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page extend_page 4 Extending Simpatico
+/*! \page extend_page 5 Extending Simpatico
 
 \ref source_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref hoomd_page  (Next)

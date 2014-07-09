@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page hoomd_page 5 Integration with Hoomd-blue
+/*! \page hoomd_page 6 Integration with Hoomd-blue
 
 \ref extend_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
 \ref developer_page  (Next)

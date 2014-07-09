@@ -1,0 +1,26 @@
+namespace McMd
+{
+
+/*! \page features_page 3 Features 
+
+\ref user_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref source_page  (Next) 
+<BR>
+
+These pages present an overview of features of various programs that can be enabled by using the parameter file to select which classes are used for potential energies (interaction classes), molecular dynamics integrators or Monte Carlo moves, an data analysis operattions.
+
+<h2> Contents:</h2> 
+   <ul style="list-style: none;">
+   <li> \subpage features_inter_page</li>
+   <li> \subpage features_mcMd_page </li>
+   <li> \subpage features_ddMd_page </li>
+   </ul>
+
+<BR> 
+\ref user_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref index "Main Page"  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref source_page  (Next) 
+ 
+*/
+
+}

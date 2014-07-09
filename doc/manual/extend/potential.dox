@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page extend_potential_page 4.4 Potential Energy Classes
+/*! \page extend_potential_page 5.4 Potential Energy Classes
 
 \ref extend_factory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref extend_subfactory_page  (Next)
