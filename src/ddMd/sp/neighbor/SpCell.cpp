@@ -35,32 +35,26 @@ namespace DdMd
    /*
    * Fill an array with pointers to SpCellAtom objects in this cell and neighbors.
    *
-   * Upon return, the NeighborArray neighbors contains pointers to all of the
-   * atoms this cell and neighboring cells.  The first nAtom() elements are the
-   * the atoms in this cell.
+   * Upon return, the NeighborArray neighbors contains pointers to all of the atoms
+   * in this cell and neighboring cells.  The first nAtom() elements are the the 
+   * atoms in this cell.
    */
    void SpCell::getNeighbors(NeighborArray &neighbors) const
    {
       // Preconditions
       assert(offsetsPtr_);
-      assert(!isGhostCell_);
 
-      const SpCell* cellBegin;
-      const SpCell* cellEnd;
+      const SpCell* cellPtr;
       SpCellAtom* atomBegin;
       SpCellAtom* atomEnd;
-      int  is, ns;
-      bool bg, eg;
 
       neighbors.clear();
-      ns = offsetsPtr_->size();
 
-      for (is = 0; is < ns; ++is) {
-         cellBegin = this + (*offsetsPtr_)[is].first;
-         cellEnd   = this + (*offsetsPtr_)[is].second;
-         if (cellBegin->id() >= id_) {
-            atomBegin = cellBegin->begin_;
-            atomEnd = cellEnd->begin_ + cellEnd->nAtom_;
+      for (int is = 0; is < 27; ++is) {
+         cellPtr = this + (*offsetsPtr_)[is];
+         if (cellPtr->id() >= id_) {
+            atomBegin = cellPtr->begin_;
+            atomEnd = atomBegin + cellPtr->nAtom_;
             for ( ; atomBegin < atomEnd; ++atomBegin) {
                neighbors.append(atomBegin);
             }

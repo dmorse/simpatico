@@ -11,6 +11,7 @@
 #include <ddMd/sp/neighbor/SpCellAtom.h>
 #include <ddMd/sp/chemistry/SpAtom.h>
 #include <util/containers/FSArray.h>
+#include <util/containers/FArray.h>
 #include <util/global.h>
 
 #include <utility>
@@ -78,29 +79,22 @@ namespace DdMd
       */
       static const int MaxNeighborAtom = 2000;
 
+      #if 0 
       /**
       * Maximum number of cells per cutoff length.
       */
       static const int MaxNCellCut = 4;
- 
+
       /**
       * Maximum allowed number of neighboring cells. 
       */
       static const int OffSetArrayCapacity = (2*MaxNCellCut + 1)*(2*MaxNCellCut + 1) + 3;
+      #endif
     
       /**
-      * An array of strips of relative ids for columns of neighboring cells.
-      *
-      * Every cell has a pointer to an OffsetArray, which uses relative 
-      * cell indices (offsets relative to the cell id of the primary cell) 
-      * to identify neighboring cells. Each std::pair<int, int> element in 
-      * in an OffsetArra contains relative addresses for the the first 
-      * (pair.first) and last (pair.second) cells in a contiguous strip of 
-      * cells that could contain atoms that lie within a cutoff length of 
-      * some point in the primary cell. The contents of the OffsetArray
-      * are calculated in the SpCellList::makeGrid() function.
+      * An array of relative cell ids for neighboring cells.
       */
-      typedef FSArray< std::pair<int,int>, OffSetArrayCapacity> OffsetArray;
+      typedef FArray<int, 27> OffsetArray;
 
       /**
       * Static array for holding neighbors in a cell list.
@@ -129,7 +123,7 @@ namespace DdMd
       */
       const SpCell* nextCellPtr() const;
 
-      // Mutators 
+      // Mutators
 
       /**
       * Set id for this SpCell.

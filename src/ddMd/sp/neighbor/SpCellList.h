@@ -15,6 +15,7 @@
 #include <util/space/Grid.h>
 #include <util/containers/DArray.h>
 #include <util/containers/GArray.h>
+#include <util/containers/FMatrix.h>
 #include <util/global.h>
 
 namespace DdMd
@@ -120,10 +121,9 @@ namespace DdMd
       * \param lower        lower coordinate bounds for this processor
       * \param upper        upper coordinate bounds for this processor
       * \param cutoffs      pair cutoff distance in each direction
-      * \param nCellCut     number of cells per cutoff length
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    const Vector& cutoffs, int nCellCut = 1);
+                     const Vector& cutoffs);
 
       /**
       * Allocate memory for this SpCellList (Cartesian coordinates).
@@ -137,10 +137,9 @@ namespace DdMd
       * \param lower        lower bound for this processor in maximum boundary
       * \param upper        upper bound for this processor in maximum boundary
       * \param cutoff       pair cutoff distance in each direction
-      * \param nCellCut     number of cells per cutoff length
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    double cutoff, int nCellCut = 1);
+                    double cutoff);
 
       /**
       * Make the cell grid (using generalized coordinates).
@@ -162,11 +161,9 @@ namespace DdMd
       * \param lower    lower bound of local atom coordinates.
       * \param upper    upper bound of local atom coordinates.
       * \param cutoffs  pair cutoff length in each direction
-      * \param nCellCut number of cells per cutoff length
       */
       void 
-      makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs, 
-               int nCellCut = 1);
+      makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs);
 
       /**
       * Determine the appropriate cell for an SpAtom, based on its position.
@@ -294,8 +291,8 @@ namespace DdMd
          int cellRank;
       };
 
-      /// Array of strips of relative offsets to neighboring cells.
-      Cell::OffsetArray offsets_;
+      /// Matrix of offset array for neighboring cells.
+      FMatrix<Cell::OffsetArray, 3, 3> offsets_;
 
       /// Grid for cells.
       Grid grid_;
@@ -318,7 +315,7 @@ namespace DdMd
       /// Length of each cell in grid
       Vector cellLengths_; 
 
-      /// Pointer to first local cell (to initialize iterator).
+      /// Pointer to first cell (to initialize iterator).
       Cell* begin_;
 
       /// Total number of atoms in cell list.
@@ -345,10 +342,9 @@ namespace DdMd
       * \param lower  lower bound used to allocate array of cells.
       * \param uppper  upper bound used to allocate array of cells.
       * \param cutoffs  minimum dimension of a cell in each direction
-      * \param nCellCut  number of cells per cutoff length
       */
-      void setGridDimensions(const Vector& lower, const Vector& upper, 
-                             const Vector& cutoffs, int nCellCut);
+      void setGridDimensions(const Vector& lower, const Vector& upper
+                             const Vector& cutoffs);
 
       /**
       * Return true if atomId is valid, i.e., if 0 <= 0 < atomCapacity.

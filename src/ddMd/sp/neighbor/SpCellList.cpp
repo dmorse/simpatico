@@ -157,90 +157,113 @@ namespace DdMd
       // Calculate required grid dimensions, reinitialize cells_ array if needed.
       setGridDimensions(lower, upper, cutoffs, nCellCut);
 
-      // Construct e array, to help identify cells within the cutoff.
-      // Definition: For i in the range -nCellCut <= i <= nCellCut,
-      // let e[i+nCellCut][j] = ( m[i]*celllengths_[j]/cutoffs[j] )**2, 
-      // where m[i] = abs(i) - 1 for abs(i) > 0, and m[0] = 0.
-      FArray<Vector, 17> e;
-      {
-         double q, r;
-         int i, j;
-         for (j = 0; j < Dimension; ++j) {
-            q = cellLengths_[j]/cutoffs[j];
-            for (i = 1; i <= nCellCut; ++i) {
-               r = q*double(i-1);
-               r = r*r;
-               e[nCellCut + i][j] = r;
-               e[nCellCut - i][j] = r;
-            }
-            e[nCellCut][j] = 0.0;
-         }
-      }
 
-      // Construct Cell::OffsetArray offsets_ of integer offset strips 
-      // Each element strip contains the cell index for the first cell
-      // strip.first and the cell index strip.second for the last cell
-      // in a contiguous strip of cells for which at least some of the
-      // cell lies within a cutoff distance of the primary cell.
-      offsets_.clear();
-      std::pair<int, int> strip;
+      int;
+      IntVector p;  // type of cell (elements are -1, 0, or 1)
+      IntVector t;  // grid translation or position, without shift
+      IntVector v;  // index components
+      int s0, s1;
+      s0 = grid_.dimension(2)*grid_.dimension(1);
+      s1 = grid_.dimension(2);
+ 
+      // Code for types of cell: 
+      // p[i] = -1 -> lower boundary along direction i
+      // p[i] = +1 -> upper boundary along direction i
+      // p[i] =  0 -> not next to boundary in direction i
+ 
+      i = 0; // index for types of cell
 
-      // Add strip (0,0) (self) as the first element of offsets_ array.
-      // This guarantees that first nAtom elements in neighborArray are 
-      // in the primary cell, allowing for simple self-interaction check.
-      strip.first  = 0;
-      strip.second = 0;
-      offsets_.append(strip); 
+      // Loop over types of cell
+      for (p[0] = -1; p[0] <= 1; ++p[0]) {
+         for (p[1] = -1; p[1] <= 1; ++p[1]) {
+            for (p[2] = -1; p[2] <= 1; ++p[2]) {
 
-      // Loop over all cells within box -nCellCut <= i, j, k <= nCellCut
-      double e0, e1, e2;              // Partial sums of distance^2/cutoff^2
-      int offset0, offset1, offset;   // Partial sums for cell id offset
-      int i, j, k;                    // relative cell coordinates
-      const int span0 = grid_.dimension(2)*grid_.dimension(1);
-      const int span1 = grid_.dimension(2);
-      bool isActive = false; // True iff this cell is within a valid strip
-      for (i = -nCellCut; i <= nCellCut; ++i) {
-         e0 = e[i+nCellCut][0];
-         offset0 = i*span0;
-         for (j = -nCellCut; j <= nCellCut; ++j) {
-            e1 = e0 + e[j + nCellCut][1];
-            offset1 = offset0 + j*span1;
-            for (k = -nCellCut; k <= nCellCut; ++k) {
-               offset = offset1 + k;
-               e2 = e1 + e[k + nCellCut][2];
-               if (e2 <= 1.0) {
-                  if (offset != 0) { // Exclude offset = 0 (already added)
-                     if (isActive) {
-                        if (offset == strip.second + 1) {
-                           strip.second = offset;
-                        } else {
-                           offsets_.append(strip);
-                           strip.first  = offset;
-                           strip.second = offset;
-                        }
-                     } else {
-                        strip.first  = offset;
-                        strip.second = offset;
-                        isActive = true;
-                     }
-                  } else {
-                     if (isActive) {
-                        offsets_.append(strip);
-                        isActive = false;
-                     }
+               // First offset is always to self self, with offset = 0
+               j = 0;
+               offsets_[i][j] = 0;
+
+               // Loop over relative offsets to neighbor cells
+               j = 1;
+               for (t[0] = -1; t[0] <= 1; ++t[0]) {
+                  v[0] = t[0];
+                  if (t[0] == -1 && p[0] == -1) {
+                     v[0] += grid_.dimension(0);
+                  } else 
+                  if (t[0] == +1 && p[0] == +1) {
+                     v[0] -= grid_.dimension(0);
                   }
-               } else {
-                  if (isActive) {
-                     offsets_.append(strip);
-                     isActive = false;
+                  v[0] *= s0;
+                  for (t[1] = -1; t[1] <= 1; ++t[1]) {
+                     v[1] = t[1];
+                     if (t[1] == -1 && p[1] == -1) {
+                        v[1] += grid_.dimension(1);
+                     } else 
+                     if (t[1] == +1 && p[1] == +1) {
+                        v[1] -= grid_.dimension(1);
+                     }
+                     v[1] *= s1;
+                     v[1] += v[0];
+                     for (t[2] = -1; t[2] <= 1; ++t[2]) {
+                        v[2] = t[2];
+                        if (t[2] == -1 && p[2] == -1) {
+                           v[2] += grid_.dimension(2);
+                        } else 
+                        if (t[2] == +1 && p[2] == +1) {
+                           v[2] -= grid_.dimension(2);
+                        }
+                        v[2] += v[1];
+
+                        if (j != 14) {
+                           offsets_[i][j] = v[2];
+                           ++j; // increment offset counter
+                        }
+
+                     }
                   }
                }
+
+               ++i; // increment cell type counter
             }
          }
       }
-      // Append last strip to offsets_, if still active at end of loop.
-      if (isActive) {
-         offsets_.append(strip);
+
+      // Loop over cells in grid, set correct offset array for each
+      i = 0; 
+      for (t[0] = 0; t[0] < grid_.dimension(0); ++t[0]) {
+         if (t[0] == 0) {
+            p[0] = -1;
+         } else
+         if (t[0] == grid_.dimension(0) - 1) {
+            p[0] = +1;
+         } else {
+            p[0] = 0;
+         }
+         v[0] = (p[0] + 1)*9;
+         for (t[1] = 0; t[1] < grid_.dimension(1); ++t[1]) {
+            if (t[1] == 0) {
+               p[1] = -1;
+            } else
+            if (t[1] == grid_.dimension(1) - 1) {
+               p[1] = +1;
+            } else {
+               p[1] = 0;
+            }
+            v[1] = (p[1] + 1)*3;
+            v[1] += v[0];
+            for (t[2] = -1; t[2] < grid_.dimension(2); ++t[2]) {
+               p[2] = 0;
+               if (t[2] == 0) {
+                  p[2] = -1;
+               } else
+               if (t[2] == grid_.dimension(2) - 1) {
+                  p[2] = +1;
+               } else {
+                  p[0] = 0;
+               }
+               j = v[1] + p[0] + 1;
+               cells_[i].setOffsetArray(&offsets_[j]);
+            }
+         }
       }
 
    }
