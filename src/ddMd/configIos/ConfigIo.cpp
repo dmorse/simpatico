@@ -47,25 +47,15 @@ namespace DdMd
    ConfigIo::ConfigIo()
     : domainPtr_(0),
       boundaryPtr_(0),
-      atomStoragePtr_(0),
+      atomStoragePtr_(0)
       #ifdef INTER_BOND
-      bondStoragePtr_(0),
+      , bondStoragePtr_(0)
       #endif
       #ifdef INTER_ANGLE
-      angleStoragePtr_(0),
+      , angleStoragePtr_(0)
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_(0),
-      #endif
-      atomCacheCapacity_(0)
-      #ifdef INTER_BOND
-      , bondCacheCapacity_(0)
-      #endif
-      #ifdef INTER_ANGLE
-      , angleCacheCapacity_(0)
-      #endif
-      #ifdef INTER_DIHEDRAL
-      , dihedralCacheCapacity_(0)
+      , dihedralStoragePtr_(0)
       #endif
    {  setClassName("ConfigIo"); }
 
@@ -75,25 +65,15 @@ namespace DdMd
    ConfigIo::ConfigIo(Simulation& simulation)
     : domainPtr_(0),
       boundaryPtr_(0),
-      atomStoragePtr_(0),
+      atomStoragePtr_(0)
       #ifdef INTER_BOND
-      bondStoragePtr_(0),
+      , bondStoragePtr_(0)
       #endif
       #ifdef INTER_ANGLE
-      angleStoragePtr_(0),
+      , angleStoragePtr_(0)
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_(0),
-      #endif
-      atomCacheCapacity_(0)
-      #ifdef INTER_BOND
-      , bondCacheCapacity_(0)
-      #endif
-      #ifdef INTER_ANGLE
-      , angleCacheCapacity_(0)
-      #endif
-      #ifdef INTER_DIHEDRAL
-      , dihedralCacheCapacity_(0)
+      , dihedralStoragePtr_(0)
       #endif
    {
       setClassName("ConfigIo"); 
@@ -152,86 +132,6 @@ namespace DdMd
 
    }
 
-   /*
-   * Set parameters and allocate memory.
-   */
-   void ConfigIo::initialize(int atomCacheCapacity
-                             #ifdef INTER_BOND
-                             , int bondCacheCapacity
-                             #endif
-                             #ifdef INTER_ANGLE
-                             , int angleCacheCapacity
-                             #endif
-                             #ifdef INTER_DIHEDRAL
-                             , int dihedralCacheCapacity
-                             #endif
-                            )
-   {
-      atomCacheCapacity_ = atomCacheCapacity;
-      #ifdef INTER_BOND
-      bondCacheCapacity_ = bondCacheCapacity;
-      #endif
-      #ifdef INTER_ANGLE
-      angleCacheCapacity_ = angleCacheCapacity;
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralCacheCapacity_ = dihedralCacheCapacity;
-      #endif
-   }
-
-   /*
-   * Read cache capacity parameters and allocate memory.
-   */
-   void ConfigIo::readParameters(std::istream& in)
-   {
-      read<int>(in, "atomCacheCapacity", atomCacheCapacity_);
-      #ifdef INTER_BOND
-      read<int>(in, "bondCacheCapacity", bondCacheCapacity_);
-      #endif
-      #ifdef INTER_ANGLE
-      read<int>(in, "angleCacheCapacity", angleCacheCapacity_);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      read<int>(in, "dihedralCacheCapacity", dihedralCacheCapacity_);
-      #endif
-   }
-
-   /*
-   * Load internal state from input archive and allocate memory.
-   */
-   void ConfigIo::load(Serializable::IArchive& ar)
-   {
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-
-      loader.load(atomCacheCapacity_);
-
-      #ifdef INTER_BOND
-      loader.load(bondCacheCapacity_);
-      #endif
-      #ifdef INTER_ANGLE
-      loader.load(angleCacheCapacity_);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      loader.load(dihedralCacheCapacity_);
-      #endif
-   }
-
-   /*
-   * Save internal state to output archive.
-   */
-   void ConfigIo::save(Serializable::OArchive& ar)
-   {
-      ar & atomCacheCapacity_;
-      #ifdef INTER_BOND
-      ar & bondCacheCapacity_;
-      #endif
-      #ifdef INTER_ANGLE
-      ar & angleCacheCapacity_;
-      #endif
-      #ifdef INTER_DIHEDRAL
-      ar & dihedralCacheCapacity_;
-      #endif
-   } 
 
    /*
    * Private method to read Group<N> objects.

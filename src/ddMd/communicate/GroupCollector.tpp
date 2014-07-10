@@ -270,17 +270,5 @@ namespace DdMd
    }
    #endif
 
-   #ifdef INTER_BOND
-   template class GroupCollector<2>;
-   #endif
-
-   #ifdef INTER_ANGLE
-   template class GroupCollector<3>;
-   #endif
-
-   #ifdef INTER_DIHEDRAL
-   template class GroupCollector<4>;
-   #endif
-
 }
 #endif // ifndef DDMD_GROUP_COLLECTOR_TPP

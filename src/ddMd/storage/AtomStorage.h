@@ -405,12 +405,12 @@ namespace DdMd
       /**
       * Get the AtomDistributor by reference.
       */
-      AtomDistributor& atomDistributor();
+      AtomDistributor& distributor();
 
       /**
       * Get the AtomCollector by reference.
       */
-      AtomCollector& atomCollector();
+      AtomCollector& collector();
 
       #endif
    
@@ -546,8 +546,8 @@ namespace DdMd
       Setable<int>  maxNGhost_;     
 
       // Distributors and collectors
-      AtomDistributor atomDistributor_;
-      AtomCollector atomCollector_;
+      AtomDistributor distributor_;
+      AtomCollector collector_;
 
       #endif
 
@@ -578,11 +578,11 @@ namespace DdMd
    { return ghostSet_.size(); }
 
    #ifdef UTIL_MPI
-   inline AtomDistributor& AtomStorage::atomDistributor()
-   {  return atomDistributor_; }
+   inline AtomDistributor& AtomStorage::distributor()
+   {  return distributor_; }
 
-   inline AtomCollector& AtomStorage::atomCollector()
-   {  return atomCollector_; }
+   inline AtomCollector& AtomStorage::collector()
+   {  return collector_; }
    #endif
 
    inline int AtomStorage::atomCapacity() const

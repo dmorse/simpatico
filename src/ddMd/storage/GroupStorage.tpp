@@ -12,6 +12,8 @@
 #include "AtomStorage.h"
 #include <util/format/Int.h>
 #include <util/mpi/MpiLoader.h>  
+#include <ddMd/communicate/GroupDistributor.tpp>   // member
+#include <ddMd/communicate/GroupCollector.tpp>     // member
 
 //#define DDMD_GROUP_STORAGE_DEBUG
 

@@ -64,7 +64,7 @@ namespace DdMd
    * Set cache capacity and allocate all required memory.
    */
    template <int N>
-   void GroupDistributor<N>::initialize(int cacheCapacity)
+   void GroupDistributor<N>::allocate(int cacheCapacity)
    {
       cacheCapacity_ = cacheCapacity;
       allocate();
@@ -350,16 +350,5 @@ namespace DdMd
    }
    #endif
 
-   #ifdef INTER_BOND
-   template class GroupDistributor<2>;
-   #endif
-
-   #ifdef INTER_ANGLE
-   template class GroupDistributor<3>;
-   #endif
-
-   #ifdef INTER_DIHEDRAL
-   template class GroupDistributor<4>;
-   #endif
 }
 #endif

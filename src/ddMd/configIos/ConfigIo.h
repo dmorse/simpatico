@@ -75,44 +75,6 @@ namespace DdMd
                      #endif
                      Buffer& buffer);
 
-      /**
-      * Set cache sizes and allocate memory.
-      *
-      * \param atomCacheCapacity size of internal atom cache. 
-      * \param bondCacheCapacity size of internal bond cache. 
-      * \param angleCacheCapacity size of internal angle cache. 
-      * \param dihedralCacheCapacity size of internal dihedral cache. 
-      */
-      virtual void initialize(int atomCacheCapacity = 100
-                              #ifdef INTER_BOND
-                              , int bondCacheCapacity = 100
-                              #endif
-                              #ifdef INTER_ANGLE
-                              , int angleCacheCapacity = 100
-                              #endif
-                              #ifdef INTER_DIHEDRAL                             
-                              , int dihedralCacheCapacity = 100
-                              #endif
-                              );
-
-      /**
-      * Read cache size and allocate memory.
-      */
-      virtual void readParameters(std::istream& in);
-
-      /**
-      * Load internal state of configIo (not configuration) from an archive.
-      *
-      * \param ar input/loading archive
-      */
-      virtual void load(Serializable::IArchive &ar);
-
-      /**
-      * Save internal state of ConfigIo (not configuration) to an archive.
-      *
-      * \param ar output/saving archive
-      */
-      virtual void save(Serializable::OArchive &ar);
 
       /**
       * Read a configuration file.
@@ -285,18 +247,6 @@ namespace DdMd
       DihedralStorage* dihedralStoragePtr_;
       #endif
 
-      // Cache capacities
-      int  atomCacheCapacity_;
-      #ifdef INTER_BOND
-      int  bondCacheCapacity_;
-      #endif
-      #ifdef INTER_ANGLE
-      int  angleCacheCapacity_;
-      #endif
-      #ifdef INTER_DIHEDRAL
-      int  dihedralCacheCapacity_;
-      #endif
-
       /**
       * Read Group<N> objects from file. 
       */
@@ -327,10 +277,10 @@ namespace DdMd
    {  return *atomStoragePtr_; }
 
    inline AtomDistributor& ConfigIo::atomDistributor()
-   {  return atomStoragePtr_->atomDistributor(); }
+   {  return atomStoragePtr_->distributor(); }
 
    inline AtomCollector& ConfigIo::atomCollector()
-   {  return atomStoragePtr_->atomCollector(); }
+   {  return atomStoragePtr_->collector(); }
 
    #ifdef INTER_BOND
    inline BondStorage& ConfigIo::bondStorage()
