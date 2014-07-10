@@ -1,0 +1,56 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_BondLengthDist_page BondLengthDist
+
+\section sec_overview Synopsis
+
+This analyzer accumulates a histogram of the lengths of all bonds in
+a specified molecular species.
+
+The resulting histogram is output to <outputFileName>.dat at the end 
+of the simulation.
+
+\section sec_param Parameters
+The parameter file format is:
+\code
+   BondLengthDist{ 
+      interval           int
+      outputFileName     string
+      speciesId          int
+      min                double
+      max                double
+      nBin               int
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+  <tr> 
+     <td> min </td>
+     <td> minimum bond length in (lower limit for histogram) </td>
+  </tr>
+  <tr> 
+     <td> max </td>
+     <td> maximum bond length in (upper limit for histogram) </td>
+  </tr>
+  <tr> 
+     <td> nBin </td>
+     <td> number of bins in histogram </td>
+  </tr>
+</table>
+
+*/
+
+}

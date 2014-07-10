@@ -3,6 +3,8 @@ namespace Inter
 
 /*! \page inter_pair_WcaPair_page WcaPair 
 
+\section sec_potential Potential
+
 The WcaPair interaction implements a Weeks-Chandler-Anderson (WCA)
 potential. This is a cutoff and shifted Lennard-Jones (LJ) interaction 
 that is cutoff at the minimum of the LJ potential, which occurs at
@@ -19,6 +21,8 @@ This yields a potential energy for each pair of atom types
           + \frac{1}{4} \right ] 
 \f]
 for all \f$ r < r_{c} \f$, and \f$V(r) = 0\f$ for \f$r > r_{c}\f$.  
+
+\section sec_param Parameters
 
 The parameter file format is similar as that for an LJPair,
 except that no input value is required for the cutoff variable.
