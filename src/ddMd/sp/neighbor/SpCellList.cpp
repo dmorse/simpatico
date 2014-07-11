@@ -11,7 +11,7 @@
 #include "SpCellList.h"
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
-#include <util/containers/FArray.h>
+//#include <util/containers/FArray.h>
 
 namespace DdMd
 {
@@ -45,29 +45,22 @@ namespace DdMd
    * Allocate memory for this SpCellList (generalized coordinates).
    */
    void SpCellList::allocate(int atomCapacity, const Vector& lower, 
-                             const Vector& upper, const Vector& cutoffs, 
-                             int nCellCut)
+                             const Vector& upper, const Vector& cutoffs)
    {
       // Allocate arrays of tag and handle objects
       tags_.allocate(atomCapacity);
       atoms_.allocate(atomCapacity);
 
       // Set grid dimensions and allocate an array of Cell objects
-      setGridDimensions(lower, upper, cutoffs, nCellCut);
+      setGridDimensions(lower, upper, cutoffs);
    }
 
    /*
    * Calculate number of cells in each direction, resize cells_ array if needed.
    */
    void SpCellList::setGridDimensions(const Vector& lower, const Vector& upper, 
-                                      const Vector& cutoffs, int nCellCut)
+                                      const Vector& cutoffs)
    {
-      if (nCellCut < 1) {
-         UTIL_THROW("Error: nCellCut < 1");
-      }
-      if (nCellCut > Cell::MaxNCellCut) {
-         UTIL_THROW("Error: nCellCut > Cell::MaxNCellCut");
-      }
       upper_ = upper;
       lower_ = lower;
 
@@ -91,7 +84,7 @@ namespace DdMd
          if (lengths[i] < cutoffs[i]) {
             UTIL_THROW("Error: length[i] < cutoff[i]");
          }
-         gridDimensions[i] = int(lengths[i]*nCellCut/cutoffs[i]);
+         gridDimensions[i] = int(lengths[i]/cutoffs[i]);
          cellLengths_[i] = lengths[i]/double(gridDimensions[i]);
 
          if (gridDimensions[i] != grid_.dimension(i)) {
@@ -111,7 +104,6 @@ namespace DdMd
          cells_.resize(newSize);
          if (newSize > oldSize) {
             for (int i = 0; i < newSize; ++i) {
-               cells_[i].setOffsetArray(offsets_);
                cells_[i].setId(i);
             }
          }
@@ -125,8 +117,8 @@ namespace DdMd
       if (isNewGrid) {
          // Loop over local cells, linking cells.
          IntVector p;
-         Cell* prevPtr = 0;
-         Cell* cellPtr = 0;
+         SpCell* prevPtr = 0;
+         SpCell* cellPtr = 0;
          int ic;
          for (p[0] = 0; p[0] < grid_.dimension(0); ++p[0]) {
             for (p[1] = 0; p[1] < grid_.dimension(1); ++p[1]) {
@@ -151,14 +143,12 @@ namespace DdMd
    * Construct grid of cells, build linked list and identify neighbors.
    */
    void SpCellList::makeGrid(const Vector& lower, const Vector& upper, 
-                           const Vector& cutoffs, int nCellCut)
+                           const Vector& cutoffs)
    {
 
       // Calculate required grid dimensions, reinitialize cells_ array if needed.
-      setGridDimensions(lower, upper, cutoffs, nCellCut);
+      setGridDimensions(lower, upper, cutoffs);
 
-
-      int;
       IntVector p;  // type of cell (elements are -1, 0, or 1)
       IntVector t;  // grid translation or position, without shift
       IntVector v;  // index components
@@ -170,8 +160,9 @@ namespace DdMd
       // p[i] = -1 -> lower boundary along direction i
       // p[i] = +1 -> upper boundary along direction i
       // p[i] =  0 -> not next to boundary in direction i
- 
-      i = 0; // index for types of cell
+
+      int i = 0; // index for types of cell
+      int j;
 
       // Loop over types of cell
       for (p[0] = -1; p[0] <= 1; ++p[0]) {
@@ -180,7 +171,7 @@ namespace DdMd
 
                // First offset is always to self self, with offset = 0
                j = 0;
-               offsets_[i][j] = 0;
+               (offsets_[i])[j] = 0;
 
                // Loop over relative offsets to neighbor cells
                j = 1;
@@ -261,7 +252,7 @@ namespace DdMd
                   p[0] = 0;
                }
                j = v[1] + p[0] + 1;
-               cells_[i].setOffsetArray(&offsets_[j]);
+               cells_[i].setOffsetArray(offsets_[j]);
             }
          }
       }
@@ -297,7 +288,7 @@ namespace DdMd
       // Initialize all cells, by associating each with a
       // block of the atoms_ array.
 
-      CellAtom* cellAtomPtr = &atoms_[0];
+      SpCellAtom* cellAtomPtr = &atoms_[0];
       for (int i = 0; i < grid_.size(); ++i) {
          cellAtomPtr = cells_[i].initialize(cellAtomPtr);
       }
@@ -392,8 +383,7 @@ namespace DdMd
          }
 
          // Check validity of all cells individually. 
-         // const CellAtom* atomPtr;
-         const Cell* cellPtr;
+         const SpCell* cellPtr;
          int   nAtomCell;
          int   nAtomSum = 0;
          for (int icell = 0; icell < grid_.size(); ++icell) {

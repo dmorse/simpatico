@@ -15,7 +15,7 @@
 #include <util/space/Grid.h>
 #include <util/containers/DArray.h>
 #include <util/containers/GArray.h>
-#include <util/containers/FMatrix.h>
+#include <util/containers/FArray.h>
 #include <util/global.h>
 
 namespace DdMd
@@ -74,7 +74,7 @@ namespace DdMd
    * distance across the unit cell along a direction parallel to reciprocal 
    * basis vector i. 
    *
-   * See Cell documentation for an example of how to iterate over local cells 
+   * See SpCell documentation for an example of how to iterate over local cells 
    * and neighboring atom pairs. 
    * 
    * \ingroup DdMd_Neighbor_Module
@@ -93,8 +93,6 @@ namespace DdMd
 
       /**
       * Destructor.
-      *
-      * Deallocates array of Cell objects, if necessary.
       */
       virtual ~SpCellList();
 
@@ -144,7 +142,7 @@ namespace DdMd
       /**
       * Make the cell grid (using generalized coordinates).
       *
-      * This method makes a Cell grid in which the number of cells in each
+      * This method makes a cell grid in which the number of cells in each
       * direction i is chosen such that the dimension of each cell that 
       * direction is greater than or equal to cutoff[i].
       *
@@ -226,14 +224,14 @@ namespace DdMd
       /**
       * Return pointer to first local cell in linked list.
       */
-      const Cell* begin() const;
+      const SpCell* begin() const;
 
       /**
       * Return a specified cell by const reference.
       * 
       * \param i cell index
       */
-      const Cell& cell(int i) const;
+      const SpCell& cell(int i) const;
 
       /**
       * Get total number of atoms (local and ghost) in this SpCellList.
@@ -292,7 +290,7 @@ namespace DdMd
       };
 
       /// Matrix of offset array for neighboring cells.
-      FMatrix<Cell::OffsetArray, 3, 3> offsets_;
+      FArray<SpCell::OffsetArray, 27> offsets_;
 
       /// Grid for cells.
       Grid grid_;
@@ -303,8 +301,8 @@ namespace DdMd
       /// Array of SpCellAtom objects, sorted by cell (dimension atomCapacity_).
       DArray<SpCellAtom> atoms_;
 
-      /// Array of Cell objects.
-      GArray<Cell> cells_;
+      /// Array of SpCell objects.
+      GArray<SpCell> cells_;
 
       /// Lower coordinate bounds (local atoms).
       Vector lower_; 
@@ -316,7 +314,7 @@ namespace DdMd
       Vector cellLengths_; 
 
       /// Pointer to first cell (to initialize iterator).
-      Cell* begin_;
+      SpCell* begin_;
 
       /// Total number of atoms in cell list.
       int nAtom_;
@@ -343,7 +341,7 @@ namespace DdMd
       * \param uppper  upper bound used to allocate array of cells.
       * \param cutoffs  minimum dimension of a cell in each direction
       */
-      void setGridDimensions(const Vector& lower, const Vector& upper
+      void setGridDimensions(const Vector& lower, const Vector& upper,
                              const Vector& cutoffs);
 
       /**
@@ -414,13 +412,13 @@ namespace DdMd
    /*
    * Return reference to cell number i.
    */
-   inline const Cell& SpCellList::cell(int i) const
+   inline const SpCell& SpCellList::cell(int i) const
    {  return cells_[i]; }
 
    /*
    * Return pointer to first Cell.
    */
-   inline const Cell* SpCellList::begin() const
+   inline const SpCell* SpCellList::begin() const
    {  return begin_; }
 
    /*

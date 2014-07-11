@@ -79,18 +79,6 @@ namespace DdMd
       */
       static const int MaxNeighborAtom = 2000;
 
-      #if 0 
-      /**
-      * Maximum number of cells per cutoff length.
-      */
-      static const int MaxNCellCut = 4;
-
-      /**
-      * Maximum allowed number of neighboring cells. 
-      */
-      static const int OffSetArrayCapacity = (2*MaxNCellCut + 1)*(2*MaxNCellCut + 1) + 3;
-      #endif
-    
       /**
       * An array of relative cell ids for neighboring cells.
       */
