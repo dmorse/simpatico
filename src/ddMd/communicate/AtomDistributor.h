@@ -115,7 +115,7 @@ namespace DdMd
       *
       * \param cacheCapacity max number of atoms cached for sending
       */
-      void initialize(int cacheCapacity = 100);
+      void allocate(int cacheCapacity);
 
       /**
       * Read cacheCapacity, allocate memory and initialize object.

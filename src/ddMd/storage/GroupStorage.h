@@ -11,6 +11,8 @@
 #include <util/global.h>
 #include <util/param/ParamComposite.h>   // base class
 #include <ddMd/storage/GroupExchanger.h> // base class
+#include <ddMd/communicate/GroupDistributor.h>   // member
+#include <ddMd/communicate/GroupCollector.h>     // member
 #include <ddMd/chemistry/Atom.h>         // member template parameter
 #include <ddMd/chemistry/Group.h>        // member template parameter
 #include <util/space/IntVector.h>        // member template parameter
@@ -403,6 +405,16 @@ namespace DdMd
 
       //@}
 
+      /**
+      *  Get the GroupDistributor by reference.
+      */
+      GroupDistributor<N>& distributor();
+
+      /**
+      *  Get the GroupCollector by reference.
+      */
+      GroupCollector<N>& collector();
+
    private:
 
       // Memory pool that holds all available group objects.
@@ -438,6 +450,10 @@ namespace DdMd
       
       // Total number of distinct groups on all processors.
       Setable<int> nTotal_;
+
+      // Distributor and Collector objects
+      GroupDistributor<N> distributor_;
+      GroupCollector<N>   collector_;
 
       /*
       * Allocate and initialize all private containers.
@@ -485,6 +501,14 @@ namespace DdMd
    inline 
    void GroupStorage<N>::begin(ConstGroupIterator<N>& iterator) const
    {  groupSet_.begin(iterator); }
+
+   template <int N>
+   inline GroupDistributor<N>& GroupStorage<N>::distributor()
+   {  return distributor_; }
+
+   template <int N>
+   inline GroupCollector<N>& GroupStorage<N>::collector()
+   {  return collector_; }
 
 } // namespace DdMd
 #endif // ifndef DDMD_GROUP_STORAGE_H

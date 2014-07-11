@@ -81,7 +81,7 @@ namespace DdMd
    inline SpSpecies& SpMolecule::species() const
    {
       assert(speciesPtr_);
-      assert(id < nAtom_);
+      assert(id_ < nAtom_);
       return *speciesPtr_;
    }
 

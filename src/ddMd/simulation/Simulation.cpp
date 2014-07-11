@@ -461,6 +461,34 @@ namespace DdMd
       readParamComposite(in, buffer_);
       readPotentialStyles(in);
 
+      // Now that the domain and buffer have been initialized the Distributor
+      // and Collector objects can be associated and allocated
+      atomStorage_.distributor().associate(domain_, boundary_, atomStorage_, buffer_);
+      atomStorage_.collector().associate(domain_, atomStorage_, buffer_);
+      atomStorage_.distributor().allocate(100);
+      atomStorage_.collector().allocate(100);
+
+      #ifdef INTER_BOND
+      bondStorage_.distributor().associate(domain_, atomStorage_, bondStorage_, buffer_);
+      bondStorage_.collector().associate(domain_, bondStorage_, buffer_);
+      bondStorage_.distributor().allocate(100);
+      bondStorage_.collector().allocate(100);
+      #endif
+
+      #ifdef INTER_ANGLE
+      angleStorage_.distributor().associate(domain_, atomStorage_, angleStorage_, buffer_);
+      angleStorage_.collector().associate(domain_, angleStorage_, buffer_);
+      angleStorage_.distributor().allocate(100);
+      angleStorage_.collector().allocate(100);
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage_.distributor().associate(domain_, atomStorage_, dihedralStorage_, buffer_);
+      dihedralStorage_.collector().associate(domain_, dihedralStorage_, buffer_);
+      dihedralStorage_.distributor().allocate(100);
+      dihedralStorage_.collector().allocate(100);
+      #endif
+
       // Create and read potential energy classes
 
       #ifndef DDMD_NOPAIR
@@ -655,6 +683,34 @@ namespace DdMd
 
       // Load potentials styles and parameters
       loadPotentialStyles(ar);
+
+      // Now that the domain and buffer have been initialized the Distributor
+      // and Collector objects can be associated and allocated
+      atomStorage_.distributor().associate(domain_, boundary_, atomStorage_, buffer_);
+      atomStorage_.collector().associate(domain_, atomStorage_, buffer_);
+      atomStorage_.distributor().allocate(100);
+      atomStorage_.collector().allocate(100);
+
+      #ifdef INTER_BOND
+      bondStorage_.distributor().associate(domain_, atomStorage_, bondStorage_, buffer_);
+      bondStorage_.collector().associate(domain_, bondStorage_, buffer_);
+      bondStorage_.distributor().allocate(100);
+      bondStorage_.collector().allocate(100);
+      #endif
+
+      #ifdef INTER_ANGLE
+      angleStorage_.distributor().associate(domain_, atomStorage_, angleStorage_, buffer_);
+      angleStorage_.collector().associate(domain_, angleStorage_, buffer_);
+      angleStorage_.distributor().allocate(100);
+      angleStorage_.collector().allocate(100);
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage_.distributor().associate(domain_, atomStorage_, dihedralStorage_, buffer_);
+      dihedralStorage_.collector().associate(domain_, dihedralStorage_, buffer_);
+      dihedralStorage_.distributor().allocate(100);
+      dihedralStorage_.collector().allocate(100);
+      #endif
 
       #ifndef DDMD_NOPAIR
       // Pair Potential
@@ -1892,7 +1948,6 @@ namespace DdMd
    {
       if (configIoPtr_ == 0) {
          configIoPtr_ = new DdMdConfigIo(*this);
-         configIoPtr_->initialize();
       }
       return *configIoPtr_;
    }
@@ -1904,7 +1959,6 @@ namespace DdMd
    {
       if (serializeConfigIoPtr_ == 0) {
          serializeConfigIoPtr_ = new SerializeConfigIo(*this);
-         serializeConfigIoPtr_->initialize();
       }
       return *serializeConfigIoPtr_;
    }
@@ -2083,7 +2137,6 @@ namespace DdMd
          delete configIoPtr_;
       }
       configIoPtr_ = ptr;
-      configIoPtr_->initialize();
    }
 
    // --- Validation ---------------------------------------------------

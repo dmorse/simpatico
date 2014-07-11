@@ -107,6 +107,7 @@ namespace DdMd
    {
   
       loadParameter<double>(ar, "skin", skin_);
+      loadParameter<int>(ar, "nCellCut", nCellCut_, false);
       loadParameter<int>(ar, "pairCapacity", pairCapacity_);
       loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
 
@@ -122,6 +123,7 @@ namespace DdMd
    void PairPotential::save(Serializable::OArchive& ar)
    {
       ar << skin_;
+      Parameter::saveOptional(ar, nCellCut_, true);
       ar << pairCapacity_;
       ar << maxBoundary_;
       ar << cutoff_;

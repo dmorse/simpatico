@@ -47,25 +47,15 @@ namespace DdMd
    ConfigIo::ConfigIo()
     : domainPtr_(0),
       boundaryPtr_(0),
-      atomStoragePtr_(0),
+      atomStoragePtr_(0)
       #ifdef INTER_BOND
-      bondStoragePtr_(0),
+      , bondStoragePtr_(0)
       #endif
       #ifdef INTER_ANGLE
-      angleStoragePtr_(0),
+      , angleStoragePtr_(0)
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_(0),
-      #endif
-      atomCacheCapacity_(0)
-      #ifdef INTER_BOND
-      , bondCacheCapacity_(0)
-      #endif
-      #ifdef INTER_ANGLE
-      , angleCacheCapacity_(0)
-      #endif
-      #ifdef INTER_DIHEDRAL
-      , dihedralCacheCapacity_(0)
+      , dihedralStoragePtr_(0)
       #endif
    {  setClassName("ConfigIo"); }
 
@@ -75,25 +65,15 @@ namespace DdMd
    ConfigIo::ConfigIo(Simulation& simulation)
     : domainPtr_(0),
       boundaryPtr_(0),
-      atomStoragePtr_(0),
+      atomStoragePtr_(0)
       #ifdef INTER_BOND
-      bondStoragePtr_(0),
+      , bondStoragePtr_(0)
       #endif
       #ifdef INTER_ANGLE
-      angleStoragePtr_(0),
+      , angleStoragePtr_(0)
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_(0),
-      #endif
-      atomCacheCapacity_(0)
-      #ifdef INTER_BOND
-      , bondCacheCapacity_(0)
-      #endif
-      #ifdef INTER_ANGLE
-      , angleCacheCapacity_(0)
-      #endif
-      #ifdef INTER_DIHEDRAL
-      , dihedralCacheCapacity_(0)
+      , dihedralStoragePtr_(0)
       #endif
    {
       setClassName("ConfigIo"); 
@@ -139,134 +119,19 @@ namespace DdMd
       boundaryPtr_ = &boundary;
 
       atomStoragePtr_ = &atomStorage;
-      atomDistributor_.associate(domain, boundary, atomStorage, buffer);
-      atomCollector_.associate(domain, atomStorage, buffer);
 
       #ifdef INTER_BOND
       bondStoragePtr_ = &bondStorage;
-      bondDistributor_.associate(domain, atomStorage,
-                                 bondStorage, buffer);
-      bondCollector_.associate(domain, bondStorage, buffer);
       #endif
       #ifdef INTER_ANGLE
       angleStoragePtr_ = &angleStorage;
-      angleDistributor_.associate(domain, atomStorage,
-                                  angleStorage, buffer);
-      angleCollector_.associate(domain, angleStorage, buffer);
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralStoragePtr_ = &dihedralStorage;
-      dihedralDistributor_.associate(domain, atomStorage,
-                                     dihedralStorage, buffer);
-      dihedralCollector_.associate(domain, dihedralStorage, buffer);
       #endif
 
    }
 
-   /*
-   * Set parameters and allocate memory.
-   */
-   void ConfigIo::initialize(int atomCacheCapacity
-                             #ifdef INTER_BOND
-                             , int bondCacheCapacity
-                             #endif
-                             #ifdef INTER_ANGLE
-                             , int angleCacheCapacity
-                             #endif
-                             #ifdef INTER_DIHEDRAL
-                             , int dihedralCacheCapacity
-                             #endif
-                            )
-   {
-      atomCacheCapacity_ = atomCacheCapacity;
-      atomDistributor_.initialize(atomCacheCapacity_);
-      atomCollector_.allocate(atomCacheCapacity_);
-      #ifdef INTER_BOND
-      bondCacheCapacity_ = bondCacheCapacity;
-      bondDistributor_.initialize(bondCacheCapacity_);
-      bondCollector_.allocate(bondCacheCapacity_);
-      #endif
-      #ifdef INTER_ANGLE
-      angleCacheCapacity_ = angleCacheCapacity;
-      angleDistributor_.initialize(angleCacheCapacity_);
-      angleCollector_.allocate(angleCacheCapacity);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralCacheCapacity_ = dihedralCacheCapacity;
-      dihedralDistributor_.initialize(dihedralCacheCapacity_);
-      dihedralCollector_.allocate(dihedralCacheCapacity_);
-      #endif
-   }
-
-   /*
-   * Read cache capacity parameters and allocate memory.
-   */
-   void ConfigIo::readParameters(std::istream& in)
-   {
-      read<int>(in, "atomCacheCapacity", atomCacheCapacity_);
-      atomDistributor_.initialize(atomCacheCapacity_);
-      atomCollector_.allocate(atomCacheCapacity_);
-      #ifdef INTER_BOND
-      read<int>(in, "bondCacheCapacity", bondCacheCapacity_);
-      bondDistributor_.initialize(bondCacheCapacity_);
-      bondCollector_.allocate(bondCacheCapacity_);
-      #endif
-      #ifdef INTER_ANGLE
-      read<int>(in, "angleCacheCapacity", angleCacheCapacity_);
-      angleDistributor_.initialize(angleCacheCapacity_);
-      angleCollector_.allocate(angleCacheCapacity_);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      read<int>(in, "dihedralCacheCapacity", dihedralCacheCapacity_);
-      dihedralDistributor_.initialize(dihedralCacheCapacity_);
-      dihedralCollector_.allocate(dihedralCacheCapacity_);
-      #endif
-   }
-
-   /*
-   * Load internal state from input archive and allocate memory.
-   */
-   void ConfigIo::load(Serializable::IArchive& ar)
-   {
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-
-      loader.load(atomCacheCapacity_);
-      atomDistributor_.initialize(atomCacheCapacity_);
-      atomCollector_.allocate(atomCacheCapacity_);
-
-      #ifdef INTER_BOND
-      loader.load(bondCacheCapacity_);
-      bondDistributor_.initialize(bondCacheCapacity_);
-      bondCollector_.allocate(bondCacheCapacity_);
-      #endif
-      #ifdef INTER_ANGLE
-      loader.load(angleCacheCapacity_);
-      angleDistributor_.initialize(angleCacheCapacity_);
-      angleCollector_.allocate(angleCacheCapacity_);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      loader.load(dihedralCacheCapacity_);
-      dihedralDistributor_.initialize(dihedralCacheCapacity_);
-      dihedralCollector_.allocate(dihedralCacheCapacity_);
-      #endif
-   }
-
-   /*
-   * Save internal state to output archive.
-   */
-   void ConfigIo::save(Serializable::OArchive& ar)
-   {
-      ar & atomCacheCapacity_;
-      #ifdef INTER_BOND
-      ar & bondCacheCapacity_;
-      #endif
-      #ifdef INTER_ANGLE
-      ar & angleCacheCapacity_;
-      #endif
-      #ifdef INTER_DIHEDRAL
-      ar & dihedralCacheCapacity_;
-      #endif
-   } 
 
    /*
    * Private method to read Group<N> objects.
