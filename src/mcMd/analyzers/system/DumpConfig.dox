@@ -3,11 +3,11 @@ namespace McMd
 
 /*! \page mcMd_analyzer_DumpConfig_page DumpConfig
 
-\section sec_overview Synopsis
+\section mcMd_analyzer_DumpConfig_synopsis_sec Synopsis
 
 This analyzer periodically writes the system configuration to file. Each file is in a separate file whose name is created by adding an integer to the outputFileName, creating a set of numbered files <outputFileName>0, <outputFileName>1, etc.
 
-\section sec_param Parameters
+\section mcMd_analyzer_DumpConfig_param_sec Parameters
 The parameter file format is:
 \code
    DumpConfig{ 
@@ -26,6 +26,8 @@ with parameters
      <td> name of output file </td>
   </tr>
 </table>
+
+\section mcMd_analyzer_DumpConfig_output_sec Output
 
 */
 

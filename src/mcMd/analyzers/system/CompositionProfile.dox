@@ -3,7 +3,7 @@ namespace McMd
 
 /*! \page mcMd_analyzer_CompositionProfile_page CompositionProfile
 
-\section sec_overview Synopsis
+\section mcMd_analyzer_CompositionProfile_synopsis_sec Synopsis
 
 This analyzer computes average monomer concentration profiles for all atom types along one or more directions, averaged over planes contstructed perpendicular to these directions.
 
@@ -11,7 +11,9 @@ If nSamplePerBlock != 0, a time sequence of block average values of these quanti
 
 Instantaneous histograms for each direction are output to file with a suffix *.log, with a separate file for each direction. Overall average profiles are output are output to <outputFileName>.dat, also with different files for different directions.
 
-\section sec_param Parameters
+\sa McMd::CompositionProfile
+
+\section mcMd_analyzer_CompositionProfile_param_sec Parameters
 The parameter file format is:
 \code
    CompositionProfile{ 
@@ -45,6 +47,8 @@ in which
      <td> number of bins in histogram for each profile </td>
   </tr>
 </table>
+
+\section mcMd_analyzer_CompositionProfile_output_sec Output
 
 */
 
