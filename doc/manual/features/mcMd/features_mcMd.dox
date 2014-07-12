@@ -17,6 +17,11 @@ to implement molecular dynamics integration (in mdSim), Monte Carlo move (in mcS
   <li> \subpage mcMd_analyzer_DumpConfig_page </li>
   <li> \subpage mcMd_analyzer_IntraPairAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_IntraStructureFactor_page </li>
+  <li> \subpage mcMd_analyzer_RDF_page </li>
+  <li> \subpage mcMd_analyzer_StructureFactor_page </li>
+  <li> \subpage mcMd_analyzer_StructureFactorGrid_page </li>
+  <li> \subpage mcMd_analyzer_StructureFactorP_page </li>
+  <li> \subpage mcMd_analyzer_StructureFactorPGrid_page </li>
 </ul>
  
 <BR>

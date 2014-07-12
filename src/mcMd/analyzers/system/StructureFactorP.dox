@@ -1,0 +1,63 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_StructureFactorP_page StructureFactorP
+
+\section mcMd_analyzer_StructureFactorP_overview_sec Synopsis
+
+This analyzer calculates partial structure factors for specified
+pair of atom types, for a specied set of wavevectors that are
+members of the reciprocal lattice.
+
+\sa McMd::StructureFactorP
+\sa Util::IntVector
+
+\section mcMd_analyzer_StructureFactorP_param_sec Parameters
+The parameter file format is:
+\code
+   StructureFactorP{ 
+      interval           int
+      outputFileName     string
+      nAtomTypeIdPair    in
+      atomTypeIdPairs    Array< Pair<int> >
+      nWave              int
+      waveIntVectors     Array<IntVector> [nWave]
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> nAtomTypeIdPair </td>
+     <td> number of atom type index pairs.
+  </tr>
+  <tr> 
+     <td> atomTypeIdPairs </td>
+     <td> Array of pairs of atom type indices, one pair per line </td>
+  </tr>
+  <tr> 
+     <td> nWave </td>
+     <td> number of reciprocal lattice wavevectors </td>
+  </tr>
+  <tr> 
+     <td> waves </td>
+     <td> array of reciprocal lattice vectors, each specified by an
+          IntVector of 3 integer indices (Miller indices), with
+          one IntVector per line </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_StructureFactorP_out_sec Output Files
+
+Final values are output to <outputFileName>.data in multicolumn format. Each row is a reciprocal lattice wavector, each column is an atom type index pair.
+
+*/
+
+}

@@ -133,15 +133,16 @@ namespace McMd
    {
       if (isAtInterval(iStep))  {
 
-         fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_, !isFirstStep_);
+         fileMaster().openOutputFile(outputFileName("_max.dat"), 
+                                     outputFile_, !isFirstStep_);
          isFirstStep_ = false;
 
-         Vector  position;
-         std::complex<double>  expFactor;
-         double  product;
-         System::ConstMoleculeIterator  molIter;
-         Molecule::ConstAtomIterator  atomIter;
-         int  nSpecies, iSpecies, typeId, i, j;
+         Vector position;
+         std::complex<double> expFactor;
+         double product;
+         System::ConstMoleculeIterator molIter;
+         Molecule::ConstAtomIterator atomIter;
+         int nSpecies, iSpecies, typeId, i, j;
 
          makeWaveVectors();
 
