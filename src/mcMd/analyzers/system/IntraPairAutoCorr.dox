@@ -1,0 +1,58 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_IntraPairAutoCorr_page IntraPairAutoCorr
+
+\section mcMd_analyzer_IntraPairAutoCorr_overview_sec Synopsis
+
+This analyzer calculates the vector autocorrelation function for
+the vector separation of a specific pair of atoms within molecules
+of a specific species. For example, by choosing the two atoms to
+be the first and last atoms of a linear chain, one can calculate
+the autocorrelation function of the end-to-end vector.
+
+\section mcMd_analyzer_IntraPairAutoCorr_param_sec Parameters
+The parameter file format is:
+\code
+   IntraPairAutoCorr{ 
+      interval           int
+      outputFileName     string
+      samplePerBlock     int
+      speciesId          int
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+  <tr> 
+     <td> atom1Id </td>
+     <td> index within molecule of 1st atom in pair </td>
+  </tr>
+  <tr> 
+     <td> atom2Id </td>
+     <td> index within molecule of 2nd atom in pair </td>
+  </tr>
+  <tr> 
+     <td> capacity </td>
+     <td> number of data samples retained in history </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_IntraPairAutoCorr_out_sec Output Files
+
+Output autocorrelation function to <outputFileName>.dat as column of values. The output() function calls AutoCorrArray<double, double>::output(), which defines the format.
+
+*/
+
+}
