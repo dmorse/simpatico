@@ -21,7 +21,7 @@ clean:
 	rm -f $(mcMd_tests_chemistry_OBJS)
 	rm -f $(mcMd_tests_chemistry_OBJS:.o=.d)
 	rm -f $(mcMd_tests_chemistry_OBJS:.o=)
-	make clean-outputs
+	$(MAKE) clean-outputs
 
 clean-outputs:
 	rm -f ar.txt binary

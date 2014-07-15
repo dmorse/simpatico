@@ -33,11 +33,11 @@ MDSIM_EXE=$(BIN_DIR)/mdSim$(BIN_SUFFIX)
 # Major targets
 
 all:	
-	make $(modules_sliplink_OBJS)
-	make $(MDSIM).o
-	make $(MCSIM).o
-	make $(MDSIM_EXE) 
-	make $(MCSIM_EXE) 
+	$(MAKE) $(modules_sliplink_OBJS)
+	$(MAKE) $(MDSIM).o
+	$(MAKE) $(MCSIM).o
+	$(MAKE) $(MDSIM_EXE) 
+	$(MAKE) $(MCSIM_EXE) 
 
 clean:
 	-rm -f $(MCSIM_EXE) mcSim.o mcSim.d

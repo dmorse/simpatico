@@ -19,7 +19,7 @@ EXTRACT_TOPOLOGY_EXE=$(BIN_DIR)/extract_topology$(BIN_SUFFIX)
 #-----------------------------------------------------------------------
 
 all:
-	make $(EXTRACT_TOPOLOGY_EXE) 
+	$(MAKE) $(EXTRACT_TOPOLOGY_EXE) 
 
 clean:	
 	rm -f $(EXTRACT_TOPOLOGY_EXE) 

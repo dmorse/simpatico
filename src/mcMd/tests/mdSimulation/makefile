@@ -17,7 +17,7 @@ clean:
 	rm -f $(mcMd_tests_mdSimulation_OBJS) 
 	rm -f $(mcMd_tests_mdSimulation_OBJS:.o=.d)
 	rm -f $(mcMd_tests_mdSimulation_OBJS:.o=)
-	make clean-outputs
+	$(MAKE) clean-outputs
 
 clean-outputs:
 	rm -f *.rst *.cfg

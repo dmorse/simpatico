@@ -20,10 +20,10 @@ run: $(inter_tests_OBJS)
 clean:
 	rm -f $(inter_tests_OBJS) $(inter_tests_OBJS:.o=.d) $(BLD_DIR)/$(TEST)
 	rm -f log count
-	cd pair; make clean
-	cd bond; make clean
-	cd angle; make clean
-	cd dihedral; make clean
+	cd pair; $(MAKE) clean
+	cd bond; $(MAKE) clean
+	cd angle; $(MAKE) clean
+	cd dihedral; $(MAKE) clean
 
 $(BLD_DIR)/$(TEST): $(BLD_DIR)/$(TEST).o $(LIBS)
 

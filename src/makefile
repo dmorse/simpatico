@@ -4,37 +4,37 @@
 # Serial versions of mdSim and mcSim MD and MC programs (MPI disabled)
 mcMd: 
 	./configure -m0
-	cd util; make all
-	cd inter; make all
-	cd mcMd; make all
+	cd util; $(MAKE) all
+	cd inter; $(MAKE) all
+	cd mcMd; $(MAKE) all
 
 # Embarassingly parallel mdSim and mcSim MD and MC programs (MPI enabled)
 mcMd-mpi: 
 	./configure -m1
-	cd util; make all
-	cd inter; make all
-	cd mcMd; make all
+	cd util; $(MAKE) all
+	cd inter; $(MAKE) all
+	cd mcMd; $(MAKE) all
  
 # Domain-decomposition ddSim molecular dynamics program (MPI enabled)
 ddMd:
 	./configure -m1
-	cd util; make all
-	cd inter; make all
-	cd ddMd; make all
+	cd util; $(MAKE) all
+	cd inter; $(MAKE) all
+	cd ddMd; $(MAKE) all
 
 # Remove object (*.o), dependency (*.d) and library (*.a) files
 clean:
-	cd util; make clean
-	cd inter; make clean
-	cd mcMd; make clean
-	cd ddMd; make clean
+	cd util; $(MAKE) clean
+	cd inter; $(MAKE) clean
+	cd mcMd; $(MAKE) clean
+	cd ddMd; $(MAKE) clean
 
 # Remove all automatically generated files, return to as-distributed state
 veryclean:
-	cd util; make veryclean
-	cd inter; make veryclean
-	cd mcMd; make veryclean
-	cd ddMd; make veryclean
+	cd util; $(MAKE) veryclean
+	cd inter; $(MAKE) veryclean
+	cd mcMd; $(MAKE) veryclean
+	cd ddMd; $(MAKE) veryclean
 	rm -f util/config.mk
 	rm -f inter/config.mk
 	rm -f mcMd/config.mk

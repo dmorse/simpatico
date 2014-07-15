@@ -12,7 +12,7 @@ all: $(util_tests_accumulators_unit_OBJS) $(TEST)
 clean:
 	rm -f $(util_tests_accumulators_unit_OBJS) $(util_tests_accumulators_unit_OBJS:.o=.d)
 	rm -f $(TEST) 
-	make clean-outputs
+	$(MAKE) clean-outputs
 
 clean-outputs:
 	rm -f binary

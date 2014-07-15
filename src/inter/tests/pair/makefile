@@ -13,7 +13,7 @@ clean:
 	rm -f $(inter_tests_pair_OBJS)
 	rm -f $(inter_tests_pair_OBJS:.o=.d)
 	rm -f $(inter_tests_pair_OBJS:.o=)
-	make clean-outputs
+	$(MAKE) clean-outputs
 
 clean-outputs:
 	rm -f out/*

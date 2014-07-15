@@ -22,19 +22,19 @@ run: $(ddMd_tests_OBJS) $(BLD_DIR)/$(TEST)
 clean:
 	rm -f $(ddMd_tests_OBJS) $(ddMd_tests_OBJS:.o=.d)
 	rm -f $(BLD_DIR)/$(TEST)
-	cd chemistry; make clean
-	cd communicate; make clean
-	cd configIos; make clean
-	cd neighbor; make clean
-	cd potentials; make clean
-	cd simulation; make clean
-	cd storage; make clean
-	make clean-outputs
+	cd chemistry; $(MAKE) clean
+	cd communicate; $(MAKE) clean
+	cd configIos; $(MAKE) clean
+	cd neighbor; $(MAKE) clean
+	cd potentials; $(MAKE) clean
+	cd simulation; $(MAKE) clean
+	cd storage; $(MAKE) clean
+	$(MAKE) clean-outputs
 
 clean-outputs:
 	rm -f log count
-	cd chemistry; make clean-outputs
-	cd configIos; make clean-outputs
+	cd chemistry; $(MAKE) clean-outputs
+	cd configIos; $(MAKE) clean-outputs
         
 -include $(ddMd_tests_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)
