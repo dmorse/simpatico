@@ -42,6 +42,12 @@ in which
 
 \section mcMd_analyzer_ComMSD_output_sec Output
 
+At the end of the simulation:
+
+Parameters are echoed to file <outputFileName>.prm.
+
+Final results for MSD vs. number of samples are output to the file <outputFileName>.dat.
+
 */
 
 }

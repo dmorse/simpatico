@@ -1,4 +1,4 @@
-/*! \page features_mcMd_page 3.1 McMd features (mcSim and mdSim)
+/*! \page features_mcMd_page 3.1 Features for mcSim and mdSim
 
 \ref features_inter_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
 \ref features_ddMd_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
@@ -22,6 +22,18 @@ to implement molecular dynamics integration (in mdSim), Monte Carlo move (in mcS
   <li> \subpage mcMd_analyzer_StructureFactorGrid_page </li>
   <li> \subpage mcMd_analyzer_StructureFactorP_page </li>
   <li> \subpage mcMd_analyzer_StructureFactorPGrid_page </li>
+  <li> \subpage mcMd_analyzer_MdEnergyOutput_page </li>
+  <li> \subpage mcMd_analyzer_MdKineticEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_MdPotentialEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_MdPressureAverage_page </li>
+  <li> \subpage mcMd_analyzer_MdVirialStressTensorAverage_page </li>
+  <li> \subpage mcMd_analyzer_McBondEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_McEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_McEnergyOutput_page </li>
+  <li> \subpage mcMd_analyzer_McExternalEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_McPairEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_McPressureAverage_page </li>
+  <li> \subpage mcMd_analyzer_McVirialStressTensorAverage_page </li>
 </ul>
  
 <BR>

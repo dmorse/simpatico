@@ -1,0 +1,92 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_StructureFactor_page StructureFactor
+
+\section ddMd_analyzer_StructureFactor_overview_sec Synopsis
+
+This analyzer calculates structure factors using a specified set
+of "mode" vectors, which define weighting factors for different
+atom types, and a specified set of reciprocal lattice wavevectors.
+
+See the DdMd::StructureFactor class documenation for a precise
+mathematical definition of the structure factor and of the
+notion of "modes". Also see the example input file below.
+
+\sa DdMd::StructureFactor
+\sa Util::IntVector
+
+\section ddMd_analyzer_StructureFactor_param_sec Parameters
+The parameter file format is:
+\code
+   StructureFactor{ 
+      interval           int
+      outputFileName     string
+      nMode              int
+      modes              Matrix<double> [nMode x nAtomType]
+      nWave              int
+      waveIntVectors     Array<IntVector> [nWave]
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> nMode </td>
+     <td> number of modes (vectors in space of dimension nAtomType) </td>
+  </tr>
+  <tr> 
+     <td> modes </td>
+     <td> Each row is a vector of dimension nAtomType, which specifies
+          a set of weight factors for different atom types in the
+          calcultation of Fourier modes. </td>
+  </tr>
+  <tr> 
+     <td> nWave </td>
+     <td> number of reciprocal lattice wavevectors. </td>
+  </tr>
+  <tr> 
+     <td> waves </td>
+     <td> array of reciprocal lattice vectors, each specified on a 
+          separate line by 3 integer indices (Miller indices) </td>
+  </tr>
+</table>
+
+\section ddMd_analyzer_StructureFactor_example_sec Example
+
+Consider a system with nAtomType = 2, with two monomer types 0 and 1. The correlation function for the monomer density can be calculted using a mode vector (1,1). The correlation function for the difference between the A and B monomer concentrations can be calculated using the mode vector (1,-1). A parameter file input for simultaneously calculating the density and composition mode correlation functions for 5 wavevectors along the x axis in a cubic or orthorhombic unit cell might look like this:
+\code
+StructureFactor{
+   interval                      1000
+   outputFileName    StructureFactor
+   nMode                            1
+   modes                     1      1
+                             0     -1
+   nWave                            5
+   waveIntVectors     8      0      0
+                      9      0      0 
+                     10      0      0 
+                     11      0      0 
+                     12      0      0 
+}
+\endcode
+
+
+\section ddMd_analyzer_StructureFactor_out_sec Output Files
+
+At the end of a simulation, all of the structure factors are output in a file 
+<outputFileName>.dat Each line in this file contains the results for a single 
+wavevector. Each line contains the 3 Miller indices of a wavevector, the 
+absolute magnitude of the wavevector, and a list of structure factor values 
+for that wavevector, one for each mode.
+
+*/
+
+}

@@ -1,4 +1,4 @@
-/*! \page features_ddMd_page 3.1 DdMd features (ddSim)
+/*! \page features_ddMd_page 3.1 Features for ddSim
 
 \ref features_mcMd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
 \ref source_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
@@ -9,10 +9,19 @@ for post-processing of ddSim trajectories.
 
 <h2> Contents: </h2>
 <ul style="list-style: none;">
-  <li> \subpage ddMd_integrator_page 
+  <li> Analyzers
      <ul style="list-style: none;">
-       <li> \ref ddMd_integrator_NVE_page - NVE integrator </li>
-       <li> \ref ddMd_integrator_NVT_page - NVT </li>
+       <li> \ref ddMd_analyzer_StructureFactor_page </li>
+       <li> \ref ddMd_analyzer_StructureFactorGrid_page </li>
+       <li> \ref ddMd_analyzer_PairEnergyAverage_page </li>
+       <li> \ref ddMd_analyzer_ExternalEnergyAverage_page </li>
+       <li> \ref ddMd_analyzer_VirialStressTensorAverage_page </li>
+     </ul>
+  </li>
+  <li> Integrators
+     <ul style="list-style: none;">
+       <li> \ref ddMd_integrator_NVE_page </li>
+       <li> \ref ddMd_integrator_NVT_page </li>
      </ul>
   </li>
 </ul>
