@@ -19,17 +19,17 @@ clean:
 	rm -f $(util_tests_OBJS) $(util_tests_OBJS:.o=.d)
 	rm -f $(BLD_DIR)/$(TEST) $(BLD_DIR)/$(TEST).d
 	rm -f dummy log count
-	cd accumulators/unit; make clean
-	cd archives; make clean
-	cd boundary; make clean
-	cd containers; make clean
-	cd crystal; make clean
-	cd format; make clean
-	cd misc; make clean
-	cd param; make clean
-	cd random; make clean
-	cd signal; make clean
-	cd space; make clean
+	cd accumulators/unit; $(MAKE) clean
+	cd archives; $(MAKE) clean
+	cd boundary; $(MAKE) clean
+	cd containers; $(MAKE) clean
+	cd crystal; $(MAKE) clean
+	cd format; $(MAKE) clean
+	cd misc; $(MAKE) clean
+	cd param; $(MAKE) clean
+	cd random; $(MAKE) clean
+	cd signal; $(MAKE) clean
+	cd space; $(MAKE) clean
 	rm -f */*.o */*/*.o 
 	rm -f */*.d */*/*.d
 

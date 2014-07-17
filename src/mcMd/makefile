@@ -32,12 +32,12 @@ clean:
 	rm -f $(mcMd_OBJS) $(mcMd_OBJS:.o=.d) $(mcMd_LIB)
 	rm -f $(MDSIM).o $(MDSIM).d
 	rm -f $(MCSIM).o $(MCSIM).d
-	cd tests; make clean
+	cd tests; $(MAKE) clean
 	rm -f *.o */*.o */*/*.o
 	rm -f *.d */*.d */*/*.d
 
 veryclean:
-	make clean
+	$(MAKE) clean
 	rm -f lib*.a
 ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f configIos/ConfigIoFactory.cpp
@@ -68,10 +68,10 @@ $(MDSIM_EXE): $(MDSIM).o $(LIBS)
 # Short names for executable targets (for convenience)
  
 mcSim:
-	make $(MCSIM_EXE)
+	$(MAKE) $(MCSIM_EXE)
 
 mdSim:
-	make $(MDSIM_EXE)
+	$(MAKE) $(MDSIM_EXE)
 
 #-----------------------------------------------------------------------
 # Include dependency files

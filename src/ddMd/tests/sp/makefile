@@ -16,10 +16,10 @@ run:
 	cd configIos; ./Test
 
 clean:
-	cd chemistry; make clean
-	cd storage; make clean
-	cd configIos; make clean
-	cd processor; make clean
+	cd chemistry; $(MAKE) clean
+	cd storage; $(MAKE) clean
+	cd configIos; $(MAKE) clean
+	cd processor; $(MAKE) clean
 	rm -f Test Test.d Test.o
 
 -include $(ddMd_tests_sp_OBJS:.o=.d)
