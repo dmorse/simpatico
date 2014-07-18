@@ -7,23 +7,21 @@
 Subpages of this page lists classes that can be used in ddSim program or 
 for post-processing of ddSim trajectories.
 
-<h2> Contents: </h2>
+<h2> Analyzers</h2>
 <ul style="list-style: none;">
-  <li> Analyzers
-     <ul style="list-style: none;">
-       <li> \ref ddMd_analyzer_StructureFactor_page </li>
-       <li> \ref ddMd_analyzer_StructureFactorGrid_page </li>
-       <li> \ref ddMd_analyzer_PairEnergyAverage_page </li>
-       <li> \ref ddMd_analyzer_ExternalEnergyAverage_page </li>
-       <li> \ref ddMd_analyzer_VirialStressTensorAverage_page </li>
-     </ul>
-  </li>
-  <li> Integrators
-     <ul style="list-style: none;">
-       <li> \ref ddMd_integrator_NVE_page </li>
-       <li> \ref ddMd_integrator_NVT_page </li>
-     </ul>
-  </li>
+  <li> \subpage ddMd_analyzer_StructureFactor_page </li>
+  <li> \subpage ddMd_analyzer_StructureFactorGrid_page </li>
+  <li> \subpage ddMd_analyzer_PairEnergyAverage_page </li>
+  <li> \subpage ddMd_analyzer_ExternalEnergyAverage_page </li>
+  <li> \subpage ddMd_analyzer_VirialStressTensorAverage_page </li>
+</ul>
+
+<h2> Integrators </h2>
+<ul style="list-style: none;">
+  <li> \subpage ddMd_integrator_NveIntegrator_page </li>
+  <li> \subpage ddMd_integrator_NvtIntegrator_page </li>
+  <li> \subpage ddMd_integrator_NphIntegrator_page </li>
+  <li> \subpage ddMd_integrator_NptIntegrator_page </li>
 </ul>
  
 <BR>

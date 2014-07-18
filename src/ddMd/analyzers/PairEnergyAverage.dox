@@ -10,7 +10,6 @@ This analyzer computes an average nonbonded pair energy.
 If nSamplePerBlock > 0, it outputs block average values every interval*nSamplePerBlock time steps. Each block average is an average of nSamplePerBlock values.
 
 \sa DdMd::PairEnergyAverage
-\sa DdMd::PairSelector.
 
 \section ddMd_analyzer_PairEnergyAverage_param_sec Parameters
 The parameter file format is:
@@ -25,30 +24,30 @@ The parameter file format is:
 in which
 <table>
   <tr> 
-     <td>interval</td>
-     <td> number of steps between data samples </td>
+    <td>interval</td>
+    <td> number of steps between data samples </td>
   </tr>
   <tr> 
-     <td> outputFileName </td>
-     <td> name of output file </td>
+    <td> outputFileName </td>
+    <td> name of output file </td>
   </tr>
   <tr> 
-     <td>nSamplePerBlock</td>
-     <td>number of samples per block average</td>
+    <td>nSamplePerBlock</td>
+    <td>number of samples per block average</td>
   </tr>
   <tr> 
-     <td>pairs</td>
-     <td>pairs is an array that stores two atom type indices</td>
+    <td>pairs</td>
+    <td>pairs is an array that stores two atom type indices</td>
   </tr>
 </table>
 
 \section ddMd_analyzer_PairEnergyAverage_output_sec Output
 
-During the simulation, if nSamplePerBlock > 0, block averages are output to the file 
-<outputFileName>.dat.
+During the simulation, if nSamplePerBlock > 0, block averages are output to the 
+file <outputFileName>.dat.
 
-At the end of the simulation, parameters are echoed to file <outputFileName>.prm and
-final results for average and error analysis output to <outputFileName>.ave.
+At the end of the simulation, parameters are echoed to file <outputFileName>.prm 
+and final results for average and error analysis output to <outputFileName>.ave.
 
 */
 

@@ -7,7 +7,7 @@
 Subpages of this page lists classes that can be used in mcSim and mdSim programs
 to implement molecular dynamics integration (in mdSim), Monte Carlo move (in mcSim), or data analysis algorithms (in either).
 
-<h2> Contents: </h2>
+<h2> Analyzers: </h2>
 <ul style="list-style: none;">
   <li> \subpage mcMd_analyzer_AtomMSD_page </li>
   <li> \subpage mcMd_analyzer_BlockRadiusGyration_page </li>
@@ -30,6 +30,7 @@ to implement molecular dynamics integration (in mdSim), Monte Carlo move (in mcS
   <li> \subpage mcMd_analyzer_MdPressureAverage_page </li>
   <li> \subpage mcMd_analyzer_McStressAutoCorrelation_page </li>
   <li> \subpage mcMd_analyzer_MdVirialStressTensorAverage_page </li>
+  <li> \subpage mcMd_analyzer_MdStressAutoCorrelation_page </li>
   <li> \subpage mcMd_analyzer_McBondEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McEnergyOutput_page </li>
@@ -42,6 +43,13 @@ to implement molecular dynamics integration (in mdSim), Monte Carlo move (in mcS
   <li> \subpage mcMd_analyzer_McVirialStressTensorAverage_page </li>
 </ul>
  
+<h2> MD Integrators: </h2>
+<ul style="list-style: none;">
+  <li> \subpage mcMd_integrator_NveVvIntegrator_page </li>
+  <li> \subpage mcMd_integrator_NvtNhIntegrator_page </li>
+  <li> \subpage mcMd_integrator_NphIntegrator_page </li>
+</ul>
+
 <BR>
 \ref features_inter_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
 \ref features_page       (Up) &nbsp; &nbsp; &nbsp; &nbsp;
