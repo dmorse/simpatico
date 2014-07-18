@@ -1,0 +1,56 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_MdIntraBondTensorAutoCorr_page MdIntraBondTensorAutoCorr
+
+\section mcMd_analyzer_MdIntraBondTensorAutoCorr_overview_sec Synopsis
+
+This analyzer computes the autocorrelation function of the single-molecule 
+bond orientation tensor. See documentation for the class template 
+McMd::IntraBondTensorAutoCorr for a more precise definition of what is 
+being calculated.
+
+\sa McMd::MdIntraBondTensorAutoCorr
+\sa McMd::IntraBondTensorAutoCorr
+
+\section mcMd_analyzer_MdIntraBondTensorAutoCorr_param_sec Parameters
+The parameter file format is:
+\code
+   MdIntraBondTensorAutoCorr{ 
+      interval           int
+      outputFileName     string
+      capacity           int
+   }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index for species of interest </td>
+  </tr>
+  <tr> 
+     <td> capacity </td>
+     <td> number of time separation values computed, number of previous values in history </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_MdIntraBondTensorAutoCorr_out_sec Output Files
+
+At the end of the simulation:
+
+ - Parameters and some other data are written to <outputFileName>.prm
+
+ - The correlation function is written to <outputFileName>.data
+
+In the <ouputFileName>.dat file, values of the correlation function are output at time separations corresponding to integer multiples of the sampling interval, in order of increasing time delay, starting from t=0 for the first value. 
+*/
+
+}

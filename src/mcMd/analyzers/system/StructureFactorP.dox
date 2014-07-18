@@ -6,8 +6,9 @@ namespace McMd
 \section mcMd_analyzer_StructureFactorP_overview_sec Synopsis
 
 This analyzer calculates partial structure factors for specified
-pair of atom types, for a specied set of wavevectors that are
-members of the reciprocal lattice.
+pair of atom types, for a specified set of reciprocal lattice 
+wavevectors. See the class documentation for a precise definition
+of what is calculated. 
 
 \sa McMd::StructureFactorP
 \sa Util::IntVector
@@ -56,7 +57,11 @@ in which
 
 \section mcMd_analyzer_StructureFactorP_out_sec Output Files
 
-Final values are output to <outputFileName>.data in multicolumn format. Each row is a reciprocal lattice wavector, each column is an atom type index pair.
+At the end of the simulation:
+
+  - Parameters are echoed to <outputFileName>.prm
+
+  - Partial structure factor values are output to <outputFileName>.dat in multicolumn format. Each row is a reciprocal lattice wavector, which contains the 3 integer indices of the wavevectors followed by values of the partial structure factors for each atom type index pair. 
 
 */
 

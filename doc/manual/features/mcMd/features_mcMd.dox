@@ -23,16 +23,22 @@ to implement molecular dynamics integration (in mdSim), Monte Carlo move (in mcS
   <li> \subpage mcMd_analyzer_StructureFactorP_page </li>
   <li> \subpage mcMd_analyzer_StructureFactorPGrid_page </li>
   <li> \subpage mcMd_analyzer_MdEnergyOutput_page </li>
+  <li> \subpage mcMd_analyzer_MdIntraBondStressAutoCorr_page </li>
+  <li> \subpage mcMd_analyzer_MdIntraBondTensorAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_MdKineticEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_MdPotentialEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_MdPressureAverage_page </li>
+  <li> \subpage mcMd_analyzer_McStressAutoCorrelation_page </li>
   <li> \subpage mcMd_analyzer_MdVirialStressTensorAverage_page </li>
   <li> \subpage mcMd_analyzer_McBondEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McEnergyOutput_page </li>
   <li> \subpage mcMd_analyzer_McExternalEnergyAverage_page </li>
+  <li> \subpage mcMd_analyzer_McIntraBondStressAutoCorr_page </li>
+  <li> \subpage mcMd_analyzer_McIntraBondTensorAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_McPairEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McPressureAverage_page </li>
+  <li> \subpage mcMd_analyzer_McStressAutoCorrelation_page </li>
   <li> \subpage mcMd_analyzer_McVirialStressTensorAverage_page </li>
 </ul>
  

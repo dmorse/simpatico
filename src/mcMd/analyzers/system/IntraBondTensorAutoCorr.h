@@ -28,6 +28,23 @@ namespace McMd
    /**
    * Autocorrelation for bond stress of a molecule.
    *
+   * The bond orientation tensor for each molecule is defined as a sum
+   * \f[ 
+   * 
+   *    S_{ij} = \sum_{a}( u_{ai}u_{aj} - \delta_{ij} )
+   *
+   * \f]
+   * where \f$u_{ai}\f$ is the ith Cartesian component (i=0,..,2) of a 
+   * unit vector \f${\bf u}_{a}\f$ parallel to bond number a, and the 
+   * sum is over all bonds in a molecule. This analyzer calculates the 
+   * quantity:
+   * \f[
+   *
+   *  C(t) = \sum_{i,j=0}^{2} \langle S_{ij}(t)S_{ij}(0) \rangle
+   *
+   * \f]
+   * for molecules of a specified species. 
+   *
    * \ingroup McMd_Analyzer_Module
    */
    template <class SystemType>

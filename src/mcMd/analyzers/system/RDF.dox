@@ -5,11 +5,8 @@ namespace McMd
 
 \section mcMd_analyzer_RDF_overview_sec Synopsis
 
-This analyzer calculates ..
-
-If nSamplePerBlock != 0, a time sequence of block average values 
-of these quantities will be output to a file <outputFileName>.dat 
-during the simulation. 
+This analyzer calculates a radial distribution function. The type of 
+atoms to include are defined by an associated McMd::PairSelector object.
 
 \sa McMd::RDF
 
@@ -55,9 +52,11 @@ in which
 
 At the end of a simulation:
 
-Parameters are echoed to <outputFielName>.prm
+  -  Parameters are echoed to <outputFielName>.prm
 
-The final radial distribution function is output to <outputFileName>.dat in a format defined by the Util::RadialDistribution::output() function.
+  -  The accumulated radial distribution function is output to <outputFileName>.dat.
+  
+The calculation uses Util::RadialDistribution function.
 
 */
 

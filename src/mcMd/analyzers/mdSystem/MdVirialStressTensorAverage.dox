@@ -7,7 +7,7 @@ namespace McMd
 
 This analyzer computes time averages of the components of the virial stress tensor.
 
-//, and optionally outputs block averages over the course of the simulation. If nSamplePerBlock > 0, block averages of nSamplePerBlock sampled values of each tensor component are output during the simulation, every nSamplePerBlock*interval time steps. 
+BUG: This analyzer reads in the nSamplePerBlock, but does not do anything with it, and does not output block averages.
 
 \sa McMd::MdVirialStressTensorAverage
 

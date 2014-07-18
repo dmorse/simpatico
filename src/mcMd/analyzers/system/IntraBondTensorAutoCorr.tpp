@@ -203,7 +203,7 @@ namespace McMd
    {  
 
       // Echo parameters to analyzer log file
-      fileMaster().openOutputFile(outputFileName(), outputFile_);
+      fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
       writeParam(outputFile_); 
       outputFile_.close();
 
