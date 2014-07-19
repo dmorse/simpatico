@@ -1,11 +1,14 @@
-/*! \page features_mcMd_page 3.1 Features for mcSim and mdSim
+/*! \page user_features_mdSim_page 2.8.3 Options for mdSim
 
-\ref features_inter_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
-\ref features_ddMd_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_ddSim_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_mcSim_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
 <BR>
 
-Subpages of this page lists classes that can be used in mcSim and mdSim programs
-to implement molecular dynamics integration (in mdSim), Monte Carlo move (in mcSim), or data analysis algorithms (in either).
+Click on any of the links below for information about parameter
+file formats for subclasses that implement data data analysis 
+(analyzer) or molecular dynamics integration algorithms that can 
+be used with the mdSim MD program.
+
 
 <h2> Analyzers: </h2>
 <ul style="list-style: none;">
@@ -28,19 +31,9 @@ to implement molecular dynamics integration (in mdSim), Monte Carlo move (in mcS
   <li> \subpage mcMd_analyzer_MdKineticEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_MdPotentialEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_MdPressureAverage_page </li>
-  <li> \subpage mcMd_analyzer_McStressAutoCorrelation_page </li>
+  <li> \subpage mcMd_analyzer_MdStressAutoCorrelation_page </li>
   <li> \subpage mcMd_analyzer_MdVirialStressTensorAverage_page </li>
   <li> \subpage mcMd_analyzer_MdStressAutoCorrelation_page </li>
-  <li> \subpage mcMd_analyzer_McBondEnergyAverage_page </li>
-  <li> \subpage mcMd_analyzer_McEnergyAverage_page </li>
-  <li> \subpage mcMd_analyzer_McEnergyOutput_page </li>
-  <li> \subpage mcMd_analyzer_McExternalEnergyAverage_page </li>
-  <li> \subpage mcMd_analyzer_McIntraBondStressAutoCorr_page </li>
-  <li> \subpage mcMd_analyzer_McIntraBondTensorAutoCorr_page </li>
-  <li> \subpage mcMd_analyzer_McPairEnergyAverage_page </li>
-  <li> \subpage mcMd_analyzer_McPressureAverage_page </li>
-  <li> \subpage mcMd_analyzer_McStressAutoCorrelation_page </li>
-  <li> \subpage mcMd_analyzer_McVirialStressTensorAverage_page </li>
 </ul>
  
 <h2> MD Integrators: </h2>
@@ -51,8 +44,8 @@ to implement molecular dynamics integration (in mdSim), Monte Carlo move (in mcS
 </ul>
 
 <BR>
-\ref features_inter_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
-\ref features_page       (Up) &nbsp; &nbsp; &nbsp; &nbsp;
-\ref features_ddMd_page  (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_ddSim_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_page       (Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_mcSim_page  (Next) &nbsp; &nbsp; &nbsp; &nbsp;
 
 */

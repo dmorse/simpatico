@@ -1,11 +1,13 @@
-/*! \page features_ddMd_page 3.1 Features for ddSim
+/*! \page user_features_ddSim_page 2.8.2 Options for ddSim
 
-\ref features_mcMd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
-\ref source_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_mdSim_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
 <BR>
 
-Subpages of this page lists classes that can be used in ddSim program or 
-for post-processing of ddSim trajectories.
+Click on any of the links below for information about parameter
+file formats for subclasses that implement on-the fly data 
+analysis (analyzer) or molecular dynamics integration algorithms 
+that can be used with the ddSim parallel MD program.
 
 <h2> Analyzers</h2>
 <ul style="list-style: none;">
@@ -25,8 +27,7 @@ for post-processing of ddSim trajectories.
 </ul>
  
 <BR>
-\ref features_mcMd_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
-\ref features_page      (Up) &nbsp; &nbsp; &nbsp; &nbsp;
-\ref source_page        (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_page (Prev/Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_mdSim_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
 
 */
