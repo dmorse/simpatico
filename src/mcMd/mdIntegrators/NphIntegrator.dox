@@ -1,0 +1,44 @@
+namespace McMd
+{
+
+/*! \page mcMd_integrator_NphIntegrator_page NphIntegrator
+
+\section mcMd_integrator_NphIntegrator_overview_sec Synopsis
+
+NphIntegrator implements a reversible NPH (constant enthalpy, constant
+pressure) integrator. See class documentation for further details, an
+explanation of modes of operation, and a literature reference.
+
+\sa McMd::NphIntegrator
+
+\section mcMd_integrator_NphIntegrator_param_sec Parameters
+The parameter file format is:
+\code
+  NphIntegrator{ 
+    dt                 double
+    W                  double
+    mode               Util::LatticeSystem
+  }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> dt </td>
+     <td> time step </td>
+  </tr>
+  <tr> 
+     <td> W </td>
+     <td> barostat mass, as in Anderson barostat </td>
+  </tr>
+  <tr> 
+     <td> mode </td>
+     <td> Determines number of independent dimensions. Can take values
+          "Cubic", "Tetragonal" or "Orthorhombic". </td>
+  </tr>
+</table>
+See the McMd::NphIntegrator class documentation for further discussion
+of the mode parameter.
+
+*/
+
+}

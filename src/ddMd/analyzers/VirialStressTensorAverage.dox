@@ -1,0 +1,47 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_VirialStressTensorAverage_page  VirialStressTensorAverage
+
+\section ddMd_analyzer_VirialStressTensorAverage_synopsis_sec Synopsis
+
+This analyzer computes time averages of the components of the virial stress tensor.
+
+BUG: This analyzer requires an nSamplePerBlock parameter, but then does nothing 
+with it, and does not output block averages.
+  
+\sa DdMd::VirialStressTensorAverage
+
+\section ddMd_analyzer_VirialStressTensorAverage_param_sec Parameters
+The parameter file format is:
+\code
+   VirialStressTensorAverage{
+     interval           int
+     outputFileName     string
+     nSamplePerBlock    int
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>nSamplePerBlock</td>
+     <td>number of data samples per block average, if nSamplePerBlock > 0.</td>
+  </tr>
+</table>
+
+\section ddMd_analyzer_VirialStressTensorAverage_output_sec Output
+
+At the end of the simulation, parameters are echoed to file <outputFileName>.prm 
+and the average of each stress component is output to <outputFileName>.dat.
+
+*/
+
+}

@@ -1,0 +1,63 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_BlockRadiusGyration_page BlockRadiusGyration
+
+\section mcMd_analyzer_BlockRadiusGyration_synopsis_sec Synopsis
+
+This analyzer calculates the radii of gyration of blocks of atoms of
+the same type within a molecule and the mean-squared distanced between
+the center of mass of different blocks, for a specified species of
+molecule. This was written for use with block copolymers, but the 
+definition of a "block" used here operationally mean "a set of all
+atoms of a specific atom type", without regard to whether they 
+form a contiguous block within the molecular structure. 
+
+KNOWN BUG: The algorithm appears to assume that the chosen
+species will contain at least one atom every type of atom in the 
+simulation (i.e., at least one atom of each type 0,...,nAtomType).
+This is correct only for a few situations, such as a melt of AB 
+diblock copolymers, and will probably crash if this assumption is 
+not correct.
+
+\section mcMd_analyzer_BlockRadiusGyration_param_sec Parameters
+The parameter file format is:
+\code
+   BlockRadiusGyration{ 
+      interval           int
+      outputFileName     string
+      samplePerBlock     int
+      speciesId          int
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> samplePerBlock </td>
+     <td> number of samples averaged in each block average </td>
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_BlockRadiusGyration_out_sec Output
+
+If nSamplePerBlock != 0, a time sequence of block average values 
+of these quantities will be output to a file <outputFileName>.dat 
+during the simulation. Final average values with error estimates
+are output to <outputFileName>.ave.
+
+
+*/
+
+}

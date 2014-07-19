@@ -1,0 +1,39 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_DumpConfig_page DumpConfig
+
+\section mcMd_analyzer_DumpConfig_synopsis_sec Synopsis
+
+This analyzer periodically writes the system configuration to file. 
+
+\section mcMd_analyzer_DumpConfig_param_sec Parameters
+
+The parameter file format is:
+\code
+  DumpConfig{ 
+    interval           int
+    outputFileName     string
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_DumpConfig_output_sec Output
+
+A system configuration is output every interval time steps, using the file format defined by the current ConfigIo. If no ConfigIo has been set explicitly in the command file, the default McMdConfigIo format will be used.
+
+Each configuration is output to a separate file. The name of each file is created by adding an integer to the outputFileName, creating a set of numbered files <outputFileName>0, <outputFileName>1, etc.
+
+*/
+
+}

@@ -1,0 +1,67 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_StructureFactorGrid_page StructureFactorGrid
+
+\section mcMd_analyzer_StructureFactorGrid_overview_sec Synopsis
+
+This analyzer calculates the structure factor for all wavevectors within
+a grid, for all integer wavevector indices up to some maximum value. It also groups together values from "stars" of wavevectors that are related by symmetry, such as the {100} family of 6 wavevectors, and outputs a single average value for the entire star.
+
+The McMd::StructureFactorGrid class is a subsclass of McMd::Structure factor. Like McMd::StructureFactor, it calculates the structure factor at a set of wavevectors, using a specified set of "modes" for each wavevector. See the documentation of McMd::Structure factor for an explanation of the notation of "modes", and the parameter file format for specifying modes.
+
+\sa McMd::StructureFactor
+\sa McMd::StructureFactorGrid
+\sa Util::LatticeSystem
+
+\section mcMd_analyzer_StructureFactorGrid_param_sec Parameters
+The parameter file format is:
+\code
+   StructureFactorGrid{ 
+      interval           int
+      outputFileName     string
+      nMode              int
+      modes              Matrix<double> [nMode x nAtomType]
+      hMax               int
+      lattice            Util::LatticeSystem
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> nMode </td>
+     <td> number of modes (vectors in space of dimension nAtomType) </td>
+  </tr>
+  <tr> 
+     <td> modes </td>
+     <td> Each row is a vector of dimension nAtomType, which specifies
+          a set of weight factors for different atom types in the
+          calculation of Fourier amplitudes. </td>
+  </tr>
+  <tr> 
+     <td> hMax </td>
+     <td> maximum index for lattice vectors in any direction. </td>
+  </tr>
+  <tr> 
+     <td> lattice </td>
+     <td> Util::LatticeSystem object that specifies the symmetry of the
+          simulation unit cell. This can take values "cubic", 
+          "tetragonal", "orthorhombic", etc.</td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_StructureFactorGrid_out_sec Output Files
+
+Final values are output to <outputFileName>.data. Each row is a star of symmetry related reciprocal lattice vectors, each column is a mode.
+
+*/
+
+}

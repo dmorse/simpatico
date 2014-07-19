@@ -1,7 +1,7 @@
 /*! \page user_options_page 2.11 Compile Time Options
 
 \ref user_multi_page      (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref source_page          (Next) 
+\ref source_page        (Next) 
 <BR>
 
 The source code for all of the simpatico programs contain some features that be enabled (included in the executable) or disabled (excluded from the executable) when the program is compiled via conditional compilation of some parts of the code. This page lists these optional features, and explains how they may be enabled or disabled.
@@ -181,6 +181,6 @@ We have chosen to use a typedef rather than a polymorphic classes for the bounda
 <BR>
 \ref user_multi_page      (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page            (Up)   &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref source_page          (Next) 
+\ref source_page        (Next) 
 
 */

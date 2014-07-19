@@ -1,10 +1,10 @@
-/*! \page inter_page 2.7 Potential Energies (Interactions)
+/*! \page user_features_inter_page 2.8.1 Potential Energies (Interactions)
 
-\ref user_examples_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
-\ref user_analysis_page (Next)
+\ref user_features_page      (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_ddSim_page (Next)
 <BR>
 
-The potential energy used by a Simpatico simulation may contain:
+The potential energy used by any Simpatico simulation may contain:
 
  - a non-bonded pair interaction
 
@@ -12,7 +12,7 @@ The potential energy used by a Simpatico simulation may contain:
 
  - an external 1-body potential
 
-Specific functional form for each type of interaction implemented by "interaction" classes, which are defined in the Inter namespace. The choice of which functional form to use for potential energy contribution is specified in the parameter file by "style" string parameter (e.g., pairStyle or bondStyle) whose value is given by the name of the associated interaction class. 
+Specific functional forms for each type of interaction implemented by "interaction" classes, which are defined in the Inter namespace. The same set of interactin classes of each type are available for use in all programs. The choice of which functional form to use for potential energy contribution is specified in the parameter file by a "style" string parameter (e.g., pairStyle or bondStyle). The value of each such string parameter gives the name of the desired interaction class. 
  
 <h2> Contents: </h2>
 <ul style="list-style: none;">
@@ -54,8 +54,7 @@ Specific functional form for each type of interaction implemented by "interactio
 </ul>
  
 <BR>
-\ref user_examples_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp;
-\ref user_analysis_page (Next)
+\ref user_features_page (Prev / Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_features_ddSim_page (Next)
 
 */

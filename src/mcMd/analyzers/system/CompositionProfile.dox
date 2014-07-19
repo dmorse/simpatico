@@ -1,0 +1,55 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_CompositionProfile_page CompositionProfile
+
+\section mcMd_analyzer_CompositionProfile_synopsis_sec Synopsis
+
+This analyzer computes average monomer concentration profiles for all atom types along one or more directions, averaged over planes contstructed perpendicular to these directions.
+
+\sa McMd::CompositionProfile
+
+\section mcMd_analyzer_CompositionProfile_param_sec Parameters
+The parameter file format is:
+\code
+   CompositionProfile{ 
+      interval           int
+      outputFileName     string
+      nDirection         int
+      intVectors         Array<IntVector> [nDirection]
+      nBins              int
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> nDirection </td>
+     <td> number of directions (reciprocal vectors) </td>
+  </tr>
+  <tr> 
+     <td> intVectors </td>
+     <td> array of reciprocal lattice vectors, given using integer Miller indices (dimension = nDirection).
+  </tr>
+  <tr>
+     <td> nBins </td>
+     <td> number of bins in histogram for each profile </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_CompositionProfile_output_sec Output
+
+If nSamplePerBlock != 0, a time sequence of block average values of these quantities will be output to a file <outputFileName>.dat during the simulation. If nSamplePerBlock == 0, no such file is created.
+
+Instantaneous histograms for each direction are output to file with a suffix *.log, with a separate file for each direction. Overall average profiles are output are output to <outputFileName>.dat, also with different files for different directions.
+
+*/
+
+}

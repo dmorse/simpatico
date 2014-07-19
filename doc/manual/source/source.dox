@@ -3,8 +3,8 @@ namespace McMd
 
 /*! \page source_page 3 Source Code Overview
 
-\ref user_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
-\ref extend_page  (Next) 
+\ref user_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref extend_page   (Next) 
 <BR>
 
 These pages present an overview of the organization of the source code, and of the class library design.
@@ -21,9 +21,9 @@ These pages present an overview of the organization of the source code, and of t
    </ul>
 
 <BR> 
-\ref user_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
 \ref index "Main Page"  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
-\ref extend_page  (Next) 
+\ref extend_page   (Next) 
  
 */
 

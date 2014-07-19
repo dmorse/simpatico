@@ -1,0 +1,63 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_RDF_page RDF
+
+\section mcMd_analyzer_RDF_overview_sec Synopsis
+
+This analyzer calculates a radial distribution function. The type of 
+atoms to include are defined by an associated McMd::PairSelector object.
+
+\sa McMd::RDF
+
+\sa McMd::PairSelector
+
+\section mcMd_analyzer_RDF_param_sec Parameters
+The parameter file format is:
+\code
+   RDF{ 
+      interval           int
+      outputFileName     string
+      max                double
+      nBin               int
+      selector           PairSelector 
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> max </td>
+     <td> maximum separation distance </td>
+  </tr>
+  <tr> 
+     <td> nBin </td>
+     <td> number of bins in histogram of radius values  </td>
+  </tr>
+  <tr> 
+     <td> selector </td>
+     <td> McMd::PairSelector object, selects types of pairs to be 
+          included in histogram </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_RDF_out_sec Output Files
+
+At the end of a simulation:
+
+  -  Parameters are echoed to <outputFielName>.prm
+
+  -  The accumulated radial distribution function is output to <outputFileName>.dat.
+  
+The calculation uses Util::RadialDistribution function.
+
+*/
+
+}

@@ -1,0 +1,27 @@
+namespace McMd
+{
+
+/*! \page user_features_page 2.8 Run-Time Options
+
+\ref user_analysis_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_restart_page  (Next) 
+<BR>
+
+These pages present an overview of features of various programs that can be enabled by using the parameter file to select which classes are used for potential energies (interaction classes), molecular dynamics integrators or Monte Carlo moves, an data analysis operattions.
+
+<h2> Contents:</h2> 
+   <ul style="list-style: none;">
+   <li> \subpage user_features_inter_page</li>
+   <li> \subpage user_features_ddSim_page </li>
+   <li> \subpage user_features_mdSim_page </li>
+   <li> \subpage user_features_mcSim_page </li>
+   </ul>
+
+<BR> 
+\ref user_analysis_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref index "Main Page"  (Up)  &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_restart_page  (Next) 
+ 
+*/
+
+}

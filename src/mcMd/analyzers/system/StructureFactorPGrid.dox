@@ -1,0 +1,68 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_StructureFactorPGrid_page StructureFactorPGrid
+
+\section mcMd_analyzer_StructureFactorPGrid_overview_sec Synopsis
+
+This analyzer calculates the partial structure factors for a
+specified set of pairs of atom types, for all wavevectors
+within a grid in reciprocal space, for all wavevector with
+integer indices up to some maximum value in each direction. 
+It also groups together values from "stars" of wavevectors 
+that are related by symmetry, such as the {100} family of 6 
+wavevectors, and outputs a single average value of each partial 
+structure factor for the entire star.
+
+\sa McMd::StructureFactorPGrid
+\sa Util::LatticeSystem
+
+\section mcMd_analyzer_StructureFactorPGrid_param_sec Parameters
+The parameter file format is:
+\code
+   StructureFactorPGrid{ 
+      interval           int
+      outputFileName     string
+      nAtomTypeIdPair    in
+      atomTypeIdPairs    Array< Pair<int> >
+      hMax               in
+      lattice            Util::LatticeSystem
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> nAtomTypeIdPair </td>
+     <td> number of atom type index pairs.
+  </tr>
+  <tr> 
+     <td> atomTypeIdPairs </td>
+     <td> Array of pairs of atom type indices, one pair per line </td>
+  </tr>
+  <tr> 
+     <td> hMax </td>
+     <td> maximum integer index for Miller indices in any direction. </td>
+  </tr>
+  <tr> 
+     <td> lattice </td>
+     <td> Util::LatticeSystem object specifies the symmetry of the 
+          simulation cell, can have string values "cubic", "tetragonal", 
+          "orthorhombic" etc.</td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_StructureFactorPGrid_out_sec Output Files
+
+Final values are output to <outputFileName>.data in multicolumn format. Each row is a reciprocal lattice wavector, each column is an atom type index pair.
+
+*/
+
+}

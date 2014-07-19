@@ -1,0 +1,33 @@
+/*! \page user_features_ddSim_page 2.8.2 Options for ddSim
+
+\ref user_features_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_mdSim_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+<BR>
+
+Click on any of the links below for information about parameter
+file formats for subclasses that implement on-the fly data 
+analysis (analyzer) or molecular dynamics integration algorithms 
+that can be used with the ddSim parallel MD program.
+
+<h2> Analyzers</h2>
+<ul style="list-style: none;">
+  <li> \subpage ddMd_analyzer_StructureFactor_page </li>
+  <li> \subpage ddMd_analyzer_StructureFactorGrid_page </li>
+  <li> \subpage ddMd_analyzer_PairEnergyAverage_page </li>
+  <li> \subpage ddMd_analyzer_ExternalEnergyAverage_page </li>
+  <li> \subpage ddMd_analyzer_VirialStressTensorAverage_page </li>
+</ul>
+
+<h2> Integrators </h2>
+<ul style="list-style: none;">
+  <li> \subpage ddMd_integrator_NveIntegrator_page </li>
+  <li> \subpage ddMd_integrator_NvtIntegrator_page </li>
+  <li> \subpage ddMd_integrator_NphIntegrator_page </li>
+  <li> \subpage ddMd_integrator_NptIntegrator_page </li>
+</ul>
+ 
+<BR>
+\ref user_features_page (Prev/Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_mdSim_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+
+*/

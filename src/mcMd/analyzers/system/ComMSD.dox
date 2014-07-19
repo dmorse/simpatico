@@ -1,0 +1,56 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_ComMSD_page  ComMSD
+
+\section mcMd_analyzer_ComMSD_synopsis_sec Synopsis
+
+This analyzer calculates the mean-squared-displacement vs. time for the
+center of mass of a specific molecular species. It properly takes into 
+account the effects of periodic boundary conditions by reconstructing
+continuous trajectories for the molecular center of mass. "Center of mass" 
+is calculated by weighting each atom in the molecule equally, without 
+using any actual atomic masses, and thus might more properly called the
+geometric center.
+
+\section mcMd_analyzer_ComMSD_param_sec Parameters
+The parameter file format is:
+\code
+  ComMSD{
+    interval           int
+    outputFileName     string
+    speciesId          int
+    capacity           int
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>speciesId</td>
+     <td> integer index of molecule species</td>
+  </tr>
+  <tr> 
+     <td>capacity</td>
+     <td>number of time separations in output, and number of positions stored in history</td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_ComMSD_output_sec Output
+
+At the end of the simulation:
+
+Parameters are echoed to file <outputFileName>.prm.
+
+Final results for MSD vs. number of samples are output to the file <outputFileName>.dat.
+
+*/
+
+}

@@ -1,0 +1,70 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_IntraStructureFactor_page IntraStructureFactor
+
+\section mcMd_analyzer_IntraStructureFactor_overview_sec Synopsis
+
+This analyzer calculates partial structure factor for a specified species of molecule, for a specific set of pairs of atom types. See class documentation for a precise definition, and explanation of conventions for atom type indices.
+
+\sa McMd::IntraStructureFactor
+
+\section mcMd_analyzer_IntraStructureFactor_param_sec Parameters
+The parameter file format is:
+\code
+   IntraStructureFactor{ 
+      interval           int
+      outputFileName     string
+      speciesId          int
+      nAtomTypeIdPair    int
+      atomTypeIdPairs    Array< Pair<int> > [nAtomTypeIdPair]
+      nWave              int
+      waveIntVectors     Array< IntVector > [nWave]
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+  <tr> 
+     <td> nAtomTypeIdPair</td>
+     <td> number of pairs of atom type ids </td>
+  </tr>
+  <tr> 
+     <td> atomTypeIdPairs</td>
+     <td> Array in which each element is pair of atom types for which the 
+          structure factor should be calculated. Negative values of the
+          type id can be used to indicate a sum over all atom types. </td>
+  </tr>
+  <tr> 
+     <td>  nWave </td>
+     <td>  number of reciprocal lattice vectors for which to calculate </td>
+  </tr>
+  <tr> 
+     <td> waveIntVectors </td>
+     <td> Array of reciprocal lattice wavevectors, expressed in terms of integer
+          indices (Miller indices) </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_IntraStructureFactor_out_sec Output Files
+
+At the end of the simulation:
+
+- Parameters are echoed to <outputFileName>.prm
+
+- Final values are output to <outputFileName>.dat.
+
+*/
+
+}

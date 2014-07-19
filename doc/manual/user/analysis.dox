@@ -1,7 +1,7 @@
-/*! \page user_analysis_page 2.8 Data Analysis
+/*! \page user_analysis_page 2.7 Data Analysis
 
- \ref inter_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
- \ref user_restart_page  (Next) 
+ \ref user_examples_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_features_page  (Next) 
  <BR> 
 
 All of the Simpatico programs allow a user to evaluate and analyze a variety of physical properties during a simulation, "on the fly". The mcSim and mdSim programs (but not ddSim) can also be used to postprocess of a sequence of system configurations that were saved to file during an earlier simulation. 
@@ -37,8 +37,8 @@ The mdSim program may also be used postprocess an MD trajectory file. An MD traj
 During postprocessing, the "interval" of each analyzer is interpreted as a number of configurations to be read from file between subsequent calls of the sample method, rather than the number of MD or MC steps. Unless configurations were written to file more frequently than necessary, the interval for each analyzers should thus generally be set to 1 in the parameter file for a postprocessing run.
 
  <BR> 
- \ref inter_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
+ \ref user_examples_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
  \ref user_page (Up)  &nbsp; &nbsp; &nbsp; &nbsp; 
- \ref user_restart_page  (Next) 
+ \ref user_features_page  (Next) 
 
 */

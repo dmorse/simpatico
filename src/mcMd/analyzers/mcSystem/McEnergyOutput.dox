@@ -1,0 +1,43 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_McEnergyOutput_page  McEnergyOutput
+
+\section mcMd_analyzer_McEnergyOutput_synopsis_sec Synopsis
+
+This analyzer periodically outputs values of all components of the 
+potential energy to a file. 
+
+\sa McMd::McEnergyOutput
+
+\section mcMd_analyzer_McEnergyOutput_param_sec Parameters
+The parameter file format is:
+\code
+  McEnergyOutput{
+    interval           int
+    outputFileName     string
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_McEnergyOutput_output_sec Output
+
+Instantaneous values of the total energy and its components are output to the file <outputFileName>.dat during a simulation, every interval time steps. Each row corresponds to one data sample.  Relevant energy components are listed in the order:
+
+   [pair] [bond] [angle] [dihedral] [link] [external] [total]
+
+Components of the energy that are not enabled in a simulation are not included. The file format used in a particular simulation is documented in <outputFileName>.prm, which is output at the end of the simulation.
+
+*/
+
+}

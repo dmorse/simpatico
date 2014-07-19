@@ -1,0 +1,50 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_MdIntraBondStressAutoCorr_page MdIntraBondStressAutoCorr
+
+\section mcMd_analyzer_MdIntraBondStressAutoCorr_overview_sec Synopsis
+
+This analyzer computes the autocorrelation function of the bond contribution to 
+the single molecule stress, for a single molecule. See class documentation for 
+a more precise definition of what is being calculated.
+
+\sa McMd::MdIntraBondStressAutoCorr
+
+\section mcMd_analyzer_MdIntraBondStressAutoCorr_param_sec Parameters
+The parameter file format is:
+\code
+   MdIntraBondStressAutoCorr{ 
+      interval           int
+      outputFileName     string
+      capacity           int
+   }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index for species of interest </td>
+  </tr>
+  <tr> 
+     <td> capacity </td>
+     <td> number of time separation values computed, number of previous values in history </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_MdIntraBondStressAutoCorr_out_sec Output Files
+
+At the end of the simulation, parameters and other data are written to <outputFileName>.prm, the correlation function is written to <outputFileName>.corr.
+
+In the <ouputFileName>.corr file, values of the correlation function are output at time separations corresponding to integer multiples of the sampling interval, in order of increasing time delay, starting from t=0 for the first value. 
+*/
+
+}

@@ -1,0 +1,66 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_BondLengthDist_page BondLengthDist
+
+\section mcMd_analyzer_BondLengthDist_synopsis_sec Synopsis
+
+This analyzer accumulates a histogram of the lengths of all bonds in
+a specified molecular species. 
+
+\sa McMd::BondLengthDist
+\sa Util::Histogram
+
+\section mcMd_analyzer_BondLengthDist_param_sec Parameters
+The parameter file format is:
+\code
+   BondLengthDist{ 
+      interval           int
+      outputFileName     string
+      speciesId          int
+      min                double
+      max                double
+      nBin               int
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+  <tr> 
+     <td> min </td>
+     <td> minimum bond length in (lower limit for histogram) </td>
+  </tr>
+  <tr> 
+     <td> max </td>
+     <td> maximum bond length in (upper limit for histogram) </td>
+  </tr>
+  <tr> 
+     <td> nBin </td>
+     <td> number of bins in histogram </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_BondLengthDist_output_sec Output
+
+At the end of the program:
+
+  - Parameters are written to <outputFileName>.prm
+
+  - Histogram of bond lengths is output to <outputFileName>.dat as column of numbers.
+
+A Util::Histogram accumulator is used internally for the calculation, and the output format is determined by the Util::Histogram::output() function.
+
+*/
+
+}

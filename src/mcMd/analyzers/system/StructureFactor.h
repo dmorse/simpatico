@@ -35,10 +35,10 @@ namespace McMd
    * \f[
    *     \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i )
    * \f]
-   * in which the sum is taken over all particles, $a$ is the atom type 
-   * of particle $i$, and $v(m, a)$ is a coefficient for atom type $a$
-   * for mode $m$. The matrix $v(m, a)$ of mode coefficients is input
-   * by the user. 
+   * in which the sum is taken over all particles, a is the atom type 
+   * of particle i, and v(m, a) is a coefficient for atom type a for
+   * mode m. The matrix v(m, a) of mode coefficients is input by the
+   * user. 
    *
    * This class can evaluate one or modes for multiple wavevectors.
    * The input format thus requires the user to specify one or more 
@@ -48,31 +48,7 @@ namespace McMd
    * an expansion of a reciprocal lattice wavevector as a sum of
    * recprocal lattice basis vectors for the periodic unit cell.
    *
-   * In a system with nAtomType = 2, with two monomer types 0 and 1,
-   * the parameter file input for calculating the density and
-   * composition modes for 5 wavevectors along the x axis in an 
-   * orthorhombic unit cell might look like this:
-   *
-   * \code
-   * StructureFactor{
-   *    interval                      1000
-   *    outputFileName    StructureFactor
-   *    nMode                            1
-   *    modes                     1      1
-   *                              0     -1
-   *    nWave                            5
-   *    waveIntVectors     8      0      0
-   *                       9      0      0 
-   *                      10      0      0 
-   *                      11      0      0 
-   *                      12      0      0 
-   * }
-   * \endcode
-   * At the end of a simulation, all of the structure factors are
-   * output in a file with a suffix *.dat. Each line in this file
-   * contains the 3 Miller indices of a wavevector, the absolute
-   * magnitude of the wavevector, and a list of structure factor
-   * values for the wavevector, one for each mode.
+   * See also: \ref mcMd_analyzer_StructureFactor_page 
    * 
    * \ingroup McMd_Analyzer_Module
    */

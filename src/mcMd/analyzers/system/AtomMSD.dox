@@ -1,0 +1,56 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_AtomMSD_page  AtomMSD
+
+\section mcMd_analyzer_AtomMSD_overview_sec Synopsis
+
+This analyzer calculates the mean-squared-displacement vs. time for atoms
+that occupy a specific site within molecules of a specific species. It 
+properly takes into account the effects of periodic boundary conditions 
+so as to construct continuous trajectories for these atoms.
+
+\section mcMd_analyzer_AtomMSD_param_sec Parameters
+The parameter file format is:
+\code
+   AtomMSD{
+     interval           int
+     outputFileName     string
+     speciesId          int
+     atomid             int
+     capacity           int
+   }
+\endcode
+with parameters:
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>speciesId</td>
+     <td> integer index of molecule species</td>
+  </tr>
+  <tr> 
+     <td>atomId</td>
+     <td>integer index of atom within molecule </td>
+  </tr>
+  <tr> 
+     <td>capacity</td>
+     <td>number of samples in history</td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_AtomMSD_out_sec Output
+
+The MSD vs. time is output to a file <outputFileName>.dat. 
+
+Parameters are echoed to <outputFileName>.prm
+
+*/
+
+}

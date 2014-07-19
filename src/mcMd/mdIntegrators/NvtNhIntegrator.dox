@@ -1,0 +1,61 @@
+namespace McMd
+{
+
+/*! \page mcMd_integrator_NvtNhIntegrator_page NvtNhIntegrator
+
+\section mcMd_integrator_NvtNhIntegrator_overview_sec Synopsis
+
+NvtNhIntegrator implements a reversible Nose'-Hoover NVT 
+(isothermal) integrator.
+
+This integrator requires that the Util::EnergyEnsemble of the 
+associated system must be set to "isothermal". The target 
+temperature is the temperature returned by the function
+Util::EnergyEnsemble::temperature().
+
+Equations of motion:
+\f{eqnarray*}
+   \frac{d{\bf v}_{i}}{dt} & = & \frac{1}{m} {\bf f}_{i} - \xi {\bf v}_{i} \\
+   \frac{d\xi}{dt}         & = & \frac{1}{ \tau_{T}^{2} }
+                           \left(  \frac{T_{K}}{T_{0}} - 1 \right )
+\f}
+in which:
+
+   - \f${\bf v}_{i}\f$ is the velocity of particle i
+
+   - \f${\bf v}_{i}\f$ is the force on particle i
+
+   - \f$T_{K} = 2K/3N\f$ is the instantaneous kinetic temperature, where
+     \f$K\f$ is the instantaneous kinetic energy and \f$N\f$ is the total
+     number of atoms.
+
+   - \f$T_{0}\f$ is the target temperature
+
+   - \f$\tau_{T}\f$ is a user-defined relaxation time parameter
+
+\sa McMd::NvtNhIntegrator
+\sa Util::EnergyEnsemble
+
+\section mcMd_integrator_NvtNhIntegrator_param_sec Parameters
+The parameter file format is:
+\code
+   NvtNhIntegrator{ 
+     dt                 double
+     tauT               double 
+   }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td> dt </td>
+     <td> time step </td>
+  </tr>
+  <tr> 
+     <td> tauT</td>
+     <td> relaxation time parameter </td>
+  </tr>
+</table>
+
+*/
+
+}

@@ -10,7 +10,7 @@ a pair of nonbonded particles separated by a distance \f$r\f$ is
 given by
 \f[
    V(r) = \frac{\epsilon}{2} 
-          \left ( 1 - \frac{ r^{2}}{\sigma^{2}} \right )
+          \left ( 1 - \frac{ r}{\sigma} \right )^{2}
 \f]
 for all \f$ r < \sigma \f$, and \f$V(r) = 0\f$ for all 
 \f$ r > \sigma \f$. The cutoff for this potential is thus equal

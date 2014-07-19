@@ -1,0 +1,51 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_McExternalEnergyAverage_page  McExternalEnergyAverage
+
+\section mcMd_analyzer_McExternalEnergyAverage_synopsis_sec Synopsis
+
+This analyzer computes the average of the total covalent bond energy, and 
+optionally outputs block averages.
+
+\section mcMd_analyzer_McExternalEnergyAverage_param_sec Parameters
+The parameter file format is:
+\code
+  McExternalEnergyAverage{
+    interval           int
+    outputFileName     string
+    nSamplePerBlock    int
+  }
+\endcode
+in which
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td>nSamplePerBlock</td>
+     <td>number of samples per block average</td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_McExternalEnergyAverage_output_sec Output
+
+During the simulation, if nSamplePerBlock > 0, block averages are output 
+to the file <outputFileName>.dat every interval*nSamplePerBlock. Every
+block average is an average of nSamplePerBlock data values, in which 
+values are calculated every interval time steps.
+
+At the end of the simulation:
+
+  - parameters are echoed to file <outputFileName>.prm 
+
+  - average and error analysis info are output to <outputFileName>.ave
+
+*/
+
+}

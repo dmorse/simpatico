@@ -1,0 +1,12 @@
+This directory contains source files for a manual that is constructed 
+using the doxygen documentation utility. The file extension *.dox is 
+used for such files.
+
+Subdirectories:
+
+  about/      - "About" section
+  user/       - "User Guide" section
+  source/     - "Source Code Overview" section
+  extend/     - "Extending Simpatico" section
+  developer/  - "Developer Information" section
+
