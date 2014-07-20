@@ -53,13 +53,13 @@ namespace McMd
       in >> boundary() ;
 
       // Get molecules and read atomic positions
-      Label     speciesLabel("species");
-      Label     nMoleculeLabel("nMolecule");
-      Label     moleculeLabel("molecule");
-      Species*  speciesPtr;
+      Label speciesLabel("species");
+      Label nMoleculeLabel("nMolecule");
+      Label moleculeLabel("molecule");
+      Species* speciesPtr;
       Molecule* molPtr;
       Molecule::AtomIterator atomIter;
-      int       iSpecies, iSpeciesIn, nMolecule, iMol, iMolIn;
+      int iSpecies, iSpeciesIn, nMolecule, iMol, iMolIn;
 
       in >> Label("MOLECULES");
       for (iSpecies = 0; iSpecies < simulation().nSpecies(); ++iSpecies) {
@@ -194,7 +194,7 @@ namespace McMd
       System::ConstMoleculeIterator molIter;
       Molecule::ConstAtomIterator   atomIter;
       Species* speciesPtr;
-      int   iSpecies, iMolecule;
+      int iSpecies, iMolecule;
       out << endl << "MOLECULES" << endl;
       for (iSpecies = 0; iSpecies < simulation().nSpecies(); ++iSpecies) {
          out << endl;

@@ -3,7 +3,7 @@ namespace Inter
 
    using namespace Util;
 
-/*! \page Inter_NS_page 4.4 Inter namespace
+/*! \page Inter_NS_page 3.4 Inter namespace
 
 \ref Util_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref McMd_NS_page (Next) 

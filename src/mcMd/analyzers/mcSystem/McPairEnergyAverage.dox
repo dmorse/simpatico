@@ -5,9 +5,7 @@ namespace McMd
 
 \section mcMd_analyzer_McPairEnergyAverage_synopsis_sec Synopsis
 
-This analyzer computes an average nonbonded pair energy.
-
-If nSamplePerBlock > 0, it outputs block average values every interval*nSamplePerBlock time steps. Each block average is an average of nSamplePerBlock values.
+This analyzer computes an average nonbonded pair energy, and optionally outputs block averages during the simulation.
 
 \sa McMd::McPairEnergyAverage
 \sa McMd::PairSelector.
@@ -15,10 +13,12 @@ If nSamplePerBlock > 0, it outputs block average values every interval*nSamplePe
 \section mcMd_analyzer_McPairEnergyAverage_param_sec Parameters
 The parameter file format is:
 \code
-   interval           int
-   outputFileName     string
-   nSamplePerBlock    int
-   selector           McMd::PairSelector
+  McPairEnergyAverage{
+    interval           int
+    outputFileName     string
+    nSamplePerBlock    int
+    selector           McMd::PairSelector
+  }
 \endcode
 in which
 <table>
@@ -46,11 +46,15 @@ in which
 
 \section mcMd_analyzer_McPairEnergyAverage_output_sec Output
 
-During the simulation, if nSamplePerBlock > 0, block averages are output to the file 
-<outputFileName>.dat.
+During the simulation, if nSamplePerBlock > 0, block averages are output to 
+the file <outputFileName>.dat. If nSamplePerBlock == 0, this file is not 
+created.
 
-At the end of the simulation, parameters are echoed to file <outputFileName>.prm and
-final results for average and error analysis output to <outputFileName>.ave.
+At the end of the simulation:
+
+  - parameters are echoed to file <outputFileName>.prm 
+
+  - the average and error analysis info are output to <outputFileName>.ave
 
 */
 

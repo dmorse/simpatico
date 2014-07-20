@@ -5,11 +5,7 @@ namespace McMd
 
 \section mcMd_analyzer_IntraStructureFactor_overview_sec Synopsis
 
-This analyzer calculates ..
-
-If nSamplePerBlock != 0, a time sequence of block average values 
-of these quantities will be output to a file <outputFileName>.dat 
-during the simulation. 
+This analyzer calculates partial structure factor for a specified species of molecule, for a specific set of pairs of atom types. See class documentation for a precise definition, and explanation of conventions for atom type indices.
 
 \sa McMd::IntraStructureFactor
 
@@ -47,7 +43,8 @@ in which
   <tr> 
      <td> atomTypeIdPairs</td>
      <td> Array in which each element is pair of atom types for which the 
-          structure factor should be calculated.  </td>
+          structure factor should be calculated. Negative values of the
+          type id can be used to indicate a sum over all atom types. </td>
   </tr>
   <tr> 
      <td>  nWave </td>
@@ -62,7 +59,11 @@ in which
 
 \section mcMd_analyzer_IntraStructureFactor_out_sec Output Files
 
-Final values are output to <outputFileName>.dat.
+At the end of the simulation:
+
+- Parameters are echoed to <outputFileName>.prm
+
+- Final values are output to <outputFileName>.dat.
 
 */
 

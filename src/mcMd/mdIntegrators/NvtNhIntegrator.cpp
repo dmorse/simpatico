@@ -202,8 +202,8 @@ namespace McMd
 
       // Update xiDot and complete update of xi_
       T_kinetic_ = system().kineticEnergy()*2.0/double(3*nAtom);
-      xiDot_     = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
-      xi_       += xiDot_*dtHalf;
+      xiDot_ = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
+      xi_ += xiDot_*dtHalf;
 
    }
 

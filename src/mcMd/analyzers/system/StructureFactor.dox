@@ -5,13 +5,13 @@ namespace McMd
 
 \section mcMd_analyzer_StructureFactor_overview_sec Synopsis
 
-This analyzer calculates structure factors using a specified set
-of "mode" vectors, which define weighting factors for different
-atom types, and a specified set of reciprocal lattice wavevectors.
+This analyzer calculates structure factors using a specified set of 
+"mode" vectors, which define weighting factors for different atom 
+types, and a specified set of reciprocal lattice wavevectors.
 
-See the McMd::StructureFactor class documenation for a precise
-mathematical definition of the structure factor and of the
-notion of "modes". Also see the example input file below.
+See the McMd::StructureFactor class documentation for a precise 
+mathematical definition of the structure factor, and an explanation 
+of the notion of "modes". Also see the example input file below.
 
 \sa McMd::StructureFactor
 \sa Util::IntVector

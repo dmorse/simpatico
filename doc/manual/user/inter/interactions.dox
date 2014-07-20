@@ -1,10 +1,10 @@
-/*! \page features_inter_page 3.1 Interactions (for all programs)
+/*! \page user_features_inter_page 2.8.1 Potential Energies (Interactions)
 
-\ref features_page      (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
-\ref features_mcMd_page (Next)
+\ref user_features_page      (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_ddSim_page (Next)
 <BR>
 
-The potential energy used by a Simpatico simulation may contain:
+The potential energy used by any Simpatico simulation may contain:
 
  - a non-bonded pair interaction
 
@@ -54,7 +54,7 @@ Specific functional forms for each type of interaction implemented by "interacti
 </ul>
  
 <BR>
-\ref features_page (Prev / Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref features_mcMd_page (Next)
+\ref user_features_page (Prev / Up) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_features_ddSim_page (Next)
 
 */

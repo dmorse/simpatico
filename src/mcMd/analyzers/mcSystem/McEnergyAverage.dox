@@ -5,18 +5,18 @@ namespace McMd
 
 \section mcMd_analyzer_McEnergyAverage_synopsis_sec Synopsis
 
-This analyzer computes the average of the total potential energy.
-
-If nSamplePerBlock > 0, it outputs block average values every interval*nSamplePerBlock time steps. Each block average is an average of nSamplePerBlock values.
+This analyzer computes the average of the total potential energy, and optionally outputs block averages during the simulation, if nSamplePerBlock > 0.
 
 \sa McMd::McEnergyAverage
 
 \section mcMd_analyzer_McEnergyAverage_param_sec Parameters
 The parameter file format is:
 \code
-   interval           int
-   outputFileName     string
-   nSamplePerBlock    int
+  McEnergyAverage{
+    interval           int
+    outputFileName     string
+    nSamplePerBlock    int
+  }
 \endcode
 with parameters
 <table>
@@ -36,11 +36,15 @@ with parameters
 
 \section mcMd_analyzer_McEnergyAverage_output_sec Output
 
-During the simulation, if nSamplePerBlock > 0, block averages are output to the file 
-<outputFileName>.dat.
+During the simulation, if nSamplePerBlock > 0, block averages are output to 
+the file <outputFileName>.dat. If nSamplePerBlock == 0, this file is not 
+created.
 
-At the end of the simulation, parameters are echoed to file <outputFileName>.prm and
-final results for average and error analysis output to <outputFileName>.ave.
+At the end of the simulation:
+
+ - parameters are echoed to file <outputFileName>.prm 
+
+ - the average value and error analysis info are output to <outputFileName>.ave.
 
 */
 

@@ -1,0 +1,50 @@
+namespace DdMd
+{
+
+/*! \page ddMd_integrator_NptIntegrator_page NptIntegrator
+
+\section ddMd_integrator_NptIntegrator_overview_sec Synopsis
+
+NptIntegrator implements a reversible NPT (constant pressure, constant
+pressure) integrator. See class documentation for further details, an
+explanation of modes of operation, and a literature reference.
+
+\sa DdMd::NptIntegrator
+
+\section ddMd_integrator_NptIntegrator_param_sec Parameters
+
+The parameter file format is:
+\code
+  NptIntegrator{ 
+    dt                 double
+    tauT               double
+    tauP               double
+    mode               Util::LatticeSystem
+  }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> dt </td>
+     <td> time step </td>
+  </tr>
+  <tr> 
+     <td> tauT </td>
+     <td> relaxation time for temperature </td>
+  </tr>
+  <tr> 
+     <td> tauP </td>
+     <td> relaxation time for pressure </td>
+  </tr>
+  <tr> 
+     <td> mode </td>
+     <td> Determines number of independent dimensions. Can take values
+          "Cubic", "Tetragonal" or "Orthorhombic". </td>
+  </tr>
+</table>
+See the DdMd::NptIntegrator class documentation for further discussion
+of the mode parameter.
+
+*/
+
+}

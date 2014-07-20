@@ -6,10 +6,10 @@ namespace McMd
 \section mcMd_analyzer_BondLengthDist_synopsis_sec Synopsis
 
 This analyzer accumulates a histogram of the lengths of all bonds in
-a specified molecular species.
+a specified molecular species. 
 
-The resulting histogram is output to <outputFileName>.dat at the end 
-of the simulation.
+\sa McMd::BondLengthDist
+\sa Util::Histogram
 
 \section mcMd_analyzer_BondLengthDist_param_sec Parameters
 The parameter file format is:
@@ -52,6 +52,14 @@ in which
 </table>
 
 \section mcMd_analyzer_BondLengthDist_output_sec Output
+
+At the end of the program:
+
+  - Parameters are written to <outputFileName>.prm
+
+  - Histogram of bond lengths is output to <outputFileName>.dat as column of numbers.
+
+A Util::Histogram accumulator is used internally for the calculation, and the output format is determined by the Util::Histogram::output() function.
 
 */
 

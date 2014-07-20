@@ -18,7 +18,11 @@ namespace McMd
 
 
    /**
-   * Autocorrelation for bond stress of a molecule.
+   * Autocorrelation for bond orientation of of a molecule. 
+   *
+   * See class template IntraBondTensorAutoCorr for further information.
+   *
+   * \sa McMd::IntraBondTensorAutoCorr
    *
    * \ingroup McMd_Analyzer_Module
    */

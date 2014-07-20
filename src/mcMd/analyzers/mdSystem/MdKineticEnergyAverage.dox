@@ -13,11 +13,13 @@ outputs block averages over the course of the simulation. If nSamplePerBlock > 0
 \section mcMd_analyzer_MdKineticEnergyAverage_param_sec Parameters
 The parameter file format is:
 \code
-   interval           int
-   outputFileName     string
-   nSamplePerBlock    int
+  MdKineticEnergyAverage{
+    interval           int
+    outputFileName     string
+    nSamplePerBlock    int
+  } 
 \endcode
-in which
+with parameters
 <table>
   <tr> 
      <td>interval</td>
@@ -29,17 +31,24 @@ in which
   </tr>
   <tr> 
      <td>nSamplePerBlock</td>
-     <td>number of data samples per block average, if nSamplePerBlock > 0.</td>
+     <td>number of data samples per block average, if nSamplePerBlock > 0.
+         If nSamplePerBlock == 0, no block averages are output.
+     </td>
   </tr>
 </table>
 
 \section mcMd_analyzer_MdKineticEnergyAverage_output_sec Output
 
-During the simulation, if nSamplePerBlock > 0, block averages of the kinetic energy 
-are output to <outputFileName>.dat every nSamplePerBlock*interval time steps.
+During the simulation, if nSamplePerBlock > 0, block averages of the kinetic 
+energy are output to <outputFileName>.dat every nSamplePerBlock*interval 
+time steps.
 
-At the end of the simulation, parameters are echoed to file <outputFileName>.prm and 
-the average kinetic energy is output to <outputFileName>.ave
+At the end of the simulation:
+
+  - parameters are echoed to file <outputFileName>.prm 
+
+  - the average kinetic energy and information about error analysis 
+    is output to <outputFileName>.ave
 
 */
 

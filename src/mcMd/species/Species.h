@@ -104,14 +104,14 @@ namespace McMd
       static const int MaxDihedralPerAtom = 72;
 
       /// A SpeciesBond has the local atom ids and a type id for one bond.
-      typedef SpeciesGroup<2>               SpeciesBond;
+      typedef SpeciesGroup<2> SpeciesBond;
 
       /// Array of pointers to Bond objects that contain a specific Atom.
       typedef FSArray<const Bond*, MaxBondPerAtom> AtomBondArray;
 
       #ifdef INTER_ANGLE
       /// A SpeciesAngle has the local atom ids and a type id for an angle.
-      typedef SpeciesGroup<3>               SpeciesAngle;
+      typedef SpeciesGroup<3> SpeciesAngle;
 
       /// Array of pointers to Angle objects that contain a specific Atom.
       typedef FSArray<const Angle*, MaxAnglePerAtom> AtomAngleArray;
@@ -119,14 +119,14 @@ namespace McMd
 
       #ifdef INTER_DIHEDRAL
       /// A SpeciesDihedral has the local atom ids and a type id for an angle.
-      typedef SpeciesGroup<4>               SpeciesDihedral;
+      typedef SpeciesGroup<4> SpeciesDihedral;
 
       /// Array of pointers to Angle objects that contain a specific Atom.
       typedef FSArray<const Dihedral*, MaxDihedralPerAtom> AtomDihedralArray;
       #endif
 
       /// A stack of unused Molecule objects available for this Species.
-      typedef ArrayStack<Molecule>          Reservoir;
+      typedef ArrayStack<Molecule> Reservoir;
 
       /**
       * Constructor.
@@ -587,26 +587,26 @@ namespace McMd
    * Get the reservoir for this Species by reference.
    */
    inline Species::Reservoir& Species::reservoir()
-   { return reservoir_; }
+   {  return reservoir_; }
 
    /*
    * Get number of Atoms per Molecule.
    */
    inline int Species::nAtom() const
-   { return nAtom_; }
+   {  return nAtom_; }
 
    /*
    * Get number of Bonds per Molecule
    */
    inline int Species::nBond() const
-   { return nBond_; }
+   {  return nBond_; }
 
    #ifdef INTER_ANGLE
    /*
    * Get number of angles per Molecule
    */
    inline int Species::nAngle() const
-   { return nAngle_; }
+   {  return nAngle_; }
    #endif
 
    #ifdef INTER_DIHEDRAL
@@ -614,27 +614,27 @@ namespace McMd
    * Get number of dihedrals per Molecule
    */
    inline int Species::nDihedral() const
-   { return nDihedral_; }
+   {  return nDihedral_; }
    #endif
 
    /*
    * Get type index for atom number iAtom.
    */
    inline int Species::atomTypeId(int iAtom) const
-   { return atomTypeIds_[iAtom]; }
+   {  return atomTypeIds_[iAtom]; }
 
    /*
    * Get a specific SpeciesBond object by local index.
    */
    inline const Species::SpeciesBond& Species::speciesBond(int iBond) const
-   { return speciesBonds_[iBond]; }
+   {  return speciesBonds_[iBond]; }
 
    #ifdef INTER_ANGLE
    /*
    * Get a specific SpeciesAngle object by local index.
    */
    inline const Species::SpeciesAngle& Species::speciesAngle(int iAngle) const
-   { return speciesAngles_[iAngle]; }
+   {  return speciesAngles_[iAngle]; }
    #endif
 
    #ifdef INTER_DIHEDRAL
@@ -642,7 +642,7 @@ namespace McMd
    * Get a specific SpeciesDihedral object by local index.
    */
    inline const Species::SpeciesDihedral& Species::speciesDihedral(int iDihedral) const
-   { return speciesDihedrals_[iDihedral]; }
+   {  return speciesDihedrals_[iDihedral]; }
    #endif
 
    /*
