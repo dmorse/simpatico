@@ -1,0 +1,89 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_VanHove_page VanHove
+
+\section ddMd_analyzer_VanHove_overview_sec Synopsis
+
+This analyzer calculates a Van Hove function S(q,t) for a specified
+set of wavevectors. The van Hove function for each wavevector q is
+defined as an autocorrelation function for a Fourier amplitude that
+is defined using a mode vector, by assigning a weight coefficient 
+to each atom type, as in the StructurFactor diagnostic. The array 
+of atomTypeCoeffs parameters used here is equivalent to the "mode"
+arrays defined in StructureFactor class. See the class definition
+See the DdMd::VanHove class documentation for a precise definition
+of S(q,t).
+
+\sa DdMd::VanHove
+\sa Util::IntVector
+
+\section ddMd_analyzer_VanHove_param_sec Parameters
+The parameter file format is:
+\code
+   VanHove{ 
+      interval           int
+      outputFileName     string
+      atomTypeCoeffs     Array<double> [nAtomType]
+      nBuffer            int
+      nWave              int
+      waveIntVectors     Array<IntVector> [nWave]
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> atomTypeCoeffs </td>
+     <td> Each row is a vector of dimension nAtomType, which specifies
+          a set of weight factors for different atom types in the
+          calcultation of Fourier amplitudes. </td>
+  </tr>
+  <tr> 
+     <td> nBuffer </td>
+     <td> number of time separation values. </td>
+  </tr>
+  <tr> 
+     <td> nWave </td>
+     <td> number of reciprocal lattice wavevectors. </td>
+  </tr>
+  <tr> 
+     <td> waves </td>
+     <td> array of reciprocal lattice vectors, each specified on a 
+          separate line by 3 integer indices (Miller indices) </td>
+  </tr>
+</table>
+
+\section ddMd_analyzer_VanHove_example_sec Example
+
+Consider a system with nAtomType = 2, with two monomer types 0 and 1. The correlation function for the composition, defined as a difference between the A and B monomer concentrations, can be calculated using the mode vector (1,-1). A parameter file input for calculating S(q,t) for the composition mode for 5 wavevectors along the x axis in a cubic or orthorhombic unit cell might look like this:
+\code
+VanHove{
+   interval                      1000
+   outputFileName             VanHove
+   nBuffer                        100
+   atomTypeCoeffs            1     -1
+   nWave                            5
+   waveIntVectors     8      0      0
+                      9      0      0 
+                     10      0      0 
+                     11      0      0 
+                     12      0      0 
+}
+\endcode
+
+
+\section ddMd_analyzer_VanHove_out_sec Output Files
+
+At the end of a simulation, all of the structure factors are output in a file <outputFileName>.dat. Results for different wavevectors are listed consecutively in blocks. Each block begins with the integer indices (Miller indices) for the associated wavevector. 
+
+*/
+
+}

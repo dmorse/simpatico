@@ -1,0 +1,43 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_OutputPressure_page  OutputPressure
+
+\section ddMd_analyzer_OutputPressure_synopsis_sec Synopsis
+
+This analyzer outputs instantaneous values of scalar pressure to file.
+
+\sa DdMd::OutputPressure
+
+\section ddMd_analyzer_OutputPressure_param_sec Parameters
+
+The parameter file format is:
+\code
+  OutputPressure{
+    interval           int
+    outputFileName     string
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+</table>
+
+\section ddMd_analyzer_OutputPressure_output_sec Output
+
+Values of the kinetic, virial and total pressure are output to <outputFileName>.dat every interval steps. The output format is:
+
+  iStep  kinetic  virial  total
+
+where iStep is the MD step index, and kinetic, virial and total refer to kinetic, virial and total pressure.
+
+*/
+
+}
