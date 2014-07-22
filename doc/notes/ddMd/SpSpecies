@@ -1,0 +1,29 @@
+Classes for keeping track of molecules and atoms within molecules 
+in the single-processor analysis framework.
+
+SpSpecies (or data could be held by Simulation)
+
+   capacity = maximum # of molecules
+   size     = number of molecules
+   nAtom    = number of atoms per molecule
+
+   array of molecule objects (independently allocated by each Species)
+
+   array of Atom* pointers? (memory pool for pointers)
+
+SpMolecule:
+
+   pointer to SpSpecies
+
+   pointer to array of SpAtom objects, indexed by atom id.
+
+   -> Allocate a pool of space for Atom* pointers for each species, and 
+      have each molecule point to a sub-block.
+
+   Groups (deal with this later):
+
+   could later add pointers to array of group objects
+
+   Might be helpful to have local group ids. Or we could place a 
+   constraint on the ordering of existing group ids.
+
