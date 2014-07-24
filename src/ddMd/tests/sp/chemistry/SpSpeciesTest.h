@@ -35,18 +35,22 @@ inline void SpSpeciesTest::testAddAtoms()
 {
    printMethod(TEST_FUNC);
 
-   species_.initialize(2, 3); 
-   species_.setId(3);
-   TEST_ASSERT(species_.nAtom() == 2);
-   TEST_ASSERT(species_.capacity() == 3);
+   int nAtom = 2;
+   int capacity = 3;
+   int speciesId = 4;
+
+   species_.initialize(nAtom, capacity); 
+   species_.setId(speciesId);
+   TEST_ASSERT(species_.nAtom() == nAtom);
+   TEST_ASSERT(species_.capacity() == capacity);
 
    DArray<SpAtom> atoms;
-   atoms.allocate(6);
+   atoms.allocate(nAtom*capacity);
    int i, j, k;
    k = 0;
    for (i=0; i < species_.capacity(); ++i) {
       for (j=0; j < species_.nAtom(); ++j) {
-         atoms[k].speciesId  = 3;
+         atoms[k].speciesId  = speciesId;
          atoms[k].moleculeId = i;
          atoms[k].atomId = j;
          ++k;
@@ -60,17 +64,17 @@ inline void SpSpeciesTest::testAddAtoms()
    TEST_ASSERT(species_.isValid());
 
    SpSpecies::SpMoleculeIterator iter;
-   species_.begin(iter);
    i = 0;
-   for ( ; iter.notEnd(); ++iter) {
+   for (species_.begin(iter) ; iter.notEnd(); ++iter) {
       TEST_ASSERT(iter->id() == i);
       for (j = 0; j < species_.nAtom(); ++j) {
          TEST_ASSERT(iter->atom(j).atomId == j);
          TEST_ASSERT(iter->atom(j).moleculeId == i);
-         TEST_ASSERT(iter->atom(j).speciesId == 3);
+         TEST_ASSERT(iter->atom(j).speciesId == speciesId);
       }
       ++i;
    }
+   TEST_ASSERT(i == species_.size());
 
    species_.clear();
    TEST_ASSERT(species_.size() == 0);
