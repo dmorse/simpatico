@@ -4,13 +4,17 @@
 \ref user_restart_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
 <BR>
 
-Click on any of the links below for information about parameter
-file formats for classes that implement data analysis (analyzer) 
-algorithms that can be used with the mcSim Monte Carlo program.
+Click on any of the links below for user information about classes
+that implement data analysis (analyzer) algorithms that can be used 
+with the mcSim Monte Carlo program.
 
-Similar documentation of the Monte Carlo Move (McMd::McMove) 
-classes is coming soon, but class documentation is available
-through the McMoves modules.
+Similar user documentation of the Monte Carlo Move (McMd::McMove) 
+classes is coming soon. For now, the only documentation is the doxygen
+API documentation for individual classes, which is accessible through 
+the \ref McMd_McMove_Module module.
+
+\sa McMd_Analyzer_Module
+\sa McMd_McMove_Module
 
 <h2> Analyzers: </h2>
 <ul style="list-style: none;">

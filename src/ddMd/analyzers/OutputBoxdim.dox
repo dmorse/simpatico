@@ -1,0 +1,44 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_OutputBoxdim_page  OutputBoxdim
+
+\section ddMd_analyzer_OutputBoxdim_synopsis_sec Synopsis
+
+This analyzer periodically outputs the lengths and volume of the simulation unit cell, for use with constant pressure simulations.
+
+\sa DdMd::OutputBoxdim
+
+\section ddMd_analyzer_OutputBoxdim_param_sec Parameters
+
+The parameter file format is:
+\code
+  OutputBoxdim{
+    interval           int
+    outputFileName     string
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+</table>
+
+\section ddMd_analyzer_OutputBoxdim_output_sec Output
+
+The dimensions of the box are periodically output to file <outputFileName>.dat. Each line in this file represents a set of instantaneous values. The format of each line is:
+
+   iStep  L[0]  L[1]  L[2]   V
+
+where the vector L is the value returned by Util::Boundary::lengths() and
+V is the volume, as returned by Util::Boundary::volume().
+
+*/
+
+}

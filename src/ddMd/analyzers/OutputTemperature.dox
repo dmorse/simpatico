@@ -1,0 +1,43 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_OutputTemperature_page  OutputTemperature
+
+\section ddMd_analyzer_OutputTemperature_synopsis_sec Synopsis
+
+This analyzer outputs instantaneous values of the kinetic temperature to file. The kinetic temperature is 2*K/3N, where K is total kinetic energy and N is total number of atoms.
+
+\sa DdMd::OutputTemperature
+
+\section ddMd_analyzer_OutputTemperature_param_sec Parameters
+
+The parameter file format is:
+\code
+  OutputTemperature{
+    interval           int
+    outputFileName     string
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+</table>
+
+\section ddMd_analyzer_OutputTemperature_output_sec Output
+
+A values of the kinetic temperature is output to <outputFileName>.dat every interval time steps. The output format for each line is:
+
+  iStep  temperature
+
+where iStep is the MD step index.
+
+*/
+
+}
