@@ -88,7 +88,7 @@ namespace DdMd
       for (int i = 0; i < atomPtrs_.capacity(); ++i) {
          atomPtrs_[i] = 0;
       }
-      for (int i = 0; i < size_; ++i) {
+      for (int i = 0; i < molecules_.size(); ++i) {
          molecules_[i].nAtom_ = 0;
       }
       molecules_.resize(0);
