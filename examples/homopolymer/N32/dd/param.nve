@@ -56,14 +56,14 @@ Simulation{
   AnalyzerManager{
      baseInterval     1000
 
+     LogEnergy{
+        interval        1000
+     }
+
   }
 }
 
     cutoff            2.5
-
-     LogEnergy{
-        interval        1000
-     }
 
     saveInterval       4000
     saveFileName    restart

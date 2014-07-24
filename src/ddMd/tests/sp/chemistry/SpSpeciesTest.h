@@ -84,48 +84,55 @@ inline void SpSpeciesTest::testRead()
 {
    printMethod(TEST_FUNC);
 
+   int nAtom = 2;
+   int capacity = 3;
+   int speciesId = 4;
+
    std::ifstream in;
    openInputFile("in/Species", in);
    in >> species_;
-   species_.setId(3);
-   TEST_ASSERT(species_.nAtom() == 2);
-   TEST_ASSERT(species_.capacity() == 3);
+   species_.setId(speciesId);
+   TEST_ASSERT(species_.nAtom() == nAtom);
+   TEST_ASSERT(species_.capacity() == capacity);
    std::cout << species_;
 
    DArray<SpAtom> atoms;
-   atoms.allocate(6);
+   atoms.allocate(nAtom*capacity);
    int i, j, k;
    k = 0;
    for (i=0; i < species_.capacity(); ++i) {
       for (j=0; j < species_.nAtom(); ++j) {
-         atoms[k].speciesId  = 3;
+         atoms[k].speciesId  = speciesId;
          atoms[k].moleculeId = i;
          atoms[k].atomId = j;
          ++k;
       }
    }
+
    species_.addAtom(atoms[0]);
    species_.addAtom(atoms[3]);
    species_.addAtom(atoms[2]);
    species_.addAtom(atoms[1]);
    TEST_ASSERT(species_.size() == 2);
+   TEST_ASSERT(species_.id() == speciesId);
    TEST_ASSERT(species_.isValid());
 
    SpSpecies::SpMoleculeIterator iter;
-   species_.begin(iter);
    i = 0;
-   for ( ; iter.notEnd(); ++iter) {
+   for (species_.begin(iter); iter.notEnd(); ++iter) {
       TEST_ASSERT(iter->id() == i);
       for (j = 0; j < species_.nAtom(); ++j) {
          TEST_ASSERT(iter->atom(j).atomId == j);
          TEST_ASSERT(iter->atom(j).moleculeId == i);
-         TEST_ASSERT(iter->atom(j).speciesId == 3);
+         TEST_ASSERT(iter->atom(j).speciesId == speciesId);
       }
       ++i;
    }
+   TEST_ASSERT(i == species_.size());
 
    species_.clear();
    TEST_ASSERT(species_.size() == 0);
+   TEST_ASSERT(species_.id() == speciesId);
 }
 
 
