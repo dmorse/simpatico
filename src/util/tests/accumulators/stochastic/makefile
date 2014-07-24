@@ -9,18 +9,18 @@ include $(SRC_DIR)/util/sources.mk
 include sources.mk
 
 all: $(tests_util_accumulators_stochastic_OBJS)
-	cd autocorr; make all
-	cd average;  make all
-	cd averageStage; make all
-	cd meanSqDisp; make all
-	cd random; make all
+	cd autocorr; $(MAKE) all
+	cd average;  $(MAKE) all
+	cd averageStage; $(MAKE) all
+	cd meanSqDisp; $(MAKE) all
+	cd random; $(MAKE) all
 
 clean:
-	cd autocorr; make clean
-	cd average;  make clean
-	cd averageStage; make clean
-	cd meanSqDisp; make clean
-	cd random; make clean
+	cd autocorr; $(MAKE) clean
+	cd average;  $(MAKE) clean
+	cd averageStage; $(MAKE) clean
+	cd meanSqDisp; $(MAKE) clean
+	cd random; $(MAKE) clean
 	rm -f $(tests_util_accumulators_stochastic_OBJS) $(tests_util_accumulators_stochastic_OBJS:.o=.d)
 
 clean-deps:

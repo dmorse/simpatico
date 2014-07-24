@@ -9,29 +9,29 @@ include src/config.mk
 # Main build targets
 
 all:
-	cd bld/serial; make mcMd
-	cd bld/parallel; make ddMd
-	cd bld/parallel; make mcMd-mpi
+	cd bld/serial; $(MAKE) mcMd
+	cd bld/parallel; $(MAKE) ddMd
+	cd bld/parallel; $(MAKE) mcMd-mpi
 
 # Build serial mcSim and mdSim MC and MD programs in bld/serial
 mcMd:
-	cd bld/serial; make mcMd
+	cd bld/serial; $(MAKE) mcMd
 
 # Build embarassingly parallel mcSim and mdSim programs in bld/parallel
 mcMd-mpi: 
-	cd bld/parallel; make mcMd-mpi
+	cd bld/parallel; $(MAKE) mcMd-mpi
 
 # Build parallel mdSim MD program in bld/parallel
 ddMd:
-	cd bld/parallel; make ddMd
+	cd bld/parallel; $(MAKE) ddMd
 
 # ==============================================================================
 # Test targets
 
 test-serial:
-	@cd bld/serial/util/tests; make all; make run
-	@cd bld/serial/inter/tests; make all; make run
-	@cd bld/serial/mcMd/tests; make all; make run
+	@cd bld/serial/util/tests; $(MAKE) all; $(MAKE) run
+	@cd bld/serial/inter/tests; $(MAKE) all; $(MAKE) run
+	@cd bld/serial/mcMd/tests; $(MAKE) all; $(MAKE) run
 	@cat bld/serial/util/tests/count > count
 	@cat bld/serial/inter/tests/count >> count
 	@cat bld/serial/mcMd/tests/count >> count
@@ -39,7 +39,7 @@ test-serial:
 	@rm -f count
 
 test-parallel:
-	cd bld/parallel/ddMd/tests; make all; make run
+	cd bld/parallel/ddMd/tests; $(MAKE) all; $(MAKE) run
 	@cat bld/parallel/ddMd/tests/count >> count
 	@cat count
 	@rm -f count
@@ -49,15 +49,15 @@ test-parallel:
 # Clean targets
 
 clean-serial:
-	cd bld/serial; make clean
+	cd bld/serial; $(MAKE) clean
 
 clean-parallel:
-	cd bld/parallel; make clean
+	cd bld/parallel; $(MAKE) clean
 
 clean:
-	cd src; make clean
-	cd bld/serial; make clean
-	cd bld/parallel; make clean
+	cd src; $(MAKE) clean
+	cd bld/serial; $(MAKE) clean
+	cd bld/parallel; $(MAKE) clean
 
 clean-bin:
 	-rm -f $(BIN_DIR)/mcSim*
@@ -65,21 +65,21 @@ clean-bin:
 	-rm -f $(BIN_DIR)/ddSim*
  
 veryclean:
-	cd bld/serial; make veryclean; rm -f makefile configure
+	cd bld/serial; $(MAKE) veryclean; rm -f makefile configure
 	cd bld/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile 
-	cd bld/parallel; make veryclean; rm -f makefile configure
+	cd bld/parallel; $(MAKE) veryclean; rm -f makefile configure
 	cd bld/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile 
-	cd doc; make clean
-	make clean-bin
-	cd src; make veryclean
+	cd doc; $(MAKE) clean
+	$(MAKE) clean-bin
+	cd src; $(MAKE) veryclean
 
 # =========================================================================
 # HTML Documentation
  
 html:
-	cd doc; make html
+	cd doc; $(MAKE) html
 
 clean-html:
-	cd doc; make clean
+	cd doc; $(MAKE) clean
 
 # ==============================================================================

@@ -34,24 +34,24 @@ $(DDSIM_EXE): $(DDSIM).o $(LIBS)
 	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o $(LIBS)
 
 ddSim:
-	make $(DDSIM_EXE)
+	$(MAKE) $(DDSIM_EXE)
 
 $(MDPP_EXE): $(MDPP).o $(LIBS)
 	$(CXX) $(LDFLAGS) -o $(MDPP_EXE) $(MDPP).o $(LIBS)
 
 mdPp:
-	make $(MDPP_EXE)
+	$(MAKE) $(MDPP_EXE)
 
 clean:
 	rm -f $(ddMd_OBJS) $(ddMd_OBJS:.o=.d) $(ddMd_LIB)
 	rm -f $(DDSIM).o $(DDSIM).d
 	rm -f $(MDPP).o $(MDPP).d
-	cd tests; make clean
+	cd tests; $(MAKE) clean
 	rm -f *.o */*.o */*/*.o
 	rm -f *.d */*.d */*/*.d
 
 veryclean:
-	make clean
+	$(MAKE) clean
 	rm -f lib*.a
 ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f configIos/ConfigIoFactory.cpp

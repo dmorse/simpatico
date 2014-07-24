@@ -11,7 +11,7 @@ clean:
 	rm -f $(util_tests_param_serial_OBJS) 
 	rm -f $(util_tests_param_serial_OBJS:.o=.d)
 	rm -f $(util_tests_param_serial_OBJS:.o=)
-	make clean-outputs
+	$(MAKE) clean-outputs
 
 clean-outputs:
 	rm -f out/*

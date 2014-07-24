@@ -16,7 +16,9 @@ namespace DdMd
 
    using namespace Util;
 
-   // Constructor.
+   /*
+   * Constructor.
+   */
    SpSpecies::SpSpecies()
     : atomPtrs_(),
       molecules_(),
@@ -26,14 +28,16 @@ namespace DdMd
    {}
 
    void SpSpecies::setId(int id)
-   {  id_ = id; }
+   { id_ = id; }
 
    void SpSpecies::initialize(int nAtom, int capacity)
    {
-      assert(molecules_.capacity() == 0);
-      assert(atomPtrs_.capacity() == 0);
-      assert(capacity_ == 0);
-      assert(nAtom_ == 0);
+      if (capacity_ != 0) {
+         UTIL_THROW("SpSpecies already initialized: capacity_ != 0");
+      }
+      if (nAtom_ != 0) {
+         UTIL_THROW("SpSpecies already initialized: nAtom_ != 0");
+      }
       nAtom_ = nAtom;
       capacity_ = capacity;
       initialize();
@@ -42,16 +46,17 @@ namespace DdMd
    void SpSpecies::initialize()
    {
       // Preconditions
-      if (molecules_.capacity() > 0) {
-         UTIL_THROW("Species already initialized");
+      if (molecules_.capacity() != 0) {
+         UTIL_THROW("SpSpecies::molecules_ already allocated");
       }
-      assert(molecules_.capacity() == 0);
-      assert(atomPtrs_.capacity() == 0);
+      if (atomPtrs_.capacity() != 0) {
+         UTIL_THROW("SpSpecies::atomPtrs_ already allocated");
+      }
       if (capacity_ <= 0) {
-         UTIL_THROW("Capacity <= 0: Value not set");
+         UTIL_THROW("SpSpecies::capacity_ <= 0: Value not set");
       }
       if (nAtom_ <= 0) {
-         UTIL_THROW("nAtom_ <= 0: Value not set");
+         UTIL_THROW("SpSpecies::nAtom_ <= 0: Value not set");
       }
 
       // Allocate and initialize atomPtrs_ array
@@ -62,16 +67,16 @@ namespace DdMd
 
       // Allocate and initialize molecules_ array
       molecules_.allocate(capacity_);
-      molecules_.resize(capacity_);
+      molecules_.resize(capacity_); // temporarily resize
       SpAtom** atomPtr = &atomPtrs_[0];
-      for (int i=0; i < capacity_; ++i) {
+      for (int i = 0; i < capacity_; ++i) {
          molecules_[i].atoms_ = atomPtr;
          molecules_[i].id_ = i;
          molecules_[i].nAtom_ = 0;
          molecules_[i].speciesPtr_ = this;
          atomPtr += nAtom_;
       }
-      molecules_.resize(0);
+      molecules_.resize(0); // reset size to zero
 
    }
 
@@ -80,10 +85,10 @@ namespace DdMd
    */
    void SpSpecies::clear()
    {
-      for (int i=0; i < atomPtrs_.capacity(); ++i) {
+      for (int i = 0; i < atomPtrs_.capacity(); ++i) {
          atomPtrs_[i] = 0;
       }
-      for (int i=0; i < capacity_; ++i) {
+      for (int i = 0; i < size_; ++i) {
          molecules_[i].nAtom_ = 0;
       }
       molecules_.resize(0);
@@ -111,7 +116,11 @@ namespace DdMd
       if (aId >= nAtom_) {
          UTIL_THROW("atom.atomId >= nAtom_");
       }
-      atomPtrs_[mId*nAtom_ + aId] = &atom;
+      int gid = mId*nAtom_ + aId; // "global" atom id, within species
+      if (atomPtrs_[gid] != 0) {
+         UTIL_THROW("Atom already present");
+      }
+      atomPtrs_[gid] = &atom;
       if (mId >= molecules_.size()) {
          molecules_.resize(mId+1);
       }
@@ -134,9 +143,6 @@ namespace DdMd
       int ia, im;
       for (im = 0; im < molecules_.size(); ++im) {
          mPtr = &(molecules_[im]);
-         if (mPtr->nAtom_ != nAtom_) {
-            UTIL_THROW("molecule nAtom != species nAtom");
-         }
          if (mPtr->atoms_ != &atomPtrs_[0] + im*nAtom_) {
             UTIL_THROW("Incorrect assignment of atoms_ in molecule");
          }
@@ -146,20 +152,31 @@ namespace DdMd
          if (mPtr->speciesPtr_ != this) {
             UTIL_THROW("Incorrect species pointer in molecule");
          }
-         for (ia = 0; ia < nAtom_; ++ia) {
-            aPtr = mPtr->atoms_[ia];
-            if (aPtr == 0) {
-               UTIL_THROW("Null atom ptr in molecule");
+         if (mPtr->nAtom_ == nAtom_) {
+            for (ia = 0; ia < nAtom_; ++ia) {
+               aPtr = mPtr->atoms_[ia];
+               if (aPtr == 0) {
+                  UTIL_THROW("Null atom ptr in molecule");
+               }
+               if (aPtr->atomId != ia) {
+                  UTIL_THROW("Inconsistent atom index");
+               }
+               if (aPtr->moleculeId != im) {
+                  UTIL_THROW("Inconsistent molecule index");
+               }
+               if (aPtr->speciesId != id_) {
+                  UTIL_THROW("Inconsistent species index");
+               }
+            } 
+         } else 
+         if (mPtr->nAtom_ == 0) {
+            for (ia = 0; ia < nAtom_; ++ia) {
+               if (mPtr->atoms_[ia] != 0) {
+                  UTIL_THROW("Nonnull atom ptr in empty molecule");
+               }
             }
-            if (aPtr->atomId != ia) {
-               UTIL_THROW("Inconsistent atom index");
-            }
-            if (aPtr->moleculeId != im) {
-               UTIL_THROW("Inconsistent molecule index");
-            }
-            if (aPtr->speciesId != id_) {
-               UTIL_THROW("Inconsistent species index");
-            }
+         } else {
+            UTIL_THROW("0 != molecule nAtom != species nAtom");
          }
       }
       return true;

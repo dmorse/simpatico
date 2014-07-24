@@ -22,6 +22,11 @@ namespace DdMd
    /**
    * An SpMolecule has a sequence of atoms, and belongs to an SpSpecies.
    *
+   * The SpMolecule class provides read-only access atoms within a 
+   * molecule, but does not provide methods to modify its own state. 
+   * SpMolecule relies on SpSpecies, a friend class, to control its
+   * state. 
+   * 
    * \ingroup DdMd_Sp_Chemistry_Module
    */
    class SpMolecule
@@ -44,14 +49,24 @@ namespace DdMd
       int id() const;
 
       /**
-      * Return Atom number id by reference.
+      * Return Atom identified by index.
+      * 
+      * \param id atom index within the molecule
       */
       SpAtom& atom(int id) const;
+
+      /**
+      * Is this molecule active?
+      */
+      bool isActive() const;
 
    private:
 
       /**
       * Pointer to an array of pointers to atoms.
+      *
+      * This member points to a subblock of a larger SpAtom* array
+      * owned by the parent SpSpecies.
       */
       SpAtom** atoms_;
 
@@ -81,7 +96,6 @@ namespace DdMd
    inline SpSpecies& SpMolecule::species() const
    {
       assert(speciesPtr_);
-      assert(id < nAtom_);
       return *speciesPtr_;
    }
 
@@ -90,10 +104,14 @@ namespace DdMd
 
    inline SpAtom& SpMolecule::atom(int id) const
    {
-      assert(id >=0);
+      assert(id >= 0);
       assert(id < nAtom_);
+      assert(atoms_[id]);
       return *(atoms_[id]);
    }
+
+   inline bool SpMolecule::isActive() const
+   {  return (bool)nAtom_; }
 
 }
 #endif

@@ -101,26 +101,43 @@ namespace DdMd
      bool isValid() const;
    
    private:
-  
-     // Array of pointers to atoms, ordered by molecule 
+
+     /**  
+     * Array of pointers to atoms, ordered by molecule.
+     */
      DArray<SpAtom*> atomPtrs_;
 
-     // Array of molecules, each associated with a block in atomPtrs_.
+     /**
+     * Array of molecules, each associated with a block in atomPtrs_.
+     *
+     * Molecules are ordered by molecule id, as stored in the atoms.
+     * The size of the array is always one greater than the maximum
+     * id of a molecule for which one or more atoms have been added.
+     */
      DSArray<SpMolecule> molecules_;
-   
-     /// SpSpecies index.
+  
+     /** 
+     * SpSpecies index.
+     */
      int id_;
-    
-     /// Number of atoms per molecule.
-     int nAtom_;
    
-     /// Maximum number of molecules in this species.
+     /** 
+     * Number of atoms per molecule in this molecular species.
+     */
+     int nAtom_;
+  
+     /** 
+     * Maximum number of molecules in this species.
+     */
      int capacity_;
    
    //friends:
    
-     friend std::istream& operator >> (std::istream& in, SpSpecies& species);
-     friend std::ostream& operator << (std::ostream& out, const SpSpecies& species);
+     friend 
+     std::istream& operator >> (std::istream& in, SpSpecies& species);
+
+     friend 
+     std::ostream& operator << (std::ostream& out, const SpSpecies& species);
    
    };
 
@@ -146,25 +163,35 @@ namespace DdMd
 
    // Inline function definitions
 
-   // Return a specific molecule. 
+   /*
+   * Return a specific molecule. 
+   */
    inline SpMolecule& SpSpecies::molecule(int i)
    {
       return molecules_[i]; 
    }
- 
-   // Return integer id for this species.
+
+   /* 
+   * Return integer id for this species.
+   */
    inline int SpSpecies::id() const
    {  return id_; }
- 
-   // Return number of atoms per molecule.
+
+   /* 
+   * Return number of atoms per molecule.
+   */
    inline int SpSpecies::nAtom() const
    {  return nAtom_; }
- 
-   // Number of molecules.
+
+   /* 
+   * Number of molecules (maximum molecule id + 1).
+   */
    inline int SpSpecies::size() const
    {  return molecules_.size(); }
- 
-   // Maximum number of molecules.
+
+   /* 
+   * Maximum number of molecules (memory capacity).
+   */
    inline int SpSpecies::capacity() const
    {  return capacity_; }
  

@@ -20,10 +20,10 @@ all: $(inter_OBJS) $(inter_LIB)
 
 clean:
 	rm -f $(inter_OBJS) $(inter_OBJS:.o=.d) $(inter_LIB)
-	cd tests; make clean
+	cd tests; $(MAKE) clean
 
 veryclean:
-	make clean
+	$(MAKE) clean
 	rm -f */*.o */*.d
 	rm -f lib*.a
 

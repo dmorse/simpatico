@@ -1,3 +1,3 @@
 clean:
-	cd mpi; make clean
-	cd serial; make clean
+	cd mpi; $(MAKE) clean
+	cd serial; $(MAKE) clean

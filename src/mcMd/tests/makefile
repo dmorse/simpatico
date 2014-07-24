@@ -24,13 +24,13 @@ clean:
 	rm -f $(mcMd_tests_OBJS:.o=.d)
 	rm -f $(mcMd_tests_OBJS:.o=)
 	rm -f *.cfg log count
-	cd chemistry; make clean
-	cd mcSimulation; make clean
-	cd mdSimulation; make clean
-	cd mdIntegrators; make clean
-	cd neighbor; make clean
-	cd simulation; make clean
-	cd species; make clean
+	cd chemistry; $(MAKE) clean
+	cd mcSimulation; $(MAKE) clean
+	cd mdSimulation; $(MAKE) clean
+	cd mdIntegrators; $(MAKE) clean
+	cd neighbor; $(MAKE) clean
+	cd simulation; $(MAKE) clean
+	cd species; $(MAKE) clean
 
 -include $(mcMd_tests_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)

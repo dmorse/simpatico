@@ -12,7 +12,7 @@ all: $(util_tests_random_OBJS) $(BLD_DIR)/$(TEST)
 clean:
 	rm -f $(util_tests_random_OBJS) $(util_tests_random_OBJS:.o=.d)
 	rm -f $(BLD_DIR)/$(TEST) 
-	make clean-outputs
+	$(MAKE) clean-outputs
 
 clean-outputs:
 	rm -f binary

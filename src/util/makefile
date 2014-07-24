@@ -19,10 +19,10 @@ all: $(util_OBJS) $(util_LIB)
 
 clean:
 	rm -f $(util_OBJS) $(util_OBJS:.o=.d) $(util_LIB)
-	cd tests; make clean
+	cd tests; $(MAKE) clean
 
 veryclean:
-	make clean
+	$(MAKE) clean
 	rm -f */*.o */*/*.o */*/*/*.o
 	rm -f */*.d */*/*.d */*/*/*.d
 	rm -f lib*.a
