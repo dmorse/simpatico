@@ -25,6 +25,7 @@ MD program.
   <li> \subpage ddMd_analyzer_ExternalEnergyAverage_page </li>
   <li> \subpage ddMd_analyzer_LogEnergy_page </li>
   <li> \subpage ddMd_analyzer_OutputBoxdim_page </li>
+  <li> \subpage ddMd_analyzer_OutputEnergy_page </li>
   <li> \subpage ddMd_analyzer_OutputPressure_page </li>
   <li> \subpage ddMd_analyzer_OutputTemperature_page </li>
   <li> \subpage ddMd_analyzer_PairEnergyAverage_page </li>
@@ -32,6 +33,7 @@ MD program.
   <li> \subpage ddMd_analyzer_StructureFactorGrid_page </li>
   <li> \subpage ddMd_analyzer_VanHove_page </li>
   <li> \subpage ddMd_analyzer_VirialStressTensorAverage_page </li>
+  <li> \subpage ddMd_analyzer_WriteConfig_page </li>
 </ul>
 
 <BR>

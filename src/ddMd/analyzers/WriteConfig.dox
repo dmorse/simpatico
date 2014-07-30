@@ -1,0 +1,41 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_WriteConfig_page WriteConfig
+
+\section ddMd_analyzer_WriteConfig_synopsis_sec Synopsis
+
+This analyzer periodically writes the system configuration to file, with 
+one configuration per file. 
+
+
+\sa DdMd::WriteConfig
+
+\section ddMd_analyzer_WriteConfig_param_sec Parameters
+
+The parameter file format is:
+\code
+  WriteConfig{
+    interval           int
+    outputFileName     string
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+</table>
+
+\section ddMd_analyzer_WriteConfig_output_sec Output
+
+Configurations are periodically output to file, with each configuration in a separate file. File names are given by the outputFileName followed by an integer. Configurations are written by calling the Simulation::writeConfig() function. This uses a file format that is determined by the current ConfigIo, or by the default DdMd:DdMdConfigIo if none has been explicitly selected.
+
+*/
+
+}

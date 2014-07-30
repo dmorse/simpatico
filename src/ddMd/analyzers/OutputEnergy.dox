@@ -1,0 +1,43 @@
+namespace DdMd
+{
+
+/*! \page ddMd_analyzer_OutputEnergy_page OutputEnergy
+
+\section ddMd_analyzer_OutputEnergy_synopsis_sec Synopsis
+
+This analyzer periodically outputs the total energy and its components during a simulation. 
+
+\sa DdMd::OutputEnergy
+
+\section ddMd_analyzer_OutputEnergy_param_sec Parameters
+
+The parameter file format is:
+\code
+  OutputEnergy{
+    interval           int
+    outputFileName     string
+  }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td>interval</td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+</table>
+
+\section ddMd_analyzer_OutputEnergy_output_sec Output
+
+Energies are periodically output to file <outputFileName>.dat. Each line in this file represents a set of instantaneous values of different contributions to the total (extensive) energy for the system. The format of each line for a simulation in which all potential energy types are used, is:
+
+   kinetic pair [bond] [angle] [dihedral] [external] total
+
+The bond, angle, dihedral, and external energies are each output only if they are used in a simulation, and are absent otherwise.
+
+*/
+
+}
