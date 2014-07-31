@@ -64,7 +64,7 @@ namespace DdMd
    /*
    * Set SpConfigIo style.
    */
-   void Processor::setConfigIo(const std::string& configIoName)
+   void Processor::setSpConfigIo(const std::string& configIoName)
    {
       configIoPtr_ = configIoFactory_.factory(configIoName);
       if (configIoPtr_ == 0) {

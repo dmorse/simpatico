@@ -7,6 +7,7 @@
 #include "storage/SpConfigurationTest.h"
 #include "processor/ProcessorTest.h"
 #include "configIos/DdMdSpConfigIoTest.h"
+#include "neighbor/SpCellTest.h"
 
 #include <test/CompositeTestRunner.h>
 
@@ -16,6 +17,7 @@ addChild(new TEST_RUNNER(SpSpeciesTest), "chemistry/");
 addChild(new TEST_RUNNER(SpAtomStorageTest), "storage/");
 addChild(new TEST_RUNNER(SpConfigurationTest), "storage/");
 addChild(new TEST_RUNNER(ProcessorTest), "processor/");
+addChild(new TEST_RUNNER(SpCellTest), "neighbor/");
 //addChild(new TEST_RUNNER(DdMdSpConfigIoTest), "configIos/");
 TEST_COMPOSITE_END
 

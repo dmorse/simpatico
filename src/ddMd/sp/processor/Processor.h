@@ -71,7 +71,7 @@ namespace DdMd
       /**
       * Set SpConfigIo style  (creates a ConfigIo).
       */
-      void setConfigIo(const std::string& configIoName);
+      void setSpConfigIo(const std::string& configIoName);
 
       /**
       * Return the current SpConfigIo (create default if necessary).

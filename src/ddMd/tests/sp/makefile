@@ -20,6 +20,7 @@ clean:
 	cd storage; $(MAKE) clean
 	cd configIos; $(MAKE) clean
 	cd processor; $(MAKE) clean
+	cd neighbor; $(MAKE) clean
 	rm -f Test Test.d Test.o
 
 -include $(ddMd_tests_sp_OBJS:.o=.d)

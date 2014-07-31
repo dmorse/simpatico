@@ -43,29 +43,37 @@ namespace DdMd
    {
       // Preconditions
       assert(offsetsPtr_);
-      assert(!isGhostCell_);
 
-      const SpCell* cellBegin;
-      const SpCell* cellEnd;
-      SpCellAtom* atomBegin;
-      SpCellAtom* atomEnd;
-      int  is, ns;
-      bool bg, eg;
+      SpCellAtom* atom;
+      int offset;
 
       neighbors.clear();
-      ns = offsetsPtr_->size();
 
-      for (is = 0; is < ns; ++is) {
-         cellBegin = this + (*offsetsPtr_)[is].first;
-         cellEnd   = this + (*offsetsPtr_)[is].second;
-         if (cellBegin->id() >= id_) {
-            atomBegin = cellBegin->begin_;
-            atomEnd = cellEnd->begin_ + cellEnd->nAtom_;
-            for ( ; atomBegin < atomEnd; ++atomBegin) {
-               neighbors.append(atomBegin);
-            }
-         }
+      // add neighbors from this cell
+      atom = begin_;
+      while (atom < begin_ + nAtom_) {
+         neighbors.append(atom);
+         atom++;
       }
+
+      for (int i = -1; i <= 1; i++)
+         for (int j = -1; j <= 1; j++)
+            for (int k = -1; k <= 1; k++) {
+               offset = 0;
+               // we already counted this cell
+               if (!(i == 0 && j == 0 && k == 0)) {
+                  offset += ((i == 0) ? 0 : ((i > 0) ? (*offsetsPtr_)[0].first : (*offsetsPtr_)[0].second));
+                  offset += ((j == 0) ? 0 : ((j > 0) ? (*offsetsPtr_)[1].first : (*offsetsPtr_)[1].second));
+                  offset += ((k == 0) ? 0 : ((k > 0) ? (*offsetsPtr_)[2].first : (*offsetsPtr_)[2].second));
+
+                  atom = (this + offset)->begin_;
+                  while (atom < (this + offset)->begin_ + (this + offset)->nAtom_) {
+                     neighbors.append(atom);
+                     atom++;
+                  }
+               }
+            }
+
    }
 
 }

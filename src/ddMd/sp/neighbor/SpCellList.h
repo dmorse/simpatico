@@ -25,7 +25,7 @@ namespace DdMd
    /**
    * A cell list used only to identify nearby atom pairs.
    *
-   * An SpSpCellList divides the simulation unit cell into a grid of cells,
+   * An SpCellList divides the simulation unit cell into a grid of cells,
    * such that the length of each cell in each direction is greater than 
    * a specified cutoff distance. 
    *
@@ -120,10 +120,9 @@ namespace DdMd
       * \param lower        lower coordinate bounds for this processor
       * \param upper        upper coordinate bounds for this processor
       * \param cutoffs      pair cutoff distance in each direction
-      * \param nCellCut     number of cells per cutoff length
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    const Vector& cutoffs, int nCellCut = 1);
+                    const Vector& cutoffs);
 
       /**
       * Allocate memory for this SpCellList (Cartesian coordinates).
@@ -137,10 +136,9 @@ namespace DdMd
       * \param lower        lower bound for this processor in maximum boundary
       * \param upper        upper bound for this processor in maximum boundary
       * \param cutoff       pair cutoff distance in each direction
-      * \param nCellCut     number of cells per cutoff length
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                    double cutoff, int nCellCut = 1);
+                    double cutoff);
 
       /**
       * Make the cell grid (using generalized coordinates).
@@ -162,11 +160,9 @@ namespace DdMd
       * \param lower    lower bound of local atom coordinates.
       * \param upper    upper bound of local atom coordinates.
       * \param cutoffs  pair cutoff length in each direction
-      * \param nCellCut number of cells per cutoff length
       */
       void 
-      makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs, 
-               int nCellCut = 1);
+      makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs);
 
       /**
       * Determine the appropriate cell for an SpAtom, based on its position.
@@ -229,14 +225,14 @@ namespace DdMd
       /**
       * Return pointer to first local cell in linked list.
       */
-      const Cell* begin() const;
+      const SpCell* begin() const;
 
       /**
       * Return a specified cell by const reference.
       * 
       * \param i cell index
       */
-      const Cell& cell(int i) const;
+      const SpCell& cell(int i) const;
 
       /**
       * Get total number of atoms (local and ghost) in this SpCellList.
@@ -294,9 +290,6 @@ namespace DdMd
          int cellRank;
       };
 
-      /// Array of strips of relative offsets to neighboring cells.
-      Cell::OffsetArray offsets_;
-
       /// Grid for cells.
       Grid grid_;
 
@@ -307,19 +300,19 @@ namespace DdMd
       DArray<SpCellAtom> atoms_;
 
       /// Array of Cell objects.
-      GArray<Cell> cells_;
+      GArray<SpCell> cells_;
 
       /// Lower coordinate bounds (local atoms).
-      Vector lower_; 
+      Vector lower_;
 
       /// Upper coordinate bounds (local atoms).
-      Vector upper_; 
+      Vector upper_;
 
       /// Length of each cell in grid
-      Vector cellLengths_; 
+      Vector cellLengths_;
 
       /// Pointer to first local cell (to initialize iterator).
-      Cell* begin_;
+      SpCell* begin_;
 
       /// Total number of atoms in cell list.
       int nAtom_;
@@ -335,6 +328,9 @@ namespace DdMd
       /// Has this SpCellList been built?
       bool isBuilt_;
 
+      /// Stores the same offsets as the grid.  Used to calculate cell offsets.
+      int gridOffsets_ [3];
+
       /**
       * Calculate required dimensions for cell grid and resize cells_ array.
       *
@@ -345,17 +341,50 @@ namespace DdMd
       * \param lower  lower bound used to allocate array of cells.
       * \param uppper  upper bound used to allocate array of cells.
       * \param cutoffs  minimum dimension of a cell in each direction
-      * \param nCellCut  number of cells per cutoff length
       */
-      void setGridDimensions(const Vector& lower, const Vector& upper, 
-                             const Vector& cutoffs, int nCellCut);
+      void setGridDimensions(const Vector& lower, const Vector& upper,
+                             const Vector& cutoffs);
 
       /**
       * Return true if atomId is valid, i.e., if 0 <= 0 < atomCapacity.
       */
       bool isValidAtomId(int atomId);
 
+      /**
+      * Return the offset such that (&cells_[cellId] + offset) is a pointer
+      * to the cell a distance x from cells_[cellId] along the axis i shifted 
+      * within the range 0 <= x < grid_.Dimension(i)
+      *
+      * \param cellId id of cell to calculate offset from
+      * \param i index for Cartesian axis. Must be 0, 1, or 2.
+      * \param x integer coordinate of cell along axis i.
+      */
+      int calculateAxisOffset(int cellId, int i, int x) const;
    };
+
+   // Private inline method definitions:
+
+   /*
+   * Return value of offset for cell a distance x along axis i shifted to the range
+   * 0 <= x <= grid_.Dimension(i)
+   */
+   inline int SpCellList::calculateAxisOffset(int cellId, int i, int x) const
+   {
+      // mod the shift so it's within the grid dimension
+      x %= grid_.dimension(i);
+
+      // calculate cell's position within the grid
+      int *p = new int[3]; int j;
+      for (j = 0; j < Dimension -1; ++j) {
+         p[j] = cellId/gridOffsets_[j];
+         cellId -= p[j]*gridOffsets_[j];
+      }
+      p[j] = cellId;
+
+      if (p[i] + x >= grid_.dimension(i)) return (x - grid_.dimension(i))*gridOffsets_[i];
+      if (p[i] + x < 0) return (grid_.dimension(i) + x)*gridOffsets_[i];
+      return x*gridOffsets_[i];
+   }
 
    // Public inline method definitions:
 
@@ -418,13 +447,13 @@ namespace DdMd
    /*
    * Return reference to cell number i.
    */
-   inline const Cell& SpCellList::cell(int i) const
+   inline const SpCell& SpCellList::cell(int i) const
    {  return cells_[i]; }
 
    /*
    * Return pointer to first Cell.
    */
-   inline const Cell* SpCellList::begin() const
+   inline const SpCell* SpCellList::begin() const
    {  return begin_; }
 
    /*

@@ -35,6 +35,7 @@ public:
    void testReadParam();
    void testAddAtoms();
    void testReadConfig();
+   void testWriteConfig();
 
 };
 
@@ -81,15 +82,27 @@ inline void ProcessorTest::testAddAtoms()
 
 inline void ProcessorTest::testReadConfig()
 {
-  printMethod(TEST_FUNC);
-  processor_.readConfig("in/config");
-  processor_.writeConfig("out/config.out");
+   printMethod(TEST_FUNC);
+   std::ifstream file;
+   openInputFile("in/config", file);
+   processor_.readConfig(file);
+   file.close();
+}
+
+inline void ProcessorTest::testWriteConfig()
+{
+   printMethod(TEST_FUNC);
+   std::ofstream file;
+   openOutputFile("out/config", file);
+   processor_.writeConfig(file);
+   file.close();
 }
 
 TEST_BEGIN(ProcessorTest)
 TEST_ADD(ProcessorTest, testReadParam)
 TEST_ADD(ProcessorTest, testAddAtoms)
 TEST_ADD(ProcessorTest, testReadConfig)
+TEST_ADD(ProcessorTest, testWriteConfig)
 TEST_END(ProcessorTest)
 
 #endif
