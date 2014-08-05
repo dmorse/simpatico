@@ -87,9 +87,6 @@ public:
 
    }
 
-   // this test needs to be recalculated because right now
-   // the grid size is 6 which is less than 27 and will cause
-   // an error to be thrown if debugging is enabled.
    void testPlaceAtom()
    {
       printMethod(TEST_FUNC);
@@ -102,7 +99,7 @@ public:
       Vector upper(4.0, 3.0, 8.0);
       Vector r(3.1, 1.6, 5.3);  // (0.775, 0.266, 0.6625)
       Vector cutoffs;
-      double cutoff = 1.2;
+      double cutoff = 1.2 / 3.0;
       for (int i=0; i < 3; ++i) {
          lower[i] = lower[i]/lengths[i];
          upper[i] = upper[i]/lengths[i];
@@ -112,10 +109,10 @@ public:
       spCellList.allocate(10, lower, upper, cutoffs);
       spCellList.makeGrid(lower, upper, cutoffs);
 
-      TEST_ASSERT(spCellList.grid().dimension(0) == 1);
-      TEST_ASSERT(spCellList.grid().dimension(1) == 2);
-      TEST_ASSERT(spCellList.grid().dimension(2) == 3);
-      TEST_ASSERT(spCellList.grid().size() == 6);
+      TEST_ASSERT(spCellList.grid().dimension(0) == 5);
+      TEST_ASSERT(spCellList.grid().dimension(1) == 7);
+      TEST_ASSERT(spCellList.grid().dimension(2) == 10);
+      TEST_ASSERT(spCellList.grid().size() == 5*7*10);
 
       // Allocate and initialize an array of Atoms
       DArray<SpAtom>       spAtoms;
@@ -123,10 +120,10 @@ public:
 
       int cellId  = spCellList.cellIndexFromPosition(r);
       IntVector p = spCellList.grid().position(cellId);
-      TEST_ASSERT(p[0] == 0);
-      TEST_ASSERT(p[1] == 1);
-      TEST_ASSERT(p[2] == 0);
-      TEST_ASSERT(cellId == 3);
+      TEST_ASSERT(p[0] == 2);
+      TEST_ASSERT(p[1] == 3);
+      TEST_ASSERT(p[2] == 3);
+      TEST_ASSERT(cellId == 173);
 
       int atomId = 3;
       spAtoms[atomId].position = r;
@@ -149,7 +146,6 @@ public:
 
    }
 
-   // same with this test
    void testPlaceAtoms()
    {
       printMethod(TEST_FUNC);
@@ -167,7 +163,7 @@ public:
       Vector lower(2.0, 0.0, 4.0);
       Vector upper(4.0, 3.0, 8.0);
       Vector cutoffs;
-      double cutoff = 1.2;
+      double cutoff = 1.2 / 3.0;
       for (int i=0; i < 3; ++i) {
          lower[i] = lower[i]/lengths[i];
          upper[i] = upper[i]/lengths[i];
@@ -196,7 +192,7 @@ public:
 
       TEST_ASSERT( spCellList.nAtom() == nAtom );
       for (i = 0; i < nAtom; ++i){
-         TEST_ASSERT(spCellList.cell(cellId[i]).nAtom() == nAtom);
+         TEST_ASSERT(spCellList.cell(cellId[i]).nAtom() == 1);
       }
 
       try {
@@ -207,7 +203,6 @@ public:
 
    }
 
-   // and this test
    void testAddRandomAtoms()
    {
       printMethod(TEST_FUNC);
@@ -219,7 +214,7 @@ public:
       Vector lower(2.0, 0.0, 4.0);
       Vector upper(4.0, 3.0, 8.0);
       Vector cutoffs;
-      double cutoff = 1.2;
+      double cutoff = 1.2 / 3.0;
       for (int i = 0; i < 3; ++i) {
          lower[i] = lower[i]/lengths[i];
          upper[i] = upper[i]/lengths[i];
@@ -228,13 +223,13 @@ public:
       spCellList.allocate(nAtom, lower, upper, cutoffs);
       spCellList.makeGrid(lower, upper, cutoffs);
 
-      TEST_ASSERT(spCellList.grid().dimension(0) == 1);
-      TEST_ASSERT(spCellList.grid().dimension(1) == 2);
-      TEST_ASSERT(spCellList.grid().dimension(2) == 3);
-      TEST_ASSERT(eq(spCellList.cellLength(0), 0.5));
-      TEST_ASSERT(eq(spCellList.cellLength(1), 0.25));
-      TEST_ASSERT(eq(spCellList.cellLength(2), 1.0/6.0));
-      TEST_ASSERT(spCellList.grid().size() == 6);
+      TEST_ASSERT(spCellList.grid().dimension(0) == 5);
+      TEST_ASSERT(spCellList.grid().dimension(1) == 7);
+      TEST_ASSERT(spCellList.grid().dimension(2) == 10);
+      TEST_ASSERT(eq(spCellList.cellLength(0), 0.5 / 5.0));
+      TEST_ASSERT(eq(spCellList.cellLength(1), 0.5 / 7.0));
+      TEST_ASSERT(eq(spCellList.cellLength(2), 0.5 / 10.0));
+      TEST_ASSERT(spCellList.grid().size() == 5*7*10);
 
       // Allocate Atom 
       DArray<SpAtom>       spAtoms;
@@ -288,14 +283,170 @@ public:
 
    }
 
+   void testGetNeighbors()
+   {
+      printMethod(TEST_FUNC);
+
+      // Define cutoff
+      double cutoff = 1.20 / 3.0;
+      double pairCutoffSq = cutoff - 1.0E-10;
+      pairCutoffSq = pairCutoffSq*pairCutoffSq;
+
+      // Setup domain
+      Vector lengths(4.0, 6.0, 8.0);
+      Vector lower(2.0, 0.0, 4.0);
+      Vector upper(4.0, 3.0, 8.0);
+      Vector cutoffs;
+      for (int i=0; i < Dimension; ++i) {
+         lower[i] = lower[i]/lengths[i];
+         upper[i] = upper[i]/lengths[i];
+         cutoffs[i] = cutoff/lengths[i];
+      }
+
+      // Setup cell list grid
+      const int nAtom = 200;
+      spCellList.allocate(nAtom, lower, upper, cutoffs);
+      spCellList.makeGrid(lower, upper, cutoffs);
+
+      TEST_ASSERT(spCellList.grid().dimension(0) == 5);
+      TEST_ASSERT(spCellList.grid().dimension(1) == 7);
+      TEST_ASSERT(spCellList.grid().dimension(2) == 10);
+      TEST_ASSERT(eq(spCellList.cellLength(0), 0.5/5.0));
+      TEST_ASSERT(eq(spCellList.cellLength(1), 0.5/7.0));
+      TEST_ASSERT(eq(spCellList.cellLength(2), 0.5/10.0));
+      TEST_ASSERT(spCellList.grid().size() == 5*7*10);
+
+      // Allocate Atom 
+      DArray<SpAtom> spAtoms;
+      DPArray<SpAtom> locals;
+      spAtoms.allocate(nAtom);
+      locals.allocate(nAtom);
+
+      // Create new random number generator
+      Random random;
+      random.setSeed(1098640);
+
+      // Place atoms at random in extended region
+      Vector pos;
+      int nLocal = 0;
+      spCellList.clear();
+      for (int i = 0; i < nAtom; ++i) {
+         spAtoms[i].typeId = 1;
+         for (int j = 0; j < Dimension; ++j) {
+            pos[j] = random.uniform(lower[j], upper[j]);
+            TEST_ASSERT(pos[j] >= lower[j]);
+            TEST_ASSERT(pos[j] <= upper[j]);
+         }
+         spAtoms[i].position = pos;
+         ++nLocal;
+         locals.append(spAtoms[i]);
+
+         TEST_ASSERT(nLocal == locals.size());
+
+         try {
+            spCellList.placeAtom(spAtoms[i]);
+         }
+         catch (Exception e) {
+            if (isIoProcessor()) {
+               e.write(std::cout);
+            }
+            TEST_ASSERT(0);
+         }
+
+      }
+
+      spCellList.build();
+
+      try {
+         spCellList.isValid();
+      }
+      catch (Exception e) {
+         TEST_ASSERT(0);
+      }
+
+      // Check that # atoms in local cells = # of local atoms
+      int na = 0;
+      int nc = 0;
+      const SpCell* spCellPtr = spCellList.begin();
+      while (spCellPtr) {
+         ++nc;
+         na += spCellPtr->nAtom();
+         spCellPtr = spCellPtr->nextCellPtr();
+      }
+      TEST_ASSERT(na == locals.size());
+
+      // Transform coordinates to Cartesian
+      for (int i = 0; i < nAtom; ++i) {
+         for (int j = 0; j < Dimension; ++j) {
+            spAtoms[i].position[j] *= lengths[j];
+         }
+      }
+      spCellList.update();
+
+      // Find all neighbor pairs within a cutoff (use cell list)
+      SpCell::NeighborArray neighbors;
+      SpCellAtom* spCellAtomPtr1;
+      SpCellAtom* spCellAtomPtr2;
+      Vector dr;
+      int    nn;      // number of neighbors in a cell
+      int    np = 0;  // Number of pairs within cutoff
+      spCellPtr = spCellList.begin();
+      while (spCellPtr) {
+         spCellPtr->getNeighbors(neighbors);
+         na = spCellPtr->nAtom();
+         nn = neighbors.size();
+         for (int i = 0; i < na; ++i) {
+            spCellAtomPtr1 = neighbors[i];
+            for (int j = 0; j < na; ++j) {
+               spCellAtomPtr2 = neighbors[j];
+               if (spCellAtomPtr2 > spCellAtomPtr1) {
+                  dr.subtract(spCellAtomPtr2->position(), spCellAtomPtr1->position());
+                  if (dr.square() < pairCutoffSq) {
+                     ++np;
+                  }
+               }
+            }
+            for (int j = na; j < nn; ++j) {
+               spCellAtomPtr2 = neighbors[j];
+               dr.subtract(spCellAtomPtr2->position(), spCellAtomPtr1->position());
+               if (dr.square() < pairCutoffSq) {
+                  ++np;
+               }
+            }
+         }
+         spCellPtr = spCellPtr->nextCellPtr();
+      }
+
+      // Count neighbor pairs directly (N^2 loop)
+      SpAtom* spAtomPtr1;
+      SpAtom* spAtomPtr2;
+      int nq = 0;
+      for (int i = 0; i < locals.size(); ++i) {
+         spAtomPtr1 = &locals[i];
+         for (int j = 0; j < locals.size(); ++j) {
+            spAtomPtr2 = &locals[j];
+            if (spAtomPtr2 > spAtomPtr1) {
+               dr.subtract(spAtomPtr2->position, spAtomPtr1->position);
+               if (dr.square() < pairCutoffSq) {
+                  ++nq;
+               }
+            }
+         }
+      }
+
+      // Assert that number of neighobr pairs is same by either method.
+      TEST_ASSERT(np == nq);
+   }
+
 };
 
 TEST_BEGIN(SpCellListTest)
 TEST_ADD(SpCellListTest, testAllocate)
 TEST_ADD(SpCellListTest, testMakeGrid)
-//TEST_ADD(SpCellListTest, testPlaceAtom)
-//TEST_ADD(SpCellListTest, testPlaceAtoms)
-//TEST_ADD(SpCellListTest, testAddRandomAtoms)
+TEST_ADD(SpCellListTest, testPlaceAtom)
+TEST_ADD(SpCellListTest, testPlaceAtoms)
+TEST_ADD(SpCellListTest, testAddRandomAtoms)
+TEST_ADD(SpCellListTest, testGetNeighbors)
 TEST_END(SpCellListTest)
 
 #endif //ifndef DDMD_SP_CELL_LIST_TEST_H

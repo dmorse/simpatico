@@ -328,7 +328,7 @@ namespace DdMd
       /// Has this SpCellList been built?
       bool isBuilt_;
 
-      /// Stores the same offsets as the grid.  Used to calculate cell offsets.
+      /// Stores the same offsets as the grid. Used to calculate SpCell::OffsetArray.
       int gridOffsets_ [3];
 
       /**

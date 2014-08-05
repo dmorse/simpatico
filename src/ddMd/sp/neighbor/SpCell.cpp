@@ -66,10 +66,12 @@ namespace DdMd
                   offset += ((j == 0) ? 0 : ((j > 0) ? (*offsetsPtr_)[1].first : (*offsetsPtr_)[1].second));
                   offset += ((k == 0) ? 0 : ((k > 0) ? (*offsetsPtr_)[2].first : (*offsetsPtr_)[2].second));
 
-                  atom = (this + offset)->begin_;
-                  while (atom < (this + offset)->begin_ + (this + offset)->nAtom_) {
-                     neighbors.append(atom);
-                     atom++;
+                  if ((this +offset)->id_ >= id_) {
+                     atom = (this + offset)->begin_;
+                     while (atom < (this + offset)->begin_ + (this + offset)->nAtom_) {
+                        neighbors.append(atom);
+                        atom++;
+                     }
                   }
                }
             }
