@@ -23,6 +23,11 @@ namespace DdMd
       atomCapacity_(0)
    {}
 
+   SpCell::~SpCell()
+   {
+      delete offsetsPtr_;
+   }
+
    void SpCell::setOffsetArray(SpCell::OffsetArray& offsets)
    {  offsetsPtr_ = &offsets; }
 

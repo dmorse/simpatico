@@ -101,6 +101,11 @@ namespace DdMd
       */
       SpCell();
 
+      /**
+      * Destructor.
+      */
+      ~SpCell();
+
       // Linked List Interface
 
       /**
