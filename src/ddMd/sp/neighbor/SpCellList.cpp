@@ -13,8 +13,6 @@
 #include <util/space/IntVector.h>
 #include <util/containers/FArray.h>
 
-#include <stdio.h>
-
 namespace DdMd
 {
 
