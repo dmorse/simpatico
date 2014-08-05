@@ -67,6 +67,8 @@ endif
 ifdef UTIL_DEBUG
 UTIL_DEFS+= -DUTIL_DEBUG
 UTIL_SUFFIX:=$(UTIL_SUFFIX)_g
+CXXFLAGS:= $(filter-out -O3,$(CXXFLAGS))
+CXXFLAGS+= -g -O0
 else
 CXXFLAGS+= $(WINLINE)
 endif

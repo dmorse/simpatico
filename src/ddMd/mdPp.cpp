@@ -96,7 +96,7 @@ int main(int argc, char** argv)
    // Set input file format format
    if (iFlag) {
       std::cout << "Setting ConfigIo " << configIoName << std::endl;
-      processor.setConfigIo(configIoName);
+      processor.setSpConfigIo(configIoName);
    }
 
    // Process dumps
