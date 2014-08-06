@@ -374,7 +374,7 @@ namespace DdMd
       x %= grid_.dimension(i);
 
       // calculate cell's position within the grid
-      int *p = new int[3]; int j;
+      int p[3]; int j;
       for (j = 0; j < Dimension -1; ++j) {
          p[j] = cellId/gridOffsets_[j];
          cellId -= p[j]*gridOffsets_[j];
