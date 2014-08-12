@@ -22,7 +22,7 @@ namespace DdMd
    * Each concrete subclass of SpConfigIo implements a specific file format
    * by implementing the pure virtual readConfig and writeConfig methods. 
    *
-   * \ingroup DdMd_SpConfigIo_Module
+   * \ingroup DdMd_Sp_ConfigIo_Module
    */
    class SpConfigIo  : public ParamComposite
    {

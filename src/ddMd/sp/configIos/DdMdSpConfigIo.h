@@ -24,7 +24,7 @@ namespace DdMd
    /**
    * Native / default DdMd format for configuration files.
    *
-   * \ingroup DdMd_SpConfigIo_Module
+   * \ingroup DdMd_Sp_ConfigIo_Module
    */
    class DdMdSpConfigIo  : public SpConfigIo
    {
