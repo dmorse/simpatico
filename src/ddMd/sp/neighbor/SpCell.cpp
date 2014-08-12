@@ -23,6 +23,11 @@ namespace DdMd
       atomCapacity_(0)
    {}
 
+   SpCell::~SpCell()
+   {
+      delete offsetsPtr_;
+   }
+
    void SpCell::setOffsetArray(SpCell::OffsetArray& offsets)
    {  offsetsPtr_ = &offsets; }
 
@@ -44,22 +49,38 @@ namespace DdMd
       // Preconditions
       assert(offsetsPtr_);
 
-      const SpCell* cellPtr;
-      SpCellAtom* atomBegin;
-      SpCellAtom* atomEnd;
+      SpCellAtom* atom;
+      int offset;
 
       neighbors.clear();
 
-      for (int is = 0; is < 27; ++is) {
-         cellPtr = this + (*offsetsPtr_)[is];
-         if (cellPtr->id() >= id_) {
-            atomBegin = cellPtr->begin_;
-            atomEnd = atomBegin + cellPtr->nAtom_;
-            for ( ; atomBegin < atomEnd; ++atomBegin) {
-               neighbors.append(atomBegin);
-            }
-         }
+      // add neighbors from this cell
+      atom = begin_;
+      while (atom < begin_ + nAtom_) {
+         neighbors.append(atom);
+         atom++;
       }
+
+      for (int i = -1; i <= 1; i++)
+         for (int j = -1; j <= 1; j++)
+            for (int k = -1; k <= 1; k++) {
+               offset = 0;
+               // we already counted this cell
+               if (!(i == 0 && j == 0 && k == 0)) {
+                  offset += ((i == 0) ? 0 : ((i > 0) ? (*offsetsPtr_)[0].first : (*offsetsPtr_)[0].second));
+                  offset += ((j == 0) ? 0 : ((j > 0) ? (*offsetsPtr_)[1].first : (*offsetsPtr_)[1].second));
+                  offset += ((k == 0) ? 0 : ((k > 0) ? (*offsetsPtr_)[2].first : (*offsetsPtr_)[2].second));
+
+                  if ((this +offset)->id_ >= id_) {
+                     atom = (this + offset)->begin_;
+                     while (atom < (this + offset)->begin_ + (this + offset)->nAtom_) {
+                        neighbors.append(atom);
+                        atom++;
+                     }
+                  }
+               }
+            }
+
    }
 
 }

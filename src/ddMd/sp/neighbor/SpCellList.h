@@ -26,7 +26,7 @@ namespace DdMd
    /**
    * A cell list used only to identify nearby atom pairs.
    *
-   * An SpSpCellList divides the simulation unit cell into a grid of cells,
+   * An SpCellList divides the simulation unit cell into a grid of cells,
    * such that the length of each cell in each direction is greater than 
    * a specified cutoff distance. 
    *
@@ -121,7 +121,7 @@ namespace DdMd
       * \param cutoffs      pair cutoff distance in each direction
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
-                     const Vector& cutoffs);
+                    const Vector& cutoffs);
 
       /**
       * Allocate memory for this SpCellList (Cartesian coordinates).
@@ -289,9 +289,6 @@ namespace DdMd
          int cellRank;
       };
 
-      /// Matrix of offset array for neighboring cells.
-      FArray<SpCell::OffsetArray, 27> offsets_;
-
       /// Grid for cells.
       Grid grid_;
 
@@ -305,15 +302,15 @@ namespace DdMd
       GArray<SpCell> cells_;
 
       /// Lower coordinate bounds (local atoms).
-      Vector lower_; 
+      Vector lower_;
 
       /// Upper coordinate bounds (local atoms).
-      Vector upper_; 
+      Vector upper_;
 
       /// Length of each cell in grid
-      Vector cellLengths_; 
+      Vector cellLengths_;
 
-      /// Pointer to first cell (to initialize iterator).
+      /// Pointer to first local cell (to initialize iterator).
       SpCell* begin_;
 
       /// Total number of atoms in cell list.
@@ -329,6 +326,9 @@ namespace DdMd
 
       /// Has this SpCellList been built?
       bool isBuilt_;
+
+      /// Stores the same offsets as the grid. Used to calculate SpCell::OffsetArray.
+      int gridOffsets_ [3];
 
       /**
       * Calculate required dimensions for cell grid and resize cells_ array.
@@ -349,7 +349,41 @@ namespace DdMd
       */
       bool isValidAtomId(int atomId);
 
+      /**
+      * Return the offset such that (&cells_[cellId] + offset) is a pointer
+      * to the cell a distance x from cells_[cellId] along the axis i shifted 
+      * within the range 0 <= x < grid_.Dimension(i)
+      *
+      * \param cellId id of cell to calculate offset from
+      * \param i index for Cartesian axis. Must be 0, 1, or 2.
+      * \param x integer coordinate of cell along axis i.
+      */
+      int calculateAxisOffset(int cellId, int i, int x) const;
    };
+
+   // Private inline method definitions:
+
+   /*
+   * Return value of offset for cell a distance x along axis i shifted to the range
+   * 0 <= x <= grid_.Dimension(i)
+   */
+   inline int SpCellList::calculateAxisOffset(int cellId, int i, int x) const
+   {
+      // mod the shift so it's within the grid dimension
+      x %= grid_.dimension(i);
+
+      // calculate cell's position within the grid
+      int p[3]; int j;
+      for (j = 0; j < Dimension -1; ++j) {
+         p[j] = cellId/gridOffsets_[j];
+         cellId -= p[j]*gridOffsets_[j];
+      }
+      p[j] = cellId;
+
+      if (p[i] + x >= grid_.dimension(i)) return (x - grid_.dimension(i))*gridOffsets_[i];
+      if (p[i] + x < 0) return (grid_.dimension(i) + x)*gridOffsets_[i];
+      return x*gridOffsets_[i];
+   }
 
    // Public inline method definitions:
 
