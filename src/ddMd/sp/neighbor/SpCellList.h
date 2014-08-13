@@ -77,7 +77,7 @@ namespace DdMd
    * See SpCell documentation for an example of how to iterate over local cells 
    * and neighboring atom pairs. 
    * 
-   * \ingroup DdMd_Neighbor_Module
+   * \ingroup DdMd_Sp_Neighbor_Module
    */
    class SpCellList
    {

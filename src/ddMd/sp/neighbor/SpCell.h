@@ -65,7 +65,7 @@ namespace DdMd
    *
    * \endcode
    * 
-   * \ingroup DdMd_Neighbor_Module
+   * \ingroup DdMd_Sp_Neighbor_Module
    */
    class SpCell
    {

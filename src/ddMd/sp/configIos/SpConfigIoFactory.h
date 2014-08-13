@@ -22,7 +22,7 @@ namespace DdMd
    /**
    * Default Factory for subclasses of SpConfigIo.
    *
-   * \ingroup DdMd_SpConfigIo_Module
+   * \ingroup DdMd_Sp_ConfigIo_Module
    */
    class SpConfigIoFactory : public Factory<SpConfigIo> 
    {

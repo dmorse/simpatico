@@ -24,7 +24,7 @@ namespace DdMd
    /**
    * A post-processor for analyzing outputs of MD simulations.
    *
-   * \ingroup DdMd_Sp_Module
+   * \ingroup DdMd_Sp_Storage_Module
    */
    class Processor : public SpConfiguration
    {

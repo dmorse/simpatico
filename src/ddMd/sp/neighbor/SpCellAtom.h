@@ -17,6 +17,8 @@ namespace DdMd
 
    /**
    * Data for an atom in a SpCellList.
+   *
+   * \ingroup DdMd_Sp_Neighbor_Module
    */
    class SpCellAtom
    {

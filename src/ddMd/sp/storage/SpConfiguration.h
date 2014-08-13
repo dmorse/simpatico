@@ -28,10 +28,10 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * A snapshot of a molecular dynamics configuration configuration.
+   * An instantaneous molecular dynamics configuration.
    *
    * A SpConfiguration has:
-   *   - a Boundary
+   *   - a Util::Boundary
    *   - an SpAtomStorage container for atoms
    *   - a SpGroupStorage for each type of covalent group
    *
