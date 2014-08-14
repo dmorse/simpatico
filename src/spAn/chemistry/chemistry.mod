@@ -3,9 +3,9 @@ namespace SpAn
 {
 
 /**
-* \defgroup SpAn_Chemistry_Module SP Chemical Structure
+* \defgroup SpAn_Chemistry_Module Chemical Structure
 *
-* \brief Single-processor (SP) classes that model atoms, groups, molecules, and species.
+* \brief Classes that model atoms, groups, molecules, and species.
 * \ingroup SpAn_Module
 */
 

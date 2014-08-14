@@ -57,8 +57,9 @@ inline void DdMdConfigIoTest::testReadConfig1()
    processor_.readParam(file); 
    file.close(); 
 
-   //processor_.setConfigIo(std::string("DdMdConfigIo"));
-   processor_.readConfig("in/config");
+   openInputFile("in/config", file);
+   processor_.readConfig(file);
+   file.close(); 
 
    TEST_ASSERT(processor_.atoms().size() == 40);
    TEST_ASSERT(processor_.bonds().size() == 35);
@@ -75,11 +76,16 @@ inline void DdMdConfigIoTest::testReadConfig1()
 inline void DdMdConfigIoTest::testReadConfig2()
 {
    printMethod(TEST_FUNC);
+   std::ifstream file;
 
-   processor_.readParam("in/Processor.2"); 
-   //processor_.setConfigIo(std::string("DdMdConfigIo_Molecule"));
+   openInputFile("in/Processor.2", file);
+   processor_.readParam(file); 
+   file.close();
+
    processor_.setConfigIo("DdMdConfigIo_Molecule");
-   processor_.readConfig("in/config.2");
+   openInputFile("in/config.2", file);
+   processor_.readConfig(file);
+   file.close();
 
    TEST_ASSERT(processor_.atoms().size() == 256);
    TEST_ASSERT(processor_.bonds().size() == 248);

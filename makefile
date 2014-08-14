@@ -1,6 +1,6 @@
 include src/config.mk
 # ==============================================================================
-.PHONY: all mcMd mcMd-mpi ddMd \
+.PHONY: all mcMd mcMd-mpi ddMd spAn \
         test-serial test-parallel \
         clean-serial clean-parallel clean clean-bin veryclean \
         html clean-html
@@ -12,6 +12,7 @@ all:
 	cd bld/serial; $(MAKE) mcMd
 	cd bld/parallel; $(MAKE) ddMd
 	cd bld/parallel; $(MAKE) mcMd-mpi
+	cd bld/serial; $(MAKE) spAn
 
 # Build serial mcSim and mdSim MC and MD programs in bld/serial
 mcMd:
@@ -24,6 +25,10 @@ mcMd-mpi:
 # Build parallel mdSim MD program in bld/parallel
 ddMd:
 	cd bld/parallel; $(MAKE) ddMd
+
+# Build single-processor analysis program in bld/serial
+spAn:
+	cd bld/serial; $(MAKE) spAn
 
 # ==============================================================================
 # Test targets
@@ -43,7 +48,6 @@ test-parallel:
 	@cat bld/parallel/ddMd/tests/count >> count
 	@cat count
 	@rm -f count
-
 
 # =========================================================================
 # Clean targets
@@ -66,9 +70,9 @@ clean-bin:
  
 veryclean:
 	cd bld/serial; $(MAKE) veryclean; rm -f makefile configure
-	cd bld/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile 
+	cd bld/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile spAn/makefile
 	cd bld/parallel; $(MAKE) veryclean; rm -f makefile configure
-	cd bld/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile 
+	cd bld/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile  spAn/makefile
 	cd doc; $(MAKE) clean
 	$(MAKE) clean-bin
 	cd src; $(MAKE) veryclean

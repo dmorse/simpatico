@@ -45,7 +45,7 @@ cp  src/util/config.mk_r bld/serial/util/config.mk
 cp  src/inter/config.mk_r bld/serial/inter/config.mk
 cp  src/mcMd/config.mk_r bld/serial/mcMd/config.mk
 cp  src/ddMd/config.mk_r bld/serial/ddMd/config.mk
-cp  src/spAn/config.mk_r bld/serial/ddMd/config.mk
+cp  src/spAn/config.mk_r bld/serial/spAn/config.mk
 
 # Namespace config.mk in bld/parallel (for out-of-source builds with MPI)
 cp  src/util/config.mk_r bld/parallel/util/config.mk

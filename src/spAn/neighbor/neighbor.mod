@@ -3,9 +3,9 @@ namespace SpAn
 {
 
 /**
-* \defgroup SpAn_Neighbor_Module SP Neighbor
+* \defgroup SpAn_Neighbor_Module Nonbonded Neighbors
 *
-* \brief Single-processor (SP) classes identify non-bonded neighbors
+* \brief Classes to efficiently identify non-bonded neighbors
 * \ingroup SpAn_Module
 */
 

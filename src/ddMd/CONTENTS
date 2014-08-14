@@ -24,5 +24,4 @@ integrators/  - molecular dynamics integrator algorithms
 simulation/   - main Simulation class
 analyzers/    - classes for on-the-fly parallel data analysis and output
 misc/         - miscellaneous utility classes
-sp/           - classes for single-processor (sp) configuration analysis 
 

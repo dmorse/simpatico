@@ -9,22 +9,35 @@ include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/spAn/sources.mk
 include $(SRC_DIR)/spAn/tests/sources.mk
 
+
+TEST=spAn/tests/Test
+
 all: $(spAn_tests_OBJS)
 
-run:
-	./Test
+run: $(spAn_tests_OBJS) $(BLD_DIR)/$(TEST)
+	$(BLD_DIR)/$(TEST) $(SRC_DIR)/spAn/tests/ > log
 	cd configIos; ./Test
+	@echo `grep failed log` ", "\
+              `grep successful log` "in spAn/tests/log" > count
+	@cat count
 
 clean:
+	rm -f $(spAn_tests_OBJS) $(spAn_tests_OBJS:.o=.d)
+	rm -f $(BLD_DIR)/$(TEST)
 	cd chemistry; $(MAKE) clean
-	cd storage; $(MAKE) clean
 	cd configIos; $(MAKE) clean
-	cd processor; $(MAKE) clean
 	cd neighbor; $(MAKE) clean
-	rm -f Test Test.d Test.o
+	cd storage; $(MAKE) clean
+	cd processor; $(MAKE) clean
+	$(MAKE) clean-outputs
 
+clean-outputs:
+	rm -f log count
+	#cd chemistry; $(MAKE) clean-outputs
+        
 -include $(spAn_tests_OBJS:.o=.d)
 -include $(spAn_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
 -include $(util_OBJS:.o=.d)
+
 

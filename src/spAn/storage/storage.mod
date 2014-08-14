@@ -3,9 +3,9 @@ namespace SpAn
 {
 
 /**
-* \defgroup SpAn_Storage_Module SP Storage
+* \defgroup SpAn_Storage_Module Storage
 *
-* \brief Single-processor (SP) classes that store atoms and groups.
+* \brief Classes that store atoms and groups.
 * \ingroup SpAn_Module
 */
 

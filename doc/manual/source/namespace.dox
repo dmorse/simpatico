@@ -4,7 +4,7 @@
 \ref Util_NS_page  (Next) 
 <BR>
 
-The classes used in simpatico are divided into four namespaces. The source code for each namespace is in a corresponding subdirectories of the src/directory: 
+The classes used in simpatico are divided into five namespaces. The source code for each namespace is in a corresponding subdirectories of the src/directory: 
 
  - namespace Util (directory src/util) contains general utilities for C++ programming and scientific computation. 
 
@@ -14,13 +14,15 @@ The classes used in simpatico are divided into four namespaces. The source code 
 
  - namespace DdMd (in directory src/ddMd) contains classes for a parallel domain-decomposition molecular dynamics code, and the main program for the ddSim executable. 
 
+ - namespace SpAn (in directory src/ddMd) contains classes for single-processor analysis of molecular dynamics trajectories, and the main program for the mdPp executable. 
+
 The code in some namespaces depends on symbols defined in others. A namespace The code in some namespaces depends on symbols defined in others. A namespace named D is said to "depend" on another namespace C if any class in namespace D uses any classes or other symbols defined in C. The Inter, McMd, DdMd, and MdCf namespaces all depend on the Util namespace, in this sense. The dependencies are:
 
  - Util does not depend on any other namespace
 
  - Inter depends only on Util
 
- - McMd and DdMd each depends on Util and Inter, but not on each other.
+ - McMd, DdMd, and SpAn each depends on Util and Inter, but not on each other.
 
 A few of the most important classes in each namespace are introduced in the following pages. An alternate, and more complete, view of all of the classes in each namespace may be obtained clicking on the "Modules" link above and browsing a hierarchy of modules. Each module contain a sets of functionally related classes.
 

@@ -2,9 +2,9 @@ namespace SpAn
 {
 
 /**
-* \defgroup SpAn_ConfigIo_Module SP ConfigIos
+* \defgroup SpAn_ConfigIo_Module ConfigIos
 *
-* \brief Single-processor (SP) config file reader / writers.
+* \brief Configuration file reader / writers.
 * \ingroup SpAn_Module
 */
 
