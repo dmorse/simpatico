@@ -1,0 +1,51 @@
+#ifndef SPAN_CONFIG_IO_FACTORY_CPP
+#define SPAN_CONFIG_IO_FACTORY_CPP
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "ConfigIoFactory.h"  
+
+// Subclasses of ConfigIo 
+#include "DdMdConfigIo.h"
+
+namespace SpAn
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor
+   */
+   ConfigIoFactory::ConfigIoFactory(Configuration& configuration)
+    : configurationPtr_(&configuration)
+   {}
+
+   /* 
+   * Return a pointer to a instance of ConfigIo subclass className.
+   */
+   ConfigIo* ConfigIoFactory::factory(const std::string &className) const
+   {
+      ConfigIo *ptr = 0;
+
+      // Try subfactories first.
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
+
+      if (className == "DdMdConfigIo") {
+         ptr = new DdMdConfigIo(*configurationPtr_);
+      } else 
+      if (className == "DdMdConfigIo_Molecule") {
+         bool hasMolecules = true;
+         ptr = new DdMdConfigIo(*configurationPtr_, hasMolecules);
+      }
+ 
+      return ptr;
+   }
+
+}
+#endif

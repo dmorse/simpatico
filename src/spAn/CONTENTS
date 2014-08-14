@@ -1,0 +1,15 @@
+The directory tree rooted at src/spAn contains classes for storage and 
+analysis of MD configurations on a single processor. These are intended 
+to be used for analysis of trajectories produced by ddSim, either during 
+post-processing of MD trajectory files or on-the-fly, for operations that
+are most easily carried out on a single processor.
+
+Subdirectories:
+---------------
+
+chemistry   atoms, covalent groups (bonds, etc.), molecules and species
+storage     containers for atoms and groups. System represent a configuration
+analyzers   data analysis (classes derived from Analyzer)
+configIos   configuration file IO 
+processor   a master class for analysis of trajectories
+

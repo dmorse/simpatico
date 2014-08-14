@@ -38,18 +38,21 @@ cp  src/util/config.mk_r src/util/config.mk
 cp  src/inter/config.mk_r src/inter/config.mk
 cp  src/mcMd/config.mk_r src/mcMd/config.mk
 cp  src/ddMd/config.mk_r src/ddMd/config.mk
+cp  src/spAn/config.mk_r src/spAn/config.mk
 
 # Namespace config.mk in bld/serial (for out-of-source builds with no MPI)
 cp  src/util/config.mk_r bld/serial/util/config.mk
 cp  src/inter/config.mk_r bld/serial/inter/config.mk
 cp  src/mcMd/config.mk_r bld/serial/mcMd/config.mk
 cp  src/ddMd/config.mk_r bld/serial/ddMd/config.mk
+cp  src/spAn/config.mk_r bld/serial/ddMd/config.mk
 
 # Namespace config.mk in bld/parallel (for out-of-source builds with MPI)
 cp  src/util/config.mk_r bld/parallel/util/config.mk
 cp  src/inter/config.mk_r bld/parallel/inter/config.mk
 cp  src/mcMd/config.mk_r bld/parallel/mcMd/config.mk
 cp  src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
+cp  src/spAn/config.mk_r bld/parallel/spAn/config.mk
 
 # Copy namespace level makefiles from src/ to bld/serial and bld/parallel 
 cp  src/makefile bld/serial/makefile
@@ -57,11 +60,13 @@ cp  src/util/makefile bld/serial/util/makefile
 cp  src/inter/makefile bld/serial/inter/makefile
 cp  src/mcMd/makefile bld/serial/mcMd/makefile
 cp  src/ddMd/makefile bld/serial/ddMd/makefile
+cp  src/spAn/makefile bld/serial/spAn/makefile
 cp  src/makefile bld/parallel/makefile
 cp  src/util/makefile bld/parallel/util/makefile
 cp  src/inter/makefile bld/parallel/inter/makefile
 cp  src/mcMd/makefile bld/parallel/mcMd/makefile
 cp  src/ddMd/makefile bld/parallel/ddMd/makefile
+cp  src/spAn/makefile bld/parallel/spAn/makefile
 
 # Copy repository versions of sources.mk files in user directories.
 # These list user-contributed classes.
@@ -97,8 +102,8 @@ cp  src/ddMd/potentials/pair/PairFactory.cpp_r src/ddMd/potentials/pair/PairFact
 cp  src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/IntegratorFactory.cpp
 cp  src/ddMd/analyzers/AnalyzerFactory.cpp_r src/ddMd/analyzers/AnalyzerFactory.cpp
 cp  src/ddMd/modifiers/ModifierFactory.cpp_r src/ddMd/modifiers/ModifierFactory.cpp
-cp  src/ddMd/sp/configIos/SpConfigIoFactory.cpp_r src/ddMd/sp/configIos/SpConfigIoFactory.cpp
-cp  src/ddMd/sp/analyzers/SpAnalyzerFactory.cpp_r src/ddMd/sp/analyzers/SpAnalyzerFactory.cpp
+cp  src/spAn/configIos/ConfigIoFactory.cpp_r src/spAn/configIos/ConfigIoFactory.cpp
+cp  src/spAn/analyzers/AnalyzerFactory.cpp_r src/spAn/analyzers/AnalyzerFactory.cpp
 
 # Copy typedef for the class that defines boundary conditions
 cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
