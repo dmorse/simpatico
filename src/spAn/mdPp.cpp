@@ -15,9 +15,9 @@
 using namespace Util;
 
 /**
-* \page  mdPp mdPp MD postprocessing program
+* \page mdPp_page mdPp - postprocessing analysis program.
 *
-* Single-processor program for MD postprocessing analysis.
+* Single-processor analysis program for postprocessing MD trajectories.
 * 
 * Usage:
 *
@@ -45,6 +45,7 @@ using namespace Util;
 *        Specify input configuration/trajectory format. The required
 *        argument inputConfigIo is the name of a ConfigIo subclass.
 *
+* \ingroup
 */
 
 int main(int argc, char** argv)

@@ -8,7 +8,9 @@
 #include <mcMd/mdSimulation/MdSimulation.h>
 
 /**
-* Program for molecular dynamics simulation.
+* \page mdSim_page mdSim - serial molecular dynamics program
+*
+* Single-processor molecular dynamics simulation program.
 *
 * Command line options:
 *
@@ -39,6 +41,7 @@
 * files produced by the processor with rank n are prefixed by "n/". All
 * output files produced by processor 6, for example, are thus put in a 
 * directory named "6/".  The default log file for processor n is "n/log". 
+*
 */
 int main(int argc, char **argv)
 {

@@ -8,6 +8,8 @@
 #include <mcMd/mcSimulation/McSimulation.h>
 
 /**
+* \page mcSim_page mcSim - serial Monte Carlo program
+*
 * Program for Monte Carlo simulation.
 *
 * Command line options:
@@ -40,6 +42,7 @@
 * output files produced by processor 6, for example, are thus put in a 
 * directory named "6/".  The default log file for processor n is "n/log". 
 */
+
 int main(int argc, char **argv)
 {
    #ifdef UTIL_MPI

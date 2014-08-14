@@ -6,6 +6,8 @@
 
 This section describes how to execute the simpatico programs mcSim, mdSim and ddSim. The command line interface is similar for all three programs. Differences among the three programs are discussed explicitly below. This page gives instructions for using any of these three programs to simulate a single physical system. Multi-system simulations, such as those used for replica exchange algorithms, are discussed separately (see \ref user_multi_page).
 
+\sa \subpage programs_page
+
 \section usage_inputs Input files 
 Every simpatico simulation requires three types of input file: 
 <ul>

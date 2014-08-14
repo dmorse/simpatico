@@ -674,6 +674,7 @@ INPUT                  = ../src/util \
                          ../src/ddMd \
                          ../src/spAn \
                          ../src/test \
+                         ../src/programs.mod \
                          manual
 
 # This tag can be used to specify the character encoding of the source files

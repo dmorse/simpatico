@@ -1,3 +1,7 @@
+/**
+* Single-processor analysis classes, for postprocessing MD trajectories.
+*/
+namespace SpAn {}
 
 namespace SpAn
 {

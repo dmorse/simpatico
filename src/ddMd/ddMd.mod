@@ -1,6 +1,6 @@
 
 /**
-* Parallel domain decomposition (DD) MD simulation and associated tools.
+* Parallel domain decomposition (DD) MD simulation.
 */
 namespace DdMd {}
 
