@@ -37,9 +37,11 @@ test-serial:
 	@cd bld/serial/util/tests; $(MAKE) all; $(MAKE) run
 	@cd bld/serial/inter/tests; $(MAKE) all; $(MAKE) run
 	@cd bld/serial/mcMd/tests; $(MAKE) all; $(MAKE) run
+	@cd bld/serial/spAn/tests; $(MAKE) all; $(MAKE) run
 	@cat bld/serial/util/tests/count > count
 	@cat bld/serial/inter/tests/count >> count
 	@cat bld/serial/mcMd/tests/count >> count
+	@cat bld/serial/spAn/tests/count >> count
 	@cat count
 	@rm -f count
 

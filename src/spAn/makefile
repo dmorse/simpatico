@@ -36,7 +36,7 @@ mdPp:
 clean:
 	rm -f $(spAn_OBJS) $(spAn_OBJS:.o=.d) $(spAn_LIB)
 	rm -f $(MDPP).o $(MDPP).d
- 	cd tests; $(MAKE) clean
+	cd tests; $(MAKE) clean
 	rm -f *.o */*.o 
 	rm -f *.d */*.d 
 

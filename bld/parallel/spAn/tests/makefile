@@ -23,16 +23,10 @@ run: $(spAn_tests_OBJS) $(BLD_DIR)/$(TEST)
 clean:
 	rm -f $(spAn_tests_OBJS) $(spAn_tests_OBJS:.o=.d)
 	rm -f $(BLD_DIR)/$(TEST)
-	cd chemistry; $(MAKE) clean
-	cd configIos; $(MAKE) clean
-	cd neighbor; $(MAKE) clean
-	cd storage; $(MAKE) clean
-	cd processor; $(MAKE) clean
 	$(MAKE) clean-outputs
 
 clean-outputs:
 	rm -f log count
-	#cd chemistry; $(MAKE) clean-outputs
         
 -include $(spAn_tests_OBJS:.o=.d)
 -include $(spAn_OBJS:.o=.d)
