@@ -22,13 +22,10 @@ include $(SRC_DIR)/ddMd/sources.mk
 # Main program location
 DDSIM=$(BLD_DIR)/ddMd/ddSim
 
-# MD postprocessor program location
-MDPP=$(BLD_DIR)/ddMd/mdPp
-
 #-----------------------------------------------------------------------
 # Main targets
 
-all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE) $(MDPP).o $(MDPP_EXE)
+all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE)
 
 $(DDSIM_EXE): $(DDSIM).o $(LIBS)
 	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o $(LIBS)
@@ -36,16 +33,9 @@ $(DDSIM_EXE): $(DDSIM).o $(LIBS)
 ddSim:
 	$(MAKE) $(DDSIM_EXE)
 
-$(MDPP_EXE): $(MDPP).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(MDPP_EXE) $(MDPP).o $(LIBS)
-
-mdPp:
-	$(MAKE) $(MDPP_EXE)
-
 clean:
 	rm -f $(ddMd_OBJS) $(ddMd_OBJS:.o=.d) $(ddMd_LIB)
 	rm -f $(DDSIM).o $(DDSIM).d
-	rm -f $(MDPP).o $(MDPP).d
 	cd tests; $(MAKE) clean
 	rm -f *.o */*.o */*/*.o
 	rm -f *.d */*.d */*/*.d

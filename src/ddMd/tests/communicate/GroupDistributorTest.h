@@ -99,6 +99,8 @@ public:
 
       domain.readParam(file());
       buffer.readParam(file());
+      TEST_ASSERT(domain.isInitialized());
+      TEST_ASSERT(buffer.isInitialized());
 
       atomStorage.readParam(file());
       atomDistributor.readParam(file());
@@ -328,7 +330,9 @@ public:
       #endif
 
       domain.readParam(file());
+      TEST_ASSERT(domain.isInitialized());
       buffer.readParam(file());
+      TEST_ASSERT(buffer.isInitialized());
 
       atomStorage.readParam(file());
       atomDistributor.readParam(file());
@@ -500,7 +504,7 @@ public:
 
 TEST_BEGIN(GroupDistributorTest)
 TEST_ADD(GroupDistributorTest, testDistribute)
-TEST_ADD(GroupDistributorTest, testDistribute2)
+//TEST_ADD(GroupDistributorTest, testDistribute2)
 TEST_END(GroupDistributorTest)
 
 #endif // DDMD_GROUP_DISTRIBUTOR_TEST_H 
