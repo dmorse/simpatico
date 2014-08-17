@@ -4,6 +4,10 @@
 #include <ddMd/configIos/DdMdConfigIo.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
+#include <ddMd/communicate/GroupDistributor.h>
+#include <ddMd/communicate/GroupDistributor.tpp>
+#include <ddMd/communicate/GroupCollector.h>
+#include <ddMd/communicate/GroupCollector.tpp>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/BondStorage.h>
@@ -130,19 +134,43 @@ public:
       }
 
       domain.readParam(file);
+      buffer.readParam(file);
+
+      // Domain and buffer must be initialized before the Distributor
+      // and Collector objects can be associated and allocated
+      atomStorage.distributor().associate(domain, boundary, atomStorage, buffer);
+      atomStorage.collector().associate(domain, atomStorage, buffer);
+      atomStorage.distributor().allocate(100);
+      atomStorage.collector().allocate(100);
       atomStorage.readParam(file);
+   
+      #ifdef INTER_BOND
+      bondStorage.distributor().associate(domain, atomStorage, bondStorage, buffer);
+      bondStorage.collector().associate(domain, bondStorage, buffer);
+      bondStorage.distributor().allocate(100);
+      bondStorage.collector().allocate(100);
       bondStorage.readParam(file);
+      #endif
+   
       #ifdef INTER_ANGLE
       if (hasAngle) {
+         angleStorage.distributor().associate(domain, atomStorage, angleStorage, buffer);
+         angleStorage.collector().associate(domain, angleStorage, buffer);
+         angleStorage.distributor().allocate(100);
+         angleStorage.collector().allocate(100);
          angleStorage.readParam(file);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (hasDihedral) {
+         dihedralStorage.distributor().associate(domain, atomStorage, dihedralStorage, buffer);
+         dihedralStorage.collector().associate(domain, dihedralStorage, buffer);
+         dihedralStorage.distributor().allocate(100);
+         dihedralStorage.collector().allocate(100);
          dihedralStorage.readParam(file);
       }
       #endif
-      buffer.readParam(file);
+
       configIo.readParam(file);
       file.close();
    }

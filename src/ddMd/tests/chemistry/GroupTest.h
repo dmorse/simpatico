@@ -1,6 +1,7 @@
 #ifndef DDMD_GROUP_TEST_H
 #define DDMD_GROUP_TEST_H
 
+#include <util/global.h>
 #include <ddMd/chemistry/Group.h>
 #include <ddMd/chemistry/AtomArray.h>
 #include <ddMd/chemistry/Atom.h>
