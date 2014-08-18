@@ -86,10 +86,6 @@ namespace DdMd
    template <int N>
    void GroupDistributor<N>::allocate()
    {
-      // Preconditions
-      if (atomStoragePtr_ == 0) {
-         UTIL_THROW("GroupDistributor not initialized");
-      }
       cache_.allocate(cacheCapacity_);
       nAtomRecv_ = 0;
       newPtr_ = 0;

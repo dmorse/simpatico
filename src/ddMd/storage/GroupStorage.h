@@ -25,10 +25,16 @@
 #include "GroupIterator.h"               // inline functions
 #include "ConstGroupIterator.h"          // inline functions
 
+namespace Util{
+   class Boundary;
+}
+
 namespace DdMd
 {
 
    class AtomStorage;
+   class Domain;
+   class Buffer;
    using namespace Util;
 
    /**
@@ -55,6 +61,16 @@ namespace DdMd
       /// \name Initialization
       //@{
       
+      /**
+      * Create associations for distributor and collector members.
+      *
+      * \param domain Domain object (defines processor grid)
+      * \param atomStorage AtomStorage object 
+      * \param buffer Buffer object (holds memory for communication)
+      */
+      void associate(Domain& domain, AtomStorage& atomStorage, 
+                     Buffer& buffer);
+
       /**
       * Set parameters, allocate memory and initialize.
       *

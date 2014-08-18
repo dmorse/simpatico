@@ -58,6 +58,16 @@ namespace DdMd
    {}
 
    /*
+   * Create associations for distributor and collector.
+   */
+   void AtomStorage::associate(Domain& domain, Boundary& boundary, 
+                               Buffer& buffer)
+   {
+      distributor_.associate(domain, boundary, *this, buffer);
+      collector_.associate(domain, *this, buffer);
+   }
+
+   /*
    * Set parameters and allocate memory.
    */
    void AtomStorage::initialize(int atomCapacity, int ghostCapacity, 
