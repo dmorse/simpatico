@@ -82,6 +82,22 @@ void ExchangerTest::setUp()
 
    // Set connections between atomDistributors
    domain.setBoundary(boundary);
+   atomStorage.associate(domain, boundary, buffer);
+   bondStorage.associate(domain, atomStorage, buffer);
+   exchanger.associate(domain, boundary, atomStorage, buffer);
+   exchanger.addGroupExchanger(bondStorage);
+   #ifdef INTER_ANGLE
+   angleStorage.associate(domain, atomStorage, buffer);
+   if (hasAngle) {
+      exchanger.addGroupExchanger(angleStorage);
+   }
+   #endif
+   #ifdef INTER_DIHEDRAL
+   dihedralStorage.associate(domain, atomStorage, buffer);
+   if (hasDihedral) {
+      exchanger.addGroupExchanger(dihedralStorage);
+   }
+   #endif
    configIo.associate(domain, boundary, atomStorage, bondStorage, 
                       #ifdef INTER_ANGLE
                       angleStorage,
@@ -90,18 +106,6 @@ void ExchangerTest::setUp()
                       dihedralStorage,
                       #endif
                       buffer);
-   exchanger.associate(domain, boundary, atomStorage, buffer);
-   exchanger.addGroupExchanger(bondStorage);
-   #ifdef INTERANGLE
-   if (hasAngle) {
-      exchanger.addGroupExchanger(angleStorage);
-   }
-   #endif
-   #ifdef INTERDIHEDRAL
-   if (hasDihedral) {
-      exchanger.addGroupExchanger(dihedralStorage);
-   }
-   #endif
 
    #ifdef UTIL_MPI
    // Set communicators
@@ -140,15 +144,11 @@ void ExchangerTest::setUp()
 
    // Domain and buffer must be initialized before the Distributor
    // and Collector objects can be associated and allocated
-   atomStorage.distributor().associate(domain, boundary, atomStorage, buffer);
-   atomStorage.collector().associate(domain, atomStorage, buffer);
    atomStorage.distributor().allocate(100);
    atomStorage.collector().allocate(100);
    atomStorage.readParam(file());
 
    #ifdef INTER_BOND
-   bondStorage.distributor().associate(domain, atomStorage, bondStorage, buffer);
-   bondStorage.collector().associate(domain, bondStorage, buffer);
    bondStorage.distributor().allocate(100);
    bondStorage.collector().allocate(100);
    bondStorage.readParam(file());
@@ -156,8 +156,6 @@ void ExchangerTest::setUp()
 
    #ifdef INTER_ANGLE
    if (hasAngle) {
-      angleStorage.distributor().associate(domain, atomStorage, angleStorage, buffer);
-      angleStorage.collector().associate(domain, angleStorage, buffer);
       angleStorage.distributor().allocate(100);
       angleStorage.collector().allocate(100);
       angleStorage.readParam(file());
@@ -165,8 +163,6 @@ void ExchangerTest::setUp()
    #endif
    #ifdef INTER_DIHEDRAL
    if (hasDihedral) {
-      dihedralStorage.distributor().associate(domain, atomStorage, dihedralStorage, buffer);
-      dihedralStorage.collector().associate(domain, dihedralStorage, buffer);
       dihedralStorage.distributor().allocate(100);
       dihedralStorage.collector().allocate(100);
       dihedralStorage.readParam(file());
