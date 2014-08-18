@@ -28,6 +28,7 @@ namespace DdMd
       bufferPtr_(0),
       source_(-1),
       recvBufferSize_(-1),
+      recvArrayCapacity_(0),
       recvArraySize_(-1),
       recvArrayId_(-1),
       isComplete_(false)
@@ -53,16 +54,16 @@ namespace DdMd
    }
 
    /*
-   * Allocate atom cache (call only on master).
+   * Set recvArray cache capacity.
    */
-   void AtomCollector::allocate(int cacheCapacity)
+   void AtomCollector::allocate(int recvArrayCapacity)
    {
-      if (recvArray_.capacity() > 0) {
-         UTIL_THROW("Attempt to re-allocate receive cache");
-      } 
-      recvArray_.allocate(cacheCapacity); 
+      recvArrayCapacity_ = recvArrayCapacity;
    }
 
+   /*
+   * Setup before receiving loop - call only on master.
+   */
    void AtomCollector::setup()
    {
       // Preconditions
@@ -78,8 +79,13 @@ namespace DdMd
       if (!bufferPtr_->isInitialized()) {
          UTIL_THROW("Buffer not allocated");
       }
-      if (recvArray_.capacity() <= 0) {
-         UTIL_THROW("Atom cache not allocated");
+
+      // Allocate recvArray if not done previously
+      if (recvArray_.capacity() == 0) {
+         if (recvArrayCapacity_ == 0) {
+            UTIL_THROW("recvArrayCapacity_ not set");
+         }
+         recvArray_.allocate(recvArrayCapacity_);
       }
 
       source_ = 0;          // rank of source node
@@ -199,14 +205,14 @@ namespace DdMd
    {
 
       // Preconditions
-      if (!bufferPtr_->isInitialized()) {
-         UTIL_THROW("Buffer not allocated");
-      }
       if (!domainPtr_->isInitialized()) {
          UTIL_THROW("Domain is not initialized");
       }
       if (domainPtr_->isMaster()) {
          UTIL_THROW("AtomCollector::send() called from master node.");
+      }
+      if (!bufferPtr_->isInitialized()) {
+         UTIL_THROW("Buffer is not initialized");
       }
 
       // Initialize atom iterator

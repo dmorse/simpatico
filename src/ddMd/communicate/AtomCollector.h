@@ -130,6 +130,9 @@ namespace DdMd
       /// Number of items in receive buffer (on master).
       int recvBufferSize_;
 
+      /// Capacity of recvArray_ (allocated only on master, known on all).
+      int recvArrayCapacity_;
+
       /// Number of items in recvArray_ (on master).
       int recvArraySize_;
 

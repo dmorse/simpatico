@@ -34,8 +34,8 @@ namespace DdMd
       sendType_(Buffer::NONE),
       nAtomRecv_(0),
       nSentTotal_(0),
-      cacheSize_(0),
-      cacheCapacity_(0)
+      cacheCapacity_(0),
+      cacheSize_(0)
    {  setClassName("GroupDistributor"); }
 
    /*
@@ -67,7 +67,6 @@ namespace DdMd
    void GroupDistributor<N>::allocate(int cacheCapacity)
    {
       cacheCapacity_ = cacheCapacity;
-      allocate();
    }
 
    /*
@@ -77,26 +76,23 @@ namespace DdMd
    void GroupDistributor<N>::readParameters(std::istream& in)
    {
       read<int>(in, "cacheCapacity", cacheCapacity_);
-      allocate();
    }
 
    /*
-   * Allocate memory and initialize state (private method).
-   */
-   template <int N>
-   void GroupDistributor<N>::allocate()
-   {
-      cache_.allocate(cacheCapacity_);
-      nAtomRecv_ = 0;
-      newPtr_ = 0;
-   }
-
-   /*
-   * Setup before distribution.
+   * Setup master before distribution. Call only on master.
    */
    template <int N>
    void GroupDistributor<N>::setup()
    {
+      // Allocate cache if necessary
+      if (cache_.capacity() == 0) {
+         if (cacheCapacity_ == 0) {
+            UTIL_THROW("cachCapacity_ not set");
+         }
+         cache_.allocate(cacheCapacity_);
+      }
+
+      // Setup state of master before loop 
       bufferPtr_->clearSendBuffer();
       bufferPtr_->beginSendBlock(Buffer::GROUP2 + N - 2);
       nAtomRecv_ = 0;
@@ -104,7 +100,7 @@ namespace DdMd
    }
 
    /*
-   * Returns address for a new local Group.
+   * Returns address for a new local Group. Call only on master.
    */ 
    template <int N>
    Group<N>* GroupDistributor<N>::newPtr()

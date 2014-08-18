@@ -88,7 +88,7 @@ namespace DdMd
       ~AtomDistributor();
 
       /**
-      * Set pointers to boundary, domain, and buffer.
+      * Set pointers to Domain, Boundary, AtomStorage, and Buffer.
       *
       * This method must be called on all nodes, before any other.
       *
@@ -103,6 +103,8 @@ namespace DdMd
       /**
       * Set cacheCapacity, allocate memory and initialize object.
       *
+      * This method must be called on all nodes, after associate().
+      *
       * This method and readParameters both allocate all required memory
       * and initialize the AtomDistributor. Memory for a temporary read
       * cache is alocated only on the master.
@@ -110,8 +112,8 @@ namespace DdMd
       * If cacheCapacity < 0, this sets a default value large enough to
       * accomodate full send buffers for all processors simultaneously.
       *
-      * Preconditions: The initialize method must have been called, the
-      * Buffer must be allocated, and the Domain must be initialized.
+      * Preconditions: The associate() function must have been called, 
+      * the Domain and Buffer must be initialized.
       *
       * \param cacheCapacity max number of atoms cached for sending
       */

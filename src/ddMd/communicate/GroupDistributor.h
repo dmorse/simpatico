@@ -215,11 +215,11 @@ namespace DdMd
       /// Total number of groups sent (defined only on master).
       int nSentTotal_;
 
+      /// Allocated capacity of cache_ (allocated only on master).
+      int cacheCapacity_;
+
       /// Current size of cache_ (defined only on master).
       int cacheSize_;
-
-      /// Allocated capacity of cache (defined only on master).
-      int cacheCapacity_;
 
       /**
       * Validate groups after receipt.
