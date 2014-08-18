@@ -25,16 +25,12 @@
 #include "GroupIterator.h"               // inline functions
 #include "ConstGroupIterator.h"          // inline functions
 
-namespace Util{
-   class Boundary;
-}
-
 namespace DdMd
 {
 
-   class AtomStorage;
    class Domain;
    class Buffer;
+   class AtomStorage;
    using namespace Util;
 
    /**
