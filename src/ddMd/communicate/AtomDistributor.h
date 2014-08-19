@@ -296,10 +296,19 @@ namespace DdMd
       int nSentTotal_;
 
       /**
-      * Allocate memory and initialize object.
+      * Has memory been allocated?
       *
-      * This method allocates all required memory and leaves the object ready
-      * for use. It is called by setParam and readParam.
+      * Initialized to false, set true at end of allocate() method.
+      */
+      bool isAllocated_;
+
+      /**
+      * Allocate and initialize memory on master processor (private).
+      *
+      * Only called on the master processor. This function allocates 
+      * and initializes all required memory on the master.  It is 
+      * called by setup on the first invokation of setup. It assigns
+      * isAllocated_ = true before returning. 
       */
       void allocate();
 
