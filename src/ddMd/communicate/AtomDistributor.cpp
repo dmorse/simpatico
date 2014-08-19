@@ -69,7 +69,7 @@ namespace DdMd
    /*
    * Set cache capacity.
    */
-   void AtomDistributor::allocate(int cacheCapacity)
+   void AtomDistributor::setCapacity(int cacheCapacity)
    {  cacheCapacity_ = cacheCapacity; }
 
    /*

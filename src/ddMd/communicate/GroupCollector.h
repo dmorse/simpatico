@@ -89,7 +89,7 @@ namespace DdMd
       *
       * \param recvArrayCapacity capacity of recvArray cache on master.
       */
-      void allocate(int recvArrayCapacity);
+      void setCapacity(int recvArrayCapacity);
 
       /**
       * Setup master processor for receiving.

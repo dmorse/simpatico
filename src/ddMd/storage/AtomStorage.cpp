@@ -145,9 +145,9 @@ namespace DdMd
       snapshot_.allocate(atomCapacity_);
 
       // Set cache capacities for distributor and collector.
-      int cacheCapacity = 512;
-      distributor_.allocate(cacheCapacity);
-      collector_.allocate(cacheCapacity);
+      int cacheCapacity = 256;
+      distributor_.setCapacity(cacheCapacity);
+      collector_.setCapacity(cacheCapacity);
 
       isInitialized_ = true;
    }

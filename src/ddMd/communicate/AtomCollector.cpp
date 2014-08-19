@@ -56,7 +56,7 @@ namespace DdMd
    /*
    * Set recvArray cache capacity.
    */
-   void AtomCollector::allocate(int recvArrayCapacity)
+   void AtomCollector::setCapacity(int recvArrayCapacity)
    {
       recvArrayCapacity_ = recvArrayCapacity;
    }

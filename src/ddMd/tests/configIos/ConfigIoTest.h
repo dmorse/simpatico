@@ -136,37 +136,23 @@ public:
       domain.readParam(file);
       buffer.readParam(file);
 
-      // Domain and buffer must be initialized before the Distributor
-      // and Collector objects can be associated and allocated
-      atomStorage.distributor().associate(domain, boundary, atomStorage, buffer);
-      atomStorage.collector().associate(domain, atomStorage, buffer);
-      atomStorage.distributor().allocate(100);
-      atomStorage.collector().allocate(100);
+      atomStorage.associate(domain, boundary, buffer);
       atomStorage.readParam(file);
    
       #ifdef INTER_BOND
-      bondStorage.distributor().associate(domain, atomStorage, bondStorage, buffer);
-      bondStorage.collector().associate(domain, bondStorage, buffer);
-      bondStorage.distributor().allocate(100);
-      bondStorage.collector().allocate(100);
+      bondStorage.associate(domain, atomStorage, buffer);
       bondStorage.readParam(file);
       #endif
    
       #ifdef INTER_ANGLE
       if (hasAngle) {
-         angleStorage.distributor().associate(domain, atomStorage, angleStorage, buffer);
-         angleStorage.collector().associate(domain, angleStorage, buffer);
-         angleStorage.distributor().allocate(100);
-         angleStorage.collector().allocate(100);
+         angleStorage.associate(domain, atomStorage, buffer);
          angleStorage.readParam(file);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (hasDihedral) {
-         dihedralStorage.distributor().associate(domain, atomStorage, dihedralStorage, buffer);
-         dihedralStorage.collector().associate(domain, dihedralStorage, buffer);
-         dihedralStorage.distributor().allocate(100);
-         dihedralStorage.collector().allocate(100);
+         dihedralStorage.associate(domain, atomStorage, buffer);
          dihedralStorage.readParam(file);
       }
       #endif

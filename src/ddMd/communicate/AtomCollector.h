@@ -37,7 +37,7 @@ namespace DdMd
    *
    *    // Initialization
    *    collector.associate(domain, storage, buffer);
-   *    collector.allocate(100);
+   *    collector.setCapacity(100);
    *
    *    // Communication
    *    if (domain.gridRank() == 0) {  // if master processor
@@ -73,16 +73,19 @@ namespace DdMd
       /**
       * Initialize pointers to associated objects.
       *
-      * Call on all processors, only once.
+      * Call on all processors, only once, before first call to setup.
       */
       void associate(Domain& domain, AtomStorage& storage, Buffer& buffer);
 
       /**
-      * Allocate cache on master processor.
+      * Set cache capacity on master processor.
       *
-      * Call only on the master processor, only once.
+      * Call oly once on master processors, before first call to setup.
+      * Calling on other processors has no effect, but does no harm.
+      *
+      * \param recvArrayCapacity size of array used to receive atoms.
       */
-      void allocate(int cacheSize);
+      void setCapacity(int recvArrayCapacity);
 
       /**
       * Setup master processor for receiving.

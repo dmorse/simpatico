@@ -54,10 +54,10 @@ namespace DdMd
    }
 
    /*
-   * Allocate cache (call only on master).
+   * Set recvaray capacity (only needed on master).
    */
    template <int N>
-   void GroupCollector<N>::allocate(int recvArrayCapacity)
+   void GroupCollector<N>::setCapacity(int recvArrayCapacity)
    {
       if (recvArray_.capacity() > 0) {
          UTIL_THROW("Attempt to re-allocate receive cache");

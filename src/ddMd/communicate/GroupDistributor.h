@@ -124,7 +124,7 @@ namespace DdMd
       *
       * \param cacheCapacity max number of groups cached for sending
       */
-      void allocate(int cacheCapacity);
+      void setCapacity(int cacheCapacity);
 
       /**
       * Read cacheCapacity, allocate memory and initialize object.
