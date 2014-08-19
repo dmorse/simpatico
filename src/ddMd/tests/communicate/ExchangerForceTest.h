@@ -186,29 +186,17 @@ void ExchangerForceTest::initialize()
    buffer.readParam(file());
    random.readParam(file());
 
-   // Domain and buffer must be initialized before the Distributor
-   // and Collector objects can be associated and allocated
-   atomStorage.distributor().allocate(100);
-   atomStorage.collector().allocate(100);
    atomStorage.readParam(file());
-
    #ifdef INTER_BOND
-   bondStorage.distributor().allocate(100);
-   bondStorage.collector().allocate(100);
    bondStorage.readParam(file());
    #endif
-
    #ifdef INTER_ANGLE
    if (hasAngle) {
-      angleStorage.distributor().allocate(100);
-      angleStorage.collector().allocate(100);
       angleStorage.readParam(file());
    }
    #endif
    #ifdef INTER_DIHEDRAL
    if (hasDihedral) {
-      dihedralStorage.distributor().allocate(100);
-      dihedralStorage.collector().allocate(100);
       dihedralStorage.readParam(file());
    }
    #endif
