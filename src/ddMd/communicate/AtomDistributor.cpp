@@ -38,7 +38,7 @@ namespace DdMd
       bufferPtr_(0),
       #endif
       newPtr_(0),
-      cacheCapacity_(0),
+      cacheCapacity_(1024),
       sendCapacity_(0),
       rankMaxSendSize_(0),
       nCachedTotal_(0),
@@ -70,7 +70,12 @@ namespace DdMd
    * Set cache capacity.
    */
    void AtomDistributor::setCapacity(int cacheCapacity)
-   {  cacheCapacity_ = cacheCapacity; }
+   {  
+      if (cache_.capacity() > 0) { 
+         UTIL_THROW("Attempt to set cacheCapacity after allocation");
+      } 
+      cacheCapacity_ = cacheCapacity; 
+   }
 
    /*
    * Read cacheCapacity.

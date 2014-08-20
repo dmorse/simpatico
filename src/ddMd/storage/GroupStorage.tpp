@@ -126,11 +126,6 @@ namespace DdMd
          groupPtrs_[i] = 0;
       }
 
-      // Set cache capacities for distributor and collector.
-      int cacheCapacity = 256;
-      distributor_.setCapacity(cacheCapacity);
-      collector_.setCapacity(cacheCapacity);
-
    }
 
    // Local group mutators

@@ -34,12 +34,18 @@ namespace DdMd
    * Usage:
    * \code
    *
-   *    AtomDistributor   distributor;
-   *    AtomStorage   storage;
-   *    Atom*         ptr;
-   *    std::ifstream file
+   *    AtomDistributor distributor;
    *
-   *    if (rank = 0) {  // If master processor
+   *    Domain domain;
+   *    Boundary boundary;
+   *    AtomStorage storage;
+   *    Buffer buffer;
+   *    associate(domain, boundary, atomStorage, buffer);
+   *
+   *    if (rank = 0) {  // If master processorz
+   *
+   *       Atom* ptr;
+   *       std::ifstream file
    *
    *       distributor.setup();
    *
@@ -88,42 +94,35 @@ namespace DdMd
       ~AtomDistributor();
 
       /**
-      * Set pointers to Domain, Boundary, AtomStorage, and Buffer.
+      * Set pointers to associated objects.
       *
       * This method must be called on all nodes, before any other.
       *
-      * \param boundary      Boundary object (periodic boundary conditions)
-      * \param domain        Domain object (processor grid)
-      * \param storage       AtomStorage object (processor grid)
-      * \param buffer        Buffer used for communication
+      * \param boundary  Boundary object (periodic boundary conditions)
+      * \param domain    Domain object (processor grid)
+      * \param storage   AtomStorage object (Atom container)
+      * \param buffer    Buffer object (for communication)
       */
       void associate(Domain& domain, Boundary& boundary,
                      AtomStorage& storage, Buffer& buffer);
 
       /**
-      * Set cacheCapacity, allocate memory and initialize object.
+      * Set capacity of the send cache on the master node.
       *
-      * This method must be called on all nodes, after associate().
+      * This method may be called on master processor before the first
+      * invokation of setup. Calling it on other processors has no 
+      * effect, but does no harm. 
       *
-      * This method and readParameters both allocate all required memory
-      * and initialize the AtomDistributor. Memory for a temporary read
-      * cache is alocated only on the master.
-      *
-      * If cacheCapacity < 0, this sets a default value large enough to
-      * accomodate full send buffers for all processors simultaneously.
-      *
-      * Preconditions: The associate() function must have been called, 
-      * the Domain and Buffer must be initialized.
+      * Setting cacheCapacity < 0 enables computation of a default value 
+      * large enough to accomodate full send buffers for all processors 
+      * simultaneously.
       *
       * \param cacheCapacity max number of atoms cached for sending
       */
       void setCapacity(int cacheCapacity);
 
       /**
-      * Read cacheCapacity, allocate memory and initialize object.
-      *
-      * This method reads cacheCapacity from file, and then goes through
-      * the same initialization steps as AtomDistributor::initialize().
+      * Read cacheCapacity.
       *
       * \param in input stream from which parameter is read.
       */
@@ -131,10 +130,12 @@ namespace DdMd
 
       #ifdef UTIL_MPI
       /**
-      * Initialize buffer before the loop over atoms.
+      * Initialization before the loop over atoms on master processor.
       *
-      * This method should be called only by the master processor,
-      * just before entering the loop to read atoms from file.
+      * This method may only be called on the master processor,
+      * just before entering the loop to read atoms from file. It
+      * must be called after associate(), and after the associated
+      * Domain and Buffer objects are initialized.
       */
       void setup();
       #endif

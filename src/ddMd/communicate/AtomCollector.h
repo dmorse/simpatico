@@ -37,7 +37,6 @@ namespace DdMd
    *
    *    // Initialization
    *    collector.associate(domain, storage, buffer);
-   *    collector.setCapacity(100);
    *
    *    // Communication
    *    if (domain.gridRank() == 0) {  // if master processor

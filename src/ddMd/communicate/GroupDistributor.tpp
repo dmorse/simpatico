@@ -34,7 +34,7 @@ namespace DdMd
       sendType_(Buffer::NONE),
       nAtomRecv_(0),
       nSentTotal_(0),
-      cacheCapacity_(0),
+      cacheCapacity_(1024), 
       cacheSize_(0)
    {  setClassName("GroupDistributor"); }
 
@@ -61,20 +61,26 @@ namespace DdMd
    }
 
    /*
-   * Set cache capacity and allocate all required memory.
+   * Set cache capacity.
    */
    template <int N>
    void GroupDistributor<N>::setCapacity(int cacheCapacity)
-   {  cacheCapacity_ = cacheCapacity; }
+   {  
+      if (cacheCapacity <= 0) {
+         UTIL_THROW("Attempt to set nonpositive cacheCapacity");
+      }  
+      if (cache_.capacity() > 0) { 
+         UTIL_THROW("Attempt to set cacheCapacity after allocation");
+      } 
+      cacheCapacity_ = cacheCapacity; 
+   }
 
    /*
    * Read cacheCapacity and allocate all required memory.
    */
    template <int N>
    void GroupDistributor<N>::readParameters(std::istream& in)
-   {
-      read<int>(in, "cacheCapacity", cacheCapacity_);
-   }
+   {  read<int>(in, "cacheCapacity", cacheCapacity_); }
 
    /*
    * Setup master before distribution. Call only on master.
