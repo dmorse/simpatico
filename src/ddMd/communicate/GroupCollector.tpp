@@ -27,7 +27,7 @@ namespace DdMd
       storagePtr_(0),
       bufferPtr_(0),
       source_(-1),
-      recvArrayCapacity_(0),
+      recvArrayCapacity_(256),
       recvBufferSize_(-1),
       recvArraySize_(-1),
       recvArrayId_(-1),
@@ -54,14 +54,17 @@ namespace DdMd
    }
 
    /*
-   * Allocate cache (call only on master).
+   * Set recvArray capacity (only needed on master).
    */
    template <int N>
-   void GroupCollector<N>::allocate(int recvArrayCapacity)
-   {
-      if (recvArray_.capacity() > 0) {
-         UTIL_THROW("Attempt to re-allocate receive cache");
-      }
+   void GroupCollector<N>::setCapacity(int recvArrayCapacity)
+   {  
+      if (recvArrayCapacity <= 0) {
+         UTIL_THROW("Attempt to set nonpositive recvArrayCapacity");
+      }  
+      if (recvArray_.capacity() > 0) { 
+         UTIL_THROW("Attempt to set recvArrayCapacity after allocation");
+      } 
       recvArrayCapacity_ = recvArrayCapacity; 
    }
 

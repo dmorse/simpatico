@@ -28,7 +28,7 @@ namespace DdMd
       bufferPtr_(0),
       source_(-1),
       recvBufferSize_(-1),
-      recvArrayCapacity_(0),
+      recvArrayCapacity_(256),
       recvArraySize_(-1),
       recvArrayId_(-1),
       isComplete_(false)
@@ -56,9 +56,15 @@ namespace DdMd
    /*
    * Set recvArray cache capacity.
    */
-   void AtomCollector::allocate(int recvArrayCapacity)
+   void AtomCollector::setCapacity(int recvArrayCapacity)
    {
-      recvArrayCapacity_ = recvArrayCapacity;
+      if (recvArrayCapacity <= 0) {
+         UTIL_THROW("Attempt to set nonpositive recvArrayCapacity");
+      }  
+      if (recvArray_.capacity() > 0) { 
+         UTIL_THROW("Attempt to set recvArrayCapacity after allocation");
+      } 
+      recvArrayCapacity_ = recvArrayCapacity; 
    }
 
    /*

@@ -125,6 +125,7 @@ namespace DdMd
       for (int i = 0; i < totalCapacity_; ++i) {
          groupPtrs_[i] = 0;
       }
+
    }
 
    // Local group mutators

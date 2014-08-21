@@ -471,22 +471,6 @@ namespace DdMd
       readParamComposite(in, buffer_);
       readPotentialStyles(in);
 
-      // Domain and buffer must be initialized before distributors can be allocated.
-      atomStorage_.distributor().allocate(100);
-      atomStorage_.collector().allocate(100);
-      #ifdef INTER_BOND
-      bondStorage_.distributor().allocate(100);
-      bondStorage_.collector().allocate(100);
-      #endif
-      #ifdef INTER_ANGLE
-      angleStorage_.distributor().allocate(100);
-      angleStorage_.collector().allocate(100);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralStorage_.distributor().allocate(100);
-      dihedralStorage_.collector().allocate(100);
-      #endif
-
       // Create and read potential energy classes
 
       #ifndef DDMD_NOPAIR
@@ -681,22 +665,6 @@ namespace DdMd
 
       // Load potentials styles and parameters
       loadPotentialStyles(ar);
-
-      // Domain and buffer must be initialized before distributors can be allocated.
-      atomStorage_.distributor().allocate(100);
-      atomStorage_.collector().allocate(100);
-      #ifdef INTER_BOND
-      bondStorage_.distributor().allocate(100);
-      bondStorage_.collector().allocate(100);
-      #endif
-      #ifdef INTER_ANGLE
-      angleStorage_.distributor().allocate(100);
-      angleStorage_.collector().allocate(100);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralStorage_.distributor().allocate(100);
-      dihedralStorage_.collector().allocate(100);
-      #endif
 
       #ifndef DDMD_NOPAIR
       // Pair Potential

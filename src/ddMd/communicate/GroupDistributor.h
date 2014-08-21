@@ -39,15 +39,20 @@ namespace DdMd
    * 
    *    GroupDistributor  distributor;
    *    GroupStorage<N>   groupStorage;
+   *    Domain&           domain;
+   *    AtomStorage       atomStorage, 
+   *    Buffer            buffer;
+   *    distributor.associate(Domain, atomStorage, GroupStorage, buffer);
+   *
    *    DArray<int>       atomOwners;
    *    Group<N>*         ptr;
-   *    std::ifstream file
    *
    *    if (rank = 0) {  // If master processor
    *
    *       distributor.setup();
    *
    *       // Read from file
+   *       std::ifstream file
    *       for (i = 0; i < nGroup; ++i) {
    *
    *           ptr = distributor.newPtr();
@@ -124,7 +129,7 @@ namespace DdMd
       *
       * \param cacheCapacity max number of groups cached for sending
       */
-      void allocate(int cacheCapacity);
+      void setCapacity(int cacheCapacity);
 
       /**
       * Read cacheCapacity, allocate memory and initialize object.
