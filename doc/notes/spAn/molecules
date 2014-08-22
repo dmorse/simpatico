@@ -1,8 +1,8 @@
 Goal: 
 
-Add data structures that are accessible from a MdPp::Processor that allow 
-access of atoms via the identifier speciesId, moleculeId, atomId that is 
-stored in a DdMd::AtomContext.
+Add data structures that are accessible from a SpAn::Configuration that 
+allow access of atoms via the identifier speciesId, moleculeId, atomId 
+that is stored in a DdMd::AtomContext.
 
 -----------------------------------------------------------------------------
 Design constraints / decisions:
@@ -12,12 +12,12 @@ for DdMd contain AtomContext information. The processor must be able to read
 and analyze atoms and groups, and carry out operations that do not require 
 AtomContext information when the input file format does not contain this
 information. This means, specifically, that the data structures involving
-species and molecules should be created after all atoms and groups are 
-read from file. 
+species and molecules should be created after all atoms and groups are read 
+from file. 
 
-2) Code in the MdPp namespace should not depend on any code or preprocessor
-macros defined in the DdMd namespace, though it does depend on Util and Iter
-namespace. The code for processing molecules and species should thus 
+2) Code in the SpAn namespace should not depend on any code or preprocessor
+macros defined in the DdMd namespace, though it does depend on Util and 
+Inter namespace. The code for processing molecules and species should thus 
 always be compiled, rather than being conditionally compiled under the 
 control of a preprocessor. Since some file formats will not contain this
 information, the user must then have a way of enabling or disabling this 
@@ -42,7 +42,7 @@ molecule.  This is to allow inter-molecular links (e.g., for polymer
 networks), and to simplify the required validity checks. We could consider 
 giving users the option of declaring that this constraint should be
 satisfied - if declared, it could be checked after reading an input file.
-The initial version of the code should, however, not assume anything 
+The initial version of the code should not, however, not assume anything 
 about the relationship between covalent groups and molecules. 
 
 5) Wouldn't it be cool if we had some code that could infer molecules and
@@ -51,9 +51,9 @@ AtomContext info accordingly? This should be considered for later addition,
 but not included in the initial version.
 
 ---------------------------------------------------------------------------
-Proposed additions to MdPp::Processor class:
+Proposed additions to SpAn::Configuration class:
 
-class Processor 
+class Configuration 
 {
 public:
 
@@ -62,9 +62,6 @@ public:
    int nSpecies() const;
 
 private:
-
-   /// This already exists (just a reminder)
-   DSArray<Atoms> atoms_;
 
    DArray<Species> species_;
 
@@ -75,7 +72,7 @@ private:
 
 };
 
-void Processor::readParameters(std::ifstream& in)
+void Configuration::readParameters(std::ifstream& in)
 {
 
    // Existing code:

@@ -10,8 +10,8 @@ processing entire molecules, which is difficult to do in a parallel
 code because molecules can span multiple processors.
 
 ----------------------------------------------------------------------
-Proposal: Create a new name space, named MdPp (molecular dynamics post
-processor) for the classes used to construct this post-processor
+Proposal: Create a new name space, named SpAn (single processor
+analysis) for the classes used to construct this post-processor
 analysis program or programs.
 
 Rationale:  The new code will require data structures to store 
@@ -34,35 +34,26 @@ use in a simulation and for use in a post-processor that makes it
 seem easier to simply define new version of these in a new namespace.
 
 --------------------------------------------------------------------
-Proposed Classes in MdPp:
+Proposed Classes in SpAn:
 
-   Processor - a master class, analogous to DdMd Simulation
-   Analyzer  - an abstract base class, analogous to DdMd::Analyzer
-   ConfigIo  - an abstract base class, analogous to DdMd::ConfigIo
-   Atom      - analogous to DdMd::Atom
-   Group     - analogous to DdMd::Group
+   Atom          - analogous to DdMd::Atom
+   Group         - analogous to DdMd::Group
+   AtomStorage   - analogous to DdMd::Atom
+   GroupStorage  - analogous to DdMd::Atom
+   Configuration - holds atom and group storages and a boundary
+   ConfigIo      - an abstract base class, analogous to DdMd::ConfigIo
+   Processor     - a master class, analogous to DdMd Simulation
+   Analyzer      - an abstract base class, analogous to DdMd::Analyzer
 
    We may consider adding potentials later, but can start with this.
-
 --------------------------------------------------------------------
-MdPp::Atom:
+SpAn::Atom:
 
-    Similar to DdMd::Atom, but without pseudo-members. All members
-    are real members of the object. 
+   Similar to DdMd::Atom, but without pseudo-members. All members
+   are real members of the object. 
 --------------------------------------------------------------------
-MdPp::Group<N>
+SpAn::Group<N>
 
-    Similar to DdMd::Group<N>, but stores only atom ids, rather than
-    pointers to atoms. Atoms will be accessible by id. 
+   Similar to DdMd::Group<N>, but stores only atom ids, rather than
+   pointers to atoms. Atoms will be accessible by id. 
 
---------------------------------------------------------------------
-MdPp::Processor class:
-
-   Data structures (differences from DdMd):
-
-   1) A Processor will store both atoms and groups in simple arrays,
-      and will access by id.
-   2) To allow for missing ids, a processor will also provide iterators.
-   3) Groups will only store ids, rather than pointers.
-
-   see Processor.h for draft.
