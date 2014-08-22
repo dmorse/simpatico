@@ -27,117 +27,122 @@ namespace SpAn
    class Species {
    public:
    
-     typedef ArrayIterator<Molecule> MoleculeIterator;
+      typedef ArrayIterator<Molecule> MoleculeIterator;
 
-     /**
-     * Constructor.
-     */
-     Species();
+      /**
+      * Constructor.
+      */
+      Species();
   
-     /**
-     * Set the index for this species.
-     *
-     * \param id species index
-     */ 
-     void setId(int id);
+      /**
+      * Set the index for this species.
+      *
+      * \param id species index
+      */ 
+      void setId(int id);
    
-     /**
-     * Initialize memory for this species and set sizes.
-     *
-     * \param nAtom number of atoms per molecule (exact)
-     * \param capacity maximum number of molecules in species
-     */ 
-     void initialize(int nAtom, int capacity);
+      /**
+      * Initialize memory for this species and set sizes.
+      *
+      * \param nAtom number of atoms per molecule (exact)
+      * \param capacity maximum number of molecules in species
+      */ 
+      void initialize(int nAtom, int capacity);
   
-     /**
-     * Initialize memory for this species.
-     */ 
-     void initialize();
+      /**
+      * Initialize memory for this species.
+      */ 
+      void initialize();
    
-     /**
-     * Add an atom to the species.
-     *
-     * \param atom Atom object to be added, must have AtomContext info.
-     */ 
-     void addAtom(Atom& atom);
+      /**
+      * Add an atom to the species.
+      *
+      * \param atom Atom object to be added, must have AtomContext info.
+      */ 
+      void addAtom(Atom& atom);
 
-     /**
-     * Clear all molecules, reset to empty.
-     */ 
-     void clear();
+      /**
+      * Clear all molecules, reset to empty.
+      */ 
+      void clear();
   
-     /**
-     * Initialize an iterator over molecules.
-     */ 
-     void begin(MoleculeIterator& iterator);
+      /**
+      * Initialize an iterator over molecules.
+      */ 
+      void begin(MoleculeIterator& iterator);
   
-     /**
-     * Return a specific molecule by reference
-     *
-     * \param i molecule index
-     */ 
-     Molecule& molecule(int i);
+      /**
+      * Return a specific molecule by reference
+      *
+      * \param i molecule index
+      */ 
+      Molecule& molecule(int i);
   
-     /** 
-     * Return integer id for this species.
-     */
-     int id() const;
+      /** 
+      * Return integer id for this species.
+      */
+      int id() const;
   
-     /** 
-     * Return number of atoms per molecule.
-     */
-     int nAtom() const;
+      /** 
+      * Return number of atoms per molecule.
+      */
+      int nAtom() const;
   
-     /** 
-     * Return number of molecules in this species (=maximum id + 1)
-     */
-     int size() const;
+      /** 
+      * Return number of molecules in this species (=maximum id + 1)
+      */
+      int size() const;
    
-     /** 
-     * Return maximum number of molecules in this species.
-     */
-     int capacity() const;
-   
-     bool isValid() const;
+      /** 
+      * Return maximum number of molecules in this species.
+      */
+      int capacity() const;
+ 
+      /**
+      * Return true if valid, or throw Exception.
+      */ 
+      bool isValid() const;
    
    private:
 
-     /**  
-     * Array of pointers to atoms, ordered by molecule.
-     */
-     DArray<Atom*> atomPtrs_;
+      /**  
+      * Array of pointers to atoms, ordered by molecule.
+      *
+      * Capacity = (molecule capacity)*(# atoms per molecule)
+      */
+      DArray<Atom*> atomPtrs_;
 
-     /**
-     * Array of molecules, each associated with a block in atomPtrs_.
-     *
-     * Molecules are ordered by molecule id, as stored in the atoms.
-     * The size of the array is always one greater than the maximum
-     * id of a molecule for which one or more atoms have been added.
-     */
-     DSArray<Molecule> molecules_;
+      /**
+      * Array of molecules, each associated with a block in atomPtrs_.
+      *
+      * Molecules are ordered by molecule id, as stored in the atoms.
+      * The size of the array is always one greater than the maximum
+      * id of a molecule for which one or more atoms have been added.
+      */
+      DSArray<Molecule> molecules_;
   
-     /** 
-     * Species index.
-     */
-     int id_;
+      /** 
+      * Species index.
+      */
+      int id_;
    
-     /** 
-     * Number of atoms per molecule in this molecular species.
-     */
-     int nAtom_;
+      /** 
+      * Number of atoms per molecule in this molecular species.
+      */
+      int nAtom_;
   
-     /** 
-     * Maximum number of molecules in this species.
-     */
-     int capacity_;
+      /** 
+      * Maximum number of molecules in this species.
+      */
+      int capacity_;
    
    //friends:
    
-     friend 
-     std::istream& operator >> (std::istream& in, Species& species);
+      friend 
+      std::istream& operator >> (std::istream& in, Species& species);
 
-     friend 
-     std::ostream& operator << (std::ostream& out, const Species& species);
+      friend 
+      std::ostream& operator << (std::ostream& out, const Species& species);
    
    };
 
@@ -167,9 +172,7 @@ namespace SpAn
    * Return a specific molecule. 
    */
    inline Molecule& Species::molecule(int i)
-   {
-      return molecules_[i]; 
-   }
+   {  return molecules_[i]; }
 
    /* 
    * Return integer id for this species.
@@ -178,19 +181,19 @@ namespace SpAn
    {  return id_; }
 
    /* 
-   * Return number of atoms per molecule.
+   * Return the number of atoms per molecule.
    */
    inline int Species::nAtom() const
    {  return nAtom_; }
 
    /* 
-   * Number of molecules (maximum molecule id + 1).
+   * Return the number of molecules (maximum molecule id + 1).
    */
    inline int Species::size() const
    {  return molecules_.size(); }
 
    /* 
-   * Maximum number of molecules (memory capacity).
+   * Return the maximum number of molecules (memory capacity).
    */
    inline int Species::capacity() const
    {  return capacity_; }

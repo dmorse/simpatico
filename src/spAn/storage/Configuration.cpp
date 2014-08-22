@@ -123,5 +123,15 @@ namespace SpAn
       #endif
    }
 
+   void Configuration::makeSpecies()
+   {
+      int speciesId;
+      AtomStorage::Iterator iter;
+      for (atoms_.begin(iter); iter.notEnd(); ++iter) {
+         speciesId = iter->speciesId;
+         species_[speciesId].addAtom(*iter);
+      }
+   }
+
 }
 #endif

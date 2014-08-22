@@ -113,6 +113,11 @@ namespace SpAn
       */
       Species& species(int i);
 
+      /**
+      * Add all atoms to species.
+      */
+      void makeSpecies();
+
    private:
      
       /// Boundary object defines periodic boundary conditions.
