@@ -93,9 +93,9 @@ namespace SpAn
       if (nSpecies_ > 0) {
          species_.allocate(nSpecies_);
          for (int i = 0; i < nSpecies_; ++i) {
-            in >> species_[i];
             species_[i].setId(i);
          }
+         readDArray<Species>(in, "species", species_, nSpecies_);
       }
 
    }
@@ -121,16 +121,6 @@ namespace SpAn
          dihedrals_.clear();
       }
       #endif
-   }
-
-   void Configuration::makeSpecies()
-   {
-      int speciesId;
-      AtomStorage::Iterator iter;
-      for (atoms_.begin(iter); iter.notEnd(); ++iter) {
-         speciesId = iter->speciesId;
-         species_[speciesId].addAtom(*iter);
-      }
    }
 
 }

@@ -24,24 +24,28 @@ public:
     : processor_()
    {}
 
-   virtual void setUp()
-   { 
-      std::ifstream file;
-      openInputFile("in/Processor", file);
-      processor_.readParam(file); 
-      file.close(); 
-   }
+   void readParam(const char* filename);
 
    void testReadParam();
    void testAddAtoms();
-   void testReadConfig();
-   void testWriteConfig();
+   void testReadConfig1();
+   void testWriteConfig1();
+   void testReadConfig2();
 
 };
 
+inline void ProcessorTest::readParam(const char* filename)
+{ 
+   std::ifstream file;
+   openInputFile(filename, file);
+   processor_.readParam(file); 
+   file.close(); 
+}
+
 inline void ProcessorTest::testReadParam()
-{  
+{
    printMethod(TEST_FUNC); 
+   readParam("in/Processor");
    if (verbose() > 0) {
       processor_.writeParam(std::cout);
    }
@@ -51,6 +55,7 @@ inline void ProcessorTest::testReadParam()
 inline void ProcessorTest::testAddAtoms()
 {
    printMethod(TEST_FUNC);
+   readParam("in/Processor");
 
    Atom* atomPtr22;
    atomPtr22 = processor_.atoms().newPtr();
@@ -80,29 +85,69 @@ inline void ProcessorTest::testAddAtoms()
    TEST_ASSERT(processor_.atoms().size() == 3);
 }
 
-inline void ProcessorTest::testReadConfig()
+inline void ProcessorTest::testReadConfig1()
 {
    printMethod(TEST_FUNC);
+   readParam("in/Processor");
    std::ifstream file;
    openInputFile("in/config", file);
    processor_.readConfig(file);
    file.close();
 }
 
-inline void ProcessorTest::testWriteConfig()
+inline void ProcessorTest::testWriteConfig1()
 {
    printMethod(TEST_FUNC);
+   readParam("in/Processor");
    std::ofstream file;
    openOutputFile("out/config", file);
    processor_.writeConfig(file);
    file.close();
 }
 
+inline void ProcessorTest::testReadConfig2()
+{
+   printMethod(TEST_FUNC);
+   //ParamComponent::setEcho(true);
+   readParam("in/Processor.2");
+   TEST_ASSERT(processor_.nSpecies() == 1);
+   processor_.setConfigIo("DdMdConfigIo_Molecule");
+   std::ifstream file;
+   openInputFile("in/config.2", file);
+   processor_.readConfig(file);
+   file.close();
+   TEST_ASSERT(processor_.species(0).size() == 8);
+
+   #if 0
+   Species* speciesPtr;
+   Species::Iterator mIter; 
+   Atom* atomPtr;
+   int nSpecies = processor_.nSpecies();
+   int i;
+   for (int is = 0; is < nSpecies; ++is) {
+      speciesPtr = &processor_.species(is);
+      for (speciesPtr->begin(mIter); mIter.notEnd(); ++mIter) {
+         for (i = 0; i < speciesPtr->nAtom(); ++i) {
+            atomPtr = &mIter->atom(i);
+            std::cout << atomPtr->id << " "
+                      << atomPtr->typeId << " "
+                      << atomPtr->speciesId << " "
+                      << atomPtr->moleculeId << " "
+                      << atomPtr->atomId << " "
+                      << atomPtr->position << " "
+                      << std::endl;
+         }
+      }
+   }
+   #endif
+}
+
 TEST_BEGIN(ProcessorTest)
 TEST_ADD(ProcessorTest, testReadParam)
 TEST_ADD(ProcessorTest, testAddAtoms)
-TEST_ADD(ProcessorTest, testReadConfig)
-TEST_ADD(ProcessorTest, testWriteConfig)
+TEST_ADD(ProcessorTest, testReadConfig1)
+TEST_ADD(ProcessorTest, testWriteConfig1)
+TEST_ADD(ProcessorTest, testReadConfig2)
 TEST_END(ProcessorTest)
 
 #endif

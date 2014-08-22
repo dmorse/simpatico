@@ -106,18 +106,28 @@ namespace SpAn
       #endif
 
       // Optionally add atoms to species
-      if (configuration().nSpecies() > 0) {
+      int nSpecies = configuration().nSpecies();
+      if (nSpecies > 0) {
          if (!hasMolecules_) {
             UTIL_THROW("No atom context info in chosen ConfigIo");
+         }
+         for (int i = 0; i < nSpecies; ++i) {
+            configuration().species(i).clear();
          }
          int speciesId;
          AtomStorage::Iterator iter;
          configuration().atoms().begin(iter);
          for ( ; iter.notEnd(); ++iter) {
             speciesId = iter->speciesId;
+            if (speciesId < 0) {
+               UTIL_THROW("Negative speciesId");
+            }
+            if (speciesId >= nSpecies) {
+               UTIL_THROW("speciesId >= nSpecies");
+            }
             configuration().species(speciesId).addAtom(*iter);
          }
-         for (int i = 0; configuration().nSpecies(); ++i) {
+         for (int i = 0; i < nSpecies; ++i) {
             configuration().species(i).isValid();
          }
       }

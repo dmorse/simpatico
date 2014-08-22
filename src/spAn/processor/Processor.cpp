@@ -94,9 +94,6 @@ namespace SpAn
    {
       clear();  
       configIo().readConfig(in); 
-      if (nSpecies() > 0) {
-         makeSpecies();    
-      }
    }
 
    /*

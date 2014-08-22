@@ -27,7 +27,7 @@ namespace SpAn
    class Species {
    public:
    
-      typedef ArrayIterator<Molecule> MoleculeIterator;
+      typedef ArrayIterator<Molecule> Iterator;
 
       /**
       * Constructor.
@@ -50,11 +50,6 @@ namespace SpAn
       void initialize(int nAtom, int capacity);
   
       /**
-      * Initialize memory for this species.
-      */ 
-      void initialize();
-   
-      /**
       * Add an atom to the species.
       *
       * \param atom Atom object to be added, must have AtomContext info.
@@ -69,7 +64,7 @@ namespace SpAn
       /**
       * Initialize an iterator over molecules.
       */ 
-      void begin(MoleculeIterator& iterator);
+      void begin(Iterator& iterator);
   
       /**
       * Return a specific molecule by reference
@@ -102,6 +97,12 @@ namespace SpAn
       * Return true if valid, or throw Exception.
       */ 
       bool isValid() const;
+
+      /**
+      * Serialize to/from an archive.
+      */
+      template <class Archive>
+      void serialize(Archive& ar, const unsigned int version);
    
    private:
 
@@ -135,6 +136,11 @@ namespace SpAn
       * Maximum number of molecules in this species.
       */
       int capacity_;
+   
+      /**
+      * Initialize memory for this species.
+      */ 
+      void initialize();
    
    //friends:
    
@@ -198,5 +204,18 @@ namespace SpAn
    inline int Species::capacity() const
    {  return capacity_; }
  
+   /*
+   * Serialize to/from an archive.
+   */
+   template <class Archive>
+   void Species::serialize(Archive& ar, const unsigned int version)
+   {
+      ar & nAtom_;
+      ar & capacity_;
+      if (Archive::is_loading()) {
+         initialize();
+      }
+   }
+
 }
 #endif

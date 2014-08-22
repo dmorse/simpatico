@@ -67,6 +67,8 @@ namespace SpAn
 
       // Allocate and initialize molecules_ array
       molecules_.allocate(capacity_);
+
+      // Initialize molecules_ array
       molecules_.resize(capacity_); // temporarily resize
       Atom** atomPtr = &atomPtrs_[0];
       for (int i = 0; i < capacity_; ++i) {
@@ -130,7 +132,7 @@ namespace SpAn
    /*
    * Initialized an iterator over molecules in species.
    */
-   void Species::begin(MoleculeIterator& iterator)
+   void Species::begin(Iterator& iterator)
    {  molecules_.begin(iterator); }
 
    /*
@@ -138,45 +140,58 @@ namespace SpAn
    */
    bool Species::isValid() const
    {
-      const Molecule* mPtr;
-      const Atom* aPtr;
-      int ia, im;
-      for (im = 0; im < molecules_.size(); ++im) {
-         mPtr = &(molecules_[im]);
-         if (mPtr->atoms_ != &atomPtrs_[0] + im*nAtom_) {
-            UTIL_THROW("Incorrect assignment of atoms_ in molecule");
-         }
-         if (mPtr->id() != im) {
-            UTIL_THROW("Incorrect molecule id");
-         }
-         if (mPtr->speciesPtr_ != this) {
-            UTIL_THROW("Incorrect species pointer in molecule");
-         }
-         if (mPtr->nAtom_ == nAtom_) {
-            for (ia = 0; ia < nAtom_; ++ia) {
-               aPtr = mPtr->atoms_[ia];
-               if (aPtr == 0) {
-                  UTIL_THROW("Null atom ptr in molecule");
-               }
-               if (aPtr->atomId != ia) {
-                  UTIL_THROW("Inconsistent atom index");
-               }
-               if (aPtr->moleculeId != im) {
-                  UTIL_THROW("Inconsistent molecule index");
-               }
-               if (aPtr->speciesId != id_) {
-                  UTIL_THROW("Inconsistent species index");
-               }
-            } 
-         } else 
-         if (mPtr->nAtom_ == 0) {
-            for (ia = 0; ia < nAtom_; ++ia) {
-               if (mPtr->atoms_[ia] != 0) {
-                  UTIL_THROW("Nonnull atom ptr in empty molecule");
-               }
+      // Check allocation and initialization
+      if (molecules_.capacity() != capacity_) {
+         UTIL_THROW("molecules_ is not allocated");
+      }
+      if (atomPtrs_.capacity() != capacity_*nAtom_) {
+         UTIL_THROW("atomPtrs_ is not allocated");
+      }
+
+      // Check molecules and atoms
+      if (molecules_.size() > 0) {
+         const Molecule* mPtr;
+         const Atom* aPtr;
+         int im, ia;
+         for (im = 0; im < molecules_.size(); ++im) {
+            mPtr = &(molecules_[im]);
+            if (mPtr->atoms_ != &atomPtrs_[0] + im*nAtom_) {
+               UTIL_THROW("Incorrect assignment of atoms_ in molecule");
             }
-         } else {
-            UTIL_THROW("0 != molecule nAtom != species nAtom");
+            if (mPtr->id() != im) {
+               UTIL_THROW("Incorrect molecule id");
+            }
+            if (mPtr->speciesPtr_ != this) {
+               UTIL_THROW("Incorrect species pointer in molecule");
+            }
+            #if 1
+            if (mPtr->nAtom_ == nAtom_) {
+               for (ia = 0; ia < nAtom_; ++ia) {
+                  aPtr = mPtr->atoms_[ia];
+                  if (aPtr == 0) {
+                     UTIL_THROW("Null atom ptr in molecule");
+                  }
+                  if (aPtr->atomId != ia) {
+                     UTIL_THROW("Inconsistent atom index");
+                  }
+                  if (aPtr->moleculeId != im) {
+                     UTIL_THROW("Inconsistent molecule index");
+                  }
+                  if (aPtr->speciesId != id_) {
+                     UTIL_THROW("Inconsistent species index");
+                  }
+               } 
+            } else 
+            if (mPtr->nAtom_ == 0) {
+               for (ia = 0; ia < nAtom_; ++ia) {
+                  if (mPtr->atoms_[ia] != 0) {
+                     UTIL_THROW("Nonnull atom ptr in empty molecule");
+                  }
+               }
+            } else {
+               UTIL_THROW("0 != molecule nAtom != species nAtom");
+            }
+            #endif
          }
       }
       return true;

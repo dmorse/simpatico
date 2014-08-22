@@ -1,5 +1,5 @@
-#ifndef SPAN_STORAGE_H
-#define SPAN_STORAGE_H
+#ifndef SPAN_CONFIGURATION_H
+#define SPAN_CONFIGURATION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -112,11 +112,6 @@ namespace SpAn
       * \param i species index
       */
       Species& species(int i);
-
-      /**
-      * Add all atoms to species.
-      */
-      void makeSpecies();
 
    private:
      

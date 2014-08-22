@@ -100,7 +100,7 @@ namespace SpAn
       // Store initial positions, and set initial shift vectors.
       Vector r;
       IntVector zero(0);
-      Species::MoleculeIterator iter;
+      Species::Iterator iter;
       int i = 0;
 
       processor().species(speciesId_).begin(iter);
@@ -132,7 +132,7 @@ namespace SpAn
       IntVector shift;
       Vector lengths = processor().boundary().lengths();
       int i, j;
-      Species::MoleculeIterator iter;
+      Species::Iterator iter;
 
       i = 0;
       processor().species(speciesId_).begin(iter);
