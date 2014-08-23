@@ -48,7 +48,7 @@ Other available command line options are discussed \ref section_options "below".
 
 \section usage_program_section Program structure
 
-To understand the program flow, it may help to look briefly at the structure of the main program. The main program files for single processor MC and MD simulations are src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp. The main program for parallel MD simulation is src/ddMd/ddSim.cpp. All three programs have a similar structure.  
+To understand the program flow, it may help to look briefly at the structure of a main program. The main program files for single processor MC and MD simulations are src/mcMd/mcSim.cpp and src/mcMd/mdSim.cpp. The main program for parallel MD simulation is src/ddMd/ddSim.cpp. All three programs have a similar structure.  
 
 Here is a slightly simplified version of the main program src/mcMd/mcSim.cpp for MC simulations:
 \code
@@ -73,11 +73,11 @@ This simplified (but functional) version of the program has only four executable
 
   - The first line creates an object named "simulation" that is an instance of the class McMd::McSimulation.  An McMd::McSimulation object represents a complete Monte Carlo (MC) simulation. 
 
-  - The second line invokes the McMd::McSimulation::setOptions() member fucntion, which processes any command line options that are passed to the program.  Some of the available command line options are discussed \ref section_options "below".
+  - The second line invokes the McMd::McSimulation::setOptions() member function. This function processes any command line options that are passed to the program.  Some of the available command line options are discussed \ref section_options "below".
 
-  - The third line invokes the readParam() member function. This function reads a parameter file and initializes the simulation.  Invoking readParam() with no argument (as here) reads the parameter file from standard input. 
+  - The third line invokes the readParam() member function. This function reads a parameter file and initializes the simulation.  Invoking readParam() with no argument, as done here, reads the parameter file from standard input. 
 
-  - The fourth line invokes the readCommands() member function. This function reads the command file, and executes each command in sequence. 
+  - The fourth line invokes the readCommands() member function. This function reads the command file, and executes each command in sequence, until it encounters a command that tells it to stop execution.
 
 The readParam() method does more than read parameters: It is an initialization function that reads parameters, allocates any required memory, and leaves the main simulation object ready for use. 
 
@@ -94,7 +94,7 @@ The parameter file contains all the data required to initialize a simulation, i.
  - The name of the command file.
  - File name prefixes for input and output files.
 
-In mcSim and mdSim simulations, the parameter file also contains data required to describe the chemical structure of every molecular species. In ddSim simulations, this information about molecular structure is instead embedded in the configuration file (discussed below). Examples of parameter file formats for different types of simulation are shown and discussed \ref user_param_page "here".
+In mcSim and mdSim simulations, the parameter file also contains data required to describe the chemical structure (topology) of every molecular species that can appear in the simulation. In ddSim simulations, this information about molecular structure is instead embedded in the configuration file (discussed below). Examples of parameter file formats for different types of simulation are shown and discussed \ref user_param_page "here".
 
 \section usage_command_section Command file
 
@@ -107,23 +107,24 @@ FINISH
 \endcode
 This file instructs the program to read a configuration file named "in", run a simulation of 100000 attempted MC moves, write a final output configuration file to a file named "out", and then stop. The command file is read by a loop that terminates when a line containing only the command FINISH is encountered. A full list of valid commands and their arguments is given \ref user_commands_page "here".
 
-Paths for the input and output files specified in the command file are constructed by concatenating input and output prefix strings that are specified in the parameter file (named inputPrefix and outputPrefix) to file names specified in the command file.  The values of the inputPrefix and outputPrefix strings are often set to directory name strings, which end with a directory separator symbol "/", in order to place all input files in one directory and all output files in another. When this convention is used, the input and output configuration files may be given the same name in the command file (e.g., "config"), because input and output configuration files will be placed in different directories.
+The relative paths to input and output configuration files are constructed by concatenating input and output prefix strings  (named inputPrefix and outputPrefix) that are specified in the parameter file to file names specified as arguments of the READ_CONFIG and WRITE_CONFIG commands in the command file.  By convention, the values of the inputPrefix and outputPrefix strings are often set to directory name strings, which end with a directory separator symbol "/", in order to place input and output files in different directories. Thus, for example, if the parameter file sets inputPrefix=in/ and outputPrefix=out/, then the command "READ_CONFIG config" would read the configuration file in/config, while "WRITE_CONFIG config" would write to the file out/config.
 
 \section usage_cfgfile_section Configuration file
 
-A configuration file specifies atomic positions and other characteristics of a system that can change during the course of a simulation. Slightly different information is required by mcSim, mdSim, and ddSim.  A default configuration file format exists for each of the three programs, each of which can also read and write files using a several other file formats.
+A configuration file specifies atomic positions and other characteristics of a system that can change during the course of a simulation. Slightly different default file formats are used by mcSim, mdSim, and ddSim, each of which can also read and write configuration files using a several non-default file formats.
   
-The default configuration file format for mcSim contains the dimensions of the periodic system boundary, the number of molecules of each molecular species, and the positions of all atoms. The default configuration file format for mdSim also contains the atomic velocities. The default file formats for these two programs do not contain any information about molecular topology (i.e., which atoms are connected to which), because this is already specified in the param file format for these programs.
+The default configuration file format for mcSim contains the dimensions of the periodic system boundary, the number of molecules of each molecular species, and the positions of all atoms. The default configuration file format for mdSim also contains atomic velocities. The default file formats for these two programs do not contain any information about molecular topology (i.e., which atoms are connected to which), because this is already specified in the param file formats for these programs.
 
-The default configuration file format for ddSim contains box dimensions, atomic positions and velocities. Unlike the file formats for mcSim and mdSim, this format also contains structural information about topology, which is given by listing ids for atoms involved in all bond (2-body), angle (3-body) and dihedral (4-body) covalent groups.
+The default configuration file format for ddSim contains periodic boundary dimensions, atomic positions and velocities. Unlike the configuration file formats for mcSim and mdSim, this format also contains structural information about topology. This is given by listing ids for atoms involved in all bond (2-body), angle (3-body) and dihedral (4-body) covalent groups.
 
 Configuration file formats for all programs are described in more detail \ref user_cfgfile_page "here".
 
 \section usage_output_section Output files
 
-Each simulation writes a limited amount of log information report the progress of the simulation. In simulations of a single system, this is log output written to linux standard output. In an interactive job, it will thus appear on the user's screen unless redirected to a file.  
+Each simulation writes a limited amount of log information to report the progress of the simulation and to summarize statistics at the end of a simulation. In simulations of a single system, this is log output written to linux standard output. In an interactive job, it will thus appear on the user's screen unless redirected to a file.  
  
-A variety of other output files may also be written by classes that implement on-the-fly statistical analyses or data output operations, which we refer to as Analyzer classes. Each such data analysis and data output class is a subclasses of either the McMd::Analyzer (for mcSim or mdSim) or DdMd::Analyzer (for ddSim) base class. The parameter file for each type of simulation specifies a set of Analyzer objects that should used during a simulation. Each such object carries out a computation and/or outputs data to file at a specified interval. Each Analyzer writes output to one or more separate files. The path to each such output file is constructed by prepending a common string variable, named outputPrefix, to a base name that is specified in the parameter file block associated with a specific Analyzer.  
+A variety of other output files may also be written by classes that implement on-the-fly statistical analyses or data output operations. These data analysis and data output classes are all subclass of either the McMd::Analyzer (for mcSim or mdSim) or DdMd::Analyzer (for ddSim) base classes, and will thus be referred to generically as analyzer classes. The parameter file for each type of simulation specifies a set of analyzer objects that should used during a simulation. Each such object carries out a computation and/or outputs data to file at a specified interval. Most analyzer classes write output to one or more separate files. Generally, a different output file is used for each analyzer object. The path to each such output file is constructed by prepending a common string variable, named outputPrefix, to a base name that is specified in the parameter file block associated with a specific Analyzer. The convention of setting outputPrefix to a directory name, such as "outputPrefix=out/", thus automatically puts
+all analyzer output files in a single directory. 
 
 The list of analyzers in a parameter file may contain one that specifies that the system configuration be dumped to file periodically during the course of the simulation for later post-processing.
 

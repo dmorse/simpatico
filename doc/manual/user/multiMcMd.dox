@@ -12,7 +12,7 @@ The multi-processor versions of mcSim or mdSim can be invoked in either "indepen
 
 In either mode, conventions for paths to input and ouput file names are different for multi-system simulations than those for single-system simulations. Each processor in an MPI job is assigned a integer "rank" in the range n = 0, ..., np-1, where np is the total number of processors.  In a multiprocessor mcSim or mdSim simulation, all or many of the files associated with a processor with rank "n" are placed in a numbered subdirectory of the working directory named "n/", e.g., in a directory named "3/" for the processor with MPI rank 3. 
 
-\section parallel_independent_sec Independent Simulation Mode
+\section user_multi_independent_sec Independent Simulation Mode
 
 To use a parallel version of mcSim or mdSim to run n completely independent simulations, one simply enters the name of the executable from, such as "mcSim_m" or "mdSim_m", from a directory that contains a set of numbered directories named 0/, 1/, 2/, .. n-1/ associated with different processors. In this mode of operation, every processor reads a completely different set of param, command and configuration input files, all of which are located in a numbered directory associated with that processor. This file convention is enforced by prepending the name of the numbered directory to the names of all input and output files that are opened by the progam, e.g., by prepending a prefix "3/" to the names of any files that are open by the processor with MPI rank 3. This manipulation of file names is done by the FileMaster class. 
 
@@ -45,7 +45,7 @@ from root of a directory tree with a structure
 \endcode
 The command "READ_CONFIG config" in each command file will cause each processor to read the input configuration file "in/config" in the appropriate numbered directory for that processor. When the simulation is run, all configuration and data analysis output files for each processor will be written to the "out" of the corresponding numbered directory. 
 
-\section Replicated Simulations
+\section user_multi_replicated_sec Replicated Simulations
 To invoke an parallel version of mcSim or mdSim in "perturbation" mode, simply invoke the program with the "-p" option. This command line option only functions in versions of the code that were compiled with both MPI enabled.  In this mode, simulations carried out on different processors are controlled by a single parameter file and a single command file, but different parameter values are assigned to different processors.  This mode of operation is required for either free energy perturbation or replica exchange simulations.
 
 For example, to run a MC program in this mode on 3 processors, one might thus enter 
@@ -73,7 +73,7 @@ assuming that commandFileName=="commands" in the param file. Note that in this c
 
 The method by which a single parameter file is used to set different parameter values on different processors involves the use of a Perturbation class, and is discussed below.
 
-\section parallel_perturb_sec Perturbation Classes
+\section user_multi_perturb_sec Perturbation Classes
 
 In perturbation mode, the master processor reads a parameter file, and broadcasts the contents of that file to all the other processors. This establishes a baseline set of parameters that are the same on all processors. The parameter file used in such simulations must also, however, contain a polymorphic block associated with a subclass of the McMd::Perturbation abstract base class. The "Pertubation" object must define how a sequence of different parameter values should be assigned on different processors. The block appears at the end of the block associated with the McSystem or MdSystem.
 
@@ -81,13 +81,13 @@ Each subclass of Perturbation defines how a sequence of slightly different sets 
 
 As a simple example of this, McEnergyPerturbation is a subclass of Perturbation that sets every processor in an MC simulation to a different temperature, or inverse temperature beta, while using the same values for all potential energy parameters on all processors.  The required values of inverse temperature for different processors are input as an array in the parameter file block that is read by McEnergyPerturbation::readParam(), listed in order of the MPI ranks of corresponding processors. The contents of this entire array is broadcast to all processors, and each processor then resets its temperature to a value obtained from the appropriate elements of the array (i.e., processor 4 resets its temperature to the value corresponding to element 4 in this array). 
 
-\section parallel_exchange_sec Replica Exchange 
+\section user_multi_exchange_sec Replica Exchange 
 
 Simpatico provides a replica exchange algorithm, which can be used in multiprocessor MC simulations with any associated Perburbation. The replica exchange algorithm is implemented by the class McMd::ReplicaMove, which implements a Monte Carlo move that exchanges configurations between processors with neighboring MPI ranks. Please see the documentation of the "ReplicaMove" class for further information.
 
 In the parameter file format for an MC simulation in perturbation mode, the block associated with the Perturbation must be followed by a line containing a boolean parameter "hasReplicaMove", which may take on values 1 (true) or 0 (false). This parameter is required only in multi-system replicated simulations. If "hasReplicaMove" is true (1), it must be followed by a parameter block associated with the ReplicaMove class. The ReplicaMove parameter file block a single "interval" parameter that specifies the interval (in MC steps) between subsequent attempted MC moves. 
 
-\section parallel_example_sec Example Parameter File
+\section user_multi_example_sec Example Parameter File
 Show below is an example of a parameter file for a replicated mcSim simulation of a polymer blend, which is simulated on three processors. This example uses the McPairPerturbation subclass of Perturbation to define a sequence of systems with different values of the epsilon parameter for interactions between A and B atoms, and uses a replica exchange move. The parameter block associated with the McPairPerturbation and ReplicaMove appear at the end of the McSystem block.
 
 \code
@@ -211,6 +211,18 @@ McSimulation{
   }
 }
 \endcode
+
+\section user_multi_restart_sec Restarting multi-system simulations 
+
+Is is also possible to restart multi-processor mcSim and mdSim simulations. During the original simulation, the frequency with which restart files should be written and the base name for these files is specified in the parameter file, exactly as for single-system simulations. In multi-system simulations, each processor writes a separate restart file, for both independent and replicate simulations.  The restart file for each processor is placed in the associated numbered directory. For example, if the saveFileName parameter in the original parameter file is "restart", the restart file for processor 2 would be repeatedly written to the file 2/restart.rst.
+
+Different conventions are used for the placement of restart command files for "independent" and "replicated" simulations. Independent simulations use a separate *.rst restart command file for each processor, each of which is placed in the same numbered directory as the associated restart file. Replicated simulations use a single restart command file, which must be placed in the same directory as the single parameter file and command file for the original simulation, which is also the directory from which the mcSim or mdSim executable is invoked. In either case, the base name of the command file or files must be the same as the base name of the restart files.
+
+The command to restart a multi-processor simulation is similar to that for a single-processor simulation. The command to restart a 3 processor mcSim simulation of either independent or replicated systems, using the mcSim_m executable and the mpirun command to launch an MPI program, is
+\code
+   mpirun -np 3 mcSim_m -e -r restart
+\endcode
+Information about whether the original simulation was a simulation of independent or replicated systems is stored within all restart files, and does not need to be specified by a command line option when the simulation is restarted. Invoking an mcSim or mdSim executable with both the "-r" and "-f" options is thus illegal, and will cause execution to halt with an error message.
 
 <BR>
 \ref user_multi_page       (Up)   &nbsp; &nbsp; &nbsp; &nbsp; 
