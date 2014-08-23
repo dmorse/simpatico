@@ -105,30 +105,41 @@ namespace SpAn
       }
       #endif
 
+      #ifdef INTER_ANGLE
+      if (configuration().angles().capacity()) {
+         readGroups(file, "ANGLES", "nAngle", configuration().angles());
+      }
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      if (configuration().dihedrals().capacity()) {
+         readGroups(file, "DIHEDRALS", "nDihedral", configuration().dihedrals());
+      }
+      #endif
+
       // Optionally add atoms to species
-      int nSpecies = configuration().nSpecies();
-      if (nSpecies > 0) {
-         if (!hasMolecules_) {
-            UTIL_THROW("No atom context info in chosen ConfigIo");
-         }
-         for (int i = 0; i < nSpecies; ++i) {
-            configuration().species(i).clear();
-         }
-         int speciesId;
-         AtomStorage::Iterator iter;
-         configuration().atoms().begin(iter);
-         for ( ; iter.notEnd(); ++iter) {
-            speciesId = iter->speciesId;
-            if (speciesId < 0) {
-               UTIL_THROW("Negative speciesId");
+      if (hasMolecules_) {
+         int nSpecies = configuration().nSpecies();
+         if (nSpecies > 0) {
+            for (int i = 0; i < nSpecies; ++i) {
+               configuration().species(i).clear();
             }
-            if (speciesId >= nSpecies) {
-               UTIL_THROW("speciesId >= nSpecies");
+            int speciesId;
+            AtomStorage::Iterator iter;
+            configuration().atoms().begin(iter);
+            for ( ; iter.notEnd(); ++iter) {
+               speciesId = iter->speciesId;
+               if (speciesId < 0) {
+                  UTIL_THROW("Negative speciesId");
+               }
+               if (speciesId >= nSpecies) {
+                  UTIL_THROW("speciesId >= nSpecies");
+               }
+               configuration().species(speciesId).addAtom(*iter);
             }
-            configuration().species(speciesId).addAtom(*iter);
-         }
-         for (int i = 0; i < nSpecies; ++i) {
-            configuration().species(i).isValid();
+            for (int i = 0; i < nSpecies; ++i) {
+               configuration().species(i).isValid();
+            }
          }
       }
    }
@@ -148,12 +159,10 @@ namespace SpAn
       file << configuration().boundary() << std::endl;
       file << std::endl;
 
-      // Atoms
-      int nAtom = configuration().atoms().size();
-      file << "ATOMS" << std::endl;
-      file << "nAtom" << Int(nAtom, 10) << std::endl;
-
       // Write atoms
+      file << "ATOMS" << std::endl;
+      int nAtom = configuration().atoms().size();
+      file << "nAtom" << Int(nAtom, 10) << std::endl;
       Vector r;
       AtomStorage::Iterator iter;
       configuration().atoms().begin(iter);
@@ -174,6 +183,18 @@ namespace SpAn
       #ifdef INTER_BOND
       if (configuration().bonds().capacity()) {
          writeGroups(file, "BONDS", "nBond", configuration().bonds());
+      }
+      #endif
+
+      #ifdef INTER_ANGLE
+      if (configuration().angles().capacity()) {
+         writeGroups(file, "ANGLES", "nAngle", configuration().angles());
+      }
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      if (configuration().dihedrals().capacity()) {
+         writeGroups(file, "DIHEDRALS", "nDihedral", configuration().dihedrals());
       }
       #endif
 

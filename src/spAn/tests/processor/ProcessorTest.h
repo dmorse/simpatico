@@ -113,10 +113,11 @@ inline void ProcessorTest::testReadConfig2()
    TEST_ASSERT(processor_.nSpecies() == 1);
    processor_.setConfigIo("DdMdConfigIo_Molecule");
    std::ifstream file;
-   openInputFile("in/config.2", file);
+   openInputFile("in/config.3", file);
    processor_.readConfig(file);
    file.close();
    TEST_ASSERT(processor_.species(0).size() == 8);
+   TEST_ASSERT(processor_.atoms().size() == 256);
 
    #if 0
    Species* speciesPtr;

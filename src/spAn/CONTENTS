@@ -9,7 +9,9 @@ Subdirectories:
 
 chemistry   atoms, covalent groups (bonds, etc.), molecules and species
 storage     containers for atoms and groups. System represent a configuration
-analyzers   data analysis (classes derived from Analyzer)
 configIos   configuration file IO 
+analyzers   data analysis (classes derived from Analyzer)
+neighbor    classes to identify non-bonded neighboring atoms
 processor   a master class for analysis of trajectories
+tests       unit tests
 
