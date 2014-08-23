@@ -63,7 +63,7 @@ inline void SpeciesTest::testAddAtoms()
    TEST_ASSERT(species_.size() == 2);
    TEST_ASSERT(species_.isValid());
 
-   Species::MoleculeIterator iter;
+   Species::Iterator iter;
    i = 0;
    for (species_.begin(iter) ; iter.notEnd(); ++iter) {
       TEST_ASSERT(iter->id() == i);
@@ -117,7 +117,7 @@ inline void SpeciesTest::testRead()
    TEST_ASSERT(species_.id() == speciesId);
    TEST_ASSERT(species_.isValid());
 
-   Species::MoleculeIterator iter;
+   Species::Iterator iter;
    i = 0;
    for (species_.begin(iter); iter.notEnd(); ++iter) {
       TEST_ASSERT(iter->id() == i);
