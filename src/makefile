@@ -44,6 +44,12 @@ veryclean:
 	cd mcMd; $(MAKE) veryclean
 	cd ddMd; $(MAKE) veryclean
 	cd spAn; $(MAKE) veryclean
+ifeq ($(BLD_DIR),$(SRC_DIR))
+	rm -f inter/user/sources.mk
+	rm -f mcMd/user/sources.mk
+	rm -f ddMd/user/sources.mk
+	rm -f spAn/user/sources.mk
+endif
 	rm -f util/config.mk
 	rm -f inter/config.mk
 	rm -f mcMd/config.mk

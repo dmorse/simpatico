@@ -4,6 +4,7 @@ include $(SRC_DIR)/spAn/configIos/sources.mk
 include $(SRC_DIR)/spAn/neighbor/sources.mk
 include $(SRC_DIR)/spAn/processor/sources.mk
 include $(SRC_DIR)/spAn/analyzers/sources.mk
+include $(SRC_DIR)/spAn/user/sources.mk
 
 spAn_= \
     $(spAn_chemistry_) \
@@ -11,7 +12,8 @@ spAn_= \
     $(spAn_configIos_) \
     $(spAn_neighbor_) \
     $(spAn_processor_) \
-    $(spAn_analyzers_) 
+    $(spAn_analyzers_) \
+    $(spAn_user_) 
 
 # Create lists of source (*.cpp) and object (*.o) files
 spAn_SRCS=\

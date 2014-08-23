@@ -52,8 +52,6 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f potentials/dihedral/DihedralFactory.cpp
 	rm -f potentials/external/ExternalFactory.cpp
 	rm -f potentials/pair/PairFactory.cpp
-	rm -f sp/configIos/SpConfigIoFactory.cpp
-	rm -f sp/analyzers/SpAnalyzerFactory.cpp
 endif
 
 #-----------------------------------------------------------------------
