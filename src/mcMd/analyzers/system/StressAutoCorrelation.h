@@ -23,7 +23,7 @@ namespace McMd
    *
    * Typename SystemType can be McSystem or MdSystem.
    *
-   * \ingroup DdMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Module
    */
    template <class SystemType>
    class StressAutoCorrelation : public SystemAnalyzer<SystemType>

@@ -29,6 +29,8 @@ namespace DdMd
    * configurations will be written to files "out/dump/config.0",
    * "out/dump/config.1", etc.
    *
+   * \sa \ref ddMd_analyzer_WriteConfig_page "param file format"
+   *
    * \ingroup DdMd_Analyzer_Module
    */
    class WriteConfig : public Analyzer

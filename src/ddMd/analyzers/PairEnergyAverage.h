@@ -20,6 +20,8 @@ namespace DdMd
    /**
    * Periodically write simulation energies to Log output.
    *
+   * \sa \ref ddMd_analyzer_PairEnergyAverage_page "param file format"
+   *
    * \ingroup DdMd_Analyzer_Module
    */
    class PairEnergyAverage : public Analyzer

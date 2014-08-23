@@ -19,6 +19,8 @@ namespace DdMd
    /**
    * Periodically write simulation energies to file.
    *
+   * \sa \ref ddMd_analyzer_OutputBoxdim_page "param file format"
+   *
    * \ingroup DdMd_Analyzer_Module
    */
    class OutputBoxdim : public Analyzer

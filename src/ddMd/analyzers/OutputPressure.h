@@ -20,6 +20,8 @@ namespace DdMd
    /**
    * Periodically write (scalar) pressure to file.
    *
+   * \sa \ref ddMd_analyzer_OutputPressure_page "param file format"
+   *
    * \ingroup DdMd_Analyzer_Module
    */
    class OutputPressure : public Analyzer

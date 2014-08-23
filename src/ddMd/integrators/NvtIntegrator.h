@@ -19,6 +19,8 @@ namespace DdMd
    /**
    * A Nose-Hoover constant temperature, constant volume integrator.
    *
+   * \sa \ref ddMd_integrator_NvtIntegrator_page "param file format"
+   *
    * \ingroup DdMd_Integrator_Module
    */
    class NvtIntegrator : public TwoStepIntegrator

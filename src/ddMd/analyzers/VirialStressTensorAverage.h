@@ -22,6 +22,8 @@ namespace DdMd
    /**
    * Periodically write (tensor) StressTensor to file.
    *
+   * \sa \ref ddMd_analyzer_VirialStressTensorAverage_page "param file format"
+   *
    * \ingroup DdMd_Analyzer_Module
    */
    class VirialStressTensorAverage : public Analyzer

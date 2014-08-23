@@ -19,6 +19,8 @@ namespace DdMd
    /**
    * A velocity-Verlet constant energy integrator.
    *
+   * \sa \ref ddMd_integrator_NveIntegrator_page "param file format"
+   *
    * \ingroup DdMd_Integrator_Module
    */
    class NveIntegrator : public TwoStepIntegrator

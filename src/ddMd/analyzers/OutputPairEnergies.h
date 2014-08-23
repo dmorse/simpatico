@@ -20,6 +20,8 @@ namespace DdMd
    /**
    * Periodically write pair energies to file.
    *
+   * \sa \ref ddMd_analyzer_OutputPairEnergies_page "param file format"
+   *
    * \ingroup DdMd_Analyzer_Module
    */
    class OutputPairEnergies : public Analyzer

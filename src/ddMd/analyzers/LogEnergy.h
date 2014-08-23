@@ -19,6 +19,8 @@ namespace DdMd
    /**
    * Periodically write simulation energies to Log output.
    *
+   * \sa \ref ddMd_analyzer_LogEnergy_page "param file format"
+   *
    * \ingroup DdMd_Analyzer_Module
    */
    class LogEnergy : public Analyzer

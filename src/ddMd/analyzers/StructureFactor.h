@@ -73,6 +73,8 @@ namespace DdMd
    * contains the 3 Miller indices of a wavevector, the absolute
    * magnitude of the wavevector, and a list of structure factor
    * values for the wavevector, one for each mode.
+   *
+   * \sa \ref ddMd_analyzer_StructureFactor_page "param file format"
    * 
    * \ingroup DdMd_Analyzer_Module
    */

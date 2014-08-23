@@ -54,6 +54,8 @@ namespace DdMd
    * structure factor values for the wavevector, one for each 
    * atomTypeId pair.
    * 
+   * \sa \ref ddMd_analyzer_StructureFactorGrid_page "param file format"
+   *
    * \ingroup DdMd_Analyzer_Module
    */
    class StructureFactorGrid : public StructureFactor

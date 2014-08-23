@@ -19,6 +19,8 @@ namespace DdMd
    /**
    * Periodically output kinetic temperature to file.
    *
+   * \sa \ref ddMd_analyzer_OutputTemperature_page "param file format"
+   *
    * \ingroup DdMd_Analyzer_Module
    */
    class OutputTemperature : public Analyzer

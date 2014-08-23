@@ -21,6 +21,8 @@ namespace DdMd
    *
    * Algorithm is based on Martyna,Tobias and Klein (J. Chem. Phys. 101, 4177-4189, 1994).
    *
+   * \sa \ref ddMd_integrator_NptIntegrator_page "param file format"
+   *
    * \ingroup DdMd_Integrator_Module
    */
    class NptIntegrator : public TwoStepIntegrator
