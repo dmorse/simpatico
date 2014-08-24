@@ -1,0 +1,49 @@
+namespace McMd
+{
+
+/*! \page mcMd_mcMove_HybridMdMove_page HybridMdMove
+
+\section mcMd_mcMove_HybridMdMove_overview_sec Synopsis
+
+A HybridMdMove uses a short NVE molecular dynamics (MD)
+simulation as an attempted Monte Carlo move. A move
+attempt consists of: (1) Generation of random velocities
+chosen from the Boltzmann distribution for the target 
+temperature, and (2) a velocity-Verlet MD simulation 
+of nStep steps. The acceptance criterian depends on
+the change in total energy (potential + kinetic) 
+during the integration, yielding acceptance with unit 
+probability in the limit of a perfect integrator, or
+an infinitesimal time step.
+
+\sa McMd::HybridMdMove
+
+\section mcMd_mcMove_HybridMdMove_param_sec Parameters
+The parameter file format is:
+\code
+   HybridMdMove{ 
+      probability        double
+      nStep              int
+      MdSytem{
+      }
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> probability </td>
+     <td> probability that this move will be chosen.
+  </tr>
+  <tr> 
+     <td> nStep </td>
+     <td> number of MD steps per attempted move.
+  </tr>
+  <tr> 
+     <td> </td>
+     <td> </td>
+  </tr>
+</table>
+
+*/
+
+}

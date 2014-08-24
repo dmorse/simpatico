@@ -1,0 +1,39 @@
+namespace McMd
+{
+
+/*! \page mcMd_mcMove_AtomDisplaceMove_page AtomDisplaceMove
+
+\section mcMd_mcMove_AtomDisplaceMove_overview_sec Synopsis
+
+This mcMove moves a randomly chosen atom of a specified species.
+
+\sa McMd::AtomDisplaceMove
+
+\section mcMd_mcMove_AtomDisplaceMove_param_sec Parameters
+The parameter file format is:
+\code
+   AtomDisplaceMove{ 
+      probability        double
+      speciesId          int
+      delta              double
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> probability </td>
+     <td> probability that this move will be chosen.
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+  <tr> 
+     <td> delta </td>
+     <td> maximum displacement </td>
+  </tr>
+</table>
+
+*/
+
+}
