@@ -41,6 +41,8 @@ namespace McMd
    * \f$ V(t) \cdot V(t') \f$ denotes a dot product of values of the 
    * vector \f$ V(t) \f$  at different times.
    *
+   * \sa \ref mcMd_analyzer_IntraPairAutoCorr_page "parameter file format"
+   *
    * \ingroup McMd_Analyzer_Module
    */
    class IntraPairAutoCorr 

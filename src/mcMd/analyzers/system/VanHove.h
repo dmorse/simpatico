@@ -70,6 +70,8 @@ namespace McMd
    * magnitude of the wavevector, and a list of nAtomTypeIdPair structure 
    * factor values for the wavevector, one for each atomTypeId pair.
    * 
+   * \sa \ref mcMd_analyzer_VanHove_page "parameter file format"
+   *
    * \ingroup McMd_Analyzer_Module
    */
    class VanHove : public SystemAnalyzer<System>

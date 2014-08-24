@@ -36,6 +36,8 @@ namespace McMd
    * intramolecular or all pairs. Only one histogram (or RDF) can be 
    * calculated.
    *
+   * \sa \ref mcMd_analyzer_RDF_page "parameter file format"
+   *
    * \ingroup McMd_Analyzer_Module
    */
    class RDF : public SystemAnalyzer<System>

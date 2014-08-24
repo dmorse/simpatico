@@ -29,6 +29,8 @@ namespace McMd
    * configurations will be written to files "out/dump/config.0",
    * "out/dump/config.1", etc.
    *
+   * \sa \ref mcMd_analyzer_DumpConfig_page "parameter file format"
+   *
    * \ingroup McMd_Analyzer_Module
    */
    class DumpConfig : public SystemAnalyzer<System>

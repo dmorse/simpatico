@@ -82,6 +82,8 @@ namespace McMd
    * structure factor values for the wavevector, one for each 
    * atomTypeId pair.
    * 
+   * \sa \ref mcMd_analyzer_StructureFactorP_page "parameter file format"
+   *
    * \ingroup McMd_Analyzer_Module
    */
    class StructureFactorP 

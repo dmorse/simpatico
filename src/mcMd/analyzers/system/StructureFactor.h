@@ -48,7 +48,7 @@ namespace McMd
    * an expansion of a reciprocal lattice wavevector as a sum of
    * recprocal lattice basis vectors for the periodic unit cell.
    *
-   * See also: \ref mcMd_analyzer_StructureFactor_page 
+   * \sa \ref mcMd_analyzer_StructureFactor_page "parameter file format"
    * 
    * \ingroup McMd_Analyzer_Module
    */

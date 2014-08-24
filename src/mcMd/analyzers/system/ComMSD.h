@@ -25,6 +25,8 @@ namespace McMd
    /**
    * Molecular center of mass mean squared displacement.
    *
+   * \sa \ref mcMd_analyzer_ComMSD_page "parameter file format"
+   *
    * \ingroup McMd_Analyzer_Module
    */
    class ComMSD : public SystemAnalyzer<System>
