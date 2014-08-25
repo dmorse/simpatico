@@ -45,8 +45,14 @@ the \ref McMd_McMove_Module module.
  
 <h2> Monte-Carlo Moves: </h2>
 <ul style="list-style: none;">
-  <li> Coming Soon </li>
+  <li> \subpage mcMd_mcMove_AtomDisplaceMove_page </li>
+  <li> \subpage mcMd_mcMove_RigidDisplaceMove_page </li>
+  <li> \subpage mcMd_mcMove_HybridMdMove_page </li>
+  <li> \subpage mcMd_mcMove_HybridNphMdMove_page </li>
 </ul>
+Most Monte Carlo moves are not yet listed here - a more complete list 
+is coming soon. For a complete list of links to class documentation 
+for McMove classes, see the \ref McMd_McMove_Module "McMove module".
 
 <BR>
 \ref user_features_mdSim_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;

@@ -22,13 +22,33 @@ an infinitesimal time step.
 The parameter file format is:
 \code
    HybridMdMove{ 
-      probability        double
-      nStep              int
-      MdSytem{
-      }
+     probability        double
+     nStep              int
+     MdSytem{
+       MdPairPotential{
+         maxBoundary         Util::Boundary
+         PairList{
+           atomCapacity      int
+           pairCapacity      int
+           skin              double
+         }
+       }
+       NveVvIntegrator{
+         dt                       double
+       }
+     }
    }
 \endcode
-in which
+The body of the MdSystem block contains parameters that are
+also present in the MdSystem block in the parameter file for 
+an mdSim molecular dynamic simulation, but excludes parameters
+that can be inferred from the McSystem block of the parent
+McSystem, such as the potential energy styles and parameters.
+The integrator must be an NveVvIntegrator, as shown above.
+The statistical ensemble of the parent system must be 
+isothermal and rigid (NVT). 
+
+Parameters:
 <table>
   <tr> 
      <td> probability </td>
@@ -39,8 +59,8 @@ in which
      <td> number of MD steps per attempted move.
   </tr>
   <tr> 
-     <td> </td>
-     <td> </td>
+     <td> MdSystem</td>
+     <td> shortened version of MdSystem block of an mdSim parameter file</td>
   </tr>
 </table>
 

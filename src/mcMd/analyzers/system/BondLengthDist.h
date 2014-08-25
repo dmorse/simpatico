@@ -23,7 +23,7 @@ namespace McMd
    /**
    * BondLengthDist evaluates the distribution function of the lengths of the bonds.
    *
-   * \sa \ref mcMd_analyzer_BlockLengthDist_page "parameter file format"
+   * \sa \ref mcMd_analyzer_BondLengthDist_page "parameter file format"
    *
    * \ingroup McMd_Analyzer_Module
    */
