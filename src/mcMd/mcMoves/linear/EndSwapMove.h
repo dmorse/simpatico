@@ -28,6 +28,8 @@ namespace McMd
    * pointless if applied to a homopolymer, or to a symmetric
    * ABA triblock. 
    *
+   * \sa \ref mcMd_mcMove_EndSwapMove_page "param file format"
+   *
    * \ingroup McMd_McMove_Module
    */
    class EndSwapMove : public SystemMove

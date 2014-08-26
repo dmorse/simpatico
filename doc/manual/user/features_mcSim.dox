@@ -13,8 +13,23 @@ classes is coming soon. For now, the only documentation is the doxygen
 API documentation for individual classes, which is accessible through 
 the \ref McMd_McMove_Module module.
 
-\sa McMd_Analyzer_Module
 \sa McMd_McMove_Module
+\sa McMd_Analyzer_Module
+
+<h2> Monte-Carlo Moves: </h2>
+<ul style="list-style: none;">
+  <li> \subpage mcMd_mcMove_AtomDisplaceMove_page </li>
+  <li> \subpage mcMd_mcMove_RigidDisplaceMove_page </li>
+  <li> \subpage mcMd_mcMove_HybridMdMove_page </li>
+  <li> \subpage mcMd_mcMove_HybridNphMdMove_page </li>
+  <li> \subpage mcMd_mcMove_EndSwapMove_page </li>
+  <li> \subpage mcMd_mcMove_CfbEndMove_page </li>
+  <li> \subpage mcMd_mcMove_CfbReptationMove_page </li>
+  <li> \subpage mcMd_mcMove_CfbRebridgeMove_page </li>
+</ul>
+Some Monte Carlo moves are not yet listed here - a more complete list 
+is coming soon. For a complete list of links to class documentation for 
+McMove classes, see the \ref McMd_McMove_Module "McMove module".
 
 <h2> Analyzers: </h2>
 <ul style="list-style: none;">
@@ -45,17 +60,6 @@ the \ref McMd_McMove_Module module.
   <li> \subpage mcMd_analyzer_McVirialStressTensorAverage_page </li>
 </ul>
  
-<h2> Monte-Carlo Moves: </h2>
-<ul style="list-style: none;">
-  <li> \subpage mcMd_mcMove_AtomDisplaceMove_page </li>
-  <li> \subpage mcMd_mcMove_RigidDisplaceMove_page </li>
-  <li> \subpage mcMd_mcMove_HybridMdMove_page </li>
-  <li> \subpage mcMd_mcMove_HybridNphMdMove_page </li>
-</ul>
-Most Monte Carlo moves are not yet listed here - a more complete list 
-is coming soon. For a complete list of links to class documentation 
-for McMove classes, see the \ref McMd_McMove_Module "McMove module".
-
 <BR>
 \ref user_features_mdSim_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
 \ref user_features_page       (Up) &nbsp; &nbsp; &nbsp; &nbsp;

@@ -23,6 +23,8 @@ namespace McMd
    /**
    * Configuration bias end regrowth move for flexible linear chains.
    *
+   * \sa \ref mcMd_mcMove_CfbEndMove_page "param file format"
+   *
    * \ingroup McMd_McMove_Module MD_Module
    */
    class CfbEndMove : public CfbEndBase

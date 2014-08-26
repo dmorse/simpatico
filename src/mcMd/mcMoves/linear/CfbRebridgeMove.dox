@@ -1,0 +1,57 @@
+namespace McMd
+{
+
+/*! \page mcMd_mcMove_CfbRebridgeMove_page CfbRebridgeMove
+
+\section mcMd_mcMove_CfbRebridgeMove_overview_sec Synopsis
+
+Configuration bias algorithm for regrowth of an internal segment of a flexible linear polymer.
+
+This algorithm is designed for use with flexible linear chains with potentiall stiff bond potentials. It is correct for angle potentials, but inefficient for stiff angle potentials, and invalid for models with dihedral potentials.
+
+\sa McMd::CfbRebridgeMove
+
+\section mcMd_mcMove_CfbRebridgeMove_param_sec Parameters
+The parameter file format is:
+\code
+   CfbRebridgeMove{ 
+      probability        double
+      speciesId          int
+      nRegrow            int
+      nTrial             int
+      length21           double
+      length10           double
+      kappa10            double
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> probability </td>
+     <td> probability that this move will be chosen.
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+  <tr> 
+     <td> nRegrow </td>
+     <td> number of atoms to attempt to regrow </td>
+  </tr>
+  <tr> 
+     <td> length21 </td>
+     <td> equilibrium bond length (2-1 bond) </td>
+  </tr>
+  <tr> 
+     <td> length10 </td>
+     <td> equilibrium bond length (1-0 bond) </td>
+  </tr>
+  <tr> 
+     <td> kappa10 </td>
+     <td> spring constant (1-0 bonds) </td>
+  </tr>
+</table>
+
+*/
+
+}

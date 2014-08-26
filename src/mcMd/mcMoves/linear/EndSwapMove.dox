@@ -1,0 +1,36 @@
+namespace McMd
+{
+
+/*! \page mcMd_mcMove_EndSwapMove_page EndSwapMove
+
+\section mcMd_mcMove_EndSwapMove_overview_sec Synopsis
+
+This McMove attempts to reverse the order of atom types in a flexible linear heteropolymer. It was designed for use with diblock copolymers, but the algorithm can be used for any heteropolymer. The current version can only be used with flexible molecules, with no angle or dihedral potentials. (This constraint could be easily relaxed to allow homogeneous angle and dihedral potentials). 
+
+The Species identified by the speciesId must be a subclass of Linear, and may not be mutable. 
+
+\sa McMd::EndSwapMove
+
+\section mcMd_mcMove_EndSwapMove_param_sec Parameters
+The parameter file format is:
+\code
+   EndSwapMove{ 
+      probability        double
+      speciesId          int
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> probability </td>
+     <td> probability that this move will be chosen.
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+</table>
+
+*/
+
+}
