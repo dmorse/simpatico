@@ -21,6 +21,7 @@ the \ref McMd_McMove_Module module.
   <li> \subpage mcMd_analyzer_AtomMSD_page </li>
   <li> \subpage mcMd_analyzer_BlockRadiusGyration_page </li>
   <li> \subpage mcMd_analyzer_BondLengthDist_page </li>
+  <li> \subpage mcMd_analyzer_BoundaryAverage_page </li>
   <li> \subpage mcMd_analyzer_ComMSD_page </li>
   <li> \subpage mcMd_analyzer_CompositionProfile_page </li>
   <li> \subpage mcMd_analyzer_DumpConfig_page </li>
@@ -31,6 +32,7 @@ the \ref McMd_McMove_Module module.
   <li> \subpage mcMd_analyzer_StructureFactorGrid_page </li>
   <li> \subpage mcMd_analyzer_StructureFactorP_page </li>
   <li> \subpage mcMd_analyzer_StructureFactorPGrid_page </li>
+  <li> \subpage mcMd_analyzer_VanHove_page </li>
   <li> \subpage mcMd_analyzer_McBondEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McEnergyOutput_page </li>
