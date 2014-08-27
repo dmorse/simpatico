@@ -27,6 +27,7 @@ MD program.
   <li> \subpage ddMd_analyzer_OutputBoxdim_page </li>
   <li> \subpage ddMd_analyzer_OutputEnergy_page </li>
   <li> \subpage ddMd_analyzer_OutputPressure_page </li>
+  <li> \subpage ddMd_analyzer_OutputPairEnergies_page </li>
   <li> \subpage ddMd_analyzer_OutputTemperature_page </li>
   <li> \subpage ddMd_analyzer_PairEnergyAverage_page </li>
   <li> \subpage ddMd_analyzer_StructureFactor_page </li>

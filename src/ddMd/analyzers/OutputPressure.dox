@@ -32,7 +32,7 @@ with parameters
 
 \section ddMd_analyzer_OutputPressure_output_sec Output
 
-Values of the kinetic, virial and total pressure are output to <outputFileName>.dat every interval steps. The output format is:
+Values of the kinetic, virial and total pressure are output to {outputFileName}.dat every interval steps. The output format is:
 
   iStep  kinetic  virial  total
 

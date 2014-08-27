@@ -36,15 +36,15 @@ in which
 \section mcMd_analyzer_McExternalEnergyAverage_output_sec Output
 
 During the simulation, if nSamplePerBlock > 0, block averages are output 
-to the file <outputFileName>.dat every interval*nSamplePerBlock. Every
+to the file {outputFileName}.dat every interval*nSamplePerBlock. Every
 block average is an average of nSamplePerBlock data values, in which 
 values are calculated every interval time steps.
 
 At the end of the simulation:
 
-  - parameters are echoed to file <outputFileName>.prm 
+  - parameters are echoed to file {outputFileName}.prm 
 
-  - average and error analysis info are output to <outputFileName>.ave
+  - average and error analysis info are output to {outputFileName}.ave
 
 */
 

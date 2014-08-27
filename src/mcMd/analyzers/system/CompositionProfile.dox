@@ -46,9 +46,9 @@ in which
 
 \section mcMd_analyzer_CompositionProfile_output_sec Output
 
-If nSamplePerBlock != 0, a time sequence of block average values of these quantities will be output to a file <outputFileName>.dat during the simulation. If nSamplePerBlock == 0, no such file is created.
+If nSamplePerBlock != 0, a time sequence of block average values of these quantities will be output to a file {outputFileName}.dat during the simulation. If nSamplePerBlock == 0, no such file is created.
 
-Instantaneous histograms for each direction are output to file with a suffix *.log, with a separate file for each direction. Overall average profiles are output are output to <outputFileName>.dat, also with different files for different directions.
+Instantaneous histograms for each direction are output to file with a suffix *.log, with a separate file for each direction. Overall average profiles are output are output to {outputFileName}.dat, also with different files for different directions.
 
 */
 

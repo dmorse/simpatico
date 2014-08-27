@@ -36,10 +36,10 @@ in which
 \section mcMd_analyzer_MdPotentialEnergyAverage_output_sec Output
 
 During the simulation, if nSamplePerBlock > 0, block averages of the potential energy 
-are output to <outputFileName>.dat every nSamplePerBlock*interval time steps.
+are output to {outputFileName}.dat every nSamplePerBlock*interval time steps.
 
-At the end of the simulation, parameters are echoed to file <outputFileName>.prm and 
-the average potential energy is output to <outputFileName>.ave
+At the end of the simulation, parameters are echoed to file {outputFileName}.prm and 
+the average potential energy is output to {outputFileName}.ave
 
 */
 

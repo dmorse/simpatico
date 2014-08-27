@@ -46,11 +46,11 @@ with parameters
 
 At the end of the simulation:
 
- - Parameters and some other data are written to <outputFileName>.prm
+ - Parameters and some other data are written to {outputFileName}.prm
 
- - The correlation function is written to <outputFileName>.data
+ - The correlation function is written to {outputFileName}.data
 
-In the <ouputFileName>.dat file, values of the correlation function are output at time separations corresponding to integer multiples of the sampling interval, in order of increasing time delay, starting from t=0 for the first value. 
+In the {outputFileName}.dat file, values of the correlation function are output at time separations corresponding to integer multiples of the sampling interval, in order of increasing time delay, starting from t=0 for the first value. 
 */
 
 }

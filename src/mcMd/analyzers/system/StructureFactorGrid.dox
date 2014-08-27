@@ -60,7 +60,7 @@ in which
 
 \section mcMd_analyzer_StructureFactorGrid_out_sec Output Files
 
-Final values are output to <outputFileName>.data. Each row is a star of symmetry related reciprocal lattice vectors, each column is a mode.
+Final values are output to {outputFileName}.data. Each row is a star of symmetry related reciprocal lattice vectors, each column is a mode.
 
 */
 

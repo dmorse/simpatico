@@ -40,15 +40,15 @@ with parameters
 \section mcMd_analyzer_MdKineticEnergyAverage_output_sec Output
 
 During the simulation, if nSamplePerBlock > 0, block averages of the kinetic 
-energy are output to <outputFileName>.dat every nSamplePerBlock*interval 
+energy are output to {outputFileName}.dat every nSamplePerBlock*interval 
 time steps.
 
 At the end of the simulation:
 
-  - parameters are echoed to file <outputFileName>.prm 
+  - parameters are echoed to file {outputFileName}.prm 
 
   - the average kinetic energy and information about error analysis 
-    is output to <outputFileName>.ave
+    is output to {outputFileName}.ave
 
 */
 

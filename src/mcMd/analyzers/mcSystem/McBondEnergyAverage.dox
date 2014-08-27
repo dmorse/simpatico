@@ -37,14 +37,14 @@ in which
 \section mcMd_analyzer_McBondEnergyAverage_output_sec Output
 
 During the simulation, if nSamplePerBlock > 0, block averages are output to 
-the file <outputFileName>.dat. If nSamplePerBlock == 0, this file is not 
+the file {outputFileName}.dat. If nSamplePerBlock == 0, this file is not 
 created.
 
 At the end of the simulation:
 
- -  parameters are echoed to file <outputFileName>.prm 
+ -  parameters are echoed to file {outputFileName}.prm 
 
- - average bond energy and error analysis info are output to <outputFileName>.ave.
+ - average bond energy and error analysis info are output to {outputFileName}.ave.
 
 */
 
