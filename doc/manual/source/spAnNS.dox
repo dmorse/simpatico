@@ -33,11 +33,11 @@ The AtomStorage class is a container for Atom objects.
 
 The GroupStorage  < int N > class templates is a container for Group objects.
 
-An SpConfiguration contains an entire instantaneous system configuration. An SpConfiguration has a Boundary, an AtomStorage, separate GroupStorage containers for bonds, angles, and dihedrals, and a set of Species obejcts for different chemical species.
+The Configuration class contains an entire instantaneous system configuration. A Configuration object has a Util::Boundary, an AtomStorage, separate GroupStorage containers for bonds, angles, and dihedrals, and a set of Species obejcts for different chemical species.
 
 See also: \ref SpAn_Storage_Module "DdMd SP Storage Module"
 
-\section SpAn_Analyzer_sec Data Analysis 
+\section SpAn_Analyzer_sec Analyzers
 
 The src/SpAn/analyzer subdirectory contains a set of classes that are used for analysis of single-processor configurations. DdMd::Analyzer is an abstract base class for classes that implement data analysis and/or data output operations. AnalyzerManager is a container for a set of Analyzer objects.
 
@@ -45,7 +45,7 @@ See also: \ref SpAn_Analyzer_Module "DdMd SP Analyzer Module"
 
 \section SpAn_Processor_sec Processor
 
-A Processor object is is a top level object for postprocessing of MD configurations and trajectories.
+A Processor object is is a top level object for postprocessing of MD configurations and trajectories. The Processor class is derived from Configuration, but also has an AnalyzerManager, and provides functions that can read, analyze, and write configuration and trajectory files.
 
 <BR>
 \ref DdMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
@@ -53,4 +53,4 @@ A Processor object is is a top level object for postprocessing of MD configurati
 \ref extend_page  (Next)
 
 */
-} 
+}
