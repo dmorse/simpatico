@@ -32,7 +32,7 @@ with parameters
 
 \section ddMd_analyzer_OutputTemperature_output_sec Output
 
-A values of the kinetic temperature is output to <outputFileName>.dat every interval time steps. The output format for each line is:
+A values of the kinetic temperature is output to {outputFileName}.dat every interval time steps. The output format for each line is:
 
   iStep  temperature
 

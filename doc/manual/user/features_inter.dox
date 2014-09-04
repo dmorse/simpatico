@@ -12,7 +12,11 @@ The potential energy used by any Simpatico simulation may contain:
 
  - an external 1-body potential
 
-Specific functional forms for each type of interaction implemented by "interaction" classes, which are defined in the Inter namespace. The same set of interactin classes of each type are available for use in all programs. The choice of which functional form to use for potential energy contribution is specified in the parameter file by a "style" string parameter (e.g., pairStyle or bondStyle). The value of each such string parameter gives the name of the desired interaction class. 
+Specific functional forms for each type of interaction are implemented by "interaction" classes. The same set of interaction classes are available for use in all simulation programs. 
+
+The choice of which functional form to use for specific type of potential energy (e.g., pair, bond, etc.) is specified in the parameter file by an associated "style" string parameter (e.g., pairStyle or bondStyle). The value of each such string parameter gives the name of the desired interaction class. 
+
+User documentation for each interaction class documents the format of the block of potential energy parameters required for that interaction. This block must apppear in the parameter file within the parameter file block for the associated potential energy class. For example, in a ddSim simulation with bondStyle == "HarmonicBond", the BondPotential{ ... } parameter block must include the the block of potential energy parameters appropriate for a HarmonicBond interaction.
  
 <h2> Contents: </h2>
 <ul style="list-style: none;">

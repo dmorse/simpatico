@@ -67,7 +67,7 @@ See the example input in the McMd::VanHove class documentation.
 \section mcMd_analyzer_VanHove_out_sec Output Files
 
 At the end of a simulation, all of the structure factors are output in a file 
-<outputFileName>.dat . (TODO: Further details of format needed).
+{outputFileName}.dat . (TODO: Further details of format needed).
 
 */
 

@@ -37,9 +37,9 @@ with parameters
 
 \section mcMd_analyzer_MdStressAutoCorrelation_out_sec Output Files
 
-At the end of the simulation, parameters and other data are written to <outputFileName>.prm, the correlation function is written to <outputFileName>.corr.
+At the end of the simulation, parameters and other data are written to {outputFileName}.prm, the correlation function is written to {outputFileName}.corr.
 
-In the <ouputFileName>.corr file, values of the correlation function are output at time separations corresponding to integer multiples of the sampling interval, in order of increasing time delay, starting from t=0 for the first value. 
+In the {outputFileName}.corr file, values of the correlation function are output at time separations corresponding to integer multiples of the sampling interval, in order of increasing time delay, starting from t=0 for the first value. 
 */
 
 }

@@ -82,7 +82,7 @@ StructureFactor{
 \section ddMd_analyzer_StructureFactor_out_sec Output Files
 
 At the end of a simulation, all of the structure factors are output in a file 
-<outputFileName>.dat Each line in this file contains the results for a single 
+{outputFileName}.dat Each line in this file contains the results for a single 
 wavevector. Each line contains the 3 Miller indices of a wavevector, the 
 absolute magnitude of the wavevector, and a list of structure factor values 
 for that wavevector, one for each mode.

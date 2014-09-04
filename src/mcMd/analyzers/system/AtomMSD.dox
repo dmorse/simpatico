@@ -47,9 +47,9 @@ with parameters:
 
 \section mcMd_analyzer_AtomMSD_out_sec Output
 
-The MSD vs. time is output to a file <outputFileName>.dat. 
+The MSD vs. time is output to a file {outputFileName}.dat. 
 
-Parameters are echoed to <outputFileName>.prm
+Parameters are echoed to {outputFileName}.prm
 
 */
 

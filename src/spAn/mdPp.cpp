@@ -45,7 +45,7 @@ using namespace Util;
 *        Specify input configuration/trajectory format. The required
 *        argument inputConfigIo is the name of a ConfigIo subclass.
 *
-* \ingroup
+* \ingroup SpAn_Module
 */
 
 int main(int argc, char** argv)

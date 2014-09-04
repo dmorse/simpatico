@@ -45,10 +45,10 @@ in which
 \section mcMd_analyzer_RadiusGyration_out_sec Output
 
 If nSamplePerBlock != 0, a time sequence of block average values 
-of these quantities will be output to a file <outputFileName>.dat 
+of these quantities will be output to a file {outputFileName}.dat 
 during the simulation. At the end of the simulations, parameters
-are echoed to <outputFileName>.prma and a final average value 
-with error estimates is output to <outputFileName>.ave.
+are echoed to {outputFileName}.prma and a final average value 
+with error estimates is output to {outputFileName}.ave.
 
 
 */

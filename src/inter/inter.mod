@@ -9,7 +9,7 @@ namespace Inter
    /**
    * \defgroup Inter_Module Inter namespace
    *
-   * \brief    Classes that define potential energy functions.
+   * \brief Classes that define potential energy functions.
    *
    * The interaction classes in the Inter namespace define potential 
    * energy functions for individual nonbonded or bonded pairs, 

@@ -82,7 +82,7 @@ VanHove{
 
 \section ddMd_analyzer_VanHove_out_sec Output Files
 
-At the end of a simulation, all of the structure factors are output in a file <outputFileName>.dat. Results for different wavevectors are listed consecutively in blocks. Each block begins with the integer indices (Miller indices) for the associated wavevector. 
+At the end of a simulation, all of the structure factors are output in a file {outputFileName}.dat. Results for different wavevectors are listed consecutively in blocks. Each block begins with the integer indices (Miller indices) for the associated wavevector. 
 
 */
 

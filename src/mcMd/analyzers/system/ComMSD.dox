@@ -47,9 +47,9 @@ with parameters
 
 At the end of the simulation:
 
-Parameters are echoed to file <outputFileName>.prm.
+Parameters are echoed to file {outputFileName}.prm.
 
-Final results for MSD vs. number of samples are output to the file <outputFileName>.dat.
+Final results for MSD vs. number of samples are output to the file {outputFileName}.dat.
 
 */
 

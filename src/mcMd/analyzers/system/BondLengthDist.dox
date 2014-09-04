@@ -55,9 +55,9 @@ in which
 
 At the end of the program:
 
-  - Parameters are written to <outputFileName>.prm
+  - Parameters are written to {outputFileName}.prm
 
-  - Histogram of bond lengths is output to <outputFileName>.dat as column of numbers.
+  - Histogram of bond lengths is output to {outputFileName}.dat as column of numbers.
 
 A Util::Histogram accumulator is used internally for the calculation, and the output format is determined by the Util::Histogram::output() function.
 

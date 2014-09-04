@@ -40,9 +40,9 @@ with parameters
 \section mcMd_analyzer_BoundaryAverage_output_sec Output
 
 If nSamplePerBlock != 0, block averages are output duuring the simulation
-to a file named <outputFileName>.dat.
+to a file named {outputFileName}.dat.
 
-At the end of the simulation, parameters are echoed to file <outputFileName>.prm, and final results for average values are output to <outputFileName>.ave.
+At the end of the simulation, parameters are echoed to file {outputFileName}.prm, and final results for average values are output to {outputFileName}.ave.
 
 */
 

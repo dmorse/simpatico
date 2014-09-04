@@ -42,13 +42,13 @@ in which
 \section mcMd_analyzer_McPressureAverage_output_sec Output
 
 During the simulation, if nSamplePerBlock > 0, block averages of the pressure
-are output to <outputFileName>.dat every nSamplePerBlock*interval time steps.
+are output to {outputFileName}.dat every nSamplePerBlock*interval time steps.
 
 At the end of the simulation:
 
-  - parameters are echoed to file <outputFileName>.prm 
+  - parameters are echoed to file {outputFileName}.prm 
 
-  - pressure is output to <outputFileName>.ave
+  - pressure is output to {outputFileName}.ave
 
 */
 

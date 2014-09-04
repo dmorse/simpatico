@@ -39,10 +39,10 @@ in which
 \section ddMd_analyzer_ExternalEnergyAverage_output_sec Output
 
 During the simulation, if nSamplePerBlock > 0, block averages are output to the file 
-<outputFileName>.dat.
+{outputFileName}.dat.
 
-At the end of the simulation, parameters are echoed to file <outputFileName>.prm and
-final results for average and error analysis output to <outputFileName>.ave.
+At the end of the simulation, parameters are echoed to file {outputFileName}.prm and
+final results for average and error analysis output to {outputFileName}.ave.
 
 */
 

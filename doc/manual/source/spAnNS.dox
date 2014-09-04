@@ -9,43 +9,49 @@ namespace SpAn
 
 The SpAn namespace (in the src/SpAn directory) contains classes that are designed for single-process analysis of molecular dynamics trajectories produced by ddSim. These classes are designed to allow storage, input/output and analysis of an entire system configuration on a single processo. Many of the classes in this namespace have names that are identical to analogous classes in the DdMd namespace. Thus, for example SpAn::Atom is a variant of the DdMd::Atom class that is designed for use in single-processor algorithms. 
 
-See also: \ref SpAn_Module "Single-Processor Analysis Module"
+See also: \ref SpAn_Module "Single-Processor Analysis (SpAn) Module"
 
 \section SpAn_chemistry_sec Chemical structure
 
 The src/SpAn/chemistry subdirectory contains a set of classes that describe atoms and covalent groups that are (for the most part) closely analogous to classes in the ddMd/chemistry directory, but are designed for single-processor configurations.
 
-An Atom represents a single particle. It contains most (but not all) of the information stored in an DdMd::Atom.  
+An SpAn::Atom represents a single particle. It contains most (but not all) of the information stored in an DdMd::Atom.  
 
-The Group < int N > group template represents a group of N covalently interacting atoms. It has an array of integer atom ids and a group type id. 
+The SpAn::Group < int N > group template represents a group of N covalently interacting atoms. It has an array of integer atom ids and a group type id. 
 
-An Molecule represents a molecule that contains a sequence of Atom objects.
+An SpAn::Molecule represents a molecule that contains a sequence of Atom objects.
 
-An Species is a container that holds a set structurally identical molecules.
+An SpAn::Species is a container that holds a set structurally identical molecules.
 
-See also: \ref SpAn_Chemistry_Module "DdMd SP Chemistry Module"
+See also: \ref SpAn_Chemistry_Module "SpAn Chemistry Module"
 
 \section SpAn_Storage_sec Storage classes
 
 The src/SpAn/storage subdirectory contains a set of containers, several of which are analogous to those in src/ddMd/storage. 
 
-The AtomStorage class is a container for Atom objects.
+The SpAn::AtomStorage class is a container for SpAn::Atom objects.
 
-The GroupStorage  < int N > class templates is a container for Group objects.
+The SpAn::GroupStorage  < int N > class templates is a container for SpAn::Group objects.
 
-An SpConfiguration contains an entire instantaneous system configuration. An SpConfiguration has a Boundary, an AtomStorage, separate GroupStorage containers for bonds, angles, and dihedrals, and a set of Species obejcts for different chemical species.
+See also: \ref SpAn_Storage_Module "SpAn Storage Module"
 
-See also: \ref SpAn_Storage_Module "DdMd SP Storage Module"
+\section SpAn_Configuration_sec Configuration
 
-\section SpAn_Analyzer_sec Data Analysis 
+The Configuration class contains an entire instantaneous system configuration. A Configuration object has:
+ - a Util::Boundary 
+ - an SpAn::AtomStorage 
+ - SpAn::GroupStorage containers for bonds, angles, and dihedrals
+ - a SpAn::Species object for each chemical species
 
-The src/SpAn/analyzer subdirectory contains a set of classes that are used for analysis of single-processor configurations. DdMd::Analyzer is an abstract base class for classes that implement data analysis and/or data output operations. AnalyzerManager is a container for a set of Analyzer objects.
+\section SpAn_Analyzer_sec Analyzers
 
-See also: \ref SpAn_Analyzer_Module "DdMd SP Analyzer Module"
+The src/SpAn/analyzer subdirectory contains a set of classes that are used for analysis of single-processor configurations. SpAn::Analyzer is an abstract base class for classes that implement data analysis and/or data output operations. SpAn::AnalyzerManager is a container for a set of SpAn::Analyzer objects.
+
+See also: \ref SpAn_Analyzer_Module "SpAn Analyzer Module"
 
 \section SpAn_Processor_sec Processor
 
-A Processor object is is a top level object for postprocessing of MD configurations and trajectories.
+A SpAn::Processor is a top level object for postprocessing of MD configurations and trajectories. The Processor class is derived from Configuration, but also has an AnalyzerManager, and provides functions that can read, analyze, and write configuration and trajectory files.
 
 <BR>
 \ref DdMd_NS_page (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 
@@ -53,4 +59,4 @@ A Processor object is is a top level object for postprocessing of MD configurati
 \ref extend_page  (Next)
 
 */
-} 
+}

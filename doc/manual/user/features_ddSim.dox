@@ -1,4 +1,4 @@
-/*! \page user_features_ddSim_page 2.8.2 Options for ddSim
+/*! \page user_features_ddSim_page 2.8.2 Features for ddSim
 
 \ref user_features_inter_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
 \ref user_features_mdSim_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
@@ -27,6 +27,7 @@ MD program.
   <li> \subpage ddMd_analyzer_OutputBoxdim_page </li>
   <li> \subpage ddMd_analyzer_OutputEnergy_page </li>
   <li> \subpage ddMd_analyzer_OutputPressure_page </li>
+  <li> \subpage ddMd_analyzer_OutputPairEnergies_page </li>
   <li> \subpage ddMd_analyzer_OutputTemperature_page </li>
   <li> \subpage ddMd_analyzer_PairEnergyAverage_page </li>
   <li> \subpage ddMd_analyzer_StructureFactor_page </li>

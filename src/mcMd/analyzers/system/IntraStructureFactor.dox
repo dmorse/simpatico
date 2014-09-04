@@ -61,9 +61,9 @@ in which
 
 At the end of the simulation:
 
-- Parameters are echoed to <outputFileName>.prm
+- Parameters are echoed to {outputFileName}.prm
 
-- Final values are output to <outputFileName>.dat.
+- Final values are output to {outputFileName}.dat.
 
 */
 

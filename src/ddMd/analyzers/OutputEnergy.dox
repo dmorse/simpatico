@@ -32,7 +32,7 @@ with parameters
 
 \section ddMd_analyzer_OutputEnergy_output_sec Output
 
-Energies are periodically output to file <outputFileName>.dat. Each line in this file represents a set of instantaneous values of different contributions to the total (extensive) energy for the system. The format of each line for a simulation in which all potential energy types are used, is:
+Energies are periodically output to file {outputFileName}.dat. Each line in this file represents a set of instantaneous values of different contributions to the total (extensive) energy for the system. The format of each line for a simulation in which all potential energy types are used, is:
 
    kinetic pair [bond] [angle] [dihedral] [external] total
 

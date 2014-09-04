@@ -38,9 +38,9 @@ in which
 
 At the end of the simulation:
 
- - parameters are echoed to file <outputFileName>.prm 
+ - parameters are echoed to file {outputFileName}.prm 
 
- - average of each stress component is output to <outputFileName>.dat
+ - average of each stress component is output to {outputFileName}.dat
 
 */
 

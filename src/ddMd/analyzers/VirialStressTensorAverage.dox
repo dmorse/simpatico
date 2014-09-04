@@ -39,8 +39,8 @@ in which
 
 \section ddMd_analyzer_VirialStressTensorAverage_output_sec Output
 
-At the end of the simulation, parameters are echoed to file <outputFileName>.prm 
-and the average of each stress component is output to <outputFileName>.dat.
+At the end of the simulation, parameters are echoed to file {outputFileName}.prm 
+and the average of each stress component is output to {outputFileName}.dat.
 
 */
 

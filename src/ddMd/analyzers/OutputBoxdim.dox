@@ -32,7 +32,7 @@ with parameters
 
 \section ddMd_analyzer_OutputBoxdim_output_sec Output
 
-The dimensions of the box are periodically output to file <outputFileName>.dat. Each line in this file represents a set of instantaneous values. The format of each line is:
+The dimensions of the box are periodically output to file {outputFileName}.dat. Each line in this file represents a set of instantaneous values. The format of each line is:
 
    iStep  L[0]  L[1]  L[2]   V
 

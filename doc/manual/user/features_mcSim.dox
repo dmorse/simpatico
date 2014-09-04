@@ -1,4 +1,4 @@
-/*! \page user_features_mcSim_page 2.8.4 Options for mcSim 
+/*! \page user_features_mcSim_page 2.8.4 Features for mcSim 
 
 \ref user_features_mdSim_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
 \ref user_restart_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
@@ -54,6 +54,7 @@ McMove classes, see the \ref McMd_McMove_Module "McMove module".
   <li> \subpage mcMd_analyzer_McExternalEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McIntraBondStressAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_McIntraBondTensorAutoCorr_page </li>
+  <li> \subpage mcMd_analyzer_McNVTChemicalPotential_page </li>
   <li> \subpage mcMd_analyzer_McPairEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McPressureAverage_page </li>
   <li> \subpage mcMd_analyzer_McStressAutoCorrelation_page </li>

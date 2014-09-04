@@ -51,7 +51,7 @@ in which
 
 \section mcMd_analyzer_IntraPairAutoCorr_out_sec Output Files
 
-Output autocorrelation function to <outputFileName>.dat as column of values. The output() function calls AutoCorrArray<double, double>::output(), which defines the format.
+Output autocorrelation function to {outputFileName}.dat as column of values. The output() function calls AutoCorrArray<double, double>::output(), which defines the format.
 
 */
 
