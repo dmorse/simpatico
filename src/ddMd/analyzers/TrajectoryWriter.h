@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/analyzers/Analyzer.h>             // base class
-#include <ddMd/storage/AtomStorage.h>               
+#include <ddMd/analyzers/Analyzer.h>         // base class
+#include <ddMd/storage/AtomStorage.h>       
 #ifdef INTER_BOND
 #include <ddMd/storage/BondStorage.h>               
 #endif
@@ -19,16 +19,15 @@
 #ifdef INTER_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>               
 #endif
-#include <ddMd/communicate/AtomCollector.h>      // member 
-#include <ddMd/communicate/GroupCollector.h>     // member 
-#include <util/boundary/Boundary.h>              // typedef
+#include <util/boundary/Boundary.h>         // typedef
 
 namespace DdMd
 {
 
    class Simulation;
    class Domain;
-   class Buffer;
+   class AtomCollector;
+   template <int N> class GroupCollector;
 
    using namespace Util;
 
@@ -77,10 +76,10 @@ namespace DdMd
       virtual void save(Serializable::OArchive &ar);
 
       /**
-      * Clear nSample counter.
+      * Open the trajectory file. 
       */
-      virtual void clear();
-  
+      virtual void setup();
+
       /**
       * Dump configuration to file
       *
@@ -88,6 +87,11 @@ namespace DdMd
       */
       virtual void sample(long iStep);
 
+      /**
+      * Clear nSample counter.
+      */
+      virtual void clear();
+  
       /**
       * Close ouput file.
       */
@@ -98,12 +102,13 @@ namespace DdMd
       /**
       * Write data that should appear once, at beginning of the file. 
       *
-      * Called by sample when iStep == 0.
+      * Called by sample on first invocation. Default implementation is empty.
       *
       * \param out output file stream
       * \param iStep MD time step index
       */
-      virtual void writeHeader(std::ofstream& out, long iStep) = 0;
+      virtual void writeHeader(std::ofstream& out, long iStep)
+      {};
 
       /**
       * Write data that should appear in every frame.
@@ -182,11 +187,13 @@ namespace DdMd
       /// Has readParam been called?
       long isInitialized_;
    
-      // Pointers to associated objects.
+      // Pointers to associated Domain.
       Domain* domainPtr_;
+
+      // Pointers to associated Boundary.
       Boundary* boundaryPtr_;
 
-      // Storage and collectors
+      // Pointers to storage objects.
       AtomStorage* atomStoragePtr_;
       #ifdef INTER_BOND
       BondStorage* bondStoragePtr_;
@@ -197,14 +204,6 @@ namespace DdMd
       #ifdef INTER_DIHEDRAL
       DihedralStorage* dihedralStoragePtr_;
       #endif
-
-      /**
-      * Write Group<N> objects to file. 
-      */
-      template <int N>
-      int writeGroups(std::ofstream& file, 
-                      const char* sectionLabel, const char* nGroupLabel,
-                      GroupStorage<N>& storage, GroupCollector<N>& collector);
 
    };
 
