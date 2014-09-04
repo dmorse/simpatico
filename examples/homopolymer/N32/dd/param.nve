@@ -60,6 +60,11 @@ Simulation{
         interval        1000
      }
 
+     LammpsDumpWriter{
+        interval        2000
+        outputFileName  trajectory
+     }
+
   }
 }
 

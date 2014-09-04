@@ -30,6 +30,10 @@
 #include "PairEnergyAverage.h"
 #include "StressAutoCorrelation.h"
 
+// Trajectory Writer Analyzers
+#include "DdMdTrajectoryWriter.h"
+#include "LammpsDumpWriter.h"
+
 namespace DdMd
 {
 
@@ -50,8 +54,8 @@ namespace DdMd
       Analyzer* ptr = 0;
 
       // Try subfactories first (if any)
-      //ptr = trySubfactories(className);
-      //if (ptr) return ptr;
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
 
       // Simulation Analyzers
       if (className == "WriteConfig") {
@@ -101,6 +105,12 @@ namespace DdMd
       } else
       if (className == "StressAutoCorrelation") {
          ptr = new StressAutoCorrelation(simulation());
+      }
+      if (className == "DdMdTrajectoryWriter") {
+         ptr = new DdMdTrajectoryWriter(simulation());
+      }
+      if (className == "LammpsDumpWriter") {
+         ptr = new LammpsDumpWriter(simulation());
       }
       return ptr;
    }

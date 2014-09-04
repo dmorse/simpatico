@@ -10,13 +10,10 @@
 
 #include "DdMdTrajectoryWriter.h"
 #include <ddMd/simulation/Simulation.h>
+#include <ddMd/communicate/AtomCollector.h>
 #include <ddMd/chemistry/Atom.h>
 #include <util/archives/BinaryFileOArchive.h>
 #include <util/space/Vector.h>
-#include <util/space/IntVector.h>
-
-#include <vector>
-#include <sstream>
 
 namespace DdMd
 {
@@ -47,6 +44,7 @@ namespace DdMd
          ar << nAtom_;
       }
 
+      #if 0
       // Write groups
       #ifdef INTER_BOND
       if (bondStorage().capacity()) {
@@ -62,6 +60,7 @@ namespace DdMd
       if (dihedralStorage().capacity()) {
          writeGroups<4>(ar, dihedralStorage(), dihedralCollector());
       }
+      #endif
       #endif
    }
 
@@ -105,6 +104,7 @@ namespace DdMd
 
    }
 
+   #if 0
    /*
    * Private method to save Group<N> objects.
    */
@@ -129,6 +129,7 @@ namespace DdMd
       }
       return nGroup;
    }
+   #endif
 
 }
 #endif
