@@ -20,6 +20,7 @@ ddMd_analyzers_=\
      ddMd/analyzers/ExternalEnergyAverage.cpp\
      ddMd/analyzers/TrajectoryWriter.cpp\
      ddMd/analyzers/DdMdTrajectoryWriter.cpp\
+     ddMd/analyzers/LammpsDumpWriter.cpp\
      ddMd/analyzers/StressAutoCorrelation.cpp
 
 ddMd_analyzers_SRCS=\

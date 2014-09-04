@@ -1,5 +1,5 @@
-#ifndef DDMD_DDMD_TRAJECTORY_WRITER_H
-#define DDMD_DDMD_TRAJECTORY_WRITER_H
+#ifndef DDMD_LAMMPS_DUMP_WRITER_H
+#define DDMD_LAMMPS_DUMP_WRITER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -16,11 +16,11 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Native binary trajectory format for ddSim.
+   * Write a trajectory in the Lammps dump format.
    *
    * \ingroup McMd_TrajectoryWriter_Module
    */
-   class DdMdTrajectoryWriter : public TrajectoryWriter
+   class LammpsDumpWriter : public TrajectoryWriter
    {
 
    public:
@@ -30,20 +30,12 @@ namespace DdMd
       *
       * \param simulation parent Simulation object
       */
-      DdMdTrajectoryWriter(Simulation& simulation);
+      LammpsDumpWriter(Simulation& simulation);
 
       /**
       * Destructor.
       */
-      virtual ~DdMdTrajectoryWriter();
-
-      /**
-      * Read trajectory file header and initialize simulation parameters.
-      *
-      * \param file output file stream
-      * \param iStep MD time step index
-      */
-      void writeHeader(std::ofstream &file, long iStep);
+      virtual ~LammpsDumpWriter();
 
       /**
       * Read a single frame. Frames are assumed to be read consecutively.
@@ -57,16 +49,6 @@ namespace DdMd
 
       /// Number of atoms in the file.
       int nAtom_;
-
-      #if 0
-      /**
-      * Private method to save Group<N> objects.
-      */
-      template <int N>
-      int writeGroups(BinaryFileOArchive& ar,
-                      GroupStorage<N>& storage, 
-                      GroupCollector<N>& collector); 
-      #endif
 
    };
 
