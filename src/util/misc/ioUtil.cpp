@@ -37,11 +37,11 @@ namespace Util
    *
    * Throw Exception if input value differs from expected value.
    */
-   void checkString(std::istream& in, std::string& expected)
+   void checkString(std::istream& in, const std::string& expected)
    {
       std::string actual;
       in >> actual;
-      if ( actual != expected ) {
+      if (actual != expected) {
          Log::file() << "Error in checkString"     << std::endl;
          Log::file() << "Expected: " <<  expected  << std::endl;
 	 Log::file() << "Scanned:  " <<  actual    << std::endl;
@@ -59,47 +59,65 @@ namespace Util
       return ss.str();
    }
 
-
-   /*
-   * Get the next line of input skipping an blank lines.
-   */
-   void getNextLine(std::istream& in, std::string& line)
-   {
-      bool hasLine = false;
-      while (!hasLine) {
-         std::getline(in, line);
-         if (!line.empty()) {
-            hasLine = true;
-         }
-      }
-   }
-
    /*
    * Transfer the next line of input to a stringstream
    */
-   void getLine(std::istream& in, std::stringstream& line)
+   bool getLine(std::istream& in, std::stringstream& line)
    {
       std::string string;
-      line.str(string);
-      getline(in, string);
-      line.str(string);
+      if (!in.eof()) {
+         getline(in, string);
+         line.str(string);
+         return true;
+      } else {
+         line.str(string);
+         return false;
+      }
    }
 
    /*
-   * Transfer the next line of input to an sstream
+   * Get the next non-blank line of input.
    */
-   void getNextLine(std::istream& in, std::stringstream& line)
+   bool getNextLine(std::istream& in, std::string& line)
    {
-      std::string string;
-      line.str(string);
-      bool hasLine = false;
-      while (!hasLine) {
-         std::getline(in, string);
-         if (!string.empty()) {
-            hasLine = true;
+      while (true) {
+         if (!in.eof()) {
+            getline(in, line);
+            rStrip(line);
+            if (!line.empty()) {
+               // Return true to indicate eof not reached
+               return true;
+            }
+         } else {
+            line.clear();
+            // Return false to indicate eof reached
+            return false;
          }
       }
-      line.str(string);
+   }
+
+   /*
+   * Assign the next non-blank line of input to a stringstream
+   */
+   bool getNextLine(std::istream& in, std::stringstream& line)
+   {
+      std::string string;
+      while (true) {
+         if (!in.eof()) {
+            getline(in, string);
+            rStrip(string);
+            if (!string.empty()) {
+               line.str(string);
+               // Return true to indicate eof not reached
+               return true;
+            }
+         } else {
+            // Set stringstream content to empty string
+            line.str(string);
+            // Return false to indicate eof reached
+            return false;
+         }
+      }
    }
 
 }
