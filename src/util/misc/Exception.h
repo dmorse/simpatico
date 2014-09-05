@@ -19,7 +19,7 @@ namespace Util
    *
    * Exceptions are usually thrown using the UTIL_THROW() macro. 
    *
-   * \ingroup Util_Module
+   * \ingroup Misc_Module
    */
    class Exception 
    {

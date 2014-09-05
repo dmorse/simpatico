@@ -15,6 +15,8 @@ namespace Util
    * Represents a specific bit location within an unsigned int.
    *
    * Provides methods to query, set or clear a particular bit.
+   *
+   * \ingroup Misc_Module
    */
    class Bit 
    {

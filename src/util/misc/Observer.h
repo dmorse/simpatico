@@ -18,7 +18,7 @@ namespace Util
    * The template class parameter Event is the type of object that is 
    * passed to the update() method as a message about an event.
    *
-   * \ingroup Util_Module
+   * \ingroup Misc_Module
    */
    template <typename Event>
    class Observer

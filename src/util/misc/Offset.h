@@ -21,7 +21,7 @@ namespace Util
    *  B - base class 
    *  M - member type
    * 
-   * \ingroup Util_Module
+   * \ingroup Misc_Module
    */
    template <typename D, typename B, typename M>
    ptrdiff_t memberOffset(D& object, M  B::* memPtr)

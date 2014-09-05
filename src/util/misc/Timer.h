@@ -25,7 +25,7 @@ namespace Util
    * intervals.  The accumulated time is returned by the time()
    * method, and can be reset to zero by the clear() method.
    *
-   * \ingroup Util_Module
+   * \ingroup Misc_Module
    */
    class Timer
    {

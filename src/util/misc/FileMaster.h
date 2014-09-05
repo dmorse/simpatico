@@ -91,6 +91,8 @@ namespace Util
    * constructed as a concatenation of a root prefix (if any), a
    * directory id string (if any), and a base name provided as a
    * parameter to these methods.
+   *
+   * \ingroup Misc_Module
    */
    class FileMaster : public ParamComposite
    {

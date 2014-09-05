@@ -25,7 +25,7 @@ namespace Util
    * to point to a ofstream file object using the static setFile() 
    * method. 
    *
-   * \ingroup Util_Module
+   * \ingroup Misc_Module
    */
    class Log
    {

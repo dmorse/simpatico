@@ -18,12 +18,16 @@ namespace Util
    /**
    * Return string representation of an integer.
    *
+   * \ingroup Misc_Module
+   *
    * \param n integer to be converted.
    */
    std::string toString(int n);
 
    /**
    * Strip trailing whitespace from a string.
+   *
+   * \ingroup Misc_Module
    *
    * \param  string string (stripped upon return).
    * \return length of stripped string.
@@ -35,6 +39,8 @@ namespace Util
    *
    * \throw Exception if input value differs from expected value.
    *
+   * \ingroup Misc_Module
+   *
    * \param in input stream
    * \param expected expected value of string read from stream
    */
@@ -43,15 +49,21 @@ namespace Util
    /**
    * Read the next line into a stringstream.
    *
-   * \param in   input stream from which to read.
+   * Variant of std::getline(). Does not strip trailing whitespace.
+   *
+   * \ingroup Misc_Module
+   *
+   * \param in input stream from which to read.
    * \param line stringstream containing line, on output.
    */
    bool getLine(std::istream& in, std::stringstream& line);
 
    /**
-   * Get the next non-empty line of input, skipping any empty lines.
+   * Read the next non-empty line into a string, strip trailing whitespace.
    *
    * Variant of std::getline() that skips empty lines.
+   *
+   * \ingroup Misc_Module
    *
    * \param in input stream from which to read.
    * \param line string with next non-empty line, on output.
@@ -60,9 +72,11 @@ namespace Util
    bool getNextLine(std::istream& in, std::string& line);
 
    /**
-   * Read the next non-empty line into a stringstream.
+   * Read the next non-empty line into a stringstream, strip trailing whitespace.
    *
    * Variant of std::getline() that skips empty lines and uses stringstream.
+   *
+   * \ingroup Misc_Module
    *
    * \param in   input stream from which to read.
    * \param line stringstream containing next non-empty line, on output.

@@ -35,7 +35,7 @@ namespace Util
    * information is required for any Observer to respond appropriately 
    * when notified. 
    *
-   * \ingroup Util_Module
+   * \ingroup Misc_Module
    */
    template <typename Event>
    class Notifier
