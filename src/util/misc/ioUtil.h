@@ -31,24 +31,14 @@ namespace Util
    int rStrip(std::string& string);
 
    /**
-   * Read string, and compare to expected value. 
+   * Extract string from stream, and compare to expected value. 
    *
    * \throw Exception if input value differs from expected value.
    *
-   * \param in       input stream
+   * \param in input stream
    * \param expected expected value of string read from stream
    */
-   void checkString(std::istream& in, std::string& expected);
-
-   /**
-   * Get the next non-empty line of input, skipping any empty lines.
-   *
-   * Variant of std::getline() that skips empty lines.
-   *
-   * \param in   input stream from which to read.
-   * \param line string with next non-empty line, on output.
-   */
-   void getNextLine(std::istream& in, std::string& line);
+   void checkString(std::istream& in, const std::string& expected);
 
    /**
    * Read the next line into a stringstream.
@@ -56,7 +46,18 @@ namespace Util
    * \param in   input stream from which to read.
    * \param line stringstream containing line, on output.
    */
-   void getLine(std::istream& in, std::stringstream& line);
+   bool getLine(std::istream& in, std::stringstream& line);
+
+   /**
+   * Get the next non-empty line of input, skipping any empty lines.
+   *
+   * Variant of std::getline() that skips empty lines.
+   *
+   * \param in input stream from which to read.
+   * \param line string with next non-empty line, on output.
+   * \return true if not end-of-file, false if end-of-file.
+   */
+   bool getNextLine(std::istream& in, std::string& line);
 
    /**
    * Read the next non-empty line into a stringstream.
@@ -65,8 +66,9 @@ namespace Util
    *
    * \param in   input stream from which to read.
    * \param line stringstream containing next non-empty line, on output.
+   * \return true if not end-of-file, false if end-of-file.
    */
-   void getNextLine(std::istream& in, std::stringstream& line);
+   bool getNextLine(std::istream& in, std::stringstream& line);
 
 }
 #endif

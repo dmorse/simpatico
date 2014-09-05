@@ -20,6 +20,7 @@
 #include "param/serial/ParamTestComposite.h"
 #include "random/RandomTest.h"
 #include "space/SpaceTestComposite.h"
+#include "misc/MiscTestComposite.h"
 
 #ifdef  UTIL_MPI
 #include "param/mpi/MpiParamTestComposite.h"
@@ -40,6 +41,7 @@ addChild(new TEST_RUNNER(FormatTest), "format/");
 addChild(new ParamTestComposite, "param/serial/");
 addChild(new TEST_RUNNER(RandomTest), "random/");
 addChild(new SpaceTestComposite, "space/");
+addChild(new MiscTestComposite, "misc/");
 #ifdef UTIL_MPI
 //addChild(new MpiParamTestComposite, "param/mpi/");
 //addChild(new TEST_RUNNER(MpiSendRecvTest), "mpi/");
