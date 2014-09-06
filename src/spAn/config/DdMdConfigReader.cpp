@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "DdMdConfigIo.h"
+#include "DdMdConfigReader.h"
 
 #include <spAn/chemistry/Atom.h>
 #include <spAn/chemistry/Group.h>
@@ -28,15 +28,15 @@ namespace SpAn
    /*
    * Constructor.
    */
-   DdMdConfigIo::DdMdConfigIo(Configuration& configuration, bool hasMolecules)
-    : ConfigIo(configuration),
+   DdMdConfigReader::DdMdConfigReader(Configuration& configuration, bool hasMolecules)
+    : ConfigReader(configuration),
       hasMolecules_(hasMolecules)
-   {  setClassName("DdMdConfigIo"); }
+   {  setClassName("DdMdConfigReader"); }
 
    /*
    * Read a configuration file.
    */
-   void DdMdConfigIo::readConfig(std::ifstream& file)
+   void DdMdConfigReader::readConfig(std::ifstream& file)
    {
       // Precondition
       if (!file.is_open()) {  
@@ -147,7 +147,7 @@ namespace SpAn
    /* 
    * Write the configuration file.
    */
-   void DdMdConfigIo::writeConfig(std::ofstream& file)
+   void DdMdConfigReader::writeConfig(std::ofstream& file)
    {
       // Precondition
       if (!file.is_open()) {  

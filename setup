@@ -103,7 +103,9 @@ cp  src/ddMd/potentials/pair/PairFactory.cpp_r src/ddMd/potentials/pair/PairFact
 cp  src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/IntegratorFactory.cpp
 cp  src/ddMd/analyzers/AnalyzerFactory.cpp_r src/ddMd/analyzers/AnalyzerFactory.cpp
 cp  src/ddMd/modifiers/ModifierFactory.cpp_r src/ddMd/modifiers/ModifierFactory.cpp
-cp  src/spAn/configIos/ConfigIoFactory.cpp_r src/spAn/configIos/ConfigIoFactory.cpp
+
+cp  src/spAn/config/ConfigReaderFactory.cpp_r src/spAn/config/ConfigReaderFactory.cpp
+cp  src/spAn/trajectory/TrajectoryReaderFactory.cpp_r src/spAn/trajectory/TrajectoryReaderFactory.cpp
 cp  src/spAn/analyzers/AnalyzerFactory.cpp_r src/spAn/analyzers/AnalyzerFactory.cpp
 
 # Copy typedef for the class that defines boundary conditions

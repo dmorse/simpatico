@@ -21,7 +21,7 @@ using namespace Util;
 * 
 * Usage:
 *
-*    mdPp [-t] [-i inputConfigIo]  param config first last
+*    mdPp [-t] [-i inputConfigReader]  param config first last
 *
 * Required arguments:
 *
@@ -40,10 +40,10 @@ using namespace Util;
 *        Sets to read a trajectory file. If not set, reads a sequence
 *        of configuration files.
 *
-*     -i inputConfigIo
+*     -i inputConfigReader
 *
 *        Specify input configuration/trajectory format. The required
-*        argument inputConfigIo is the name of a ConfigIo subclass.
+*        argument inputConfigReader is the name of a ConfigReader subclass.
 *
 * \ingroup SpAn_Module
 */
@@ -55,18 +55,24 @@ int main(int argc, char** argv)
 
    // Parse command-line arguments
    bool tFlag = false;
-   bool iFlag = false;
-   std::string configIoName = "DdMdConfigIo";
+   bool cFlag = false;
+   bool dFlag = false;
+   std::string configStyle;
+   std::string trajectoryStyle;
    int c;
    opterr = 0;
-   while ((c = getopt(argc, argv, "ti:")) != -1) {
+   while ((c = getopt(argc, argv, "tc:d:")) != -1) {
       switch (c) {
       case 't':
          tFlag = true;
          break;
-      case 'i':
-         iFlag = true;
-         configIoName = optarg;
+      case 'c':
+         cFlag = true;
+         configStyle = optarg;
+         break;
+      case 'd':
+         dFlag = true;
+         trajectoryStyle = optarg;
          break;
       case '?':
          Log::file() << "Unknown option -" << optopt << std::endl;
@@ -74,34 +80,58 @@ int main(int argc, char** argv)
    }
 
    // Read required arguments
-   if (argc - optind != 4) {
-      std::cout << "optind = " << optind << std::endl;
-      std::cout << "argc   = " << argc << std::endl;
-      UTIL_THROW("Wrong number of arguments");
+   if (tFlag) {
+      if (argc - optind != 3) {
+         Log::file() << "optind = " << optind << std::endl;
+         Log::file() << "argc   = " << argc << std::endl;
+         UTIL_THROW("Wrong number of required arguments");
+      }
+   } else {
+      if (argc - optind != 4) {
+         Log::file() << "optind = " << optind << std::endl;
+         Log::file() << "argc   = " << argc << std::endl;
+         UTIL_THROW("Wrong number of required arguments");
+      }
    }
-   const char* paramFileName = argv[optind];
-   const char* configFileName = argv[optind+1];
-   int first = atoi(argv[optind+2]);
-   int last = atoi(argv[optind+3]);
-   std::cout << "paramFile  = " << paramFileName << std::endl;
-   std::cout << "configFile = " << configFileName << std::endl;
-   std::cout << "first      = " << first << std::endl;
-   std::cout << "last       = " << last << std::endl;
 
    // Read parameter file
+   const char* paramFileName = argv[optind];
+   Log::file() << "paramFile  = " << paramFileName << std::endl;
    std::ifstream paramFile;
    paramFile.open(paramFileName);
    processor.readParam(paramFile);
    paramFile.close();
 
-   // Set input file format format
-   if (iFlag) {
-      std::cout << "Setting ConfigIo " << configIoName << std::endl;
-      processor.setConfigIo(configIoName);
+   const char* configFileName = argv[optind+1];
+   Log::file() << "configFile = " << configFileName << std::endl;
+
+   if (cFlag) {
+      Log::file() << "configStyle= " 
+                  << configStyle << std::endl;
+      processor.setConfigReader(configStyle);
    }
 
+   if (tFlag) {
+       processor.readConfig(configFileName);
+       const char* trajectoryFileName = argv[optind+2];
+       Log::file() << "trajectoryFile = " << trajectoryFileName << std::endl;
+       if (dFlag) {
+          Log::file() << "trajectoryStyle= " 
+                      << trajectoryStyle << std::endl;
+          processor.setTrajectoryReader(trajectoryStyle);
+       }
+       processor.analyzeTrajectory(trajectoryFileName);
+   } else {
+      int first = atoi(argv[optind+2]);
+      int last = atoi(argv[optind+3]);
+      Log::file() << "first = " << first << std::endl;
+      Log::file() << "last  = " << last << std::endl;
+      processor.analyzeDumps(first, last, configFileName);
+   }
+
+
+
    // Process dumps
-   processor.analyzeDumps(first, last, configFileName);
 
    return 0;
 }

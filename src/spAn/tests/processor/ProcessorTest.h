@@ -95,23 +95,13 @@ inline void ProcessorTest::testReadConfig1()
    file.close();
 }
 
-inline void ProcessorTest::testWriteConfig1()
-{
-   printMethod(TEST_FUNC);
-   readParam("in/Processor");
-   std::ofstream file;
-   openOutputFile("out/config", file);
-   processor_.writeConfig(file);
-   file.close();
-}
-
 inline void ProcessorTest::testReadConfig2()
 {
    printMethod(TEST_FUNC);
    //ParamComponent::setEcho(true);
    readParam("in/Processor.2");
    TEST_ASSERT(processor_.nSpecies() == 1);
-   processor_.setConfigIo("DdMdConfigIo_Molecule");
+   processor_.setConfigReader("DdMdConfigReader_Molecule");
    std::ifstream file;
    openInputFile("in/config.3", file);
    processor_.readConfig(file);
@@ -147,7 +137,6 @@ TEST_BEGIN(ProcessorTest)
 TEST_ADD(ProcessorTest, testReadParam)
 TEST_ADD(ProcessorTest, testAddAtoms)
 TEST_ADD(ProcessorTest, testReadConfig1)
-TEST_ADD(ProcessorTest, testWriteConfig1)
 TEST_ADD(ProcessorTest, testReadConfig2)
 TEST_END(ProcessorTest)
 

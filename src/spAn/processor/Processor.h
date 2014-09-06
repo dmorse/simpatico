@@ -8,16 +8,17 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <spAn/storage/Configuration.h>       // base class
-#include <spAn/configIos/ConfigIoFactory.h>   // member 
-#include <spAn/analyzers/AnalyzerManager.h>   // member 
-#include <util/misc/FileMaster.h>             // member 
+#include <spAn/storage/Configuration.h>                // base class
+#include <spAn/config/ConfigReaderFactory.h>           // member 
+#include <spAn/trajectory/TrajectoryReaderFactory.h>   // member 
+#include <spAn/analyzers/AnalyzerManager.h>            // member 
+#include <util/misc/FileMaster.h>                      // member 
 
 
 namespace SpAn 
 {
 
-   class ConfigIo;
+   class ConfigReader;
 
    using namespace Util;
 
@@ -65,18 +66,20 @@ namespace SpAn
       void readParameters(std::istream& in);
 
       //@}
-      /// \name ConfigIo Interface 
+      /// \name ConfigReader Interface 
       //@{
       
       /**
-      * Set ConfigIo style  (creates a ConfigIo).
+      * Set ConfigReader style  (creates a ConfigReader).
+      *
+      * \param string identifier for ConfigReader subclass
       */
-      void setConfigIo(const std::string& configIoName);
+      void setConfigReader(const std::string& configReaderName);
 
       /**
-      * Return the current ConfigIo (create default if necessary).
+      * Return the current ConfigReader (create default if necessary).
       */
-      ConfigIo& configIo();
+      ConfigReader& configReader();
    
       /**
       * Read a single configuration file.
@@ -89,20 +92,6 @@ namespace SpAn
       void readConfig(const std::string& filename);
    
       /**
-      * Write a single configuration file.
-      */
-      void writeConfig(std::ofstream& out);
-
-      /**
-      * Open, write and close a configuration file.
-      */
-      void writeConfig(const std::string& filename);
-
-      //@}
-      /// \name Trajectory analysis
-      //@{
-
-      /**
       * Read and analyze a sequence of numbered configuration files.
       *
       * This function reads and analyzes a sequence of configuration files 
@@ -114,12 +103,30 @@ namespace SpAn
       * \param max  integer suffix of last configuration file name
       * \param fileBaseName root name for dump files (without integer suffix)
       */  
-      void analyzeDumps(int min, int max, std::string fileBaseName);
+      void analyzeDumps(int min, int max, const std::string& baseFileName);
+
+      //@}
+      /// \name Trajectory analysis
+      //@{
 
       /**
-      * Analyze a trajectory file.
+      * Set TrajectoryReader style  (creates a TrajectoryReader).
+      *
+      * \param string identifier for TrajectoryReader subclass
       */
-      void analyzeTrajectory(std::string& filename);
+      void setTrajectoryReader(const std::string& trajectoryStyle);
+
+      /**
+      * Return the current TrajectoryReader (create default if necessary).
+      */
+      TrajectoryReader& trajectoryReader();
+   
+      /**
+      * Open, read, analyze and close a single trajectory file.
+      *
+      * \param name of trajectory file.
+      */
+      void analyzeTrajectory(const std::string& filename);
 
       //@}
       /// \name Miscellaneous functions
@@ -139,11 +146,17 @@ namespace SpAn
 
    private:
 
-      /// Pointer to current ConfigIo object.
-      ConfigIo* configIoPtr_;
+      /// Pointer to current ConfigReader object.
+      ConfigReader* configReaderPtr_;
 
-      /// Factory for generating ConfigIo at run time.
-      ConfigIoFactory configIoFactory_;
+      /// Pointer to current TrajectoryReader object.
+      TrajectoryReader* trajectoryReaderPtr_;
+
+      /// Factory for choosing ConfigReader at run time.
+      ConfigReaderFactory configReaderFactory_;
+
+      /// Factory for choosing TrajectoryReader at run time.
+      TrajectoryReaderFactory trajectoryReaderFactory_;
 
       /// Manager for analyzers
       AnalyzerManager analyzerManager_;
@@ -151,8 +164,8 @@ namespace SpAn
       /// FileMaster (optionally activated)
       FileMaster fileMaster_;
 
-      /// String identifier for ConfigIo class name
-      std::string configIoName_;
+      /// String identifier for ConfigReader class name
+      std::string configReaderName_;
 
    };
 

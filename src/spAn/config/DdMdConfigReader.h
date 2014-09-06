@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <spAn/configIos/ConfigIo.h>
+#include <spAn/config/ConfigReader.h>
 #include <spAn/storage/GroupStorage.h>
 #include <spAn/storage/Configuration.h>
 
@@ -24,9 +24,9 @@ namespace SpAn
    /**
    * Native / default DdMd format for configuration files.
    *
-   * \ingroup SpAn_ConfigIo_Module
+   * \ingroup SpAn_ConfigReader_Module
    */
-   class DdMdConfigIo  : public ConfigIo
+   class DdMdConfigReader  : public ConfigReader
    {
 
    public:
@@ -34,7 +34,7 @@ namespace SpAn
       /**
       * Default constructor.
       */
-      DdMdConfigIo(bool hasMolecules = false);
+      DdMdConfigReader(bool hasMolecules = false);
 
       /**
       * Constructor.
@@ -42,7 +42,7 @@ namespace SpAn
       * \param configuration parent Configuration object.
       * \param hasMolecules true if file format has DdMd::AtomContext info
       */
-      DdMdConfigIo(Configuration& configuration, bool hasMolecules = false);
+      DdMdConfigReader(Configuration& configuration, bool hasMolecules = false);
 
       /**
       * Read configuration file in DdMd default format.
@@ -78,7 +78,7 @@ namespace SpAn
    * Private method to read Group<N> objects.
    */
    template <int N>
-   int DdMdConfigIo::readGroups(std::ifstream& file, 
+   int DdMdConfigReader::readGroups(std::ifstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupStorage<N>& groups)
@@ -98,7 +98,7 @@ namespace SpAn
    * Private method to write Group<N> objects.
    */
    template <int N>
-   int DdMdConfigIo::writeGroups(std::ofstream& file, const char* sectionLabel,
+   int DdMdConfigReader::writeGroups(std::ofstream& file, const char* sectionLabel,
                   const char* nGroupLabel, GroupStorage<N>& groups)
    {
       Configuration::BondIterator iter;

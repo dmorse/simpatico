@@ -1,5 +1,5 @@
-#ifndef SPAN_CONFIG_IO_H
-#define SPAN_CONFIG_IO_H
+#ifndef SPAN_CONFIG_READER_H
+#define SPAN_CONFIG_READER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -19,12 +19,12 @@ namespace SpAn
    /**
    * Abstract reader/writer for configuration files.
    *
-   * Each concrete subclass of ConfigIo implements a specific file format
+   * Each concrete subclass of ConfigReader implements a specific file format
    * by implementing the pure virtual readConfig and writeConfig methods. 
    *
-   * \ingroup SpAn_ConfigIo_Module
+   * \ingroup SpAn_ConfigReader_Module
    */
-   class ConfigIo  : public ParamComposite
+   class ConfigReader  : public ParamComposite
    {
 
    public:
@@ -32,19 +32,19 @@ namespace SpAn
       /**
       * Default constructor.
       */
-      ConfigIo();
+      ConfigReader();
 
       /**
       * Constructor.
       *
       * \param configuration parent Configuration object
       */
-      ConfigIo(Configuration& configuration);
+      ConfigReader(Configuration& configuration);
 
       /**
       * Destructor.
       */
-      virtual ~ConfigIo();
+      virtual ~ConfigReader();
 
       /**
       * Read a configuration file.
@@ -53,12 +53,14 @@ namespace SpAn
       */
       virtual void readConfig(std::ifstream& file) = 0;
 
+      #if 0
       /**
       * Write configuration file.
       *
       * \param file  output file 
       */
       virtual void writeConfig(std::ofstream& file) = 0;
+      #endif
 
    protected:
 

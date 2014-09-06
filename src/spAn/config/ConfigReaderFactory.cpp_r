@@ -8,10 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ConfigIoFactory.h"  
+#include "ConfigReaderFactory.h"  
 
-// Subclasses of ConfigIo 
-#include "DdMdConfigIo.h"
+// Subclasses of ConfigReader 
+#include "DdMdConfigReader.h"
 
 namespace SpAn
 {
@@ -21,27 +21,27 @@ namespace SpAn
    /*
    * Constructor
    */
-   ConfigIoFactory::ConfigIoFactory(Configuration& configuration)
+   ConfigReaderFactory::ConfigReaderFactory(Configuration& configuration)
     : configurationPtr_(&configuration)
    {}
 
    /* 
-   * Return a pointer to a instance of ConfigIo subclass className.
+   * Return a pointer to a instance of ConfigReader subclass className.
    */
-   ConfigIo* ConfigIoFactory::factory(const std::string &className) const
+   ConfigReader* ConfigReaderFactory::factory(const std::string &className) const
    {
-      ConfigIo *ptr = 0;
+      ConfigReader *ptr = 0;
 
       // Try subfactories first.
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
-      if (className == "DdMdConfigIo") {
-         ptr = new DdMdConfigIo(*configurationPtr_);
+      if (className == "DdMdConfigReader") {
+         ptr = new DdMdConfigReader(*configurationPtr_);
       } else 
-      if (className == "DdMdConfigIo_Molecule") {
+      if (className == "DdMdConfigReader_Molecule") {
          bool hasMolecules = true;
-         ptr = new DdMdConfigIo(*configurationPtr_, hasMolecules);
+         ptr = new DdMdConfigReader(*configurationPtr_, hasMolecules);
       }
  
       return ptr;

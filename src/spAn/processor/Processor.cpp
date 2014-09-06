@@ -9,7 +9,8 @@
 */
 
 #include "Processor.h"
-#include <spAn/configIos/DdMdConfigIo.h>
+#include <spAn/config/DdMdConfigReader.h>
+#include <spAn/trajectory/LammpsDumpReader.h>
 
 // std headers
 #include <fstream>
@@ -23,8 +24,10 @@ namespace SpAn
    * Constructor.
    */
    Processor::Processor()
-    : configIoPtr_(0),
-      configIoFactory_(*this),
+    : configReaderPtr_(0),
+      trajectoryReaderPtr_(0),
+      configReaderFactory_(*this),
+      trajectoryReaderFactory_(*this),
       analyzerManager_(*this)
    {  setClassName("Processor"); }
 
@@ -33,8 +36,11 @@ namespace SpAn
    */
    Processor::~Processor()
    {
-      if (configIoPtr_) {
-         delete configIoPtr_;
+      if (configReaderPtr_) {
+         delete configReaderPtr_;
+      }
+      if (trajectoryReaderPtr_) {
+         delete trajectoryReaderPtr_;
       }
    }
 
@@ -59,32 +65,34 @@ namespace SpAn
       readParamComposite(in, analyzerManager_);
    }
 
-   // ConfigIo Functions
+   // ConfigReader Functions
 
    /*
-   * Set ConfigIo style.
+   * Set ConfigReader style.
    */
-   void Processor::setConfigIo(const std::string& configIoName)
+   void Processor::setConfigReader(const std::string& configStyle)
    {
-      configIoPtr_ = configIoFactory_.factory(configIoName);
-      if (configIoPtr_ == 0) {
+      configReaderPtr_ = configReaderFactory_.factory(configStyle);
+      if (configReaderPtr_ == 0) {
          std::string msg;
-         msg = "Unrecognized ConfigIo subclass name: ";
-         msg += configIoName;
+         msg = "Unrecognized ConfigReader subclass name: ";
+         msg += configStyle;
          UTIL_THROW(msg.c_str());
       }
    }
 
+   // Config File Reader
+
    /*
-   * Return the ConfigIo (create default if necessary).
+   * Return the ConfigReader (create default if necessary).
    */
-   ConfigIo& Processor::configIo() 
+   ConfigReader& Processor::configReader() 
    {
-      if (configIoPtr_ == 0) {
-         configIoPtr_ = new DdMdConfigIo(*this);
-         assert(configIoPtr_);
+      if (configReaderPtr_ == 0) {
+         configReaderPtr_ = new DdMdConfigReader(*this);
+         assert(configReaderPtr_);
       }
-      return *configIoPtr_;
+      return *configReaderPtr_;
    }
 
    /*
@@ -93,7 +101,7 @@ namespace SpAn
    void Processor::readConfig(std::ifstream& in)
    {
       clear();  
-      configIo().readConfig(in); 
+      configReader().readConfig(in); 
    }
 
    /*
@@ -108,28 +116,9 @@ namespace SpAn
    }
 
    /*
-   * Write a single configuration file (must be open)
-   */
-   void Processor::writeConfig(std::ofstream& out)
-   {  configIo().writeConfig(out); }
-
-   /*
-   * Open, write and close a configuration file.
-   */
-   void Processor::writeConfig(const std::string& filename)
-   {
-      std::ofstream outputFile;
-      outputFile.open(filename.c_str());
-      configIo().writeConfig(outputFile);
-      outputFile.close();
-   }
-
-   // Trajectory Analysis
-   
-   /*
    * Read and analyze a sequence of configuration files.
    */
-   void Processor::analyzeDumps(int min, int max, std::string baseFileName)
+   void Processor::analyzeDumps(int min, int max, const std::string& baseFileName)
    {
       // Preconditions
       if (min < 0)    UTIL_THROW("min < 0");
@@ -199,6 +188,73 @@ namespace SpAn
       Log::file() << std::endl;
       #endif
 
+   }
+
+   // Trajectory Analysis
+
+   /*
+   * Set TrajectoryReader style.
+   */
+   void Processor::setTrajectoryReader(const std::string& trajectoryStyle)
+   {
+      trajectoryReaderPtr_ = 
+                      trajectoryReaderFactory_.factory(trajectoryStyle);
+      if (trajectoryReaderPtr_ == 0) {
+         std::string msg;
+         msg = "Unrecognized TrajectoryReader subclass name: ";
+         msg += trajectoryStyle;
+         UTIL_THROW(msg.c_str());
+      }
+   }
+
+   /*
+   * Return the TrajectoryReader (create default if necessary).
+   */
+   TrajectoryReader& Processor::trajectoryReader() 
+   {
+      if (trajectoryReaderPtr_ == 0) {
+         trajectoryReaderPtr_ = new LammpsDumpReader(*this);
+         assert(trajectoryReaderPtr_);
+      }
+      return *trajectoryReaderPtr_;
+   }
+
+   /*
+   * Read and analyze a trajectory file.
+   */
+   void Processor::analyzeTrajectory(const std::string& filename)
+   {
+
+      // Open file
+      std::ifstream file;
+      file.open(filename.c_str());
+      if (!file.is_open()) {
+         std::string msg = "Trajectory file is not open. Filename =";
+         msg += filename;
+         UTIL_THROW(msg.c_str());
+      }
+
+      // Initialize analyzers (taking in molecular information).
+      analyzerManager_.setup();
+
+      // Main loop
+      trajectoryReader().readHeader(file);
+      Log::file() << "begin main loop" << std::endl;
+      int iStep = 0;
+      bool notEnd = true;
+      while (notEnd) {
+         notEnd = trajectoryReader().readFrame(file);
+         if (notEnd) {
+            analyzerManager_.sample(iStep);
+            ++iStep;
+         }
+      }
+      Log::file() << "end main loop" << std::endl;
+
+      // Output any final results of analyzers to output files
+      analyzerManager_.output();
+
+      file.close();
    }
 
    /*

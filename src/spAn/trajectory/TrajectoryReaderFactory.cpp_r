@@ -1,0 +1,47 @@
+#ifndef SPAN_TRAJECTORY_READER_FACTORY_CPP
+#define SPAN_TRAJECTORY_READER_FACTORY_CPP
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "TrajectoryReaderFactory.h"  
+
+// Subclasses of TrajectoryReader 
+#include "LammpsDumpReader.h"
+
+namespace SpAn
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor
+   */
+   TrajectoryReaderFactory::TrajectoryReaderFactory(Configuration& configuration)
+    : configurationPtr_(&configuration)
+   {}
+
+   /* 
+   * Return a pointer to a instance of TrajectoryReader subclass className.
+   */
+   TrajectoryReader* TrajectoryReaderFactory::factory(const std::string &className) const
+   {
+      TrajectoryReader *ptr = 0;
+
+      // Try subfactories first.
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
+
+      if (className == "LammpsDumpReader") {
+         ptr = new LammpsDumpReader(*configurationPtr_);
+      } 
+ 
+      return ptr;
+   }
+
+}
+#endif

@@ -5,7 +5,7 @@
 #include "storage/AtomStorageTest.h"
 #include "storage/ConfigurationTest.h"
 #include "processor/ProcessorTest.h"
-#include "configIos/DdMdConfigIoTest.h"
+#include "config/DdMdConfigReaderTest.h"
 #include "neighbor/CellTest.h"
 
 #include <test/CompositeTestRunner.h>
@@ -17,7 +17,7 @@ addChild(new TEST_RUNNER(AtomStorageTest), "storage/");
 addChild(new TEST_RUNNER(ConfigurationTest), "storage/");
 addChild(new TEST_RUNNER(ProcessorTest), "processor/");
 addChild(new TEST_RUNNER(CellTest), "neighbor/");
-addChild(new TEST_RUNNER(DdMdConfigIoTest), "configIos/");
+addChild(new TEST_RUNNER(DdMdConfigReaderTest), "config/");
 TEST_COMPOSITE_END
 
 #endif

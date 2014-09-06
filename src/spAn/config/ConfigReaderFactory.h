@@ -9,7 +9,7 @@
 */
 
 #include <util/param/Factory.h>  
-#include <spAn/configIos/ConfigIo.h>
+#include <spAn/config/ConfigReader.h>
 
 #include <string>
 
@@ -20,11 +20,11 @@ namespace SpAn
    class Configuration;
 
    /**
-   * Default Factory for subclasses of ConfigIo.
+   * Default Factory for subclasses of ConfigReader.
    *
-   * \ingroup SpAn_ConfigIo_Module
+   * \ingroup SpAn_ConfigReader_Module
    */
-   class ConfigIoFactory : public Factory<ConfigIo> 
+   class ConfigReaderFactory : public Factory<ConfigReader> 
    {
 
    public:
@@ -34,10 +34,10 @@ namespace SpAn
       *
       * \param configuration parent Configuration object
       */
-      ConfigIoFactory(Configuration& configuration);
+      ConfigReaderFactory(Configuration& configuration);
 
       /**
-      * Create an instance of a specified subclass of ConfigIo.
+      * Create an instance of a specified subclass of ConfigReader.
       *
       * If the subclassName is recognized, this method returns a
       * pointer to new object. If the name is not recognized, it
@@ -45,14 +45,14 @@ namespace SpAn
       *
       * The new object is created using a constructor that takes
       * the parent SpAn::Configuration as a parameter. The calling
-      * function must invoke DdMd::ConfigIo::initialize() before
-      * using the new ConfigIo to read or write configuration
+      * function must invoke DdMd::ConfigReader::initialize() before
+      * using the new ConfigReader to read or write configuration
       * files.
       *
-      * \param  subclassName  name of a subclass of ConfigIo 
-      * \return ConfigIo*     pointer to new instance of subclassName
+      * \param  subclassName  name of a subclass of ConfigReader 
+      * \return ConfigReader*     pointer to new instance of subclassName
       */
-      ConfigIo* factory(const std::string &subclassName) const;
+      ConfigReader* factory(const std::string &subclassName) const;
 
    private:
 

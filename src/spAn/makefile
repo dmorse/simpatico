@@ -44,7 +44,7 @@ veryclean:
 	$(MAKE) clean
 	rm -f lib*.a
 ifeq ($(BLD_DIR),$(SRC_DIR))
-	rm -f configIos/ConfigIoFactory.cpp
+	rm -f config/ConfigReaderFactory.cpp
 	rm -f analyzers/AnalyzerFactory.cpp
 endif
 

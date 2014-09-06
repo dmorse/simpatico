@@ -1,5 +1,5 @@
-#ifndef SPAN_CONFIG_IO_CPP
-#define SPAN_CONFIG_IO_CPP
+#ifndef SPAN_CONFIG_READER_CPP
+#define SPAN_CONFIG_READER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ConfigIo.h"
+#include "ConfigReader.h"
 
 namespace SpAn
 {
@@ -18,23 +18,23 @@ namespace SpAn
    /*
    * Constructor.
    */
-   ConfigIo::ConfigIo()
+   ConfigReader::ConfigReader()
      : configurationPtr_(0)
-   {  setClassName("ConfigIo"); }
+   {  setClassName("ConfigReader"); }
 
    /*
    * Constructor.
    */
-   ConfigIo::ConfigIo(Configuration& configuration)
+   ConfigReader::ConfigReader(Configuration& configuration)
      : configurationPtr_(&configuration)
    {
-      setClassName("ConfigIo"); 
+      setClassName("ConfigReader"); 
    }
 
    /*
    * Destructor.
    */
-   ConfigIo::~ConfigIo()
+   ConfigReader::~ConfigReader()
    {}
 
 }

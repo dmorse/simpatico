@@ -9,13 +9,13 @@ include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/spAn/sources.mk
 
-all: $(spAn_configIos_OBJS)
+all: $(spAn_config_OBJS)
 
 clean:
-	rm -f $(spAn_configIos_OBJS) $(spAn_configIos_OBJS:.o=.d)
+	rm -f $(spAn_config_OBJS) $(spAn_config_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(spAn_configIos_OBJS:.o=.d)
+	rm -f $(spAn_config_OBJS:.o=.d)
 
--include $(spAn_configIos_OBJS:.o=.d)
+-include $(spAn_config_OBJS:.o=.d)
 

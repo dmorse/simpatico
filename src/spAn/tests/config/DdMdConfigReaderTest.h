@@ -11,7 +11,7 @@
 using namespace Util;
 using namespace SpAn;
 
-class DdMdConfigIoTest : public ParamFileTest
+class DdMdConfigReaderTest : public ParamFileTest
 {
 
 private:
@@ -20,7 +20,7 @@ private:
 
 public:
 
-   DdMdConfigIoTest() 
+   DdMdConfigReaderTest() 
     : processor_()
    {}
 
@@ -35,7 +35,7 @@ public:
 
 };
 
-inline void DdMdConfigIoTest::testReadParam()
+inline void DdMdConfigReaderTest::testReadParam()
 {  
    printMethod(TEST_FUNC); 
    std::ifstream file;
@@ -48,7 +48,7 @@ inline void DdMdConfigIoTest::testReadParam()
    }
 }
 
-inline void DdMdConfigIoTest::testReadConfig1()
+inline void DdMdConfigReaderTest::testReadConfig1()
 {
    printMethod(TEST_FUNC);
 
@@ -67,13 +67,9 @@ inline void DdMdConfigIoTest::testReadConfig1()
    // std::cout << "nBond = " << processor_.bonds().size() << "\n";
    // std::cout << processor_.boundary() << "\n";
 
-   std::ofstream out;
-   openOutputFile("out/config", out);
-   processor_.writeConfig(out);
-   out.close();
 }
 
-inline void DdMdConfigIoTest::testReadConfig2()
+inline void DdMdConfigReaderTest::testReadConfig2()
 {
    printMethod(TEST_FUNC);
    std::ifstream file;
@@ -82,7 +78,7 @@ inline void DdMdConfigIoTest::testReadConfig2()
    processor_.readParam(file); 
    file.close();
 
-   processor_.setConfigIo("DdMdConfigIo_Molecule");
+   processor_.setConfigReader("DdMdConfigReader_Molecule");
    openInputFile("in/config.2", file);
    processor_.readConfig(file);
    file.close();
@@ -93,17 +89,13 @@ inline void DdMdConfigIoTest::testReadConfig2()
    // std::cout << "nBond = " << processor_.bonds().size() << "\n";
    // std::cout << processor_.boundary() << "\n";
 
-   std::ofstream out;
-   openOutputFile("out/config.2", out);
-   processor_.writeConfig(out);
-   out.close();
 }
 
 
-TEST_BEGIN(DdMdConfigIoTest)
-TEST_ADD(DdMdConfigIoTest, testReadParam)
-TEST_ADD(DdMdConfigIoTest, testReadConfig1)
-TEST_ADD(DdMdConfigIoTest, testReadConfig2)
-TEST_END(DdMdConfigIoTest)
+TEST_BEGIN(DdMdConfigReaderTest)
+TEST_ADD(DdMdConfigReaderTest, testReadParam)
+TEST_ADD(DdMdConfigReaderTest, testReadConfig1)
+TEST_ADD(DdMdConfigReaderTest, testReadConfig2)
+TEST_END(DdMdConfigReaderTest)
 
 #endif

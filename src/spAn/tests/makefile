@@ -24,7 +24,7 @@ clean:
 	rm -f $(spAn_tests_OBJS) $(spAn_tests_OBJS:.o=.d)
 	rm -f $(BLD_DIR)/$(TEST)
 	cd chemistry; $(MAKE) clean
-	cd configIos; $(MAKE) clean
+	cd config; $(MAKE) clean
 	cd neighbor; $(MAKE) clean
 	cd storage; $(MAKE) clean
 	cd processor; $(MAKE) clean
