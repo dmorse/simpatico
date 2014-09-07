@@ -1,9 +1,9 @@
 Processor{
    atomCapacity 20000
    bondCapacity 20000
-   SpAnalyzerManager{
+   AnalyzerManager{
 
-      SpLogStep{
+      LogStep{
       }
 
    }

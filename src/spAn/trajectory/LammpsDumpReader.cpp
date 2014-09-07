@@ -47,33 +47,39 @@ namespace SpAn
       checkString(line, "ITEM:");
       checkString(line, "TIMESTEP");
       int step;
-      line >> step;
-      checkString(line, "TIMESTEP");
+      file >> step;
  
       // Read ITEM: NUMBER OF ATOMS
       notEnd = getNextLine(file, line);
+      if (!notEnd) {
+         UTIL_THROW("EOF reading ITEM: NUMBER OF ATOMS");
+      }
       checkString(line, "ITEM:");
       checkString(line, "NUMBER");
       checkString(line, "OF");
       checkString(line, "ATOMS");
       int nAtom;
-      line >> nAtom;
+      file >> nAtom;
 
       // Read ITEM: BOX
       notEnd = getNextLine(file, line);
+      if (!notEnd) {
+         UTIL_THROW("EOF reading ITEM: BOX");
+      }
       checkString(line, "ITEM:");
       checkString(line, "BOX");
-      // Ignore rest of line
-      Vector lengths;
-      file >> lengths[0];
-      file >> lengths[1];
-      file >> lengths[2];
-     
+      // Ignore rest of ITEM: BOX line
+      Vector min, max, lengths;
+      for (int i = 0; i < Dimension; ++i) {
+         file >> min[i] >> max[i];
+         lengths[i] = max[i] - min[i];
+      }
+
       // Read ITEM: ATOMS 
       notEnd = getNextLine(file, line);
       checkString(line, "ITEM:");
       checkString(line, "ATOMS");
-      // Ignore the rest of the format line, for now
+      // Ignore the rest of ITEM: ATOMS  line, for now
 
       // Loop over atoms, read positions
       AtomStorage* storagePtr = &configuration().atoms();
@@ -85,7 +91,7 @@ namespace SpAn
 
          // Find atom address in AtomStorage by id
          file >> id;
-         id = id - 1; // Convert from Lammps -> Simpatico convention
+         id = id - 1; // Convert from Lammps -> Simpatico integer convention
          atomPtr = storagePtr->ptr(id);
          if (atomPtr == 0) {
             UTIL_THROW("Unknown atom");
@@ -100,7 +106,7 @@ namespace SpAn
          file >> shift;
 
       }
-
+      return true;
    }
 
 }
