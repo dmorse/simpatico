@@ -44,7 +44,7 @@ namespace Util
       if (actual != expected) {
          Log::file() << "Error in checkString"     << std::endl;
          Log::file() << "Expected: " <<  expected  << std::endl;
-	 Log::file() << "Scanned:  " <<  actual    << std::endl;
+         Log::file() << "Scanned:  " <<  actual    << std::endl;
          UTIL_THROW("Incorrect string");
       };
    }
@@ -65,18 +65,19 @@ namespace Util
    bool getLine(std::istream& in, std::stringstream& line)
    {
       std::string string;
+      line.str(string);
+      line.clear();
       if (!in.eof()) {
          getline(in, string);
          line.str(string);
          return true;
       } else {
-         line.str(string);
          return false;
       }
    }
 
    /*
-   * Get the next non-blank line of input.
+   * Get the next non-blank line of input, strip trailing whitespace.
    */
    bool getNextLine(std::istream& in, std::string& line)
    {
@@ -85,12 +86,12 @@ namespace Util
             getline(in, line);
             rStrip(line);
             if (!line.empty()) {
-               // Return true to indicate eof not reached
+               // Return true indicates eof not reached
                return true;
             }
          } else {
             line.clear();
-            // Return false to indicate eof reached
+            // Return false indicates eof was reached
             return false;
          }
       }
@@ -102,19 +103,19 @@ namespace Util
    bool getNextLine(std::istream& in, std::stringstream& line)
    {
       std::string string;
+      line.str(string);
+      line.clear();
       while (true) {
          if (!in.eof()) {
             getline(in, string);
             rStrip(string);
             if (!string.empty()) {
                line.str(string);
-               // Return true to indicate eof not reached
+               // Return true indicates eof not reached
                return true;
             }
          } else {
-            // Set stringstream content to empty string
-            line.str(string);
-            // Return false to indicate eof reached
+            // Return false indicates eof reached
             return false;
          }
       }
