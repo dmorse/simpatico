@@ -14,7 +14,7 @@
 
 // Analyzers 
 #include "LogEnergy.h"
-#include "WriteConfig.h"
+#include "ConfigWriter.h"
 #include "OutputEnergy.h"
 #include "OutputPressure.h"
 #include "OutputStressTensor.h"
@@ -58,8 +58,8 @@ namespace DdMd
       if (ptr) return ptr;
 
       // Simulation Analyzers
-      if (className == "WriteConfig") {
-         ptr = new WriteConfig(simulation());
+      if (className == "ConfigWriter") {
+         ptr = new ConfigWriter(simulation());
       } else 
       if (className == "LogEnergy") {
          ptr = new LogEnergy(simulation());

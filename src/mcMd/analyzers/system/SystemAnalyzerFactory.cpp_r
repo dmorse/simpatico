@@ -12,7 +12,7 @@
 
 // Analyzers for any System (Mc or Md)
 #include <mcMd/analyzers/simulation/LogProgress.h>
-#include "DumpConfig.h"
+#include "ConfigWriter.h"
 #include "RDF.h"
 #include "StructureFactorP.h"
 #include "StructureFactorPGrid.h"
@@ -66,8 +66,8 @@ namespace McMd
       if (className == "LogProgress") {
          ptr = new LogProgress();
       } else
-      if (className == "DumpConfig") {
-         ptr = new DumpConfig(system());
+      if (className == "ConfigWriter") {
+         ptr = new ConfigWriter(system());
       } else
       if (className == "RDF") {
          ptr = new RDF(system());

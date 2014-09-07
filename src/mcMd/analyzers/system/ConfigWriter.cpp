@@ -1,5 +1,5 @@
-#ifndef MCMD_DUMP_CONFIG_CPP
-#define MCMD_DUMP_CONFIG_CPP
+#ifndef MCMD_CONFIG_WRITER_CPP
+#define MCMD_CONFIG_WRITER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "DumpConfig.h"
+#include "ConfigWriter.h"
 #include <util/misc/FileMaster.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/misc/ioUtil.h>
@@ -23,16 +23,16 @@ namespace McMd
    /*
    * Constructor.
    */
-   DumpConfig::DumpConfig(System& system) 
+   ConfigWriter::ConfigWriter(System& system) 
     : SystemAnalyzer<System>(system),
       nSample_(0),
       isInitialized_(false)
-   {  setClassName("DumpConfig"); }
+   {  setClassName("ConfigWriter"); }
 
    /*
    * Read interval and outputFileName. 
    */
-   void DumpConfig::readParameters(std::istream& in) 
+   void ConfigWriter::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);
@@ -42,7 +42,7 @@ namespace McMd
    /*
    * Load state from an archive.
    */
-   void DumpConfig::loadParameters(Serializable::IArchive& ar)
+   void ConfigWriter::loadParameters(Serializable::IArchive& ar)
    {
       Analyzer::loadParameters(ar);
       ar & nSample_;
@@ -52,19 +52,19 @@ namespace McMd
    /*
    * Save state to archive.
    */
-   void DumpConfig::save(Serializable::OArchive& ar)
+   void ConfigWriter::save(Serializable::OArchive& ar)
    { ar & *this; }
 
    /*
    * Read interval and outputFileName. 
    */
-   void DumpConfig::setup() 
+   void ConfigWriter::setup() 
    {  nSample_ = 0; }
 
    /*
    * Dump configuration to file
    */
-   void DumpConfig::sample(long iStep) 
+   void ConfigWriter::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
 
@@ -83,4 +83,4 @@ namespace McMd
    }
   
 }
-#endif // DUMP_CONFIG_CPP
+#endif // CONFIG_WRITER_CPP

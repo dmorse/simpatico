@@ -1,5 +1,5 @@
-#ifndef DDMD_WRITE_CONFIG_H
-#define DDMD_WRITE_CONFIG_H
+#ifndef DDMD_CONFIG_WRITER_H
+#define DDMD_CONFIG_WRITER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -19,21 +19,21 @@ namespace DdMd
    /**
    * Periodically write simulation configuration to a new file.
    *
-   * This class uses the Simulation::writeConfig() method to write the entire
-   * simulation configuration periodically, at interval read from file. Names 
-   * of configuration dump files are constructed by concatenating the
-   * Simulation outputPrefix, a dumpPrefix, the literal string "config.", and 
-   * an integer that is incremented after each dump. The dump prefix is a 
-   * string that is read by the read() method of this class. For example, 
-   * if Simulation::outputPrefix is "out/" and dumpPrefix is "dump/", the 
-   * configurations will be written to files "out/dump/config.0",
-   * "out/dump/config.1", etc.
+   * This class uses the Simulation::writeConfig() to write the entire
+   * simulation configuration periodically, at interval read from file. 
+   * Names of configuration dump files are constructed by concatenating the
+   * Simulation outputPrefix, a dumpPrefix, the literal string "config.", 
+   * and an integer that is incremented after each dump. The dump prefix 
+   * is a string that is read by the read() method of this class. For 
+   * example, if Simulation::outputPrefix is "out/" and dumpPrefix is 
+   * "dump/", the configurations will be written to files named
+   * "out/dump/config.0", "out/dump/config.1", etc.
    *
-   * \sa \ref ddMd_analyzer_WriteConfig_page "param file format"
+   * \sa \ref ddMd_analyzer_ConfigWriter_page "param file format"
    *
    * \ingroup DdMd_Analyzer_Module
    */
-   class WriteConfig : public Analyzer
+   class ConfigWriter : public Analyzer
    {
    
    public:
@@ -43,12 +43,12 @@ namespace DdMd
       *
       * \param simulation parent Simulation object. 
       */
-      WriteConfig(Simulation& simulation);
+      ConfigWriter(Simulation& simulation);
    
       /**
       * Destructor.
       */
-      virtual ~WriteConfig()
+      virtual ~ConfigWriter()
       {} 
    
       /**

@@ -1,5 +1,5 @@
-#ifndef MCMD_DUMP_CONFIG_H
-#define MCMD_DUMP_CONFIG_H
+#ifndef MCMD_CONFIG_WRITER_H
+#define MCMD_CONFIG_WRITER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -29,11 +29,11 @@ namespace McMd
    * configurations will be written to files "out/dump/config.0",
    * "out/dump/config.1", etc.
    *
-   * \sa \ref mcMd_analyzer_DumpConfig_page "parameter file format"
+   * \sa \ref mcMd_analyzer_ConfigWriter_page "parameter file format"
    *
    * \ingroup McMd_Analyzer_Module
    */
-   class DumpConfig : public SystemAnalyzer<System>
+   class ConfigWriter : public SystemAnalyzer<System>
    {
    
    public:
@@ -43,12 +43,12 @@ namespace McMd
       *
       * \param system parent System object. 
       */
-      DumpConfig(System& system);
+      ConfigWriter(System& system);
    
       /**
       * Destructor.
       */
-      virtual ~DumpConfig()
+      virtual ~ConfigWriter()
       {} 
    
       /**
@@ -99,10 +99,10 @@ namespace McMd
       std::ofstream outputFile_;
 
       /// Number of configurations dumped thus far (first dump is zero).
-      long    nSample_;
+      long nSample_;
    
       /// Has readParam been called?
-      long    isInitialized_;
+      long isInitialized_;
    
    };
 
@@ -110,7 +110,7 @@ namespace McMd
    * Serialize to/from an archive. 
    */
    template <class Archive>
-   void DumpConfig::serialize(Archive& ar, const unsigned int version)
+   void ConfigWriter::serialize(Archive& ar, const unsigned int version)
    {
       Analyzer::serialize(ar, version);
       ar & nSample_;

@@ -3,7 +3,6 @@ ddMd_analyzers_=\
      ddMd/analyzers/AnalyzerManager.cpp\
      ddMd/analyzers/AnalyzerFactory.cpp\
      ddMd/analyzers/LogEnergy.cpp\
-     ddMd/analyzers/WriteConfig.cpp\
      ddMd/analyzers/OutputEnergy.cpp\
      ddMd/analyzers/OutputPressure.cpp\
      ddMd/analyzers/OutputStressTensor.cpp\
@@ -18,10 +17,11 @@ ddMd_analyzers_=\
      ddMd/analyzers/OrderParamNucleation.cpp\
      ddMd/analyzers/PairEnergyAverage.cpp\
      ddMd/analyzers/ExternalEnergyAverage.cpp\
+     ddMd/analyzers/StressAutoCorrelation.cpp\
+     ddMd/analyzers/ConfigWriter.cpp\
      ddMd/analyzers/TrajectoryWriter.cpp\
      ddMd/analyzers/DdMdTrajectoryWriter.cpp\
-     ddMd/analyzers/LammpsDumpWriter.cpp\
-     ddMd/analyzers/StressAutoCorrelation.cpp
+     ddMd/analyzers/LammpsDumpWriter.cpp
 
 ddMd_analyzers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(ddMd_analyzers_))

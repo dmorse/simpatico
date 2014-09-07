@@ -1,5 +1,5 @@
-#ifndef DDMD_WRITE_CONFIG_CPP
-#define DDMD_WRITE_CONFIG_CPP
+#ifndef DDMD_CONFIG_WRITER_CPP
+#define DDMD_CONFIG_WRITER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "WriteConfig.h"
+#include "ConfigWriter.h"
 #include <util/mpi/MpiLoader.h>
 #include <util/misc/ioUtil.h>
 
@@ -22,16 +22,16 @@ namespace DdMd
    /*
    * Constructor.
    */
-   WriteConfig::WriteConfig(Simulation& simulation) 
+   ConfigWriter::ConfigWriter(Simulation& simulation) 
     : Analyzer(simulation),
       nSample_(0),
       isInitialized_(false)
-   {  setClassName("WriteConfig"); }
+   {  setClassName("ConfigWriter"); }
 
    /*
    * Read interval and outputFileName. 
    */
-   void WriteConfig::readParameters(std::istream& in) 
+   void ConfigWriter::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);
@@ -41,7 +41,7 @@ namespace DdMd
    /*
    * Load internal state from an archive.
    */
-   void WriteConfig::loadParameters(Serializable::IArchive &ar)
+   void ConfigWriter::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
       loadOutputFileName(ar);
@@ -55,7 +55,7 @@ namespace DdMd
    /*
    * Save internal state to an archive.
    */
-   void WriteConfig::save(Serializable::OArchive &ar)
+   void ConfigWriter::save(Serializable::OArchive &ar)
    {
       saveInterval(ar);
       saveOutputFileName(ar);
@@ -65,13 +65,13 @@ namespace DdMd
    /*
    * Read interval and outputFileName. 
    */
-   void WriteConfig::clear() 
+   void ConfigWriter::clear() 
    {  nSample_ = 0; }
 
    /*
    * Dump configuration to file
    */
-   void WriteConfig::sample(long iStep) 
+   void ConfigWriter::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
 
