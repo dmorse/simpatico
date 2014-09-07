@@ -45,6 +45,7 @@ veryclean:
 	rm -f lib*.a
 ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f config/ConfigReaderFactory.cpp
+	rm -f trajectory/TrajectoryReaderFactory.cpp
 	rm -f analyzers/AnalyzerFactory.cpp
 endif
 
