@@ -37,25 +37,27 @@ namespace DdMd
    *   - a Mask (list of other atoms with masked pair interactions)
    *   - a communication Plan
    *
-   * An Atom may only be constructed as an element of an AtomArray. The
-   * Atom constructor is private, but is accessible by the AtomArray class
-   * via a friend declaration.
+   * An Atom may only be constructed as an element of an AtomArray. 
+   * The Atom constructor is private, to prevent instantiation of an 
+   * indivual Atom, but is accessible by the AtomArray class via a
+   * a friend declaration.
    *
    * The interface of the Atom class provides access to each Atom data
    * field through an accessor function, as if all were true C++ class 
-   * member. In fact, some of the above are "pseudo-members" that are 
-   * stored in separate arrays.  All arrays that store atom data are
+   * data members. In fact, some of the above are "pseudo-members" that 
+   * are stored in separate arrays.  All arrays that store atom data are
    * private members of the associated AtomArray, all of which use the 
-   * same indexing scheme to identify atoms. Each actual Atom object has 
-   * a pointer to its parent AtomArray and its array index in private 
-   * members.  The public accessor method for each psuedo-member simply 
-   * retrieves the rquired array element for this atom. In the current
-   * implementation the position, force, atom type id, and isGhost 
-   * flag are stored in true member variables of an Atom object, while
-   * the velocity, mask, plan, and id (the global atom index) are all 
-   * psuedo-members stored in separate arrays. See documentation of 
-   * the private member localId_ and other comments in the Atom.h file 
-   * for further implementation details.
+   * same indexing scheme to identify atoms. Each Atom object has a
+   * pointer to its parent AtomArray and its array index, in private 
+   * members.  The public accessor method for each pseudo-member simply 
+   * retrieves the required array element for this atom. 
+   *
+   * In the current implementation, the position, force, atom type id, 
+   * and isGhost flag are stored in true member variables of an Atom 
+   * object, while the velocity, mask, plan, id (the global atom index),
+   * and AtomContext (if any) are all pseudo-members stored in separate 
+   * arrays. See documentation of the private member localId_ and other 
+   * comments in the Atom.h file for further implementation details.
    *
    * \ingroup DdMd_Chemistry_Module
    */
@@ -64,6 +66,20 @@ namespace DdMd
 
    public:
 
+      // Static member functions
+ 
+      /**
+      * Enable (true) or disable (false) use of AtomContext data.
+      *
+      * \param value of hasAtomContext static bool flag.
+      */
+      static void setHasAtomContext(bool hasAtomContext);
+
+      /**
+      * Is AtomContext data enabled?
+      */
+      static bool hasAtomContext();
+ 
       #ifdef UTIL_MPI
       /**
       * Return size of an atom packed into buffer for exchange, in bytes.
@@ -76,6 +92,8 @@ namespace DdMd
       static int packedGhostSize();
       #endif
 
+      // Non-static member functions
+ 
       /// \name Mutators
       //@{
 
@@ -142,7 +160,6 @@ namespace DdMd
       */
       Plan& plan();
 
-      #ifdef DDMD_MOLECULES
       /**
       * Get the AtomContext struct.
       *
@@ -152,10 +169,9 @@ namespace DdMd
       * it species, and the index of the atom with the molecule. 
       */
       AtomContext& context();
-      #endif      
 
       //@}
-      /// \name Accessors (return values and const references).
+      /// \name Accessors (return by value or const references).
       //@{
 
       /**
@@ -198,12 +214,10 @@ namespace DdMd
       */
       const Plan& plan() const;
 
-      #ifdef DDMD_MOLECULES      
       /**
       * Get the context by reference (const reference).
       */
       const AtomContext& context() const;
-      #endif
 
       //@}
       #if 0
@@ -295,6 +309,11 @@ namespace DdMd
    private:
 
       /**
+      * Static member determines if AtomContext is used.
+      */ 
+      static bool hasAtomContext_;
+
+      /**
       * Position of atom.
       */
       Vector position_;
@@ -309,11 +328,11 @@ namespace DdMd
       *
       * The least signficant bit of this unsigned int stores a ghost flag,
       * which is 1 if this atom is a ghost, and 0 if it is a local atom. 
-      * The remaining bits, which can be accessed as localId_ >> 1, store
-      * the array index of this atom in the parent AtomArray. The array
-      * index is set during allocation, and never changed thereafter.
-      * The ghost flag may be changed at any time by the public function
-      * void Atom::setIsGhost(bool).  
+      * The remaining bits, which can be accessed using a bit shift, as
+      * localId_ >> 1, store the array index of this atom in the parent 
+      * AtomArray. The array index is set during allocation, and is never 
+      * changed thereafter. The ghost flag can be changed at any time by 
+      * the public function void Atom::setIsGhost(bool).  
       */
       unsigned int localId_;
 
@@ -337,6 +356,8 @@ namespace DdMd
       /**
       * Constructor.
       *
+      * Private and not implemented to prohibit instantiation.
+      *
       * An Atom may be constructed only as an element of an AtomArray.
       * The AtomArray class is a friend of Atom, and may thus call this 
       * private constructor.
@@ -350,6 +371,8 @@ namespace DdMd
       */
       Atom(const Atom& other);
 
+   // friends:
+   
       friend class AtomArray;
       friend class Util::Memory;
 
@@ -481,18 +504,29 @@ namespace DdMd
    inline void Atom::setId(int id)
    {  arrayPtr_->ids_[localId_ >> 1] = id; }
 
-   #ifdef DDMD_MOLECULES   
    /* 
    * Get non-const reference to context.
    */
    inline AtomContext& Atom::context()
-   {  return arrayPtr_->contexts_[localId_ >> 1]; }
+   {  
+      assert(hasAtomContext_); 
+      return arrayPtr_->contexts_[localId_ >> 1]; 
+   }
 
    /*
    * Get context by const reference.
    */
    inline const AtomContext& Atom::context() const
-   { return arrayPtr_->contexts_[localId_ >> 1]; }
-   #endif
+   {
+      assert(hasAtomContext_); 
+      return arrayPtr_->contexts_[localId_ >> 1]; 
+   }
+
+   /*
+   * Is AtomContext data enabled?
+   */
+   inline bool Atom::hasAtomContext()
+   {  return hasAtomContext_; }
+ 
 }
 #endif

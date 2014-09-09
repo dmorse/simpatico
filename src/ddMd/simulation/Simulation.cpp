@@ -167,6 +167,7 @@ namespace DdMd
       #ifdef INTER_EXTERNAL
       hasExternal_(false),
       #endif
+      hasAtomContext_(false),
       maskedPairPolicy_(MaskBonded),
       reverseUpdateFlag_(false),
       #ifdef UTIL_MPI
@@ -394,10 +395,10 @@ namespace DdMd
       }
 
       /*
-      * Note that if isRestarting, this function returns immediately. 
+      * Note that if isRestarting, this function returns immediately.
       * All information in the parameter file is also contained in
-      * a restart file. During a restart, the restart file is read 
-      * and isRestarting_ is set true within setOptions(), which the 
+      * a restart file. During a restart, the restart file is read
+      * and isRestarting_ is set true within setOptions(), which the
       * main program ddSim.cpp calls before readParam().
       */
    }
@@ -442,6 +443,10 @@ namespace DdMd
       hasExternal_ = false;
       read<bool>(in, "hasExternal", hasExternal_, false); // optional
       #endif
+
+      hasAtomContext_ = false;
+      read<bool>(in, "hasAtomContext", hasAtomContext_, false); // optional
+      Atom::setHasAtomContext(hasAtomContext_);
 
       // Read array of atom type descriptors
       atomTypes_.allocate(nAtomType_);
@@ -638,6 +643,10 @@ namespace DdMd
       loadParameter<bool>(ar, "hasExternal", hasExternal_, false); // opt
       #endif
 
+      hasAtomContext_ = false;
+      loadParameter<bool>(ar, "hasAtomContext", hasAtomContext_, false); // opt
+      Atom::setHasAtomContext(hasAtomContext_);
+
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
@@ -812,7 +821,7 @@ namespace DdMd
          fileMaster().openRestartIFile(filename, ".rst", ar.file());
       }
       // ParamComposite::load() calls Simulation::loadParameters()
-      load(ar); 
+      load(ar);
       if (isIoProcessor()) {
          ar.file().close();
       }
@@ -847,6 +856,7 @@ namespace DdMd
       #ifdef INTER_EXTERNAL
       Parameter::saveOptional(ar, hasExternal_, hasExternal_);
       #endif
+      Parameter::saveOptional(ar, hasAtomContext_, hasAtomContext_);
       ar << atomTypes_;
 
       // Read storage capacities
@@ -960,10 +970,10 @@ namespace DdMd
    * Read the FileMaster parameters.
    */
    void Simulation::readFileMaster(std::istream &in)
-   {  
-      assert(fileMasterPtr_);  
-      readParamComposite(in, *fileMasterPtr_); 
-      assert(fileMasterPtr_->hasIoCommunicator());  
+   {
+      assert(fileMasterPtr_);
+      readParamComposite(in, *fileMasterPtr_);
+      assert(fileMasterPtr_->hasIoCommunicator());
    }
 
    /*
@@ -971,9 +981,9 @@ namespace DdMd
    */
    void Simulation::loadFileMaster(Serializable::IArchive& ar)
    {
-      assert(fileMasterPtr_);  
-      loadParamComposite(ar, *fileMasterPtr_); 
-      assert(fileMasterPtr_->hasIoCommunicator());  
+      assert(fileMasterPtr_);
+      loadParamComposite(ar, *fileMasterPtr_);
+      assert(fileMasterPtr_->hasIoCommunicator());
    }
 
    /*
@@ -1894,22 +1904,28 @@ namespace DdMd
    }
 
    // --- ConfigIo Accessors -------------------------------------------
-   
-   /**
+
+   /*
    * Return the ConfigIo (create default if necessary).
    */
-   ConfigIo& Simulation::configIo() 
+   ConfigIo& Simulation::configIo()
    {
       if (configIoPtr_ == 0) {
-         configIoPtr_ = new DdMdConfigIo(*this);
+         if (Atom::hasAtomContext()) {
+            // DdMdConfigIo format with hasMolecules = true
+            configIoPtr_ = new DdMdConfigIo(*this, true);
+         } else {
+            // DdMdConfigIo format with hasMolecules = false
+            configIoPtr_ = new DdMdConfigIo(*this, false);
+         }
       }
       return *configIoPtr_;
    }
 
-   /**
+   /*
    * Return a SerialConfigIo (create if necessary).
    */
-   SerializeConfigIo& Simulation::serializeConfigIo() 
+   SerializeConfigIo& Simulation::serializeConfigIo()
    {
       if (serializeConfigIoPtr_ == 0) {
          serializeConfigIoPtr_ = new SerializeConfigIo(*this);

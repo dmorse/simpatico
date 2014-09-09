@@ -21,6 +21,17 @@ namespace DdMd
    using namespace Util;
 
    /*
+   * Initialize hasAtomContext_ flag to true. This enable AtomContext info by default.
+   */
+   bool Atom::hasAtomContext_ = true;
+
+   /*
+   * Enable (true) or disable (false) use of AtomContext data.
+   */
+   void Atom::setHasAtomContext(bool hasAtomContext)
+   {  hasAtomContext_ = hasAtomContext; }
+
+   /*
    * Constructor (private, used by AtomArray).
    */
    Atom::Atom() :
@@ -44,9 +55,9 @@ namespace DdMd
       setIsGhost(other.isGhost());
       force_ = other.force_;
       velocity() = other.velocity();
-      #ifdef DDMD_MOLECULES
-      context() = other.context();
-      #endif
+      if (hasAtomContext_) {
+         context() = other.context();
+      }
       mask() = other.mask();
       plan() = other.plan();
       setId(other.id());
@@ -63,6 +74,9 @@ namespace DdMd
       mask().clear();
       plan().clearFlags();
       setId(-1);
+      if (hasAtomContext_) {
+         context().clear();
+      }
    }
 
    #ifdef UTIL_MPI
@@ -75,9 +89,9 @@ namespace DdMd
       buffer.pack<int>(typeId());
       buffer.pack<Vector>(position());
       buffer.pack<Vector>(velocity());
-      #ifdef DDMD_MOLECULES
-      buffer.pack<AtomContext>(context());
-      #endif
+      if (hasAtomContext_) {
+         buffer.pack<AtomContext>(context());
+      }
       buffer.pack<unsigned int>(plan().flags());
 
       // Pack Mask
@@ -103,9 +117,9 @@ namespace DdMd
       setTypeId(i);
       buffer.unpack<Vector>(position());
       buffer.unpack<Vector>(velocity());
-      #ifdef DDMD_MOLECULES
-      buffer.unpack<AtomContext>(context());
-      #endif
+      if (hasAtomContext_) {
+         buffer.unpack<AtomContext>(context());
+      }
       unsigned int ui;
       buffer.unpack<unsigned int>(ui);
       plan().setFlags(ui);
@@ -129,9 +143,9 @@ namespace DdMd
    {  
       int size = 0;
       size += 2*sizeof(int);
-      #ifdef DDMD_MOLECULES 
-      size += sizeof(AtomContext);
-      #endif 
+      if (hasAtomContext_) {
+         size += sizeof(AtomContext);
+      }
       size += 2*sizeof(Vector); 
       size += sizeof(unsigned int);
       size += sizeof(int);

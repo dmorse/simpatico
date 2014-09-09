@@ -37,22 +37,14 @@ namespace DdMd
       /**
       * Default constructor.
       */
-      #ifndef DDMD_MOLECULES
-      DdMdOrderedConfigIo();
-      #else
-      DdMdOrderedConfigIo(bool hasMolecules = false);
-      #endif
+      DdMdOrderedConfigIo(bool hasMolecules);
 
       /**
       * Constructor.
       *
       * \param simulation parent Simulation object.
       */
-      #ifndef DDMD_MOLECULES
-      DdMdOrderedConfigIo(Simulation& simulation);
-      #else
-      DdMdOrderedConfigIo(Simulation& simulation, bool hasMolecules = false);
-      #endif
+      DdMdOrderedConfigIo(Simulation& simulation, bool hasMolecules);
 
       /**
       * Read configuration file.
@@ -93,9 +85,7 @@ namespace DdMd
          Vector velocity;
          int typeId;
          int id;
-         #ifdef DDMD_MOLECULES
          AtomContext context;
-         #endif
 
          IoAtom()
           : position(0.0),
