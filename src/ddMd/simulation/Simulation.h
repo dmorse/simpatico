@@ -966,6 +966,9 @@ namespace DdMd
       bool hasExternal_;
       #endif
 
+      /// Does this simulation keep track of AtomContext info?
+      bool hasAtomContext_;
+
       /**
       * Policy for suppressing pair interactions for some atom pairs.
       *

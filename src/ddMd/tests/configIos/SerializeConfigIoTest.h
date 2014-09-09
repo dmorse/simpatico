@@ -46,6 +46,10 @@ class SerializeConfigIoTest: public ParamFileTest
 
 public:
 
+   SerializeConfigIoTest()
+    : configIo(false) // hasMolecules = false
+   {}
+
    virtual void setUp()
    {
       // Set connections between objects
@@ -176,6 +180,7 @@ public:
    void testReadWriteConfig()
    {
       printMethod(TEST_FUNC);
+      //ParamComposite::setEcho(true);
       readParam();
 
       std::ifstream inFile;

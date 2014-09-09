@@ -31,7 +31,7 @@ using namespace DdMd;
 class ConfigIoTest: public ParamFileTest
 {
 
-   DdMdConfigIo configIo;
+   DdMdConfigIo configIo; 
    Boundary boundary;
    Domain   domain;
    Buffer   buffer;
@@ -47,6 +47,10 @@ class ConfigIoTest: public ParamFileTest
    bool hasDihedral;
 
 public:
+
+   ConfigIoTest()
+    : configIo(false) //hasMolecules = false
+   {}
 
    virtual void setUp()
    {
