@@ -1,5 +1,5 @@
-#ifndef UTIL_XML_START_TAG_CPP
-#define UTIL_XML_START_TAG_CPP
+#ifndef UTIL_XML_END_TAG_CPP
+#define UTIL_XML_END_TAG_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,20 +8,18 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "XmlStartTag.h"
-#include "ioUtil.h"
+#include "XmlEndTag.h"
+#include <util/misc/ioUtil.h>
 
 namespace Util
 {
 
-   XmlStartTag::XmlStartTag()
-    : endBracket_(false)
+   XmlEndTag::XmlEndTag()
    {}
 
-   bool XmlStartTag::matchLabel(const std::string& line, int begin)
+   bool XmlEndTag::match(const std::string& line, int begin)
    {
       label_ = "";
-      endBracket_ = false;
       setString(line, begin);
 
       // Skip leading white space
@@ -34,6 +32,12 @@ namespace Util
          //std::cout << "Missing opening bracket" << std::endl;
          return false;
       }
+      next();
+      if (isEnd()) return false;
+      if (c() != '/') {
+         //std::cout << "Missing slash" << std::endl;
+         return false;
+      }
 
       // Read label
       int beginLabel, endLabel;
@@ -41,33 +45,21 @@ namespace Util
       skip();
       if (isEnd()) return false;
       beginLabel = cursor();
-      while (c() != ' ') {
+      while (c() != '>' && c() != ' ') {
          next();
          if (isEnd()) return false;
       }
       endLabel = cursor();
       label_ = string().substr(beginLabel, endLabel - beginLabel);
-      return true;
-
-   }
-         
-   bool XmlStartTag::matchAttribute(XmlAttribute& attribute)
-   {
+    
       skip();
       if (isEnd()) return false;
       if (c() == '>') {
-         endBracket_ = true;
-         return false;
-      } else if (c() == '/') {
-         next();
-         if (isEnd()) return false;
-         if (c() == '>') {
-            endBracket_ = true;
-         }
-         return false;
+         return true;
       } else {
-         return attribute.match(*this);
+         return false;
       }
+
    }
 
 }

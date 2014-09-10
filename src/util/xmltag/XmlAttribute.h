@@ -18,7 +18,7 @@ namespace Util
    /**
    * Parser for an XML attribute.
    * 
-   * \ingroup Misc_Module
+   * \ingroup XmlTag_Module
    */
    class XmlAttribute : public XmlBase
    {

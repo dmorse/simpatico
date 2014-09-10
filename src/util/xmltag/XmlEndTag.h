@@ -19,7 +19,7 @@ namespace Util
    /**
    * Parser for an XML end tag.
    *
-   * \ingroup Misc_Module
+   * \ingroup XmlTag_Module
    */
    class XmlEndTag : public XmlBase
    {

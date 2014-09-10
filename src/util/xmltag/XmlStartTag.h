@@ -33,7 +33,7 @@ namespace Util
    *    } 
    * \endcode
    *
-   * \ingroup Misc_Module
+   * \ingroup XmlTag_Module
    */
    class XmlStartTag : public XmlBase
    {

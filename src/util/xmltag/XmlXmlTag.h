@@ -17,12 +17,12 @@ namespace Util
 {
    
    /**
-   * Parser for an XML start tag.
+   * Parser for an XML file declaration tag (first line in file).
    *
    * The match function attempts to match an xml file declaration tag, 
    * such as: <?xml version="1.0" encoding="UTF-8"?>. 
    * 
-   * \ingroup Misc_Module
+   * \ingroup XmlTag_Module
    */
    class XmlXmlTag : public XmlBase
    {

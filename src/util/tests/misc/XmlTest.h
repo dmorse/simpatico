@@ -1,11 +1,11 @@
 #ifndef XML_TEST_H
 #define XML_TEST_H
 
-#include <util/misc/XmlBase.h>
-#include <util/misc/XmlAttribute.h>
-#include <util/misc/XmlStartTag.h>
-#include <util/misc/XmlEndTag.h>
-#include <util/misc/XmlXmlTag.h>
+#include <util/xmltag/XmlBase.h>
+#include <util/xmltag/XmlAttribute.h>
+#include <util/xmltag/XmlStartTag.h>
+#include <util/xmltag/XmlEndTag.h>
+#include <util/xmltag/XmlXmlTag.h>
 #include <util/global.h>
 
 #ifdef UTIL_MPI
