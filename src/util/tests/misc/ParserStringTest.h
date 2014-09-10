@@ -1,7 +1,7 @@
 #ifndef PARSER_STRING_TEST_H
 #define PARSER_STRING_TEST_H
 
-#include <util/misc/ParserString.h>
+#include <util/misc/XmlBase.h>
 #include <util/global.h>
 
 #ifdef UTIL_MPI
@@ -15,7 +15,7 @@
 
 using namespace Util;
 
-class ParserStringTest : public UnitTest 
+class XmlBaseTest : public UnitTest 
 {
 
 public:
@@ -30,9 +30,9 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      ParserString parser;
+      XmlBase parser;
       std::string string("this is the string");
-      parser.setString("this is the string", 0);
+      parser.setString(string, 0);
       TEST_ASSERT(parser.string() == string);
       TEST_ASSERT(parser.cursor() == 0);
       TEST_ASSERT(parser.c() == 't');
@@ -42,7 +42,7 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      ParserString parser;
+      XmlBase parser;
       std::string string("   this is the string");
       parser.setString(string, 0);
       TEST_ASSERT(parser.string() == string);
@@ -65,9 +65,9 @@ public:
 
 };
 
-TEST_BEGIN(ParserStringTest)
-TEST_ADD(ParserStringTest, testSetString)
-TEST_ADD(ParserStringTest, testMove)
-TEST_END(ParserStringTest)
+TEST_BEGIN(XmlBaseTest)
+TEST_ADD(XmlBaseTest, testSetString)
+TEST_ADD(XmlBaseTest, testMove)
+TEST_END(XmlBaseTest)
 
 #endif

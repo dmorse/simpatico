@@ -1,5 +1,5 @@
-#ifndef UTIL_PARSER_STRING_CPP
-#define UTIL_PARSER_STRING_CPP
+#ifndef UTIL_XML_BASE_CPP
+#define UTIL_XML_BASE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ParserString.h"
+#include "XmlBase.h"
 
 namespace Util
 {
@@ -16,7 +16,7 @@ namespace Util
    /*
    * Constructor.
    */
-   ParserString::ParserString() 
+   XmlBase::XmlBase() 
     : stringPtr_(0),
       end_(0),
       cursor_(0),
@@ -26,7 +26,7 @@ namespace Util
    /*
    * Initialize string and cursor.
    */
-   void ParserString::setString(const std::string& string, int cursor)
+   void XmlBase::setString(const std::string& string, int cursor)
    {
       stringPtr_ = &string;
       end_ = string.length();
@@ -36,7 +36,7 @@ namespace Util
    /*
    * Set cursor. String must already be set.
    */
-   void ParserString::setCursor(int cursor)
+   void XmlBase::setCursor(int cursor)
    {
       if (!stringPtr_) {
          UTIL_THROW("No string");

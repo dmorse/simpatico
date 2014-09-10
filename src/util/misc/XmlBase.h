@@ -1,5 +1,5 @@
-#ifndef UTIL_PARSER_STRING_H
-#define UTIL_PARSER_STRING_H
+#ifndef UTIL_XML_BASE_H
+#define UTIL_XML_BASE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -15,16 +15,16 @@ namespace Util
 {
 
    /**
-   * Base class for classes that parse strings.
+   * Base class for classes that parse XML strings.
    */
-   class ParserString 
+   class XmlBase 
    {
    public:
 
       /**
       * Constructor.
       */
-      ParserString();
+      XmlBase();
 
       /**
       * Initialize string and cursor.
@@ -78,7 +78,7 @@ namespace Util
    /*
    * Skip leading white space, if any.
    */
-   inline void ParserString::skip()
+   inline void XmlBase::skip()
    {
       if (cursor_ == end_) return;
       while (c_ == ' ') {
@@ -94,7 +94,7 @@ namespace Util
    /*
    * Advance to the next character.
    */
-   inline void ParserString::next()
+   inline void XmlBase::next()
    {
       if (cursor_ == end_) return;
       ++cursor_; 
@@ -108,25 +108,25 @@ namespace Util
    /*
    * Return the associated string.
    */
-   inline const std::string& ParserString::string() const
+   inline const std::string& XmlBase::string() const
    {  return (*stringPtr_); }
 
    /**
    * Return the index of the current character.
    */
-   inline int ParserString::cursor() const
+   inline int XmlBase::cursor() const
    {  return cursor_; }
 
    /**
    * Return the current character.
    */
-   inline int ParserString::c() const
+   inline int XmlBase::c() const
    {  return c_; }
 
    /**
    * Has the cursor reached the end of the string?
    */
-   inline bool ParserString::isEnd() const
+   inline bool XmlBase::isEnd() const
    {  return (cursor_ == end_); }
    
 }

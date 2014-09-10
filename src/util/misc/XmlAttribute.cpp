@@ -1,5 +1,5 @@
-#ifndef UTIL_XML_CPP
-#define UTIL_XML_CPP
+#ifndef UTIL_XML_ATTRIBUTE_CPP
+#define UTIL_XML_ATTRIBUTE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,15 +8,14 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Xml.h"
+#include "XmlAttribute.h"
 #include "ioUtil.h"
 
 namespace Util
 {
 
    XmlAttribute::XmlAttribute()
-    : 
-      ParserString(),
+    : XmlBase(),
       label_(""),
       value_()
    {
@@ -31,10 +30,13 @@ namespace Util
       value_.str("");
       value_.clear();
 
-      // Read label
-      int beginLabel, endLabel;
+      // Skip white space
+      if (isEnd()) return false;
       skip();
       if (isEnd()) return false;
+
+      // Read label
+      int beginLabel, endLabel;
       if (c() == '=') return false;
       if (c() == '>') return false;
       beginLabel = cursor();
@@ -45,7 +47,7 @@ namespace Util
       }
       endLabel = cursor();
 
-      // Advance and skip white space
+      // Advance past '=' and white space
       next();
       skip();
       if (isEnd()) return false;
@@ -55,6 +57,8 @@ namespace Util
       char quote;
       if (c() == '\'' || c() == '\"') {
          quote = c();
+      } else {
+         return false;
       }
       next();
       if (isEnd()) return false;
@@ -73,52 +77,13 @@ namespace Util
       return true;
    }
 
-   bool XmlAttribute::match(ParserString& parser)
+   bool XmlAttribute::match(XmlBase& parser)
    {
       bool status = match(parser.string(), parser.cursor());
       if (status) {
          parser.setCursor(cursor());
       }
       return status;
-   }
-
-   XmlStartTag::XmlStartTag()
-    : isEnd_(false)
-   {}
-
-   bool XmlStartTag::matchLabel(const std::string& line, int begin)
-   {
-      setString(line, begin);
-      skip();
-      if (isEnd()) return false;
-
-      // Read opening bracket
-      if (c() != '<') return false;
-
-      // Read label
-      int beginLabel, endLabel;
-      next();
-      skip();
-      if (isEnd()) return false;
-      beginLabel = cursor();
-      while (c() != ' ') {
-         next();
-         if (isEnd()) return false;
-      }
-      endLabel = cursor();
-      skip();
-      if (isEnd()) return false;
-
-   }
-         
-   bool XmlStartTag::matchAttribute()
-   {
-      if (c() == '>') {
-         isEnd_ = true;
-         return false;
-      } else {
-         return attribute_.match(*this);
-      }
    }
 
 }
