@@ -1,5 +1,5 @@
-#ifndef SPAN_DDMD_CONFIG_READER_CPP
-#define SPAN_DDMD_CONFIG_READER_CPP
+#ifndef SPAN_HOOMD_CONFIG_READER_CPP
+#define SPAN_HOOMD_CONFIG_READER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "DdMdConfigReader.h"
+#include "HoomdConfigReader.h"
 
 #include <spAn/chemistry/Atom.h>
 #include <spAn/chemistry/Group.h>
@@ -17,8 +17,8 @@
 #include <spAn/storage/Configuration.h>
 
 #include <util/space/Vector.h>
-//#include <util/format/Int.h>
-//#include <util/format/Dbl.h>
+#include <util/format/Int.h>
+#include <util/format/Dbl.h>
 
 namespace SpAn
 {
@@ -28,15 +28,14 @@ namespace SpAn
    /*
    * Constructor.
    */
-   DdMdConfigReader::DdMdConfigReader(Configuration& configuration, bool hasMolecules)
-    : ConfigReader(configuration),
-      hasMolecules_(hasMolecules)
-   {  setClassName("DdMdConfigReader"); }
+   HoomdConfigReader::HoomdConfigReader(Configuration& configuration)
+    : ConfigReader(configuration)
+   {  setClassName("HoomdConfigReader"); }
 
    /*
    * Read a configuration file.
    */
-   void DdMdConfigReader::readConfig(std::ifstream& file)
+   void HoomdConfigReader::readConfig(std::ifstream& file)
    {
       // Precondition
       if (!file.is_open()) {  
@@ -117,31 +116,6 @@ namespace SpAn
       }
       #endif
 
-      // Optionally add atoms to species
-      if (hasMolecules_) {
-         int nSpecies = configuration().nSpecies();
-         if (nSpecies > 0) {
-            for (int i = 0; i < nSpecies; ++i) {
-               configuration().species(i).clear();
-            }
-            int speciesId;
-            AtomStorage::Iterator iter;
-            configuration().atoms().begin(iter);
-            for ( ; iter.notEnd(); ++iter) {
-               speciesId = iter->speciesId;
-               if (speciesId < 0) {
-                  UTIL_THROW("Negative speciesId");
-               }
-               if (speciesId >= nSpecies) {
-                  UTIL_THROW("speciesId >= nSpecies");
-               }
-               configuration().species(speciesId).addAtom(*iter);
-            }
-            for (int i = 0; i < nSpecies; ++i) {
-               configuration().species(i).isValid();
-            }
-         }
-      }
    }
  
 }

@@ -1,5 +1,5 @@
-#ifndef SPAN_DDMD_CONFIG_READER_H
-#define SPAN_DDMD_CONFIG_READER_H
+#ifndef SPAN_HOOMD_CONFIG_READER_H
+#define SPAN_HOOMD_CONFIG_READER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -22,11 +22,11 @@ namespace SpAn
    using namespace Util;
 
    /**
-   * Native / default DdMd format for configuration files.
+   * Reader for Hoomd-blue XML configuration files.
    *
    * \ingroup SpAn_ConfigReader_Module
    */
-   class DdMdConfigReader  : public ConfigReader
+   class HoomdConfigReader  : public ConfigReader
    {
 
    public:
@@ -34,15 +34,14 @@ namespace SpAn
       /**
       * Default constructor.
       */
-      DdMdConfigReader(bool hasMolecules = false);
+      HoomdConfigReader();
 
       /**
       * Constructor.
       *
       * \param configuration parent Configuration object.
-      * \param hasMolecules true if file format has DdMd::AtomContext info
       */
-      DdMdConfigReader(Configuration& configuration, bool hasMolecules = false);
+      HoomdConfigReader(Configuration& configuration);
 
       /**
       * Read configuration file in DdMd default format.
@@ -52,8 +51,6 @@ namespace SpAn
       virtual void readConfig(std::ifstream& file);
 
    private:
-
-      bool hasMolecules_;
 
       template <int N>
       int readGroups(std::ifstream& file, const char* sectionLabel, 
@@ -67,14 +64,14 @@ namespace SpAn
    * Private method to read Group<N> objects.
    */
    template <int N>
-   int DdMdConfigReader::readGroups(std::ifstream& file, 
+   int HoomdConfigReader::readGroups(std::ifstream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupStorage<N>& groups)
    {
       int nGroup;  // Total number of groups in file
-      file >> Label(sectionLabel);
-      file >> Label(nGroupLabel) >> nGroup;
+      //file >> Label(sectionLabel);
+      //file >> Label(nGroupLabel) >> nGroup;
       Group<N>* groupPtr;
       for (int i = 0; i < nGroup; ++i) {
          groupPtr = groups.newPtr();
