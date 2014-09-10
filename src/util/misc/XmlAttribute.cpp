@@ -25,10 +25,12 @@ namespace Util
 
    bool XmlAttribute::match(const std::string& line, int begin)
    {
-      setString(line, begin);
+      // Clear members 
       label_ = "";
       value_.str("");
-      value_.clear();
+      value_.clear(); 
+
+      setString(line, begin);
 
       // Skip white space
       if (isEnd()) return false;

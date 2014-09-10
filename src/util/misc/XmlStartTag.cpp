@@ -20,6 +20,8 @@ namespace Util
 
    bool XmlStartTag::matchLabel(const std::string& line, int begin)
    {
+      label_ = "";
+      endBracket_ = false;
       setString(line, begin);
 
       // Skip leading white space

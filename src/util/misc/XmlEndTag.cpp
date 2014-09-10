@@ -19,6 +19,7 @@ namespace Util
 
    bool XmlEndTag::match(const std::string& line, int begin)
    {
+      label_ = "";
       setString(line, begin);
 
       // Skip leading white space
