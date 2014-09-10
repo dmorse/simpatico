@@ -82,39 +82,44 @@ namespace SpAn
          
          getNextLine(file, line);
 
-         // Attempt to match start tag label or hoomd_xml end tag
+         // Attempt to match hoomd_xml end tag
          if (end.match(line, 0)) {
+
             if (end.label() != "hoomd_xml") {
                Log::file() << "End label = " << end.label() << std::endl;
                UTIL_THROW("Incorrect hoomd_xml end tag label");
             }
             finish = true;
-         } else 
+
+         } else // Attempt to match a data node
          if (start.matchLabel(line, 0)) {
+
             name = start.label();
             Log::file() << std::endl;
             Log::file() << "node name = " << start.label() << std::endl;
-            processNode(start, file);
 
-            #if 0
-            while (start.matchAttribute(attribute)) {
-               Log::file() << attribute.label() << std::endl;
+            // Select function to read the remainder of the node, including attributes
+            if (name == "atom") {
+               readAtomNode(start, file);
+            } else
+            if (name == "box") {
+               Log::file() << "Box node not yet implemented" << std::endl;
+            } else {
+               UTIL_THROW("Unknown node name");
             }
-            if (!start.endBracket()) {
-               UTIL_THROW("Missing end bracket");
-            }
-            #endif
 
          } else {
+
             Log::file() << line << std::endl;
             UTIL_THROW("Error unrecognized node");
+
          }
          
       }
 
    }
    
-   void HoomdConfigReader::processNode(Util::XmlStartTag& start, std::istream& file)
+   void HoomdConfigReader::readAtomNode(Util::XmlStartTag& start, std::istream& file)
    {
        // Process data node start tag
        XmlAttribute attribute;

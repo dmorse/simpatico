@@ -56,13 +56,15 @@ namespace SpAn
 
    private:
 
+      void readAtomNode(Util::XmlStartTag& start, std::istream& file);
+
+      // Define a private method for each type of valid node
+
       #if 0
       template <int N>
       int readGroups(std::ifstream& file, const char* sectionLabel, 
                      const char* nGroupLabel, GroupStorage<N>& groups);
       #endif
-
-      void processNode(Util::XmlStartTag& start, std::istream& file);
 
    };
 
