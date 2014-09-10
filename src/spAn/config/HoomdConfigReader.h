@@ -75,7 +75,7 @@ namespace SpAn
       Group<N>* groupPtr;
       for (int i = 0; i < nGroup; ++i) {
          groupPtr = groups.newPtr();
-         file >> *groupPtr;
+         //file >> *groupPtr;
       }
       return nGroup;
    }
