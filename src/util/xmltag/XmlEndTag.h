@@ -32,12 +32,26 @@ namespace Util
       XmlEndTag();
 
       /**
-      * Return true if an attribute is found, false otherwise.
+      * Attempt to match any end tag.
+      * 
+      * Return true if end tag found, false otherwise.
       *
       * \param string containing text of XML tag
       * \param begin  index of first character
       */
       bool match(const std::string& string, int begin);
+
+      /**
+      * Match a required end tag.
+      * 
+      * Throw exception is specified end tag does not match.
+      *
+      * \param expected expected label string
+      * \param string containing text of XML tag
+      * \param begin  index of first character
+      */
+      void match(const std::string expected,
+                 const std::string& string, int begin);
 
       /**
       * Label string.

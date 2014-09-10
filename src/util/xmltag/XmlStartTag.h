@@ -28,9 +28,7 @@ namespace Util
    *    while (matchAttribute(attribute)) {
    *       // process attribute;
    *    } 
-   *    if (!tag.endBracket()) {
-   *       UTIL_THROW("No end-bracket - ill formed start tag");
-   *    } 
+   *    tag.finish();
    * \endcode
    *
    * \ingroup XmlTag_Module
@@ -46,12 +44,25 @@ namespace Util
       XmlStartTag();
 
       /**
-      * Return true if an attribute is found, false otherwise.
+      * Match opening bracket and any label.
       *
       * \param string containing text of XML tag
       * \param begin  index of first character
+      * \return true if match, false otherwise
       */
       bool matchLabel(const std::string& string, int begin);
+
+      /**
+      * Match opening bracket and a specific required label.
+      *
+      * Throws exception if no match.
+      *
+      * \param expected  expected label string
+      * \param string  containing text of XML tag
+      * \param begin index of first character
+      */
+      void matchLabel(const std::string expected, 
+                      const std::string& string, int begin);
 
       /**
       * Attempt to match an attribute.
@@ -60,6 +71,13 @@ namespace Util
       * \return true if an attribute is found, false otherwise
       */
       bool matchAttribute(XmlAttribute& attribute);
+
+      /**
+      * Check if end bracket was found.
+      * 
+      * Throws exception if no end bracket was found.
+      */
+      void finish();
 
       /**
       * Label string.

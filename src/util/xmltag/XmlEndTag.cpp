@@ -61,6 +61,21 @@ namespace Util
       }
 
    }
+   
+   void XmlEndTag::match(const std::string expected,
+                         const std::string& line, int begin)
+   {
+      if (!match(line, begin)) {
+         Log::file() << "line = " << line << std::endl;
+         UTIL_THROW("No end tag");
+      } 
+      if (label() != expected) {
+         Log::file() << "line     = " << line << std::endl;
+         Log::file() << "expected = " << expected << std::endl; 
+         Log::file() << "label    = " << label()  << std::endl; 
+         UTIL_THROW("Incorrect end tag label");
+      }
+   }
 
 }
 #endif

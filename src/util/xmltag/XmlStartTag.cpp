@@ -55,6 +55,19 @@ namespace Util
       return true;
    }
          
+   void XmlStartTag::matchLabel(const std::string expected,
+                                const std::string& line, int begin)
+   {
+      if (!matchLabel(line, begin)) {
+         UTIL_THROW("Unable to match start tag label");
+      }
+      if (label() != expected) {
+          Log::file() << "found    = " << label() << std::endl;
+          Log::file() << "expected = " << expected << std::endl;
+          UTIL_THROW("Incorrect start tag label");
+      }
+   }
+
    bool XmlStartTag::matchAttribute(XmlAttribute& attribute)
    {
       skip();
@@ -71,6 +84,17 @@ namespace Util
          return false;
       } else {
          return attribute.match(*this);
+      }
+   }
+
+   /*
+   * Throw exception if now end bracket was found.
+   */
+   void XmlStartTag::finish()
+   {
+      if (!endBracket()) {
+         Log::file() << "line = " << string() << std::endl;
+         UTIL_THROW("Missing end bracket");
       }
    }
 

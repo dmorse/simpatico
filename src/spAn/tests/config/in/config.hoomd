@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<hoomd_xml>
+<hoomd_xml version="1.5">
+<configuration time_step="0">
 
-<atom>
+<atom num="2">
+  1.0   2.2   3.3
+  2.0   5.2   7.3
 </atom>
 
+</configuration>
 </hoomd_xml>

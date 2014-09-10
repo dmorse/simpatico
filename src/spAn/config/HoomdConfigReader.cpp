@@ -57,22 +57,39 @@ namespace SpAn
       // Read hoom_xml start tag
       getNextLine(file, line);
       XmlStartTag start;
-      if (!start.matchLabel(line, 0)) {
-         UTIL_THROW("Missing hoomd_xml start tag");
-      }
-      if (start.label() != "hoomd_xml") {
-         Log::file() << line << std::endl;
-         Log::file() << "Start label = " << start.label() << std::endl;
-         UTIL_THROW("Incorrect hoomd_xml start tag label");
-      }
+      start.matchLabel("hoomd_xml", line, 0); 
       XmlAttribute attribute;
+      std::string version;
       while (start.matchAttribute(attribute)) {
-         UTIL_THROW("Found attribute of hoomd_xml tag");
+         if (attribute.label() == "version") {
+            attribute.value() >> version;
+         } else {
+           Log::file() << "attribute = " << attribute.label() << std::endl;
+           UTIL_THROW("Unknown attribute of hoomd_xml tag");
+         }
       }
-      if (!start.endBracket()) {
-          Log::file() << line << std::endl;
-          UTIL_THROW("Missing end bracket for hoomd_xml tag");
+
+      // Read configuration start tag
+      getNextLine(file, line);
+      start.matchLabel("configuration", line, 0); 
+      int timestep;
+      int dimension;
+      double vizsigma;
+      while (start.matchAttribute(attribute)) {
+         if (attribute.label() == "time_step") {
+            attribute.value() >> timestep;
+         } else 
+         if (attribute.label() == "dimension") {
+            attribute.value() >> dimension;
+         } else 
+         if (attribute.label() == "vizsigma") {
+            attribute.value() >> vizsigma;
+         } else {
+            Log::file() << "attribute = " << attribute.label() << std::endl;
+            UTIL_THROW("Unknown attribute of hoomd_xml tag");
+         }
       }
+      start.finish();
 
       // Read data nodes
       XmlEndTag end;
@@ -85,9 +102,9 @@ namespace SpAn
          // Attempt to match hoomd_xml end tag
          if (end.match(line, 0)) {
 
-            if (end.label() != "hoomd_xml") {
+            if (end.label() != "configuration") {
                Log::file() << "End label = " << end.label() << std::endl;
-               UTIL_THROW("Incorrect hoomd_xml end tag label");
+               UTIL_THROW("Incorrect configuration end tag label");
             }
             finish = true;
 
@@ -98,7 +115,7 @@ namespace SpAn
             Log::file() << std::endl;
             Log::file() << "node name = " << start.label() << std::endl;
 
-            // Select function to read the remainder of the node, including attributes
+            // Select node type
             if (name == "atom") {
                readAtomNode(start, file);
             } else
@@ -117,31 +134,37 @@ namespace SpAn
          
       }
 
+      getNextLine(file, line);
+      end.match("hoomd_xml", line, 0); 
+
    }
    
-   void HoomdConfigReader::readAtomNode(Util::XmlStartTag& start, std::istream& file)
+   void HoomdConfigReader::readAtomNode(Util::XmlStartTag& start, 
+                                        std::istream& file)
    {
-       // Process data node start tag
-       XmlAttribute attribute;
-       while (start.matchAttribute(attribute)) {
-           Log::file() << attribute.label() << std::endl;
-       }
-       if (!start.endBracket()) {
-          UTIL_THROW("Missing end bracket");
-       }
+      // Process data node start tag
+      XmlAttribute attribute;
+      int n;
+      while (start.matchAttribute(attribute)) {
+         if (attribute.label() == "num") {
+            attribute.value() >> n;
+         } else {
+            Log::file() << attribute.label() << std::endl;
+            UTIL_THROW("Unknown attribute");
+         }
+      }
+      start.finish();
 
-       // Process body (e.g., atom positions
+      Vector position;
+      for (int i = 0; i < n; ++i) {
+         file >> position; 
+      }
 
-       // Process data node end tag
-       std::string line;
-       XmlEndTag end;
-       getNextLine(file, line);
-       if (!end.match(line, 0)) {
-          UTIL_THROW("Missing end tag for data node");
-       }
-       if (end.label() != start.label()) {
-          UTIL_THROW("End tag label != start tag label");
-       }
+      // Process end tag
+      std::string line;
+      XmlEndTag end;
+      getNextLine(file, line);
+      end.match("atom", line, 0);
         
    }
 
