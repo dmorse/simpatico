@@ -1,4 +1,5 @@
 #include "DdMdConfigReaderTest.h"
+#include "HoomdConfigReaderTest.h"
 
 int main()
 {
@@ -7,4 +8,7 @@ int main()
 
    TEST_RUNNER(DdMdConfigReaderTest) runner1;
    runner1.run();
+
+   TEST_RUNNER(HoomdConfigReaderTest) runner2;
+   runner2.run();
 } 

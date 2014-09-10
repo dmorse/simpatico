@@ -12,6 +12,7 @@
 
 // Subclasses of ConfigReader 
 #include "DdMdConfigReader.h"
+#include "HoomdConfigReader.h"
 
 namespace SpAn
 {
@@ -42,6 +43,9 @@ namespace SpAn
       if (className == "DdMdConfigReader_Molecule") {
          bool hasMolecules = true;
          ptr = new DdMdConfigReader(*configurationPtr_, hasMolecules);
+      } else 
+      if (className == "HoomdConfigReader") {
+         ptr = new HoomdConfigReader(*configurationPtr_);
       }
  
       return ptr;

@@ -41,14 +41,18 @@ namespace Util
       if (!stringPtr_) {
          UTIL_THROW("No string");
       }
-      if (cursor >= end_) {
-         UTIL_THROW("Error: cursor >= end_");
+      if (cursor > end_) {
+         UTIL_THROW("Error: cursor > end_");
       }
       if (cursor < 0) {
          UTIL_THROW("Error: cursor < 0");
       }
       cursor_ = cursor;
-      c_ = (*stringPtr_)[cursor];
+      if (cursor < end_) {
+         c_ = (*stringPtr_)[cursor];
+      } else {
+         c_ = '\0';
+      }
    }
 
 }

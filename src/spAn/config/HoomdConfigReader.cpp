@@ -17,8 +17,11 @@
 #include <spAn/storage/Configuration.h>
 
 #include <util/space/Vector.h>
-#include <util/format/Int.h>
-#include <util/format/Dbl.h>
+#include <util/xmltag/XmlXmlTag.h>
+#include <util/xmltag/XmlStartTag.h>
+#include <util/xmltag/XmlAttribute.h>
+#include <util/xmltag/XmlEndTag.h>
+#include <util/misc/ioUtil.h>
 
 namespace SpAn
 {
@@ -42,6 +45,102 @@ namespace SpAn
             UTIL_THROW("Error: File is not open"); 
       }
 
+      std::string line;
+
+      // Read XML tag
+      getNextLine(file, line);
+      XmlXmlTag xmlTag;
+      if (!xmlTag.match(line, 0)) {
+         UTIL_THROW("Missing XML tag");
+      }
+
+      // Read hoom_xml start tag
+      getNextLine(file, line);
+      XmlStartTag start;
+      if (!start.matchLabel(line, 0)) {
+         UTIL_THROW("Missing hoomd_xml start tag");
+      }
+      if (start.label() != "hoomd_xml") {
+         Log::file() << line << std::endl;
+         Log::file() << "Start label = " << start.label() << std::endl;
+         UTIL_THROW("Incorrect hoomd_xml start tag label");
+      }
+      XmlAttribute attribute;
+      while (start.matchAttribute(attribute)) {
+         UTIL_THROW("Found attribute of hoomd_xml tag");
+      }
+      if (!start.endBracket()) {
+          Log::file() << line << std::endl;
+          UTIL_THROW("Missing end bracket for hoomd_xml tag");
+      }
+
+      // Read data nodes
+      XmlEndTag end;
+      std::string name;
+      bool finish = false;
+      while (!finish) {
+         
+         getNextLine(file, line);
+
+         // Attempt to match start tag label or hoomd_xml end tag
+         if (end.match(line, 0)) {
+            if (end.label() != "hoomd_xml") {
+               Log::file() << "End label = " << end.label() << std::endl;
+               UTIL_THROW("Incorrect hoomd_xml end tag label");
+            }
+            finish = true;
+         } else 
+         if (start.matchLabel(line, 0)) {
+            name = start.label();
+            Log::file() << std::endl;
+            Log::file() << "node name = " << start.label() << std::endl;
+            processNode(start, file);
+
+            #if 0
+            while (start.matchAttribute(attribute)) {
+               Log::file() << attribute.label() << std::endl;
+            }
+            if (!start.endBracket()) {
+               UTIL_THROW("Missing end bracket");
+            }
+            #endif
+
+         } else {
+            Log::file() << line << std::endl;
+            UTIL_THROW("Error unrecognized node");
+         }
+         
+      }
+
+   }
+   
+   void HoomdConfigReader::processNode(Util::XmlStartTag& start, std::istream& file)
+   {
+       // Process data node start tag
+       XmlAttribute attribute;
+       while (start.matchAttribute(attribute)) {
+           Log::file() << attribute.label() << std::endl;
+       }
+       if (!start.endBracket()) {
+          UTIL_THROW("Missing end bracket");
+       }
+
+       // Process body (e.g., atom positions
+
+       // Process data node end tag
+       std::string line;
+       XmlEndTag end;
+       getNextLine(file, line);
+       if (!end.match(line, 0)) {
+          UTIL_THROW("Missing end tag for data node");
+       }
+       if (end.label() != start.label()) {
+          UTIL_THROW("End tag label != start tag label");
+       }
+        
+   }
+
+      #if 0
       // Read and broadcast boundary
       file >> Label("BOUNDARY");
       file >> configuration().boundary();
@@ -50,7 +149,8 @@ namespace SpAn
 
       // Read atoms
       Atom* atomPtr;
-      int atomCapacity = configuration().atoms().capacity(); // Maximum allowed id + 1
+      // atomCapacity = maximum allowed id + 1
+      int atomCapacity = configuration().atoms().capacity(); 
       int nAtom;          
       file >> Label("ATOMS");
       file >> Label("nAtom") >> nAtom;
@@ -116,7 +216,7 @@ namespace SpAn
       }
       #endif
 
-   }
- 
+      #endif // if 0
+
 }
 #endif

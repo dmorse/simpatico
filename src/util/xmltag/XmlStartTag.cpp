@@ -38,17 +38,21 @@ namespace Util
       // Read label
       int beginLabel, endLabel;
       next();
+      if (isEnd()) return false;
+      if (c() == '/') return false; // Indicates an end tag
       skip();
       if (isEnd()) return false;
       beginLabel = cursor();
-      while (c() != ' ') {
+      while (c() != ' ' && c() != '>') {
          next();
          if (isEnd()) return false;
       }
       endLabel = cursor();
       label_ = string().substr(beginLabel, endLabel - beginLabel);
+      if (c() == '>') {
+         endBracket_ = true;
+      }
       return true;
-
    }
          
    bool XmlStartTag::matchAttribute(XmlAttribute& attribute)

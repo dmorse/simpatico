@@ -9,10 +9,14 @@
 */
 
 #include <spAn/config/ConfigReader.h>
-#include <spAn/storage/GroupStorage.h>
-#include <spAn/storage/Configuration.h>
+//#include <spAn/storage/GroupStorage.h>
+//#include <spAn/storage/Configuration.h>
 
-#include <util/format/Int.h>
+#include <iostream>
+
+namespace Util {
+   class XmlStartTag;
+}
 
 namespace SpAn
 {
@@ -52,14 +56,19 @@ namespace SpAn
 
    private:
 
+      #if 0
       template <int N>
       int readGroups(std::ifstream& file, const char* sectionLabel, 
                      const char* nGroupLabel, GroupStorage<N>& groups);
+      #endif
+
+      void processNode(Util::XmlStartTag& start, std::istream& file);
 
    };
 
    // Member functions templates
 
+   #if 0
    /*
    * Private method to read Group<N> objects.
    */
@@ -79,6 +88,7 @@ namespace SpAn
       }
       return nGroup;
    }
+   #endif
 
 }
 #endif

@@ -1,7 +1,8 @@
 spAn_config_=\
    spAn/config/ConfigReader.cpp \
    spAn/config/ConfigReaderFactory.cpp \
-   spAn/config/DdMdConfigReader.cpp 
+   spAn/config/DdMdConfigReader.cpp \
+   spAn/config/HoomdConfigReader.cpp \
 
 spAn_config_SRCS=\
      $(addprefix $(SRC_DIR)/, $(spAn_config_))
