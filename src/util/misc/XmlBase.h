@@ -15,7 +15,9 @@ namespace Util
 {
 
    /**
-   * Base class for classes that parse XML strings.
+   * Base class for classes that parse XML markup tags.
+   * 
+   * \ingroup Misc_Module
    */
    class XmlBase 
    {

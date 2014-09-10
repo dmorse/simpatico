@@ -32,6 +32,8 @@ namespace Util
    *       UTIL_THROW("No end-bracket - ill formed start tag");
    *    } 
    * \endcode
+   *
+   * \ingroup Misc_Module
    */
    class XmlStartTag : public XmlBase
    {

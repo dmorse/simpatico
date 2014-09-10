@@ -58,7 +58,7 @@ namespace Util
       if (c() == '>') {
          endBracket_ = true;
          return false;
-      } else if (c() == '\/') {
+      } else if (c() == '/') {
          next();
          if (isEnd()) return false;
          if (c() == '>') {
