@@ -5,6 +5,7 @@
 #include <util/misc/XmlAttribute.h>
 #include <util/misc/XmlStartTag.h>
 #include <util/misc/XmlEndTag.h>
+#include <util/misc/XmlXmlTag.h>
 #include <util/global.h>
 
 #ifdef UTIL_MPI
@@ -143,6 +144,16 @@ public:
       TEST_ASSERT(result);
       TEST_ASSERT(tag.label() == "Knobby");
    }
+
+   void testXmlXmlTag() 
+   {
+      printMethod(TEST_FUNC);
+      XmlXmlTag tag;
+      std::string string("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+      bool result = tag.match(string, 0);
+      TEST_ASSERT(result);
+   }
+
 };
 
 TEST_BEGIN(XmlTest)
@@ -152,6 +163,7 @@ TEST_ADD(XmlTest, testXmlAttributeMatch1)
 TEST_ADD(XmlTest, testXmlAttributeMatch2)
 TEST_ADD(XmlTest, testXmlStartTag)
 TEST_ADD(XmlTest, testXmlEndTag)
+TEST_ADD(XmlTest, testXmlXmlTag)
 TEST_END(XmlTest)
 
 #endif

@@ -8,6 +8,7 @@ util_misc_=\
     util/misc/Memory.cpp \
     util/misc/ioUtil.cpp \
     util/misc/XmlBase.cpp \
+    util/misc/XmlXmlTag.cpp \
     util/misc/XmlAttribute.cpp \
     util/misc/XmlStartTag.cpp \
     util/misc/XmlEndTag.cpp \
