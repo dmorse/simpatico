@@ -11,6 +11,7 @@
 #include "Processor.h"
 #include <spAn/config/DdMdConfigReader.h>
 #include <spAn/trajectory/LammpsDumpReader.h>
+#include <util/format/Str.h>
 
 // std headers
 #include <fstream>
@@ -28,7 +29,9 @@ namespace SpAn
       trajectoryReaderPtr_(0),
       configReaderFactory_(*this),
       trajectoryReaderFactory_(*this),
-      analyzerManager_(*this)
+      analyzerManager_(*this),
+      paramFileName_(),
+      commandFileName_()
    {  setClassName("Processor"); }
 
    /*
@@ -41,6 +44,69 @@ namespace SpAn
       }
       if (trajectoryReaderPtr_) {
          delete trajectoryReaderPtr_;
+      }
+   }
+
+   /*
+   * Process command line options.
+   */
+   void Processor::setOptions(int argc, char * const * argv)
+   {
+      bool  eFlag = false;               // option e
+
+      // Read command-line arguments
+      int c;
+      opterr = 0;
+      while ((c = getopt(argc, argv, "e")) != -1) {
+         switch (c) {
+         case 'e':
+           eFlag = true;
+           break;
+         case '?':
+           Log::file() << "Unknown option -" << optopt << std::endl;
+         }
+      }
+
+      // If option -e, enable echoing of parameters as they are read
+      if (eFlag) {
+         ParamComponent::setEcho(true);
+      }
+
+      // Check number of remaining arguments
+      int nArg = argc - optind;
+      if (nArg < 1) {
+         Log::file() << "optind = " << optind << std::endl;
+         Log::file() << "argc   = " << argc << std::endl;
+         UTIL_THROW("Two few non-option arguments");
+      }
+      if (nArg > 2) {
+         Log::file() << "optind = " << optind << std::endl;
+         Log::file() << "argc   = " << argc << std::endl;
+         UTIL_THROW("Two many non-option arguments");
+      }
+   
+      // Read parameter file name
+      paramFileName_ = argv[optind];
+      Log::file() << "paramFileName  = " << paramFileName_ << std::endl;
+
+      // Read command file name, if any
+      if (nArg == 2) {
+         commandFileName_ = argv[optind+1];
+         Log::file() << "commandFileName = " 
+                     << commandFileName_ << std::endl;
+      }
+
+   }
+
+   /*
+   * Read default param file.
+   */
+   void Processor::readParam()
+   {
+      if (paramFileName_ != "") {
+         readParam(paramFileName_.c_str());
+      } else {
+         UTIL_THROW("No param file specified");
       }
    }
 
@@ -63,6 +129,89 @@ namespace SpAn
       Configuration::readParameters(in);
       readParamCompositeOptional(in, fileMaster_);
       readParamComposite(in, analyzerManager_);
+   }
+
+   /*
+   * Read and execute commands from default command file.
+   */
+   void Processor::readCommands()
+   {
+      if (commandFileName_ != "") {
+         std::ifstream file;
+         file.open(commandFileName_.c_str());
+         //fileMaster().openInputFile(commandFileName_, file);
+         readCommands(file);
+         file.close();
+      } else {
+         readCommands(std::cin);
+      }
+   }
+
+   /*
+   * Read and execute commands from a specified command file.
+   */
+   void Processor::readCommands(std::istream &in)
+   {
+      #if 0
+      if (!isInitialized_) {
+         UTIL_THROW("McSimulation is not initialized");
+      }
+      #endif
+
+      std::string    command;
+      std::string    filename;
+      std::ifstream  inputFile;
+      // std::ofstream  outputFile;
+
+      bool readNext = true;
+      while (readNext) {
+
+         in >> command;
+         Log::file() << command;
+
+         if (command == "FINISH") {
+            Log::file() << std::endl;
+            readNext = false;
+         } else
+         if (command == "SET_CONFIG_READER") {
+            std::string classname;
+            in >> classname;
+            Log::file() << Str(classname, 15) << std::endl;
+            setConfigReader(classname);
+         } else
+         if (command == "READ_CONFIG") {
+            in >> filename;
+            Log::file() << Str(filename, 15) << std::endl;
+            inputFile.open(filename.c_str());
+            //fileMaster().openInputFile(filename, inputFile);
+            readConfig(inputFile);
+            inputFile.close();
+         } else
+         if (command == "SET_TRAJECTORY_READER") {
+            std::string classname;
+            in >> classname;
+            Log::file() << Str(classname, 15) << std::endl;
+            setTrajectoryReader(classname);
+         } else
+         if (command == "ANALYZE_TRAJECTORY") {
+            in >> filename;
+            analyzeTrajectory(filename);
+         } else
+         #if 0
+         if (command == "WRITE_CONFIG") {
+            in >> filename;
+            Log::file() << Str(filename, 15) << std::endl;
+            fileMaster().openOutputFile(filename, outputFile);
+            writeConfig(outputFile);
+            outputFile.close();
+         } else
+         #endif
+         {
+            Log::file() << "  Error: Unknown command  " << std::endl;
+            readNext = false;
+         }
+
+      }
    }
 
    // ConfigReader Functions
@@ -118,11 +267,13 @@ namespace SpAn
    /*
    * Read and analyze a sequence of configuration files.
    */
-   void Processor::analyzeDumps(int min, int max, const std::string& baseFileName)
+   void Processor::analyzeConfigs(const std::string& baseFileName,
+                                  int min, int max, int interval)
    {
       // Preconditions
       if (min < 0)    UTIL_THROW("min < 0");
       if (max < min)  UTIL_THROW("max < min");
+      if (interval <= 0)  UTIL_THROW("interval <= 0");
 
       //Timer timer;
       std::string filename;
@@ -132,7 +283,7 @@ namespace SpAn
       // Main loop
       Log::file() << "begin main loop" << std::endl;
       //timer.start();
-      for (int iStep = min; iStep <= max; ++iStep) {
+      for (int iStep = min; iStep <= max; iStep += interval) {
 
          indexString << iStep;
          filename = baseFileName;

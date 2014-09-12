@@ -56,7 +56,10 @@ namespace SpAn
 
    private:
 
-      void readAtomNode(Util::XmlStartTag& start, std::istream& file);
+      void readBox(Util::XmlStartTag& start, std::istream& file);
+      void readPosition(Util::XmlStartTag& start, std::istream& file);
+      void readVelocity(Util::XmlStartTag& start, std::istream& file);
+      void readType(Util::XmlStartTag& start, std::istream& file);
 
       // Define a private method for each type of valid node
 

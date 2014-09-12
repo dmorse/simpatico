@@ -42,9 +42,11 @@ namespace SpAn
    {
       // Precondition
       if (!file.is_open()) {  
-            UTIL_THROW("Error: File is not open"); 
+         UTIL_THROW("Error: File is not open"); 
       }
 
+      // Set flags
+     
       std::string line;
 
       // Read XML tag
@@ -116,8 +118,11 @@ namespace SpAn
             Log::file() << "node name = " << start.label() << std::endl;
 
             // Select node type
-            if (name == "atom") {
-               readAtomNode(start, file);
+            if (name == "position") {
+               readPosition(start, file);
+            } else
+            if (name == "velocity") {
+               readVelocity(start, file);
             } else
             if (name == "box") {
                Log::file() << "Box node not yet implemented" << std::endl;
@@ -136,18 +141,27 @@ namespace SpAn
 
       getNextLine(file, line);
       end.match("hoomd_xml", line, 0); 
-
    }
-   
-   void HoomdConfigReader::readAtomNode(Util::XmlStartTag& start, 
+
+
+
+
+
+   void HoomdConfigReader::readBox(Util::XmlStartTag& start, 
                                         std::istream& file)
    {
       // Process data node start tag
       XmlAttribute attribute;
-      int n;
+      Vector lengths;
       while (start.matchAttribute(attribute)) {
-         if (attribute.label() == "num") {
-            attribute.value() >> n;
+         if (attribute.label() == "lx") {
+            attribute.value() >> lengths[0];
+         } else 
+         if (attribute.label() == "ly") {
+            attribute.value() >> lengths[1];
+         } else 
+         if (attribute.label() == "lz") {
+            attribute.value() >> lengths[2];
          } else {
             Log::file() << attribute.label() << std::endl;
             UTIL_THROW("Unknown attribute");
@@ -155,96 +169,174 @@ namespace SpAn
       }
       start.finish();
 
-      Vector position;
-      for (int i = 0; i < n; ++i) {
-         file >> position; 
+      configuration().boundary().setOrthorhombic(lengths);
+
+   }
+
+   void HoomdConfigReader::readPosition(Util::XmlStartTag& start, 
+                                        std::istream& file)
+   {
+      // Count atoms in storage
+      AtomStorage& storage = configuration().atoms();
+      int n = storage.size();
+      bool hasAtoms;
+      if (n == 0) {
+         hasAtoms = false; 
+      } else {
+         hasAtoms = true; 
+      }
+
+      // Process data node start tag
+      XmlAttribute attribute;
+      while (start.matchAttribute(attribute)) {
+         if (attribute.label() == "num") {
+            int num;
+            attribute.value() >> num;
+            if (hasAtoms && num != n) {
+               UTIL_THROW("Inconsistent number of atoms");
+            } 
+         } else {
+            Log::file() << attribute.label() << std::endl;
+            UTIL_THROW("Unknown attribute");
+         }
+      }
+      start.finish();
+
+      // Read atom positions
+      Atom* atomPtr;
+      if (hasAtoms) {
+         for (int i = 0; i < n; ++i) {
+            atomPtr = storage.ptr(i);
+            if (!atomPtr) {
+               UTIL_THROW("Atom not found");   
+            }
+            file >> atomPtr->position;
+         }
+      } else {
+         for (int i = 0; i < n; ++i) {
+            atomPtr = storage.newPtr();
+            atomPtr->id = i;
+            file >> atomPtr->position;
+            storage.add();
+         }
       }
 
       // Process end tag
       std::string line;
       XmlEndTag end;
       getNextLine(file, line);
-      end.match("atom", line, 0);
-        
+      end.match("position", line, 0);
    }
 
-      #if 0
-      // Read and broadcast boundary
-      file >> Label("BOUNDARY");
-      file >> configuration().boundary();
+   void HoomdConfigReader::readVelocity(Util::XmlStartTag& start, 
+                                        std::istream& file)
+   {
+      // Count atoms in storage
+      AtomStorage& storage = configuration().atoms();
+      int n = storage.size();
+      bool hasAtoms;
+      if (n == 0) {
+         hasAtoms = false; 
+      } else {
+         hasAtoms = true; 
+      }
 
-      // Read and distribute atoms
+      // Process data node start tag
+      XmlAttribute attribute;
+      while (start.matchAttribute(attribute)) {
+         if (attribute.label() == "num") {
+            int num;
+            attribute.value() >> num;
+            if (hasAtoms && num != n) {
+               UTIL_THROW("Inconsistent number of atoms");
+            } 
+         } else {
+            Log::file() << attribute.label() << std::endl;
+            UTIL_THROW("Unknown attribute");
+         }
+      }
+      start.finish();
 
-      // Read atoms
+      // Read atom velocitys
       Atom* atomPtr;
-      // atomCapacity = maximum allowed id + 1
-      int atomCapacity = configuration().atoms().capacity(); 
-      int nAtom;          
-      file >> Label("ATOMS");
-      file >> Label("nAtom") >> nAtom;
-      for (int i = 0; i < nAtom; ++i) {
-
-         // Get pointer to new atom 
-         atomPtr = configuration().atoms().newPtr();
- 
-         file >> atomPtr->id;
-         if (atomPtr->id < 0) {
-            std::cout << "atom id =" << atomPtr->id << std::endl;
-            UTIL_THROW("Negative atom id");
-         }
-         if (atomPtr->id >= atomCapacity) {
-            std::cout << "atom id      =" << atomPtr->id << std::endl;
-            std::cout << "atomCapacity =" << atomCapacity << std::endl;
-            UTIL_THROW("Invalid atom id");
-         }
-         file >> atomPtr->typeId;
-         if (hasMolecules_) {
-            file >> atomPtr->speciesId;
-            if (atomPtr->speciesId < 0) {
-               std::cout << "species Id  =" << atomPtr->speciesId << std::endl;
-               UTIL_THROW("Negative species id");
+      if (hasAtoms) {
+         for (int i = 0; i < n; ++i) {
+            atomPtr = storage.ptr(i);
+            if (!atomPtr) {
+               UTIL_THROW("Atom not found");   
             }
-            file >> atomPtr->moleculeId; 
-            if (atomPtr->moleculeId < 0) {
-               std::cout << "molecule Id =" << atomPtr->moleculeId << std::endl;
-               UTIL_THROW("Negative molecule id");
-            }
-            file >> atomPtr->atomId;
-            if (atomPtr->atomId < 0) {
-               std::cout << "atom id     =" << atomPtr->atomId << std::endl;
-               UTIL_THROW("Negative atom id in molecule");
-            }
+            file >> atomPtr->velocity;
          }
-         file >> atomPtr->position;
-         file >> atomPtr->velocity;
-
-         // Finalize addition of new atom
-         configuration().atoms().add();
+      } else {
+         for (int i = 0; i < n; ++i) {
+            atomPtr = storage.newPtr();
+            atomPtr->id = i;
+            file >> atomPtr->velocity;
+            storage.add();
+         }
       }
 
-      // Read Covalent Groups
-      #ifdef INTER_BOND
-      if (configuration().bonds().capacity()) {
-         readGroups(file, "BONDS", "nBond", configuration().bonds());
-         //if (maskPolicy == MaskBonded) {
-         //   setAtomMasks();
-         //}
-      }
-      #endif
+      // Process end tag
+      std::string line;
+      XmlEndTag end;
+      getNextLine(file, line);
+      end.match("velocity", line, 0);
+   }
 
-      #ifdef INTER_ANGLE
-      if (configuration().angles().capacity()) {
-         readGroups(file, "ANGLES", "nAngle", configuration().angles());
+   void HoomdConfigReader::readType(Util::XmlStartTag& start, 
+                                    std::istream& file)
+   {
+      // Count atoms in storage
+      AtomStorage& storage = configuration().atoms();
+      int n = storage.size();
+      bool hasAtoms;
+      if (n == 0) {
+         hasAtoms = false; 
+      } else {
+         hasAtoms = true;
       }
-      #endif
 
-      #ifdef INTER_DIHEDRAL
-      if (configuration().dihedrals().capacity()) {
-         readGroups(file, "DIHEDRALS", "nDihedral", configuration().dihedrals());
+      // Process data node start tag
+      XmlAttribute attribute;
+      while (start.matchAttribute(attribute)) {
+         if (attribute.label() == "num") {
+            int num;
+            attribute.value() >> num;
+            if (hasAtoms && num != n) {
+               UTIL_THROW("Inconsistent number of atoms");
+            } 
+         } else {
+            Log::file() << attribute.label() << std::endl;
+            UTIL_THROW("Unknown attribute");
+         }
       }
-      #endif
+      start.finish();
 
-      #endif // if 0
+      // Read atom velocities
+      Atom* atomPtr;
+      if (hasAtoms) {
+         for (int i = 0; i < n; ++i) {
+            atomPtr = storage.ptr(i);
+            if (!atomPtr) {
+               UTIL_THROW("Atom not found");   
+            }
+            file >> atomPtr->typeId;
+         }
+      } else {
+         for (int i = 0; i < n; ++i) {
+            atomPtr = storage.newPtr();
+            atomPtr->id = i;
+            file >> atomPtr->typeId;
+            storage.add();
+         }
+      }
+
+      // Process end tag
+      std::string line;
+      XmlEndTag end;
+      getNextLine(file, line);
+      end.match("type", line, 0);
+   }
 
 }
 #endif

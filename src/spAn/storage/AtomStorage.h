@@ -16,7 +16,7 @@
 #include <util/containers/ArrayIterator.h>    // inline function
 
 
-namespace SpAn 
+namespace SpAn
 {
 
    using namespace Util;
@@ -26,7 +26,7 @@ namespace SpAn
    *
    * \ingroup SpAn_Storage_Module
    */
-   class AtomStorage 
+   class AtomStorage
    {
 
    public:
@@ -66,9 +66,13 @@ namespace SpAn
       * Clear all atoms and groups.
       */
       void clear();
-  
+
       /**
       * Get a pointer to an atom by global id.
+      *
+      * Returns a null pointer if no such atom is present.
+      *
+      * \param id global index / tag of desired atom.
       */
       Atom* ptr(int id);
 
@@ -79,16 +83,16 @@ namespace SpAn
 
       /**
       * Get atom capacity (maximum id + 1).
-      */ 
+      */
       int capacity() const;
 
       /**
       * Get number of atoms.
-      */ 
+      */
       int size() const;
 
    private:
-     
+
       /// Array of atom objects, added in order read from file.
       DSArray<Atom> atoms_;
 
@@ -110,7 +114,7 @@ namespace SpAn
 
    /*
    * Get atom capacity (maximum id + 1).
-   */ 
+   */
    inline
    int AtomStorage::capacity() const
    {  return atoms_.capacity(); }
@@ -124,7 +128,7 @@ namespace SpAn
    /*
    * Initialize an iterator for atoms.
    */
-   inline 
+   inline
    void AtomStorage::begin(AtomStorage::Iterator& iter)
    {  atoms_.begin(iter); }
 
