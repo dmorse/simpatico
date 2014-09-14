@@ -10,6 +10,7 @@
 
 #include "Processor.h"
 #include <spAn/config/DdMdConfigReader.h>
+#include <spAn/config/DdMdConfigWriter.h>
 #include <spAn/trajectory/LammpsDumpReader.h>
 #include <util/format/Str.h>
 
@@ -28,6 +29,7 @@ namespace SpAn
     : configReaderPtr_(0),
       trajectoryReaderPtr_(0),
       configReaderFactory_(*this),
+      configWriterFactory_(*this),
       trajectoryReaderFactory_(*this),
       analyzerManager_(*this),
       paramFileName_(),
@@ -161,7 +163,7 @@ namespace SpAn
       std::string    command;
       std::string    filename;
       std::ifstream  inputFile;
-      // std::ofstream  outputFile;
+      std::ofstream  outputFile;
 
       bool readNext = true;
       while (readNext) {
@@ -201,6 +203,19 @@ namespace SpAn
             inputFile.close();
 
          } else
+         if (command == "SET_CONFIG_WRITER") {
+            std::string classname;
+            in >> classname;
+            Log::file() << Str(classname, 15) << std::endl;
+            setConfigWriter(classname);
+         } else
+         if (command == "WRITE_CONFIG") {
+            in >> filename;
+            Log::file() << Str(filename, 15) << std::endl;
+            fileMaster().openOutputFile(filename, outputFile);
+            writeConfig(outputFile);
+            outputFile.close();
+         } else
          if (command == "SET_TRAJECTORY_READER") {
             std::string classname;
             in >> classname;
@@ -211,15 +226,6 @@ namespace SpAn
             in >> filename;
             analyzeTrajectory(filename);
          } else
-         #if 0
-         if (command == "WRITE_CONFIG") {
-            in >> filename;
-            Log::file() << Str(filename, 15) << std::endl;
-            fileMaster().openOutputFile(filename, outputFile);
-            writeConfig(outputFile);
-            outputFile.close();
-         } else
-         #endif
          {
             Log::file() << "  Error: Unknown command  " << std::endl;
             readNext = false;
@@ -243,8 +249,6 @@ namespace SpAn
          UTIL_THROW(msg.c_str());
       }
    }
-
-   // Config File Reader
 
    /*
    * Return the ConfigReader (create default if necessary).
@@ -272,10 +276,10 @@ namespace SpAn
    */
    void Processor::readConfig(const std::string& filename)
    { 
-      std::ifstream inputFile;
-      inputFile.open(filename.c_str());
-      readConfig(inputFile);
-      inputFile.close();
+      std::ifstream file;
+      file.open(filename.c_str());
+      readConfig(file);
+      file.close();
    }
 
    /*
@@ -353,6 +357,54 @@ namespace SpAn
       Log::file() << std::endl;
       #endif
 
+   }
+
+   // ConfigWriter Functions
+
+   /*
+   * Set ConfigWriter style.
+   */
+   void Processor::setConfigWriter(const std::string& configStyle)
+   {
+      configWriterPtr_ = configWriterFactory_.factory(configStyle);
+      if (configWriterPtr_ == 0) {
+         std::string msg;
+         msg = "Unrecognized ConfigWriter subclass name: ";
+         msg += configStyle;
+         UTIL_THROW(msg.c_str());
+      }
+   }
+
+   /*
+   * Return the ConfigWriter (create default if necessary).
+   */
+   ConfigWriter& Processor::configWriter() 
+   {
+      if (configWriterPtr_ == 0) {
+         configWriterPtr_ = new DdMdConfigWriter(*this);
+         assert(configWriterPtr_);
+      }
+      return *configWriterPtr_;
+   }
+
+   /*
+   * Read a single configuration file.
+   */
+   void Processor::writeConfig(std::ofstream& in)
+   {
+      clear();  
+      configWriter().writeConfig(in); 
+   }
+
+   /*
+   * Open, write and close a configuration file.
+   */
+   void Processor::writeConfig(const std::string& filename)
+   { 
+      std::ofstream file;
+      file.open(filename.c_str());
+      writeConfig(file);
+      file.close();
    }
 
    // Trajectory Analysis
@@ -433,9 +485,9 @@ namespace SpAn
    */
    FileMaster& Processor::fileMaster()
    {
-      if (!fileMaster_.isActive()) {
-         UTIL_THROW(" Attempt to use inactive FileMaster");
-      } 
+      //if (!fileMaster_.isActive()) {
+      //   UTIL_THROW(" Attempt to use inactive FileMaster");
+      //} 
       return fileMaster_;
    }
 

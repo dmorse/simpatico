@@ -105,6 +105,7 @@ cp  src/ddMd/analyzers/AnalyzerFactory.cpp_r src/ddMd/analyzers/AnalyzerFactory.
 cp  src/ddMd/modifiers/ModifierFactory.cpp_r src/ddMd/modifiers/ModifierFactory.cpp
 
 cp  src/spAn/config/ConfigReaderFactory.cpp_r src/spAn/config/ConfigReaderFactory.cpp
+cp  src/spAn/config/ConfigWriterFactory.cpp_r src/spAn/config/ConfigWriterFactory.cpp
 cp  src/spAn/trajectory/TrajectoryReaderFactory.cpp_r src/spAn/trajectory/TrajectoryReaderFactory.cpp
 cp  src/spAn/analyzers/AnalyzerFactory.cpp_r src/spAn/analyzers/AnalyzerFactory.cpp
 

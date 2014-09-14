@@ -1,1 +1,2 @@
-SpConfigIoFactory.cpp
+ConfigReaderFactory.cpp
+ConfigWriterFactory.cpp

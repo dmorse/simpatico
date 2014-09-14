@@ -10,10 +10,10 @@
 
 #include <spAn/storage/Configuration.h>                // base class
 #include <spAn/config/ConfigReaderFactory.h>           // member 
+#include <spAn/config/ConfigWriterFactory.h>           // member 
 #include <spAn/trajectory/TrajectoryReaderFactory.h>   // member 
 #include <spAn/analyzers/AnalyzerManager.h>            // member 
 #include <util/misc/FileMaster.h>                      // member 
-
 
 namespace SpAn 
 {
@@ -130,7 +130,33 @@ namespace SpAn
                           int min, int max, int interval = 1);
 
       //@}
-      /// \name Trajectory analysis
+      /// \name ConfigWriter Interface 
+      //@{
+      
+      /**
+      * Set ConfigWriter style  (creates a ConfigWriter).
+      *
+      * \param configWriterName identifier for ConfigWriter subclass
+      */
+      void setConfigWriter(const std::string& configWriterName);
+
+      /**
+      * Return the current ConfigWriter (create default if necessary).
+      */
+      ConfigWriter& configWriter();
+
+      /**
+      * Write a single configuration file.
+      */
+      void writeConfig(std::ofstream& in);
+
+      /**
+      * Open, write and close a configuration file.
+      */
+      void writeConfig(const std::string& filename);
+   
+      //@}
+      /// \name Trajectory File Interface
       //@{
 
       /**
@@ -148,7 +174,7 @@ namespace SpAn
       /**
       * Open, read, analyze and close a single trajectory file.
       *
-      * \param name of trajectory file.
+      * \param filename name of trajectory file.
       */
       void analyzeTrajectory(const std::string& filename);
 
@@ -173,11 +199,17 @@ namespace SpAn
       /// Pointer to current ConfigReader object.
       ConfigReader* configReaderPtr_;
 
+      /// Pointer to current ConfigWriter object.
+      ConfigWriter* configWriterPtr_;
+
       /// Pointer to current TrajectoryReader object.
       TrajectoryReader* trajectoryReaderPtr_;
 
       /// Factory for choosing ConfigReader at run time.
       ConfigReaderFactory configReaderFactory_;
+
+      /// Factory for choosing ConfigWriter at run time.
+      ConfigWriterFactory configWriterFactory_;
 
       /// Factory for choosing TrajectoryReader at run time.
       TrajectoryReaderFactory trajectoryReaderFactory_;
@@ -191,8 +223,10 @@ namespace SpAn
       /// String identifier for ConfigReader class name
       std::string configReaderName_;
 
+      /// Name of parameter file (required command line argument)
       std::string paramFileName_;
 
+      /// Name of command file (optional command line argument)
       std::string commandFileName_;
 
    };

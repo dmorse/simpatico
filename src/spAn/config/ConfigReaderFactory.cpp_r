@@ -1,5 +1,5 @@
-#ifndef SPAN_CONFIG_IO_FACTORY_CPP
-#define SPAN_CONFIG_IO_FACTORY_CPP
+#ifndef SPAN_CONFIG_READER_FACTORY_CPP
+#define SPAN_CONFIG_READER_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
