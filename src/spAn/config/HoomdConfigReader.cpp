@@ -32,8 +32,39 @@ namespace SpAn
    * Constructor.
    */
    HoomdConfigReader::HoomdConfigReader(Configuration& configuration)
-    : ConfigReader(configuration)
+    : ConfigReader(configuration, true)
    {  setClassName("HoomdConfigReader"); }
+
+   /*
+   * Read auxiliary type map file.
+   */
+   void HoomdConfigReader::readAuxiliaryFile(std::ifstream& file)
+   {
+      bool notEnd;
+      std::stringstream line;
+
+      notEnd = getNextLine(file, line);
+      if (notEnd) {
+         checkString(line, "ATOM");
+         checkString(line, "TYPES:");
+         atomTypeMap_.read(file);
+      }
+
+      notEnd = getNextLine(file, line);
+      if (notEnd) {
+         checkString(line, "BOND");
+         checkString(line, "TYPES:");
+         bondTypeMap_.read(file);
+      }
+
+      notEnd = getNextLine(file, line);
+      if (notEnd) {
+         checkString(line, "ANGLE");
+         checkString(line, "TYPES:");
+         angleTypeMap_.read(file);
+      }
+ 
+   }
 
    /*
    * Read a configuration file.
@@ -114,18 +145,33 @@ namespace SpAn
          if (start.matchLabel(line, 0)) {
 
             name = start.label();
-            Log::file() << std::endl;
-            Log::file() << "node name = " << start.label() << std::endl;
+            // Log::file() << std::endl;
+            // Log::file() << "node name = " << start.label() << std::endl;
 
             // Select node type
+            if (name == "box") {
+               readBox(start, file);
+            } else
             if (name == "position") {
                readPosition(start, file);
             } else
             if (name == "velocity") {
                readVelocity(start, file);
-            } else
-            if (name == "box") {
-               Log::file() << "Box node not yet implemented" << std::endl;
+            } else 
+            if (name == "type") {
+               readType(start, file);
+            } else 
+            if (name == "mass") {
+               readAtomIgnore(start, file);
+            } else 
+            if (name == "charge") {
+               readAtomIgnore(start, file);
+            } else 
+            if (name == "body") {
+               readAtomIgnore(start, file);
+            } else 
+            if (name == "bond") {
+               readBond(start, file);
             } else {
                UTIL_THROW("Unknown node name");
             }
@@ -133,7 +179,7 @@ namespace SpAn
          } else {
 
             Log::file() << line << std::endl;
-            UTIL_THROW("Error unrecognized node");
+            UTIL_THROW("Expected data node start tag or configuration end tag");
 
          }
          
@@ -173,38 +219,54 @@ namespace SpAn
 
    }
 
+   /*
+   * Finish processing start tag.
+   */
+   int HoomdConfigReader::readNumberAttribute(Util::XmlStartTag& start, int nAtom)
+   {
+      XmlAttribute attribute;
+      while (start.matchAttribute(attribute)) {
+         if (attribute.label() == "num") {
+            int num;
+            attribute.value() >> num;
+            if (nAtom > 0 && num != nAtom) {
+               UTIL_THROW("Inconsistent number of atoms");
+            } 
+            if (nAtom == 0) {
+               nAtom = num;
+            }
+         } else {
+            Log::file() << attribute.label() << std::endl;
+            UTIL_THROW("Unknown attribute");
+         }
+      }
+      start.finish();
+      return nAtom;
+   }
+
+   /*
+   * Check end tag.
+   */
+   void HoomdConfigReader::endTag(std::istream& file, const std::string& name)
+   {
+      std::string line;
+      XmlEndTag end;
+      getNextLine(file, line);
+      end.match(name, line, 0);
+   }
+
+   /*
+   * Read position data node.
+   */
    void HoomdConfigReader::readPosition(Util::XmlStartTag& start, 
                                         std::istream& file)
    {
-      // Count atoms in storage
       AtomStorage& storage = configuration().atoms();
-      int n = storage.size();
-      bool hasAtoms;
-      if (n == 0) {
-         hasAtoms = false; 
-      } else {
-         hasAtoms = true; 
-      }
+      int nAtom = storage.size();
+      int n = readNumberAttribute(start, nAtom);
 
-      // Process data node start tag
-      XmlAttribute attribute;
-      while (start.matchAttribute(attribute)) {
-         if (attribute.label() == "num") {
-            int num;
-            attribute.value() >> num;
-            if (hasAtoms && num != n) {
-               UTIL_THROW("Inconsistent number of atoms");
-            } 
-         } else {
-            Log::file() << attribute.label() << std::endl;
-            UTIL_THROW("Unknown attribute");
-         }
-      }
-      start.finish();
-
-      // Read atom positions
       Atom* atomPtr;
-      if (hasAtoms) {
+      if (nAtom > 0) {
          for (int i = 0; i < n; ++i) {
             atomPtr = storage.ptr(i);
             if (!atomPtr) {
@@ -220,46 +282,21 @@ namespace SpAn
             storage.add();
          }
       }
-
-      // Process end tag
-      std::string line;
-      XmlEndTag end;
-      getNextLine(file, line);
-      end.match("position", line, 0);
+      endTag(file, "position");
    }
 
+   /*
+   * Read velocity data node.
+   */
    void HoomdConfigReader::readVelocity(Util::XmlStartTag& start, 
                                         std::istream& file)
    {
-      // Count atoms in storage
       AtomStorage& storage = configuration().atoms();
-      int n = storage.size();
-      bool hasAtoms;
-      if (n == 0) {
-         hasAtoms = false; 
-      } else {
-         hasAtoms = true; 
-      }
+      int nAtom = storage.size();
+      int n = readNumberAttribute(start, nAtom);
 
-      // Process data node start tag
-      XmlAttribute attribute;
-      while (start.matchAttribute(attribute)) {
-         if (attribute.label() == "num") {
-            int num;
-            attribute.value() >> num;
-            if (hasAtoms && num != n) {
-               UTIL_THROW("Inconsistent number of atoms");
-            } 
-         } else {
-            Log::file() << attribute.label() << std::endl;
-            UTIL_THROW("Unknown attribute");
-         }
-      }
-      start.finish();
-
-      // Read atom velocitys
       Atom* atomPtr;
-      if (hasAtoms) {
+      if (nAtom > 0) {
          for (int i = 0; i < n; ++i) {
             atomPtr = storage.ptr(i);
             if (!atomPtr) {
@@ -275,67 +312,99 @@ namespace SpAn
             storage.add();
          }
       }
-
-      // Process end tag
-      std::string line;
-      XmlEndTag end;
-      getNextLine(file, line);
-      end.match("velocity", line, 0);
+      endTag(file, "velocity");
    }
 
+   /*
+   * Read type data node.
+   */
    void HoomdConfigReader::readType(Util::XmlStartTag& start, 
                                     std::istream& file)
    {
-      // Count atoms in storage
       AtomStorage& storage = configuration().atoms();
-      int n = storage.size();
-      bool hasAtoms;
-      if (n == 0) {
-         hasAtoms = false; 
-      } else {
-         hasAtoms = true;
-      }
+      int nAtom = storage.size();
+      int n = readNumberAttribute(start, nAtom);
+      int typeId;
+      std::string typeName;
 
-      // Process data node start tag
-      XmlAttribute attribute;
-      while (start.matchAttribute(attribute)) {
-         if (attribute.label() == "num") {
-            int num;
-            attribute.value() >> num;
-            if (hasAtoms && num != n) {
-               UTIL_THROW("Inconsistent number of atoms");
-            } 
-         } else {
-            Log::file() << attribute.label() << std::endl;
-            UTIL_THROW("Unknown attribute");
-         }
-      }
-      start.finish();
-
-      // Read atom velocities
       Atom* atomPtr;
-      if (hasAtoms) {
+      if (nAtom > 0) {
          for (int i = 0; i < n; ++i) {
             atomPtr = storage.ptr(i);
             if (!atomPtr) {
                UTIL_THROW("Atom not found");   
             }
-            file >> atomPtr->typeId;
+            file >> typeName;
+            typeId = atomTypeMap_.id(typeName);
+            atomPtr->typeId = typeId;
          }
       } else {
          for (int i = 0; i < n; ++i) {
             atomPtr = storage.newPtr();
             atomPtr->id = i;
-            file >> atomPtr->typeId;
+            file >> typeName;
+            typeId = atomTypeMap_.id(typeName);
+            atomPtr->typeId = typeId;
             storage.add();
          }
       }
+      endTag(file, "type");
+   }
 
-      // Process end tag
-      std::string line;
+   /*
+   * Read and discard atom data 
+   */
+   void HoomdConfigReader::readAtomIgnore(Util::XmlStartTag& start, 
+                                          std::istream& file)
+   {
+      AtomStorage& storage = configuration().atoms();
+      int nAtom = storage.size();
+      int n = readNumberAttribute(start, nAtom);
+
+      std::string dummy;
+      for (int i = 0; i < n; ++i) {
+         file >> dummy;
+      }
+
+      endTag(file, start.label());
+      #if 0
       XmlEndTag end;
+      std::string line;
       getNextLine(file, line);
-      end.match("type", line, 0);
+      if (!end.match(line, 0)) {
+         UTIL_THROW("No end tag");
+      }
+      #endif
+   }
+
+   /*
+   * Read type data node.
+   */
+   void HoomdConfigReader::readBond(Util::XmlStartTag& start, 
+                                    std::istream& file)
+   {
+      GroupStorage < 2> & storage = configuration().bonds();
+      int nGroup = storage.size();
+      if (nGroup > 0) {
+         UTIL_THROW("Group storage not empty");
+      }
+      int n = readNumberAttribute(start, nGroup);
+      int typeId;
+      std::string typeName;
+
+      int i, j;
+      Group<2>* groupPtr;
+      for (i = 0; i < n; ++i) {
+         groupPtr = storage.newPtr();
+         groupPtr->id = i;
+         file >> typeName;
+         typeId = bondTypeMap_.id(typeName);
+         groupPtr->typeId = typeId;
+         for (j = 0; j < 2; ++j) {
+            file >> groupPtr->atomIds[j];
+         }
+      }
+      endTag(file, start.label());
    }
 
 }

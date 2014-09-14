@@ -25,11 +25,10 @@ namespace SpAn
    /*
    * Constructor.
    */
-   ConfigReader::ConfigReader(Configuration& configuration)
-     : configurationPtr_(&configuration)
-   {
-      setClassName("ConfigReader"); 
-   }
+   ConfigReader::ConfigReader(Configuration& configuration, bool needsAuxiliaryFile)
+     : configurationPtr_(&configuration),
+       needsAuxiliaryFile_(needsAuxiliaryFile)
+   {  setClassName("ConfigReader"); }
 
    /*
    * Destructor.

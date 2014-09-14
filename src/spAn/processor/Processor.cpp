@@ -180,12 +180,26 @@ namespace SpAn
             setConfigReader(classname);
          } else
          if (command == "READ_CONFIG") {
+
+            // If needed, read auxiliary file
+            if (configReader().needsAuxiliaryFile()) {
+               Log::file() << "Reading auxiliary file" << std::endl;
+               in >> filename;
+               Log::file() << Str(filename, 20) << std::endl;
+               inputFile.open(filename.c_str());
+               //fileMaster().openInputFile(filename, inputFile);
+               configReader().readAuxiliaryFile(inputFile);
+               inputFile.close();
+            }
+
+            // Read actual configuration file
             in >> filename;
             Log::file() << Str(filename, 15) << std::endl;
             inputFile.open(filename.c_str());
             //fileMaster().openInputFile(filename, inputFile);
             readConfig(inputFile);
             inputFile.close();
+
          } else
          if (command == "SET_TRAJECTORY_READER") {
             std::string classname;

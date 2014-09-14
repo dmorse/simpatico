@@ -39,7 +39,7 @@ namespace SpAn
       *
       * \param configuration parent Configuration object
       */
-      ConfigReader(Configuration& configuration);
+      ConfigReader(Configuration& configuration, bool needsAuxiliaryFile = false);
 
       /**
       * Destructor.
@@ -53,14 +53,20 @@ namespace SpAn
       */
       virtual void readConfig(std::ifstream& file) = 0;
 
-      #if 0
       /**
-      * Write configuration file.
-      *
-      * \param file  output file 
+      * Return true if an auxiliary file is needed.
       */
-      virtual void writeConfig(std::ofstream& file) = 0;
-      #endif
+      bool needsAuxiliaryFile() const;
+
+      /**
+      * Read auxiliary file.
+      * 
+      * Empty default implementation.
+      *
+      * \param file  auxiliary file, open for reading.
+      */
+      virtual void readAuxiliaryFile(std::ifstream& file)
+      {}
 
    protected:
 
@@ -71,7 +77,16 @@ namespace SpAn
 
       Configuration* configurationPtr_;
 
+      bool needsAuxiliaryFile_;
+
    };
+
+   /*
+   * Return true if an auxiliary file is needed.
+   */
+   inline
+   bool ConfigReader::needsAuxiliaryFile() const
+   {  return needsAuxiliaryFile_; }
 
 }
 #endif

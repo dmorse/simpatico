@@ -2,10 +2,48 @@
 <hoomd_xml version="1.5">
 <configuration time_step="0">
 
-<atom num="2">
+<box lx="6.0" ly="6.0" lz="9.0"/>
+
+<position num="3">
   1.0   2.2   3.3
   2.0   5.2   7.3
-</atom>
+  4.0   1.2   0.4
+</position>
+
+<velocity num="3">
+  1.0   2.2   3.3
+  2.0   5.2   7.3
+  4.0   1.2   0.4
+</velocity>
+
+<type num="3">
+A
+B
+A 
+</type>
+
+<mass num="3">
+1.0
+1.0
+1.0
+</mass>
+
+<charge num="3">
+0.0
+0.0
+0.0
+</charge>
+
+<body num="3">
+-1
+-1
+-1
+</body>
+
+<bond num="2">
+A-B 0 1
+B-C 1 2
+</bond>
 
 </configuration>
 </hoomd_xml>

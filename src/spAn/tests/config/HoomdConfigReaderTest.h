@@ -8,6 +8,8 @@
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
 
+#include <iostream>
+
 using namespace Util;
 using namespace SpAn;
 
@@ -58,15 +60,42 @@ inline void HoomdConfigReaderTest::testReadConfig()
    
    processor_.setConfigReader("HoomdConfigReader");
 
+   // Read auxiliary file
+   openInputFile("in/types", file);
+   processor_.configReader().readAuxiliaryFile(file);
+   //std::cout << std::endl << "Read auxiliary types file";
+   file.close(); 
+
+   // Read auxiliary file
    openInputFile("in/config.hoomd", file);
    processor_.readConfig(file);
    file.close(); 
 
-   //TEST_ASSERT(processor_.atoms().size() == 40);
-   //TEST_ASSERT(processor_.bonds().size() == 35);
+   TEST_ASSERT(processor_.atoms().size() == 3);
+   TEST_ASSERT(processor_.bonds().size() == 2);
+ 
+   std::cout << std::endl;
+   std::cout << processor_.boundary() << "\n";
+
+   AtomStorage::Iterator atomIt;
+   std::cout << std::endl;
+   for (processor_.atoms().begin(atomIt); atomIt.notEnd(); ++atomIt) {
+      std::cout << atomIt->id << "  " 
+                << atomIt->typeId << std::endl;
+   }
+
+   GroupStorage< 2 > ::Iterator bondIt;
+   std::cout << std::endl;
+   for (processor_.bonds().begin(bondIt); bondIt.notEnd(); ++bondIt) {
+      std::cout << bondIt->id << "  " 
+                << bondIt->typeId  << "  " 
+                << bondIt->atomIds[0] << "  "
+                << bondIt->atomIds[1] << "  "
+                << std::endl;
+   }
+
    // std::cout << "nAtom = " << processor_.atoms().size() << "\n";
    // std::cout << "nBond = " << processor_.bonds().size() << "\n";
-   // std::cout << processor_.boundary() << "\n";
 
 }
 

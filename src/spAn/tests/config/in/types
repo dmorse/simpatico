@@ -1,0 +1,9 @@
+ATOM TYPES:
+nType 3
+types  2 A
+       1 B
+       0 C
+BOND TYPES:
+nType 2
+types  1 A-B
+       0 B-C

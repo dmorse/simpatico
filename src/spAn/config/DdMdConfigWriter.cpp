@@ -43,7 +43,7 @@ namespace SpAn
          UTIL_THROW("Error: File is not open"); 
       }
 
-      // Write Boundary dimensions
+      // Write boundary box dimensions
       file << "BOUNDARY" << std::endl << std::endl;
       file << configuration().boundary() << std::endl;
       file << std::endl;

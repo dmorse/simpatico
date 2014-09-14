@@ -1,5 +1,6 @@
 #include "DdMdConfigReaderTest.h"
 #include "HoomdConfigReaderTest.h"
+#include "TypeMapTest.h"
 
 int main()
 {
@@ -9,6 +10,10 @@ int main()
    TEST_RUNNER(DdMdConfigReaderTest) runner1;
    runner1.run();
 
-   TEST_RUNNER(HoomdConfigReaderTest) runner2;
+   TEST_RUNNER(TypeMapTest) runner2;
    runner2.run();
+
+   TEST_RUNNER(HoomdConfigReaderTest) runner3;
+   runner3.run();
+
 } 

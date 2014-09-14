@@ -38,7 +38,20 @@ namespace SpAn
       */
       ~TypeMap();
 
+      /**
+      * Add typeId / type name pair to the container.
+      *
+      * \param id  integer type id
+      * \param name  type names string
+      */
       void insert(int id, const std::string& name);
+
+      /**
+      * Read pairs from file.
+      *
+      * \param in input stream.
+      */
+      void read(std::istream& in);
 
       /**
       * Get type id associated with a type name.
@@ -50,6 +63,11 @@ namespace SpAn
       */
       const std::string& name(int id) const;
 
+      /**
+      * Number of a pairs in map.
+      */
+      int size() const;
+
    private:
 
       /// Map of string name keys and integer id values.
@@ -60,6 +78,7 @@ namespace SpAn
 
    };
 
+   inline
    int TypeMap::id(const std::string& name) const
    {
       std::map<std::string, int>::const_iterator iter = ids_.find(name);
@@ -69,6 +88,7 @@ namespace SpAn
       return iter->second;   
    }
 
+   inline
    const std::string& TypeMap::name(int id) const
    {
       std::map<int, std::string>::const_iterator iter = names_.find(id);
@@ -77,6 +97,10 @@ namespace SpAn
       }
       return iter->second;   
    }
+
+   inline 
+   int TypeMap::size() const
+   {  return names_.size(); }
 
 }
 #endif

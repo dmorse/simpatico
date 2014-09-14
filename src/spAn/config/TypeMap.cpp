@@ -9,11 +9,12 @@
 */
 
 #include "TypeMap.h"
+#include <util/param/Label.h>
 
 namespace SpAn 
 {
 
-   //using namespace Util;
+   using namespace Util;
 
    /**
    * Constructor
@@ -39,6 +40,19 @@ namespace SpAn
       }
       ids_.insert(std::pair<std::string, int>(name, id));
       names_.insert(std::pair<int, std::string>(id, name));
+   }
+
+   void TypeMap::read(std::istream& in)
+   {
+      int nType = 0;
+      int id;
+      std::string name;
+      in >> Label("nType") >> nType;
+      in >> Label("types");
+      for (int i = 0; i < nType; ++i) {
+         in >> id >> name;
+         insert(id, name);
+      }
    }
 
 }
