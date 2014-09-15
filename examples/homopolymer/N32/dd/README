@@ -4,5 +4,5 @@ To run an example, with log information to screen:
 
 To postprocess the resulting config and trajectory files:
 
-   mdPp -t param.pp out/config out/trajectory
+   mdPp param.pp commands.pp
 
