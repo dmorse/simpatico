@@ -9,7 +9,7 @@
 */
 
 #include <spAn/config/ConfigWriter.h>       // base class
-#include <span/config/TypeMap.h>            // member
+#include <spAn/config/TypeMap.h>            // member
 
 namespace SpAn
 {
