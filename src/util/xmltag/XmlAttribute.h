@@ -31,6 +31,11 @@ namespace Util
       XmlAttribute();
 
       /**
+      * Destructor
+      */ 
+      virtual ~XmlAttribute();
+
+      /**
       * Return true if an attribute is found, false otherwise.
       */
       bool match(const std::string& string, int begin);

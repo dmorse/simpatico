@@ -35,6 +35,11 @@ namespace Util
       XmlXmlTag();
 
       /**
+      * Destructor
+      */ 
+      ~XmlXmlTag();
+
+      /**
       * Attempt to match entire xml tag.
       *
       * \param string containing text of XML tag

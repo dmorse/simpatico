@@ -61,6 +61,7 @@ namespace SpAn
       TypeMap bondTypeMap_;
       TypeMap angleTypeMap_;
       TypeMap dihedralTypeMap_;
+      bool hasTypeMaps_;
 
       template <int N>
       void writeGroups(std::ofstream& file,
@@ -69,34 +70,6 @@ namespace SpAn
                        const TypeMap& map);
 
    };
-
-   #if 0
-   // Member functions templates
-
-   /*
-   * Private method to write Group<N> objects.
-   */
-   template <int N> void
-   HoomdConfigWriter::writeGroups(std::ofstream& file, 
-                                  const std::string& label,
-                                  const GroupStorage<N>& groups,
-                                  const TypeMap& map)
-   {
-      file << "<" << label << ">\n";
-      std::string typeName;
-      int j;
-      ConstArrayIterator< Group<N> > iter;
-      for (groups.begin(iter); iter.notEnd(); ++iter) {
-         typeName = map.name(iter->typeId);
-         file << typeName << " ";
-         for (j = 0; j < N; ++j) {
-            file << iter->atomIds[j] << " ";
-         }            
-         file << "\n";
-      }
-      file << "</" << label << ">\n\n";
-   }
-   #endif
 
 }
 #endif

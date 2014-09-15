@@ -17,6 +17,9 @@ namespace Util
    XmlEndTag::XmlEndTag()
    {}
 
+   XmlEndTag::~XmlEndTag()
+   {}
+
    bool XmlEndTag::match(const std::string& line, int begin)
    {
       label_ = "";

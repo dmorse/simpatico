@@ -44,6 +44,11 @@ namespace Util
       XmlStartTag();
 
       /**
+      * Destructor
+      */ 
+      ~XmlStartTag();
+
+      /**
       * Match opening bracket and any label.
       *
       * \param string containing text of XML tag

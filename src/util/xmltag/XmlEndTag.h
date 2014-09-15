@@ -32,6 +32,11 @@ namespace Util
       XmlEndTag();
 
       /**
+      * Destructor
+      */ 
+      ~XmlEndTag();
+
+      /**
       * Attempt to match any end tag.
       * 
       * Return true if end tag found, false otherwise.

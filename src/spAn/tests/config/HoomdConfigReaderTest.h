@@ -74,10 +74,10 @@ inline void HoomdConfigReaderTest::testReadConfig()
    TEST_ASSERT(processor_.atoms().size() == 3);
    TEST_ASSERT(processor_.bonds().size() == 2);
  
+   #if 0
    std::cout << std::endl;
    std::cout << processor_.boundary() << "\n";
 
-   #if 0
    AtomStorage::Iterator atomIt;
    std::cout << std::endl;
    for (processor_.atoms().begin(atomIt); atomIt.notEnd(); ++atomIt) {
@@ -96,21 +96,15 @@ inline void HoomdConfigReaderTest::testReadConfig()
    }
    #endif
 
+   //  Open and write output hoomd file
    processor_.setConfigWriter("HoomdConfigWriter");
-
-   // Read auxiliary file
    openInputFile("in/types", file);
    processor_.configWriter().readAuxiliaryFile(file);
    file.close(); 
-
-   //  Open output file
    std::ofstream out;
    openOutputFile("out/config.hoomd", out);
    processor_.writeConfig(out);
    out.close(); 
-
-   // std::cout << "nAtom = " << processor_.atoms().size() << "\n";
-   // std::cout << "nBond = " << processor_.bonds().size() << "\n";
 
 }
 

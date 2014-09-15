@@ -32,7 +32,8 @@ namespace SpAn
    * Constructor.
    */
    HoomdConfigReader::HoomdConfigReader(Configuration& configuration)
-    : ConfigReader(configuration, true)
+    : ConfigReader(configuration, true),
+      hasTypeMaps_(false)
    {  setClassName("HoomdConfigReader"); }
 
    /*
@@ -63,7 +64,8 @@ namespace SpAn
          checkString(line, "TYPES:");
          angleTypeMap_.read(file);
       }
- 
+
+      hasTypeMaps_ = true;
    }
 
    /*
@@ -71,9 +73,12 @@ namespace SpAn
    */
    void HoomdConfigReader::readConfig(std::ifstream& file)
    {
-      // Precondition
+      // Preconditions
       if (!file.is_open()) {  
          UTIL_THROW("Error: File is not open"); 
+      }
+      if (!hasTypeMaps_) {
+         UTIL_THROW("Error: A type map file must be read before config"); 
       }
 
       // Set flags

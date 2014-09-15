@@ -67,6 +67,7 @@ namespace SpAn
       TypeMap bondTypeMap_;
       TypeMap angleTypeMap_;
       TypeMap dihedralTypeMap_;
+      bool hasTypeMaps_;
 
       /**
       * Read box data node.

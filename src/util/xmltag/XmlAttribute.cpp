@@ -23,6 +23,9 @@ namespace Util
       value_.clear(); 
    }
 
+   XmlAttribute::~XmlAttribute()
+   {} 
+
    bool XmlAttribute::match(const std::string& line, int begin)
    {
       // Clear members 

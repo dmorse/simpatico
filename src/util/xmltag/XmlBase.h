@@ -29,6 +29,11 @@ namespace Util
       XmlBase();
 
       /**
+      * Destructor.
+      */
+      ~XmlBase();
+
+      /**
       * Initialize string and cursor.
       */
       void setString(const std::string& string, int cursor = 0);

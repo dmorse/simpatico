@@ -18,6 +18,9 @@ namespace Util
     : endBracket_(false)
    {}
 
+   XmlStartTag::~XmlStartTag()
+   {}
+
    bool XmlStartTag::matchLabel(const std::string& line, int begin)
    {
       label_ = "";

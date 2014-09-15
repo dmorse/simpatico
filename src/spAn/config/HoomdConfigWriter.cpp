@@ -31,7 +31,8 @@ namespace SpAn
    * Constructor.
    */
    HoomdConfigWriter::HoomdConfigWriter(Configuration& configuration)
-    : ConfigWriter(configuration, true)
+    : ConfigWriter(configuration, true),
+      hasTypeMaps_(false)
    {  setClassName("HoomdConfigWriter"); }
 
    /*
@@ -62,7 +63,8 @@ namespace SpAn
          checkString(line, "TYPES:");
          angleTypeMap_.read(file);
       }
- 
+
+      hasTypeMaps_ = true; 
    }
 
    /*
@@ -100,6 +102,9 @@ namespace SpAn
       if (!file.is_open()) {  
          UTIL_THROW("Error: File is not open"); 
       }
+      if (!hasTypeMaps_) {  
+         UTIL_THROW("Error: Must read type map auxiliary file before config"); 
+      }
 
       file << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
       file << "<hoomd_xml version=\"1.5\">\n\n";
@@ -108,9 +113,9 @@ namespace SpAn
       // Write box
       Vector lengths = configuration().boundary().lengths();
       file << "<box"
-           << " lx=\"" << lengths[0] << "\""
-           << " ly=\"" << lengths[1] << "\""
-           << " lz=\"" << lengths[1] << "\""
+           << " lx=\"" << Dbl(lengths[0], 15, 8) << "\""
+           << " ly=\"" << Dbl(lengths[1], 15, 8) << "\""
+           << " lz=\"" << Dbl(lengths[2], 15, 8) << "\""
            << " />\n\n";
 
       // Write position
@@ -123,13 +128,21 @@ namespace SpAn
       }
       file << "</position>\n\n";
 
-      // Write position
+      // Write velocity
       file << "<velocity num=\"" << nAtom << "\">\n";
       configuration().atoms().begin(iter);
       for (; iter.notEnd(); ++iter) {
          file << iter->position << "\n";
       }
       file << "</velocity>\n\n";
+
+      // Write type
+      file << "<type num=\"" << nAtom << "\">\n";
+      configuration().atoms().begin(iter);
+      for (; iter.notEnd(); ++iter) {
+         file << atomTypeMap_.name(iter->typeId) << "\n";
+      }
+      file << "</type>\n\n";
 
       // Write the groups
       #ifdef INTER_BOND
