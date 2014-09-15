@@ -8,16 +8,14 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <spAn/config/ConfigWriter.h>
-#include <spAn/storage/GroupStorage.h>
-#include <spAn/storage/Configuration.h>
-
-#include <util/format/Int.h>
+#include <spAn/config/ConfigWriter.h>       // base class
+#include <span/config/TypeMap.h>            // member
 
 namespace SpAn
 {
 
    class Configuration;
+   template <int N> class GroupStorage;
 
    using namespace Util;
 
@@ -50,34 +48,55 @@ namespace SpAn
       */
       virtual void writeConfig(std::ofstream& file);
    
+      /**
+      * Read auxiliary file with type map information.
+      *
+      * \param file input file stream
+      */
+      virtual void readAuxiliaryFile(std::ifstream& file);
+
    private:
 
+      TypeMap atomTypeMap_;
+      TypeMap bondTypeMap_;
+      TypeMap angleTypeMap_;
+      TypeMap dihedralTypeMap_;
+
       template <int N>
-      int writeGroups(std::ofstream& file, const char* sectionLabel, 
-                      const char* nGroupLabel, GroupStorage<N>& groups);
+      void writeGroups(std::ofstream& file,
+                       const std::string& label,
+                       const GroupStorage<N>& groups,
+                       const TypeMap& map);
 
    };
 
+   #if 0
    // Member functions templates
 
    /*
    * Private method to write Group<N> objects.
    */
-   template <int N>
-   int HoomdConfigWriter::writeGroups(std::ofstream& file, const char* sectionLabel,
-                  const char* nGroupLabel, GroupStorage<N>& groups)
+   template <int N> void
+   HoomdConfigWriter::writeGroups(std::ofstream& file, 
+                                  const std::string& label,
+                                  const GroupStorage<N>& groups,
+                                  const TypeMap& map)
    {
-      Configuration::BondIterator iter;
-      int nGroup = configuration().bonds().size();
-
-      file << std::endl;
-      //file << sectionLabel << std::endl;
-      //file << nGroupLabel << Int(nGroup, 10) << std::endl;
+      file << "<" << label << ">\n";
+      std::string typeName;
+      int j;
+      ConstArrayIterator< Group<N> > iter;
       for (groups.begin(iter); iter.notEnd(); ++iter) {
-         file << *iter << std::endl;
+         typeName = map.name(iter->typeId);
+         file << typeName << " ";
+         for (j = 0; j < N; ++j) {
+            file << iter->atomIds[j] << " ";
+         }            
+         file << "\n";
       }
-      return nGroup;
+      file << "</" << label << ">\n\n";
    }
+   #endif
 
 }
 #endif

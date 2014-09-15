@@ -15,6 +15,7 @@ clean:
 	rm -f $(spAn_tests_config_OBJS) 
 	rm -f $(spAn_tests_config_OBJS:.o=.d)
 	rm -f $(spAn_tests_config_OBJS:.o=)
+	rm -f out/*
 
 -include $(spAn_tests_config_OBJS:.o=.d)
 -include $(spAn_OBJS:.o=.d)

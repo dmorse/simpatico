@@ -12,7 +12,7 @@
 
 // Subclasses of ConfigWriter 
 #include "DdMdConfigWriter.h"
-//#include "HoomdConfigWriter.h"
+#include "HoomdConfigWriter.h"
 
 namespace SpAn
 {
@@ -43,11 +43,10 @@ namespace SpAn
       if (className == "DdMdConfigWriter_Molecule") {
          bool hasMolecules = true;
          ptr = new DdMdConfigWriter(*configurationPtr_, hasMolecules);
-      } 
-      //else 
-      //if (className == "HoomdConfigWriter") {
-      //   ptr = new HoomdConfigWriter(*configurationPtr_);
-      //}
+      } else 
+      if (className == "HoomdConfigWriter") {
+         ptr = new HoomdConfigWriter(*configurationPtr_);
+      }
  
       return ptr;
    }

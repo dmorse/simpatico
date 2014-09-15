@@ -171,7 +171,8 @@ namespace SpAn
                readAtomIgnore(start, file);
             } else 
             if (name == "bond") {
-               readBond(start, file);
+               //readBond(start, file);
+               readGroups<2>(start, file, configuration().bonds(), bondTypeMap_);
             } else {
                UTIL_THROW("Unknown node name");
             }
@@ -399,6 +400,38 @@ namespace SpAn
          groupPtr->id = i;
          file >> typeName;
          typeId = bondTypeMap_.id(typeName);
+         groupPtr->typeId = typeId;
+         for (j = 0; j < 2; ++j) {
+            file >> groupPtr->atomIds[j];
+         }
+      }
+      endTag(file, start.label());
+   }
+
+   /*
+   * Read group data node.
+   */
+   template <int N>
+   void HoomdConfigReader::readGroups(Util::XmlStartTag& start, 
+                                      std::istream& file,
+                                      GroupStorage<N>& storage,
+                                      const TypeMap& map)
+   {
+      int nGroup = storage.size();
+      if (nGroup > 0) {
+         UTIL_THROW("Group storage not empty");
+      }
+      int n = readNumberAttribute(start, nGroup);
+      int typeId;
+      std::string typeName;
+
+      int i, j;
+      Group<2>* groupPtr;
+      for (i = 0; i < n; ++i) {
+         groupPtr = storage.newPtr();
+         groupPtr->id = i;
+         file >> typeName;
+         typeId = map.id(typeName);
          groupPtr->typeId = typeId;
          for (j = 0; j < 2; ++j) {
             file >> groupPtr->atomIds[j];

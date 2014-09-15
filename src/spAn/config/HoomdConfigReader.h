@@ -21,6 +21,7 @@ namespace SpAn
 {
 
    class Configuration;
+   template <int N> class GroupStorage;
 
    using namespace Util;
 
@@ -131,11 +132,15 @@ namespace SpAn
       */
       void readBond(Util::XmlStartTag& start, std::istream& file);
 
-      #if 0
+      /**
+      * Read bond data node.
+      *
+      * \param start XmlStartTag, after node name has been read
+      * \param file configuration file
+      */
       template <int N>
-      int readGroups(std::ifstream& file, const char* sectionLabel, 
-                     const char* nGroupLabel, GroupStorage<N>& groups);
-      #endif
+      void readGroups(Util::XmlStartTag& start, std::istream& file,
+                      GroupStorage<N>& storage, const TypeMap& map);
 
    };
 

@@ -9,7 +9,7 @@
 */
 
 #include <util/containers/DSArray.h>       // member (template)
-#include <spAn/chemistry/Group.h>        // member (template argument)
+#include <spAn/chemistry/Group.h>          // member (template argument)
 #include <util/containers/ArrayIterator.h> // inline function
 
 namespace SpAn 

@@ -25,8 +25,9 @@ namespace SpAn
    /*
    * Constructor.
    */
-   ConfigWriter::ConfigWriter(Configuration& configuration)
-    : configurationPtr_(&configuration)
+   ConfigWriter::ConfigWriter(Configuration& configuration, bool needsAuxiliaryFile)
+    : configurationPtr_(&configuration),
+      needsAuxiliaryFile_(needsAuxiliaryFile)
    {  setClassName("ConfigWriter"); }
 
    /*

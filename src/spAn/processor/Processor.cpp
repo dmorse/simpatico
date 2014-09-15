@@ -140,8 +140,8 @@ namespace SpAn
    {
       if (commandFileName_ != "") {
          std::ifstream file;
-         file.open(commandFileName_.c_str());
-         //fileMaster().openInputFile(commandFileName_, file);
+         //file.open(commandFileName_.c_str());
+         fileMaster().openInputFile(commandFileName_, file);
          readCommands(file);
          file.close();
       } else {
@@ -160,10 +160,10 @@ namespace SpAn
       }
       #endif
 
-      std::string    command;
-      std::string    filename;
-      std::ifstream  inputFile;
-      std::ofstream  outputFile;
+      std::string command;
+      std::string filename;
+      std::ifstream inputFile;
+      std::ofstream outputFile;
 
       bool readNext = true;
       while (readNext) {
@@ -187,9 +187,9 @@ namespace SpAn
             if (configReader().needsAuxiliaryFile()) {
                Log::file() << "Reading auxiliary file" << std::endl;
                in >> filename;
-               Log::file() << Str(filename, 20) << std::endl;
-               inputFile.open(filename.c_str());
-               //fileMaster().openInputFile(filename, inputFile);
+               Log::file() << Str(filename, 20);
+               //inputFile.open(filename.c_str());
+               fileMaster().openInputFile(filename, inputFile);
                configReader().readAuxiliaryFile(inputFile);
                inputFile.close();
             }
@@ -197,9 +197,9 @@ namespace SpAn
             // Read actual configuration file
             in >> filename;
             Log::file() << Str(filename, 15) << std::endl;
-            inputFile.open(filename.c_str());
-            //fileMaster().openInputFile(filename, inputFile);
-            readConfig(inputFile);
+            //inputFile.open(filename.c_str());
+            fileMaster().openInputFile(filename, inputFile);
+            configReader().readConfig(inputFile);
             inputFile.close();
 
          } else
@@ -210,10 +210,19 @@ namespace SpAn
             setConfigWriter(classname);
          } else
          if (command == "WRITE_CONFIG") {
+            if (configWriter().needsAuxiliaryFile()) {
+               //Log::file() << "Writing auxiliary file" << std::endl;
+               in >> filename;
+               Log::file() << Str(filename, 20);
+               //inputFile.open(filename.c_str());
+               fileMaster().openInputFile(filename, inputFile);
+               configWriter().readAuxiliaryFile(inputFile);
+               inputFile.close();
+            }
             in >> filename;
-            Log::file() << Str(filename, 15) << std::endl;
+            Log::file() << Str(filename, 20) << std::endl;
             fileMaster().openOutputFile(filename, outputFile);
-            writeConfig(outputFile);
+            configWriter().writeConfig(outputFile);
             outputFile.close();
          } else
          if (command == "SET_TRAJECTORY_READER") {
@@ -225,7 +234,7 @@ namespace SpAn
          if (command == "ANALYZE_TRAJECTORY") {
             in >> filename;
             analyzeTrajectory(filename);
-         } else
+         } else 
          {
             Log::file() << "  Error: Unknown command  " << std::endl;
             readNext = false;
@@ -388,13 +397,10 @@ namespace SpAn
    }
 
    /*
-   * Read a single configuration file.
+   * Read a configuration file.
    */
    void Processor::writeConfig(std::ofstream& in)
-   {
-      clear();  
-      configWriter().writeConfig(in); 
-   }
+   {  configWriter().writeConfig(in); }
 
    /*
    * Open, write and close a configuration file.
