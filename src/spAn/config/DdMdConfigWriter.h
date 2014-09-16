@@ -70,7 +70,7 @@ namespace SpAn
    int DdMdConfigWriter::writeGroups(std::ofstream& file, const char* sectionLabel,
                   const char* nGroupLabel, GroupStorage<N>& groups)
    {
-      Configuration::BondIterator iter;
+      ArrayIterator< Group<N> > iter;
       int nGroup = configuration().bonds().size();
 
       file << std::endl;

@@ -71,8 +71,8 @@ inline void HoomdConfigReaderTest::testReadConfig()
    processor_.readConfig(file);
    file.close(); 
 
-   TEST_ASSERT(processor_.atoms().size() == 3);
-   TEST_ASSERT(processor_.bonds().size() == 2);
+   TEST_ASSERT(processor_.atoms().size() == 32);
+   TEST_ASSERT(processor_.bonds().size() == 31);
  
    #if 0
    std::cout << std::endl;

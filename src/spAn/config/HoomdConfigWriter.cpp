@@ -90,7 +90,7 @@ namespace SpAn
          }            
          file << "\n";
       }
-      file << "</" << label << ">\n\n";
+      file << "</" << label << ">\n";
    }
 
    /* 
@@ -105,36 +105,47 @@ namespace SpAn
       if (!hasTypeMaps_) {  
          UTIL_THROW("Error: Must read type map auxiliary file before config"); 
       }
+      int nAtom = configuration().atoms().size();
 
       file << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-      file << "<hoomd_xml version=\"1.5\">\n\n";
-      file << "<configuration time_step=\"0\">\n\n";
+      file << "<hoomd_xml version=\"1.5\">\n";
+      file << "<configuration time_step=\"0\" dimensions=\"3\" natoms=\""
+           << nAtom << "\" >\n";
 
       // Write box
       Vector lengths = configuration().boundary().lengths();
       file << "<box"
-           << " lx=\"" << Dbl(lengths[0], 15, 8) << "\""
-           << " ly=\"" << Dbl(lengths[1], 15, 8) << "\""
-           << " lz=\"" << Dbl(lengths[2], 15, 8) << "\""
-           << " />\n\n";
+           << " lx=\"" << lengths[0] << "\""
+           << " ly=\"" << lengths[1] << "\""
+           << " lz=\"" << lengths[2] << "\""
+           << " xy=\"0\""
+           << " xz=\"0\""
+           << " yz=\"0\""
+           << "/>\n";
 
       // Write position
-      int nAtom = configuration().atoms().size();
       file << "<position num=\"" << nAtom << "\">\n";
       AtomStorage::Iterator iter;
+      int j;
       configuration().atoms().begin(iter);
       for (; iter.notEnd(); ++iter) {
-         file << iter->position << "\n";
+         for (j = 0; j < Dimension; ++j) {
+            file.precision(12);
+            file << iter->position[j] << " ";
+         }
+         file << "\n";
       }
-      file << "</position>\n\n";
+      file << "</position>\n";
 
+      #if 0
       // Write velocity
       file << "<velocity num=\"" << nAtom << "\">\n";
       configuration().atoms().begin(iter);
       for (; iter.notEnd(); ++iter) {
          file << iter->position << "\n";
       }
-      file << "</velocity>\n\n";
+      file << "</velocity>\n";
+      #endif
 
       // Write type
       file << "<type num=\"" << nAtom << "\">\n";

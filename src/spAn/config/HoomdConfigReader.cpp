@@ -111,14 +111,21 @@ namespace SpAn
       getNextLine(file, line);
       start.matchLabel("configuration", line, 0); 
       int timestep;
-      int dimension;
+      int dimensions;
+      int natoms;
       double vizsigma;
       while (start.matchAttribute(attribute)) {
          if (attribute.label() == "time_step") {
             attribute.value() >> timestep;
          } else 
-         if (attribute.label() == "dimension") {
-            attribute.value() >> dimension;
+         if (attribute.label() == "dimensions") {
+            attribute.value() >> dimensions;
+            if (dimensions != 3) {
+               UTIL_THROW("hoomd_xml dimensions attribute not equal to 3");
+            }
+         } else
+         if (attribute.label() == "natoms") {
+            attribute.value() >> natoms;
          } else 
          if (attribute.label() == "vizsigma") {
             attribute.value() >> vizsigma;
@@ -172,12 +179,23 @@ namespace SpAn
             if (name == "charge") {
                readAtomIgnore(start, file);
             } else 
+            if (name == "diameter") {
+               readAtomIgnore(start, file);
+            } else 
             if (name == "body") {
                readAtomIgnore(start, file);
             } else 
             if (name == "bond") {
-               //readBond(start, file);
                readGroups<2>(start, file, configuration().bonds(), bondTypeMap_);
+            } else 
+            if (name == "angle") {
+               readGroups<3>(start, file, configuration().angles(), angleTypeMap_);
+            } else 
+            if (name == "dihedral") {
+               readGroups<4>(start, file, configuration().dihedrals(), dihedralTypeMap_);
+            } else 
+            if (name == "improper") {
+               readGroups<4>(start, file, configuration().dihedrals(), dihedralTypeMap_);
             } else {
                UTIL_THROW("Unknown node name");
             }
@@ -205,6 +223,7 @@ namespace SpAn
       // Process data node start tag
       XmlAttribute attribute;
       Vector lengths;
+      double xy, xz, yz;
       while (start.matchAttribute(attribute)) {
          if (attribute.label() == "lx") {
             attribute.value() >> lengths[0];
@@ -214,6 +233,15 @@ namespace SpAn
          } else 
          if (attribute.label() == "lz") {
             attribute.value() >> lengths[2];
+         } else 
+         if (attribute.label() == "xy") {
+            attribute.value() >> xy;
+         } else 
+         if (attribute.label() == "xz") {
+            attribute.value() >> xz;
+         } else 
+         if (attribute.label() == "yz") {
+            attribute.value() >> yz;
          } else {
             Log::file() << attribute.label() << std::endl;
             UTIL_THROW("Unknown attribute");
@@ -430,16 +458,18 @@ namespace SpAn
       int typeId;
       std::string typeName;
 
-      int i, j;
-      Group<2>* groupPtr;
-      for (i = 0; i < n; ++i) {
-         groupPtr = storage.newPtr();
-         groupPtr->id = i;
-         file >> typeName;
-         typeId = map.id(typeName);
-         groupPtr->typeId = typeId;
-         for (j = 0; j < 2; ++j) {
-            file >> groupPtr->atomIds[j];
+      if (n > 0) {
+         int i, j;
+         Group<N>* groupPtr;
+         for (i = 0; i < n; ++i) {
+            groupPtr = storage.newPtr();
+            groupPtr->id = i;
+            file >> typeName;
+            typeId = map.id(typeName);
+            groupPtr->typeId = typeId;
+            for (j = 0; j < 2; ++j) {
+               file >> groupPtr->atomIds[j];
+            }
          }
       }
       endTag(file, start.label());
