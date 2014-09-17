@@ -32,13 +32,16 @@ namespace DdMd
 
       /**
       * Default constructor.
+      *
+      * \param hasMolecules desired value of hasMolecules flag
       */
       DdMdConfigIo(bool hasMolecules = false);
 
       /**
       * Constructor.
       *
-      * \param simulation parent Simulation object.
+      * \param simulation parent Simulation object
+      * \param hasMolecules desired value of hasMolecules flag
       */
       DdMdConfigIo(Simulation& simulation, bool hasMolecules = false);
 
@@ -51,8 +54,8 @@ namespace DdMd
       * \pre  There are no atoms, ghosts, or groups.
       * \pre  AtomStorage is set for scaled / generalized coordinates
       *
-      * \post atomic coordinates are scaled / generalized
-      * \post there are no ghosts
+      * \post Atomic coordinates are scaled / generalized
+      * \post There are no ghosts
       *
       * \param file input file stream (must be open on master)
       * \param maskPolicy MaskPolicy to be used in setting atom masks

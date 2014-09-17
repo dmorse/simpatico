@@ -71,7 +71,7 @@ namespace DdMd
       /**
       * Enable (true) or disable (false) use of AtomContext data.
       *
-      * \param value of hasAtomContext static bool flag.
+      * \param hasAtomContext new value for hasAtomContext static bool flag.
       */
       static void setHasAtomContext(bool hasAtomContext);
 
