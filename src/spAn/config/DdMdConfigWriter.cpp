@@ -33,6 +33,25 @@ namespace SpAn
       hasMolecules_(hasMolecules)
    {  setClassName("DdMdConfigWriter"); }
 
+   /*
+   * Private method to write Group<N> objects.
+   */
+   template <int N>
+   int DdMdConfigWriter::writeGroups(std::ofstream& file, const char* sectionLabel,
+                  const char* nGroupLabel, GroupStorage<N>& groups)
+   {
+      ArrayIterator< Group<N> > iter;
+      int nGroup = configuration().bonds().size();
+
+      file << std::endl;
+      file << sectionLabel << std::endl;
+      file << nGroupLabel << Int(nGroup, 10) << std::endl;
+      for (groups.begin(iter); iter.notEnd(); ++iter) {
+         file << *iter << std::endl;
+      }
+      return nGroup;
+   }
+
    /* 
    * Write the configuration file.
    */

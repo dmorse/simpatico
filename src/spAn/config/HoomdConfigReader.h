@@ -67,6 +67,7 @@ namespace SpAn
       TypeMap bondTypeMap_;
       TypeMap angleTypeMap_;
       TypeMap dihedralTypeMap_;
+      TypeMap improperTypeMap_;
       bool hasTypeMaps_;
 
       /**
@@ -134,9 +135,9 @@ namespace SpAn
       void readBond(Util::XmlStartTag& start, std::istream& file);
 
       /**
-      * Read bond data node.
+      * Read Group<N> (bond, angle, ...) data node.
       *
-      * \param start XmlStartTag, after node name has been read
+      * \param start XmlStartTag, after node label has been matched
       * \param file configuration file
       */
       template <int N>
@@ -144,30 +145,6 @@ namespace SpAn
                       GroupStorage<N>& storage, const TypeMap& map);
 
    };
-
-   // Member functions templates
-
-   #if 0
-   /*
-   * Private method to read Group<N> objects.
-   */
-   template <int N>
-   int HoomdConfigReader::readGroups(std::ifstream& file, 
-                  const char* sectionLabel,
-                  const char* nGroupLabel,
-                  GroupStorage<N>& groups)
-   {
-      int nGroup;  // Total number of groups in file
-      //file >> Label(sectionLabel);
-      //file >> Label(nGroupLabel) >> nGroup;
-      Group<N>* groupPtr;
-      for (int i = 0; i < nGroup; ++i) {
-         groupPtr = groups.newPtr();
-         //file >> *groupPtr;
-      }
-      return nGroup;
-   }
-   #endif
 
 }
 #endif

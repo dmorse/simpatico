@@ -26,6 +26,7 @@ namespace SpAn
       #endif
       #ifdef INTER_DIHEDRAL
       , dihedralCapacity_(0)
+      , improperCapacity_(0)
       #endif
       , nSpecies_(0)
    {  setClassName("Configuration"); }
@@ -84,6 +85,13 @@ namespace SpAn
       if (dihedralCapacity_ > 0) {
          dihedrals_.allocate(dihedralCapacity_);
       }
+
+      improperCapacity_ = 0;
+      isRequired = false;
+      read<int>(in, "improperCapacity", improperCapacity_, isRequired); 
+      if (improperCapacity_ > 0) {
+         impropers_.allocate(improperCapacity_);
+      }
       #endif
 
       // Optionally read species info
@@ -119,6 +127,9 @@ namespace SpAn
       #ifdef INTER_DIHEDRAL
       if (dihedralCapacity_ > 0) {
          dihedrals_.clear();
+      }
+      if (improperCapacity_ > 0) {
+         impropers_.clear();
       }
       #endif
    }

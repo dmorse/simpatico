@@ -114,6 +114,7 @@ namespace SpAn
 
       // Write box
       Vector lengths = configuration().boundary().lengths();
+      file.precision(12);
       file << "<box"
            << " lx=\"" << lengths[0] << "\""
            << " ly=\"" << lengths[1] << "\""
@@ -153,7 +154,7 @@ namespace SpAn
       for (; iter.notEnd(); ++iter) {
          file << atomTypeMap_.name(iter->typeId) << "\n";
       }
-      file << "</type>\n\n";
+      file << "</type>\n";
 
       // Write the groups
       #ifdef INTER_BOND
@@ -162,14 +163,12 @@ namespace SpAn
                      bondTypeMap_);
       }
       #endif
-
       #ifdef INTER_ANGLE
       if (configuration().angles().size()) {
          writeGroups(file, "angle", configuration().angles(), 
                      angleTypeMap_);
       }
       #endif
-
       #ifdef INTER_DIHEDRAL
       if (configuration().dihedrals().size()) {
          writeGroups(file, "dihedral", configuration().dihedrals(), 

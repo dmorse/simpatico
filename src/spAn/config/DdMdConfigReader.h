@@ -61,27 +61,5 @@ namespace SpAn
 
    };
 
-   // Member functions templates
-
-   /*
-   * Private method to read Group<N> objects.
-   */
-   template <int N>
-   int DdMdConfigReader::readGroups(std::ifstream& file, 
-                  const char* sectionLabel,
-                  const char* nGroupLabel,
-                  GroupStorage<N>& groups)
-   {
-      int nGroup;  // Total number of groups in file
-      file >> Label(sectionLabel);
-      file >> Label(nGroupLabel) >> nGroup;
-      Group<N>* groupPtr;
-      for (int i = 0; i < nGroup; ++i) {
-         groupPtr = groups.newPtr();
-         file >> *groupPtr;
-      }
-      return nGroup;
-   }
-
 }
 #endif

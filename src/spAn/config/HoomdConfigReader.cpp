@@ -186,17 +186,25 @@ namespace SpAn
                readAtomIgnore(start, file);
             } else 
             if (name == "bond") {
-               readGroups<2>(start, file, configuration().bonds(), bondTypeMap_);
-            } else 
-            if (name == "angle") {
-               readGroups<3>(start, file, configuration().angles(), angleTypeMap_);
-            } else 
-            if (name == "dihedral") {
-               readGroups<4>(start, file, configuration().dihedrals(), dihedralTypeMap_);
-            } else 
-            if (name == "improper") {
-               readGroups<4>(start, file, configuration().dihedrals(), dihedralTypeMap_);
-            } else {
+               readGroups<2>(start, file, configuration().bonds(), 
+                             bondTypeMap_);
+            }
+            #ifdef INTER_ANGLE
+            else if (name == "angle") {
+               readGroups<3>(start, file, configuration().angles(), 
+                             angleTypeMap_);
+            } 
+            #endif
+            #ifdef INTER_DIHEDRAL
+            else if (name == "dihedral") {
+               readGroups<4>(start, file, configuration().dihedrals(), 
+                             dihedralTypeMap_);
+            } else if (name == "improper") {
+               readGroups<4>(start, file, configuration().impropers(), 
+                             improperTypeMap_);
+            } 
+            #endif
+            else {
                UTIL_THROW("Unknown node name");
             }
 

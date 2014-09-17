@@ -61,6 +61,7 @@ namespace SpAn
       TypeMap bondTypeMap_;
       TypeMap angleTypeMap_;
       TypeMap dihedralTypeMap_;
+      TypeMap improperTypeMap_;
       bool hasTypeMaps_;
 
       template <int N>

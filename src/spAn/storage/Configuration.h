@@ -46,6 +46,7 @@ namespace SpAn
       typedef ArrayIterator<Group <2> > BondIterator;
       typedef ArrayIterator<Group <3> > AngleIterator;
       typedef ArrayIterator<Group <4> > DihedralIterator;
+      typedef ArrayIterator<Group <4> > ImproperIterator;
 
       /**
       * Constructor
@@ -85,18 +86,21 @@ namespace SpAn
       AtomStorage& atoms();
 
       #ifdef INTER_BOND
-      /// Get the Bond Configuration.
+      /// Get the Bond storage.
       GroupStorage<2>& bonds();
       #endif
 
       #ifdef INTER_ANGLE
-      /// Get the Angle Configuration.
+      /// Get the Angle storage.
       GroupStorage<3>& angles();
       #endif
 
       #ifdef INTER_DIHEDRAL
-      /// Get the Dihedral Configuration.
+      /// Get the Dihedral storage.
       GroupStorage<4>& dihedrals();
+
+      /// Get the Improper dihedral storage.
+      GroupStorage<4>& impropers();
       #endif
 
       /**
@@ -134,6 +138,9 @@ namespace SpAn
       #ifdef INTER_DIHEDRAL
       /// Array of dihedral objects, added in order read from file.
       GroupStorage<4> dihedrals_;
+
+      /// Array of improper objects, added in order read from file.
+      GroupStorage<4> impropers_;
       #endif
 
       /// Array of Species objects.
@@ -155,6 +162,9 @@ namespace SpAn
       #ifdef INTER_DIHEDRAL
       /// Maximum number of dihedrals (used to allocate array).
       int dihedralCapacity_;
+
+      /// Maximum number of impropers (used to allocate array).
+      int improperCapacity_;
       #endif
 
       /// Number of species (set to zero to disable)
@@ -186,6 +196,9 @@ namespace SpAn
    #ifdef INTER_DIHEDRAL
    inline GroupStorage<4>& Configuration::dihedrals()
    {  return dihedrals_; }
+
+   inline GroupStorage<4>& Configuration::impropers()
+   {  return impropers_; }
    #endif
 
    inline int Configuration::nSpecies() const
