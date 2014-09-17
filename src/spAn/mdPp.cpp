@@ -16,7 +16,11 @@
 *
 *    mdPp [-e] param [command]
 *
-* Required arguments:
+* Options:
+*
+*     -e enable echoing of the param file (no argument)
+*
+* Non-option arguments:
 *
 *     param   - name of parameter file
 *
@@ -24,10 +28,6 @@
 *
 * If no command file is provided, commands are read from standard
 * input (i.e., from the keyboard).
-*
-* Options:
-*
-*     -e enable echoing of the param file
 *
 * \ingroup SpAn_Module
 */

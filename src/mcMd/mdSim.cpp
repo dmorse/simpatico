@@ -12,18 +12,30 @@
 *
 * Single-processor molecular dynamics simulation program.
 *
-* Command line options:
+* Usage (single processor version, without MPI):
+*
+*    mdSim [-e] [-p] [-r restartFile] < paramFile
+*
+* Options:
 *
 *   -e  
-*    Enable echoing of the parameter file as it is read.
+*
+*    Enable echoing of parameter file to log file as it is read. This
+*    option is often useful for debugging the parameter file.
 *
 *   -p  
+*
 *    Enable use of a free energy perturbation. 
 *
-*   -r filename. 
-*    Restart a simulation. The parameter "filename" is the base
-*    name for the 3 restart files, named filename.prm, 
-*    filename.rst, and filename.cmd.
+*  -r restartFile
+*
+*   This option reads a restart file and restarts a previous run. The 
+*   command line argument restarFile argument is the shared base name of
+*   the restart file and a corresponding command script file. The name
+*   of the restart file is obtained by appending the file extension .rst 
+*   to the base name, giving a name of the form restartFile.rst. The
+*   corresponding command file must have the same base name and a file
+*   name extension .cmd, giving a name of the form restartFile.cmd.
 *
 * Files:
 *
@@ -31,9 +43,11 @@
 * stream read by readParam() is std::cin and the default log file 
 * Log::file() is std::cout.
 *
-* If compiled in parallel mode (ifdef UTIL_MPI) and invoked with the 
+* If compiled with MPI enabled (ifdef UTIL_MPI) and invoked with the 
 * "-p" option, a single parameter file is read from std::cin, as in a 
-* serial job.  If compiled in parallel mode and invoked without the -p 
+* serial job.  
+*
+* If compiled with MPI enabled (ifdef UTIL_MPI) invoked without the -p 
 * option, each processor reads from a different parameter file, which 
 * is named "n/param" for processor n.
 *
@@ -43,6 +57,7 @@
 * directory named "6/".  The default log file for processor n is "n/log". 
 *
 */
+
 int main(int argc, char **argv)
 {
    #ifdef UTIL_MPI
