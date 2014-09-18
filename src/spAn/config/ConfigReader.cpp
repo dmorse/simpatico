@@ -9,7 +9,7 @@
 */
 
 #include "ConfigReader.h"
-#include <spAn/storage/configuration.h>
+#include <spAn/storage/Configuration.h>
 
 #include <iostream>
 
@@ -53,7 +53,7 @@ namespace SpAn
          int nFill = 0;
          for (int i = 0; i < nSpecies; ++i) {
             speciesPtr = &configuration().species(i);
-            nFill += speciesPtr->capacity()*speciesPtr->capacity();
+            nFill += speciesPtr->nAtom()*speciesPtr->capacity();
             speciesPtr->clear();
          }
          AtomStorage* storagePtr = &configuration().atoms();
