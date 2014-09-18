@@ -44,9 +44,10 @@ namespace DdMd
       /**
       * Constructor.
       *
-      * \param simulation parent Simulation object. 
+      * \param simulation parent Simulation object
+      * \param isBinary Is the trajectory file a binary file?
       */
-      TrajectoryWriter(Simulation& simulation);
+      TrajectoryWriter(Simulation& simulation, bool isBinary = false);
    
       /**
       * Destructor.
@@ -98,6 +99,11 @@ namespace DdMd
       virtual void output();
 
    protected:
+
+      /**
+      * Is the file format binary?
+      */
+      bool isBinary();
 
       /**
       * Write data that should appear once, at beginning of the file. 
@@ -186,7 +192,10 @@ namespace DdMd
    
       /// Has readParam been called?
       long isInitialized_;
-   
+  
+      /// Is the trajectory file a binary file? 
+      bool isBinary_;
+
       // Pointers to associated Domain.
       Domain* domainPtr_;
 

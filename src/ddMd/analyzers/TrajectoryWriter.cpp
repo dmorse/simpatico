@@ -20,10 +20,11 @@ namespace DdMd
    /*
    * Constructor.
    */
-   TrajectoryWriter::TrajectoryWriter(Simulation& simulation)
+   TrajectoryWriter::TrajectoryWriter(Simulation& simulation, bool isBinary)
     : Analyzer(simulation),
       nSample_(0),
       isInitialized_(false),
+      isBinary_(isBinary),
       domainPtr_(0),
       boundaryPtr_(0),
       atomStoragePtr_(0)
@@ -91,7 +92,10 @@ namespace DdMd
    * Setup - open the trajectory file.
    */
    void TrajectoryWriter::setup()
-   {  simulation().fileMaster().openOutputFile(outputFileName(), outputFile_); }
+   {  
+      simulation().fileMaster().openOutputFile(outputFileName(), outputFile_); 
+      writeHeader(outputFile_, iStep);
+   }
 
    /*
    * Write frame to file, header on first sample.
@@ -99,9 +103,6 @@ namespace DdMd
    void TrajectoryWriter::sample(long iStep)
    {
       if (isAtInterval(iStep))  {
-         if (nSample_ == 0) {
-            writeHeader(outputFile_, iStep);
-         }
          writeFrame(outputFile_, iStep);
          ++nSample_;
       }

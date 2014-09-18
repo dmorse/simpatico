@@ -1,6 +1,7 @@
 spAn_trajectory_=\
    spAn/trajectory/TrajectoryReader.cpp \
    spAn/trajectory/LammpsDumpReader.cpp \
+   spAn/trajectory/DdMdTrajectoryReader.cpp \
    spAn/trajectory/TrajectoryReaderFactory.cpp 
 
 spAn_trajectory_SRCS=\

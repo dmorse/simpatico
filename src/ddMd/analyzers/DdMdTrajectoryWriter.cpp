@@ -24,7 +24,7 @@ namespace DdMd
    * Constructor.
    */
    DdMdTrajectoryWriter::DdMdTrajectoryWriter(Simulation& simulation)
-    : TrajectoryWriter(simulation)
+    : TrajectoryWriter(simulation, true)
    {}
 
    /*
@@ -44,50 +44,27 @@ namespace DdMd
          ar << nAtom_;
       }
 
-      #if 0
-      // Write groups
-      #ifdef INTER_BOND
-      if (bondStorage().capacity()) {
-         writeGroups<2>(ar, bondStorage(), bondCollector());
-      }
-      #endif
-      #ifdef INTER_ANGLE
-      if (angleStorage().capacity()) {
-         writeGroups<3>(ar, angleStorage(), angleCollector());
-      }
-      #endif
-      #ifdef INTER_DIHEDRAL
-      if (dihedralStorage().capacity()) {
-         writeGroups<4>(ar, dihedralStorage(), dihedralCollector());
-      }
-      #endif
-      #endif
    }
 
    void DdMdTrajectoryWriter::writeFrame(std::ofstream &file, long iStep)
    {
       BinaryFileOArchive ar(file);
 
-      // Write Boundary dimensions
+      // Write iStep and boundary dimensions
       if (domain().isMaster()) {
+         ar << iStep;
          ar << boundary();
       }
 
-      // Writes atoms
-      // atomStorage().computeNAtomTotal(domain().communicator());
+      // Write atoms
       if (domain().isMaster()) {  
-         int id;
-         int typeId;
          Vector r;
          bool isCartesian = atomStorage().isCartesian();
 
          atomCollector().setup();
          Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
-            id = atomPtr->id();
-            typeId = atomPtr->typeId();
-            ar << id;
-            ar << typeId;
+            ar << atomPtr->id();
             if (isCartesian) {
                ar << atomPtr->position();
             } else {
@@ -103,33 +80,6 @@ namespace DdMd
       }
 
    }
-
-   #if 0
-   /*
-   * Private method to save Group<N> objects.
-   */
-   template <int N>
-   int DdMdTrajectoryWriter::writeGroups(BinaryFileOArchive& ar,
-                  GroupStorage<N>& storage, GroupCollector<N>& collector) 
-   {
-      Group<N>* groupPtr;
-      int       nGroup;
-      storage.computeNTotal(domain().communicator());
-      nGroup = storage.nTotal();
-      if (domain().isMaster()) {  
-         ar << nGroup;
-         collector.setup();
-         groupPtr = collector.nextPtr();
-         while (groupPtr) {
-            ar << *groupPtr;
-            groupPtr = collector.nextPtr();
-         }
-      } else { 
-         collector.send();
-      }
-      return nGroup;
-   }
-   #endif
 
 }
 #endif
