@@ -47,9 +47,10 @@ namespace SpAn
       BinaryFileIArchive ar(file);
 
       // Attempt to read iStep
-      long iStep; 
+      long iStep = -1;  
       ar >> iStep;
-      //std::cout << iStep << std::endl;
+
+      // Return false if read failed, indicating end of file.
       if (file.eof()) {
          return false;
       }
@@ -57,13 +58,12 @@ namespace SpAn
       // Read boundary dimensions
       ar >> configuration().boundary();
 
-      // Loop over atoms, read positions
+      // Loop over atoms, read atomic positions
       AtomStorage* storagePtr = &configuration().atoms();
       Atom* atomPtr;
       int id, i, j;
       for (i = 0; i < nAtom_; ++i) {
          ar >> id;
-         //std::cout << id << std::endl;
          atomPtr = storagePtr->ptr(id);
          if (atomPtr == 0) {
             UTIL_THROW("Unknown atom");

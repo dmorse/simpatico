@@ -10,6 +10,3 @@ Processor{
 
    }
 }
-
-   configIoName    DdMdConfigIo
-   configFileName  in

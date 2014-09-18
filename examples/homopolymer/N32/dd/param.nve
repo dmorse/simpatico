@@ -63,7 +63,12 @@ Simulation{
 
      LammpsDumpWriter{
         interval        2000
-        outputFileName  trajectory
+        outputFileName  trajectory.lmp
+     }
+
+     DdMdTrajectoryWriter{
+        interval        2000
+        outputFileName  out/trajectory.trj
      }
 
   }
