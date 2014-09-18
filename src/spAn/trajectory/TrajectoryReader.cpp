@@ -18,15 +18,9 @@ namespace SpAn
    /*
    * Constructor.
    */
-   TrajectoryReader::TrajectoryReader()
-    : configurationPtr_(0)
-   {  setClassName("TrajectoryReader"); }
-
-   /*
-   * Constructor.
-   */
-   TrajectoryReader::TrajectoryReader(Configuration& configuration)
-    : configurationPtr_(&configuration)
+   TrajectoryReader::TrajectoryReader(Configuration& configuration, bool isBinary)
+    : configurationPtr_(&configuration),
+      isBinary_(isBinary)
    {  setClassName("TrajectoryReader"); }
 
    /*

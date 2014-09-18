@@ -23,7 +23,7 @@ namespace SpAn
    * Constructor.
    */
    DdMdTrajectoryReader::DdMdTrajectoryReader(Configuration& configuration)
-    : TrajectoryReader(configuration)
+    : TrajectoryReader(configuration, true)
    {  setClassName("DdMdTrajectoryReader"); }
 
    /*
@@ -36,6 +36,7 @@ namespace SpAn
    {
       BinaryFileIArchive ar(file);
       ar >> nAtom_;
+      //std::cout << nAtom_ << std::endl;
    }
 
    /*
@@ -46,8 +47,9 @@ namespace SpAn
       BinaryFileIArchive ar(file);
 
       // Attempt to read iStep
-      int iStep; 
+      long iStep; 
       ar >> iStep;
+      //std::cout << iStep << std::endl;
       if (file.eof()) {
          return false;
       }
@@ -61,6 +63,7 @@ namespace SpAn
       int id, i, j;
       for (i = 0; i < nAtom_; ++i) {
          ar >> id;
+         //std::cout << id << std::endl;
          atomPtr = storagePtr->ptr(id);
          if (atomPtr == 0) {
             UTIL_THROW("Unknown atom");
@@ -69,6 +72,7 @@ namespace SpAn
             ar >> atomPtr->position[j];
          }
       }
+
       return true;
    }
 

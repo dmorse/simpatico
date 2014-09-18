@@ -12,6 +12,9 @@
 #include <ddMd/simulation/Simulation.h>
 #include <util/mpi/MpiLoader.h>
 
+#include <fstream>
+#include <ios>
+
 namespace DdMd
 {
 
@@ -93,8 +96,14 @@ namespace DdMd
    */
    void TrajectoryWriter::setup()
    {  
-      simulation().fileMaster().openOutputFile(outputFileName(), outputFile_); 
-      writeHeader(outputFile_, iStep);
+      if (isBinary()) {
+         outputFile_.open(outputFileName().c_str(), 
+                          std::ios::out | std::ios::binary);
+      } else {
+         simulation().fileMaster().openOutputFile(outputFileName(), 
+                                                  outputFile_); 
+      }
+      writeHeader(outputFile_);
    }
 
    /*

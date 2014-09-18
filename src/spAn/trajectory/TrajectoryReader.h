@@ -30,21 +30,22 @@ namespace SpAn
    public:
 
       /**
-      * Default constructor.
-      */
-      TrajectoryReader();
-
-      /**
       * Constructor.
       *
       * \param configuration parent Configuration object
+      * \param Is the trajectory file a binary format?
       */
-      TrajectoryReader(Configuration& configuration);
+      TrajectoryReader(Configuration& configuration, bool isBinary = false);
 
       /**
       * Destructor.
       */
       virtual ~TrajectoryReader();
+
+      /**
+      * Is the file format binary (true) or text (false)?
+      */
+      bool isBinary() const;
 
       /**
       * Read a header (if any).
@@ -63,14 +64,27 @@ namespace SpAn
 
    protected:
 
+      /**
+      * Return parent Configuraiton by reference.
+      */
       Configuration& configuration()
       {  return *configurationPtr_; }
 
    private:
 
+      /// Pointer to parent SpAn::Configuration.
       Configuration* configurationPtr_;
 
+      /// Is the file format binary (true) or text (false)?
+      bool isBinary_;
+
    };
+
+   /**
+   * Is the file format binary (true) or text (false)?
+   */
+   inline bool TrajectoryReader::isBinary() const
+   {  return isBinary_; }
 
 }
 #endif

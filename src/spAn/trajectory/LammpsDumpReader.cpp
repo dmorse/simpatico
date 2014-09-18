@@ -22,7 +22,7 @@ namespace SpAn
    * Constructor.
    */
    LammpsDumpReader::LammpsDumpReader(Configuration& configuration)
-    : TrajectoryReader(configuration)
+    : TrajectoryReader(configuration, false)
    {  setClassName("LammpsDumpReader"); }
 
    /*

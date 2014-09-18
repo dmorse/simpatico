@@ -38,6 +38,9 @@ namespace SpAn
 
       if (className == "LammpsDumpReader") {
          ptr = new LammpsDumpReader(*configurationPtr_);
+      } else 
+      if (className == "DdMdTrajectoryReader") {
+         ptr = new DdMdTrajectoryReader(*configurationPtr_);
       } 
  
       return ptr;

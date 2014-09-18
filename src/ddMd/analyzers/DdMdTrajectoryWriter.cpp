@@ -33,7 +33,7 @@ namespace DdMd
    DdMdTrajectoryWriter::~DdMdTrajectoryWriter()
    {}
 
-   void DdMdTrajectoryWriter::writeHeader(std::ofstream &file, long iStep)
+   void DdMdTrajectoryWriter::writeHeader(std::ofstream &file)
    {
       BinaryFileOArchive ar(file);
 
@@ -63,15 +63,17 @@ namespace DdMd
 
          atomCollector().setup();
          Atom* atomPtr = atomCollector().nextPtr();
+         int id;
          while (atomPtr) {
-            ar << atomPtr->id();
+            id = atomPtr->id();
+            ar << id;
             if (isCartesian) {
                ar << atomPtr->position();
             } else {
                boundary().transformGenToCart(atomPtr->position(), r);
                ar << r;
             }
-            ar << atomPtr->velocity();
+            // ar << atomPtr->velocity();
             atomPtr = atomCollector().nextPtr();
          }
 

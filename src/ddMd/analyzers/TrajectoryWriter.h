@@ -101,9 +101,9 @@ namespace DdMd
    protected:
 
       /**
-      * Is the file format binary?
+      * Is the file format binary (true) or text (false)?
       */
-      bool isBinary();
+      bool isBinary() const;
 
       /**
       * Write data that should appear once, at beginning of the file. 
@@ -111,9 +111,8 @@ namespace DdMd
       * Called by sample on first invocation. Default implementation is empty.
       *
       * \param out output file stream
-      * \param iStep MD time step index
       */
-      virtual void writeHeader(std::ofstream& out, long iStep)
+      virtual void writeHeader(std::ofstream& out)
       {};
 
       /**
@@ -217,6 +216,12 @@ namespace DdMd
    };
 
    // Inline method definitions
+
+   /**
+   * Is the file format binary (true) or text (false)?
+   */
+   inline bool TrajectoryWriter::isBinary() const
+   {  return isBinary_; }
 
    inline Domain& TrajectoryWriter::domain()
    {  return *domainPtr_; }

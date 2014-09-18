@@ -449,7 +449,11 @@ namespace SpAn
 
       // Open file
       std::ifstream file;
-      file.open(filename.c_str());
+      if (trajectoryReader().isBinary()) {
+         file.open(filename.c_str(), std::ios::in | std::ios::binary);
+      } else {
+         file.open(filename.c_str());
+      }
       if (!file.is_open()) {
          std::string msg = "Trajectory file is not open. Filename =";
          msg += filename;

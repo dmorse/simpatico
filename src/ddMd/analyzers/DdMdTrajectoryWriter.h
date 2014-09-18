@@ -41,9 +41,8 @@ namespace DdMd
       * Read trajectory file header and initialize simulation parameters.
       *
       * \param file output file stream
-      * \param iStep MD time step index
       */
-      void writeHeader(std::ofstream &file, long iStep);
+      void writeHeader(std::ofstream &file);
 
       /**
       * Read a single frame. Frames are assumed to be read consecutively.
