@@ -70,13 +70,30 @@ namespace SpAn
 
    protected:
 
+      /**
+      * Set atom context data for all atoms, assuming consecutive ids.
+      * 
+      * \return true for normal completion, false if error is detected.
+      */
+      bool setAtomContexts();
+
+      /**
+      * Add all atoms to Species containers and associated molecules.
+      */
+      void addAtomsToSpecies();
+
+      /**
+      * Get parent Configuration by reference.
+      */
       Configuration& configuration()
       { return *configurationPtr_; }
 
    private:
 
+      /// Pointer to parent Configuration.
       Configuration* configurationPtr_;
 
+      /// Does this reader require an auxiliary file?
       bool needsAuxiliaryFile_;
 
    };

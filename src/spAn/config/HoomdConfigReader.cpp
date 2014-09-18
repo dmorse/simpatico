@@ -217,8 +217,21 @@ namespace SpAn
          
       }
 
+      // Read hoomd_xml end line
       getNextLine(file, line);
       end.match("hoomd_xml", line, 0); 
+
+      // If species are declared, attempt to set atom context info,
+      // assuming that atom ids are ordered by molecule and species.
+
+      if (configuration().nSpecies() > 0) {
+         bool success;
+         success = setAtomContexts();
+         if (success) {
+            addAtomsToSpecies();
+         }
+      }
+
    }
 
 
