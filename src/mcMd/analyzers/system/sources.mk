@@ -20,13 +20,6 @@ mcMd_analyzers_system_=\
     mcMd/analyzers/system/BoundaryAverage.cpp \
     mcMd/analyzers/system/ConfigWriter.cpp 
 
-ifdef MCMD_PERTURB
-ifdef UTIL_MPI
-mcMd_analyzers_system_+=\
-    mcMd/analyzers/system/MigratingVanHove.cpp
-endif
-endif
-
 mcMd_analyzers_system_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_analyzers_system_))
 mcMd_analyzers_system_OBJS=\
