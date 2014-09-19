@@ -96,12 +96,12 @@ namespace DdMd
    */
    void TrajectoryWriter::setup()
    {  
+      fileMaster& = simulation().fileMaster();
       if (isBinary()) {
-         outputFile_.open(outputFileName().c_str(), 
-                          std::ios::out | std::ios::binary);
+         fileMaster.openOutputFile(outputFileName(), outputFile_, 
+                                   std::ios::out | std::ios::binary);
       } else {
-         simulation().fileMaster().openOutputFile(outputFileName(), 
-                                                  outputFile_); 
+         fileMaster.openOutputFile(outputFileName(), outputFile_);
       }
       writeHeader(outputFile_);
    }

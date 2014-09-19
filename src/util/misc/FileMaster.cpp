@@ -208,8 +208,37 @@ namespace Util
    * Open and return an input file with specified base name
    */
    void
+   FileMaster::openInputFile(const std::string& name, std::ifstream& in,
+                             std::ios_base::openmode mode) const
+   {
+      // Construct filename = inputPrefix_ + name
+      std::string filename(rootPrefix_);
+      if (hasDirectoryId_) {
+         filename += directoryIdPrefix_;
+      }
+      filename += inputPrefix_;
+      filename += name;
+
+      in.open(filename.c_str(), mode);
+
+      // Check for error opening file
+      if (in.fail()) {
+         std::string message = "Error opening input file. Filename: ";
+         message += filename;
+         UTIL_THROW(message.c_str());
+      }
+
+   }
+
+   /*
+   * Open and return an input file with specified base name
+   */
+   void
    FileMaster::openInputFile(const std::string& name, std::ifstream& in) const
    {
+      openInputFile(name, in, std::ios_base::in); 
+      #if 0
+
       // Construct filename = inputPrefix_ + name
       std::string filename(rootPrefix_);
       if (hasDirectoryId_) {
@@ -226,6 +255,7 @@ namespace Util
          message += filename;
          UTIL_THROW(message.c_str());
       }
+      #endif
 
    }
 
@@ -233,9 +263,43 @@ namespace Util
    * Open and return an output file named outputPrefix + name
    */
    void
-   FileMaster::openOutputFile(const std::string& name, std::ofstream& out, bool append)
-   const
+   FileMaster::openOutputFile(const std::string& name, 
+                              std::ofstream& out, 
+                              std::ios_base::openmode mode) const
    {
+      // Construct filename = outputPrefix_ + name
+      std::string filename(rootPrefix_);
+      if (hasDirectoryId_) {
+         filename += directoryIdPrefix_;
+      }
+      filename += outputPrefix_;
+      filename += name;
+
+      out.open(filename.c_str(), mode);
+
+      // Check for error opening file
+      if (out.fail()) {
+         std::string message = "Error opening output file. Filename: ";
+         message += filename;
+         UTIL_THROW(message.c_str());
+      }
+
+   }
+
+   /*
+   * Open and return an output file named outputPrefix + name
+   */
+   void
+   FileMaster::openOutputFile(const std::string& name, 
+                              std::ofstream& out, bool append) const
+   {
+      if (append) {
+         openOutputFile(name, out, std::ios::out | std::ios::app);
+      } else {
+         openOutputFile(name, out );
+      }
+  
+      #if 0
       // Construct filename = outputPrefix_ + name
       std::string filename(rootPrefix_);
       if (hasDirectoryId_) {
@@ -255,6 +319,7 @@ namespace Util
          message += filename;
          UTIL_THROW(message.c_str());
       }
+      #endif
 
    }
 

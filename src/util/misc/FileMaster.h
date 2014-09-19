@@ -10,6 +10,7 @@
 
 #include <util/param/ParamComposite.h>      // base class
 
+#include <ios>
 #include <fstream>
 #include <string>
 
@@ -226,6 +227,19 @@ namespace Util
       void openInputFile(const std::string& filename, std::ifstream& in) const;
 
       /**
+      * Open an input file.
+      *
+      * The path to this file constructed by concatenating:
+      * [rootPrefix] + [directoryIdPrefix] + inputPrefix + filename.
+      *
+      * \param  filename file name, without any prefix
+      * \param  in       ifstream object to associated with a file
+      * \param  mode     bit mask that specifies opening mode
+      */
+      void openInputFile(const std::string& filename, std::ifstream& in, 
+                         std::ios_base::openmode mode) const;
+
+      /**
       * Open an output file.
       *
       * The path to this file constructed by concatenating:
@@ -238,6 +252,20 @@ namespace Util
       void 
       openOutputFile(const std::string& filename, std::ofstream& out, bool append = false) const;
 
+      /**
+      * Open an output file.
+      *
+      * The path to this file constructed by concatenating:
+      * [rootPrefix] + [directoryIdPrefix] + outputPrefix + filename.
+      *
+      * \param  filename  file name, without any prefix
+      * \param  out       ofstream object to associated with a file
+      * \param  mode      bit mask that specifies opening mode
+      */
+      void 
+      openOutputFile(const std::string& filename, std::ofstream& out, 
+                         std::ios_base::openmode mode) const;
+ 
       /**
       * Open an input restart parameter file for reading.
       *
