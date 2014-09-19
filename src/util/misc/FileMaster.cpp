@@ -296,7 +296,7 @@ namespace Util
       if (append) {
          openOutputFile(name, out, std::ios::out | std::ios::app);
       } else {
-         openOutputFile(name, out );
+         openOutputFile(name, out, std::ios::out);
       }
   
       #if 0

@@ -264,7 +264,7 @@ namespace Util
       */
       void 
       openOutputFile(const std::string& filename, std::ofstream& out, 
-                         std::ios_base::openmode mode) const;
+                     std::ios_base::openmode mode) const;
  
       /**
       * Open an input restart parameter file for reading.
