@@ -21,7 +21,10 @@ configIos/    - configuration file reader/writers
 potentials/   - potential energy classes
 neighbor/     - cell list and pair list data structures
 integrators/  - molecular dynamics integrator algorithms
+modifiers/    - classes that modify the system during integration
 simulation/   - main Simulation class
 analyzers/    - classes for on-the-fly parallel data analysis and output
 misc/         - miscellaneous utility classes
+tests/        - unit tests
+user/         - directory for user-developed classes 
 
