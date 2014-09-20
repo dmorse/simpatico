@@ -36,7 +36,10 @@ namespace McMd
    * Constructor.
    */
    DCDTrajectoryIo::DCDTrajectoryIo(System &system)
-   : TrajectoryIo(system)
+   : TrajectoryIo(system),
+     nAtoms_(0),
+     nFrames_(0),
+     frameId_(0)
    {}
 
    /*
@@ -54,6 +57,7 @@ namespace McMd
 
    void DCDTrajectoryIo::readHeader(std::fstream &file)
    {
+      #if 0
       // Calculate atomCapacity for entire simulation
       int atomCapacity = 0;
       int bondCapacity = 0;
@@ -75,17 +79,21 @@ namespace McMd
          atomCapacity += speciesCapacity*speciesPtr->nAtom();
          bondCapacity += speciesCapacity*speciesPtr->nBond();
       }
+      #endif
+      TrajectoryIo::readHeader(file);
 
-      // read number of frames
+      // Read number of frames
       file.seekp(NFILE_POS);
       nFrames_ = read_int(file);
+      frameId_ = 0;
 
+      // Read number of atoms
       file.seekp(NATOMS_POS);
       nAtoms_ = read_int(file);
-      if (nAtoms_ != atomCapacity) {
+      if (nAtoms_ != atomCapacity_) {
          std::ostringstream oss;
          oss << "Number of atoms in DCD file (" << nAtoms_ << ") does not "
-              << "match allocated number of atoms (" << atomCapacity  << ")!";
+              << "match allocated number of atoms (" << atomCapacity_  << ")!";
          UTIL_THROW(oss.str().c_str());
       }
 
@@ -96,8 +104,13 @@ namespace McMd
       zBuffer_.allocate(nAtoms_);
    }
 
-   void DCDTrajectoryIo::readFrame(std::fstream &file)
+   bool DCDTrajectoryIo::readFrame(std::fstream &file)
    {
+      // Check if the last frame was already read
+      if (frameId_ >= nFrames_) {
+         return false;
+      }
+
       double lx,ly,lz;
       double angle0,angle1,angle2;
 
@@ -194,6 +207,13 @@ namespace McMd
             }
          }
       }
+
+      // Increment frame counter
+      ++frameId_;
+
+      // Indicate successful completion
+      return true;
    }
+
 }
 #endif

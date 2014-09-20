@@ -654,11 +654,15 @@ namespace McMd
    void MdSimulation::analyzeTrajectory(int min, int max, std::string classname,
       std::string filename)
    {
-      Timer             timer;
+      // Preconditions
+      if (min < 0) UTIL_THROW("min < 0");
+      if (max < 0) UTIL_THROW("max < 0");
+      if (max < min) UTIL_THROW("max < min!");
+
+      Timer timer;
       std::stringstream indexString;
-      std::fstream*     trajectoryFile;
-      TrajectoryIo*     trajectoryIo;
-      int nFrames; 
+      std::fstream* trajectoryFile;
+      TrajectoryIo* trajectoryIo;
 
       // Obtain trajectoryIo objecct
       if (!(trajectoryIo = system().trajectoryIoFactory().factory(classname))) {
@@ -679,52 +683,47 @@ namespace McMd
         UTIL_THROW(message.c_str());
       }
 
-      // read in information from trajectory file
+      // Read in information from trajectory file
       trajectoryIo->readHeader(*trajectoryFile);
-
-      nFrames = trajectoryIo->nFrames();
 
       // Main loop
       Log::file() << "begin main loop" << std::endl;
       timer.start();
 
-      // Allow for negative values of min, max (counted from the end)
-      if (min < 0) min = nFrames+min;
-      if (max < 0) max = nFrames+max;
-
-      // Sanity checks
-      if (min < 0 || min >= nFrames)  UTIL_THROW("min < 0 or min >= nFrames!");
-      if (max < 0 || max >= nFrames)  UTIL_THROW("max < 0 or max >= nFrames!");
-      if (max < min)  UTIL_THROW("max < min!");
-
-      for (iStep_ = 0; iStep_ <= max; ++iStep_) {
+      bool hasFrame = true;
+      for (iStep_ = 0; iStep_ <= max && hasFrame; ++iStep_) {
 
          // Read frames, even if they are not sampled
-         trajectoryIo->readFrame(*trajectoryFile);
+         hasFrame = trajectoryIo->readFrame(*trajectoryFile);
 
-         #ifndef INTER_NOPAIR
-         // Build the system CellList
-         system().pairPotential().buildPairList();
-         #endif
+         if (hasFrame) {
 
-         #ifndef NDEBUG
-         isValid();
-         #endif
+            #ifndef INTER_NOPAIR
+            // Build the system CellList
+            system().pairPotential().buildPairList();
+            #endif
+   
+            #ifdef UTIL_DEBUG
+            isValid();
+            #endif
+   
+            // Initialize analyzers (taking in molecular information).
+            if (iStep_ == min) analyzerManager().setup();
+   
+            // Sample property values only for iStep >= min
+            if (iStep_ >= min) analyzerManager().sample(iStep_);
 
-         // Initialize analyzers (taking in molecular information).
-         if (iStep_ == min) analyzerManager().setup();
-
-         // Sample property values only for iStep >= min
-         if (iStep_ >= min) analyzerManager().sample(iStep_);
+         }
 
       }
       timer.stop();
       Log::file() << "end main loop" << std::endl;
+      int nFrames = iStep_ - min + 1;
 
       // Close trajectory file
       trajectoryFile->close();
 
-      // delete objects
+      // Delete objects
       delete trajectoryIo;
       delete trajectoryFile;
 
@@ -733,7 +732,7 @@ namespace McMd
 
       // Output time 
       Log::file() << std::endl;
-      Log::file() << "nFrames       " << max-min+1 << std::endl;
+      Log::file() << "# of frames   " << nFrames << std::endl;
       Log::file() << "run time      " << timer.time() 
                   << "  sec" << std::endl;
       Log::file() << "time / frame " << timer.time()/double(nFrames) 

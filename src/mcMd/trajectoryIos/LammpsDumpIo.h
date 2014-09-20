@@ -30,28 +30,34 @@ namespace McMd
    
    public:
 
-      /// Constructor. 
+      /**
+      * Constructor. 
+      */
       LammpsDumpIo(System& system);
- 
-      /// Destructor.   
+
+      /** 
+      * Destructor.   
+      */
       virtual ~LammpsDumpIo();
  
       /**
-      * Read trajectory file header and initialize simulation parameters.
+      * Setup before reading frames.
       *
       * \param file input file stream.
       */
-      void readHeader(std::fstream &file);
- 
+      void readHeader(std::fstream& file);
+
       /**
       * Read a single frame. Frames are assumed to be read consecutively.
       *
       * \param file input file stream.
+      * \return true if a frame is available, false if end of file
       */
-      void readFrame(std::fstream &file);
+      bool readFrame(std::fstream& file);
 
    private:
 
+       /// Atom positions, indexed by id.
        DArray< Vector > positions_;
 
    }; 

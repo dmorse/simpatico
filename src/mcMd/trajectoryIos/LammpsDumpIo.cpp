@@ -38,20 +38,42 @@ namespace McMd
    LammpsDumpIo::~LammpsDumpIo()
    {}
 
+   /*
+   * Setup to read trajectory.
+   */
    void LammpsDumpIo::readHeader(std::fstream &file)
-   {}
-
-   void LammpsDumpIo::readFrame(std::fstream &file)
    {
+      TrajectoryIo::readHeader(file);
+
+      if (!positions_.isAllocated()) {
+         positions_.allocate(atomCapacity_);
+      } else {
+         if (atomCapacity_ != positions_.capacity()) {
+            UTIL_THROW("Inconsistent values of atom capacity");
+         }
+      }
+   }
+
+   /*
+   * Read frame, return false if end-of-file
+   */
+   bool LammpsDumpIo::readFrame(std::fstream &file)
+   {
+      // Preconditions
+      if (!positions_.isAllocated()) {
+         UTIL_THROW("positions_ array is not allocated");
+      }
 
       bool notEnd;
       std::stringstream line;
 
-      // Read ITEM: TIMESTEP
+      // Attempt to read first line
       notEnd = getNextLine(file, line);
       if (!notEnd) {
-         UTIL_THROW("EOF reading ITEM: TIMESTEP");
+         return false;
       }
+
+      // Process ITEM: TIMESTEP
       checkString(line, "ITEM:");
       checkString(line, "TIMESTEP");
       int step;
@@ -68,13 +90,8 @@ namespace McMd
       checkString(line, "ATOMS");
       int nAtom;
       file >> nAtom;
-
-      if (positions_.isAllocated()) {
-         if (nAtom != positions_.capacity()) {
-            UTIL_THROW("Inconsistent values of nAtom");
-         }
-      } else {
-         positions_.allocate(nAtom);
+      if (nAtom != atomCapacity_) {
+         UTIL_THROW("Inconsistent value of nAtom");
       }
 
       // Read ITEM: BOX
@@ -135,7 +152,7 @@ namespace McMd
          }
       }
 
-      //return true;
+      return true;
    }
 }
 #endif
