@@ -18,7 +18,7 @@ run: $(util_tests_OBJS) $(BLD_DIR)/$(TEST)
 clean:
 	rm -f $(util_tests_OBJS) $(util_tests_OBJS:.o=.d)
 	rm -f $(BLD_DIR)/$(TEST) $(BLD_DIR)/$(TEST).d
-	rm -f dummy log count
+	rm -f log count dummy xdr
 	cd accumulators/unit; $(MAKE) clean
 	cd archives; $(MAKE) clean
 	cd boundary; $(MAKE) clean

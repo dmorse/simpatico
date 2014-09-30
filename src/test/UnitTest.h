@@ -10,6 +10,7 @@
 
 #include "TestException.h"
 
+#include <stdio.h>
 #include <fstream>
 #include <string>
 #ifdef TEST_MPI
@@ -139,7 +140,7 @@ protected:
    virtual void endMarker();
 
    /**
-   * Open input file.
+   * Open C++ input file ifstream.
    *
    * This function adds the filePrefix before the name parameter.
    * It does not check if this node isIoProcessor.
@@ -150,15 +151,27 @@ protected:
    void openInputFile(const std::string& name, std::ifstream& in) const;
 
    /**
-   * Open output file stream.
+   * Open C++ output file ofstream.
    *
    * This function adds the filePrefix before the name parameter.
    * It does not check if this node isIoProcessor.
    *
-   * \param name base file name (added to filePrefix).
-   * \param out  output file (opened on return).
+   * \param name base file name (added to filePrefix)
+   * \param out  output file (opened on return)
    */
    void openOutputFile(const std::string& name, std::ofstream& out) const;
+
+   /**
+   * Open C file handle with specified mode.
+   *
+   * This function adds the filePrefix before the name parameter.
+   * It does not check if this node isIoProcessor.
+   *
+   * \param name base file name (added to filePrefix)
+   * \param mode string that specified read or write mode
+   * \return C file handle, opened for reading or writing
+   */
+   FILE* openFile(const std::string& name, const char* mode) const;
 
    /**
    * Return integer verbosity level  (0 == silent).
@@ -353,6 +366,25 @@ const
                 << filename << std::endl;
       TEST_THROW("Failure to open file");
    }
+}
+
+/*
+* Open C file handle.
+*/
+FILE*
+UnitTest::openFile(const std::string& name, const char* mode) 
+const
+{   
+   std::string filename = filePrefix_;
+   filename += name;
+   FILE* fp = fopen(filename.c_str(), mode);
+   if (fp == NULL) {
+      std::cout << std::endl;
+      std::cout << "Failure of fopen to open file " 
+                << filename << std::endl;
+      TEST_THROW("Failure to open file");
+   }
+   return fp;
 }
 
 /*

@@ -60,16 +60,16 @@ namespace Util
       XdrFileOArchive(std::string filename);
 
       /**
-      * Constructor.
-      *
-      * \param file output file
-      */
-      XdrFileOArchive(std::ofstream& file);
-
-      /**
       * Destructor.
       */
       virtual ~XdrFileOArchive();
+
+      /**
+      * Associate with an open file and initialize.
+      *
+      * \param file C file handle, must be open for writing.
+      */
+      void init(FILE* file);
 
       /**
       * Get the underlying ifstream by reference.
@@ -188,6 +188,7 @@ namespace Util
                          const unsigned int version)
    {  xdr_int(ar.xdrPtr(), &data);  }
 
+   #if 0
    /*
    * Save an unsigned long int to a XdrFileOArchive.
    */
@@ -203,6 +204,7 @@ namespace Util
    inline void serialize(XdrFileOArchive& ar, long& data,  
                          const unsigned int version)
    {  xdr_long(ar.xdrPtr(), &data);  }
+   #endif
 
    /*
    * Save a float to a XdrFileOArchive.

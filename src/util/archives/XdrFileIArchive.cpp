@@ -49,6 +49,15 @@ namespace Util
    {}
 
    /*
+   * Initialize if default constructed.
+   */
+   void XdrFileIArchive::init(FILE* file)
+   {
+      filePtr_ = file;  
+      xdrstdio_create(&xdr_, filePtr_, XDR_DECODE); 
+   }
+
+   /*
    * Load a std::string from a XdrFileIArchive.
    */
    template <>

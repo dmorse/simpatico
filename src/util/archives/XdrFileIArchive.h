@@ -72,6 +72,13 @@ namespace Util
       virtual ~XdrFileIArchive();
 
       /**
+      * Initialize by associating with an open file.
+      *
+      * \param file C library file handle, must be open for reading.
+      */
+      void init(FILE* file);
+
+      /**
       * Load one object.
       */
       template <typename T>
@@ -188,6 +195,7 @@ namespace Util
                          const unsigned int version)
    {  xdr_int(ar.xdrPtr(), &data);  }
 
+   #if 0
    /*
    * Load an unsigned long int from a XdrFileIArchive.
    */
@@ -203,6 +211,7 @@ namespace Util
    inline void serialize(XdrFileIArchive& ar, long& data,  
                          const unsigned int version)
    {  xdr_long(ar.xdrPtr(), &data);  }
+   #endif
 
    /*
    * Load a float from a XdrFileIArchive.

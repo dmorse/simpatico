@@ -46,13 +46,15 @@ namespace Util
    * Destructor.
    */
    XdrFileOArchive::~XdrFileOArchive()
+   {}
+
+   /*
+   * Initialize if default constructed.
+   */
+   void XdrFileOArchive::init(FILE* file)
    {
-      if (filePtr_) {
-         fflush(filePtr_);
-         //if (createdFile_) {
-         //   fclose(filePtr_);
-         //}
-      }
+      filePtr_ = file;  
+      xdrstdio_create(&xdr_, filePtr_, XDR_ENCODE); 
    }
 
    /*
