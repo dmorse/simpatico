@@ -12,6 +12,7 @@
 
 // Subclasses of TrajectoryReader 
 #include "LammpsDumpReader.h"
+#include "DdMdTrajectoryReader.h"
 
 namespace SpAn
 {
