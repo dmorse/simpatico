@@ -1,0 +1,30 @@
+namespace McMd
+{
+
+/*! \page mcMd_integrator_NveVvIntegrator_page NveVvIntegrator
+
+\section mcMd_integrator_NveVvIntegrator_overview_sec Synopsis
+
+NveVvIntegrator implements a velocity-Verlet NVE (constant energy, rigid
+boundary) integrator.
+
+\sa McMd::NveVvIntegrator
+
+\section mcMd_integrator_NveVvIntegrator_param_sec Parameters
+The parameter file format is:
+\code
+   NveVvIntegrator{ 
+     dt                 double
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> dt </td>
+     <td> time step </td>
+  </tr>
+</table>
+
+*/
+
+}

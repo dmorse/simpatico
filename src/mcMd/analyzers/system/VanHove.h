@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -70,6 +70,8 @@ namespace McMd
    * magnitude of the wavevector, and a list of nAtomTypeIdPair structure 
    * factor values for the wavevector, one for each atomTypeId pair.
    * 
+   * \sa \ref mcMd_analyzer_VanHove_page "parameter file format"
+   *
    * \ingroup McMd_Analyzer_Module
    */
    class VanHove : public SystemAnalyzer<System>

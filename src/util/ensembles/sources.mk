@@ -4,5 +4,5 @@ util_ensembles_=\
     util/ensembles/SpeciesEnsemble.cpp 
 
 util_ensembles_SRCS=$(addprefix $(SRC_DIR)/, $(util_ensembles_))
-util_ensembles_OBJS=$(addprefix $(OBJ_DIR)/, $(util_ensembles_:.cpp=.o))
+util_ensembles_OBJS=$(addprefix $(BLD_DIR)/, $(util_ensembles_:.cpp=.o))
 

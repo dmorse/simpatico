@@ -1,0 +1,71 @@
+namespace McMd
+{
+
+/*! \page mcMd_mcMove_HybridNphMdMove_page HybridNphMdMove
+
+\section mcMd_mcMove_HybridNphMdMove_overview_sec Synopsis
+
+A HybridNphMdMove uses a short NPH molecular dynamics (MD)
+simulation as an attempted Monte Carlo move for a simulation
+of NPT ensemble. A move attempt consists of: (1) Generation 
+of random velocities chosen from the Boltzmann distribution 
+for the target temperature, and (2) a velocity-Verlet NPH
+MD simulation of nStep steps. The acceptance criterian 
+depends on the change in the conserved energy (potential 
++ kinetic) during the integration, yielding acceptance with 
+unit probability in the limit of a perfect integrator, or an 
+infinitesimal time step.
+
+\sa McMd::HybridNphMdMove
+
+\section mcMd_mcMove_HybridNphMdMove_param_sec Parameters
+The parameter file format is:
+\code
+   HybridNphMdMove{ 
+     probability        double
+     nStep              int
+     MdSytem{
+       MdPairPotential{
+         maxBoundary         Util::Boundary
+         PairList{
+           atomCapacity      int
+           pairCapacity      int
+           skin              double
+         }
+       }
+       NphVvIntegrator{
+         dt                       double
+         W                        double
+         mode                     Util::LatticeSystem
+       }
+     }
+   }
+\endcode
+The body of the MdSystem block contains parameters that are
+also present in the MdSystem block in the parameter file for an 
+NPH mdSim molecular dynamic simulation, but excludes parameters
+that can be inferred from the McSystem block of the parent
+McSystem, such as the potential energy styles and parameters.
+The integrator must be an NveVvIntegrator, as shown above. The 
+statistical ensemble of the parent system must be isothermal 
+and isobaric (NPT). 
+
+Parameters:
+<table>
+  <tr> 
+     <td> probability </td>
+     <td> probability that this move will be chosen.
+  </tr>
+  <tr> 
+     <td> nStep </td>
+     <td> number of MD steps per attempted move.
+  </tr>
+  <tr> 
+     <td> MdSystem</td>
+     <td> shortened version of McMd::MdSystem block of an mdSim parameter file</td>
+  </tr>
+</table>
+
+*/
+
+}

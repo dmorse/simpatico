@@ -1,0 +1,157 @@
+This directory contains examples of input files for a variety of simple systems.
+Many of the examples involve polymer liquids or networks. 
+
+-------------------------------------------------------------------------------
+Subdirectories: 
+
+Examples in different directories use versions of the code compiled with 
+different sets of optional features enabled. The examples in the atomic/, dimer/, 
+homopolymer/, diblock/, and blend/ subdirectories are designed to work with the 
+default versions of the code, which provides nonbonded pair and bond potentials 
+but not angle or dihedral potentials.
+
+atomic:   Examples of atomic liquids, with non-bonded point particles.
+          These examples use default executables mdSim, mcSim, and ddSim.
+
+dimer:    Liquids of diaatomic molecules, with pair and bond forces.
+          These examples use default executables mdSim, mcSim, and ddSim.
+
+homopolymer:
+          Liquid of flexible linear bead-spring homopolymers. These
+          examples use default executables mdSim, mcSim, and ddSim.
+
+diblock:
+          Liquid of flexible linear bead-spring diblock copolymers. These
+          examples use default executables mdSim, mcSim, and ddSim.
+
+blend:    Mixtures of A and B flexible linear bead-spring polymers, 
+          using default executables mdSim, mcSim, and ddSim.
+
+blend-semigrand:    
+          Mixtures of A and B flexible linear bead-spring polymers, in
+          semi-grand ensemble, using an MC move that transforms A to B
+          or vise-versa. Uses default mcSim executable. 
+
+worm:     Melts of short wormlike polymers, with bond and bending forces.
+          These examples require version of the code in which angles are
+          enabled, for which the executable name should contain a suffix
+          _a, such as mcSim_a, mdSim_a or ddSim_a. Angle potentials can 
+          be enabled by entering "./configure -a1" from the build directory 
+          before compiling.
+
+dihedral: Melts of short linear polymers with an angle potential and a 
+          modest dihedral torsion potential, as for united-atom model of
+          an alkane. These examples require a version of the code with 
+          both angle and dihedral potentials were enabled by entering 
+          "./configure -a1 -d1" from the build directory before compiling.
+          The required executable names should contain suffixes _a and _d, 
+          mdSim_a_d, mcSim_a_d, or ddSim_a_d.
+
+external: Flexible bead-spring polymers in external one-body potentials. 
+          These examples require a version of the code in which external
+          potentials are enabled by entering "./configure -e1" from the
+          build directory before compiling. The resulting executable 
+          names should contain a suffix _e.
+
+link:     Randomly crosslinked networks of short linear polymers. These 
+          examples require a version of the code in which mutable crosslinks
+          have been enabled by entering "./configure -l" from the build
+          directory, yielding an executable with a suffix _l. 
+
+-------------------------------------------------------------------------------
+Example Directory Structure:
+
+A directory containing an example for a simulation of a single system 
+typically looks like this:
+
+   param
+   commands
+   in/
+   in/config
+   out/
+
+The file "param" is the input parameter file, which the main executable reads 
+from standard input. The file "commands" is the command script. The file 
+"in/config" is the input configuration file. Outputs are written to the out/ 
+directory. 
+
+In some examples in which an input configuration is shared by several examples
+that use different simulation algorithms, the in/ directory is further up the 
+directory hierarchy, at the level of the root directories for the examples.
+
+The names of the parameter and command files may sometimes contain suffixes 
+after "param" and "commands".  Some example directories may also contain 
+multiple parameter files with different suffixes, which allow the user to
+run several variants of an example, or run the same example using different
+versions of the program.  The meaning of different suffixes are discussed 
+below. 
+
+Some examples are configured to write periodic configuration dumps. If present,
+these are written to subdirectory out/dump/ in files with names of the form 
+out/dump/config.i, where i represents an integer, giving base names config.0, 
+config.1, config.2 etc.
+
+Basic Usage
+-----------
+Each example sub-directory contains one or more parameter files with names that
+begin with "param", sometimes followed by a suffix. The basic usage to run an
+example is
+
+   (EXECUTABLE) < (PARAMFILE)
+
+where (EXECUTABLE) represents the name of the relevant executable and (PARAMFILE)
+the name of a parameter file. This usage prints log information to the screen. 
+To redirect log information to a file, simply redirect the standard out, as in:
+
+  (EXECUTABLE) < (PARAMFILE) > (LOGFILE)
+
+where (LOGFILE) is the name of a logfile. 
+
+The simplest examples contain a single parameter file named "param". In this case,
+the usage for the single-processor programs is simply one of:
+
+   mdSim < param
+
+to run a mdSim MD simulation, or
+
+   mdSim < param
+
+or an mcSim MC simulation, respectively. 
+
+The command to run any multi-processor simulation must be preceded by the command 
+to run an mpi job, which must specify the number of processors to use. Thus, for 
+example, to run a ddSim parallel MD simulation, one might type 
+
+   mpirun -np 8 ddSim < param
+
+to run a parallel ddSim MD simulation on 8 processors. In a ddSim simulation, the 
+number of processors in the mpi command must be consistent with the number of 
+processors in the grid defined in the param file.
+
+Some parameter file names contain a suffix that consists one or two letter
+labels separated by underscores. In this case, this suffix on the param file
+identifies the features that must be enabled in the required version of the
+program, which is the same as the suffix on the required executable name.
+For instance, the examples in the dihedral/ directory all require program 
+versions with angle and dihedral potentials enabled. The required executables 
+can be created by recompiling after defining the variables INTER_ANGLE and 
+INTER_DIHEDRAL in the file src/inter/defines.mk. This creates executables
+mcSim_a_d, mdSim_a_d, and ddSim_a_d whose names end with the suffix _a_d,
+in which _a indicates that angles potentials are enabled and _d indicates
+that dihedrals are enabled.  The parameter files that require these program 
+versions are named param_a_d, as a reminder of which program is required. 
+The required command is thus
+
+   mdSim_a_d < param_a_d
+
+to run an MD simulation example with angles and dihedrals enabled, and send 
+log information to the screen.
+
+A few MD examples also contain several param files with different ending such 
+as ".nve" or ".nvt" to indicate the type of MD integrator being used. In this
+case, 
+
+   mdSim < param.nve 
+
+would run an NVE MD simulation and send log information to the screen.
+

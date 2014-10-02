@@ -1,7 +1,7 @@
-OBJ_DIR_REL =../..
+BLD_DIR_REL =../..
 
-include $(OBJ_DIR_REL)/config.mk
-include $(OBJ_DIR)/util/config.mk
+include $(BLD_DIR_REL)/config.mk
+include $(BLD_DIR)/util/config.mk
 include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/misc/sources.mk
 

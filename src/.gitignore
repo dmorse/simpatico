@@ -2,3 +2,4 @@ config.mk
 *.o
 *.d
 *.a
+edit.py

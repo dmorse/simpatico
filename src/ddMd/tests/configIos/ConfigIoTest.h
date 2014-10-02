@@ -4,6 +4,10 @@
 #include <ddMd/configIos/DdMdConfigIo.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
+#include <ddMd/communicate/GroupDistributor.h>
+#include <ddMd/communicate/GroupDistributor.tpp>
+#include <ddMd/communicate/GroupCollector.h>
+#include <ddMd/communicate/GroupCollector.tpp>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/BondStorage.h>
@@ -27,7 +31,7 @@ using namespace DdMd;
 class ConfigIoTest: public ParamFileTest
 {
 
-   DdMdConfigIo configIo;
+   DdMdConfigIo configIo; 
    Boundary boundary;
    Domain   domain;
    Buffer   buffer;
@@ -43,6 +47,10 @@ class ConfigIoTest: public ParamFileTest
    bool hasDihedral;
 
 public:
+
+   ConfigIoTest()
+    : configIo(false) //hasMolecules = false
+   {}
 
    virtual void setUp()
    {
@@ -130,19 +138,29 @@ public:
       }
 
       domain.readParam(file);
+      buffer.readParam(file);
+
+      atomStorage.associate(domain, boundary, buffer);
       atomStorage.readParam(file);
+   
+      #ifdef INTER_BOND
+      bondStorage.associate(domain, atomStorage, buffer);
       bondStorage.readParam(file);
+      #endif
+   
       #ifdef INTER_ANGLE
       if (hasAngle) {
+         angleStorage.associate(domain, atomStorage, buffer);
          angleStorage.readParam(file);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (hasDihedral) {
+         dihedralStorage.associate(domain, atomStorage, buffer);
          dihedralStorage.readParam(file);
       }
       #endif
-      buffer.readParam(file);
+
       configIo.readParam(file);
       file.close();
    }

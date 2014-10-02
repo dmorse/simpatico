@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -14,7 +14,7 @@
 
 // Analyzers 
 #include "LogEnergy.h"
-#include "WriteConfig.h"
+#include "ConfigWriter.h"
 #include "OutputEnergy.h"
 #include "OutputPressure.h"
 #include "OutputStressTensor.h"
@@ -25,6 +25,14 @@
 #include "StructureFactor.h"
 #include "StructureFactorGrid.h"
 #include "OrderParamNucleation.h"
+#include "VanHove.h"
+#include "ExternalEnergyAverage.h"
+#include "PairEnergyAverage.h"
+#include "StressAutoCorrelation.h"
+
+// Trajectory Writer Analyzers
+#include "DdMdTrajectoryWriter.h"
+#include "LammpsDumpWriter.h"
 
 namespace DdMd
 {
@@ -46,12 +54,12 @@ namespace DdMd
       Analyzer* ptr = 0;
 
       // Try subfactories first (if any)
-      //ptr = trySubfactories(className);
-      //if (ptr) return ptr;
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
 
       // Simulation Analyzers
-      if (className == "WriteConfig") {
-         ptr = new WriteConfig(simulation());
+      if (className == "ConfigWriter") {
+         ptr = new ConfigWriter(simulation());
       } else 
       if (className == "LogEnergy") {
          ptr = new LogEnergy(simulation());
@@ -63,7 +71,7 @@ namespace DdMd
          ptr = new OutputPressure(simulation());
       } else
       if (className == "OutputStressTensor") {
-         ptr = new OutputPressure(simulation());
+         ptr = new OutputStressTensor(simulation());
       } else
       if (className == "VirialStressTensorAverage") {
          ptr = new VirialStressTensorAverage(simulation());
@@ -85,6 +93,24 @@ namespace DdMd
       } else
       if (className == "OrderParamNucleation") {
          ptr = new OrderParamNucleation(simulation());
+      } else
+      if (className == "VanHove") {
+         ptr = new VanHove(simulation());
+      } else
+      if (className == "ExternalEnergyAverage") {
+         ptr = new ExternalEnergyAverage(simulation());
+      } else
+      if (className == "PairEnergyAverage") {
+         ptr = new PairEnergyAverage(simulation());
+      } else
+      if (className == "StressAutoCorrelation") {
+         ptr = new StressAutoCorrelation(simulation());
+      }
+      if (className == "DdMdTrajectoryWriter") {
+         ptr = new DdMdTrajectoryWriter(simulation());
+      }
+      if (className == "LammpsDumpWriter") {
+         ptr = new LammpsDumpWriter(simulation());
       }
       return ptr;
    }

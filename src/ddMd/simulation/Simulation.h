@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -965,6 +965,9 @@ namespace DdMd
       /// Does this simulation have an external potential?
       bool hasExternal_;
       #endif
+
+      /// Does this simulation keep track of AtomContext info?
+      bool hasAtomContext_;
 
       /**
       * Policy for suppressing pair interactions for some atom pairs.

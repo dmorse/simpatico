@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -76,9 +76,11 @@ namespace McMd
 
    }; 
 
-   // Inline methods
+   // Inline member functions.
 
-   // Check if an Atom is in the masked set.
+   /*
+   * Check if an Atom is in the masked set.
+   */
    inline bool Mask::isMasked(const Atom& atom) const
    {
       const Atom* ptr = &atom;
@@ -88,7 +90,9 @@ namespace McMd
       return false;
    }
 
-   // Return the number of masked atoms.
+   /*
+   * Return the number of masked atoms.
+   */
    inline int Mask::size() const
    { return size_; }
 

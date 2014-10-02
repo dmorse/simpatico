@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -37,7 +37,6 @@ namespace DdMd
    *
    *    // Initialization
    *    collector.associate(domain, storage, buffer);
-   *    collector.allocate(100);
    *
    *    // Communication
    *    if (domain.gridRank() == 0) {  // if master processor
@@ -73,16 +72,19 @@ namespace DdMd
       /**
       * Initialize pointers to associated objects.
       *
-      * Call on all processors, only once.
+      * Call on all processors, only once, before first call to setup.
       */
       void associate(Domain& domain, AtomStorage& storage, Buffer& buffer);
 
       /**
-      * Allocate cache on master processor.
+      * Set cache capacity on master processor.
       *
-      * Call only on the master processor, only once.
+      * Call oly once on master processors, before first call to setup.
+      * Calling on other processors has no effect, but does no harm.
+      *
+      * \param recvArrayCapacity size of array used to receive atoms.
       */
-      void allocate(int cacheSize);
+      void setCapacity(int recvArrayCapacity);
 
       /**
       * Setup master processor for receiving.
@@ -129,6 +131,9 @@ namespace DdMd
 
       /// Number of items in receive buffer (on master).
       int recvBufferSize_;
+
+      /// Capacity of recvArray_ (allocated only on master, known on all).
+      int recvArrayCapacity_;
 
       /// Number of items in recvArray_ (on master).
       int recvArraySize_;

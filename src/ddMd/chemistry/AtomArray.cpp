@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -26,13 +26,11 @@ namespace DdMd
    */
    AtomArray::AtomArray() 
     : Array<Atom>(),
-      #ifdef DDMD_MOLECULES
-      contexts_(0),
-      #endif
       velocities_(0),
       masks_(0),
       plans_(0),
-      ids_(0)
+      ids_(0),
+      contexts_(0)
    {}
 
    /*
@@ -41,15 +39,14 @@ namespace DdMd
    AtomArray::~AtomArray()
    {
       if (data_) {
-         // free(data_);
          Memory::deallocate<Atom>(data_, capacity_);
-         #ifdef DDMD_MOLECULES
-         Memory::deallocate<AtomContext>(contexts_, capacity_);
-         #endif
          Memory::deallocate<Vector>(velocities_, capacity_);
          Memory::deallocate<Mask>(masks_, capacity_);
          Memory::deallocate<Plan>(plans_, capacity_);
          Memory::deallocate<int>(ids_, capacity_);
+         if (contexts_) {
+            Memory::deallocate<AtomContext>(contexts_, capacity_);
+         }
          capacity_ = 0;
       }
    }
@@ -74,13 +71,13 @@ namespace DdMd
       // Allocate memory
       //posix_memalign((void**) &data_, 64, capacity*sizeof(Atom));
       Memory::allocate<Atom>(data_, capacity);
-      #ifdef DDMD_MOLECULES
-      Memory::allocate<AtomContext>(contexts_, capacity);
-      #endif
       Memory::allocate<Vector>(velocities_, capacity);
       Memory::allocate<Mask>(masks_, capacity);
       Memory::allocate<Plan>(plans_, capacity);
       Memory::allocate<int>(ids_, capacity);
+      if (Atom::hasAtomContext()) {
+         Memory::allocate<AtomContext>(contexts_, capacity);
+      }
       capacity_ = capacity;
 
       // Initialize values.
@@ -90,6 +87,9 @@ namespace DdMd
         ids_[i] = -1;
         masks_[i].clear();
         plans_[i].clearFlags();
+        if (Atom::hasAtomContext()) {
+           contexts_[i].clear();
+        }
       }
 
    }

@@ -5,5 +5,5 @@ inter_dihedral_=\
 inter_dihedral_SRCS=\
      $(addprefix $(SRC_DIR)/, $(inter_dihedral_))
 inter_dihedral_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(inter_dihedral_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(inter_dihedral_:.cpp=.o))
 

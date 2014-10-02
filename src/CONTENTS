@@ -1,0 +1,26 @@
+Subdirectories:
+---------------
+
+util       utility classes for scientific computation (namespace Util)
+inter      classes defining potential energy functions (namespace Inter)
+mcMd       serial Monte Carlo (MC) / molecular dynamics (MD) (namespace McMd)
+ddMd       parallel domain-decomposition MD simulation (namespace DdMd)
+modules    add-on components for particular applications
+test       unit test framework
+draft      unfinished or proposed classes
+
+Files (before running the setup script):
+----------------------------------------
+
+makefile      main makefile for in-source builds
+config.mk_r   compiler settings (default repository version)
+config.mk     compiler settings (user version, created by setup script)
+configure     configure script (for en|dis-abling compile time options)
+CONTENTS      this file
+
+Setup and configuration:
+------------------------
+
+For compilation instructions, see the file doc/manual/user/compile.dox, 
+the README file in the root directory (the parent of this directory), or
+the user guide section of the web documentation in doc/html.

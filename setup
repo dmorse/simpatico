@@ -12,10 +12,10 @@
 # 1) Copies default or repository versions of several build configuration 
 # files, named config.mk_r, to modifiable user versions, named config.mk. 
 # A separate set of build configuration files is created in the src/
-# directory (for in-source build) and in the obj/serial and obj/parallel
+# directory (for in-source build) and in the bld/serial and bld/parallel
 # object directories. 
 #
-# 2) Sets the makefile variables $(ROOT_DIR) and $(OBJ_DIR) in the main
+# 2) Sets the makefile variables $(ROOT_DIR) and $(BLD_DIR) in the main
 # config.mk file in each object directory to the absolute paths of the 
 # current working directory of the object directory, respectively. 
 #
@@ -28,52 +28,52 @@
 # and Boundary typedef.
 #------------------------------------------------------------------------
 
-# Create main config.mk files and set the value of $(ROOT_DIR) and $(OBJ_DIR)
+# Create main config.mk files and set the value of $(ROOT_DIR) and $(BLD_DIR)
 sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|obj/serial|" src/config.mk_r > obj/serial/config.mk
-sed -e "s|=PWD|=$PWD|" -e "s|=OWD|obj/parallel|" src/config.mk_r > obj/parallel/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" src/config.mk_r > bld/serial/config.mk
+sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/config.mk_r > bld/parallel/config.mk
 
 # Namespace config.mk in src/ directory (for in-source builds)
 cp  src/util/config.mk_r src/util/config.mk
 cp  src/inter/config.mk_r src/inter/config.mk
 cp  src/mcMd/config.mk_r src/mcMd/config.mk
 cp  src/ddMd/config.mk_r src/ddMd/config.mk
-cp  src/mdCf/config.mk_r src/mdCf/config.mk
+cp  src/spAn/config.mk_r src/spAn/config.mk
 
-# Namespace config.mk in obj/serial (for out-of-source builds with no MPI)
-cp  src/util/config.mk_r obj/serial/util/config.mk
-cp  src/inter/config.mk_r obj/serial/inter/config.mk
-cp  src/mcMd/config.mk_r obj/serial/mcMd/config.mk
-cp  src/ddMd/config.mk_r obj/serial/ddMd/config.mk
-cp  src/mdCf/config.mk_r obj/serial/mdCf/config.mk
+# Namespace config.mk in bld/serial (for out-of-source builds with no MPI)
+cp  src/util/config.mk_r bld/serial/util/config.mk
+cp  src/inter/config.mk_r bld/serial/inter/config.mk
+cp  src/mcMd/config.mk_r bld/serial/mcMd/config.mk
+cp  src/ddMd/config.mk_r bld/serial/ddMd/config.mk
+cp  src/spAn/config.mk_r bld/serial/spAn/config.mk
 
-# Namespace config.mk in obj/parallel (for out-of-source builds with MPI)
-cp  src/util/config.mk_r obj/parallel/util/config.mk
-cp  src/inter/config.mk_r obj/parallel/inter/config.mk
-cp  src/mcMd/config.mk_r obj/parallel/mcMd/config.mk
-cp  src/ddMd/config.mk_r obj/parallel/ddMd/config.mk
-cp  src/mdCf/config.mk_r obj/parallel/mdCf/config.mk
+# Namespace config.mk in bld/parallel (for out-of-source builds with MPI)
+cp  src/util/config.mk_r bld/parallel/util/config.mk
+cp  src/inter/config.mk_r bld/parallel/inter/config.mk
+cp  src/mcMd/config.mk_r bld/parallel/mcMd/config.mk
+cp  src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
+cp  src/spAn/config.mk_r bld/parallel/spAn/config.mk
 
-# Copy namespace level makefiles from src/ to obj/serial and obj/parallel 
-cp  src/makefile obj/serial/makefile
-cp  src/util/makefile obj/serial/util/makefile
-cp  src/inter/makefile obj/serial/inter/makefile
-cp  src/mcMd/makefile obj/serial/mcMd/makefile
-cp  src/ddMd/makefile obj/serial/ddMd/makefile
-cp  src/mdCf/makefile obj/serial/mdCf/makefile
-cp  src/makefile obj/parallel/makefile
-cp  src/util/makefile obj/parallel/util/makefile
-cp  src/inter/makefile obj/parallel/inter/makefile
-cp  src/mcMd/makefile obj/parallel/mcMd/makefile
-cp  src/ddMd/makefile obj/parallel/ddMd/makefile
-cp  src/mdCf/makefile obj/parallel/mdCf/makefile
+# Copy namespace level makefiles from src/ to bld/serial and bld/parallel 
+cp  src/makefile bld/serial/makefile
+cp  src/util/makefile bld/serial/util/makefile
+cp  src/inter/makefile bld/serial/inter/makefile
+cp  src/mcMd/makefile bld/serial/mcMd/makefile
+cp  src/ddMd/makefile bld/serial/ddMd/makefile
+cp  src/spAn/makefile bld/serial/spAn/makefile
+cp  src/makefile bld/parallel/makefile
+cp  src/util/makefile bld/parallel/util/makefile
+cp  src/inter/makefile bld/parallel/inter/makefile
+cp  src/mcMd/makefile bld/parallel/mcMd/makefile
+cp  src/ddMd/makefile bld/parallel/ddMd/makefile
+cp  src/spAn/makefile bld/parallel/spAn/makefile
 
 # Copy repository versions of sources.mk files in user directories.
 # These list user-contributed classes.
 cp  src/inter/user/sources.mk_r src/inter/user/sources.mk
 cp  src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
 cp  src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
-cp  src/mdCf/user/sources.mk_r src/mdCf/user/sources.mk
+cp  src/spAn/user/sources.mk_r src/spAn/user/sources.mk
 
 # ------------------------------------------------------------------------
 # Copy repository version of Factory implementation files to user versions.
@@ -105,8 +105,10 @@ cp  src/ddMd/integrators/IntegratorFactory.cpp_r src/ddMd/integrators/Integrator
 cp  src/ddMd/analyzers/AnalyzerFactory.cpp_r src/ddMd/analyzers/AnalyzerFactory.cpp
 cp  src/ddMd/modifiers/ModifierFactory.cpp_r src/ddMd/modifiers/ModifierFactory.cpp
 
-cp  src/mdCf/configIos/ConfigIoFactory.cpp_r src/mdCf/configIos/ConfigIoFactory.cpp
-cp  src/mdCf/analyzers/AnalyzerFactory.cpp_r src/mdCf/analyzers/AnalyzerFactory.cpp
+cp  src/spAn/config/ConfigReaderFactory.cpp_r src/spAn/config/ConfigReaderFactory.cpp
+cp  src/spAn/config/ConfigWriterFactory.cpp_r src/spAn/config/ConfigWriterFactory.cpp
+cp  src/spAn/trajectory/TrajectoryReaderFactory.cpp_r src/spAn/trajectory/TrajectoryReaderFactory.cpp
+cp  src/spAn/analyzers/AnalyzerFactory.cpp_r src/spAn/analyzers/AnalyzerFactory.cpp
 
 # Copy typedef for the class that defines boundary conditions
 cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
@@ -114,8 +116,8 @@ cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
 # ---------------------------------------------------------------------
 # Create copies of the configure script.
 
-cp src/configure obj/serial/configure
-cp src/configure obj/parallel/configure
+cp src/configure bld/serial/configure
+cp src/configure bld/parallel/configure
 
-# Enable UTIL_MPI by default in obj/parallel (silently).
-cd obj/parallel; ./configure -m1 &> /dev/null
+# Enable UTIL_MPI by default in bld/parallel (silently).
+cd bld/parallel; ./configure -m1 &> /dev/null

@@ -14,17 +14,17 @@ The classes used in simpatico are divided into five namespaces. The source code 
 
  - namespace DdMd (in directory src/ddMd) contains classes for a parallel domain-decomposition molecular dynamics code, and the main program for the ddSim executable. 
 
- - namespace MdCf (in directory src/MdCf) contains classes for a serial processing of MD configurations and trajectories. These are used for postprocessing of trajectories produced by ddSim.
+ - namespace SpAn (in directory src/ddMd) contains classes for single-processor analysis of molecular dynamics trajectories, and the main program for the mdPp executable. 
 
-The code in some namespaces depends on symbols defined in others. A namespace The code in some namespaces depends on symbols defined in others. A namespace named D is said to "depend" on another namespace C if any class in namespace D uses any classes or other symbols defined in C. The Inter, McMd, DdMd, and MdCf namespaces all depend on the Util namespace, in this sense. The dependencies are:
+The code in some namespaces depends on symbols defined in others. A namespace named B is said to "depend" on another namespace A if any class in namespace B uses any classes or other symbols defined in A. The Inter, McMd, DdMd, and SpAn namespaces all depend on the Util namespace, in this sense. The dependencies are:
 
  - Util does not depend on any other namespace
 
  - Inter depends only on Util
 
- - McMd, DdMd and MdCf each depends on Util and Inter, but not on each other.
+ - McMd, DdMd, and SpAn each depends on Util and Inter, but not on each other.
 
-A few of the most important classes in each namespace are introduced in the following pages. An alternate, and more complete, view of all of the classes in each namespace may be obtained clicking on the "Modules" link above and browsing a hierarchy of modules. Each module contain a sets of functionally related classes.
+A few of the most important classes in each namespace are introduced in the following pages. An alternate, and more complete, view of all of the classes in each namespace may be obtained clicking on the "Modules" link above and browsing a hierarchy of modules. Each module within a namespace contain a sets of functionally related classes.
 
 <BR>
 \ref source_directory_page  (Prev)  &nbsp; &nbsp; &nbsp; &nbsp; 

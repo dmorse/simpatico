@@ -10,5 +10,5 @@ util_mpi_+=\
 endif
 
 util_mpi_SRCS=$(addprefix $(SRC_DIR)/, $(util_mpi_))
-util_mpi_OBJS=$(addprefix $(OBJ_DIR)/, $(util_mpi_:.cpp=.o))
+util_mpi_OBJS=$(addprefix $(BLD_DIR)/, $(util_mpi_:.cpp=.o))
 

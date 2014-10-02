@@ -8,10 +8,10 @@ modules_hoomd_analyzers_NVCC_=\
 modules_hoomd_analyzers_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_hoomd_analyzers_))
 modules_hoomd_analyzers_OBJS=\
-    $(addprefix $(OBJ_DIR)/, $(modules_hoomd_analyzers_:.cpp=.o))
+    $(addprefix $(BLD_DIR)/, $(modules_hoomd_analyzers_:.cpp=.o))
 
 modules_hoomd_analyzers_NVCC_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_hoomd_analyzers_NVCC_))
 modules_hoomd_analyzers_NVCC_OBJS=\
-    $(addprefix $(OBJ_DIR)/, $(modules_hoomd_analyzers_NVCC_:.cu=.cu.o))
+    $(addprefix $(BLD_DIR)/, $(modules_hoomd_analyzers_NVCC_:.cu=.cu.o))
 

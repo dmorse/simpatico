@@ -12,10 +12,11 @@ using namespace Util;
 class GArrayTest : public UnitTest 
 {
 
+   int memory_;
+
 public:
 
-   void setUp(){ TEST_ASSERT(Memory::total() == 0); };
-   void tearDown(){};
+   void setUp();
    void testReserve();
    void testConstructor();
    void testSubscript();
@@ -29,6 +30,9 @@ public:
 };
 
 
+void GArrayTest::setUp()
+{  memory_ = Memory::total(); } 
+
 void GArrayTest::testConstructor()
 {
    printMethod(TEST_FUNC);
@@ -36,7 +40,7 @@ void GArrayTest::testConstructor()
       GArray<int> v;
       TEST_ASSERT(v.capacity() == 0);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 } 
 
 void GArrayTest::testReserve()
@@ -48,7 +52,7 @@ void GArrayTest::testReserve()
       TEST_ASSERT(v.capacity() == 3 );
       TEST_ASSERT(v.size() == 0 );
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 void GArrayTest::testSubscript()
@@ -65,7 +69,7 @@ void GArrayTest::testSubscript()
       TEST_ASSERT(v[1] == 4);
       TEST_ASSERT(v[2] == 5);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 } 
 
 void GArrayTest::testDefaultReserve()
@@ -86,7 +90,7 @@ void GArrayTest::testDefaultReserve()
       TEST_ASSERT(v.size() == 5);
       TEST_ASSERT(v.capacity() == 64);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 } 
 
 void GArrayTest::testAppendResize()
@@ -108,7 +112,7 @@ void GArrayTest::testAppendResize()
       TEST_ASSERT(v.size() == 5);
       TEST_ASSERT(v.capacity() == 6);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 } 
 
 void GArrayTest::testResize1()
@@ -128,7 +132,7 @@ void GArrayTest::testResize1()
       TEST_ASSERT(v[0] == 3);
       TEST_ASSERT(v[1] == 4);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 } 
 
 void GArrayTest::testResize2()
@@ -172,7 +176,7 @@ void GArrayTest::testResize2()
       TEST_ASSERT(v[3] == 0);
       TEST_ASSERT(v[4] == 0);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 } 
 
 void GArrayTest::testCopyConstructor()
@@ -200,7 +204,7 @@ void GArrayTest::testCopyConstructor()
       TEST_ASSERT(u[1] == 4 );
       TEST_ASSERT(u[2] == 5 );
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 
@@ -253,7 +257,7 @@ void GArrayTest::testSerialize1File()
       TEST_ASSERT(u[2] == 5);
       TEST_ASSERT(i2 == 13);
    }
-   TEST_ASSERT(Memory::total() == 0);
+   TEST_ASSERT(Memory::total() == memory_);
 }
 
 TEST_BEGIN(GArrayTest)

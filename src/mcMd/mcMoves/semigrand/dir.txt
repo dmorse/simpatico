@@ -1,3 +1,0 @@
-subDirectories =
-pathFromSrc = mcMd/mcMoves/semigrand
-pathToSrc = ../../..

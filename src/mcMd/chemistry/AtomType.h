@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -129,7 +129,7 @@ namespace McMd
 
    };
 
-   // Inline methods
+   // Inline member functions.
 
    /*
    * Set the mass.
@@ -184,9 +184,9 @@ namespace McMd
    *
    * Format:
    *
-   *    name  mass
+   *    name  [string] mass [double]
    *
-   * \param in        input stream
+   * \param in  input stream
    * \param atomType  AtomType to be read from stream
    * \return modified input stream
    */
@@ -199,8 +199,8 @@ namespace McMd
    *
    *    name  mass
    *
-   * \param  out      output stream
-   * \param  atomType AtomType to be written to stream
+   * \param  out  output stream
+   * \param  atomType  AtomType to be written to stream
    * \return modified output stream
    */
    std::ostream& operator<<(std::ostream& out, const AtomType &atomType);
@@ -208,9 +208,9 @@ namespace McMd
    /**
    * Serialize an AtomType.
    *
-   * \param ar        archive object
+   * \param ar  archive object
    * \param atomType  object to be serialized
-   * \param version   archive version id
+   * \param version  archive version id
    */
    template <class Archive>
    void serialize(Archive& ar, AtomType& atomType, const unsigned int version)
@@ -233,18 +233,32 @@ namespace Util
 
    /**
    * Send an AtomType (wrapper for MPI Send).
+   *
+   * \param comm MPI communicator
+   * \param data AtomType data
+   * \param dest MPI rank of destination (receiving) processor
+   * \param tag  integer identifier for message
    */
    template <>
    void send<McMd::AtomType>(MPI::Comm& comm, McMd::AtomType& data, int dest, int tag);
 
    /**
    * Receive an AtomType (wrapper for MPI Recv).
+   *
+   * \param comm MPI communicator
+   * \param data AtomType data
+   * \param source MPI rank of source (sending) processor
+   * \param tag  integer identifier for message
    */
    template <>
    void recv<McMd::AtomType>(MPI::Comm& comm, McMd::AtomType& data, int source, int tag);
 
    /**
    * Broadcast an AtomType (wrapper for MPI Bcast).
+   *
+   * \param comm MPI communicator
+   * \param data AtomType data
+   * \param root MPI rank of root processor from which data is broadcast
    */
    template <>
    void bcast<McMd::AtomType>(MPI::Intracomm& comm, McMd::AtomType& data, int root);

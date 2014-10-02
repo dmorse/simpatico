@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -34,12 +34,12 @@
 #ifdef INTER_COULOMB
 #include <mcMd/potentials/coulomb/CoulombFactory.h>
 #endif
+#ifdef INTER_EXTERNAL
+#include <mcMd/potentials/external/ExternalFactory.h>
+#endif
 #ifdef MCMD_LINK
 #include <mcMd/potentials/link/LinkFactory.h>
 #include <mcMd/links/LinkMaster.h>
-#endif
-#ifdef INTER_EXTERNAL
-#include <mcMd/potentials/external/ExternalFactory.h>
 #endif
 #ifdef INTER_TETHER
 #include <mcMd/potentials/tether/tetherFactory.h>
@@ -95,11 +95,11 @@ namespace McMd
       #ifdef INTER_COULOMB
       coulombFactoryPtr_(0),
       #endif
-      #ifdef MCMD_LINK
-      linkFactoryPtr_(0),
-      #endif
       #ifdef INTER_EXTERNAL
       externalFactoryPtr_(0),
+      #endif
+      #ifdef MCMD_LINK
+      linkFactoryPtr_(0),
       #endif
       #ifdef INTER_TETHER
       tetherFactoryPtr_(0),
@@ -129,11 +129,11 @@ namespace McMd
       #ifdef INTER_COULOMB
       coulombStyle_(),
       #endif
-      #ifdef MCMD_LINK
-      linkStyle_(),
-      #endif
       #ifdef INTER_EXTERNAL
       externalStyle_(),
+      #endif
+      #ifdef MCMD_LINK
+      linkStyle_(),
       #endif
       #ifdef INTER_TETHER
       tetherStyle_(),
@@ -218,11 +218,11 @@ namespace McMd
       #ifdef INTER_COULOMB
       coulombStyle_(other.coulombStyle_),
       #endif
-      #ifdef MCMD_LINK
-      linkStyle_(other.linkStyle_),
-      #endif
       #ifdef INTER_EXTERNAL
       externalStyle_(other.externalStyle_),
+      #endif
+      #ifdef MCMD_LINK
+      linkStyle_(other.linkStyle_),
       #endif
       #ifdef INTER_TETHER
       tetherStyle_(other.tetherStyle_),
@@ -274,19 +274,14 @@ namespace McMd
             delete coulombFactoryPtr_;
          }
          #endif
-         #ifdef MCMD_LINK
-         if (linkFactoryPtr_) {
-            delete linkFactoryPtr_;
-         }
-         #endif
          #ifdef INTER_EXTERNAL
          if (externalFactoryPtr_) {
             delete externalFactoryPtr_;
          }
          #endif
          #ifdef MCMD_LINK
-         if (linkMasterPtr_) {
-            delete linkMasterPtr_;
+         if (linkFactoryPtr_) {
+            delete linkFactoryPtr_;
          }
          #endif
          #ifdef INTER_TETHER
@@ -446,40 +441,33 @@ namespace McMd
       #ifndef INTER_NOPAIR
       read<std::string>(in, "pairStyle", pairStyle_);
       #endif
-
       if (simulation().nBondType() > 0) {
          read<std::string>(in, "bondStyle", bondStyle_);
       }
-
       #ifdef INTER_ANGLE
       if (simulation().nAngleType() > 0) {
          read<std::string>(in, "angleStyle", angleStyle_);
       }
-
       #endif
       #ifdef INTER_DIHEDRAL
       if (simulation().nDihedralType() > 0) {
          read<std::string>(in, "dihedralStyle", dihedralStyle_);
       }
-
       #endif
       #ifdef INTER_COULOMB
       if (simulation().hasCoulomb() > 0) {
          read<std::string>(in, "coulombStyle", coulombStyle_);
       }
-
       #endif
       #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
          read<std::string>(in, "externalStyle", externalStyle_);
       }
-
       #endif
       #ifdef MCMD_LINK
       if (simulation().nLinkType() > 0) {
          read<std::string>(in, "linkStyle", linkStyle_);
       }
-
       #endif
       #ifdef INTER_TETHER
       if (simulation().hasTether()) {
@@ -557,14 +545,14 @@ namespace McMd
          ar << coulombStyle_;
       }
       #endif
-      #ifdef MCMD_LINK
-      if (simulation().nLinkType() > 0) {
-         ar << linkStyle_;
-      }
-      #endif
       #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
          ar << externalStyle_;
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         ar << linkStyle_;
       }
       #endif
       #ifdef INTER_TETHER
@@ -693,7 +681,7 @@ namespace McMd
    }
 
    /*
-   * Save internal state to an archive.
+   * Save configuration to an archive.
    */
    void System::saveConfig(Serializable::OArchive& ar)
    {
@@ -871,20 +859,20 @@ namespace McMd
    /*
    * If a perturbation is expected, read the polymorphic perturbation block. 
    *
-   * This method reads the array of perturbation parameters, and then
+   * This function reads the array of perturbation parameters, and then
    * modifies the appropriate system parameters accordingly. This function
    * is not called by System::readParameters, but should be called by the 
-   * readParameters method of subclasses (e.g., MdSystem and McSystem). It 
+   * readParameters function of subclasses (e.g., MdSystem and McSystem). It 
    * should be called after all of the potentials, ensmebles, and other 
    * physical parameters, which provide a set of baseline parameters that 
-   * this method can then modify.
+   * this function can then modify.
    *
    * The parameter value used for this system is determined by the rank
    * of this System, which is a parameter of the Perturbation constructor.
    * The rank must thus be known to the perturbation factory that creates 
    * an instance of a subclass of Perturbation. Subclasses of system must
    * re-implement the virtual System::newDefaultPerturbationFactory()
-   * method to create an appropriate Factory object.
+   * function to create an appropriate Factory object.
    */
    void System::readPerturbation(std::istream& in) 
    {
@@ -1200,8 +1188,8 @@ namespace McMd
    */
    std::string System::dihedralStyle() const
    {  return dihedralStyle_;  }
-
    #endif
+
    #ifdef INTER_COULOMB
    /*
    * Return the CoulombFactory by reference.
@@ -1220,28 +1208,8 @@ namespace McMd
    */
    std::string System::coulombStyle() const
    {  return coulombStyle_;  }
-
    #endif
-   #ifdef MCMD_LINK
-   /*
-   * Return the Link factory by reference.
-   */
-   Factory<BondPotential>& System::linkFactory()
-   {
-      if (linkFactoryPtr_ == 0) {
-         linkFactoryPtr_ = new LinkFactory(*this);
-      }
-      assert(linkFactoryPtr_);
-      return *linkFactoryPtr_;
-   }
 
-   /*
-   * Get the link style string.
-   */
-   std::string System::linkStyle() const
-   {  return linkStyle_;  }
-
-   #endif
    #ifdef INTER_EXTERNAL
    /*
    * Return the ExternalFactory by reference.
@@ -1260,8 +1228,28 @@ namespace McMd
    */
    std::string System::externalStyle() const
    {  return externalStyle_;  }
-
    #endif
+
+   #ifdef MCMD_LINK
+   /*
+   * Return the Link factory by reference.
+   */
+   Factory<BondPotential>& System::linkFactory()
+   {
+      if (linkFactoryPtr_ == 0) {
+         linkFactoryPtr_ = new LinkFactory(*this);
+      }
+      assert(linkFactoryPtr_);
+      return *linkFactoryPtr_;
+   }
+
+   /*
+   * Get the link style string.
+   */
+   std::string System::linkStyle() const
+   {  return linkStyle_;  }
+   #endif
+
    #ifdef INTER_TETHER
    /*
    * Return the TetherFactory by reference.

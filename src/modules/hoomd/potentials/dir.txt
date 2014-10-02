@@ -1,4 +1,0 @@
-subDirectories = pair bond link
-pathFromSrc = modules/hoomd/potentials
-pathToSrc = ../../..
-

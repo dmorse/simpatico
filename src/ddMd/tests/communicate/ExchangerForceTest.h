@@ -5,6 +5,10 @@
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/communicate/Exchanger.h>
+#include <ddMd/communicate/GroupDistributor.h>
+#include <ddMd/communicate/GroupDistributor.tpp>
+#include <ddMd/communicate/GroupCollector.h>
+#include <ddMd/communicate/GroupCollector.tpp>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
@@ -35,8 +39,6 @@
 #include <inter/dihedral/MultiHarmonicDihedral.h>
 #include <inter/dihedral/CosineDihedral.h>
 #endif
-
-#include <util/mpi/MpiLogger.h>
 
 #ifdef UTIL_MPI
 #ifndef TEST_MPI
@@ -78,7 +80,7 @@ private:
 
    DArray<Vector> forces;
 
-   PairPotentialImpl<DpdPair>        pairPotential;
+   PairPotentialImpl<DpdPair> pairPotential;
    BondPotentialImpl<HarmonicL0Bond> bondPotential;
    #ifdef INTER_ANGLE
    AnglePotentialImpl<HarmonicAngle> anglePotential;
@@ -125,6 +127,22 @@ void ExchangerForceTest::initialize()
 
    // Set connections between atomDistributors
    domain.setBoundary(boundary);
+   atomStorage.associate(domain, boundary, buffer);
+   bondStorage.associate(domain, atomStorage, buffer);
+   exchanger.associate(domain, boundary, atomStorage, buffer);
+   exchanger.addGroupExchanger(bondStorage);
+   #ifdef INTER_ANGLE
+   angleStorage.associate(domain, atomStorage, buffer);
+   if (hasAngle) {
+      exchanger.addGroupExchanger(angleStorage);
+   }
+   #endif
+   #ifdef INTER_DIHEDRAL
+   dihedralStorage.associate(domain, atomStorage, buffer);
+   if (hasDihedral) {
+      exchanger.addGroupExchanger(dihedralStorage);
+   }
+   #endif
    configIo.associate(domain, boundary, atomStorage, bondStorage, 
                       #ifdef INTER_ANGLE
                       angleStorage,
@@ -133,37 +151,6 @@ void ExchangerForceTest::initialize()
                       dihedralStorage,
                       #endif
                       buffer);
-   exchanger.associate(domain, boundary, atomStorage, buffer);
-   exchanger.addGroupExchanger(bondStorage);
-   #ifdef INTER_ANGLE
-   if (hasAngles) {
-      exchanger.addGroupExchanger(angleStorage);
-   }
-   #endif
-   #ifdef INTER_DIHEDRAL
-   if (hasDihedrals) {
-      exchanger.addGroupExchanger(dihedralStorage);
-   }
-   #endif
-
-   pairPotential.setNAtomType(1);
-   pairPotential.associate(domain, boundary, atomStorage);
-   pairPotential.setReverseUpdateFlag(reverseUpdateFlag);
-
-   bondPotential.setNBondType(1);
-   bondPotential.associate(boundary, bondStorage);
-   #ifdef INTER_ANGLE
-   if (hasAngles) {
-      anglePotential.setNAngleType(1);
-      anglePotential.associate(boundary, angleStorage);
-   }
-   #endif
-   #ifdef INTER_DIHEDRAL
-   if (hasDihedrals) {
-      dihedralPotential.setNDihedralType(1);
-      dihedralPotential.associate(boundary, dihedralStorage);
-   }
-   #endif
 
    #ifdef UTIL_MPI
    // Set communicators
@@ -173,16 +160,12 @@ void ExchangerForceTest::initialize()
    configIo.setIoCommunicator(communicator());
    random.setIoCommunicator(communicator());
    atomStorage.setIoCommunicator(communicator());
-   pairPotential.setIoCommunicator(communicator());
    bondStorage.setIoCommunicator(communicator());
-   bondPotential.setIoCommunicator(communicator());
    #ifdef INTER_ANGLE
    angleStorage.setIoCommunicator(communicator());
-   anglePotential.setIoCommunicator(communicator());
    #endif
    #ifdef INTER_DIHEDRAL
    dihedralStorage.setIoCommunicator(communicator());
-   dihedralPotential.setIoCommunicator(communicator());
    #endif
    #else // ifdef UTIL_MPI
    domain.setRank(0);
@@ -201,34 +184,51 @@ void ExchangerForceTest::initialize()
    // Read parameter file
    domain.readParam(file());
    buffer.readParam(file());
-   //configIo.readParam(file());
    random.readParam(file());
+
    atomStorage.readParam(file());
+   #ifdef INTER_BOND
    bondStorage.readParam(file());
+   #endif
    #ifdef INTER_ANGLE
-   if (hasAngles) {
+   if (hasAngle) {
       angleStorage.readParam(file());
    }
    #endif
    #ifdef INTER_DIHEDRAL
-   if (hasDihedrals) {
+   if (hasDihedral) {
       dihedralStorage.readParam(file());
    }
    #endif
-
+   
+   pairPotential.associate(domain, boundary, atomStorage);
+   pairPotential.setIoCommunicator(communicator());
+   pairPotential.setNAtomType(1);
+   pairPotential.setReverseUpdateFlag(reverseUpdateFlag);
    pairPotential.readParam(file());
+
+   bondPotential.associate(boundary, bondStorage);
+   bondPotential.setIoCommunicator(communicator());
+   bondPotential.setNBondType(1);
    bondPotential.readParam(file());
+
    #ifdef INTER_ANGLE
    if (hasAngles) {
+      anglePotential.setIoCommunicator(communicator());
+      anglePotential.associate(boundary, angleStorage);
+      anglePotential.setNAngleType(1);
       anglePotential.readParam(file());
    }
    #endif
    #ifdef INTER_DIHEDRAL
    if (hasDihedrals) {
+      dihedralPotential.associate(boundary, dihedralStorage);
+      dihedralPotential.setIoCommunicator(communicator());
+      dihedralPotential.setNDihedralType(1);
       dihedralPotential.readParam(file());
    }
    #endif
-   configIo.initialize();
+
    closeFile();
 
    exchanger.setPairCutoff(pairPotential.cutoff());
@@ -236,12 +236,11 @@ void ExchangerForceTest::initialize()
    forces.allocate(atomStorage.totalAtomCapacity());
 
    MaskPolicy policy = MaskBonded;
-   //std::ifstream configFile("in/config");
    std::ifstream configFile;
    openInputFile("in/config", configFile);
    configIo.readConfig(configFile, policy);
 
-   int  nAtom = 0;     // Number received on this processor.
+   int  nAtom = 0;    // Number received on this processor.
    int  nAtomAll = 0; // Number received on all processors.
 
    // Check that all atoms are accounted for after distribution.
@@ -260,19 +259,25 @@ void ExchangerForceTest::displaceAtoms(double range)
 {
 
    // Set displacement ranges in appropriate coordinate system
+   // Input parameter is range in Cartesian coordinates
    Vector ranges;
-   for (int i = 0; i < Dimension; ++i) {
-      ranges[i] = range/boundary.length(i);
+   if (atomStorage.isCartesian()) {
+      for (int i = 0; i < Dimension; ++i) {
+         ranges[i] = range;
+      }
+   } else {
+      for (int i = 0; i < Dimension; ++i) {
+         ranges[i] = range/boundary.length(i);
+      }
    }
   
    // Displace local atoms
    AtomIterator atomIter;
    double min, max;
-   for (int i = 0; i < Dimension; ++i) {
-      max = ranges[i];
-      min = -max;
-      atomStorage.begin(atomIter);
-      for ( ; atomIter.notEnd(); ++atomIter) {
+   for (atomStorage.begin(atomIter); atomIter.notEnd(); ++atomIter) {
+      for (int i = 0; i < Dimension; ++i) {
+         max = ranges[i];
+         min = -max;
          atomIter->position()[i] += random.uniform(min, max);
       }
    }
@@ -394,8 +399,9 @@ void ExchangerForceTest::testGhostUpdate()
    int  nAtomAll = 0; // Number received on all processors.
    int  myRank = domain.gridRank();
 
-   double range = 0.4;
+   double range = 0.2;
    displaceAtoms(range);
+   atomStorage.clearSnapshot();
    exchanger.exchange();
    exchangeNotify();
 
@@ -405,6 +411,7 @@ void ExchangerForceTest::testGhostUpdate()
 
    // Transform to Cartesian coordinates
    atomStorage.transformGenToCart(boundary);
+   atomStorage.makeSnapshot();
 
    // Update ghost positions
    exchanger.update();
@@ -479,9 +486,10 @@ void ExchangerForceTest::testGhostUpdateCycle()
    AtomIterator   atomIter;
    GhostIterator  ghostIter;
 
-   double range = 0.05;
+   double range = 0.02;
    //displaceAtoms(range);
 
+   atomStorage.clearSnapshot();
    exchanger.exchange();
    exchangeNotify();
    nAtom = atomStorage.nAtom();
@@ -506,13 +514,13 @@ void ExchangerForceTest::testGhostUpdateCycle()
    // Transform to Cartesian coordinates
    atomStorage.transformGenToCart(boundary);
 
-   range = 0.05;
+   range = 0.02;
    for (int i=0; i < 4; ++i) {
 
       TEST_ASSERT(atomStorage.isCartesian());
       displaceAtoms(range);
 
-      for (int j=0; j < 2; ++j) {
+      for (int j = 0; j < 2; ++j) {
          exchanger.update();
          TEST_ASSERT(nGhost == atomStorage.nGhost());
          TEST_ASSERT(nAtom == atomStorage.nAtom());
@@ -559,6 +567,7 @@ void ExchangerForceTest::testGhostUpdateCycle()
 
       // Transform to Cartesian coordinates
       atomStorage.transformGenToCart(boundary);
+      atomStorage.makeSnapshot();
 
    }
 

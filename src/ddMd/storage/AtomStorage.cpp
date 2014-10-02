@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -56,6 +56,16 @@ namespace DdMd
    */
    AtomStorage::~AtomStorage()
    {}
+
+   /*
+   * Create associations for distributor and collector.
+   */
+   void AtomStorage::associate(Domain& domain, Boundary& boundary, 
+                               Buffer& buffer)
+   {
+      distributor_.associate(domain, boundary, *this, buffer);
+      collector_.associate(domain, *this, buffer);
+   }
 
    /*
    * Set parameters and allocate memory.

@@ -142,39 +142,45 @@ McSimulation{
 \endcode
 
 \section user_param_mcmd_overview_section Overview
-In outline, the structure for an mcSim file for the default the code (without angle, dihedral or external potentials) is:
+The format is shown below for an mcSim file for a code with all potential types enabled at compile time (with bond, angle, dihedral and external potentials). Most parameters are shown in the format "label type" where type is the type of variable expected. Optional parameters are shown in square brackets, using the format [label type = default], where default is the default value assigned to the variable if this line is absent from the parameter file.
 \code
 McSimulation{
   FileMaster{ ... }
-  nAtomType    [int]
-  nBondType    [int]
-  atomTypes    [string (name)]   [float (mass)]
+  nAtomType       int
+  [nBondType      int = 0]
+  [nAngleType     int = 0]
+  [nDihedralType  int = 0]
+  [hasExternal    bool = 0]
+  atomTypes    string (name)   float (mass)
                ...
-  maskedPairPolicy   [string]
+  maskedPairPolicy   string
   SpeciesManager{ ... }
   Random{ ... }
   McSystem{ ... }
   McMoveManager{ ... }
   AnalyzerManager{ ... }
-  writeRestartInterval  [int]
-  writeRestartFileName  [string]
+  writeRestartInterval  int
+  writeRestartFileName  string
 }
 \endcode
 The corresponding format for an mdSim file is:
 \code
 MdSimulation{
   FileMaster{ ... }
-  nAtomType    [int]
-  nBondType    [int]
-  atomTypes    [string (name)]   [float (mass)]
+  nAtomType        int
+  [nBondType       int = 0]
+  [nAngleType      int = 0]
+  [nDihedralType   int = 0]
+  [hasExternal     bool = 0]
+  atomTypes        string (name)   float (mass)
                ...
-  maskedPairPolicy   [string]
+  maskedPairPolicy   string
   SpeciesManager{ ... }
   Random{ ... }
   MdSystem{ ... }
   AnalyzerManager{ ... }
-  writeRestartInterval    [int]
-  writeRestartFileName    [string]
+  writeRestartInterval    int
+  writeRestartFileName    string
 }
 \endcode
 The two formats are similar in most respects. The most important differences are:
@@ -191,6 +197,7 @@ The following parameters appear in the main block in the format for either type 
 <ul>
 <li> nAtomType: The number of atom types, which are indexed by an integer index with values 0, ...,  nAtomType - 1. </li>
 <li> nBondType: The number of bond types, which are indexed by an integer index with values 0, ...,  nBondType - 1. </li>
+<li> hasExternal: This is a boolean variable that is set to true (1) if an external potential will be used and false (0) otherwise. </li>
 <li> atomTypes: atomTypes is an array of values of type McMd::AtomType. The string representation of each atom type consists of a string label (e.g., "A" or "B") followed by a floating point value for the atom mass. </li>
 <li> maskedPairPolicy: Determines if nonbonded pair interactions between bonded atoms are "masked" (i.e., suppressed), or included. See below for further discussion.
 <li> writeRestartInterval: The interval, in MD time steps or attempted MC moves, between time steps when a restart file is written.
@@ -198,13 +205,13 @@ The following parameters appear in the main block in the format for either type 
 </ul>
 The writeRestartInterval and writeRestartFileName parameters are discussed in more detail \ref user_restart_page "here".
 
-\section user_param_mcmd_maskPairPolicy_section MaskedPairPolicy
-The parameter maskedPairPolicy is represented internally by an instance of the enum McMd::MaskPolicy. This can have values MaskBonded or MaskNone, which are represented in the parameter file by strings "MaskBonded" or "maskBonded" and "MaskNone" or "maskNone", respectively. The value "MaskBonded" indicates that nonbonded pair interactions between bonded atoms should be suppressed or "masked", i.e., there should be no non-bonded pair interaction between pairs of atoms that are directly connected by a two-body covalent bond. The value "MaskNone" indicates, conversely, that the nonbonded pair interaction should operate between any two atoms that are separated by a distance less than the appropriate pair potential cutoff length.
-
 \section user_param_mcmd_filemaster_section FileMaster
 The FileMaster block is associated with an instance of the class Util::FileMaster. This block contains several string parameters that specify locations of input and output files. The string "commandFileName" is the name of the command file that controls program execution after the parameter file is processed. The "inputPrefix" string is prepended to the names of input configuration files and other input files. The "outputPrefix" string is predended to the names of most output files. 
 
 Input and output files can be placed in separate directories by giving directory names for these two prefixes, in which case the prefix strings should end with a backslash (directory separator). In the above example, by setting "inputPrefix" to "in/" and "outputPrefix" to "out/", we have specified that input files should be read from subdirectory "in" and output files should be written to a subdirectory named "out".
+
+\section user_param_mcmd_maskPairPolicy_section MaskedPairPolicy
+The parameter maskedPairPolicy is represented internally by an instance of the enum McMd::MaskPolicy. This can have values MaskBonded or MaskNone, which are represented in the parameter file by strings "MaskBonded" or "maskBonded" and "MaskNone" or "maskNone", respectively. The value "MaskBonded" indicates that nonbonded pair interactions between bonded atoms should be suppressed or "masked", i.e., there should be no non-bonded pair interaction between pairs of atoms that are directly connected by a two-body covalent bond. The value "MaskNone" indicates, conversely, that the nonbonded pair interaction should operate between any two atoms that are separated by a distance less than the appropriate pair potential cutoff length.
 
 \section user_param_random_section Random
 The Random block is associated with a Util::Random object.  The only parameter this block is a "seed" for the Mersenne-Twister random number generator. The seed value must be an unsigned (non-negative) 32 bit integer, in the range 0 <= seed < 4294967296.
@@ -219,8 +226,11 @@ The AnalyzerManager block contains a single integer parameter named baseInterval
 The format for an McSystem subblock of an MdSimulation is:
 \code
   McSystem{
-    pairStyle      [string]
-    bondStyle      [string]
+    pairStyle         string
+    [bondStyle        string]
+    [angleStyle       string]
+    [dihedralStyle    string]
+    [externalStyle    string]
     McPairPotential{ ... }
     BondPotential{ ... }
     EnergyEnsemble{ ... }
@@ -230,24 +240,29 @@ The format for an McSystem subblock of an MdSimulation is:
 The format for an MdSystem subblock of an MdSimulation block is:
 \code
   McSystem{
-    pairStyle      [string]
-    bondStyle      [string]
+    pairStyle        string
+    bondStyle        string
+    angleStyle       string
+    dihedralStyle    string
+    externalStyle    string
     MdPairPotential{ ...  }
-    BondPotential{ ...  }
-    EnergyEnsemble{ ...  }
-    BoundaryEnsemble{ ...  }
+    [BondPotential{ ...  }]
+    [EnergyEnsemble{ ...  }]
+    [BoundaryEnsemble{ ...  }]
     MdIntegrator{ ...  }
   }
 \endcode
-In the above description of the MdSystem block, MdIntegrator{ ... } denotes a polymorphic block that must contain the file format for a subclass of the McMd::MdIntegrator base class.
+The both types of System, values of the potential energy "style" parameters (pairStyle, bondStyle, etc.) are strings that specify the names of "interaction" classes that implement specific potential energy functions for nonbonded pair, covalent and external potentials, respectively. For example, pairStyle may be assigned a valueLJPair, indicating the LJPair interaction class defined in the src/inter/pair directory. Interaction classes of different types are in different subdirectories of the src/inter directory tree. 
+
+For bond, angle and dihedral covalent potentials, the style string (e.g., bondStyle) and potential energy block (e.g., BondPotential) must be present if and only if the corresponding type of potential energy has been enabled by explicitly assigning a nonzero value to nBondType, nAngleType, or nDihedralType parameters, respectively, in the main McSimulation or MdSimulation block. Similarly, the externalStyle parameter and ExternalPotential block must be present if an only if the external potential has been explicitly assigned a value of true (1).  These style string and potential energy entries may not appear if the corresponding potential energy has been disabled by setting the corresonding n(Potential)Type variable to its default value of zero for covalent potentials or by setting hasExternal to its default value of false (0), or by not including these variables in the parameter file.
 
 The only differences between an MdSystem block and an McSystem block are thus:
   
   - An MdSystem contains an MdPairPotential block (McMd::MdPairPotential) where an McSystem contains an McPairPotential block (McMd::McPairPotential).
  
-  - An MdSystem block contains an additional polymorphic McMd::MdIntegrator block.
+  - An MdSystem block contains an additional McMd::MdIntegrator block. In the above description of the MdSystem block, MdIntegrator{ ... } denotes a polymorphic block that must contain the file format for a subclass of the McMd::MdIntegrator base class, with an opening line that specifies the desired subclass (e.g., NvtIntegrator{...}). 
 
-The both types of System, values of the pairStyle and bondStyle parameters are strings that specify the names of "interaction" classes that implement specific potential energy functions for nonbonded pair and covalent bond potentials, respectively. Interaction classes for non-bonded pair interactions are in the src/inter/pair directory. Interaction classes for bond potentials are in the src/inter/bond directory. For executables in which angle, dihedral, and/or external potentials have enabled (these are all disabled by default) these two "style" variables would be followed by "angleStyle", "dihedralStyle" and/or "externaStyle" string variables, as appropriate. 
+
 
 \section user_param_mdpair_section Pair Potentials
 

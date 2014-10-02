@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -91,6 +91,8 @@ namespace Util
    * constructed as a concatenation of a root prefix (if any), a
    * directory id string (if any), and a base name provided as a
    * parameter to these methods.
+   *
+   * \ingroup Misc_Module
    */
    class FileMaster : public ParamComposite
    {

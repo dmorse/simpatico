@@ -1,3 +1,0 @@
-subDirectories = analyzers mcMoves
-pathFromSrc = modules/sliplink
-pathToSrc = ../..

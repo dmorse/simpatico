@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -29,6 +29,8 @@ namespace McMd
    * tail).  The direction of the move (i.e., which end is the head) is 
    * chosen at random. The only parameter is nTrial, the number of trial 
    * positions for the new position of the head monomer.
+   *
+   * \sa \ref mcMd_mcMove_CfbReptationMove_page "param file format"
    *
    * \ingroup McMd_McMove_Module
    */

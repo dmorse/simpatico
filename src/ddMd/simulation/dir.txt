@@ -1,3 +1,0 @@
-subDirectories =
-pathFromSrc = ddMd/simulation
-pathToSrc = ../..

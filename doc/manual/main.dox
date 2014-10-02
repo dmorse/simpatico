@@ -20,8 +20,8 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \ref user_commands_page </li>
    <li> \ref user_cfgfile_page  </li>
    <li> \ref user_examples_page </li>
-   <li> \ref inter_page </li>
    <li> \ref user_analysis_page </li>
+   <li> \ref user_features_page </li>
    <li> \ref user_restart_page  </li>
    <li> \ref user_multi_page    </li>
    <li> \ref user_options_page  </li>
@@ -35,7 +35,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \subpage Inter_NS_page </li>
    <li> \subpage McMd_NS_page  </li>
    <li> \subpage DdMd_NS_page  </li>
-   <li> \subpage MdCf_NS_page  </li>
+   <li> \subpage SpAn_NS_page  </li>
    </ul>
  </li>
  <li> \subpage extend_page  "4. Extending Simpatico" </li>

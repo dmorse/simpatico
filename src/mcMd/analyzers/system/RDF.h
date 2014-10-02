@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -35,6 +35,8 @@ namespace McMd
    * types, and may specify whether to accept only intermolecular,
    * intramolecular or all pairs. Only one histogram (or RDF) can be 
    * calculated.
+   *
+   * \sa \ref mcMd_analyzer_RDF_page "parameter file format"
    *
    * \ingroup McMd_Analyzer_Module
    */

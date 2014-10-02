@@ -5,104 +5,114 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-Simpatico is a C++ package for Monte Carlo (MC), Molecular Dynamics 
-(MD) and hybrid MD/MC simulations of classical mechanical models of
-polymeric and molecular liquids. It contains:
+Simpatico is a C++ package for Molecular Dynamics (MD), Monte Carlo (MC), 
+and hybrid MC simulations of classical mechanical models of polymeric and
+molecular liquids. It contains:
+
+- A program for parallel MD simulations, named ddSim.
 
 - Programs for Monte Carlo (MC) and molecular dynamics (MD) 
   simulations on a single processor, named mcSim and mdSim.
 
-- A program for parallel MD simulations, named ddSim.
-
-The parallel MD program ddSim uses a domain (or spatial) 
-decomposition algorithm for parallelization.
+The parallel MD program ddSim uses a spatial domain decomposition for 
+parallelization.
    
 Getting the Source Code:
 ------------------------
 
-Simpatico source code may be obtained either by downloading 
-a tar filefrom the github project web page
-<http://dmorse.github.com/simpatico/index.html> 
-or by using git to cloning a working tree from
-<https://github.com/dmorse/simpatico>.
-Either method gets you a current copy of the master branch from 
-the git repository.
+Simpatico source code may be obtained either by downloading a compressed
+tar file from the github project web page
 
-If you download a tarball, the tar file will be named something
-like dmorse-simpatico-id.tar, where "id" denotes a denotes a 
-hexadecimal identifier for the most recent commit to the git 
-repository.  When you extract the tar file (tar -xvf), the 
-source files will be extracted into a directory with the same 
-name, dmorse-simpatico-id/.  To recreate the same directory 
-structure as that used in the repository, in which the root 
-directory is named simpatico/, you may want to rename this root 
-directory to simpatico/, before running the ./setup script.
-To unpack the tar file and move the directory, enter:
+<http://dmorse.github.com/simpatico/index.html> 
+
+or by using git to clone the github repository from the repository page
+                                                                             
+<https://github.com/dmorse/simpatico>.
+
+Either method gets you a current copy of the master branch from the git 
+repository. 
+
+If you download a tarball, the tar file will be named something like 
+dmorse-simpatico-id.tar, where "id" denotes a denotes a hexadecimal 
+identifier for the most recent commit to the git repository.  When you 
+extract the tar file (tar -xvf), the source files will be extracted into 
+a directory with the same name, dmorse-simpatico-id/.  To recreate the 
+same directory structure as that used in the repository, in which the 
+root directory is named simpatico/, you may want to rename this root 
+directory to simpatico/, before running the ./setup script.  To unpack 
+the tar file and move the directory, enter:
 
    > tar -xvf dmorse-simpatico-id.tar
    > mv  dmorse-simpatico-id simpatico
 
-from the directory that will contain the simpatico root
-directory. If you mv the root directory after running the 
-setup script (see below), you must rerun the script. 
+from the parent directory that will contain the simpatico root directory. 
+If you move the root directory after running the setup script (see below), 
+you must rerun the setup script. 
 
 Documentation:
 --------------
 
-Web pages that provide both user and developer documentation for
-Simpatico is prepared using the Doxygen utility (www.doxygen.org). 
+Web pages that provide both user and developer documentation for 
+Simpatico is prepared using the Doxygen utility (www.doxygen.org).  
 Doxygen creates html web pages that are deposited in the directory 
-doc/html/ of the working tree. These pages are created from 
-comments extracted from the C++ source code, and from a set of 
-text files in the directory doc/manual/. These text files, which 
-have the file extension *.dox, contain the text for a set of 
-introductory documentation pages, and are readable in any text 
-editor. 
+doc/html/ of the working tree. These pages are created from comments 
+extracted from the C++ source code, and from a set of text files in the 
+directory doc/manual/. These text files, which have the file extension 
+*.dox, contain the text for a set of introductory documentation pages, 
+and are readable in any text editor. 
 
 A recent copy of the documentation is available online, at
+
 <http://dmorse.github.com/simpatico/index.html>.
 
 After getting a copy of the source code (either by download or by 
-cloning the git repository), you can use dOxygen to generate a 
-local copy of the html documentation within the simpatico/doc/html 
-directory of the source code tree.  This requires that dOxygen 
-be installed on your computer and that the executable be in a 
-directory in your PATH. The basic instructions (after dOxygen is 
-installed) are:
+cloning the git repository), you can use dOxygen to generate a local 
+copy of the html documentation within the simpatico/doc/html directory 
+of the source code tree.  This requires that dOxygen be installed on 
+your computer and that the executable be in a directory in your PATH. 
+The basic instructions (after dOxygen is installed) are:
 
   - cd to the simpatico/doc directory
+
   - Enter "make html"
 
-This should create a large set of html files in the 
-simpatico/doc/html directory. To begin reading the documentation, 
-point a browser at the file simpatico/doc/html/index.html.
+This should create many html files in the simpatico/doc/html 
+directory. To begin reading the documentation, point a browser at 
+the file simpatico/doc/html/index.html, which is the main page.
 
 Compiling:
 ----------
 
-The code is standard C++ and must be compiled from source. 
+The code is ansi standard C++ and must be compiled from source. 
 Multi-processor programs (ddSim and multi-processor versions of 
-mcSim and mdSim) require an MPI library. By default, the build
-system requires access to a python interpreter, though this
-dependence can be removed. Complete instructions for compiling 
-various versions of Simpatico are given in the text file 
-simpatico/doc/manual/user/compile.dox, or in the corresponding 
-html web page in the doc/html directory.
+mcSim and mdSim) also require an MPI library. The build system 
+requires the gnu version of the unix make utility and a python
+interpreter.
 
+Complete instructions for compiling various versions of Simpatico 
+are given in the text file simpatico/doc/manual/user/compile.dox, 
+or in the corresponding html web page in the doc/html directory.
 Short instructions for compiling the default single-processor 
 versions of mcSim and mdSim (for the impatient) are:
 
-- Add the simpatico/tools/python directory to your PYTHONPATH
-  environment variable.
+- Add the simpatico/bin directory to your linux command search
+  PATH environment variable, and add the simpatico/tools/python 
+  directory to your PYTHONPATH environment variable.
 
-- cd to the simpatico root directory
+- cd to the simpatico/ root directory
 
-- Enter "./setup" to run a setup script
+- Enter "./setup" from this root directory to run a setup script
 
-- Enter "make mcMd"
+- Enter "make mcMd" from the same directory
 
 The resulting executables, named "mcSim" and "mdSim", will be 
-installed in the simpatico bin/ directory. Further instructions
-for compiling multi-processor programs, and for enabling or
-disabling various compile-time features, are given in the text
-and html documentation.
+installed in the simpatico bin/ directory. Please see the text 
+file and html documentation mentioned above for further 
+instructions for compiling multi-processor programs, which may 
+require modification of the users programming environment and/or 
+simpatico configuration files to provide access to an MPI 
+library.  
+
+Instructions for enabling or disabling a variety of optional 
+compile-time features are also given in the html documentation. 
+

@@ -2,7 +2,7 @@
 .PHONY: clean 
 
 clean: 
-	cd cpp;  make clean
-	#cd python; make clean
+	cd cpp;  $(MAKE) clean
+	#cd python; $(MAKE) clean
 
 # ==============================================================================

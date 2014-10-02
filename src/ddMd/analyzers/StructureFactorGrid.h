@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -54,6 +54,8 @@ namespace DdMd
    * structure factor values for the wavevector, one for each 
    * atomTypeId pair.
    * 
+   * \sa \ref ddMd_analyzer_StructureFactorGrid_page "param file format"
+   *
    * \ingroup DdMd_Analyzer_Module
    */
    class StructureFactorGrid : public StructureFactor

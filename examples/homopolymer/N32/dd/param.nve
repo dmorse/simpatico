@@ -48,7 +48,8 @@ Simulation{
   }
   NveIntegrator{
     dt                0.005
-    saveInterval          0
+    saveInterval       5000
+    saveFileName    restart
   }
   Random{
     seed              8012457890
@@ -56,14 +57,24 @@ Simulation{
   AnalyzerManager{
      baseInterval     1000
 
+     LogEnergy{
+        interval        1000
+     }
+
+     LammpsDumpWriter{
+        interval        2000
+        outputFileName  trajectory.lmp
+     }
+
+     DdMdTrajectoryWriter{
+        interval        2000
+        outputFileName  out/trajectory.trj
+     }
+
   }
 }
 
     cutoff            2.5
-
-     LogEnergy{
-        interval        1000
-     }
 
     saveInterval       4000
     saveFileName    restart

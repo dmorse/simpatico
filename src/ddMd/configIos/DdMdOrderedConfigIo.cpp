@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -44,29 +44,17 @@ namespace DdMd
    /*
    * Constructor.
    */
-   #ifndef DDMD_MOLECULES
-   DdMdOrderedConfigIo::DdMdOrderedConfigIo()
-   #else
    DdMdOrderedConfigIo::DdMdOrderedConfigIo(bool hasMolecules)
-   #endif
-    : ConfigIo()
-      #ifdef DDMD_MOLECULES
-      , hasMolecules_(hasMolecules)
-      #endif
+    : ConfigIo(),
+      hasMolecules_(hasMolecules)
    {  setClassName("DdMdOrderedConfigIo"); }
 
    /*
    * Constructor.
    */
-   #ifndef DDMD_MOLECULES
-   DdMdOrderedConfigIo::DdMdOrderedConfigIo(Simulation& simulation)
-   #else
    DdMdOrderedConfigIo::DdMdOrderedConfigIo(Simulation& simulation, bool hasMolecules)
-   #endif
-    : ConfigIo(simulation)
-      #ifdef DDMD_MOLECULES
-      , hasMolecules_(hasMolecules)
-      #endif
+    : ConfigIo(simulation),
+      hasMolecules_(hasMolecules)
    {  setClassName("DdMdOrderedConfigIo"); }
 
    /*
@@ -117,6 +105,9 @@ namespace DdMd
       if (domain().isMaster() && !file.is_open()) {  
             UTIL_THROW("Error: File is not open on master"); 
       }
+      if (!Atom::hasAtomContext()) {
+         hasMolecules_ = false;
+      }
 
       // Read and broadcast boundary
       if (domain().isMaster()) {  
@@ -150,11 +141,9 @@ namespace DdMd
          int id;
          int typeId;
 
-         #ifdef DDMD_MOLECULES
          int aId;
          int mId;
          int sId;
-         #endif
 
          for (int i = 0; i < nAtom; ++i) {
 
@@ -168,7 +157,6 @@ namespace DdMd
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
  
-            #ifdef DDMD_MOLECULES
             if (hasMolecules_) {
                file >> sId >> mId >> aId;
                if (sId < 0) {
@@ -184,7 +172,6 @@ namespace DdMd
                atomPtr->context().moleculeId = mId;
                atomPtr->context().atomId = aId;
             }
-            #endif 
   
             file >> r;
             boundary().transformCartToGen(r, atomPtr->position());
@@ -303,6 +290,9 @@ namespace DdMd
       if (domain().isMaster() && !file.is_open()) {  
             UTIL_THROW("Error: File is not open on master"); 
       }
+      if (!Atom::hasAtomContext()) {
+         hasMolecules_ = false;
+      }
 
       // Write Boundary dimensions
       if (domain().isMaster()) {
@@ -343,9 +333,9 @@ namespace DdMd
             atoms_[id].velocity = atomPtr->velocity();
             atoms_[id].typeId = atomPtr->typeId();
             atoms_[id].id = id;
-            #ifdef DDMD_MOLECULES
-            atoms_[id].context = atomPtr->context();
-            #endif
+            if (hasMolecules_) {
+               atoms_[id].context = atomPtr->context();
+            }
             atomPtr = atomCollector().nextPtr();
             ++n;
          } 
@@ -359,13 +349,11 @@ namespace DdMd
                UTIL_THROW("Something is rotten in Denmark");
             }
             file << Int(id, 10) << Int(atoms_[id].typeId, 6);
-            #ifdef DDMD_MOLECULES
             if (hasMolecules_) {
                file << Int(atoms_[id].context.speciesId, 6)
                     << Int(atoms_[id].context.moleculeId, 6)
                     << Int(atoms_[id].context.atomId, 6);
             }
-            #endif
             file << "\n" << atoms_[id].position 
                  << "\n" << atoms_[id].velocity 
                  << "\n";

@@ -1,0 +1,42 @@
+/*! \page inter_pair_page 2.8.1.1 Pair Interactions
+
+Each of the pair potential interaction classes calculates the nonbonded interaction energy and force for pairs of particles. Each class defines a functional form for the potential function \f$V(r)\f$ of a particle pair as a function of the distance \f$r\f$ between the two particles, using parameters that depend upon the type ids of the two atoms.  This function is always set to zero for \f$r\f$ greater than some cutoff distance.
+
+The pair interaction classes are not derived from a common base class, but all implement a common interface that is described \subpage inter_pair_interface_page "here". 
+
+\section inter_pair_parameters_section Parameter File Format
+
+The parameters used in the pair potential between atoms of atom type ids i and j depend on the atom types.  Values for each variable that appears in the mathematical description of a pair potential function are thus stored in matrix containers (i.e., 2D arrays) containing nAtomType rows and nAtomType columns, in which the i, j element gives the value of the parameter for interactions between atoms of type i and j.  
+
+In the parameter file, the values for the elements of such a matrix appear in matrix format, in which each
+row of the matrix appears as one line of the file. The string label identifying the name of the parameters appears at the beginning of the line containing the first row. For example, a matrix-valued parameter 
+named "epsilon" for a system with 3 types of atoms (nAtomType =3) would be input in the format
+\code
+   epsilon  epsilon(0, 0)  epsilon(0, 1)  epsilon(0, 2)
+            epsilon(1, 0)  epsilon(1, 1)  epsilon(1, 2)
+            epsilon(2, 0)  epsilon(2, 1)  epsilon(2, 2)
+\endcode
+Here, the word "epsilon" at the beginning of first row represents a literal string label, but epsilon(i, j) represents a numerical value for interactions between atoms of types i and j.  
+
+The parameters that describe pair interactions are all represented by symmetric matrices, because the order in which the atom type indices are listed is arbitrary. At the moment, the parameter file uses an input format that was designed for a general matrix and that thus does not enforce this requirement. It is thus up to the user to enter the same values for the (i, j) and (j, i) off-diagonal elements of each such matrix. 
+
+For example, the Lennard-Jones potential LJPair has three parameters \f$\epsilon\f$, \f$\sigma\f$ and \f$r_{c}\f$. These are represented in the code by matrix-valued variables named "epsilon", "sigma", and "cutoff", which appear sequentially in the parameter file.  A parameter file block for this potential in a system with two types of atoms might thus look something like
+\code
+   epsilon    1.0    1.5
+              1.5    1.0
+   sigma      1.0    1.2
+              1.2    1.0
+   cutoff     2.5    3.0
+              3.0    2.5 
+\endcode
+In this example, a larger epsilon energy parameter and a larger van der Waals diameter sigma is used for interactions between unlike atoms of types 0 and 1 than between pairs of atoms of type 0 or type 1.  The cutoff for each pair of types has been chosen to be 2.5 times the sigma parameter for that pair (i.e., cutoff = 2.5 for 00 and 11 interactions, for which sigma = 1.0, and cutoff = 3.0 for 10 and 01 interactions, for which sigma = 1.2).
+
+\section inter_pair_interactions_section Pair Interaction Classes
+
+<ul style="list-style: none;">
+    <li> \subpage inter_pair_LJPair_page - truncated Lennard-Jones </li>
+    <li> \subpage inter_pair_WcaPair_page - Weeks-Chandler-Anderson (purely repulsive Lennard-Jones)</li>
+    <li> \subpage inter_pair_DpdPair_page - soft potential typical of dissipative particle dynamics (DPD) simulations </li>
+</ul>
+
+*/

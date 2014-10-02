@@ -5,6 +5,10 @@
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/communicate/Exchanger.h>
+#include <ddMd/communicate/GroupDistributor.h>
+#include <ddMd/communicate/GroupDistributor.tpp>
+#include <ddMd/communicate/GroupCollector.h>
+#include <ddMd/communicate/GroupCollector.tpp>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
@@ -78,6 +82,22 @@ void ExchangerTest::setUp()
 
    // Set connections between atomDistributors
    domain.setBoundary(boundary);
+   atomStorage.associate(domain, boundary, buffer);
+   bondStorage.associate(domain, atomStorage, buffer);
+   exchanger.associate(domain, boundary, atomStorage, buffer);
+   exchanger.addGroupExchanger(bondStorage);
+   #ifdef INTER_ANGLE
+   angleStorage.associate(domain, atomStorage, buffer);
+   if (hasAngle) {
+      exchanger.addGroupExchanger(angleStorage);
+   }
+   #endif
+   #ifdef INTER_DIHEDRAL
+   dihedralStorage.associate(domain, atomStorage, buffer);
+   if (hasDihedral) {
+      exchanger.addGroupExchanger(dihedralStorage);
+   }
+   #endif
    configIo.associate(domain, boundary, atomStorage, bondStorage, 
                       #ifdef INTER_ANGLE
                       angleStorage,
@@ -86,18 +106,6 @@ void ExchangerTest::setUp()
                       dihedralStorage,
                       #endif
                       buffer);
-   exchanger.associate(domain, boundary, atomStorage, buffer);
-   exchanger.addGroupExchanger(bondStorage);
-   #ifdef INTERANGLE
-   if (hasAngle) {
-      exchanger.addGroupExchanger(angleStorage);
-   }
-   #endif
-   #ifdef INTERDIHEDRAL
-   if (hasDihedral) {
-      exchanger.addGroupExchanger(dihedralStorage);
-   }
-   #endif
 
    #ifdef UTIL_MPI
    // Set communicators
@@ -131,10 +139,12 @@ void ExchangerTest::setUp()
 
    domain.readParam(file());
    buffer.readParam(file());
-   //configIo.readParam(file());
    random.readParam(file());
+
    atomStorage.readParam(file());
+   #ifdef INTER_BOND
    bondStorage.readParam(file());
+   #endif
    #ifdef INTER_ANGLE
    if (hasAngle) {
       angleStorage.readParam(file());
@@ -145,7 +155,7 @@ void ExchangerTest::setUp()
       dihedralStorage.readParam(file());
    }
    #endif
-   configIo.initialize();
+   // configIo.initialize();
    closeFile(); // close parameter file
 
    exchanger.setPairCutoff(0.5);

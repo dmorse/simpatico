@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -100,8 +100,7 @@ namespace McMd
       Vector dr;
       System::MoleculeIterator molIter;
       double prefactor;
-      //double dtHalf = 0.5*dt_;
-      int    iSpecies, nSpecies;
+      int iSpecies, nSpecies;
 
       nSpecies = simulation().nSpecies();
 

@@ -1,8 +1,8 @@
-OBJ_DIR_REL =../..
-include $(OBJ_DIR_REL)/config.mk
-include $(OBJ_DIR)/mcMd/config.mk
-include $(OBJ_DIR)/inter/config.mk
-include $(OBJ_DIR)/util/config.mk
+BLD_DIR_REL =../..
+include $(BLD_DIR_REL)/config.mk
+include $(BLD_DIR)/mcMd/config.mk
+include $(BLD_DIR)/inter/config.mk
+include $(BLD_DIR)/util/config.mk
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/mcMd/sources.mk
 include $(SRC_DIR)/inter/sources.mk
@@ -14,7 +14,7 @@ TEST=mcMd/tests/Test
 all: $(mcMd_tests_OBJS)
 
 run: $(mcMd_tests_OBJS)
-	$(OBJ_DIR)/$(TEST) $(SRC_DIR)/mcMd/tests/ > log
+	$(BLD_DIR)/$(TEST) $(SRC_DIR)/mcMd/tests/ > log
 	@echo `grep failed log` ", "\
              `grep successful log` "in mcMd/tests/log" > count
 	@cat count
@@ -24,13 +24,13 @@ clean:
 	rm -f $(mcMd_tests_OBJS:.o=.d)
 	rm -f $(mcMd_tests_OBJS:.o=)
 	rm -f *.cfg log count
-	cd chemistry; make clean
-	cd mcSimulation; make clean
-	cd mdSimulation; make clean
-	cd mdIntegrators; make clean
-	cd neighbor; make clean
-	cd simulation; make clean
-	cd species; make clean
+	cd chemistry; $(MAKE) clean
+	cd mcSimulation; $(MAKE) clean
+	cd mdSimulation; $(MAKE) clean
+	cd mdIntegrators; $(MAKE) clean
+	cd neighbor; $(MAKE) clean
+	cd simulation; $(MAKE) clean
+	cd species; $(MAKE) clean
 
 -include $(mcMd_tests_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)

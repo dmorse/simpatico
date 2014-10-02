@@ -165,7 +165,7 @@ public:
       // Collect atoms
       collector.associate(domain, storage, buffer);
       if (domain.isMaster()) {  
-         collector.allocate(buffer.atomCapacity());
+         collector.setCapacity(buffer.atomCapacity());
          collector.setup();
          Atom* atomPtr = collector.nextPtr();
          int i = 0;
@@ -191,7 +191,7 @@ public:
       // Collect atoms
       collector.associate(domain, storage, buffer);
       if (domain.isMaster()) {  
-         collector.allocate(6);
+         collector.setCapacity(6);
          collector.setup();
          Atom* atomPtr = collector.nextPtr();
          int i = 0;

@@ -1,0 +1,40 @@
+namespace McMd
+{
+
+/*! \page mcMd_mcMove_RigidDisplaceMove_page RigidDisplaceMove
+
+\section mcMd_mcMove_RigidDisplaceMove_overview_sec Synopsis
+
+This mcMove attemps a rigid displacement of a randomly chosen
+molecule of a specified species.
+
+\sa McMd::RigidDisplaceMove
+
+\section mcMd_mcMove_RigidDisplaceMove_param_sec Parameters
+The parameter file format is:
+\code
+   RigidDisplaceMove{ 
+      probability        double
+      speciesId          int
+      delta              double
+   }
+\endcode
+in which
+<table>
+  <tr> 
+     <td> probability </td>
+     <td> probability that this move will be chosen.
+  </tr>
+  <tr> 
+     <td> speciesId </td>
+     <td> integer index of molecular species </td>
+  </tr>
+  <tr> 
+     <td> delta </td>
+     <td> maximum displacement </td>
+  </tr>
+</table>
+
+*/
+
+}

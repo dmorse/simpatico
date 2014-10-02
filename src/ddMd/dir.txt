@@ -1,3 +1,0 @@
-subDirectories = boundary chemistry storage communicate neighbor system configIo potentials force interaction integrator
-pathFromSrc = ddMd
-pathToSrc = ..

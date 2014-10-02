@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -107,6 +107,7 @@ namespace DdMd
    {
   
       loadParameter<double>(ar, "skin", skin_);
+      loadParameter<int>(ar, "nCellCut", nCellCut_, false);
       loadParameter<int>(ar, "pairCapacity", pairCapacity_);
       loadParameter<Boundary>(ar, "maxBoundary", maxBoundary_);
 
@@ -122,6 +123,7 @@ namespace DdMd
    void PairPotential::save(Serializable::OArchive& ar)
    {
       ar << skin_;
+      Parameter::saveOptional(ar, nCellCut_, true);
       ar << pairCapacity_;
       ar << maxBoundary_;
       ar << cutoff_;

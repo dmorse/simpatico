@@ -27,9 +27,6 @@
 # Modifiers take actions at regular intervals that modify the system.
 # DDMD_MODIFIERS=1
  
-# Define DDMD_MOLECULES to include molecule, species atom context info.
-# DDMD_MOLECULES=1
-
 #-----------------------------------------------------------------------
 # The following code defines the variables DDMD_DEFS and DDMD_SUFFIX.
 # Most uers should not need to modify anything below this point.
@@ -55,24 +52,22 @@ DDMD_DEFS+= -DDDMD_MODIFIERS
 DDMD_SUFFIX:=$(DDMD_SUFFIX)_u
 endif
 
-# Enable molecules / atom context
-ifdef DDMD_MOLECULES
-DDMD_DEFS+= -DDDMD_MOLECULES
-DDMD_SUFFIX:=$(DDMD_SUFFIX)_z
-endif
-
 #-----------------------------------------------------------------------
 # Path to ddMd library
-# Note: OBJ_DIR is defined in src/config.mk.
+# Note: BLD_DIR is defined in src/config.mk.
 
 DDMD_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(DDMD_SUFFIX)
 
 ddMd_LIBNAME=ddMd$(DDMD_ALL_SUFFIX)
-ddMd_LIB=$(OBJ_DIR)/ddMd/lib$(ddMd_LIBNAME).a
+ddMd_LIB=$(BLD_DIR)/ddMd/lib$(ddMd_LIBNAME).a
 
 #-----------------------------------------------------------------------
-# Path to executable 
+# Path to executables
 # BIN_DIR is defined in src/config.mk.
 
+# Path to parallel domain-decomposition Md (ddSim) program
 DDSIM_EXE=$(BIN_DIR)/ddSim$(DDMD_ALL_SUFFIX)
+
+# Path to serial MD postprocessor (mdPp) program
+MDPP_EXE=$(BIN_DIR)/mdPp
 #-----------------------------------------------------------------------

@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -24,19 +24,19 @@ namespace DdMd
    /**
    * Abstract base for periodic output and/or analysis actions.
    *
-   * The periodic action associated with an Analyzer can involve sampling
-   * of a physical property and adding it to statistical accumulator, 
-   * outputting it to file, or both. This periodic action must be 
-   * implemented by the pure virtual sample() method.
+   * The periodic action associated with an Analyzer is implemented 
+   * by the pure virtual sample() method. This action often involves 
+   * computation of a physical property which may be either added
+   * added it to statistical accumulator or output to a file, or both. 
    *
    * The sample() method should take the desired action only when the
-   * simulation step index is an integer multiple of the associated interval
-   * parameter.  The interval must be a positive integer that is a multiple 
-   * of the static member Analyzer::baseInterval.
+   * simulation step index is an integer multiple of the associated 
+   * interval member variable. The interval must be a positive integer 
+   * that is a multiple of the static member Analyzer::baseInterval.
    *
-   * The virtual sample() method does not take any parameters. An Analyzer
-   * must thus access its parent Simulation and/or Simulation via a pointer, 
-   * which is usually initialized in its subclass constructor.
+   * An Analyzer has access to its parent Simulation via the protected
+   * Analyzer::simulation() method, which returns the parent Simulation 
+   * by reference.
    *
    * \ingroup DdMd_Analyzer_Module
    */

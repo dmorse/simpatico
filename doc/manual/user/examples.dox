@@ -1,7 +1,7 @@
 /*! \page user_examples_page 2.6 Examples
 
-\ref user_cfgfile_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref inter_page  (Next)
+\ref user_cfgfile_page  (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
+\ref user_analysis_page (Next)
 <BR>
 
 Input files for a set of example simulations are provided with Simpatico in the simpatico/examples/ directory. Examining and running these examples is the easiest way to become familiar with the program.
@@ -48,6 +48,6 @@ The above directions assume that the users PATH shell variable has been set to i
 <BR>
 \ref user_cfgfile_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp; 
 \ref user_page (Up) &nbsp; &nbsp; &nbsp; &nbsp; 
-\ref inter_page (Next)
+\ref user_analysis_page (Next)
 
 */

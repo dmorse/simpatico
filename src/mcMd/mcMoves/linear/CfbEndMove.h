@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -22,6 +22,8 @@ namespace McMd
 
    /**
    * Configuration bias end regrowth move for flexible linear chains.
+   *
+   * \sa \ref mcMd_mcMove_CfbEndMove_page "param file format"
    *
    * \ingroup McMd_McMove_Module MD_Module
    */

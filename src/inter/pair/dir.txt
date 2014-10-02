@@ -1,3 +1,0 @@
-subDirectories =
-pathFromSrc = interactions/pair
-pathToSrc = ../..

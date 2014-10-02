@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -39,15 +39,20 @@ namespace DdMd
    * 
    *    GroupDistributor  distributor;
    *    GroupStorage<N>   groupStorage;
+   *    Domain&           domain;
+   *    AtomStorage       atomStorage, 
+   *    Buffer            buffer;
+   *    distributor.associate(Domain, atomStorage, GroupStorage, buffer);
+   *
    *    DArray<int>       atomOwners;
    *    Group<N>*         ptr;
-   *    std::ifstream file
    *
    *    if (rank = 0) {  // If master processor
    *
    *       distributor.setup();
    *
    *       // Read from file
+   *       std::ifstream file
    *       for (i = 0; i < nGroup; ++i) {
    *
    *           ptr = distributor.newPtr();
@@ -124,7 +129,7 @@ namespace DdMd
       *
       * \param cacheCapacity max number of groups cached for sending
       */
-      void initialize(int cacheCapacity = -1);
+      void setCapacity(int cacheCapacity);
 
       /**
       * Read cacheCapacity, allocate memory and initialize object.
@@ -215,11 +220,11 @@ namespace DdMd
       /// Total number of groups sent (defined only on master).
       int nSentTotal_;
 
+      /// Allocated capacity of cache_ (allocated only on master).
+      int cacheCapacity_;
+
       /// Current size of cache_ (defined only on master).
       int cacheSize_;
-
-      /// Allocated capacity of cache (defined only on master).
-      int cacheCapacity_;
 
       /**
       * Validate groups after receipt.

@@ -1,6 +1,10 @@
 Domain{
   gridDimensions    2    1     3
 }
+Buffer{
+  atomCapacity    100
+  ghostCapacity   100
+}
 AtomStorage{
   atomCapacity        50
   ghostCapacity       50
@@ -10,13 +14,7 @@ BondStorage{
   capacity            50
   totalCapacity      100
 }
-Buffer{
-  atomCapacity    100
-  ghostCapacity   100
-}
 DdMdConfigIo{
-  atomCacheCapacity      100
-  bondCacheCapacity      100
 }
 
 
@@ -28,5 +26,7 @@ DihedralStorage{
   capacity            50
   totalCapacity      100
 }
+  atomCacheCapacity      100
+  bondCacheCapacity      100
   angleCacheCapacity     100
   dihedralCacheCapacity  100

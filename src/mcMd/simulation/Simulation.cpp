@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -217,18 +217,18 @@ namespace McMd
          UTIL_THROW("hasCoulomb must be 0 or 1");
       }
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_ = 0;
-      read<int>(in, "nLinkType", nLinkType_, false); // optional
-      if (nLinkType_ < 0) {
-         UTIL_THROW("nLinkType must be >= 0");
-      }
-      #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = 0;
       read<int>(in, "hasExternal", hasExternal_, false); // optional
       if (hasExternal_ < 0) {
          UTIL_THROW("hasExternal must be >= 0");
+      }
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_ = 0;
+      read<int>(in, "nLinkType", nLinkType_, false); // optional
+      if (nLinkType_ < 0) {
+         UTIL_THROW("nLinkType must be >= 0");
       }
       #endif
       #ifdef INTER_TETHER
@@ -238,14 +238,12 @@ namespace McMd
       }
       #endif
 
-      #ifndef MCMD_NOATOMTYPES
       // Allocate and read an array of AtomType objects
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
       }
       readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
-      #endif
 
       read<MaskPolicy>(in, "maskedPairPolicy", maskedPairPolicy_);
 
@@ -282,27 +280,26 @@ namespace McMd
       hasCoulomb_ = false;
       loadParameter<int>(ar, "hasCoulomb", hasCoulomb_, false);
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_ = 0;
-      loadParameter<int>(ar, "nLinkType", nLinkType_, false);
-      #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = false;
       loadParameter<int>(ar, "hasExternal", hasExternal_, false);
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_ = 0;
+      loadParameter<int>(ar, "nLinkType", nLinkType_, false);
       #endif
       #ifdef INTER_TETHER
       hasTether_ = false;
       loadParameter<int>(ar, "hasTether", hasTether_, false);
       #endif
 
-      #ifndef MCMD_NOATOMTYPES
       // Allocate and load an array of AtomType objects
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
       }
       loadDArray<AtomType>(ar, "atomTypes", atomTypes_, nAtomType_);
-      #endif
+
       loadParameter<MaskPolicy>(ar, "maskedPairPolicy", maskedPairPolicy_);
       loadParamComposite(ar, *speciesManagerPtr_);
       for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
@@ -334,29 +331,27 @@ namespace McMd
       //ar << hasCoulomb_;
       Parameter::saveOptional(ar, hasCoulomb_, hasCoulomb_);
       #endif
-      #ifdef MCMD_LINK
-      // ar << nLinkType_;
-      Parameter::saveOptional(ar, nLinkType_, (bool)nLinkType_);
-      #endif
       #ifdef INTER_EXTERNAL
       // ar << hasExternal_;
       Parameter::saveOptional(ar, hasExternal_, hasExternal_);
+      #endif
+      #ifdef MCMD_LINK
+      // ar << nLinkType_;
+      Parameter::saveOptional(ar, nLinkType_, (bool)nLinkType_);
       #endif
       #ifdef INTER_TETHER
       ar << hasTether_;
       Parameter::saveOptional(ar, hasTether_, hasTether_);
       #endif
 
-      #ifndef MCMD_NOATOMTYPES
       ar << atomTypes_;
-      #endif
       ar & maskedPairPolicy_;
       (*speciesManagerPtr_).save(ar);
       random_.save(ar);
    }
 
    /*
-   * Allocate and initialize all private data (private method).
+   * Allocate and initialize all private data (private function).
    *
    * Allocates global arrays (molecules_, atoms_, bonds_, angles_) and the
    * arrays first<class>Ids_ of integers to species blocks. Initializes:
@@ -543,7 +538,7 @@ namespace McMd
    *
    * For each atom, it sets the molecule pointer and an integer typeId.
    *
-   * This method also pushes all molecules of the species onto the
+   * This function also pushes all molecules of the species onto the
    * reservoir, pushing them in order of decreasing molecule id.
    */
    void Simulation::initializeSpecies(int iSpecies)

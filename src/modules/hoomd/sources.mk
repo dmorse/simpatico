@@ -1,4 +1,3 @@
-
 include $(SRC_DIR)/modules/hoomd/analyzers/sources.mk
 include $(SRC_DIR)/modules/hoomd/mcMoves/sources.mk
 include $(SRC_DIR)/modules/hoomd/potentials/pair/sources.mk
@@ -23,7 +22,7 @@ modules_hoomd_= \
 modules_hoomd_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_hoomd_))
 modules_hoomd_OBJS=\
-    $(addprefix $(OBJ_DIR)/, $(modules_hoomd_:.cpp=.o))
+    $(addprefix $(BLD_DIR)/, $(modules_hoomd_:.cpp=.o))
 
 #-----------------------------------------------------------------
 # Cuda C files
@@ -34,5 +33,5 @@ modules_hoomd_NVCC_=\
 modules_hoomd_NVCC_SRCS=\
     $(addprefix $(SRC_DIR)/, $(modules_hoomd_NVCC_))
 modules_hoomd_NVCC_OBJS=\
-    $(addprefix $(OBJ_DIR)/, $(modules_hoomd_NVCC_:.cu=.cu.o))
+    $(addprefix $(BLD_DIR)/, $(modules_hoomd_NVCC_:.cu=.cu.o))
 

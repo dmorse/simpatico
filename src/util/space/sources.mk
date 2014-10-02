@@ -6,5 +6,5 @@ util_space_=util/space/Grid.cpp \
 util_space_SRCS=\
      $(addprefix $(SRC_DIR)/, $(util_space_))
 util_space_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(util_space_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(util_space_:.cpp=.o))
 

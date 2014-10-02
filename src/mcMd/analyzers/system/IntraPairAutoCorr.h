@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -40,6 +40,8 @@ namespace McMd
    * of the time t and over all molecules in a species.  Here, 
    * \f$ V(t) \cdot V(t') \f$ denotes a dot product of values of the 
    * vector \f$ V(t) \f$  at different times.
+   *
+   * \sa \ref mcMd_analyzer_IntraPairAutoCorr_page "parameter file format"
    *
    * \ingroup McMd_Analyzer_Module
    */

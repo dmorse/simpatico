@@ -52,12 +52,10 @@ MCMD_SUFFIX:=
 # extended using the := operator, as MCMD_SUFFIX:=$(MCMD_SUFFIX)_f.
  
 
-# Enable free energy perturbation (_f for "free energy")
+# Enable free energy perturbation 
 ifdef UTIL_MPI
 ifdef MCMD_PERTURB
 MCMD_DEFS+= -DMCMD_PERTURB
-else
-MCMD_SUFFIX:=$(MCMD_SUFFIX)_nf
 endif
 endif
 
@@ -80,7 +78,7 @@ endif
 MCMD_ALL_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
 
 mcMd_LIBNAME=mcMd$(MCMD_ALL_SUFFIX)
-mcMd_LIB=$(OBJ_DIR)/mcMd/lib$(mcMd_LIBNAME).a
+mcMd_LIB=$(BLD_DIR)/mcMd/lib$(mcMd_LIBNAME).a
 
 #-----------------------------------------------------------------------
 # Paths to executable files

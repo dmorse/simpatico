@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -82,15 +82,6 @@ namespace DdMd
       * array is stored in element i in each of these arrays.
       */
 
-      #ifdef DDMD_MOLECULES
-
-      /**
-      * C-array of Atom velocities.
-      */
-      AtomContext*  contexts_;
-
-      #endif
-
       /**
       * C-array of Atom velocities.
       */
@@ -110,6 +101,11 @@ namespace DdMd
       * C-array Atom global ids (tags).
       */
       int*  ids_;
+
+      /**
+      * C-array of Atom velocities.
+      */
+      AtomContext*  contexts_;
 
       /**
       * Copy ctor (prohibited - private and not implemented).

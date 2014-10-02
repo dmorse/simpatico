@@ -12,5 +12,5 @@ endif
 mcMd_perturb_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_perturb_))
 mcMd_perturb_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_perturb_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_perturb_:.cpp=.o))
 

@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -22,7 +22,8 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include <hoomd/SystemDefinition.h>          // HOOMD
+#include <boost/hoomd_config.h>       // HOOMD
+#include <hoomd/SystemDefinition.h>
 #include <hoomd/System.h>
 #include <hoomd/ExecutionConfiguration.h>
 #include <hoomd/ParticleData.h>

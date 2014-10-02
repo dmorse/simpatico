@@ -1,0 +1,27 @@
+This directory contains source code for a domain-decomposition (DD)
+parallel molecular dynamics (MD) program and associated analysis tools. 
+All of the code in this directory is defined in the DdMd namespace. 
+The ddSim parallel MD code uses a domain-decomposition parallelization 
+strategy similiar to that used in LAMMPS and many other parallel MD codes. 
+
+Source files in the DdMd namespace (or src/ddMd/ directory) uses classes and 
+other names defined in the Util and Inter namespaces (or the src/util/ and 
+sr/inter/ directories), but do not use any names from the McMD namespace (or 
+the src/mcMd/ subdirectory). Most files in the DdMd namespace contain a 
+"using namespace Util" directive that brings the entire Util namespace into 
+scope.  The few source files that use classes from the Inter namespace also 
+contain a "using namespace Inter" directive. 
+
+Subdirectories:
+
+chemistry/    - atoms and covalent groups (bonds, etc.)
+storage/      - containers that manage Atom and Group objects
+communicate/  - interprocessor communication
+configIos/    - configuration file reader/writers
+potentials/   - potential energy classes
+neighbor/     - cell list and pair list data structures
+integrators/  - molecular dynamics integrator algorithms
+simulation/   - main Simulation class
+analyzers/    - classes for on-the-fly parallel data analysis and output
+misc/         - miscellaneous utility classes
+

@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -53,13 +53,13 @@ namespace McMd
       in >> boundary() ;
 
       // Get molecules and read atomic positions
-      Label     speciesLabel("species");
-      Label     nMoleculeLabel("nMolecule");
-      Label     moleculeLabel("molecule");
-      Species*  speciesPtr;
+      Label speciesLabel("species");
+      Label nMoleculeLabel("nMolecule");
+      Label moleculeLabel("molecule");
+      Species* speciesPtr;
       Molecule* molPtr;
       Molecule::AtomIterator atomIter;
-      int       iSpecies, iSpeciesIn, nMolecule, iMol, iMolIn;
+      int iSpecies, iSpeciesIn, nMolecule, iMol, iMolIn;
 
       in >> Label("MOLECULES");
       for (iSpecies = 0; iSpecies < simulation().nSpecies(); ++iSpecies) {
@@ -194,7 +194,7 @@ namespace McMd
       System::ConstMoleculeIterator molIter;
       Molecule::ConstAtomIterator   atomIter;
       Species* speciesPtr;
-      int   iSpecies, iMolecule;
+      int iSpecies, iMolecule;
       out << endl << "MOLECULES" << endl;
       for (iSpecies = 0; iSpecies < simulation().nSpecies(); ++iSpecies) {
          out << endl;

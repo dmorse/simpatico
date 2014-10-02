@@ -6,7 +6,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -21,7 +21,7 @@ namespace Util
    *  B - base class 
    *  M - member type
    * 
-   * \ingroup Util_Module
+   * \ingroup Misc_Module
    */
    template <typename D, typename B, typename M>
    ptrdiff_t memberOffset(D& object, M  B::* memPtr)

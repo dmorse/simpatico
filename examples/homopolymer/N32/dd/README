@@ -1,0 +1,8 @@
+To run an example, with log information to screen:
+
+   mpirun -np 6 ddSim < param.nve 
+
+To postprocess the resulting config and trajectory files:
+
+   mdPp param.pp commands.pp
+

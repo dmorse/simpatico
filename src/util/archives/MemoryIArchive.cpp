@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -36,7 +36,12 @@ namespace Util
    * Destructor.
    */
    MemoryIArchive::~MemoryIArchive()
-   {  if (buffer_ && ownsData_) delete buffer_; }
+   {  
+      if (buffer_ && ownsData_) {
+         //delete buffer_; 
+         Memory::deallocate<Byte>(buffer_, capacity_ + sizeof(size_t));
+      }
+   }
 
    /*
    * Allocate a block of memory.

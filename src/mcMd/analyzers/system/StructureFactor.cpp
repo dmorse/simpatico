@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Copyright 2010, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -133,15 +133,16 @@ namespace McMd
    {
       if (isAtInterval(iStep))  {
 
-         fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_, !isFirstStep_);
+         fileMaster().openOutputFile(outputFileName("_max.dat"), 
+                                     outputFile_, !isFirstStep_);
          isFirstStep_ = false;
 
-         Vector  position;
-         std::complex<double>  expFactor;
-         double  product;
-         System::ConstMoleculeIterator  molIter;
-         Molecule::ConstAtomIterator  atomIter;
-         int  nSpecies, iSpecies, typeId, i, j;
+         Vector position;
+         std::complex<double> expFactor;
+         double product;
+         System::ConstMoleculeIterator molIter;
+         Molecule::ConstAtomIterator atomIter;
+         int nSpecies, iSpecies, typeId, i, j;
 
          makeWaveVectors();
 

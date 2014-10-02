@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -196,5 +196,44 @@ namespace Util
       }
    }
 
+   #ifdef UTIL_MPI
+   /*
+   * Reduce (add) distributions from multiple MPI processors.
+   */
+   void Distribution::reduce(MPI::Intracomm& communicator, int root)
+   {
+  
+      long* totHistogram = new long[nBin_]; 
+      communicator.Reduce(histogram_.cArray(), totHistogram, nBin_, MPI::LONG, MPI::SUM, root);
+      if (communicator.Get_rank() == root) {
+         for (int i=0; i < nBin_; ++i) {
+            histogram_[i] = totHistogram[i];
+         }
+      } else { 
+         for (int i=0; i < nBin_; ++i) {
+            histogram_[i] = 0.0;
+         }
+      }
+      delete totHistogram;
+
+      long totSample; 
+      communicator.Reduce(&nSample_, &totSample, 1, MPI::LONG, MPI::SUM, root);
+      if (communicator.Get_rank() == root) {
+         nSample_ = totSample;
+      } else {
+         nSample_ = 0;
+      }
+
+      long totReject; 
+      communicator.Reduce(&nReject_, &totReject, 1, MPI::LONG, MPI::SUM, root);
+      if (communicator.Get_rank() == root) {
+         nReject_ = totReject;
+      } else {
+         nReject_ = 0;
+      }
+
+   }
+   #endif
+        
 }
 #endif

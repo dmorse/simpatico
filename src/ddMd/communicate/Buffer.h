@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -20,36 +20,197 @@ namespace DdMd
    template <int N> class Group;
 
    /**
-   * Buffer for sending blocks of data between processors.
+   * Buffer for interprocessor communication.
    *
-   * A Buffer manages two blocks of memory blocks, a send buffer
+   * A Buffer manages two blocks of raw memory, a send buffer
    * and a receive buffer, that are used to communicate data
    * between processors. The class provides a simple interace
-   * for: (1) Packing data into the send buffer on a processor
-   * from which it will be sent, (2) Unpacking data from the 
-   * receive buffer on the processor that receives a buffer, 
-   * and (3) sending, receiving, and broadcasting the data in
-   * these two buffers. The functions that send and receive
-   * data are relatively simple wrappers around MPI functions.
+   * for: 
+   * 
+   *   - Packing data into the send buffer on the processor
+   *     that sends data (source processor)
+   * 
+   *   - Unpacking data from the receive buffer on a processor 
+   *     that receives the data (destination processor)
+   * 
+   *   - Sending, receiving, and broadcasting the data in these 
+   *     two buffers. 
    *
-   * A send or receive buffer may contain one or more blocks
-   * of data. Each block contains a sequence of items of the 
-   * same type. The expected types of data are enumerated by
-   * the public enum Buffer::BlockDataType. Each item in a 
-   * block may contain an Atom packed for exchange of ownerhsip
-   * (ATOM) of ownership, the position, id and type of a ghost 
-   * (GHOST) atom, an update of a ghost position (UPDATE), a
-   * force vector for use in reverse update (FORCE), or any
-   * of several types of covalent Group (GROUP2, GROUP3, and
-   * GROUP4). 
+   * The functions that send, receive and broadcast data are 
+   * relatively simple wrappers around MPI functions.
    *
-   * The DdMd::Atom  class and DdMd::Group class template
-   * provide functions to pack and unpack individual items
-   * (e.g., atoms or groups). The pack and unpack functions 
-   * in these classes are implemented using the primitive 
-   * pack() and unpack() function templates, which allow the
-   * user to pack and unpack a single primitive C variable 
-   * into a heterogeneous buffer. 
+   * The send and receive buffers contain one or more blocks of
+   * data. Each block contains a prefix and data segment. The
+   * data segment contains a sequence of items of the same data
+   * type. The prefix contains information about the data segment,
+   * including the length of the buffer, the number of items, 
+   * and the type of data.
+   *
+   * \section Buffer_type_sec Data types
+   *
+   * Different possible types of data are enumerated by the public 
+   * enum Buffer::BlockDataType. The allowed values of this enum are:
+   *
+   *   - NONE    : Default setting (between blocks)
+   *   - ATOM    : a full atom packed for exchange of ownership
+   *   - GHOST   : a ghost atom (position, id and typeId)
+   *   - UPDATE  : an update of a ghost atom position
+   *   - FORCE   : a force vector for use in a reverse update
+   *   - GROUP2  : a Group<2> (bond)
+   *   - GROUP3  : a Group<3> (angle)
+   *   - GROUP4  : a Group<4> (dihedral)
+   *   - SPECIAL : specialized nonstandard data type
+   *   
+   * The standard ATOM, GHOST, UPDATE, FORCE, and GROUP(2,3,4) types
+   * are used in the implementation of the Exchanger class.
+   *
+   * The DdMd::Atom  class and DdMd::Group class template provide
+   * provide member functions to pack and unpack individual items 
+   * of standard types (atoms and groups). The pack and unpack 
+   * functions in these classes each take a Buffer by reference 
+   * as an argument. They are implemented using the primitive 
+   * Buffer::pack<T>() and Buffer::unpack<T>() member function 
+   * templates of the Buffer class, which a user to pack and 
+   * unpack a single C variable of type T to or from a Buffer.
+   * 
+   * The SPECIAL BlockDataType value is a generic label for any
+   * specialized, non-standard data type. Code that uses an 
+   * Buffer to communicate a specialized data type should provide
+   * functions to pack and unpack individual items of the required
+   * type. Like the pack and unpack functions for atoms and groups,
+   * these functions should be implemented using the Buffer::pack() 
+   * and Buffer::unpack() function templates.
+   *
+   * \section Buffer_pack_sec Packing a block of data
+   *
+   * Example - packing a block of Group<2> objects:
+   * \code
+   *
+   *    Buffer buffer;
+   *    DArray< Group<2> > bonds;
+   *
+   *    // Clear buffer before packing
+   *    buffer.clear();   
+   * 
+   *    // Pack data block
+   *    buffer.beginSendBlock(Buffer::GROUP2);
+   *    for (i = 0; i < bonds.size(); ++i) {
+   *       bonds[i].pack(buffer);
+   *       buffer.incrementSendSize();
+   *    }
+   *    bool isComplete = true;
+   *    endSendBlock(true);
+   *
+   *    // Pack subsequent blocks, if any.
+   *
+   *    buffer.send(communicator, destination);
+   *
+   * \endcode
+   * Note:
+   *
+   *  - Call beginSendBlock() and endSendBlock() before and after the 
+   *    loop over data items, respectively.
+   *
+   *  - Call incrementSendSize() after packing each item to increment
+   *    an internal counter of number of items in block. 
+   * 
+   *  -  The bool isComplete argument of endSendBlock(bool) indicates 
+   *     whether the block of data is complete, i.e., whether all data 
+   *     of this type is contained in this block (true), or whether
+   *     the receiving processor should expect one or more further 
+   *     messages containing the rest of this block. This flag is sent
+   *     as part of the block prefix.
+   *
+   * \section Buffer_unpack_sec Unpacking a block of data
+   *
+   * Example - unpacking a block of Group<2> objects:
+   * \code
+   *
+   *    Buffer buffer;
+   *    DArray< Group<2> > bonds;
+   *    MPI::Intracomm communicator;
+   *    int source;
+   *
+   *    // Receive the buffer 
+   *    buffer.recv(communicator, source);
+   *
+   *    // Unpack a data block
+   *    bool isComplete;
+   *    int i = 0;
+   *    isComplete = buffer.beginRecvBlock();
+   *    while (buffer.recvSize()) {
+   *       bonds[i].unpack(buffer);
+   *       buffer.decrementRecvSize();
+   *       ++i;
+   *    }
+   *    endRecvBlock();
+   *
+   *    // Subsequent blocks, if any
+   *
+   * \endcode
+   * Note:
+   *
+   *  - Call beginRecvBlock() and endRecvBlock() before and after 
+   *    the loop over items in the block, respectively. The return 
+   *    value of Buffer::recvSize() is equal to the total number 
+   *    of data items in the block after beginRecvBlock() returns, 
+   *    and must have reached zero when endRecvBlock() is called. 
+   *
+   *  - The return value of beginRecvBlock() is the value of the
+   *    isComplete flag that was passed as an argument to the 
+   *    endSendBlock(bool) function on the source processor. 
+   *
+   *  - Call decrementRecvSize() after unpackingpacking each item 
+   *    to decrement the value recvSize counter by one. 
+   * 
+   *  - This example does not include code to check the isComplete 
+   *    flag. More complete code would check this, and either throw
+   *    an exception or prepare to receive another message if the
+   *    flag was set false.
+   *
+   * \section Buffer_isComplete_sec Sending a block in several messages
+   *
+   * The above examples shows a simple case of packing and unpacking
+   * a complete block without any explicit checking of whether the 
+   * message will fit in the buffer on the source processor or checking
+   * of the isComplete flag on the destination. Code that needs to 
+   * send blocks that may exceed the buffer size can use the isComplete
+   * flag to break the a block of data into in several messages, by 
+   * setting isComplete false in all but the last message of the 
+   * sequence. 
+   * 
+   * Here is an example of the code to receive an array of data that 
+   * may have been split into several messages:
+   * \code
+   *
+   *    Buffer buffer;
+   *    DArray< Group<2> > bonds;
+   *    MPI::Intracomm communicator;
+   *    int source;
+   *
+   *    int i = 0;
+   *    bool isComplete = false;
+   *    while (!isComplete) {
+   *       buffer.recv(communicator, source);
+   *       isComplete = buffer.beginRecvBlock();
+   *       while (buffer.recvSize()) {
+   *          bonds[i].unpack(buffer);
+   *          buffer.decrementRecvSize();
+   *          ++i;
+   *       }
+   *       endRecvBlock();
+   *    }
+   *
+   * \endcode
+   * The code required to avoid overfilling the send buffer on the
+   * source processor (not shown), requires knowledge of the packed
+   * size of one object. This is provided for Atom and Group objects
+   * by the Atom::packedAtomSize(), Atom::packedGhostSize() and
+   * Group::packedSize() static functions. 
+   *
+   * This idiom for dividing large blocks is used in the implementation
+   * of all the DdMd Distributor and Collector classes (AtomDistributor, 
+   * AtomCollector, GroupDistributor and GroupCollector).
    *
    * \ingroup DdMd_Communicate_Module
    */
@@ -61,8 +222,8 @@ namespace DdMd
       /**
       * Enumeration of types of data to be sent in blocks. 
       */
-      enum BlockDataType 
-           {NONE, ATOM, GHOST, UPDATE, FORCE, GROUP2, GROUP3, GROUP4};
+      enum BlockDataType {NONE, ATOM, GHOST, UPDATE, FORCE, 
+                          GROUP2, GROUP3, GROUP4, SPECIAL};
 
       /**
       * Constructor.
@@ -100,43 +261,24 @@ namespace DdMd
       *
       * Calculate amounts of memory required to accommodate specified
       * number of local atoms (atomCapacity), or the specified number
-      * of ghosts (ghostCapacity), and allocate send and receive buffers 
-      * large enough to hold the larger value.
+      * of ghosts (ghostCapacity), and allocate send and receive 
+      * buffers large enough to hold the larger value.
       *
       * \param atomCapacity max expected number of local atoms.
       * \param ghostCapacity max expected number of ghost atoms.
       */
       void allocate(int atomCapacity, int ghostCapacity);
 
-      /** \name Send Buffer Management
-      *
-      * To pack a block of data into the send buffer.
-      *
-      * - Call beginSendBlock() at the beginning of the block.
-      *
-      * - Call the appropriate method of DdMd::Atom or DdMd::Group
-      *   once for each item to be packed, within a loop over items 
-      *   to be sent.
-      *
-      * - After packing each item, call incrementSendSize() to
-      *   increment a counter of the number of items in the block.
-      *
-      * - Call endSendBlock() at the end of the block, to
-      *   finalize the block. 
-      *
-      * A complete send buffer may contain one or more such blocks
-      * of data, e.g., it may contain a block of atoms followed by
-      * several blocks of groups.
-      */
-      //@{
+      /// \name Send Buffer Management
+      ///@{
       
       /**
-      * Clear the entire send buffer.
+      * Clear the send buffer.
       */
       void clearSendBuffer();
 
       /**
-      * Initialize the block atomtype.
+      * Initialize a data block.
       *
       * Sets sendSize() to zero and sets the sendType.
       *
@@ -166,22 +308,22 @@ namespace DdMd
       /**
       * Finalize a block in the send buffer.
       *
-      * This method writes a "descriptor" section at the beginning of a data
-      * block. The descriptor specifies the length of the block, the type of 
-      * data, and whether the block is "complete". 
+      * This method writes the "prefix" section at the beginning of a data
+      * block. The descriptor specifies the length of the block, the type 
+      * of data, and whether the block is "complete". 
       *
       * A block should be marked as incomplete iff the required data of 
       * the relevant sendtype did not fit into the buffer. This tells the
       * receiving processor to expect one or more other buffers containing 
-      * the remaining data of that type.
+      * the remaining data of the same type type.
       *
       * \param isComplete false if data block is incomplete, true otherwise
       */
       void endSendBlock(bool isComplete = true);
 
-      //@}
+      ///@}
       /// \name Receive Buffer Management
-      //@{
+      ///@{
       
       /**
       * Begin to receive a block from the recv buffer.
@@ -223,11 +365,11 @@ namespace DdMd
       */
       void endRecvBlock();
 
-      //@}
+      ///@}
       #ifdef UTIL_MPI
       /// \name Interprocessor Communication
       //@{
-      
+
       /**
       * Receive from processor send and send to processor recv.
       *

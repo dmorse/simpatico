@@ -1,16 +1,16 @@
 #-----------------------------------------------------------------------
 # The copy of this namespace-level makefile in the src/ directory is 
-# copied to the obj/serial and obj/parallel directories by the setup
+# copied to the bld/serial and bld/parallel directories by the setup
 # script to create the copies in those directories. Only the copy in
 # the src/ directory is stored in the repository.
 #-----------------------------------------------------------------------
 # Makefile includes
 
-OBJ_DIR_REL =..
-include $(OBJ_DIR_REL)/config.mk
-include $(OBJ_DIR)/util/config.mk
-include $(OBJ_DIR)/inter/config.mk
-include $(OBJ_DIR)/mcMd/config.mk
+BLD_DIR_REL =..
+include $(BLD_DIR_REL)/config.mk
+include $(BLD_DIR)/util/config.mk
+include $(BLD_DIR)/inter/config.mk
+include $(BLD_DIR)/mcMd/config.mk
 include $(SRC_DIR)/mcMd/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk
@@ -19,8 +19,8 @@ include $(SRC_DIR)/mcMd/sources.mk
 #-----------------------------------------------------------------------
 # Variable definitions
 
-MDSIM=$(OBJ_DIR)/mcMd/mdSim
-MCSIM=$(OBJ_DIR)/mcMd/mcSim
+MDSIM=$(BLD_DIR)/mcMd/mdSim
+MCSIM=$(BLD_DIR)/mcMd/mcSim
 #-----------------------------------------------------------------------
 # Main targets
 
@@ -32,14 +32,14 @@ clean:
 	rm -f $(mcMd_OBJS) $(mcMd_OBJS:.o=.d) $(mcMd_LIB)
 	rm -f $(MDSIM).o $(MDSIM).d
 	rm -f $(MCSIM).o $(MCSIM).d
-	cd tests; make clean
+	cd tests; $(MAKE) clean
 	rm -f *.o */*.o */*/*.o
 	rm -f *.d */*.d */*/*.d
 
 veryclean:
-	make clean
+	$(MAKE) clean
 	rm -f lib*.a
-ifeq ($(OBJ_DIR),$(SRC_DIR))
+ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f configIos/ConfigIoFactory.cpp
 	rm -f analyzers/mcSystem/McAnalyzerFactory.cpp
 	rm -f analyzers/mdSystem/MdAnalyzerFactory.cpp
@@ -68,10 +68,10 @@ $(MDSIM_EXE): $(MDSIM).o $(LIBS)
 # Short names for executable targets (for convenience)
  
 mcSim:
-	make $(MCSIM_EXE)
+	$(MAKE) $(MCSIM_EXE)
 
 mdSim:
-	make $(MDSIM_EXE)
+	$(MAKE) $(MDSIM_EXE)
 
 #-----------------------------------------------------------------------
 # Include dependency files

@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -38,11 +38,12 @@ namespace DdMd
       bufferPtr_(0),
       #endif
       newPtr_(0),
-      cacheCapacity_(0),
+      cacheCapacity_(1024),
       sendCapacity_(0),
       rankMaxSendSize_(0),
       nCachedTotal_(0),
-      nSentTotal_(0)
+      nSentTotal_(0),
+      isAllocated_(false)
    {  setClassName("AtomDistributor"); }
 
    /*
@@ -66,82 +67,79 @@ namespace DdMd
    }
 
    /*
-   * Set cache capacity and allocate all required memory.
+   * Set cache capacity.
    */
-   void AtomDistributor::initialize(int cacheCapacity)
-   {
-      cacheCapacity_ = cacheCapacity;
-      allocate();
+   void AtomDistributor::setCapacity(int cacheCapacity)
+   {  
+      if (cache_.capacity() > 0) { 
+         UTIL_THROW("Attempt to set cacheCapacity after allocation");
+      } 
+      cacheCapacity_ = cacheCapacity; 
    }
 
    /*
-   * Read cacheCapacity and allocate all required memory.
+   * Read cacheCapacity.
    */
    void AtomDistributor::readParameters(std::istream& in)
    {
       // Read parameter file block
       read<int>(in, "cacheCapacity", cacheCapacity_);
- 
-      // Do actual allocation
-      allocate();
    }
 
    /*
-   * Allocate memory and initialize state (private method).
-   * Called on all processors.
+   * Allocate and initialize memory on master processor (private).
    */
    void AtomDistributor::allocate()
    {
       // Preconditions
+      if (isAllocated_) {
+         UTIL_THROW("Attempt to re-allocate AtomDistributor");
+      }
       if (domainPtr_ == 0) {
-         UTIL_THROW("AtomDistributor not initialized");
+         UTIL_THROW("AtomDistributor is not initialized");
       }
       if (!domainPtr_->isInitialized()) {
          UTIL_THROW("Domain is not initialized");
       }
       #ifdef UTIL_MPI
       if (!bufferPtr_->isInitialized()) {
-         UTIL_THROW("Buffer not initialized");
+         UTIL_THROW("Buffer is not initialized");
       }
       #endif
 
       int gridSize  = domainPtr_->grid().size();
-      int rank      = domainPtr_->gridRank();
       #ifdef UTIL_MPI
       sendCapacity_ = bufferPtr_->atomCapacity();
       #endif
 
-      // If master processor
-      if (rank == 0) {
-
-         // Default cacheCapacity_ = (# processors)*(max atoms per send)
-         if (cacheCapacity_ <= 0) {
-            cacheCapacity_ = gridSize * sendCapacity_;
-         }
-
-         // Allocate memory for array of atoms on the master processor. 
-         cache_.allocate(cacheCapacity_);
-         reservoir_.allocate(cacheCapacity_);
-
-         // Push all atoms onto the reservoir stack, in reverse order.
-         for (int i = cacheCapacity_ - 1; i >= 0; --i) {
-            reservoir_.push(cache_[i]);
-         }
-
-         #ifdef UTIL_MPI
-         // Allocate memory for sendArrays_ matrix, and nullify all elements.
-         sendArrays_.allocate(gridSize, sendCapacity_);
-         sendSizes_.allocate(gridSize);
-         for (int i = 0; i < gridSize; ++i) {
-            sendSizes_[i] = 0; 
-            for (int j = 0; j < sendCapacity_; ++j) {
-               sendArrays_(i, j) = 0;      
-            }
-         }
-         #endif
-
+      // Default cacheCapacity_ = (# processors)*(max atoms per send)
+      if (cacheCapacity_ <= 0) {
+         cacheCapacity_ = gridSize * sendCapacity_;
       }
 
+      // Allocate atom cache and reservoir on the master processor. 
+      cache_.allocate(cacheCapacity_);
+      reservoir_.allocate(cacheCapacity_);
+
+      // Push all atoms onto the reservoir stack, in reverse order.
+      for (int i = cacheCapacity_ - 1; i >= 0; --i) {
+         reservoir_.push(cache_[i]);
+      }
+
+      #ifdef UTIL_MPI
+      // Allocate memory for sendArrays_ matrix, and nullify all elements.
+      sendArrays_.allocate(gridSize, sendCapacity_);
+      sendSizes_.allocate(gridSize);
+      for (int i = 0; i < gridSize; ++i) {
+         sendSizes_[i] = 0; 
+         for (int j = 0; j < sendCapacity_; ++j) {
+            sendArrays_(i, j) = 0;      
+         }
+      }
+      #endif
+
+      // Mark this as allocated.
+      isAllocated_ = true;
    }
 
    #ifdef UTIL_MPI
@@ -150,10 +148,44 @@ namespace DdMd
    */ 
    void AtomDistributor::setup() 
    {  
-      bufferPtr_->clearSendBuffer(); 
-      bufferPtr_->beginSendBlock(Buffer::ATOM); 
+      // Preconditions
+      if (domainPtr_ == 0) {
+         UTIL_THROW("AtomDistributor not initialized");
+      }
+      if (!domainPtr_->isInitialized()) {
+         UTIL_THROW("Domain is not initialized");
+      }
+      if (domainPtr_->gridRank() != 0) {
+         UTIL_THROW("This is not the master processor");
+      }
+      #ifdef UTIL_MPI
+      if (!bufferPtr_->isInitialized()) {
+         UTIL_THROW("Buffer is not initialized");
+      }
+      #endif
+
+      // Allocate if needed (on first call).
+      // Note: isAllocated_ is set true by the allocate() function.
+      if (!isAllocated_) {
+         allocate();
+      }
+
+      // Check post-allocation conditions 
+      if (reservoir_.size() != reservoir_.capacity()) {
+         UTIL_THROW("Atom reservoir not full in setup");
+      }
+      int gridSize  = domainPtr_->grid().size();
+      for (int i = 0; i < gridSize; ++i) {
+         if (sendSizes_[i] != 0) {
+            UTIL_THROW("A sendArray size is not zero in setup"); 
+         }
+      }
+
+      // Clear buffer and counters
+      bufferPtr_->clearSendBuffer();
+      bufferPtr_->beginSendBlock(Buffer::ATOM);
       nCachedTotal_ = 0;
-      nSentTotal_   = 0;
+      nSentTotal_ = 0;
    }
    #endif
 

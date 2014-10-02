@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -12,6 +12,8 @@
 #include "AtomStorage.h"
 #include <util/format/Int.h>
 #include <util/mpi/MpiLoader.h>  
+#include <ddMd/communicate/GroupDistributor.tpp>   // member
+#include <ddMd/communicate/GroupCollector.tpp>     // member
 
 //#define DDMD_GROUP_STORAGE_DEBUG
 
@@ -42,6 +44,17 @@ namespace DdMd
    template <int N>
    GroupStorage<N>::~GroupStorage()
    {}
+
+   /*
+   * Create associations for distributor and collector.
+   */
+   template <int N>
+   void GroupStorage<N>::associate(Domain& domain, AtomStorage& atomStorage, 
+                                   Buffer& buffer)
+   {
+      distributor_.associate(domain, atomStorage, *this, buffer);
+      collector_.associate(domain, *this, buffer);
+   }
 
    /*
    * Set parameters and allocate memory.
@@ -112,6 +125,7 @@ namespace DdMd
       for (int i = 0; i < totalCapacity_; ++i) {
          groupPtrs_[i] = 0;
       }
+
    }
 
    // Local group mutators
@@ -245,7 +259,7 @@ namespace DdMd
 
       // Check consitency of pointers to atoms and atom ids
       Group<N>* ptr;
-      int       i, j;
+      int i, j;
       j = 0;
       for (i = 0; i < totalCapacity_ ; ++i) {
          ptr = groupPtrs_[i];
@@ -464,7 +478,7 @@ namespace DdMd
    /*
    * Identify groups that span boundaries.
    *
-   * This method is called by exchangeAtoms, after computing plans for
+   * This function is called by exchangeAtoms, after computing plans for
    * exchanging atoms, based on their position, but before exchanging
    * atoms, and before clearing ghosts from any previous exchange.
    *
@@ -481,7 +495,7 @@ namespace DdMd
    *
    * After calculating a ghost communication plan for each group, clear 
    * the pointers to all ghost atoms in the group. The exchangeAtoms 
-   * method will clear the actual ghost atoms from the AtomStorage.
+   * function will clear the actual ghost atoms from the AtomStorage.
    */
    template <int N> void 
    GroupStorage<N>::markSpanningGroups(FMatrix<double, Dimension, 2>& bound, 

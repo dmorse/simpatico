@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -40,21 +40,29 @@ namespace DdMd
       if (ptr) return ptr;
 
       if (className == "DdMdConfigIo") {
-         ptr = new DdMdConfigIo(*simulationPtr_);
+         bool hasMolecules;
+         if (Atom::hasAtomContext()) {
+            hasMolecules = true;
+         } else {
+            hasMolecules = false;
+         }
+         ptr = new DdMdConfigIo(*simulationPtr_, hasMolecules);
       } else 
-      #ifdef DDMD_MOLECULES
-      if (className == "DdMdConfigIo_Molecule") {
-         ptr = new DdMdConfigIo(*simulationPtr_, true);
+      if (className == "DdMdConfigIo_NoMolecule") {
+         ptr = new DdMdConfigIo(*simulationPtr_, false);
       } else 
-      #endif
       if (className == "DdMdOrderedConfigIo") {
-         ptr = new DdMdOrderedConfigIo(*simulationPtr_);
+         bool hasMolecules;
+         if (Atom::hasAtomContext()) {
+            hasMolecules = true;
+         } else {
+            hasMolecules = false;
+         }
+         ptr = new DdMdOrderedConfigIo(*simulationPtr_, hasMolecules);
       } else
-      #ifdef DDMD_MOLECULES
-      if (className == "DdMdOrderedConfigIo_Molecule") {
-         ptr = new DdMdOrderedConfigIo(*simulationPtr_, true);
+      if (className == "DdMdOrderedConfigIo_NoMolecule") {
+         ptr = new DdMdOrderedConfigIo(*simulationPtr_, false);
       } else
-      #endif
       if (className == "LammpsConfigIo") {
          ptr = new LammpsConfigIo(*simulationPtr_);
       } else

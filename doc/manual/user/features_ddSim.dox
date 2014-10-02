@@ -1,0 +1,45 @@
+/*! \page user_features_ddSim_page 2.8.2 Features for ddSim
+
+\ref user_features_inter_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_mdSim_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+<BR>
+
+Click on any of the links below for user information about classes 
+that implement algorithms for molecular dynamics integration or 
+on-the fly data analysis that can be used with the ddSim parallel 
+MD program.
+
+\sa DdMd_Integrator_Module
+\sa DdMd_Analyzer_Module
+
+<h2> MD Integrators (subclasses of DdMd::Integrator): </h2>
+<ul style="list-style: none;">
+  <li> \subpage ddMd_integrator_NveIntegrator_page </li>
+  <li> \subpage ddMd_integrator_NvtIntegrator_page </li>
+  <li> \subpage ddMd_integrator_NphIntegrator_page </li>
+  <li> \subpage ddMd_integrator_NptIntegrator_page </li>
+</ul>
+ 
+<h2> Analysis (subclasses of DdMd::Analyzer): </h2>
+<ul style="list-style: none;">
+  <li> \subpage ddMd_analyzer_ExternalEnergyAverage_page </li>
+  <li> \subpage ddMd_analyzer_LogEnergy_page </li>
+  <li> \subpage ddMd_analyzer_OutputBoxdim_page </li>
+  <li> \subpage ddMd_analyzer_OutputEnergy_page </li>
+  <li> \subpage ddMd_analyzer_OutputPressure_page </li>
+  <li> \subpage ddMd_analyzer_OutputPairEnergies_page </li>
+  <li> \subpage ddMd_analyzer_OutputTemperature_page </li>
+  <li> \subpage ddMd_analyzer_PairEnergyAverage_page </li>
+  <li> \subpage ddMd_analyzer_StructureFactor_page </li>
+  <li> \subpage ddMd_analyzer_StructureFactorGrid_page </li>
+  <li> \subpage ddMd_analyzer_VanHove_page </li>
+  <li> \subpage ddMd_analyzer_VirialStressTensorAverage_page </li>
+  <li> \subpage ddMd_analyzer_WriteConfig_page </li>
+</ul>
+
+<BR>
+\ref user_features_inter_page (Prev) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_page (Up) &nbsp; &nbsp; &nbsp; &nbsp;
+\ref user_features_mdSim_page (Next) &nbsp; &nbsp; &nbsp; &nbsp;
+
+*/

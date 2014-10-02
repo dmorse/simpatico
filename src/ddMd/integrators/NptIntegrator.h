@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -20,6 +20,8 @@ namespace DdMd
    * A reversible symplectic NPT integrator.
    *
    * Algorithm is based on Martyna,Tobias and Klein (J. Chem. Phys. 101, 4177-4189, 1994).
+   *
+   * \sa \ref ddMd_integrator_NptIntegrator_page "param file format"
    *
    * \ingroup DdMd_Integrator_Module
    */

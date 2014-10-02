@@ -23,5 +23,5 @@ endif
 mcMd_analyzers_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_analyzers_))
 mcMd_analyzers_OBJS=\
-     $(addprefix $(OBJ_DIR)/, $(mcMd_analyzers_:.cpp=.o))
+     $(addprefix $(BLD_DIR)/, $(mcMd_analyzers_:.cpp=.o))
 

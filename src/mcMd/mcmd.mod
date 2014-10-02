@@ -1,6 +1,6 @@
 
 /**
-* Classes for Monte Carlo (MC) and molecular dynamics (MC) simulation.
+* Serial Monte Carlo (MC) and molecular dynamics (MC) simulation.
 */
 namespace McMd {}
 

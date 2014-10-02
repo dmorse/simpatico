@@ -1,0 +1,7 @@
+ATOM TYPES:
+nType 2
+types  0 A
+       1 B
+BOND TYPES:
+nType 1
+types  0 polymer

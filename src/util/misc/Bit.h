@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -15,6 +15,8 @@ namespace Util
    * Represents a specific bit location within an unsigned int.
    *
    * Provides methods to query, set or clear a particular bit.
+   *
+   * \ingroup Misc_Module
    */
    class Bit 
    {

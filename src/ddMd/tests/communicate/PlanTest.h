@@ -1,6 +1,7 @@
 #ifndef DDMD_PLAN_TEST_H
 #define DDMD_PLAN_TEST_H
 
+#include <util/global.h>
 #include <ddMd/communicate/Plan.h>
 
 #ifdef UTIL_MPI

@@ -4,11 +4,10 @@ util_misc_=\
     util/misc/Exception.cpp \
     util/misc/FileMaster.cpp \
     util/misc/initStatic.cpp \
-    util/misc/ioUtil.cpp \
     util/misc/Log.cpp \
-    util/misc/Memory.cpp
-
+    util/misc/Memory.cpp \
+    util/misc/ioUtil.cpp 
 
 util_misc_SRCS=$(addprefix $(SRC_DIR)/, $(util_misc_))
-util_misc_OBJS=$(addprefix $(OBJ_DIR)/, $(util_misc_:.cpp=.o))
+util_misc_OBJS=$(addprefix $(BLD_DIR)/, $(util_misc_:.cpp=.o))
 

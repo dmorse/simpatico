@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -21,10 +21,7 @@
 #include <mcMd/chemistry/Dihedral.h>   // typedef
 #endif
 #include <mcMd/chemistry/MaskPolicy.h> // member 
-#ifndef MCMD_NOATOMTYPES
 #include <mcMd/chemistry/AtomType.h>   // member container template parameter
-#endif
-
 #include <util/misc/FileMaster.h>      // member
 #include <util/random/Random.h>        // member
 #include <util/containers/RArray.h>    // member container for Atoms
@@ -140,7 +137,7 @@ namespace McMd
       /**
       * Set MPI job to read one parameter file and one command file.
       *
-      * Call this method before readParam() to allow a single parameter
+      * Call this function before readParam() to allow a single parameter
       * and command file to be used in multi-processor free energy 
       * perturbation simulations, and to read the parameter file from
       * std in. It calls Util::ParamComposite:setIoCommunicator()
@@ -161,8 +158,8 @@ namespace McMd
       /**
       * Allocate and initialize a molecule set for one Species.
       * 
-      * This method is called during initialization by the readParam
-      * method of an associated System.
+      * This function is called during initialization by the readParam()
+      * function of an associated System.
       *
       * \param set       molecule set for one Species in a System.
       * \param speciesId integer index of the relevant Species.
@@ -318,7 +315,6 @@ namespace McMd
       */ 
       const Species& species(int i) const;
 
-      #ifndef MCMD_NOATOMTYPES
       /**
       * Get a single AtomType object by const reference.
       *
@@ -330,7 +326,6 @@ namespace McMd
       * Get a const Array of all AtomType objects.
       */
       const Array<AtomType>& atomTypes() const;
-      #endif
 
       /**
       * Get value of step index for main MC or MD loop.
@@ -382,14 +377,12 @@ namespace McMd
       /// Random number generator.
       Random random_;
 
-      #ifndef MCMD_NOATOMTYPES
       /**
       * Array of AtomType objects for all types in simulation.
       *
       * Each AtomType stores the name and mass for a type of Atom.
       */
       DArray<AtomType> atomTypes_;
-      #endif
 
       /** 
       * Array of all Molecule objects, for all Species.
@@ -407,7 +400,7 @@ namespace McMd
       * This RArray is an alias (i.e., a shallow copy) of a DArray that is a
       * private static member of the Atom class.
       */
-      RArray<Atom>     atoms_;
+      RArray<Atom> atoms_;
 
       /**
       * Array of all Bond objects.
@@ -417,7 +410,7 @@ namespace McMd
       * and blocks associated with molecules are of the same Species are 
       * stored sequentially within a larger block.
       */
-      DArray<Bond>     bonds_;
+      DArray<Bond> bonds_;
 
       #ifdef INTER_ANGLE
       /**
@@ -428,7 +421,7 @@ namespace McMd
       * and blocks associated with molecules are of the same Species are 
       * stored sequentially within a larger block.
       */
-      DArray<Angle>     angles_;
+      DArray<Angle> angles_;
       #endif
 
       #ifdef INTER_DIHEDRAL
@@ -457,7 +450,7 @@ namespace McMd
       * Element firstAtomIds[i] is an integer index for the first Atom of the
       * block of the atoms_ Array associated with species number i.
       */
-      DArray<int>      firstAtomIds_;
+      DArray<int> firstAtomIds_;
 
       /**
       * Array containing indices to the first Bond of each species.
@@ -465,7 +458,7 @@ namespace McMd
       * Element firstBondIds[i] is an integer index for the first Bond of the
       * block of the bonds_ Array associated with species number i.
       */
-      DArray<int>      firstBondIds_;
+      DArray<int> firstBondIds_;
 
       #ifdef INTER_ANGLE
       /**
@@ -474,7 +467,7 @@ namespace McMd
       * Element firstAngleIds[i] is an integer index for the first Angle of the
       * block of the angles_ Array associated with species number i.
       */
-      DArray<int>      firstAngleIds_;
+      DArray<int> firstAngleIds_;
       #endif
 
       #ifdef INTER_DIHEDRAL
@@ -484,13 +477,13 @@ namespace McMd
       * Element firstDihedralIds[i] is an integer index for the first Dihedral of the
       * block of the dihedrals_ Array associated with species number i.
       */
-      DArray<int>  firstDihedralIds_;
+      DArray<int> firstDihedralIds_;
       #endif
 
       /**
       * Object for opening associated input and output files.
       */
-      FileMaster  fileMaster_;
+      FileMaster fileMaster_;
 
       #ifdef UTIL_MPI
       /**
@@ -528,19 +521,19 @@ namespace McMd
       //@{
 
       /// Number of atom types.
-      int  nAtomType_;
+      int nAtomType_;
 
       /// Number of bond types.
-      int  nBondType_;
+      int nBondType_;
 
       #ifdef INTER_ANGLE
       /// Number of angle types.
-      int  nAngleType_;
+      int nAngleType_;
       #endif
 
       #ifdef INTER_DIHEDRAL
       /// Number of dihedral types.
-      int  nDihedralType_;
+      int nDihedralType_;
       #endif
 
       #ifdef INTER_COULOMB
@@ -550,7 +543,7 @@ namespace McMd
 
       #ifdef INTER_EXTERNAL
       /// Does an external potential exist? (0 false or 1 true)
-      int  hasExternal_;
+      int hasExternal_;
       #endif
 
       #ifdef MCMD_LINK
@@ -560,7 +553,7 @@ namespace McMd
 
       #ifdef INTER_TETHER
       /// Does a tether potential exist? (0 false or 1 true)
-      int  hasTether_;
+      int hasTether_;
       #endif
 
       /**
@@ -570,7 +563,7 @@ namespace McMd
       * for all Species in all Systems. This should be equal to the sum 
       * of values of capacity() for each Species.
       */
-      int  moleculeCapacity_;
+      int moleculeCapacity_;
 
       /**
       * Number of atoms allocated.
@@ -579,7 +572,7 @@ namespace McMd
       * Species in all Systems.  The atomCapacity should be equal to the
       * sum of values of capacity()*nAtom() for each Species.
       */
-      int  atomCapacity_;
+      int atomCapacity_;
 
       /**
       * Number of bonds allocated.
@@ -587,7 +580,7 @@ namespace McMd
       * The number of Bond objects allocated in the DArray bonds_ , for all
       * Species in all Systems.
       */
-      int  bondCapacity_;
+      int bondCapacity_;
 
       #ifdef INTER_ANGLE
       /**
@@ -596,7 +589,7 @@ namespace McMd
       * The number of Angle objects allocated in the DArray angles_, for all
       * Species in all Systems.
       */
-      int  angleCapacity_;
+      int angleCapacity_;
       #endif
 
       #ifdef INTER_DIHEDRAL
@@ -606,7 +599,7 @@ namespace McMd
       * The number of Dihedral objects allocated in the DArray dihedrals_, for all
       * Species in all Systems.
       */
-      int  dihedralCapacity_;
+      int dihedralCapacity_;
       #endif
 
       /**
@@ -617,7 +610,7 @@ namespace McMd
       *  - MaskNone:   no masked pairs
       *  - MaskBonded:  mask pair interaction between bonded atoms
       */
-      MaskPolicy  maskedPairPolicy_;
+      MaskPolicy maskedPairPolicy_;
 
       //@}
 
@@ -661,7 +654,7 @@ namespace McMd
    }; // end class Simulation
 
 
-   // public inline accessor methods
+   // Public inline accessor member functions
 
    inline int Simulation::nAtomType() const
    {  return nAtomType_; }
@@ -684,14 +677,14 @@ namespace McMd
    {  return hasCoulomb_; }
    #endif
 
-   #ifdef MCMD_LINK
-   inline int Simulation::nLinkType() const
-   {  return nLinkType_; }
-   #endif
-
    #ifdef INTER_EXTERNAL
    inline int Simulation::hasExternal() const
    {  return hasExternal_; }
+   #endif
+
+   #ifdef MCMD_LINK
+   inline int Simulation::nLinkType() const
+   {  return nLinkType_; }
    #endif
 
    #ifdef INTER_TETHER
@@ -727,13 +720,11 @@ namespace McMd
    inline Random& Simulation::random()
    {  return random_; }
 
-   #ifndef MCMD_NOATOMTYPES
    inline const Array<AtomType>& Simulation::atomTypes() const
    {  return atomTypes_; }
 
    inline const AtomType& Simulation::atomType(int i) const
    {  return atomTypes_[i]; }
-   #endif
 
    #ifdef UTIL_MPI
    inline MPI::Intracomm& Simulation::communicator()
@@ -743,7 +734,7 @@ namespace McMd
    }
    #endif
 
-   // Protected inline methods
+   // Protected inline member functions
    
    inline FileMaster& Simulation::fileMaster()
    {  return fileMaster_; }
@@ -758,7 +749,7 @@ namespace McMd
    }
 
    inline int Simulation::iStep() const
-   { return iStep_; }
+   {  return iStep_; }
 
 }
 #endif

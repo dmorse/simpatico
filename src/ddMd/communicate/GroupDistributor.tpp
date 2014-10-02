@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -34,8 +34,8 @@ namespace DdMd
       sendType_(Buffer::NONE),
       nAtomRecv_(0),
       nSentTotal_(0),
-      cacheSize_(0),
-      cacheCapacity_(0)
+      cacheCapacity_(1024), 
+      cacheSize_(0)
    {  setClassName("GroupDistributor"); }
 
    /*
@@ -61,13 +61,18 @@ namespace DdMd
    }
 
    /*
-   * Set cache capacity and allocate all required memory.
+   * Set cache capacity.
    */
    template <int N>
-   void GroupDistributor<N>::initialize(int cacheCapacity)
-   {
-      cacheCapacity_ = cacheCapacity;
-      allocate();
+   void GroupDistributor<N>::setCapacity(int cacheCapacity)
+   {  
+      if (cacheCapacity <= 0) {
+         UTIL_THROW("Attempt to set nonpositive cacheCapacity");
+      }  
+      if (cache_.capacity() > 0) { 
+         UTIL_THROW("Attempt to set cacheCapacity after allocation");
+      } 
+      cacheCapacity_ = cacheCapacity; 
    }
 
    /*
@@ -75,32 +80,23 @@ namespace DdMd
    */
    template <int N>
    void GroupDistributor<N>::readParameters(std::istream& in)
-   {
-      read<int>(in, "cacheCapacity", cacheCapacity_);
-      allocate();
-   }
+   {  read<int>(in, "cacheCapacity", cacheCapacity_); }
 
    /*
-   * Allocate memory and initialize state (private method).
-   */
-   template <int N>
-   void GroupDistributor<N>::allocate()
-   {
-      // Preconditions
-      if (atomStoragePtr_ == 0) {
-         UTIL_THROW("GroupDistributor not initialized");
-      }
-      cache_.allocate(cacheCapacity_);
-      nAtomRecv_ = 0;
-      newPtr_ = 0;
-   }
-
-   /*
-   * Setup before distribution.
+   * Setup master before distribution. Call only on master.
    */
    template <int N>
    void GroupDistributor<N>::setup()
    {
+      // Allocate cache if necessary
+      if (cache_.capacity() == 0) {
+         if (cacheCapacity_ == 0) {
+            UTIL_THROW("cachCapacity_ not set");
+         }
+         cache_.allocate(cacheCapacity_);
+      }
+
+      // Setup state of master before loop 
       bufferPtr_->clearSendBuffer();
       bufferPtr_->beginSendBlock(Buffer::GROUP2 + N - 2);
       nAtomRecv_ = 0;
@@ -108,7 +104,7 @@ namespace DdMd
    }
 
    /*
-   * Returns address for a new local Group.
+   * Returns address for a new local Group. Call only on master.
    */ 
    template <int N>
    Group<N>* GroupDistributor<N>::newPtr()
