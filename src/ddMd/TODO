@@ -1,13 +1,11 @@
 Exchanger:
 ----------
 
-- Add memory usage statistics, to see which communication step (atom
-  exchange or ghost exchange) uses the most memory.
-
 - Write separate algorithm for initial ghost exchange, to reduce memory 
   requirements See doc/notes/ddMd/initGhosts
 
-- Consider moving allocation of Buffer to Exchanger.
+- Add memory usage statistics, to see which communication step (atom
+  exchange or ghost exchange) uses the most memory.
 
 - Improve error checking of conditions that can lead to incomplete groups.
   Under what conditions can a group span two boundaries in the same direction ?
@@ -31,6 +29,8 @@ Buffer:
 
 - Make sure memory statistics include all usage, including setup.
 
+- Consider moving allocation of Buffer to Exchanger.
+
 AtomStorage:
 ------------
 
@@ -45,13 +45,6 @@ Moving GroupStorage to Potential class:
 
 - Make each GroupStorage a member of the associated potential.
 
-Hybrid MD
----------
-
-- Finish and test transactions in AtomStorage (in transactions branch).
-
-- Add transactions to GroupStorage (in transactions branch).
-
 Single Processor Operation
 --------------------------
 
@@ -59,20 +52,10 @@ Single Processor Operation
   work ifndef UTIL_MPI, continue with other classes, to enable single 
   processor operation with no MPI.
 
-Files
------
+Hybrid MD
+---------
 
-- Add ConfigIo that can read and write hoomd XML format.
+- Finish and test transactions in AtomStorage (in transactions branch).
 
-- Add mechanism to output trajectory files in a standard format.
-
-- Add ConfigIo that can read and write McMd format, to allow McMd 
-  codes to be used for analysis.
-
-- Think about separating topology and configuration files. 
-
-Analysis
---------
-
-- Write stand-alone single processor framework for analysis.
+- Add transactions to GroupStorage (in transactions branch).
 

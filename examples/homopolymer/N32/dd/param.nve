@@ -68,7 +68,7 @@ Simulation{
 
      DdMdTrajectoryWriter{
         interval        2000
-        outputFileName  out/trajectory.trj
+        outputFileName  trajectory.trj
      }
 
   }

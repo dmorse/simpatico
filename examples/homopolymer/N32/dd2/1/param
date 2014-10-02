@@ -52,12 +52,17 @@ Simulation{
     tauT              0.5
     tauP              0.5
     mode              cubic
+    saveInterval      1000
+    saveFileName      restart
   }
   Random{
     seed              8012457890
   }
   AnalyzerManager{
      baseInterval     100
+
+  }
+}
 
      OutputEnergy{
         interval         1000
@@ -75,11 +80,7 @@ Simulation{
      OutputTemperature{
         interval         1000
         outputFileName   temperature
-      }
-  }
-}
-
-
+     }
 
 
      WriteConfig{

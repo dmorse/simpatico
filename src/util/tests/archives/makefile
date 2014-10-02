@@ -15,7 +15,7 @@ clean:
 	$(MAKE) clean-outputs
 
 clean-outputs:
-	rm -f dummy text binary
+	rm -f dummy text binary xdr
 
 -include $(util_tests_archives_OBJS:.o=.d)
 -include $(util_OBJS:.o=.d)

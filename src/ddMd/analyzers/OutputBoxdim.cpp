@@ -38,10 +38,12 @@ namespace DdMd
       readInterval(in);
       readOutputFileName(in);
 
+      #if 0
       std::string filename;
       filename  = outputFileName();
       simulation().fileMaster().openOutputFile(filename, outputFile_);
       isInitialized_ = true;
+      #endif
    }
 
    /*
@@ -54,10 +56,6 @@ namespace DdMd
 
       MpiLoader<Serializable::IArchive> loader(*this, ar);
       loader.load(nSample_);
-
-      std::string filename;
-      filename  = outputFileName();
-      simulation().fileMaster().openOutputFile(filename, outputFile_);
 
       isInitialized_ = true;
    }
@@ -72,13 +70,23 @@ namespace DdMd
       ar << nSample_;
    }
 
-  
-
    /*
    * Reset nSample_
    */
    void OutputBoxdim::clear()
    {  nSample_ = 0; }
+
+   /*
+   * Open outputfile
+   */ 
+   void OutputBoxdim::setup()
+   {
+      if (simulation().domain().isMaster()) {
+         std::string filename;
+         filename  = outputFileName();
+         simulation().fileMaster().openOutputFile(filename, outputFile_);
+      }
+   }
 
    /*
    * Dump configuration to file

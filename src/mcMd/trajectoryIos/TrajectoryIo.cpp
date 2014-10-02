@@ -10,6 +10,9 @@
 
 #include "TrajectoryIo.h"
 #include <mcMd/simulation/System.h>
+#include <mcMd/simulation/Simulation.h>
+#include <mcMd/species/Species.h>
+#include <mcMd/chemistry/Molecule.h>
 
 namespace McMd
 {
@@ -20,10 +23,10 @@ namespace McMd
    * Constructor. 
    */
    TrajectoryIo::TrajectoryIo(System& system)
-    : nFrames_(0),
-      boundaryPtr_(&system.boundary()),
+    : boundaryPtr_(&system.boundary()),
       systemPtr_(&system),
-      simulationPtr_(&system.simulation())
+      simulationPtr_(&system.simulation()),
+      atomCapacity_(0)
    {}
 
    /* 
@@ -37,15 +40,34 @@ namespace McMd
    */
    void TrajectoryIo::readHeader(std::fstream &file)
    {
-      UTIL_THROW("This TrajectoryIo class does not implement a readHeader() method.");
+      int nSpecies = simulation().nSpecies();
+      int speciesCapacity = 0;
+      int iSpec,iMol;
+      Species* speciesPtr;
+      Molecule* molPtr;
+
+      // Add molecules to system
+      atomCapacity_ = 0;
+      for (iSpec = 0; iSpec < nSpecies; ++iSpec) {
+         speciesPtr = &simulation().species(iSpec);
+         speciesCapacity = speciesPtr->capacity();
+
+         for (iMol = 0; iMol < speciesCapacity; ++iMol) {
+            molPtr = &(speciesPtr->reservoir().pop());
+            system().addMolecule(*molPtr);
+         }
+         atomCapacity_ += speciesCapacity*speciesPtr->nAtom();
+      }
+
    }
 
    /*
    * Read a single frame.
    */
-   void TrajectoryIo::readFrame(std::fstream& file)
+   bool TrajectoryIo::readFrame(std::fstream& file)
    {
        UTIL_THROW("This TrajectoryIo class does not implement a readFrame() method.");
+       return false;
    }
 
    /*

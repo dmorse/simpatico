@@ -21,9 +21,6 @@
 #include "IntraStructureFactor.h"
 #include "IntraStructureFactorGrid.h"
 #include "VanHove.h"
-#ifdef UTIL_MPI
-#include "MigratingVanHove.h"
-#endif
 #include "RadiusGyration.h"
 #include "BlockRadiusGyration.h"
 #include "BondLengthDist.h"
@@ -133,11 +130,7 @@ namespace McMd
       else 
       if (className == "BennettsMethod") {
          ptr = new BennettsMethod(system());
-      } else 
-      if (className == "MigratingVanHove") {
-         ptr = new MigratingVanHove(system());
-      }
-
+      } 
       #endif
       #endif
 

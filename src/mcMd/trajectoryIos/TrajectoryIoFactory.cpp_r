@@ -12,6 +12,7 @@
 
 // Subclasses of ConfigIo
 #include "DCDTrajectoryIo.h"
+#include "LammpsDumpIo.h"
 
 namespace McMd
 {
@@ -36,6 +37,9 @@ namespace McMd
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
+      if (className == "LammpsDumpIo") {
+         ptr = new LammpsDumpIo(*systemPtr_);
+      } else
       if (className == "DCDTrajectoryIo") {
          ptr = new DCDTrajectoryIo(*systemPtr_);
       }

@@ -191,12 +191,16 @@ namespace Util
 
             // Open command file
             std::ifstream* filePtr = new std::ifstream();
-            filePtr->open(filename.c_str());
-            if (filePtr->fail()) {
-               std::string message;
-               message = "Error opening command file. Filename: ";
-               message += filename;
-               UTIL_THROW(message.c_str());
+            if (isIoProcessor()) {
+               // Log::file() << "Opening command file " 
+               //            << filename << std::endl;
+               filePtr->open(filename.c_str());
+               if (filePtr->fail()) {
+                  std::string message;
+                  message = "Error opening command file. Filename: ";
+                  message += filename;
+                  UTIL_THROW(message.c_str());
+               }
             }
             commandFilePtr_ = filePtr;
          }
@@ -208,8 +212,39 @@ namespace Util
    * Open and return an input file with specified base name
    */
    void
+   FileMaster::openInputFile(const std::string& name, std::ifstream& in,
+                             std::ios_base::openmode mode) const
+   {
+      // Construct filename = inputPrefix_ + name
+      std::string filename(rootPrefix_);
+      if (hasDirectoryId_) {
+         filename += directoryIdPrefix_;
+      }
+      filename += inputPrefix_;
+      filename += name;
+      // Log::file() << "Opening input file " 
+      //            << filename << std::endl;
+
+      in.open(filename.c_str(), mode);
+
+      // Check for error opening file
+      if (in.fail()) {
+         std::string message = "Error opening input file. Filename: ";
+         message += filename;
+         UTIL_THROW(message.c_str());
+      }
+
+   }
+
+   /*
+   * Open and return an input file with specified base name
+   */
+   void
    FileMaster::openInputFile(const std::string& name, std::ifstream& in) const
    {
+      openInputFile(name, in, std::ios_base::in); 
+      #if 0
+
       // Construct filename = inputPrefix_ + name
       std::string filename(rootPrefix_);
       if (hasDirectoryId_) {
@@ -226,6 +261,7 @@ namespace Util
          message += filename;
          UTIL_THROW(message.c_str());
       }
+      #endif
 
    }
 
@@ -233,9 +269,45 @@ namespace Util
    * Open and return an output file named outputPrefix + name
    */
    void
-   FileMaster::openOutputFile(const std::string& name, std::ofstream& out, bool append)
-   const
+   FileMaster::openOutputFile(const std::string& name, 
+                              std::ofstream& out, 
+                              std::ios_base::openmode mode) const
    {
+      // Construct filename = outputPrefix_ + name
+      std::string filename(rootPrefix_);
+      if (hasDirectoryId_) {
+         filename += directoryIdPrefix_;
+      }
+      filename += outputPrefix_;
+      filename += name;
+      // Log::file() << "Opening output file " 
+      //            << filename << std::endl;
+
+      out.open(filename.c_str(), mode);
+
+      // Check for error opening file
+      if (out.fail()) {
+         std::string message = "Error opening output file. Filename: ";
+         message += filename;
+         UTIL_THROW(message.c_str());
+      }
+
+   }
+
+   /*
+   * Open and return an output file named outputPrefix + name
+   */
+   void
+   FileMaster::openOutputFile(const std::string& name, 
+                              std::ofstream& out, bool append) const
+   {
+      if (append) {
+         openOutputFile(name, out, std::ios::out | std::ios::app);
+      } else {
+         openOutputFile(name, out, std::ios::out);
+      }
+  
+      #if 0
       // Construct filename = outputPrefix_ + name
       std::string filename(rootPrefix_);
       if (hasDirectoryId_) {
@@ -255,6 +327,7 @@ namespace Util
          message += filename;
          UTIL_THROW(message.c_str());
       }
+      #endif
 
    }
 
@@ -271,6 +344,8 @@ namespace Util
       }
       filename += name;
       filename += ext;
+      // Log::file() << "Opening param input file " 
+      //            << filename << std::endl;
 
       in.open(filename.c_str());
       if (in.fail()) {
@@ -293,6 +368,8 @@ namespace Util
       }
       filename += name;
       filename += ext;
+      // Log::file() << "Opening param output file " 
+      //            << filename << std::endl;
 
       out.open(filename.c_str());
       if (out.fail()) {
@@ -314,6 +391,8 @@ namespace Util
       }
       filename += name;
       filename += ext;
+      // Log::file() << "Opening restart input file " 
+      //            << filename << std::endl;
 
       in.open(filename.c_str());
       if (in.fail()) {
@@ -336,6 +415,8 @@ namespace Util
       }
       filename += name;
       filename += ext;
+      // Log::file() << "Opening restart output file " 
+      //            << filename << std::endl;
 
       out.open(filename.c_str());
 

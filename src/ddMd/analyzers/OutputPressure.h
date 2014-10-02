@@ -69,6 +69,11 @@ namespace DdMd
       virtual void clear();
   
       /**
+      * Setup - open output file.
+      */
+      virtual void setup();
+
+      /**
       * Dump configuration to file
       *
       * \param iStep MD step index

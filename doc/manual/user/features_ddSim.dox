@@ -20,7 +20,7 @@ MD program.
   <li> \subpage ddMd_integrator_NptIntegrator_page </li>
 </ul>
  
-<h2> Analysis (subclasses of DdMd::Analyzer): </h2>
+<h2> Data Analysis and Output (subclasses of DdMd::Analyzer): </h2>
 <ul style="list-style: none;">
   <li> \subpage ddMd_analyzer_ExternalEnergyAverage_page </li>
   <li> \subpage ddMd_analyzer_LogEnergy_page </li>
@@ -34,7 +34,9 @@ MD program.
   <li> \subpage ddMd_analyzer_StructureFactorGrid_page </li>
   <li> \subpage ddMd_analyzer_VanHove_page </li>
   <li> \subpage ddMd_analyzer_VirialStressTensorAverage_page </li>
-  <li> \subpage ddMd_analyzer_WriteConfig_page </li>
+  <li> \subpage ddMd_analyzer_ConfigWriter_page </li>
+  <li> \subpage ddMd_analyzer_DdMdTrajectoryWriter_page </li>
+  <li> \subpage ddMd_analyzer_LammpsDumpWriter_page </li>
 </ul>
 
 <BR>

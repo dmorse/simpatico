@@ -9,10 +9,10 @@ Subdirectories:
 
 chemistry   atoms, covalent groups (bonds, etc.), molecules and species
 storage     containers for atoms and groups. System represent a configuration
-config      configuration file readers
+config      configuration file readers and writers
 trajectory  trajectory file readers
-analyzers   data analysis (classes derived from Analyzer)
-processor   a master class for analysis of trajectories
+analyzers   data analysis and output (classes derived from Analyzer)
+processor   main postprocessor class
 neighbor    classes to identify non-bonded neighboring atoms
 tests       unit tests
 

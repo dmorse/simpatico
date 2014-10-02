@@ -68,7 +68,12 @@ namespace DdMd
       virtual void clear();
   
       /**
-      * Dump configuration to file
+      * Setup - open output file.
+      */
+      virtual void setup();
+
+      /**
+      * Write energy to file
       *
       * \param iStep MC step index
       */
