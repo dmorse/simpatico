@@ -371,17 +371,12 @@ namespace DdMd
          }
          load(std::string(rArg));
          if (isIoProcessor()) {
+            Log::file() << "Done reading restart file" << std::endl;
             Log::file() << std::endl;
          }
       }
 
    }
-
-   /*
-   *  Read parameters from default parameter file.
-   */
-   void Simulation::readParam()
-   {  readParam(fileMaster().paramFile()); }
 
    /*
    * Read parameter block, including begin and end.
@@ -401,6 +396,17 @@ namespace DdMd
       * and isRestarting_ is set true within setOptions(), which the
       * main program ddSim.cpp calls before readParam().
       */
+   }
+
+   /*
+   *  Read parameters from default parameter file.
+   */
+   void Simulation::readParam()
+   {
+      if (!isRestarting_) {  
+         readParam(fileMaster().paramFile()); 
+      }
+      /// See comment about restart in readParam(std::istream&)
    }
 
    /*
@@ -1312,9 +1318,11 @@ namespace DdMd
             if (command == "WRITE_PARAM") {
                // Write params file, using current variable values.
                inBuffer >> filename;
-               fileMaster().openOutputFile(filename, outputFile);
-               writeParam(outputFile);
-               outputFile.close();
+               if (isIoProcessor()) {
+                  fileMaster().openOutputFile(filename, outputFile);
+                  writeParam(outputFile);
+                  outputFile.close();
+               }
             } else
             if (command == "SET_CONFIG_IO") {
                // Create a ConfigIo object of specified subclass.

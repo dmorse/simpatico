@@ -1,5 +1,5 @@
-#ifndef DDMD_OUTPUT_STRESSTENSOR_H
-#define DDMD_OUTPUT_STRESSTENSOR_H
+#ifndef DDMD_OUTPUT_STRESS_TENSOR_H
+#define DDMD_OUTPUT_STRESS_TENSOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -10,12 +10,11 @@
 
 #include <ddMd/analyzers/Analyzer.h>
 #include <ddMd/simulation/Simulation.h>
-#include <util/mpi/MpiLoader.h>
-#include <util/space/Tensor.h>
 
 namespace DdMd
 {
 
+   class Simulation;
    using namespace Util;
 
    /**
@@ -67,6 +66,11 @@ namespace DdMd
       */
       virtual void clear();
   
+      /**
+      * Setup - open output file.
+      */
+      virtual void setup();
+
       /**
       * Dump configuration to file
       *

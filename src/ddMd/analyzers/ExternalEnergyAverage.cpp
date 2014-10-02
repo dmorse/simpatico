@@ -54,7 +54,7 @@ namespace DdMd
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
 
-      if(simulation().domain().isMaster()) {
+      if (simulation().domain().isMaster()) {
          accumulator_ = new Average;
          accumulator_->setNSamplePerBlock(nSamplePerBlock_);
       }
@@ -131,16 +131,15 @@ namespace DdMd
    void ExternalEnergyAverage::output()
    {
       if (simulation().domain().isMaster()) {
-      simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
-      ParamComposite::writeParam(outputFile_);
-      outputFile_.close();
+         simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
+         ParamComposite::writeParam(outputFile_);
+         outputFile_.close();
 
-      simulation().fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
-      accumulator_->output(outputFile_);
-      outputFile_.close();
+         simulation().fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
+         accumulator_->output(outputFile_);
+         outputFile_.close();
       }
    }
-
 
 }
 #endif

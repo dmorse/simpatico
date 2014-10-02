@@ -37,11 +37,11 @@ namespace DdMd
    {
       readInterval(in);
       readOutputFileName(in);
-
+      #if 0
       std::string filename;
       filename  = outputFileName();
       simulation().fileMaster().openOutputFile(filename, outputFile_);
-
+      #endif
       isInitialized_ = true;
    }
 
@@ -57,10 +57,11 @@ namespace DdMd
       MpiLoader<Serializable::IArchive> loader(*this, ar);
       loader.load(nSample_);
 
+      #if 0
       std::string filename;
       filename  = outputFileName();
       simulation().fileMaster().openOutputFile(filename, outputFile_);
-
+      #endif
       isInitialized_ = true;
    }
 
@@ -80,6 +81,18 @@ namespace DdMd
    */
    void OutputPressure::clear() 
    {  nSample_ = 0; }
+
+   /*
+   * Open outputfile
+   */ 
+   void OutputPressure::setup()
+   {
+      if (simulation().domain().isMaster()) {
+         std::string filename;
+         filename  = outputFileName();
+         simulation().fileMaster().openOutputFile(filename, outputFile_);
+      }
+   }
 
    /*
    * Dump configuration to file

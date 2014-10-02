@@ -1,5 +1,5 @@
-#ifndef DDMD_OUTPUT_STRESSTENSOR_CPP
-#define DDMD_OUTPUT_STRESSTENSOR_CPP
+#ifndef DDMD_OUTPUT_STRESS_TENSOR_CPP
+#define DDMD_OUTPUT_STRESS_TENSOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,7 +9,9 @@
 */
 
 #include "OutputStressTensor.h"
-//#include <util/misc/FileMaster.h>
+#include <util/misc/FileMaster.h>
+#include <util/mpi/MpiLoader.h>
+#include <util/space/Tensor.h>
 #include <util/misc/ioUtil.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
@@ -38,10 +40,11 @@ namespace DdMd
       readInterval(in);
       readOutputFileName(in);
 
+      #if 0
       std::string filename;
       filename  = outputFileName();
       simulation().fileMaster().openOutputFile(filename, outputFile_);
-
+      #endif
       isInitialized_ = true;
    }
 
@@ -56,10 +59,11 @@ namespace DdMd
       MpiLoader<Serializable::IArchive> loader(*this, ar);
       loader.load(nSample_);
 
+      #if 0
       std::string filename;
       filename  = outputFileName();
       simulation().fileMaster().openOutputFile(filename, outputFile_);
-
+      #endif
       isInitialized_ = true;
    }
 
@@ -79,6 +83,18 @@ namespace DdMd
    */
    void OutputStressTensor::clear() 
    {  nSample_ = 0; }
+
+   /*
+   * Open outputfile
+   */ 
+   void OutputStressTensor::setup()
+   {
+      if (simulation().domain().isMaster()) {
+         std::string filename;
+         filename  = outputFileName();
+         simulation().fileMaster().openOutputFile(filename, outputFile_);
+      }
+   }
 
    /*
    * Dump configuration to file

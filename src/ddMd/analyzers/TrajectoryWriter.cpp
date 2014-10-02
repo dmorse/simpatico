@@ -97,17 +97,19 @@ namespace DdMd
    void TrajectoryWriter::setup()
    {  
       FileMaster& fileMaster = simulation().fileMaster();
-      if (isBinary()) {
-         fileMaster.openOutputFile(outputFileName(), outputFile_, 
-                                   std::ios::out | std::ios::binary);
-      } else {
-         fileMaster.openOutputFile(outputFileName(), outputFile_);
+      if (isIoProcessor()) {
+         if (isBinary()) {
+            fileMaster.openOutputFile(outputFileName(), outputFile_, 
+                                      std::ios::out | std::ios::binary);
+         } else {
+            fileMaster.openOutputFile(outputFileName(), outputFile_);
+         }
       }
       writeHeader(outputFile_);
    }
 
    /*
-   * Write frame to file, header on first sample.
+   * Write a frame to file.
    */
    void TrajectoryWriter::sample(long iStep)
    {

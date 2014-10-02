@@ -191,12 +191,16 @@ namespace Util
 
             // Open command file
             std::ifstream* filePtr = new std::ifstream();
-            filePtr->open(filename.c_str());
-            if (filePtr->fail()) {
-               std::string message;
-               message = "Error opening command file. Filename: ";
-               message += filename;
-               UTIL_THROW(message.c_str());
+            if (isIoProcessor()) {
+               // Log::file() << "Opening command file " 
+               //            << filename << std::endl;
+               filePtr->open(filename.c_str());
+               if (filePtr->fail()) {
+                  std::string message;
+                  message = "Error opening command file. Filename: ";
+                  message += filename;
+                  UTIL_THROW(message.c_str());
+               }
             }
             commandFilePtr_ = filePtr;
          }
@@ -218,6 +222,8 @@ namespace Util
       }
       filename += inputPrefix_;
       filename += name;
+      // Log::file() << "Opening input file " 
+      //            << filename << std::endl;
 
       in.open(filename.c_str(), mode);
 
@@ -274,6 +280,8 @@ namespace Util
       }
       filename += outputPrefix_;
       filename += name;
+      // Log::file() << "Opening output file " 
+      //            << filename << std::endl;
 
       out.open(filename.c_str(), mode);
 
@@ -336,6 +344,8 @@ namespace Util
       }
       filename += name;
       filename += ext;
+      // Log::file() << "Opening param input file " 
+      //            << filename << std::endl;
 
       in.open(filename.c_str());
       if (in.fail()) {
@@ -358,6 +368,8 @@ namespace Util
       }
       filename += name;
       filename += ext;
+      // Log::file() << "Opening param output file " 
+      //            << filename << std::endl;
 
       out.open(filename.c_str());
       if (out.fail()) {
@@ -379,6 +391,8 @@ namespace Util
       }
       filename += name;
       filename += ext;
+      // Log::file() << "Opening restart input file " 
+      //            << filename << std::endl;
 
       in.open(filename.c_str());
       if (in.fail()) {
@@ -401,6 +415,8 @@ namespace Util
       }
       filename += name;
       filename += ext;
+      // Log::file() << "Opening restart output file " 
+      //            << filename << std::endl;
 
       out.open(filename.c_str());
 
