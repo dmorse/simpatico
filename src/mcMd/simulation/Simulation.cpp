@@ -48,11 +48,11 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       nDihedralType_(-1),
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_(-1),
-      #endif
       #ifdef INTER_EXTERNAL
       hasExternal_(-1),
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_(-1),
       #endif
       #ifdef INTER_TETHER
       hasTether_(-1),
@@ -107,11 +107,11 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       nDihedralType_(-1),
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_(-1),
-      #endif
       #ifdef INTER_EXTERNAL
       hasExternal_(-1),
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_(-1),
       #endif
       #ifdef INTER_TETHER
       hasTether_(-1),
@@ -204,18 +204,18 @@ namespace McMd
          UTIL_THROW("nDihedralType must be >= 0");
       }
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_ = 0;
-      read<int>(in, "nLinkType", nLinkType_, false); // optional
-      if (nLinkType_ < 0) {
-         UTIL_THROW("nLinkType must be >= 0");
-      }
-      #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = 0;
       read<int>(in, "hasExternal", hasExternal_, false); // optional
       if (hasExternal_ < 0) {
          UTIL_THROW("hasExternal must be >= 0");
+      }
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_ = 0;
+      read<int>(in, "nLinkType", nLinkType_, false); // optional
+      if (nLinkType_ < 0) {
+         UTIL_THROW("nLinkType must be >= 0");
       }
       #endif
       #ifdef INTER_TETHER
@@ -263,13 +263,13 @@ namespace McMd
       nDihedralType_ = 0;
       loadParameter<int>(ar, "nDihedralType", nDihedralType_, false);
       #endif
-      #ifdef MCMD_LINK
-      nLinkType_ = 0;
-      loadParameter<int>(ar, "nLinkType", nLinkType_, false);
-      #endif
       #ifdef INTER_EXTERNAL
       hasExternal_ = false;
       loadParameter<int>(ar, "hasExternal", hasExternal_, false);
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_ = 0;
+      loadParameter<int>(ar, "nLinkType", nLinkType_, false);
       #endif
       #ifdef INTER_TETHER
       hasTether_ = false;
@@ -310,13 +310,13 @@ namespace McMd
       // ar << nDihedralType_;
       Parameter::saveOptional(ar, nDihedralType_, (bool)nDihedralType_);
       #endif
-      #ifdef MCMD_LINK
-      // ar << nLinkType_;
-      Parameter::saveOptional(ar, nLinkType_, (bool)nLinkType_);
-      #endif
       #ifdef INTER_EXTERNAL
       // ar << hasExternal_;
       Parameter::saveOptional(ar, hasExternal_, hasExternal_);
+      #endif
+      #ifdef MCMD_LINK
+      // ar << nLinkType_;
+      Parameter::saveOptional(ar, nLinkType_, (bool)nLinkType_);
       #endif
       #ifdef INTER_TETHER
       ar << hasTether_;

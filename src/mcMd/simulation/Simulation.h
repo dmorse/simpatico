@@ -234,18 +234,18 @@ namespace McMd
       int nDihedralType() const;
       #endif
 
-      #ifdef MCMD_LINK
-      /**
-      * Get the number of link types.
-      */
-      int nLinkType() const;
-      #endif
-
       #ifdef INTER_EXTERNAL
       /**
       * Does an external potential exist?
       */
       int hasExternal() const;
+      #endif
+
+      #ifdef MCMD_LINK
+      /**
+      * Get the number of link types.
+      */
+      int nLinkType() const;
       #endif
 
       #ifdef INTER_TETHER
@@ -529,14 +529,14 @@ namespace McMd
       int nDihedralType_;
       #endif
 
-      #ifdef MCMD_LINK
-      /// Number of link types.
-      int nLinkType_;
-      #endif
-
       #ifdef INTER_EXTERNAL
       /// Does an external potential exist? (0 false or 1 true)
       int hasExternal_;
+      #endif
+
+      #ifdef MCMD_LINK
+      /// Number of link types.
+      int nLinkType_;
       #endif
 
       #ifdef INTER_TETHER
@@ -660,14 +660,14 @@ namespace McMd
    {  return nDihedralType_; }
    #endif
 
-   #ifdef MCMD_LINK
-   inline int Simulation::nLinkType() const
-   {  return nLinkType_; }
-   #endif
-
    #ifdef INTER_EXTERNAL
    inline int Simulation::hasExternal() const
    {  return hasExternal_; }
+   #endif
+
+   #ifdef MCMD_LINK
+   inline int Simulation::nLinkType() const
+   {  return nLinkType_; }
    #endif
 
    #ifdef INTER_TETHER

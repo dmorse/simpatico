@@ -31,12 +31,12 @@
 #ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralFactory.h>
 #endif
+#ifdef INTER_EXTERNAL
+#include <mcMd/potentials/external/ExternalFactory.h>
+#endif
 #ifdef MCMD_LINK
 #include <mcMd/potentials/link/LinkFactory.h>
 #include <mcMd/links/LinkMaster.h>
-#endif
-#ifdef INTER_EXTERNAL
-#include <mcMd/potentials/external/ExternalFactory.h>
 #endif
 #ifdef INTER_TETHER
 #include <mcMd/potentials/tether/tetherFactory.h>
@@ -89,11 +89,11 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       dihedralFactoryPtr_(0),
       #endif
-      #ifdef MCMD_LINK
-      linkFactoryPtr_(0),
-      #endif
       #ifdef INTER_EXTERNAL
       externalFactoryPtr_(0),
+      #endif
+      #ifdef MCMD_LINK
+      linkFactoryPtr_(0),
       #endif
       #ifdef INTER_TETHER
       tetherFactoryPtr_(0),
@@ -120,11 +120,11 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       dihedralStyle_(),
       #endif
-      #ifdef MCMD_LINK
-      linkStyle_(),
-      #endif
       #ifdef INTER_EXTERNAL
       externalStyle_(),
+      #endif
+      #ifdef MCMD_LINK
+      linkStyle_(),
       #endif
       #ifdef INTER_TETHER
       tetherStyle_(),
@@ -172,11 +172,11 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       dihedralFactoryPtr_(other.dihedralFactoryPtr_),
       #endif
-      #ifdef MCMD_LINK
-      linkFactoryPtr_(other.linkFactoryPtr_),
-      #endif
       #ifdef INTER_EXTERNAL
       externalFactoryPtr_(other.externalFactoryPtr_),
+      #endif
+      #ifdef MCMD_LINK
+      linkFactoryPtr_(other.linkFactoryPtr_),
       #endif
       #ifdef INTER_TETHER
       tetherFactoryPtr_(other.tetherFactoryPtr_),
@@ -203,11 +203,11 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       dihedralStyle_(other.dihedralStyle_),
       #endif
-      #ifdef MCMD_LINK
-      linkStyle_(other.linkStyle_),
-      #endif
       #ifdef INTER_EXTERNAL
       externalStyle_(other.externalStyle_),
+      #endif
+      #ifdef MCMD_LINK
+      linkStyle_(other.linkStyle_),
       #endif
       #ifdef INTER_TETHER
       tetherStyle_(other.tetherStyle_),
@@ -252,11 +252,6 @@ namespace McMd
          #ifdef INTER_DIHEDRAL
          if (dihedralFactoryPtr_) {
             delete dihedralFactoryPtr_;
-         }
-         #endif
-         #ifdef MCMD_LINK
-         if (linkFactoryPtr_) {
-            delete linkFactoryPtr_;
          }
          #endif
          #ifdef INTER_EXTERNAL
@@ -441,14 +436,14 @@ namespace McMd
          read<std::string>(in, "dihedralStyle", dihedralStyle_);
       }
       #endif
-      #ifdef MCMD_LINK
-      if (simulation().nLinkType() > 0) {
-         read<std::string>(in, "linkStyle", linkStyle_);
-      }
-      #endif
       #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
          read<std::string>(in, "externalStyle", externalStyle_);
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         read<std::string>(in, "linkStyle", linkStyle_);
       }
       #endif
       #ifdef INTER_TETHER
@@ -479,14 +474,14 @@ namespace McMd
          loadParameter<std::string>(ar, "dihedralStyle", dihedralStyle_);
       }
       #endif
-      #ifdef MCMD_LINK
-      if (simulation().nLinkType() > 0) {
-         loadParameter<std::string>(ar, "linkStyle", linkStyle_);
-      }
-      #endif
       #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
          loadParameter<std::string>(ar, "externalStyle", externalStyle_);
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         loadParameter<std::string>(ar, "linkStyle", linkStyle_);
       }
       #endif
       #ifdef INTER_TETHER
@@ -517,14 +512,14 @@ namespace McMd
          ar << dihedralStyle_;
       }
       #endif
-      #ifdef MCMD_LINK
-      if (simulation().nLinkType() > 0) {
-         ar << linkStyle_;
-      }
-      #endif
       #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
          ar << externalStyle_;
+      }
+      #endif
+      #ifdef MCMD_LINK
+      if (simulation().nLinkType() > 0) {
+         ar << linkStyle_;
       }
       #endif
       #ifdef INTER_TETHER
@@ -584,7 +579,7 @@ namespace McMd
          linkMasterPtr_->save(ar);
       }
    }
-   #endif // MCMD_LINK
+   #endif 
 
    #ifdef INTER_TETHER
    void System::readTetherMaster(std::istream &in)
@@ -609,7 +604,7 @@ namespace McMd
          tetherMasterPtr_->save(ar);
       }
    }
-   #endif // INTER_TETHER
+   #endif 
 
    /*
    * Load configuration from an archive.
@@ -1163,26 +1158,6 @@ namespace McMd
 
    #endif
 
-   #ifdef MCMD_LINK
-   /*
-   * Return the Link factory by reference.
-   */
-   Factory<BondPotential>& System::linkFactory()
-   {
-      if (linkFactoryPtr_ == 0) {
-         linkFactoryPtr_ = new LinkFactory(*this);
-      }
-      assert(linkFactoryPtr_);
-      return *linkFactoryPtr_;
-   }
-
-   /*
-   * Get the link style string.
-   */
-   std::string System::linkStyle() const
-   {  return linkStyle_;  }
-   #endif
-
    #ifdef INTER_EXTERNAL
    /*
    * Return the ExternalFactory by reference.
@@ -1201,6 +1176,26 @@ namespace McMd
    */
    std::string System::externalStyle() const
    {  return externalStyle_;  }
+   #endif
+
+   #ifdef MCMD_LINK
+   /*
+   * Return the Link factory by reference.
+   */
+   Factory<BondPotential>& System::linkFactory()
+   {
+      if (linkFactoryPtr_ == 0) {
+         linkFactoryPtr_ = new LinkFactory(*this);
+      }
+      assert(linkFactoryPtr_);
+      return *linkFactoryPtr_;
+   }
+
+   /*
+   * Get the link style string.
+   */
+   std::string System::linkStyle() const
+   {  return linkStyle_;  }
    #endif
 
    #ifdef INTER_TETHER

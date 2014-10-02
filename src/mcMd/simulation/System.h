@@ -63,13 +63,13 @@ namespace McMd
    #ifdef INTER_DIHEDRAL
    class DihedralPotential;
    #endif
-   #ifdef MCMD_LINK
-   class LinkPotential;
-   class LinkMaster;
-   #endif // MCMD_LINK
    #ifdef INTER_EXTERNAL
    class ExternalPotential;
    #endif
+   #ifdef MCMD_LINK
+   class LinkPotential;
+   class LinkMaster;
+   #endif 
    #ifdef INTER_TETHER
    class TetherFactory;
    class TetherMaster;
@@ -438,6 +438,18 @@ namespace McMd
       std::string dihedralStyle() const;
       #endif
 
+      #ifdef INTER_EXTERNAL
+      /**
+      * Get the associated ExternalPotential factory by reference.
+      */
+      Factory<ExternalPotential>& externalFactory();
+
+      /**
+      * Return external potential style string.
+      */
+      std::string externalStyle() const;
+      #endif
+
       #ifdef MCMD_LINK
       /**
       * Get the associated Link factory by reference.
@@ -453,18 +465,6 @@ namespace McMd
       * Get the LinkMaster by reference.
       */
       LinkMaster& linkMaster() const;
-      #endif
-
-      #ifdef INTER_EXTERNAL
-      /**
-      * Get the associated ExternalPotential factory by reference.
-      */
-      Factory<ExternalPotential>& externalFactory();
-
-      /**
-      * Return external potential style string.
-      */
-      std::string externalStyle() const;
       #endif
 
       #ifdef INTER_TETHER
@@ -751,7 +751,7 @@ namespace McMd
       * \param ar output archive.
       */
       void saveLinkMaster(Serializable::OArchive& ar);
-      #endif // MCMD_LINK
+      #endif 
 
       #ifdef INTER_TETHER
       /**
@@ -826,16 +826,16 @@ namespace McMd
       Factory<DihedralPotential>* dihedralFactoryPtr_;
       #endif
   
-      #ifdef MCMD_LINK
-      /// Pointer to Link Factory
-      Factory<BondPotential>* linkFactoryPtr_;
-      #endif
-   
       #ifdef INTER_EXTERNAL
       /// Pointer to ExternalPotential factory
       Factory<ExternalPotential>* externalFactoryPtr_;
       #endif
   
+      #ifdef MCMD_LINK
+      /// Pointer to Link Factory
+      Factory<BondPotential>* linkFactoryPtr_;
+      #endif
+   
       #ifdef INTER_TETHER
       /// Pointer to TetherFactory.
       TetherFactory* tetherFactoryPtr_;
@@ -887,14 +887,14 @@ namespace McMd
       std::string dihedralStyle_;
       #endif
 
-      #ifdef MCMD_LINK
-      /// Name of link potential style.
-      std::string linkStyle_;
-      #endif
-
       #ifdef INTER_EXTERNAL
       /// Name of external potential style.
       std::string externalStyle_;
+      #endif
+
+      #ifdef MCMD_LINK
+      /// Name of link potential style.
+      std::string linkStyle_;
       #endif
 
       #ifdef INTER_TETHER
