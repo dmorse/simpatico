@@ -548,7 +548,7 @@ namespace McMd
 
       #ifdef MCMD_LINK
       /// Number of link types.
-      int  nLinkType_;
+      int nLinkType_;
       #endif
 
       #ifdef INTER_TETHER

@@ -612,7 +612,7 @@ namespace McMd
          linkMasterPtr_->save(ar);
       }
    }
-   #endif // MCMD_LINK
+   #endif 
 
    #ifdef INTER_TETHER
    void System::readTetherMaster(std::istream &in)
@@ -637,7 +637,7 @@ namespace McMd
          tetherMasterPtr_->save(ar);
       }
    }
-   #endif // INTER_TETHER
+   #endif 
 
    /*
    * Load configuration from an archive.

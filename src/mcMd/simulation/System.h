@@ -766,7 +766,7 @@ namespace McMd
       * \param ar output archive.
       */
       void saveLinkMaster(Serializable::OArchive& ar);
-      #endif // MCMD_LINK
+      #endif 
 
       #ifdef INTER_TETHER
       /**
@@ -853,7 +853,7 @@ namespace McMd
   
       #ifdef MCMD_LINK
       /// Pointer to Link Factory
-      Factory<BondPotential>*  linkFactoryPtr_;
+      Factory<BondPotential>* linkFactoryPtr_;
       #endif
    
       #ifdef INTER_TETHER
