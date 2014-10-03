@@ -121,9 +121,9 @@ McSimulation{
       interval                         10000
     }
 
-    DumpConfig{
+    ConfigWriter{
       interval                         1000
-      outputFileName            dump/config.
+      outputFileName                 config.
     }
 
     McEnergyOutput{
@@ -186,6 +186,7 @@ McSimulation{
     }
 
   }
-  saveInterval                0
+  saveInterval               20000
+  saveFileName             restart
 }
 

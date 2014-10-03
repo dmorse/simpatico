@@ -1,6 +1,6 @@
 Simulation{
   Domain{
-    gridDimensions    4    4    2
+    gridDimensions    2    2    2
   }
   FileMaster{
     commandFileName   commands
