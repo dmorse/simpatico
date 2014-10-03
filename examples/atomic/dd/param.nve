@@ -10,8 +10,8 @@ Simulation{
   nAtomType           1
   atomTypes           A    1.0
   AtomStorage{
-    atomCapacity       4000
-    ghostCapacity      8000
+    atomCapacity      20000
+    ghostCapacity     20000
     totalAtomCapacity 65000
   }
   Buffer{
