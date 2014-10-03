@@ -317,6 +317,7 @@ namespace SpAn
                                         std::istream& file)
    {
       AtomStorage& storage = configuration().atoms();
+      Boundary& boundary = configuration().boundary();
       int nAtom = storage.size();
       int n = readNumberAttribute(start, nAtom);
 
@@ -328,12 +329,14 @@ namespace SpAn
                UTIL_THROW("Atom not found");   
             }
             file >> atomPtr->position;
+            boundary.shift(atomPtr->position);
          }
       } else {
          for (int i = 0; i < n; ++i) {
             atomPtr = storage.newPtr();
             atomPtr->id = i;
             file >> atomPtr->position;
+            boundary.shift(atomPtr->position);
             storage.add();
          }
       }

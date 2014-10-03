@@ -82,10 +82,11 @@ namespace Util
       /**
       * Shift Cartesian Vector r to its primary image.
       *
-      * One output, each coordinate r[i] is shifted by a multiple of length[i]
-      * so as to lie within the range minima_[i] < r[i] < maxima_[i].
+      * Upon completion, each component r[i] of Vector r is shifted by
+      * a multiple of length[i] so as to lie within the allowed range 
+      * minima_[i] <= r[i] < maxima_[i].
       *
-      * Precondition: The algorithm assumes that on input, for each i=0,..,2,
+      * Precondition: The algorithm assumes that on input, for each i,
       * minima_[i] - lengths_[i] < r[i] < maxima_[i] + lengths_[i]
       *
       * \param r Vector of Cartesian coordinates

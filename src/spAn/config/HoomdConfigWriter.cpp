@@ -113,7 +113,8 @@ namespace SpAn
            << nAtom << "\" >\n";
 
       // Write box
-      Vector lengths = configuration().boundary().lengths();
+      Boundary& boundary = configuration().boundary();
+      Vector lengths = boundary.lengths();
       file.precision(12);
       file << "<box"
            << " lx=\"" << lengths[0] << "\""
@@ -124,15 +125,24 @@ namespace SpAn
            << " yz=\"0\""
            << "/>\n";
 
-      // Write position
+      // Write atom position node
       file << "<position num=\"" << nAtom << "\">\n";
+      Vector rg, rc;
       AtomStorage::Iterator iter;
       int j;
       configuration().atoms().begin(iter);
       for (; iter.notEnd(); ++iter) {
+         boundary.shift(iter->position);
+         boundary.transformCartToGen(iter->position, rg);
+         for (j = 0; j < Dimension; ++j) {
+            if (rg[j] >= 0.5) {
+               rg[j] -= 1.0;
+            }
+         }
+         boundary.transformGenToCart(rg, rc);
          for (j = 0; j < Dimension; ++j) {
             file.precision(12);
-            file << iter->position[j] << " ";
+            file << rc[j] << " ";
          }
          file << "\n";
       }
