@@ -18,7 +18,6 @@ McSimulation{
       bondType                           0
       hasAngles                          1
       angleType                          0
-      hasDihedrals                       0
     }
 
   }

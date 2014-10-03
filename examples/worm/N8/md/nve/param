@@ -7,7 +7,6 @@ MdSimulation{
   nAtomType                              1
   nBondType                              1
   nAngleType                             1
-  nDihedralType                          0
   atomTypes                     A      1.0
   maskedPairPolicy              MaskBonded
   SpeciesManager{
@@ -19,7 +18,6 @@ MdSimulation{
       bondType                           0
       hasAngles                          1
       angleType                          0
-      hasDihedrals                       0
     }
 
   }
