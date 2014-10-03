@@ -129,7 +129,7 @@ McSimulation{
   saveFileName            restart
 }
 
-    DumpConfig{
+    ConfigWriter{
       interval                         10000
       outputFileName            dump/config.
     }
