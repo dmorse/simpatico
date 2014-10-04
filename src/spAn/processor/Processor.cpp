@@ -256,6 +256,8 @@ namespace SpAn
          msg += configStyle;
          UTIL_THROW(msg.c_str());
       }
+      // Log::file() << "Setting config reader to class "
+      //            << configReaderPtr_->className() << std::endl;
    }
 
    /*

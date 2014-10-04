@@ -112,10 +112,13 @@ namespace SpAn
       file << "<configuration time_step=\"0\" dimensions=\"3\" natoms=\""
            << nAtom << "\" >\n";
 
+      // Set ostream format for double precision
+      file.precision(12);
+      file.setf(std::ios_base::fixed);
+
       // Write box
       Boundary& boundary = configuration().boundary();
       Vector lengths = boundary.lengths();
-      file.precision(12);
       file << "<box"
            << " lx=\"" << lengths[0] << "\""
            << " ly=\"" << lengths[1] << "\""
@@ -153,7 +156,7 @@ namespace SpAn
       file << "<velocity num=\"" << nAtom << "\">\n";
       configuration().atoms().begin(iter);
       for (; iter.notEnd(); ++iter) {
-         file << iter->position << "\n";
+         file << iter->velocity << "\n";
       }
       file << "</velocity>\n";
       #endif
@@ -166,7 +169,7 @@ namespace SpAn
       }
       file << "</type>\n";
 
-      // Write the groups
+      // Write covalent groups, as needed
       #ifdef INTER_BOND
       if (configuration().bonds().size()) {
          writeGroups(file, "bond", configuration().bonds(), 

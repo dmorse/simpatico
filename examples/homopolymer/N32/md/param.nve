@@ -1,15 +1,13 @@
 MdSimulation{
   FileMaster{
     commandFileName                 commands
-    inputPrefix                       ../in/
+    inputPrefix                          in/
     outputPrefix                        out/
   }
   nAtomType                              1
   nBondType                              1
-  nAngleType                             0
-  nDihedralType                          0
   atomTypes                    A       1.0
-  maskedPairPolicy                MaskBonded
+  maskedPairPolicy              MaskBonded
   SpeciesManager{
 
     Homopolymer{
@@ -17,8 +15,6 @@ MdSimulation{
       nAtom                                 32
       atomType                               0
       bondType                               0
-      hasAngles                              0
-      hasDihedrals                           0
     }
 
   }
@@ -44,15 +40,13 @@ MdSimulation{
       length                1.000000000000e+00
     }
     EnergyEnsemble{
-      type                  isothermal
-      temperature           1.000000000000e+00
+      type                  adiabatic
     }
     BoundaryEnsemble{
       type                  rigid
     }
-    NvtNhIntegrator{
+    NveVvIntegrator{
       dt                    5.000000000000e-03
-      tauT                  1.000000000000
     }
   }
   AnalyzerManager{
@@ -62,14 +56,14 @@ MdSimulation{
       interval                           200
     }
 
+  }
+  saveInterval                500
+  saveFileName            restart
+}
+
     DumpConfig{
       interval                          1000
       outputFileName            dump/config.
-    }
-
-    MdWriteRestart{
-      interval                           500
-      outputFileName                 restart
     }
 
     MdEnergyOutput{
@@ -109,9 +103,6 @@ MdSimulation{
       atom2Id                            31 
       capacity                          200
     }
-
-  }
-}
 
     RDF{
       interval                          1000

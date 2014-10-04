@@ -1,6 +1,6 @@
 McSimulation{
   FileMaster{
-    commandFileName                paramfile
+    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -174,13 +174,3 @@ McSimulation{
   saveInterval                50000
   saveFileName              restart
 }
-WRITE_PARAM      param
-READ_CONFIG      config
-SIMULATE         200000
-WRITE_CONFIG     config
-FINISH
-
-    HarmonicTether{
-      nTetherType                            1
-      kappa                 1.000000000000e+00
-    }
