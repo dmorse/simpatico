@@ -1,6 +1,6 @@
 McSimulation{
   FileMaster{
-    commandFileName                paramfile
+    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -94,7 +94,7 @@ McSimulation{
       interval                         10000
     }
 
-    DumpConfig{
+    ConfigWriter{
       interval                         1000
       outputFileName            dump/config.
     }
@@ -162,17 +162,7 @@ McSimulation{
   saveInterval             1000
   saveFileName          restart
 }
-WRITE_PARAM      param
-READ_CONFIG      config
-SIMULATE         500000
-WRITE_CONFIG     config
-FINISH
 
-
-    HarmonicTether{
-      nTetherType                            1
-      kappa                 1.000000000000e+00
-    }
 
     CfbEndMove{
       probability           0.030000000000e+00

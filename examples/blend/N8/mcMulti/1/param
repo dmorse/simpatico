@@ -1,6 +1,6 @@
 McSimulation{
   FileMaster{
-    commandFileName                paramfile
+    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -33,8 +33,8 @@ McSimulation{
     pairStyle                        LJPair
     bondStyle                 HarmonicBond
     McPairPotential{
-      epsilon               1.000000000000e+00  1.000000000000e+00
-                            1.000000000000e+00  1.000000000000e+00
+      epsilon               1.000000000000e+00  1.150000000000e+00
+                            1.150000000000e+00  1.000000000000e+00
       sigma                 1.000000000000e+00  1.000000000000e+00
                             1.000000000000e+00  1.000000000000e+00
       cutoff                1.122460000000e+00  1.122460000000e+00
@@ -94,7 +94,7 @@ McSimulation{
       interval                         10000
     }
 
-    DumpConfig{
+    ConfigWriter{
       interval                         1000
       outputFileName            dump/config.
     }
@@ -127,8 +127,8 @@ McSimulation{
     RDF{
       interval                          1000
       outputFileName                     RDF
-      max                               5.0
-      nBin                              500
+      max                                5.0
+      nBin                               500
       selector                         inter   -1    -1
     }
 
@@ -159,20 +159,10 @@ McSimulation{
     }
 
   }
-  saveInterval              1000
-  saveFileName           restart
+  saveInterval             1000
+  saveFileName          restart
 }
-WRITE_PARAM      param
-READ_CONFIG      config
-SIMULATE         500000
-WRITE_CONFIG     config
-FINISH
 
-
-    HarmonicTether{
-      nTetherType                            1
-      kappa                 1.000000000000e+00
-    }
 
     CfbEndMove{
       probability           0.030000000000e+00
