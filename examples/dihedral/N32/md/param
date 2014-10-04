@@ -73,14 +73,9 @@ MdSimulation{
       interval                           200
     }
 
-    DumpConfig{
+    ConfigWriter{
       interval                          1000
       outputFileName            dump/config.
-    }
-
-    MdWriteRestart{
-      interval                           500
-      outputFileName                 restart
     }
 
     MdEnergyOutput{
