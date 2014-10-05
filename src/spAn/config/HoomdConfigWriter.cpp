@@ -112,9 +112,9 @@ namespace SpAn
       file << "<configuration time_step=\"0\" dimensions=\"3\" natoms=\""
            << nAtom << "\" >\n";
 
-      // Set ostream format for double precision
+      // Set ostream floating point precision, restore default format
       file.precision(12);
-      file.setf(std::ios_base::fixed);
+      file.unsetf(std::ios_base::floatfield);
 
       // Write box
       Boundary& boundary = configuration().boundary();

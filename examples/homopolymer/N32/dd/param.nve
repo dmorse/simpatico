@@ -61,11 +61,6 @@ Simulation{
         interval        1000
      }
 
-     LammpsDumpWriter{
-        interval        2000
-        outputFileName  trajectory.lmp
-     }
-
      DdMdTrajectoryWriter{
         interval        2000
         outputFileName  trajectory.trj
@@ -74,11 +69,8 @@ Simulation{
   }
 }
 
-    cutoff            2.5
-
-    saveInterval       4000
-    saveFileName    restart
-
+---------------------------------------
+Blocks for unused analyzers:
 
      OutputEnergy{
         interval        1000
@@ -90,7 +82,8 @@ Simulation{
         outputFileName  pressure
      }
 
-    cutoff            2.5
+     LammpsDumpWriter{
+        interval        2000
+        outputFileName  trajectory.lmp
+     }
 
-  nAngleType         0
-  hasExternal        0
