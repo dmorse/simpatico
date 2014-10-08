@@ -1,6 +1,6 @@
 MdSimulation{
   FileMaster{
-    commandFileName                paramfile
+    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/ 
   }

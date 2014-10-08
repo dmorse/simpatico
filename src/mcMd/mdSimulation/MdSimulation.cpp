@@ -158,8 +158,8 @@ namespace McMd
       }
       #endif
       if (rflag) {
-         std::cout << "Reading restart" << std::endl;
-         std::cout << "Base file name " << std::string(rarg) << std::endl;
+         //std::cout << "Reading restart" << std::endl;
+         //std::cout << "Base file name " << std::string(rarg) << std::endl;
          isRestarting_ = true; 
          load(std::string(rarg));
       }
