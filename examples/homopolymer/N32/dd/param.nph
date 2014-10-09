@@ -57,6 +57,11 @@ Simulation{
   AnalyzerManager{
      baseInterval     100
 
+     DdMdTrajectoryWriter{
+        interval        2000
+        outputFileName  trajectory.trj
+     }
+
      OutputEnergy{
         interval         1000
         outputFileName   energy
@@ -66,24 +71,17 @@ Simulation{
         interval         1000
         outputFileName   pressure
      }
+
      OutputBoxdim{
         interval         1000
         outputFileName   boxdim
      }
+
      OutputTemperature{
         interval         1000
         outputFileName   temperature
-      }
+     }
+
   }
 }
 
-
-
-
-     WriteConfig{
-        interval         2000
-        outputFileName   config
-     }
-
-  nAngleType         0
-  hasExternal        0

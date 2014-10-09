@@ -64,6 +64,11 @@ Simulation{
         interval        1000
      }
 
+     DdMdTrajectoryWriter{
+        interval        2000
+        outputFileName  trajectory.trj
+     }
+
      OutputEnergy{
         interval         1000
         outputFileName   energy

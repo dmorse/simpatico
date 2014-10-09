@@ -64,7 +64,7 @@ namespace SpAn
            fileMaster_.setParamFileName(std::string(optarg));
            break;
          case 'c':
-           fileMaster_.setParamFileName(std::string(optarg));
+           fileMaster_.setCommandFileName(std::string(optarg));
            break;
          case '?':
            Log::file() << "Unknown option -" << optopt << std::endl;
@@ -111,6 +111,7 @@ namespace SpAn
    void Processor::readCommands()
    {
       if (fileMaster_.commandFileName().empty()) {
+         // Read from standard input if no command file name is set
          readCommands(std::cin);
       } else {
          readCommands(fileMaster_.commandFile());

@@ -1,0 +1,13 @@
+System:
+
+    10 dimers (small system)
+
+Usage:
+
+NVT md simulation:
+
+    mdSim -e -p param -c commands
+
+Restarting and extending above simulations
+
+    mdSim -e -r restart -c restart.cmd

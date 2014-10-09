@@ -94,8 +94,7 @@ MdSimulation{
   saveFileName               restart
 }
 
-    DumpConfig{
+    ConfigWriter{
       interval                           4000
       outputFileName              dump/config.
     }
-
