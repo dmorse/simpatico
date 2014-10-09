@@ -20,7 +20,8 @@ using namespace Util;
 *
 * Usage:
 *
-*    mpirun -np P ddSim [-e] [-s nSystem] [-r restartFile] < paramFile
+*    mpirun -np P ddSim [-e] [-s nSystem] 
+*                       [-p paramFile] [-r restartFile] [-c command] 
 *
 *    Here, P is the number of processors and paramFile is a parameter 
 *    file that is read from standard input.
@@ -38,15 +39,19 @@ using namespace Util;
 *   to a different physical system to allow nSystem independent simulations. 
 *   The total communicator rank must be a multiple of nSystem.
 *
+*  -p paramFile
+*
+*   Specifies the name of parameter file used for initialization.
+*
 *  -r restartFile
 *
-*   This option reads a restart file and restarts a previous run. The 
-*   command line argument restarFile argument is the shared base name of
-*   the restart file and a corresponding command script file. The name
-*   of the restart file is obtained by appending the file extension .rst 
-*   to the base name, giving a name of the form restartFile.rst. The
-*   corresponding command file must have the same base name and a file
-*   name extension .cmd, giving a name of the form restartFile.cmd.
+*   Specifies the name of a restart file that was written by a previous
+*   simulation, which is used to restart and complete or extend the 
+*   earlier run. It is illegal to set both the -p and -r options.
+*
+*  -c commandFile
+*
+*   Specifies the name of a command file. 
 */
 
 int main(int argc, char **argv)

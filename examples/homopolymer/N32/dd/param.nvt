@@ -3,7 +3,6 @@ Simulation{
     gridDimensions    2    1    3
   }
   FileMaster{
-    commandFileName commands
     inputPrefix     in/
     outputPrefix    out/
   }
@@ -61,6 +60,14 @@ Simulation{
         interval        1000
      }
 
+     DdMdTrajectoryWriter{
+        interval        2000
+        outputFileName  trajectory.trj
+     }
+
+  }
+}
+
      OutputEnergy{
         interval         1000
         outputFileName   energy
@@ -71,16 +78,8 @@ Simulation{
         outputFileName   pressure
      }
 
-  }
-}
-
-
-
-
-     WriteConfig{
+     ConfigWriter{
         interval         2000
         outputFileName   config
      }
 
-  nAngleType         0
-  hasExternal        0

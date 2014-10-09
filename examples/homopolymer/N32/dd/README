@@ -1,6 +1,6 @@
 To run an example of 12000 steps, with log information to screen:
 
-   mpirun -np 6 ddSim -e < param.nve 
+   mpirun -np 6 ddSim -e -p param.nve -c commands
 
 To postprocess the resulting config and trajectory files:
 
@@ -8,5 +8,5 @@ To postprocess the resulting config and trajectory files:
 
 To restart the simulation and continue to 25000 steps
 
-   mpirun -np 6 ddSim -e -r restart
+   mpirun -np 6 ddSim -e -r restart -c restart.cmd
 

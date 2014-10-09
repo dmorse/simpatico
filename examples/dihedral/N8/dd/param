@@ -3,7 +3,6 @@ Simulation{
     gridDimensions    2    2    1
   }
   FileMaster{
-    commandFileName    commands
     inputPrefix        ../in/
     outputPrefix       out/
   }

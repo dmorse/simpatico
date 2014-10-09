@@ -1,0 +1,13 @@
+System:
+
+    melt of 100 wormlike chains of 8 atoms.
+
+Usage - cd to an example subdirectory, then enter:
+
+MC simulation:
+
+    mcSim -e -p param.nve -c commands
+
+Restart and extend previous simulation
+
+    mdcim -e -r restart -c restart.cmd

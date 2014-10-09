@@ -101,28 +101,40 @@ namespace McMd
    */
    void MdSimulation::setOptions(int argc, char **argv)
    {
-      char* rarg   = 0;
-      bool  eflag  = false;
-      bool  rflag  = false;
+      bool  eflag  = false; // echo
+      bool  pFlag = false;  // param file 
+      bool  rFlag  = false; // restart file
+      bool  cFlag = false;  // command file 
       #ifdef MCMD_PERTURB
-      bool  pflag = false;
+      bool  fflag = false;  // free energy perturbation
       #endif
+      char* pArg = 0;
+      char* rarg = 0;
+      char* cArg = 0;
    
       // Read program arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "epr:")) != -1) {
+      while ((c = getopt(argc, argv, "ep:r:c:f")) != -1) {
          switch (c) {
          case 'e':
            eflag = true;
            break;
+         case 'p': // parameter file
+           pFlag = true;
+           pArg  = optarg;
+           break;
          case 'r':
-           rflag = true;
+           rFlag = true;
            rarg  = optarg;
            break;
+         case 'c': // command file
+           cFlag = true;
+           cArg  = optarg;
+           break;
          #ifdef MCMD_PERTURB
-         case 'p':
-           pflag = true;
+         case 'f':
+           fflag = true;
            break;
          #endif
          case '?':
@@ -138,9 +150,9 @@ namespace McMd
 
       #ifdef MCMD_PERTURB
       // Set to use a perturbation.
-      if (pflag) {
+      if (fflag) {
    
-         if (rflag) {
+         if (rFlag) {
             std::string msg("Error: Options -r and -p are incompatible. Use -r alone. ");
             msg += "Existence of a perturbation is specified in restart file.";
             UTIL_THROW(msg.c_str());
@@ -157,12 +169,28 @@ namespace McMd
    
       }
       #endif
-      if (rflag) {
-         std::cout << "Reading restart" << std::endl;
-         std::cout << "Base file name " << std::string(rarg) << std::endl;
+
+      // If option -p, set parameter file name
+      if (pFlag) {
+         if (rFlag) {
+            UTIL_THROW("Cannot have both parameter and restart files");
+         }
+         fileMaster().setParamFileName(std::string(pArg));
+      }
+
+      // If option -c, set command file name
+      if (cFlag) {
+         fileMaster().setCommandFileName(std::string(cArg));
+      }
+
+      // If option -r, restart
+      if (rFlag) {
+         //Log::file() << "Reading restart file "
+         //            << std::string(rarg) << std::endl;
          isRestarting_ = true; 
          load(std::string(rarg));
       }
+
    }
 
    /* 
@@ -193,7 +221,9 @@ namespace McMd
    * Read default parameter file.
    */
    void MdSimulation::readParam()
-   {  readParam(fileMaster().paramFile()); }
+   {
+      readParam(fileMaster().paramFile()); 
+   }
 
    /*
    * Read parameter block, including begin and end.
@@ -470,7 +500,12 @@ namespace McMd
    * Read and implement commands from the default command file.
    */
    void MdSimulation::readCommands()
-   {  readCommands(fileMaster().commandFile()); }
+   {  
+      if (fileMaster().commandFileName().empty()) {
+         UTIL_THROW("Empty command file name");
+      }
+      readCommands(fileMaster().commandFile()); 
+   }
 
    /* 
    * Run a simulation.
@@ -753,13 +788,9 @@ namespace McMd
 
       // Load state from archive
       Serializable::IArchive ar;
-      fileMaster().openRestartIFile(filename, ".rst", ar.file());
+      fileMaster().openRestartIFile(filename, "", ar.file());
       load(ar);
       ar.file().close();
-
-      // Set command (*.cmd) file
-      std::string commandFileName = filename + ".cmd";
-      fileMaster().setCommandFileName(commandFileName);
 
       isInitialized_ = true;
       isRestarting_  = true;
@@ -771,7 +802,7 @@ namespace McMd
    void MdSimulation::save(const std::string& filename)
    {
       Serializable::OArchive ar;
-      fileMaster().openRestartOFile(filename, ".rst", ar.file());
+      fileMaster().openRestartOFile(filename, "", ar.file());
       save(ar);
       ar.file().close();
    }

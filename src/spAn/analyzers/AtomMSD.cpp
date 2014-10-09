@@ -167,11 +167,8 @@ namespace SpAn
    {  
 
       // Output parameters
-      if (processor().hasFileMaster()) {
-         processor().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
-      } else {
-         outputFile_.open(outputFileName(".prm").c_str());
-      }
+      processor().fileMaster().openOutputFile(outputFileName(".prm"), 
+                                              outputFile_);
 
       writeParam(outputFile_); 
       outputFile_ << std::endl;
@@ -188,11 +185,8 @@ namespace SpAn
       outputFile_.close();
 
       // Output statistical analysis to separate data file
-      if (processor().hasFileMaster()) {
-         processor().fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
-      } else {
-         outputFile_.open(outputFileName(".dat").c_str());
-      }
+      processor().fileMaster().openOutputFile(outputFileName(".dat"), 
+                                              outputFile_);
       accumulator_.output(outputFile_); 
       outputFile_.close();
 

@@ -31,9 +31,7 @@ namespace SpAn
       configReaderFactory_(*this),
       configWriterFactory_(*this),
       trajectoryReaderFactory_(*this),
-      analyzerManager_(*this),
-      paramFileName_(),
-      commandFileName_()
+      analyzerManager_(*this)
    {  setClassName("Processor"); }
 
    /*
@@ -54,48 +52,23 @@ namespace SpAn
    */
    void Processor::setOptions(int argc, char * const * argv)
    {
-      bool  eFlag = false;               // option e
 
-      // Read command-line arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "e")) != -1) {
+      while ((c = getopt(argc, argv, "ep:c:")) != -1) {
          switch (c) {
          case 'e':
-           eFlag = true;
+           ParamComponent::setEcho(true);
+           break;
+         case 'p':
+           fileMaster_.setParamFileName(std::string(optarg));
+           break;
+         case 'c':
+           fileMaster_.setCommandFileName(std::string(optarg));
            break;
          case '?':
            Log::file() << "Unknown option -" << optopt << std::endl;
          }
-      }
-
-      // If option -e, enable echoing of parameters as they are read
-      if (eFlag) {
-         ParamComponent::setEcho(true);
-      }
-
-      // Check number of remaining arguments
-      int nArg = argc - optind;
-      if (nArg < 1) {
-         Log::file() << "optind = " << optind << std::endl;
-         Log::file() << "argc   = " << argc << std::endl;
-         UTIL_THROW("Two few non-option arguments");
-      }
-      if (nArg > 2) {
-         Log::file() << "optind = " << optind << std::endl;
-         Log::file() << "argc   = " << argc << std::endl;
-         UTIL_THROW("Two many non-option arguments");
-      }
-   
-      // Read parameter file name
-      paramFileName_ = argv[optind];
-      Log::file() << "paramFileName  = " << paramFileName_ << std::endl;
-
-      // Read command file name, if any
-      if (nArg == 2) {
-         commandFileName_ = argv[optind+1];
-         Log::file() << "commandFileName = " 
-                     << commandFileName_ << std::endl;
       }
 
    }
@@ -105,11 +78,10 @@ namespace SpAn
    */
    void Processor::readParam()
    {
-      if (paramFileName_ != "") {
-         readParam(paramFileName_.c_str());
-      } else {
-         UTIL_THROW("No param file specified");
+      if (fileMaster_.paramFileName().empty()) {
+         UTIL_THROW("Empty param file name");
       }
+      readParam(fileMaster_.paramFile());
    }
 
    /*
@@ -138,13 +110,11 @@ namespace SpAn
    */
    void Processor::readCommands()
    {
-      if (commandFileName_ != "") {
-         std::ifstream file;
-         fileMaster().openInputFile(commandFileName_, file);
-         readCommands(file);
-         file.close();
-      } else {
+      if (fileMaster_.commandFileName().empty()) {
+         // Read from standard input if no command file name is set
          readCommands(std::cin);
+      } else {
+         readCommands(fileMaster_.commandFile());
       }
    }
 
@@ -187,7 +157,7 @@ namespace SpAn
                Log::file() << "\nReading auxiliary file: "; 
                in >> filename;
                Log::file() << filename;
-               fileMaster().openInputFile(filename, inputFile);
+               fileMaster_.openInputFile(filename, inputFile);
                configReader().readAuxiliaryFile(inputFile);
                inputFile.close();
             }
@@ -196,7 +166,7 @@ namespace SpAn
             Log::file() << "\nReading config file: ";
             in >> filename;
             Log::file() << filename << std::endl;
-            fileMaster().openInputFile(filename, inputFile);
+            fileMaster_.openInputFile(filename, inputFile);
             configReader().readConfig(inputFile);
             inputFile.close();
 
@@ -212,14 +182,14 @@ namespace SpAn
                Log::file() << "\nReading auxiliary file: ";
                in >> filename;
                Log::file() << filename;
-               fileMaster().openInputFile(filename, inputFile);
+               fileMaster_.openInputFile(filename, inputFile);
                configWriter().readAuxiliaryFile(inputFile);
                inputFile.close();
             }
             Log::file() << "\nWriting config file: ";
             in >> filename;
             Log::file() << filename << std::endl;
-            fileMaster().openOutputFile(filename, outputFile);
+            fileMaster_.openOutputFile(filename, outputFile);
             configWriter().writeConfig(outputFile);
             outputFile.close();
          } else
@@ -452,10 +422,10 @@ namespace SpAn
       // Open file
       std::ifstream file;
       if (trajectoryReader().isBinary()) {
-         fileMaster().openInputFile(filename, file,
+         fileMaster_.openInputFile(filename, file,
                                     std::ios::in | std::ios::binary);
       } else {
-         fileMaster().openInputFile(filename, file);
+         fileMaster_.openInputFile(filename, file);
       }
       if (!file.is_open()) {
          std::string msg = "Trajectory file is not open. Filename =";
@@ -487,21 +457,10 @@ namespace SpAn
    }
 
    /*
-   * Does this processor have a FileMaster? 
-   */
-   bool Processor::hasFileMaster() const
-   {  return fileMaster_.isActive(); }
-
-   /*
    * Return FileMaster.
    */
    FileMaster& Processor::fileMaster()
-   {
-      //if (!fileMaster_.isActive()) {
-      //   UTIL_THROW(" Attempt to use inactive FileMaster");
-      //} 
-      return fileMaster_;
-   }
+   {  return fileMaster_; }
 
 }
 #endif

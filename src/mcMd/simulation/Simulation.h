@@ -141,7 +141,7 @@ namespace McMd
       * and command file to be used in multi-processor free energy 
       * perturbation simulations, and to read the parameter file from
       * std in. It calls Util::ParamComposite:setIoCommunicator()
-      * and Util::FileMaster::setParamFileStdIn().
+      * and Util::FileMaster::setCommonControl().
       *
       * \param communicator MPI communicator used for parameter file.
       */
