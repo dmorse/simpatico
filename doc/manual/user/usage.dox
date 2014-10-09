@@ -20,7 +20,7 @@ The contents and formats of these different types of file are discussed briefly 
 When a simulation is executed, the parameter file is immediately read from standard input. The parameter file is used to initialize the state of the program and allocate memory. The name of the command file is specified within the parameter file.  The command file is read after the parameter file. The command file is a script that contains a list of commands that are interpreted and executed in sequence, which controls the program flow after initialization. The command file for a simple simulation would normally contain a command to read a specific input configuration file, a command to run a simulation of a specified number of steps, a command to write the final configuration to a specific file, and a command to halt execution.
 
 \section usage_run_serial_section Running a simulation 
-The names of the parameter and command files required to run a simpatico simulation are passed to the program as arguments of the "-p" and "-c" command line opitions, respectively. 
+The names of the parameter and command files required to run a simpatico simulation are passed to the program as arguments of the "-p" and "-c" command line options, respectively. 
 
 To run a single-processor simulation, one thus invokes the nane of the binary executable file with the -p and -c options followed by appropriate input file names. For example, to run the default version of the single-processor mdSim MD simulation, using a parameter file named "param" and command file named "commands" that are both in the current working directory, one would enter:
 \code

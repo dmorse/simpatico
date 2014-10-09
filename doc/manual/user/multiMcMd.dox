@@ -216,13 +216,13 @@ McSimulation{
 
 Is is also possible to restart multi-processor mcSim and mdSim simulations. During the original simulation, the frequency with which restart files should be written and the base name for these files is specified in the parameter file, exactly as for single-system simulations. In multi-system simulations, each processor writes a separate restart file, for both independent and replicate simulations.  The restart file for each processor is placed in the associated numbered directory. For example, if the saveFileName parameter in the original parameter file is "restart", the restart file for processor 2 would be repeatedly written to the file 2/restart.rst.
 
-Different conventions are used for the placement of restart command files for "independent" and "replicated" simulations. Independent simulations use a separate *.rst restart command file for each processor, each of which is placed in the same numbered directory as the associated restart file. Replicated simulations use a single restart command file, which must be placed in the same directory as the single parameter file and command file for the original simulation, which is also the directory from which the mcSim or mdSim executable is invoked. In either case, the base name of the command file or files must be the same as the base name of the restart files.
+Different conventions are used for the placement of restart command files for "independent" and "replicated" simulations. Independent simulations use a separate restart command file for each processor, each of which is placed in the same numbered directory as the associated restart file. Replicated simulations use a single restart command file, which must be placed in the same directory as the single restart file, and the single parameter file and command file for the original simulation. In either case, the base name of the restart command file is passed as command line parameter of the -c option.
 
-The command to restart a multi-processor simulation is similar to that for a single-processor simulation. The command to restart a 3 processor mcSim simulation of either independent or replicated systems, using the mcSim_m executable and the mpirun command to launch an MPI program, is
+The command to restart a multi-processor simulation is similar to that for a single-processor simulation. The command to restart a 3 processor mcSim simulation of either independent or replicated systems, using the mcSim_m executable and the mpirun command to launch an MPI program, using a restart file named "restart"  and a command file named "restart.cmd", is:
 \code
-   mpirun -np 3 mcSim_m -e -r restart
+   mpirun -np 3 mcSim_m -e -r restart -c restart.cmd
 \endcode
-Information about whether the original simulation was a simulation of independent or replicated systems is stored within all restart files, and does not need to be specified by a command line option when the simulation is restarted. Invoking an mcSim or mdSim executable with both the "-r" and "-f" options is thus illegal, and will cause execution to halt with an error message.
+Information about whether the original simulations were independent or replicated is stored within all restart files, and does not need to be be specified by a command line option when the simulation is restarted. Invoking an mcSim or mdSim executable with both the "-r" and "-f" options is thus illegal, and will cause execution to halt with an error message.
 
 <BR>
 \ref user_multi_page       (Up)   &nbsp; &nbsp; &nbsp; &nbsp; 
