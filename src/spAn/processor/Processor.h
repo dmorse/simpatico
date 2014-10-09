@@ -183,11 +183,6 @@ namespace SpAn
       //@{
  
       /**
-      * Return true if the FileMaster is active.
-      */
-      bool hasFileMaster() const;
-
-      /**
       * Return FileMaster if active, or throw Exception.
       */
       FileMaster& fileMaster();
@@ -217,17 +212,11 @@ namespace SpAn
       /// Manager for analyzers
       AnalyzerManager analyzerManager_;
 
-      /// FileMaster (optionally activated)
+      /// FileMaster
       FileMaster fileMaster_;
 
       /// String identifier for ConfigReader class name
       std::string configReaderName_;
-
-      /// Name of parameter file (required command line argument)
-      std::string paramFileName_;
-
-      /// Name of command file (optional command line argument)
-      std::string commandFileName_;
 
    };
 

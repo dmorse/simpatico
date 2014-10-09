@@ -14,20 +14,21 @@
 * 
 * Usage:
 *
-*    mdPp [-e] param [command]
+*    mdPp [-e] -p param [-c command]
 *
 * Options:
 *
-*     -e enable echoing of the param file (no argument)
+*     -e 
+*      Enable echoing of the param file (no argument)
 *
-* Non-option arguments:
+*     -p paramFileName
+*      Specify parameter file name as an argument
 *
-*     param   - name of parameter file
+*     -p commandFileName
+*      Specify command file name as an argument
 *
-*     command - name of command file script (optional).
-*
-* If no command file is provided, commands are read from standard
-* input (i.e., from the keyboard).
+* If option -p is not set, so that no command file name is given,
+* commands are read from standard input (i.e., from the keyboard).
 *
 * \ingroup SpAn_Module
 */
