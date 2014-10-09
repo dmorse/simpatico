@@ -101,7 +101,7 @@ McSimulation{
       capacity                            500
     }
   }
-  saveInterval        10000000
+  saveInterval         1000000
   saveFileName         restart
 }
 

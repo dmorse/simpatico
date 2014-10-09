@@ -1,8 +1,0 @@
-SET_CONFIG_IO    DdMdConfigIo
-READ_CONFIG      config.ddMd
-THERMALIZE       1.0
-SIMULATE         40000
-WRITE_CONFIG     config
-SET_CONFIG_IO    DdMdConfigIo
-WRITE_CONFIG     DdMdconfig
-FINISH

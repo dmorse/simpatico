@@ -1,13 +1,12 @@
 MdSimulation{
   FileMaster{
     commandFileName               commands
-    inputPrefix                  ../../in/
+    inputPrefix                        in/
     outputPrefix                      out/
   }
   nAtomType                              1
   nBondType                              1
   nAngleType                             1
-  nDihedralType                          1
   atomTypes                    A       1.0
   maskedPairPolicy              MaskBonded
   SpeciesManager{
@@ -19,8 +18,6 @@ MdSimulation{
       bondType                           0
       hasAngles                          1
       angleType                          0
-      hasDihedrals                       1
-      dihedralType                       0
     }
 
   }
@@ -30,8 +27,7 @@ MdSimulation{
   MdSystem{
     pairStyle       LJPair
     bondStyle       HarmonicBond
-    angleStyle      HarmonicAngle
-    dihedralStyle   CosineDihedral
+    angleStyle      CosineAngle
     MdPairPotential{
       epsilon           1.000000000000e+00
       sigma             1.000000000000e+00
@@ -48,11 +44,7 @@ MdSimulation{
       length            1.000000000000e+00
     }
     AnglePotential{
-      kappa             20.00000000000e+00
-      theta0            60.00000000000e+00
-    }
-    DihedralPotential{
-      kappa              1.00000000000e+00
+      kappa             4.000000000000e+00
     }
     EnergyEnsemble{
       type                      isothermal
@@ -92,22 +84,21 @@ MdSimulation{
     }
 
     MdKineticEnergyAverage{
-      interval                         1000
+      interval                        1000
       outputFileName         kineticEnergy
       nSamplePerBlock                   10
     }
 
     IntraPairAutoCorr{
-      interval                         1000
-      outputFileName         IntraPairAutoCorr
-      speciesId                        0
-      atom1Id                          0
-      atom2Id                          7
+      interval                        1000
+      outputFileName     IntraPairAutoCorr
+      speciesId                          0
+      atom1Id                            0
+      atom2Id                            7
       capacity  	              1000
     }
   }
-  saveInterval             10000
-  saveFileName           restart
+  saveInterval                     0
 }
 
     CosineSqAngle{

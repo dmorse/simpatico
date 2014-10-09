@@ -1,7 +1,7 @@
 McSimulation{
   FileMaster{
     commandFileName               commands
-    inputPrefix                        in/
+    inputPrefix                     ../in/
     outputPrefix                      out/
   }
   nAtomType                              1
