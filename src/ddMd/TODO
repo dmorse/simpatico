@@ -1,20 +1,35 @@
+Command-Line interface
+----------------------
+
+- Change command line interface to specify parameter and command files 
+  as options -p param -c commands, with default file names
+
+- On restart, allow specification of restart and command files with
+  separate options
+
+Perturbation:
+-------------
+
+- Add perturbation class and class hierarchy for use with multi-system
+  parallel simulations
+
 Exchanger:
 ----------
 
 - Write separate algorithm for initial ghost exchange, to reduce memory 
   requirements See doc/notes/ddMd/initGhosts
 
-- Add memory usage statistics, to see which communication step (atom
-  exchange or ghost exchange) uses the most memory.
+- Add memory usage statistics, to measure which communication step (atom
+  exchange or ghost exchange) uses the most memory
 
 Non-orthogonal boundaries:
 --------------------------
 
 - Generalize makeSnapShot and needsExchange methods in AtomStorage to
-  allow for non-orthogonal boundaries (requires changes to Boundary).
+  allow for non-orthogonal boundaries (requires changes to Boundary)
 
 - Modify calculation of distances between cells in construction of Offset
-  array in DdMd::CellList. Perhaps move calculation to Boundary class.
+  array in DdMd::CellList. Perhaps move calculation to Boundary class
 
 Buffer:
 -------
@@ -22,35 +37,35 @@ Buffer:
 - Allocate in bytes, remove atomCapacity and ghostCapacity 
   (see doc/notes/ddMd/Buffer)
 
-- Make sure memory statistics include all usage, including setup.
+- Make sure memory statistics include all usage, including setup
 
-- Consider moving allocation of Buffer to Exchanger.
+- Consider moving allocation of Buffer to Exchanger
 
 AtomStorage:
 ------------
 
 - Make sure memory statistics include all usage, including setup, so
   that the user has a better indication of when the ghost capacity 
-  needs to be increased.
+  needs to be increased
 
 Moving GroupStorage to Potential class:
 ---------------------------------------
 
 - see doc/notes/ddMd/GroupStorage
 
-- Make each GroupStorage a member of the associated potential.
+- Make each GroupStorage a member of the associated potential
 
 Single Processor Operation
 --------------------------
 
 - Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
   work ifndef UTIL_MPI, continue with other classes, to enable single 
-  processor operation with no MPI.
+  processor operation with no MPI
 
 Hybrid MD
 ---------
 
-- Finish and test transactions in AtomStorage (in transactions branch).
+- Finish and test transactions in AtomStorage (in transactions branch)
 
-- Add transactions to GroupStorage (in transactions branch).
+- Add transactions to GroupStorage (in transactions branch)
 

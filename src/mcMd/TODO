@@ -1,3 +1,20 @@
+Command-line interface
+----------------------
+
+- Change command line interface to specify parameter and command files 
+  as options -p param -c commands, with default file names.
+
+- On restart, allow specification of restart and command files with
+  separate options.
+
+Species
+-------
+
+- Remove reservoir from Species
+
+- Move Species hierarchy to a separate namespace
+
+
 Serialization
 -------------
 
@@ -32,7 +49,7 @@ Deformable Boundaries
 ---------------------
 
 - Generalize snapshot and obsolete pair list methods to use 
-   miniminumDeformRatio to deal optimally with MD in deforming boundaries.
+  miniminumDeformRatio to deal optimally with MD in deforming boundaries.
 
 Perturbation
 ------------
@@ -54,11 +71,11 @@ SystemAccess base classes
 -------------------------
 
 - Rename SubSystem SystemAccess
-- Define McSystemAccess and MdSystemAccess classes with potential energy accessors.
-- Derive analyzers from a public Analyzer and a protected (Mc|Md)SystemAccess.
+- Define (Mc|Md)SystemAccess classes with potential energy accessors
+- Derive analyzers from a public Analyzer and a protected (Mc|Md)SystemAccess
 - Remove replace system().typePotential() by typePotential() in analyzers
-- Derive SystemMcMove from a protected McSystemAccess.
-- Remove replace system().typePotential() by typePotential() in mcMoves.
-- Derive MdIntegrator from a protected MdSystemAccess.
+- Derive SystemMcMove from a protected McSystemAccess
+- Remove replace system().typePotential() by typePotential() in mcMoves
+- Derive MdIntegrator from a protected MdSystemAccess
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
 
