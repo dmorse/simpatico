@@ -1,0 +1,21 @@
+System:
+
+    melt of 100 chains of 8 atoms.
+
+Usage:
+
+NVE md simulation:
+
+    mdSim -e -p param.nve -c commands
+
+NVT md simulation
+
+    mdSim -e -p param.nvt -c commands
+
+NVT DPD simulation
+
+    mdSim -e -p param.dpd -c commands
+
+Restarting NVE or NVT MD simulations
+
+    mdSim -e -r restart -c restart.cmd

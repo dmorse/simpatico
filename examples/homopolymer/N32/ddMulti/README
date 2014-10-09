@@ -1,4 +1,13 @@
 Example of ddSim for 8 processors split between 2 systems, assigning four 
-processors to each system. Command:
+processors to each system. 
 
-mpirun -np 8 ddSim -s 2
+Usage:
+
+Run simulation of two independent systems:
+
+    mpirun -np 8 ddSim -s 2 -p param -c commands
+
+Restart above simulation:
+
+    mpirun -np 8 ddSim -s 2 -r restart -c restart.cmd
+

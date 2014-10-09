@@ -16,11 +16,11 @@ In either mode, conventions for paths to input and ouput file names are differen
 
 To use a parallel version of mcSim or mdSim to run n completely independent simulations, one simply enters the name of the executable from, such as "mcSim_m" or "mdSim_m", from a directory that contains a set of numbered directories named 0/, 1/, 2/, .. n-1/ associated with different processors. In this mode of operation, every processor reads a completely different set of param, command and configuration input files, all of which are located in a numbered directory associated with that processor. This file convention is enforced by prepending the name of the numbered directory to the names of all input and output files that are opened by the progam, e.g., by prepending a prefix "3/" to the names of any files that are open by the processor with MPI rank 3. This manipulation of file names is done by the FileMaster class. 
 
-In independent mode, parameter files cannot be read from standard input, since that would cause every processor to read the same param file. By convention, the parameter file for processor n in a set of independent simulations is instead read from the file named "param" in directory "n/" of the working directory. The command file must also be in the appropriate numbered directory, and must have the base name specified by the commandFileName given in this parameter file. Paths to other input files (such as the input configuration file) and output files (such as those created by analyzer classes) are also obtained by adding a the name "n/" of a numbered subdirectory before the inputPrefix or outputPrefix strings that are specified in the parameter file. 
+In independent mode, the paths to the parameter and command file for each system are files in the associated numbered directory with base names specified as arguments to the -p and -c command line options. Paths to other input files (such as the input configuration file) and output files (such as those created by analyzer classes) are also defined relative to the relevant numbered directory. All such path names are obtained obtained by adding a the prefix "n/" for processor n before the parameter and command file names, and before the inputPrefix or outputPrefix strings specified in the parameter file. 
 
-As an example, consider a set of MC simulations on 3 processors. Assume that the param file for each processor sets the inputPrefix string to "in/", the outputPrefix to "out/", and the commandfileName to "commands". Also assume that each command file contains a command "READ_CONFIG config" that read the initial configuration from a file named "config" in the appropriate input directory. Such a simulation can be run by entering
+As an example, consider a set of MC simulations on 3 processors. Assume that the param file for each processor sets the inputPrefix string to "in/" and the outputPrefix to "out/". Also assume that each command file contains a command "READ_CONFIG config" that read the initial configuration from a file named "config" in the appropriate data input directory. Such a simulation can be run by entering
 \code
-    mpirun -np 3 mSim_m_f 
+    mpirun -np 3 mSim_m -p param -c commands
 \endcode
 from root of a directory tree with a structure
 \code
@@ -43,14 +43,14 @@ from root of a directory tree with a structure
         config
       out/
 \endcode
-The command "READ_CONFIG config" in each command file will cause each processor to read the input configuration file "in/config" in the appropriate numbered directory for that processor. When the simulation is run, all configuration and data analysis output files for each processor will be written to the "out" of the corresponding numbered directory. 
+The command "READ_CONFIG config" in each command file will cause each processor to read the input configuration file "in/config" in the appropriate numbered directory for that processor. When the simulation is run, all configuration and data analysis output files for each processor will be written to the "out" directory of the corresponding numbered directory. 
 
 \section user_multi_replicated_sec Replicated Simulations
-To invoke an parallel version of mcSim or mdSim in "perturbation" mode, simply invoke the program with the "-p" option. This command line option only functions in versions of the code that were compiled with both MPI enabled.  In this mode, simulations carried out on different processors are controlled by a single parameter file and a single command file, but different parameter values are assigned to different processors.  This mode of operation is required for either free energy perturbation or replica exchange simulations.
+To invoke an parallel version of mcSim or mdSim in "perturbation" mode, simply invoke the program with the "-f" option. This command line option only functions in versions of the code that were compiled with MPI enabled.  In this mode, simulations carried out on different processors are controlled by a single parameter file and a single command file, but different parameter values are assigned to different processors.  This mode of operation is required for either free energy perturbation or replica exchange simulations.
 
 For example, to run a MC program in this mode on 3 processors, one might thus enter 
 \code
-    mpirun -np 2 mSim_m -p < param
+    mpirun -np 2 mSim_m -f -p param -c commands
 \endcode
 from the root directory of a directory tree with a structure
 \code
@@ -69,7 +69,7 @@ from the root directory of a directory tree with a structure
         config
       out/
 \endcode
-assuming that commandFileName=="commands" in the param file. Note that in this case the parameter file is read from standard input, and that only a single command file is used, as in a simulation of a single system, but that input configuration files and all output files are placed in numbered subdirectories associated with particular processors.
+In this case, a single parameter file named "param" and command file named "commands" is read from the common root directory, and used to control the simulations on all three processors. In this mode, separate input configuration files are read from the in/ subdirectory of the associated numbered subdirectory, and output files produced by each processor are written to files within the associated numbered directory.
 
 The method by which a single parameter file is used to set different parameter values on different processors involves the use of a Perturbation class, and is discussed below.
 

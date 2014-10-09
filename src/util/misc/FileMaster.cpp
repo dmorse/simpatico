@@ -8,8 +8,12 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "FileMaster.h"
 #include <util/global.h>
+
+#include "FileMaster.h"
+#ifdef UTIL_MPI
+#include <util/mpi/MpiLoader.h>
+#endif
 
 #include <sstream>
 
@@ -100,7 +104,13 @@ namespace Util
    {  outputPrefix_ = outputPrefix; }
 
    /*
-   * Set the output prefix.
+   * Set the parameter file name.
+   */
+   void FileMaster::setParamFileName(const std::string& paramFileName)
+   {  paramFileName_ = paramFileName; }
+
+   /*
+   * Set the command file name.
    */
    void FileMaster::setCommandFileName(const std::string& commandFileName)
    {  commandFileName_ = commandFileName; }
@@ -124,14 +134,12 @@ namespace Util
    {
       loadParameter<std::string>(ar, "inputPrefix",  inputPrefix_);
       loadParameter<std::string>(ar, "outputPrefix", outputPrefix_);
-      ar >> directoryIdPrefix_;
-      ar >> rootPrefix_;
-      ar >> hasDirectoryId_;
+      #ifdef UTIL_MPI
+      MpiLoader<Serializable::IArchive> loader(*this, ar);
+      loader.load(isCommonControl_);
+      #else
       ar >> isCommonControl_;
-      Log::file() << "drectoryIdPrefix_ = " << directoryIdPrefix_ << std::endl;
-      Log::file() << "rootPrefix_       = " << rootPrefix_ << std::endl;
-      Log::file() << "hasDirectoryId_   = " << hasDirectoryId_ << std::endl;
-      Log::file() << "isCommonControl_  = " << isCommonControl_ << std::endl;
+      #endif
    }
 
    /*
@@ -141,9 +149,6 @@ namespace Util
    {
       ar << inputPrefix_;
       ar << outputPrefix_;
-      ar << directoryIdPrefix_;
-      ar << rootPrefix_;
-      ar << hasDirectoryId_;
       ar << isCommonControl_;
    }
 

@@ -145,6 +145,13 @@ namespace Util
       void setCommonControl();
 
       /**
+      * Set the parameter file name.
+      *
+      * \param paramFileName name of parameter file
+      */
+      void setParamFileName(const std::string& paramFileName);
+
+      /**
       * Set the command file name.
       *
       * \param commandFileName name of command file
