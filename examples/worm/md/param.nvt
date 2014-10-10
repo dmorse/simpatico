@@ -78,8 +78,8 @@ MdSimulation{
     }
 
     MdEnergyOutput{
-      interval                         10000
-      outputFileName        energyOutput
+      interval                       10000
+      outputFileName          energyOutput
     }
 
     MdKineticEnergyAverage{
@@ -97,7 +97,8 @@ MdSimulation{
       capacity  	              1000
     }
   }
-  saveInterval                     0
+  saveInterval                 10000
+  saveFileName               restart 
 }
 
     CosineSqAngle{

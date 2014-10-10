@@ -117,7 +117,7 @@ McSimulation{
     }
 
   }
-  saveInterval                20000
+  saveInterval               200000
   saveFileName              restart
 }
 

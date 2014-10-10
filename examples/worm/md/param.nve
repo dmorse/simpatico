@@ -80,7 +80,8 @@ MdSimulation{
     }
 
   }
-  saveInterval                      0
+  saveInterval                      1000
+  saveFileName                   restart
 }
 
     CosineSqAngle{

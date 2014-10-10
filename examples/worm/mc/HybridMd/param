@@ -105,7 +105,8 @@ McSimulation{
     }
 
   }
-  saveInterval                        0
+  saveInterval                        50
+  saveFileName                   restart
 }
 
     RadiusGyration{

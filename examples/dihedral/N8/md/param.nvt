@@ -105,7 +105,7 @@ MdSimulation{
       capacity  	              1000
     }
   }
-  saveInterval             10000
+  saveInterval             20000
   saveFileName           restart
 }
 

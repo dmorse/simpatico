@@ -58,25 +58,26 @@ Simulation{
     kappa              1.0
   }
   EnergyEnsemble{
-    type              isothermal
-    temperature       1.0
+    type            isothermal
+    temperature            1.0
   }
   BoundaryEnsemble{
-    type              rigid
+    type                 rigid
   }
   NveIntegrator{
-    dt                0.005
-    saveInterval          0
+    dt                   0.005
+    saveInterval          2000
+    saveFileName       restart
   }
   Random{
-    seed              8012457890
+    seed            8012457890
   }
   AnalyzerManager{
-     baseInterval     100
+     baseInterval          100
 
      OutputEnergy{
-        interval         1000
-        outputFileName   energy
+        interval          1000
+        outputFileName  energy
      }
 
      OutputPressure{

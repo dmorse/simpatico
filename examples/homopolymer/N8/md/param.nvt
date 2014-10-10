@@ -130,7 +130,7 @@ MdSimulation{
     }
 
   }
-  saveInterval                  2000
+  saveInterval                 10000
   saveFileName               restart
 }
 

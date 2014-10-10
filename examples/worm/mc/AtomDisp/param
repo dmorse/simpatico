@@ -93,7 +93,8 @@ McSimulation{
       capacity                     500
     }
   }
-  saveInterval                     0
+  saveInterval                  400000
+  saveFileName                 restart
 }
 
     HybridMdMove{

@@ -1,0 +1,4 @@
+RESTART         14000
+WRITE_CONFIG   config
+FINISH
+
