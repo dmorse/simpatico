@@ -6,8 +6,14 @@ Usage - cd to an example subdirectory, then enter:
 
 MC simulation:
 
-    mcSim -e -p param.nve -c commands
+    mcSim_a -e -p param -c commands
 
 Restart and extend previous simulation
 
-    mdcim -e -r restart -c restart.cmd
+    mdcim_a -e -r restart -c restart.cmd
+
+------------------------------------------------------
+
+BUG: The example in the Reptation subdirectory is 
+broken, because of a bug in the implementation of the 
+CfbReptation MC move for systems with angle potentials. 

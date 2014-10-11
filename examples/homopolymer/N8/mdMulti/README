@@ -4,7 +4,7 @@ System:
 
 Usage:
 
-NVE md simulation:
+Independent NVE MD simulations on 3 processors:
 
     mpirun -np 3 mdSim_m -e -p param -c commands
 

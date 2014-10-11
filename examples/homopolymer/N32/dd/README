@@ -1,10 +1,12 @@
-To run an example of 12000 steps, with log information to screen:
+
+
+Parallel NVE simulation on 6 processors, 12000 steps, log info to screen:
 
    mpirun -np 6 ddSim -e -p param.nve -c commands
 
 To postprocess the resulting config and trajectory files:
 
-   mdPp param.pp commands.pp
+   mdPp -p param.pp -c commands.pp
 
 To restart the simulation and continue to 25000 steps
 

@@ -1,4 +1,4 @@
 #!/bin/bash
-rm -f */log
-rm -f */*.rst
 rm -f */out/*
+rm -f */restart
+rm -f */log
