@@ -293,6 +293,7 @@ namespace Util
       void openInputFile(const std::string& filename, std::ifstream& in, 
                          std::ios_base::openmode mode) const;
 
+      #if 0
       /**
       * Open an output file.
       *
@@ -306,6 +307,7 @@ namespace Util
       void 
       openOutputFile(const std::string& filename, std::ofstream& out, 
                      bool append = false) const;
+      #endif
 
       /**
       * Open an output file.
@@ -320,6 +322,19 @@ namespace Util
       void 
       openOutputFile(const std::string& filename, std::ofstream& out, 
                      std::ios_base::openmode mode) const;
+
+      /**
+      * Open an output file, default open mode.
+      *
+      * The path to this file constructed by concatenating:
+      * [rootPrefix] + [directoryIdPrefix] + outputPrefix + filename.
+      *
+      * \param  filename  file name, without any prefix
+      * \param  out       ofstream object to associated with a file
+      */
+      void 
+      openOutputFile(const std::string& filename, std::ofstream& out)
+      const;
 
       //@}
       /// \name Misc Accessors

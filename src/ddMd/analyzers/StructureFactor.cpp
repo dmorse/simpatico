@@ -153,7 +153,12 @@ namespace DdMd
       if (isAtInterval(iStep))  {
 
          if (simulation().domain().isMaster()) {
-            simulation().fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_, !isFirstStep_);
+            std::ios_base::openmode mode = std::ios_base::out;
+            if (!isFirstStep_) {
+               mode = std::ios_base::out | std::ios_base::app;
+            }
+            std::string name = outputFileName("_max.dat");
+            simulation().fileMaster().openOutputFile(name, outputFile_, mode);
          }
 
          isFirstStep_ = false;

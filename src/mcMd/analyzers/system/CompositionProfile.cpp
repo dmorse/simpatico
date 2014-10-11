@@ -151,6 +151,12 @@ namespace McMd
             }
          } 
 
+         // Select open mode for output files
+         std::ios_base::openmode mode = std::ios_base::out;
+         if (!isFirstStep_) {
+           mode = std::ios_base::out | std::ios_base::app; 
+         }
+
          // Open log files
          for (int i = 0; i < nDirection_; ++i) {
             for (int j = 0; j < nAtomType_; ++j){
@@ -162,7 +168,9 @@ namespace McMd
                 }
                 oss << "_type" << j << ".log";
 
-                fileMaster().openOutputFile(oss.str(), logFiles_[i+j*nDirection_], !isFirstStep_);
+                fileMaster().openOutputFile(oss.str(), 
+                                            logFiles_[i+j*nDirection_], 
+                                            mode);
             }
          }
 

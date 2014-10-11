@@ -195,7 +195,7 @@ namespace Util
    }
 
    /*
-   * Open an input name with fully specified path.
+   * Open an ifstream with fully specified path and mode.
    */
    void
    FileMaster::open(const std::string& name, std::ifstream& in,
@@ -210,7 +210,7 @@ namespace Util
    }
 
    /*
-   * Open an ofstream with fully specified path.
+   * Open an ofstream with fully specified path and mode.
    */
    void
    FileMaster::open(const std::string& name, std::ofstream& out,
@@ -225,7 +225,7 @@ namespace Util
    }
 
    /*
-   * Open an input restart parameter file.
+   * Open an input parameter or command control file.
    */
    void FileMaster::openControlFile(const std::string& name, 
                                    std::ifstream& in) const
@@ -239,7 +239,7 @@ namespace Util
    }
 
    /*
-   * Open an input restart dump file.
+   * Open an input restart file for reading.
    */
    void FileMaster::openRestartIFile(const std::string& name, const char* ext,
                                      std::ifstream& in) const
@@ -254,7 +254,7 @@ namespace Util
    }
 
    /*
-   * Open a restart dump file for writing.
+   * Open an output restart file for writing.
    */
    void FileMaster::openRestartOFile(const std::string& name, const char* ext,
                                      std::ofstream& out) const
@@ -270,7 +270,7 @@ namespace Util
    }
 
    /*
-   * Open and return an input file with specified base name
+   * Open an input dat file with specified mode.
    */
    void
    FileMaster::openInputFile(const std::string& name, std::ifstream& in,
@@ -287,21 +287,21 @@ namespace Util
    }
 
    /*
-   * Open and return an input file with specified base name
+   * Open an input file in default text input mode.
    */
    void
    FileMaster::openInputFile(const std::string& name, std::ifstream& in) const
    {  openInputFile(name, in, std::ios_base::in); }
 
    /*
-   * Open and return an output file named outputPrefix + name
+   * Open an output data file in specified mode.
    */
    void
    FileMaster::openOutputFile(const std::string& name, 
                               std::ofstream& out, 
                               std::ios_base::openmode mode) const
    {
-      // Construct filename = outputPrefix_ + name
+      // Construct path
       std::string filename(rootPrefix_);
       if (hasDirectoryId_) {
          filename += directoryIdPrefix_;
@@ -312,6 +312,15 @@ namespace Util
       open(filename.c_str(), out, mode);
    }
 
+   /*
+   * Open an output data file in default text output mode.
+   */
+   void
+   FileMaster::openOutputFile(const std::string& name, 
+                              std::ofstream& out) const
+   {  openOutputFile(name, out, std::ios_base::out); }
+
+   #if 0
    /*
    * Open and return an output file named outputPrefix + name
    */
@@ -325,6 +334,7 @@ namespace Util
          openOutputFile(name, out, std::ios::out);
       }
    }
+   #endif
 
    /*
    * Will paramFile() return std::cin ?
