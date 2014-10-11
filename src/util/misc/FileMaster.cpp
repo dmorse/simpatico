@@ -235,29 +235,30 @@ namespace Util
          filename += directoryIdPrefix_;
       }
       filename += name;
-      open(filename.c_str(), in);
+      open(filename, in);
    }
 
    /*
    * Open an input restart file for reading.
    */
-   void FileMaster::openRestartIFile(const std::string& name, const char* ext,
-                                     std::ifstream& in) const
+   void 
+   FileMaster::openRestartIFile(const std::string& name, std::ifstream& in,
+                                std::ios_base::openmode mode) const
    {
       std::string filename(rootPrefix_);
       if (hasDirectoryId_) {
          filename += directoryIdPrefix_;
       }
       filename += name;
-      filename += ext;
-      open(filename.c_str(), in);
+      open(filename, in, mode);
    }
 
    /*
    * Open an output restart file for writing.
    */
-   void FileMaster::openRestartOFile(const std::string& name, const char* ext,
-                                     std::ofstream& out) const
+   void 
+   FileMaster::openRestartOFile(const std::string& name, std::ofstream& out,
+                                std::ios_base::openmode mode) const
    {
       // Construct filename = outputPrefix_ + name
       std::string filename(rootPrefix_);
@@ -265,8 +266,7 @@ namespace Util
          filename = directoryIdPrefix_;
       }
       filename += name;
-      filename += ext;
-      open(filename.c_str(), out);
+      open(filename, out, mode);
    }
 
    /*
@@ -283,15 +283,8 @@ namespace Util
       }
       filename += inputPrefix_;
       filename += name;
-      open(filename.c_str(), in, mode);
+      open(filename, in, mode);
    }
-
-   /*
-   * Open an input file in default text input mode.
-   */
-   void
-   FileMaster::openInputFile(const std::string& name, std::ifstream& in) const
-   {  openInputFile(name, in, std::ios_base::in); }
 
    /*
    * Open an output data file in specified mode.
@@ -309,32 +302,8 @@ namespace Util
       filename += outputPrefix_;
       filename += name;
 
-      open(filename.c_str(), out, mode);
+      open(filename, out, mode);
    }
-
-   /*
-   * Open an output data file in default text output mode.
-   */
-   void
-   FileMaster::openOutputFile(const std::string& name, 
-                              std::ofstream& out) const
-   {  openOutputFile(name, out, std::ios_base::out); }
-
-   #if 0
-   /*
-   * Open and return an output file named outputPrefix + name
-   */
-   void
-   FileMaster::openOutputFile(const std::string& name, 
-                              std::ofstream& out, bool append) const
-   {
-      if (append) {
-         openOutputFile(name, out, std::ios::out | std::ios::app);
-      } else {
-         openOutputFile(name, out, std::ios::out);
-      }
-   }
-   #endif
 
    /*
    * Will paramFile() return std::cin ?

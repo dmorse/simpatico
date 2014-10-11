@@ -121,7 +121,7 @@ namespace Util
       //@{
 
       /**
-      * Set the path from current directory to root data directory.
+      * Set the path from current directory to root directory.
       *
       * \param rootPrefix root prefix for all file names.
       */
@@ -204,9 +204,9 @@ namespace Util
       //@{
       
       /**
-      * Open an input file with a known path and optional mode.
+      * Open an input file with a known path and open mode.
       *
-      * Add error checking to C++ ifstream::open function.
+      * Adds error checking to C++ ifstream::open function.
       *
       * \param  name  complete file path
       * \param  in    ifstream object to associated with a file
@@ -216,7 +216,7 @@ namespace Util
                 std::ios_base::openmode mode = std::ios_base::in) const;
 
       /**
-      * Open an output file with a known path and optional mode.
+      * Open an output file with a known path and open mode.
       *
       * Add error checking to C++ ofstream::open function.
       *
@@ -248,66 +248,44 @@ namespace Util
       * The path to this file constructed by concatenating:
       * [rootPrefix] + [directoryIdPrefix] + name + "." + ext
       *
-      * \param  name  base file name, without any prefix or extension
-      * \param  ext   file name extension.
-      * \param  in    ifstream object to open
-      */
-      void openRestartIFile(const std::string& name, const char* ext,
-                            std::ifstream& in) const;
-
-      /**
-      * Open an output restart dump file for writing.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + name + "." + ext
-      *
-      * \param  name  base file name, without any prefix or extension
-      * \param  ext   file name extension.
-      * \param  out   ofstream object to open
-      */
-      void openRestartOFile(const std::string& name, const char* ext, 
-                            std::ofstream& out) const;
-
-      /**
-      * Open an input file.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + inputPrefix + filename.
-      *
-      * \param  filename file name, without any prefix
-      * \param  in       ifstream object to associated with a file
-      */
-      void openInputFile(const std::string& filename, 
-                         std::ifstream& in) const;
-
-      /**
-      * Open an input file.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + inputPrefix + filename.
-      *
-      * \param  filename file name, without any prefix
-      * \param  in       ifstream object to associated with a file
-      * \param  mode     bit mask that specifies opening mode
-      */
-      void openInputFile(const std::string& filename, std::ifstream& in, 
-                         std::ios_base::openmode mode) const;
-
-      #if 0
-      /**
-      * Open an output file.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + outputPrefix + filename.
-      *
-      * \param  filename  file name, without any prefix
-      * \param  out       ofstream object to associated with a file
-      * \param  append    True if we are appending to the file (default=false)
+      * \param name  base file name, without any prefix or extension
+      * \param in  ifstream object to open
+      * \param mode open mode
       */
       void 
-      openOutputFile(const std::string& filename, std::ofstream& out, 
-                     bool append = false) const;
-      #endif
+      openRestartIFile(const std::string& name, std::ifstream& in,
+                       std::ios_base::openmode mode = std::ios_base::in) 
+      const;
+
+      /**
+      * Open an output restart file for writing.
+      *
+      * The path to this file constructed by concatenating:
+      * [rootPrefix] + [directoryIdPrefix] + name 
+      *
+      * \param name base file name
+      * \param out ofstream object to open
+      * \param mode open mode
+      */
+      void 
+      openRestartOFile(const std::string& name, std::ofstream& out,
+                       std::ios_base::openmode mode = std::ios_base::out) 
+      const;
+
+      /**
+      * Open an input file.
+      *
+      * The path to this file constructed by concatenating:
+      * [rootPrefix] + [directoryIdPrefix] + inputPrefix + filename.
+      *
+      * \param  filename  file name, without any prefix
+      * \param  in  ifstream object to associated with a file
+      * \param  mode  bit mask that specifies opening mode
+      */
+      void 
+      openInputFile(const std::string& filename, std::ifstream& in, 
+                    std::ios_base::openmode mode = std::ios_base::in) 
+      const;
 
       /**
       * Open an output file.
@@ -316,24 +294,12 @@ namespace Util
       * [rootPrefix] + [directoryIdPrefix] + outputPrefix + filename.
       *
       * \param  filename  file name, without any prefix
-      * \param  out       ofstream object to associated with a file
-      * \param  mode      bit mask that specifies opening mode
+      * \param  out  ofstream object to associated with a file
+      * \param  mode  bit mask that specifies opening mode
       */
       void 
       openOutputFile(const std::string& filename, std::ofstream& out, 
-                     std::ios_base::openmode mode) const;
-
-      /**
-      * Open an output file, default open mode.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + outputPrefix + filename.
-      *
-      * \param  filename  file name, without any prefix
-      * \param  out       ofstream object to associated with a file
-      */
-      void 
-      openOutputFile(const std::string& filename, std::ofstream& out)
+                     std::ios_base::openmode mode = std::ios_base::out) 
       const;
 
       //@}

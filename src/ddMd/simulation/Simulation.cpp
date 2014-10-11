@@ -849,7 +849,8 @@ namespace DdMd
 
       Serializable::IArchive ar;
       if (isIoProcessor()) {
-         fileMaster().openRestartIFile(filename, "", ar.file());
+         std::ios_base::openmode mode = std::ios_base::in | std::ios_base::binary;
+         fileMaster().openRestartIFile(filename, ar.file(), mode);
       }
       // ParamComposite::load() calls Simulation::loadParameters()
       load(ar);
@@ -979,7 +980,8 @@ namespace DdMd
       // Save parameters (only on ioProcessor)
       Serializable::OArchive ar;
       if (isIoProcessor()) {
-         fileMaster().openRestartOFile(filename, "", ar.file());
+         std::ios_base::openmode mode = std::ios_base::out | std::ios_base::binary;
+         fileMaster().openRestartOFile(filename, ar.file(), mode);
          save(ar);
       }
 

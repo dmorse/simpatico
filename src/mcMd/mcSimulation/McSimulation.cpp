@@ -409,7 +409,8 @@ namespace McMd
 
       // Load from archive
       Serializable::IArchive ar;
-      fileMaster().openRestartIFile(filename, "", ar.file());
+      std::ios_base::openmode mode = std::ios_base::in | std::ios_base::binary;
+      fileMaster().openRestartIFile(filename, ar.file(), mode);
       load(ar);
       ar.file().close();
 
@@ -432,7 +433,8 @@ namespace McMd
       if (saveInterval_ > 0) {
          if (iStep_ % saveInterval_ == 0) {
             Serializable::OArchive ar;
-            fileMaster().openRestartOFile(filename, "", ar.file());
+            std::ios_base::openmode mode = std::ios_base::out | std::ios_base::binary;
+            fileMaster().openRestartOFile(filename, ar.file(), mode);
             save(ar);
             ar.file().close();
          }

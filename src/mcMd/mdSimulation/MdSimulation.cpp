@@ -788,7 +788,8 @@ namespace McMd
 
       // Load state from archive
       Serializable::IArchive ar;
-      fileMaster().openRestartIFile(filename, "", ar.file());
+      std::ios_base::openmode mode = std::ios_base::in | std::ios_base::binary;
+      fileMaster().openRestartIFile(filename, ar.file(), mode);
       load(ar);
       ar.file().close();
 
@@ -802,7 +803,8 @@ namespace McMd
    void MdSimulation::save(const std::string& filename)
    {
       Serializable::OArchive ar;
-      fileMaster().openRestartOFile(filename, "", ar.file());
+      std::ios_base::openmode mode = std::ios_base::out | std::ios_base::binary;
+      fileMaster().openRestartOFile(filename, ar.file(), mode);
       save(ar);
       ar.file().close();
    }
