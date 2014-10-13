@@ -26,7 +26,7 @@ data analysis that can be used with the mdSim serial MD program.
   <li> \subpage mcMd_analyzer_BoundaryAverage_page </li>
   <li> \subpage mcMd_analyzer_ComMSD_page </li>
   <li> \subpage mcMd_analyzer_CompositionProfile_page </li>
-  <li> \subpage mcMd_analyzer_DumpConfig_page </li>
+  <li> \subpage mcMd_analyzer_ConfigWriter_page </li>
   <li> \subpage mcMd_analyzer_IntraPairAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_IntraStructureFactor_page </li>
   <li> \subpage mcMd_analyzer_RadiusGyration_page </li>
