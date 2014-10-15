@@ -38,6 +38,7 @@ namespace SpAn
       * Constructor.
       *
       * \param configuration parent Configuration object
+      * \param needsAuxiliaryFile Does this class need to read an auxiliary file?
       */
       ConfigWriter(Configuration& configuration, bool needsAuxiliaryFile = false);
 

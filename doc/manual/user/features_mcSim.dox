@@ -39,7 +39,7 @@ McMove classes, see the \ref McMd_McMove_Module "McMove module".
   <li> \subpage mcMd_analyzer_BoundaryAverage_page </li>
   <li> \subpage mcMd_analyzer_ComMSD_page </li>
   <li> \subpage mcMd_analyzer_CompositionProfile_page </li>
-  <li> \subpage mcMd_analyzer_DumpConfig_page </li>
+  <li> \subpage mcMd_analyzer_ConfigWriter_page </li>
   <li> \subpage mcMd_analyzer_IntraPairAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_IntraStructureFactor_page </li>
   <li> \subpage mcMd_analyzer_RDF_page </li>

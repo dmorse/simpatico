@@ -1,11 +1,18 @@
-Boundary classes
-----------------
+FileMaster
+----------
 
-- Add typedef Vector Deformation;
+- Allow opening of all files with arbitrary modes
 
-- Add void deform(Deformation& deformation) method.
+- Provide methods that just provide paths, so that users can
+  open files separately, if desired.
 
-- Add DEFORM command to ddSim command script.
+- Clean up repetitive code by providing generic methods to
+  open input and output files with error checking, then use
+  generic open and path functions inside more specialized
+  methods.
+
+Boundary classes - non-orthogonal
+---------------------------------
 
 - Add applyShift(Vector& r, IntVector &t) to boundary classes.
 
@@ -13,4 +20,13 @@ Boundary classes
 
 - Add bool isOrthogonal() method to Boundary classes. Use to test other 
   classes that call Boundary::lengths().
+
+Boundary classes - deformation
+------------------------------
+
+- Add typedef Vector Deformation;
+
+- Add void deform(Deformation& deformation) method.
+
+- Add DEFORM command to ddSim command script.
 

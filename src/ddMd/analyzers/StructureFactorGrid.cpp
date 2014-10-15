@@ -310,7 +310,13 @@ namespace DdMd
       if (isAtInterval(iStep))  {
 
          if (simulation().domain().isMaster()) {
-            simulation().fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
+            // simulation().fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
+            std::ios_base::openmode mode = std::ios_base::out;
+            if (!isFirstStep_) {
+               mode = std::ios_base::out | std::ios_base::app;
+            }
+            std::string name = outputFileName("dat");
+            simulation().fileMaster().openOutputFile(name, logFile_, mode);
          }
 
          StructureFactor::sample(iStep);

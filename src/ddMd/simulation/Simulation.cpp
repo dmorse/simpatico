@@ -302,29 +302,41 @@ namespace DdMd
    */
    void Simulation::setOptions(int argc, char * const * argv)
    {
-      bool  eFlag = false;
-      bool  rFlag = false;
-      bool  sFlag = false;
+      bool  sFlag = false; // split communicator
+      bool  eFlag = false; // echo
+      bool  pFlag = false; // param file name
+      bool  rFlag = false; // restart file name
+      bool  cFlag = false; // command file name
       char* sArg = 0;
       char* rArg = 0;
+      char* pArg = 0;
+      char* cArg = 0;
       int  nSystem = 1;
 
       // Read command-line arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "er:s:")) != -1) {
+      while ((c = getopt(argc, argv, "es:p:r:c:")) != -1) {
          switch (c) {
-         case 'e':
+         case 'e': // echo parameters
            eFlag = true;
            break;
-         case 'r':
-           rFlag = true;
-           rArg  = optarg;
-           break;
-         case 's':
+         case 's': // split communicator
            sFlag = true;
            sArg  = optarg;
            nSystem = atoi(sArg);
+           break;
+         case 'p': // parameter file
+           pFlag = true;
+           pArg  = optarg;
+           break;
+         case 'r': // restart file
+           rFlag = true;
+           rArg  = optarg;
+           break;
+         case 'c': // command file
+           cFlag = true;
+           cArg  = optarg;
            break;
          case '?':
            Log::file() << "Unknown option -" << optopt << std::endl;
@@ -363,6 +375,19 @@ namespace DdMd
          ParamComponent::setEcho(true);
       }
 
+      // If option -p, set parameter file name
+      if (pFlag) {
+         if (rFlag) {
+            UTIL_THROW("Cannot have both parameter and restart files");
+         }
+         fileMaster().setParamFileName(std::string(pArg));
+      }
+
+      // If option -c, set command file name
+      if (cFlag) {
+         fileMaster().setCommandFileName(std::string(cArg));
+      }
+
       // If option -r, load state from a restart file.
       if (rFlag) {
          if (isIoProcessor()) {
@@ -390,7 +415,7 @@ namespace DdMd
       }
 
       /*
-      * Note that if isRestarting, this function returns immediately.
+      * Note that if isRestarting_, this function returns immediately.
       * All information in the parameter file is also contained in
       * a restart file. During a restart, the restart file is read
       * and isRestarting_ is set true within setOptions(), which the
@@ -406,7 +431,7 @@ namespace DdMd
       if (!isRestarting_) {  
          readParam(fileMaster().paramFile()); 
       }
-      /// See comment about restart in readParam(std::istream&)
+      /// See comment about restarting in readParam(std::istream&)
    }
 
    /*
@@ -824,7 +849,8 @@ namespace DdMd
 
       Serializable::IArchive ar;
       if (isIoProcessor()) {
-         fileMaster().openRestartIFile(filename, ".rst", ar.file());
+         std::ios_base::openmode mode = std::ios_base::in | std::ios_base::binary;
+         fileMaster().openRestartIFile(filename, ar.file(), mode);
       }
       // ParamComposite::load() calls Simulation::loadParameters()
       load(ar);
@@ -832,10 +858,6 @@ namespace DdMd
          ar.file().close();
       }
 
-      // Set default command (*.cmd) file name = filename + ".cmd".
-      // This will be used by Simulation::readCommands().
-      std::string commandFileName = filename + ".cmd";
-      fileMaster().setCommandFileName(commandFileName);
    }
 
    /*
@@ -958,7 +980,8 @@ namespace DdMd
       // Save parameters (only on ioProcessor)
       Serializable::OArchive ar;
       if (isIoProcessor()) {
-         fileMaster().openRestartOFile(filename, ".rst", ar.file());
+         std::ios_base::openmode mode = std::ios_base::out | std::ios_base::binary;
+         fileMaster().openRestartOFile(filename, ar.file(), mode);
          save(ar);
       }
 
@@ -1165,10 +1188,10 @@ namespace DdMd
          if (hasIoCommunicator()) {
             bcast<std::string>(domain_.communicator(), line, 0);
          }
-         #else // not UTIL_MPI
+         #else // ifndef UTIL_MPI
          getNextLine(in, line);
          Log::file() << line << std::endl;
-         #endif // not UTIL_MPI
+         #endif 
          inBuffer.clear();
          for (unsigned i=0; i < line.size(); ++i) {
             inBuffer.put(line[i]);
@@ -1394,7 +1417,12 @@ namespace DdMd
    * Read and implement commands from the default command file.
    */
    void Simulation::readCommands()
-   {  readCommands(fileMaster().commandFile()); }
+   {  
+      if (fileMaster().commandFileName().empty()) {
+         UTIL_THROW("Empty command file name");
+      }
+      readCommands(fileMaster().commandFile()); 
+   }
 
    /*
    * Set flag to specify if reverse communication is enabled.

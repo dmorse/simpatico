@@ -1,0 +1,4 @@
+RESTART          5000000
+SET_CONFIG_IO    McConfigIo
+WRITE_CONFIG     config
+FINISH

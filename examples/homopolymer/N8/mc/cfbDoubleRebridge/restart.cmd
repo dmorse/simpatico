@@ -1,3 +1,3 @@
-RESTART            240000
+RESTART             30000
 WRITE_CONFIG       config
 FINISH

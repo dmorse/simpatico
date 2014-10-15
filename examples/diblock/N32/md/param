@@ -1,6 +1,5 @@
 MdSimulation{
   FileMaster{
-    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -64,9 +63,9 @@ MdSimulation{
       interval                           500
     }
 
-    DumpConfig{
+    ConfigWriter{
       interval                           200
-      outputFileName            dump/config.
+      outputFileName                  config.
     }
 
     MdEnergyOutput{
@@ -138,7 +137,8 @@ MdSimulation{
     }
 
   }
-  saveInterval      0
+  saveInterval          200
+  saveFileName      restart
 }
 
 

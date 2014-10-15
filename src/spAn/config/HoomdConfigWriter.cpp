@@ -112,9 +112,13 @@ namespace SpAn
       file << "<configuration time_step=\"0\" dimensions=\"3\" natoms=\""
            << nAtom << "\" >\n";
 
-      // Write box
-      Vector lengths = configuration().boundary().lengths();
+      // Set ostream floating point precision, restore default format
       file.precision(12);
+      file.unsetf(std::ios_base::floatfield);
+
+      // Write box
+      Boundary& boundary = configuration().boundary();
+      Vector lengths = boundary.lengths();
       file << "<box"
            << " lx=\"" << lengths[0] << "\""
            << " ly=\"" << lengths[1] << "\""
@@ -124,15 +128,24 @@ namespace SpAn
            << " yz=\"0\""
            << "/>\n";
 
-      // Write position
+      // Write atom position node
       file << "<position num=\"" << nAtom << "\">\n";
+      Vector rg, rc;
       AtomStorage::Iterator iter;
       int j;
       configuration().atoms().begin(iter);
       for (; iter.notEnd(); ++iter) {
+         boundary.shift(iter->position);
+         boundary.transformCartToGen(iter->position, rg);
+         for (j = 0; j < Dimension; ++j) {
+            if (rg[j] >= 0.5) {
+               rg[j] -= 1.0;
+            }
+         }
+         boundary.transformGenToCart(rg, rc);
          for (j = 0; j < Dimension; ++j) {
             file.precision(12);
-            file << iter->position[j] << " ";
+            file << rc[j] << " ";
          }
          file << "\n";
       }
@@ -143,7 +156,7 @@ namespace SpAn
       file << "<velocity num=\"" << nAtom << "\">\n";
       configuration().atoms().begin(iter);
       for (; iter.notEnd(); ++iter) {
-         file << iter->position << "\n";
+         file << iter->velocity << "\n";
       }
       file << "</velocity>\n";
       #endif
@@ -156,7 +169,7 @@ namespace SpAn
       }
       file << "</type>\n";
 
-      // Write the groups
+      // Write covalent groups, as needed
       #ifdef INTER_BOND
       if (configuration().bonds().size()) {
          writeGroups(file, "bond", configuration().bonds(), 

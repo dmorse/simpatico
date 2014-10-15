@@ -167,7 +167,7 @@ namespace McMd
       if (communicatorPtr_ != &communicator) {
          UTIL_THROW("ParamCcommunicator must be the one passed to constructor");
       }
-      fileMaster_.setParamFileStdIn();
+      fileMaster_.setCommonControl();
       ParamComponent::setIoCommunicator(communicator);
    }
 

@@ -1,0 +1,13 @@
+System:
+
+    melt of 100 wormlike chains of 8 atoms.
+
+Usage:
+
+Parallel NVE md simulation on 6 processors:
+
+    mpirun -np 6 ddSim_a -e -p param -c commands
+
+Restarting and extending previous simulation
+
+    mpirun -np 6 ddSim_a -e -r restart -c restart.cmd

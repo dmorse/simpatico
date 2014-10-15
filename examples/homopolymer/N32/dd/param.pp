@@ -8,5 +8,10 @@ Processor{
       LogStep{
       }
 
+      LammpsDumpWriter{
+         interval        1
+         outputFileName  out/trajectory.lmp
+      }
+
    }
 }

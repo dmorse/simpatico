@@ -1,0 +1,13 @@
+System:
+
+    melt of 100 chains of 8 atoms.
+
+Usage - Changed directory to example subdirectory and enter:
+
+Serial MC simulation:
+
+    mcSim -e -p param -c commands
+
+Restarting and extending a previous simulation:
+
+    mcSim -e -r restart -c restart.cmd

@@ -59,6 +59,8 @@ MdSimulation{
     }
 
   }
+  saveInterval      400
+  saveFileName  restart
 }
 
 

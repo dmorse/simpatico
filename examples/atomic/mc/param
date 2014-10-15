@@ -1,6 +1,5 @@
 McSimulation{
   FileMaster{
-    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -103,7 +102,7 @@ McSimulation{
     }
 
   }
-  saveInterval               500000
+  saveInterval               200000
   saveFileName              restart
 }
 

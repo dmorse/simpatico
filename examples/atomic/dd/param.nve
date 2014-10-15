@@ -1,17 +1,16 @@
 Simulation{
   Domain{
-    gridDimensions    4    4    2
+    gridDimensions    2    2    2
   }
   FileMaster{
-    commandFileName   commands
     inputPrefix       in/
     outputPrefix      out/
   }
   nAtomType           1
   atomTypes           A    1.0
   AtomStorage{
-    atomCapacity       4000
-    ghostCapacity      8000
+    atomCapacity      20000
+    ghostCapacity     20000
     totalAtomCapacity 65000
   }
   Buffer{

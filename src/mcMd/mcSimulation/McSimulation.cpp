@@ -122,6 +122,7 @@ namespace McMd
       delete mcAnalyzerManagerPtr_;
    }
 
+   #if 0
    /*
    * Process command line options.
    */
@@ -194,6 +195,105 @@ namespace McMd
       }
 
    }
+   #endif
+
+   /*
+   * Process command line options.
+   */
+   void McSimulation::setOptions(int argc, char **argv)
+   {
+      bool  eflag = false;  // echo
+      bool  pFlag = false;  // param file 
+      bool  rFlag  = false; // restart file
+      bool  cFlag = false;  // command file 
+      #ifdef MCMD_PERTURB
+      bool  fflag = false;  // free energy perturbation
+      #endif
+      char* pArg = 0;
+      char* rarg = 0;
+      char* cArg = 0;
+   
+      // Read program arguments
+      int c;
+      opterr = 0;
+      while ((c = getopt(argc, argv, "ep:r:c:f")) != -1) {
+         switch (c) {
+         case 'e':
+           eflag = true;
+           break;
+         case 'p': // parameter file
+           pFlag = true;
+           pArg  = optarg;
+           break;
+         case 'r':
+           rFlag = true;
+           rarg  = optarg;
+           break;
+         case 'c': // command file
+           cFlag = true;
+           cArg  = optarg;
+           break;
+         #ifdef MCMD_PERTURB
+         case 'f':
+           fflag = true;
+           break;
+         #endif
+         case '?':
+           Log::file() << "Unknown option -" << optopt << std::endl;
+           UTIL_THROW("Invalid command line option");
+         }
+      }
+   
+      // Set flag to echo parameters as they are read.
+      if (eflag) {
+         Util::ParamComponent::setEcho(true);
+      }
+
+      #ifdef MCMD_PERTURB
+      // Set to use a perturbation.
+      if (fflag) {
+   
+         if (rFlag) {
+            std::string msg("Error: Options -r and -p are incompatible. Use -r alone. ");
+            msg += "Existence of a perturbation is specified in restart file.";
+            UTIL_THROW(msg.c_str());
+         }
+   
+         // Set to expect perturbation in the param file.
+         system().setExpectPerturbation();
+   
+         #ifdef UTIL_MPI
+         Util::Log::file() << "Set to read parameters from a single file" 
+                           << std::endl;
+         setIoCommunicator();
+         #endif
+   
+      }
+      #endif
+
+      // If option -p, set parameter file name
+      if (pFlag) {
+         if (rFlag) {
+            UTIL_THROW("Cannot have both parameter and restart files");
+         }
+         fileMaster().setParamFileName(std::string(pArg));
+      }
+
+      // If option -c, set command file name
+      if (cFlag) {
+         fileMaster().setCommandFileName(std::string(cArg));
+      }
+
+      // If option -r, restart
+      if (rFlag) {
+         //Log::file() << "Reading restart file " 
+         //            << std::string(rarg) << std::endl;
+         isRestarting_ = true; 
+         load(std::string(rarg));
+      }
+
+   }
+
 
    /*
    * Read parameters from file.
@@ -309,13 +409,10 @@ namespace McMd
 
       // Load from archive
       Serializable::IArchive ar;
-      fileMaster().openRestartIFile(filename, ".rst", ar.file());
+      std::ios_base::openmode mode = std::ios_base::in | std::ios_base::binary;
+      fileMaster().openRestartIFile(filename, ar.file(), mode);
       load(ar);
       ar.file().close();
-
-      // Set command (*.cmd) file
-      std::string commandFileName = filename + ".cmd";
-      fileMaster().setCommandFileName(commandFileName);
 
       #ifdef UTIL_MPI
       #ifdef MCMD_PERTURB
@@ -336,7 +433,8 @@ namespace McMd
       if (saveInterval_ > 0) {
          if (iStep_ % saveInterval_ == 0) {
             Serializable::OArchive ar;
-            fileMaster().openRestartOFile(filename, ".rst", ar.file());
+            std::ios_base::openmode mode = std::ios_base::out | std::ios_base::binary;
+            fileMaster().openRestartOFile(filename, ar.file(), mode);
             save(ar);
             ar.file().close();
          }
@@ -609,7 +707,13 @@ namespace McMd
    * Read and execute commands from the default command file.
    */
    void McSimulation::readCommands()
-   {  readCommands(fileMaster().commandFile()); }
+   {  
+      if (fileMaster().commandFileName().empty()) {
+         UTIL_THROW("Empty command file name");
+      }
+      readCommands(fileMaster().commandFile()); 
+   }
+
 
    /*
    * Run this MC simulation.

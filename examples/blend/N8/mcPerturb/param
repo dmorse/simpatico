@@ -1,6 +1,5 @@
 McSimulation{
   FileMaster{
-    commandFileName                paramfile
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -162,12 +161,6 @@ McSimulation{
   saveInterval           20000
   saveFileName         restart
 }
-WRITE_PARAM      param
-READ_CONFIG      config
-SIMULATE         100000
-WRITE_CONFIG     config
-FINISH
-
 
 
   ReplicaMove{

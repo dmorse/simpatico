@@ -294,10 +294,16 @@ namespace McMd
 
    void StructureFactorGrid::sample(long iStep)
    {
-      fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
+
+      std::ios_base::openmode mode = std::ios_base::out;
+      if (!isFirstStep_) {
+        mode = std::ios_base::out | std::ios_base::app; 
+      }
+      fileMaster().openOutputFile(outputFileName(".dat"), logFile_, mode);
+
+      // fileMaster().openOutputFile(outputFileName(".dat"), logFile_, !isFirstStep_);
 
       StructureFactor::sample(iStep);
-
 
       // Log structure factors
       double volume = system().boundary().volume();

@@ -1,6 +1,5 @@
 McSimulation{
   FileMaster{
-    commandFileName                 commands
     inputPrefix                          in/
     outputPrefix                        out/
   }
@@ -77,9 +76,9 @@ McSimulation{
       interval                         10000
     }
 
-    DumpConfig{
+    ConfigWriter{
       interval                         10000
-      outputFileName            dump/config.
+      outputFileName                 config.
     }
 
     McEnergyOutput{
@@ -134,7 +133,7 @@ McSimulation{
     }
 
   }
-  saveInterval    1000
+  saveInterval    10000
   saveFileName    restart
 }
 

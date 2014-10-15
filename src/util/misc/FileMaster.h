@@ -18,81 +18,109 @@ namespace Util
 {
 
    /**
-   * A FileMaster manages a set of input and output files.
+   * A FileMaster manages input and output files for a simulation.
    *
-   * A FileMaster manages provides methods to open input and output 
-   * files within several locations within a standard directory 
-   * structure for molecular simulations. The directory structure 
-   * is slightly different for simulations of a single physical 
-   * system then for simulations of multiple independent systems, 
-   * as discussed below.
-   *  
-   * For simulations of a single physical system (whether 
-   * performed by either a serial or parallel program), we define 
-   * three prefix strings for path names, which are usually 
-   * correspond to different directories within a tree:
+   * <H4> File types </H4>
    *
-   *   - an root directory path prefix
-   *   - a input data path prefix
-   *   - an output data path prefix
+   * A FileMaster manages a set of input and output files for a  
+   * molecular simulation. It provides methods to open four different
+   * types of file, which are located in different places within a 
+   * standard directory structure. These file types are:
    *
-   * Paths to command and restart files are constructed by
-   * pre-pending the root directory path prefix to base names to 
-   * base name for these files.  The root directory path prefix must
-   * be the path to the root directory for a simulation from the current 
-   * working directory. It should either be an empty string (to indicate
-   * the current working directory) or a valid directory name that
-   * ends with a directory separator "/". The root prefix is set to 
-   * an empty string by default. Paths to input and output data files
-   * files are constructed by prepending first the root directory 
-   * path prefix, then the input or output prefix to base names for 
-   * specific data files. The input and output prefixes are often
-   * chosen to be names of subdirectories of the root directory 
-   * that hold input and output data files (such as "in/" and "out/"), 
-   * in which case they should end with a directory separator.
+   *   - Control files, i.e., parameter and command input files
    *
-   * For parallel simulations of a multiple independent systems, the
-   * root directory must contain a set of directories whose names are 
-   * integers corresponding to integer indices for different systems. 
-   * Thus for example, the directory that contains files that are 
-   * specific to system number 6 would be a subdirectory "6/" of the 
-   * root directory. In this case, path names for different types of 
-   * files are thus constructed from four path prefixes:
+   *   - Restart files, which can be opened for input or output
    *
-   *   - the root directory path prefix
-   *   - an integer directory id prefix, such as "6/" 
-   *   - an input data path prefix 
-   *   - an output data path prefix 
+   *   - Input data files (e.g., input configuration files)
    *
-   * In this case, the path to an input or output file containing 
-   * data for a particular system is constructed by concatenting
-   * the root directory path prefix, the directory id prefix, the
-   * input or output prefix, and a base name for a specific file.
-   * When the input and output prefixes are directory paths,
-   * such as "in/" and "out/", data files associated with different 
-   * systems in separate subdirectories of the associated numbered 
-   * system level directories. In multi-system simulations, restart 
-   * files for a specific system are placed in the associated 
-   * numbered system directory.
+   *   - Output data files (e.g., trajectories and analysis output files)
    *
-   * The location of parameter and command files in multi-system
-   * simulations depends on whether the setParamStdIn() method 
-   * has been called. If this method has not been called, separate
-   * parameter and command files for each system are read from 
-   * the numbered system directory for that system. If this method
-   * has been called, a single parameter file is read from standard
-   * in and a single command file is read from the root directory,
-   * using a path that is constructed by concatenating the root
-   * prefix with a base name for the command file. 
-   *
-   * The root prefix and system id prefix are empty strings by
-   * default, but may be set by calling the setRootPrefix() and
-   * setDirectoryId() member functions, respectively. 
+   * Slightly different directory structures are used for file paths
+   * in simulations of a single system and for parallel simulations 
+   * of multiple systems, as discussed below. 
    * 
-   * The openInputFile() and openOutputFile() functions open input
-   * and output data files, using the above conventions for paths.
-   * The openRestartIFile() and openRestartOFile() open input and
-   * output restart files, respectively. 
+   * <H4> Single-system simulations </H4>
+   *
+   * In simulations of a single system, paths to the different types
+   * of file are constructed by prepending some combination of the
+   * following elements before a base file name:
+   *
+   *  - Root directory prefix: This is the path from the current
+   *    working directory to the root level directory for all files
+   *    associated with a simulation run. It defaults to an empty
+   *    string. It may be set by calling the setRootPrefix() function.
+   *
+   *  - Input prefix: This string is prepended to the base name of
+   *    all input data files. 
+   * 
+   *  - Output prefix: This string is prepended to the base name of
+   *    all output data files. 
+   * 
+   * The root directory prefix must be a path to a directory and
+   * thus must either be an empty string or must end with the 
+   * directory separator "/". The input and output prefix are 
+   * often also chosen to be directory paths, in order to place 
+   * input and output files in different subdirectories (e.g., 
+   * "in/" and "out/"), but can also be strings that are 
+   * prepended to the base name for all input and output files.
+   *
+   * In simulations of a single systems, paths to both control
+   * and restart files are constructed by the openControFile(),
+   * openRestartIFile() and openRestartOFile() by concatenating
+   * the root prefix (if any) to a base file name that is passed 
+   * to the appropriate function. Paths to input and output files
+   * are constructed by the openInputFile() and openOutputFile()
+   * functions by concatenating the root prefix, if any, to the 
+   * input or output prefix, as appropriate, and a base file 
+   * name that is passed as as argument. 
+   *
+   * <H4> Multi-system simulations </H4>
+   *
+   * A parallel simulation of multiple systems use a directory
+   * structure in which the root directory (specified by the root
+   * directory prefix) contains a set of numbered subdirectories
+   * named "0/", "1/", "2/", etc.. Each such numbered directory
+   * contains input, output and restart files that are specific 
+   * to a particular system, and will be referred to in what 
+   * follows as the system directory for that system. The integer
+   * index for the system associated with a specific MPI processor
+   * must be set by the setDirectoryId() method.
+   *
+   * In all simulations of multiple systems, paths to input and
+   * input and output data files are constructed by the functions
+   * openInputFile() and openOutputFile() by concatenating the
+   * system directory path, an input or output prefix, and a base
+   * file name. Paths to restart files for each system are 
+   * constructed by concatentaing the system directory path and
+   * a base file name, thus placing these files in the system
+   * directory. 
+   *
+   * Two different modes of operation are possible for simulations
+   * of multiple systems, which differ in the treatment of control
+   * files. In "independent" mode, simulations of multiple systems 
+   * are assumed to be completely independent and to require separate
+   * parameter and command control files for each system. In this
+   * case, the openControlFile() system opens files in the numbered
+   * system directory. In "replicated" model, all simulations are
+   * controlled by a single parameter file and a single control
+   * file, which are opened in the root directory. "Independent"
+   * mode is enabled by default, and "replicated" mode may be chosen
+   * by calling the function "setCommonControl()" before opening any
+   * any control files. 
+   *   
+   * <H4> Control Files </H4>
+   *
+   * FileMaster provides several special functions for parameter and
+   * command files. Names of the parameter and command files can be set 
+   * by calling the setParamFileName() or setCommandFileName() functions,
+   * respectively. If the setCommandFileName() function is not called
+   * before readParameters(), the readParameters() function will
+   * expect to find a "commandFileName" a the first parameter in the 
+   * FileMaster parameter file block. After parameter and command file 
+   * names have been set, the paramFile() and commandFile() functions
+   * return references to the resulting parameter and command files.
+   * The first time these functions are called, they each call
+   * openControlFile() internally to open the appropriate file.
    *
    * \ingroup Misc_Module
    */
@@ -118,30 +146,49 @@ namespace Util
       */
       virtual ~FileMaster();
 
+      /// \name Initialization
+      //@{
+
       /**
-      * Set the path from current directory to root data directory.
+      * Set the path from current directory to root directory.
       *
-      * \param rootPrefix root prefix for all file names.
+      * \param rootPrefix root directory prefix string for all paths
       */
       void setRootPrefix(const std::string& rootPrefix);
 
       /**
       * Set an integer directory identifier for this processor.
       *
-      * This method should be called only for parallel operation. The
-      * directoryId is normally set to be the MPI rank of this processor.
-      * After calling setDirectoryId(n) with an integer n, a prefix "n/" 
-      * will be prepended to the paths of all input and output file 
-      * files that are opened by openInputFile() and openOutputFile().
+      * This method should be called only for simulations of multiple
+      * systems, to set an integer identifier for the physical system
+      * associated with this processor.  After calling this function
+      * with an integer n, a directory id prefix "n/" will be 
+      * prepended to the paths of input, output and restart files 
+      * associated with that system. 
       *
-      * \param directoryId integer directory name for input and output files.
+      * \param directoryId integer subdirectory name
       */
       void setDirectoryId(int directoryId);
 
       /**
-      * Set paramFile() to return std::cin even if a directory id is set.
+      * Set to use single param and command files for multi-system 
+      * simulations.
       */ 
-      void setParamFileStdIn();
+      void setCommonControl();
+
+      /**
+      * Set the parameter file name.
+      *
+      * \param paramFileName name of parameter file
+      */
+      void setParamFileName(const std::string& paramFileName);
+
+      /**
+      * Set the command file name.
+      *
+      * \param commandFileName name of command file
+      */
+      void setCommandFileName(const std::string& commandFileName);
 
       /**
       * Set the input file prefix string.
@@ -158,13 +205,6 @@ namespace Util
       void setOutputPrefix(const std::string& outputPrefix);
  
       /**
-      * Set the command file name.
-      *
-      * \param commandFileName name of command file
-      */
-      void setCommandFileName(const std::string& commandFileName);
- 
-      /**
       * Read parameter file.
       *
       * Reads the inputPrefix and outputPrefix string variables.
@@ -172,6 +212,10 @@ namespace Util
       * \param in pararameter file input stream
       */
       virtual void readParameters(std::istream& in);
+
+      //@}
+      /// \name Serialization
+      //@{
 
       /**
       * Load internal state from file.
@@ -187,15 +231,142 @@ namespace Util
       */
       virtual void save(Serializable::OArchive &ar);
    
+      //@}
+      /// \name File Opening
+      //@{
+      
+      /**
+      * Open an input file with a known path and open mode.
+      *
+      * Adds error checking to C++ ifstream::open function.
+      *
+      * \param  name  complete file path
+      * \param  in    ifstream object to associated with a file
+      * \param  mode  read mode 
+      */
+      void open(const std::string& name, std::ifstream& in, 
+                std::ios_base::openmode mode = std::ios_base::in) const;
+
+      /**
+      * Open an output file with a known path and open mode.
+      *
+      * Add error checking to C++ ofstream::open function.
+      *
+      * \param  name  complete file path
+      * \param  out  ofstream object to associated with a file
+      * \param  mode  write mode
+      */
+      void open(const std::string& name, std::ofstream& out, 
+                std::ios_base::openmode mode = std::ios_base::out) const;
+
+      /**
+      * Open an input parameter or command file.
+      *
+      * The path to this file constructed by concatenating:
+      * [rootPrefix] + [directoryIdPrefix] + name + "." + ext
+      *
+      * The directoryIdPrefix is included only if a directory id 
+      * has not been set and the setCommonControl() function has 
+      * not been called.
+      *
+      * \param  name  base file name, without any prefix
+      * \param  in  ifstream object to open
+      */
+      void openControlFile(const std::string& name, 
+                           std::ifstream& in) const;
+
+      /**
+      * Open an input restart dump file for reading.
+      *
+      * The path to this file constructed by concatenating:
+      * [rootPrefix] + [directoryIdPrefix] + name + "." + ext
+      *
+      * \param name  base file name, without any prefix or extension
+      * \param in  ifstream object to open
+      * \param mode  open mode
+      */
+      void 
+      openRestartIFile(const std::string& name, std::ifstream& in,
+                       std::ios_base::openmode mode = std::ios_base::in) 
+      const;
+
+      /**
+      * Open an output restart file for writing.
+      *
+      * The path to this file constructed by concatenating:
+      * [rootPrefix] + [directoryIdPrefix] + name 
+      *
+      * \param name base file name
+      * \param out ofstream object to open
+      * \param mode open mode
+      */
+      void 
+      openRestartOFile(const std::string& name, std::ofstream& out,
+                       std::ios_base::openmode mode = std::ios_base::out) 
+      const;
+
+      /**
+      * Open an input file.
+      *
+      * The path to this file constructed by concatenating:
+      * [rootPrefix] + [directoryIdPrefix] + inputPrefix + filename.
+      *
+      * \param  filename  file name, without any prefix
+      * \param  in  ifstream object to associated with a file
+      * \param  mode  bit mask that specifies opening mode
+      */
+      void 
+      openInputFile(const std::string& filename, std::ifstream& in, 
+                    std::ios_base::openmode mode = std::ios_base::in) 
+      const;
+
+      /**
+      * Open an output file.
+      *
+      * The path to this file constructed by concatenating:
+      * [rootPrefix] + [directoryIdPrefix] + outputPrefix + filename.
+      *
+      * \param  filename  file name, without any prefix
+      * \param  out  ofstream object to associated with a file
+      * \param  mode  bit mask that specifies opening mode
+      */
+      void 
+      openOutputFile(const std::string& filename, std::ofstream& out, 
+                     std::ios_base::openmode mode = std::ios_base::out) 
+      const;
+
+      //@}
+      /// \name Control Files
+      //@{
+      
+      /**
+      * Is set for common param and command files?
+      */
+      bool isCommonControl() const;
+
+      /**
+      * Return the param file name, if any.
+      */
+      std::string paramFileName() const;
+
+      /**
+      * Return the command file name.
+      *
+      * The base name of the command file is read from the parameter file
+      * by the readParameters() method. 
+      */
+      std::string commandFileName() const;
+
       /**
       * Get a default parameter stream by reference.
       *
-      * If setDirectoryId() has not been called, of if setParamFileStdIn()
+      * If setDirectoryId() has not been called, of if setCommonControl()
       * has been called, this method returns std::cin.
       * 
-      * If setDirectoryId() has been called and setParamFileStdInd() has not,
-      * this method returns a reference to a file "n/param". This file is 
-      * opened for reading the first time it is returned by this method.
+      * If setDirectoryId() has been called and setCommonControld() has
+      * not, this method returns a reference to a file "n/param". This 
+      * file is opened for reading the first time it is returned by this 
+      * function.
       */
       std::istream& paramFile();
 
@@ -216,197 +387,73 @@ namespace Util
       */
       std::istream& commandFile();
 
-      /**
-      * Open an input file.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + inputPrefix + filename.
-      *
-      * \param  filename file name, without any prefix
-      * \param  in       ifstream object to associated with a file
-      */
-      void openInputFile(const std::string& filename, std::ifstream& in) const;
-
-      /**
-      * Open an input file.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + inputPrefix + filename.
-      *
-      * \param  filename file name, without any prefix
-      * \param  in       ifstream object to associated with a file
-      * \param  mode     bit mask that specifies opening mode
-      */
-      void openInputFile(const std::string& filename, std::ifstream& in, 
-                         std::ios_base::openmode mode) const;
-
-      /**
-      * Open an output file.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + outputPrefix + filename.
-      *
-      * \param  filename  file name, without any prefix
-      * \param  out       ofstream object to associated with a file
-      * \param  append    True if appending to the file (default=false)
-      */
-      void 
-      openOutputFile(const std::string& filename, std::ofstream& out, 
-                     bool append = false) const;
-
-      /**
-      * Open an output file.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + outputPrefix + filename.
-      *
-      * The directoryIdPrefix is included only if a directory id 
-      * is set and setParamFileStdIn() has not been invoked.
-      *
-      * \param  filename  file name, without any prefix
-      * \param  out       ofstream object to associated with a file
-      * \param  mode      bit mask that specifies opening mode
-      */
-      void 
-      openOutputFile(const std::string& filename, std::ofstream& out, 
-                     std::ios_base::openmode mode) const;
- 
-      /**
-      * Open an input file in the parameter directory.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + name + "." + ext
-      *
-      * The directoryIdPrefix is included only if a directory id 
-      * is set and setParamFileStdIn() has not been invoked.
-      *
-      *
-      * \param  name  base file name, without any prefix
-      * \param  ext   file name extension.
-      * \param  in    ifstream object to open
-      */
-      void openParamIFile(const std::string& name, const char* ext,
-                          std::ifstream& in) const;
-
-      /**
-      * Open an input file in the parameter directory.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + name + "." + ext
-      *
-      * The directoryIdPrefix is included only if a directory id 
-      * is set and setParamFileStdIn() has not been invoked.
-      *
-      *
-      * \param name  base file name, without any prefix or extension
-      * \param ext  file name extension.
-      * \param out  ofstream object to open
-      */
-      void openParamOFile(const std::string& name, const char* ext,
-                          std::ofstream& out) const;
-
-      /**
-      * Open an input restart file.
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + name + "." + ext
-      *
-      * The directoryIdPrefix is included only if a directory id 
-      * is set and the setParamFileStdIn method has not been set. 
-      *
-      * \param name  base file name, without any prefix or extension
-      * \param ext  file name extension.
-      * \param in  ifstream object to open
-      */
-      void openRestartIFile(const std::string& name, const char* ext,
-                            std::ifstream& in) const;
-
-      /**
-      * Open an output restart file. 
-      *
-      * The path to this file constructed by concatenating:
-      * [rootPrefix] + [directoryIdPrefix] + name + "." + ext
-      *
-      * \param name  base file name, without any prefix or extension
-      * \param ext  file name extension.
-      * \param out  ofstream object to open
-      */
-      void openRestartOFile(const std::string& name, const char* ext, 
-                            std::ofstream& out) const;
-
-      /**
-      * Return the command file name.
-      *
-      * The base name of the param file is read from the parameter file
-      * by the readParameters() method. 
-      */
-      std::string commandFileName() const;
-
-      /**
-      * Is paramFile() set to return std::cin ?
-      */
-      bool isParamFileStdIn() const;
-
+      //@}
+      
    private:
+
+      /*
+      * Name of the parameter file.
+      */
+      std::string  paramFileName_;
 
       /*
       * Name of the command file.
       */
-      std::string commandFileName_;
+      std::string  commandFileName_;
 
       /*
-      * Prefix added to input file names.
-      *
-      * If this is a file path, with a trailing directory separator,
-      * all input files will be sought in this directory.
+      * Prefix for input data file names.
       */
-      std::string inputPrefix_;
+      std::string  inputPrefix_;
 
       /*
-      * Prefix added to output file names.
-      *
-      * If this is a file path, with a trailing directory separation, all 
-      * output files will be written to this directory.
+      * Prefix for output data file names.
       */
-      std::string outputPrefix_;
+      std::string  outputPrefix_;
 
       /*
-      * The integer directory id (used in parallel mode).
+      * The integer directory id prefix, for multi-system simulations.
       */
-      std::string directoryIdPrefix_;
+      std::string  directoryIdPrefix_;
 
       /*
-      * Path for the root directory for this simulation.
+      * Path for the root directory of files for this simulation.
       */
-      std::string rootPrefix_;
+      std::string  rootPrefix_;
 
       /*
-      * Pointer to parameter file.
+      * Pointer to the parameter file.
       */
-      std::ifstream* paramFilePtr_;
+      std::ifstream*  paramFilePtr_;
 
       /*
-      * Pointer to command file.
+      * Pointer to the command file.
       */
-      std::ifstream* commandFilePtr_;
+      std::ifstream*  commandFilePtr_;
 
       /*
       * Has a directoryId prefix been set?
       */
-      bool hasDirectoryId_;
+      bool  hasDirectoryId_;
 
       /*
-      * Has setParamFileStdIn been called?
+      * Should we use a single parameter and command file?
       */
-      bool isSetParamFileStdIn_;
+      bool isCommonControl_;
 
    };
 
    /*
    * Return the command file base name.
    */
+   inline std::string FileMaster::paramFileName() const
+   {  return paramFileName_; }
+
+   /*
+   * Return the command file base name.
+   */
    inline std::string FileMaster::commandFileName() const
-   { return commandFileName_; }
+   {  return commandFileName_; }
 
 } 
 #endif

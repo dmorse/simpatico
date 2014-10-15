@@ -63,7 +63,7 @@ namespace SpAn
       /**
       * Open, read, and close parameter file.
       *
-      * \param in input parameter file name
+      * \param filename input parameter file name
       */
       void readParam(const char* filename);
 
@@ -93,7 +93,7 @@ namespace SpAn
       /**
       * Set ConfigReader style  (creates a ConfigReader).
       *
-      * \param string identifier for ConfigReader subclass
+      * \param configReaderName identifier for ConfigReader subclass
       */
       void setConfigReader(const std::string& configReaderName);
 
@@ -121,7 +121,7 @@ namespace SpAn
       * suffixes min <= n <= max with subsequent values differing by the
       * specified interval.
       *
-      * \param fileBaseName root name for dump files (without int suffix)
+      * \param baseFileName  root name for dump files (without int suffix)
       * \param min  integer suffix of first configuration file name
       * \param max  integer suffix of last configuration file name
       * \param interval  interval between subsequent timestep values
@@ -162,7 +162,7 @@ namespace SpAn
       /**
       * Set TrajectoryReader style  (creates a TrajectoryReader).
       *
-      * \param string identifier for TrajectoryReader subclass
+      * \param trajectoryStyle TrajectoryReader subclass identifier
       */
       void setTrajectoryReader(const std::string& trajectoryStyle);
 
@@ -182,11 +182,6 @@ namespace SpAn
       /// \name Miscellaneous functions
       //@{
  
-      /**
-      * Return true if the FileMaster is active.
-      */
-      bool hasFileMaster() const;
-
       /**
       * Return FileMaster if active, or throw Exception.
       */
@@ -217,17 +212,11 @@ namespace SpAn
       /// Manager for analyzers
       AnalyzerManager analyzerManager_;
 
-      /// FileMaster (optionally activated)
+      /// FileMaster
       FileMaster fileMaster_;
 
       /// String identifier for ConfigReader class name
       std::string configReaderName_;
-
-      /// Name of parameter file (required command line argument)
-      std::string paramFileName_;
-
-      /// Name of command file (optional command line argument)
-      std::string commandFileName_;
 
    };
 

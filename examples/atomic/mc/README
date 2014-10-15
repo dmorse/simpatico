@@ -1,0 +1,13 @@
+System:
+
+    8 atoms with WCA (repulsive Lennard-Jones) interactions
+
+Usage:
+
+Monte Carlo (MC) simulation:
+
+    mcSim -e -p param -c commands
+
+Restarting MC simulations
+
+    mcSim -e -r restart -c restart.cmd

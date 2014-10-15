@@ -1,0 +1,18 @@
+All simulations in this directory tree are simulations of 100 
+chains of 8 atoms each with angle and dihedral potentials. 
+All of these examples use one of two initial configuration 
+files in the "in/" subdirectory of this directory. 
+
+These simulations all require versions of the main programs
+that have been compiled with angle and dihedral potentials 
+enabled. These can be created by cd'ing to bld/parallel, for
+parallel programs, or bld/serial, for serial programs, and
+entering
+
+> ./configure -a1 -d1
+
+before recompiling these programs. The names of the resulting 
+executable names, such as mdSim_a_d, will then include a 
+string "_a_d" to indicate that these features have been 
+enabled. 
+

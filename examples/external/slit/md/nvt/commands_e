@@ -1,6 +1,0 @@
-SET_CONFIG_IO              McConfigIo
-READ_CONFIG                config
-THERMALIZE                 1.00  
-SIMULATE                   50000
-WRITE_CONFIG               config
-FINISH

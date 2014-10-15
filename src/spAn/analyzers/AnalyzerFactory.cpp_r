@@ -13,8 +13,8 @@
 #include <spAn/processor/Processor.h>
 
 // Analyzers 
-//#include "LogEnergy.h"
 #include "LogStep.h"
+#include "LammpsDumpWriter.h"
 
 namespace SpAn
 {
@@ -42,10 +42,10 @@ namespace SpAn
       // Analyzers
       if (className == "LogStep") {
          ptr = new LogStep(processor());
-      }
-      //if (className == "WriteConfig") {
-      //   ptr = new WriteConfig(processor());
-      //}
+      } else
+      if (className == "LammpsDumpWriter") {
+         ptr = new LammpsDumpWriter(processor());
+      } 
       return ptr;
    }
 
