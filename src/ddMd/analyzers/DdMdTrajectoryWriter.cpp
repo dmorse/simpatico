@@ -15,6 +15,8 @@
 #include <util/archives/BinaryFileOArchive.h>
 #include <util/space/Vector.h>
 
+#include <climits>
+
 namespace DdMd
 {
 
@@ -50,28 +52,31 @@ namespace DdMd
    {
       BinaryFileOArchive ar(file);
 
-      // Write iStep and boundary dimensions
-      if (domain().isMaster()) {
+      if (domain().isMaster()) {  
+
          ar << iStep;
          ar << boundary();
-      }
 
-      // Write atoms
-      if (domain().isMaster()) {  
          Vector r;
+         int id, j;
+         unsigned int ir;
          bool isCartesian = atomStorage().isCartesian();
 
          atomCollector().setup();
          Atom* atomPtr = atomCollector().nextPtr();
-         int id;
          while (atomPtr) {
             id = atomPtr->id();
             ar << id;
             if (isCartesian) {
-               ar << atomPtr->position();
+               boundary().transformCartToGen(atomPtr->position(), r);
             } else {
-               boundary().transformGenToCart(atomPtr->position(), r);
-               ar << r;
+               r = atomPtr->position();
+            }
+            for (j = 0; j < Dimension; ++j) {
+               if (r[j] >= 1.0) r[j] -= 1.0;
+               if (r[j] <  0.0) r[j] += 1.0;
+               ir = floor( UINT_MAX*r[j] + r[j] + 0.5 );
+               ar << ir;
             }
             // ar << atomPtr->velocity();
             atomPtr = atomCollector().nextPtr();

@@ -14,6 +14,8 @@
 #include <util/space/Vector.h>
 #include <util/misc/ioUtil.h>
 
+#include <climits>
+
 namespace SpAn
 {
 
@@ -56,12 +58,16 @@ namespace SpAn
       }
 
       // Read boundary dimensions
-      ar >> configuration().boundary();
+      Util::Boundary& boundary = configuration().boundary();
+      ar >> boundary;
 
       // Loop over atoms, read atomic positions
       AtomStorage* storagePtr = &configuration().atoms();
       Atom* atomPtr;
+      Vector r;
+      double h = 1.0/(double(UINT_MAX) + 1.0);
       int id, i, j;
+      unsigned int ir;
       for (i = 0; i < nAtom_; ++i) {
          ar >> id;
          atomPtr = storagePtr->ptr(id);
@@ -69,8 +75,10 @@ namespace SpAn
             UTIL_THROW("Unknown atom");
          }
          for (j = 0; j < Dimension; ++j) {
-            ar >> atomPtr->position[j];
+            ar >> ir;
+            r[j] = ir*h;
          }
+         boundary.transformGenToCart(r, atomPtr->position);
       }
 
       return true;
