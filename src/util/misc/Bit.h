@@ -39,7 +39,7 @@ namespace Util
       *
       * \param shift location of the bit, 0 < shift <= 32.
       */ 
-      void init(unsigned int shift);
+      void setMask(unsigned int shift);
   
       /**
       * Set this bit in the flags parameter

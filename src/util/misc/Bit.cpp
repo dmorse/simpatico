@@ -26,12 +26,12 @@ namespace Util
    * Constructor.
    */
    Bit::Bit(unsigned int shift)
-   {  init(shift); }
+   {  setMask(shift); }
 
    /*
    * Set the bit mask.
    */
-   void Bit::init(unsigned int shift)
+   void Bit::setMask(unsigned int shift)
    {  
       if (shift > sizeof(unsigned int)*CHAR_BIT) {
          UTIL_THROW("Shift is too large");

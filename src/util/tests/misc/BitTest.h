@@ -33,7 +33,7 @@ public:
       printMethod(TEST_FUNC);
 
       Bit bit;
-      bit.init(3);
+      bit.setMask(3);
       TEST_ASSERT(bit.mask() == 8);
    }
 
