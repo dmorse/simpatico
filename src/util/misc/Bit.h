@@ -23,11 +23,23 @@ namespace Util
    public:
   
       /**
+      * Default constructor.
+      */ 
+      Bit();
+  
+      /**
       * Constructor.
       *
       * \param shift location of the bit, 0 < shift <= 32.
       */ 
       Bit(unsigned int shift);
+  
+      /**
+      * Set or reset the bit mask.
+      *
+      * \param shift location of the bit, 0 < shift <= 32.
+      */ 
+      void init(unsigned int shift);
   
       /**
       * Set this bit in the flags parameter
