@@ -36,6 +36,8 @@ namespace DdMd
 
       /**
       * Default constructor.
+      *
+      * \param hasMolecules Set true to include AtomContext info.
       */
       DdMdOrderedConfigIo(bool hasMolecules);
 
@@ -43,6 +45,7 @@ namespace DdMd
       * Constructor.
       *
       * \param simulation parent Simulation object.
+      * \param hasMolecules Set true to include AtomContext info.
       */
       DdMdOrderedConfigIo(Simulation& simulation, bool hasMolecules);
 

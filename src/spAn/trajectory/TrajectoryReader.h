@@ -32,8 +32,8 @@ namespace SpAn
       /**
       * Constructor.
       *
-      * \param configuration parent Configuration object
-      * \param Is the trajectory file a binary format?
+      * \param configuration  parent Configuration object
+      * \param isBinary  Is the trajectory file a binary format?
       */
       TrajectoryReader(Configuration& configuration, bool isBinary = false);
 

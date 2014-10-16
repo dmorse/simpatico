@@ -1,17 +1,17 @@
 namespace McMd
 {
 
-/*! \page mcMd_analyzer_DumpConfig_page DumpConfig
+/*! \page mcMd_analyzer_ConfigWriter_page ConfigWriter
 
-\section mcMd_analyzer_DumpConfig_synopsis_sec Synopsis
+\section mcMd_analyzer_ConfigWriter_synopsis_sec Synopsis
 
 This analyzer periodically writes the system configuration to file. 
 
-\section mcMd_analyzer_DumpConfig_param_sec Parameters
+\section mcMd_analyzer_ConfigWriter_param_sec Parameters
 
 The parameter file format is:
 \code
-  DumpConfig{ 
+  ConfigWriter{ 
     interval           int
     outputFileName     string
   }
@@ -28,7 +28,7 @@ with parameters
   </tr>
 </table>
 
-\section mcMd_analyzer_DumpConfig_output_sec Output
+\section mcMd_analyzer_ConfigWriter_output_sec Output
 
 A system configuration is output every interval time steps, using the file format defined by the current ConfigIo. If no ConfigIo has been set explicitly in the command file, the default McMdConfigIo format will be used.
 

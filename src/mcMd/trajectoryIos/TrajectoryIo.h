@@ -56,7 +56,7 @@ namespace McMd
       * readFrame(), the readHeader() method must be called.
       *
       * \param file input file stream
-      * \param true if a frame is avaiable, false if at end of file
+      * \return true if a frame is avaiable, false if at end of file
       */
       virtual bool readFrame(std::fstream& file);
 
