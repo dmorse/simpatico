@@ -21,6 +21,7 @@ ddMd_analyzers_=\
      ddMd/analyzers/ConfigWriter.cpp\
      ddMd/analyzers/TrajectoryWriter.cpp\
      ddMd/analyzers/DdMdTrajectoryWriter.cpp\
+     ddMd/analyzers/DdMdGroupTrajectoryWriter.cpp\
      ddMd/analyzers/LammpsDumpWriter.cpp
 
 ddMd_analyzers_SRCS=\

@@ -1014,6 +1014,8 @@ namespace DdMd
       /// Return a SerializeConfigIo (create if necessary)
       SerializeConfigIo& serializeConfigIo();
 
+      void setGroup(std::stringstream& inBuffer);
+
    // friends:
 
       friend class SimulationAccess;

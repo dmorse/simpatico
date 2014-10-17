@@ -16,7 +16,8 @@ namespace DdMd{
    * of the essential algorithms of ddSim, but may be used by some
    * analyzers or modifiers.
    */
-   struct AtomContext{
+   struct AtomContext
+   {
 
       /**
       * Index of the species of molecule.
@@ -50,11 +51,27 @@ namespace DdMd{
       unsigned int groupMask;
 
       /**
+      * Default constructor.
+      */
+      AtomContext();
+
+      /**
       * Set all data members to null default values. 
       */
       void clear();
 
    };
+
+   /*
+   * Set all data members to null default values. 
+   */
+   inline 
+   AtomContext::AtomContext()
+    : speciesId(-1),
+      moleculeId(-1),
+      atomId(-1),
+      groupMask(0)
+   {}
 
    /*
    * Set all data members to null default values. 

@@ -51,6 +51,9 @@ namespace DdMd
       if (className == "DdMdConfigIo_NoMolecule") {
          ptr = new DdMdConfigIo(*simulationPtr_, false);
       } else 
+      if (className == "DdMdConfigIo_Molecule") {
+         ptr = new DdMdConfigIo(*simulationPtr_, true);
+      } else 
       if (className == "DdMdOrderedConfigIo") {
          bool hasMolecules;
          if (Atom::hasAtomContext()) {

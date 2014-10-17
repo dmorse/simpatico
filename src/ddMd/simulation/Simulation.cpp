@@ -57,6 +57,7 @@
 #include <util/misc/Memory.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/misc/Timer.h>
+#include <util/misc/Bit.h>
 #include <util/misc/initStatic.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
@@ -1401,6 +1402,9 @@ namespace DdMd
                dihedralPotential().set(paramName, typeId, value);
             } else
             #endif
+            if (command == "SET_GROUP") {
+               setGroup(inBuffer);
+            } else
             if (command == "FINISH") {
                // Terminate loop over commands.
                readNext = false;
@@ -2143,6 +2147,62 @@ namespace DdMd
          delete configIoPtr_;
       }
       configIoPtr_ = ptr;
+   }
+
+   // --- Group Management ---------------------------------------------
+   
+   /*
+   * Return true if this Simulation is valid, or throw an Exception.
+   */
+   void Simulation::setGroup(std::stringstream& inBuffer)
+   {
+      // Precondition
+      if (!Atom::hasAtomContext()) {
+         UTIL_THROW("AtomContext is not enabled");
+      }
+
+      // Read groupId and create a corresponding bit mask
+      unsigned int groupId;
+      inBuffer >> groupId;
+      Bit bit(groupId);
+
+      // Read the group style
+      std::string groupStyle;
+      inBuffer >> groupStyle;
+
+      AtomIterator iter;
+      if (groupStyle == "delete") {
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            bit.clear(iter->context().groupMask);
+         }
+      } else 
+      if (groupStyle == "all") {
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            bit.set(iter->context().groupMask);
+         }
+      } else 
+      if (groupStyle == "atomType") {
+         int typeId;
+         inBuffer >> typeId;
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            if (iter->typeId() == typeId) {
+               bit.set(iter->context().groupMask);
+            }
+         }
+      } else
+      if (groupStyle == "species") {
+         int speciesId;
+         inBuffer >> speciesId;
+         for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
+            if (iter->context().speciesId == speciesId) {
+               bit.set(iter->context().groupMask);
+            }
+         }
+      } else {
+         std::string msg = "SET_GROUP command with unknown group style ";
+         msg += groupStyle;
+         UTIL_THROW(msg.c_str());
+      }
    }
 
    // --- Validation ---------------------------------------------------

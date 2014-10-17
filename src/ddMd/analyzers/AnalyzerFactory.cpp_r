@@ -32,6 +32,7 @@
 
 // Trajectory Writer Analyzers
 #include "DdMdTrajectoryWriter.h"
+#include "DdMdGroupTrajectoryWriter.h"
 #include "LammpsDumpWriter.h"
 
 namespace DdMd
@@ -105,10 +106,13 @@ namespace DdMd
       } else
       if (className == "StressAutoCorrelation") {
          ptr = new StressAutoCorrelation(simulation());
-      }
+      } else
       if (className == "DdMdTrajectoryWriter") {
          ptr = new DdMdTrajectoryWriter(simulation());
-      }
+      } else
+      if (className == "DdMdGroupTrajectoryWriter") {
+         ptr = new DdMdGroupTrajectoryWriter(simulation());
+      } else
       if (className == "LammpsDumpWriter") {
          ptr = new LammpsDumpWriter(simulation());
       }
