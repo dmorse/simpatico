@@ -8,6 +8,7 @@ Simulation{
   }
   nAtomType           2
   nBondType           1
+  hasAtomContext      1
   atomTypes           A    1.0
                       B    1.0
   AtomStorage{
@@ -62,7 +63,21 @@ Simulation{
      LogEnergy{
         interval  1000
      }
- 
+
+     DdMdTrajectoryWriter{
+        interval        2000
+        outputFileName  trajectory
+     } 
+
+     DdMdGroupTrajectoryWriter{
+        interval        2000
+        outputFileName  trajectory.0
+        groupId         0 
+     } 
+
+  }
+}
+
      OutputEnergy{
         interval        1000
         outputFileName  energy
@@ -72,9 +87,6 @@ Simulation{
         interval        1000
         outputFileName  pressure
      }
-
-  }
-}
 
      WriteConfig{
         interval          2000
