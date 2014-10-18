@@ -8,7 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-namespace DdMd{
+namespace DdMd
+{
+
    /**
    * Descriptor for context of an Atom within a molecule and species.
    *
@@ -41,16 +43,6 @@ namespace DdMd{
       int atomId;
 
       /**
-      * Bit mask indicating what atom groups this atom belongs to.
-      *
-      * This unsigned int is a bit mask in which individual bits
-      * can be set, unset and queries using the Util:Bitt class.
-      * Each bit is set if this atom belongs to a corresponding
-      * group of atoms.
-      */
-      unsigned int groupMask;
-
-      /**
       * Default constructor.
       */
       AtomContext();
@@ -69,8 +61,7 @@ namespace DdMd{
    AtomContext::AtomContext()
     : speciesId(-1),
       moleculeId(-1),
-      atomId(-1),
-      groupMask(0)
+      atomId(-1)
    {}
 
    /*
@@ -81,7 +72,6 @@ namespace DdMd{
       speciesId = -1;
       moleculeId = -1;
       atomId = -1;
-      groupMask = 0;
    }
 
 }

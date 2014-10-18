@@ -8,7 +8,6 @@ Simulation{
   }
   nAtomType           2
   nBondType           1
-  hasAtomContext      1
   atomTypes           A    1.0
                       B    1.0
   AtomStorage{
@@ -85,3 +84,4 @@ Simulation{
 
   nAngleType         0
   hasExternal        0
+  hasAtomContext     1

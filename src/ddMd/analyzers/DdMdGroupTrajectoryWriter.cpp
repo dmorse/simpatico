@@ -46,6 +46,24 @@ namespace DdMd
       read<unsigned int>(in, "groupId", groupId_);
    }
 
+   /*
+   * Load internal state from an archive.
+   */
+   void DdMdGroupTrajectoryWriter::loadParameters(Serializable::IArchive &ar)
+   {
+      TrajectoryWriter::loadParameters(ar);
+      loadParameter<unsigned int>(ar, "groupId", groupId_);
+   }
+
+   /*
+   * Save internal state to output archive.
+   */
+   void DdMdGroupTrajectoryWriter::save(Serializable::OArchive& ar)
+   {
+      TrajectoryWriter::save(ar);
+      ar << groupId_;
+   }
+
    void DdMdGroupTrajectoryWriter::writeHeader(std::ofstream &file)
    {
       if (domain().isMaster()) {  
@@ -56,7 +74,7 @@ namespace DdMd
          Atom* atomPtr = atomCollector().nextPtr();
          nAtom_ = 0;
          while (atomPtr) {
-            if (bit.isSet(atomPtr->context().groupMask)) {
+            if (bit.isSet(atomPtr->groups())) {
                ++nAtom_;
             }
             atomPtr = atomCollector().nextPtr();
@@ -87,7 +105,7 @@ namespace DdMd
          atomCollector().setup();
          Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
-            if (bit.isSet(atomPtr->context().groupMask)) {
+            if (bit.isSet(atomPtr->groups())) {
                id = atomPtr->id();
                ar << id;
                //file << id << std::endl;

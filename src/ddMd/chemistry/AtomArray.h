@@ -85,22 +85,27 @@ namespace DdMd
       /**
       * C-array of Atom velocities.
       */
-      Vector*  velocities_;
+      Vector* velocities_;
 
       /**
       * C-array of Atom Mask objects.
       */
-      Mask*  masks_;
+      Mask* masks_;
 
       /**
       * C-array of communication Plan data.
       */
-      Plan*  plans_; 
+      Plan* plans_; 
 
       /**
       * C-array Atom global ids (tags).
       */
-      int*  ids_;
+      int* ids_;
+
+      /**
+      * C-array of bit maps for atom groups.
+      */
+      unsigned int* groups_;
 
       /**
       * C-array of Atom velocities.

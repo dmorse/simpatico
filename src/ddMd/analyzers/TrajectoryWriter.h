@@ -186,9 +186,6 @@ namespace DdMd
       // Output file stream
       std::ofstream outputFile_;
 
-      /// Number of configurations dumped thus far (first dump is zero).
-      long nSample_;
-   
       /// Has readParam been called?
       long isInitialized_;
   

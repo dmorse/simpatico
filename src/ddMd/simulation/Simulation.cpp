@@ -2156,10 +2156,6 @@ namespace DdMd
    */
    void Simulation::setGroup(std::stringstream& inBuffer)
    {
-      // Precondition
-      if (!Atom::hasAtomContext()) {
-         UTIL_THROW("AtomContext is not enabled");
-      }
 
       // Read groupId and create a corresponding bit mask
       unsigned int groupId;
@@ -2173,12 +2169,12 @@ namespace DdMd
       AtomIterator iter;
       if (groupStyle == "delete") {
          for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
-            bit.clear(iter->context().groupMask);
+            bit.clear(iter->groups());
          }
       } else 
       if (groupStyle == "all") {
          for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
-            bit.set(iter->context().groupMask);
+            bit.set(iter->groups());
          }
       } else 
       if (groupStyle == "atomType") {
@@ -2186,16 +2182,19 @@ namespace DdMd
          inBuffer >> typeId;
          for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
             if (iter->typeId() == typeId) {
-               bit.set(iter->context().groupMask);
+               bit.set(iter->groups());
             }
          }
       } else
       if (groupStyle == "species") {
+         if (!Atom::hasAtomContext()) {
+            UTIL_THROW("AtomContext is not enabled");
+         }
          int speciesId;
          inBuffer >> speciesId;
          for (atomStorage_.begin(iter) ; iter.notEnd(); ++iter) {
             if (iter->context().speciesId == speciesId) {
-               bit.set(iter->context().groupMask);
+               bit.set(iter->groups());
             }
          }
       } else {

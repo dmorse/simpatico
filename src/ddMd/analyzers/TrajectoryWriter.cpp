@@ -25,7 +25,6 @@ namespace DdMd
    */
    TrajectoryWriter::TrajectoryWriter(Simulation& simulation, bool isBinary)
     : Analyzer(simulation),
-      nSample_(0),
       isInitialized_(false),
       isBinary_(isBinary),
       domainPtr_(0),
@@ -74,10 +73,6 @@ namespace DdMd
    {
       loadInterval(ar);
       loadOutputFileName(ar);
-
-      MpiLoader<Serializable::IArchive> loader(*this, ar);
-      loader.load(nSample_);
-
       isInitialized_ = true;
    }
 
@@ -88,7 +83,6 @@ namespace DdMd
    {
       saveInterval(ar);
       saveOutputFileName(ar);
-      ar << nSample_;
    }
 
    /*
@@ -115,7 +109,6 @@ namespace DdMd
    {
       if (isAtInterval(iStep))  {
          writeFrame(outputFile_, iStep);
-         ++nSample_;
       }
    }
 
@@ -124,7 +117,6 @@ namespace DdMd
    */
    void TrajectoryWriter::clear()
    {
-      nSample_ = 0;
       if (outputFile_.is_open()) {
          outputFile_.close();
       }
