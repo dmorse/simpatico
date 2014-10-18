@@ -10,7 +10,7 @@ processing entire molecules, which is difficult to do in a parallel
 code because molecules can span multiple processors.
 
 ----------------------------------------------------------------------
-Proposal: Create a new name space, named SpAn (single processor
+Proposal: Create a new name space, named Tools (single processor
 analysis) for the classes used to construct this post-processor
 analysis program or programs.
 
@@ -34,7 +34,7 @@ use in a simulation and for use in a post-processor that makes it
 seem easier to simply define new version of these in a new namespace.
 
 --------------------------------------------------------------------
-Proposed Classes in SpAn:
+Proposed Classes in Tools:
 
    Atom          - analogous to DdMd::Atom
    Group         - analogous to DdMd::Group
@@ -47,12 +47,12 @@ Proposed Classes in SpAn:
 
    We may consider adding potentials later, but can start with this.
 --------------------------------------------------------------------
-SpAn::Atom:
+Tools::Atom:
 
    Similar to DdMd::Atom, but without pseudo-members. All members
    are real members of the object. 
 --------------------------------------------------------------------
-SpAn::Group<N>
+Tools::Group<N>
 
    Similar to DdMd::Group<N>, but stores only atom ids, rather than
    pointers to atoms. Atoms will be accessible by id. 

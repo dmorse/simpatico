@@ -13,7 +13,7 @@ The following list explains the contents of the subdirectories of the root simpa
      inter/   - Inter namespace
      mcMd/    - McMd namespace
      ddMd/    - DdMd namespace
-     spAn/    - SpAn namespace
+     tools/    - Tools namespace
      modules/ - modules for specific applications
      test/    - unit test framework
   bld/        - directories for object (*.o) files and libraries

@@ -1,6 +1,6 @@
 Goal: 
 
-Add data structures that are accessible from a SpAn::Configuration that 
+Add data structures that are accessible from a Tools::Configuration that 
 allow access of atoms via the identifier speciesId, moleculeId, atomId 
 that is stored in a DdMd::AtomContext.
 
@@ -15,7 +15,7 @@ information. This means, specifically, that the data structures involving
 species and molecules should be created after all atoms and groups are read 
 from file. 
 
-2) Code in the SpAn namespace should not depend on any code or preprocessor
+2) Code in the Tools namespace should not depend on any code or preprocessor
 macros defined in the DdMd namespace, though it does depend on Util and 
 Inter namespace. The code for processing molecules and species should thus 
 always be compiled, rather than being conditionally compiled under the 
@@ -51,7 +51,7 @@ AtomContext info accordingly? This should be considered for later addition,
 but not included in the initial version.
 
 ---------------------------------------------------------------------------
-Proposed additions to SpAn::Configuration class:
+Proposed additions to Tools::Configuration class:
 
 class Configuration 
 {

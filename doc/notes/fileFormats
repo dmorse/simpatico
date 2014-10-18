@@ -98,7 +98,8 @@ Lammps:
 
         VMD can read atom, custom, dcd xtc and zyz files.
  
-        The lammps styles can write either one file per snapshot, if the * character appears         in the file name, or one big file, if no such character apppears. This is not 
+        The lammps styles can write either one file per snapshot, if the * character appears         
+        in the file name, or one big file, if no such character apppears. This is not 
         available for dcd and xtc files.
 
    ----------
