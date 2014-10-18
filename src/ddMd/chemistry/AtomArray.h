@@ -98,19 +98,19 @@ namespace DdMd
       Plan* plans_; 
 
       /**
-      * C-array Atom global ids (tags).
+      * C-array of Atom global ids (tags).
       */
       int* ids_;
 
       /**
-      * C-array of bit maps for atom groups.
+      * C-array of bit fields for groups that each Atom belongs to.
       */
       unsigned int* groups_;
 
       /**
-      * C-array of Atom velocities.
+      * C-array of AtomContext structs, one per atom.
       */
-      AtomContext*  contexts_;
+      AtomContext* contexts_;
 
       /**
       * Copy ctor (prohibited - private and not implemented).

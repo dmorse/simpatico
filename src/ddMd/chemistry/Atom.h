@@ -163,6 +163,8 @@ namespace DdMd
       /**
       * Get the AtomContext struct by non-const reference.
       *
+      * Throws and Exception if atom context data is disabled.
+      *
       * A DdMd::AtomContext struct contains public members speciesId,
       * moleculeId and atomId that identify the species of molecule
       * to which this atom belongs, the index of the molecule within
@@ -171,13 +173,15 @@ namespace DdMd
       AtomContext& context();
 
       /**
-      * Get groups bit map by non-const reference.
+      * Get groups bit field by non-const reference.
       *
-      * The unsigned int groups is used as a bit map, in which bit number
-      * i=0,...,31 is set true/1 if this atom belongs to group i, and is
-      * false/0 if this atom does not belong to group i. By default, all 
-      * bits are clear, giving groups == 0. Individual bits can be set,
-      * cleared or queried using an instance of the Util::Bit class. 
+      * The unsigned int groups is used as a bit field in which bit 
+      * number i (with i=0 the least signficant bit), is set true/1 
+      * if this atom belongs to group i, and is false/0 if this atom 
+      * of not belong to group i. By default, all bits are clear.
+      *
+      * Individual bits may be set, unset and queried using an 
+      * instance of class Util::Bit.
       */
       unsigned int& groups();
 
@@ -227,17 +231,23 @@ namespace DdMd
       const Mask& mask() const;
 
       /**
-      * Get communication plan (const reference).
+      * Get communication plan by const reference.
       */
       const Plan& plan() const;
 
       /**
       * Get the AtomContext struct by const reference.
+      *
+      * Throws an Exception if atom context data is disabled.
+      *
+      * \sa AtomContext& context() non-const accessor for
       */
       const AtomContext& context() const;
 
       /**
-      * Get groups bit map. 
+      * Get bit field of groups to which this atom belongs.
+      *
+      * \sa Atom::groups() non-const accessor.
       */
       unsigned int groups() const;
 

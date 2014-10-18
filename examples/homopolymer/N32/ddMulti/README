@@ -3,7 +3,7 @@ processors to each system.
 
 Usage:
 
-Run simulation of two independent systems:
+Run simulation of two independent systems on 8 processors:
 
     mpirun -np 8 ddSim -s 2 -p param -c commands
 
