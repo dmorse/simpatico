@@ -1,5 +1,5 @@
 # ==============================================================================
-.PHONY: mcMd mcMd-mpi ddMd spAn clean veryclean
+.PHONY: mcMd mcMd-mpi ddMd tools clean veryclean
 
 # Serial versions of mdSim and mcSim MD and MC programs (MPI disabled)
 mcMd: 
@@ -23,11 +23,11 @@ ddMd:
 	cd ddMd; $(MAKE) all
 
 # Single-processor analysis program (MPI disabled)
-spAn:
+tools:
 	./configure -m0
 	cd util; $(MAKE) all
 	cd inter; $(MAKE) all
-	cd spAn; $(MAKE) all
+	cd tools; $(MAKE) all
 
 # Remove object (*.o), dependency (*.d) and library (*.a) files
 clean:
@@ -35,7 +35,7 @@ clean:
 	cd inter; $(MAKE) clean
 	cd mcMd; $(MAKE) clean
 	cd ddMd; $(MAKE) clean
-	cd spAn; $(MAKE) clean
+	cd tools; $(MAKE) clean
 
 # Remove all automatically generated files, return to as-distributed state
 veryclean:
@@ -43,18 +43,18 @@ veryclean:
 	cd inter; $(MAKE) veryclean
 	cd mcMd; $(MAKE) veryclean
 	cd ddMd; $(MAKE) veryclean
-	cd spAn; $(MAKE) veryclean
+	cd tools; $(MAKE) veryclean
 ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f inter/user/sources.mk
 	rm -f mcMd/user/sources.mk
 	rm -f ddMd/user/sources.mk
-	rm -f spAn/user/sources.mk
+	rm -f tools/user/sources.mk
 endif
 	rm -f util/config.mk
 	rm -f inter/config.mk
 	rm -f mcMd/config.mk
 	rm -f ddMd/config.mk
-	rm -f spAn/config.mk
+	rm -f tools/config.mk
 	rm -f config.mk
 
 # ==============================================================================

@@ -1,6 +1,6 @@
 include src/config.mk
 # ==============================================================================
-.PHONY: all mcMd mcMd-mpi ddMd spAn \
+.PHONY: all mcMd mcMd-mpi ddMd tools \
         test-serial test-parallel \
         clean-serial clean-parallel clean clean-bin veryclean \
         html clean-html
@@ -12,7 +12,7 @@ all:
 	cd bld/serial; $(MAKE) mcMd
 	cd bld/parallel; $(MAKE) ddMd
 	cd bld/parallel; $(MAKE) mcMd-mpi
-	cd bld/serial; $(MAKE) spAn
+	cd bld/serial; $(MAKE) tools
 
 # Build serial mcSim and mdSim MC and MD programs in bld/serial
 mcMd:
@@ -27,8 +27,8 @@ ddMd:
 	cd bld/parallel; $(MAKE) ddMd
 
 # Build single-processor analysis program in bld/serial
-spAn:
-	cd bld/serial; $(MAKE) spAn
+tools:
+	cd bld/serial; $(MAKE) tools
 
 # ==============================================================================
 # Test targets
@@ -37,11 +37,11 @@ test-serial:
 	@cd bld/serial/util/tests; $(MAKE) all; $(MAKE) run
 	@cd bld/serial/inter/tests; $(MAKE) all; $(MAKE) run
 	@cd bld/serial/mcMd/tests; $(MAKE) all; $(MAKE) run
-	@cd bld/serial/spAn/tests; $(MAKE) all; $(MAKE) run
+	@cd bld/serial/tools/tests; $(MAKE) all; $(MAKE) run
 	@cat bld/serial/util/tests/count > count
 	@cat bld/serial/inter/tests/count >> count
 	@cat bld/serial/mcMd/tests/count >> count
-	@cat bld/serial/spAn/tests/count >> count
+	@cat bld/serial/tools/tests/count >> count
 	@cat count
 	@rm -f count
 
@@ -69,12 +69,13 @@ clean-bin:
 	-rm -f $(BIN_DIR)/mcSim*
 	-rm -f $(BIN_DIR)/mdSim*
 	-rm -f $(BIN_DIR)/ddSim*
+	-rm -f $(BIN_DIR)/mdPp*
  
 veryclean:
-	cd bld/serial; $(MAKE) veryclean; rm -f makefile configure
-	cd bld/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile spAn/makefile
-	cd bld/parallel; $(MAKE) veryclean; rm -f makefile configure
-	cd bld/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile  spAn/makefile
+	cd bld/serial; $(MAKE) veryclean; rm -f makefile configure config.mk
+	cd bld/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile tools/makefile
+	cd bld/parallel; $(MAKE) veryclean; rm -f makefile configure config.mk
+	cd bld/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile tools/makefile
 	cd doc; $(MAKE) clean
 	$(MAKE) clean-bin
 	cd src; $(MAKE) veryclean

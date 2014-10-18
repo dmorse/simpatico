@@ -1,0 +1,55 @@
+#ifndef TOOLS_CONFIG_READER_FACTORY_CPP
+#define TOOLS_CONFIG_READER_FACTORY_CPP
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "ConfigReaderFactory.h"  
+
+// Subclasses of ConfigReader 
+#include "DdMdConfigReader.h"
+#include "HoomdConfigReader.h"
+
+namespace Tools
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor
+   */
+   ConfigReaderFactory::ConfigReaderFactory(Configuration& configuration)
+    : configurationPtr_(&configuration)
+   {}
+
+   /* 
+   * Return a pointer to a instance of ConfigReader subclass className.
+   */
+   ConfigReader* ConfigReaderFactory::factory(const std::string &className) const
+   {
+      ConfigReader *ptr = 0;
+
+      // Try subfactories first.
+      ptr = trySubfactories(className);
+      if (ptr) return ptr;
+
+      if (className == "DdMdConfigReader") {
+         ptr = new DdMdConfigReader(*configurationPtr_);
+      } else 
+      if (className == "DdMdConfigReader_Molecule") {
+         bool hasMolecules = true;
+         ptr = new DdMdConfigReader(*configurationPtr_, hasMolecules);
+      } else 
+      if (className == "HoomdConfigReader") {
+         ptr = new HoomdConfigReader(*configurationPtr_);
+      }
+ 
+      return ptr;
+   }
+
+}
+#endif
