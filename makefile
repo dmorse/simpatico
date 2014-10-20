@@ -77,9 +77,11 @@ veryclean:
 	cd bld/serial; rm -f util/makefile inter/makefile 
 	cd bld/serial; rm -f mcMd/makefile ddMd/makefile tools/makefile
 	cd bld/parallel; $(MAKE) veryclean; rm -f makefile configure config.mk
-	cd bld/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile tools/makefile
+	cd bld/parallel; rm -f util/makefile inter/makefile 
+	cd bld/parallel; rm -f mcMd/makefile ddMd/makefile tools/makefile
 	$(MAKE) clean-bin
 	-rm -f $(BIN_DIR)/makeDep
+	-rm -f scripts/python/*.pyc
 	cd doc; $(MAKE) clean
 	cd src; $(MAKE) veryclean
 
