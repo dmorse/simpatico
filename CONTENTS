@@ -6,7 +6,7 @@ bld/            build directories, to hold files generated during compilation
   serial/       build directory for serial programs
   parallel/     build directory for parallel programs
 bin/            location for installing executables
-tools/          tools for manipulating input and output files
+scripts/        utilities in languages other than C++
   bin/          bash script tools
   python/       python tools
   mathematica/  mathematica tools

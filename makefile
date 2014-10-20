@@ -70,14 +70,17 @@ clean-bin:
 	-rm -f $(BIN_DIR)/mdSim*
 	-rm -f $(BIN_DIR)/ddSim*
 	-rm -f $(BIN_DIR)/mdPp*
+	-rm -f $(BIN_DIR)/*Maker*
  
 veryclean:
 	cd bld/serial; $(MAKE) veryclean; rm -f makefile configure config.mk
-	cd bld/serial; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile tools/makefile
+	cd bld/serial; rm -f util/makefile inter/makefile 
+	cd bld/serial; rm -f mcMd/makefile ddMd/makefile tools/makefile
 	cd bld/parallel; $(MAKE) veryclean; rm -f makefile configure config.mk
 	cd bld/parallel; rm -f util/makefile inter/makefile mcMd/makefile ddMd/makefile tools/makefile
-	cd doc; $(MAKE) clean
 	$(MAKE) clean-bin
+	-rm -f $(BIN_DIR)/makeDep
+	cd doc; $(MAKE) clean
 	cd src; $(MAKE) veryclean
 
 # =========================================================================

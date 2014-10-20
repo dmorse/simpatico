@@ -33,6 +33,9 @@ sed -e "s|=PWD|=$PWD|" -e "s|=OWD|src|" src/config.mk_r > src/config.mk
 sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/serial|" src/config.mk_r > bld/serial/config.mk
 sed -e "s|=PWD|=$PWD|" -e "s|=OWD|bld/parallel|" src/config.mk_r > bld/parallel/config.mk
 
+# Copy the makeDep dependency-maker script
+cp scripts/python/makeDep bin/
+
 # Namespace config.mk in src/ directory (for in-source builds)
 cp  src/util/config.mk_r src/util/config.mk
 cp  src/inter/config.mk_r src/inter/config.mk

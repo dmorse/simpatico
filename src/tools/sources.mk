@@ -5,6 +5,7 @@ include $(SRC_DIR)/tools/trajectory/sources.mk
 include $(SRC_DIR)/tools/neighbor/sources.mk
 include $(SRC_DIR)/tools/processor/sources.mk
 include $(SRC_DIR)/tools/analyzers/sources.mk
+include $(SRC_DIR)/tools/generators/sources.mk
 include $(SRC_DIR)/tools/user/sources.mk
 
 tools_= \
@@ -15,6 +16,7 @@ tools_= \
     $(tools_neighbor_) \
     $(tools_processor_) \
     $(tools_analyzers_) \
+    $(tools_generators_) \
     $(tools_user_) 
 
 # Create lists of source (*.cpp) and object (*.o) files
