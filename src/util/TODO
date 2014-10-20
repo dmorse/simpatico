@@ -1,15 +1,9 @@
 FileMaster
 ----------
 
-- Allow opening of all files with arbitrary modes
-
-- Provide methods that just provide paths, so that users can
-  open files separately, if desired.
-
-- Clean up repetitive code by providing generic methods to
-  open input and output files with error checking, then use
-  generic open and path functions inside more specialized
-  methods.
+- Allow input prefix and output prefix to be set by functions,
+  to allow them to be set from the command line, and expect them
+  from parameter file only if not already set. 
 
 Boundary classes - non-orthogonal
 ---------------------------------
@@ -28,5 +22,5 @@ Boundary classes - deformation
 
 - Add void deform(Deformation& deformation) method.
 
-- Add DEFORM command to ddSim command script.
+- Add DEFORM_BOUNDARY command to ddSim command script.
 
