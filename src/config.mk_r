@@ -129,7 +129,7 @@ MPI_LIB=mpicxx
 # namespace-level directories. In each of these, the basic pattern is
 #
 # %.o:%.cpp
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(CPPDEFS) -c -o $@ $<
+#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c -o $@ $<
 #
 # The variable $(CPPDEFS), which contains a list of C preprocessor
 # macro definitions, is not defined in this file. Instead, it is assigned 
