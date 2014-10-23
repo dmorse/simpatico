@@ -17,25 +17,38 @@ include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/tools/sources.mk
 
 #-----------------------------------------------------------------------
-# Variable definition
+# Executable program targets
 
-# MD postprocessor program location
-MDPP=$(BLD_DIR)/tools/mdPp
+# MD postprocessor --------------------------------
+mdPp=$(BLD_DIR)/tools/mdPp
+
+$(mdPp_BIN): $(mdPp).o $(LIBS)
+	$(CXX) $(LDFLAGS) -o $(mdPp_BIN) $(mdPp).o $(LIBS)
+
+mdPp:
+	$(MAKE) $(mdPp_BIN)
+
+-include $(mdPp).d
+
+# ChainMaker --------------------------------------
+
+ChainMaker=$(BLD_DIR)/tools/generators/ChainMaker
+ChainMaker_BIN=$(BIN_DIR)/chainMaker
+
+$(ChainMaker_BIN): $(ChainMaker).o $(LIBS)
+	$(CXX) $(LDFLAGS) -o $(ChainMaker_BIN) $(ChainMaker).o $(LIBS)
+
+-include $(ChainMaker).d
 
 #-----------------------------------------------------------------------
 # Main targets
 
-all: $(tools_OBJS) $(tools_LIB) $(MDPP).o $(MDPP_EXE)
-
-$(MDPP_EXE): $(MDPP).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(MDPP_EXE) $(MDPP).o $(LIBS)
-
-mdPp:
-	$(MAKE) $(MDPP_EXE)
+all: $(tools_LIB) $(mdPp_BIN) $(ChainMaker_BIN)
 
 clean:
 	rm -f $(tools_OBJS) $(tools_OBJS:.o=.d) $(tools_LIB)
-	rm -f $(MDPP).o $(MDPP).d
+	rm -f $(mdPp).o $(mdPp).d
+	rm -f $(ChainMaker).o $(ChainMaker).d
 	cd tests; $(MAKE) clean
 	rm -f *.o */*.o 
 	rm -f *.d */*.d 
@@ -51,10 +64,9 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 endif
 
 #-----------------------------------------------------------------------
-# Include dependency files
+# Include class dependency files
  
 -include $(util_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
 -include $(tools_OBJS:.o=.d)
--include $(MDPP).d
 

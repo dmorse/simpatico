@@ -7,7 +7,7 @@
 #   - A variable $(TOOLS_SUFFIX) which is added as a suffix to the name of
 #     the tools library and (by default) the main executables. 
 #
-#   - Name $(TOOLS_LIB) and $(DDSIM_EXE) of the DdMd library and 
+#   - Name $(TOOLS_LIB) and $(mdPp_BIN) of the DdMd library and 
 #     executable files.
 #
 # This file is included by every makefile in the tools directory. 
@@ -57,5 +57,5 @@ tools_LIB=$(BLD_DIR)/tools/lib$(tools_LIBNAME).a
 # BIN_DIR is defined in src/config.mk.
 
 # Path to serial MD postprocessor (mdPp) program
-MDPP_EXE=$(BIN_DIR)/mdPp
+mdPp_BIN=$(BIN_DIR)/mdPp
 #-----------------------------------------------------------------------

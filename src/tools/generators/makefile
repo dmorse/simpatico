@@ -9,29 +9,22 @@ include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/tools/sources.mk
 
-PROGS=$(BIN_DIR)/ChainMaker\
-      $(BIN_DIR)/AtomicMaker\
-      $(BIN_DIR)/RingMaker
+# -- Targets for programs
 
-all: $(tools_generators_OBJS) $(PROGS)
+ChainMaker=$(BLD_DIR)/tools/generators/ChainMaker
+ChainMaker_BIN=$(BIN_DIR)/chainMaker
+
+-include $(tools_OBJS:.o=.d)
+-include $(ChainMaker).d
+
+$(ChainMaker_BIN): $(ChainMaker).o $(LIBS)
+	$(CXX) $(LDFLAGS) -o $(ChainMaker_BIN) $(ChainMaker).o $(LIBS)
+
+all: $(ChainMaker_BIN) 
 
 clean:
-	rm -f $(tools_generators_OBJS) $(tools_generators_OBJS:.o=.d)
+	rm -f $(ChainMaker).o $(ChainMaker).d
 
 clean-deps:
-	rm -f $(tools_generators_OBJS:.o=.d)
-
-ChainMaker=$(BLD_DIR)/tools/generators/chainMaker/ChainMaker
-$(BIN_DIR)/ChainMaker: $(ChainMaker).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(BIN_DIR)/ChainMaker $(ChainMaker).o $(LIBS)
-
-AtomicMaker=$(BLD_DIR)/tools/generators/atomicMaker/AtomicMaker
-$(BIN_DIR)/AtomicMaker: $(AtomicMaker).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(BIN_DIR)/AtomicMaker $(AtomicMaker).o $(LIBS)
-
-RingMaker=$(BLD_DIR)/tools/generators/rings/RingMaker
-$(BIN_DIR)/RingMaker: $(RingMaker).o $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(BIN_DIR)/RingMaker $(RingMaker).o $(LIBS)
-
--include $(tools_generators_OBJS:.o=.d)
+	rm -f $(ChainMaker).d
 
