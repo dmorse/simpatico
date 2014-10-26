@@ -18,7 +18,7 @@ run: $(util_tests_OBJS) $(BLD_DIR)/$(TEST)
 clean:
 	rm -f $(util_tests_OBJS) $(util_tests_OBJS:.o=.d)
 	rm -f $(BLD_DIR)/$(TEST) 
-	rm -f dummy log count
+	rm -f dummy log count xdr
 
 $(BLD_DIR)/$(TEST): $(BLD_DIR)/$(TEST).o $(util_LIB)
 

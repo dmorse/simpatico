@@ -42,12 +42,15 @@ test-serial:
 	@cat bld/serial/inter/tests/count >> count
 	@cat bld/serial/mcMd/tests/count >> count
 	@cat bld/serial/tools/tests/count >> count
+	@echo " "
+	@echo "Summary"
 	@cat count
 	@rm -f count
 
 test-parallel:
 	cd bld/parallel/ddMd/tests; $(MAKE) all; $(MAKE) run
 	@cat bld/parallel/ddMd/tests/count >> count
+	@echo " "
 	@cat count
 	@rm -f count
 
@@ -59,6 +62,11 @@ clean-serial:
 
 clean-parallel:
 	cd bld/parallel; $(MAKE) clean
+
+clean-tests:
+	cd src/; $(MAKE) clean-tests
+	cd bld/serial; $(MAKE) clean-tests
+	cd bld/parallel; $(MAKE) clean-tests
 
 clean:
 	cd src; $(MAKE) clean

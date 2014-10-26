@@ -34,8 +34,16 @@ clean:
 	cd util; $(MAKE) clean
 	cd inter; $(MAKE) clean
 	cd mcMd; $(MAKE) clean
-	cd ddMd; $(MAKE) clean
 	cd tools; $(MAKE) clean
+	cd ddMd; $(MAKE) clean
+
+# Clean unit tests
+clean-tests:
+	cd util/tests; $(MAKE) clean
+	cd inter/tests; $(MAKE) clean
+	cd mcMd/tests; $(MAKE) clean
+	cd tools/tests; $(MAKE) clean
+	cd ddMd/tests; $(MAKE) clean
 
 # Remove all automatically generated files, return to as-distributed state
 veryclean:
