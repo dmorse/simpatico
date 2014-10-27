@@ -22,6 +22,7 @@ run: $(mcMd_tests_OBJS) $(BLD_DIR)/$(TEST)
 clean:
 	-rm -f $(mcMd_tests_OBJS) $(BLD_DIR)/$(TEST) $(mcMd_tests_OBJS:.o=.d)
 	-rm -f *.cfg log count
+	cd $(SRC_DIR)/mcMd/tests; $(MAKE) clean-outputs
 
 -include $(mcMd_tests_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)

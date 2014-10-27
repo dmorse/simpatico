@@ -33,6 +33,14 @@ clean:
 	rm -f */*.o */*/*.o 
 	rm -f */*.d */*/*.d
 
+clean-outputs:
+	rm -f log count dummy xdr
+	cd accumulators/unit; $(MAKE) clean-outputs
+	cd archives; $(MAKE) clean-outputs
+	cd containers; $(MAKE) clean-outputs
+	cd param/serial; $(MAKE) clean-outputs
+	cd random; $(MAKE) clean-outputs
+
 -include $(util_tests_OBJS:.o=.d)
 -include $(util_OBJS:.o=.d)
 

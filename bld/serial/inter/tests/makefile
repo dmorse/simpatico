@@ -20,6 +20,7 @@ run: $(inter_tests_OBJS) $(BLD_DIR)/$(TEST)
 clean:
 	rm -f $(inter_tests_OBJS) $(BLD_DIR)/$(TEST) $(inter_tests_OBJS:.o=.d)
 	rm -f log count
+	cd $(SRC_DIR)/inter/tests; $(MAKE) clean-outputs
 
 -include $(inter_tests_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)

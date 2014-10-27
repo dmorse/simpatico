@@ -32,6 +32,12 @@ clean:
 	cd simulation; $(MAKE) clean
 	cd species; $(MAKE) clean
 
+clean-outputs:
+	rm -f *.cfg log count
+	cd chemistry; $(MAKE) clean-outputs
+	cd mcSimulation; $(MAKE) clean-outputs
+	cd mdSimulation; $(MAKE) clean-outputs
+
 -include $(mcMd_tests_OBJS:.o=.d)
 -include $(mcMd_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)

@@ -25,6 +25,10 @@ clean:
 	cd angle; $(MAKE) clean
 	cd dihedral; $(MAKE) clean
 
+clean-outputs:
+	rm -f log count
+	cd pair; $(MAKE) clean-outputs
+
 $(BLD_DIR)/$(TEST): $(BLD_DIR)/$(TEST).o $(LIBS)
 
 -include $(inter_tests_OBJS:.o=.d)
