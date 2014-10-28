@@ -5,8 +5,8 @@
 #include "storage/AtomStorageTest.h"
 #include "storage/ConfigurationTest.h"
 #include "processor/ProcessorTest.h"
-#include "config/DdMdConfigReaderTest.h"
 #include "neighbor/CellTest.h"
+#include "config/DdMdConfigReaderTest.h"
 
 #include <test/CompositeTestRunner.h>
 

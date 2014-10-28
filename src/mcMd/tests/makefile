@@ -11,7 +11,7 @@ include $(SRC_DIR)/mcMd/tests/sources.mk
 
 TEST=mcMd/tests/Test
 
-all: $(mcMd_tests_OBJS)
+all: $(mcMd_tests_OBJS) $(BLD_DIR)/$(TEST)
 
 run: $(mcMd_tests_OBJS)
 	$(BLD_DIR)/$(TEST) $(SRC_DIR)/mcMd/tests/ > log
@@ -24,6 +24,7 @@ clean:
 	rm -f $(mcMd_tests_OBJS:.o=.d)
 	rm -f $(mcMd_tests_OBJS:.o=)
 	rm -f *.cfg log count
+ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd chemistry; $(MAKE) clean
 	cd mcSimulation; $(MAKE) clean
 	cd mdSimulation; $(MAKE) clean
@@ -31,9 +32,11 @@ clean:
 	cd neighbor; $(MAKE) clean
 	cd simulation; $(MAKE) clean
 	cd species; $(MAKE) clean
+else
+	cd $(SRC_DIR)/mcMd/tests; $(MAKE) clean-outputs
+endif
 
 clean-outputs:
-	rm -f *.cfg log count
 	cd chemistry; $(MAKE) clean-outputs
 	cd mcSimulation; $(MAKE) clean-outputs
 	cd mdSimulation; $(MAKE) clean-outputs

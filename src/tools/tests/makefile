@@ -12,7 +12,7 @@ include $(SRC_DIR)/tools/tests/sources.mk
 
 TEST=tools/tests/Test
 
-all: $(tools_tests_OBJS)
+all: $(tools_tests_OBJS) $(BLD_DIR)/$(TEST)
 
 run: $(tools_tests_OBJS) $(BLD_DIR)/$(TEST)
 	$(BLD_DIR)/$(TEST) $(SRC_DIR)/tools/tests/ > log
@@ -21,22 +21,27 @@ run: $(tools_tests_OBJS) $(BLD_DIR)/$(TEST)
 	@cat count
 
 clean:
-	rm -f $(tools_tests_OBJS) $(tools_tests_OBJS:.o=.d)
-	rm -f $(BLD_DIR)/$(TEST)
+	rm -f $(tools_tests_OBJS) 
+	rm -f $(tools_tests_OBJS:.o=.d)
+	rm -f $(tools_tests_OBJS:.o=)
+	rm -f log count
+ifeq ($(BLD_DIR),$(SRC_DIR))
 	cd chemistry; $(MAKE) clean
 	cd config; $(MAKE) clean
 	cd neighbor; $(MAKE) clean
 	cd storage; $(MAKE) clean
 	cd processor; $(MAKE) clean
-	$(MAKE) clean-outputs
+	rm -f */*.o */*.d
+#	$(MAKE) clean-outputs
+#else
+#	cd $(SRC_DIR)/tools/tests; $(MAKE) clean outputs
+endif
 
-clean-outputs:
-	rm -f log count
-	#cd chemistry; $(MAKE) clean-outputs
+#clean-outputs:
+#	cd chemistry; $(MAKE) clean-outputs
         
 -include $(tools_tests_OBJS:.o=.d)
 -include $(tools_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
 -include $(util_OBJS:.o=.d)
-
 

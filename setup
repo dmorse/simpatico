@@ -54,29 +54,41 @@ cp  src/tools/config.mk_r bld/serial/tools/config.mk
 cp  src/util/config.mk_r bld/parallel/util/config.mk
 cp  src/inter/config.mk_r bld/parallel/inter/config.mk
 cp  src/mcMd/config.mk_r bld/parallel/mcMd/config.mk
-cp  src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
 cp  src/tools/config.mk_r bld/parallel/tools/config.mk
+cp  src/ddMd/config.mk_r bld/parallel/ddMd/config.mk
 
-# Copy namespace level makefiles from src/ to bld/serial and bld/parallel 
+# Copy makefiles from src/ to bld/serial
 cp  src/makefile bld/serial/makefile
 cp  src/util/makefile bld/serial/util/makefile
 cp  src/inter/makefile bld/serial/inter/makefile
 cp  src/mcMd/makefile bld/serial/mcMd/makefile
-cp  src/ddMd/makefile bld/serial/ddMd/makefile
 cp  src/tools/makefile bld/serial/tools/makefile
+cp  src/ddMd/makefile bld/serial/ddMd/makefile
+cp  src/util/tests/makefile bld/serial/util/tests/makefile
+cp  src/inter/tests/makefile bld/serial/inter/tests/makefile
+cp  src/mcMd/tests/makefile bld/serial/mcMd/tests/makefile
+cp  src/tools/tests/makefile bld/serial/tools/tests/makefile
+cp  src/ddMd/tests/makefile bld/serial/ddMd/tests/makefile
+
+# Copy makefiles from src/ to bld/parallel
 cp  src/makefile bld/parallel/makefile
 cp  src/util/makefile bld/parallel/util/makefile
 cp  src/inter/makefile bld/parallel/inter/makefile
 cp  src/mcMd/makefile bld/parallel/mcMd/makefile
 cp  src/ddMd/makefile bld/parallel/ddMd/makefile
 cp  src/tools/makefile bld/parallel/tools/makefile
+cp  src/util/tests/makefile bld/parallel/util/tests/makefile
+cp  src/inter/tests/makefile bld/parallel/inter/tests/makefile
+cp  src/mcMd/tests/makefile bld/parallel/mcMd/tests/makefile
+cp  src/tools/tests/makefile bld/parallel/tools/tests/makefile
+cp  src/ddMd/tests/makefile bld/parallel/ddMd/tests/makefile
 
 # Copy repository versions of sources.mk files in user directories.
 # These list user-contributed classes.
 cp  src/inter/user/sources.mk_r src/inter/user/sources.mk
 cp  src/mcMd/user/sources.mk_r src/mcMd/user/sources.mk
-cp  src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
 cp  src/tools/user/sources.mk_r src/tools/user/sources.mk
+cp  src/ddMd/user/sources.mk_r src/ddMd/user/sources.mk
 
 # ------------------------------------------------------------------------
 # Copy repository version of Factory implementation files to user versions.
