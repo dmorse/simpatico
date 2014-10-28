@@ -19,18 +19,19 @@
 * Options:
 *
 *     -e 
-*      Enable echoing of the param file (no argument)
+*
+*      Enable echoing of the param file to std::out (no argument)
 *
 *     -p paramFileName
-*      Specify parameter file name as an argument
+*
+*      Specify name of a parameter file name as argument
 *
 *     -p commandFileName
-*      Specify command file name as an argument
+*
+*      Specify the name of a command file name as the argument
 *
 * If option -p is not set, so that no command file name is given,
 * commands are read from standard input (i.e., from the keyboard).
-*
-* \ingroup Tools_Module
 */
 
 int main(int argc, char** argv)

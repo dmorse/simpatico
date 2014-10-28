@@ -672,7 +672,7 @@ INPUT                  = ../src/util \
                          ../src/inter \
                          ../src/mcMd \
                          ../src/ddMd \
-                         ../src/spAn \
+                         ../src/tools \
                          ../src/test \
                          ../src/programs.mod \
                          manual

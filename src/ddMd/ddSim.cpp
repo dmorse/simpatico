@@ -24,7 +24,8 @@ using namespace Util;
 *                       [-p paramFile] [-r restartFile] [-c command] 
 *
 *    Here, P is the number of processors and paramFile is a parameter 
-*    file that is read from standard input.
+*    file that is read from standard input. The -p and -r options are
+*    incompatible: It is illegal to invoke both. 
 *
 * Options:
 *
