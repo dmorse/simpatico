@@ -111,8 +111,8 @@ namespace McMd
       /// Array of new atom type ids for all atoms in molecule.
       DArray<int> newTypeIds_;
 
-      /// Array of old atom type ids for all atoms in molecule.
-      DArray<int> oldTypeIds_;
+      /// Array of bool variables: 1 if atom type changes, 0 if not.
+      DArray<int> isFlipped_;
 
       /// Array of ids for atoms that change type.
       DSArray<int> flipAtomIds_;

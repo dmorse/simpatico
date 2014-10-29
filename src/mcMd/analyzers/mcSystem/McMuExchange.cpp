@@ -47,7 +47,6 @@ namespace McMd
       isInitialized_(false)
    {}
 
-
    /*
    * Read parameters and initialize.
    */
@@ -86,8 +85,9 @@ namespace McMd
    void McMuExchange::setup()
    {
       nMolecule_ = system().nMolecule(speciesId_);
+      assert(nMolecule_ <= accumulators_.capacity());
       for (int iMol = 0; iMol < nMolecule_; ++iMol) {
-         accumulators_[iMol].clear(); 
+         accumulators_[iMol].clear();
       }
    }
 
@@ -114,9 +114,10 @@ namespace McMd
          Atom* ptr2 = 0;    // Pointer to neighboring atom
          Mask* maskPtr = 0; // Mask of flipped atom
          double rsq, dE, beta, boltzmann;
-         int j, k, nNeighbor;
+         int j, k, nNeighbor, nFlip;
          int i1, i2, id1, id2, t1, t2, t1New, iMol;
          beta = system().energyEnsemble().beta();
+         nFlip = flipAtomIds_.size();
 
          // Loop over molecules in species
          iMol = 0;
@@ -126,7 +127,7 @@ namespace McMd
             ptr0 = &molIter->atom(0);
 
             // Loop over flipped atoms
-            for (j=0; flipAtomIds_.size(); ++j) {
+            for (j = 0; j < nFlip; ++j) {
                i1 = flipAtomIds_[j];
                t1New = newTypeIds_[i1];
                ptr1 = &molIter->atom(i1);
@@ -171,6 +172,7 @@ namespace McMd
                   }
                } // end loop over neighbors
             } // end loop over flipped atoms
+
             boltzmann = exp(-beta*dE);
             accumulators_[iMol].sample(boltzmann);
             ++iMol;
@@ -188,27 +190,30 @@ namespace McMd
       writeParam(outputFile_);
       outputFile_.close();
 
-      fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
       double ave, err;
       double sumAve = 0.0;
       double sumAveSq = 0.0;
-      double sumErr = 0.0;
+      double sumErrSq = 0.0;
       for (int iMol=0; iMol < nMolecule_; ++iMol) {
-         //accumulators_[iMol].output(outputFile_);
          ave = accumulators_[iMol].average();
          err = accumulators_[iMol].blockingError();
-         sumErr += err;
          sumAve += ave;
          sumAveSq += ave*ave;
+         sumErrSq += err*err;
       }
       double rMol = double(nMolecule_);
       ave = sumAve/rMol;
-      err = sumErr/rMol;
-      double var = sumAveSq/rMol - ave*ave;
-      double dev = sqrt(var);
-      std::cout << "Average = " << ave << " +- " << dev/sqrt(rMol) << std::endl;
-      std::cout << "Std Dev = " << dev << std::endl;
-      std::cout << "Est Dev = " << err << std::endl;
+      err = sqrt(sumErrSq/rMol);
+      double dev = sqrt((sumAveSq/rMol) - ave*ave);
+
+      fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
+      outputFile_ << "Average = " << ave << " +- " << dev/sqrt(rMol) << std::endl;
+      outputFile_ << "Error via molecule variance    = " << dev/sqrt(rMol) << std::endl;
+      outputFile_ << "Error via time series analysis = " << err/sqrt(rMol) << std::endl;
+      outputFile_ << std::endl;
+      //for (int iMol=0; iMol < nMolecule_; ++iMol) {
+      //   accumulators_[iMol].output(outputFile_);
+      //}
       outputFile_.close();
    }
 
