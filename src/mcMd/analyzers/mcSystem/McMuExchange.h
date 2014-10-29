@@ -51,7 +51,7 @@ namespace McMd
       virtual void readParameters(std::istream& in);
 
       /** 
-      * Clear accumulator.
+      * Clear accumulators.
       */
       virtual void setup();
    
@@ -105,8 +105,8 @@ namespace McMd
       /// Output file stream
       std::ofstream outputFile_;
 
-      /// Average object - statistical accumulator
-      Average  accumulator_;
+      /// Array of accumulators - one per molecule
+      DArray<Average> accumulators_;
 
       /// Array of new atom type ids for all atoms in molecule.
       DArray<int> newTypeIds_;
@@ -122,6 +122,9 @@ namespace McMd
 
       /// Actual number of trial positions for each regrown atom.
       int  speciesId_; 
+
+      /// Number of molecules in this species.
+      int  nMolecule_; 
 
       /// Actual number of trial positions for each regrown atom.
       int  nAtom_; 
@@ -155,8 +158,8 @@ namespace McMd
       if (!isInitialized_) {
          UTIL_THROW("Error: Object not initialized.");
       }
-
-      ar & accumulator_;
+      ar & nMolecule_;
+      ar & accumulators_;
    }
 
 }

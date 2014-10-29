@@ -39,9 +39,8 @@ namespace McMd
       simulationPtr_(&system.simulation()),
       boundaryPtr_(&system.boundary()),
       outputFile_(),
-      accumulator_(),
+      accumulators_(),
       newTypeIds_(),
-      oldTypeIds_(),
       flipAtomIds_(),
       speciesId_(-1),
       nAtom_(-1),
@@ -64,34 +63,33 @@ namespace McMd
       if (speciesId_ >= system().simulation().nSpecies()) {
          UTIL_THROW("speciesId >= nSpecies");
       }
-      Species* speciesPtr = &(system().simulation().species(speciesId_));
+      Species* speciesPtr;
+      speciesPtr = &(system().simulation().species(speciesId_));
       nAtom_ = speciesPtr->nAtom();
       newTypeIds_.allocate(nAtom_);
       readDArray<int>(in, "newTypeIds", newTypeIds_, nAtom_);
 
-      oldTypeIds_.allocate(nAtom_);
       flipAtomIds_.allocate(nAtom_);
       for (int i = 0; i < nAtom_; ++i) {
-         oldTypeIds_[i] = speciesPtr->atomTypeId(i);
-         if (newTypeIds_[i] != oldTypeIds_[i]) {
+         if (newTypeIds_[i] != speciesPtr->atomTypeId(i)) {
             flipAtomIds_.append(i);
          }
       }
-      flipAtomIds_.allocate(nAtom_);
-
-      // If nSamplePerBlock != 0, open an output file for block averages.
-      if (accumulator_.nSamplePerBlock()) {
-         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
-      }
+      accumulators_.allocate(speciesPtr->capacity());
 
       isInitialized_ = true;
    }
 
    /*
-   * Clear accumulator.
+   * Clear accumulators.
    */
    void McMuExchange::setup()
-   {  accumulator_.clear(); }
+   {
+      nMolecule_ = system().nMolecule(speciesId_);
+      for (int iMol = 0; iMol < nMolecule_; ++iMol) {
+         accumulators_[iMol].clear(); 
+      }
+   }
 
    /*
    * Evaluate change in energy, add Boltzmann factor to accumulator.
@@ -99,57 +97,81 @@ namespace McMd
    void McMuExchange::sample(long iStep)
    {
       if (isAtInterval(iStep))  {
+
+         // Precondition
          if (!system().energyEnsemble().isIsothermal()) {
             UTIL_THROW("EnergyEnsemble is not isothermal");
          }
 
-         //Species& species = simulation().species(speciesId_);
          McPairPotential& potential = system().pairPotential();
          const CellList& cellList = potential.cellList();
-         Atom* ptr1 = 0;
-         Atom* ptr2 = 0;
-         Mask* maskPtr = 0;
+         System::MoleculeIterator molIter;
+         Atom* ptr0 = 0;    // Pointer to first atom in molecule
+         Atom* ptr1 = 0;    // Pointer to flipped atom
+         Atom* ptr2 = 0;    // Pointer to neighbor
+         Mask* maskPtr = 0; // Mask of flipped atom
          double beta = system().energyEnsemble().beta();
          double rsq, dE, boltzmann;
-         int i, j, k, nNeighbor;
-         int id1, id2, t1, t2, t1New;
+         int j, k, nNeighbor;
+         int i1, i2, id1, id2, t1, t2, t1New, iMol;
 
-
-         System::MoleculeIterator molIter;
-         Molecule::AtomIterator atomIter;
+         // Loop over molecules in species
+         iMol = 0;
          system().begin(speciesId_, molIter); 
          for ( ; molIter.notEnd(); ++molIter) {
             dE = 0.0;
+            ptr0 = &molIter->atom(0);
+
+            // Loop over flipped atoms
             for (j=0; flipAtomIds_.size(); ++j) {
-               i = flipAtomIds_[j];
-               t1New = newTypeIds_[i];
-               ptr1 = &molIter->atom(i);
-               t1 = ptr1->typeId();
+               i1 = flipAtomIds_[j];
+               t1New = newTypeIds_[i1];
+               ptr1 = &molIter->atom(i1);
                id1 = ptr1->id();
+               t1 = ptr1->typeId();
                maskPtr = &(ptr1->mask());
+
+               // Loop over neighboring atoms
                cellList.getNeighbors(ptr1->position(), neighbors_);
                nNeighbor = neighbors_.size();
                for (k = 0; k < nNeighbor; ++k) {
                   ptr2 = neighbors_[k];
-                  t2 = ptr2->typeId();
                   id2 = ptr2->id();
 
                   // Check if atoms are identical
-                  if (id1 != id2) {
+                  if (id2 != id1) {
           
                      // Check if pair is masked
                      if (!maskPtr->isMasked(*ptr2)) {
+
                         rsq = boundary().distanceSq(ptr1->position(), 
                                                     ptr2->position());
-                        dE += potential.energy(rsq, t1New, t2);
-                        dE -= potential.energy(rsq, t1, t2);
+                        t2 = ptr2->typeId();
+                        if (&(ptr1->molecule()) != &(ptr2->molecule())) {
+
+                           // Intermolecular atom pair 
+                           dE -= potential.energy(rsq, t1, t2);
+                           dE += potential.energy(rsq, t1New, t2);
+
+                        } else {
+
+                           // Intramolecular atom pair 
+                           if (id2 > id1) {
+                              dE -= potential.energy(rsq, t1, t2);
+                              i2 = (int)(ptr2 - ptr0);
+                              t2 = newTypeIds_[i2];
+                              dE += potential.energy(rsq, t1New, t2);
+                           }
+
+                        }
                      }
                   }
-               }
-            }
+               } // end loop over neighbors
+            } // end loop over flipped atoms
             boltzmann = exp(-beta*dE);
-            accumulator_.sample(boltzmann);
-         }
+            accumulators_[iMol].sample(boltzmann);
+            ++iMol;
+         } // end loop over molecules
       }
    }
 
@@ -158,19 +180,15 @@ namespace McMd
    */
    void McMuExchange::output()
    {
-      #if 0
-      // If outputFile_ was used to write block averages, close it.
-      if (accumulator_.nSamplePerBlock()) {
-         outputFile_.close();
-      }
-      #endif
 
       fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
       writeParam(outputFile_);
       outputFile_.close();
 
       fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
-      accumulator_.output(outputFile_);
+      for (int iMol=0; iMol < nMolecule_; ++iMol) {
+         accumulators_[iMol].output(outputFile_);
+      }
       outputFile_.close();
    }
 
