@@ -98,9 +98,12 @@ namespace McMd
    {
       if (isAtInterval(iStep))  {
 
-         // Precondition
+         // Preconditions
          if (!system().energyEnsemble().isIsothermal()) {
             UTIL_THROW("EnergyEnsemble is not isothermal");
+         }
+         if (nMolecule_ != system().nMolecule(speciesId_)) {
+            UTIL_THROW("nMolecule has changed since setup");
          }
 
          McPairPotential& potential = system().pairPotential();
@@ -108,12 +111,12 @@ namespace McMd
          System::MoleculeIterator molIter;
          Atom* ptr0 = 0;    // Pointer to first atom in molecule
          Atom* ptr1 = 0;    // Pointer to flipped atom
-         Atom* ptr2 = 0;    // Pointer to neighbor
+         Atom* ptr2 = 0;    // Pointer to neighboring atom
          Mask* maskPtr = 0; // Mask of flipped atom
-         double beta = system().energyEnsemble().beta();
-         double rsq, dE, boltzmann;
+         double rsq, dE, beta, boltzmann;
          int j, k, nNeighbor;
          int i1, i2, id1, id2, t1, t2, t1New, iMol;
+         beta = system().energyEnsemble().beta();
 
          // Loop over molecules in species
          iMol = 0;
@@ -186,9 +189,26 @@ namespace McMd
       outputFile_.close();
 
       fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
+      double ave, err;
+      double sumAve = 0.0;
+      double sumAveSq = 0.0;
+      double sumErr = 0.0;
       for (int iMol=0; iMol < nMolecule_; ++iMol) {
-         accumulators_[iMol].output(outputFile_);
+         //accumulators_[iMol].output(outputFile_);
+         ave = accumulators_[iMol].average();
+         err = accumulators_[iMol].blockingError();
+         sumErr += err;
+         sumAve += ave;
+         sumAveSq += ave*ave;
       }
+      double rMol = double(nMolecule_);
+      ave = sumAve/rMol;
+      err = sumErr/rMol;
+      double var = sumAveSq/rMol - ave*ave;
+      double dev = sqrt(var);
+      std::cout << "Average = " << ave << " +- " << dev/sqrt(rMol) << std::endl;
+      std::cout << "Std Dev = " << dev << std::endl;
+      std::cout << "Est Dev = " << err << std::endl;
       outputFile_.close();
    }
 
