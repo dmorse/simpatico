@@ -14,11 +14,13 @@
 
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
+#include <mcMd/neighbor/CellList.h>
 
 #include <mcMd/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/boundary/Boundary.h>
+#include <util/ensembles/EnergyEnsemble.h>
 #include <util/space/Vector.h>
 #include <util/global.h>
 
@@ -97,25 +99,57 @@ namespace McMd
    void McMuExchange::sample(long iStep)
    {
       if (isAtInterval(iStep))  {
+         if (!system().energyEnsemble().isIsothermal()) {
+            UTIL_THROW("EnergyEnsemble is not isothermal");
+         }
 
-         #if 0
-         Species* speciesPtr;
-         Molecule* molPtr;
-         Atom* atom1Ptr;
-         Atom* atom2Ptr;
+         //Species& species = simulation().species(speciesId_);
+         McPairPotential& potential = system().pairPotential();
+         const CellList& cellList = potential.cellList();
+         Atom* ptr1 = 0;
+         Atom* ptr2 = 0;
+         Mask* maskPtr = 0;
+         double beta = system().energyEnsemble().beta();
+         double rsq, dE, boltzmann;
+         int i, j, k, nNeighbor;
+         int id1, id2, t1, t2, t1New;
 
-         double beta = energyEnsemble().beta();
-         speciesPtr = &(simulation().species(speciesId_));
 
-         // Loop over molecules in species {
-         //   for (int j=0; flipAtomIds__.size(); ++j) {
-         //      i = flipAtomIds__[j];
-         //      Get neighbors from cell list.
-         //      Calculate old and new pair energies.
-         //   }
-         // } 
-         #endif
+         System::MoleculeIterator molIter;
+         Molecule::AtomIterator atomIter;
+         system().begin(speciesId_, molIter); 
+         for ( ; molIter.notEnd(); ++molIter) {
+            dE = 0.0;
+            for (j=0; flipAtomIds_.size(); ++j) {
+               i = flipAtomIds_[j];
+               t1New = newTypeIds_[i];
+               ptr1 = &molIter->atom(i);
+               t1 = ptr1->typeId();
+               id1 = ptr1->id();
+               maskPtr = &(ptr1->mask());
+               cellList.getNeighbors(ptr1->position(), neighbors_);
+               nNeighbor = neighbors_.size();
+               for (k = 0; k < nNeighbor; ++k) {
+                  ptr2 = neighbors_[k];
+                  t2 = ptr2->typeId();
+                  id2 = ptr2->id();
 
+                  // Check if atoms are identical
+                  if (id1 != id2) {
+          
+                     // Check if pair is masked
+                     if (!maskPtr->isMasked(*ptr2)) {
+                        rsq = boundary().distanceSq(ptr1->position(), 
+                                                    ptr2->position());
+                        dE += potential.energy(rsq, t1New, t2);
+                        dE -= potential.energy(rsq, t1, t2);
+                     }
+                  }
+               }
+            }
+            boltzmann = exp(-beta*dE);
+            accumulator_.sample(boltzmann);
+         }
       }
    }
 

@@ -117,6 +117,9 @@ namespace McMd
       /// Array of ids for atoms that change type.
       DSArray<int> flipAtomIds_;
 
+      /// Array to hold pointers to neighboring atoms.
+      CellList::NeighborArray neighbors_;
+
       /// Actual number of trial positions for each regrown atom.
       int  speciesId_; 
 
