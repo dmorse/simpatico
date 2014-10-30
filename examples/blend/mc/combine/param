@@ -1,6 +1,6 @@
 McSimulation{
   FileMaster{
-    inputPrefix                          in/
+    inputPrefix                       ../in/
     outputPrefix                        out/
   }
   nAtomType                              2
@@ -121,7 +121,7 @@ McSimulation{
     }
 
     ConfigWriter{
-      interval                         1000
+      interval                         2000
       outputFileName                 config.
     }
 
