@@ -41,11 +41,14 @@ namespace McMd
       outputFile_(),
       accumulators_(),
       newTypeIds_(),
+      isAtomFlipped_(),
       flipAtomIds_(),
       speciesId_(-1),
       nAtom_(-1),
       isInitialized_(false)
-   {}
+   {
+      setClassName("McMuExchange");
+   }
 
    /*
    * Read parameters and initialize.
@@ -69,9 +72,13 @@ namespace McMd
       readDArray<int>(in, "newTypeIds", newTypeIds_, nAtom_);
 
       flipAtomIds_.allocate(nAtom_);
+      isAtomFlipped_.allocate(nAtom_);
       for (int i = 0; i < nAtom_; ++i) {
          if (newTypeIds_[i] != speciesPtr->atomTypeId(i)) {
             flipAtomIds_.append(i);
+            isAtomFlipped_[i] = 1;
+         } else {
+            isAtomFlipped_[i] = 0;
          }
       }
       accumulators_.allocate(speciesPtr->capacity());
@@ -85,7 +92,12 @@ namespace McMd
    void McMuExchange::setup()
    {
       nMolecule_ = system().nMolecule(speciesId_);
-      assert(nMolecule_ <= accumulators_.capacity());
+      if (nMolecule_ > accumulators_.capacity()) {
+         UTIL_THROW("nMolecule > capacity");
+      }
+      if (nMolecule_ <= 0) {
+         UTIL_THROW("nMolecule <= 0");
+      }
       for (int iMol = 0; iMol < nMolecule_; ++iMol) {
          accumulators_[iMol].clear();
       }
@@ -165,6 +177,13 @@ namespace McMd
                               i2 = (int)(ptr2 - ptr0);
                               t2 = newTypeIds_[i2];
                               dE += potential.energy(rsq, t1New, t2);
+                           } else {
+                              i2 = (int)(ptr2 - ptr0);
+                              if (!isAtomFlipped_[i2]) {
+                                 dE -= potential.energy(rsq, t1, t2);
+                                 t2 = newTypeIds_[i2];
+                                 dE += potential.energy(rsq, t1New, t2);
+                              }
                            }
 
                         }
@@ -207,9 +226,12 @@ namespace McMd
       double dev = sqrt((sumAveSq/rMol) - ave*ave);
 
       fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
-      outputFile_ << "Average = " << ave << " +- " << dev/sqrt(rMol) << std::endl;
-      outputFile_ << "Error via molecule variance    = " << dev/sqrt(rMol) << std::endl;
-      outputFile_ << "Error via time series analysis = " << err/sqrt(rMol) << std::endl;
+      outputFile_ << "Average = " << ave << " +- " 
+                  << dev/sqrt(rMol) << std::endl;
+      outputFile_ << "Error via molecule variance    = " 
+                  << dev/sqrt(rMol) << std::endl;
+      outputFile_ << "Error via time series analysis = " 
+                  << err/sqrt(rMol) << std::endl;
       outputFile_ << std::endl;
       //for (int iMol=0; iMol < nMolecule_; ++iMol) {
       //   accumulators_[iMol].output(outputFile_);
@@ -221,13 +243,56 @@ namespace McMd
    * Save state to binary file archive.
    */
    void McMuExchange::save(Serializable::OArchive& ar)
-   {  ar & *this; }
+   {
+      if (!isInitialized_) {
+         UTIL_THROW("McMuExchange object not initialized"); 
+      }
+      ar << interval_;
+      ar << outputFileName_;
+      ar << speciesId_;
+      ar << nAtom_;
+      ar << newTypeIds_;
+      ar << nMolecule_;
+      for (int i = 0; i < nMolecule_; ++i) {
+         ar << accumulators_[i];
+      }
+   }
 
    /*
    * Load state from a binary file archive.
    */
-   void McMuExchange::load(Serializable::IArchive& ar)
-   { ar & *this; }
+   void McMuExchange::loadParameters(Serializable::IArchive& ar)
+   { 
+      loadInterval(ar);  
+      loadOutputFileName(ar);  
+      loadParameter(ar, "speciesId", speciesId_);
+      ar >> nAtom_;
+      Species* speciesPtr;
+      speciesPtr = &(system().simulation().species(speciesId_));
+      if (nAtom_ != speciesPtr->nAtom()) {
+         UTIL_THROW("Inconsistent values of nAtom on loading");
+      }
+      newTypeIds_.allocate(nAtom_);
+      loadDArray(ar, "newTypeIds", newTypeIds_, nAtom_);
+
+      flipAtomIds_.allocate(nAtom_);
+      isAtomFlipped_.allocate(nAtom_);
+      for (int i = 0; i < nAtom_; ++i) {
+         if (newTypeIds_[i] != speciesPtr->atomTypeId(i)) {
+            flipAtomIds_.append(i);
+            isAtomFlipped_[i] = 1;
+         } else {
+            isAtomFlipped_[i] = 0;
+         }
+      }
+      accumulators_.allocate(speciesPtr->capacity());
+
+      ar >> nMolecule_;
+      for (int i = 0; i < nMolecule_; ++i) {
+         ar >> accumulators_[i];
+      }
+      isInitialized_ = true;
+   }
 
 }
 #endif

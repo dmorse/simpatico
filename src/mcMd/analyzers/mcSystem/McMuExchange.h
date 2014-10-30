@@ -77,7 +77,7 @@ namespace McMd
       *
       * \param ar binary loading (input) archive.
       */
-      virtual void load(Serializable::IArchive& ar);
+      virtual void loadParameters(Serializable::IArchive& ar);
 
       /**
       * Serialize to/from an archive. 
@@ -111,8 +111,8 @@ namespace McMd
       /// Array of new atom type ids for all atoms in molecule.
       DArray<int> newTypeIds_;
 
-      /// Array of bool variables: 1 if atom type changes, 0 if not.
-      DArray<int> isFlipped_;
+      /// Array of boolean variables: 1 if atom type changes, 0 if not.
+      DArray<int> isAtomFlipped_;
 
       /// Array of ids for atoms that change type.
       DSArray<int> flipAtomIds_;
@@ -153,13 +153,17 @@ namespace McMd
    */
    template <class Archive>
    void McMuExchange::serialize(Archive& ar, 
-                                          const unsigned int version)
+                                const unsigned int version)
    {
-      if (!isInitialized_) {
-         UTIL_THROW("Error: Object not initialized.");
-      }
+      ar & interval_;
+      ar & outputFileName_;
+      ar & speciesId_;
+      ar & nAtom_;
+      ar & newTypeIds_;
       ar & nMolecule_;
-      ar & accumulators_;
+      for (int i = 0; i < nMolecule_; ++i) {
+         ar & accumulators_[i];
+      }
    }
 
 }

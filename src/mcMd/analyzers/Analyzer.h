@@ -248,7 +248,7 @@ namespace McMd
 
    // Method template
 
-   /**
+   /*
    * Serialize to/from an archive. 
    */
    template <class Archive>
