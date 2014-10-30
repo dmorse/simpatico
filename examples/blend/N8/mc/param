@@ -184,6 +184,20 @@ McSimulation{
       capacity                         1000
     }
 
+    McMuExchange{
+      interval                         1000
+      outputFileName           McMuExchange
+      speciesId                           0
+      newTypeIds                          1
+                                          1
+                                          1
+                                          1
+                                          1
+                                          1
+                                          1
+                                          1
+    }
+
   }
   saveInterval               20000
   saveFileName             restart
