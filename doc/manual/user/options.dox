@@ -119,14 +119,6 @@ The optional features are:
     <td> DDMD_MODIFIERS </td>
     <td> ddMd/config.mk </td>
   </tr>
-  <tr> 
-    <td> Molecules </td>
-    <td> -z </td>
-    <td> OFF </td>
-    <td> _z </td>
-    <td> DDMD_MOLECULES </td>
-    <td> ddMd/config.mk </td>
-  </tr>
 </table>
 
 

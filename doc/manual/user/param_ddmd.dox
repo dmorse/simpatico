@@ -78,7 +78,6 @@ Simulation{
   }
 }
 \endcode
-This differs substantially from the mdSim and mcSim param files show previously. The main Simulation block is associated with a DdMd::Simulation object.In a ddSim simulation, there is only one main object; There is no analog of the MdSystem or McSystem blocks that appear in the mdSim and mcSim param files. 
 
 In outline form, the format is
 \code
@@ -105,11 +104,11 @@ Simulation{
   AnalyzerManager{ ... }
 }
 \endcode
-The main Simulation{} block for a ddSim file is associated with a DdMd::Simulation object. There is no analog in a ddSim parameter file of the MdSystem or McSystem subblocks that appear in the mdSim and mcSim param files. 
+The main Simulation{} block in a ddSim simulation is associated with a DdMd::Simulation object. In a ddSim simulation, no distinction is made between a "Simulation" and a "System", and so there is no analog of the MdSystem or McSystem sub-blocks that appear in the mdSim and mcSim param files.
 
-Many parameters and parameter blocks in this format are similar to those in mcSim and mdSim parameter files. The nAtomType, nBondType, atomTypes, pairStyle, bondStyle, and maskedPairPolicy parameters all have the same meaning as the corresponding parameters in mcSim and mdSim parameter files. The FileMaster, Random, EnergyEnsemble, and BoundaryEnsemble blocks are all associated with classes defined in the Util namespace, and so have formats identical to corresponding blocks in mcSim and mdSim parameter files.
+Many parameters and parameter blocks in this format are similar to those in mcSim and mdSim parameter files. The variables nAtomType, atomTypes, maskedPairPolicy, pairStyle, nBondType, bondStyle all have meaning as the corresponding parameters in mcSim and mdSim parameter files. So do corresponding variables associated with angles (nAngleType and nAngleStyle) and dihedral (nDihedralGroup and dihedralStyle) that do not appear in this example. The FileMaster, Random, EnergyEnsemble, and BoundaryEnsemble blocks are all identical to corresponding blocks in mcSim and mdSim parameter files.
 
-The PairPotential and BondPotential blocks are associated with instances of DdMd::PairPotential and DdMd::BondPotential. These blocks take the same parameters as the MdPairPotential and BondPotential blocks of an mdSim simulation. The same pair and bond style strings can be used in ddSim, mdSim and mcSim simulation. Ifthe ddSim executable has been compiled with angle, dihedral, and/or external potentials enabled (by uncommenting defitions of INTER_ANGLE, INTER_DIHEDRAL, and/or INTER_EXTERNAL in inter/config.mk) then the PairPotential and BondPotential blocks must be followed by AnglePotential, DihedralPotential, and/or ExternalPotential blocks, as appropriate.
+The PairPotential and BondPotential blocks in this example are associated with instances of DdMd::PairPotential and DdMd::BondPotential, respectively These blocks take the same parameters as the MdPairPotential and BondPotential blocks of an mdSim simulation. The same pair and bond style strings are valid here as an mdSim or mcSim simulation. If the ddSim executable has been compiled with angle, dihedral, and/or external potentials enabled, and if one or more of these potentials has been enabled at run time by specifying nonzero values for nAngleType, nDihedralType or hasExternalPotential, then the PairPotential and BondPotential blocks must be followed by AnglePotential, DihedralPotential, and/or ExternalPotential blocks, as appropriate.
 
 The AnalyzerManager block is associated with an instance of DdMd::AnalyzerManager, and has a format similar to that of the corresponding block in a mdSim or mcSim parameter file. This block must contain a value for the baseInterval, followed by zero or more polymorphic blocks, each of which contains the parameter block for a subclass of DdMd::Analyzer. The number of analyzers that are provided for use on-the-fly during ddSim simulations is thus far much smaller than the number avaiable for mdSim and mcSim simulations. This is partly a result of lack of time, and partly because some analyzers that are easy to implement in single-processor simulations are more difficult to implement efficiently in a parallel simulation.
 

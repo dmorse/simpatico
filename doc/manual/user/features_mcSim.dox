@@ -54,11 +54,12 @@ McMove classes, see the \ref McMd_McMove_Module "McMove module".
   <li> \subpage mcMd_analyzer_McExternalEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McIntraBondStressAutoCorr_page </li>
   <li> \subpage mcMd_analyzer_McIntraBondTensorAutoCorr_page </li>
-  <li> \subpage mcMd_analyzer_McNVTChemicalPotential_page </li>
   <li> \subpage mcMd_analyzer_McPairEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_McPressureAverage_page </li>
   <li> \subpage mcMd_analyzer_McStressAutoCorrelation_page </li>
   <li> \subpage mcMd_analyzer_McVirialStressTensorAverage_page </li>
+  <li> \subpage mcMd_analyzer_McNVTChemicalPotential_page </li>
+  <li> \subpage mcMd_analyzer_McMuExchange_page </li>
 </ul>
  
 <BR>
