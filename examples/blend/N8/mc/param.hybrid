@@ -1,0 +1,129 @@
+McSimulation{
+  FileMaster{
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              2
+  nBondType                              1
+  atomTypes                    A       1.0
+                               B       1.0
+  maskedPairPolicy                MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                      50
+      nAtom                                  8
+      atomType                               0
+      bondType                               0
+    }
+
+    Homopolymer{
+      moleculeCapacity                      50
+      nAtom                                  8
+      atomType                               1
+      bondType                               0
+    }
+  }
+  Random{
+    seed                           13451892
+  }
+  McSystem{
+    pairStyle                        LJPair
+    bondStyle                  HarmonicBond
+    McPairPotential{
+      epsilon               1.000000000000e+00  1.300000000000e+00
+                            1.300000000000e+00  1.000000000000e+00
+      sigma                 1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      cutoff                1.122460000000e+00  1.122460000000e+00
+                            1.122460000000e+00  1.122460000000e+00
+      maxBoundary                 cubic  10.5 
+    }
+    BondPotential{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+    EnergyEnsemble{
+      type                  isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                  rigid
+    }
+  }
+  McMoveManager{
+
+    HybridMdMove{
+      probability           0.002000000000e+00
+      nStep                                 50
+      MdSystem{
+        MdPairPotential{
+          maxBoundary                 cubic  10.5 
+          PairList{
+            atomCapacity                        1000
+            pairCapacity                       10000
+            skin                  3.000000000000e-01
+          }
+        }
+        NveVvIntegrator{
+          dt                    7.000000000000e-03
+        }
+      }
+    }
+
+  }
+  AnalyzerManager{
+    baseInterval                           1
+
+    LogProgress{
+      interval                           100
+    }
+
+    McEnergyAverage{
+      interval                             1
+      outputFileName               energyAve
+      nSamplePerBlock                     10
+    }
+
+    McPairEnergyAverage{
+      interval                             1
+      outputFileName              pairEnergy
+      nSamplePerBlock                     10
+      selector                           inter  0  1
+    }
+ 
+    RadiusGyration{
+      interval                             1
+      outputFileName          RadiusGyration
+      nSamplePerBlock                     10
+      speciesId                            0
+    }
+
+    IntraPairAutoCorr{
+      interval                            1
+      outputFileName      IntraPairAutoCorr
+      speciesId                           0
+      atom1Id                             0
+      atom2Id                             7 
+      capacity                         1000
+    }
+
+    McMuExchange{
+      interval                            1
+      outputFileName           McMuExchange
+      speciesId                           0
+      newTypeIds                          1
+                                          1
+                                          1
+                                          1
+                                          1
+                                          1
+                                          1
+                                          1
+    }
+
+  }
+  saveInterval                1000
+  saveFileName             restart
+}
+
