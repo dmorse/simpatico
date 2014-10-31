@@ -55,22 +55,25 @@ namespace Tools
       read<int>(in, "capacity", capacity_);
 
       // Validate parameters
-      if (speciesId_ < 0)
+      if (speciesId_ < 0) {
          UTIL_THROW("Negative speciesId");
-      if (speciesId_ >= processor().nSpecies()) 
+      }
+      if (speciesId_ >= processor().nSpecies()) {
          UTIL_THROW("speciesId > nSpecies");
-      if (atomId_ < 0)
+      }
+      Species& species = processor().species(speciesId_);
+      if (atomId_ < 0) {
          UTIL_THROW("Negative atomId");
-      if (capacity_ <= 0)       
-         UTIL_THROW("Negative capacity");
-
-      Species* speciesPtr = &processor().species(speciesId_);
-
-      if (atomId_ >= speciesPtr->nAtom()) 
+      }
+      if (atomId_ >= species.nAtom()) {
          UTIL_THROW("atomId >= nAtom");
+      }
+      if (capacity_ <= 0) {
+         UTIL_THROW("Negative capacity");
+      }
 
       // Maximum possible number of molecules of this species
-      int speciesCapacity = speciesPtr->capacity();
+      int speciesCapacity = species.capacity();
 
       // Allocate local arrays
       truePositions_.allocate(speciesCapacity);
@@ -91,9 +94,11 @@ namespace Tools
       if (!isInitialized_) {
          UTIL_THROW("Error: object is not initialized");
       }
+      Species& species = processor().species(speciesId_);
+      Boundary& boundary = processor().boundary();
 
       // Set number of molecules of this species in the Processor. 
-      nMolecule_ = processor().species(speciesId_).size();
+      nMolecule_ = species.size();
       accumulator_.setNEnsemble(nMolecule_);
       accumulator_.clear();
 
@@ -103,10 +108,10 @@ namespace Tools
       Species::Iterator iter;
       int i = 0;
 
-      processor().species(speciesId_).begin(iter);
+      species.begin(iter);
       for ( ; iter.notEnd(); ++iter) {
          r = iter->atom(atomId_).position;
-         processor().boundary().shift(r);
+         boundary.shift(r);
          oldPositions_[i] = r;
          shifts_[i] = zero;
          ++i;
@@ -118,50 +123,51 @@ namespace Tools
    */
    void AtomMSD::sample(long iStep) 
    { 
-      if (!isAtInterval(iStep)) return;
-
-      // Confirm that nMolecule has remained constant, and nMolecule > 0.
-      if (nMolecule_ <= 0) {
-         UTIL_THROW("nMolecule <= 0");
-      }
-      if (nMolecule_ != processor().species(speciesId_).size()) {
-         UTIL_THROW("Number of molecules has changed.");
-      }
-
-      Vector r;
-      IntVector shift;
-      Vector lengths = processor().boundary().lengths();
-      int i, j;
-      Species::Iterator iter;
-
-      i = 0;
-      processor().species(speciesId_).begin(iter);
-      for ( ; iter.notEnd(); ++iter) {
-
-         r = iter->atom(atomId_).position;
-         processor().boundary().shift(r);
-
-         // Compare current r to previous position, oldPositions_[i]
-         processor().boundary().distanceSq(r, oldPositions_[i], shift);
-
-         // If this atom crossed a boundary, increment its shift vector
-         shifts_[i] += shift;
-
-         // Reconstruct true position
-         for (j = 0; j < Dimension; ++j) {
-            truePositions_[i][j] = r[j] + shifts_[i][j]*lengths[j];
+      if (isAtInterval(iStep)) {
+         Species&  species  = processor().species(speciesId_);
+         Boundary& boundary = processor().boundary();
+   
+         // Confirm that nMolecule is positive, and unchanged.
+         if (nMolecule_ <= 0) {
+            UTIL_THROW("nMolecule <= 0");
          }
-
-         // Store current position in box for comparison to next one
-         oldPositions_[i] = r;
-
-         ++i;  
+         if (nMolecule_ != species.size()) {
+            UTIL_THROW("Number of molecules has changed.");
+         }
+   
+         Vector r;
+         IntVector shift;
+         Vector lengths = boundary.lengths();
+         int i, j;
+         Species::Iterator iter;
+   
+         i = 0;
+         for (species.begin(iter); iter.notEnd(); ++iter) {
+   
+            r = iter->atom(atomId_).position;
+            boundary.shift(r);
+   
+            // Compare current r to previous position, oldPositions_[i]
+            boundary.distanceSq(r, oldPositions_[i], shift);
+   
+            // If a boundary was crossed, increment shift vector
+            shifts_[i] += shift;
+   
+            // Reconstruct true position
+            for (j = 0; j < Dimension; ++j) {
+               truePositions_[i][j] = r[j] + shifts_[i][j]*lengths[j];
+            }
+   
+            // Store current position in box for comparison to next one
+            oldPositions_[i] = r;
+   
+            ++i;  
+         }
+         accumulator_.sample(truePositions_);
       }
-      accumulator_.sample(truePositions_);
 
    }
 
-   #if 1
    /// Output results to file after simulation is completed.
    void AtomMSD::output() 
    {  
@@ -191,7 +197,6 @@ namespace Tools
       outputFile_.close();
 
    }
-   #endif
 
 }
 #endif 

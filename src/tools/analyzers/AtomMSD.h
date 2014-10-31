@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <tools/analyzers/Analyzer.h>            // base class template
+#include <tools/analyzers/Analyzer.h>           // base class template
 #include <util/accumulators/MeanSqDispArray.h>  // member template 
 #include <util/space/Vector.h>                  // member template parameter
 #include <util/containers/DArray.h>             // member template
@@ -19,7 +19,7 @@ namespace Tools
    using namespace Util;
 
    /**
-   * Mean-squared displacement of specific atom in molecules of specific species.
+   * Mean-squared displacement of specific atoms in specific species.
    *
    * \ingroup Tools_Analyzer_Module
    */
