@@ -1,6 +1,3 @@
-#ifndef MCMD_HOMOPOLYMER_CPP
-#define MCMD_HOMOPOLYMER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -164,4 +161,3 @@ namespace McMd
    #endif
  
 } 
-#endif

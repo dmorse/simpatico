@@ -1,6 +1,3 @@
-#ifndef MCMD_BLOCK_RADIUS_GYRATION_CPP
-#define MCMD_BLOCK_RADIUS_GYRATION_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -293,4 +290,3 @@ namespace McMd
    }
 
 }
-#endif 

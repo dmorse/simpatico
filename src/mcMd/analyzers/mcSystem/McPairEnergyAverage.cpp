@@ -1,7 +1,4 @@
 #ifndef INTER_NOPAIR
-#ifndef MCMD_MC_PAIR_ENERGY_AVERAGE_CPP
-#define MCMD_MC_PAIR_ENERGY_AVERAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -167,5 +164,4 @@ namespace McMd
    }
    
 }
-#endif
 #endif 

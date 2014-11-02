@@ -1,6 +1,3 @@
-#ifndef MCMD_CFB_REBRIDGE_BASE_CPP
-#define MCMD_CFB_REBRIDGE_BASE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -564,4 +561,3 @@ namespace McMd
    }
 
 }
-#endif

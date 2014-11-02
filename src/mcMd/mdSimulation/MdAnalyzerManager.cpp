@@ -1,6 +1,3 @@
-#ifndef MCMD_MD_ANALYZER_MANAGER_CPP
-#define MCMD_MD_ANALYZER_MANAGER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -40,4 +37,3 @@ namespace McMd
    {  return new MdAnalyzerFactory(*simulationPtr_, *systemPtr_); }
 
 }
-#endif

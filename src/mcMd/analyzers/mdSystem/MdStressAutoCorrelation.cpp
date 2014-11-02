@@ -1,6 +1,3 @@
-#ifndef MCMD_MD_STRESS_AUTOCORRELATION_CPP
-#define MCMD_MD_STRESS_AUTOCORRELATION_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -28,4 +25,3 @@ namespace McMd
    {}
 
 }
-#endif

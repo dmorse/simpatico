@@ -1,6 +1,3 @@
-#ifndef MCMD_HOMOPOLYMER_SEMI_GRAND_MOVE_CPP
-#define MCMD_HOMOPOLYMER_SEMI_GRAND_MOVE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -121,4 +118,3 @@ namespace McMd
    }
 
 }
-#endif

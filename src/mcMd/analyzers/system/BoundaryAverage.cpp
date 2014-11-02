@@ -1,6 +1,3 @@
-#ifndef MCMD_BOUNDARY_AVERAGE_CPP
-#define MCMD_BOUNDARY_AVERAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -137,5 +134,3 @@ namespace McMd
    }
 
 }
-
-#endif 

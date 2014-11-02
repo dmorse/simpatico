@@ -1,7 +1,3 @@
-#ifndef INTER_NOPAIR
-#ifndef MD_PAIR_INTERACTION
-#define MD_PAIR_INTERACTION
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -83,5 +79,3 @@ namespace McMd
    { return pairList_.isCurrent(boundary()); }
 
 }
-#endif
-#endif

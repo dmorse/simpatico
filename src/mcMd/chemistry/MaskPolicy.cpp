@@ -1,6 +1,3 @@
-#ifndef MCMD_MASK_POLICY_CPP
-#define MCMD_MASK_POLICY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -64,4 +61,3 @@ namespace McMd
    }
 
 }
-#endif

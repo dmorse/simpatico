@@ -1,6 +1,3 @@
-#ifndef MCMD_SPECIES_QUERIES_CPP
-#define MCMD_SPECIES_QUERIES_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -16,4 +13,3 @@ namespace McMd
    using namespace Util;
 
 } 
-#endif

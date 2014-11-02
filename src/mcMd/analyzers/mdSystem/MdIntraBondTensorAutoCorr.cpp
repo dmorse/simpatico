@@ -1,6 +1,3 @@
-#ifndef MCMD_MD_INTRA_BOND_TENSOR_AUTO_CORR_CPP
-#define MCMD_MD_INTRA_BOND_TENSOR_AUTO_CORR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -31,5 +28,3 @@ namespace McMd
    {}
 
 }
-#endif
-

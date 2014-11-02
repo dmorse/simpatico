@@ -1,6 +1,3 @@
-#ifndef MCMD_TEST_CPP
-#define MCMD_TEST_CPP
-
 /*
 * This program runs all unit tests in the mcMd directory.
 */
@@ -35,4 +32,3 @@ int main(int argc, char* argv[])
    runner.run();
 
 }
-#endif

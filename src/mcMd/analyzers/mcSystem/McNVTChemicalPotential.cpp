@@ -1,6 +1,3 @@
-#ifndef MCMD_MC_NVT_CHEMICAL_POTENTIAL_CPP
-#define MCMD_MC_NVT_CHEMICAL_POTENTIAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -531,4 +528,3 @@ namespace McMd
    }
 
 }
-#endif

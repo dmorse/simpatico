@@ -1,6 +1,3 @@
-#ifndef MCMD_MD_PRESSURE_AVERAGE_CPP
-#define MCMD_MD_PRESSURE_AVERAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -21,4 +18,3 @@ namespace McMd
    {  setClassName("MdPressureAverage"); }
 
 }
-#endif

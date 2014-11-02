@@ -1,6 +1,3 @@
-#ifndef MCMD_NPH_INTEGRATOR_CPP
-#define MCMD_NPH_INTEGRATOR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -362,4 +359,3 @@ namespace McMd
    }
    
 }
-#endif

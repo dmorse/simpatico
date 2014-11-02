@@ -1,6 +1,3 @@
-#ifndef MCMD_LINEAR_CPP
-#define MCMD_LINEAR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -286,4 +283,3 @@ namespace McMd
    } 
    
 }
-#endif

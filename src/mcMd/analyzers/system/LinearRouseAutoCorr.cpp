@@ -1,6 +1,3 @@
-#ifndef MCMD_LINEAR_ROUSE_AUTO_CORR_CPP
-#define MCMD_LINEAR_ROUSE_AUTO_CORR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -228,5 +225,3 @@ namespace McMd
 
 
 }
-
-#endif 

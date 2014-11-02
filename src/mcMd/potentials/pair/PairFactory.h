@@ -1,4 +1,3 @@
-#ifndef INTER_NOPAIR
 #ifndef MCMD_PAIR_FACTORY_H
 #define MCMD_PAIR_FACTORY_H
 
@@ -116,5 +115,4 @@ namespace McMd
    };
  
 }
-#endif
 #endif

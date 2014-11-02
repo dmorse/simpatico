@@ -1,6 +1,3 @@
-#ifndef MCMD_RDF_CPP
-#define MCMD_RDF_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -203,4 +200,3 @@ namespace McMd
    }
 
 }
-#endif

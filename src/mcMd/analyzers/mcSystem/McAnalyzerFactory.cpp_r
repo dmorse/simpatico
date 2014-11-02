@@ -1,6 +1,3 @@
-#ifndef MC_ANALYZER_FACTORY
-#define MC_ANALYZER_FACTORY
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -107,5 +104,3 @@ namespace McMd
    }
 
 }
-
-#endif

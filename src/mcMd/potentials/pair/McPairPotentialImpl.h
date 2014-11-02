@@ -1,4 +1,3 @@
-#ifndef INTER_NOPAIR
 #ifndef MCMD_MC_PAIR_INTERACTION_IMPL_H
 #define MCMD_MC_PAIR_INTERACTION_IMPL_H
 
@@ -527,5 +526,4 @@ namespace McMd
    {  return interaction().className(); }
 
 }
-#endif
 #endif

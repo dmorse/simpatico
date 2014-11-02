@@ -1,6 +1,3 @@
-#ifndef MCMD_ATOM_CPP
-#define MCMD_ATOM_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -137,4 +134,3 @@ namespace McMd
    {  moleculePtrs_[id_] = &molecule; }
 
 }
-#endif

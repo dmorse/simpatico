@@ -1,6 +1,3 @@
-#ifndef MCMD_TRAJECTORY_IO_CPP
-#define MCMD_TRAJECTORY_IO_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -87,4 +84,3 @@ namespace McMd
    }
 
 } 
-#endif

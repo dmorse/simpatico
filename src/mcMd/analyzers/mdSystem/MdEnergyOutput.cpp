@@ -1,6 +1,3 @@
-#ifndef MCMD_MD_ENERGY_OUTPUT_CPP
-#define MCMD_MD_ENERGY_OUTPUT_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -162,4 +159,3 @@ namespace McMd
       outputFile_.close();
    }
 }
-#endif 

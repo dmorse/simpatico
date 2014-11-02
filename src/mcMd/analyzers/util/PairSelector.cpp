@@ -1,5 +1,9 @@
-#ifndef MCMD_PAIR_SELECTOR_CPP
-#define MCMD_PAIR_SELECTOR_CPP
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, The Regents of the University of Minnesota
+* Distributed under the terms of the GNU General Public License.
+*/
 
 #include "PairSelector.h"
 #include <mcMd/chemistry/Atom.h>
@@ -140,7 +144,6 @@ namespace McMd
 } 
 
 #ifdef UTIL_MPI
-
 namespace Util
 {
 
@@ -177,6 +180,5 @@ namespace McMd
    }
 
 }
-#endif
+#endif // ifdef UTIL_MPI
 
-#endif

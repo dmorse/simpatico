@@ -1,6 +1,3 @@
-#ifndef MCMD_RING_TETRA_REBRIDGE_MOVE_CPP
-#define MCMD_RING_TETRA_REBRIDGE_MOVE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -294,4 +291,3 @@ namespace McMd
    }
    
 }
-#endif

@@ -1,6 +1,3 @@
-#ifndef MCMD_DIBLOCK_CPP
-#define MCMD_DIBLOCK_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -191,4 +188,3 @@ namespace McMd
    #endif
 
 } 
-#endif

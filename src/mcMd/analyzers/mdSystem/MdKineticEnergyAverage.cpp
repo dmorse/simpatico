@@ -1,6 +1,3 @@
-#ifndef MCMD_MD_KINETIC_ENERGY_AVERAGE_CPP
-#define MCMD_MD_KINETIC_ENERGY_AVERAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -107,4 +104,3 @@ namespace McMd
    }
 
 }
-#endif 

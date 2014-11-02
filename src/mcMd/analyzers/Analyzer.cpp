@@ -1,6 +1,3 @@
-#ifndef MCMD_ANALYZER_CPP
-#define MCMD_ANALYZER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -158,4 +155,3 @@ namespace McMd
    }
 
 }
-#endif

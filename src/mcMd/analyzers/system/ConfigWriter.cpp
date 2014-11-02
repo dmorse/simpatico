@@ -1,6 +1,3 @@
-#ifndef MCMD_CONFIG_WRITER_CPP
-#define MCMD_CONFIG_WRITER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -83,4 +80,3 @@ namespace McMd
    }
   
 }
-#endif // CONFIG_WRITER_CPP

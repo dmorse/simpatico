@@ -1,6 +1,3 @@
-#ifndef MCMD_BOND_LENGTH_DIST_CPP
-#define MCMD_BOND_LENGTH_DIST_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -138,4 +135,3 @@ namespace McMd
    }
 
 }
-#endif

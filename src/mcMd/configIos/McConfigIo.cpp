@@ -1,6 +1,3 @@
-#ifndef MCMD_MC_CONFIG_IO_CPP
-#define MCMD_MC_CONFIG_IO_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -45,4 +42,3 @@ namespace McMd
    {  out << atom.position() << std::endl; }
 
 } 
-#endif

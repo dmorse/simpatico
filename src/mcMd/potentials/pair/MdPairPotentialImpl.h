@@ -1,4 +1,3 @@
-#ifndef INTER_NOPAIR
 #ifndef MCMD_MD_PAIR_POTENTIAL_IMPL_H
 #define MCMD_MD_PAIR_POTENTIAL_IMPL_H
 
@@ -443,5 +442,4 @@ namespace McMd
    {  computeStressImpl(stress); }
 
 }
-#endif
 #endif

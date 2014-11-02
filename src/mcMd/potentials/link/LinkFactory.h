@@ -1,4 +1,3 @@
-#ifdef  MCMD_LINK
 #ifndef MCMD_LINK_FACTORY_H
 #define MCMD_LINK_FACTORY_H
 
@@ -48,5 +47,4 @@ namespace McMd
    };
   
 }
-#endif
 #endif

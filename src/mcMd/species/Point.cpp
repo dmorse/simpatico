@@ -1,6 +1,3 @@
-#ifndef MCMD_POINT_CPP
-#define MCMD_POINT_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -62,4 +59,3 @@ namespace McMd
    }
    
 } 
-#endif

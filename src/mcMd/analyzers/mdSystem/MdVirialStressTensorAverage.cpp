@@ -1,6 +1,3 @@
-#ifndef MD_VIRIAL_STRESSTENSOR_AVERAGE_CPP
-#define MD_VIRIAL_STRESSTENSOR_AVERAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -165,4 +162,3 @@ namespace McMd
    }
 
 }
-#endif  

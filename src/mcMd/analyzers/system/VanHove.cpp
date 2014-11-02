@@ -1,6 +1,3 @@
-#ifndef MCMD_VAN_HOVE_CPP
-#define MCMD_VAN_HOVE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -237,4 +234,3 @@ namespace McMd
    }
 
 }
-#endif

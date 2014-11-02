@@ -1,8 +1,5 @@
 #ifdef  MCMD_PERTURB
 #ifdef INTER_EXTERNAL
-#ifndef MCMD_MC_EXTERNAL_PERTURBATION_CPP
-#define MCMD_MC_EXTERNAL_PERTURBATION_CPP
-
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -128,6 +125,5 @@ namespace McMd
    }
 
 }
-#endif  
 #endif  // #ifndef INTER_EXTERNAL
 #endif  // #ifdef  MCMD_PERTURB

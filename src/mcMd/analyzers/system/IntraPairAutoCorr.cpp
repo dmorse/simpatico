@@ -1,6 +1,3 @@
-#ifndef MCMD_INTRA_PAIR_AUTO_CORR_CPP
-#define MCMD_INTRA_PAIR_AUTO_CORR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -207,4 +204,3 @@ namespace McMd
    }
 
 }
-#endif 

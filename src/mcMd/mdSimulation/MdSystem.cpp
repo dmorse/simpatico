@@ -1,6 +1,3 @@
-#ifndef MCMD_MD_SYSTEM_CPP
-#define MCMD_MD_SYSTEM_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -897,4 +894,3 @@ namespace McMd
    {  return new MdConfigIo(*this); }
 
 }
-#endif

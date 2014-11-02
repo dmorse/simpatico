@@ -1,6 +1,3 @@
-#ifndef MCMD_LOG_PROGRESS_CPP
-#define MCMD_LOG_PROGRESS_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -48,4 +45,3 @@ namespace McMd
    }
   
 }
-#endif 

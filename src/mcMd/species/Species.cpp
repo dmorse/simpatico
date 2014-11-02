@@ -1,6 +1,3 @@
-#ifndef MCMD_SPECIES_CPP
-#define MCMD_SPECIES_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -703,4 +700,3 @@ namespace McMd
       UTIL_THROW("generateMolecules() not implemented.");
    }
 } 
-#endif
