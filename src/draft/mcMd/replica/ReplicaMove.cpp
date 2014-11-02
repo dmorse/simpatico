@@ -1,8 +1,5 @@
 #ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
-#ifndef REPLICA_MOVE_CPP
-#define REPLICA_MOVE_CPP
-
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -267,6 +264,5 @@ namespace McMd
    }
 
 }
-#endif
 #endif // ifdef UTIL_MPI
 #endif // ifdef MCMD_PERTURB

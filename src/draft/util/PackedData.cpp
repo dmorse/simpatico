@@ -1,6 +1,3 @@
-#ifndef PACKED_DATA_CPP
-#define PACKED_DATA_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -119,4 +116,3 @@ namespace Util
    #endif
 
 }
-#endif

@@ -1,6 +1,3 @@
-#ifndef TOOLS_TYPE_MAP_CPP
-#define TOOLS_TYPE_MAP_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -56,4 +53,3 @@ namespace Tools
    }
 
 }
-#endif

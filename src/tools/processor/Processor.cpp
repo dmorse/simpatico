@@ -1,6 +1,3 @@
-#ifndef TOOLS_PROCESSOR_CPP
-#define TOOLS_PROCESSOR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -463,4 +460,3 @@ namespace Tools
    {  return fileMaster_; }
 
 }
-#endif

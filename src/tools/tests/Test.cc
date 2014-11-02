@@ -1,5 +1,3 @@
-#ifndef TOOLS_TEST_CPP
-#define TOOLS_TEST_CPP
 #include "ToolsTestComposite.h"
 
 /*
@@ -16,4 +14,3 @@ int main(int argc, char* argv[])
    }
    runner.run();
 }
-#endif 

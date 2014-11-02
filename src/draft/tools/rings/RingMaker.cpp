@@ -1,6 +1,3 @@
-#ifndef CHAIN_MAKER_CPP
-#define CHAIN_MAKER_CPP
-
 #include  <util/param/ParamComposite.h>
 #include  <util/random/Random.h>
 #include  <util/space/Vector.h>              // template parameter
@@ -105,5 +102,3 @@ int main() {
    ring.readParam(std::cin);
    ring.writeRings(std::cout);
 }
-#endif
-

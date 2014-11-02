@@ -1,6 +1,3 @@
-#ifndef TOOLS_TRAJECTORY_WRITER_CPP
-#define TOOLS_TRAJECTORY_WRITER_CPP
-
 /*
 * Simpatico - Processor Package for Polymeric and Molecular Liquids
 *
@@ -140,4 +137,3 @@ namespace Tools
    {  clear(); }
 
 }
-#endif

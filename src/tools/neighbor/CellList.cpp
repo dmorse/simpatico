@@ -1,6 +1,3 @@
-#ifndef TOOLS_CELL_LIST_CPP
-#define TOOLS_CELL_LIST_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -335,4 +332,3 @@ namespace Tools
    }
 
 }
-#endif

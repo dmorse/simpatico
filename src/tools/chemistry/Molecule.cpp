@@ -1,6 +1,3 @@
-#ifndef TOOLS_MOLECULE_CPP
-#define TOOLS_MOLECULE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -23,4 +20,3 @@ namespace Tools
    {}
    
 }
-#endif

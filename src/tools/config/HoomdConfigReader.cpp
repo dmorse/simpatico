@@ -1,6 +1,3 @@
-#ifndef TOOLS_HOOMD_CONFIG_READER_CPP
-#define TOOLS_HOOMD_CONFIG_READER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -500,4 +497,3 @@ namespace Tools
    }
 
 }
-#endif

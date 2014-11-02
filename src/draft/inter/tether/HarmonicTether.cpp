@@ -1,7 +1,4 @@
 #ifdef  MCMD_TETHER
-#ifndef HARMONIC_TETHER_CPP
-#define HARMONIC_TETHER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -65,5 +62,4 @@ namespace Inter
    }
 
 } 
-#endif
 #endif

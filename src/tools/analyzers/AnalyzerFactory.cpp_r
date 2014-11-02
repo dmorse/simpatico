@@ -1,6 +1,3 @@
-#ifndef MDCF_ANALYZER_FACTORY_CPP
-#define MDCF_ANALYZER_FACTORY_CPP
-
 /*
 * Simpatico - Processor Package for Polymeric and Molecular Liquids
 *
@@ -50,4 +47,3 @@ namespace Tools
    }
 
 }
-#endif

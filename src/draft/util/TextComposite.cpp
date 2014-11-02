@@ -1,6 +1,3 @@
-#ifndef TEXT_PARAM_COMPOSITE_CPP
-#define TEXT_PARAM_COMPOSITE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -98,4 +95,3 @@ namespace Util
    }
    
 }
-#endif

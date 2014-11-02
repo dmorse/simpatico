@@ -1,6 +1,3 @@
-#ifndef TOOLS_ATOM_STORAGE_CPP
-#define TOOLS_ATOM_STORAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -76,4 +73,3 @@ namespace Tools
    }
 
 }
-#endif

@@ -1,6 +1,3 @@
-#ifndef TOOLS_CHAIN_MAKER_CPP
-#define TOOLS_CHAIN_MAKER_CPP
-
 #include   "ChainMaker.h"
 #include   <util/format/Int.h>
 #include   <util/format/Dbl.h>
@@ -286,5 +283,3 @@ int main()
    obj.readParam(std::cin);
    obj.writeChains(std::cout);
 }
-
-#endif

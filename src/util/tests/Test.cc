@@ -1,6 +1,3 @@
-#ifndef UTIL_TEST_CPP
-#define UTIL_TEST_CPP
-
 /*
 * This program runs all unit tests in the util directory.
 */ 
@@ -71,4 +68,3 @@ int main(int argc, char* argv[])
    MPI::Finalize();
    #endif 
 }
-#endif

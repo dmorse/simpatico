@@ -1,6 +1,3 @@
-#ifndef OUT_FILE_CPP
-#define OUT_FILE_CPP
-
 #include "Outfile.h"
 
 namespace Util
@@ -37,4 +34,3 @@ namespace Util
    {  return filename_; }
    
 }
-#endif

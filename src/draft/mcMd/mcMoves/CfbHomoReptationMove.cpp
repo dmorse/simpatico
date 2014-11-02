@@ -1,6 +1,3 @@
-#ifndef MCMD_CFB_HOMO_REPTATION_MOVE_CPP
-#define MCMD_CFB_HOMO_REPTATION_MOVE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -182,4 +179,3 @@ namespace McMd
    }
    
 }
-#endif

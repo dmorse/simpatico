@@ -1,6 +1,3 @@
-#ifndef TOOLS_ATOM_MSD_CPP
-#define TOOLS_ATOM_MSD_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -199,4 +196,3 @@ namespace Tools
    }
 
 }
-#endif 

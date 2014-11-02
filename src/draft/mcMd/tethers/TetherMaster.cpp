@@ -1,6 +1,3 @@
-#ifndef MCMD_TETHER_MASTER_CPP
-#define MCMD_TETHER_MASTER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -372,4 +369,3 @@ namespace McMd
    }
 
 } 
-#endif

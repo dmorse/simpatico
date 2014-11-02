@@ -1,6 +1,3 @@
-#ifndef ATOMIC_MAKER_CPP
-#define ATOMIC_MAKER_CPP
-
 #include   "AtomicMaker.h"
 
 #include <string>
@@ -41,5 +38,3 @@ int main() {
    obj.readParam(std::cin);
    obj.writeConfig(std::cout);
 }
-
-#endif
