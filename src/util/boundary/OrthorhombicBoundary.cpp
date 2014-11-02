@@ -1,6 +1,3 @@
-#ifndef UTIL_ORTHORHOMBIC_BOUNDARY_CPP
-#define UTIL_ORTHORHOMBIC_BOUNDARY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -244,5 +241,3 @@ namespace Util
    #endif
 
 }
-
-#endif

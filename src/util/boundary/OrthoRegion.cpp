@@ -1,6 +1,3 @@
-#ifndef UTIL_ORTHO_REGION_CPP
-#define UTIL_ORTHO_REGION_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -79,4 +76,3 @@ namespace Util
    }
 
 } 
-#endif

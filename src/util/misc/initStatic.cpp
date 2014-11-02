@@ -1,6 +1,3 @@
-#ifndef UTIL_INIT_STATIC_H
-#define UTIL_INIT_STATIC_H
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -45,4 +42,3 @@ namespace Util
    }
 
 }
-#endif

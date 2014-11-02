@@ -1,6 +1,3 @@
-#ifndef UTIL_WRITE_CPP
-#define UTIL_WRITE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -40,4 +37,3 @@ namespace Util
    { out << Bool(data); }
 
 }
-#endif

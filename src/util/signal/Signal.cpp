@@ -1,6 +1,3 @@
-#ifndef UTIL_SIGNAL_CPP
-#define UTIL_SIGNAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -55,4 +52,3 @@ namespace Util
    { return functorPtrs_.size(); }
 
 }
-#endif 

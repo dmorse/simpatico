@@ -1,6 +1,3 @@
-#ifndef UTIL_DISTRIBUTION_CPP
-#define UTIL_DISTRIBUTION_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -236,4 +233,3 @@ namespace Util
    #endif
         
 }
-#endif

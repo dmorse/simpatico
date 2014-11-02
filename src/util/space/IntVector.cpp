@@ -1,6 +1,3 @@
-#ifndef UTIL_INT_VECTOR_CPP
-#define UTIL_INT_VECTOR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -120,4 +117,3 @@ namespace Util
    }
 
 } 
-#endif

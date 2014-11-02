@@ -1,6 +1,3 @@
-#ifndef UTIL_AR1_PROCESS_CPP
-#define UTIL_AR1_PROCESS_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -60,4 +57,3 @@ namespace Util
    }
 
 } 
-#endif

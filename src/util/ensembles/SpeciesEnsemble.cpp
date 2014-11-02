@@ -1,6 +1,3 @@
-#ifndef UTIL_SPECIES_ENSEMBLE_CPP
-#define UTIL_SPECIES_ENSEMBLE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -117,4 +114,3 @@ namespace Util
    #endif
 
 } 
-#endif

@@ -1,6 +1,3 @@
-#ifndef UTIL_AVERAGE_CPP
-#define UTIL_AVERAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -237,4 +234,3 @@ namespace Util
    {  descendants_.push_back(descendantPtr); }
 
 }
-#endif

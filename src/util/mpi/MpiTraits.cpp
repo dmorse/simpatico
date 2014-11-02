@@ -1,6 +1,3 @@
-#ifndef UTIL_MPI_TRAITS_CPP
-#define UTIL_MPI_TRAITS_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -69,5 +66,4 @@ namespace Util
    const bool MpiTraits<wchar_t>::hasType = true;
    #endif
 }
-#endif
 #endif

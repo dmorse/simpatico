@@ -1,16 +1,13 @@
-#ifndef UTIL_BIT_CPP
-#define UTIL_BIT_CPP
-
-#include "Bit.h"
-#include <util/global.h>
-#include <climits>
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2012, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
 */
+
+#include "Bit.h"
+#include <util/global.h>
+#include <climits>
 
 namespace Util
 {
@@ -40,4 +37,3 @@ namespace Util
    }
 
 }
-#endif

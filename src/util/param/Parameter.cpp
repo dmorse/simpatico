@@ -1,6 +1,3 @@
-#ifndef UTIL_PARAMETER_CPP
-#define UTIL_PARAMETER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -165,4 +162,3 @@ namespace Util
    {  return isActive_; }
 
 } 
-#endif

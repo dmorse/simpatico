@@ -1,6 +1,3 @@
-#ifndef UTIL_POINT_GROUP_CPP
-#define UTIL_POINT_GROUP_CPP
-
 #include "PointGroup.h"
 
 namespace Util {
@@ -21,4 +18,3 @@ namespace Util {
    }
 
 }
-#endif

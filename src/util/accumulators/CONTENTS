@@ -25,22 +25,22 @@ for data analysis.
   RadialDistribution             - accumulates a histogram of particle
                                    separations in a material.
 
-In class templates Average, AutoCorr, AutoCorrArray, and MeanSqDispArray, 
-the Data template parameter may be a floating point type (float or double), 
-a complex type (complex<float> or complex<double>) or a Vector.
+In class templates AutoCorr, AutoCorrArray, and MeanSqDispArray, the Data 
+template parameter may be a floating point type (float or double), a 
+complex type (complex<float> or complex<double>) or a Vector.
 
-The Product parameter in the templates AutoCorr and AutoCorrArray is 
-the type for an inner product of two Data values. We require that 
-Product be float, double, complex<float>, complex<double> or double 
-when Data is float, double, complex<float>, complex<double> or Vector, 
-respectively. The inner product a*b is defined as a simple multiplication 
-for real values, as a dot product for Vectors, and conjg(a)*b when a and 
-b are complex. These definitions are implemented by a set of overloaded 
+The Product parameter in the templates AutoCorr and AutoCorrArray is the 
+type for an inner product of two Data values. We require that Product be 
+float, double, complex<float>, complex<double> or double when Data is 
+float, double, complex<float>, complex<double> or Vector, respectively. 
+The inner product a*b is defined as a simple multiplication for real 
+values, as a dot product for Vectors, and conjg(a)*b when a and b are 
+complex. These definitions are implemented by a set of overloaded 
 functions defined in the file product.h.
 
-In the implementation of MeanSqDispArray, the square difference of two Data 
-values is a double precision number that is defined for floating point, 
-complex, and Vector Data types by the explicit specializations of the 
-sqDiff() method.
+In the implementation of MeanSqDispArray, the square difference of two 
+Data values is a double precision number that is defined for floating 
+point, complex, and Vector Data types by the explicit specializations 
+of the sqDiff() method.
 
-See also: Accumulators module in the doxygen documentation.
+See also: Util Accumulators module in the doxygen documentation.

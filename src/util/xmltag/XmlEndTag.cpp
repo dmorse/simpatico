@@ -1,6 +1,3 @@
-#ifndef UTIL_XML_END_TAG_CPP
-#define UTIL_XML_END_TAG_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -81,4 +78,3 @@ namespace Util
    }
 
 }
-#endif

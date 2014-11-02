@@ -1,6 +1,3 @@
-#ifndef UTIL_MPI_FILE_IO_CPP
-#define UTIL_MPI_FILE_IO_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -54,4 +51,3 @@ namespace Util
    #endif
 
 } 
-#endif

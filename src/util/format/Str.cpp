@@ -1,6 +1,3 @@
-#ifndef UTIL_STR_CPP
-#define UTIL_STR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -66,4 +63,3 @@ namespace Util
    }
 
 } 
-#endif

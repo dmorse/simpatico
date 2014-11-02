@@ -1,6 +1,3 @@
-#ifndef UTIL_PARAM_COMPONENT_CPP
-#define UTIL_PARAM_COMPONENT_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -88,4 +85,3 @@ namespace Util
    }
 
 } 
-#endif

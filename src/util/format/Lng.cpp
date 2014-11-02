@@ -1,6 +1,3 @@
-#ifndef UTIL_LNG_CPP
-#define UTIL_LNG_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -74,4 +71,3 @@ namespace Util
    }
 
 } 
-#endif

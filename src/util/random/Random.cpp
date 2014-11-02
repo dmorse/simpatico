@@ -1,6 +1,3 @@
-#ifndef UTIL_RANDOM_CPP
-#define UTIL_RANDOM_CPP
-
 #include "Random.h"
 
 #include <cmath>
@@ -141,4 +138,3 @@ namespace Util
 
 
 }
-#endif

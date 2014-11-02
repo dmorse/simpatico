@@ -1,6 +1,3 @@
-#ifndef UTIL_MEMORY_COUNTER_CPP
-#define UTIL_MEMORY_COUNTER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -34,4 +31,3 @@ namespace Util
    {  size_ = 0; }
 
 }
-#endif

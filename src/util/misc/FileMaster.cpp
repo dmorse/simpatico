@@ -1,6 +1,3 @@
-#ifndef UTIL_FILE_MASTER_CPP
-#define UTIL_FILE_MASTER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -312,4 +309,3 @@ namespace Util
    {  return ((!hasDirectoryId_) || isCommonControl_); }
 
 }
-#endif
