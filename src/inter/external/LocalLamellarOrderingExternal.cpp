@@ -1,6 +1,3 @@
-#ifndef INTER_LOCAL_LAMELLAR_ORDERING_EXTERNAL_CPP
-#define INTER_LOCAL_LAMELLAR_ORDERING_EXTERNAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -186,4 +183,3 @@ namespace Inter
    {  return std::string("LocalLamellarOrderingExternal"); }
  
 } 
-#endif

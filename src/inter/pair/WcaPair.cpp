@@ -1,6 +1,3 @@
-#ifndef INTER_WCA_PAIR_CPP
-#define INTER_WCA_PAIR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -85,4 +82,3 @@ namespace Inter
    }
 
 } 
-#endif

@@ -1,6 +1,3 @@
-#ifndef INTER_BOX_EXTERNAL_CPP
-#define INTER_BOX_EXTERNAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -161,4 +158,3 @@ namespace Inter
  
 
 } 
-#endif

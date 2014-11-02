@@ -1,6 +1,3 @@
-#ifndef HARMONIC_ANGLE_CPP
-#define HARMONIC_ANGLE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -203,4 +200,3 @@ namespace Inter
 
 
 } 
-#endif

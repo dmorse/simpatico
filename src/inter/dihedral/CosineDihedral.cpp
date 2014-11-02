@@ -1,6 +1,3 @@
-#ifndef INTER_COSINE_DIHEDRAL_CPP
-#define INTER_COSINE_DIHEDRAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -120,4 +117,3 @@ namespace Inter
    {  return std::string("CosineDihedral"); }
 
 } 
-#endif

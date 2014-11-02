@@ -1,6 +1,3 @@
-#ifndef INTER_COSINE_SQ_ANGLE_CPP
-#define INTER_COSINE_SQ_ANGLE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -207,4 +204,3 @@ namespace Inter
 
 
 } 
-#endif

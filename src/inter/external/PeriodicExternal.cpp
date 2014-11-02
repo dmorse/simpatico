@@ -1,6 +1,3 @@
-#ifndef INTER_PERIODIC_EXTERNAL_CPP
-#define INTER_PERIODIC_EXTERNAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -208,4 +205,3 @@ namespace Inter
    {  return std::string("PeriodicExternal"); }
  
 } 
-#endif

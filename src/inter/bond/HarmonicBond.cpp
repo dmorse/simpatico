@@ -1,6 +1,3 @@
-#ifndef INTER_HARMONIC_BOND_CPP
-#define INTER_HARMONIC_BOND_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -183,4 +180,3 @@ namespace Inter
    }
 
 } 
-#endif

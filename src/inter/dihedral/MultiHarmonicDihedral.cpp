@@ -1,6 +1,3 @@
-#ifndef INTER_MULTI_HARMONIC_DIHEDRAL_CPP
-#define INTER_MULTI_HARMONIC_DIHEDRAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -248,4 +245,3 @@ namespace Inter
    {  return std::string("MultiHarmonicDihedral"); }
 
 } 
-#endif

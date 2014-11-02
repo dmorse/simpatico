@@ -1,6 +1,3 @@
-#ifndef INTER_FENE_BOND_CPP
-#define INTER_FENE_BOND_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -242,5 +239,3 @@ namespace Inter
    }
 
 }
-#endif
-

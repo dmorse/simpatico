@@ -1,6 +1,3 @@
-#ifndef INTER_SLIT_EXTERNAL_CPP
-#define INTER_SLIT_EXTERNAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -161,4 +158,3 @@ namespace Inter
    {  return std::string("SlitExternal"); }
  
 } 
-#endif
