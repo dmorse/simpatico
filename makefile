@@ -9,10 +9,10 @@ include src/config.mk
 # Main build targets
 
 all:
-	cd bld/serial; $(MAKE) mcMd
-	cd bld/parallel; $(MAKE) ddMd
-	cd bld/parallel; $(MAKE) mcMd-mpi
 	cd bld/serial; $(MAKE) tools
+	cd bld/serial; $(MAKE) mcMd
+	cd bld/parallel; $(MAKE) mcMd-mpi
+	cd bld/parallel; $(MAKE) ddMd
 
 # Build serial mcSim and mdSim MC and MD programs in bld/serial
 mcMd:

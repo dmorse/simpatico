@@ -1,6 +1,3 @@
-#ifndef DDMD_OUTPUT_BOXDIM_CPP
-#define DDMD_OUTPUT_BOXDIM_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -113,4 +110,3 @@ namespace DdMd
    }
 
 }
-#endif

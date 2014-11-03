@@ -1,6 +1,3 @@
-#ifndef DDMD_OUTPUT_TEMPERATURE_CPP
-#define DDMD_OUTPUT_TEMPERATURE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -121,4 +118,3 @@ namespace DdMd
    }
 
 }
-#endif

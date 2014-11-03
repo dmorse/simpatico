@@ -1,6 +1,3 @@
-#ifndef DDMD_ANALYZER_CPP
-#define DDMD_ANALYZER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -137,4 +134,3 @@ namespace DdMd
    }
 
 }
-#endif

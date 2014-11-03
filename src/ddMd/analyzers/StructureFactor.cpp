@@ -1,6 +1,3 @@
-#ifndef DDMD_STRUCTURE_FACTOR_CPP
-#define DDMD_STRUCTURE_FACTOR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -306,4 +303,3 @@ namespace DdMd
    }
 
 }
-#endif

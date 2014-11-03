@@ -1,6 +1,3 @@
-#ifndef DDMD_SERIALIZE_CONFIG_IO_CPP
-#define DDMD_SERIALIZE_CONFIG_IO_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -322,4 +319,3 @@ namespace DdMd
    }
 
 }
-#endif

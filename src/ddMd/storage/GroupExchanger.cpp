@@ -1,6 +1,3 @@
-#ifndef DDMD_GROUP_EXCHANGER_CPP
-#define DDMD_GROUP_EXCHANGER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -21,6 +18,4 @@ namespace DdMd
  GroupExchanger::~GroupExchanger()
  {}
 
-
-} // namespace DdMd
-#endif
+} 

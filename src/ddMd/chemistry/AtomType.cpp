@@ -1,6 +1,3 @@
-#ifndef DDMD_ATOM_TYPE_CPP
-#define DDMD_ATOM_TYPE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -117,6 +114,4 @@ namespace Util
    bool MpiTraits<DdMd::AtomType>::hasType = false;
 
 }
-#endif
-
-#endif
+#endif // ifdef UTIL_MPI

@@ -1,6 +1,3 @@
-#ifndef DDMD_DDMD_GROUP_TRAJECTORY_WRITER_CPP
-#define DDMD_DDMD_GROUP_TRAJECTORY_WRITER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -131,4 +128,3 @@ namespace DdMd
    }
 
 }
-#endif

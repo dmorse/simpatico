@@ -1,6 +1,3 @@
-#ifndef DDMD_MASK_POLICY_CPP
-#define DDMD_MASK_POLICY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -63,4 +60,3 @@ namespace DdMd
    }
 
 }
-#endif

@@ -1,6 +1,3 @@
-#ifndef DDMD_BOND_STORAGE_CPP
-#define DDMD_BOND_STORAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -28,5 +25,3 @@ namespace DdMd
    {  GroupStorage<2>::readParameters(in); }
 
 }
-
-#endif

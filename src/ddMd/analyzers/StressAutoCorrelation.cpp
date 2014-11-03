@@ -1,6 +1,3 @@
-#ifndef DDMD_STRESS_TENSOR_AUTO_CORRELATION_CPP
-#define DDMD_STRESS_TENSOR_AUTO_CORRELATION_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -183,4 +180,3 @@ namespace DdMd
    }
 
 }
-#endif  

@@ -1,6 +1,3 @@
-#ifndef DDMD_VAN_HOVE_CPP
-#define DDMD_VAN_HOVE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -257,4 +254,3 @@ namespace DdMd
    }
 
 }
-#endif

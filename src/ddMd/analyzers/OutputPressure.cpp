@@ -1,6 +1,3 @@
-#ifndef DDMD_OUTPUT_PRESSURE_CPP
-#define DDMD_OUTPUT_PRESSURE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -118,4 +115,3 @@ namespace DdMd
    }
 
 }
-#endif 

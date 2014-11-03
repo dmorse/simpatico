@@ -1,6 +1,3 @@
-#ifndef DDMD_MODIFIER_MANAGER_CPP
-#define DDMD_MODIFIER_MANAGER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -341,4 +338,3 @@ namespace DdMd
    {  return new ModifierFactory(*simulationPtr_); }
  
 }
-#endif

@@ -1,6 +1,3 @@
-#ifndef DDMD_EXCHANGER_CPP
-#define DDMD_EXCHANGER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -1134,4 +1131,3 @@ namespace DdMd
    #endif // ifdef UTIL_MPI
 
 }
-#endif

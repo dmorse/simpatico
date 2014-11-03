@@ -1,6 +1,3 @@
-#ifndef DDMD_BOND_FACTORY_CPP
-#define DDMD_BOND_FACTORY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -60,4 +57,3 @@ namespace DdMd
    }
 
 }
-#endif

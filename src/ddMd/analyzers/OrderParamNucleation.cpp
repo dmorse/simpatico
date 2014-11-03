@@ -1,6 +1,3 @@
-#ifndef DDMD_ORDER_PARAM_NUCLEATION_CPP
-#define DDMD_ORDER_PARAM_NUCLEATION_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -204,4 +201,3 @@ namespace DdMd
    } 
 
 }
-#endif

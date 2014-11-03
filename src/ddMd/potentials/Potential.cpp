@@ -1,6 +1,3 @@
-#ifndef DDMD_POTENTIAL_CPP
-#define DDMD_POTENTIAL_CPP
-
 #include "Potential.h"
 
 /*
@@ -173,4 +170,3 @@ namespace DdMd
    #endif
 
 }
-#endif

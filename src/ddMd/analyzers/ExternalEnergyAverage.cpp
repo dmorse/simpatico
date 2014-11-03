@@ -1,6 +1,3 @@
-#ifndef DDMD_EXTERNAL_ENERGY_AVERAGE_CPP
-#define DDMD_EXTERNAL_ENERGY_AVERAGE_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -142,4 +139,3 @@ namespace DdMd
    }
 
 }
-#endif

@@ -1,6 +1,3 @@
-#ifndef DDMD_TIMER_CPP
-#define DDMD_TIMER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -68,4 +65,3 @@ namespace DdMd
    {  return time_; }
 
 }
-#endif

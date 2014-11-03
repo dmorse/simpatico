@@ -1,6 +1,3 @@
-#ifndef DDMD_ASYMM_SF_CPP
-#define DDMD_ASYMM_SF_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -249,4 +246,3 @@ namespace DdMd
    } 
 
 }
-#endif

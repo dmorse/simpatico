@@ -1,6 +1,3 @@
-#ifndef DDMD_ATOM_ARRAY_CPP
-#define DDMD_ATOM_ARRAY_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -117,4 +114,3 @@ namespace DdMd
    {  return (bool)data_; }
 
 }
-#endif

@@ -1,6 +1,3 @@
-#ifndef DDMD_PAIR_POTENTIAL_CPP
-#define DDMD_PAIR_POTENTIAL_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -440,4 +437,3 @@ namespace DdMd
    }
 
 }
-#endif

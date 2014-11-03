@@ -1,6 +1,3 @@
-#ifndef ANALYZER_FACTORY
-#define ANALYZER_FACTORY
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -120,4 +117,3 @@ namespace DdMd
    }
 
 }
-#endif

@@ -1,6 +1,3 @@
-#ifndef DDMD_INIT_STATIC_CPP
-#define DDMD_INIT_STATIC_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -30,4 +27,3 @@ namespace DdMd
    }
 
 }
-#endif

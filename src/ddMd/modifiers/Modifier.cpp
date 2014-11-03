@@ -1,6 +1,3 @@
-#ifndef DDMD_MODIFIER_CPP
-#define DDMD_MODIFIER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -103,4 +100,3 @@ namespace DdMd
    {  flag.set(flags_); }
 
 }
-#endif

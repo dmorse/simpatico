@@ -1,6 +1,3 @@
-#ifndef DDMD_LAMMPS_DUMP_WRITER_CPP
-#define DDMD_LAMMPS_DUMP_WRITER_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -97,4 +94,3 @@ namespace DdMd
    }
 
 }
-#endif

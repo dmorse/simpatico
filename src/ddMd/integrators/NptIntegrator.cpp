@@ -1,6 +1,3 @@
-#ifndef DDMD_NPT_INTEGRATOR_CPP
-#define DDMD_NPT_INTEGRATOR_CPP
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -407,4 +404,3 @@ namespace DdMd
   }
 
 }
-#endif
