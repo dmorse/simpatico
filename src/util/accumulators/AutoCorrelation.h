@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "AutoCorrelation.h"          // base class
+#include "AutoCorrStage.h"            // base class
 #include <util/containers/GArray.h>   // member
 #include <util/global.h>
 
@@ -24,7 +24,7 @@ namespace Util
    * \ingroup Accumulators_Module
    */
    template <typename Data, typename Product>
-   class AutoCorrelation : public AutoCorrStage
+   class AutoCorrelation : public AutoCorrStage<Data, Product>
    {
 
    public:
@@ -46,14 +46,16 @@ namespace Util
       /**
       * Set the base output file name.
       */
-      void setFileName(int bufferCapacity);
+      void setFileName(std::string outputFileName);
 
+      #if 0
       /**
       * Set buffer capacity, allocate memory and initialize.
       *
       * \param bufferCapacity max. number of values in buffer
       */
       void setCapacity(int bufferCapacity);
+      #endif
 
       /**
       * Register the creation of a descendant stage.
@@ -105,8 +107,11 @@ namespace Util
 
    private:
 
+      // Base name of output file(s).
+      std::string outputFileName_;
+
       // Pointers to descendant AutoCorrStage objects
-      GArray<AutoCorrStage*> descendants_;
+      GArray< AutoCorrStage<Data, Product>* > descendants_;
 
    };
 

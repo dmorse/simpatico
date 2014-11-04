@@ -91,6 +91,11 @@ namespace Util
       virtual void sample(Data value);
 
       /**
+      * Clear accumulators and destroy descendants.
+      */
+      void clear();
+
+      /**
       * Register the creation of a descendant stage.
       *
       * This should be called only by a root stage.
@@ -123,11 +128,6 @@ namespace Util
       * Return capacity of history buffer.
       */
       int bufferCapacity() const;
-
-      /**
-      * Return number of values sampled thus far.
-      */
-      int nSample() const;
 
       /**
       * Return the number of sampled values.
@@ -202,7 +202,7 @@ namespace Util
       /// Pointer to child stage, if any.
       AutoCorrStage* childPtr_;
 
-      /// Pointer to root stage. Null if this is the root stage.
+      /// Pointer to root stage. 
       AutoCorrStage* rootPtr_;
 
       /// Stage index
@@ -249,13 +249,15 @@ namespace Util
    /*
    * Does this object have a child?  (protected)
    */
-   inline bool AutoCorrStage::hasChild() const
+   template <typename Data, typename Product>
+   inline bool AutoCorrStage<Data, Product>::hasChild() const
    { return bool(childPtr_); }
 
    /*
    * Return child object by reference. (protected)
    */
-   inline AutoCorrStage& AutoCorrStage::child()
+   template <typename Data, typename Product>
+   inline AutoCorrStage<Data, Product>& AutoCorrStage<Data, Product>::child()
    { return *childPtr_; }
 
 }

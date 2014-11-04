@@ -25,15 +25,17 @@ using std::complex;
 namespace Util
 {
 
+   #if 0
    /*
    * Default constructor.
    */
    template <typename Data, typename Product>
-   AutoCorr<Data, Product>::AutoCorr()
+   AutoCorrStage<Data, Product>::AutoCorr()
    {
       setClassName("AutoCorr");
       setToZero(sum_);
    }
+   #endif
 
    /*
    * Constructor for rootPtr AutoCorrStage, with stageId = 0.
@@ -44,7 +46,7 @@ namespace Util
       corr_(),
       nCorr_(),
       bufferCapacity_(0),
-      nSample_(0)
+      nSample_(0),
       blockSum_(0.0),
       nBlockSample_(0),
       stageInterval_(1),
@@ -66,7 +68,7 @@ namespace Util
       corr_(),
       nCorr_(),
       bufferCapacity_(rootPtr->bufferCapacity()),
-      nSample_(0)
+      nSample_(0),
       blockSum_(0.0),
       nBlockSample_(0),
       stageInterval_(stageInterval),
@@ -77,13 +79,6 @@ namespace Util
    { 
       allocate(); 
    }
-
-   /*
-   * Destructor
-   */
-   template <typename Data, typename Product>
-   AutoCorr<Data, Product>::~AutoCorr()
-   {}
 
    /*
    * Destructor.
@@ -100,7 +95,7 @@ namespace Util
    * Set buffer capacity and initialize.
    */
    template <typename Data, typename Product>
-   void AutoCorr<Data, Product>::setCapacity(int bufferCapacity)
+   void AutoCorrStage<Data, Product>::setCapacity(int bufferCapacity)
    {
       bufferCapacity_ = bufferCapacity;
       allocate();
@@ -110,7 +105,7 @@ namespace Util
    * Set previously allocated to initial empty state.
    */
    template <typename Data, typename Product>
-   void AutoCorr<Data, Product>::clear()
+   void AutoCorrStage<Data, Product>::clear()
    {
       setToZero(sum_);
       nSample_ = 0;
@@ -132,7 +127,7 @@ namespace Util
    * Add a sampled value to the ensemble.
    */
    template <typename Data, typename Product>
-   void AutoCorrStage<Data, Product>::sample(double value)
+   void AutoCorrStage<Data, Product>::sample(Data value)
    {
 
       // Increment global accumulators
@@ -174,7 +169,8 @@ namespace Util
    */
    template <typename Data, typename Product>
    template <class Archive>
-   void AutoCorr<Data, Product>::serialize(Archive& ar,
+   void 
+   AutoCorrStage<Data, Product>::serialize(Archive& ar,
                                            const unsigned int version)
    {
       ar & bufferCapacity_;
@@ -220,7 +216,7 @@ namespace Util
    * Return capacity of history buffer.
    */
    template <typename Data, typename Product>
-   int AutoCorr<Data, Product>::bufferCapacity() const
+   int AutoCorrStage<Data, Product>::bufferCapacity() const
    {  return bufferCapacity_; }
 
    /*
@@ -241,7 +237,7 @@ namespace Util
    * Return average of sampled values.
    */
    template <typename Data, typename Product>
-   Data AutoCorr<Data, Product>::average() const
+   Data AutoCorrStage<Data, Product>::average() const
    {
       Data ave  = sum_;
       ave /= double(nSample_);
@@ -252,16 +248,16 @@ namespace Util
    * Final output
    */
    template <typename Data, typename Product>
-   void AutoCorr<Data, Product>::output(std::ostream& outFile)
+   void AutoCorrStage<Data, Product>::output(std::ostream& outFile)
    {
       Data    ave;
       Product autocorr;
-      Product aveSq;
+      //Product aveSq;
 
       // Calculate and output average of sampled values
       ave  = sum_;
       ave /= double(nSample_);
-      aveSq = product(ave, ave);
+      //aveSq = product(ave, ave);
 
       // Calculate and output autocorrelation
       for (int i = 0; i < buffer_.size(); ++i) {
@@ -278,7 +274,7 @@ namespace Util
    *  Return correlation time in unit of sampling interval
    */
    template <typename Data, typename Product>
-   double AutoCorr<Data, Product>::corrTime() const
+   double AutoCorrStage<Data, Product>::corrTime() const
    {
       Data    ave;
       Product aveSq, variance, autocorr, sum;
@@ -312,9 +308,9 @@ namespace Util
    * \param t the lag time index
    */
    template <typename Data, typename Product>
-   Product AutoCorr<Data, Product>::autoCorrelation(int t) const
+   Product AutoCorrStage<Data, Product>::autoCorrelation(int t) const
    {
-      Data    ave;
+      Data ave;
       Product autocorr;
       Product aveSq;
 
@@ -337,21 +333,21 @@ namespace Util
    * Allocate arrays and CyclicBuffer, and initialize.
    */
    template <typename Data, typename Product>
-   void AutoCorr<Data, Product>::allocate()
+   void AutoCorrStage<Data, Product>::allocate()
    {
       if (bufferCapacity_ > 0) {
          corr_.allocate(bufferCapacity_);
          nCorr_.allocate(bufferCapacity_);
          buffer_.allocate(bufferCapacity_);
       }
-      clear();
+      AutoCorrStage<Data, Product>::clear();
    }
 
    /*
    * Are capacities consistent?
    */
    template <typename Data, typename Product>
-   bool AutoCorr<Data, Product>::isValid()
+   bool AutoCorrStage<Data, Product>::isValid()
    {
       bool valid = true;
       if (bufferCapacity_ != corr_.capacity()) valid = false;
