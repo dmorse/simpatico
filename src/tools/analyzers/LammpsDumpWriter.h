@@ -17,6 +17,7 @@ namespace Tools
 {
 
    class Processor;
+   class Configuration;
    using namespace Util;
 
    /**
@@ -32,9 +33,17 @@ namespace Tools
       /**
       * Constructor.
       *
-      * \param configuration parent Processor object
+      * \param processor parent Processor object
       */
-      LammpsDumpWriter(Processor& configuration);
+      LammpsDumpWriter(Processor& processor);
+
+      /**
+      * Constructor.
+      *
+      * \param configuration parent Configuration object
+      * \param fileMaster asssociated Util::FileMaster object 
+      */
+      LammpsDumpWriter(Configuration& configuration, FileMaster& fileMaster);
 
       /**
       * Destructor.

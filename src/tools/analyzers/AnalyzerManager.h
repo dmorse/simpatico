@@ -9,14 +9,12 @@
 */
 
 #include "Analyzer.h"                 // template parameter
-#include <util/param/Manager.h>         // base class template
+#include <util/param/Manager.h>       // base class template
 
 namespace Tools
 {
 
    using namespace Util;
-
-   class Processor;
 
    /**
    * Manager for a list of Analyzer objects.
@@ -31,7 +29,7 @@ namespace Tools
       /**
       * Constructor.
       */
-      AnalyzerManager(Processor& processor);
+      AnalyzerManager();
 
       /**
       * Destructor.
@@ -69,16 +67,6 @@ namespace Tools
       * Call output method of each analyzer.
       */
       void output();
-
-      /**
-      * Return pointer to a new default factory.
-      */
-      virtual Factory<Analyzer>* newDefaultFactory() const;
-
-   private:
-
-      /// Pointer to parent Processor.
-      Processor* processorPtr_;
  
    };
 

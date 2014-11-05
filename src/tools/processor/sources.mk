@@ -1,6 +1,8 @@
 
 tools_processor_= \
-    tools/processor/Processor.cpp 
+    tools/processor/Processor.cpp \
+    tools/processor/ProcessorAnalyzerFactory.cpp \
+    tools/processor/ProcessorAnalyzerManager.cpp 
 
 # Create lists of source (*.cpp) and object (*.o) files
 tools_processor_SRCS=\

@@ -8,15 +8,14 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <tools/analyzers/Analyzer.h>         // base class
-//#include <tools/storage/AtomStorage.h>       
-//#include <tools/storage/GroupStorage.h>               
+#include <tools/analyzers/Analyzer.h>        // base class
 #include <util/boundary/Boundary.h>          // typedef
 
 namespace Tools
 {
 
    class Processor;
+   class Configuration;
    class AtomStorage;
    template <int N> class GroupStorage;
 
@@ -38,7 +37,17 @@ namespace Tools
       * \param processor parent Processor object
       * \param isBinary Is the trajectory file a binary file?
       */
-      TrajectoryWriter(Processor& processor, bool isBinary = false);
+      TrajectoryWriter(Processor& processor, bool isBinary);
+   
+      /**
+      * Constructor.
+      *
+      * \param configuration parent Configuration object
+      * \param fileMaster associated FileMaster object
+      * \param isBinary Is the trajectory file a binary file?
+      */
+      TrajectoryWriter(Configuration& configuration, FileMaster& fileMaster,
+                       bool isBinary);
    
       /**
       * Destructor.

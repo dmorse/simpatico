@@ -120,12 +120,6 @@ namespace Tools
    */
    void Processor::readCommands(std::istream &in)
    {
-      #if 0
-      if (!isInitialized_) {
-         UTIL_THROW("Processor is not initialized");
-      }
-      #endif
-
       std::string command;
       std::string filename;
       std::ifstream inputFile;
@@ -322,17 +316,6 @@ namespace Tools
 
       // Output results of all analyzers to output files
       analyzerManager_.output();
-
-      #if 0
-      // Output time
-      Log::file() << std::endl;
-      Log::file() << "nConfig       " << nConfig << std::endl;
-      Log::file() << "run time      " << timer.time()
-                  << "  sec" << std::endl;
-      Log::file() << "time / config " << timer.time()/double(nConfig)
-                  << "  sec" << std::endl;
-      Log::file() << std::endl;
-      #endif
 
    }
 

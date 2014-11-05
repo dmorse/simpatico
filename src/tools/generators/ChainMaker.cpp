@@ -7,6 +7,10 @@
 namespace Tools 
 {
 
+   ChainMaker::ChainMaker(){};
+
+   ChainMaker::~ChainMaker(){};
+
    void ChainMaker::readParam(std::istream& in)
    {
       bondPotential_.setNBondType(1);

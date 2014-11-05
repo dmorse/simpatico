@@ -9,7 +9,7 @@
 #include <tools/chemistry/Molecule.h>
 #include <tools/chemistry/Atom.h>
 #include <tools/chemistry/Species.h>
-#include <tools/processor/Processor.h>
+#include <tools/storage/Configuration.h>
 #include <util/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/archives/Serializable_includes.h>
@@ -24,8 +24,25 @@ namespace Tools
    /*
    * Constructor.
    */
-   AtomMSD::AtomMSD(Processor& configuration) 
-    : Analyzer(configuration),
+   AtomMSD::AtomMSD(Processor& processor) 
+    : Analyzer(processor),
+      outputFile_(),
+      accumulator_(),
+      truePositions_(),
+      oldPositions_(),
+      shifts_(),
+      speciesId_(-1),
+      atomId_(-1),
+      nMolecule_(-1),
+      capacity_(-1),
+      isInitialized_(false)
+   {  setClassName("AtomMSD"); }
+
+   /*
+   * Constructor.
+   */
+   AtomMSD::AtomMSD(Configuration& configuration, FileMaster& fileMaster) 
+    : Analyzer(configuration, fileMaster),
       outputFile_(),
       accumulator_(),
       truePositions_(),
@@ -55,10 +72,10 @@ namespace Tools
       if (speciesId_ < 0) {
          UTIL_THROW("Negative speciesId");
       }
-      if (speciesId_ >= processor().nSpecies()) {
+      if (speciesId_ >= configuration().nSpecies()) {
          UTIL_THROW("speciesId > nSpecies");
       }
-      Species& species = processor().species(speciesId_);
+      Species& species = configuration().species(speciesId_);
       if (atomId_ < 0) {
          UTIL_THROW("Negative atomId");
       }
@@ -91,10 +108,10 @@ namespace Tools
       if (!isInitialized_) {
          UTIL_THROW("Error: object is not initialized");
       }
-      Species& species = processor().species(speciesId_);
-      Boundary& boundary = processor().boundary();
+      Species& species = configuration().species(speciesId_);
+      Boundary& boundary = configuration().boundary();
 
-      // Set number of molecules of this species in the Processor. 
+      // Set number of molecules of this species in the Configuration. 
       nMolecule_ = species.size();
       accumulator_.setNEnsemble(nMolecule_);
       accumulator_.clear();
@@ -121,8 +138,8 @@ namespace Tools
    void AtomMSD::sample(long iStep) 
    { 
       if (isAtInterval(iStep)) {
-         Species&  species  = processor().species(speciesId_);
-         Boundary& boundary = processor().boundary();
+         Species&  species  = configuration().species(speciesId_);
+         Boundary& boundary = configuration().boundary();
    
          // Confirm that nMolecule is positive, and unchanged.
          if (nMolecule_ <= 0) {
@@ -170,7 +187,7 @@ namespace Tools
    {  
 
       // Output parameters
-      processor().fileMaster().openOutputFile(outputFileName(".prm"), 
+      fileMaster().openOutputFile(outputFileName(".prm"), 
                                               outputFile_);
 
       writeParam(outputFile_); 
@@ -188,7 +205,7 @@ namespace Tools
       outputFile_.close();
 
       // Output statistical analysis to separate data file
-      processor().fileMaster().openOutputFile(outputFileName(".dat"), 
+      fileMaster().openOutputFile(outputFileName(".dat"), 
                                               outputFile_);
       accumulator_.output(outputFile_); 
       outputFile_.close();

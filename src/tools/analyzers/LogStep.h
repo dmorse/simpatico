@@ -28,10 +28,10 @@ namespace Tools
       /**
       * Constructor.
       *
-      * \param processor reference to parent Processor
+      * \param configuration reference to parent Configuration
       */
-      LogStep(Processor &processor)
-       : Analyzer(processor)
+      LogStep(Configuration &configuration)
+       : Analyzer(configuration)
       {}
   
       /** 

@@ -12,8 +12,8 @@
 #include <tools/config/ConfigReaderFactory.h>           // member 
 #include <tools/config/ConfigWriterFactory.h>           // member 
 #include <tools/trajectory/TrajectoryReaderFactory.h>   // member 
-#include <tools/analyzers/AnalyzerManager.h>            // member 
-#include <util/misc/FileMaster.h>                      // member 
+#include <tools/processor/ProcessorAnalyzerManager.h>   // member 
+#include <util/misc/FileMaster.h>                       // member 
 
 namespace Tools 
 {
@@ -210,7 +210,7 @@ namespace Tools
       TrajectoryReaderFactory trajectoryReaderFactory_;
 
       /// Manager for analyzers
-      AnalyzerManager analyzerManager_;
+      ProcessorAnalyzerManager analyzerManager_;
 
       /// FileMaster
       FileMaster fileMaster_;

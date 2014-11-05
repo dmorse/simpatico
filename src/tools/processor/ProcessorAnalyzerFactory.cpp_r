@@ -5,13 +5,13 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "AnalyzerFactory.h" // Class header
+#include "ProcessorAnalyzerFactory.h" // Class header
 
 #include <tools/processor/Processor.h>
 
 // Analyzers 
-#include "LogStep.h"
-#include "LammpsDumpWriter.h"
+#include <tools/analyzers/LogStep.h>
+#include <tools/analyzers/LammpsDumpWriter.h>
 
 namespace Tools
 {
@@ -21,14 +21,14 @@ namespace Tools
    /*
    * Constructor.
    */
-   AnalyzerFactory::AnalyzerFactory(Processor& processor)
+   ProcessorAnalyzerFactory::ProcessorAnalyzerFactory(Processor& processor)
     : processorPtr_(&processor)
    {}
 
    /* 
    * Return a pointer to an instance of Analyzer subclass className.
    */
-   Analyzer* AnalyzerFactory::factory(const std::string &className) const
+   Analyzer* ProcessorAnalyzerFactory::factory(const std::string &className) const
    {
       Analyzer* ptr = 0;
 

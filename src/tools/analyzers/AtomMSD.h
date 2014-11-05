@@ -35,6 +35,14 @@ namespace Tools
       */
       AtomMSD(Processor &processor);
   
+      /**
+      * Constructor.
+      *
+      * \param configuration reference to parent Configuration
+      * \param fileMaster reference to associated FileMaster
+      */
+      AtomMSD(Configuration &configuration, FileMaster& fileMaster);
+  
       /** 
       * Read parameters from file.
       *
@@ -60,7 +68,7 @@ namespace Tools
       virtual void output();
 
    private:
-   
+ 
       /// Output file stream
       std::ofstream outputFile_;
 

@@ -19,7 +19,10 @@ namespace Tools
    {
    
    public:
-   
+  
+      ChainMaker();
+      ~ChainMaker();
+
       void readParam(std::istream& in);
    
       void writeChains(std::ostream& out);

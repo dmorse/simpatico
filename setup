@@ -122,7 +122,7 @@ cp  src/ddMd/modifiers/ModifierFactory.cpp_r src/ddMd/modifiers/ModifierFactory.
 cp  src/tools/config/ConfigReaderFactory.cpp_r src/tools/config/ConfigReaderFactory.cpp
 cp  src/tools/config/ConfigWriterFactory.cpp_r src/tools/config/ConfigWriterFactory.cpp
 cp  src/tools/trajectory/TrajectoryReaderFactory.cpp_r src/tools/trajectory/TrajectoryReaderFactory.cpp
-cp  src/tools/analyzers/AnalyzerFactory.cpp_r src/tools/analyzers/AnalyzerFactory.cpp
+cp  src/tools/processor/ProcessorAnalyzerFactory.cpp_r src/tools/processor/ProcessorAnalyzerFactory.cpp
 
 # Copy typedef for the class that defines boundary conditions
 cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h

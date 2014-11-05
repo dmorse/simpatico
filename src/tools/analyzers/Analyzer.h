@@ -15,10 +15,13 @@
 #include <iostream>
 #include <fstream>
 
+namespace Util { class FileMaster; }
+
 namespace Tools
 {
 
    using namespace Util;
+   class Configuration;
    class Processor;
 
    /**
@@ -30,11 +33,11 @@ namespace Tools
    * implemented by the pure virtual sample() method.
    *
    * The sample() method should take the desired action only when the
-   * processor step index is an integer multiple of the associated 
+   * configuration step index is an integer multiple of the associated 
    * interval parameter.  
    *
    * The virtual sample() method does not take any parameters. An 
-   * Analyzer must thus access its parent Processor via a pointer, 
+   * Analyzer must thus access its parent Configuration via a pointer, 
    * which is usually initialized in its subclass constructor.
    *
    * \ingroup Tools_Analyzer_Module
@@ -48,8 +51,25 @@ namespace Tools
 
       /**
       * Constructor.
+      *
+      * \param configuration parent Configuration object
+      */
+      Analyzer(Configuration& configuration);
+
+      /**
+      * Constructor.
+      *
+      * \param processor parent Processor object
       */
       Analyzer(Processor& processor);
+
+      /**
+      * Constructor.
+      *
+      * \param configuration parent Configuration
+      * \param fileMaster associated Util::FileMaster object
+      */
+      Analyzer(Configuration& configuration, FileMaster& fileMaster);
 
       /**
       * Destructor.
@@ -57,7 +77,7 @@ namespace Tools
       virtual ~Analyzer();
 
       /**
-      * Setup before processor.
+      * Setup before configuration.
       *
       * This method is called just before the beginning of the
       * main loop. It may be used to complete any initialization 
@@ -103,7 +123,7 @@ namespace Tools
       /**
       * Return true iff counter is a multiple of the interval.
       *
-      * \param counter processor step counter
+      * \param counter configuration step counter
       */
       bool isAtInterval(long counter) const;
 
@@ -130,9 +150,14 @@ namespace Tools
       void readOutputFileName(std::istream &in);
 
       /**
-      * Get the parent Processor by reference.
+      * Get the parent Configuration by reference.
       */
-      Processor& processor();
+      Configuration& configuration();
+
+      /**
+      * Get an associated FileMaster by reference.
+      */
+      FileMaster& fileMaster();
 
       /**
       * Return outputFileName string.
@@ -149,11 +174,17 @@ namespace Tools
       /// Base name of output file(s).
       std::string outputFileName_;
 
-      /// Pointer to parent Processor
-      Processor* processorPtr_;
+      /// Pointer to parent Configuration
+      Configuration* configurationPtr_;
 
-      /// Number of processor steps between subsequent actions.
+      /// Pointer to FileMaster
+      FileMaster* fileMasterPtr_;
+
+      /// Number of configuration steps between subsequent actions.
       long interval_;
+
+      /// True if this is reponsible for FileMaster destruction.
+      bool ownsFileMaster_;
 
    };
 
@@ -178,11 +209,10 @@ namespace Tools
    {  return outputFileName_; }
 
    /*
-   * Get the parent Processor by reference.
+   * Get the parent Configuration by reference.
    */
-   inline Processor& Analyzer::processor()
-   {  return *processorPtr_; }
-
+   inline Configuration& Analyzer::configuration()
+   {  return *configurationPtr_; }
 
 }
 #endif

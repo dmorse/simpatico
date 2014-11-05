@@ -1,6 +1,5 @@
 tools_analyzers_=\
      tools/analyzers/Analyzer.cpp \
-     tools/analyzers/AnalyzerFactory.cpp \
      tools/analyzers/AnalyzerManager.cpp \
      tools/analyzers/AtomMSD.cpp \
      tools/analyzers/TrajectoryWriter.cpp \

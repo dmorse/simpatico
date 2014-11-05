@@ -1,5 +1,5 @@
 /*
-* Simpatico - Processor Package for Polymeric and Molecular Liquids
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2014, The Regents of the University of Minnesota
 * Distributed under the terms of the GNU General Public License.
@@ -7,6 +7,7 @@
 
 #include "TrajectoryWriter.h"
 #include <tools/processor/Processor.h>
+#include <tools/storage/Configuration.h>
 #include <tools/storage/AtomStorage.h>
 #include <tools/storage/GroupStorage.h>
 #include <util/mpi/MpiLoader.h>
@@ -55,6 +56,44 @@ namespace Tools
       #endif
    }
 
+
+   /*
+   * Constructor.
+   */
+   TrajectoryWriter::TrajectoryWriter(Configuration& configuration, 
+                                      Util::FileMaster& fileMaster,
+                                      bool isBinary)
+    : Analyzer(configuration, fileMaster),
+      nSample_(0),
+      isInitialized_(false),
+      isBinary_(isBinary),
+      boundaryPtr_(0),
+      atomStoragePtr_(0)
+      #ifdef INTER_BOND
+      , bondStoragePtr_(0)
+      #endif
+      #ifdef INTER_ANGLE
+      , angleStoragePtr_(0)
+      #endif
+      #ifdef INTER_DIHEDRAL
+      , dihedralStoragePtr_(0)
+      #endif
+   {
+      setClassName("TrajectoryWriter");
+      boundaryPtr_ = &configuration.boundary();
+
+      atomStoragePtr_ = &configuration.atoms();
+      #ifdef INTER_BOND
+      bondStoragePtr_ = &configuration.bonds();
+      #endif
+      #ifdef INTER_ANGLE
+      angleStoragePtr_ = &configuration.angles();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStoragePtr_ = &configuration.dihedrals();
+      #endif
+   }
+
    /*
    * Read interval and outputFileName.
    */
@@ -96,14 +135,11 @@ namespace Tools
    */
    void TrajectoryWriter::setup()
    {  
-      FileMaster& fileMaster = processor().fileMaster();
-      if (isIoProcessor()) {
-         if (isBinary()) {
-            fileMaster.openOutputFile(outputFileName(), outputFile_, 
-                                      std::ios::out | std::ios::binary);
-         } else {
-            fileMaster.openOutputFile(outputFileName(), outputFile_);
-         }
+      if (isBinary()) {
+         fileMaster().openOutputFile(outputFileName(), outputFile_, 
+                                   std::ios::out | std::ios::binary);
+      } else {
+         fileMaster().openOutputFile(outputFileName(), outputFile_);
       }
       writeHeader(outputFile_);
    }

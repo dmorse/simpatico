@@ -6,7 +6,8 @@
 */
 
 #include "Analyzer.h"
-//#include <util/misc/FileMaster.h>
+#include <tools/processor/Processor.h>
+#include <util/misc/FileMaster.h>
 #include <util/global.h>
 
 namespace Tools
@@ -17,18 +18,50 @@ namespace Tools
    /*
    * Constructor.
    */
+   Analyzer::Analyzer(Configuration& configuration)
+    : ParamComposite(),
+      outputFileName_(),
+      configurationPtr_(&configuration),
+      fileMasterPtr_(0),
+      interval_(1),
+      ownsFileMaster_(false)
+   {}
+
+   /*
+   * Constructor.
+   */
    Analyzer::Analyzer(Processor& processor)
     : ParamComposite(),
       outputFileName_(),
-      processorPtr_(&processor),
-      interval_(1)
+      configurationPtr_(&processor),
+      fileMasterPtr_(&processor.fileMaster()),
+      interval_(1),
+      ownsFileMaster_(false)
+   {}
+
+   /*
+   * Constructor.
+   */
+   Analyzer::Analyzer(Configuration& configuration, FileMaster& fileMaster)
+    : ParamComposite(),
+      outputFileName_(),
+      configurationPtr_(&configuration),
+      fileMasterPtr_(&fileMaster),
+      interval_(1),
+      ownsFileMaster_(false)
    {}
 
    /*
    * Destructor.
    */
    Analyzer::~Analyzer()
-   {}
+   {
+      if (fileMasterPtr_) {
+         if (ownsFileMaster_) {
+            delete fileMasterPtr_;
+         }
+      }
+   }
 
    /*
    * Read the interval from parameter file, with error checking.
@@ -63,6 +96,18 @@ namespace Tools
       std::string filename = outputFileName_;
       filename += suffix;
       return filename;
+   }
+
+   /*
+   * Get an associated FileMaster by reference.
+   */
+   FileMaster& Analyzer::fileMaster()
+   {
+      if (fileMasterPtr_ == 0) {
+         fileMasterPtr_ = new FileMaster();
+         ownsFileMaster_ = true;
+      }
+      return *fileMasterPtr_; 
    }
 
 }

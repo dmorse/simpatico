@@ -6,7 +6,6 @@
 */
 
 #include "AnalyzerManager.h" 
-#include "AnalyzerFactory.h" 
 
 namespace Tools
 {
@@ -16,9 +15,8 @@ namespace Tools
    /*
    * Constructor.
    */
-   AnalyzerManager::AnalyzerManager(Processor& processor)
-   : Manager<Analyzer>(),
-     processorPtr_(&processor)
+   AnalyzerManager::AnalyzerManager()
+   : Manager<Analyzer>()
    {  setClassName("AnalyzerManager"); }
 
    /*
@@ -79,12 +77,4 @@ namespace Tools
       }
    }
 
-   /*
-   * Return pointer to default factory.
-   */
-   Factory<Analyzer>* AnalyzerManager::newDefaultFactory() const
-   {
-      return new AnalyzerFactory(*processorPtr_);
-   }
- 
 }

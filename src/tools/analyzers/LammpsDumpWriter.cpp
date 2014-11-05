@@ -6,7 +6,7 @@
 */
 
 #include "LammpsDumpWriter.h"
-#include <tools/processor/Processor.h>
+#include <tools/storage/Configuration.h>
 #include <tools/chemistry/Atom.h>
 #include <tools/chemistry/Group.h>
 
@@ -24,6 +24,14 @@ namespace Tools
    */
    LammpsDumpWriter::LammpsDumpWriter(Processor& processor)
     : TrajectoryWriter(processor, false)
+   {}
+
+   /*
+   * Constructor.
+   */
+   LammpsDumpWriter::LammpsDumpWriter(Configuration& configuration,
+                                      FileMaster& fileMaster)
+    : TrajectoryWriter(configuration, fileMaster, false)
    {}
 
    /*

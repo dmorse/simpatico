@@ -1,5 +1,5 @@
-#ifndef TOOLS_ANALYZER_FACTORY_H
-#define TOOLS_ANALYZER_FACTORY_H
+#ifndef TOOLS_PROCESSOR_ANALYZER_FACTORY_H
+#define TOOLS_PROCESSOR_ANALYZER_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,7 +9,7 @@
 */
 
 #include <util/param/Factory.h>        // base class template
-#include <tools/analyzers/Analyzer.h>   // base template parameter
+#include <tools/analyzers/Analyzer.h>  // base template parameter
 
 namespace Tools
 {
@@ -23,7 +23,7 @@ namespace Tools
    *
    * \ingroup Tools_Analyzer_Module
    */
-   class AnalyzerFactory : public Factory<Analyzer>
+   class ProcessorAnalyzerFactory : public Factory<Analyzer>
    {
 
    public:
@@ -33,7 +33,7 @@ namespace Tools
       *
       * \param processor associated physical Processor
       */
-      AnalyzerFactory(Processor& processor);
+      ProcessorAnalyzerFactory(Processor& processor);
 
       /** 
       * Return pointer to a new Analyzer object.
