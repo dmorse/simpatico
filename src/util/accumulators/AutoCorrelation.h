@@ -31,10 +31,8 @@ namespace Util
 
       /**
       * Constructor
-      *
-      * \param blockFactor ratio of block sizes of subsequent stages
       */
-      AutoCorrelation(int blockFactor = 4);
+      AutoCorrelation();
 
       /**
       * Destructor.
@@ -48,15 +46,6 @@ namespace Util
       */
       void setFileName(std::string outputFileName);
 
-      #if 0
-      /**
-      * Set buffer capacity, allocate memory and initialize.
-      *
-      * \param bufferCapacity max. number of values in buffer
-      */
-      void setCapacity(int bufferCapacity);
-      #endif
-
       /**
       * Register the creation of a descendant stage.
       *
@@ -66,33 +55,6 @@ namespace Util
       */
       virtual void registerDescendant(AutoCorrelation* ptr);
 
-      ///\name Serialization
-      //@{
-
-      /**
-      * Load state from an archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void loadParameters(Serializable::IArchive& ar);
-
-      /**
-      * Save state to an archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchive& ar);
-
-      /**
-      * Serialize to/from an archive.
-      *
-      * \param ar      archive
-      * \param version archive version id
-      */
-      template <class Archive>
-      void serialize(Archive& ar, const unsigned int version);
-
-      //@}
       ///\name Accessors
       //@{
 
@@ -106,9 +68,6 @@ namespace Util
       //@}
 
    private:
-
-      // Base name of output file(s).
-      std::string outputFileName_;
 
       // Pointers to descendant AutoCorrStage objects
       GArray< AutoCorrStage<Data, Product>* > descendants_;

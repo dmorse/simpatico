@@ -22,17 +22,9 @@ namespace Util
    * \param blockFactor ratio of block sizes of subsequent stages
    */
    template <typename Data, typename Product>
-   AutoCorrelation<Data, Product>::AutoCorrelation(int blockFactor = 4)
-    : AutoCorrStage(blockFactor)
+   AutoCorrelation<Data, Product>::AutoCorrelation()
+    : AutoCorrStage()
    {}
-
-   /*
-   * Set the base output file name.
-   */
-   template <typename Data, typename Product>
-   void 
-   AutoCorrelation<Data, Product>::setOutputFileName(std::string outputFileName)
-   {  outputFileName_ = outputFileName; }
 
    /*
    * Register the creation of a descendant stage.
@@ -41,38 +33,6 @@ namespace Util
    virtual void 
    AutoCorrelation<Data, Product>::registerDescendant(AutoCorrelation* ptr)
    {}
-
-   /*
-   * Load state from an archive.
-   */
-   template <typename Data, typename Product>
-   virtual void 
-   AutoCorrelation<Data, Product>::loadParameters(Serializable::IArchive& ar)
-   {
-      AutoCorrStage::load(ar);
-   }
-
-   /*
-   * Save state to an archive.
-   */
-   template <typename Data, typename Product>
-   virtual void 
-   AutoCorrelation<Data, Product>::save(Serializable::OArchive& ar)
-   {
-      AutoCorrStage::save(ar);
-   }
-
-   /*
-   * Serialize to/from an archive.
-   */
-   template <class Archive>
-   template <typename Data, typename Product>
-   void 
-   AutoCorrelation<Data, Product>::serialize(Archive& ar, 
-                                             const unsigned int version)
-   {
-      AutoCorrStage::serialize(ar, version);
-   }
 
    /*
    * Output the autocorrelation function
