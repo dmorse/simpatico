@@ -181,8 +181,9 @@ namespace Util
 
       ar & blockSum_;
       ar & nBlockSample_;
+      ar & blockFactor_;
 
-      // Constructor sets blockFactor_, stageInterval_, and stageId_
+      // Constructor always sets stageInterval_ and stageId_
 
       // Does this stage have a child?
       int hasChild;
@@ -248,8 +249,16 @@ namespace Util
    {
       //Data  ave = sum_/double(nSample_);
       //Product aveSq = product(ave, ave);
+
+      int min;
+      if (stageId_ == 0) {
+         min = 0;
+      } else {
+         min = bufferCapacity_ / blockFactor_;
+      }
+
       Product autocorr;
-      for (int i = 0; i < buffer_.size(); ++i) {
+      for (int i = min; i < buffer_.size(); ++i) {
          autocorr = corr_[i]/double(nCorr_[i]);
          //autocorr = autocorr - aveSq;
          outFile << Int(i*stageInterval_) << " ";
