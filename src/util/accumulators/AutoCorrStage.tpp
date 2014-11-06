@@ -12,9 +12,8 @@
 
 #include <util/accumulators/setToZero.h>
 #include <util/accumulators/product.h>
-#include <util/space/Vector.h>
 #include <util/format/Int.h>
-#include <util/format/Dbl.h>
+//#include <util/format/Dbl.h>
 #include <util/format/write.h>
 
 #include <complex>
@@ -25,39 +24,32 @@ using std::complex;
 namespace Util
 {
 
-   #if 0
-   /*
-   * Default constructor.
-   */
-   template <typename Data, typename Product>
-   AutoCorrStage<Data, Product>::AutoCorr()
-   {
-      setClassName("AutoCorr");
-      setToZero(sum_);
-   }
-   #endif
-
    /*
    * Constructor for rootPtr AutoCorrStage, with stageId = 0.
    */
    template <typename Data, typename Product>
-   AutoCorrStage<Data, Product>::AutoCorrStage(int blockFactor)
+   AutoCorrStage<Data, Product>::AutoCorrStage()
     : buffer_(),
       corr_(),
       nCorr_(),
+      sum_(),
       bufferCapacity_(0),
       nSample_(0),
-      blockSum_(0.0),
+      blockSum_(),
       nBlockSample_(0),
       stageInterval_(1),
       childPtr_(0),
       rootPtr_(0),
       stageId_(0),
-      blockFactor_(blockFactor)
-   {  rootPtr_ = this; }
+      blockFactor_(1)
+   {  
+      rootPtr_ = this; 
+      setToZero(sum_);
+      setToZero(blockSum_);
+   }
 
    /*
-   * Constructor for dynamically generated objects with stageId > 0.
+   * Private constructor for stages with stageId > 0.
    */
    template <typename Data, typename Product>
    AutoCorrStage<Data, Product>::AutoCorrStage(long stageInterval, 
@@ -67,9 +59,10 @@ namespace Util
     : buffer_(),
       corr_(),
       nCorr_(),
+      sum_(),
       bufferCapacity_(rootPtr->bufferCapacity()),
       nSample_(0),
-      blockSum_(0.0),
+      blockSum_(),
       nBlockSample_(0),
       stageInterval_(stageInterval),
       childPtr_(0),
@@ -78,6 +71,8 @@ namespace Util
       blockFactor_(blockFactor)
    { 
       allocate(); 
+      setToZero(sum_);
+      setToZero(blockSum_);
    }
 
    /*
@@ -95,9 +90,10 @@ namespace Util
    * Set buffer capacity and initialize.
    */
    template <typename Data, typename Product>
-   void AutoCorrStage<Data, Product>::setCapacity(int bufferCapacity)
+   void AutoCorrStage<Data, Product>::setParam(int bufferCapacity, int blockFactor)
    {
       bufferCapacity_ = bufferCapacity;
+      blockFactor_ = blockFactor;
       allocate();
    }
 
@@ -108,8 +104,8 @@ namespace Util
    void AutoCorrStage<Data, Product>::clear()
    {
       setToZero(sum_);
+      setToZero(blockSum_);
       nSample_ = 0;
-      blockSum_ = 0.0;
       nBlockSample_ = 0;
       if (bufferCapacity_ > 0) {
          for (int i=0; i < bufferCapacity_; ++i) {
@@ -117,9 +113,6 @@ namespace Util
             nCorr_[i] = 0;
          }
          buffer_.clear();
-      }
-      if (childPtr_) {
-         delete childPtr_;
       }
    }
 
@@ -129,15 +122,20 @@ namespace Util
    template <typename Data, typename Product>
    void AutoCorrStage<Data, Product>::sample(Data value)
    {
+      if (bufferCapacity_ <= 0) {
+         bufferCapacity_ = 64;
+         blockFactor_ = 2;
+         allocate();
+      }
 
       // Increment global accumulators
-      ++nSample_;
       sum_ += value;
       buffer_.append(value);
       for (int i=0; i < buffer_.size(); ++i) {
          corr_[i] += product(buffer_[i], value);
          ++nCorr_[i];
       };
+      ++nSample_;
 
       // Increment block accumulators
       blockSum_ += value;
@@ -157,7 +155,7 @@ namespace Util
          childPtr_->sample(blockSum_ / double(blockFactor_));
 
          // Reset block accumulators
-         blockSum_ = 0.0;
+         setToZero(blockSum_);
          nBlockSample_ = 0;
 
       }
@@ -173,18 +171,18 @@ namespace Util
    AutoCorrStage<Data, Product>::serialize(Archive& ar,
                                            const unsigned int version)
    {
-      ar & bufferCapacity_;
       ar & buffer_;
       ar & corr_;
       ar & nCorr_;
       ar & sum_;
+      ar & bufferCapacity_;
       ar & nSample_;
       isValid();
 
       ar & blockSum_;
       ar & nBlockSample_;
-      ar & stageInterval_;
-      ar & blockFactor_;
+
+      // Constructor sets blockFactor_, stageInterval_, and stageId_
 
       // Does this stage have a child?
       int hasChild;
@@ -238,36 +236,29 @@ namespace Util
    */
    template <typename Data, typename Product>
    Data AutoCorrStage<Data, Product>::average() const
-   {
-      Data ave  = sum_;
-      ave /= double(nSample_);
-      return ave;
+   { 
+      return sum_/double(nSample_); 
    }
 
    /*
-   * Final output
+   * Calculate and output autocorrelation function.
    */
    template <typename Data, typename Product>
    void AutoCorrStage<Data, Product>::output(std::ostream& outFile)
    {
-      Data    ave;
+      //Data  ave = sum_/double(nSample_);
+      //Product aveSq = product(ave, ave);
       Product autocorr;
-      //Product aveSq;
-
-      // Calculate and output average of sampled values
-      ave  = sum_;
-      ave /= double(nSample_);
-      //aveSq = product(ave, ave);
-
-      // Calculate and output autocorrelation
       for (int i = 0; i < buffer_.size(); ++i) {
          autocorr = corr_[i]/double(nCorr_[i]);
          //autocorr = autocorr - aveSq;
-         outFile << Int(i);
+         outFile << Int(i*stageInterval_) << " ";
          write<Product>(outFile, autocorr);
          outFile << std::endl;
       }
-
+      if (childPtr_) {
+         childPtr_->output(outFile);
+      }
    }
 
    /*
@@ -276,29 +267,19 @@ namespace Util
    template <typename Data, typename Product>
    double AutoCorrStage<Data, Product>::corrTime() const
    {
-      Data    ave;
-      Product aveSq, variance, autocorr, sum;
-      int     size;
-
-      size = buffer_.size();
-
-      // Calculate average sampled values
-      ave   = sum_/double(nSample_);
-      ave  /= double(nSample_);
-      aveSq = product(ave, ave);
-
-      // Calculate variance sampled values
-      variance = corr_[0]/double(nCorr_[0]);
+      Data ave = sum_/double(nSample_);
+      Product aveSq = product(ave, ave);
+      Product variance = corr_[0]/double(nCorr_[0]);
       variance = variance - aveSq;
-
+      Product autocorr, sum;
       setToZero(sum);
+      int  size = buffer_.size();
       for (int i = 1; i < size/2; ++i) {
          autocorr = corr_[i]/double(nCorr_[i]);
          autocorr = autocorr - aveSq;
-         sum     += autocorr;
+         sum += autocorr;
       }
       sum = sum/variance;
-
       return sum;
    }
 
@@ -310,20 +291,11 @@ namespace Util
    template <typename Data, typename Product>
    Product AutoCorrStage<Data, Product>::autoCorrelation(int t) const
    {
-      Data ave;
-      Product autocorr;
-      Product aveSq;
-
-      // Calculate average of sampled values
-      ave  = sum_;
-      ave /= double(nSample_);
-      aveSq = product(ave, ave);
-
-      // Calculate and return autocorrelation
       assert(t < buffer_.size());
-      autocorr = corr_[t]/double(nCorr_[t]);
-      autocorr = autocorr - aveSq;
-
+      Product autocorr = corr_[t]/double(nCorr_[t]);
+      Data ave  = sum_/double(nSample_);
+      Product aveSq = product(ave, ave);
+      autocorr -= aveSq;
       return autocorr;
    }
 

@@ -67,7 +67,7 @@ namespace Util
       *
       * \param blockFactor ratio of block sizes of subsequent stages
       */
-      AutoCorrStage(int blockFactor = 4);
+      AutoCorrStage();
 
       /**
       * Destructor.
@@ -80,8 +80,9 @@ namespace Util
       * Set the buffer (history) capacity.
       *
       * \param bufferCapacity max. number of values stored in buffer
+      * \param blockFactor ratio of block sizes of subsequent stages
       */
-      void setCapacity(int bufferCapacity);
+      void setParam(int bufferCapacity = 64, int blockFactor = 2);
 
       /**
       * Sample a value.
@@ -208,7 +209,7 @@ namespace Util
       /// Stage index
       int stageId_;
 
-      /// Number of samples per block.
+      /// Number of samples per block (interval ratio for successive stages)
       int blockFactor_;
 
       /**

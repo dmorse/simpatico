@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "AutoCorrelation.h"  
+//#include "AutoCorrelation.h"  
 #include "AutoCorrStage.tpp"  
 
 #include <string>
@@ -16,7 +16,7 @@
 namespace Util
 {
 
-   template class AutoCorrelation<double, double>;
+   //template class AutoCorrelation<double, double>;
    template class AutoCorrStage<double, double>;
 }
 #endif
