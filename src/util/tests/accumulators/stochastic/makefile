@@ -1,15 +1,15 @@
-SRC_DIR_REL =../../../../src
+SRC_DIR_REL =../../../..
 
 include $(SRC_DIR_REL)/config.mk
-include $(SRC_DIR)/util/config.mk
-include $(TESTS_DIR)/util/patterns.mk
+include $(BLD_DIR)/util/config.mk
+include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
-
 
 include sources.mk
 
 all: $(tests_util_accumulators_stochastic_OBJS)
 	cd autocorr; $(MAKE) all
+	cd autoCorrelation; $(MAKE) all
 	cd average;  $(MAKE) all
 	cd averageStage; $(MAKE) all
 	cd meanSqDisp; $(MAKE) all
@@ -17,6 +17,7 @@ all: $(tests_util_accumulators_stochastic_OBJS)
 
 clean:
 	cd autocorr; $(MAKE) clean
+	cd autoCorrelation; $(MAKE) clean
 	cd average;  $(MAKE) clean
 	cd averageStage; $(MAKE) clean
 	cd meanSqDisp; $(MAKE) clean

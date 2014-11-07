@@ -1,24 +1,26 @@
-SRC_DIR_REL =../../../../../src
+SRC_DIR_REL =../../../../..
 
 include $(SRC_DIR_REL)/config.mk
-include $(SRC_DIR)/util/config.mk
-include $(TESTS_DIR)/util/patterns.mk
+include $(BLD_DIR)/util/config.mk
+include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 
 
 include sources.mk
 
-all: $(tests_util_accumulators_stochastic_autocorr_OBJS) AutoCorrTest
+all: $(util_tests_accumulators_stochastic_autocorr_OBJS) AutoCorrTest
 
 clean:
-	rm -f $(tests_util_accumulators_stochastic_autocorr_OBJS) AutoCorrTest $(tests_util_accumulators_stochastic_autocorr_OBJS:.o=.d)
+	rm -f $(util_tests_accumulators_stochastic_autocorr_OBJS)
+	rm -f $(util_tests_accumulators_stochastic_autocorr_OBJS:.o=.d)
+	rm -f AutoCorrTest 
 
 clean-deps:
-	rm -f $(tests_util_accumulators_stochastic_autocorr_OBJS:.o=.d)
+	rm -f $(util_tests_accumulators_stochastic_autocorr_OBJS:.o=.d)
 
 AutoCorrTest: AutoCorrTest.o $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o AutoCorrTest AutoCorrTest.o \
 	       $(util_LIB)
 
--include $(tests_util_accumulators_stochastic_autocorr_OBJS:.o=.d)
+-include $(util_tests_accumulators_stochastic_autocorr_OBJS:.o=.d)
 
