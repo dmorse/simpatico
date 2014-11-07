@@ -50,6 +50,18 @@ namespace Util
       */
       virtual void registerDescendant(AutoCorrStage<Data, Product>* ptr);
 
+      using AutoCorrStage<Data, Product>::sample;
+      using AutoCorrStage<Data, Product>::setParam;
+      using AutoCorrStage<Data, Product>::clear;
+      using AutoCorrStage<Data, Product>::serialize;
+      using AutoCorrStage<Data, Product>::bufferCapacity;
+      using AutoCorrStage<Data, Product>::nSample;
+      using AutoCorrStage<Data, Product>::average;
+      using AutoCorrStage<Data, Product>::corrTime;
+      using AutoCorrStage<Data, Product>::autoCorrelation;
+      using AutoCorrStage<Data, Product>::stageInterval;
+      //using AutoCorrStage<Data, Product>::output;
+
    private:
 
       // Pointers to descendant AutoCorrStage objects

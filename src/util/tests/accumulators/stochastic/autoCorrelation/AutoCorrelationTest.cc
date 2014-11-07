@@ -9,7 +9,7 @@
 #include <util/space/Tensor.h>
 #include <util/containers/DArray.h>
 #include <util/containers/FArray.h>
-#include <util/accumulators/AutoCorrelation.h>     // template 
+#include <util/accumulators/AutoCorrelation.tpp>     // template 
 #include <util/accumulators/Average.h>
 
 #include <iostream>
@@ -41,13 +41,13 @@ public:
    }
 
 
-   void testAutoCorrDouble() 
+   void testAutoCorrDouble(int maxStageId) 
    {
       setUp("testAutoCorrDouble");
 
       AutoCorrelation<double, double> autocorr;
-      Average average;
-      //autocorr.setBufferCapacity(100);
+      //Average average;
+      autocorr.setParam(64, maxStageId);
       //average.setNSamplePerBlock(1);
 
       Ar1Process process(random_);
@@ -66,12 +66,12 @@ public:
       tearDown();
    }
 
-   void testAutoCorrVector() 
+   void testAutoCorrVector(int maxStageId) 
    {
       setUp("testAutoVector");
 
       AutoCorrelation<Vector, double> autocorr;
-      //autocorr.setBufferCapacity(100);
+      autocorr.setParam(64, maxStageId);
 
       Ar1Process process0(random_);
       Ar1Process process1(random_);
@@ -143,8 +143,9 @@ int main()
 {
    AutoCorrelationTest test;
 
-   test.testAutoCorrDouble();
-   test.testAutoCorrVector();
+   test.testAutoCorrDouble(0);
+   test.testAutoCorrDouble(3);
+   test.testAutoCorrVector(3);
    //test.testAutoCorrSerialize();
 }
 
