@@ -13,7 +13,6 @@
 #include <util/accumulators/setToZero.h>
 #include <util/accumulators/product.h>
 #include <util/format/Int.h>
-//#include <util/format/Dbl.h>
 #include <util/format/write.h>
 
 #include <complex>
@@ -41,6 +40,7 @@ namespace Util
       childPtr_(0),
       rootPtr_(0),
       stageId_(0),
+      maxStageId_(10),
       blockFactor_(1)
    {  
       rootPtr_ = this; 
@@ -53,8 +53,8 @@ namespace Util
    */
    template <typename Data, typename Product>
    AutoCorrStage<Data, Product>::AutoCorrStage(long stageInterval, 
-                                               int stageId, 
-                                               AutoCorrStage* rootPtr, 
+                                               int stageId, int maxStageId,
+                                               AutoCorrStage<Data, Product>* rootPtr, 
                                                int blockFactor)
     : buffer_(),
       corr_(),
@@ -68,6 +68,7 @@ namespace Util
       childPtr_(0),
       rootPtr_(rootPtr),
       stageId_(stageId),
+      maxStageId_(maxStageId),
       blockFactor_(blockFactor)
    { 
       allocate(); 
@@ -90,9 +91,11 @@ namespace Util
    * Set buffer capacity and initialize.
    */
    template <typename Data, typename Product>
-   void AutoCorrStage<Data, Product>::setParam(int bufferCapacity, int blockFactor)
+   void AutoCorrStage<Data, Product>::setParam(int bufferCapacity, 
+                                               int maxStageId, int blockFactor)
    {
       bufferCapacity_ = bufferCapacity;
+      maxStageId_ = maxStageId;
       blockFactor_ = blockFactor;
       allocate();
    }
@@ -125,6 +128,7 @@ namespace Util
       if (bufferCapacity_ <= 0) {
          bufferCapacity_ = 64;
          blockFactor_ = 2;
+         maxStageId_ = 10;
          allocate();
       }
 
@@ -142,22 +146,21 @@ namespace Util
       ++nBlockSample_;
 
       if (nBlockSample_ == blockFactor_) {
-
-         if (!childPtr_) {
-            long nextStageInterval = stageInterval_*blockFactor_;
-            int  nextStageId = stageId_ + 1;
-            childPtr_ = new AutoCorrStage(nextStageInterval, nextStageId, 
-                                         rootPtr_, blockFactor_);
-            rootPtr_->registerDescendant(childPtr_);
+         if (stageId_ < maxStageId_) {
+            if (!childPtr_) {
+               long nextStageInterval = stageInterval_*blockFactor_;
+               int  nextStageId = stageId_ + 1;
+               childPtr_ = new AutoCorrStage(nextStageInterval, nextStageId, 
+                                             maxStageId_, rootPtr_, blockFactor_);
+               rootPtr_->registerDescendant(childPtr_);
+            }
+            // Add block average as first value in child sequence 
+            blockSum_ /= double(blockFactor_);
+            childPtr_->sample(blockSum_);
          }
-
-         // Add block average as first value in child sequence 
-         childPtr_->sample(blockSum_ / double(blockFactor_));
-
          // Reset block accumulators
          setToZero(blockSum_);
          nBlockSample_ = 0;
-
       }
 
    }
@@ -342,7 +345,7 @@ namespace Util
 
    template <typename Data, typename Product>
    void 
-   AutoCorrStage<Data, Product>::registerDescendant(AutoCorrStage* ptr)
+   AutoCorrStage<Data, Product>::registerDescendant(AutoCorrStage<Data, Product>* ptr)
    {}
 
 }

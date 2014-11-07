@@ -8,7 +8,6 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/ParamComposite.h>    // Base class
 #include <util/containers/RingBuffer.h>   // member
 #include <util/containers/DArray.h>       // member
 #include <util/global.h>
@@ -53,7 +52,7 @@ namespace Util
    * \ingroup Accumulators_Module
    */
    template <typename Data, typename Product>
-   class AutoCorrStage : public ParamComposite
+   class AutoCorrStage 
    {
 
    public:
@@ -80,9 +79,10 @@ namespace Util
       * Set the buffer (history) capacity.
       *
       * \param bufferCapacity max. number of values stored in buffer
+      * \param maxStageId maximum stage index (0=primary)
       * \param blockFactor ratio of block sizes of subsequent stages
       */
-      void setParam(int bufferCapacity = 64, int blockFactor = 2);
+      void setParam(int bufferCapacity = 64, int maxStageId = 10, int blockFactor = 2);
 
       /**
       * Sample a value.
@@ -103,7 +103,7 @@ namespace Util
       *
       * \param ptr pointer to a descendant AutoCorrStage.
       */
-      virtual void registerDescendant(AutoCorrStage* ptr);
+      virtual void registerDescendant(AutoCorrStage<Data, Product>* ptr);
 
       /**
       * Serialize to/from an archive.
@@ -192,7 +192,7 @@ namespace Util
       long nSample_;
 
       /// Sum of sampled values in the current block.
-      double blockSum_;
+      Data blockSum_;
 
       /// Number of values in the current block.
       long nBlockSample_;
@@ -201,13 +201,16 @@ namespace Util
       long stageInterval_;
 
       /// Pointer to child stage, if any.
-      AutoCorrStage* childPtr_;
+      AutoCorrStage<Data, Product>* childPtr_;
 
       /// Pointer to root stage. 
-      AutoCorrStage* rootPtr_;
+      AutoCorrStage<Data, Product>* rootPtr_;
 
       /// Stage index
       int stageId_;
+
+      /// Maximum allowed stage index
+      int maxStageId_;
 
       /// Number of samples per block (interval ratio for successive stages)
       int blockFactor_;
@@ -216,12 +219,14 @@ namespace Util
       * Constructor for child objects.
       *
       * \param stageInterval  number of primary values per sample
-      * \param stageId  integer id for this stage
-      * \param rootPtr  pointer to root AutoCorrStage
-      * \param blockFactor  ratio of block sizes of subsequent stages
+      * \param stageId integer id for this stage
+      * \param maxStageId integer id for this stage
+      * \param rootPtr pointer to root AutoCorrStage
+      * \param maxStageId index of the highest stage (primary=0)
+      * \param blockFactor ratio of block sizes of subsequent stages
       */
-      AutoCorrStage(long stageInterval, int stageId, 
-                    AutoCorrStage* rootPtr, int blockFactor);
+      AutoCorrStage(long stageInterval, int stageId, int maxStageId,
+                    AutoCorrStage<Data, Product>* rootPtr, int blockFactor);
 
       /**
       * Copy constructor - private and not implemented.

@@ -8,15 +8,21 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-//#include "AutoCorrelation.h"  
+#include "AutoCorrelation.tpp"  
 #include "AutoCorrStage.tpp"  
+#include <util/space/Vector.h>
+#include <util/space/Tensor.h>
+
+#include <complex>
 
 #include <string>
 
 namespace Util
 {
-
-   //template class AutoCorrelation<double, double>;
+   template class AutoCorrelation<double, double>;
+   template class AutoCorrelation<std::complex<double>, std::complex<double> >;
+   template class AutoCorrelation<Vector, double>;
+   template class AutoCorrelation<Tensor, double>;
    template class AutoCorrStage<double, double>;
 }
 #endif
