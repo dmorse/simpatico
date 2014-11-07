@@ -1,5 +1,5 @@
-#ifndef UTIL_AUTOCORR_STAGE_H
-#define UTIL_AUTOCORR_STAGE_H
+#ifndef UTIL_AUTO_CORR_STAGE_H
+#define UTIL_AUTO_CORR_STAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

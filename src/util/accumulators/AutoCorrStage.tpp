@@ -201,7 +201,7 @@ namespace Util
             long nextStageInterval = stageInterval_*blockFactor_;
             int  nextStageId       = stageId_ + 1;
             childPtr_ = new AutoCorrStage(nextStageInterval, 
-                                          nextStageId,
+                                          nextStageId, maxStageId_,
                                           rootPtr_, blockFactor_);
             rootPtr_->registerDescendant(childPtr_);
          }
