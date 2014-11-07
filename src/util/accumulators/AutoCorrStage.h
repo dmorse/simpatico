@@ -82,7 +82,7 @@ namespace Util
       * \param maxStageId maximum stage index (0=primary)
       * \param blockFactor ratio of block sizes of subsequent stages
       */
-      void setParam(int bufferCapacity = 64, int maxStageId = 10, int blockFactor = 2);
+      void setParam(int bufferCapacity=64, int maxStageId=0, int blockFactor=2);
 
       /**
       * Sample a value.
