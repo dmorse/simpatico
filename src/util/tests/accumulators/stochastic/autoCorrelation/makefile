@@ -6,19 +6,15 @@ include $(SRC_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include sources.mk
 
-all: $(util_tests_accumulators_stochastic_autoCorrelation_OBJS) AutoCorrStageTest
+all: $(util_tests_accumulators_stochastic_autoCorrelation_OBJS) AutoCorrelationTest
 
 clean:
 	rm -f $(util_tests_accumulators_stochastic_autoCorrelation_OBJS) 
 	rm -f $(util_tests_accumulators_stochastic_autoCorrelation_OBJS:.o=.d)
-	rm -f AutoCorrStageTest AutoCorrelationTest
+	rm -f AutoCorrelationTest
 
 clean-deps:
 	rm -f $(util_tests_accumulators_stochastic_autoCorrelation_OBJS:.o=.d)
-
-AutoCorrStageTest: AutoCorrStageTest.o $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o AutoCorrStageTest AutoCorrStageTest.o \
-	       $(util_LIB)
 
 AutoCorrelationTest: AutoCorrelationTest.o $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o AutoCorrelationTest AutoCorrelationTest.o \

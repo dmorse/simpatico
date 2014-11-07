@@ -1,5 +1,4 @@
 util_tests_accumulators_stochastic_autoCorrelation_ = \
-    util/tests/accumulators/stochastic/autoCorrelation/AutoCorrStageTest.cc \
     util/tests/accumulators/stochastic/autoCorrelation/AutoCorrelationTest.cc 
 
 util_tests_accumulators_stochastic_autoCorrelation_SRCS=\
