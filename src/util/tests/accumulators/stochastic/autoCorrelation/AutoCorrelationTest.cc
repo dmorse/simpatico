@@ -1,5 +1,5 @@
-#ifndef AUTO_CORR_STAGE_TEST_H
-#define AUTO_CORR_STAGE_TEST_H
+#ifndef AUTO_CORRELATION_TEST_H
+#define AUTO_CORRELATION_TEST_H
 
 #include <util/archives/MemoryOArchive.h>
 #include <util/archives/MemoryIArchive.h>
@@ -9,7 +9,7 @@
 #include <util/space/Tensor.h>
 #include <util/containers/DArray.h>
 #include <util/containers/FArray.h>
-#include <util/accumulators/AutoCorrStage.h>     // template 
+#include <util/accumulators/AutoCorrelation.h>     // template 
 #include <util/accumulators/Average.h>
 
 #include <iostream>
@@ -18,12 +18,12 @@
 
 using namespace Util;
 
-class AutoCorrStageTest 
+class AutoCorrelationTest 
 {
 
 public:
 
-   AutoCorrStageTest()
+   AutoCorrelationTest()
     : verbose_(2)
    {}
 
@@ -45,7 +45,7 @@ public:
    {
       setUp("testAutoCorrDouble");
 
-      AutoCorrStage<double, double> autocorr;
+      AutoCorrelation<double, double> autocorr;
       Average average;
       //autocorr.setBufferCapacity(100);
       //average.setNSamplePerBlock(1);
@@ -70,7 +70,7 @@ public:
    {
       setUp("testAutoVector");
 
-      AutoCorrStage<Vector, double> autocorr;
+      AutoCorrelation<Vector, double> autocorr;
       //autocorr.setBufferCapacity(100);
 
       Ar1Process process0(random_);
@@ -99,7 +99,7 @@ public:
    {
       setUp("testAutoCorrSerialize");
 
-      AutoCorrStage<double, double> autocorr;
+      AutoCorrelation<double, double> autocorr;
       Average average;
       autocorr.setParam(100);
       average.setNSamplePerBlock(1);
@@ -119,7 +119,7 @@ public:
       MemoryOArchive u;
       MemoryIArchive v;
       u.allocate(autocorr.packedSize());
-      AutoCorrStage<double, double> clone;
+      AutoCorrelation<double, double> clone;
       u << autocorr;
       v = u;
       v >> clone;
@@ -141,10 +141,10 @@ private:
 
 int main()
 {
-   AutoCorrStageTest test;
+   AutoCorrelationTest test;
 
    test.testAutoCorrDouble();
-   //test.testAutoCorrVector();
+   test.testAutoCorrVector();
    //test.testAutoCorrSerialize();
 }
 

@@ -23,23 +23,27 @@ namespace Util
    */
    template <typename Data, typename Product>
    AutoCorrelation<Data, Product>::AutoCorrelation()
-    : AutoCorrStage()
-   {}
+    : AutoCorrStage<Data, Product>()
+   {
+      descendants_.append(this);
+   }
 
    /*
    * Register the creation of a descendant stage.
    */
-   template <typename Data, typename Product>
-   virtual void 
-   AutoCorrelation<Data, Product>::registerDescendant(AutoCorrelation* ptr)
-   {}
+   template <typename Data, typename Product> 
+   void 
+   AutoCorrelation<Data, Product>::registerDescendant(AutoCorrStage<Data, Product>* ptr)
+   {  descendants_.append(ptr); }
 
    /*
    * Output the autocorrelation function
    */
    template <typename Data, typename Product>
-   virtual void AutoCorrelation<Data, Product>::output()
-   {}
+   void AutoCorrelation<Data, Product>::output(std::ostream& out)
+   {
+      AutoCorrStage<Data, Product>::output(out);
+   }
 
 }
 #endif

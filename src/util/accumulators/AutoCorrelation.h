@@ -16,7 +16,7 @@ namespace Util
 {
 
    /**
-   * Hierarchical auto-correlation function algorithm.
+   * Auto-correlation function, using hierarchical algorithm.
    *
    * This class represents the primary stage of a linked list of
    * AutoCorrelation objects.
@@ -35,37 +35,20 @@ namespace Util
       AutoCorrelation();
 
       /**
-      * Destructor.
-      *
-      * Recursively destroy all descendant stages.
-      */
-      virtual ~AutoCorrelation();
-
-      /**
-      * Set the base output file name.
-      */
-      void setFileName(std::string outputFileName);
-
-      /**
-      * Register the creation of a descendant stage.
-      *
-      * This should be called only by a root stage.
-      *
-      * \param ptr pointer to a descendant AutoCorrelation.
-      */
-      virtual void registerDescendant(AutoCorrelation* ptr);
-
-      ///\name Accessors
-      //@{
-
-      /**
       * Output the autocorrelation function
       *
       * \param out output stream.
       */
       virtual void output(std::ostream& out);
 
-      //@}
+      /**
+      * Register a descendant stage.
+      *
+      * This should be called only by a root stage.
+      *
+      * \param ptr pointer to a descendant AutoCorrelation.
+      */
+      virtual void registerDescendant(AutoCorrStage<Data, Product>* ptr);
 
    private:
 
