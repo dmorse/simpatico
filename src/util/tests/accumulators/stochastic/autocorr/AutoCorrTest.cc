@@ -246,6 +246,7 @@ public:
    }
    #endif
 
+   #if 0
    void testAutoCorrSerialize() 
    {
       setUp("testAutoCorrSerialize");
@@ -278,6 +279,7 @@ public:
       clone.output(std::cout);
       tearDown();
    }
+   #endif
 
    Random& random() 
    { return random_; }
@@ -300,7 +302,7 @@ int main()
    test.testAutoCorrArrayVector();
    test.testAutoCorrArrayTensor();
    //test.testAutoCorrPack();
-   test.testAutoCorrSerialize();
+   //test.testAutoCorrSerialize();
 }
 
 #endif
