@@ -131,6 +131,11 @@ namespace Util
       int bufferCapacity() const;
 
       /**
+      * Return current size of history buffer.
+      */
+      int bufferSize() const;
+
+      /**
       * Return the number of sampled values.
       */
       long nSample() const;

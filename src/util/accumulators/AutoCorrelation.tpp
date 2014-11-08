@@ -33,17 +33,31 @@ namespace Util
    */
    template <typename Data, typename Product> 
    void 
-   AutoCorrelation<Data, Product>::registerDescendant(AutoCorrStage<Data, Product>* ptr)
+   AutoCorrelation<Data, Product>
+                  ::registerDescendant(AutoCorrStage<Data, Product>* ptr)
    {  descendants_.append(ptr); }
 
+   /*
+   * Return the maximum delay.
+   */
+   template <typename Data, typename Product> 
+   int AutoCorrelation<Data, Product>::maxDelay() const
+   {
+      int iStage = descendants_.size() - 1;
+      AutoCorrStage<Data, Product>* stagePtr = descendants_[iStage];
+      int interval = stagePtr->stageInterval();
+      int size = stagePtr->bufferSize();
+      return (size - 1)*interval;
+   }
+
+   #if 0
    /*
    * Output the autocorrelation function
    */
    template <typename Data, typename Product>
    void AutoCorrelation<Data, Product>::output(std::ostream& out)
-   {
-      AutoCorrStage<Data, Product>::output(out);
-   }
+   {  AutoCorrStage<Data, Product>::output(out); }
+   #endif
 
 }
 #endif

@@ -35,11 +35,18 @@ namespace Util
       AutoCorrelation();
 
       /**
+      * Return maximum delay, in primary samples.
+      */
+      int maxDelay() const;
+
+      #if 0
+      /**
       * Output the autocorrelation function
       *
       * \param out output stream.
       */
       virtual void output(std::ostream& out);
+      #endif
 
       /**
       * Register a descendant stage.
@@ -50,17 +57,17 @@ namespace Util
       */
       virtual void registerDescendant(AutoCorrStage<Data, Product>* ptr);
 
-      using AutoCorrStage<Data, Product>::sample;
       using AutoCorrStage<Data, Product>::setParam;
+      using AutoCorrStage<Data, Product>::sample;
       using AutoCorrStage<Data, Product>::clear;
       using AutoCorrStage<Data, Product>::serialize;
+      using AutoCorrStage<Data, Product>::output;
       using AutoCorrStage<Data, Product>::bufferCapacity;
       using AutoCorrStage<Data, Product>::nSample;
       using AutoCorrStage<Data, Product>::average;
       using AutoCorrStage<Data, Product>::corrTime;
       using AutoCorrStage<Data, Product>::autoCorrelation;
       using AutoCorrStage<Data, Product>::stageInterval;
-      //using AutoCorrStage<Data, Product>::output;
 
    private:
 

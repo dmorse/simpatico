@@ -63,6 +63,11 @@ public:
       }
       autocorr.output(std::cout);
       //average.output(std::cout);
+
+      std::cout << "maxDelay = " 
+                << autocorr.maxDelay()
+                << std::endl;
+
       tearDown();
    }
 
@@ -81,7 +86,7 @@ public:
       process1.init(tau);
       process2.init(tau);
 
-      int    nSample =  100000;
+      int    nSample = 100000;
       Vector x;
       for (int i=0; i < nSample; i++) {
          x[0] = process0();
@@ -90,6 +95,9 @@ public:
          autocorr.sample(x);
       }
       autocorr.output(std::cout);
+      std::cout << "maxDelay = " 
+                << autocorr.maxDelay()
+                << std::endl;
 
       tearDown();
    }

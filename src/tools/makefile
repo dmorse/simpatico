@@ -60,7 +60,7 @@ ifeq ($(BLD_DIR),$(SRC_DIR))
 	rm -f config/ConfigReaderFactory.cpp
 	rm -f config/ConfigWriterFactory.cpp
 	rm -f trajectory/TrajectoryReaderFactory.cpp
-	rm -f analyzers/AnalyzerFactory.cpp
+	rm -f processor/ProcessorAnalyzerFactory.cpp
 endif
 
 #-----------------------------------------------------------------------

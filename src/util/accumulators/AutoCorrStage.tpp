@@ -222,6 +222,13 @@ namespace Util
    {  return bufferCapacity_; }
 
    /*
+   * Return current size of the history buffer.
+   */
+   template <typename Data, typename Product>
+   int AutoCorrStage<Data, Product>::bufferSize() const
+   {  return buffer_.size(); }
+
+   /*
    * Return the number of sampled values.
    */
    template <typename Data, typename Product>
