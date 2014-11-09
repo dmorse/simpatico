@@ -1,0 +1,96 @@
+namespace Topo{
+
+   class Topo::Species -> replaces current McMd::Species
+   class Topo::Group   -> replaces current McMd::SpeciesGroup
+
+}
+
+Questions:
+
+1) Must Topo::Species be abstract? If not, what can it contain?
+
+Alternative #1: Pimpl idiom
+---------------------------
+
+namespace McMd{
+
+   class Species
+   {
+
+      // inline call through functions
+
+      generate();
+      reservoir();
+ 
+   protected:
+
+      Topo::Species*  speciesPtr_;
+      McMd::Generator genPtr_;
+
+   private:
+
+      PArray<Molecule> reservoir_;
+
+   };
+
+   template <class TopoSpecies> 
+   class SpeciesImpl : public TopoSpecies {
+
+      Constructor creates a TopoSpecies, assigns to speciesPtr_
+
+      inline call through functions
+
+      generate();
+      reservoir();
+ 
+   };
+
+   class Generator;
+   template <class TopoSpecies> GeneratorImpl;
+
+   explicit specializations for Point, Linear
+
+}
+
+-----------------------------------------------------
+Alternative #2: Inheritance for species + composition
+
+namespace McMd{
+
+   class Species : public Topo::Species
+   {
+ 
+      Species(Topo::Species , McMd::Generator) :
+        : Topo::Species(*Topo::Species),
+
+      getAtomBonds(...); etc.
+
+   private:
+
+      reservoir_;
+      generatorPtr_;
+
+   }
+
+}
+
+-----------------------------------------------------
+Possibilities/Thoughts:
+
+   1) Make Topo::Species a nearly pure abstract base class.
+      The only think being copied would really be the vtable
+      containing the readParameters method.
+
+   2) Use pimpl for implementation of specialized code to 
+      build the species. This can be slow, but stores no data.
+      Implement the readParameters method here.
+
+-----------------------------------------------------
+Speed considerations:
+
+   Q1: Which methods must be fast?
+   A1: Method atom[Bond|Angle|Dihedral]Ids, which returns an array of ids.
+       This is used in MC in getAtom[Bonds|Angles|Dihedrals]
+   Q1: Is one indirection for the array acceptable?
+   A2: Possibly.
+-----------------------------------------------------
