@@ -100,6 +100,12 @@ namespace McMd
       /// Number of samples per block average output
       int  capacity_;
 
+      /// Maximum id for AutoCorrStage
+      int  maxStageId_;
+
+      /// BlockFactor for AutoCorrStage algorithm
+      int  blockFactor_;
+
       /// Has readParam been called?
       long  isInitialized_;
 
@@ -123,7 +129,9 @@ namespace McMd
     : SystemAnalyzer<SystemType>(system),
       outputFile_(),
       accumulator_(),
-      capacity_(-1),
+      capacity_(64),
+      maxStageId_(10),
+      blockFactor_(2),
       isInitialized_(false)
    {}
 
@@ -143,8 +151,10 @@ namespace McMd
       readInterval(in);
       readOutputFileName(in);
       read(in, "capacity", capacity_);
+      bool isRequired = false;
+      read(in, "maxStageId", maxStageId_, isRequired);
 
-      accumulator_.setParam(capacity_);
+      accumulator_.setParam(capacity_, maxStageId_, blockFactor_);
       accumulator_.clear();
 
       isInitialized_ = true;
@@ -214,7 +224,7 @@ namespace McMd
          Tensor total;
          Tensor virial;
          Tensor kinetic;
-         system().computeVirialStress(total);
+         system().computeVirialStress(virial);
          system().computeKineticStress(kinetic);
          total.add(virial, kinetic);
 
