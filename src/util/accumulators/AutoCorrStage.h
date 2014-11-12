@@ -62,9 +62,7 @@ namespace Util
       *
       * This constructor creates a primary AutoCorrStage object with
       * stageId = 0 and stageInterval = 1. A private constructor is
-      * used to recursively create children of this object.
-      *
-      * \param blockFactor ratio of block sizes of subsequent stages
+      * used to recursively create descendant stages as needed.
       */
       AutoCorrStage();
 
@@ -76,7 +74,7 @@ namespace Util
       virtual ~AutoCorrStage();
 
       /**
-      * Set the buffer (history) capacity.
+      * Set all parameters and allocate to initialize state.
       *
       * \param bufferCapacity max. number of values stored in buffer
       * \param maxStageId maximum stage index (0=primary)
@@ -87,7 +85,7 @@ namespace Util
       /**
       * Sample a value.
       *
-      * \param value current value
+      * \param value current Data value
       */
       virtual void sample(Data value);
 
@@ -178,13 +176,13 @@ namespace Util
 
    private:
 
-      // Ring buffer containing a sequence of stored Data values.
+      // Ring buffer containing sequence of Data values
       RingBuffer<Data> buffer_;
 
-      // Array in which corr[j] = sum of values of <x(i-j), x(i)>
+      // Array in which corr_[j] = sum of values of <x(i-j), x(i)>
       DArray<Product> corr_;
 
-      // Array in which nCorr[i] = number of values added to corr[i]
+      // Array in which nCorr_[i] = number of products added to corr_[i]
       DArray<int> nCorr_;
 
       // Sum of all previous values of x(t)
@@ -221,7 +219,7 @@ namespace Util
       int blockFactor_;
 
       /**
-      * Constructor for child objects.
+      * Constructor for child objects (private).
       *
       * \param stageInterval  number of primary values per sample
       * \param stageId integer id for this stage
@@ -234,12 +232,12 @@ namespace Util
                     AutoCorrStage<Data, Product>* rootPtr, int blockFactor);
 
       /**
-      * Copy constructor - private and not implemented.
+      * Copy constructor - private and not implemented to prohibit.
       */
       AutoCorrStage(const AutoCorrStage& other);
 
       /**
-      * Assignment - private and not implemented.
+      * Assignment - private and not implemented to prohibit.
       */
       AutoCorrStage& operator = (const AutoCorrStage& other);
 
