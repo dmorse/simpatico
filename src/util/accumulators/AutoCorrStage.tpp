@@ -248,7 +248,9 @@ namespace Util
    template <typename Data, typename Product>
    Data AutoCorrStage<Data, Product>::average() const
    { 
-      return sum_/double(nSample_); 
+      Data output = sum_;
+      output /= double(nSample_);
+      return output;
    }
 
    /*
