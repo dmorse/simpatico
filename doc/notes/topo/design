@@ -1,96 +1,75 @@
+Possible names for new namespace: Topo, Chem, or Struc.
+Use Topo as an example in what follows.
+
 namespace Topo{
 
+   class Topo::Group -> replaces current McMd::SpeciesGroup
    class Topo::Species -> replaces current McMd::Species
-   class Topo::Group   -> replaces current McMd::SpeciesGroup
+   class Topo::SpeciesBuilder -> code to build a species
 
 }
 
-Questions:
+---------------------------------------------------------------
+SpeciesBuilder (Design):
 
-1) Must Topo::Species be abstract? If not, what can it contain?
+   1) Use pimpl idiom for SpeciesBuilder within a Species. 
+   2) Have Species::readParameters call SpeciesBuilder::readParameters.
+   3) Make SpeciesBuilder a friend of Species, provide data access
+   4) Make a hierarchy of SpeciesBuilder classes, keep Species generic.
 
-Alternative #1: Pimpl idiom
----------------------------
+   class Species {
 
-namespace McMd{
+      Species(SpeciesBuilder& builder)
+       : builderPtr_(&builder)
+      {}
 
-   class Species
-   {
+      void readParameters(std::istream& in) 
+      {
+         bool nextIndent = false;
+         addComposite(*builderPtr_, nextIndent);
+         builderPtr_->readParameters(in);
+      }
 
-      // inline call through functions
+   private:
 
-      generate();
-      reservoir();
- 
+      SpeciesBuilder* builderPtr_;
+
+   //friend:
+
+      friend class SpeciesBuilder; 
+   };
+
+   class SpeciesBuilder {
+
+      void readParameters(){
+         ....
+      }
+
    protected:
 
-      Topo::Species*  speciesPtr_;
-      McMd::Generator genPtr_;
+      void setSpecies(Species& species);
+
+      void addBond(...);
+      void addAngle(...);
+
+      accessor to structure data;
 
    private:
 
-      PArray<Molecule> reservoir_;
+      Species& speciesPtr_;
 
    };
 
-   template <class TopoSpecies> 
-   class SpeciesImpl : public TopoSpecies {
+---------------------------------------------------------------
+Generators (Design):
 
-      Constructor creates a TopoSpecies, assigns to speciesPtr_
+   Introduce a Generator template in McMd and Tools namespaces. 
+   Unimplemented functions should throw errors.
 
-      inline call through functions
+   Introduce explicit specializations for Linear, Atom, etc.
 
-      generate();
-      reservoir();
- 
-   };
-
-   class Generator;
-   template <class TopoSpecies> GeneratorImpl;
-
-   explicit specializations for Point, Linear
-
-}
-
------------------------------------------------------
-Alternative #2: Inheritance for species + composition
-
-namespace McMd{
-
-   class Species : public Topo::Species
-   {
- 
-      Species(Topo::Species , McMd::Generator) :
-        : Topo::Species(*Topo::Species),
-
-      getAtomBonds(...); etc.
-
-   private:
-
-      reservoir_;
-      generatorPtr_;
-
-   }
-
-}
-
------------------------------------------------------
-Possibilities/Thoughts:
-
-   1) Make Topo::Species a nearly pure abstract base class.
-      The only think being copied would really be the vtable
-      containing the readParameters method.
-
-   2) Use pimpl for implementation of specialized code to 
-      build the species. This can be slow, but stores no data.
-      Implement the readParameters method here.
-
------------------------------------------------------
-Speed considerations:
-
-   Q1: Which methods must be fast?
-   A1: Method atom[Bond|Angle|Dihedral]Ids, which returns an array of ids.
-       This is used in MC in getAtom[Bonds|Angles|Dihedrals]
-   Q1: Is one indirection for the array acceptable?
-   A2: Possibly.
------------------------------------------------------
+   The factory should create a SpeciesBuilder, a Generator, and
+   then link them to an associated Species object. All specialized
+   functions are called through the associated Builder and Generator
+   objects.
+   
