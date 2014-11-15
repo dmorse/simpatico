@@ -1,5 +1,5 @@
-#ifndef DDMD_STRESS_TENSOR_AUTO_CORRELATION_H
-#define DDMD_STRESS_TENSOR_AUTO_CORRELATION_H
+#ifndef DDMD_AUTO_CORR_ANALYZER_H
+#define DDMD_AUTO_CORR_ANALYZER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -12,7 +12,7 @@
 #include <ddMd/simulation/Simulation.h>
 #include <util/mpi/MpiLoader.h>
 #include <util/space/Tensor.h>
-#include <util/accumulators/AutoCorrArray.h>     // member template
+#include <util/accumulators/AutoCorrelation.h>     // member template
 
 namespace DdMd
 {
@@ -24,7 +24,8 @@ namespace DdMd
    *
    * \ingroup DdMd_Analyzer_Module
    */
-   class StressAutoCorrelation : public Analyzer
+   template <typename Data, typename Product>
+   class AutoCorrAnalyzer : public Analyzer
    {
    
    public:
@@ -34,12 +35,12 @@ namespace DdMd
       *
       * \param simulation parent Simulation object. 
       */
-      StressAutoCorrelation(Simulation& simulation);
+      AutoCorrAnalyzer(Simulation& simulation);
    
       /**
       * Destructor.
       */
-      virtual ~StressAutoCorrelation()
+      virtual ~AutoCorrAnalyzer()
       {} 
    
       /**
@@ -85,16 +86,34 @@ namespace DdMd
       */
       virtual void output();
 
+   protected:
+
+      /**
+      * Compute Data value, call on all processors.
+      *
+      * Default implementation is empty.
+      */
+      virtual void computeData()
+      {}
+
+      /**
+      * Get Data value, call only on master
+      */
+      virtual Data data() = 0;
+
    private:
  
       /// Output file stream
       std::ofstream  outputFile_;
       
       /// Statistical accumulator.
-      AutoCorrArray<double, double>  accumulator_;
+      AutoCorrelation<Data, Product>*  accumulatorPtr_;
 
-      /// Number of samples per block average output
-      int  capacity_;
+      /// Buffer capacity per stage (# values stored)
+      int  bufferCapacity_;
+
+      /// Maximum stage index for descendant AutoCorrStage objects
+      int  maxStageId_;
 
       /// Has readParam been called?
       long  isInitialized_;

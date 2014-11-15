@@ -91,10 +91,10 @@ namespace DdMd
       std::ofstream  outputFile_;
       
       /// Statistical accumulator.
-      AutoCorrelation<Tensor, double>  accumulator_;
+      AutoCorrelation<Tensor, double>*  accumulatorPtr_;
 
       /// Buffer capacity per stage (# values stored)
-      int  capacity_;
+      int  bufferCapacity_;
 
       /// Maximum stage index for descendant AutoCorrStage objects
       int  maxStageId_;

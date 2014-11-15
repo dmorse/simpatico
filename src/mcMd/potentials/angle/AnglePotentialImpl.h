@@ -42,7 +42,7 @@ namespace McMd
       AnglePotentialImpl(System& system);
 
       /** 
-      * Constructor (copied from McAnglePotential)
+      * Copy constructor.
       */
       AnglePotentialImpl(AnglePotentialImpl<Interaction>& other);
 

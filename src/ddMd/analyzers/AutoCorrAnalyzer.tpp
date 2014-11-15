@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "StressAutoCorr.h"
+#include "AutoCorrAnalyzer.h"
 #include <util/accumulators/AutoCorrelation.tpp>
 #include <util/misc/ioUtil.h>
 #include <util/format/Int.h>
@@ -21,18 +21,20 @@ namespace DdMd
    /*
    * Constructor.
    */
-   StressAutoCorr::StressAutoCorr(Simulation& simulation) 
+   template <typename Data, typename Product>
+   AutoCorrAnalyzer<Data, Product>::AutoCorrAnalyzer(Simulation& simulation) 
     : Analyzer(simulation),
       accumulatorPtr_(0),
       bufferCapacity_(-1),
       maxStageId_(10),
       isInitialized_(false)
-   {  setClassName("StressAutoCorr"); }
+   {  setClassName("AutoCorrAnalyzer"); }
 
    /*
    * Read interval and outputFileName. 
    */
-   void StressAutoCorr::readParameters(std::istream& in) 
+   template <typename Data, typename Product>
+   void AutoCorrAnalyzer<Data, Product>::readParameters(std::istream& in) 
    {
       readInterval(in);
       readOutputFileName(in);
@@ -48,7 +50,8 @@ namespace DdMd
    /*
    * Load internal state from an archive.
    */
-   void StressAutoCorr::loadParameters(Serializable::IArchive &ar)
+   template <typename Data, typename Product>
+   void AutoCorrAnalyzer<Data, Product>::loadParameters(Serializable::IArchive &ar)
    {
       loadInterval(ar);
       loadOutputFileName(ar);
@@ -65,7 +68,8 @@ namespace DdMd
    /*
    * Save internal state to an archive.
    */
-   void StressAutoCorr::save(Serializable::OArchive &ar)
+   template <typename Data, typename Product>
+   void AutoCorrAnalyzer<Data, Product>::save(Serializable::OArchive &ar)
    {
       saveInterval(ar);
       saveOutputFileName(ar);
@@ -81,7 +85,8 @@ namespace DdMd
    /*
    * Clear accumulator.
    */
-   void StressAutoCorr::clear() 
+   template <typename Data, typename Product>
+   void AutoCorrAnalyzer<Data, Product>::clear() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Error: Object not initialized");
@@ -94,64 +99,41 @@ namespace DdMd
       }
    }
 
-
    /*
- *    * Set actual number of molecules and clear accumulator.
- *       */
-   void StressAutoCorr::setup()
+   * Setup before simulation.
+   */
+   template <typename Data, typename Product>
+   void AutoCorrAnalyzer<Data, Product>::setup()
    {
       if (!isInitialized_) {
          UTIL_THROW("Object not initialized.");
       }
-      clear();
+      // clear();
    }
 
    /*
-   * Sample the stress tensor.
+   * Sample one Data value.
    */
-   void StressAutoCorr::sample(long iStep) 
+   template <typename Data, typename Product>
+   void AutoCorrAnalyzer<Data, Product>::sample(long iStep) 
    {  
       if (isAtInterval(iStep))  {
-         Simulation& sim = simulation();
-         sim.computeVirialStress();
-         sim.computeKineticStress();
-
+         computeData();
          if (sim.domain().isMaster()) {
             if (!accumulatorPtr_) {
                UTIL_THROW("Null accumulatorPtr_ on master");
             }
-
-            Tensor virial  = sim.virialStress();
-            Tensor kinetic = sim.kineticStress();
-            Tensor total = total.add(virial, kinetic);
-
-            // Remove trace
-            double pressure = 0.0;
-            int i, j;
-            for (i = 0; i < Dimension; ++i) {
-               pressure += total(i,i);
-            }
-            pressure = pressure/double(Dimension);
-            for (i = 0; i < Dimension; ++i) {
-               total(i,i) -= pressure;
-            }
-   
-            double factor = sqrt(sim.boundary().volume()/10.0);
-            for (i = 0; i < Dimension; ++i) {
-               for (j = 0; j < Dimension; ++j) {
-                  total(i,j) *= factor;
-               }
-            }
-   
-            accumulatorPtr_->sample(total);
+            Data value = data();
+            accumulatorPtr_->sample(value);
          }
       }
    }
 
    /*
-   * Dump StressTensor Measurment results.
+   * Output autocorrelation function to file.
    */
-   void StressAutoCorr::output() 
+   template <typename Data, typename Product>
+   void AutoCorrAnalyzer<Data, Product>::output() 
    {
       if (simulation().domain().isMaster()) {
          if (!accumulatorPtr_) {

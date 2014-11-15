@@ -221,7 +221,8 @@ namespace McMd
    template <class Interaction>
    BondPotentialImpl<Interaction>::BondPotentialImpl(
                          BondPotentialImpl<Interaction>& other)
-    : BondPotential(other.system()),
+    : BondPotential(),
+      SubSystem(other.system()),
       interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}
