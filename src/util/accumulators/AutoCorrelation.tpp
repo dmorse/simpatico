@@ -18,8 +18,6 @@ namespace Util
 
    /*
    * Constructor
-   *
-   * \param blockFactor ratio of block sizes of subsequent stages
    */
    template <typename Data, typename Product>
    AutoCorrelation<Data, Product>::AutoCorrelation()
@@ -29,13 +27,36 @@ namespace Util
    }
 
    /*
-   * Register the creation of a descendant stage.
+   * Read parameters and initialize.
    */
-   template <typename Data, typename Product> 
-   void 
-   AutoCorrelation<Data, Product>
-                  ::registerDescendant(AutoCorrStage<Data, Product>* ptr)
-   {  descendants_.append(ptr); }
+   template <typename Data, typename Product>
+   void AutoCorrelation<Data, Product>::readParameters(std::istream& in)
+   {
+      bool isRequired = false;
+      read(in, "bufferCapacity", bufferCapacity_, isRequired);
+      read(in, "maxStageId", maxStageId_, isRequired);
+      read(in, "blockFactor", blockFactor_, isRequired);
+      allocate();
+   }
+
+   /*
+   * Load internal state from archive.
+   */
+   template <typename Data, typename Product>
+   void AutoCorrelation<Data, Product>::load(Serializable::IArchive &ar)
+   {
+      loadParameter<int>(ar, "bufferCapacity", bufferCapacity_); 
+      loadParameter<int>(ar, "maxStageId", maxStageId_); 
+      loadParameter<int>(ar, "blockFactor", blockFactor_); 
+      serializePrivate(ar, 0);
+   }
+
+   /*
+   * Save internal state to archive.
+   */
+   template <typename Data, typename Product>
+   void AutoCorrelation<Data, Product>::save(Serializable::OArchive &ar)
+   {  ar & *this; }
 
    /*
    * Return the maximum delay.
@@ -50,14 +71,14 @@ namespace Util
       return (size - 1)*interval;
    }
 
-   #if 0
    /*
-   * Output the autocorrelation function
+   * Register the creation of a descendant stage.
    */
-   template <typename Data, typename Product>
-   void AutoCorrelation<Data, Product>::output(std::ostream& out)
-   {  AutoCorrStage<Data, Product>::output(out); }
-   #endif
+   template <typename Data, typename Product> 
+   void 
+   AutoCorrelation<Data, Product>
+                  ::registerDescendant(AutoCorrStage<Data, Product>* ptr)
+   {  descendants_.append(ptr); }
 
 }
 #endif

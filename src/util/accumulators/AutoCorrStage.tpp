@@ -28,23 +28,21 @@ namespace Util
    */
    template <typename Data, typename Product>
    AutoCorrStage<Data, Product>::AutoCorrStage()
-    : buffer_(),
+    : bufferCapacity_(64),
+      maxStageId_(10),
+      blockFactor_(2),
+      buffer_(),
       corr_(),
       nCorr_(),
-      sum_(),
-      bufferCapacity_(0),
       nSample_(0),
       blockSum_(),
       nBlockSample_(0),
       stageInterval_(1),
       childPtr_(0),
       rootPtr_(0),
-      stageId_(0),
-      maxStageId_(10),
-      blockFactor_(1)
-   {  
-      rootPtr_ = this; 
-      setToZero(sum_);
+      stageId_(0)
+   {
+      rootPtr_ = this;
       setToZero(blockSum_);
    }
 
@@ -52,27 +50,25 @@ namespace Util
    * Private constructor for stages with stageId > 0.
    */
    template <typename Data, typename Product>
-   AutoCorrStage<Data, Product>::AutoCorrStage(long stageInterval, 
+   AutoCorrStage<Data, Product>::AutoCorrStage(long stageInterval,
                                                int stageId, int maxStageId,
-                                               AutoCorrStage<Data, Product>* rootPtr, 
+                                               AutoCorrStage<Data, Product>* rootPtr,
                                                int blockFactor)
-    : buffer_(),
+    : bufferCapacity_(rootPtr->bufferCapacity()),
+      maxStageId_(maxStageId),
+      blockFactor_(blockFactor),
+      buffer_(),
       corr_(),
       nCorr_(),
-      sum_(),
-      bufferCapacity_(rootPtr->bufferCapacity()),
       nSample_(0),
       blockSum_(),
       nBlockSample_(0),
       stageInterval_(stageInterval),
       childPtr_(0),
       rootPtr_(rootPtr),
-      stageId_(stageId),
-      maxStageId_(maxStageId),
-      blockFactor_(blockFactor)
-   { 
-      allocate(); 
-      setToZero(sum_);
+      stageId_(stageId)
+   {
+      allocate();
       setToZero(blockSum_);
    }
 
@@ -91,7 +87,7 @@ namespace Util
    * Set buffer capacity and initialize.
    */
    template <typename Data, typename Product>
-   void AutoCorrStage<Data, Product>::setParam(int bufferCapacity, 
+   void AutoCorrStage<Data, Product>::setParam(int bufferCapacity,
                                                int maxStageId, int blockFactor)
    {
       bufferCapacity_ = bufferCapacity;
@@ -106,7 +102,6 @@ namespace Util
    template <typename Data, typename Product>
    void AutoCorrStage<Data, Product>::clear()
    {
-      setToZero(sum_);
       setToZero(blockSum_);
       nSample_ = 0;
       nBlockSample_ = 0;
@@ -133,7 +128,6 @@ namespace Util
       }
 
       // Increment global accumulators
-      sum_ += value;
       buffer_.append(value);
       for (int i=0; i < buffer_.size(); ++i) {
          corr_[i] += product(buffer_[i], value);
@@ -150,11 +144,11 @@ namespace Util
             if (!childPtr_) {
                long nextStageInterval = stageInterval_*blockFactor_;
                int  nextStageId = stageId_ + 1;
-               childPtr_ = new AutoCorrStage(nextStageInterval, nextStageId, 
+               childPtr_ = new AutoCorrStage(nextStageInterval, nextStageId,
                                              maxStageId_, rootPtr_, blockFactor_);
                rootPtr_->registerDescendant(childPtr_);
             }
-            // Add block average as first value in child sequence 
+            // Add block average as first value in child sequence
             blockSum_ /= double(blockFactor_);
             childPtr_->sample(blockSum_);
          }
@@ -170,23 +164,39 @@ namespace Util
    */
    template <typename Data, typename Product>
    template <class Archive>
-   void 
+   void
    AutoCorrStage<Data, Product>::serialize(Archive& ar,
                                            const unsigned int version)
    {
+      // Parameters (required for initialization)
+      ar & bufferCapacity_;
+      ar & maxStageId_;
+      ar & blockFactor_;
+
+      // Serialize private state info.
+      serializePrivate(ar, version);
+   }
+
+   /*
+   * Serialize private info for this AutoCorrStage.
+   */
+   template <typename Data, typename Product>
+   template <class Archive>
+   void
+   AutoCorrStage<Data, Product>::serializePrivate(Archive& ar,
+                                          const unsigned int version)
+   {
+      // State of simple nonblock correlator
       ar & buffer_;
       ar & corr_;
       ar & nCorr_;
-      ar & sum_;
-      ar & bufferCapacity_;
       ar & nSample_;
       isValid();
 
       ar & blockSum_;
       ar & nBlockSample_;
-      ar & blockFactor_;
 
-      // Constructor always sets stageInterval_ and stageId_
+      // Constructor sets rootPtr_, stageInterval_ and stageId_
 
       // Does this stage have a child?
       int hasChild;
@@ -200,7 +210,7 @@ namespace Util
          if (Archive::is_loading()) {
             long nextStageInterval = stageInterval_*blockFactor_;
             int  nextStageId       = stageId_ + 1;
-            childPtr_ = new AutoCorrStage(nextStageInterval, 
+            childPtr_ = new AutoCorrStage(nextStageInterval,
                                           nextStageId, maxStageId_,
                                           rootPtr_, blockFactor_);
             rootPtr_->registerDescendant(childPtr_);
@@ -219,7 +229,7 @@ namespace Util
    */
    template <typename Data, typename Product>
    int AutoCorrStage<Data, Product>::bufferCapacity() const
-   {  return bufferCapacity_; }
+   {  return bufferCapacity_;  }
 
    /*
    * Return current size of the history buffer.
@@ -243,25 +253,22 @@ namespace Util
    {  return stageInterval_; }
 
    /*
-   * Return average of sampled values.
+   * Calculate and output autocorrelation function, assuming zero average.
    */
    template <typename Data, typename Product>
-   Data AutoCorrStage<Data, Product>::average() const
-   { 
-      Data output = sum_;
-      output /= double(nSample_);
-      return output;
+   void AutoCorrStage<Data, Product>::output(std::ostream& outFile)
+   {
+      Product aveSq;
+      setToZero(aveSq);
+      output(outFile, aveSq);
    }
 
    /*
    * Calculate and output autocorrelation function.
    */
    template <typename Data, typename Product>
-   void AutoCorrStage<Data, Product>::output(std::ostream& outFile)
+   void AutoCorrStage<Data, Product>::output(std::ostream& outFile, Product aveSq)
    {
-      //Data  ave = sum_/double(nSample_);
-      //Product aveSq = product(ave, ave);
-
       int min;
       if (stageId_ == 0) {
          min = 0;
@@ -272,52 +279,73 @@ namespace Util
       Product autocorr;
       for (int i = min; i < buffer_.size(); ++i) {
          autocorr = corr_[i]/double(nCorr_[i]);
-         //autocorr = autocorr - aveSq;
+         autocorr -= aveSq;
          outFile << Int(i*stageInterval_) << " ";
          write<Product>(outFile, autocorr);
          outFile << std::endl;
       }
       if (childPtr_) {
-         childPtr_->output(outFile);
+         childPtr_->output(outFile, aveSq);
       }
    }
 
    /*
-   *  Return correlation time in unit of sampling interval
-   */
-   template <typename Data, typename Product>
-   double AutoCorrStage<Data, Product>::corrTime() const
-   {
-      Data ave = sum_/double(nSample_);
-      Product aveSq = product(ave, ave);
-      Product variance = corr_[0]/double(nCorr_[0]);
-      variance = variance - aveSq;
-      Product autocorr, sum;
-      setToZero(sum);
-      int  size = buffer_.size();
-      for (int i = 1; i < size/2; ++i) {
-         autocorr = corr_[i]/double(nCorr_[i]);
-         autocorr = autocorr - aveSq;
-         sum += autocorr;
-      }
-      sum = sum/variance;
-      return sum;
-   }
-
-   /*
-   * Return autocorrelation at a given lag time index
-   *
-   * \param t the lag time index
+   * Return autocorrelation at a given lag time, assuming zero average.
    */
    template <typename Data, typename Product>
    Product AutoCorrStage<Data, Product>::autoCorrelation(int t) const
    {
+      Product aveSq;
+      setToZero(aveSq);
+      return autoCorrelation(t, aveSq);
+   }
+
+   /*
+   * Return autocorrelation at a given lag time.
+   */
+   template <typename Data, typename Product>
+   Product AutoCorrStage<Data, Product>::autoCorrelation(int t, Product aveSq) const
+   {
       assert(t < buffer_.size());
       Product autocorr = corr_[t]/double(nCorr_[t]);
-      Data ave  = sum_/double(nSample_);
-      Product aveSq = product(ave, ave);
       autocorr -= aveSq;
       return autocorr;
+   }
+
+   /*
+   *  Return correlation time, in Data samples, assuming zero average.
+   */
+   template <typename Data, typename Product>
+   double AutoCorrStage<Data, Product>::corrTime() const
+   {
+      Product aveSq;
+      setToZero(aveSq);
+      return corrTime(aveSq);
+   }
+
+   /*
+   *  Return correlation time in unit of sampling interval.
+   */
+   template <typename Data, typename Product>
+   double AutoCorrStage<Data, Product>::corrTime(Product aveSq) const
+   {
+      // Compute variance from value C(t=0)
+      Product variance = corr_[0];
+      variance /= double(nCorr_[0]);
+      variance -= aveSq;
+
+      // Compute integral of C(t)/C(0)
+      Product autocorr, sum;
+      setToZero(sum);
+      int  size = buffer_.size();
+      for (int i = 1; i < size/2; ++i) {
+         autocorr = corr_[i];
+         autocorr /= double(nCorr_[i]);
+         autocorr -= aveSq;
+         sum += autocorr;
+      }
+      sum /= variance;
+      return sum;
    }
 
    // Private member functions
@@ -347,13 +375,13 @@ namespace Util
       if (bufferCapacity_ != nCorr_.capacity()) valid = false;
       if (bufferCapacity_ != buffer_.capacity()) valid = false;
       if (!valid) {
-         UTIL_THROW("Invalid AutoCorr");
+         UTIL_THROW("Invalid AutoCorrStage");
       }
       return valid;
    }
 
    template <typename Data, typename Product>
-   void 
+   void
    AutoCorrStage<Data, Product>::registerDescendant(AutoCorrStage<Data, Product>* ptr)
    {}
 

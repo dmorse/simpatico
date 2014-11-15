@@ -95,15 +95,6 @@ namespace Util
       void clear();
 
       /**
-      * Register the creation of a descendant stage.
-      *
-      * This should be called only by a root stage.
-      *
-      * \param ptr pointer to a descendant AutoCorrStage.
-      */
-      virtual void registerDescendant(AutoCorrStage<Data, Product>* ptr);
-
-      /**
       * Serialize to/from an archive.
       *
       * \param ar      archive
@@ -124,6 +115,14 @@ namespace Util
       void output(std::ostream& out);
 
       /**
+      * Output the autocorrelation function
+      *
+      * \param out output stream.
+      * \param aveSq square of average <x>^2 to be subtracted from <x(t)x(0)>
+      */
+      void output(std::ostream& out, Product aveSq);
+
+      /**
       * Return capacity of history buffer.
       */
       int bufferCapacity() const;
@@ -139,30 +138,56 @@ namespace Util
       long nSample() const;
 
       /**
-      * Return average of all sampled values.
-      */
-      Data average() const;
-
-      /**
-      * Numerical integration of autocorrelation function
-      */
-      double corrTime() const;
-
-      /**
-      * Return autocorrelation at a given lag time
-      *
-      * \param t the lag time
-      */
-      Product autoCorrelation(int t) const;
-
-      /**
       * Return the number of sampled values per block at this stage.
       */
       long stageInterval() const;
 
+      /**
+      * Return autocorrelation at a given lag time
+      *
+      * \param t the lag time, in Data samples
+      */
+      Product autoCorrelation(int t) const;
+
+      /**
+      * Return autocorrelation at a given lag time
+      *
+      * \param t the lag time, in Data samples
+      * \param aveSq square of average <x>^2 to be subtracted from <x(t)x(0)>
+      */
+      Product autoCorrelation(int t, Product aveSq) const;
+
+      /**
+      * Estimate of autocorrelation time, in samples.
+      *
+      * This variant assumes a zero average.
+      */
+      double corrTime() const;
+
+      /**
+      * Numerical integration of autocorrelation function.
+      *
+      * \param aveSq square of average <x>^2 to be subtracted from <x(t)x(0)>
+      */
+      double corrTime(Product aveSq) const;
+
       //@}
 
    protected:
+
+      // Physical capacity (# of elements) of buffer, corr, and nCorr.
+      int bufferCapacity_;
+
+      /// Maximum allowed stage index (controls maximum degree of blocking).
+      int maxStageId_;
+
+      /// Number of values per block (ratio of intervals for successive stages).
+      int blockFactor_;
+
+      /**
+      * Allocate memory and initialize to empty state.
+      */
+      void allocate();
 
       /**
       * Does this have a child AutoCorrStage?
@@ -173,6 +198,24 @@ namespace Util
       * Return the child AutoCorrStage by reference.
       */
       AutoCorrStage& child();
+
+      /**
+      * Register the creation of a descendant stage.
+      *
+      * This should be called only by a root stage.
+      *
+      * \param ptr pointer to a descendant AutoCorrStage.
+      */
+      virtual void registerDescendant(AutoCorrStage<Data, Product>* ptr);
+
+      /**
+      * Serialize private data members, and descendants.
+      *
+      * \param ar      archive
+      * \param version archive version id
+      */
+      template <class Archive>
+      void serializePrivate(Archive& ar, const unsigned int version);
 
    private:
 
@@ -187,9 +230,6 @@ namespace Util
 
       // Sum of all previous values of x(t)
       Data sum_;
-
-      // Physical capacity (# of elements) of buffer, corr, and nCorr
-      int bufferCapacity_;
 
       /// Number of sampled values.
       long nSample_;
@@ -206,17 +246,11 @@ namespace Util
       /// Pointer to child stage, if any.
       AutoCorrStage<Data, Product>* childPtr_;
 
-      /// Pointer to root stage. 
+      /// Pointer to root stage.
       AutoCorrStage<Data, Product>* rootPtr_;
 
       /// Stage index
       int stageId_;
-
-      /// Maximum allowed stage index
-      int maxStageId_;
-
-      /// Number of samples per block (interval ratio for successive stages)
-      int blockFactor_;
 
       /**
       * Constructor for child objects (private).
@@ -232,19 +266,14 @@ namespace Util
                     AutoCorrStage<Data, Product>* rootPtr, int blockFactor);
 
       /**
-      * Copy constructor - private and not implemented to prohibit.
+      * Copy constructor - private and not implemented to prohibit copying.
       */
       AutoCorrStage(const AutoCorrStage& other);
 
       /**
-      * Assignment - private and not implemented to prohibit.
+      * Assignment - private and not implemented to prohibit assignment.
       */
       AutoCorrStage& operator = (const AutoCorrStage& other);
-
-      /**
-      * Allocate memory and initialize to empty state.
-      */
-      void allocate();
 
       /**
       * Is the internal state valid?
@@ -260,7 +289,7 @@ namespace Util
    */
    template <typename Data, typename Product>
    inline bool AutoCorrStage<Data, Product>::hasChild() const
-   { return bool(childPtr_); }
+   {  return bool(childPtr_); }
 
    /*
    * Return child object by reference. (protected)
