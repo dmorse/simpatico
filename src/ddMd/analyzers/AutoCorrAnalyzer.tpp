@@ -6,6 +6,7 @@
 */
 
 #include "AutoCorrAnalyzer.h"
+#include <ddMd/simulation/Simulation.h>
 #include <util/accumulators/AutoCorrelation.tpp>
 #include <util/misc/ioUtil.h>
 #include <util/format/Int.h>
@@ -119,7 +120,7 @@ namespace DdMd
    {  
       if (isAtInterval(iStep))  {
          computeData();
-         if (sim.domain().isMaster()) {
+         if (simulation().domain().isMaster()) {
             if (!accumulatorPtr_) {
                UTIL_THROW("Null accumulatorPtr_ on master");
             }

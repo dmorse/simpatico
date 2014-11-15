@@ -10,12 +10,12 @@
 
 #include <ddMd/analyzers/Analyzer.h>
 #include <ddMd/simulation/Simulation.h>
-#include <util/mpi/MpiLoader.h>
-#include <util/space/Tensor.h>
 #include <util/accumulators/AutoCorrelation.h>     // member template
 
 namespace DdMd
 {
+
+   //template <typename Data, typename Product> class AutoCorrelation;
 
    using namespace Util;
 
