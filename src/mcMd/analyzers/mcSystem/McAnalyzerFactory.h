@@ -24,7 +24,7 @@ namespace McMd
    * AnalyzerFactory for an McSimulation
    *
    * \ingroup McMd_Factory_Module
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Mc_Module
    */
    class McAnalyzerFactory : public Factory<Analyzer>
    {

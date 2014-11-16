@@ -23,7 +23,7 @@ namespace McMd
    * AnalyzerFactory for any System (for mc or md).
    *
    * \ingroup McMd_Factory_Module
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class SystemAnalyzerFactory : public Factory<Analyzer>
    {

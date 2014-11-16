@@ -22,7 +22,7 @@ namespace McMd
    /**
    * Periodically write (tensor) StressTensor to file.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Md_Module
    */
    class MdVirialStressTensorAverage : public SystemAnalyzer<MdSystem>
    {

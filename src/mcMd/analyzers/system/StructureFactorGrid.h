@@ -56,7 +56,7 @@ namespace McMd
    * 
    * \sa \ref mcMd_analyzer_StructureFactorGrid_page "parameter file format"
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class StructureFactorGrid : public StructureFactor
    {

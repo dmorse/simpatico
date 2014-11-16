@@ -26,7 +26,7 @@ namespace McMd
    * The SystemType may be McSystem and MdSystem. The use of a template
    * is possible because both types of system use a similar interface.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    template <class SystemType>
    class PressureAverage : public SystemAnalyzer<SystemType>

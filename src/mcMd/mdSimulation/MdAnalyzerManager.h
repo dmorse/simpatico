@@ -28,7 +28,7 @@ namespace McMd
    * an MdAnalyzerFactory.
    *
    * \ingroup McMd_Manager_Module
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Md_Module
    */
    class MdAnalyzerManager : public AnalyzerManager
    {

@@ -38,7 +38,7 @@ namespace McMd
    * \f]
    * is the pressure.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Md_Module
    */
    class MdStressAutoCorr : public StressAutoCorr<MdSystem>
    {
@@ -63,7 +63,7 @@ namespace McMd
       * 
       * \param stress computed stress tensor (on return).
       */ 
-      void computeStress(Tensor& total);
+      void computeStress(Tensor& stress);
 
    };
 

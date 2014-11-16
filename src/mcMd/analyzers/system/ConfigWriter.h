@@ -31,7 +31,7 @@ namespace McMd
    *
    * \sa \ref mcMd_analyzer_ConfigWriter_page "parameter file format"
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class ConfigWriter : public SystemAnalyzer<System>
    {

@@ -30,7 +30,7 @@ namespace McMd
    * Analyzer to output the total pair energy and the
    * sum of squares of the monomeric and molecular pair energy
    * 
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Md_Module
    */
    class MdPairEnergyCoefficients : public SystemAnalyzer<MdSystem>
    {

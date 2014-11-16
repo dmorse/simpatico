@@ -23,7 +23,7 @@ namespace McMd
    * The FileMaster associated with a SystemAnalyzer is the one
    * used by the parent System.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    template <class SystemType>
    class SystemAnalyzer : public Analyzer 

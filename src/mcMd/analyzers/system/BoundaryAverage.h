@@ -21,7 +21,7 @@ namespace McMd
    /**
    * Average of boundary lengths and volume of simulation cell.  
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class BoundaryAverage : public SystemAnalyzer<System>
    {

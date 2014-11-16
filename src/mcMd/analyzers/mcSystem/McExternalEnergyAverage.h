@@ -22,7 +22,7 @@ namespace McMd
    /**
    * McExternalEnergyAverage averages of total external energy.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Mc_Module
    */
    class McExternalEnergyAverage : public AverageAnalyzer<McSystem>
    {

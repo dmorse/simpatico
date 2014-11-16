@@ -20,7 +20,7 @@ namespace McMd
    /**
    * Autocorrelation for bond stress of a molecule.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Md_Module
    */
    class MdIntraBondStressAutoCorr : public IntraBondStressAutoCorr<MdSystem>
    {

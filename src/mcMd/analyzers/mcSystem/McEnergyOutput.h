@@ -19,7 +19,7 @@ namespace McMd
    /**
    * Analyzer to output total potential energy.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Mc_Module
    */
    class McEnergyOutput : public SystemAnalyzer<McSystem>
    {

@@ -22,7 +22,7 @@ namespace McMd
    /**
    * Calculate distribution of type indices for mutable species.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Mc_Module
    */
    class SemiGrandDistribution : public SystemAnalyzer<McSystem>
    {
