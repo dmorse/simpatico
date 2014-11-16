@@ -1,5 +1,5 @@
-#ifndef DDMD_STRESS_AUTO_CORR_H
-#define DDMD_STRESS_AUTO_CORR_H
+#ifndef DDMD_AUTO_CORR_ANALYZER_H
+#define DDMD_AUTO_CORR_ANALYZER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -10,12 +10,12 @@
 
 #include <ddMd/analyzers/Analyzer.h>
 #include <ddMd/simulation/Simulation.h>
-#include <util/mpi/MpiLoader.h>
-#include <util/space/Tensor.h>
 #include <util/accumulators/AutoCorrelation.h>     // member template
 
 namespace DdMd
 {
+
+   //template <typename Data, typename Product> class AutoCorrelation;
 
    using namespace Util;
 
@@ -24,7 +24,8 @@ namespace DdMd
    *
    * \ingroup DdMd_Analyzer_Module
    */
-   class StressAutoCorr : public Analyzer
+   template <typename Data, typename Product>
+   class AutoCorrAnalyzer : public Analyzer
    {
    
    public:
@@ -34,12 +35,12 @@ namespace DdMd
       *
       * \param simulation parent Simulation object. 
       */
-      StressAutoCorr(Simulation& simulation);
+      AutoCorrAnalyzer(Simulation& simulation);
    
       /**
       * Destructor.
       */
-      virtual ~StressAutoCorr()
+      virtual ~AutoCorrAnalyzer()
       {} 
    
       /**
@@ -85,13 +86,28 @@ namespace DdMd
       */
       virtual void output();
 
+   protected:
+
+      /**
+      * Compute Data value, call on all processors.
+      *
+      * Default implementation is empty.
+      */
+      virtual void computeData()
+      {}
+
+      /**
+      * Get Data value, call only on master
+      */
+      virtual Data data() = 0;
+
    private:
  
       /// Output file stream
       std::ofstream  outputFile_;
       
       /// Statistical accumulator.
-      AutoCorrelation<Tensor, double>*  accumulatorPtr_;
+      AutoCorrelation<Data, Product>*  accumulatorPtr_;
 
       /// Buffer capacity per stage (# values stored)
       int  bufferCapacity_;

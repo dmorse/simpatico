@@ -17,8 +17,9 @@ ddMd_analyzers_=\
      ddMd/analyzers/OrderParamNucleation.cpp\
      ddMd/analyzers/PairEnergyAverage.cpp\
      ddMd/analyzers/ExternalEnergyAverage.cpp\
-     ddMd/analyzers/StressAutoCorrelation.cpp\
      ddMd/analyzers/StressAutoCorr.cpp\
+     ddMd/analyzers/StressAutoCorrelation.cpp\
+     ddMd/analyzers/BondTensorAutoCorr.cpp\
      ddMd/analyzers/ConfigWriter.cpp\
      ddMd/analyzers/TrajectoryWriter.cpp\
      ddMd/analyzers/DdMdTrajectoryWriter.cpp\

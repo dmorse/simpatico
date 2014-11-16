@@ -25,8 +25,9 @@
 #include "VanHove.h"
 #include "ExternalEnergyAverage.h"
 #include "PairEnergyAverage.h"
-#include "StressAutoCorrelation.h"
 #include "StressAutoCorr.h"
+#include "StressAutoCorrelation.h"
+#include "BondTensorAutoCorr.h"
 
 // Trajectory Writer Analyzers
 #include "DdMdTrajectoryWriter.h"
@@ -102,11 +103,14 @@ namespace DdMd
       if (className == "PairEnergyAverage") {
          ptr = new PairEnergyAverage(simulation());
       } else
+      if (className == "StressAutoCorr") {
+         ptr = new StressAutoCorr(simulation());
+      } else
       if (className == "StressAutoCorrelation") {
          ptr = new StressAutoCorrelation(simulation());
       } else
-      if (className == "StressAutoCorr") {
-         ptr = new StressAutoCorr(simulation());
+      if (className == "BondTensorAutoCorr") {
+         ptr = new BondTensorAutoCorr(simulation());
       } else
       if (className == "DdMdTrajectoryWriter") {
          ptr = new DdMdTrajectoryWriter(simulation());
