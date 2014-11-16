@@ -34,11 +34,26 @@ for data analysis.
 
 In class templates AutoCorrelation, AutoCorr, and AutoCorrArray the Data
 template parameter may be a floating point type (float or double), a complex 
-type (complex<float> or complex<double>), a Vector, or a Tensor. The meaning
-of the product is defined by the product() function template.  
+type (std::complex<float> or std::complex<double>), a Vector, or a Tensor. 
+The meaning of the product is defined by the product() function template, 
+as discussed below.
 
-The Product parameter in the templates AutoCorr and AutoCorrArray is the type for an inner product of two Data values. We require that Product be float, double, complex<float>, complex<double> or double when Data is float, double, std::complex<float>, std::complex<double>, Vector, or Tensor, respectively.  The inner product a*b is defined as a simple multiplication for real values, as conjg(a)*b when a and b are complex, as Euclidean inner product (dot product) for Vectors, and as summation products of corresponding elements for Tensor objects. These definitions are implemented by a set of overloaded functions defined in the file product.h.
+In the templates AutoCorr, AutoCorrelation and AutoCorrArray, the Product 
+parameter is the type for an inner product of two Data values. We require that 
+Product be float, double, std::complex<float>, std::complex<double> or double 
+when Data is float, double, std::complex<float>, std::complex<double>, Vector, 
+or Tensor, respectively.  The inner product a*b is defined as a simple 
+multiplication for real Data values, as conjg(a)*b for complex data, as a 
+Euclidean inner product (dot product) for Vector data, and as a summation of 
+9 products of corresponding elements for Tensor data (i.e., as a sum over i 
+and j of a_{ij}b_{ij}). These definitions are implemented by a set of 
+overloaded functions named "product()", as defined in the file product.h.
 
-In the class template MeanSqDispArray, the Data parameter may be floating point (real or double), complex, or Vector.  In the implementation of MeanSqDispArray, the square difference of two Data values is a double precision number that is defined for floating point, complex, and Vector Data types by the explicit specializations of the sqDiff() method.
+In the class template MeanSqDispArray, the Data parameter may be floating 
+point (real or double), complex (std::complex<real> or std::complex<double>) 
+or Vector.  In the implementation of MeanSqDispArray, the square difference 
+of two Data values is a double precision number that is defined for floating 
+point, complex, and Vector Data types by the explicit specializations of the 
+sqDiff() method.
 
 See also: Util Accumulators module in the doxygen documentation.
