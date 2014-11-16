@@ -43,7 +43,7 @@ namespace McMd
       virtual ~StressAutoCorr();
    
       /**
-      * Read dumpPrefix and interval.
+      * Read parameters from file and initialize.
       *
       * \param in input parameter file
       */
@@ -64,7 +64,7 @@ namespace McMd
       virtual void save(Serializable::OArchive &ar);
 
       /**
-      * Serialize to/from an archive. 
+      * Serialize to/from an archive.
       *
       * \param ar      saving or loading archive
       * \param version archive version id
@@ -73,19 +73,19 @@ namespace McMd
       void serialize(Archive& ar, const unsigned int version);
   
       /**
-      * Setup accumulator.
+      * Setup before beginning of loop.
       */
       virtual void setup();
   
       /**
-      * Sample virial stress to accumulators
+      * Sample stress tensor and add to accumulator.
       *
       * \param iStep MD or MC step index
       */
       virtual void sample(long iStep);
 
       /**
-      * Dump configuration to file
+      * Output results to file (parameters and autocorrelation function).
       */
       virtual void output();
 

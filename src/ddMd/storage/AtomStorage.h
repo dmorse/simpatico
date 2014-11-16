@@ -90,6 +90,19 @@ namespace DdMd
       virtual void readParameters(std::istream& in);
 
       /**
+      * Set all forces to zero.
+      *
+      * Sets forces on all local atoms to zero. Also zeros forces for 
+      * ghost atoms iff parameter zeroGhosts is true.
+      *
+      * \param zeroGhosts if true, zero forces on ghost atoms.
+      */
+      void zeroForces(bool zeroGhosts);
+  
+      /// \name Serialization (Checkpoint \& Restart)
+      //@{
+
+      /**
       * Load internal state from an archive.
       *
       * \param ar input/loading archive
@@ -105,16 +118,7 @@ namespace DdMd
       */
       virtual void save(Serializable::OArchive &ar);
 
-      /**
-      * Set all forces to zero.
-      *
-      * Sets forces on all local atoms to zero. Also zeros forces for 
-      * ghost atoms iff parameter zeroGhosts is true.
-      *
-      * \param zeroGhosts if true, zero forces on ghost atoms.
-      */
-      void zeroForces(bool zeroGhosts);
-  
+      //@}
       /// \name Local Atom Management
       //@{
 
@@ -192,9 +196,19 @@ namespace DdMd
       void removeAtom(Atom* atomPtr); 
 
       /**
-      * Clear all local and ghost atoms.
+      * Clear all local atoms.
       */
       void clearAtoms(); 
+
+      /**
+      * Return number of local atoms on this procesor (excluding ghosts)
+      */
+      int nAtom() const;
+
+      /**
+      * Return capacity for local atoms on this processor (excluding ghosts).
+      */
+      int atomCapacity() const;
 
       //@}
       /// \name Ghost Atom Management
@@ -265,30 +279,40 @@ namespace DdMd
       */
       void clearGhosts(); 
 
+      /**
+      * Return current number of ghost atoms on this processor.
+      */
+      int nGhost() const;
+
+      /**
+      * Return capacity for ghost atoms on this processor.
+      */
+      int ghostCapacity() const;
+
       //@}
       /// \name Coordinate Systems
       //@{
 
       /**
-      * Transform all atomic positions from Cartesian to generalized coordinates.
+      * Transform positions from Cartesian to generalized coordinates.
       *
-      * Transforms coordinates of local and ghost atoms.
+      * Transforms position coordinates of all local and ghost atoms.
       *
       * \param boundary periodic boundary conditions
       */
       void transformCartToGen(const Boundary& boundary);
  
       /**
-      * Transform all atomic positions from generalized to Cartesian coordinates.
+      * Transform positions from generalized to Cartesian coordinates.
       *
-      * Transforms coordinates of local and ghost atoms.
+      * Transforms position coordinates of all local and ghost atoms.
       *
       * \param boundary periodic boundary conditions
       */
       void transformGenToCart(const Boundary& boundary);
 
       /**
-      * Are atomic coordinates Cartesian (true) or generalized (false)?
+      * Are atom coordinates Cartesian (true) or generalized (false)?
       */
       bool isCartesian() const;
 
@@ -314,7 +338,7 @@ namespace DdMd
       void clearSnapshot();
 
       /**
-      * Return max. squared displacement on this processor since last snapshot.
+      * Return max-squared displacement since the last snapshot.
       *
       * Note: This is a local operation, and returns only the maximum on this
       * processor. 
@@ -324,7 +348,7 @@ namespace DdMd
       double maxSqDisplacement();
 
       //@}
-      /// \name Iterator interface
+      /// \name Iteration
       //@{
 
       /**
@@ -356,61 +380,69 @@ namespace DdMd
       void begin(ConstGhostIterator& iterator) const;
 
       //@}
-      /// \name Accessors 
+      /// \name Global Atom Counting
       //@{
      
       /**
-      * Return AtomMap by const reference.  
-      */
-      const AtomMap& map() const;
-
-      /**
-      * Return current number of atoms (excluding ghosts)
-      */
-      int nAtom() const;
-
-      /**
-      * Return current number of ghost atoms.
-      */
-      int nGhost() const;
-
-      /**
-      * Return capacity for atoms (excluding ghosts).
-      */
-      int atomCapacity() const;
-
-      /**
-      * Return capacity for ghost atoms
-      */
-      int ghostCapacity() const;
-
-      /**
       * Return maximum number of atoms on all processors.
       *
-      * Atom ids are labelled from 0, ..., totalAtomCapacity-1
+      * The return value is one greater than the maximum allowed
+      * atom id value, i.e. atom ids are assigned values in the
+      * range 0 <= id <= totalAtomCapacity-1.
       */
       int totalAtomCapacity() const;
 
       #ifdef UTIL_MPI
       /**
-      * Compute and store the total number of atoms on all processors.
+      * Compute the total number of local atoms on all processors.
       *
-      * This is an MPI reduce operation. The correct result is stored and
-      * returned only on the rank 0 processor. On other processors, the
-      * function stores a null value of -1.
+      * This is an MPI reduce operation, and thus must be called on
+      * all processors. The resulting sum is stored only on the master
+      * processor, with rank 0. It may be retrieved by a subsequent 
+      * call to nAtomTotal() on the master (rank 0) processor. A null
+      * value is stored on all other processors.
       *
-      * \param  communicator MPI communicator for this system.
-      * \return on master node, return total number of atoms.
+      * Upon return, the value is marked as set (i.e., known) on all
+      * processors in the communicator. This can be cleared by calling 
+      * the unSetNAtomTotal() function on all processors. 
+      *
+      * If computeNAtomTotal function is called when the value of 
+      * nAtomTotal is already set (and thus presumably already known), 
+      * the function will return without doing anything.
+      *
+      * \param communicator MPI communicator for this system.
       */
       void computeNAtomTotal(MPI::Intracomm& communicator);
+      #endif
+
+      /**
+      * Get total number of atoms on all processors.
+      *
+      * This function should only be called on the master (rank = 0).
+      * The return value is computed by a previous invocation of 
+      * computeNAtomTotal(), which must be called on all processors.
+      */
+      int nAtomTotal() const;
 
       /**
       * Unset value of NAtomTotal (mark as unknown). 
       *
-      * Must be called simultaneously on all processors.
+      * Thus function must be called simultaneously on all processors.
+      * It should be called immediately after any operation that changes
+      * the number of atoms per processor.
       */
       void unsetNAtomTotal();
 
+      //@}
+      /// \name Accessors for Member Objects
+      //@{
+     
+      /**
+      * Return the AtomMap by const reference.  
+      */
+      const AtomMap& map() const;
+
+      #ifdef UTIL_MPI
       /**
       * Get the AtomDistributor by reference.
       */
@@ -420,16 +452,11 @@ namespace DdMd
       * Get the AtomCollector by reference.
       */
       AtomCollector& collector();
-
       #endif
    
-      /**
-      * Get total number of atoms on all processors.
-      *
-      * This function should only be called on the master node (rank = 0).
-      * The return value is computed by a previous call of computeNAtomTotal.
-      */
-      int nAtomTotal() const;
+      //@}
+      /// \name Miscellaneous Accessors 
+      //@{
 
       /**
       * Has this object been initialized?
@@ -447,7 +474,7 @@ namespace DdMd
       /**
       * Return true if the container is valid, or throw an Exception.
       *  
-      * \param communicator domain communicator for all domain processors.
+      * \param communicator communicator for all domain processors.
       */
       bool isValid(MPI::Intracomm& communicator) const;
       #endif
