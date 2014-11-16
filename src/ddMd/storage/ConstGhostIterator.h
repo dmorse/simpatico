@@ -19,7 +19,7 @@ namespace DdMd
    /**
    * Iterator for all ghost atoms owned by an AtomStorage.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Atom_Module
    */
    class ConstGhostIterator : public ConstPArrayIterator<Atom>
    {};

@@ -28,7 +28,7 @@ namespace DdMd
    /**
    * Interface for a GroupStorage<N> for use in Exchanger.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Group_Module
    */
    class GroupExchanger
    {

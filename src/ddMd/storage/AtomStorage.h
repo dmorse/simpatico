@@ -37,7 +37,7 @@ namespace DdMd
    /**
    * A container for all the atoms and ghost atoms on this processor.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Atom_Module
    */
    class AtomStorage : public ParamComposite
    {

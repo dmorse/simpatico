@@ -20,7 +20,7 @@ namespace DdMd
    * which is set in the constructor and effects the param 
    * file format.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Group_Module
    */
    class BondStorage : public GroupStorage<2>
    {

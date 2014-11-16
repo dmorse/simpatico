@@ -19,7 +19,7 @@ namespace DdMd
    /**
    * Iterator for all Group < N > objects owned by a GroupStorage< N >.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Group_Module
    */
    template <int N>
    class GroupIterator : public PArrayIterator< Group<N> >
