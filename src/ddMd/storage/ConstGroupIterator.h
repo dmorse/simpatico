@@ -21,7 +21,7 @@ namespace DdMd
    *
    * This iterator provides read-only (const) access to Group < N > objects.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Group_Module
    */
    template <int N>
    class ConstGroupIterator : public ConstPArrayIterator< Group<N> >

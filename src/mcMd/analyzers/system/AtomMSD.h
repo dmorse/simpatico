@@ -23,7 +23,7 @@ namespace McMd
    * Autocorrelation for vector separation of two atoms on a molecule.  
    *
    * \sa \ref mcMd_analyzer_AtomMSD_page "parameter file format"
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class AtomMSD : public SystemAnalyzer<System>
    {

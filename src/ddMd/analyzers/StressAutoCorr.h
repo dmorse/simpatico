@@ -1,5 +1,5 @@
-#ifndef MD_VIRIAL_STRESSTENSOR_AVERAGE_H
-#define MD_VIRIAL_STRESSTENSOR_AVERAGE_H
+#ifndef DDMD_STRESS_AUTO_CORR_H
+#define DDMD_STRESS_AUTO_CORR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,13 +8,13 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/analyzers/Analyzer.h>
-#include <mcMd/analyzers/SystemAnalyzer.h>
-#include <mcMd/mdSimulation/MdSystem.h>
+#include <ddMd/analyzers/Analyzer.h>
+#include <ddMd/simulation/Simulation.h>
+#include <util/mpi/MpiLoader.h>
 #include <util/space/Tensor.h>
-#include <util/accumulators/Average.h>
+#include <util/accumulators/AutoCorrelation.h>     // member template
 
-namespace McMd
+namespace DdMd
 {
 
    using namespace Util;
@@ -22,9 +22,9 @@ namespace McMd
    /**
    * Periodically write (tensor) StressTensor to file.
    *
-   * \ingroup McMd_Analyzer_Md_Module
+   * \ingroup DdMd_Analyzer_Module
    */
-   class MdVirialStressTensorAverage : public SystemAnalyzer<MdSystem>
+   class StressAutoCorr : public Analyzer
    {
    
    public:
@@ -32,14 +32,14 @@ namespace McMd
       /**
       * Constructor.
       *
-      * \param system parent MdSystem object. 
+      * \param simulation parent Simulation object. 
       */
-      MdVirialStressTensorAverage(MdSystem& system);
+      StressAutoCorr(Simulation& simulation);
    
       /**
       * Destructor.
       */
-      virtual ~MdVirialStressTensorAverage()
+      virtual ~StressAutoCorr()
       {} 
    
       /**
@@ -67,6 +67,11 @@ namespace McMd
       * Clear nSample counter.
       */
       virtual void clear();
+
+      /**
+      * Setup accumulator!
+      */
+      virtual void setup();
   
       /**
       * Sample virial stress to accumulators
@@ -83,43 +88,19 @@ namespace McMd
    private:
  
       /// Output file stream
-      std::ofstream outputFile_;
+      std::ofstream  outputFile_;
       
-      /// Average object to save sxx
-      Average sxxAccumulator_;
+      /// Statistical accumulator.
+      AutoCorrelation<Tensor, double>*  accumulatorPtr_;
 
-      /// Average object to save sxx
-      Average sxyAccumulator_;
+      /// Buffer capacity per stage (# values stored)
+      int  bufferCapacity_;
 
-      /// Average object to save sxx
-      Average sxzAccumulator_;
+      /// Maximum stage index for descendant AutoCorrStage objects
+      int  maxStageId_;
 
-      /// Average object to save sxx
-      Average syxAccumulator_;
-
-      /// Average object to save sxx
-      Average syyAccumulator_;
-
-      /// Average object to save sxx
-      Average syzAccumulator_;
-
-      /// Average object to save sxx
-      Average szxAccumulator_;
-
-      /// Average object to save sxx
-      Average szyAccumulator_;
-
-      /// Average object to save sxx
-      Average szzAccumulator_;
-
-      /// Number of samples per block average output
-      int nSamplePerBlock_;
-
-      /// Number of configurations dumped thus far (first dump is zero).
-      long    nSample_;
-   
       /// Has readParam been called?
-      long    isInitialized_;
+      long  isInitialized_;
    
    };
 

@@ -1,5 +1,5 @@
-#ifndef DDMD_STRESS_AUTO_CORRELATION_H
-#define DDMD_STRESS_AUTO_CORRELATION_H
+#ifndef DDMD_BOND_TENSOR_AUTO_CORR_H
+#define DDMD_BOND_TENSOR_AUTO_CORR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -21,7 +21,7 @@ namespace DdMd
    *
    * \ingroup DdMd_Analyzer_Module
    */
-   class StressAutoCorrelation : public AutoCorrAnalyzer<Tensor, double>
+   class BondTensorAutoCorr : public AutoCorrAnalyzer<Tensor, double>
    {
    
    public:
@@ -31,13 +31,12 @@ namespace DdMd
       *
       * \param simulation parent Simulation object. 
       */
-      StressAutoCorrelation(Simulation& simulation);
+      BondTensorAutoCorr(Simulation& simulation);
    
       /**
       * Destructor.
       */
-      virtual ~StressAutoCorrelation()
-      {} 
+      virtual ~BondTensorAutoCorr();
 
       using AutoCorrAnalyzer<Tensor, double>::readParameters;
       using AutoCorrAnalyzer<Tensor, double>::loadParameters;
@@ -51,6 +50,10 @@ namespace DdMd
 
       virtual void computeData();
       virtual Tensor data();
+
+   private:
+
+      Tensor bondTensor_;
 
    };
 

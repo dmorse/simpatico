@@ -23,7 +23,7 @@ namespace McMd
    * Manager for Analyzer objects in an McSimulation.
    *
    * \ingroup McMd_Manager_Module
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Mc_Module
    */
    class McAnalyzerManager : public AnalyzerManager
    {

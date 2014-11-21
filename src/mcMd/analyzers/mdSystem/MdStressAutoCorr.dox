@@ -1,0 +1,54 @@
+namespace McMd
+{
+
+/*! \page mcMd_analyzer_MdStressAutoCorr_page MdStressAutoCorr
+
+\section mcMd_analyzer_MdStressAutoCorr_overview_sec Synopsis
+
+This analyzer computes the stress autocorrelation function
+\f[
+   C(t) = k_{B}T G(t)
+\f]
+for an isotropic liquid, where \f$G(t)\f$ is the shear stress relaxation modulus. See the class documentation or header file for McMd::MdStressAutoCorr for a precise operational definition of \f$C(t)\f$ (i.e., for how it is calculated).
+
+\sa McMd::MdStressAutoCorr
+\sa McMd::StressAutoCorr
+
+\section mcMd_analyzer_MdStressAutoCorr_param_sec Parameters
+The parameter file format is:
+\code
+   MdStressAutoCorr{ 
+      interval           int
+      outputFileName     string
+      bufferCapacity     int
+     [maxStageId         int]
+   }
+\endcode
+with parameters
+<table>
+  <tr> 
+     <td> interval </td>
+     <td> number of steps between data samples </td>
+  </tr>
+  <tr> 
+     <td> outputFileName </td>
+     <td> name of output file </td>
+  </tr>
+  <tr> 
+     <td> bufferCapacity </td>
+     <td> number of values in historty at each stage. </td>
+  </tr>
+  <tr>
+     <td> maxStageId </td>
+     <td> maximum stage index (Optional. Default value = 10) </td>
+  </tr>
+</table>
+
+\section mcMd_analyzer_MdStressAutoCorr_out_sec Output Files
+
+At the end of the simulation, parameters and other data are written to {outputFileName}.prm, while the correlation function is written to {outputFileName}.dat.
+
+In the {outputFileName}.dat correlation function file, values of the correlation function are output at time separations corresponding to integer multiples of the sampling interval, in order of increasing time delay. Values from zero to the bufferCapacity, which come from the first stage of hierarchical blocking algorithm (stageId=1), correspond to autocorrelations of instantaneous values and output for consecutive integer values of the time delay. Large values of the time delay, which are calculated by subsequent levels, are output with intervals that are powers of 2 (2 for state 2, 4 for stage 3, etc.) and correspond to autocorrelations of block averages, averaged over the corresponding interval. 
+*/
+
+}

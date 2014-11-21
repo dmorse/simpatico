@@ -85,7 +85,7 @@ namespace McMd
    * structure factor values for the wavevector, one for each 
    * atomTypeId pair.
    * 
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class IntraStructureFactor 
     : public SystemAnalyzer<System>

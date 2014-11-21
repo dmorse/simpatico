@@ -29,14 +29,15 @@ namespace McMd
    *
    * The van Hove function S(k,t) is defined here as an expectation value
    * \f[
-   *     S(k,t)  = < \psi(k,t) \psi^{*}(k,0) > / V
+   *     S(k,t)  = \langle \psi(k,t) \psi^{*}(k,0) / V \rangle
    * \f]
-   * where V is system volume, and \f$\psi(k,t)\f$ is given by a sum
+   * where \f$V \equiv \sqrt{V(t)V(0)}\f$ is system volume, and where
+   * \f$\psi(k,t)\f$ is a mode amplitude given by a sum
    * \f[
    *     \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i )
    * \f]
-   * over all atoms in the system, where \f$ c_{a} \f$ is a user-specified 
-   * coefficient for monomers of type a. 
+   * over all atoms in the system, where \f$ c_{a} \f$ is a user-specified
+   * coefficient for atoms of type a.
    *
    * The Van Hove class can calculate S(k,t) for a list of wavevectors.
    * Each wavevector is specified as an IntVector containing integer 
@@ -72,7 +73,7 @@ namespace McMd
    * 
    * \sa \ref mcMd_analyzer_VanHove_page "parameter file format"
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class VanHove : public SystemAnalyzer<System>
    {

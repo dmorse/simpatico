@@ -18,7 +18,7 @@ namespace McMd
    /**
    * Periodically write step number to a Log file.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class LogProgress : public Analyzer
    {

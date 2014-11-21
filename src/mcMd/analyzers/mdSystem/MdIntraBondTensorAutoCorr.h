@@ -24,7 +24,7 @@ namespace McMd
    *
    * \sa McMd::IntraBondTensorAutoCorr
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Md_Module
    */
    class MdIntraBondTensorAutoCorr : public IntraBondTensorAutoCorr<MdSystem>
    {

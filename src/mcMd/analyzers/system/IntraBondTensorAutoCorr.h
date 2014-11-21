@@ -45,7 +45,7 @@ namespace McMd
    * \f]
    * for molecules of a specified species. 
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    template <class SystemType>
    class IntraBondTensorAutoCorr : public SystemAnalyzer<SystemType>

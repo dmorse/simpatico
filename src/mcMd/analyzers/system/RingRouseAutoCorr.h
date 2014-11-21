@@ -25,7 +25,7 @@ namespace McMd
    /**
    * Autocorrelation for Rouse mode coefficients of a ring molecule.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class RingRouseAutoCorr : public SystemAnalyzer<System>
    {

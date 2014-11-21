@@ -21,7 +21,7 @@ namespace McMd
    /**
    * McBondEnergyAverage averages of bond potential energy.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Mc_Module
    */
    class McBondEnergyAverage : public AverageAnalyzer<McSystem>
    {

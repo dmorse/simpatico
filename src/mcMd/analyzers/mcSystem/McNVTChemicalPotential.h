@@ -29,7 +29,7 @@ namespace McMd
    * McNVTChemicalPotential uses configuration bias algorithm
    * to calculate the chemical potential of a linear chain.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_Mc_Module
    */
    class McNVTChemicalPotential : public SystemAnalyzer<McSystem>
    {

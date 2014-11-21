@@ -29,7 +29,7 @@ namespace McMd
    /**
    * Autocorrelation for Rouse mode coefficients of a linear molecule.
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class LinearRouseAutoCorr : public SystemAnalyzer<System>
    {

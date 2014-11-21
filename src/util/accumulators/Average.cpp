@@ -95,7 +95,7 @@ namespace Util
 
       // Process block average for output
       if (nSamplePerBlock_ && outFilePtr) {
-         blockSum_  += value;
+         blockSum_ += value;
          ++iBlock_;
          if (iBlock_ == nSamplePerBlock_) {
             *outFilePtr << Dbl(blockSum_/double(nSamplePerBlock_))

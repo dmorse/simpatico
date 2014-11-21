@@ -25,7 +25,7 @@ namespace McMd
    *
    * \sa \ref mcMd_analyzer_BondLengthDist_page "parameter file format"
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class BondLengthDist : public SystemAnalyzer<System>
    {

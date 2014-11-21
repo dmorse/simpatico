@@ -19,7 +19,7 @@ namespace DdMd
    /**
    * Iterator for all atoms owned by an AtomStorage.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Atom_Module
    */
    class AtomIterator : public PArrayIterator<Atom>
    {};

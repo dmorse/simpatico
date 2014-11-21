@@ -27,7 +27,7 @@ namespace McMd
    *
    * \sa \ref mcMd_analyzer_ComMSD_page "parameter file format"
    *
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class ComMSD : public SystemAnalyzer<System>
    {

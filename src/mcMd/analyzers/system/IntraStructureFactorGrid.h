@@ -58,7 +58,7 @@ namespace McMd
    * with suffix .dat containing the instantaneous values of the
    * structure factors is appended to.
    * 
-   * \ingroup McMd_Analyzer_Module
+   * \ingroup McMd_Analyzer_McMd_Module
    */
    class IntraStructureFactorGrid : public IntraStructureFactor
    {

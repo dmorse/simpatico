@@ -31,7 +31,7 @@ namespace DdMd
    /**
    * Associative container for finding atoms identified by integer id.
    *
-   * \ingroup DdMd_Storage_Module
+   * \ingroup DdMd_Storage_Atom_Module
    */
    class AtomMap 
    {

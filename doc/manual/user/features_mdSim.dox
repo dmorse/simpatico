@@ -42,9 +42,8 @@ data analysis that can be used with the mdSim serial MD program.
   <li> \subpage mcMd_analyzer_MdKineticEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_MdPotentialEnergyAverage_page </li>
   <li> \subpage mcMd_analyzer_MdPressureAverage_page </li>
-  <li> \subpage mcMd_analyzer_MdStressAutoCorrelation_page </li>
   <li> \subpage mcMd_analyzer_MdVirialStressTensorAverage_page </li>
-  <li> \subpage mcMd_analyzer_MdStressAutoCorrelation_page </li>
+  <li> \subpage mcMd_analyzer_MdStressAutoCorr_page </li>
 </ul>
  
 <BR>
