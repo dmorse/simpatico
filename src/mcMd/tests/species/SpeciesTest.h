@@ -33,7 +33,6 @@ public:
   
    void testConstructor();
    void testReadParam();
-   //void testPopMolecule();
 
 };
 
@@ -70,67 +69,9 @@ void SpeciesTest::testReadParam()
 
 }
 
-#if 0
-void SpeciesTest::testPopMolecule()
-{
-   printMethod(TEST_FUNC);
-   using std::ifstream;
-   using std::cout;
-
-   //cout << "Species Id  = " << species.id() << std::endl;
-   TEST_ASSERT(species.id() == speciesId);
-
-   // Read input file  
-   std::ifstream in("species/in/Species");
-   species.readParam(in);
-   in.close();
-
-   TEST_ASSERT(species.isValid());
-
-   Molecule* molPtr;
-
-   molPtr = &(species.reservoir().pop());
-   //cout << "Molecule Id = " << molPtr->id() << std::endl;
-   //cout << "Species Id  = " << molPtr->species().id() << std::endl;
-   TEST_ASSERT(&(molPtr->species()) == &species );
-   TEST_ASSERT(molPtr->id() == 0 );
-   TEST_ASSERT(species.reservoir().size() 
-                   == species.reservoir().capacity() - 1);
-   TEST_ASSERT(species.isValid() );
-
-   molPtr = &(species.reservoir().pop());
-   //cout << "Molecule Id = " << molPtr->id() << std::endl;
-   //cout << "Species Id  = " << molPtr->species().id() << std::endl;
-   TEST_ASSERT(&(molPtr->species()) == &species);
-   TEST_ASSERT(molPtr->id() == 1);
-   TEST_ASSERT(species.reservoir().size() 
-                   == species.reservoir().capacity() - 2);
-
-   molPtr = &(species.reservoir().pop());
-   //cout << "Molecule Id = " << molPtr->id() << std::endl;
-   //cout << "Species Id  = " << molPtr->species().id() << std::endl;
-   TEST_ASSERT(&(molPtr->species()) == &species);
-   TEST_ASSERT(molPtr->id() == 2);
-   TEST_ASSERT(species.reservoir().size() 
-                   == species.reservoir().capacity() - 3);
-
-   molPtr = &(species.reservoir().pop());
-   //cout << "Molecule Id = " << molPtr->id() << std::endl;
-   //cout << "Species Id  = " << molPtr->species().id() << std::endl;
-   TEST_ASSERT(&(molPtr->species()) == &species);
-   TEST_ASSERT(molPtr->id() == 3);
-   TEST_ASSERT(species.reservoir().size() 
-                   == species.reservoir().capacity() - 4);
-
-   TEST_ASSERT(species.isValid());
-
-}
-#endif
-
 TEST_BEGIN(SpeciesTest)
 TEST_ADD(SpeciesTest, testConstructor)
 TEST_ADD(SpeciesTest, testReadParam)
-   //TEST_ADD(SpeciesTest, testPopMolecule);
 TEST_END(SpeciesTest)
 
 #endif

@@ -204,9 +204,10 @@ namespace McMd
       if (nMolecule > capacity())
          UTIL_THROW("nMolecule > Species.capacity()!"); 
 
+      Simulation& sim = system.simulation();
       for (iMol = 0; iMol < nMolecule; ++iMol) {
          // Add a new molecule to the system
-         Molecule &newMolecule= simulation().getMolecule(id());
+         Molecule &newMolecule= sim.getMolecule(id());
          system.addMolecule(newMolecule);
 
          // Try placing atoms
