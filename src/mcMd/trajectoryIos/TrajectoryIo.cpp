@@ -50,7 +50,7 @@ namespace McMd
          speciesCapacity = speciesPtr->capacity();
 
          for (iMol = 0; iMol < speciesCapacity; ++iMol) {
-            molPtr = &(speciesPtr->reservoir().pop());
+            molPtr = &(simulation().getMolecule(iSpec));
             system().addMolecule(*molPtr);
          }
          atomCapacity_ += speciesCapacity*speciesPtr->nAtom();

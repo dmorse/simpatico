@@ -77,7 +77,7 @@ namespace McMd
          speciesPtr = &simulation().species(iSpec);
          nMolecule  = speciesPtr->capacity();
          for (iMol = 0; iMol < nMolecule; ++iMol) {
-            molPtr = &(speciesPtr->reservoir().pop());
+            molPtr = &(simulation().getMolecule(iSpec));
             system().addMolecule(*molPtr);
    
             // Read positions

@@ -624,7 +624,7 @@ namespace McMd
          }
          ar >> nMoleculeIn;
          for (int iMol = 0; iMol < nMoleculeIn; ++iMol) {
-            molPtr = &(speciesPtr->reservoir().pop());
+            molPtr = &(simulation().getMolecule(iSpecies));
             addMolecule(*molPtr);
             if (molPtr != &molecule(iSpecies, iMol)) {
                UTIL_THROW("Molecule index error");
@@ -1024,7 +1024,7 @@ namespace McMd
          while (nMol > 0) {
             molPtr = &molecule(iSpecies, nMol - 1);
             removeMolecule(*molPtr);
-            speciesPtr->reservoir().push(*molPtr);
+            simulation().returnMolecule(*molPtr);
             nMol = nMolecule(iSpecies);
          }
       }

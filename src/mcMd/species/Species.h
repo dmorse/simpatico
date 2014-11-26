@@ -283,15 +283,6 @@ namespace McMd
       int capacity() const;
 
       /**
-      * Get the reservoir for this Species by reference.
-      * 
-      * The reservoir is an ArrayStack<Molecule> containers of pointers to
-      * all unused Molecule objects of this species, i.e., all Molecules
-      * that are not owned by any System.
-      */
-      Reservoir& reservoir();
-
-      /**
       * Return true if Species is valid, or throw an Exception.
       */
       bool isValid() const;
@@ -522,14 +513,6 @@ namespace McMd
    private:
 
       /**
-      * Reservoir of molecules that are not assigned to any System.
-      *
-      * The reservoir_ stack holds pointers to Molecule objects within the
-      * molecules_ array that are not assigned to any System.
-      */
-      ArrayStack<Molecule>  reservoir_;
-
-      /**
       * Array of AtomBondIdArray objects for all atoms.
       * 
       * Element atomBondArray_[id] is the AtomBondIdArray containing the
@@ -582,12 +565,6 @@ namespace McMd
    */
    inline int Species::capacity() const
    { return moleculeCapacity_; }
-
-   /**
-   * Get the reservoir for this Species by reference.
-   */
-   inline Species::Reservoir& Species::reservoir()
-   {  return reservoir_; }
 
    /*
    * Get number of Atoms per Molecule.

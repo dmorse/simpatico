@@ -373,7 +373,8 @@ namespace McMd
       int  nDihedral;
       #endif
 
-      // Allocate arrays of pointers to first object in a species block.
+      // Allocate arrays dimensioned by nSpecies().
+      reservoirs_.allocate(nSpecies());
       firstMoleculeIds_.allocate(nSpecies());
       firstAtomIds_.allocate(nSpecies());
       if (nBondType_ > 0) {
@@ -408,6 +409,9 @@ namespace McMd
             UTIL_THROW("Inconsistent species ids");
          }
          //speciesPtr->setId(iSpecies);
+
+         // Allocate reservoir for this species
+         reservoirs_[iSpecies].allocate(speciesPtr->capacity());
 
          // Set indexes of first objects of the blocks for this species
          firstMoleculeIds_[iSpecies] = moleculeCapacity_;
@@ -557,7 +561,7 @@ namespace McMd
       // Push on in reverse order, so that they pop off in sequence
       moleculePtr = &molecules_[firstMoleculeIds_[iSpecies] + capacity - 1];
       for (iMol = 0; iMol < capacity; ++iMol) {
-         speciesPtr->reservoir().push(*moleculePtr);
+         reservoirs_[iSpecies].push(*moleculePtr);
          --moleculePtr;
       }
 
@@ -777,6 +781,23 @@ namespace McMd
       const Molecule* molecules = &molecules_[firstMoleculeIds_[speciesId]];
       int   capacity = species(speciesId).capacity();
       set.allocate(molecules, capacity);
+   }
+
+   /*
+   * Get a new molecule from a reservoir of unused Molecule objects.
+   */ 
+   Molecule& Simulation::getMolecule(int speciesId)
+   {
+      return reservoirs_[speciesId].pop();  
+   }
+
+   /*
+   * Return a molecule to a reservoir of unused molecules.
+   */ 
+   void Simulation::returnMolecule(Molecule& molecule)
+   {
+      int speciesId = molecule.species().id();
+      reservoirs_[speciesId].push(molecule);  
    }
 
    // Accessors

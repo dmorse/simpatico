@@ -118,7 +118,6 @@ namespace McMd
    {
       if (isAtInterval(iStep))  {
 
-         Species* speciesPtr;
          Molecule* molPtr;
          Atom* endPtr, *pvt1Ptr;
          Vector trialPos[MaxTrial_], bondVec, pvt1Pos;
@@ -136,8 +135,7 @@ namespace McMd
          int    iTrial;
 
          beta = energyEnsemble().beta();
-         speciesPtr = &(simulation().species(speciesId_));
-         molPtr = &(speciesPtr->reservoir().pop());
+         molPtr = &(simulation().getMolecule(speciesId_));
          system().addMolecule(*molPtr);
 
          // Main molecule inserting loop:
@@ -328,7 +326,7 @@ namespace McMd
          }
 
          system().removeMolecule(*molPtr);
-         speciesPtr->reservoir().push(*molPtr);
+         simulation().returnMolecule(*molPtr);
 
          }
    }

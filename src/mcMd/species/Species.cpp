@@ -51,7 +51,6 @@ namespace McMd
    void Species::readParameters(std::istream &in)
    {
       read<int>(in, "moleculeCapacity", moleculeCapacity_);
-      reservoir_.allocate(moleculeCapacity_);
 
       // Define chemical structure, after reading any parameters.
       readSpeciesParam(in);
@@ -66,7 +65,6 @@ namespace McMd
    void Species::loadParameters(Serializable::IArchive& ar)
    {
       loadParameter<int>(ar, "moleculeCapacity", moleculeCapacity_);
-      reservoir_.allocate(moleculeCapacity_);
 
       // Read and define chemical structure.
       loadSpeciesParam(ar);
@@ -472,15 +470,9 @@ namespace McMd
    bool Species::isValid() const
    {
 
-      if (reservoir_.isAllocated()) {
+      if (atomTypeIds_.isAllocated()) {
  
-         // Check validity of reservoir (throws exception if invalid)
-         reservoir_.isValid();
-
          // Check atomTypeIds array
-         if (!atomTypeIds_.isAllocated()) {
-            UTIL_THROW("AtomTypeIds_ not allocated");
-         }
          if (!isMutable()) {
             for (int i = 0; i < nAtom_; ++i) {
                if (atomTypeIds_[i] < 0) {

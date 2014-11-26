@@ -206,7 +206,7 @@ namespace McMd
 
       for (iMol = 0; iMol < nMolecule; ++iMol) {
          // Add a new molecule to the system
-         Molecule &newMolecule= reservoir().pop();
+         Molecule &newMolecule= simulation().getMolecule(id());
          system.addMolecule(newMolecule);
 
          // Try placing atoms

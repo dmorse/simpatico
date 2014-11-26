@@ -78,7 +78,7 @@ namespace McMd
          speciesPtr = &simulation().species(iSpec);
          nMolecule = nMoleculeSpecies[iSpec];
          for (int iMol=0; iMol < nMolecule; ++iMol) {
-            molPtr = &(speciesPtr->reservoir().pop());
+            molPtr = &(simulation().getMolecule(iSpec));
             system().addMolecule(*molPtr);
             for (molPtr->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                in >> atomIter->position() >> atomType;

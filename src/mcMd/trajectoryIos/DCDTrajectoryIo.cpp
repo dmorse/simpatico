@@ -70,7 +70,7 @@ namespace McMd
 
          // Add molecules to system
          for (iMol = 0; iMol < speciesCapacity; ++iMol) {
-            molPtr = &(speciesPtr->reservoir().pop());
+            molPtr = &(simulation().getMolecule(iSpec));
             system().addMolecule(*molPtr);
          }
          atomCapacity += speciesCapacity*speciesPtr->nAtom();
