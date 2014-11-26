@@ -5,6 +5,7 @@ mcMd_species_=mcMd/species/Diblock.cpp \
     mcMd/species/HomoRing.cpp mcMd/species/Linear.cpp \
     mcMd/species/Point.cpp mcMd/species/Ring.cpp \
     mcMd/species/Species.cpp \
+    mcMd/species/atomGroups.cpp \
     mcMd/species/species_queries.cpp \
     mcMd/species/SpeciesFactory.cpp \
     mcMd/species/SpeciesManager.cpp \

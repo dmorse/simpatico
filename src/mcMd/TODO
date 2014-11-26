@@ -6,7 +6,13 @@ Reptation and Cfb with angles
 Species
 -------
 
-- Move Species hierarchy to a separate namespace, so it can be used in tools
+- Replace Species::getAtom(Groups) methods by members of non-member template.
+
+- Replace Species generator method by non-member function template with 
+  explicit specializations for Linear and Atom.
+
+- Move Species, SpeciesGroup etc. hierarchy to a Chem namespace, so it can be 
+  used in Tool namespace.
 
 Serialization
 -------------

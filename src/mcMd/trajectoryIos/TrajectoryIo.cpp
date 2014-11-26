@@ -20,10 +20,10 @@ namespace McMd
    * Constructor. 
    */
    TrajectoryIo::TrajectoryIo(System& system)
-    : boundaryPtr_(&system.boundary()),
+    : atomCapacity_(0),
+      boundaryPtr_(&system.boundary()),
       systemPtr_(&system),
-      simulationPtr_(&system.simulation()),
-      atomCapacity_(0)
+      simulationPtr_(&system.simulation())
    {}
 
    /* 
