@@ -6,9 +6,7 @@ Reptation and Cfb with angles
 Species
 -------
 
-- Remove reservoir from Species
-
-- Move Species hierarchy to a separate namespace
+- Move Species hierarchy to a separate namespace, so it can be used in tools
 
 Serialization
 -------------

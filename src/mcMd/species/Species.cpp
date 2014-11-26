@@ -26,16 +26,20 @@ namespace McMd
    * Default constructor.
    */
    Species::Species()
-    : nAtom_(0),
+    : id_(-1),
+      moleculeCapacity_(0),
+      nAtom_(0),
+      atomTypeIds_(),
       nBond_(0),
+      speciesBonds_(),
       #ifdef INTER_ANGLE
       nAngle_(0),
+      speciesAngles_(),
       #endif
       #ifdef INTER_DIHEDRAL
       nDihedral_(0),
+      speciesDihedrals_(),
       #endif
-      moleculeCapacity_(0),
-      id_(-1),
       mutatorPtr_(0)
    {  setClassName("Species"); }
 
