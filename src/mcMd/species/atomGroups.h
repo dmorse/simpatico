@@ -21,18 +21,32 @@ namespace McMd
    class Molecule;
    class Species;
 
+   #ifdef INTER_BOND
+   /**
+   * Array to hold pointers to bonds that contain a specific atom.
+   */
    typedef FSArray<const Bond*, Species::MaxBondPerAtom> AtomBondArray;
 
-   /*
+   /**
    * Fill an array of pointers to Bonds that contain an Atom.
+   *
+   * \param atom the Atom of interest
+   * \param molecule the molecule containing that atom
+   * \param species the species of that molecule
+   * \param bonds an array to fill with pointers to bonds
    */
-   void getAtomBonds(const Atom& atom, const Molecule& molecule, const Species& species,
-                     AtomBondArray& groups);
+   void getAtomBonds(const Atom& atom, const Molecule& molecule, 
+                     const Species& species,
+                     AtomBondArray& bonds);
 
-   /*
+   /**
    * Fill an array of pointers to Bonds that contain an Atom.
+   *
+   * \param atom the Atom of interest
+   * \param bonds an array to fill with pointers to bonds
    */
    void getAtomBonds(const Atom& atom, AtomBondArray& bonds);
+   #endif
 
 } 
 #endif

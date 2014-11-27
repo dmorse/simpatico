@@ -14,8 +14,7 @@ namespace McMd
 
    using namespace Util;
 
-   // Bonds
-
+   #ifdef INTER_BOND
    /*
    * Fill an array of pointers to Bonds that contain an Atom.
    */
@@ -25,7 +24,7 @@ namespace McMd
       const int atomId  = int( &atom - &molecule.atom(0) );
       const Species::AtomBondIdArray bondIds = species.atomBondIds(atomId);
       const int nGroup = bondIds.size();
-      const Bond* firstPtr = &molecule.bond(0);  // pointer to first Bond in molecule
+      const Bond* firstPtr = &molecule.bond(0);  // first Bond in molecule
       bonds.clear();
       for (int i = 0; i < nGroup; ++i) {
          bonds.append(firstPtr + bondIds[i]);
@@ -41,5 +40,6 @@ namespace McMd
       const Species& species = molecule.species();
       getAtomBonds(atom, molecule, species, bonds);
    }
+   #endif
 
 } 
