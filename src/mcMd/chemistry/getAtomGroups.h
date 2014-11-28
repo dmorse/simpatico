@@ -10,7 +10,9 @@
 
 #include <util/containers/FSArray.h>      // used in typedefs
 #include <mcMd/species/Species.h>         // used in typedefs
+#ifdef INTER_BOND
 #include <mcMd/chemistry/Bond.h>          // typedef
+#endif
 #ifdef INTER_ANGLE
 #include <mcMd/chemistry/Angle.h>         // typedef
 #endif
@@ -38,18 +40,6 @@ namespace McMd
    * Fill an array of pointers to Bonds that contain an Atom.
    *
    * \param atom the Atom of interest
-   * \param molecule the molecule containing that atom
-   * \param species the species of that molecule
-   * \param bonds an array to fill with pointers to bonds
-   */
-   void getAtomBonds(const Atom& atom, const Molecule& molecule, 
-                     const Species& species,
-                     AtomBondArray& bonds);
-
-   /**
-   * Fill an array of pointers to Bonds that contain an Atom.
-   *
-   * \param atom the Atom of interest
    * \param bonds an array to fill with pointers to bonds
    */
    void getAtomBonds(const Atom& atom, AtomBondArray& bonds);
@@ -66,18 +56,6 @@ namespace McMd
    * Fill an array of pointers to Angles that contain an Atom.
    *
    * \param atom the Atom of interest
-   * \param molecule the molecule containing that atom
-   * \param species the species of that molecule
-   * \param angles an array to fill with pointers to angles
-   */
-   void getAtomAngles(const Atom& atom, const Molecule& molecule, 
-                     const Species& species,
-                     AtomAngleArray& angles);
-
-   /**
-   * Fill an array of pointers to Angles that contain an Atom.
-   *
-   * \param atom the Atom of interest
    * \param angles an array to fill with pointers to angles
    */
    void getAtomAngles(const Atom& atom, AtomAngleArray& angles);
@@ -89,19 +67,6 @@ namespace McMd
    */
    typedef FSArray<const Dihedral*, Species::MaxDihedralPerAtom> 
            AtomDihedralArray;
-
-   /**
-   * Fill an array of pointers to Dihedrals that contain an Atom.
-   *
-   * \param atom the Atom of interest
-   * \param molecule the molecule containing that atom
-   * \param species the species of that molecule
-   * \param dihedrals an array to fill with pointers to dihedrals
-   */
-   void getAtomDihedrals(const Atom& atom, 
-                     const Molecule& molecule, 
-                     const Species& species,
-                     AtomDihedralArray& dihedrals);
 
    /**
    * Fill an array of pointers to Dihedrals that contain an Atom.

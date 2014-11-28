@@ -21,7 +21,9 @@
 #ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/PairFactory.h>
 #endif
+#ifdef INTER_BOND
 #include <mcMd/potentials/bond/BondFactory.h>
+#endif
 #ifdef INTER_ANGLE
 #include <mcMd/potentials/angle/AngleFactory.h>
 #endif
@@ -79,7 +81,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairFactoryPtr_(0),
       #endif
+      #ifdef INTER_BOND
       bondFactoryPtr_(0),
+      #endif
       #ifdef INTER_ANGLE
       angleFactoryPtr_(0),
       #endif
@@ -110,7 +114,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairStyle_(),
       #endif
+      #ifdef INTER_BOND
       bondStyle_(),
+      #endif
       #ifdef INTER_ANGLE
       angleStyle_(),
       #endif
@@ -162,7 +168,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairFactoryPtr_(other.pairFactoryPtr_),
       #endif
+      #ifdef INTER_BOND
       bondFactoryPtr_(other.bondFactoryPtr_),
+      #endif
       #ifdef INTER_ANGLE
       angleFactoryPtr_(other.angleFactoryPtr_),
       #endif
@@ -193,7 +201,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       pairStyle_(other.pairStyle_),
       #endif 
+      #ifdef INTER_BOND
       bondStyle_(other.bondStyle_),
+      #endif
       #ifdef INTER_ANGLE
       angleStyle_(other.angleStyle_),
       #endif
@@ -238,9 +248,11 @@ namespace McMd
             delete pairFactoryPtr_;
          }
          #endif
+         #ifdef INTER_BOND
          if (bondFactoryPtr_) {
             delete bondFactoryPtr_;
          }
+         #endif
          #ifdef INTER_ANGLE
          if (angleFactoryPtr_) {
             delete angleFactoryPtr_;
@@ -418,11 +430,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       read<std::string>(in, "pairStyle", pairStyle_);
       #endif
-
+      #ifdef INTER_BOND
       if (simulation().nBondType() > 0) {
          read<std::string>(in, "bondStyle", bondStyle_);
       }
-
+      #endif
       #ifdef INTER_ANGLE
       if (simulation().nAngleType() > 0) {
          read<std::string>(in, "angleStyle", angleStyle_);
@@ -458,9 +470,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       loadParameter<std::string>(ar, "pairStyle", pairStyle_);
       #endif
+      #ifdef INTER_BOND
       if (simulation().nBondType() > 0) {
          loadParameter<std::string>(ar, "bondStyle", bondStyle_);
       }
+      #endif
       #ifdef INTER_ANGLE
       if (simulation().nAngleType() > 0) {
          loadParameter<std::string>(ar, "angleStyle", angleStyle_);
@@ -496,9 +510,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       ar << pairStyle_;
       #endif
+      #ifdef INTER_BOND
       if (simulation().nBondType() > 0) {
          ar << bondStyle_;
       }
+      #endif
       #ifdef INTER_ANGLE
       if (simulation().nAngleType() > 0) {
          ar << angleStyle_;
@@ -1093,6 +1109,7 @@ namespace McMd
    {  return pairStyle_;  }
    #endif
 
+   #ifdef INTER_BOND
    /*
    * Return the BondFactory by reference.
    */
@@ -1110,6 +1127,7 @@ namespace McMd
    */
    std::string System::bondStyle() const
    {  return bondStyle_;  }
+   #endif
 
    #ifdef INTER_ANGLE
    /*

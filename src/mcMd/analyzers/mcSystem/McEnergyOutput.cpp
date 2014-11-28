@@ -59,9 +59,11 @@ namespace McMd
          outputFile_ << Dbl(pair);
          energy += pair;
          #endif
+         #ifdef INTER_BOND
          double bond = system().bondPotential().energy();
          outputFile_ << Dbl(bond);
          energy += bond;
+         #endif 
          #ifdef INTER_ANGLE
          if (system().hasAnglePotential()) {
             double angle = system().anglePotential().energy();
@@ -117,7 +119,9 @@ namespace McMd
       #ifndef INTER_NOPAIR
       outputFile_    << "[pair]       ";
       #endif
+      #ifdef INTER_BOND
       outputFile_    << "[bond]       ";
+      #endif
       #ifdef INTER_ANGLE
       if (system().hasAnglePotential()) {
          outputFile_ << "[angle]      ";

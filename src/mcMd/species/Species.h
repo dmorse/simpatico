@@ -282,8 +282,12 @@ namespace McMd
       * \param boundary the boundary to generate atoms in
       */
       virtual void generateMolecules(int nMolecule,
-         DArray<double> exclusionRadius, System &system,
-         BondPotential *bondPotentialPtr, const Boundary &boundary);
+                                     DArray<double> exclusionRadius, 
+                                     System &system,
+                                     #ifdef INTER_BOND
+                                     BondPotential *bondPotentialPtr, 
+                                     #endif
+                                     const Boundary &boundary);
       
    protected:
 

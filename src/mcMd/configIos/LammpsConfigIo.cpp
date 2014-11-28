@@ -51,8 +51,10 @@ namespace McMd
       for (iSpec = 0; iSpec < nSpecies; ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
          speciesCapacity = speciesPtr->capacity();
-         atomCapacity   += speciesCapacity*speciesPtr->nAtom();
-         bondCapacity   += speciesCapacity*speciesPtr->nBond();
+         atomCapacity += speciesCapacity*speciesPtr->nAtom();
+         #ifdef INTER_BOND
+         bondCapacity += speciesCapacity*speciesPtr->nBond();
+         #endif
       }
 
 
@@ -111,7 +113,7 @@ namespace McMd
 
       // Read particle masses (discard values)
       double mass;
-      int    atomTypeId;
+      int atomTypeId;
       in >> Label("Masses");
       for (i = 0; i < nAtomType; ++i) {
          in >> atomTypeId >> mass;
@@ -123,13 +125,13 @@ namespace McMd
       * Atom tags must appear in order, numbered from 1
       */
       in >> Label("Atoms");
-      Molecule*                molPtr;
-      Molecule::AtomIterator   atomIter;
-      IntVector                shift;
+      Molecule* molPtr;
+      Molecule::AtomIterator atomIter;
+      IntVector shift;
       int atomId, molId, iMol, nMolecule;
       for (iSpec=0; iSpec < nSpecies; ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
-         nMolecule  = speciesPtr->capacity();
+         nMolecule = speciesPtr->capacity();
          for (iMol = 0; iMol < nMolecule; ++iMol) {
             molPtr = &(simulation().getMolecule(iSpec));
             system().addMolecule(*molPtr);
@@ -156,9 +158,6 @@ namespace McMd
          }
       }
 
-      #if 0
-      #endif
-
    }
 
    void LammpsConfigIo::write(std::ostream &out)
@@ -170,13 +169,13 @@ namespace McMd
       out << endl;
 
       // Count total numbers of atoms and bonds in all species.
-      Species  *speciesPtr;
-      int       iSpec, nMolecule;
-      int       nAtom = 0;
-      int       nBond = 0;
+      Species* speciesPtr;
+      int iSpec, nMolecule;
+      int nAtom = 0;
+      int nBond = 0;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
-         nMolecule  = system().nMolecule(iSpec);
+         nMolecule = system().nMolecule(iSpec);
          nAtom += nMolecule*(speciesPtr->nAtom());
          nBond += nMolecule*(speciesPtr->nBond());
       }
@@ -193,7 +192,11 @@ namespace McMd
       // Write numbers of atom types, bond types, etc.
       Format::setDefaultWidth(5);
       out << Int(simulation().nAtomType()) << " atom types" << endl;
+      #ifdef INTER_BOND
       out << Int(simulation().nBondType()) << " bond types" << endl;
+      #else
+      out << Int(0) << " bond types" << endl;
+      #endif
       out << Int(0) << " angle types" << endl;
       out << Int(0) << " dihedral types" << endl;
       out << Int(0) << " improper types" << endl;
@@ -218,12 +221,12 @@ namespace McMd
       out << endl;
 
       // Write atomic positions
-      // lammps atom     tag = Simpatico atom id + 1
-      // lammps molecule id  = Simpatico molecule id + 1
+      // lammps atom tag = Simpatico atom id + 1
+      // lammps molecule id = Simpatico molecule id + 1
       out << "Atoms" << endl;
       out << endl;
       System::MoleculeIterator molIter;
-      Molecule::AtomIterator   atomIter;
+      Molecule::AtomIterator atomIter;
       int i;
       int shift = 0;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
@@ -241,11 +244,12 @@ namespace McMd
       }
       out << endl;
 
+      #if INTER_BOND
       // Write bond topology
       out << "Bonds" << endl;
       out << endl;
       Molecule::BondIterator bondIter;
-      int                    iBond = 1;
+      int iBond = 1;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
             for (molIter->begin(bondIter); bondIter.notEnd(); ++bondIter) {
@@ -258,6 +262,7 @@ namespace McMd
          }
       }
       out << endl;
+      #endif
 
       // Reset Format defaults to initialization values
       Format::initStatic();

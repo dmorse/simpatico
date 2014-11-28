@@ -114,8 +114,10 @@ namespace McMd
       /// \name Potential Energy Queries
       //@{
 
+      #ifdef INTER_BOND
       /// Does a bond potential exist?
       bool hasBonds() const;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Does an angle potential exist?
@@ -163,8 +165,10 @@ namespace McMd
       /// Pointer to Boundary object for actual boundary.
       Boundary*   boundaryPtr_;
 
+      #ifdef INTER_BOND
       // Does a bond potential exist?
       bool hasBonds_;
+      #endif
 
       #ifdef INTER_ANGLE
       // Does an angle potential exist?
@@ -251,11 +255,13 @@ namespace McMd
       (*moleculeSetsPtr_)[speciesId].begin(iterator);
    }
 
+   #ifdef INTER_BOND
    /*
    * Does a bond potential exist?
    */
    inline bool SubSystem::hasBonds() const
    {  return hasBonds_; }
+   #endif
 
    #ifdef INTER_ANGLE
    /*

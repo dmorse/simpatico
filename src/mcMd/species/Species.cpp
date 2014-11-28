@@ -612,8 +612,13 @@ namespace McMd
    *
    */
    void Species::generateMolecules(int nMolecule,
-      DArray<double> exclusionRadius, System &system,
-      BondPotential *bondPotentialPtr, const Boundary& boundary) {
+                                   DArray<double> exclusionRadius, 
+                                   System &system,
+                                   #ifdef INTER_BOND
+                                   BondPotential *bondPotentialPtr, 
+                                   #endif
+                                   const Boundary& boundary) 
+   {
       UTIL_THROW("generateMolecules() not implemented.");
    }
 } 

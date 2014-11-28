@@ -117,7 +117,9 @@ namespace McMd
       Species  *speciesPtr;
       int iSpec, nMolecule;
       int nAtom = 0;
+      #ifdef INTER_BOND
       int nBond = 0;
+      #endif
       #ifdef INTER_ANGLE
       int nAngle = 0;
       #endif
@@ -128,7 +130,9 @@ namespace McMd
          speciesPtr = &simulation().species(iSpec);
          nMolecule  = system().nMolecule(iSpec);
          nAtom += nMolecule*(speciesPtr->nAtom());
+         #ifdef INTER_BOND
          nBond += nMolecule*(speciesPtr->nBond());
+         #endif
          #ifdef INTER_ANGLE
          nAngle += nMolecule*(speciesPtr->nAngle());
          #endif
@@ -174,6 +178,7 @@ namespace McMd
       }
       out << std::endl;
 
+      #ifdef INTER_BOND
       // Write Bonds
       out << "BONDS" << std::endl;
       out << "nBond  " << nBond << std::endl;
@@ -195,6 +200,7 @@ namespace McMd
          }
       }
       out << std::endl;
+      #endif
 
       #ifdef INTER_ANGLE
       // Write Angles

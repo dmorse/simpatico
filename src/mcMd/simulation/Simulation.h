@@ -13,7 +13,9 @@
 #include <util/param/ParamComposite.h>  // base class
 #include <mcMd/chemistry/Atom.h>        // member container template argument
 #include <mcMd/chemistry/Molecule.h>    // member container template argument
+#ifdef INTER_BOND
 #include <mcMd/chemistry/Bond.h>        // typedef
+#endif
 #ifdef INTER_ANGLE
 #include <mcMd/chemistry/Angle.h>       // typedef
 #endif
@@ -234,10 +236,12 @@ namespace McMd
       */
       int nAtomType() const;
 
+      #ifdef INTER_BOND
       /**
       * Get the number of bond types.
       */
       int nBondType() const;
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -296,10 +300,12 @@ namespace McMd
       */
       int atomCapacity() const;
 
+      #ifdef INTER_BOND
       /**
       * Get the total number of Bonds allocated.
       */
       int bondCapacity() const;
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -422,6 +428,7 @@ namespace McMd
       */
       RArray<Atom> atoms_;
 
+      #ifdef INTER_BOND
       /**
       * Array of all Bond objects.
       *
@@ -431,6 +438,7 @@ namespace McMd
       * stored sequentially within a larger block.
       */
       DArray<Bond> bonds_;
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -472,6 +480,7 @@ namespace McMd
       */
       DArray<int> firstAtomIds_;
 
+      #ifdef INTER_BOND
       /**
       * Array containing indices to the first Bond of each species.
       *
@@ -479,6 +488,7 @@ namespace McMd
       * block of the bonds_ Array associated with species number i.
       */
       DArray<int> firstBondIds_;
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -543,8 +553,10 @@ namespace McMd
       /// Number of atom types.
       int nAtomType_;
 
+      #ifdef INTER_BOND
       /// Number of bond types.
       int nBondType_;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Number of angle types.
@@ -589,6 +601,7 @@ namespace McMd
       */
       int atomCapacity_;
 
+      #ifdef INTER_BOND
       /**
       * Number of bonds allocated.
       *
@@ -596,6 +609,7 @@ namespace McMd
       * Species in all Systems.
       */
       int bondCapacity_;
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -641,12 +655,14 @@ namespace McMd
       */
       void initializeSpecies(int speciesId);
    
+      #ifdef INTER_BOND
       /**
       * Initialize all Bond objects in all Molecules of one Species.
       *
       * \param speciesId integer Id of the Species.
       */
       void initializeSpeciesBonds(int speciesId);
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -674,8 +690,10 @@ namespace McMd
    inline int Simulation::nAtomType() const
    {  return nAtomType_; }
 
+   #ifdef INTER_BOND
    inline int Simulation::nBondType() const
    {  return nBondType_; }
+   #endif
 
    #ifdef INTER_ANGLE
    inline int Simulation::nAngleType() const
@@ -711,8 +729,10 @@ namespace McMd
    inline int Simulation::atomCapacity() const
    {  return atomCapacity_; }
 
+   #ifdef INTER_BOND
    inline int Simulation::bondCapacity() const
    {  return bondCapacity_; }
+   #endif
 
    #ifdef INTER_ANGLE
    inline int Simulation::angleCapacity() const

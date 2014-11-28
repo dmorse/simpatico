@@ -43,8 +43,7 @@ namespace McMd
       /**
       * Destructor.
       */
-      virtual ~Ring()
-      {}
+      virtual ~Ring();
 
    protected:
 

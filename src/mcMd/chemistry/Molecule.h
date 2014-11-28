@@ -9,7 +9,9 @@
 */
 
 #include "Atom.h"
+#ifdef INTER_BOND
 #include "Bond.h"
+#endif
 #ifdef INTER_ANGLE
 #include "Angle.h"
 #endif
@@ -46,11 +48,13 @@ namespace McMd
       /// Iterator for const Atoms within a Molecule.
       typedef ConstArrayIterator<Atom>  ConstAtomIterator;
 
+      #ifdef INTER_BOND
       /// Iterator for Bonds within a Molecule.
       typedef ArrayIterator<Bond>  BondIterator;
 
       /// Iterator for const Bonds within a Molecule.
       typedef ConstArrayIterator<Bond>  ConstBondIterator;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Iterator for Angles within a Molecule.
@@ -123,6 +127,7 @@ namespace McMd
       */
       void setNAtom(int nAtom);
      
+      #ifdef INTER_BOND
       /**
       * Set the first Bond.
       *
@@ -136,6 +141,7 @@ namespace McMd
       * \param nBond number of Bonds in the molecule.
       */
       void setNBond(int nBond);
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -185,8 +191,10 @@ namespace McMd
       /// Get the number of Atoms in this Molecule.
       int nAtom() const;
 
+      #ifdef INTER_BOND
       /// Get the number of Bonds in this Molecule.
       int nBond() const;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Get the number of Angles in this Molecule.
@@ -216,8 +224,9 @@ namespace McMd
       */
       Atom& atom(int localId);
 
+      #ifdef INTER_BOND
       /**
-      * Get a specific Bond in this Molecule by reference.
+      * Get a specific Bond in this Molecule by non-const reference.
       * 
       * Returns the bond with local integer index 0 <= localId < nBond.
       *
@@ -233,10 +242,11 @@ namespace McMd
       * \param localId local index of desired bond within this Molecule.
       */
       const Bond& bond(int localId) const;
+      #endif
 
       #ifdef INTER_ANGLE
       /**
-      * Get a specific Angle in this Molecule by reference.
+      * Get a specific Angle in this Molecule by non-const reference.
       * 
       * Returns the angle with local integer index 0 <= localId < nAngle.
       *
@@ -292,6 +302,7 @@ namespace McMd
       */
       void begin(ConstAtomIterator &iterator) const;
 
+      #ifdef INTER_BOND
       /**  
       * Set a Molecule::BondIterator to first Bond in this Molecule.
       *
@@ -305,6 +316,7 @@ namespace McMd
       * \param iterator on output, points to first Bond.
       */
       void begin(ConstBondIterator &iterator) const;
+      #endif
 
       #ifdef INTER_ANGLE
       /**  
@@ -352,8 +364,10 @@ namespace McMd
       /// Pointer to first atom in molecule.
       Atom* firstAtomPtr_; 
 
+      #ifdef INTER_BOND
       /// Pointer to first bond in molecule.
       Bond* firstBondPtr_;    
+      #endif
 
       #ifdef INTER_ANGLE
       /// Pointer to first angle in molecule.
@@ -368,8 +382,10 @@ namespace McMd
       /// Number of atoms in molecule.
       int nAtom_;             
 
+      #ifdef INTER_BOND
       /// Number of bonds in molecule.
       int nBond_;            
+      #endif
 
       #ifdef INTER_ANGLE
       /// Number of angles in molecule.
@@ -393,7 +409,9 @@ namespace McMd
     : speciesPtr_(0),
       systemPtr_(0),
       firstAtomPtr_(0),
+      #ifdef INTER_BOND
       firstBondPtr_(0),
+      #endif
       #ifdef INTER_ANGLE
       firstAnglePtr_(0),
       #endif
@@ -401,7 +419,9 @@ namespace McMd
       firstDihedralPtr_(0),
       #endif
       nAtom_(0),
+      #ifdef INTER_BOND
       nBond_(0),
+      #endif
       #ifdef INTER_ANGLE
       nAngle_(0),
       #endif
@@ -435,11 +455,13 @@ namespace McMd
    inline int Molecule::nAtom() const
    {  return nAtom_; }
 
+   #ifdef INTER_BOND
    /*
    * Get number of bonds in this molecule.
    */
    inline int Molecule::nBond() const
    {  return nBond_; }
+   #endif
 
    #ifdef INTER_ANGLE
    /*
@@ -479,8 +501,9 @@ namespace McMd
       return *(firstAtomPtr_ + localIndex); 
    }
 
+   #ifdef INTER_BOND
    /*
-   * Get a specific Bond, referenced by an index.
+   * Get a specific Bond by reference.
    */
    inline Bond& Molecule::bond(int localIndex)
    {  
@@ -489,9 +512,9 @@ namespace McMd
       assert(localIndex < nBond_); 
       return *(firstBondPtr_ + localIndex); 
    }
-
+  
    /*
-   * Get a specific Bond, referenced by an index.
+   * Get a specific Bond by const reference.
    */
    inline const Bond& Molecule::bond(int localIndex) const
    {  
@@ -500,6 +523,7 @@ namespace McMd
       assert(localIndex < nBond_); 
       return *(firstBondPtr_ + localIndex); 
    }
+   #endif
 
    #ifdef INTER_ANGLE
    /*
@@ -577,6 +601,7 @@ namespace McMd
       iterator.setEnd(firstAtomPtr_ + nAtom_); 
    }
 
+   #ifdef INTER_BOND
    /*
    * Set BondIterator to first Bond in this molecule.
    */
@@ -598,6 +623,7 @@ namespace McMd
       iterator.setCurrent(firstBondPtr_); 
       iterator.setEnd(firstBondPtr_ + nBond_); 
    }
+   #endif
 
    #ifdef INTER_ANGLE
    /*
@@ -677,6 +703,7 @@ namespace McMd
    inline void Molecule::setNAtom(int nAtom)
    {  nAtom_ = nAtom; }
 
+   #ifdef INTER_BOND
    /*
    * Set pointer to first Bond in molecule.
    */
@@ -688,6 +715,7 @@ namespace McMd
    */
    inline void Molecule::setNBond(int nBond)
    {  nBond_ = nBond; }
+   #endif
 
    #ifdef INTER_ANGLE
    /*

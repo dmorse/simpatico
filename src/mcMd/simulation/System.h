@@ -56,7 +56,9 @@ namespace McMd
    class ConfigIo;
    class TrajectoryIo;
    class PairFactory;
+   #ifdef INTER_BOND
    class BondPotential;
+   #endif
    #ifdef INTER_ANGLE
    class AnglePotential;
    #endif
@@ -404,6 +406,7 @@ namespace McMd
       std::string pairStyle() const;
       #endif
 
+      #ifdef INTER_BOND
       /**
       * Get the associated Factory<BondPotential> by reference.
       */
@@ -413,6 +416,7 @@ namespace McMd
       * Return covalent bond style string.
       */
       std::string bondStyle() const;
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -813,8 +817,10 @@ namespace McMd
       PairFactory* pairFactoryPtr_;
       #endif
    
+      #ifdef INTER_BOND
       /// Pointer to the Factory<BondPotential>.
       Factory<BondPotential>* bondFactoryPtr_;
+      #endif
   
       #ifdef INTER_ANGLE 
       /// Pointer to the AnglePotential Factory.
@@ -874,8 +880,10 @@ namespace McMd
       std::string pairStyle_;
       #endif
 
+      #ifdef INTER_BOND
       /// Name of bond potential style.
       std::string bondStyle_;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Name of angle potential style.
