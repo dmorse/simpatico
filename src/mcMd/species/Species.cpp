@@ -7,11 +7,11 @@
 
 #include "Species.h"
 
-#include <util/global.h>                    // needed for UTIL_THROW
-#include <mcMd/chemistry/Atom.h>
-#include <mcMd/chemistry/SpeciesGroup.tpp>  // SpeciesBond/Angle implementation
+#include <util/global.h>                    
+//#include <mcMd/chemistry/Atom.h>
+#include <mcMd/chemistry/SpeciesGroup.tpp>  
 
-#include <mcMd/potentials/bond/BondPotential.h>
+//#include <mcMd/potentials/bond/BondPotential.h>
 
 #ifdef UTIL_MPI
 #include <mcMd/simulation/McMd_mpi.h>       // to read DArray<SpeciesBond>
@@ -240,85 +240,6 @@ namespace McMd
       #endif
    }
 
-   // Accessors
-
-   /*
-   * Get an array of pointers to Bonds that contain an Atom.
-   */
-   void Species::getAtomBonds(const Atom& atom, AtomBondArray& bonds) const
-   {
-      bonds.clear();
-
-      if (nBond_ > 0) {
-
-         const Molecule& molecule = atom.molecule();
-         assert(this == &molecule.species());
-
-         const Bond* bondPtr; 
-         int atomId, bondId, nBond;
-   
-         atomId  = int( &atom - &molecule.atom(0) );
-         bondPtr = &molecule.bond(0);  // pointer to first Bond in molecule
-         nBond   = atomBondIdArrays_[atomId].size();
-         for (bondId = 0; bondId < nBond; ++bondId) {
-            bonds.append(bondPtr + atomBondIdArrays_[atomId][bondId]);
-         }
-      }
-
-   }
-
-   #ifdef INTER_ANGLE
-   /*
-   * Get an array of pointers to Angles that contain an Atom.
-   */
-   void Species::getAtomAngles(const Atom& atom, AtomAngleArray& angles) const
-   {
-      angles.clear();
-
-      if (nAngle_ > 0) {
-         const Molecule& molecule = atom.molecule();
-         assert(this == &molecule.species());
-
-         const Angle* anglePtr; 
-         int atomId, angleId, nAngle;
-   
-         atomId   = int( &atom - &molecule.atom(0) );
-         anglePtr = &molecule.angle(0);  // pointer to first Angle in molecule
-         nAngle   = atomAngleIdArrays_[atomId].size();
-         for (angleId = 0; angleId < nAngle; ++angleId) {
-            angles.append(anglePtr + atomAngleIdArrays_[atomId][angleId]);
-         }
-      }
-
-   }
-   #endif
-
-   #ifdef INTER_DIHEDRAL
-   /*
-   * Get an array of pointers to Dihedrals that contain an Atom.
-   */
-   void Species::getAtomDihedrals(const Atom& atom, AtomDihedralArray& dihedrals) 
-        const
-   {
-      dihedrals.clear();
-
-      if (nDihedral_ > 0) {
-         const Molecule& molecule = atom.molecule();
-         assert(this == &molecule.species());
-
-         const Dihedral* dihedralPtr; 
-         int atomId, dihedralId, nDihedral;
-   
-         atomId   = int( &atom - &molecule.atom(0) );
-         dihedralPtr = &molecule.dihedral(0);  // pointer to first Dihedral in molecule
-         nDihedral   = atomDihedralIdArrays_[atomId].size();
-         for (dihedralId = 0; dihedralId < nDihedral; ++dihedralId) {
-            dihedrals.append(dihedralPtr + atomDihedralIdArrays_[atomId][dihedralId]);
-         }
-      }
-   }
-   #endif
- 
    // Setters
 
    /*

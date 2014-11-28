@@ -6,8 +6,6 @@ Reptation and Cfb with angles
 Species
 -------
 
-- Replace Species::getAtom(Groups) methods by members of non-member template.
-
 - Replace Species generator method by non-member function template with 
   explicit specializations for Linear and Atom.
 

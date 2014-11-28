@@ -610,14 +610,12 @@ namespace McMd
    {
       ar >> boundary();
 
-      Species* speciesPtr;
-      int nSpecies = simulation().nSpecies();
       Molecule* molPtr;
       Molecule::AtomIterator atomIter;
       int iSpeciesIn, nMoleculeIn;
+      const int nSpecies = simulation().nSpecies();
 
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         speciesPtr = &simulation().species(iSpecies);
          ar >> iSpeciesIn;
          if (iSpeciesIn != iSpecies) {
             UTIL_THROW("Error: iSpeciesIn != iSpecies");
@@ -651,10 +649,10 @@ namespace McMd
    {
       ar << boundary();
 
-      int nSpecies = simulation().nSpecies();
       System::MoleculeIterator molIter;
-      Molecule::AtomIterator   atomIter;
+      Molecule::AtomIterator atomIter;
       int nMoleculeOut;
+      const int nSpecies = simulation().nSpecies();
 
       for (int iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          ar << iSpecies;
@@ -952,7 +950,7 @@ namespace McMd
       assert(simulationPtr_);
 
       // Allocate an array of nSpecies empty MoleculeSet objects.
-      int nSpecies = simulationPtr_->nSpecies();
+      const int nSpecies = simulation().nSpecies();
       moleculeSetsPtr_->allocate(nSpecies);
 
       // Allocate and initialize the MoleculeSet for each species.
@@ -1015,12 +1013,11 @@ namespace McMd
    */
    void System::removeAllMolecules()
    {
-      Species*  speciesPtr;
       Molecule* molPtr;
-      int       iSpecies, nMol;
-      for (iSpecies = 0; iSpecies < simulation().nSpecies(); ++iSpecies) {
-         speciesPtr = &simulation().species(iSpecies);
-         nMol  = nMolecule(iSpecies);
+      int iSpecies, nMol;
+      const int nSpecies = simulation().nSpecies();
+      for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         nMol = nMolecule(iSpecies);
          while (nMol > 0) {
             molPtr = &molecule(iSpecies, nMol - 1);
             removeMolecule(*molPtr);
@@ -1221,7 +1218,7 @@ namespace McMd
    bool System::isValid() const
    {
       Molecule* molPtr;
-      int       iSpecies, iMolecule;
+      int iSpecies, iMolecule;
       if (!simulationPtr_) {
          UTIL_THROW("Null simulationPtr_");
       }

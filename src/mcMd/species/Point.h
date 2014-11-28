@@ -53,12 +53,7 @@ namespace McMd
       * \param in input stream
       */
       virtual void readSpeciesParam(std::istream &in);
-   
-      /**
-      * Return the atom type id.
-      */
-      virtual int getAtomTypeId(Molecule &molecule, int index);
-   
+  
       /**
       * Load species structure from an Archive.
       *

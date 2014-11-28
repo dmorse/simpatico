@@ -11,6 +11,7 @@
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/neighbor/CellList.h>
 #include <mcMd/potentials/bond/BondPotential.h>
+#include <mcMd/chemistry/Molecule.h>
 
 #include <sstream>
 

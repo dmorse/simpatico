@@ -18,6 +18,7 @@ namespace McMd
    class System;
    class CellList;
    class BondPotential;
+   class Molecule;
 
    /**
    * A Species of linear polymers (abstract).
@@ -134,6 +135,7 @@ namespace McMd
       void buildLinear();
 
    private:
+
       /**
       * Try to place an atom. If successful, recursively call tryPlace
       * again to place next atom

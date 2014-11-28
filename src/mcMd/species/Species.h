@@ -12,15 +12,8 @@
 #include <util/containers/DArray.h>        // member template
 #include <util/containers/FSArray.h>       // member template
 
-#include <mcMd/chemistry/Molecule.h>       // member template parameter
+//#include <mcMd/chemistry/Molecule.h>       // member template parameter
 #include <mcMd/chemistry/SpeciesGroup.h>   // member template parameter
-#include <mcMd/chemistry/Bond.h>           // typedef
-#ifdef INTER_ANGLE
-#include <mcMd/chemistry/Angle.h>          // typedef
-#endif
-#ifdef INTER_DIHEDRAL
-#include <mcMd/chemistry/Dihedral.h>       // typedef
-#endif
 #include <util/boundary/Boundary.h>        // typedef
 
 namespace McMd
@@ -29,6 +22,7 @@ namespace McMd
    using namespace Util;
 
    class Atom;
+   class System;
    class SpeciesMutator;
    class BondPotential;
 
@@ -90,7 +84,7 @@ namespace McMd
    public:
 
       /// Maximum number of bonds that can be connected to one atom.
-      static const int MaxBondPerAtom    = 4;
+      static const int MaxBondPerAtom = 4;
 
       /// A SpeciesBond has the local atom ids and a type id for one bond.
       typedef SpeciesGroup<2> SpeciesBond;
@@ -98,21 +92,15 @@ namespace McMd
       /// An array of local integer bond ids for all bonds containing one atom.
       typedef FSArray<int, MaxBondPerAtom> AtomBondIdArray;
 
-      /// Array of pointers to Bond objects that contain one atom.
-      typedef FSArray<const Bond*, MaxBondPerAtom> AtomBondArray;
-
       #ifdef INTER_ANGLE
       /// Maximum number of angles groups that can contain one atom.
-      static const int MaxAnglePerAtom   = 18;
+      static const int MaxAnglePerAtom = 18;
 
       /// A SpeciesAngle has the local atom ids and a type id for one angle.
       typedef SpeciesGroup<3> SpeciesAngle;
 
       /// An array of local angle ids for all angles containing one atom.
       typedef FSArray<int, MaxAnglePerAtom> AtomAngleIdArray;
-
-      /// Array of pointers to Angle objects that contain one atom.
-      typedef FSArray<const Angle*, MaxAnglePerAtom> AtomAngleArray;
       #endif
 
       #ifdef INTER_DIHEDRAL
@@ -124,9 +112,6 @@ namespace McMd
 
       /// An array of local angle ids for all dihedrals containing one atom.
       typedef FSArray<int, MaxDihedralPerAtom> AtomDihedralIdArray;
-
-      /// Array of pointers to Angle objects that contain one atom.
-      typedef FSArray<const Dihedral*, MaxDihedralPerAtom> AtomDihedralArray;
       #endif
 
       /**
@@ -145,10 +130,10 @@ namespace McMd
       /**
       * Read parameters and initialize structure for this species.
       *
-      * This function reads the parameter moleculeCapacity (the number of
-      * of Molecule objects allocated for this Species) and invokes the
-      * virtual Species::readSpeciesParam() function to define the chemical
-      * structure of the Species.
+      * This function reads the parameter moleculeCapacity (the maximum 
+      * allowed number of molecules of this Species) and invokes the
+      * virtual Species::readSpeciesParam() function to define the 
+      * chemical structure of the Species.
       *
       * \param in input stream.
       */
@@ -210,14 +195,6 @@ namespace McMd
       */
       const AtomBondIdArray& atomBondIds(int atomId) const;
 
-      /**
-      * Get array of pointers to Bonds that contain an Atom.
-      *
-      * \param atom  atom of interest
-      * \param bonds array of pointers to Bonds containing the atom
-      */
-      void getAtomBonds(const Atom& atom, AtomBondArray& bonds) const;
-
       #ifdef INTER_ANGLE
       /**
       * Get number of angles per molecule for this Species.
@@ -237,14 +214,6 @@ namespace McMd
       * \param atomId local index for atom of interest
       */
       const AtomAngleIdArray& atomAngleIds(int atomId) const;
-
-      /**
-      * Get array of pointers to Angles that contain an Atom.
-      *
-      * \param atom  atom of interest.
-      * \param angles  array of pointers to Angles containing the atom.
-      */
-      void getAtomAngles(const Atom& atom, AtomAngleArray& angles) const;
       #endif
 
       #ifdef INTER_DIHEDRAL
@@ -266,14 +235,6 @@ namespace McMd
       * \param atomId  local index for atom of interest
       */
       const AtomDihedralIdArray& atomDihedralIds(int atomId) const;
-
-      /**
-      * Get array of pointers to Dihedrals that contain an Atom.
-      *
-      * \param atom  atom of interest.
-      * \param dihedrals array of pointers to Dihedrals containing the atom.
-      */
-      void getAtomDihedrals(const Atom& atom, AtomDihedralArray& dihedrals) const;
       #endif
 
       //@}
@@ -286,7 +247,7 @@ namespace McMd
       int id() const;
 
       /**
-      * Get total number of Molecule objects allocated for this Species.
+      * Maximum allowed number of molecules for this Species.
       */
       int capacity() const;
 
@@ -364,7 +325,7 @@ namespace McMd
       * Array of SpeciesBonds for all bonds, indexed by local bond id.
       * 
       * Element speciesBonds_[id] is the SpeciesBond object for bond number id 
-      * in any Molecule of this Species, where 0 <= id < nBond_.
+      * in any molecule of this Species, where 0 <= id < nBond_.
       */ 
       DArray<SpeciesBond> speciesBonds_;
 
@@ -378,7 +339,7 @@ namespace McMd
       * Array of SpeciesAngles for all angles, indexed by local angle id.
       * 
       * Element speciesAngles_[id] is the SpeciesAngle object for angle number id 
-      * in any Molecule of this Species, where 0 <= id < nAngle_.
+      * in any molecule of this Species, where 0 <= id < nAngle_.
       */ 
       DArray<SpeciesAngle> speciesAngles_;
       #endif
@@ -393,7 +354,7 @@ namespace McMd
       * Array of SpeciesDihedrals for all dihedrals, indexed by local dihedral id.
       * 
       * Element speciesDihedrals_[id] is the SpeciesDihedral object for dihedral
-      * number id in any Molecule of this Species, where 0 <= id < nAngle_.
+      * number id in any molecule of this Species, where 0 <= id < nAngle_.
       */ 
       DArray<SpeciesDihedral> speciesDihedrals_;
       #endif
@@ -519,7 +480,7 @@ namespace McMd
       * 
       * Element atomBondIdArrays_[id] is the AtomBondIdArray containing the
       * local bond ids for bonds connected to atom with local index id 
-      * in a generic Molecule of this Species.
+      * in a generic molecule of this Species.
       */ 
       DArray<AtomBondIdArray> atomBondIdArrays_;
 
@@ -529,7 +490,7 @@ namespace McMd
       * 
       * Element atomAngleIdArrays_[id] is the AtomAngleIdArray containing the
       * local angle ids for angles connected to atom with local index id 
-      * in a generic Molecule of this Species.
+      * in a generic molecule of this Species.
       */ 
       DArray<AtomAngleIdArray> atomAngleIdArrays_;
       #endif
@@ -540,7 +501,7 @@ namespace McMd
       * 
       * Element atomDihedralIdArrays_[id] is the AtomAngleIdArray containing the
       * local dihedral ids for dihedrals connected to atom with local index id 
-      * in a generic Molecule of this Species.
+      * in a generic molecule of this Species.
       */ 
       DArray<AtomDihedralIdArray> atomDihedralIdArrays_;
       #endif
@@ -563,19 +524,19 @@ namespace McMd
    { return id_; }
 
    /*
-   * Get number of Molecule objects allocated for this Species.
+   * Get maximum number of molecules for this Species.
    */
    inline int Species::capacity() const
    { return moleculeCapacity_; }
 
    /*
-   * Get number of Atoms per Molecule.
+   * Get number of Atoms per molecule.
    */
    inline int Species::nAtom() const
    {  return nAtom_; }
 
    /*
-   * Get number of Bonds per Molecule
+   * Get number of Bonds per molecule
    */
    inline int Species::nBond() const
    {  return nBond_; }
@@ -624,7 +585,7 @@ namespace McMd
 
    #ifdef INTER_DIHEDRAL
    /*
-   * Get number of dihedrals per Molecule
+   * Get number of dihedrals per molecule
    */
    inline int Species::nDihedral() const
    {  return nDihedral_; }

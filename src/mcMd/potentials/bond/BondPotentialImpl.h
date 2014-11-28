@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/simulation/SubSystem.h>
-#include <util/global.h>
 
 namespace Util
 {
@@ -189,9 +189,9 @@ namespace McMd
 #include <mcMd/simulation/System.h> 
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
-#include <mcMd/species/Species.h>
-#include <util/boundary/Boundary.h> 
+#include <mcMd/chemistry/getAtomGroups.h>
 
+#include <util/boundary/Boundary.h> 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/space/Tensor.h>
@@ -313,13 +313,13 @@ namespace McMd
    double BondPotentialImpl<Interaction>::atomEnergy(const Atom &atom) const
    {
 
-      Species::AtomBondArray bonds;
+      AtomBondArray bonds;
       const Bond* bondPtr;
       double rsq;
       double energy   = 0.0;
-      int    iBond, nBond;
+      int iBond, nBond;
 
-      atom.molecule().species().getAtomBonds(atom, bonds);
+      getAtomBonds(atom, bonds);
       nBond = bonds.size();
       for (iBond = 0; iBond < nBond; ++iBond) {
          bondPtr = bonds[iBond];
