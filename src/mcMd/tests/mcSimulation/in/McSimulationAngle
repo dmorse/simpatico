@@ -1,7 +1,7 @@
 McSimulation{
   FileMaster{
     commandFileName  in/commands
-    inputPrefix           in/md.
+    inputPrefix              in/
     outputPrefix            out/
   }
   nAtomType                    2
@@ -24,11 +24,13 @@ McSimulation{
       blockLengths                 3       2
       atomTypes                    1       0
       bondType                     0
+      hasAngles                    1
+      angleType                    0
     }
   
   }
   Random{
-    seed                -874665293
+    seed                -874663293
   }
   McSystem{
     pairStyle    LJPair
@@ -85,13 +87,6 @@ McSimulation{
   }
   saveInterval 0
 }
-
-
-
-
-
-READ_CONFIG    config
-FINISH
 
 
     OrthoBoxPotential{

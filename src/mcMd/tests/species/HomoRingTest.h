@@ -25,6 +25,7 @@ public:
    void setUp() 
    { 
       species.setId(speciesId); 
+      // setVerbose(2);
    } 
 
    void tearDown() 
@@ -46,14 +47,15 @@ void HomoRingTest::testConstructor()
 void HomoRingTest::testReadParam()
 {
    printMethod(TEST_FUNC);
-   using std::ifstream;
-   using std::cout;
 
-   ifstream in("in/HomoRing");
+   //ifstream in("in/HomoRing");
+   std::ifstream in;
+   openInputFile("in/HomoRing", in);
    species.readParam(in);
    in.close();
 
    if (verbose() > 1) {
+      std::cout << std::endl;
       species.writeParam(std::cout);
    }
 

@@ -57,7 +57,7 @@ public:
       openFile("in/McSimulation"); 
       #endif
       sim.readParam(file());
-      std::cout << std::endl;
+      //std::cout << std::endl;
    }
 
    void testReadParam();
@@ -119,7 +119,7 @@ void McSimulationTest::testPairEnergy()
    simulation_.simulate(10);
 
    System::MoleculeIterator molIter;
-   Molecule::AtomIterator   atomIter;
+   Molecule::AtomIterator atomIter;
    double energy, de;
 
    energy = 0.0;
@@ -183,8 +183,8 @@ void McSimulationTest::testAngleEnergy()
    simulation_.simulate(10);
 
    System::MoleculeIterator molIter;
-   Molecule::AtomIterator   atomIter;
-   double                   energy, de;
+   Molecule::AtomIterator atomIter;
+   double energy, de;
 
    energy = 0.0;
    for (int is=0; is < simulation_.nSpecies(); ++is) {
