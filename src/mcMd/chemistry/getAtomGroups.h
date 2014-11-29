@@ -63,7 +63,7 @@ namespace McMd
 
    #ifdef INTER_DIHEDRAL
    /**
-   * Array to hold pointers to dihedrals that contain a specific atom.
+   * Array to hold pointers to Dihedrals that contain a specific atom.
    */
    typedef FSArray<const Dihedral*, Species::MaxDihedralPerAtom> 
            AtomDihedralArray;

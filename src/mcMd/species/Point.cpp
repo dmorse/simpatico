@@ -20,7 +20,7 @@ namespace McMd
       type_(-1)
    {
       nAtom_ = 1;
-      nBond_ = 0;
+      // nBond_, nAngle_, & nDihedral_ initialized to 0 in Species.
    }
 
    /*

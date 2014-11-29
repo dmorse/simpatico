@@ -30,8 +30,10 @@ namespace McMd
       moleculeCapacity_(0),
       nAtom_(0),
       atomTypeIds_(),
+      #ifdef INTER_BOND
       nBond_(0),
       speciesBonds_(),
+      #endif
       #ifdef INTER_ANGLE
       nAngle_(0),
       speciesAngles_(),
@@ -83,7 +85,9 @@ namespace McMd
    void Species::readSpeciesParam(std::istream &in)
    {
       read<int>(in, "nAtom", nAtom_);
+      #ifdef INTER_BOND
       read<int>(in, "nBond", nBond_);
+      #endif
       #ifdef INTER_ANGLE
       read<int>(in, "nAngle", nAngle_);
       #endif
@@ -94,6 +98,7 @@ namespace McMd
 
       readDArray<int>(in, "atomTypeIds", atomTypeIds_, nAtom_);
 
+      #ifdef INTER_BOND
       if (nBond_ > 0) {
          readDArray<SpeciesBond>(in, "speciesBonds", speciesBonds_, 
                                  nBond_);
@@ -106,6 +111,7 @@ namespace McMd
             atomBondIdArrays_[atomId2].append(bondId);
          }
       }
+      #endif
 
       #ifdef INTER_ANGLE
       if (nAngle_ > 0) {
@@ -152,7 +158,9 @@ namespace McMd
    void Species::loadSpeciesParam(Serializable::IArchive &ar)
    {
       loadParameter<int>(ar, "nAtom", nAtom_);
+      #ifdef INTER_BOND
       loadParameter<int>(ar, "nBond", nBond_);
+      #endif
       #ifdef INTER_ANGLE
       loadParameter<int>(ar, "nAngle", nAngle_);
       #endif
@@ -163,6 +171,7 @@ namespace McMd
 
       loadDArray<int>(ar, "atomTypeIds", atomTypeIds_, nAtom_);
 
+      #ifdef INTER_BOND
       if (nBond_ > 0) {
          loadDArray<SpeciesBond>(ar, "speciesBonds", speciesBonds_, 
                                  nBond_);
@@ -176,6 +185,7 @@ namespace McMd
          }
 
       }
+      #endif
 
       #ifdef INTER_ANGLE
       if (nAngle_ > 0) {
@@ -223,7 +233,9 @@ namespace McMd
       ar << id_;
       ar << moleculeCapacity_;
       ar << nAtom_;
+      #ifdef INTER_BOND
       ar << nBond_;
+      #endif
       #ifdef INTER_ANGLE
       ar << nAngle_;
       #endif
@@ -231,7 +243,9 @@ namespace McMd
       ar << nDihedral_;
       #endif
       ar << atomTypeIds_;
+      #ifdef INTER_BOND
       ar << speciesBonds_;
+      #endif
       #ifdef INTER_ANGLE
       ar << speciesAngles_;
       #endif
@@ -266,22 +280,25 @@ namespace McMd
    void Species::allocate() 
    {
       assert(nAtom_ >  0);
-      assert(nBond_ >= 0);
-
       atomTypeIds_.allocate(nAtom_);
+
+      #ifdef INTER_BOND
       atomBondIdArrays_.allocate(nAtom_);
+      assert(nBond_ >= 0);
       if (nBond_ > 0) {
          speciesBonds_.allocate(nBond_);
       } 
+      #endif
       #ifdef INTER_ANGLE
       atomAngleIdArrays_.allocate(nAtom_);
+      assert(nAngle_ >= 0);
       if (nAngle_ > 0) {
          speciesAngles_.allocate(nAngle_);
       } 
       #endif
-
       #ifdef INTER_DIHEDRAL
       atomDihedralIdArrays_.allocate(nAtom_);
+      assert(nDihedral_ >= 0);
       if (nDihedral_ > 0) {
          speciesDihedrals_.allocate(nDihedral_);
       } 
@@ -301,6 +318,7 @@ namespace McMd
       atomTypeIds_[atomId] = atomType;
    }
 
+   #ifdef INTER_BOND
    /*
    * Add a bond to the species chemical structure.
    */
@@ -324,6 +342,7 @@ namespace McMd
       atomBondIdArrays_[atomId2].append(bondId);
 
    }
+   #endif
 
    #ifdef INTER_ANGLE
    /*
@@ -406,6 +425,7 @@ namespace McMd
             }
          }
 
+         #ifdef INTER_BOND
          // Loop over all bonds (if any) in speciesBonds_ array
          int  atomId, bondId, atomId0, atomId1, j;
          bool hasBond;
@@ -468,8 +488,10 @@ namespace McMd
                
             }
          }
-         if (bondCounter != 2*nBond_) 
+         if (bondCounter != 2*nBond_) {
             UTIL_THROW("Inconsistency in total number of bonds");
+         }
+         #endif
 
          #ifdef INTER_ANGLE
          // Loop over all angles (if any) in speciesAngles_ array
@@ -529,8 +551,9 @@ namespace McMd
                ++angleCounter;
             }
          }
-         if (angleCounter != 3*nAngle_) 
+         if (angleCounter != 3*nAngle_) {
             UTIL_THROW("Inconsistency in total number of angles");
+         }
          #endif
 
          #ifdef INTER_DIHEDRAL
@@ -592,24 +615,22 @@ namespace McMd
                ++dihedralCounter;
             }
          }
-         if (dihedralCounter != 4*nDihedral_) 
+         if (dihedralCounter != 4*nDihedral_) {
             UTIL_THROW("Inconsistency in total number of dihedrals");
+         }
          #endif
 
-
       } else { 
-
-         if (moleculeCapacity_ != 0) 
+         if (moleculeCapacity_ != 0) {
             UTIL_THROW("Unallocated species but moleculeCapacity != 0");
-
+         }
       }
 
       return true;
    }
 
-   /**
-   * Generate random molecules (default implementation)
-   *
+   /*
+   * Generate random molecules (default implementation - throws exception)
    */
    void Species::generateMolecules(int nMolecule,
                                    DArray<double> exclusionRadius, 
@@ -618,7 +639,6 @@ namespace McMd
                                    BondPotential *bondPotentialPtr, 
                                    #endif
                                    const Boundary& boundary) 
-   {
-      UTIL_THROW("generateMolecules() not implemented.");
-   }
+   {  UTIL_THROW("generateMolecules() not implemented."); }
+
 } 

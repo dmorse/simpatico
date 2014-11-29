@@ -11,9 +11,8 @@
 #include <util/param/ParamComposite.h>     // base class
 #include <util/containers/DArray.h>        // member template
 #include <util/containers/FSArray.h>       // member template
-
-//#include <mcMd/chemistry/Molecule.h>       // member template parameter
 #include <mcMd/chemistry/SpeciesGroup.h>   // member template parameter
+
 #include <util/boundary/Boundary.h>        // typedef
 
 namespace McMd
@@ -21,10 +20,11 @@ namespace McMd
 
    using namespace Util;
 
-   class Atom;
-   class System;
    class SpeciesMutator;
+   class System;
+   #ifdef INTER_BOND
    class BondPotential;
+   #endif
 
    /**
    * A Species represents a set of chemically similar molecules.
@@ -33,48 +33,39 @@ namespace McMd
    *
    *    - A description of the structure of a molecule of this species.
    *
-   *    - A capacity, which is the number of Molecules of this Species for
-   *      which memory must be allocated.
+   *    - A capacity, which is the maximum allowed number of Molecules of
+   *      this Species, or the number for which space should be allocated.
    *
-   * The chemical structure is initialized in the readParam function and may be
-   * queried by several accessor functions. The capacity specifies the maximum
-   * allowed number of Molecules of this of this species, and thus the number 
-   * for which space should be allocated.
-   *
-   * The chemical structure of a generic molecule within a Species is defined
+   * The chemical structure of each molecule within a Species is defined
    * by specifying the type of each atom and constructing a list of bond,
    * angle and dihedral covalent groups. Information about covalent groups 
    * is stored internally in a set of SpeciesGroup<N> objects with N=2,3, 
    * and 4. This chemical structure is defined within the virtual protected 
    * readSpeciesParam(std::istream&) function, which is called by readParam.
    *
-   * Implementations of readSpeciesParam() may read any parameters that are 
-   * required to define the chemical structure of an particular Species.
-   * The default implementation of Species::readSpeciesParam() simply reads 
-   * all of the required information from file. This is thus sufficiently 
-   * flexible to describe any molecular species. Subclasses of Species may 
-   * instead hard-code some or all of the information required to describe
-   * a molecular structure into the class definition, and thus reduce the
-   * amount of information that must be read from file. For example, if a 
-   * subclass of Species represents a unique chemical structure, such as
-   * water or some other specific molecule, then the entire structure can 
-   * be hard-coded into the function implemenation. In other cases, in which
-   * a subclass is used to describe a category of molecular species, a more
-   * limited amount of information must be read from file in order to
-   * specify a unique structure. For example, a class that represents a 
-   * linear homopolymer might read information required describe the 
-   * monomer and to specify the number of monomers per chain.
+   * Implementations of readSpeciesParam() must read whatever 
+   * parameters are required to define the chemical structure of some 
+   * class of molecular structures. The default implementation of 
+   * Species::readSpeciesParam() is general enough to describe any molecular 
+   * structure, and simply reads all of the required information about atom 
+   * types and groups from file. Subclasses of Species generally hard-code
+   * some or all of the information required to describe a structure into 
+   * the class definition, and require correspondingly less information to
+   * to be specified in the parameter file. For example, the parameter file
+   * format for a class that represents a flexible linear homopolymer might
+   * require only the number of monomers per chain, a single atom type 
+   * index and a single bond type index. A subclass that represents a
+   * specific chemical structure (e.g., a water molecule) might not require
+   * any data from the parameter file.
    *
-   * A subclass of Species may also be usd to represent a "psuedo species".
-   * A pseudo species is a species in which each molecule can be in any
-   * of a finite number of different internal states, in which the chemical
-   * structure is slightly different in different states. A pseudo-molecule
+   * A subclasses of Species may also represent a "mutable" species. A 
+   * mutable species is one in which each molecule can be in any of a 
+   * finite number of different internal states, in which the chemical
+   * structure is slightly different in different states. A mutable species
    * could, for example, be used implement a semi-grand ensemble for a
    * polymer mixture, in which each polymer can be of either of two types.
-   * The readMoleculeState() and writeMoleculeState() functions are provided
-   * to allow information about the internal state of each molecules in
-   * such an ensemble to be read from and written to a configuration file.
-   * The default implementations of these functions do nothing.
+   * A subclass that represents a mutable species must have an associated
+   * SpeciesMutator. See documentation for Species::setMutatorPtr().
    *
    * \ingroup McMd_Species_Module
    */
@@ -83,6 +74,7 @@ namespace McMd
 
    public:
 
+      #ifdef INTER_BOND
       /// Maximum number of bonds that can be connected to one atom.
       static const int MaxBondPerAtom = 4;
 
@@ -91,12 +83,13 @@ namespace McMd
 
       /// An array of local integer bond ids for all bonds containing one atom.
       typedef FSArray<int, MaxBondPerAtom> AtomBondIdArray;
+      #endif
 
       #ifdef INTER_ANGLE
       /// Maximum number of angles groups that can contain one atom.
       static const int MaxAnglePerAtom = 18;
 
-      /// A SpeciesAngle has the local atom ids and a type id for one angle.
+      /// A SpeciesAngle has local atom ids and a type id for one angle.
       typedef SpeciesGroup<3> SpeciesAngle;
 
       /// An array of local angle ids for all angles containing one atom.
@@ -107,7 +100,7 @@ namespace McMd
       /// Maximum number of dihedral groups that can contain one atom.
       static const int MaxDihedralPerAtom = 72;
 
-      /// A SpeciesDihedral has the local atom ids and a type id for one dihedral. 
+      /// A SpeciesDihedral has local atom ids and a type id for one dihedral. 
       typedef SpeciesGroup<4> SpeciesDihedral;
 
       /// An array of local angle ids for all dihedrals containing one atom.
@@ -176,6 +169,7 @@ namespace McMd
       */
       int atomTypeId(int iAtom) const;
 
+      #ifdef INTER_BOND
       /**
       * Get number of bonds per molecule for this Species.
       */
@@ -194,6 +188,7 @@ namespace McMd
       * \param atomId local index for atom of interest
       */
       const AtomBondIdArray& atomBondIds(int atomId) const;
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -238,6 +233,20 @@ namespace McMd
       #endif
 
       //@}
+      /// \name Interface for mutable species.
+      //@{
+      
+      /**
+      * Is this a mutable Species?
+      */
+      bool isMutable() const;
+
+      /**
+      * Return the species mutator object by reference.
+      */
+      SpeciesMutator& mutator();
+
+      //@}
       /// \name Miscellaneous Accessors
       //@{
 
@@ -255,20 +264,6 @@ namespace McMd
       * Return true if Species is valid, or throw an Exception.
       */
       bool isValid() const;
-
-      //@}
-      /// \name Interface for mutable species.
-      //@{
-      
-      /**
-      * Is this a mutable Species?
-      */
-      bool isMutable() const;
-
-      /**
-      * Return the species mutator object by reference.
-      */
-      SpeciesMutator& mutator();
 
       //@}
 
@@ -320,6 +315,7 @@ namespace McMd
       */ 
       DArray<int> atomTypeIds_;
 
+      #ifdef INTER_BOND
       /**
       * Number of bonds per molecule.
       */
@@ -332,6 +328,7 @@ namespace McMd
       * in any molecule of this Species, where 0 <= id < nBond_.
       */ 
       DArray<SpeciesBond> speciesBonds_;
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -415,6 +412,7 @@ namespace McMd
       */
       void setAtomType(int atomId, int atomType);
 
+      #ifdef INTER_BOND
       /**
       * Add a bond to the chemical structure of a generic molecule.
       *
@@ -427,6 +425,7 @@ namespace McMd
       * \param bondType bond type index 
       */
       void makeBond(int bondId, int atomId1, int atomId2, int bondType);
+      #endif
 
       #ifdef INTER_ANGLE
       /**
@@ -466,12 +465,15 @@ namespace McMd
       /**
       * Set a pointer to an associated SpeciesMutator for a mutable species.
       *
-      * A mutable species must be implemented as a subclass of both Species 
-      * and SpeciesMutator. The constructor of any such class must call 
-      * setMutatorPtr(this) to give the address of the SpeciesMutator subobject
-      * to the Species subobject. If an instance of such a class is accessed
-      * through a Species* pointer, the SpeciesMutator is then be accessible 
-      * via the Species::mutator() function.
+      * A mutable subclass of Species must have an associated SpeciesMutator 
+      * object. The constructor of each such subclass should pass a pointer
+      * to the SpeciesMutator to setMutatorPtr. After this function is called,
+      * Species::isMutator() will return true, the associated SpeciesMutator 
+      * will be accessible via the Species::mutator() function. If a mutable 
+      * Species subclass is derived from both Species and SpeciesMutator 
+      * (recommended), the function setMutatorPtr(this) should be invoked
+      * within the subclass constructor to pass the address of the 
+      * SpeciesMutator sub-object to the Species subobject.
       *
       * \param mutatorPtr pointer to an associated SpeciesMutator object
       */
@@ -479,22 +481,24 @@ namespace McMd
 
    private:
 
+      #ifdef INTER_BOND
       /**
       * Array of AtomBondIdArray objects for all atoms.
       * 
-      * Element atomBondIdArrays_[id] is the AtomBondIdArray containing the
-      * local bond ids for bonds connected to atom with local index id 
-      * in a generic molecule of this Species.
+      * Element atomBondIdArrays_[id] is the AtomBondIdArray containing 
+      * the local bond ids for bonds connected to atom with local index 
+      * number i.
       */ 
       DArray<AtomBondIdArray> atomBondIdArrays_;
+      #endif
 
       #ifdef INTER_ANGLE
       /**
       * Array of AtomAngleIdArray objects for all atoms.
       * 
-      * Element atomAngleIdArrays_[id] is the AtomAngleIdArray containing the
-      * local angle ids for angles connected to atom with local index id 
-      * in a generic molecule of this Species.
+      * Element atomAngleIdArrays_[i] is the AtomAngleIdArray containing
+      * the local angle ids for angles connected to atom with local index 
+      * number i.
       */ 
       DArray<AtomAngleIdArray> atomAngleIdArrays_;
       #endif
@@ -503,19 +507,20 @@ namespace McMd
       /**
       * Array of AtomDihedralIdArray objects for all atoms.
       * 
-      * Element atomDihedralIdArrays_[id] is the AtomAngleIdArray containing the
-      * local dihedral ids for dihedrals connected to atom with local index id 
-      * in a generic molecule of this Species.
+      * Element atomDihedralIdArrays_[id] is the AtomAngleIdArray containing 
+      * the local dihedral ids for dihedrals connected to atom with local 
+      * index number i.
       */ 
       DArray<AtomDihedralIdArray> atomDihedralIdArrays_;
       #endif
 
-      /// Pointer to associated Species Mutator (if any).
+      /**
+      * Pointer to associated SpeciesMutator (if any).
+      *
+      * This pointer is initialized to null (0). The function isMutator()
+      * returns false iff mutatorPtr_ is null. 
+      */
       SpeciesMutator* mutatorPtr_;
-
-   //friends:
-   
-      friend class PseudoSpecies; 
 
    };
 
@@ -540,16 +545,17 @@ namespace McMd
    {  return nAtom_; }
 
    /*
-   * Get number of Bonds per molecule
-   */
-   inline int Species::nBond() const
-   {  return nBond_; }
-
-   /*
    * Get type index for atom number iAtom.
    */
    inline int Species::atomTypeId(int iAtom) const
    {  return atomTypeIds_[iAtom]; }
+
+   #ifdef INTER_BOND
+   /*
+   * Get number of Bonds per molecule
+   */
+   inline int Species::nBond() const
+   {  return nBond_; }
 
    /*
    * Get a specific SpeciesBond object by local index.
@@ -564,6 +570,7 @@ namespace McMd
    inline 
    const Species::AtomBondIdArray& Species::atomBondIds(int atomId) const
    {  return atomBondIdArrays_[atomId]; }
+   #endif
 
    #ifdef INTER_ANGLE
    /*

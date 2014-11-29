@@ -12,6 +12,11 @@ Species
 - Move Species, SpeciesGroup etc. hierarchy to a Chem namespace, so it can be 
   used in Tool namespace.
 
+ConfigIos
+---------
+
+- Modify LammpsConfigIo to allow writing of angles and dihedrals, as needed.
+
 Serialization
 -------------
 

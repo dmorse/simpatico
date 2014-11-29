@@ -52,8 +52,10 @@ namespace McMd
       for (iSpec = 0; iSpec < nSpecies; ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
          speciesCapacity = speciesPtr->capacity();
-         atomCapacity   += speciesCapacity*speciesPtr->nAtom();
-         bondCapacity   += speciesCapacity*speciesPtr->nBond();
+         atomCapacity += speciesCapacity*speciesPtr->nAtom();
+         #ifdef INTER_BOND
+         bondCapacity += speciesCapacity*speciesPtr->nBond();
+         #endif
       }
 
       // Read boundary

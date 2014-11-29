@@ -177,7 +177,9 @@ namespace McMd
          speciesPtr = &simulation().species(iSpec);
          nMolecule = system().nMolecule(iSpec);
          nAtom += nMolecule*(speciesPtr->nAtom());
+         #ifdef INTER_BOND
          nBond += nMolecule*(speciesPtr->nBond());
+         #endif
       }
 
       // Write numbers of atoms, bonds, etc.
