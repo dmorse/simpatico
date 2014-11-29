@@ -37,7 +37,7 @@ namespace McMd
       nBond_  = nAtom_ - 1;
       read<int>(in,"bondType", bondType_);
 
-      #if INTER_ANGLE
+      #ifdef INTER_ANGLE
       hasAngles_ = 0;
       read<int>(in, "hasAngles", hasAngles_, false); // optional
       if (hasAngles_) {
@@ -51,7 +51,7 @@ namespace McMd
       }
       #endif
 
-      #if INTER_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       hasDihedrals_ = 0;
       read<int>(in, "hasDihedrals", hasDihedrals_, false); // optional
       if (hasDihedrals_) {
