@@ -1,0 +1,11 @@
+System:
+
+    melt of 100 symmetric diblock copolymer chains of 8 atoms
+
+MC simulation:
+
+    mcSim -e -p param -c commands
+
+Restarting and extending a previous simulation:
+
+    mcSim -e -r restart -c restart.cmd
