@@ -426,204 +426,212 @@ namespace McMd
          }
 
          #ifdef INTER_BOND
-         // Loop over all bonds (if any) in speciesBonds_ array
-         int  atomId, bondId, atomId0, atomId1, j;
-         bool hasBond;
-         for (bondId = 0; bondId < nBond_; ++bondId) {
-
-            atomId0 = speciesBond(bondId).atomId(0);
-            atomId1 = speciesBond(bondId).atomId(1);
+         {
+            // Loop over all bonds (if any) in speciesBonds_ array
+            int  atomId, bondId, atomId0, atomId1, j;
+            bool hasBond;
+            for (bondId = 0; bondId < nBond_; ++bondId) {
    
-            // Check that atomIds are in valid range and unequal
-            if (atomId0 < 0 || atomId0 >= nAtom_) {
-               UTIL_THROW("Invalid atomId0 in speciesBonds_");
-            }
-            if (atomId1 < 0 || atomId1 >= nAtom_) {
-               UTIL_THROW("Invalid atomId1 in speciesBonds_");
-            }
-            if (atomId0 == atomId1) {
-               UTIL_THROW("Equal atom ids in a SpeciesBond");
-            }
-
-            // Check that bondId is in atombondIdArrays_ for atomId0
-            hasBond = false;
-            for (j = 0; j < atomBondIdArrays_[atomId0].size(); ++j) {
-               if (atomBondIdArrays_[atomId0][j] == bondId) {
-                  hasBond = true;
-                  break;
-               } 
-            }
-            if (!hasBond) {
-               UTIL_THROW("BondId missing from atomBondIdArrays_");
-            }
-
-            // Check that bondId is in atombondIdArrays_ for atomId0
-            hasBond = false;
-            for (j = 0; j < atomBondIdArrays_[atomId1].size(); ++j) {
-               if (atomBondIdArrays_[atomId1][j] == bondId) {
-                  hasBond = true;
-                  break;
-               } 
-            }
-            if (!hasBond) {
-               UTIL_THROW("BondId missing from atomBondIdArrays_");
-            }
-
-         }
-
-         // Loop over atomBondIdArrays for all atoms
-         int bondCounter = 0;
-         for (atomId = 0; atomId < nAtom_; ++atomId) {
-            for (j = 0; j < atomBondIdArrays_[atomId].size(); ++j) {
-               bondId = atomBondIdArrays_[atomId][j];
-
-               if (bondId < 0 || bondId >= nBond_) 
-                  UTIL_THROW("Bond index out of range");
-
                atomId0 = speciesBond(bondId).atomId(0);
                atomId1 = speciesBond(bondId).atomId(1);
-               if (atomId != atomId0 && atomId != atomId1) 
-                  UTIL_THROW("Inconsistency in atomBondId and bond");
-               ++bondCounter;
-               
+      
+               // Check that atomIds are in valid range and unequal
+               if (atomId0 < 0 || atomId0 >= nAtom_) {
+                  UTIL_THROW("Invalid atomId0 in speciesBonds_");
+               }
+               if (atomId1 < 0 || atomId1 >= nAtom_) {
+                  UTIL_THROW("Invalid atomId1 in speciesBonds_");
+               }
+               if (atomId0 == atomId1) {
+                  UTIL_THROW("Equal atom ids in a SpeciesBond");
+               }
+   
+               // Check that bondId is in atombondIdArrays_ for atomId0
+               hasBond = false;
+               for (j = 0; j < atomBondIdArrays_[atomId0].size(); ++j) {
+                  if (atomBondIdArrays_[atomId0][j] == bondId) {
+                     hasBond = true;
+                     break;
+                  } 
+               }
+               if (!hasBond) {
+                  UTIL_THROW("BondId missing from atomBondIdArrays_");
+               }
+   
+               // Check that bondId is in atombondIdArrays_ for atomId1
+               hasBond = false;
+               for (j = 0; j < atomBondIdArrays_[atomId1].size(); ++j) {
+                  if (atomBondIdArrays_[atomId1][j] == bondId) {
+                     hasBond = true;
+                     break;
+                  } 
+               }
+               if (!hasBond) {
+                  UTIL_THROW("BondId missing from atomBondIdArrays_");
+               }
+   
             }
-         }
-         if (bondCounter != 2*nBond_) {
-            UTIL_THROW("Inconsistency in total number of bonds");
+   
+            // Loop over atomBondIdArrays for all atoms
+            int bondCounter = 0;
+            for (atomId = 0; atomId < nAtom_; ++atomId) {
+               for (j = 0; j < atomBondIdArrays_[atomId].size(); ++j) {
+                  bondId = atomBondIdArrays_[atomId][j];
+   
+                  if (bondId < 0 || bondId >= nBond_) 
+                     UTIL_THROW("Bond index out of range");
+   
+                  atomId0 = speciesBond(bondId).atomId(0);
+                  atomId1 = speciesBond(bondId).atomId(1);
+                  if (atomId != atomId0 && atomId != atomId1) 
+                     UTIL_THROW("Inconsistency in atomBondId and bond");
+                  ++bondCounter;
+                  
+               }
+            }
+            if (bondCounter != 2*nBond_) {
+               UTIL_THROW("Inconsistency in total number of bonds");
+            }
          }
          #endif
 
          #ifdef INTER_ANGLE
-         // Loop over all angles (if any) in speciesAngles_ array
-         int  angleId, id, id2, atomId2(-1);
-         bool hasAngles;
-         for (angleId = 0; angleId < nAngle_; ++angleId) {
-
-            for (id = 0; id < 3; ++id) {
-               atomId = speciesAngle(angleId).atomId(id);
-
-               // Check that atomIds are in valid range and unequal
-               if (atomId < 0 || atomId >= nAtom_) {
-                  UTIL_THROW("Invalid atomId in speciesAngles_");
-               }
-               for (id2 = id + 1; id2 < 3; ++id2) {
-                  atomId2 = speciesAngle(angleId).atomId(id2);
-                  if (atomId2 == atomId) {
-                      UTIL_THROW("Equal atom ids in a SpeciesAngle");
-                  }
-               }
-
-               // Check that angleId is in atomAngleIdArrays_ for atomId
-               hasAngles = false;
-               for (j = 0; j < atomAngleIdArrays_[atomId].size(); ++j) {
-                  if (atomAngleIdArrays_[atomId][j] == angleId) {
-                     hasAngles = true;
-                     break;
-                  } 
-               }
-               if (!hasAngles) {
-                  UTIL_THROW("AngleId missing from atomAngleIdArrays_");
-               }
-            }
-
-         }
-
-         // Loop over atomAngleIdArrays for all atoms
-         int angleCounter = 0;
-         bool hasAtom;
-         for (atomId = 0; atomId < nAtom_; ++atomId) {
-            for (j = 0; j < atomAngleIdArrays_[atomId].size(); ++j) {
-               angleId = atomAngleIdArrays_[atomId][j];
-               if (angleId < 0 || angleId >= nAngle_) 
-                  UTIL_THROW("Angle index out of range");
-
-               hasAtom = false;
+         {
+            // Loop over all angles (if any) in speciesAngles_ array
+            int  angleId, id, id2, atomId, atomId2(-1), j;
+            bool hasAngles;
+            for (angleId = 0; angleId < nAngle_; ++angleId) {
+   
                for (id = 0; id < 3; ++id) {
-                  atomId2 = speciesAngle(angleId).atomId(id);
-                  if (atomId2 == atomId) {
-                     hasAtom = true;
-                     break;
+                  atomId = speciesAngle(angleId).atomId(id);
+   
+                  // Check that atomIds are in valid range and unequal
+                  if (atomId < 0 || atomId >= nAtom_) {
+                     UTIL_THROW("Invalid atomId in speciesAngles_");
+                  }
+                  for (id2 = id + 1; id2 < 3; ++id2) {
+                     atomId2 = speciesAngle(angleId).atomId(id2);
+                     if (atomId2 == atomId) {
+                         UTIL_THROW("Equal atom ids in a SpeciesAngle");
+                     }
+                  }
+   
+                  // Check that angleId is in atomAngleIdArrays_ for atomId
+                  hasAngles = false;
+                  for (j = 0; j < atomAngleIdArrays_[atomId].size(); ++j) {
+                     if (atomAngleIdArrays_[atomId][j] == angleId) {
+                        hasAngles = true;
+                        break;
+                     } 
+                  }
+                  if (!hasAngles) {
+                     UTIL_THROW("AngleId missing from atomAngleIdArrays_");
                   }
                }
-               if (!hasAtom) {
-                  UTIL_THROW("Inconsistency in atomAngleId and angle");
-               }
-               ++angleCounter;
+   
             }
-         }
-         if (angleCounter != 3*nAngle_) {
-            UTIL_THROW("Inconsistency in total number of angles");
+   
+            // Loop over atomAngleIdArrays for all atoms
+            int angleCounter = 0;
+            bool hasAtom;
+            for (atomId = 0; atomId < nAtom_; ++atomId) {
+               for (j = 0; j < atomAngleIdArrays_[atomId].size(); ++j) {
+                  angleId = atomAngleIdArrays_[atomId][j];
+                  if (angleId < 0 || angleId >= nAngle_) 
+                     UTIL_THROW("Angle index out of range");
+   
+                  hasAtom = false;
+                  for (id = 0; id < 3; ++id) {
+                     atomId2 = speciesAngle(angleId).atomId(id);
+                     if (atomId2 == atomId) {
+                        hasAtom = true;
+                        break;
+                     }
+                  }
+                  if (!hasAtom) {
+                     UTIL_THROW("Inconsistency in atomAngleId and angle");
+                  }
+                  ++angleCounter;
+               }
+            }
+            if (angleCounter != 3*nAngle_) {
+               UTIL_THROW("Inconsistency in total number of angles");
+            }
          }
          #endif
 
          #ifdef INTER_DIHEDRAL
-         // Loop over all dihedrals (if any) in speciesDihedrals_ array
-         int  dihedralId, tId, tId2, tAtomId, tAtomId2;
-         bool hasDihedral;
-
-         for (dihedralId = 0; dihedralId < nDihedral_; ++dihedralId) {
-
-            for (tId = 0; tId < 4; ++tId) {
-               tAtomId = speciesDihedral(dihedralId).atomId(tId);
-
-               // Check that atomIds are in valid range and unequal
-               if (tAtomId < 0 || tAtomId >= nAtom_) {
-                  UTIL_THROW("Invalid atomId in speciesDihedral_");
-               }
-               for (tId2 = tId + 1; tId2 < 4; ++tId2) {
-                  tAtomId2 = speciesDihedral(dihedralId).atomId(tId2);
-                  if (tAtomId2 == tAtomId) {
-                      UTIL_THROW("Equal atom ids in a SpeciesDihedral");
-                  }
-               }
-
-               // Check that dihedralId is in atomDihedralIdArrays_ for tAtomId
-               hasDihedral = false;
-               for (j = 0; j < atomDihedralIdArrays_[tAtomId].size(); ++j) {
-                  if (atomDihedralIdArrays_[tAtomId][j] == dihedralId) {
-                     hasDihedral = true;
-                     break;
-                  } 
-               }
-               if (!hasDihedral) {
-                  UTIL_THROW("DihedralId missing from atomDihedralIdArrays_");
-               }
-            }
-
-         }
-
-         // Loop over atomDihedralIdArrays for all atoms.
-         int dihedralCounter = 0;
-         bool tHasAtom;
-         for (tAtomId = 0; tAtomId < nAtom_; ++tAtomId) {
-            for (j = 0; j < atomDihedralIdArrays_[tAtomId].size(); ++j) {
-               dihedralId = atomDihedralIdArrays_[tAtomId][j];
-               if (dihedralId < 0 || dihedralId >= nDihedral_) 
-                  UTIL_THROW("Dihedral index out of range");
-
-               tHasAtom = false;
+         {
+            // Loop over all dihedrals (if any) in speciesDihedrals_ array
+            int  dihedralId, tId, tId2, tAtomId, tAtomId2, j;
+            bool hasDihedral;
+   
+            for (dihedralId = 0; dihedralId < nDihedral_; ++dihedralId) {
+   
                for (tId = 0; tId < 4; ++tId) {
-                  tAtomId2 = speciesDihedral(dihedralId).atomId(tId);
-                  if (tAtomId2 == tAtomId) {
-                     tHasAtom = true;
-                     break;
+                  tAtomId = speciesDihedral(dihedralId).atomId(tId);
+   
+                  // Check that atomIds are in valid range and unequal
+                  if (tAtomId < 0 || tAtomId >= nAtom_) {
+                     UTIL_THROW("Invalid atomId in speciesDihedral_");
+                  }
+                  for (tId2 = tId + 1; tId2 < 4; ++tId2) {
+                     tAtomId2 = speciesDihedral(dihedralId).atomId(tId2);
+                     if (tAtomId2 == tAtomId) {
+                         UTIL_THROW("Equal atom ids in a SpeciesDihedral");
+                     }
+                  }
+   
+                  // Check that dihedralId is in atomDihedralIdArrays_ for tAtomId
+                  hasDihedral = false;
+                  for (j = 0; j < atomDihedralIdArrays_[tAtomId].size(); ++j) {
+                     if (atomDihedralIdArrays_[tAtomId][j] == dihedralId) {
+                        hasDihedral = true;
+                        break;
+                     } 
+                  }
+                  if (!hasDihedral) {
+                     UTIL_THROW("DihedralId missing from atomDihedralIdArrays_");
                   }
                }
-               if (!tHasAtom) {
-                  UTIL_THROW("Inconsistency in atomDihedralId and dihedral");
-               }
-               ++dihedralCounter;
+   
             }
-         }
-         if (dihedralCounter != 4*nDihedral_) {
-            UTIL_THROW("Inconsistency in total number of dihedrals");
+   
+            // Loop over atomDihedralIdArrays for all atoms.
+            int dihedralCounter = 0;
+            bool tHasAtom;
+            for (tAtomId = 0; tAtomId < nAtom_; ++tAtomId) {
+               for (j = 0; j < atomDihedralIdArrays_[tAtomId].size(); ++j) {
+                  dihedralId = atomDihedralIdArrays_[tAtomId][j];
+                  if (dihedralId < 0 || dihedralId >= nDihedral_) 
+                     UTIL_THROW("Dihedral index out of range");
+   
+                  tHasAtom = false;
+                  for (tId = 0; tId < 4; ++tId) {
+                     tAtomId2 = speciesDihedral(dihedralId).atomId(tId);
+                     if (tAtomId2 == tAtomId) {
+                        tHasAtom = true;
+                        break;
+                     }
+                  }
+                  if (!tHasAtom) {
+                     UTIL_THROW("Inconsistency in atomDihedralId and dihedral");
+                  }
+                  ++dihedralCounter;
+               }
+            }
+            if (dihedralCounter != 4*nDihedral_) {
+               UTIL_THROW("Inconsistency in total number of dihedrals");
+            }
          }
          #endif
 
       } else { 
+
          if (moleculeCapacity_ != 0) {
-            UTIL_THROW("Unallocated species but moleculeCapacity != 0");
+            UTIL_THROW("Species not allocated but moleculeCapacity != 0");
          }
+
       }
 
       return true;

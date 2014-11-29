@@ -458,7 +458,7 @@ namespace McMd
          atomCapacity_ += capacity*nAtom;
          #ifdef INTER_BOND
          if (nBondType_ > 0) {
-            nBond    = speciesPtr->nBond();
+            nBond = speciesPtr->nBond();
             bondCapacity_ += capacity*nBond;
          }
          #endif
@@ -616,8 +616,8 @@ namespace McMd
       int capacity, nBond;
 
       speciesPtr = &species(iSpecies);
-      nBond      = speciesPtr->nBond();
-      capacity   = speciesPtr->capacity();
+      nBond = speciesPtr->nBond();
+      capacity = speciesPtr->capacity();
 
       // Initialize pointers before loop
       moleculePtr = &molecules_[firstMoleculeIds_[iSpecies]];
@@ -686,8 +686,8 @@ namespace McMd
       int capacity, nAngle;
 
       speciesPtr = &species(iSpecies);
-      capacity   = speciesPtr->capacity();
-      nAngle     = speciesPtr->nAngle();
+      capacity = speciesPtr->capacity();
+      nAngle = speciesPtr->nAngle();
 
       // Initialize pointers before loop
       moleculePtr = &molecules_[firstMoleculeIds_[iSpecies]];
@@ -956,10 +956,13 @@ namespace McMd
             }
 
             #ifdef INTER_BOND
-            if (nBondType_ > 0) {
+            if (nBondType_ > 0 && nBond > 0) {
 
                if (&moleculePtr->bond(0) != bondPtr) {
                   UTIL_THROW("Error in molecule::bond()");
+               }
+               if (moleculePtr->nBond() != nBond) {
+                  UTIL_THROW("Inconsistent values of nBond");
                }
 
                const Atom* atom0Ptr;
@@ -1020,10 +1023,13 @@ namespace McMd
             #endif
 
             #ifdef INTER_ANGLE
-            if (nAngleType_ > 0) {
+            if (nAngleType_ > 0 && nAngle > 0) {
 
                if (&moleculePtr->angle(0) != anglePtr) {
                   UTIL_THROW("Error in molecule::angle()");
+               }
+               if (moleculePtr->nAngle() != nAngle) {
+                  UTIL_THROW("Inconsistent values of nAngle");
                }
 
                const Atom* atom0Ptr = 0;
@@ -1078,13 +1084,16 @@ namespace McMd
             #endif
 
             #ifdef INTER_DIHEDRAL
-            if (nDihedralType_ > 0) {
+            if (nDihedralType_ > 0 && nDihedral > 0) {
 
                const Atom* tAtomPtr;
                int tAtomId, dihedralType;
 
                if (&moleculePtr->dihedral(0) != dihedralPtr) {
                   UTIL_THROW("Error in molecule::dihedral()");
+               }
+               if (moleculePtr->nDihedral() != nDihedral) {
+                  UTIL_THROW("Inconsistent values of nDihedral");
                }
 
                // Validate dihedrals within a molecule

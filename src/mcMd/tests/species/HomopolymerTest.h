@@ -31,7 +31,6 @@ public:
    void tearDown() 
    {}
 
-     
    void testConstructor();
    void testReadParam();
 
@@ -61,6 +60,8 @@ void HomopolymerTest::testReadParam()
       std::cout << std::endl;
       species.writeParam(std::cout);
    }
+
+   TEST_ASSERT(species.isValid());
 
    TEST_ASSERT(species.nBond() == species.nAtom() - 1);
    const SpeciesGroup<2>* bondPtr;
@@ -142,8 +143,6 @@ void HomopolymerTest::testReadParam()
       }
    }
    #endif
-
-   TEST_ASSERT(species.isValid());
 }
 
 TEST_BEGIN(HomopolymerTest)

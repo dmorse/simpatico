@@ -20,15 +20,17 @@ namespace McMd
    */
    void getAtomBonds(const Atom& atom, AtomBondArray& groups)
    {
-      const Molecule& molecule = atom.molecule();
-      const Species& species = molecule.species();
-      const int atomId  = int( &atom - &molecule.atom(0) );
-      const Species::AtomBondIdArray groupIds = species.atomBondIds(atomId);
-      const int nGroup = groupIds.size();
-      const Bond* firstPtr = &molecule.bond(0);  // first group in molecule
       groups.clear();
-      for (int i = 0; i < nGroup; ++i) {
-         groups.append(firstPtr + groupIds[i]);
+      const Molecule& molecule = atom.molecule();
+      if (molecule.nBond()) {
+         const Species& species = molecule.species();
+         const int atomId  = int( &atom - &molecule.atom(0) );
+         const Species::AtomBondIdArray groupIds = species.atomBondIds(atomId);
+         const int nGroup = groupIds.size();
+         const Bond* firstPtr = &molecule.bond(0);  // first group in molecule
+         for (int i = 0; i < nGroup; ++i) {
+            groups.append(firstPtr + groupIds[i]);
+         }
       }
    }
    #endif
@@ -39,15 +41,17 @@ namespace McMd
    */
    void getAtomAngles(const Atom& atom, AtomAngleArray& groups)
    {
-      const Molecule& molecule = atom.molecule();
-      const Species& species = molecule.species();
-      const int atomId  = int( &atom - &molecule.atom(0) );
-      const Species::AtomAngleIdArray groupIds = species.atomAngleIds(atomId);
-      const int nGroup = groupIds.size();
-      const Angle* firstPtr = &molecule.angle(0);  // first group in molecule
       groups.clear();
-      for (int i = 0; i < nGroup; ++i) {
-         groups.append(firstPtr + groupIds[i]);
+      const Molecule& molecule = atom.molecule();
+      if (molecule.nAngle()) {
+         const Species& species = molecule.species();
+         const int atomId  = int( &atom - &molecule.atom(0) );
+         const Species::AtomAngleIdArray groupIds = species.atomAngleIds(atomId);
+         const int nGroup = groupIds.size();
+         const Angle* firstPtr = &molecule.angle(0);  // first group in molecule
+         for (int i = 0; i < nGroup; ++i) {
+            groups.append(firstPtr + groupIds[i]);
+         }
       }
    }
    #endif
@@ -58,15 +62,17 @@ namespace McMd
    */
    void getAtomDihedrals(const Atom& atom, AtomDihedralArray& groups)
    {
-      const Molecule& molecule = atom.molecule();
-      const Species& species = molecule.species();
-      const int atomId  = int( &atom - &molecule.atom(0) );
-      const Species::AtomDihedralIdArray groupIds = species.atomDihedralIds(atomId);
-      const int nGroup = groupIds.size();
-      const Dihedral* firstPtr = &molecule.dihedral(0);  // first group in molecule
       groups.clear();
-      for (int i = 0; i < nGroup; ++i) {
-         groups.append(firstPtr + groupIds[i]);
+      const Molecule& molecule = atom.molecule();
+      if (molecule.nDihedral()) {
+         const Species& species = molecule.species();
+         const int atomId  = int( &atom - &molecule.atom(0) );
+         const Species::AtomDihedralIdArray groupIds = species.atomDihedralIds(atomId);
+         const int nGroup = groupIds.size();
+         const Dihedral* firstPtr = &molecule.dihedral(0);  // first group in molecule
+         for (int i = 0; i < nGroup; ++i) {
+            groups.append(firstPtr + groupIds[i]);
+         }
       }
    }
    #endif

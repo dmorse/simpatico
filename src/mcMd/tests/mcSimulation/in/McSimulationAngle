@@ -28,6 +28,7 @@ McSimulation{
       angleType                    0
     }
   
+
   }
   Random{
     seed                -874663293
@@ -67,7 +68,7 @@ McSimulation{
       nStep                       20
       MdSystem{
         MdPairPotential{
-           maxBoundary  orthorhombic   2.0    3.0     4.0
+           maxBoundary  orthorhombic   2.5    3.5     4.5
            PairList{
              atomCapacity                30
              pairCapacity              1000
@@ -75,7 +76,7 @@ McSimulation{
            }
         }
         NveVvIntegrator{
-           dt                         0.02000
+           dt                         0.01000
         }
       }
     }
@@ -87,7 +88,6 @@ McSimulation{
   }
   saveInterval 0
 }
-
 
     OrthoBoxPotential{
       indexConfinement                       3
