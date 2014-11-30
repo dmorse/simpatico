@@ -44,6 +44,9 @@ namespace McMd
       */
       Group();
 
+      /// \name Initialization
+      //@{
+
       /**
       * Add an atom to this group.
       *
@@ -59,12 +62,9 @@ namespace McMd
       */
       void setTypeId(int typeId);
 
-      /**
-      * Activate or deactivate the group.
-      *
-      * \param isActive true (active) or false (inactive)
-      */
-      void setIsActive(bool isActive);
+      //@}
+      /// \name Accessors
+      //@{
 
       /**
       * Get a specific Atom in the Group by reference.
@@ -85,6 +85,25 @@ namespace McMd
       */
       int typeId() const;
 
+      //@}
+      /// \name Counting inactive atoms
+      //@{
+
+      /**
+      * Activate this group (set number of inactive atoms to zero).
+      */
+      void activate();
+
+      /**
+      * Increment the number of inactive atoms.
+      */
+      void incrementInactive();
+
+      /**
+      * Decrement the number of inactive atoms.
+      */
+      void decrementInactive();
+
       /**
       * Is this group active?
       *
@@ -94,6 +113,8 @@ namespace McMd
       */
       bool isActive() const;
 
+      //@}
+
    private:
 
       /// Array of pointers to Atoms in this group.
@@ -102,8 +123,8 @@ namespace McMd
       /// Integer index for the type of group.
       int typeId_;
 
-      /// If false, the group has been temporarily deactivated.
-      bool isActive_;
+      /// Number of inactive atoms in group.
+      int nInActive_;
 
    };
 
@@ -113,7 +134,7 @@ namespace McMd
    template <int NAtom>
    Group<NAtom>::Group()
     : typeId_(-1),
-      isActive_(true)
+      nInActive_(0)
    {
       for (int i=0; i < NAtom; ++i) {
          atoms_[i] = 0;
@@ -134,12 +155,7 @@ namespace McMd
    inline void Group<NAtom>::setTypeId(int typeId)
    {  typeId_ = typeId; }
 
-   /*
-   * Activate or deactivate the group.
-   */
-   template <int NAtom>
-   inline void Group<NAtom>::setIsActive(bool isActive)
-   {  isActive_ = isActive; }
+   // Accessors
 
    /*
    * Get a specific Atom in the Group.
@@ -168,12 +184,41 @@ namespace McMd
    inline int Group<NAtom>::typeId() const
    {  return typeId_; }
 
+   // Counting inactive atoms
+
+   /*
+   * Activate the group (set nInActive_ = 0)   
+   */
+   template <int NAtom>
+   inline void Group<NAtom>::activate()
+   {  nInActive_ = 0; }
+
+   /*
+   * Increment the number of inactive atoms.
+   */
+   template <int NAtom>
+   inline void Group<NAtom>::incrementInactive()
+   {  
+      assert(nInActive_ < NAtom);  
+      ++nInActive_; 
+   }
+
+   /*
+   * Decrement the number of inactive atoms.
+   */
+   template <int NAtom>
+   inline void Group<NAtom>::decrementInactive()
+   {
+      assert(nInActive_ > 0);
+      --nInActive_;
+   }
+
    /*
    * Is this group active?
    */
    template <int NAtom>
    inline bool Group<NAtom>::isActive() const
-   {  return isActive_; }
+   {  return (nInActive_ == 0); }
 
 }
 #endif

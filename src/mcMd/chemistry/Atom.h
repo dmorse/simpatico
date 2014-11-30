@@ -163,7 +163,7 @@ namespace McMd
       #endif
 
       //@}
-      ///\name Allocation and de-allocation
+      ///\name Allocation and de-allocation (static members)
       //@{
 
       /**

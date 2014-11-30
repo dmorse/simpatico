@@ -63,17 +63,17 @@ namespace McMd
       }
       #ifdef INTER_BOND
       for (i = 0; i < nBond_; ++i) {
-         (firstBondPtr_ + i)->setIsActive(true);
+         (firstBondPtr_ + i)->activate();
       }
       #endif
       #ifdef INTER_ANGLE
       for (i = 0; i < nAngle_; ++i) {
-         (firstAnglePtr_ + i)->setIsActive(true);
+         (firstAnglePtr_ + i)->activate();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       for (i = 0; i < nDihedral_; ++i) {
-         (firstDihedralPtr_ + i)->setIsActive(true);
+         (firstDihedralPtr_ + i)->activate();
       }
       #endif
    }

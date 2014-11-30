@@ -815,7 +815,9 @@ namespace McMd
    */ 
    Molecule& Simulation::getMolecule(int speciesId)
    {
-      return reservoirs_[speciesId].pop();  
+      Molecule* ptr = &reservoirs_[speciesId].pop();  
+      ptr->setIsActive(); 
+      return *ptr;
    }
 
    /*
@@ -939,7 +941,12 @@ namespace McMd
                   if (atomPtr != &(moleculePtr->atom(iAtom))) {
                      UTIL_THROW("Inconsistent molecule.atom()");
                   }
-   
+  
+                  // Require that atom be active 
+                  if (!atomPtr->isActive()) {
+                     UTIL_THROW("Atom is inactive");
+                  }
+
                   // Validate atom type, if species is not mutable
                   if (!speciesPtr->isMutable()) {
                      type = atomPtr->typeId();
@@ -950,6 +957,7 @@ namespace McMd
                         UTIL_THROW("Inconsistent atom type");
                      }
                   }
+
 
                   ++atomPtr;
                }
@@ -1003,6 +1011,11 @@ namespace McMd
                   }
                   if (bondPtr->typeId() != bondType) {
                      UTIL_THROW("Inconsistent bond type index");
+                  }
+
+                  // Require that bond be active 
+                  if (!bondPtr->isActive()) {
+                     UTIL_THROW("Bond is inactive");
                   }
 
                   // If MaskBonded, check that bonded atoms are masked
@@ -1078,6 +1091,11 @@ namespace McMd
                      UTIL_THROW("Inconsistent angle type index");
                   }
 
+                  // Require that angle be active 
+                  if (!anglePtr->isActive()) {
+                     UTIL_THROW("Angle is inactive");
+                  }
+
                   ++anglePtr;
                }
             }
@@ -1119,6 +1137,12 @@ namespace McMd
                   if (dihedralType != dihedralPtr->typeId()) {
                      UTIL_THROW("Inconsistent dihedral type index");
                   }
+
+                  // Require that dihedral be active 
+                  if (!dihedralPtr->isActive()) {
+                     UTIL_THROW("Dihedral is inactive");
+                  }
+
                   ++dihedralPtr;
                }
 

@@ -25,10 +25,11 @@ namespace McMd
    using namespace Util;
 
    /*
-   * De-activate and atom an all associated groups.
+   * De-activate an atom an all associated groups.
    */
-   void deActivateAtom(Atom& atom)
+   void deActivate(Atom& atom)
    {
+      assert(atom.isActive());
       atom.setIsActive(false);
 
       Molecule& molecule = atom.molecule();
@@ -38,27 +39,24 @@ namespace McMd
       #ifdef INTER_BOND
       if (species.nBond()) {
          const Species::AtomBondIdArray groupIds = species.atomBondIds(atomId);
-         const int nGroup = groupIds.size();
-         for (i = 0; i < nGroup; ++i) {
-            molecule.bond(groupIds[i]).setIsActive(false);
+         for (i = 0; i < groupIds.size(); ++i) {
+            molecule.bond(groupIds[i]).incrementInactive();
          }
       }
       #endif
       #ifdef INTER_ANGLE
       if (species.nAngle()) {
          const Species::AtomAngleIdArray groupIds = species.atomAngleIds(atomId);
-         const int nGroup = groupIds.size();
-         for (i = 0; i < nGroup; ++i) {
-            molecule.angle(groupIds[i]).setIsActive(false);
+         for (i = 0; i < groupIds.size(); ++i) {
+            molecule.angle(groupIds[i]).incrementInactive();
          }
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (species.nDihedral()) {
          const Species::AtomDihedralIdArray groupIds = species.atomDihedralIds(atomId);
-         const int nGroup = groupIds.size();
-         for (i = 0; i < nGroup; ++i) {
-            molecule.dihedral(groupIds[i]).setIsActive(false);
+         for (i = 0; i < groupIds.size(); ++i) {
+            molecule.dihedral(groupIds[i]).incrementInactive();
          }
       }
       #endif
@@ -69,79 +67,36 @@ namespace McMd
    *
    * Note: Each group is re-activated only if All atoms in the group are now active.
    */
-   void reActivateAtom(Atom& atom)
+   void reActivate(Atom& atom)
    {
+      assert(!atom.isActive());
       atom.setIsActive(true);
 
       Molecule& molecule = atom.molecule();
       const Species& species = molecule.species();
       const int atomId = int( &atom - &molecule.atom(0) );
-      int i, j;
-      bool allActive;
 
       #ifdef INTER_BOND
       if (species.nBond()) {
          const Species::AtomBondIdArray groupIds = species.atomBondIds(atomId);
-         const int nGroup = groupIds.size();
-         Bond* groupPtr;
-         for (i = 0; i < nGroup; ++i) {
-            groupPtr = &molecule.bond(groupIds[i]);
-            allActive = true;
-            for (j = 0; j < 2; ++j) {
-               if (!groupPtr->atom(j).isActive()) {
-                  allActive = false;
-                  break;
-               }
-            }
-            if (allActive) {
-               groupPtr->setIsActive(true);
-            } else {
-               groupPtr->setIsActive(false);
-            }
+         for (int i = 0; i < groupIds.size(); ++i) {
+            molecule.bond(groupIds[i]).decrementInactive();
          }
       }
       #endif
-
       #ifdef INTER_ANGLE
       if (species.nAngle()) {
          const Species::AtomAngleIdArray groupIds = species.atomAngleIds(atomId);
-         const int nGroup = groupIds.size();
-         Angle* groupPtr;
-         for (i = 0; i < nGroup; ++i) {
-            groupPtr = &molecule.angle(groupIds[i]);
-            allActive = true;
-            for (j = 0; j < 3; ++j) {
-               if (!groupPtr->atom(j).isActive()) {
-                  allActive = false;
-                  break;
-               }
-            }
-            if (allActive) {
-               groupPtr->setIsActive(true);
-            } else {
-               groupPtr->setIsActive(false);
-            }
+         for (int i = 0; i < groupIds.size(); ++i) {
+            molecule.angle(groupIds[i]).decrementInactive();
          }
       }
       #endif
-
       #ifdef INTER_DIHEDRAL
       if (species.nDihedral()) {
          const Species::AtomDihedralIdArray groupIds = species.atomDihedralIds(atomId);
-         const int nGroup = groupIds.size();
-         Dihedral* groupPtr;
-         for (i = 0; i < nGroup; ++i) {
-            groupPtr = &molecule.dihedral(groupIds[i]);
-            allActive = true;
-            for (j = 0; j < 4; ++j) {
-               if (!groupPtr->atom(j).isActive()) {
-                  allActive = false;
-                  break;
-               }
-            }
-            if (allActive) {
-               groupPtr->setIsActive(true);
-            }
+         for (int i = 0; i < groupIds.size(); ++i) {
+            molecule.dihedral(groupIds[i]).decrementInactive();
          }
       }
       #endif
