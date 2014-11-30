@@ -12,6 +12,7 @@
 #include <mcMd/species/SpeciesManager.h>
 #include <mcMd/species/Species.h>
 #include <mcMd/chemistry/SpeciesGroup.tpp>
+#include <mcMd/chemistry/DeActivator.h>
 
 // namespace Util
 #include <util/containers/ArraySet.h>
@@ -816,7 +817,7 @@ namespace McMd
    Molecule& Simulation::getMolecule(int speciesId)
    {
       Molecule* ptr = &reservoirs_[speciesId].pop();  
-      ptr->setIsActive(); 
+      DeActivator::activate(*ptr); // activate all atoms in molecule
       return *ptr;
    }
 

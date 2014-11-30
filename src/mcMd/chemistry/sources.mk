@@ -5,8 +5,8 @@ mcMd_chemistry_= \
     mcMd/chemistry/Mask.cpp \
     mcMd/chemistry/MaskPolicy.cpp \
     mcMd/chemistry/Molecule.cpp \
+    mcMd/chemistry/DeActivator.cpp \
     mcMd/chemistry/getAtomGroups.cpp \
-    mcMd/chemistry/deActivateAtom.cpp \
 
 mcMd_chemistry_SRCS=\
      $(addprefix $(SRC_DIR)/, $(mcMd_chemistry_))

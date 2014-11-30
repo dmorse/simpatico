@@ -85,25 +85,6 @@ namespace McMd
       */
       int typeId() const;
 
-      //@}
-      /// \name Counting inactive atoms
-      //@{
-
-      /**
-      * Activate this group (set number of inactive atoms to zero).
-      */
-      void activate();
-
-      /**
-      * Increment the number of inactive atoms.
-      */
-      void incrementInactive();
-
-      /**
-      * Decrement the number of inactive atoms.
-      */
-      void decrementInactive();
-
       /**
       * Is this group active?
       *
@@ -125,6 +106,27 @@ namespace McMd
 
       /// Number of inactive atoms in group.
       int nInActive_;
+
+      // Private member functions, called by DeActivator
+
+      /**
+      * Activate this group (set number of inactive atoms to zero).
+      */
+      void activate();
+
+      /**
+      * Increment the number of inactive atoms.
+      */
+      void incrementInactive();
+
+      /**
+      * Decrement the number of inactive atoms.
+      */
+      void decrementInactive();
+
+   // friends:
+
+      friend class DeActivator;
 
    };
 
@@ -184,6 +186,13 @@ namespace McMd
    inline int Group<NAtom>::typeId() const
    {  return typeId_; }
 
+   /*
+   * Is this group active?
+   */
+   template <int NAtom>
+   inline bool Group<NAtom>::isActive() const
+   {  return (nInActive_ == 0); }
+
    // Counting inactive atoms
 
    /*
@@ -212,13 +221,6 @@ namespace McMd
       assert(nInActive_ > 0);
       --nInActive_;
    }
-
-   /*
-   * Is this group active?
-   */
-   template <int NAtom>
-   inline bool Group<NAtom>::isActive() const
-   {  return (nInActive_ == 0); }
 
 }
 #endif

@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "deActivateAtom.h"
+#include "DeActivator.h"
 #include <mcMd/species/Species.h>     
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/chemistry/Molecule.h>
@@ -25,9 +25,9 @@ namespace McMd
    using namespace Util;
 
    /*
-   * De-activate an atom an all associated groups.
+   * De-activate an atom and all associated groups.
    */
-   void deActivate(Atom& atom)
+   void DeActivator::deActivate(Atom& atom)
    {
       assert(atom.isActive());
       atom.setIsActive(false);
@@ -67,7 +67,7 @@ namespace McMd
    *
    * Note: Each group is re-activated only if All atoms in the group are now active.
    */
-   void reActivate(Atom& atom)
+   void DeActivator::reActivate(Atom& atom)
    {
       assert(!atom.isActive());
       atom.setIsActive(true);
@@ -101,6 +101,32 @@ namespace McMd
       }
       #endif
 
+   }
+
+   /*
+   * Activate all atoms and groups in this molecule.
+   */
+   void DeActivator::activate(Molecule& molecule)
+   {
+      int i;
+      for (i = 0; i < molecule.nAtom(); ++i) {
+         molecule.atom(i).setIsActive(true);
+      }
+      #ifdef INTER_BOND
+      for (i = 0; i < molecule.nBond(); ++i) {
+         molecule.bond(i).activate();
+      }
+      #endif
+      #ifdef INTER_ANGLE
+      for (i = 0; i < molecule.nAngle(); ++i) {
+         molecule.angle(i).activate();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      for (i = 0; i < molecule.nDihedral(); ++i) {
+        molecule.dihedral(i).activate();
+      }
+      #endif
    }
 
 }

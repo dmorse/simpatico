@@ -41,7 +41,7 @@ namespace McMd
    public:
 
       // Typedefs
-      
+
       /// Iterator for Atoms within a Molecule.
       typedef ArrayIterator<Atom>  AtomIterator;
 
@@ -76,8 +76,8 @@ namespace McMd
       static const int NullIndex = -1;
 
       // Member functions
-     
-      /** 
+
+      /**
       * Constructor.
       */
       Molecule();
@@ -86,26 +86,26 @@ namespace McMd
       * \name Mutators
       */
       //@{
-      
+
       /**
       * Set the parent Species.
       *
       * \param species parent Species object.
       */
       void setSpecies(Species &species);
- 
+
       /**
       * Set the parent System.
       *
       * \param system parent System object.
       */
       void setSystem(System &system);
- 
+
       /**
       * Set the parent System pointer to null (no System).
       */
       void unsetSystem();
- 
+
       /**
       * Set the integer index for this molecule.
       *
@@ -119,14 +119,14 @@ namespace McMd
       * \param atom first Atom in molecule.
       */
       void setFirstAtom(Atom &atom);
- 
+
       /**
       * Set the number of Atoms per molecule.
       *
       * \param nAtom number of Atoms in the molecule.
       */
       void setNAtom(int nAtom);
-     
+
       #ifdef INTER_BOND
       /**
       * Set the first Bond.
@@ -134,7 +134,7 @@ namespace McMd
       * \param bond first Bond in molecule.
       */
       void setFirstBond(Bond &bond);
- 
+
       /**
       * Set the number of Bonds per molecule.
       *
@@ -150,7 +150,7 @@ namespace McMd
       * \param angle first Angle in molecule.
       */
       void setFirstAngle(Angle &angle);
- 
+
       /**
       * Set the number of Angles per molecule.
       *
@@ -166,7 +166,7 @@ namespace McMd
       * \param dihedral first Dihedral in molecule.
       */
       void setFirstDihedral(Dihedral &dihedral);
- 
+
       /**
       * Set the number of Dihedrals per molecule.
       *
@@ -174,11 +174,6 @@ namespace McMd
       */
       void setNDihedral(int nDihedral);
       #endif
-
-      /**
-      * Mark all atoms and groups in this molecule as active.
-      */
-      void setIsActive();
 
       //@}
       /// \name Accessors
@@ -213,7 +208,7 @@ namespace McMd
 
       /**
       * Get a specific Atom in this Molecule.
-      * 
+      *
       * Returns the atom with local integer index 0 <= localId < nAtom.
       *
       * \param localId local index of desired atom within this Molecule.
@@ -222,7 +217,7 @@ namespace McMd
 
       /**
       * Get a specific Atom in this Molecule.
-      * 
+      *
       * Returns the atom with local integer index 0 <= localId < nAtom.
       *
       * \param localId local index of desired atom within this Molecule.
@@ -232,7 +227,7 @@ namespace McMd
       #ifdef INTER_BOND
       /**
       * Get a specific Bond in this Molecule by non-const reference.
-      * 
+      *
       * Returns the bond with local integer index 0 <= localId < nBond.
       *
       * \param localId local index of desired bond within this Molecule.
@@ -241,7 +236,7 @@ namespace McMd
 
       /**
       * Get a specific Bond in this Molecule by const reference.
-      * 
+      *
       * Returns the bond with local integer index 0 <= localId < nBond.
       *
       * \param localId local index of desired bond within this Molecule.
@@ -252,7 +247,7 @@ namespace McMd
       #ifdef INTER_ANGLE
       /**
       * Get a specific Angle in this Molecule by non-const reference.
-      * 
+      *
       * Returns the angle with local integer index 0 <= localId < nAngle.
       *
       * \param localId local index of desired angle within this Molecule.
@@ -261,7 +256,7 @@ namespace McMd
 
       /**
       * Get a specific Angle in this Molecule by const reference.
-      * 
+      *
       * Returns the angle with local integer index 0 <= localId < nAngle.
       *
       * \param localId local index of desired angle within this Molecule.
@@ -272,7 +267,7 @@ namespace McMd
       #ifdef INTER_DIHEDRAL
       /**
       * Get a specific Dihedral in this Molecule by reference.
-      * 
+      *
       * Returns the dihedral with local integer index 0 <= localId < nDihedral.
       *
       * \param localId local index of desired dihedral within this Molecule.
@@ -281,7 +276,7 @@ namespace McMd
 
       /**
       * Get a specific Dihedral in this Molecule by const reference.
-      * 
+      *
       * Returns the dihedral with local integer index 0 <= localId < nDihedral.
       *
       * \param localId local index of desired dihedral within this Molecule.
@@ -292,15 +287,15 @@ namespace McMd
       //@}
       /// \name Iterator Interface
       //@{
-    
-      /**  
+
+      /**
       * Set an Molecule::AtomIterator to first Atom in this Molecule.
       *
       * \param iterator on output, points to first Atom.
       */
       void begin(AtomIterator &iterator);
 
-      /**  
+      /**
       * Set an Molecule::ConstAtomIterator to first Atom in this Molecule.
       *
       * \param iterator on output, points to first Atom.
@@ -308,14 +303,14 @@ namespace McMd
       void begin(ConstAtomIterator &iterator) const;
 
       #ifdef INTER_BOND
-      /**  
+      /**
       * Set a Molecule::BondIterator to first Bond in this Molecule.
       *
       * \param iterator on output, points to first Bond.
       */
       void begin(BondIterator &iterator);
 
-      /**  
+      /**
       * Set a Molecule::ConstBondIterator to first Bond in this Molecule.
       *
       * \param iterator on output, points to first Bond.
@@ -324,14 +319,14 @@ namespace McMd
       #endif
 
       #ifdef INTER_ANGLE
-      /**  
+      /**
       * Set a Molecule::AngleIterator to first Angle in this Molecule.
       *
       * \param iterator on output, points to first Angle.
       */
       void begin(AngleIterator &iterator);
 
-      /**  
+      /**
       * Set a Molecule::ConstAngleIterator to first Angle in this Molecule.
       *
       * \param iterator on output, points to first Angle.
@@ -340,14 +335,14 @@ namespace McMd
       #endif
 
       #ifdef INTER_DIHEDRAL
-      /**  
+      /**
       * Set a Molecule::DihedralIterator to first Dihedral in this Molecule.
       *
       * \param iterator on output, points to first Dihedral.
       */
       void begin(DihedralIterator &iterator);
 
-      /**  
+      /**
       * Set a Molecule::ConstDihedralIterator to first Dihedral in this Molecule.
       *
       * \param iterator on output, points to first Dihedral.
@@ -360,18 +355,18 @@ namespace McMd
    private:
 
       /// Pointer to Species object.
-      Species* speciesPtr_;  
+      Species* speciesPtr_;
 
       /// Pointer to System containing this molecule, if any.
       /// This pointer should be null when the molecule is in no System.
-      System* systemPtr_;  
+      System* systemPtr_;
 
       /// Pointer to first atom in molecule.
-      Atom* firstAtomPtr_; 
+      Atom* firstAtomPtr_;
 
       #ifdef INTER_BOND
       /// Pointer to first bond in molecule.
-      Bond* firstBondPtr_;    
+      Bond* firstBondPtr_;
       #endif
 
       #ifdef INTER_ANGLE
@@ -385,58 +380,33 @@ namespace McMd
       #endif
 
       /// Number of atoms in molecule.
-      int nAtom_;             
+      int nAtom_;
 
       #ifdef INTER_BOND
       /// Number of bonds in molecule.
-      int nBond_;            
+      int nBond_;
       #endif
 
       #ifdef INTER_ANGLE
       /// Number of angles in molecule.
-      int nAngle_;            
+      int nAngle_;
       #endif
 
       #ifdef INTER_DIHEDRAL
       /// Number of dihedrals in molecule.
-      int nDihedral_;            
+      int nDihedral_;
       #endif
 
       /// Integer index for this molecule within its Species
-      int id_;                
+      int id_;
+
+   // friends:
+
+      class DeActivator;
 
    };
 
    // Inline member functions
-
-   #if 0
-   /// Constructor.
-   inline Molecule::Molecule()
-    : speciesPtr_(0),
-      systemPtr_(0),
-      firstAtomPtr_(0),
-      #ifdef INTER_BOND
-      firstBondPtr_(0),
-      #endif
-      #ifdef INTER_ANGLE
-      firstAnglePtr_(0),
-      #endif
-      #ifdef INTER_DIHEDRAL
-      firstDihedralPtr_(0),
-      #endif
-      nAtom_(0),
-      #ifdef INTER_BOND
-      nBond_(0),
-      #endif
-      #ifdef INTER_ANGLE
-      nAngle_(0),
-      #endif
-      #ifdef INTER_DIHEDRAL
-      nDihedral_(0),
-      #endif
-      id_(NullIndex)
-   {}
-   #endif
 
    /*
    * Get the Species by reference.
@@ -444,16 +414,16 @@ namespace McMd
    inline Species& Molecule::species() const
    {
       assert(speciesPtr_);
-      return *speciesPtr_; 
+      return *speciesPtr_;
    }
 
    /*
    * Get the parent System by reference.
    */
    inline System& Molecule::system() const
-   { 
+   {
       assert(systemPtr_);
-      return *systemPtr_; 
+      return *systemPtr_;
    }
 
    /*
@@ -494,7 +464,7 @@ namespace McMd
       assert(firstAtomPtr_);
       assert(localIndex >= 0);
       assert(localIndex < nAtom_);
-      return *(firstAtomPtr_ + localIndex); 
+      return *(firstAtomPtr_ + localIndex);
    }
 
    /*
@@ -504,8 +474,8 @@ namespace McMd
    {
       assert(firstAtomPtr_);
       assert(localIndex >= 0);
-      assert(localIndex < nAtom_); 
-      return *(firstAtomPtr_ + localIndex); 
+      assert(localIndex < nAtom_);
+      return *(firstAtomPtr_ + localIndex);
    }
 
    #ifdef INTER_BOND
@@ -513,22 +483,22 @@ namespace McMd
    * Get a specific Bond by reference.
    */
    inline Bond& Molecule::bond(int localIndex)
-   {  
+   {
       assert(firstBondPtr_);
       assert(localIndex >= 0);
-      assert(localIndex < nBond_); 
-      return *(firstBondPtr_ + localIndex); 
+      assert(localIndex < nBond_);
+      return *(firstBondPtr_ + localIndex);
    }
-  
+
    /*
    * Get a specific Bond by const reference.
    */
    inline const Bond& Molecule::bond(int localIndex) const
-   {  
+   {
       assert(firstBondPtr_);
       assert(localIndex >= 0);
-      assert(localIndex < nBond_); 
-      return *(firstBondPtr_ + localIndex); 
+      assert(localIndex < nBond_);
+      return *(firstBondPtr_ + localIndex);
    }
    #endif
 
@@ -537,22 +507,22 @@ namespace McMd
    * Get a specific Angle, referenced by an index.
    */
    inline Angle& Molecule::angle(int localIndex)
-   {  
+   {
       assert(firstAnglePtr_);
       assert(localIndex >= 0);
-      assert(localIndex < nAngle_); 
-      return *(firstAnglePtr_ + localIndex); 
+      assert(localIndex < nAngle_);
+      return *(firstAnglePtr_ + localIndex);
    }
 
    /*
    * Get a specific Angle, referenced by an index.
    */
    inline const Angle& Molecule::angle(int localIndex) const
-   {  
+   {
       assert(firstAnglePtr_);
       assert(localIndex >= 0);
-      assert(localIndex < nAngle_); 
-      return *(firstAnglePtr_ + localIndex); 
+      assert(localIndex < nAngle_);
+      return *(firstAnglePtr_ + localIndex);
    }
    #endif
 
@@ -561,22 +531,22 @@ namespace McMd
    * Get a specific Dihedral, referenced by an index.
    */
    inline Dihedral& Molecule::dihedral(int localIndex)
-   {  
+   {
       assert(firstDihedralPtr_);
       assert(localIndex >= 0);
-      assert(localIndex < nDihedral_); 
-      return *(firstDihedralPtr_ + localIndex); 
+      assert(localIndex < nDihedral_);
+      return *(firstDihedralPtr_ + localIndex);
    }
 
    /*
    * Get a specific Dihedral, referenced by an index.
    */
    inline const Dihedral& Molecule::dihedral(int localIndex) const
-   {  
+   {
       assert(firstDihedralPtr_);
       assert(localIndex >= 0);
-      assert(localIndex < nAngle_); 
-      return *(firstDihedralPtr_ + localIndex); 
+      assert(localIndex < nAngle_);
+      return *(firstDihedralPtr_ + localIndex);
    }
    #endif
 
@@ -590,22 +560,22 @@ namespace McMd
    * Set AtomIterator to first Atom in this molecule.
    */
    inline void Molecule::begin(AtomIterator &iterator)
-   { 
+   {
       assert(firstAtomPtr_);
       assert(nAtom_ > 0);
-      iterator.setCurrent(firstAtomPtr_); 
-      iterator.setEnd(firstAtomPtr_ + nAtom_); 
+      iterator.setCurrent(firstAtomPtr_);
+      iterator.setEnd(firstAtomPtr_ + nAtom_);
    }
 
    /*
    * Set AtomIterator to first Atom in this molecule.
    */
    inline void Molecule::begin(ConstAtomIterator &iterator) const
-   { 
+   {
       assert(firstAtomPtr_);
       assert(nAtom_ > 0);
-      iterator.setCurrent(firstAtomPtr_); 
-      iterator.setEnd(firstAtomPtr_ + nAtom_); 
+      iterator.setCurrent(firstAtomPtr_);
+      iterator.setEnd(firstAtomPtr_ + nAtom_);
    }
 
    #ifdef INTER_BOND
@@ -613,22 +583,22 @@ namespace McMd
    * Set BondIterator to first Bond in this molecule.
    */
    inline void Molecule::begin(BondIterator &iterator)
-   { 
+   {
       assert(firstBondPtr_);
       assert(nBond_ > 0);
-      iterator.setCurrent(firstBondPtr_); 
-      iterator.setEnd(firstBondPtr_ + nBond_); 
+      iterator.setCurrent(firstBondPtr_);
+      iterator.setEnd(firstBondPtr_ + nBond_);
    }
 
    /*
    * Set ConstBondIterator to first Bond in this molecule.
    */
    inline void Molecule::begin(ConstBondIterator &iterator) const
-   { 
+   {
       assert(firstBondPtr_);
       assert(nBond_ > 0);
-      iterator.setCurrent(firstBondPtr_); 
-      iterator.setEnd(firstBondPtr_ + nBond_); 
+      iterator.setCurrent(firstBondPtr_);
+      iterator.setEnd(firstBondPtr_ + nBond_);
    }
    #endif
 
@@ -637,22 +607,22 @@ namespace McMd
    * Set AngleIterator to first Angle in this molecule.
    */
    inline void Molecule::begin(AngleIterator &iterator)
-   { 
+   {
       assert(firstAnglePtr_);
       assert(nAngle_ > 0);
-      iterator.setCurrent(firstAnglePtr_); 
-      iterator.setEnd(firstAnglePtr_ + nAngle_); 
+      iterator.setCurrent(firstAnglePtr_);
+      iterator.setEnd(firstAnglePtr_ + nAngle_);
    }
 
    /*
    * Set ConstAngleIterator to first Angle in this molecule.
    */
    inline void Molecule::begin(ConstAngleIterator &iterator) const
-   { 
+   {
       assert(firstAnglePtr_);
       assert(nAngle_ > 0);
-      iterator.setCurrent(firstAnglePtr_); 
-      iterator.setEnd(firstAnglePtr_ + nAngle_); 
+      iterator.setCurrent(firstAnglePtr_);
+      iterator.setEnd(firstAnglePtr_ + nAngle_);
    }
    #endif
 
@@ -661,21 +631,21 @@ namespace McMd
    * Set DihedralIterator to first Dihedral in this molecule.
    */
    inline void Molecule::begin(DihedralIterator &iterator)
-   { 
+   {
       assert(firstDihedralPtr_);
       assert(nDihedral_ > 0);
-      iterator.setCurrent(firstDihedralPtr_); 
-      iterator.setEnd(firstDihedralPtr_ + nDihedral_); 
+      iterator.setCurrent(firstDihedralPtr_);
+      iterator.setEnd(firstDihedralPtr_ + nDihedral_);
    }
 
    /*
    * Set ConstDihedralIterator to first Dihedral in this molecule.
    */
    inline void Molecule::begin(ConstDihedralIterator &iterator) const
-   { 
+   {
       assert(firstDihedralPtr_);
       assert(nDihedral_ > 0);
-      iterator.setCurrent(firstDihedralPtr_); 
+      iterator.setCurrent(firstDihedralPtr_);
       iterator.setEnd(firstDihedralPtr_ + nDihedral_);
    }
    #endif
@@ -763,11 +733,11 @@ namespace McMd
    /*
    * Return local id of an Atom within its parent molecule.
    *
-   * This function is defined here, rather than in Atom.h, because its 
+   * This function is defined here, rather than in Atom.h, because its
    * implementation requires the inline method Molecule::atom(int).
    */
    inline int Atom::indexInMolecule() const
    {  return int(this - &molecule().atom(0));}
 
-} 
+}
 #endif

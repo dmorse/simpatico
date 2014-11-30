@@ -104,13 +104,6 @@ namespace McMd
       */
       void setTypeId(int typeId);
 
-      /**
-      * Set the atom as active (true) or inactive (false).
-      *  
-      * \param isActive set true for active, false for inactive.
-      */
-      void setIsActive(bool isActive);
-
       //@}
       /// \name Accessors
       //@{
@@ -254,17 +247,24 @@ namespace McMd
       /// Copy constructor. Private to prevent copying, not implemented.
       Atom(const Atom& other);
 
+      /**
+      * Mark this atom as active (true) or inactive (false) (private).
+      *  
+      * \param isActive set true for active, false for inactive.
+      */
+      void setIsActive(bool isActive);
+
+   // friends:
+
+      friend class DeActivator;
+
    }; 
 
-   // Inline member functions
+   // Inline pubic member functions
 
    // Set type index for Atom.
    inline void Atom:: setTypeId(int typeId) 
    {  typeId_ = typeId; }
-
-   // Set the atom as active (true) or inactive (false).
-   inline void Atom::setIsActive(bool isActive)
-   {  isActives_[id_] = isActive; }
 
    // Get global id for Atom.
    inline int  Atom::id() const
@@ -323,6 +323,12 @@ namespace McMd
    inline const IntVector& Atom::shift() const
    {  return shifts_[id_]; }
    #endif
+
+   // Inline private member functions
+
+   // Set the atom as active (true) or inactive (false) (private)
+   inline void Atom::setIsActive(bool isActive)
+   {  isActives_[id_] = isActive; }
 
 }
 #endif
