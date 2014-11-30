@@ -1,5 +1,5 @@
-#ifndef MCMD_ATOM_GROUPS_H
-#define MCMD_ATOM_GROUPS_H
+#ifndef MCMD_GET_ATOM_GROUPS_H
+#define MCMD_GET_ATOM_GROUPS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

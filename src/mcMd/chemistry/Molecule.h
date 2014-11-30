@@ -175,6 +175,11 @@ namespace McMd
       void setNDihedral(int nDihedral);
       #endif
 
+      /**
+      * Mark all atoms and groups in this molecule as active.
+      */
+      void setIsActive();
+
       //@}
       /// \name Accessors
       //@{
@@ -404,6 +409,7 @@ namespace McMd
 
    // Inline member functions
 
+   #if 0
    /// Constructor.
    inline Molecule::Molecule()
     : speciesPtr_(0),
@@ -430,6 +436,7 @@ namespace McMd
       #endif
       id_(NullIndex)
    {}
+   #endif
 
    /*
    * Get the Species by reference.
