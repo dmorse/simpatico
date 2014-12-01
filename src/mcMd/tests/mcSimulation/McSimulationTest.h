@@ -4,7 +4,6 @@
 #include <mcMd/mcSimulation/McSimulation.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mdSimulation/MdSystem.h>
-//#include <mcMd/mcSimulation/serialize.h>
 #include <mcMd/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
@@ -14,11 +13,6 @@
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
 
-#include <util/archives/MemoryCounter.h>
-#include <util/archives/MemoryOArchive.h>
-#include <util/archives/MemoryIArchive.h>
-#include <util/archives/TextFileOArchive.h>
-#include <util/archives/TextFileIArchive.h>
 #include <util/archives/BinaryFileOArchive.h>
 #include <util/archives/BinaryFileIArchive.h>
 #include <util/archives/Serializable_includes.h>
@@ -39,11 +33,10 @@ public:
 
    McSimulationTest();
    virtual void setUp();
-   void readParam();
-   void readConfig(const char* filename);
 
+   // Test functions
    void testReadParamBond();
-   void testReadParam();
+   void testReadConfigBond();
    void testPairEnergy();
    void testBondEnergy();
    void testMdSystemCopy();
@@ -52,6 +45,7 @@ public:
    void testReadRestart();
 
    #ifdef INTER_ANGLE
+   void testReadParamAngle();
    void testAngleEnergy();
    void testSimulateAngle();
    #endif
@@ -61,13 +55,18 @@ private:
    McSimulation simulation_;
    McSystem& system_;
 
+   // Utility functions
+   void readParam(const char* filename);
+   void readConfig(const char* filename);
+
 };
 
 McSimulationTest::McSimulationTest()
  : ParamFileTest(),
    system_(simulation_.system())
 { 
-   setVerbose(2); 
+   //setVerbose(2); 
+   //ParamComposite::setEcho(true);
 }
 
 void McSimulationTest::setUp()
@@ -75,13 +74,9 @@ void McSimulationTest::setUp()
    simulation_.fileMaster().setRootPrefix(filePrefix());
 } 
 
-void McSimulationTest::readParam()
+void McSimulationTest::readParam(const char* filename)
 {  
-   #ifdef INTER_ANGLE
-   openFile("in/McSimulationAngle"); 
-   #else
-   openFile("in/McSimulation"); 
-   #endif
+   openFile(filename); 
    simulation_.readParam(file());
    file().close();
 }
@@ -98,9 +93,7 @@ void McSimulationTest::readConfig(const char* filename)
 void McSimulationTest::testReadParamBond()
 {
    printMethod(TEST_FUNC);
-   openFile("in/McSimulation");
-   simulation_.readParam(file());
-   file().close();
+   readParam("in/McSimulation");
 
    try {
       simulation_.isValid();
@@ -115,46 +108,48 @@ void McSimulationTest::testReadParamBond()
    }
 }
 
-void McSimulationTest::testReadParam()
+void McSimulationTest::testReadConfigBond()
 {
    printMethod(TEST_FUNC);
-   //ParamComposite::setEcho(true);
 
-   readParam();
-   if (verbose() > 1) {
-      std::cout << std::endl;
-      simulation_.writeParam(std::cout);
-   }
-
-   #if 1
-   simulation_.readCommands();
+   readParam("in/McSimulation");
    try {
+      readConfig("in/config");
       simulation_.isValid();
    } catch (Exception e) {
       std::cout << e.message();
       TEST_ASSERT(0);
    }
-   #endif
 }
+
+#ifdef INTER_ANGLE
+void McSimulationTest::testReadParamAngle()
+{
+   printMethod(TEST_FUNC);
+
+   readParam("in/McSimulationAngle"); 
+   if (verbose() > 1) {
+      std::cout << std::endl;
+      simulation_.writeParam(std::cout);
+   }
+}
+#endif
 
 void McSimulationTest::testPairEnergy()
 { 
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   //readParam();
-   openFile("in/McSimulation"); 
-   simulation_.readParam(file());
-   simulation_.readCommands();
+   readParam("in/McSimulation"); 
+   readConfig("in/config");
 
-   simulation_.simulate(10);
+   // simulation_.simulate(10);
 
    System::MoleculeIterator molIter;
    Molecule::AtomIterator atomIter;
    double total = system_.pairPotential().energy();
-
-   double energy, de;
-   energy = 0.0;
+   double de;
+   double energy = 0.0;
    for (int is=0; is < simulation_.nSpecies(); ++is) {
       for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
@@ -177,15 +172,12 @@ void McSimulationTest::testBondEnergy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   openFile("in/McSimulation"); 
-   simulation_.readParam(file());
-   file().close();
-   simulation_.readCommands();
+   readParam("in/McSimulation"); 
+   readConfig("in/config");
 
    //simulation_.simulate(10);
 
    double total = system_.bondPotential().energy();
-
    System::MoleculeIterator molIter;
    Molecule::AtomIterator atomIter;
    double energy, de;
@@ -213,11 +205,8 @@ void McSimulationTest::testAngleEnergy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   //readParam(simulation_);
-   openFile("in/McSimulationAngle"); 
-   simulation_.readParam(file());
-   file().close();
-   simulation_.readCommands();
+   readParam("in/McSimulationAngle"); 
+   readConfig("in/config");
 
    //simulation_.simulate(10);
 
@@ -252,11 +241,8 @@ void McSimulationTest::testMdSystemCopy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   //readParam(simulation_);
-   openFile("in/McSimulation"); 
-   simulation_.readParam(file());
-   file().close();
-   simulation_.readCommands();
+   readParam("in/McSimulation"); 
+   readConfig("in/config");
 
    simulation_.simulate(10);
 
@@ -273,18 +259,14 @@ void McSimulationTest::testMdSystemCopy()
              << mdSystem.potentialEnergy() << std::endl;
 
    mdSystemFile.close(); 
-
 }
 
 void McSimulationTest::testSimulateBond()
 {
    printMethod(TEST_FUNC);
 
-   std::cout << std::endl;
-   openFile("in/McSimulation"); 
-   simulation_.readParam(file());
-   file().close();
-   simulation_.readCommands();
+   readParam("in/McSimulation"); 
+   readConfig("in/config"); 
 
    std::string baseFileName("simulate.0");
    simulation_.save(baseFileName);
@@ -296,17 +278,31 @@ void McSimulationTest::testSimulateBond()
 
 }
 
-void McSimulationTest::testWriteRestartBond()
+#ifdef INTER_ANGLE
+void McSimulationTest::testSimulateAngle()
 {
    printMethod(TEST_FUNC);
 
+   readParam("in/McSimulationAngle"); 
+   readConfig("in/md.config");
+
+   std::string baseFileName("simulateAngle.0");
+   simulation_.save(baseFileName);
+
+   simulation_.simulate(40);
+
+   baseFileName = "simulateAngle.20";
+   simulation_.save(baseFileName);
+}
+#endif
+
+void McSimulationTest::testWriteRestartBond()
+{
+   printMethod(TEST_FUNC);
    std::cout << std::endl;
-   //readParam(simulation_);
-   //simulation_.readCommands();
-   openFile("in/McSimulation"); 
-   simulation_.readParam(file());
-   file().close();
-   simulation_.readCommands();
+
+   readParam("in/McSimulation"); 
+   readConfig("in/config"); 
 
    std::string baseFileName("writeRestart.0");
    simulation_.save(baseFileName);
@@ -322,31 +318,6 @@ void McSimulationTest::testWriteRestartBond()
    simulation_.save(baseFileName);
 }
 
-#ifdef INTER_ANGLE
-void McSimulationTest::testSimulateAngle()
-{
-   printMethod(TEST_FUNC);
-   std::cout << std::endl;
-   openFile("in/McSimulationAngle"); 
-   simulation_.readParam(file());
-   file().close();
-
-   //simulation_.readCommands();
-   readConfig("in/md.config");
-
-   std::cout << std::endl;
-
-   std::string baseFileName("simulateAngle.0");
-   simulation_.save(baseFileName);
-
-   simulation_.simulate(40);
-
-   baseFileName = "simulateAngle.20";
-   simulation_.save(baseFileName);
-
-}
-#endif
-
 void McSimulationTest::testReadRestart()
 {
    printMethod(TEST_FUNC);
@@ -361,7 +332,7 @@ void McSimulationTest::testReadRestart()
 
 TEST_BEGIN(McSimulationTest)
 TEST_ADD(McSimulationTest, testReadParamBond)
-TEST_ADD(McSimulationTest, testReadParam)
+TEST_ADD(McSimulationTest, testReadConfigBond)
 TEST_ADD(McSimulationTest, testPairEnergy)
 TEST_ADD(McSimulationTest, testBondEnergy)
 TEST_ADD(McSimulationTest, testMdSystemCopy)
@@ -369,6 +340,7 @@ TEST_ADD(McSimulationTest, testSimulateBond)
 TEST_ADD(McSimulationTest, testWriteRestartBond)
 //TEST_ADD(McSimulationTest, testReadRestart)
 #ifdef INTER_ANGLE
+TEST_ADD(McSimulationTest, testReadParamAngle)
 TEST_ADD(McSimulationTest, testAngleEnergy)
 TEST_ADD(McSimulationTest, testSimulateAngle)
 #endif
