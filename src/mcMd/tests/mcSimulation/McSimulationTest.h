@@ -7,6 +7,7 @@
 #include <mcMd/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+#include <mcMd/chemistry/Activate.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/bond/BondPotential.h>
 #ifdef INTER_ANGLE
@@ -39,6 +40,7 @@ public:
    void testReadConfigBond();
    void testPairEnergy();
    void testBondEnergy();
+   void testActivate();
    void testMdSystemCopy();
    void testSimulateBond();
    void testWriteRestartBond();
@@ -236,6 +238,71 @@ void McSimulationTest::testAngleEnergy()
 }
 #endif
 
+void McSimulationTest::testActivate()
+{ 
+   printMethod(TEST_FUNC);
+   std::cout << std::endl;
+
+   readParam("in/McSimulation"); 
+   readConfig("in/config");
+
+   int speciesId = 1;
+   int moleculeId = 1;
+   int atomId = 2;
+   int i, j; 
+   Species& species = simulation_.species(speciesId);
+   Molecule& molecule = system_.molecule(speciesId, moleculeId);
+   Atom& atom = molecule.atom(atomId);
+   Species::AtomBondIdArray bondIds = species.atomBondIds(atomId);
+ 
+   // Test initial state 
+   TEST_ASSERT(atom.isActive());
+   for (i = 0; i < bondIds.size(); ++i) {
+      TEST_ASSERT(molecule.bond(bondIds[i]).isActive());
+   }
+   for (int i = 0; i < molecule.nBond(); ++i) {
+      TEST_ASSERT(molecule.bond(i).isActive());
+      TEST_ASSERT(molecule.bond(i).checkInactive());
+   }
+
+   // Deactivate atom 2 
+   Activate::deactivate(molecule.atom(atomId));
+   TEST_ASSERT(!atom.isActive());
+   for (int i = 0; i < bondIds.size(); ++i) {
+      TEST_ASSERT(!molecule.bond(bondIds[i]).isActive());
+      TEST_ASSERT(molecule.bond(bondIds[i]).nInActive() == 1);
+   }
+   for (int i = 0; i < molecule.nBond(); ++i) {
+      TEST_ASSERT(molecule.bond(i).checkInactive());
+   }
+
+
+   // Deactivate atom 3
+   Activate::deactivate(molecule.atom(atomId+1));
+   TEST_ASSERT(!atom.isActive());
+   TEST_ASSERT(!molecule.atom(atomId+1).isActive());
+   for (int i = 0; i < bondIds.size(); ++i) {
+      TEST_ASSERT(!molecule.bond(bondIds[i]).isActive());
+   }
+   for (int i = 0; i < molecule.nBond(); ++i) {
+      TEST_ASSERT(molecule.bond(i).checkInactive());
+   }
+
+   Activate::reactivate(molecule.atom(atomId));
+   Activate::reactivate(molecule.atom(atomId+1));
+   TEST_ASSERT(atom.isActive());
+   TEST_ASSERT(molecule.atom(atomId+1).isActive());
+   for (int i = 0; i < bondIds.size(); ++i) {
+      TEST_ASSERT(molecule.bond(bondIds[i]).isActive());
+      TEST_ASSERT(molecule.bond(bondIds[i]).nInActive() == 0);
+   }
+   for (int i = 0; i < molecule.nBond(); ++i) {
+      TEST_ASSERT(molecule.bond(i).isActive());
+      TEST_ASSERT(molecule.bond(i).checkInactive());
+   }
+
+}
+
 void McSimulationTest::testMdSystemCopy()
 {
    printMethod(TEST_FUNC);
@@ -335,6 +402,7 @@ TEST_ADD(McSimulationTest, testReadParamBond)
 TEST_ADD(McSimulationTest, testReadConfigBond)
 TEST_ADD(McSimulationTest, testPairEnergy)
 TEST_ADD(McSimulationTest, testBondEnergy)
+TEST_ADD(McSimulationTest, testActivate)
 TEST_ADD(McSimulationTest, testMdSystemCopy)
 TEST_ADD(McSimulationTest, testSimulateBond)
 TEST_ADD(McSimulationTest, testWriteRestartBond)

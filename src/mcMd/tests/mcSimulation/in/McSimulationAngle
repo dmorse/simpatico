@@ -27,11 +27,10 @@ McSimulation{
       hasAngles                    1
       angleType                    0
     }
-  
 
   }
   Random{
-    seed                -874663293
+    seed                 874866293
   }
   McSystem{
     pairStyle    LJPair
@@ -88,6 +87,7 @@ McSimulation{
   }
   saveInterval 0
 }
+
 
     OrthoBoxPotential{
       indexConfinement                       3

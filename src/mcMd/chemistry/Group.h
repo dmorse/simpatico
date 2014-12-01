@@ -95,6 +95,11 @@ namespace McMd
       bool isActive() const;
 
       /**
+      * Return number of inactive atoms.
+      */
+      int nInActive() const;
+
+      /**
       * Check consistency of number of inactive atoms.
       *
       * Returns true if consistent, or throws Exception.
@@ -201,15 +206,22 @@ namespace McMd
    {  return (nInActive_ == 0); }
 
    /*
+   * Return number of inactive atoms.
+   */
+   template <int NAtom>
+   inline int Group<NAtom>::nInActive() const
+   {  return nInActive_; }
+
+   /*
    * Check consistency of nInActive counter.
    */
    template <int NAtom>
    bool Group<NAtom>::checkInactive() const
    {
-      assert(atoms_[i]);  
       int counter = 0;
       for (int i=0; i < NAtom;  ++i) {
-         if (atoms_[i]->isActive()) ++counter;
+         assert(atoms_[i]);  
+         if (!atoms_[i]->isActive()) ++counter;
       }
       if (counter != nInActive_) {
          UTIL_THROW("Inconsistent number of inactive atoms");
