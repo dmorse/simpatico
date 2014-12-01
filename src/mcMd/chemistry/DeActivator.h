@@ -15,18 +15,27 @@ namespace McMd
    class Molecule;
 
    /**
-   * Class of static methods to de-active and re-active atoms.
+   * Static member functions to de-active and re-active atoms.
    *
-   * Static methods of this class can de-activate and re-activate
-   * individual atoms or all atoms in a molecule, while guaranteeing
-   * the consistency of the inactive atom counter in all associated
-   * Group objects. 
+   * This class has only static member functions, and no member 
+   * variables. It provides functions that can de-activate and
+   * re-activate individual atoms and activate all atoms in a
+   * molecule, while guaranteeing the consistency of the count
+   * of inactive atoms in associated covalent group objects,
+   * i.e., all bonds, angles, and dihedrals that contain that
+   * atom.
    *
-   * This class is a friend of Atom and Group<N> classes to allow 
-   * access to private functions that modify Atom::Active_ flag 
-   * and the Group<N>::nInActive_ inactive atom counter.
+   * This set of functions is defined as class to allow a
+   * friend class declaration: Class DeActivator is declared 
+   * a friend of Atom and Group<N> classes to allow access to 
+   * private member functions that modify the Atom::isActive_ 
+   * bool flag and the Group<N>::nInActive_ int counter. By 
+   * allowing these functions to be called only via members
+   * of DeActivator, which call all required functions when 
+   * the status of an atom changes, we guarantee that Atom 
+   * and Group<N> objects are in consistent states.
    */
-   class DeActivator 
+   class DeActivator
    {
  
    public: 
@@ -48,8 +57,8 @@ namespace McMd
       /**
       * Activate all atoms and groups in one molecule.
       *
-      * Sets isActive flag to true for all atoms and inactive atom
-      * counter to zero for all groups.
+      * Marks all atoms as active and sets the number of inactive 
+      * atoms to zero for all groups in the molecule.
       *
       * \param molecule Molecule object to be fully activated
       */

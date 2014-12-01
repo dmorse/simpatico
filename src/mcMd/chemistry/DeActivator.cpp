@@ -41,6 +41,7 @@ namespace McMd
          const Species::AtomBondIdArray groupIds = species.atomBondIds(atomId);
          for (i = 0; i < groupIds.size(); ++i) {
             molecule.bond(groupIds[i]).incrementInactive();
+            assert(molecule.bond(groupIds[i]).checkInactive());
          }
       }
       #endif
@@ -49,6 +50,7 @@ namespace McMd
          const Species::AtomAngleIdArray groupIds = species.atomAngleIds(atomId);
          for (i = 0; i < groupIds.size(); ++i) {
             molecule.angle(groupIds[i]).incrementInactive();
+            assert(molecule.angle(groupIds[i]).checkInactive());
          }
       }
       #endif
@@ -57,6 +59,7 @@ namespace McMd
          const Species::AtomDihedralIdArray groupIds = species.atomDihedralIds(atomId);
          for (i = 0; i < groupIds.size(); ++i) {
             molecule.dihedral(groupIds[i]).incrementInactive();
+            assert(molecule.dihedral(groupIds[i]).checkInactive());
          }
       }
       #endif
@@ -75,12 +78,15 @@ namespace McMd
       Molecule& molecule = atom.molecule();
       const Species& species = molecule.species();
       const int atomId = int( &atom - &molecule.atom(0) );
+      assert(atomId >= 0);
+      assert(atomId < molecule.nAtom());
 
       #ifdef INTER_BOND
       if (species.nBond()) {
          const Species::AtomBondIdArray groupIds = species.atomBondIds(atomId);
          for (int i = 0; i < groupIds.size(); ++i) {
             molecule.bond(groupIds[i]).decrementInactive();
+            assert(molecule.bond(groupIds[i]).checkInactive());
          }
       }
       #endif
@@ -89,6 +95,7 @@ namespace McMd
          const Species::AtomAngleIdArray groupIds = species.atomAngleIds(atomId);
          for (int i = 0; i < groupIds.size(); ++i) {
             molecule.angle(groupIds[i]).decrementInactive();
+            assert(molecule.angle(groupIds[i]).checkInactive());
          }
       }
       #endif
@@ -97,6 +104,7 @@ namespace McMd
          const Species::AtomDihedralIdArray groupIds = species.atomDihedralIds(atomId);
          for (int i = 0; i < groupIds.size(); ++i) {
             molecule.dihedral(groupIds[i]).decrementInactive();
+            assert(molecule.dihedral(groupIds[i]).checkInactive());
          }
       }
       #endif

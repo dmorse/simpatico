@@ -88,11 +88,18 @@ namespace McMd
       /**
       * Is this group active?
       *
-      * Atoms and the groups containing them can be de-activated and
-      * re-activated by some Monte Carlo moves, such as configuration 
-      * bias moves that remove and regrow parts of a molecule.
+      * A group is active iff all associated atoms are active. Atoms
+      * can be temporarily de-activated during some Monte Carlo moves
+      * that remove and regrow parts of a molecule. 
       */
       bool isActive() const;
+
+      /**
+      * Check consistency of number of inactive atoms.
+      *
+      * Returns true if consistent, or throws Exception.
+      */
+      bool checkInactive() const;
 
       //@}
 
@@ -193,7 +200,23 @@ namespace McMd
    inline bool Group<NAtom>::isActive() const
    {  return (nInActive_ == 0); }
 
-   // Counting inactive atoms
+   /*
+   * Check consistency of nInActive counter.
+   */
+   template <int NAtom>
+   bool Group<NAtom>::checkInactive() const
+   {
+      int counter = 0;
+      for (int i=0; i < NAtom;  ++i) {
+         if (atom(i).isActive()) ++counter;
+      }
+      if (counter != nInActive_) {
+         UTIL_THROW("Inconsistent number of inactive atoms");
+      }
+      return true;
+   }
+
+   // Private functions that modify nInActive_
 
    /*
    * Activate the group (set nInActive_ = 0)   
