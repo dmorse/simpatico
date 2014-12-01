@@ -5,7 +5,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "DeActivator.h"
+#include "Activate.h"
 #include <mcMd/species/Species.h>     
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/chemistry/Molecule.h>
@@ -25,13 +25,19 @@ namespace McMd
    using namespace Util;
 
    /*
-   * De-activate an atom and all associated groups.
+   * De-activate an atom and update associated groups.
    */
-   void DeActivator::deActivate(Atom& atom)
+   void Activate::deactivate(Atom& atom)
    {
-      assert(atom.isActive());
+      // Precondition: Atom must be active
+      if (!atom.isActive()) {
+         UTIL_THROW("Atom is not active");
+      }
+
+      // De-activate atom
       atom.setIsActive(false);
 
+      // Update associated groups
       Molecule& molecule = atom.molecule();
       const Species& species = molecule.species();
       const int atomId = int( &atom - &molecule.atom(0) );
@@ -66,21 +72,24 @@ namespace McMd
    }
 
    /*
-   * Re-activate a temporarily de-activated atom and associated groups.
-   *
-   * Note: Each group is re-activated only if All atoms in the group are now active.
+   * Re-activate a temporarily de-activated atom and update associated groups.
    */
-   void DeActivator::reActivate(Atom& atom)
+   void Activate::reactivate(Atom& atom)
    {
-      assert(!atom.isActive());
+      // Precondition: Atom must be inactive
+      if (atom.isActive()) {
+         UTIL_THROW("Atom already active");
+      }
+
+      // Re-activate atom
       atom.setIsActive(true);
 
+      // Update associated groups
       Molecule& molecule = atom.molecule();
       const Species& species = molecule.species();
       const int atomId = int( &atom - &molecule.atom(0) );
       assert(atomId >= 0);
       assert(atomId < molecule.nAtom());
-
       #ifdef INTER_BOND
       if (species.nBond()) {
          const Species::AtomBondIdArray groupIds = species.atomBondIds(atomId);
@@ -114,7 +123,7 @@ namespace McMd
    /*
    * Activate all atoms and groups in this molecule.
    */
-   void DeActivator::activate(Molecule& molecule)
+   void Activate::activate(Molecule& molecule)
    {
       int i;
       for (i = 0; i < molecule.nAtom(); ++i) {

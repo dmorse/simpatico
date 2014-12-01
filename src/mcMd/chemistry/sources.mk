@@ -5,7 +5,7 @@ mcMd_chemistry_= \
     mcMd/chemistry/Mask.cpp \
     mcMd/chemistry/MaskPolicy.cpp \
     mcMd/chemistry/Molecule.cpp \
-    mcMd/chemistry/DeActivator.cpp \
+    mcMd/chemistry/Activate.cpp \
     mcMd/chemistry/getAtomGroups.cpp 
 
 mcMd_chemistry_SRCS=\

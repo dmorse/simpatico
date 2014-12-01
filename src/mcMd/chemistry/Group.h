@@ -114,7 +114,7 @@ namespace McMd
       /// Number of inactive atoms in group.
       int nInActive_;
 
-      // Private member functions, called by DeActivator
+      // Private member functions, accessible by class Activate
 
       /**
       * Activate this group (set number of inactive atoms to zero).
@@ -133,7 +133,7 @@ namespace McMd
 
    // friends:
 
-      friend class DeActivator;
+      friend class Activate;
 
    };
 
@@ -206,9 +206,10 @@ namespace McMd
    template <int NAtom>
    bool Group<NAtom>::checkInactive() const
    {
+      assert(atoms_[i]);  
       int counter = 0;
       for (int i=0; i < NAtom;  ++i) {
-         if (atom(i).isActive()) ++counter;
+         if (atoms_[i]->isActive()) ++counter;
       }
       if (counter != nInActive_) {
          UTIL_THROW("Inconsistent number of inactive atoms");

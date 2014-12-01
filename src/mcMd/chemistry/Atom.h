@@ -256,7 +256,7 @@ namespace McMd
 
    // friends:
 
-      friend class DeActivator;
+      friend class Activate;
 
    }; 
 
