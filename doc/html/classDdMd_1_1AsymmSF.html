@@ -74,11 +74,11 @@
 <div class="textblock"><p><a class="el" href="classDdMd_1_1AsymmSF.html" title="AsymmSF evaluates structure factors in Fourier space.">AsymmSF</a> evaluates structure factors in Fourier space. </p>
 <p>A structure factor for a wavevector k and mode m defined as an expectation value </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ S_{m}(k) = < \rho(k) \rho(-k) / V > \]" src="form_96.png"/>
+<img class="formulaDsp" alt="\[ S_{m}(k) = < \rho(k) \rho(-k) / V > \]" src="form_103.png"/>
 </p>
-<p> where, V is system volume, and <img class="formulaInl" alt="$\rho(k)$" src="form_97.png"/> is a Fourier component </p>
+<p> where, V is system volume, and <img class="formulaInl" alt="$\rho(k)$" src="form_104.png"/> is a Fourier component </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]" src="form_98.png"/>
+<img class="formulaDsp" alt="\[ \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]" src="form_105.png"/>
 </p>
 <p> in which the sum is taken over all particles, $a$ is the atom type of particle $i$, and $v(m, a)$ is a coefficient for atom type $a$ for mode $m$. The matrix $v(m, a)$ of mode coefficients is input by the user.</p>
 <p>This class can evaluate one or modes for multiple wavevectors. The input format thus requires the user to specify one or more mode vectors, and one or more wavevectors. Each wavevector is specified as an IntVector containing the integer Miller indices of a reciprocal lattice vector. These are the coeficients in an expansion of a reciprocal lattice wavevector as a sum of recprocal lattice basis vectors for the periodic unit cell.</p>
@@ -197,7 +197,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00031">31</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00028">28</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
 
 </div>
 </div>
@@ -217,7 +217,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00036">36</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00033">33</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
 
 </div>
 </div>
@@ -250,9 +250,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classDdMd_1_1AsymmSFGrid.html#ad70d781c1c12fc9bc79e2766a3d37c5c">DdMd::AsymmSFGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00040">40</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00037">37</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
 
-<p>References <a class="el" href="DMatrix_8h_source.html#l00166">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="AsymmSF_8h_source.html#l00140">fourierModes_</a>, <a class="el" href="AsymmSF_8h_source.html#l00199">isInitialized_</a>, <a class="el" href="AsymmSF_8h_source.html#l00179">maximumQ_</a>, <a class="el" href="AsymmSF_8h_source.html#l00169">maximumValue_</a>, <a class="el" href="AsymmSF_8h_source.html#l00174">maximumWaveIntVector_</a>, <a class="el" href="AsymmSF_8h_source.html#l00164">modes_</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01158">DdMd::Simulation::nAtomType()</a>, <a class="el" href="AsymmSF_8h_source.html#l00191">nAtomType_</a>, <a class="el" href="AsymmSF_8h_source.html#l00185">nMode_</a>, <a class="el" href="AsymmSF_8h_source.html#l00182">nWave_</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00045">DdMd::Analyzer::readInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00112">DdMd::Analyzer::readOutputFileName()</a>, <a class="el" href="AsymmSF_8h_source.html#l00085">Samples</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, <a class="el" href="AsymmSF_8h_source.html#l00133">structureFactors_</a>, <a class="el" href="AsymmSF_8h_source.html#l00147">totalFourierModes_</a>, <a class="el" href="AsymmSF_8h_source.html#l00152">waveIntVectors_</a>, and <a class="el" href="AsymmSF_8h_source.html#l00157">waveVectors_</a>.</p>
+<p>References <a class="el" href="DMatrix_8h_source.html#l00166">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="AsymmSF_8h_source.html#l00140">fourierModes_</a>, <a class="el" href="AsymmSF_8h_source.html#l00199">isInitialized_</a>, <a class="el" href="AsymmSF_8h_source.html#l00179">maximumQ_</a>, <a class="el" href="AsymmSF_8h_source.html#l00169">maximumValue_</a>, <a class="el" href="AsymmSF_8h_source.html#l00174">maximumWaveIntVector_</a>, <a class="el" href="AsymmSF_8h_source.html#l00164">modes_</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01163">DdMd::Simulation::nAtomType()</a>, <a class="el" href="AsymmSF_8h_source.html#l00191">nAtomType_</a>, <a class="el" href="AsymmSF_8h_source.html#l00185">nMode_</a>, <a class="el" href="AsymmSF_8h_source.html#l00182">nWave_</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00042">DdMd::Analyzer::readInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00109">DdMd::Analyzer::readOutputFileName()</a>, <a class="el" href="AsymmSF_8h_source.html#l00085">Samples</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, <a class="el" href="AsymmSF_8h_source.html#l00133">structureFactors_</a>, <a class="el" href="AsymmSF_8h_source.html#l00147">totalFourierModes_</a>, <a class="el" href="AsymmSF_8h_source.html#l00152">waveIntVectors_</a>, and <a class="el" href="AsymmSF_8h_source.html#l00157">waveVectors_</a>.</p>
 
 </div>
 </div>
@@ -274,7 +274,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#a4d3188e3d11e6a679f464018785d98a7">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00080">80</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00077">77</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
 
 <p>References <a class="el" href="AsymmSF_8h_source.html#l00199">isInitialized_</a>, <a class="el" href="AsymmSF_8h_source.html#l00185">nMode_</a>, <a class="el" href="AsymmSF_8h_source.html#l00188">nSample_</a>, <a class="el" href="AsymmSF_8h_source.html#l00182">nWave_</a>, <a class="el" href="AsymmSF_8h_source.html#l00133">structureFactors_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -306,9 +306,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="classDdMd_1_1Analyzer.html#af41861e5d91cf1c702a6c69c7843ad8b">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00100">100</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00097">97</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01028">DdMd::Simulation::atomStorage()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00435">DdMd::AtomStorage::begin()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01022">DdMd::Simulation::boundary()</a>, <a class="el" href="Domain_8h_source.html#l00256">DdMd::Domain::communicator()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01025">DdMd::Simulation::domain()</a>, <a class="el" href="Vector_8h_source.html#l00618">Util::Vector::dot()</a>, <a class="el" href="AsymmSF_8h_source.html#l00140">fourierModes_</a>, <a class="el" href="Constants_8h_source.html#l00040">Util::Constants::Im</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00237">DdMd::Analyzer::isAtInterval()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00191">makeWaveVectors()</a>, <a class="el" href="AsymmSF_8h_source.html#l00179">maximumQ_</a>, <a class="el" href="AsymmSF_8h_source.html#l00169">maximumValue_</a>, <a class="el" href="AsymmSF_8h_source.html#l00174">maximumWaveIntVector_</a>, <a class="el" href="AsymmSF_8h_source.html#l00164">modes_</a>, <a class="el" href="AsymmSF_8h_source.html#l00185">nMode_</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="AsymmSF_8h_source.html#l00188">nSample_</a>, <a class="el" href="AsymmSF_8h_source.html#l00182">nWave_</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, <a class="el" href="AsymmSF_8h_source.html#l00133">structureFactors_</a>, <a class="el" href="AsymmSF_8h_source.html#l00147">totalFourierModes_</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00409">Util::OrthorhombicBoundary::volume()</a>, <a class="el" href="AsymmSF_8h_source.html#l00152">waveIntVectors_</a>, and <a class="el" href="AsymmSF_8h_source.html#l00157">waveVectors_</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01033">DdMd::Simulation::atomStorage()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">DdMd::AtomStorage::begin()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01027">DdMd::Simulation::boundary()</a>, <a class="el" href="Domain_8h_source.html#l00256">DdMd::Domain::communicator()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01030">DdMd::Simulation::domain()</a>, <a class="el" href="Vector_8h_source.html#l00618">Util::Vector::dot()</a>, <a class="el" href="AsymmSF_8h_source.html#l00140">fourierModes_</a>, <a class="el" href="Constants_8h_source.html#l00040">Util::Constants::Im</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00237">DdMd::Analyzer::isAtInterval()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00188">makeWaveVectors()</a>, <a class="el" href="AsymmSF_8h_source.html#l00179">maximumQ_</a>, <a class="el" href="AsymmSF_8h_source.html#l00169">maximumValue_</a>, <a class="el" href="AsymmSF_8h_source.html#l00174">maximumWaveIntVector_</a>, <a class="el" href="AsymmSF_8h_source.html#l00164">modes_</a>, <a class="el" href="AsymmSF_8h_source.html#l00185">nMode_</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="AsymmSF_8h_source.html#l00188">nSample_</a>, <a class="el" href="AsymmSF_8h_source.html#l00182">nWave_</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, <a class="el" href="AsymmSF_8h_source.html#l00133">structureFactors_</a>, <a class="el" href="AsymmSF_8h_source.html#l00147">totalFourierModes_</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00410">Util::OrthorhombicBoundary::volume()</a>, <a class="el" href="AsymmSF_8h_source.html#l00152">waveIntVectors_</a>, and <a class="el" href="AsymmSF_8h_source.html#l00157">waveVectors_</a>.</p>
 
 </div>
 </div>
@@ -332,9 +332,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classDdMd_1_1AsymmSFGrid.html#a34cf1a42c6460d595b3bedfb921947d5">DdMd::AsymmSFGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00211">211</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00208">208</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01129">DdMd::Simulation::fileMaster()</a>, <a class="el" href="AsymmSF_8h_source.html#l00179">maximumQ_</a>, <a class="el" href="AsymmSF_8h_source.html#l00169">maximumValue_</a>, <a class="el" href="AsymmSF_8h_source.html#l00174">maximumWaveIntVector_</a>, <a class="el" href="AsymmSF_8h_source.html#l00185">nMode_</a>, <a class="el" href="AsymmSF_8h_source.html#l00188">nSample_</a>, <a class="el" href="AsymmSF_8h_source.html#l00182">nWave_</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="AsymmSF_8h_source.html#l00126">outputFile_</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, <a class="el" href="AsymmSF_8h_source.html#l00133">structureFactors_</a>, <a class="el" href="AsymmSF_8h_source.html#l00152">waveIntVectors_</a>, <a class="el" href="AsymmSF_8h_source.html#l00157">waveVectors_</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00122">Util::ParamComposite::writeParam()</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01134">DdMd::Simulation::fileMaster()</a>, <a class="el" href="AsymmSF_8h_source.html#l00179">maximumQ_</a>, <a class="el" href="AsymmSF_8h_source.html#l00169">maximumValue_</a>, <a class="el" href="AsymmSF_8h_source.html#l00174">maximumWaveIntVector_</a>, <a class="el" href="AsymmSF_8h_source.html#l00185">nMode_</a>, <a class="el" href="AsymmSF_8h_source.html#l00188">nSample_</a>, <a class="el" href="AsymmSF_8h_source.html#l00182">nWave_</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="AsymmSF_8h_source.html#l00126">outputFile_</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, <a class="el" href="AsymmSF_8h_source.html#l00133">structureFactors_</a>, <a class="el" href="AsymmSF_8h_source.html#l00152">waveIntVectors_</a>, <a class="el" href="AsymmSF_8h_source.html#l00157">waveVectors_</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00119">Util::ParamComposite::writeParam()</a>.</p>
 
 </div>
 </div>
@@ -355,11 +355,11 @@ Protected Attributes</h2></td></tr>
 <p>Update wavevectors. </p>
 <p>Calculate floating point wavevectors. </p>
 
-<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00191">191</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AsymmSF_8cpp_source.html#l00188">188</a> of file <a class="el" href="AsymmSF_8cpp_source.html">AsymmSF.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01022">DdMd::Simulation::boundary()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="AsymmSF_8h_source.html#l00182">nWave_</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00421">Util::OrthorhombicBoundary::reciprocalBasisVector()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, <a class="el" href="AsymmSF_8h_source.html#l00152">waveIntVectors_</a>, <a class="el" href="AsymmSF_8h_source.html#l00157">waveVectors_</a>, and <a class="el" href="Vector_8h_source.html#l00363">Util::Vector::Zero</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01027">DdMd::Simulation::boundary()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="AsymmSF_8h_source.html#l00182">nWave_</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00422">Util::OrthorhombicBoundary::reciprocalBasisVector()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, <a class="el" href="AsymmSF_8h_source.html#l00152">waveIntVectors_</a>, <a class="el" href="AsymmSF_8h_source.html#l00157">waveVectors_</a>, and <a class="el" href="Vector_8h_source.html#l00363">Util::Vector::Zero</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -379,7 +379,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00085">85</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>.</p>
 
 </div>
 </div>
@@ -398,7 +398,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00126">126</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00242">DdMd::AsymmSFGrid::output()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00211">output()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00239">DdMd::AsymmSFGrid::output()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00208">output()</a>.</p>
 
 </div>
 </div>
@@ -418,7 +418,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00133">133</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00080">clear()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00242">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00211">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00077">clear()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00239">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00208">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -438,7 +438,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00140">140</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -458,7 +458,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00147">147</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -477,7 +477,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00152">152</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00191">makeWaveVectors()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00242">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00211">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00188">makeWaveVectors()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00239">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00208">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -496,7 +496,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00157">157</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00191">makeWaveVectors()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00242">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00211">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00188">makeWaveVectors()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00239">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00208">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -516,7 +516,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00164">164</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -535,7 +535,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00169">169</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00242">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00211">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00239">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00208">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -554,7 +554,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00174">174</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00242">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00211">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00239">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00208">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -573,7 +573,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00179">179</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00242">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00211">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00239">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00208">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -592,7 +592,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00182">182</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00080">clear()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00191">makeWaveVectors()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00211">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00077">clear()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00188">makeWaveVectors()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00208">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -611,7 +611,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00185">185</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00080">clear()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00242">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00211">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00077">clear()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00239">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00208">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -630,7 +630,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00188">188</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00080">clear()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00242">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00211">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00100">sample()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00077">clear()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00239">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00208">output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00097">sample()</a>.</p>
 
 </div>
 </div>
@@ -649,7 +649,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00191">191</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>.</p>
 
 </div>
 </div>
@@ -668,7 +668,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AsymmSF_8h_source.html#l00199">199</a> of file <a class="el" href="AsymmSF_8h_source.html">AsymmSF.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00080">clear()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00035">DdMd::AsymmSFGrid::readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00040">readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="AsymmSF_8cpp_source.html#l00077">clear()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00032">DdMd::AsymmSFGrid::readParameters()</a>, and <a class="el" href="AsymmSF_8cpp_source.html#l00037">readParameters()</a>.</p>
 
 </div>
 </div>
@@ -682,7 +682,7 @@ Protected Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:18 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:03 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

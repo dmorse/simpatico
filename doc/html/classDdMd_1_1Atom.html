@@ -81,10 +81,11 @@
 <li>a <a class="el" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a parent Atom are &quot;masked&quot;.">Mask</a> (list of other atoms with masked pair interactions)</li>
 <li>a communication <a class="el" href="classDdMd_1_1Plan.html" title="Communication plan.">Plan</a></li>
 </ul>
-<p>An <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> may only be constructed as an element of an <a class="el" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>. The <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> constructor is private, but is accessible by the <a class="el" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a> class via a friend declaration.</p>
-<p>The interface of the <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> class provides access to each <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> data field through an accessor function, as if all were true C++ class member. In fact, some of the above are "pseudo-members" that are stored in separate arrays. All arrays that store atom data are private members of the associated <a class="el" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>, all of which use the same indexing scheme to identify atoms. Each actual <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> object has a pointer to its parent <a class="el" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a> and its array index in private members. The public accessor method for each psuedo-member simply retrieves the rquired array element for this atom. In the current implementation the position, force, atom type id, and isGhost flag are stored in true member variables of an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> object, while the velocity, mask, plan, and id (the global atom index) are all psuedo-members stored in separate arrays. See documentation of the private member localId_ and other comments in the Atom.h file for further implementation details. </p>
+<p>An <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> may only be constructed as an element of an <a class="el" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>. The <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> constructor is private, to prevent instantiation of an indivual <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>, but is accessible by the <a class="el" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a> class via a a friend declaration.</p>
+<p>The interface of the <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> class provides access to each <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> data field through an accessor function, as if all were true C++ class data members. In fact, some of the above are "pseudo-members" that are stored in separate arrays. All arrays that store atom data are private members of the associated <a class="el" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>, all of which use the same indexing scheme to identify atoms. Each <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> object has a pointer to its parent <a class="el" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a> and its array index, in private members. The public accessor method for each pseudo-member simply retrieves the required array element for this atom.</p>
+<p>In the current implementation, the position, force, atom type id, and isGhost flag are stored in true member variables of an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> object, while the velocity, mask, plan, id (the global atom index), and <a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a> (if any) are all pseudo-members stored in separate arrays. See documentation of the private member localId_ and other comments in the Atom.h file for further implementation details. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00062">62</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00064">64</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">Atom.h</a>&gt;</code></p>
 
@@ -114,7 +115,11 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a parent Atom are &quot;masked&quot;.">Mask</a> by reference.  <a href="#a8a468104f3541cdf012977f3de4f0e98"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Plan.html">Plan</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#a66d188c40ec33739a45b3a0d23e771d2">plan</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get communication plan by reference.  <a href="#a66d188c40ec33739a45b3a0d23e771d2"></a><br/></td></tr>
-<tr><td colspan="2"><div class="groupHeader">Accessors (return values and const references).</div></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structDdMd_1_1AtomContext.html">AtomContext</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#a8e11b74cd3820a36bfa0f979610cc3af">context</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a> struct by non-const reference.  <a href="#a8e11b74cd3820a36bfa0f979610cc3af"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#a5c6ff11a521d5ac39fbea8b05d8dfdbe">groups</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get groups bit field by non-const reference.  <a href="#a5c6ff11a521d5ac39fbea8b05d8dfdbe"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Accessors (return by value or const references).</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8">id</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get unique global index for this atom.  <a href="#aca106da4ff4a2a5428f013272060eaf8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#a6cadb772421f5337885fcf2de3c8fc3c">typeId</a> () const </td></tr>
@@ -130,7 +135,11 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classDdMd_1_1Mask.html">Mask</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#a70028ccac83394b0b8bf5da5eaf91e95">mask</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a parent Atom are &quot;masked&quot;.">Mask</a> by const reference.  <a href="#a70028ccac83394b0b8bf5da5eaf91e95"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classDdMd_1_1Plan.html">Plan</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#a6d9d6e1c4763b87a9da79794841f1bbc">plan</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get communication plan (const reference).  <a href="#a6d9d6e1c4763b87a9da79794841f1bbc"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get communication plan by const reference.  <a href="#a6d9d6e1c4763b87a9da79794841f1bbc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structDdMd_1_1AtomContext.html">AtomContext</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#a260ad4637633b2f2e1890116896634b2">context</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a> struct by const reference.  <a href="#a260ad4637633b2f2e1890116896634b2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#a344db59424515819628451e56a7249d0">groups</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get bit field of groups to which this atom belongs.  <a href="#a344db59424515819628451e56a7249d0"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Pack and Unpack Methods (Interprocessor Communication)</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#a55b11608e596e3c5686e0092259cbaff">packAtom</a> (<a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> into a send buffer, for exchange of ownership.  <a href="#a55b11608e596e3c5686e0092259cbaff"></a><br/></td></tr>
@@ -150,8 +159,12 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack updated position of ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> from recv buffer.  <a href="#a295174b945b9b6753f6938a356abde3e"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#abbd4ecfc190d1ecf7b2d11d0855888d8">setHasAtomContext</a> (bool <a class="el" href="classDdMd_1_1Atom.html#a03a860e705e9140fd6efce99ef085d22">hasAtomContext</a>)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable (true) or disable (false) use of <a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a> data.  <a href="#abbd4ecfc190d1ecf7b2d11d0855888d8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#a03a860e705e9140fd6efce99ef085d22">hasAtomContext</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is <a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a> data enabled?  <a href="#a03a860e705e9140fd6efce99ef085d22"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#abafbc5ab8d426f0003e015e0a48692c2">packedAtomSize</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return size of an atom packed into buffer for exchange, in bytes.  <a href="#abafbc5ab8d426f0003e015e0a48692c2"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return max size of an atom packed for exchange, in bytes.  <a href="#abafbc5ab8d426f0003e015e0a48692c2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Atom.html#af779cc1269d2d2e48c14c40e90afbb5f">packedGhostSize</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return size of ghost atom packed for communication, in bytes.  <a href="#af779cc1269d2d2e48c14c40e90afbb5f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="friends"></a>
@@ -160,6 +173,57 @@ Friends</h2></td></tr>
 class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="abbd4ecfc190d1ecf7b2d11d0855888d8"></a><!-- doxytag: member="DdMd::Atom::setHasAtomContext" ref="abbd4ecfc190d1ecf7b2d11d0855888d8" args="(bool hasAtomContext)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classDdMd_1_1Atom.html#abbd4ecfc190d1ecf7b2d11d0855888d8">DdMd::Atom::setHasAtomContext</a> </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>hasAtomContext</em></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Enable (true) or disable (false) use of <a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a> data. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hasAtomContext</td><td>new value for hasAtomContext static bool flag. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00028">28</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00634">DdMd::Simulation::loadParameters()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00438">DdMd::Simulation::readParameters()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a03a860e705e9140fd6efce99ef085d22"></a><!-- doxytag: member="DdMd::Atom::hasAtomContext" ref="a03a860e705e9140fd6efce99ef085d22" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classDdMd_1_1Atom.html#a03a860e705e9140fd6efce99ef085d22">DdMd::Atom::hasAtomContext</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline, static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Is <a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a> data enabled? </p>
+
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00575">575</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+
+<p>Referenced by <a class="el" href="AtomArray_8cpp_source.html#l00056">DdMd::AtomArray::allocate()</a>, <a class="el" href="ddMd_2configIos_2ConfigIoFactory_8cpp_source.html#l00031">DdMd::ConfigIoFactory::factory()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00084">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00089">DdMd::DdMdConfigIo::readConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00090">DdMd::DdMdOrderedConfigIo::readConfig()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">DdMd::DdMdConfigIo::writeConfig()</a>, and <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="abafbc5ab8d426f0003e015e0a48692c2"></a><!-- doxytag: member="DdMd::Atom::packedAtomSize" ref="abafbc5ab8d426f0003e015e0a48692c2" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -174,9 +238,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 </div>
 <div class="memdoc">
 
-<p>Return size of an atom packed into buffer for exchange, in bytes. </p>
+<p>Return max size of an atom packed for exchange, in bytes. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00128">128</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00146">146</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
 </div>
 </div>
@@ -196,7 +260,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Return size of ghost atom packed for communication, in bytes. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00175">175</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00193">193</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
 </div>
 </div>
@@ -217,9 +281,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Assignment. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00040">40</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00048">48</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00475">id()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00389">isGhost()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00284">McMd::Atom::mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00451">mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00463">plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00439">velocity()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00272">McMd::Atom::velocity()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00541">context()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00563">groups()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00529">id()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00443">isGhost()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00505">mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00517">plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00535">setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00423">setIsGhost()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00493">velocity()</a>.</p>
 
 </div>
 </div>
@@ -239,11 +303,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Reset integer members to initial null values. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00059">59</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00068">68</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Mask_8cpp_source.html#l00033">McMd::Mask::clear()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00284">McMd::Atom::mask()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00031">DdMd::Mask::clear()</a>, <a class="el" href="AtomContext_8h_source.html#l00070">DdMd::AtomContext::clear()</a>, <a class="el" href="Plan_8h_source.html#l00104">DdMd::Plan::clearFlags()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00541">context()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00563">groups()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00505">mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00517">plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00535">setId()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00423">setIsGhost()</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00190">DdMd::AtomStorage::newAtomPtr()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00195">DdMd::AtomDistributor::newAtomPtr()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00281">DdMd::AtomStorage::newGhostPtr()</a>, and <a class="el" href="GroupStorage_8tpp_source.html#l00640">DdMd::GroupStorage&lt; N &gt;::pack()</a>.</p>
+<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00192">DdMd::AtomDistributor::newAtomPtr()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00187">DdMd::AtomStorage::newAtomPtr()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00278">DdMd::AtomStorage::newGhostPtr()</a>, and <a class="el" href="GroupStorage_8tpp_source.html#l00640">DdMd::GroupStorage&lt; N &gt;::pack()</a>.</p>
 
 </div>
 </div>
@@ -271,9 +335,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00481">481</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00535">535</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00232">DdMd::AtomStorage::addAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00323">DdMd::AtomStorage::addGhost()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00087">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00109">DdMd::LammpsConfigIo::readConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00104">DdMd::DdMdConfigIo::readConfig()</a>, and <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00105">DdMd::DdMdOrderedConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00229">DdMd::AtomStorage::addAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00320">DdMd::AtomStorage::addGhost()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00068">clear()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00084">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00048">operator=()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00089">DdMd::DdMdConfigIo::readConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00106">DdMd::LammpsConfigIo::readConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00090">DdMd::DdMdOrderedConfigIo::readConfig()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00111">unpackAtom()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00176">unpackGhost()</a>.</p>
 
 </div>
 </div>
@@ -300,9 +364,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00363">363</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00417">417</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="SerializeConfigIo_8cpp_source.html#l00087">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00109">DdMd::LammpsConfigIo::readConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00104">DdMd::DdMdConfigIo::readConfig()</a>, and <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00105">DdMd::DdMdOrderedConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="SerializeConfigIo_8cpp_source.html#l00084">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00089">DdMd::DdMdConfigIo::readConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00106">DdMd::LammpsConfigIo::readConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00090">DdMd::DdMdOrderedConfigIo::readConfig()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00111">unpackAtom()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00176">unpackGhost()</a>.</p>
 
 </div>
 </div>
@@ -329,9 +393,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00369">369</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00423">423</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00211">DdMd::AtomStorage::addNewAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00300">DdMd::AtomStorage::addNewGhost()</a>, and <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00281">DdMd::AtomStorage::newGhostPtr()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00208">DdMd::AtomStorage::addNewAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00297">DdMd::AtomStorage::addNewGhost()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00068">clear()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00278">DdMd::AtomStorage::newGhostPtr()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00048">operator=()</a>.</p>
 
 </div>
 </div>
@@ -351,9 +415,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Get position Vector by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00398">398</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">452</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00265">DdMd::AtomDistributor::addAtom()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00060">DdMd::AtomMap::addLocal()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00367">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00358">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00401">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00331">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00315">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00342">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00471">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00960">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l01035">DdMd::PairPotentialImpl&lt; Interaction &gt;::computePairEnergies()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00416">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00409">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00465">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00893">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00087">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00501">DdMd::GroupStorage&lt; N &gt;::markSpanningGroups()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00401">DdMd::CellList::placeAtom()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00109">DdMd::LammpsConfigIo::readConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00104">DdMd::DdMdConfigIo::readConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00105">DdMd::DdMdOrderedConfigIo::readConfig()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00460">DdMd::AtomDistributor::receive()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00222">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00821">DdMd::Exchanger::update()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00339">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00273">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00300">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>.</p>
+<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00262">DdMd::AtomDistributor::addAtom()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00057">DdMd::AtomMap::addLocal()</a>, <a class="el" href="BondTensorAutoCorr_8cpp_source.html#l00036">DdMd::BondTensorAutoCorr::computeData()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00367">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00358">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00401">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00331">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00315">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00342">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00471">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00960">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l01035">DdMd::PairPotentialImpl&lt; Interaction &gt;::computePairEnergies()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00416">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00409">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00465">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00893">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00084">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00501">DdMd::GroupStorage&lt; N &gt;::markSpanningGroups()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00085">packAtom()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00163">packGhost()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00205">packUpdate()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00401">DdMd::CellList::placeAtom()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00089">DdMd::DdMdConfigIo::readConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00106">DdMd::LammpsConfigIo::readConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00090">DdMd::DdMdOrderedConfigIo::readConfig()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00457">DdMd::AtomDistributor::receive()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00111">unpackAtom()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00176">unpackGhost()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00214">unpackUpdate()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00818">DdMd::Exchanger::update()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00336">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00048">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>.</p>
 
 </div>
 </div>
@@ -373,9 +437,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Get velocity Vector by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00439">439</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00493">493</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="SerializeConfigIo_8cpp_source.html#l00087">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00040">operator=()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00104">DdMd::DdMdConfigIo::readConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00105">DdMd::DdMdOrderedConfigIo::readConfig()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00222">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00273">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00300">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>.</p>
+<p>Referenced by <a class="el" href="SerializeConfigIo_8cpp_source.html#l00084">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00048">operator=()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00085">packAtom()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00089">DdMd::DdMdConfigIo::readConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00090">DdMd::DdMdOrderedConfigIo::readConfig()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00111">unpackAtom()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">DdMd::DdMdConfigIo::writeConfig()</a>, and <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>.</p>
 
 </div>
 </div>
@@ -395,9 +459,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Get force Vector by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00410">410</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00464">464</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00331">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00315">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00342">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00471">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00960">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l00899">DdMd::Exchanger::reverseUpdate()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00331">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00315">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00342">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00471">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00960">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00223">packForce()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00896">DdMd::Exchanger::reverseUpdate()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00232">unpackForce()</a>.</p>
 
 </div>
 </div>
@@ -417,9 +481,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Get the associated <a class="el" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a parent Atom are &quot;masked&quot;.">Mask</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00451">451</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00505">505</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00040">operator=()</a>, and <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00202">DdMd::ConfigIo::setAtomMasks()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00068">clear()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00048">operator=()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00085">packAtom()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00199">DdMd::ConfigIo::setAtomMasks()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00111">unpackAtom()</a>.</p>
 
 </div>
 </div>
@@ -439,9 +503,59 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Get communication plan by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00463">463</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00517">517</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="GroupStorage_8tpp_source.html#l00732">DdMd::GroupStorage&lt; N &gt;::markGhosts()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00501">DdMd::GroupStorage&lt; N &gt;::markSpanningGroups()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00040">operator=()</a>, and <a class="el" href="GroupStorage_8tpp_source.html#l00640">DdMd::GroupStorage&lt; N &gt;::pack()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00068">clear()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00732">DdMd::GroupStorage&lt; N &gt;::markGhosts()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00501">DdMd::GroupStorage&lt; N &gt;::markSpanningGroups()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00048">operator=()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00640">DdMd::GroupStorage&lt; N &gt;::pack()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00085">packAtom()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00163">packGhost()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00111">unpackAtom()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00176">unpackGhost()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8e11b74cd3820a36bfa0f979610cc3af"></a><!-- doxytag: member="DdMd::Atom::context" ref="a8e11b74cd3820a36bfa0f979610cc3af" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structDdMd_1_1AtomContext.html">AtomContext</a> &amp; <a class="el" href="classDdMd_1_1Atom.html#a8e11b74cd3820a36bfa0f979610cc3af">DdMd::Atom::context</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the <a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a> struct by non-const reference. </p>
+<p>Throws and Exception if atom context data is disabled.</p>
+<p>A <a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">DdMd::AtomContext</a> struct contains public members speciesId, moleculeId and atomId that identify the species of molecule to which this atom belongs, the index of the molecule within it species, and the index of the atom with the molecule. </p>
+
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00541">541</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+
+<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+
+<p>Referenced by <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00068">clear()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00084">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00048">operator=()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00085">packAtom()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00089">DdMd::DdMdConfigIo::readConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00090">DdMd::DdMdOrderedConfigIo::readConfig()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00111">unpackAtom()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">DdMd::DdMdConfigIo::writeConfig()</a>, and <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5c6ff11a521d5ac39fbea8b05d8dfdbe"></a><!-- doxytag: member="DdMd::Atom::groups" ref="a5c6ff11a521d5ac39fbea8b05d8dfdbe" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int &amp; <a class="el" href="classDdMd_1_1Atom.html#a5c6ff11a521d5ac39fbea8b05d8dfdbe">DdMd::Atom::groups</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get groups bit field by non-const reference. </p>
+<p>The unsigned int groups is used as a bit field in which bit number i (with i=0 the least signficant bit), is set true/1 if this atom belongs to group i, and is false/0 if this atom of not belong to group i. By default, all bits are clear.</p>
+<p>Individual bits may be set, unset and queried using an instance of class <a class="el" href="classUtil_1_1Bit.html" title="Represents a specific bit location within an unsigned int.">Util::Bit</a>. </p>
+
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00563">563</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+
+<p>Referenced by <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00068">clear()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00084">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00048">operator=()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00085">packAtom()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00111">unpackAtom()</a>, <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00064">DdMd::DdMdGroupTrajectoryWriter::writeHeader()</a>.</p>
 
 </div>
 </div>
@@ -461,9 +575,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Get unique global index for this atom. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00475">475</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00529">529</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AtomMap_8cpp_source.html#l00123">DdMd::AtomMap::addGhost()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00060">DdMd::AtomMap::addLocal()</a>, <a class="el" href="AtomMap_8h_source.html#l00279">DdMd::AtomMap::findGroupGhostAtoms()</a>, <a class="el" href="AtomMap_8h_source.html#l00257">DdMd::AtomMap::findGroupLocalAtoms()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00218">DdMd::AtomMap::isValid()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00040">operator=()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00142">DdMd::AtomMap::removeGhost()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00086">DdMd::AtomMap::removeLocal()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00222">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00339">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00273">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00300">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>.</p>
+<p>Referenced by <a class="el" href="AtomMap_8cpp_source.html#l00120">DdMd::AtomMap::addGhost()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00057">DdMd::AtomMap::addLocal()</a>, <a class="el" href="AtomMap_8h_source.html#l00279">DdMd::AtomMap::findGroupGhostAtoms()</a>, <a class="el" href="AtomMap_8h_source.html#l00257">DdMd::AtomMap::findGroupLocalAtoms()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00215">DdMd::AtomMap::isValid()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00048">operator=()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00085">packAtom()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00163">packGhost()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00139">DdMd::AtomMap::removeGhost()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00083">DdMd::AtomMap::removeLocal()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00336">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00048">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>.</p>
 
 </div>
 </div>
@@ -483,9 +597,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Get atom type index. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00383">383</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00437">437</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00960">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l01035">DdMd::PairPotentialImpl&lt; Interaction &gt;::computePairEnergies()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00893">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00222">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00339">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00273">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00300">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00960">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l01035">DdMd::PairPotentialImpl&lt; Interaction &gt;::computePairEnergies()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00893">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00085">packAtom()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00163">packGhost()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00336">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, and <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>.</p>
 
 </div>
 </div>
@@ -505,9 +619,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Is this atom a ghost? </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00389">389</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00443">443</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00367">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00358">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00401">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00331">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00315">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00342">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00471">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00960">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00296">DdMd::GroupStorage&lt; N &gt;::computeNTotal()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l01035">DdMd::PairPotentialImpl&lt; Interaction &gt;::computePairEnergies()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00416">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00409">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00465">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00893">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="AtomMap_8h_source.html#l00279">DdMd::AtomMap::findGroupGhostAtoms()</a>, <a class="el" href="AtomMap_8h_source.html#l00257">DdMd::AtomMap::findGroupLocalAtoms()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00384">DdMd::GroupStorage&lt; N &gt;::isValid()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00732">DdMd::GroupStorage&lt; N &gt;::markGhosts()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00501">DdMd::GroupStorage&lt; N &gt;::markSpanningGroups()</a>, <a class="el" href="GroupCollector_8tpp_source.html#l00114">DdMd::GroupCollector&lt; N &gt;::nextPtr()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00040">operator=()</a>, and <a class="el" href="GroupCollector_8tpp_source.html#l00213">DdMd::GroupCollector&lt; N &gt;::send()</a>.</p>
+<p>Referenced by <a class="el" href="BondTensorAutoCorr_8cpp_source.html#l00036">DdMd::BondTensorAutoCorr::computeData()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00367">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00358">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00401">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeEnergy()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00331">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00315">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00342">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeForces()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00471">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00960">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeForcesAndStress()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00296">DdMd::GroupStorage&lt; N &gt;::computeNTotal()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l01035">DdMd::PairPotentialImpl&lt; Interaction &gt;::computePairEnergies()</a>, <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00416">DdMd::BondPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00409">DdMd::AnglePotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00465">DdMd::DihedralPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="PairPotentialImpl_8h_source.html#l00893">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeStress()</a>, <a class="el" href="AtomMap_8h_source.html#l00279">DdMd::AtomMap::findGroupGhostAtoms()</a>, <a class="el" href="AtomMap_8h_source.html#l00257">DdMd::AtomMap::findGroupLocalAtoms()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00384">DdMd::GroupStorage&lt; N &gt;::isValid()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00732">DdMd::GroupStorage&lt; N &gt;::markGhosts()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00501">DdMd::GroupStorage&lt; N &gt;::markSpanningGroups()</a>, <a class="el" href="GroupCollector_8tpp_source.html#l00114">DdMd::GroupCollector&lt; N &gt;::nextPtr()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00048">operator=()</a>, and <a class="el" href="GroupCollector_8tpp_source.html#l00213">DdMd::GroupCollector&lt; N &gt;::send()</a>.</p>
 
 </div>
 </div>
@@ -527,7 +641,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Get the position Vector (const reference). </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00404">404</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00458">458</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
 </div>
 </div>
@@ -547,7 +661,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Get the velocity Vector (const reference). </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00445">445</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00499">499</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
 </div>
 </div>
@@ -567,7 +681,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Get the force Vector (const reference). </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00416">416</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00470">470</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
 </div>
 </div>
@@ -587,7 +701,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 <p>Get the associated <a class="el" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a parent Atom are &quot;masked&quot;.">Mask</a> by const reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00457">457</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00511">511</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
 </div>
 </div>
@@ -605,9 +719,54 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 </div>
 <div class="memdoc">
 
-<p>Get communication plan (const reference). </p>
+<p>Get communication plan by const reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00469">469</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00523">523</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a260ad4637633b2f2e1890116896634b2"></a><!-- doxytag: member="DdMd::Atom::context" ref="a260ad4637633b2f2e1890116896634b2" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structDdMd_1_1AtomContext.html">AtomContext</a> &amp; <a class="el" href="classDdMd_1_1Atom.html#a8e11b74cd3820a36bfa0f979610cc3af">DdMd::Atom::context</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the <a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a> struct by const reference. </p>
+<p>Throws an Exception if atom context data is disabled.</p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a>&amp; <a class="el" href="classDdMd_1_1Atom.html#a8e11b74cd3820a36bfa0f979610cc3af" title="Get the AtomContext struct by non-const reference.">context()</a> non-const accessor for </dd></dl>
+
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00552">552</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
+
+<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a344db59424515819628451e56a7249d0"></a><!-- doxytag: member="DdMd::Atom::groups" ref="a344db59424515819628451e56a7249d0" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="classDdMd_1_1Atom.html#a5c6ff11a521d5ac39fbea8b05d8dfdbe">DdMd::Atom::groups</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get bit field of groups to which this atom belongs. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classDdMd_1_1Atom.html#a5c6ff11a521d5ac39fbea8b05d8dfdbe" title="Get groups bit field by non-const reference.">Atom::groups()</a> non-const accessor. </dd></dl>
+
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00569">569</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html">ddMd/chemistry/Atom.h</a>.</p>
 
 </div>
 </div>
@@ -635,11 +794,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00072">72</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00085">85</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00252">McMd::Atom::id()</a>, <a class="el" href="Buffer_8h_source.html#l00607">DdMd::Buffer::incrementSendSize()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00284">McMd::Atom::mask()</a>, <a class="el" href="Buffer_8h_source.html#l00566">DdMd::Buffer::pack()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00260">McMd::Atom::position()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00256">McMd::Atom::typeId()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00272">McMd::Atom::velocity()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00541">context()</a>, <a class="el" href="Plan_8h_source.html#l00128">DdMd::Plan::flags()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00563">groups()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00529">id()</a>, <a class="el" href="Buffer_8h_source.html#l00607">DdMd::Buffer::incrementSendSize()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00505">mask()</a>, <a class="el" href="Buffer_8h_source.html#l00566">DdMd::Buffer::pack()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00517">plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">position()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00104">DdMd::Mask::size()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00437">typeId()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00493">velocity()</a>.</p>
 
-<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00265">DdMd::AtomDistributor::addAtom()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00195">DdMd::AtomDistributor::newAtomPtr()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00382">DdMd::AtomDistributor::send()</a>.</p>
+<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00262">DdMd::AtomDistributor::addAtom()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00192">DdMd::AtomDistributor::newAtomPtr()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00379">DdMd::AtomDistributor::send()</a>.</p>
 
 </div>
 </div>
@@ -666,11 +825,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00097">97</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00111">111</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00045">DdMd::Mask::append()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00034">DdMd::Mask::clear()</a>, <a class="el" href="Buffer_8h_source.html#l00613">DdMd::Buffer::decrementRecvSize()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00284">McMd::Atom::mask()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00260">McMd::Atom::position()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00248">McMd::Atom::setTypeId()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00104">DdMd::Mask::size()</a>, <a class="el" href="Buffer_8h_source.html#l00581">DdMd::Buffer::unpack()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00272">McMd::Atom::velocity()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00042">DdMd::Mask::append()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00031">DdMd::Mask::clear()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00541">context()</a>, <a class="el" href="Buffer_8h_source.html#l00613">DdMd::Buffer::decrementRecvSize()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00563">groups()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00505">mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00517">plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">position()</a>, <a class="el" href="Plan_8h_source.html#l00098">DdMd::Plan::setFlags()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00535">setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00417">setTypeId()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00104">DdMd::Mask::size()</a>, <a class="el" href="Buffer_8h_source.html#l00581">DdMd::Buffer::unpack()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00493">velocity()</a>.</p>
 
-<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00460">DdMd::AtomDistributor::receive()</a>.</p>
+<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00457">DdMd::AtomDistributor::receive()</a>.</p>
 
 </div>
 </div>
@@ -698,9 +857,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00145">145</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00163">163</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00252">McMd::Atom::id()</a>, <a class="el" href="Buffer_8h_source.html#l00607">DdMd::Buffer::incrementSendSize()</a>, <a class="el" href="Buffer_8h_source.html#l00566">DdMd::Buffer::pack()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00260">McMd::Atom::position()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00256">McMd::Atom::typeId()</a>.</p>
+<p>References <a class="el" href="Plan_8h_source.html#l00128">DdMd::Plan::flags()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00529">id()</a>, <a class="el" href="Buffer_8h_source.html#l00607">DdMd::Buffer::incrementSendSize()</a>, <a class="el" href="Buffer_8h_source.html#l00566">DdMd::Buffer::pack()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00517">plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">position()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00437">typeId()</a>.</p>
 
 </div>
 </div>
@@ -728,9 +887,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00158">158</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00176">176</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="Buffer_8h_source.html#l00613">DdMd::Buffer::decrementRecvSize()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00260">McMd::Atom::position()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00248">McMd::Atom::setTypeId()</a>, and <a class="el" href="Buffer_8h_source.html#l00581">DdMd::Buffer::unpack()</a>.</p>
+<p>References <a class="el" href="Buffer_8h_source.html#l00613">DdMd::Buffer::decrementRecvSize()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00517">plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">position()</a>, <a class="el" href="Plan_8h_source.html#l00098">DdMd::Plan::setFlags()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00535">setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00417">setTypeId()</a>, and <a class="el" href="Buffer_8h_source.html#l00581">DdMd::Buffer::unpack()</a>.</p>
 
 </div>
 </div>
@@ -758,11 +917,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00187">187</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00205">205</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="Buffer_8h_source.html#l00607">DdMd::Buffer::incrementSendSize()</a>, <a class="el" href="Buffer_8h_source.html#l00566">DdMd::Buffer::pack()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00260">McMd::Atom::position()</a>.</p>
+<p>References <a class="el" href="Buffer_8h_source.html#l00607">DdMd::Buffer::incrementSendSize()</a>, <a class="el" href="Buffer_8h_source.html#l00566">DdMd::Buffer::pack()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">position()</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00821">DdMd::Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00818">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
@@ -790,11 +949,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00196">196</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00214">214</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="Buffer_8h_source.html#l00613">DdMd::Buffer::decrementRecvSize()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00260">McMd::Atom::position()</a>, and <a class="el" href="Buffer_8h_source.html#l00581">DdMd::Buffer::unpack()</a>.</p>
+<p>References <a class="el" href="Buffer_8h_source.html#l00613">DdMd::Buffer::decrementRecvSize()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">position()</a>, and <a class="el" href="Buffer_8h_source.html#l00581">DdMd::Buffer::unpack()</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00821">DdMd::Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00818">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
@@ -822,11 +981,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00205">205</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00223">223</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00280">McMd::Atom::force()</a>, <a class="el" href="Buffer_8h_source.html#l00607">DdMd::Buffer::incrementSendSize()</a>, and <a class="el" href="Buffer_8h_source.html#l00566">DdMd::Buffer::pack()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00464">force()</a>, <a class="el" href="Buffer_8h_source.html#l00607">DdMd::Buffer::incrementSendSize()</a>, and <a class="el" href="Buffer_8h_source.html#l00566">DdMd::Buffer::pack()</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00899">DdMd::Exchanger::reverseUpdate()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00896">DdMd::Exchanger::reverseUpdate()</a>.</p>
 
 </div>
 </div>
@@ -854,11 +1013,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00214">214</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00232">232</a> of file <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html">ddMd/chemistry/Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="Buffer_8h_source.html#l00613">DdMd::Buffer::decrementRecvSize()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00280">McMd::Atom::force()</a>, and <a class="el" href="Buffer_8h_source.html#l00581">DdMd::Buffer::unpack()</a>.</p>
+<p>References <a class="el" href="Buffer_8h_source.html#l00613">DdMd::Buffer::decrementRecvSize()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00464">force()</a>, and <a class="el" href="Buffer_8h_source.html#l00581">DdMd::Buffer::unpack()</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00899">DdMd::Exchanger::reverseUpdate()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00896">DdMd::Exchanger::reverseUpdate()</a>.</p>
 
 </div>
 </div>
@@ -872,7 +1031,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>Util::Memory</b></td
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:18 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:04 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -57,270 +57,266 @@
 <div class="title">AtomCollector.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef DDMD_ATOM_COLLECTOR_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define DDMD_ATOM_COLLECTOR_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;AtomCollector.h&quot;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;Domain.h&quot;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;Buffer.h&quot;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;ddMd/storage/AtomStorage.h&gt;</span>
-<a name="l00015"></a>00015 
-<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;algorithm&gt;</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;AtomCollector.h&quot;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;Domain.h&quot;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &quot;Buffer.h&quot;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;ddMd/storage/AtomStorage.h&gt;</span>
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;algorithm&gt;</span>
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="keyword">namespace </span>DdMd
+<a name="l00016"></a>00016 {
 <a name="l00017"></a>00017 
-<a name="l00018"></a>00018 <span class="keyword">namespace </span>DdMd
-<a name="l00019"></a>00019 {
-<a name="l00020"></a>00020 
-<a name="l00021"></a>00021    <span class="keyword">using namespace </span>Util;
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023    <span class="comment">/*</span>
-<a name="l00024"></a>00024 <span class="comment">   * Constructor.</span>
-<a name="l00025"></a>00025 <span class="comment">   */</span>
-<a name="l00026"></a><a class="code" href="classDdMd_1_1AtomCollector.html#adb7efe7b233b97ef81eaf8df32518116">00026</a>    <a class="code" href="classDdMd_1_1AtomCollector.html#adb7efe7b233b97ef81eaf8df32518116" title="Constructor.">AtomCollector::AtomCollector</a>() 
-<a name="l00027"></a>00027     : domainPtr_(0),
-<a name="l00028"></a>00028       bufferPtr_(0),
-<a name="l00029"></a>00029       source_(-1),
-<a name="l00030"></a>00030       recvBufferSize_(-1),
-<a name="l00031"></a>00031       recvArrayCapacity_(256),
-<a name="l00032"></a>00032       recvArraySize_(-1),
-<a name="l00033"></a>00033       recvArrayId_(-1),
-<a name="l00034"></a>00034       isComplete_(false)
-<a name="l00035"></a>00035    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;AtomCollector&quot;</span>); }
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037    <span class="comment">/*</span>
-<a name="l00038"></a>00038 <span class="comment">   * Destructor.</span>
-<a name="l00039"></a>00039 <span class="comment">   */</span>
-<a name="l00040"></a><a class="code" href="classDdMd_1_1AtomCollector.html#a78f527c9e3e9e2593705256751a251d3">00040</a>    <a class="code" href="classDdMd_1_1AtomCollector.html#a78f527c9e3e9e2593705256751a251d3" title="Destructor.">AtomCollector::~AtomCollector</a>() 
-<a name="l00041"></a>00041    {}
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043    <span class="comment">/*</span>
-<a name="l00044"></a>00044 <span class="comment">   * Retain pointers to associated objects.</span>
-<a name="l00045"></a>00045 <span class="comment">   *</span>
-<a name="l00046"></a>00046 <span class="comment">   * Call on all domain notes.</span>
-<a name="l00047"></a>00047 <span class="comment">   */</span>
-<a name="l00048"></a><a class="code" href="classDdMd_1_1AtomCollector.html#a8b72ea6dd07ec6f87ebddddba736bd64">00048</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomCollector.html#a8b72ea6dd07ec6f87ebddddba736bd64" title="Initialize pointers to associated objects.">AtomCollector::associate</a>(<a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain, <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; storage, 
-<a name="l00049"></a>00049                                  <a class="code" href="classDdMd_1_1Buffer.html" title="Buffer for interprocessor communication.">Buffer</a>&amp; buffer)
-<a name="l00050"></a>00050    {
-<a name="l00051"></a>00051       domainPtr_  = &amp;domain;
-<a name="l00052"></a>00052       storagePtr_ = &amp;storage;
-<a name="l00053"></a>00053       bufferPtr_  = &amp;buffer;
-<a name="l00054"></a>00054    }
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056    <span class="comment">/*</span>
-<a name="l00057"></a>00057 <span class="comment">   * Set recvArray cache capacity.</span>
-<a name="l00058"></a>00058 <span class="comment">   */</span>
-<a name="l00059"></a><a class="code" href="classDdMd_1_1AtomCollector.html#a32df2cfe1023e3f4f73eecd3c571307c">00059</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomCollector.html#a32df2cfe1023e3f4f73eecd3c571307c" title="Set cache capacity on master processor.">AtomCollector::setCapacity</a>(<span class="keywordtype">int</span> recvArrayCapacity)
-<a name="l00060"></a>00060    {
-<a name="l00061"></a>00061       <span class="keywordflow">if</span> (recvArrayCapacity &lt;= 0) {
-<a name="l00062"></a>00062          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to set nonpositive recvArrayCapacity&quot;</span>);
-<a name="l00063"></a>00063       }  
-<a name="l00064"></a>00064       <span class="keywordflow">if</span> (recvArray_.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>() &gt; 0) { 
-<a name="l00065"></a>00065          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to set recvArrayCapacity after allocation&quot;</span>);
-<a name="l00066"></a>00066       } 
-<a name="l00067"></a>00067       recvArrayCapacity_ = recvArrayCapacity; 
-<a name="l00068"></a>00068    }
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070    <span class="comment">/*</span>
-<a name="l00071"></a>00071 <span class="comment">   * Setup before receiving loop - call only on master.</span>
-<a name="l00072"></a>00072 <span class="comment">   */</span>
-<a name="l00073"></a><a class="code" href="classDdMd_1_1AtomCollector.html#ac976436d0bc1e3ac7313e648572360d5">00073</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomCollector.html#ac976436d0bc1e3ac7313e648572360d5" title="Setup master processor for receiving.">AtomCollector::setup</a>()
-<a name="l00074"></a>00074    {
-<a name="l00075"></a>00075       <span class="comment">// Preconditions</span>
-<a name="l00076"></a>00076       <span class="keywordflow">if</span> (!domainPtr_) {
-<a name="l00077"></a>00077          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Collector not initialized&quot;</span>);
+<a name="l00018"></a>00018    <span class="keyword">using namespace </span>Util;
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020    <span class="comment">/*</span>
+<a name="l00021"></a>00021 <span class="comment">   * Constructor.</span>
+<a name="l00022"></a>00022 <span class="comment">   */</span>
+<a name="l00023"></a><a class="code" href="classDdMd_1_1AtomCollector.html#adb7efe7b233b97ef81eaf8df32518116">00023</a>    <a class="code" href="classDdMd_1_1AtomCollector.html#adb7efe7b233b97ef81eaf8df32518116" title="Constructor.">AtomCollector::AtomCollector</a>() 
+<a name="l00024"></a>00024     : domainPtr_(0),
+<a name="l00025"></a>00025       bufferPtr_(0),
+<a name="l00026"></a>00026       source_(-1),
+<a name="l00027"></a>00027       recvBufferSize_(-1),
+<a name="l00028"></a>00028       recvArrayCapacity_(256),
+<a name="l00029"></a>00029       recvArraySize_(-1),
+<a name="l00030"></a>00030       recvArrayId_(-1),
+<a name="l00031"></a>00031       isComplete_(false)
+<a name="l00032"></a>00032    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;AtomCollector&quot;</span>); }
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034    <span class="comment">/*</span>
+<a name="l00035"></a>00035 <span class="comment">   * Destructor.</span>
+<a name="l00036"></a>00036 <span class="comment">   */</span>
+<a name="l00037"></a><a class="code" href="classDdMd_1_1AtomCollector.html#a78f527c9e3e9e2593705256751a251d3">00037</a>    <a class="code" href="classDdMd_1_1AtomCollector.html#a78f527c9e3e9e2593705256751a251d3" title="Destructor.">AtomCollector::~AtomCollector</a>() 
+<a name="l00038"></a>00038    {}
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040    <span class="comment">/*</span>
+<a name="l00041"></a>00041 <span class="comment">   * Retain pointers to associated objects.</span>
+<a name="l00042"></a>00042 <span class="comment">   *</span>
+<a name="l00043"></a>00043 <span class="comment">   * Call on all domain notes.</span>
+<a name="l00044"></a>00044 <span class="comment">   */</span>
+<a name="l00045"></a><a class="code" href="classDdMd_1_1AtomCollector.html#a8b72ea6dd07ec6f87ebddddba736bd64">00045</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomCollector.html#a8b72ea6dd07ec6f87ebddddba736bd64" title="Initialize pointers to associated objects.">AtomCollector::associate</a>(<a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain, <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; storage, 
+<a name="l00046"></a>00046                                  <a class="code" href="classDdMd_1_1Buffer.html" title="Buffer for interprocessor communication.">Buffer</a>&amp; buffer)
+<a name="l00047"></a>00047    {
+<a name="l00048"></a>00048       domainPtr_  = &amp;domain;
+<a name="l00049"></a>00049       storagePtr_ = &amp;storage;
+<a name="l00050"></a>00050       bufferPtr_  = &amp;buffer;
+<a name="l00051"></a>00051    }
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053    <span class="comment">/*</span>
+<a name="l00054"></a>00054 <span class="comment">   * Set recvArray cache capacity.</span>
+<a name="l00055"></a>00055 <span class="comment">   */</span>
+<a name="l00056"></a><a class="code" href="classDdMd_1_1AtomCollector.html#a32df2cfe1023e3f4f73eecd3c571307c">00056</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomCollector.html#a32df2cfe1023e3f4f73eecd3c571307c" title="Set cache capacity on master processor.">AtomCollector::setCapacity</a>(<span class="keywordtype">int</span> recvArrayCapacity)
+<a name="l00057"></a>00057    {
+<a name="l00058"></a>00058       <span class="keywordflow">if</span> (recvArrayCapacity &lt;= 0) {
+<a name="l00059"></a>00059          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to set nonpositive recvArrayCapacity&quot;</span>);
+<a name="l00060"></a>00060       }  
+<a name="l00061"></a>00061       <span class="keywordflow">if</span> (recvArray_.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>() &gt; 0) { 
+<a name="l00062"></a>00062          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to set recvArrayCapacity after allocation&quot;</span>);
+<a name="l00063"></a>00063       } 
+<a name="l00064"></a>00064       recvArrayCapacity_ = recvArrayCapacity; 
+<a name="l00065"></a>00065    }
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067    <span class="comment">/*</span>
+<a name="l00068"></a>00068 <span class="comment">   * Setup before receiving loop - call only on master.</span>
+<a name="l00069"></a>00069 <span class="comment">   */</span>
+<a name="l00070"></a><a class="code" href="classDdMd_1_1AtomCollector.html#ac976436d0bc1e3ac7313e648572360d5">00070</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomCollector.html#ac976436d0bc1e3ac7313e648572360d5" title="Setup master processor for receiving.">AtomCollector::setup</a>()
+<a name="l00071"></a>00071    {
+<a name="l00072"></a>00072       <span class="comment">// Preconditions</span>
+<a name="l00073"></a>00073       <span class="keywordflow">if</span> (!domainPtr_) {
+<a name="l00074"></a>00074          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Collector not initialized&quot;</span>);
+<a name="l00075"></a>00075       }
+<a name="l00076"></a>00076       <span class="keywordflow">if</span> (!domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a06fb7e618207f58603b5cda77fb4fc59" title="Has this Domain been initialized by calling readParam?">isInitialized</a>()) {
+<a name="l00077"></a>00077          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Domain is not initialized&quot;</span>);
 <a name="l00078"></a>00078       }
-<a name="l00079"></a>00079       <span class="keywordflow">if</span> (!domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a06fb7e618207f58603b5cda77fb4fc59" title="Has this Domain been initialized by calling readParam?">isInitialized</a>()) {
-<a name="l00080"></a>00080          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Domain is not initialized&quot;</span>);
+<a name="l00079"></a>00079       <span class="keywordflow">if</span> (!domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">isMaster</a>()) {
+<a name="l00080"></a>00080          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Not the master processor&quot;</span>);
 <a name="l00081"></a>00081       }
-<a name="l00082"></a>00082       <span class="keywordflow">if</span> (!domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">isMaster</a>()) {
-<a name="l00083"></a>00083          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Not the master processor&quot;</span>);
+<a name="l00082"></a>00082       <span class="keywordflow">if</span> (!bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a54d044f2ef58334549017b7070a36d22" title="Has this Buffer been initialized?">isInitialized</a>()) {
+<a name="l00083"></a>00083          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Buffer not allocated&quot;</span>);
 <a name="l00084"></a>00084       }
-<a name="l00085"></a>00085       <span class="keywordflow">if</span> (!bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a54d044f2ef58334549017b7070a36d22" title="Has this Buffer been initialized?">isInitialized</a>()) {
-<a name="l00086"></a>00086          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Buffer not allocated&quot;</span>);
-<a name="l00087"></a>00087       }
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089       <span class="comment">// Allocate recvArray if not done previously</span>
-<a name="l00090"></a>00090       <span class="keywordflow">if</span> (recvArray_.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>() == 0) {
-<a name="l00091"></a>00091          <span class="keywordflow">if</span> (recvArrayCapacity_ == 0) {
-<a name="l00092"></a>00092             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;recvArrayCapacity_ not set&quot;</span>);
-<a name="l00093"></a>00093          }
-<a name="l00094"></a>00094          recvArray_.<a class="code" href="classDdMd_1_1AtomArray.html#af30babdd2ba8ccc40e95b727be18c28f" title="Allocate memory on the heap.">allocate</a>(recvArrayCapacity_);
-<a name="l00095"></a>00095       }
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097       source_ = 0;          <span class="comment">// rank of source node</span>
-<a name="l00098"></a>00098       recvBufferSize_ = 0;  <span class="comment">// number of atoms in MPI buffer </span>
-<a name="l00099"></a>00099       recvArraySize_ = 0;   <span class="comment">// number of atoms in recvArray_ </span>
-<a name="l00100"></a>00100       recvArrayId_ = 0;     <span class="comment">// id of current atom in recvArray_</span>
-<a name="l00101"></a>00101       isComplete_ = <span class="keyword">false</span>;  <span class="comment">// not finished with current processor</span>
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103       <span class="comment">// Initialize Atom iterator on master processor.</span>
-<a name="l00104"></a>00104       storagePtr_-&gt;<a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">begin</a>(iterator_);
-<a name="l00105"></a>00105    }
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00108"></a>00108 <span class="preprocessor"></span>   <span class="comment">/*</span>
-<a name="l00109"></a>00109 <span class="comment">   * Return address for a new Atom, or null when all are received.</span>
-<a name="l00110"></a>00110 <span class="comment">   *</span>
-<a name="l00111"></a>00111 <span class="comment">   * Call this function only on the master processor.</span>
-<a name="l00112"></a>00112 <span class="comment">   */</span> 
-<a name="l00113"></a><a class="code" href="classDdMd_1_1AtomCollector.html#a6166e17eb4bd211f908c9795150a6795">00113</a>    <a class="code" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>* <a class="code" href="classDdMd_1_1AtomCollector.html#a6166e17eb4bd211f908c9795150a6795" title="Return a pointer to the next available atom, or null.">AtomCollector::nextPtr</a>()
-<a name="l00114"></a>00114    {
-<a name="l00115"></a>00115       <span class="comment">// Preconditions</span>
-<a name="l00116"></a>00116       <span class="keywordflow">if</span> (domainPtr_ == 0) {
-<a name="l00117"></a>00117          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomCollector has not been initialized&quot;</span>);
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086       <span class="comment">// Allocate recvArray if not done previously</span>
+<a name="l00087"></a>00087       <span class="keywordflow">if</span> (recvArray_.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>() == 0) {
+<a name="l00088"></a>00088          <span class="keywordflow">if</span> (recvArrayCapacity_ == 0) {
+<a name="l00089"></a>00089             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;recvArrayCapacity_ not set&quot;</span>);
+<a name="l00090"></a>00090          }
+<a name="l00091"></a>00091          recvArray_.<a class="code" href="classDdMd_1_1AtomArray.html#af30babdd2ba8ccc40e95b727be18c28f" title="Allocate memory on the heap.">allocate</a>(recvArrayCapacity_);
+<a name="l00092"></a>00092       }
+<a name="l00093"></a>00093 
+<a name="l00094"></a>00094       source_ = 0;          <span class="comment">// rank of source node</span>
+<a name="l00095"></a>00095       recvBufferSize_ = 0;  <span class="comment">// number of atoms in MPI buffer </span>
+<a name="l00096"></a>00096       recvArraySize_ = 0;   <span class="comment">// number of atoms in recvArray_ </span>
+<a name="l00097"></a>00097       recvArrayId_ = 0;     <span class="comment">// id of current atom in recvArray_</span>
+<a name="l00098"></a>00098       isComplete_ = <span class="keyword">false</span>;  <span class="comment">// not finished with current processor</span>
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100       <span class="comment">// Initialize Atom iterator on master processor.</span>
+<a name="l00101"></a>00101       storagePtr_-&gt;<a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">begin</a>(iterator_);
+<a name="l00102"></a>00102    }
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 <span class="preprocessor">   #ifdef UTIL_MPI</span>
+<a name="l00105"></a>00105 <span class="preprocessor"></span>   <span class="comment">/*</span>
+<a name="l00106"></a>00106 <span class="comment">   * Return address for a new Atom, or null when all are received.</span>
+<a name="l00107"></a>00107 <span class="comment">   *</span>
+<a name="l00108"></a>00108 <span class="comment">   * Call this function only on the master processor.</span>
+<a name="l00109"></a>00109 <span class="comment">   */</span> 
+<a name="l00110"></a><a class="code" href="classDdMd_1_1AtomCollector.html#a6166e17eb4bd211f908c9795150a6795">00110</a>    <a class="code" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>* <a class="code" href="classDdMd_1_1AtomCollector.html#a6166e17eb4bd211f908c9795150a6795" title="Return a pointer to the next available atom, or null.">AtomCollector::nextPtr</a>()
+<a name="l00111"></a>00111    {
+<a name="l00112"></a>00112       <span class="comment">// Preconditions</span>
+<a name="l00113"></a>00113       <span class="keywordflow">if</span> (domainPtr_ == 0) {
+<a name="l00114"></a>00114          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomCollector has not been initialized&quot;</span>);
+<a name="l00115"></a>00115       }
+<a name="l00116"></a>00116       <span class="keywordflow">if</span> (!domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a06fb7e618207f58603b5cda77fb4fc59" title="Has this Domain been initialized by calling readParam?">isInitialized</a>() != 0) {
+<a name="l00117"></a>00117          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Domain is not initialized&quot;</span>);
 <a name="l00118"></a>00118       }
-<a name="l00119"></a>00119       <span class="keywordflow">if</span> (!domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a06fb7e618207f58603b5cda77fb4fc59" title="Has this Domain been initialized by calling readParam?">isInitialized</a>() != 0) {
-<a name="l00120"></a>00120          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Domain is not initialized&quot;</span>);
+<a name="l00119"></a>00119       <span class="keywordflow">if</span> (!domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">isMaster</a>()) {
+<a name="l00120"></a>00120          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Not the master processor&quot;</span>);
 <a name="l00121"></a>00121       }
-<a name="l00122"></a>00122       <span class="keywordflow">if</span> (!domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">isMaster</a>()) {
-<a name="l00123"></a>00123          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Not the master processor&quot;</span>);
-<a name="l00124"></a>00124       }
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126       <span class="comment">// If still processing atoms from master processor</span>
-<a name="l00127"></a>00127       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>* ptr;
-<a name="l00128"></a>00128       <span class="keywordflow">if</span> (source_ == 0) {
-<a name="l00129"></a>00129          <span class="keywordflow">if</span> (iterator_.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>()) {
-<a name="l00130"></a>00130             ptr = iterator_.<a class="code" href="classUtil_1_1PArrayIterator.html#a561ea75642c2ed8d246208b27f8c0299" title="Return a pointer to the current data.">get</a>();
-<a name="l00131"></a>00131             ++iterator_;
-<a name="l00132"></a>00132             <span class="keywordflow">return</span> ptr;
-<a name="l00133"></a>00133          } <span class="keywordflow">else</span> {
-<a name="l00134"></a>00134             recvBufferSize_ = 0;
-<a name="l00135"></a>00135             recvArraySize_ = 0;
-<a name="l00136"></a>00136             recvArrayId_ = 0;
-<a name="l00137"></a>00137             isComplete_ = <span class="keyword">true</span>;
-<a name="l00138"></a>00138          }
-<a name="l00139"></a>00139       }
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123       <span class="comment">// If still processing atoms from master processor</span>
+<a name="l00124"></a>00124       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>* ptr;
+<a name="l00125"></a>00125       <span class="keywordflow">if</span> (source_ == 0) {
+<a name="l00126"></a>00126          <span class="keywordflow">if</span> (iterator_.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>()) {
+<a name="l00127"></a>00127             ptr = iterator_.<a class="code" href="classUtil_1_1PArrayIterator.html#a561ea75642c2ed8d246208b27f8c0299" title="Return a pointer to the current data.">get</a>();
+<a name="l00128"></a>00128             ++iterator_;
+<a name="l00129"></a>00129             <span class="keywordflow">return</span> ptr;
+<a name="l00130"></a>00130          } <span class="keywordflow">else</span> {
+<a name="l00131"></a>00131             recvBufferSize_ = 0;
+<a name="l00132"></a>00132             recvArraySize_ = 0;
+<a name="l00133"></a>00133             recvArrayId_ = 0;
+<a name="l00134"></a>00134             isComplete_ = <span class="keyword">true</span>;
+<a name="l00135"></a>00135          }
+<a name="l00136"></a>00136       }
+<a name="l00137"></a>00137 
+<a name="l00138"></a>00138       <span class="comment">// While at end of recvArray_, or while array is empty.</span>
+<a name="l00139"></a>00139       <span class="keywordflow">while</span> (recvArrayId_ == recvArraySize_) {
 <a name="l00140"></a>00140 
-<a name="l00141"></a>00141       <span class="comment">// While at end of recvArray_, or while array is empty.</span>
-<a name="l00142"></a>00142       <span class="keywordflow">while</span> (recvArrayId_ == recvArraySize_) {
+<a name="l00141"></a>00141          <span class="comment">// If receive buffer is empty</span>
+<a name="l00142"></a>00142          <span class="keywordflow">if</span> (recvBufferSize_ == 0) {
 <a name="l00143"></a>00143 
-<a name="l00144"></a>00144          <span class="comment">// If receive buffer is empty</span>
-<a name="l00145"></a>00145          <span class="keywordflow">if</span> (recvBufferSize_ == 0) {
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147             <span class="comment">// If processing of items from processor source_ is complete.</span>
-<a name="l00148"></a>00148             <span class="keywordflow">if</span> (isComplete_) {
-<a name="l00149"></a>00149                ++source_;
-<a name="l00150"></a>00150                recvArraySize_ = 0;
-<a name="l00151"></a>00151                recvArrayId_ = 0;
-<a name="l00152"></a>00152                isComplete_ = <span class="keyword">false</span>;
-<a name="l00153"></a>00153                <span class="comment">// If last processor is complete, return null pointer.</span>
-<a name="l00154"></a>00154                <span class="keywordflow">if</span> (source_ == domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a890695ed2d3be89420649be7befe01e1" title="Return processor Grid by const reference.">grid</a>().<a class="code" href="classUtil_1_1Grid.html#afcc4923c22d853206945e1b4c9334b0e" title="Get total number of grid points.">size</a>()) {
-<a name="l00155"></a>00155                   source_ = 0;
-<a name="l00156"></a>00156                   <span class="keywordflow">return</span> 0;
-<a name="l00157"></a>00157                }
-<a name="l00158"></a>00158             }
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160             assert(recvBufferSize_ == 0); <span class="comment">// recv buffer is empty</span>
-<a name="l00161"></a>00161             assert(!isComplete_);         <span class="comment">// source_ is not completed</span>
-<a name="l00162"></a>00162             
-<a name="l00163"></a>00163             <span class="comment">// Send request to processor source_ .</span>
-<a name="l00164"></a>00164             <span class="keywordtype">int</span> message = source_;
-<a name="l00165"></a>00165             domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>().Send(&amp;message, 1, MPI::INT, 
-<a name="l00166"></a>00166                                                source_, message);
-<a name="l00167"></a>00167       
-<a name="l00168"></a>00168             <span class="comment">// Receive buffer from processor source_</span>
-<a name="l00169"></a>00169             bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a1b0d1eb5202afbd87af64511e8ec1469" title="Receive a buffer.">recv</a>(domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>(), source_);
-<a name="l00170"></a>00170             isComplete_ = bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a084adf34691be655ad90392f4749b667" title="Begin to receive a block from the recv buffer.">beginRecvBlock</a>();
-<a name="l00171"></a>00171             recvBufferSize_ = bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items left in current recv block.">recvSize</a>();
-<a name="l00172"></a>00172          }
-<a name="l00173"></a>00173 
-<a name="l00174"></a>00174          <span class="comment">// Unpack atoms from recv buffer into recvArray_.</span>
-<a name="l00175"></a>00175          <span class="keywordflow">if</span> (recvBufferSize_ &gt; 0) {
-<a name="l00176"></a>00176             recvArraySize_ = 0;
-<a name="l00177"></a>00177             recvArrayId_ = 0;
-<a name="l00178"></a>00178             <span class="keywordflow">if</span> (recvBufferSize_ != bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items left in current recv block.">recvSize</a>()) {
-<a name="l00179"></a>00179                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent buffer receive counters&quot;</span>);
-<a name="l00180"></a>00180             }
-<a name="l00181"></a>00181             <span class="keywordflow">while</span> (bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items left in current recv block.">recvSize</a>() &gt; 0 
-<a name="l00182"></a>00182                    &amp;&amp; recvArraySize_ &lt; recvArray_.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>()) 
-<a name="l00183"></a>00183             {
-<a name="l00184"></a>00184                recvArray_[recvArraySize_].unpackAtom(*bufferPtr_);
-<a name="l00185"></a>00185                ++recvArraySize_;
-<a name="l00186"></a>00186                --recvBufferSize_;
-<a name="l00187"></a>00187                <span class="keywordflow">if</span> (recvBufferSize_ != bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items left in current recv block.">recvSize</a>()) {
-<a name="l00188"></a>00188                   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent buffer receive counters&quot;</span>);
-<a name="l00189"></a>00189                }
+<a name="l00144"></a>00144             <span class="comment">// If processing of items from processor source_ is complete.</span>
+<a name="l00145"></a>00145             <span class="keywordflow">if</span> (isComplete_) {
+<a name="l00146"></a>00146                ++source_;
+<a name="l00147"></a>00147                recvArraySize_ = 0;
+<a name="l00148"></a>00148                recvArrayId_ = 0;
+<a name="l00149"></a>00149                isComplete_ = <span class="keyword">false</span>;
+<a name="l00150"></a>00150                <span class="comment">// If last processor is complete, return null pointer.</span>
+<a name="l00151"></a>00151                <span class="keywordflow">if</span> (source_ == domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a890695ed2d3be89420649be7befe01e1" title="Return processor Grid by const reference.">grid</a>().<a class="code" href="classUtil_1_1Grid.html#afcc4923c22d853206945e1b4c9334b0e" title="Get total number of grid points.">size</a>()) {
+<a name="l00152"></a>00152                   source_ = 0;
+<a name="l00153"></a>00153                   <span class="keywordflow">return</span> 0;
+<a name="l00154"></a>00154                }
+<a name="l00155"></a>00155             }
+<a name="l00156"></a>00156 
+<a name="l00157"></a>00157             assert(recvBufferSize_ == 0); <span class="comment">// recv buffer is empty</span>
+<a name="l00158"></a>00158             assert(!isComplete_);         <span class="comment">// source_ is not completed</span>
+<a name="l00159"></a>00159             
+<a name="l00160"></a>00160             <span class="comment">// Send request to processor source_ .</span>
+<a name="l00161"></a>00161             <span class="keywordtype">int</span> message = source_;
+<a name="l00162"></a>00162             domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>().Send(&amp;message, 1, MPI::INT, 
+<a name="l00163"></a>00163                                                source_, message);
+<a name="l00164"></a>00164       
+<a name="l00165"></a>00165             <span class="comment">// Receive buffer from processor source_</span>
+<a name="l00166"></a>00166             bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a1b0d1eb5202afbd87af64511e8ec1469" title="Receive a buffer.">recv</a>(domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>(), source_);
+<a name="l00167"></a>00167             isComplete_ = bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a084adf34691be655ad90392f4749b667" title="Begin to receive a block from the recv buffer.">beginRecvBlock</a>();
+<a name="l00168"></a>00168             recvBufferSize_ = bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items left in current recv block.">recvSize</a>();
+<a name="l00169"></a>00169          }
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171          <span class="comment">// Unpack atoms from recv buffer into recvArray_.</span>
+<a name="l00172"></a>00172          <span class="keywordflow">if</span> (recvBufferSize_ &gt; 0) {
+<a name="l00173"></a>00173             recvArraySize_ = 0;
+<a name="l00174"></a>00174             recvArrayId_ = 0;
+<a name="l00175"></a>00175             <span class="keywordflow">if</span> (recvBufferSize_ != bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items left in current recv block.">recvSize</a>()) {
+<a name="l00176"></a>00176                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent buffer receive counters&quot;</span>);
+<a name="l00177"></a>00177             }
+<a name="l00178"></a>00178             <span class="keywordflow">while</span> (bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items left in current recv block.">recvSize</a>() &gt; 0 
+<a name="l00179"></a>00179                    &amp;&amp; recvArraySize_ &lt; recvArray_.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>()) 
+<a name="l00180"></a>00180             {
+<a name="l00181"></a>00181                recvArray_[recvArraySize_].unpackAtom(*bufferPtr_);
+<a name="l00182"></a>00182                ++recvArraySize_;
+<a name="l00183"></a>00183                --recvBufferSize_;
+<a name="l00184"></a>00184                <span class="keywordflow">if</span> (recvBufferSize_ != bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items left in current recv block.">recvSize</a>()) {
+<a name="l00185"></a>00185                   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent buffer receive counters&quot;</span>);
+<a name="l00186"></a>00186                }
+<a name="l00187"></a>00187             }
+<a name="l00188"></a>00188             <span class="keywordflow">if</span> (bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items left in current recv block.">recvSize</a>() == 0) {
+<a name="l00189"></a>00189                bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#aab3b99c14b6169bc0f709c7cc4fc5714" title="Finish processing a block in the recv buffer.">endRecvBlock</a>();
 <a name="l00190"></a>00190             }
-<a name="l00191"></a>00191             <span class="keywordflow">if</span> (bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items left in current recv block.">recvSize</a>() == 0) {
-<a name="l00192"></a>00192                bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#aab3b99c14b6169bc0f709c7cc4fc5714" title="Finish processing a block in the recv buffer.">endRecvBlock</a>();
-<a name="l00193"></a>00193             }
-<a name="l00194"></a>00194          }
-<a name="l00195"></a>00195 
-<a name="l00196"></a>00196       }
-<a name="l00197"></a>00197 
-<a name="l00198"></a>00198       <span class="comment">// Return current item from recvArray.</span>
-<a name="l00199"></a>00199       ++recvArrayId_;
-<a name="l00200"></a>00200       <span class="keywordflow">return</span> &amp;recvArray_[recvArrayId_ - 1];
-<a name="l00201"></a>00201 
-<a name="l00202"></a>00202    }
-<a name="l00203"></a>00203 
-<a name="l00204"></a>00204    <span class="comment">/*</span>
-<a name="l00205"></a>00205 <span class="comment">   * Send all atoms from this process.</span>
-<a name="l00206"></a>00206 <span class="comment">   *</span>
-<a name="l00207"></a>00207 <span class="comment">   * Call on every domain processor except the master.</span>
-<a name="l00208"></a>00208 <span class="comment">   */</span>
-<a name="l00209"></a>00209    <span class="keywordtype">void</span> 
-<a name="l00210"></a><a class="code" href="classDdMd_1_1AtomCollector.html#abd4afa0da2576dd023e2a09495edc113">00210</a>    <a class="code" href="classDdMd_1_1AtomCollector.html#abd4afa0da2576dd023e2a09495edc113" title="Send all atoms to the master.">AtomCollector::send</a>()
-<a name="l00211"></a>00211    {
-<a name="l00212"></a>00212 
-<a name="l00213"></a>00213       <span class="comment">// Preconditions</span>
-<a name="l00214"></a>00214       <span class="keywordflow">if</span> (!domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a06fb7e618207f58603b5cda77fb4fc59" title="Has this Domain been initialized by calling readParam?">isInitialized</a>()) {
-<a name="l00215"></a>00215          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Domain is not initialized&quot;</span>);
+<a name="l00191"></a>00191          }
+<a name="l00192"></a>00192 
+<a name="l00193"></a>00193       }
+<a name="l00194"></a>00194 
+<a name="l00195"></a>00195       <span class="comment">// Return current item from recvArray.</span>
+<a name="l00196"></a>00196       ++recvArrayId_;
+<a name="l00197"></a>00197       <span class="keywordflow">return</span> &amp;recvArray_[recvArrayId_ - 1];
+<a name="l00198"></a>00198 
+<a name="l00199"></a>00199    }
+<a name="l00200"></a>00200 
+<a name="l00201"></a>00201    <span class="comment">/*</span>
+<a name="l00202"></a>00202 <span class="comment">   * Send all atoms from this process.</span>
+<a name="l00203"></a>00203 <span class="comment">   *</span>
+<a name="l00204"></a>00204 <span class="comment">   * Call on every domain processor except the master.</span>
+<a name="l00205"></a>00205 <span class="comment">   */</span>
+<a name="l00206"></a>00206    <span class="keywordtype">void</span> 
+<a name="l00207"></a><a class="code" href="classDdMd_1_1AtomCollector.html#abd4afa0da2576dd023e2a09495edc113">00207</a>    <a class="code" href="classDdMd_1_1AtomCollector.html#abd4afa0da2576dd023e2a09495edc113" title="Send all atoms to the master.">AtomCollector::send</a>()
+<a name="l00208"></a>00208    {
+<a name="l00209"></a>00209 
+<a name="l00210"></a>00210       <span class="comment">// Preconditions</span>
+<a name="l00211"></a>00211       <span class="keywordflow">if</span> (!domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a06fb7e618207f58603b5cda77fb4fc59" title="Has this Domain been initialized by calling readParam?">isInitialized</a>()) {
+<a name="l00212"></a>00212          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Domain is not initialized&quot;</span>);
+<a name="l00213"></a>00213       }
+<a name="l00214"></a>00214       <span class="keywordflow">if</span> (domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">isMaster</a>()) {
+<a name="l00215"></a>00215          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomCollector::send() called from master node.&quot;</span>);
 <a name="l00216"></a>00216       }
-<a name="l00217"></a>00217       <span class="keywordflow">if</span> (domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">isMaster</a>()) {
-<a name="l00218"></a>00218          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomCollector::send() called from master node.&quot;</span>);
+<a name="l00217"></a>00217       <span class="keywordflow">if</span> (!bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a54d044f2ef58334549017b7070a36d22" title="Has this Buffer been initialized?">isInitialized</a>()) {
+<a name="l00218"></a>00218          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Buffer is not initialized&quot;</span>);
 <a name="l00219"></a>00219       }
-<a name="l00220"></a>00220       <span class="keywordflow">if</span> (!bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a54d044f2ef58334549017b7070a36d22" title="Has this Buffer been initialized?">isInitialized</a>()) {
-<a name="l00221"></a>00221          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Buffer is not initialized&quot;</span>);
-<a name="l00222"></a>00222       }
+<a name="l00220"></a>00220 
+<a name="l00221"></a>00221       <span class="comment">// Initialize atom iterator</span>
+<a name="l00222"></a>00222       storagePtr_-&gt;<a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">begin</a>(iterator_);
 <a name="l00223"></a>00223 
-<a name="l00224"></a>00224       <span class="comment">// Initialize atom iterator</span>
-<a name="l00225"></a>00225       storagePtr_-&gt;<a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">begin</a>(iterator_);
+<a name="l00224"></a>00224       isComplete_= <span class="keyword">false</span>;
+<a name="l00225"></a>00225       <span class="keywordflow">while</span> (!isComplete_) {
 <a name="l00226"></a>00226 
-<a name="l00227"></a>00227       isComplete_= <span class="keyword">false</span>;
-<a name="l00228"></a>00228       <span class="keywordflow">while</span> (!isComplete_) {
-<a name="l00229"></a>00229 
-<a name="l00230"></a>00230          <span class="comment">// Receive notice from master to send atoms (blocking receive)</span>
-<a name="l00231"></a>00231          <span class="keywordtype">int</span> message;
-<a name="l00232"></a>00232          <span class="keywordtype">int</span> tag = domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>().Get_rank();
-<a name="l00233"></a>00233          domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>().Recv(&amp;message, 1, MPI::INT, 0, tag);
-<a name="l00234"></a>00234 
-<a name="l00235"></a>00235          <span class="comment">// Pack buffer with atoms</span>
-<a name="l00236"></a>00236          <span class="keywordtype">int</span> recvArraySize_ = 0;
-<a name="l00237"></a>00237          isComplete_ = iterator_.<a class="code" href="classUtil_1_1PArrayIterator.html#ab376881f847b656dee85c3247706172b" title="Is the current pointer at the end of the PArray?">isEnd</a>();
-<a name="l00238"></a>00238          bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a3e9c53dd43d416f2980ee1eb396316e1" title="Clear the send buffer.">clearSendBuffer</a>();
-<a name="l00239"></a>00239          bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#ad48f3c999f7dea6b3ac8a245e39e649b" title="Initialize a data block.">beginSendBlock</a>(Buffer::ATOM);
-<a name="l00240"></a>00240          <span class="keywordflow">while</span> (recvArraySize_ &lt; bufferPtr_-&gt;atomCapacity() &amp;&amp; !isComplete_) {
-<a name="l00241"></a>00241             iterator_-&gt;packAtom(*bufferPtr_);
-<a name="l00242"></a>00242             ++recvArraySize_;
-<a name="l00243"></a>00243             ++iterator_;
-<a name="l00244"></a>00244             isComplete_ = iterator_.<a class="code" href="classUtil_1_1PArrayIterator.html#ab376881f847b656dee85c3247706172b" title="Is the current pointer at the end of the PArray?">isEnd</a>();
-<a name="l00245"></a>00245          }
-<a name="l00246"></a>00246          bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#ac625a812aee3b7fe37d17f9cdb8c86f1" title="Finalize a block in the send buffer.">endSendBlock</a>(isComplete_);
+<a name="l00227"></a>00227          <span class="comment">// Receive notice from master to send atoms (blocking receive)</span>
+<a name="l00228"></a>00228          <span class="keywordtype">int</span> message;
+<a name="l00229"></a>00229          <span class="keywordtype">int</span> tag = domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>().Get_rank();
+<a name="l00230"></a>00230          domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>().Recv(&amp;message, 1, MPI::INT, 0, tag);
+<a name="l00231"></a>00231 
+<a name="l00232"></a>00232          <span class="comment">// Pack buffer with atoms</span>
+<a name="l00233"></a>00233          <span class="keywordtype">int</span> recvArraySize_ = 0;
+<a name="l00234"></a>00234          isComplete_ = iterator_.<a class="code" href="classUtil_1_1PArrayIterator.html#ab376881f847b656dee85c3247706172b" title="Is the current pointer at the end of the PArray?">isEnd</a>();
+<a name="l00235"></a>00235          bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a3e9c53dd43d416f2980ee1eb396316e1" title="Clear the send buffer.">clearSendBuffer</a>();
+<a name="l00236"></a>00236          bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#ad48f3c999f7dea6b3ac8a245e39e649b" title="Initialize a data block.">beginSendBlock</a>(Buffer::ATOM);
+<a name="l00237"></a>00237          <span class="keywordflow">while</span> (recvArraySize_ &lt; bufferPtr_-&gt;atomCapacity() &amp;&amp; !isComplete_) {
+<a name="l00238"></a>00238             iterator_-&gt;packAtom(*bufferPtr_);
+<a name="l00239"></a>00239             ++recvArraySize_;
+<a name="l00240"></a>00240             ++iterator_;
+<a name="l00241"></a>00241             isComplete_ = iterator_.<a class="code" href="classUtil_1_1PArrayIterator.html#ab376881f847b656dee85c3247706172b" title="Is the current pointer at the end of the PArray?">isEnd</a>();
+<a name="l00242"></a>00242          }
+<a name="l00243"></a>00243          bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#ac625a812aee3b7fe37d17f9cdb8c86f1" title="Finalize a block in the send buffer.">endSendBlock</a>(isComplete_);
+<a name="l00244"></a>00244 
+<a name="l00245"></a>00245          <span class="comment">// Send buffer to master</span>
+<a name="l00246"></a>00246          bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a0976d94ef4aa36d8dc8d42da2d0dea0f" title="Send a complete buffer.">send</a>(domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>(), 0);
 <a name="l00247"></a>00247 
-<a name="l00248"></a>00248          <span class="comment">// Send buffer to master</span>
-<a name="l00249"></a>00249          bufferPtr_-&gt;<a class="code" href="classDdMd_1_1Buffer.html#a0976d94ef4aa36d8dc8d42da2d0dea0f" title="Send a complete buffer.">send</a>(domainPtr_-&gt;<a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">communicator</a>(), 0);
-<a name="l00250"></a>00250 
-<a name="l00251"></a>00251       }
-<a name="l00252"></a>00252 
-<a name="l00253"></a>00253    }
-<a name="l00254"></a>00254 <span class="preprocessor">   #endif</span>
-<a name="l00255"></a>00255 <span class="preprocessor"></span>
-<a name="l00256"></a>00256 }
-<a name="l00257"></a>00257 <span class="preprocessor">#endif</span>
+<a name="l00248"></a>00248       }
+<a name="l00249"></a>00249 
+<a name="l00250"></a>00250    }
+<a name="l00251"></a>00251 <span class="preprocessor">   #endif</span>
+<a name="l00252"></a>00252 <span class="preprocessor"></span>
+<a name="l00253"></a>00253 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:55 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

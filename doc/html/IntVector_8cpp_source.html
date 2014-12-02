@@ -57,136 +57,132 @@
 <div class="title">IntVector.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef UTIL_INT_VECTOR_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define UTIL_INT_VECTOR_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;IntVector.h&quot;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;Dimension.h&quot;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;<a class="code" href="global_8h.html" title="File containing preprocessor macros for error handling.">util/global.h</a>&gt;</span>
-<a name="l00014"></a>00014 
-<a name="l00015"></a>00015 <span class="preprocessor">#ifdef UTIL_MPI</span>
-<a name="l00016"></a>00016 <span class="preprocessor"></span><span class="preprocessor">#include &lt;util/mpi/MpiStructBuilder.h&gt;</span>
-<a name="l00017"></a>00017 <span class="preprocessor">#endif</span>
-<a name="l00018"></a>00018 <span class="preprocessor"></span>
-<a name="l00019"></a>00019 <span class="keyword">namespace </span>Util
-<a name="l00020"></a>00020 {
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;IntVector.h&quot;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;Dimension.h&quot;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;<a class="code" href="global_8h.html" title="File containing preprocessor macros for error handling.">util/global.h</a>&gt;</span>
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 <span class="preprocessor">#ifdef UTIL_MPI</span>
+<a name="l00013"></a>00013 <span class="preprocessor"></span><span class="preprocessor">#include &lt;util/mpi/MpiStructBuilder.h&gt;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#endif</span>
+<a name="l00015"></a>00015 <span class="preprocessor"></span>
+<a name="l00016"></a>00016 <span class="keyword">namespace </span>Util
+<a name="l00017"></a>00017 {
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019    <span class="comment">// Define static Zero vector</span>
+<a name="l00020"></a>00020    <span class="keyword">const</span> IntVector <a class="code" href="classUtil_1_1IntVector.html#a05e6c59fde97c69f713b6dab540e8a7b" title="Zero IntVector.">IntVector::Zero</a> = IntVector(0);
 <a name="l00021"></a>00021 
-<a name="l00022"></a>00022    <span class="comment">// Define static Zero vector</span>
-<a name="l00023"></a>00023    <span class="keyword">const</span> IntVector <a class="code" href="classUtil_1_1IntVector.html#a05e6c59fde97c69f713b6dab540e8a7b" title="Zero IntVector.">IntVector::Zero</a> = IntVector(0);
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025    <span class="comment">// Equality operators</span>
-<a name="l00026"></a>00026    
-<a name="l00027"></a><a class="code" href="namespaceUtil.html#af3b67cf187dbf43796687881bc38f3fd">00027</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ac55a53e38c064c7c70b3a356cdc62853" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v2) 
-<a name="l00028"></a>00028    {
-<a name="l00029"></a>00029       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
-<a name="l00030"></a>00030          <span class="keywordflow">if</span> (v1.elem_[i] != v2.elem_[i]) {
-<a name="l00031"></a>00031             <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00032"></a>00032          }
-<a name="l00033"></a>00033       }
-<a name="l00034"></a>00034       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00035"></a>00035    }
-<a name="l00036"></a>00036    
-<a name="l00037"></a>00037    
-<a name="l00038"></a><a class="code" href="namespaceUtil.html#a1403b915ed1e3e287256a5b52955d46b">00038</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ac55a53e38c064c7c70b3a356cdc62853" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v1, <span class="keyword">const</span> <span class="keywordtype">int</span>* v2) 
-<a name="l00039"></a>00039    {
-<a name="l00040"></a>00040       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
-<a name="l00041"></a>00041          <span class="keywordflow">if</span> (v1.elem_[i] != v2[i]) {
-<a name="l00042"></a>00042             <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00043"></a>00043          }
-<a name="l00044"></a>00044       }
-<a name="l00045"></a>00045       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00046"></a>00046    }
+<a name="l00022"></a>00022    <span class="comment">// Equality operators</span>
+<a name="l00023"></a>00023    
+<a name="l00024"></a><a class="code" href="namespaceUtil.html#af3b67cf187dbf43796687881bc38f3fd">00024</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ac55a53e38c064c7c70b3a356cdc62853" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v2) 
+<a name="l00025"></a>00025    {
+<a name="l00026"></a>00026       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00027"></a>00027          <span class="keywordflow">if</span> (v1.elem_[i] != v2.elem_[i]) {
+<a name="l00028"></a>00028             <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00029"></a>00029          }
+<a name="l00030"></a>00030       }
+<a name="l00031"></a>00031       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00032"></a>00032    }
+<a name="l00033"></a>00033    
+<a name="l00034"></a>00034    
+<a name="l00035"></a><a class="code" href="namespaceUtil.html#a1403b915ed1e3e287256a5b52955d46b">00035</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ac55a53e38c064c7c70b3a356cdc62853" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v1, <span class="keyword">const</span> <span class="keywordtype">int</span>* v2) 
+<a name="l00036"></a>00036    {
+<a name="l00037"></a>00037       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00038"></a>00038          <span class="keywordflow">if</span> (v1.elem_[i] != v2[i]) {
+<a name="l00039"></a>00039             <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00040"></a>00040          }
+<a name="l00041"></a>00041       }
+<a name="l00042"></a>00042       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00043"></a>00043    }
+<a name="l00044"></a>00044    
+<a name="l00045"></a><a class="code" href="namespaceUtil.html#a6187b72daa8f5feef8ac016a4f03e7db">00045</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ac55a53e38c064c7c70b3a356cdc62853" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>* v1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v2) 
+<a name="l00046"></a>00046    { <span class="keywordflow">return</span> (v2 == v1); }
 <a name="l00047"></a>00047    
-<a name="l00048"></a><a class="code" href="namespaceUtil.html#a6187b72daa8f5feef8ac016a4f03e7db">00048</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ac55a53e38c064c7c70b3a356cdc62853" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>* v1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v2) 
-<a name="l00049"></a>00049    { <span class="keywordflow">return</span> (v2 == v1); }
-<a name="l00050"></a>00050    
-<a name="l00051"></a>00051    <span class="comment">// Inequality operators</span>
+<a name="l00048"></a>00048    <span class="comment">// Inequality operators</span>
+<a name="l00049"></a>00049    
+<a name="l00050"></a><a class="code" href="namespaceUtil.html#a91f9d9c09a665591d9d78aee8f49a804">00050</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a33608178e140012e6439e23adea10b9d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v2) 
+<a name="l00051"></a>00051    { <span class="keywordflow">return</span> !(v1 == v2); }
 <a name="l00052"></a>00052    
-<a name="l00053"></a><a class="code" href="namespaceUtil.html#a91f9d9c09a665591d9d78aee8f49a804">00053</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a33608178e140012e6439e23adea10b9d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v2) 
-<a name="l00054"></a>00054    { <span class="keywordflow">return</span> !(v1 == v2); }
-<a name="l00055"></a>00055    
+<a name="l00053"></a>00053    
+<a name="l00054"></a><a class="code" href="namespaceUtil.html#a019f73173fb01204fd3bb2c97a5ea6e9">00054</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a33608178e140012e6439e23adea10b9d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v1, <span class="keyword">const</span> <span class="keywordtype">int</span>* v2) 
+<a name="l00055"></a>00055    { <span class="keywordflow">return</span> !(v1 == v2); }
 <a name="l00056"></a>00056    
-<a name="l00057"></a><a class="code" href="namespaceUtil.html#a019f73173fb01204fd3bb2c97a5ea6e9">00057</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a33608178e140012e6439e23adea10b9d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v1, <span class="keyword">const</span> <span class="keywordtype">int</span>* v2) 
-<a name="l00058"></a>00058    { <span class="keywordflow">return</span> !(v1 == v2); }
-<a name="l00059"></a>00059    
+<a name="l00057"></a>00057    
+<a name="l00058"></a><a class="code" href="namespaceUtil.html#a393d6fafd566aebd1c05b80f6b1b8c1c">00058</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a33608178e140012e6439e23adea10b9d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>* v1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v2) 
+<a name="l00059"></a>00059    { <span class="keywordflow">return</span> !(v2 == v1); }
 <a name="l00060"></a>00060    
-<a name="l00061"></a><a class="code" href="namespaceUtil.html#a393d6fafd566aebd1c05b80f6b1b8c1c">00061</a>    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a33608178e140012e6439e23adea10b9d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>* v1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; v2) 
-<a name="l00062"></a>00062    { <span class="keywordflow">return</span> !(v2 == v1); }
-<a name="l00063"></a>00063    
-<a name="l00064"></a>00064    <span class="comment">/* </span>
-<a name="l00065"></a>00065 <span class="comment">   * Input a IntVector from an istream, without line breaks.</span>
-<a name="l00066"></a>00066 <span class="comment">   */</span>
-<a name="l00067"></a><a class="code" href="namespaceUtil.html#a244a3547e6afa1a3441e1cbad7d3801c">00067</a>    std::istream&amp; <a class="code" href="namespaceUtil.html#a84a8e4c844fd5d302194294ce6cf1dda" title="istream extractor for a MonoclinicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> &amp;vector)
-<a name="l00068"></a>00068    {
-<a name="l00069"></a>00069       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
-<a name="l00070"></a>00070          in &gt;&gt; vector.elem_[i];
-<a name="l00071"></a>00071       }
-<a name="l00072"></a>00072       <span class="keywordflow">return</span> in;
-<a name="l00073"></a>00073    }
-<a name="l00074"></a>00074    
-<a name="l00075"></a>00075    <span class="comment">/* </span>
-<a name="l00076"></a>00076 <span class="comment">   * Output a IntVector to an ostream, without line breaks.</span>
-<a name="l00077"></a>00077 <span class="comment">   */</span>
-<a name="l00078"></a><a class="code" href="namespaceUtil.html#a45886e51836cd3a74c99bbdfb7c21d17">00078</a>    std::ostream&amp; <a class="code" href="namespaceUtil.html#a10bcffa95685d7673ce01e7c634b0bf2" title="ostream inserter for an MonoclinicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> &amp;vector) 
-<a name="l00079"></a>00079    {
-<a name="l00080"></a>00080       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
-<a name="l00081"></a>00081          out.width(IntVector::Width);
-<a name="l00082"></a>00082          out &lt;&lt; vector.elem_[i];
-<a name="l00083"></a>00083       }
-<a name="l00084"></a>00084       <span class="keywordflow">return</span> out;
-<a name="l00085"></a>00085    }
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00088"></a>00088 <span class="preprocessor"></span>   <span class="comment">// Initialize MpiTraits&lt;IntVector&gt;</span>
-<a name="l00089"></a>00089    MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01IntVector_01_4.html#ae0b652561be6625b03d360928dfe4839" title="MPI Datatype.">MpiTraits&lt;IntVector&gt;::type</a> = MPI::BYTE;
-<a name="l00090"></a>00090    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01IntVector_01_4.html#a1642f20abc819c874786de9b87a5364b" title="Is the MPI type initialized?">MpiTraits&lt;IntVector&gt;::hasType</a> = <span class="keyword">false</span>;
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092    <span class="comment">/*</span>
-<a name="l00093"></a>00093 <span class="comment">   * Commit MPI Datatype.</span>
-<a name="l00094"></a>00094 <span class="comment">   */</span>
-<a name="l00095"></a><a class="code" href="classUtil_1_1IntVector.html#ad54c107285d35edd9dc957b1f77324a1">00095</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntVector.html#ad54c107285d35edd9dc957b1f77324a1" title="Commit MPI datatype MpiTraits&lt;IntVector&gt;::type.">IntVector::commitMpiType</a>() 
-<a name="l00096"></a>00096    {
-<a name="l00097"></a>00097       <span class="keywordflow">if</span> (!<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;IntVector&gt;::hasType</a>) {
-<a name="l00098"></a>00098          <a class="code" href="classUtil_1_1MpiStructBuilder.html" title="A MpiStructBuilder objects is used to create an MPI Struct datatype.">MpiStructBuilder</a> builder;
-<a name="l00099"></a>00099          <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>        vector;
-<a name="l00100"></a>00100          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a34f85f4a1e1c296ba324fe274ea22f24" title="Set address of an class instance.">setBase</a>(&amp;vector);
-<a name="l00101"></a>00101          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;vector[0], MPI::INT);
-<a name="l00102"></a>00102          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;vector[1], MPI::INT);
-<a name="l00103"></a>00103          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;vector[2], MPI::INT);
-<a name="l00104"></a>00104          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#ae95e12f80d3991fe0bd7848010924c25" title="Build and commit a user-defined MPI Struct datatype.">commit</a>(<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;IntVector&gt;::type</a>);
-<a name="l00105"></a>00105          <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;IntVector&gt;::hasType</a> = <span class="keyword">true</span>;
-<a name="l00106"></a>00106       }
-<a name="l00107"></a>00107    }
-<a name="l00108"></a>00108 <span class="preprocessor">   #endif</span>
-<a name="l00109"></a>00109 <span class="preprocessor"></span>
-<a name="l00110"></a>00110    <span class="comment">/*</span>
-<a name="l00111"></a>00111 <span class="comment">   * This static method exists to guarantee initialization of static </span>
-<a name="l00112"></a>00112 <span class="comment">   * constants and variables defined in this file.  Call it somewhere </span>
-<a name="l00113"></a>00113 <span class="comment">   * in the program to guarantee that the contents of this file will </span>
-<a name="l00114"></a>00114 <span class="comment">   * be linked, rather than optimized away. It may only be called once.</span>
-<a name="l00115"></a>00115 <span class="comment">   */</span>
-<a name="l00116"></a><a class="code" href="classUtil_1_1IntVector.html#a5e1cd025099a001b162c2a65303c9cac">00116</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntVector.html#a5e1cd025099a001b162c2a65303c9cac" title="Initialize static IntVector::Zero.">IntVector::initStatic</a>() 
-<a name="l00117"></a>00117    {
-<a name="l00118"></a>00118       <span class="keyword">static</span> <span class="keywordtype">int</span> nCall = 0;
-<a name="l00119"></a>00119       ++nCall;
-<a name="l00120"></a>00120    }
-<a name="l00121"></a>00121 
-<a name="l00122"></a>00122 } 
-<a name="l00123"></a>00123 <span class="preprocessor">#endif</span>
+<a name="l00061"></a>00061    <span class="comment">/* </span>
+<a name="l00062"></a>00062 <span class="comment">   * Input a IntVector from an istream, without line breaks.</span>
+<a name="l00063"></a>00063 <span class="comment">   */</span>
+<a name="l00064"></a><a class="code" href="namespaceUtil.html#a244a3547e6afa1a3441e1cbad7d3801c">00064</a>    std::istream&amp; <a class="code" href="namespaceUtil.html#a84a8e4c844fd5d302194294ce6cf1dda" title="istream extractor for a MonoclinicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> &amp;vector)
+<a name="l00065"></a>00065    {
+<a name="l00066"></a>00066       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00067"></a>00067          in &gt;&gt; vector.elem_[i];
+<a name="l00068"></a>00068       }
+<a name="l00069"></a>00069       <span class="keywordflow">return</span> in;
+<a name="l00070"></a>00070    }
+<a name="l00071"></a>00071    
+<a name="l00072"></a>00072    <span class="comment">/* </span>
+<a name="l00073"></a>00073 <span class="comment">   * Output a IntVector to an ostream, without line breaks.</span>
+<a name="l00074"></a>00074 <span class="comment">   */</span>
+<a name="l00075"></a><a class="code" href="namespaceUtil.html#a45886e51836cd3a74c99bbdfb7c21d17">00075</a>    std::ostream&amp; <a class="code" href="namespaceUtil.html#a10bcffa95685d7673ce01e7c634b0bf2" title="ostream inserter for an MonoclinicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> &amp;vector) 
+<a name="l00076"></a>00076    {
+<a name="l00077"></a>00077       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00078"></a>00078          out.width(IntVector::Width);
+<a name="l00079"></a>00079          out &lt;&lt; vector.elem_[i];
+<a name="l00080"></a>00080       }
+<a name="l00081"></a>00081       <span class="keywordflow">return</span> out;
+<a name="l00082"></a>00082    }
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084 <span class="preprocessor">   #ifdef UTIL_MPI</span>
+<a name="l00085"></a>00085 <span class="preprocessor"></span>   <span class="comment">// Initialize MpiTraits&lt;IntVector&gt;</span>
+<a name="l00086"></a>00086    MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01IntVector_01_4.html#ae0b652561be6625b03d360928dfe4839" title="MPI Datatype.">MpiTraits&lt;IntVector&gt;::type</a> = MPI::BYTE;
+<a name="l00087"></a>00087    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01IntVector_01_4.html#a1642f20abc819c874786de9b87a5364b" title="Is the MPI type initialized?">MpiTraits&lt;IntVector&gt;::hasType</a> = <span class="keyword">false</span>;
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089    <span class="comment">/*</span>
+<a name="l00090"></a>00090 <span class="comment">   * Commit MPI Datatype.</span>
+<a name="l00091"></a>00091 <span class="comment">   */</span>
+<a name="l00092"></a><a class="code" href="classUtil_1_1IntVector.html#ad54c107285d35edd9dc957b1f77324a1">00092</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntVector.html#ad54c107285d35edd9dc957b1f77324a1" title="Commit MPI datatype MpiTraits&lt;IntVector&gt;::type.">IntVector::commitMpiType</a>() 
+<a name="l00093"></a>00093    {
+<a name="l00094"></a>00094       <span class="keywordflow">if</span> (!<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;IntVector&gt;::hasType</a>) {
+<a name="l00095"></a>00095          <a class="code" href="classUtil_1_1MpiStructBuilder.html" title="A MpiStructBuilder objects is used to create an MPI Struct datatype.">MpiStructBuilder</a> builder;
+<a name="l00096"></a>00096          <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>        vector;
+<a name="l00097"></a>00097          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a34f85f4a1e1c296ba324fe274ea22f24" title="Set address of an class instance.">setBase</a>(&amp;vector);
+<a name="l00098"></a>00098          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;vector[0], MPI::INT);
+<a name="l00099"></a>00099          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;vector[1], MPI::INT);
+<a name="l00100"></a>00100          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;vector[2], MPI::INT);
+<a name="l00101"></a>00101          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#ae95e12f80d3991fe0bd7848010924c25" title="Build and commit a user-defined MPI Struct datatype.">commit</a>(<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;IntVector&gt;::type</a>);
+<a name="l00102"></a>00102          <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;IntVector&gt;::hasType</a> = <span class="keyword">true</span>;
+<a name="l00103"></a>00103       }
+<a name="l00104"></a>00104    }
+<a name="l00105"></a>00105 <span class="preprocessor">   #endif</span>
+<a name="l00106"></a>00106 <span class="preprocessor"></span>
+<a name="l00107"></a>00107    <span class="comment">/*</span>
+<a name="l00108"></a>00108 <span class="comment">   * This static method exists to guarantee initialization of static </span>
+<a name="l00109"></a>00109 <span class="comment">   * constants and variables defined in this file.  Call it somewhere </span>
+<a name="l00110"></a>00110 <span class="comment">   * in the program to guarantee that the contents of this file will </span>
+<a name="l00111"></a>00111 <span class="comment">   * be linked, rather than optimized away. It may only be called once.</span>
+<a name="l00112"></a>00112 <span class="comment">   */</span>
+<a name="l00113"></a><a class="code" href="classUtil_1_1IntVector.html#a5e1cd025099a001b162c2a65303c9cac">00113</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntVector.html#a5e1cd025099a001b162c2a65303c9cac" title="Initialize static IntVector::Zero.">IntVector::initStatic</a>() 
+<a name="l00114"></a>00114    {
+<a name="l00115"></a>00115       <span class="keyword">static</span> <span class="keywordtype">int</span> nCall = 0;
+<a name="l00116"></a>00116       ++nCall;
+<a name="l00117"></a>00117    }
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119 } 
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:13 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

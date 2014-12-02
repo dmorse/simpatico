@@ -71,21 +71,23 @@
 <!-- doxytag: class="DdMd::TrajectoryWriter" --><!-- doxytag: inherits="DdMd::Analyzer" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Based class for classes that write trajectories to a single file. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00040">40</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00039">39</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 </div>
-<p><code>#include &lt;<a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for DdMd::TrajectoryWriter:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classDdMd_1_1TrajectoryWriter.png" usemap="#DdMd::TrajectoryWriter_map" alt=""/>
   <map id="DdMd::TrajectoryWriter_map" name="DdMd::TrajectoryWriter_map">
-<area href="classDdMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions." alt="DdMd::Analyzer" shape="rect" coords="94,168,272,192"/>
-<area href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file." alt="Util::ParamComposite" shape="rect" coords="94,112,272,136"/>
-<area href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file." alt="Util::ParamComponent" shape="rect" coords="94,56,272,80"/>
-<area href="classUtil_1_1Serializable.html" title="Abstract class for serializable objects." alt="Util::Serializable" shape="rect" coords="0,0,178,24"/>
-<area href="classUtil_1_1MpiFileIo.html" title="Identifies whether this processor may do file I/O." alt="Util::MpiFileIo" shape="rect" coords="188,0,366,24"/>
-<area href="classDdMd_1_1DdMdTrajectoryWriter.html" title="Native binary trajectory format for ddSim." alt="DdMd::DdMdTrajectoryWriter" shape="rect" coords="94,280,272,304"/>
+<area href="classDdMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions." alt="DdMd::Analyzer" shape="rect" coords="223,168,436,192"/>
+<area href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file." alt="Util::ParamComposite" shape="rect" coords="223,112,436,136"/>
+<area href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file." alt="Util::ParamComponent" shape="rect" coords="223,56,436,80"/>
+<area href="classUtil_1_1Serializable.html" title="Abstract class for serializable objects." alt="Util::Serializable" shape="rect" coords="111,0,324,24"/>
+<area href="classUtil_1_1MpiFileIo.html" title="Identifies whether this processor may do file I/O." alt="Util::MpiFileIo" shape="rect" coords="334,0,547,24"/>
+<area href="classDdMd_1_1DdMdGroupTrajectoryWriter.html" title="Native binary trajectory format for ddSim, for one group." alt="DdMd::DdMdGroupTrajectoryWriter" shape="rect" coords="0,280,213,304"/>
+<area href="classDdMd_1_1DdMdTrajectoryWriter.html" title="Native binary trajectory format for ddSim." alt="DdMd::DdMdTrajectoryWriter" shape="rect" coords="223,280,436,304"/>
+<area href="classDdMd_1_1LammpsDumpWriter.html" title="Write a trajectory in the Lammps dump format." alt="DdMd::LammpsDumpWriter" shape="rect" coords="446,280,659,304"/>
 </map>
  </div></div>
 
@@ -93,8 +95,8 @@ Inheritance diagram for DdMd::TrajectoryWriter:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#afe44bd8a29217c430766aeba93ec7046">TrajectoryWriter</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;<a class="el" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0">simulation</a>)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#afe44bd8a29217c430766aeba93ec7046"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#ad084d76ac323267b546de5e621d91d4c">TrajectoryWriter</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;<a class="el" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0">simulation</a>, bool <a class="el" href="classDdMd_1_1TrajectoryWriter.html#ae9efaa2c2e5764a3b24f6e48da8ff036">isBinary</a>=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ad084d76ac323267b546de5e621d91d4c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#ab04c0a6f3ea60c7e798923cf0fa17ea4">~TrajectoryWriter</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ab04c0a6f3ea60c7e798923cf0fa17ea4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#a7a3430ddeb31dd99803b3043c8c8d7a9">readParameters</a> (std::istream &amp;in)</td></tr>
@@ -103,16 +105,20 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load internal state from an archive.  <a href="#af46cb119fcd9691007214311f6426390"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#a0d027e70524a4963beb66ce9bf1564b5">save</a> (<a class="el" href="classUtil_1_1Serializable.html#aca43a1eea5ec5f13189a57892a7a6d04">Serializable::OArchive</a> &amp;ar)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save internal state to an archive.  <a href="#a0d027e70524a4963beb66ce9bf1564b5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#a691b116e4684004922c7aaba06200b2d">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear nSample counter.  <a href="#a691b116e4684004922c7aaba06200b2d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#a352f5d9ef92b53618fe1a49670fac949">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the trajectory file.  <a href="#a352f5d9ef92b53618fe1a49670fac949"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#a21b8f1f56167aae54c63f2e353d11821">sample</a> (long iStep)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump configuration to file.  <a href="#a21b8f1f56167aae54c63f2e353d11821"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#a691b116e4684004922c7aaba06200b2d">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear nSample counter.  <a href="#a691b116e4684004922c7aaba06200b2d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#ac46f5c685216beb0b89dc5fbb460de53">output</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close ouput file.  <a href="#ac46f5c685216beb0b89dc5fbb460de53"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#ad11dffd0a0ce002f2af20d26a799b3f5">writeHeader</a> (std::ofstream &amp;out, long iStep)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data that should appear once, at beginning of the file.  <a href="#ad11dffd0a0ce002f2af20d26a799b3f5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#ae9efaa2c2e5764a3b24f6e48da8ff036">isBinary</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the file format binary (true) or text (false)?  <a href="#ae9efaa2c2e5764a3b24f6e48da8ff036"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#ac5fbd03d43073242c10ea1d8d4cff2b8">writeHeader</a> (std::ofstream &amp;out)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data that should appear once, at beginning of the file.  <a href="#ac5fbd03d43073242c10ea1d8d4cff2b8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#a6309205281222b6cd83de335d2de4d31">writeFrame</a> (std::ofstream &amp;out, long iStep)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data that should appear in every frame.  <a href="#a6309205281222b6cd83de335d2de4d31"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#abf8df796fd1e5119b9324f2b0a3e0e99">domain</a> ()</td></tr>
@@ -137,16 +143,26 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the dihedral collector by reference.  <a href="#a41e0f8fc451ad9c649d02f5d542b7582"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="afe44bd8a29217c430766aeba93ec7046"></a><!-- doxytag: member="DdMd::TrajectoryWriter::TrajectoryWriter" ref="afe44bd8a29217c430766aeba93ec7046" args="(Simulation &amp;simulation)" -->
+<a class="anchor" id="ad084d76ac323267b546de5e621d91d4c"></a><!-- doxytag: member="DdMd::TrajectoryWriter::TrajectoryWriter" ref="ad084d76ac323267b546de5e621d91d4c" args="(Simulation &amp;simulation, bool isBinary=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#afe44bd8a29217c430766aeba93ec7046">DdMd::TrajectoryWriter::TrajectoryWriter</a> </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1TrajectoryWriter.html#ad084d76ac323267b546de5e621d91d4c">DdMd::TrajectoryWriter::TrajectoryWriter</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td>
-          <td class="paramname"><em>simulation</em></td><td>)</td>
+          <td class="paramname"><em>simulation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isBinary</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
@@ -155,14 +171,15 @@ Protected Member Functions</h2></td></tr>
 <p>Constructor. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">simulation</td><td>parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> object. </td></tr>
+    <tr><td class="paramname">simulation</td><td>parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> object </td></tr>
+    <tr><td class="paramname">isBinary</td><td>Is the trajectory file a binary file? </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8cpp_source.html#l00048">48</a> of file <a class="el" href="TrajectoryWriter_8cpp_source.html">TrajectoryWriter.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00023">23</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html">ddMd/analyzers/TrajectoryWriter.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01037">DdMd::Simulation::angleStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01028">DdMd::Simulation::atomStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01032">DdMd::Simulation::bondStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01022">DdMd::Simulation::boundary()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01049">DdMd::Simulation::buffer()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01042">DdMd::Simulation::dihedralStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01025">DdMd::Simulation::domain()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01042">DdMd::Simulation::angleStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01033">DdMd::Simulation::atomStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01037">DdMd::Simulation::bondStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01027">DdMd::Simulation::boundary()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01047">DdMd::Simulation::dihedralStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01030">DdMd::Simulation::domain()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -182,7 +199,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00055">55</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00055">55</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 
 </div>
 </div>
@@ -212,9 +229,11 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a172a3a656b5829c8d758424ad09a22a6">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8cpp_source.html#l00085">85</a> of file <a class="el" href="TrajectoryWriter_8cpp_source.html">TrajectoryWriter.cpp</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1DdMdGroupTrajectoryWriter.html#a636bcf131ddf222cbe6952e7d5a63e2a">DdMd::DdMdGroupTrajectoryWriter</a>.</p>
 
-<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00045">DdMd::Analyzer::readInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00112">DdMd::Analyzer::readOutputFileName()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00059">59</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html">ddMd/analyzers/TrajectoryWriter.cpp</a>.</p>
+
+<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00042">DdMd::Analyzer::readInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00109">DdMd::Analyzer::readOutputFileName()</a>.</p>
 
 </div>
 </div>
@@ -243,9 +262,11 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#af98d405b86be7fd6d92f6b5e98e278dd">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8cpp_source.html#l00095">95</a> of file <a class="el" href="TrajectoryWriter_8cpp_source.html">TrajectoryWriter.cpp</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1DdMdGroupTrajectoryWriter.html#a04a2ade4ca179db1cd0402f9363ed3d9">DdMd::DdMdGroupTrajectoryWriter</a>.</p>
 
-<p>References <a class="el" href="MpiLoader_8h_source.html#l00137">Util::MpiLoader&lt; IArchive &gt;::load()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00077">DdMd::Analyzer::loadInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00118">DdMd::Analyzer::loadOutputFileName()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00069">69</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html">ddMd/analyzers/TrajectoryWriter.cpp</a>.</p>
+
+<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00074">DdMd::Analyzer::loadInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00115">DdMd::Analyzer::loadOutputFileName()</a>.</p>
 
 </div>
 </div>
@@ -274,18 +295,20 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#a314e65958fa201e8fb493712a0f899cc">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8cpp_source.html#l00109">109</a> of file <a class="el" href="TrajectoryWriter_8cpp_source.html">TrajectoryWriter.cpp</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1DdMdGroupTrajectoryWriter.html#a6b34a3ea113e8121dd4c2b95d42f8f74">DdMd::DdMdGroupTrajectoryWriter</a>.</p>
 
-<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00106">DdMd::Analyzer::saveInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00126">DdMd::Analyzer::saveOutputFileName()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00079">79</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html">ddMd/analyzers/TrajectoryWriter.cpp</a>.</p>
+
+<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00103">DdMd::Analyzer::saveInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00123">DdMd::Analyzer::saveOutputFileName()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a691b116e4684004922c7aaba06200b2d"></a><!-- doxytag: member="DdMd::TrajectoryWriter::clear" ref="a691b116e4684004922c7aaba06200b2d" args="()" -->
+<a class="anchor" id="a352f5d9ef92b53618fe1a49670fac949"></a><!-- doxytag: member="DdMd::TrajectoryWriter::setup" ref="a352f5d9ef92b53618fe1a49670fac949" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classDdMd_1_1TrajectoryWriter.html#a691b116e4684004922c7aaba06200b2d">DdMd::TrajectoryWriter::clear</a> </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1TrajectoryWriter.html#a352f5d9ef92b53618fe1a49670fac949">DdMd::TrajectoryWriter::setup</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -294,13 +317,13 @@ Protected Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Clear nSample counter. </p>
+<p>Open the trajectory file. </p>
 
-<p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#a4d3188e3d11e6a679f464018785d98a7">DdMd::Analyzer</a>.</p>
+<p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#adc0577afc0c6830c7c40e5f46818cd2c">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8cpp_source.html#l00119">119</a> of file <a class="el" href="TrajectoryWriter_8cpp_source.html">TrajectoryWriter.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00088">88</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html">ddMd/analyzers/TrajectoryWriter.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="TrajectoryWriter_8cpp_source.html#l00145">output()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01134">DdMd::Simulation::fileMaster()</a>, <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00220">isBinary()</a>, <a class="el" href="MpiFileIo_8h_source.html#l00092">Util::MpiFileIo::isIoProcessor()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, and <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00115">writeHeader()</a>.</p>
 
 </div>
 </div>
@@ -329,9 +352,33 @@ Protected Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classDdMd_1_1Analyzer.html#af41861e5d91cf1c702a6c69c7843ad8b">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8cpp_source.html#l00130">130</a> of file <a class="el" href="TrajectoryWriter_8cpp_source.html">TrajectoryWriter.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00105">105</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html">ddMd/analyzers/TrajectoryWriter.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01129">DdMd::Simulation::fileMaster()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00237">DdMd::Analyzer::isAtInterval()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, <a class="el" href="classDdMd_1_1TrajectoryWriter.html#a6309205281222b6cd83de335d2de4d31">writeFrame()</a>, and <a class="el" href="classDdMd_1_1TrajectoryWriter.html#ad11dffd0a0ce002f2af20d26a799b3f5">writeHeader()</a>.</p>
+<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00237">DdMd::Analyzer::isAtInterval()</a>, and <a class="el" href="classDdMd_1_1TrajectoryWriter.html#a6309205281222b6cd83de335d2de4d31">writeFrame()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a691b116e4684004922c7aaba06200b2d"></a><!-- doxytag: member="DdMd::TrajectoryWriter::clear" ref="a691b116e4684004922c7aaba06200b2d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classDdMd_1_1TrajectoryWriter.html#a691b116e4684004922c7aaba06200b2d">DdMd::TrajectoryWriter::clear</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Clear nSample counter. </p>
+
+<p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#a4d3188e3d11e6a679f464018785d98a7">DdMd::Analyzer</a>.</p>
+
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00115">115</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html">ddMd/analyzers/TrajectoryWriter.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00125">output()</a>.</p>
 
 </div>
 </div>
@@ -353,50 +400,63 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#aff7be7e7f8f23c8cad4dd35140ab8004">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8cpp_source.html#l00145">145</a> of file <a class="el" href="TrajectoryWriter_8cpp_source.html">TrajectoryWriter.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00125">125</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html">ddMd/analyzers/TrajectoryWriter.cpp</a>.</p>
 
-<p>References <a class="el" href="TrajectoryWriter_8cpp_source.html#l00119">clear()</a>.</p>
+<p>References <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00115">clear()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad11dffd0a0ce002f2af20d26a799b3f5"></a><!-- doxytag: member="DdMd::TrajectoryWriter::writeHeader" ref="ad11dffd0a0ce002f2af20d26a799b3f5" args="(std::ofstream &amp;out, long iStep)=0" -->
+<a class="anchor" id="ae9efaa2c2e5764a3b24f6e48da8ff036"></a><!-- doxytag: member="DdMd::TrajectoryWriter::isBinary" ref="ae9efaa2c2e5764a3b24f6e48da8ff036" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classDdMd_1_1TrajectoryWriter.html#ad11dffd0a0ce002f2af20d26a799b3f5">DdMd::TrajectoryWriter::writeHeader</a> </td>
+          <td class="memname">bool <a class="el" href="classDdMd_1_1TrajectoryWriter.html#ae9efaa2c2e5764a3b24f6e48da8ff036">DdMd::TrajectoryWriter::isBinary</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline, protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Is the file format binary (true) or text (false)? </p>
+
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00220">220</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
+
+<p>Referenced by <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00088">setup()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac5fbd03d43073242c10ea1d8d4cff2b8"></a><!-- doxytag: member="DdMd::TrajectoryWriter::writeHeader" ref="ac5fbd03d43073242c10ea1d8d4cff2b8" args="(std::ofstream &amp;out)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="classDdMd_1_1TrajectoryWriter.html#ac5fbd03d43073242c10ea1d8d4cff2b8">DdMd::TrajectoryWriter::writeHeader</a> </td>
           <td>(</td>
           <td class="paramtype">std::ofstream &amp;&#160;</td>
-          <td class="paramname"><em>out</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">long&#160;</td>
-          <td class="paramname"><em>iStep</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td><code> [protected, pure virtual]</code></td>
+          <td class="paramname"><em>out</em></td><td>)</td>
+          <td><code> [inline, protected, virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Write data that should appear once, at beginning of the file. </p>
-<p>Called by sample when iStep == 0.</p>
+<p>Called by sample on first invocation. Default implementation is empty.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">out</td><td>output file stream </td></tr>
-    <tr><td class="paramname">iStep</td><td>MD time step index </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1DdMdTrajectoryWriter.html#a6d300901d57a611d8af7b3813d2f2ff6">DdMd::DdMdTrajectoryWriter</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1DdMdGroupTrajectoryWriter.html#a6e025ab62314be7fab1d367247d9063a">DdMd::DdMdGroupTrajectoryWriter</a>, and <a class="el" href="classDdMd_1_1DdMdTrajectoryWriter.html#a80eaf65b8a918e7520e8b8dac485c157">DdMd::DdMdTrajectoryWriter</a>.</p>
 
-<p>Referenced by <a class="el" href="TrajectoryWriter_8cpp_source.html#l00130">sample()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00115">115</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
+
+<p>Referenced by <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00088">setup()</a>.</p>
 
 </div>
 </div>
@@ -435,9 +495,9 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1DdMdTrajectoryWriter.html#a831c1670782a1df42f06e16b05113343">DdMd::DdMdTrajectoryWriter</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1DdMdGroupTrajectoryWriter.html#aa12aed218d4112c6a3e1bbc4ee799ef7">DdMd::DdMdGroupTrajectoryWriter</a>, <a class="el" href="classDdMd_1_1DdMdTrajectoryWriter.html#a831c1670782a1df42f06e16b05113343">DdMd::DdMdTrajectoryWriter</a>, and <a class="el" href="classDdMd_1_1LammpsDumpWriter.html#a867f4037e832a43435f167066615f343">DdMd::LammpsDumpWriter</a>.</p>
 
-<p>Referenced by <a class="el" href="TrajectoryWriter_8cpp_source.html#l00130">sample()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00105">sample()</a>.</p>
 
 </div>
 </div>
@@ -457,9 +517,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00213">213</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00223">223</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00039">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00048">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>, <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00035">DdMd::DdMdTrajectoryWriter::writeHeader()</a>, and <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00064">DdMd::DdMdGroupTrajectoryWriter::writeHeader()</a>.</p>
 
 </div>
 </div>
@@ -479,9 +539,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get Boundary by reference. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00216">216</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00226">226</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00048">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>.</p>
 
 </div>
 </div>
@@ -501,9 +561,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00219">219</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00229">229</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00039">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00048">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00035">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
 
 </div>
 </div>
@@ -523,9 +583,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1AtomCollector.html" title="Class for collecting Atoms from processors to master processor.">AtomCollector</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00222">222</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00232">232</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00048">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00064">DdMd::DdMdGroupTrajectoryWriter::writeHeader()</a>.</p>
 
 </div>
 </div>
@@ -545,9 +605,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get <a class="el" href="classDdMd_1_1BondStorage.html" title="Container for for Group&lt;2&gt; (bond) objects.">BondStorage</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00226">226</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
-
-<p>Referenced by <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00039">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00236">236</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 
 </div>
 </div>
@@ -567,9 +625,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the bond collector by reference. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00229">229</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
-
-<p>Referenced by <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00039">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00239">239</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 
 </div>
 </div>
@@ -589,9 +645,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get <a class="el" href="classDdMd_1_1AngleStorage.html" title="Container for Group&lt;3&gt; (angle) objects.">AngleStorage</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00234">234</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
-
-<p>Referenced by <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00039">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00244">244</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 
 </div>
 </div>
@@ -611,9 +665,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the angle collector by reference. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00237">237</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
-
-<p>Referenced by <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00039">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00247">247</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 
 </div>
 </div>
@@ -633,9 +685,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get <a class="el" href="classDdMd_1_1DihedralStorage.html" title="Container for Group&lt;4&gt; (dihedral) objects.">DihedralStorage</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00242">242</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
-
-<p>Referenced by <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00039">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00252">252</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 
 </div>
 </div>
@@ -655,15 +705,13 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the dihedral collector by reference. </p>
 
-<p>Definition at line <a class="el" href="TrajectoryWriter_8h_source.html#l00245">245</a> of file <a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a>.</p>
-
-<p>Referenced by <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00039">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html#l00255">255</a> of file <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="TrajectoryWriter_8h_source.html">TrajectoryWriter.h</a></li>
-<li><a class="el" href="TrajectoryWriter_8cpp_source.html">TrajectoryWriter.cpp</a></li>
+<li><a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8h_source.html">ddMd/analyzers/TrajectoryWriter.h</a></li>
+<li><a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html">ddMd/analyzers/TrajectoryWriter.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
@@ -671,7 +719,7 @@ Protected Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:18 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:04 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

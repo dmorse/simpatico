@@ -63,7 +63,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -119,7 +119,7 @@
 <a name="l00163"></a>00163 
 <a name="l00164"></a>00164    <span class="keyword">protected</span>:
 <a name="l00165"></a>00165 
-<a name="l00169"></a>00169       <span class="keywordtype">void</span> setFileMaster(<a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; fileMaster);
+<a name="l00169"></a>00169       <span class="keywordtype">void</span> setFileMaster(<a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>&amp; fileMaster);
 <a name="l00170"></a>00170 
 <a name="l00176"></a>00176       <span class="keywordtype">void</span> readInterval(std::istream &amp;in);
 <a name="l00177"></a>00177 
@@ -129,7 +129,7 @@
 <a name="l00191"></a>00191 
 <a name="l00197"></a>00197       <span class="keywordtype">void</span> loadOutputFileName(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a>&amp; ar);
 <a name="l00198"></a>00198 
-<a name="l00204"></a>00204       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; fileMaster();
+<a name="l00204"></a>00204       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>&amp; fileMaster();
 <a name="l00205"></a>00205 
 <a name="l00209"></a>00209       <span class="keyword">const</span> std::string&amp; outputFileName() <span class="keyword">const</span>;
 <a name="l00210"></a>00210 
@@ -141,7 +141,7 @@
 <a name="l00221"></a>00221 
 <a name="l00222"></a>00222    <span class="keyword">private</span>:
 <a name="l00223"></a>00223 
-<a name="l00225"></a>00225       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>* fileMasterPtr_;
+<a name="l00225"></a>00225       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>* fileMasterPtr_;
 <a name="l00226"></a>00226 
 <a name="l00227"></a>00227    };
 <a name="l00228"></a>00228 
@@ -167,6 +167,9 @@
 <a name="l00248"></a>00248 
 <a name="l00249"></a>00249    <span class="comment">// Method template</span>
 <a name="l00250"></a>00250 
+<a name="l00251"></a>00251    <span class="comment">/*</span>
+<a name="l00252"></a>00252 <span class="comment">   * Serialize to/from an archive. </span>
+<a name="l00253"></a>00253 <span class="comment">   */</span>
 <a name="l00254"></a>00254    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
 <a name="l00255"></a><a class="code" href="classMcMd_1_1Analyzer.html#ae6a6b048d58746a31d21c34c418e5670">00255</a>    <span class="keywordtype">void</span> <a class="code" href="namespaceMcMd.html#a355e75967e1f13958db3c325e8d9abb2" title="Serialize a PairSelector.">Analyzer::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00256"></a>00256    {
@@ -182,7 +185,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:55 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

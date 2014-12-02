@@ -63,7 +63,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -98,7 +98,7 @@
 <a name="l00039"></a>00039 
 <a name="l00040"></a>00040    <span class="keyword">using namespace </span>Util;
 <a name="l00041"></a>00041 
-<a name="l00042"></a>00042    <span class="keyword">class </span>Species;
+<a name="l00042"></a>00042    <span class="keyword">class </span><a class="code" href="classSpecies.html">Species</a>;
 <a name="l00043"></a>00043    <span class="keyword">class </span>SpeciesManager;
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045    <span class="keyword">class </span>Analyzer;
@@ -147,7 +147,7 @@
 <a name="l00191"></a>00191 
 <a name="l00195"></a>00195       <a class="code" href="classUtil_1_1Factory.html">Factory&lt;Species&gt;</a>&amp; speciesFactory();
 <a name="l00196"></a>00196 
-<a name="l00200"></a>00200       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; fileMaster();
+<a name="l00200"></a>00200       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>&amp; fileMaster();
 <a name="l00201"></a>00201 
 <a name="l00202"></a>00202 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00203"></a>00203 <span class="preprocessor"></span>
@@ -171,14 +171,14 @@
 <a name="l00234"></a>00234       <span class="keywordtype">int</span> nDihedralType() <span class="keyword">const</span>;
 <a name="l00235"></a>00235 <span class="preprocessor">      #endif</span>
 <a name="l00236"></a>00236 <span class="preprocessor"></span>
-<a name="l00237"></a>00237 <span class="preprocessor">      #ifdef MCMD_LINK</span>
+<a name="l00237"></a>00237 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
 <a name="l00238"></a>00238 <span class="preprocessor"></span>
-<a name="l00241"></a>00241       <span class="keywordtype">int</span> nLinkType() <span class="keyword">const</span>;
+<a name="l00241"></a>00241       <span class="keywordtype">int</span> hasExternal() <span class="keyword">const</span>;
 <a name="l00242"></a>00242 <span class="preprocessor">      #endif</span>
 <a name="l00243"></a>00243 <span class="preprocessor"></span>
-<a name="l00244"></a>00244 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
+<a name="l00244"></a>00244 <span class="preprocessor">      #ifdef MCMD_LINK</span>
 <a name="l00245"></a>00245 <span class="preprocessor"></span>
-<a name="l00248"></a>00248       <span class="keywordtype">int</span> hasExternal() <span class="keyword">const</span>;
+<a name="l00248"></a>00248       <span class="keywordtype">int</span> nLinkType() <span class="keyword">const</span>;
 <a name="l00249"></a>00249 <span class="preprocessor">      #endif</span>
 <a name="l00250"></a>00250 <span class="preprocessor"></span>
 <a name="l00251"></a>00251 <span class="preprocessor">      #ifdef INTER_TETHER</span>
@@ -269,7 +269,7 @@
 <a name="l00473"></a>00473       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;int&gt;</a> firstDihedralIds_;
 <a name="l00474"></a>00474 <span class="preprocessor">      #endif</span>
 <a name="l00475"></a>00475 <span class="preprocessor"></span>
-<a name="l00479"></a>00479       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> fileMaster_;
+<a name="l00479"></a>00479       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a> fileMaster_;
 <a name="l00480"></a>00480 
 <a name="l00481"></a>00481 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00482"></a>00482 <span class="preprocessor"></span>
@@ -305,14 +305,14 @@
 <a name="l00529"></a>00529       <span class="keywordtype">int</span> nDihedralType_;
 <a name="l00530"></a>00530 <span class="preprocessor">      #endif</span>
 <a name="l00531"></a>00531 <span class="preprocessor"></span>
-<a name="l00532"></a>00532 <span class="preprocessor">      #ifdef MCMD_LINK</span>
+<a name="l00532"></a>00532 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
 <a name="l00533"></a>00533 <span class="preprocessor"></span>
-<a name="l00534"></a>00534       <span class="keywordtype">int</span> nLinkType_;
+<a name="l00534"></a>00534       <span class="keywordtype">int</span> hasExternal_;
 <a name="l00535"></a>00535 <span class="preprocessor">      #endif</span>
 <a name="l00536"></a>00536 <span class="preprocessor"></span>
-<a name="l00537"></a>00537 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
+<a name="l00537"></a>00537 <span class="preprocessor">      #ifdef MCMD_LINK</span>
 <a name="l00538"></a>00538 <span class="preprocessor"></span>
-<a name="l00539"></a>00539       <span class="keywordtype">int</span> hasExternal_;
+<a name="l00539"></a>00539       <span class="keywordtype">int</span> nLinkType_;
 <a name="l00540"></a>00540 <span class="preprocessor">      #endif</span>
 <a name="l00541"></a>00541 <span class="preprocessor"></span>
 <a name="l00542"></a>00542 <span class="preprocessor">      #ifdef INTER_TETHER</span>
@@ -376,14 +376,14 @@
 <a name="l00660"></a>00660 <span class="keyword">   </span>{  <span class="keywordflow">return</span> nDihedralType_; }
 <a name="l00661"></a>00661 <span class="preprocessor">   #endif</span>
 <a name="l00662"></a>00662 <span class="preprocessor"></span>
-<a name="l00663"></a>00663 <span class="preprocessor">   #ifdef MCMD_LINK</span>
-<a name="l00664"></a><a class="code" href="classMcMd_1_1Simulation.html#af044562a4427a42d14b27923528c6237">00664</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#af044562a4427a42d14b27923528c6237" title="Get the number of link types.">Simulation::nLinkType</a>()<span class="keyword"> const</span>
-<a name="l00665"></a>00665 <span class="keyword">   </span>{  <span class="keywordflow">return</span> nLinkType_; }
+<a name="l00663"></a>00663 <span class="preprocessor">   #ifdef INTER_EXTERNAL</span>
+<a name="l00664"></a><a class="code" href="classMcMd_1_1Simulation.html#a84b380cfe058e530a597b1040b77611c">00664</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a84b380cfe058e530a597b1040b77611c" title="Does an external potential exist?">Simulation::hasExternal</a>()<span class="keyword"> const</span>
+<a name="l00665"></a>00665 <span class="keyword">   </span>{  <span class="keywordflow">return</span> hasExternal_; }
 <a name="l00666"></a>00666 <span class="preprocessor">   #endif</span>
 <a name="l00667"></a>00667 <span class="preprocessor"></span>
-<a name="l00668"></a>00668 <span class="preprocessor">   #ifdef INTER_EXTERNAL</span>
-<a name="l00669"></a><a class="code" href="classMcMd_1_1Simulation.html#a84b380cfe058e530a597b1040b77611c">00669</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a84b380cfe058e530a597b1040b77611c" title="Does an external potential exist?">Simulation::hasExternal</a>()<span class="keyword"> const</span>
-<a name="l00670"></a>00670 <span class="keyword">   </span>{  <span class="keywordflow">return</span> hasExternal_; }
+<a name="l00668"></a>00668 <span class="preprocessor">   #ifdef MCMD_LINK</span>
+<a name="l00669"></a><a class="code" href="classMcMd_1_1Simulation.html#af044562a4427a42d14b27923528c6237">00669</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#af044562a4427a42d14b27923528c6237" title="Get the number of link types.">Simulation::nLinkType</a>()<span class="keyword"> const</span>
+<a name="l00670"></a>00670 <span class="keyword">   </span>{  <span class="keywordflow">return</span> nLinkType_; }
 <a name="l00671"></a>00671 <span class="preprocessor">   #endif</span>
 <a name="l00672"></a>00672 <span class="preprocessor"></span>
 <a name="l00673"></a>00673 <span class="preprocessor">   #ifdef INTER_TETHER</span>
@@ -432,7 +432,7 @@
 <a name="l00716"></a>00716 <span class="preprocessor"></span>
 <a name="l00717"></a>00717    <span class="comment">// Protected inline member functions</span>
 <a name="l00718"></a>00718    
-<a name="l00719"></a><a class="code" href="classMcMd_1_1Simulation.html#a1d59234d00553f1dcae37158165d2a0f">00719</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; <a class="code" href="classMcMd_1_1Simulation.html#a1d59234d00553f1dcae37158165d2a0f" title="Get the FileMaster object.">Simulation::fileMaster</a>()
+<a name="l00719"></a><a class="code" href="classMcMd_1_1Simulation.html#a1d59234d00553f1dcae37158165d2a0f">00719</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>&amp; <a class="code" href="classMcMd_1_1Simulation.html#a1d59234d00553f1dcae37158165d2a0f" title="Get the FileMaster object.">Simulation::fileMaster</a>()
 <a name="l00720"></a>00720    {  <span class="keywordflow">return</span> fileMaster_; }
 <a name="l00721"></a>00721 
 <a name="l00722"></a><a class="code" href="classMcMd_1_1Simulation.html#a8b3a15a9ef8fdfa480236fd0d841515b">00722</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Simulation.html#a8b3a15a9ef8fdfa480236fd0d841515b" title="Set the associated AnalyzerManager.">Simulation::setAnalyzerManager</a>(<a class="code" href="classMcMd_1_1AnalyzerManager.html" title="Manager for a list of Analyzer objects.">AnalyzerManager</a>* ptr)
@@ -455,7 +455,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:15 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:00 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

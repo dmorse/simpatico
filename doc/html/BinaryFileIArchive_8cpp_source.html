@@ -57,93 +57,89 @@
 <div class="title">BinaryFileIArchive.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef UTIL_BINARY_FILE_I_ARCHIVE_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define UTIL_BINARY_FILE_I_ARCHIVE_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;BinaryFileIArchive.h&quot;</span>
-<a name="l00012"></a>00012 
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;vector&gt;</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;BinaryFileIArchive.h&quot;</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 <span class="keyword">namespace </span>Util
+<a name="l00013"></a>00013 {
 <a name="l00014"></a>00014 
-<a name="l00015"></a>00015 <span class="keyword">namespace </span>Util
-<a name="l00016"></a>00016 {
-<a name="l00017"></a>00017 
-<a name="l00018"></a>00018    <span class="comment">/*</span>
-<a name="l00019"></a>00019 <span class="comment">   * Constructor.</span>
-<a name="l00020"></a>00020 <span class="comment">   */</span>
-<a name="l00021"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#ad5174be566fe2cafb982e269bb1527d5">00021</a>    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#ad5174be566fe2cafb982e269bb1527d5" title="Constructor.">BinaryFileIArchive::BinaryFileIArchive</a>()
-<a name="l00022"></a>00022     : filePtr_(0),
-<a name="l00023"></a>00023       version_(0),
-<a name="l00024"></a>00024       createdFile_(true)
-<a name="l00025"></a>00025    {  filePtr_ = <span class="keyword">new</span> std::ifstream(); }
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027    <span class="comment">/*</span>
-<a name="l00028"></a>00028 <span class="comment">   * Constructor.</span>
-<a name="l00029"></a>00029 <span class="comment">   */</span>
-<a name="l00030"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#a97f7bdd5924d9b8aa917ffdbf2f2f308">00030</a>    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#ad5174be566fe2cafb982e269bb1527d5" title="Constructor.">BinaryFileIArchive::BinaryFileIArchive</a>(std::string filename)
-<a name="l00031"></a>00031     : filePtr_(0),
-<a name="l00032"></a>00032       version_(0),
-<a name="l00033"></a>00033       createdFile_(true)
-<a name="l00034"></a>00034    {  filePtr_ = <span class="keyword">new</span> std::ifstream(filename.c_str()); }
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036    <span class="comment">/*</span>
-<a name="l00037"></a>00037 <span class="comment">   * Constructor.</span>
-<a name="l00038"></a>00038 <span class="comment">   */</span>
-<a name="l00039"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#a5efac3bbbbb5e1ec7dd7f799e805da01">00039</a>    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#ad5174be566fe2cafb982e269bb1527d5" title="Constructor.">BinaryFileIArchive::BinaryFileIArchive</a>(std::ifstream&amp; file)
-<a name="l00040"></a>00040     : filePtr_(&amp;file),
-<a name="l00041"></a>00041       version_(0),
-<a name="l00042"></a>00042       createdFile_(false)
-<a name="l00043"></a>00043    {}
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045    <span class="comment">/*</span>
-<a name="l00046"></a>00046 <span class="comment">   * Destructor.</span>
-<a name="l00047"></a>00047 <span class="comment">   */</span>
-<a name="l00048"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#a4bf663b84ea5eca5c572530e8ff5fd31">00048</a>    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#a4bf663b84ea5eca5c572530e8ff5fd31" title="Destructor.">BinaryFileIArchive::~BinaryFileIArchive</a>()
-<a name="l00049"></a>00049    {
-<a name="l00050"></a>00050       <span class="keywordflow">if</span> (filePtr_ &amp;&amp; createdFile_) {  
-<a name="l00051"></a>00051          <span class="keyword">delete</span> filePtr_; 
-<a name="l00052"></a>00052       }
-<a name="l00053"></a>00053    }
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055    <span class="comment">/*</span>
-<a name="l00056"></a>00056 <span class="comment">   * Return underlying file by reference.</span>
-<a name="l00057"></a>00057 <span class="comment">   */</span>
-<a name="l00058"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#a3da261733c9d8099c2326c7e43241e63">00058</a>    std::ifstream&amp; <a class="code" href="classUtil_1_1BinaryFileIArchive.html#a3da261733c9d8099c2326c7e43241e63" title="Get the underlying ifstream by reference.">BinaryFileIArchive::file</a>()
-<a name="l00059"></a>00059    {  <span class="keywordflow">return</span> *filePtr_; }
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061    <span class="comment">/*</span>
-<a name="l00062"></a>00062 <span class="comment">   * Load a std::string from BinaryFileIArchive.</span>
-<a name="l00063"></a>00063 <span class="comment">   */</span>
-<a name="l00064"></a>00064    <span class="keyword">template</span> &lt;&gt;
-<a name="l00065"></a>00065    <span class="keywordtype">void</span> serialize(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">BinaryFileIArchive</a>&amp; ar, std::string&amp; data, 
-<a name="l00066"></a>00066                   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
-<a name="l00067"></a>00067    {
-<a name="l00068"></a>00068       <span class="keyword">static</span> std::vector&lt;char&gt; charvec;
-<a name="l00069"></a>00069       <span class="keywordtype">size_t</span> size;
-<a name="l00070"></a>00070       ar.<a class="code" href="classUtil_1_1BinaryFileIArchive.html#a31e6f783bdf9a7f8c2a6b5bf62a08773" title="Unpack a single T object.">unpack</a>(size);
-<a name="l00071"></a>00071       <span class="keywordflow">if</span> (size &gt; charvec.capacity()) {
-<a name="l00072"></a>00072          charvec.reserve(size + 8);
-<a name="l00073"></a>00073       }
-<a name="l00074"></a>00074       ar.<a class="code" href="classUtil_1_1BinaryFileIArchive.html#a31e6f783bdf9a7f8c2a6b5bf62a08773" title="Unpack a single T object.">unpack</a>(&amp;charvec[0], size);
-<a name="l00075"></a>00075       data = &amp;charvec[0];
-<a name="l00076"></a>00076    }
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079 }
-<a name="l00080"></a>00080 <span class="preprocessor">#endif</span>
+<a name="l00015"></a>00015    <span class="comment">/*</span>
+<a name="l00016"></a>00016 <span class="comment">   * Constructor.</span>
+<a name="l00017"></a>00017 <span class="comment">   */</span>
+<a name="l00018"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#ad5174be566fe2cafb982e269bb1527d5">00018</a>    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#ad5174be566fe2cafb982e269bb1527d5" title="Constructor.">BinaryFileIArchive::BinaryFileIArchive</a>()
+<a name="l00019"></a>00019     : filePtr_(0),
+<a name="l00020"></a>00020       version_(0),
+<a name="l00021"></a>00021       createdFile_(true)
+<a name="l00022"></a>00022    {  filePtr_ = <span class="keyword">new</span> std::ifstream(); }
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024    <span class="comment">/*</span>
+<a name="l00025"></a>00025 <span class="comment">   * Constructor.</span>
+<a name="l00026"></a>00026 <span class="comment">   */</span>
+<a name="l00027"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#a97f7bdd5924d9b8aa917ffdbf2f2f308">00027</a>    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#ad5174be566fe2cafb982e269bb1527d5" title="Constructor.">BinaryFileIArchive::BinaryFileIArchive</a>(std::string filename)
+<a name="l00028"></a>00028     : filePtr_(0),
+<a name="l00029"></a>00029       version_(0),
+<a name="l00030"></a>00030       createdFile_(true)
+<a name="l00031"></a>00031    {  filePtr_ = <span class="keyword">new</span> std::ifstream(filename.c_str()); }
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033    <span class="comment">/*</span>
+<a name="l00034"></a>00034 <span class="comment">   * Constructor.</span>
+<a name="l00035"></a>00035 <span class="comment">   */</span>
+<a name="l00036"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#a5efac3bbbbb5e1ec7dd7f799e805da01">00036</a>    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#ad5174be566fe2cafb982e269bb1527d5" title="Constructor.">BinaryFileIArchive::BinaryFileIArchive</a>(std::ifstream&amp; file)
+<a name="l00037"></a>00037     : filePtr_(&amp;file),
+<a name="l00038"></a>00038       version_(0),
+<a name="l00039"></a>00039       createdFile_(false)
+<a name="l00040"></a>00040    {}
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042    <span class="comment">/*</span>
+<a name="l00043"></a>00043 <span class="comment">   * Destructor.</span>
+<a name="l00044"></a>00044 <span class="comment">   */</span>
+<a name="l00045"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#a4bf663b84ea5eca5c572530e8ff5fd31">00045</a>    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#a4bf663b84ea5eca5c572530e8ff5fd31" title="Destructor.">BinaryFileIArchive::~BinaryFileIArchive</a>()
+<a name="l00046"></a>00046    {
+<a name="l00047"></a>00047       <span class="keywordflow">if</span> (filePtr_ &amp;&amp; createdFile_) {  
+<a name="l00048"></a>00048          <span class="keyword">delete</span> filePtr_; 
+<a name="l00049"></a>00049       }
+<a name="l00050"></a>00050    }
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052    <span class="comment">/*</span>
+<a name="l00053"></a>00053 <span class="comment">   * Return underlying file by reference.</span>
+<a name="l00054"></a>00054 <span class="comment">   */</span>
+<a name="l00055"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#a3da261733c9d8099c2326c7e43241e63">00055</a>    std::ifstream&amp; <a class="code" href="classUtil_1_1BinaryFileIArchive.html#a3da261733c9d8099c2326c7e43241e63" title="Get the underlying ifstream by reference.">BinaryFileIArchive::file</a>()
+<a name="l00056"></a>00056    {  <span class="keywordflow">return</span> *filePtr_; }
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058    <span class="comment">/*</span>
+<a name="l00059"></a>00059 <span class="comment">   * Load a std::string from BinaryFileIArchive.</span>
+<a name="l00060"></a>00060 <span class="comment">   */</span>
+<a name="l00061"></a>00061    <span class="keyword">template</span> &lt;&gt;
+<a name="l00062"></a>00062    <span class="keywordtype">void</span> serialize(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">BinaryFileIArchive</a>&amp; ar, std::string&amp; data, 
+<a name="l00063"></a>00063                   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00064"></a>00064    {
+<a name="l00065"></a>00065       <span class="keyword">static</span> std::vector&lt;char&gt; charvec;
+<a name="l00066"></a>00066       <span class="keywordtype">size_t</span> size;
+<a name="l00067"></a>00067       ar.<a class="code" href="classUtil_1_1BinaryFileIArchive.html#a31e6f783bdf9a7f8c2a6b5bf62a08773" title="Unpack a single T object.">unpack</a>(size);
+<a name="l00068"></a>00068       <span class="keywordflow">if</span> (size &gt; charvec.capacity()) {
+<a name="l00069"></a>00069          charvec.reserve(size + 8);
+<a name="l00070"></a>00070       }
+<a name="l00071"></a>00071       ar.<a class="code" href="classUtil_1_1BinaryFileIArchive.html#a31e6f783bdf9a7f8c2a6b5bf62a08773" title="Unpack a single T object.">unpack</a>(&amp;charvec[0], size);
+<a name="l00072"></a>00072       data = &amp;charvec[0];
+<a name="l00073"></a>00073    }
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:56 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

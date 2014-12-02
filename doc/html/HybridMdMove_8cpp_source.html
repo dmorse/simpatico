@@ -57,172 +57,168 @@
 <div class="title">HybridMdMove.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef MCMD_HYBRID_MD_MOVE_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define MCMD_HYBRID_MD_MOVE_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;HybridMdMove.h&quot;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;mcMd/mcSimulation/McSystem.h&gt;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;mcMd/mdIntegrators/MdIntegrator.h&gt;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;mcMd/mdSimulation/MdSystem.h&gt;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;mcMd/simulation/Simulation.h&gt;</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;mcMd/chemistry/Atom.h&gt;</span>
-<a name="l00017"></a>00017 <span class="preprocessor">#ifndef INTER_NOPAIR</span>
-<a name="l00018"></a>00018 <span class="preprocessor"></span><span class="preprocessor">#include &lt;mcMd/potentials/pair/MdPairPotential.h&gt;</span>
-<a name="l00019"></a>00019 <span class="preprocessor">#include &lt;mcMd/potentials/pair/McPairPotential.h&gt;</span>
-<a name="l00020"></a>00020 <span class="preprocessor">#endif</span>
-<a name="l00021"></a>00021 <span class="preprocessor"></span>
-<a name="l00022"></a>00022 <span class="keyword">namespace </span>McMd
-<a name="l00023"></a>00023 {
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025    <span class="keyword">using namespace </span>Util;
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027    <span class="comment">/*</span>
-<a name="l00028"></a>00028 <span class="comment">   * Constructor</span>
-<a name="l00029"></a>00029 <span class="comment">   */</span>
-<a name="l00030"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#acd7b664f0431ea920a93161de3812bde">00030</a>    <a class="code" href="classMcMd_1_1HybridMdMove.html#acd7b664f0431ea920a93161de3812bde" title="Constructor.">HybridMdMove::HybridMdMove</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system) :
-<a name="l00031"></a>00031       <a class="code" href="classMcMd_1_1SystemMove.html" title="An McMove that acts on one McSystem.">SystemMove</a>(system),
-<a name="l00032"></a>00032       mdSystemPtr_(0),
-<a name="l00033"></a>00033       nStep_(0)
-<a name="l00034"></a>00034    {
-<a name="l00035"></a>00035       <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;HybridMdMove&quot;</span>);
-<a name="l00036"></a>00036       mdSystemPtr_ = <span class="keyword">new</span> <a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>(system);
-<a name="l00037"></a>00037       oldPositions_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().atomCapacity());
-<a name="l00038"></a>00038    }
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040    <span class="comment">/*</span>
-<a name="l00041"></a>00041 <span class="comment">   * Destructor.</span>
-<a name="l00042"></a>00042 <span class="comment">   */</span>
-<a name="l00043"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a40a25194509469fa6cc0de60fa995fa5">00043</a>    <a class="code" href="classMcMd_1_1HybridMdMove.html#a40a25194509469fa6cc0de60fa995fa5" title="Destructor.">HybridMdMove::~HybridMdMove</a>()
-<a name="l00044"></a>00044    {
-<a name="l00045"></a>00045       <span class="keywordflow">if</span> (mdSystemPtr_) {
-<a name="l00046"></a>00046          <span class="keyword">delete</span> mdSystemPtr_;
-<a name="l00047"></a>00047       }
-<a name="l00048"></a>00048    }
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050    <span class="comment">/*</span>
-<a name="l00051"></a>00051 <span class="comment">   * Read parameter maxDisp</span>
-<a name="l00052"></a>00052 <span class="comment">   */</span>
-<a name="l00053"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#aa112a0219e49fde388221b36ddb9e494">00053</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#aa112a0219e49fde388221b36ddb9e494" title="Read nStep, dt, skin, maxNPair from file.">HybridMdMove::readParameters</a>(std::istream&amp; in)
-<a name="l00054"></a>00054    {
-<a name="l00055"></a>00055       <a class="code" href="classMcMd_1_1McMove.html#ae8ba388e2900251a42294e72ea394488" title="Read the probability from file.">readProbability</a>(in);
-<a name="l00056"></a>00056       read&lt;int&gt;(in, <span class="stringliteral">&quot;nStep&quot;</span>, nStep_);
-<a name="l00057"></a>00057       <a class="code" href="classUtil_1_1ParamComposite.html#ab2372dcc5d7d8db632b2b9844caf206e" title="Add and read a required child ParamComposite.">readParamComposite</a>(in, *mdSystemPtr_);
-<a name="l00058"></a>00058    }
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060    <span class="comment">/*</span>
-<a name="l00061"></a>00061 <span class="comment">   * Load internal state from an archive.</span>
-<a name="l00062"></a>00062 <span class="comment">   */</span>
-<a name="l00063"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a72aaf8cd9e68ca71c1c0e28e9191b608">00063</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#a72aaf8cd9e68ca71c1c0e28e9191b608" title="Load internal state from an archive.">HybridMdMove::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
-<a name="l00064"></a>00064    {
-<a name="l00065"></a>00065       <a class="code" href="classMcMd_1_1HybridMdMove.html#a72aaf8cd9e68ca71c1c0e28e9191b608" title="Load internal state from an archive.">McMove::loadParameters</a>(ar);
-<a name="l00066"></a>00066       loadParameter&lt;int&gt;(ar, <span class="stringliteral">&quot;nStep&quot;</span>, nStep_);
-<a name="l00067"></a>00067       <a class="code" href="classUtil_1_1ParamComposite.html#a5f0b72c058b5a9913cfc289a3d4586ed" title="Add and load a required child ParamComposite.">loadParamComposite</a>(ar, *mdSystemPtr_);
-<a name="l00068"></a>00068    }
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070    <span class="comment">/*</span>
-<a name="l00071"></a>00071 <span class="comment">   * Save internal state to an archive.</span>
-<a name="l00072"></a>00072 <span class="comment">   */</span>
-<a name="l00073"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a40c8a66ede55c3dee1a78c9410df0ae3">00073</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#a40c8a66ede55c3dee1a78c9410df0ae3" title="Save internal state to an archive.">HybridMdMove::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
-<a name="l00074"></a>00074    {
-<a name="l00075"></a>00075       <a class="code" href="classMcMd_1_1HybridMdMove.html#a40c8a66ede55c3dee1a78c9410df0ae3" title="Save internal state to an archive.">McMove::save</a>(ar);
-<a name="l00076"></a>00076       ar &lt;&lt; nStep_;
-<a name="l00077"></a>00077       mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a7d389932d3d52c55bf6c21c88460d440" title="Save parameters to an archive, without configuration.">saveParameters</a>(ar);
-<a name="l00078"></a>00078    }
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080    <span class="comment">/*</span>
-<a name="l00081"></a>00081 <span class="comment">   * Generate, attempt and accept or reject a Hybrid MD/MC move.</span>
-<a name="l00082"></a>00082 <span class="comment">   */</span>
-<a name="l00083"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a1da2d057e0f0b27b600a4187dfd7179c">00083</a>    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#a1da2d057e0f0b27b600a4187dfd7179c" title="Generate, attempt and accept or reject a move.">HybridMdMove::move</a>()
-<a name="l00084"></a>00084    {
-<a name="l00085"></a>00085       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">System::MoleculeIterator</a> molIter;
-<a name="l00086"></a>00086       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a>   atomIter;
-<a name="l00087"></a>00087       <span class="keywordtype">double</span> oldEnergy, newEnergy;
-<a name="l00088"></a>00088       <span class="keywordtype">int</span>    iSpec;
-<a name="l00089"></a>00089       <span class="keywordtype">int</span>    nSpec = <a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>();
-<a name="l00090"></a>00090       <span class="keywordtype">bool</span>   accept;
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092       <a class="code" href="classMcMd_1_1McMove.html#a5d90f9f9b40e1b8abf2d76109ca060a0" title="Increment the number of attempted moves.">incrementNAttempt</a>();
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094       <span class="comment">// Store old atom positions in oldPositions_ array.</span>
-<a name="l00095"></a>00095       <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpec; ++iSpec) {
-<a name="l00096"></a>00096          mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter);
-<a name="l00097"></a>00097          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00098"></a>00098             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
-<a name="l00099"></a>00099                oldPositions_[atomIter-&gt;id()] = atomIter-&gt;position();
-<a name="l00100"></a>00100             }
-<a name="l00101"></a>00101          }
-<a name="l00102"></a>00102       }
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104       <span class="comment">// Initialize MdSystem</span>
-<a name="l00105"></a>00105 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
-<a name="l00106"></a>00106 <span class="preprocessor"></span>      mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#ae68ae421f5cead5dfaab22fba53a40c6" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#ac7cf257101e79baaf8f92517f7ff874a" title="Build the internal PairList.">buildPairList</a>();
-<a name="l00107"></a>00107 <span class="preprocessor">      #endif</span>
-<a name="l00108"></a>00108 <span class="preprocessor"></span>      mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a00fce01c6a30fd2ba32178b3f7781239" title="Compute all forces in this System.">calculateForces</a>();
-<a name="l00109"></a>00109       mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#aa1002532674b377f3b03827141c73ada" title="Set all velocities to Boltzmann distributed random values.">setBoltzmannVelocities</a>(<a class="code" href="classMcMd_1_1SystemMove.html#ad817b7a09d57b7b096b6a6f73e22c1a4" title="Get EnergyEnsemble object of parent McSystem.">energyEnsemble</a>().temperature());
-<a name="l00110"></a>00110       mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a3b540db66e87e7faf2e9c58d182b7809" title="Return the MdIntegrator by reference.">mdIntegrator</a>().<a class="code" href="classMcMd_1_1MdIntegrator.html#a5637182496a25c43cf69909309f76a37" title="Initialize internal state, if any.">setup</a>();
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112       <span class="comment">// Store old energy</span>
-<a name="l00113"></a>00113       oldEnergy  = mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a8d1111fcc92eb150fa30100b85326563" title="Compute and return total potential energy.">potentialEnergy</a>();
-<a name="l00114"></a>00114       oldEnergy += mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a86f5a5b17492b2466781921b0ce3e052" title="Compute and return total kinetic energy.">kineticEnergy</a>();
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116       <span class="comment">// Run a short MD simulation</span>
-<a name="l00117"></a>00117       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iStep = 0; iStep &lt; nStep_; ++iStep) {
-<a name="l00118"></a>00118          mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a3b540db66e87e7faf2e9c58d182b7809" title="Return the MdIntegrator by reference.">mdIntegrator</a>().<a class="code" href="classMcMd_1_1MdIntegrator.html#a2622fe6c9fd3e0141a679660cb99d2a6" title="Take a complete MD integration step.">step</a>();
-<a name="l00119"></a>00119       }
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121       <span class="comment">// Calculate new energy</span>
-<a name="l00122"></a>00122       newEnergy  = mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a8d1111fcc92eb150fa30100b85326563" title="Compute and return total potential energy.">potentialEnergy</a>();
-<a name="l00123"></a>00123       newEnergy += mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a86f5a5b17492b2466781921b0ce3e052" title="Compute and return total kinetic energy.">kineticEnergy</a>();
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;HybridMdMove.h&quot;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;mcMd/mcSimulation/McSystem.h&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;mcMd/mdIntegrators/MdIntegrator.h&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;mcMd/mdSimulation/MdSystem.h&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;mcMd/simulation/Simulation.h&gt;</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;mcMd/chemistry/Atom.h&gt;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#ifndef INTER_NOPAIR</span>
+<a name="l00015"></a>00015 <span class="preprocessor"></span><span class="preprocessor">#include &lt;mcMd/potentials/pair/MdPairPotential.h&gt;</span>
+<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;mcMd/potentials/pair/McPairPotential.h&gt;</span>
+<a name="l00017"></a>00017 <span class="preprocessor">#endif</span>
+<a name="l00018"></a>00018 <span class="preprocessor"></span>
+<a name="l00019"></a>00019 <span class="keyword">namespace </span>McMd
+<a name="l00020"></a>00020 {
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022    <span class="keyword">using namespace </span>Util;
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024    <span class="comment">/*</span>
+<a name="l00025"></a>00025 <span class="comment">   * Constructor</span>
+<a name="l00026"></a>00026 <span class="comment">   */</span>
+<a name="l00027"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#acd7b664f0431ea920a93161de3812bde">00027</a>    <a class="code" href="classMcMd_1_1HybridMdMove.html#acd7b664f0431ea920a93161de3812bde" title="Constructor.">HybridMdMove::HybridMdMove</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system) :
+<a name="l00028"></a>00028       <a class="code" href="classMcMd_1_1SystemMove.html" title="An McMove that acts on one McSystem.">SystemMove</a>(system),
+<a name="l00029"></a>00029       mdSystemPtr_(0),
+<a name="l00030"></a>00030       nStep_(0)
+<a name="l00031"></a>00031    {
+<a name="l00032"></a>00032       <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;HybridMdMove&quot;</span>);
+<a name="l00033"></a>00033       mdSystemPtr_ = <span class="keyword">new</span> <a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>(system);
+<a name="l00034"></a>00034       oldPositions_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().atomCapacity());
+<a name="l00035"></a>00035    }
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037    <span class="comment">/*</span>
+<a name="l00038"></a>00038 <span class="comment">   * Destructor.</span>
+<a name="l00039"></a>00039 <span class="comment">   */</span>
+<a name="l00040"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a40a25194509469fa6cc0de60fa995fa5">00040</a>    <a class="code" href="classMcMd_1_1HybridMdMove.html#a40a25194509469fa6cc0de60fa995fa5" title="Destructor.">HybridMdMove::~HybridMdMove</a>()
+<a name="l00041"></a>00041    {
+<a name="l00042"></a>00042       <span class="keywordflow">if</span> (mdSystemPtr_) {
+<a name="l00043"></a>00043          <span class="keyword">delete</span> mdSystemPtr_;
+<a name="l00044"></a>00044       }
+<a name="l00045"></a>00045    }
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047    <span class="comment">/*</span>
+<a name="l00048"></a>00048 <span class="comment">   * Read parameter maxDisp</span>
+<a name="l00049"></a>00049 <span class="comment">   */</span>
+<a name="l00050"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#aa112a0219e49fde388221b36ddb9e494">00050</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#aa112a0219e49fde388221b36ddb9e494" title="Read nStep, dt, skin, maxNPair from file.">HybridMdMove::readParameters</a>(std::istream&amp; in)
+<a name="l00051"></a>00051    {
+<a name="l00052"></a>00052       <a class="code" href="classMcMd_1_1McMove.html#ae8ba388e2900251a42294e72ea394488" title="Read the probability from file.">readProbability</a>(in);
+<a name="l00053"></a>00053       read&lt;int&gt;(in, <span class="stringliteral">&quot;nStep&quot;</span>, nStep_);
+<a name="l00054"></a>00054       <a class="code" href="classUtil_1_1ParamComposite.html#ab2372dcc5d7d8db632b2b9844caf206e" title="Add and read a required child ParamComposite.">readParamComposite</a>(in, *mdSystemPtr_);
+<a name="l00055"></a>00055    }
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057    <span class="comment">/*</span>
+<a name="l00058"></a>00058 <span class="comment">   * Load internal state from an archive.</span>
+<a name="l00059"></a>00059 <span class="comment">   */</span>
+<a name="l00060"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a72aaf8cd9e68ca71c1c0e28e9191b608">00060</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#a72aaf8cd9e68ca71c1c0e28e9191b608" title="Load internal state from an archive.">HybridMdMove::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
+<a name="l00061"></a>00061    {
+<a name="l00062"></a>00062       <a class="code" href="classMcMd_1_1HybridMdMove.html#a72aaf8cd9e68ca71c1c0e28e9191b608" title="Load internal state from an archive.">McMove::loadParameters</a>(ar);
+<a name="l00063"></a>00063       loadParameter&lt;int&gt;(ar, <span class="stringliteral">&quot;nStep&quot;</span>, nStep_);
+<a name="l00064"></a>00064       <a class="code" href="classUtil_1_1ParamComposite.html#a5f0b72c058b5a9913cfc289a3d4586ed" title="Add and load a required child ParamComposite.">loadParamComposite</a>(ar, *mdSystemPtr_);
+<a name="l00065"></a>00065    }
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067    <span class="comment">/*</span>
+<a name="l00068"></a>00068 <span class="comment">   * Save internal state to an archive.</span>
+<a name="l00069"></a>00069 <span class="comment">   */</span>
+<a name="l00070"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a40c8a66ede55c3dee1a78c9410df0ae3">00070</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#a40c8a66ede55c3dee1a78c9410df0ae3" title="Save internal state to an archive.">HybridMdMove::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
+<a name="l00071"></a>00071    {
+<a name="l00072"></a>00072       <a class="code" href="classMcMd_1_1HybridMdMove.html#a40c8a66ede55c3dee1a78c9410df0ae3" title="Save internal state to an archive.">McMove::save</a>(ar);
+<a name="l00073"></a>00073       ar &lt;&lt; nStep_;
+<a name="l00074"></a>00074       mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a7d389932d3d52c55bf6c21c88460d440" title="Save parameters to an archive, without configuration.">saveParameters</a>(ar);
+<a name="l00075"></a>00075    }
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077    <span class="comment">/*</span>
+<a name="l00078"></a>00078 <span class="comment">   * Generate, attempt and accept or reject a Hybrid MD/MC move.</span>
+<a name="l00079"></a>00079 <span class="comment">   */</span>
+<a name="l00080"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a1da2d057e0f0b27b600a4187dfd7179c">00080</a>    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#a1da2d057e0f0b27b600a4187dfd7179c" title="Generate, attempt and accept or reject a move.">HybridMdMove::move</a>()
+<a name="l00081"></a>00081    {
+<a name="l00082"></a>00082       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">System::MoleculeIterator</a> molIter;
+<a name="l00083"></a>00083       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a>   atomIter;
+<a name="l00084"></a>00084       <span class="keywordtype">double</span> oldEnergy, newEnergy;
+<a name="l00085"></a>00085       <span class="keywordtype">int</span>    iSpec;
+<a name="l00086"></a>00086       <span class="keywordtype">int</span>    nSpec = <a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>();
+<a name="l00087"></a>00087       <span class="keywordtype">bool</span>   accept;
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089       <a class="code" href="classMcMd_1_1McMove.html#a5d90f9f9b40e1b8abf2d76109ca060a0" title="Increment the number of attempted moves.">incrementNAttempt</a>();
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091       <span class="comment">// Store old atom positions in oldPositions_ array.</span>
+<a name="l00092"></a>00092       <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpec; ++iSpec) {
+<a name="l00093"></a>00093          mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter);
+<a name="l00094"></a>00094          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00095"></a>00095             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00096"></a>00096                oldPositions_[atomIter-&gt;id()] = atomIter-&gt;position();
+<a name="l00097"></a>00097             }
+<a name="l00098"></a>00098          }
+<a name="l00099"></a>00099       }
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101       <span class="comment">// Initialize MdSystem</span>
+<a name="l00102"></a>00102 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
+<a name="l00103"></a>00103 <span class="preprocessor"></span>      mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#ae68ae421f5cead5dfaab22fba53a40c6" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#ac7cf257101e79baaf8f92517f7ff874a" title="Build the internal PairList.">buildPairList</a>();
+<a name="l00104"></a>00104 <span class="preprocessor">      #endif</span>
+<a name="l00105"></a>00105 <span class="preprocessor"></span>      mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a00fce01c6a30fd2ba32178b3f7781239" title="Compute all forces in this System.">calculateForces</a>();
+<a name="l00106"></a>00106       mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#aa1002532674b377f3b03827141c73ada" title="Set all velocities to Boltzmann distributed random values.">setBoltzmannVelocities</a>(<a class="code" href="classMcMd_1_1SystemMove.html#ad817b7a09d57b7b096b6a6f73e22c1a4" title="Get EnergyEnsemble object of parent McSystem.">energyEnsemble</a>().temperature());
+<a name="l00107"></a>00107       mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a3b540db66e87e7faf2e9c58d182b7809" title="Return the MdIntegrator by reference.">mdIntegrator</a>().<a class="code" href="classMcMd_1_1MdIntegrator.html#a5637182496a25c43cf69909309f76a37" title="Initialize internal state, if any.">setup</a>();
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109       <span class="comment">// Store old energy</span>
+<a name="l00110"></a>00110       oldEnergy  = mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a8d1111fcc92eb150fa30100b85326563" title="Compute and return total potential energy.">potentialEnergy</a>();
+<a name="l00111"></a>00111       oldEnergy += mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a86f5a5b17492b2466781921b0ce3e052" title="Compute and return total kinetic energy.">kineticEnergy</a>();
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113       <span class="comment">// Run a short MD simulation</span>
+<a name="l00114"></a>00114       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iStep = 0; iStep &lt; nStep_; ++iStep) {
+<a name="l00115"></a>00115          mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a3b540db66e87e7faf2e9c58d182b7809" title="Return the MdIntegrator by reference.">mdIntegrator</a>().<a class="code" href="classMcMd_1_1MdIntegrator.html#a2622fe6c9fd3e0141a679660cb99d2a6" title="Take a complete MD integration step.">step</a>();
+<a name="l00116"></a>00116       }
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118       <span class="comment">// Calculate new energy</span>
+<a name="l00119"></a>00119       newEnergy  = mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a8d1111fcc92eb150fa30100b85326563" title="Compute and return total potential energy.">potentialEnergy</a>();
+<a name="l00120"></a>00120       newEnergy += mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1MdSystem.html#a86f5a5b17492b2466781921b0ce3e052" title="Compute and return total kinetic energy.">kineticEnergy</a>();
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122       <span class="comment">// Decide whether to accept or reject</span>
+<a name="l00123"></a>00123       accept = <a class="code" href="classMcMd_1_1McMove.html#a8e27f330daa6bbc314b8f81ca0f9decb" title="Get Random number generator of parent Simulation.">random</a>().<a class="code" href="classUtil_1_1Random.html#aca8c04b92484ed95768827d6ad411e40" title="Metropolis algorithm for whether to accept a MC move.">metropolis</a>( <a class="code" href="classMcMd_1_1SystemMove.html#ab3e350078e9b4c77048315280fd77c12" title="Boltzmann weight associated with an energy difference.">boltzmann</a>(newEnergy-oldEnergy) );
 <a name="l00124"></a>00124 
-<a name="l00125"></a>00125       <span class="comment">// Decide whether to accept or reject</span>
-<a name="l00126"></a>00126       accept = <a class="code" href="classMcMd_1_1McMove.html#a8e27f330daa6bbc314b8f81ca0f9decb" title="Get Random number generator of parent Simulation.">random</a>().<a class="code" href="classUtil_1_1Random.html#aca8c04b92484ed95768827d6ad411e40" title="Metropolis algorithm for whether to accept a MC move.">metropolis</a>( <a class="code" href="classMcMd_1_1SystemMove.html#ab3e350078e9b4c77048315280fd77c12" title="Boltzmann weight associated with an energy difference.">boltzmann</a>(newEnergy-oldEnergy) );
+<a name="l00125"></a>00125       <span class="comment">// Accept move</span>
+<a name="l00126"></a>00126       <span class="keywordflow">if</span> (accept) {
 <a name="l00127"></a>00127 
-<a name="l00128"></a>00128       <span class="comment">// Accept move</span>
-<a name="l00129"></a>00129       <span class="keywordflow">if</span> (accept) {
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131 <span class="preprocessor">         #ifndef INTER_NOPAIR</span>
-<a name="l00132"></a>00132 <span class="preprocessor"></span>         <span class="comment">// Rebuild the McSystem cellList using the new positions.</span>
-<a name="l00133"></a>00133          <a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#ac8e05051715f5cb8eaac4f8999764e02" title="Build the CellList with current configuration.">buildCellList</a>();
-<a name="l00134"></a>00134 <span class="preprocessor">         #endif</span>
-<a name="l00135"></a>00135 <span class="preprocessor"></span>
-<a name="l00136"></a>00136          <span class="comment">// Increment counter for the number of accepted moves.</span>
-<a name="l00137"></a>00137          <a class="code" href="classMcMd_1_1McMove.html#a858b694f6e1cae8276e9c3a24ae38c18" title="Increment the number of accepted moves.">incrementNAccept</a>();
-<a name="l00138"></a>00138 
-<a name="l00139"></a>00139       } <span class="keywordflow">else</span> {
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141          <span class="comment">// Restore old atom positions</span>
-<a name="l00142"></a>00142          <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpec; ++iSpec) {
-<a name="l00143"></a>00143             mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter);
-<a name="l00144"></a>00144             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00145"></a>00145                molIter-&gt;begin(atomIter);
-<a name="l00146"></a>00146                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
-<a name="l00147"></a>00147                   atomIter-&gt;position() = oldPositions_[atomIter-&gt;id()];
-<a name="l00148"></a>00148                }
-<a name="l00149"></a>00149             }
-<a name="l00150"></a>00150          }
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152       }
-<a name="l00153"></a>00153 
-<a name="l00154"></a>00154       <span class="keywordflow">return</span> accept;
-<a name="l00155"></a>00155 
-<a name="l00156"></a>00156    }
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158 }
-<a name="l00159"></a>00159 <span class="preprocessor">#endif</span>
+<a name="l00128"></a>00128 <span class="preprocessor">         #ifndef INTER_NOPAIR</span>
+<a name="l00129"></a>00129 <span class="preprocessor"></span>         <span class="comment">// Rebuild the McSystem cellList using the new positions.</span>
+<a name="l00130"></a>00130          <a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#ac8e05051715f5cb8eaac4f8999764e02" title="Build the CellList with current configuration.">buildCellList</a>();
+<a name="l00131"></a>00131 <span class="preprocessor">         #endif</span>
+<a name="l00132"></a>00132 <span class="preprocessor"></span>
+<a name="l00133"></a>00133          <span class="comment">// Increment counter for the number of accepted moves.</span>
+<a name="l00134"></a>00134          <a class="code" href="classMcMd_1_1McMove.html#a858b694f6e1cae8276e9c3a24ae38c18" title="Increment the number of accepted moves.">incrementNAccept</a>();
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136       } <span class="keywordflow">else</span> {
+<a name="l00137"></a>00137 
+<a name="l00138"></a>00138          <span class="comment">// Restore old atom positions</span>
+<a name="l00139"></a>00139          <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpec; ++iSpec) {
+<a name="l00140"></a>00140             mdSystemPtr_-&gt;<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter);
+<a name="l00141"></a>00141             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00142"></a>00142                molIter-&gt;begin(atomIter);
+<a name="l00143"></a>00143                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00144"></a>00144                   atomIter-&gt;position() = oldPositions_[atomIter-&gt;id()];
+<a name="l00145"></a>00145                }
+<a name="l00146"></a>00146             }
+<a name="l00147"></a>00147          }
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149       }
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151       <span class="keywordflow">return</span> accept;
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153    }
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:13 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

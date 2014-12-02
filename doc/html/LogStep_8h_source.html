@@ -57,40 +57,40 @@
 <div class="title">LogStep.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef SPAN_LOG_STEP_H</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define SPAN_LOG_STEP_H</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef TOOLS_LOG_STEP_H</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define TOOLS_LOG_STEP_H</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span>
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;spAn/analyzers/Analyzer.h&gt;</span>       <span class="comment">// base class template</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;tools/analyzers/Analyzer.h&gt;</span>       <span class="comment">// base class template</span>
 <a name="l00012"></a>00012 
-<a name="l00013"></a>00013 <span class="keyword">namespace </span>SpAn
+<a name="l00013"></a>00013 <span class="keyword">namespace </span>Tools
 <a name="l00014"></a>00014 {
 <a name="l00015"></a>00015 
 <a name="l00016"></a>00016    <span class="keyword">using namespace </span>Util;
 <a name="l00017"></a>00017 
-<a name="l00023"></a><a class="code" href="classSpAn_1_1LogStep.html">00023</a>    <span class="keyword">class </span><a class="code" href="classSpAn_1_1LogStep.html" title="Write step number to log.">LogStep</a> : <span class="keyword">public</span> <a class="code" href="classSpAn_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions.">Analyzer</a>
+<a name="l00023"></a><a class="code" href="classTools_1_1LogStep.html">00023</a>    <span class="keyword">class </span><a class="code" href="classTools_1_1LogStep.html" title="Write step number to log.">LogStep</a> : <span class="keyword">public</span> <a class="code" href="classTools_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions.">Analyzer</a>
 <a name="l00024"></a>00024    {
 <a name="l00025"></a>00025    
 <a name="l00026"></a>00026    <span class="keyword">public</span>:
 <a name="l00027"></a>00027   
-<a name="l00033"></a><a class="code" href="classSpAn_1_1LogStep.html#ac871d1211ad1d690a3f1cc87f9610e55">00033</a>       <a class="code" href="classSpAn_1_1LogStep.html" title="Write step number to log.">LogStep</a>(<a class="code" href="classSpAn_1_1Processor.html" title="A post-processor for analyzing outputs of MD simulations.">Processor</a> &amp;processor)
-<a name="l00034"></a>00034        : <a class="code" href="classSpAn_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions.">Analyzer</a>(processor)
+<a name="l00033"></a><a class="code" href="classTools_1_1LogStep.html#ad561ec8f28b6e272f45962ccb6a83ad4">00033</a>       <a class="code" href="classTools_1_1LogStep.html" title="Write step number to log.">LogStep</a>(<a class="code" href="classTools_1_1Configuration.html" title="An instantaneous molecular dynamics configuration.">Configuration</a> &amp;configuration)
+<a name="l00034"></a>00034        : <a class="code" href="classTools_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions.">Analyzer</a>(configuration)
 <a name="l00035"></a>00035       {}
 <a name="l00036"></a>00036   
-<a name="l00042"></a><a class="code" href="classSpAn_1_1LogStep.html#ab44c055974e819093378d2d52c479601">00042</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classSpAn_1_1LogStep.html#ab44c055974e819093378d2d52c479601" title="Read parameters from file.">readParameters</a>(std::istream&amp; in){}
+<a name="l00042"></a><a class="code" href="classTools_1_1LogStep.html#a6dfd5ca60bfd215da7030de720088104">00042</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classTools_1_1LogStep.html#a6dfd5ca60bfd215da7030de720088104" title="Read parameters from file.">readParameters</a>(std::istream&amp; in){}
 <a name="l00043"></a>00043   
-<a name="l00047"></a><a class="code" href="classSpAn_1_1LogStep.html#a043815978525d1350395df80ebc2ef84">00047</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classSpAn_1_1LogStep.html#a043815978525d1350395df80ebc2ef84" title="Determine number of molecules and allocate memory.">setup</a>(){};
+<a name="l00047"></a><a class="code" href="classTools_1_1LogStep.html#a22011e66428f9e932176fee8bf73ada5">00047</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classTools_1_1LogStep.html#a22011e66428f9e932176fee8bf73ada5" title="Determine number of molecules and allocate memory.">setup</a>(){};
 <a name="l00048"></a>00048    
-<a name="l00054"></a><a class="code" href="classSpAn_1_1LogStep.html#ac1f56c4148ed58b4218f61bcd28f2763">00054</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> sample(<span class="keywordtype">long</span> iStep)
+<a name="l00054"></a><a class="code" href="classTools_1_1LogStep.html#a20c25d85f79636cd866d60075f02f58d">00054</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> sample(<span class="keywordtype">long</span> iStep)
 <a name="l00055"></a>00055       {  std::cout &lt;&lt; <span class="stringliteral">&quot;iStep = &quot;</span> &lt;&lt; iStep &lt;&lt; std::endl; }
 <a name="l00056"></a>00056 
-<a name="l00060"></a><a class="code" href="classSpAn_1_1LogStep.html#aa4cc6ef14b0d4053c3172a87a86c5a5f">00060</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classSpAn_1_1LogStep.html#aa4cc6ef14b0d4053c3172a87a86c5a5f" title="Output results to file after simulation is completed.">output</a>(){};
+<a name="l00060"></a><a class="code" href="classTools_1_1LogStep.html#a123f4619580c29e673f756d6afcf2a86">00060</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classTools_1_1LogStep.html#a123f4619580c29e673f756d6afcf2a86" title="Output results to file after simulation is completed.">output</a>(){};
 <a name="l00061"></a>00061    
 <a name="l00062"></a>00062    };
 <a name="l00063"></a>00063 
@@ -102,7 +102,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:13 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -57,405 +57,407 @@
 <div class="title">StructureFactorGrid.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef DDMD_STRUCTURE_FACTOR_GRID_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define DDMD_STRUCTURE_FACTOR_GRID_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;StructureFactorGrid.h&quot;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;ddMd/simulation/Simulation.h&gt;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;util/crystal/PointGroup.h&gt;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;util/crystal/PointSymmetry.h&gt;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;util/archives/Serializable_includes.h&gt;</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;util/mpi/MpiLoader.h&gt;</span>
-<a name="l00017"></a>00017 <span class="preprocessor">#include &lt;util/format/Int.h&gt;</span>
-<a name="l00018"></a>00018 <span class="preprocessor">#include &lt;util/format/Dbl.h&gt;</span>
-<a name="l00019"></a>00019 
-<a name="l00020"></a>00020 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00021"></a>00021 <span class="preprocessor">#include &lt;fstream&gt;</span>
-<a name="l00022"></a>00022 <span class="keyword">namespace </span>DdMd
-<a name="l00023"></a>00023 {
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025    <span class="keyword">using namespace </span>Util;
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027    <span class="comment">/*</span>
-<a name="l00028"></a>00028 <span class="comment">   * Constructor.</span>
-<a name="l00029"></a>00029 <span class="comment">   */</span>
-<a name="l00030"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#a489fd06a03ad96b1cc80552d7868288a">00030</a>    <a class="code" href="classDdMd_1_1StructureFactorGrid.html#a489fd06a03ad96b1cc80552d7868288a" title="Constructor.">StructureFactorGrid::StructureFactorGrid</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation) 
-<a name="l00031"></a>00031     : <a class="code" href="classDdMd_1_1StructureFactor.html" title="StructureFactor evaluates structure factors in Fourier space.">StructureFactor</a>(simulation),
-<a name="l00032"></a>00032       hMax_(0),
-<a name="l00033"></a>00033       nStar_(0),
-<a name="l00034"></a>00034       lattice_(Triclinic),
-<a name="l00035"></a>00035       isInitialized_(false)
-<a name="l00036"></a>00036    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;StructureFactorGrid&quot;</span>); }
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038    <span class="comment">/*</span>
-<a name="l00039"></a>00039 <span class="comment">   * Read parameters from file, and allocate data array.</span>
-<a name="l00040"></a>00040 <span class="comment">   */</span>
-<a name="l00041"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#ad5d10b2e14ac65d83542a40e2dd3143b">00041</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#ad5d10b2e14ac65d83542a40e2dd3143b" title="Read parameters from file.">StructureFactorGrid::readParameters</a>(std::istream&amp; in) 
-<a name="l00042"></a>00042    {
-<a name="l00043"></a>00043       <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a> = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>();
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045       <span class="comment">// Read parameters</span>
-<a name="l00046"></a>00046       <a class="code" href="classDdMd_1_1Analyzer.html#a8a2aadfd6927a948d60f2686ac517372" title="Read parameter interval from file.">readInterval</a>(in);
-<a name="l00047"></a>00047       <a class="code" href="classDdMd_1_1Analyzer.html#a82766295a8504cf1c6ee817911626647" title="Read outputFileName from file.">readOutputFileName</a>(in);
-<a name="l00048"></a>00048       read&lt;int&gt;(in, <span class="stringliteral">&quot;nMode&quot;</span>, <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>);
-<a name="l00049"></a>00049       <a class="code" href="classDdMd_1_1StructureFactor.html#a4bf4124ba606350453ca9c089836dc3d" title="Array of mode vectors.">modes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>);
-<a name="l00050"></a>00050       readDMatrix&lt;double&gt;(in, <span class="stringliteral">&quot;modes&quot;</span>, <a class="code" href="classDdMd_1_1StructureFactor.html#a4bf4124ba606350453ca9c089836dc3d" title="Array of mode vectors.">modes_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>);
-<a name="l00051"></a>00051       read&lt;int&gt;(in, <span class="stringliteral">&quot;hMax&quot;</span>, hMax_);
-<a name="l00052"></a>00052       read&lt;LatticeSystem&gt;(in, <span class="stringliteral">&quot;lattice&quot;</span>, lattice_);
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054       <span class="comment">// Allocate wavevectors arrays</span>
-<a name="l00055"></a>00055       <a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>     = (2*hMax_ +1 )*(2*hMax_ + 1)*(2*hMax_ + 1);
-<a name="l00056"></a>00056       <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nWave_);
-<a name="l00057"></a>00057       <a class="code" href="classDdMd_1_1StructureFactor.html#a7ac0138d0ef5c472e929df54d9c4cb6f" title="Array of floating point wave vectors.">waveVectors_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nWave_);
-<a name="l00058"></a>00058       <a class="code" href="classDdMd_1_1StructureFactor.html#ab67234d81fa5c15a8288687ea28de7f8" title="Fourier modes of concentration.">fourierModes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(nWave_, nMode_);
-<a name="l00059"></a>00059       <a class="code" href="classDdMd_1_1StructureFactor.html#a64b759a151b9efcf35dd297f38778f45" title="Total fourier modes of concentration.">totalFourierModes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(nWave_, nMode_);
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;StructureFactorGrid.h&quot;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;ddMd/simulation/Simulation.h&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;util/crystal/PointGroup.h&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;util/crystal/PointSymmetry.h&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;util/archives/Serializable_includes.h&gt;</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;util/mpi/MpiLoader.h&gt;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;util/format/Int.h&gt;</span>
+<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;util/format/Dbl.h&gt;</span>
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00018"></a>00018 <span class="preprocessor">#include &lt;fstream&gt;</span>
+<a name="l00019"></a>00019 <span class="keyword">namespace </span>DdMd
+<a name="l00020"></a>00020 {
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022    <span class="keyword">using namespace </span>Util;
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024    <span class="comment">/*</span>
+<a name="l00025"></a>00025 <span class="comment">   * Constructor.</span>
+<a name="l00026"></a>00026 <span class="comment">   */</span>
+<a name="l00027"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#a489fd06a03ad96b1cc80552d7868288a">00027</a>    <a class="code" href="classDdMd_1_1StructureFactorGrid.html#a489fd06a03ad96b1cc80552d7868288a" title="Constructor.">StructureFactorGrid::StructureFactorGrid</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation) 
+<a name="l00028"></a>00028     : <a class="code" href="classDdMd_1_1StructureFactor.html" title="StructureFactor evaluates structure factors in Fourier space.">StructureFactor</a>(simulation),
+<a name="l00029"></a>00029       hMax_(0),
+<a name="l00030"></a>00030       nStar_(0),
+<a name="l00031"></a>00031       lattice_(Triclinic),
+<a name="l00032"></a>00032       isInitialized_(false)
+<a name="l00033"></a>00033    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;StructureFactorGrid&quot;</span>); }
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035    <span class="comment">/*</span>
+<a name="l00036"></a>00036 <span class="comment">   * Read parameters from file, and allocate data array.</span>
+<a name="l00037"></a>00037 <span class="comment">   */</span>
+<a name="l00038"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#ad5d10b2e14ac65d83542a40e2dd3143b">00038</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#ad5d10b2e14ac65d83542a40e2dd3143b" title="Read parameters from file.">StructureFactorGrid::readParameters</a>(std::istream&amp; in) 
+<a name="l00039"></a>00039    {
+<a name="l00040"></a>00040       <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a> = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>();
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042       <span class="comment">// Read parameters</span>
+<a name="l00043"></a>00043       <a class="code" href="classDdMd_1_1Analyzer.html#a8a2aadfd6927a948d60f2686ac517372" title="Read parameter interval from file.">readInterval</a>(in);
+<a name="l00044"></a>00044       <a class="code" href="classDdMd_1_1Analyzer.html#a82766295a8504cf1c6ee817911626647" title="Read outputFileName from file.">readOutputFileName</a>(in);
+<a name="l00045"></a>00045       read&lt;int&gt;(in, <span class="stringliteral">&quot;nMode&quot;</span>, <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>);
+<a name="l00046"></a>00046       <a class="code" href="classDdMd_1_1StructureFactor.html#a4bf4124ba606350453ca9c089836dc3d" title="Array of mode vectors.">modes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>);
+<a name="l00047"></a>00047       readDMatrix&lt;double&gt;(in, <span class="stringliteral">&quot;modes&quot;</span>, <a class="code" href="classDdMd_1_1StructureFactor.html#a4bf4124ba606350453ca9c089836dc3d" title="Array of mode vectors.">modes_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>);
+<a name="l00048"></a>00048       read&lt;int&gt;(in, <span class="stringliteral">&quot;hMax&quot;</span>, hMax_);
+<a name="l00049"></a>00049       read&lt;LatticeSystem&gt;(in, <span class="stringliteral">&quot;lattice&quot;</span>, lattice_);
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051       <span class="comment">// Allocate wavevectors arrays</span>
+<a name="l00052"></a>00052       <a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>     = (2*hMax_ +1 )*(2*hMax_ + 1)*(2*hMax_ + 1);
+<a name="l00053"></a>00053       <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nWave_);
+<a name="l00054"></a>00054       <a class="code" href="classDdMd_1_1StructureFactor.html#a7ac0138d0ef5c472e929df54d9c4cb6f" title="Array of floating point wave vectors.">waveVectors_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nWave_);
+<a name="l00055"></a>00055       <a class="code" href="classDdMd_1_1StructureFactor.html#ab67234d81fa5c15a8288687ea28de7f8" title="Fourier modes of concentration.">fourierModes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(nWave_, nMode_);
+<a name="l00056"></a>00056       <a class="code" href="classDdMd_1_1StructureFactor.html#a64b759a151b9efcf35dd297f38778f45" title="Total fourier modes of concentration.">totalFourierModes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(nWave_, nMode_);
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058       <span class="keywordtype">int</span> i, j, h, k, l, m;
+<a name="l00059"></a>00059       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> g;
 <a name="l00060"></a>00060 
-<a name="l00061"></a>00061       <span class="keywordtype">int</span> i, j, h, k, l, m;
-<a name="l00062"></a>00062       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> g;
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064       <span class="comment">// Cubic Symmetry</span>
-<a name="l00065"></a>00065       <span class="keywordflow">if</span> (lattice_ == Cubic) {
-<a name="l00066"></a>00066          nStar_ = (hMax_ +1 )*(hMax_ + 2)*(hMax_ + 3)/6;
-<a name="l00067"></a>00067          starIds_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
-<a name="l00068"></a>00068          starSizes_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
-<a name="l00069"></a>00069    
-<a name="l00070"></a>00070          <span class="comment">// Create cubic point group</span>
-<a name="l00071"></a>00071          <a class="code" href="classUtil_1_1PointGroup.html" title="Group of crystal symmetries with no translations.">PointGroup</a> group;
-<a name="l00072"></a>00072          <a class="code" href="classUtil_1_1PointSymmetry.html" title="A PointSymmetry represents a crystallographic point group symmetry.">PointSymmetry</a> a, b, c;
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,1) =  1;
-<a name="l00075"></a>00075          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,0) =  1;
-<a name="l00076"></a>00076          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
-<a name="l00077"></a>00077    
-<a name="l00078"></a>00078          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) = -1;
-<a name="l00079"></a>00079          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  1;
-<a name="l00080"></a>00080          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
-<a name="l00081"></a>00081    
-<a name="l00082"></a>00082          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,1) =  1;
-<a name="l00083"></a>00083          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,2) =  1;
-<a name="l00084"></a>00084          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,0) =  1;
-<a name="l00085"></a>00085    
-<a name="l00086"></a>00086          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(c);
-<a name="l00087"></a>00087          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(b);
-<a name="l00088"></a>00088          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(a);
-<a name="l00089"></a>00089          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a7130dde3c90984d24bb2d0886101f20f" title="Generate a complete group from the current elements.">makeCompleteGroup</a>();
-<a name="l00090"></a>00090    
-<a name="l00091"></a>00091          <span class="comment">// Create grid of wavevectors</span>
-<a name="l00092"></a>00092          <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;IntVector, 48&gt;</a> star;
-<a name="l00093"></a>00093          i = 0;
-<a name="l00094"></a>00094          j = 0;
-<a name="l00095"></a>00095          <span class="keywordflow">for</span> (h = 0; h &lt;= hMax_; ++h) {
-<a name="l00096"></a>00096             g[0] = h;
-<a name="l00097"></a>00097             <span class="keywordflow">for</span> (k = 0; k &lt;= h; ++k) {
-<a name="l00098"></a>00098                g[1] = k;
-<a name="l00099"></a>00099                <span class="keywordflow">for</span> (l = 0; l &lt;= k; ++l) {
-<a name="l00100"></a>00100                   g[2] = l;
-<a name="l00101"></a>00101                   starIds_[i] = j;
-<a name="l00102"></a>00102                   group.<a class="code" href="classUtil_1_1PointGroup.html#a13603ede4307a5240240fc76b79f726c" title="Generate a set of reciprocal vectors that are related by symmetry.">makeStar</a>(g, star);
-<a name="l00103"></a>00103                   starSizes_[i] = star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
-<a name="l00104"></a>00104                   <span class="keywordflow">for</span> (m = 0; m &lt; star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>(); ++m) {
-<a name="l00105"></a>00105                      <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>[j] = star[m];
-<a name="l00106"></a>00106                      ++j;
-<a name="l00107"></a>00107                   }
-<a name="l00108"></a>00108                   ++i;
-<a name="l00109"></a>00109                }
-<a name="l00110"></a>00110             }
-<a name="l00111"></a>00111          }
-<a name="l00112"></a>00112          <span class="keywordflow">if</span> (i != nStar_) {
+<a name="l00061"></a>00061       <span class="comment">// Cubic Symmetry</span>
+<a name="l00062"></a>00062       <span class="keywordflow">if</span> (lattice_ == Cubic) {
+<a name="l00063"></a>00063          nStar_ = (hMax_ +1 )*(hMax_ + 2)*(hMax_ + 3)/6;
+<a name="l00064"></a>00064          starIds_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
+<a name="l00065"></a>00065          starSizes_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
+<a name="l00066"></a>00066    
+<a name="l00067"></a>00067          <span class="comment">// Create cubic point group</span>
+<a name="l00068"></a>00068          <a class="code" href="classUtil_1_1PointGroup.html" title="Group of crystal symmetries with no translations.">PointGroup</a> group;
+<a name="l00069"></a>00069          <a class="code" href="classUtil_1_1PointSymmetry.html" title="A PointSymmetry represents a crystallographic point group symmetry.">PointSymmetry</a> a, b, c;
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,1) =  1;
+<a name="l00072"></a>00072          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,0) =  1;
+<a name="l00073"></a>00073          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
+<a name="l00074"></a>00074    
+<a name="l00075"></a>00075          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) = -1;
+<a name="l00076"></a>00076          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  1;
+<a name="l00077"></a>00077          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
+<a name="l00078"></a>00078    
+<a name="l00079"></a>00079          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,1) =  1;
+<a name="l00080"></a>00080          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,2) =  1;
+<a name="l00081"></a>00081          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,0) =  1;
+<a name="l00082"></a>00082    
+<a name="l00083"></a>00083          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(c);
+<a name="l00084"></a>00084          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(b);
+<a name="l00085"></a>00085          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(a);
+<a name="l00086"></a>00086          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a7130dde3c90984d24bb2d0886101f20f" title="Generate a complete group from the current elements.">makeCompleteGroup</a>();
+<a name="l00087"></a>00087    
+<a name="l00088"></a>00088          <span class="comment">// Create grid of wavevectors</span>
+<a name="l00089"></a>00089          <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;IntVector, 48&gt;</a> star;
+<a name="l00090"></a>00090          i = 0;
+<a name="l00091"></a>00091          j = 0;
+<a name="l00092"></a>00092          <span class="keywordflow">for</span> (h = 0; h &lt;= hMax_; ++h) {
+<a name="l00093"></a>00093             g[0] = h;
+<a name="l00094"></a>00094             <span class="keywordflow">for</span> (k = 0; k &lt;= h; ++k) {
+<a name="l00095"></a>00095                g[1] = k;
+<a name="l00096"></a>00096                <span class="keywordflow">for</span> (l = 0; l &lt;= k; ++l) {
+<a name="l00097"></a>00097                   g[2] = l;
+<a name="l00098"></a>00098                   starIds_[i] = j;
+<a name="l00099"></a>00099                   group.<a class="code" href="classUtil_1_1PointGroup.html#a13603ede4307a5240240fc76b79f726c" title="Generate a set of reciprocal vectors that are related by symmetry.">makeStar</a>(g, star);
+<a name="l00100"></a>00100                   starSizes_[i] = star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
+<a name="l00101"></a>00101                   <span class="keywordflow">for</span> (m = 0; m &lt; star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>(); ++m) {
+<a name="l00102"></a>00102                      <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>[j] = star[m];
+<a name="l00103"></a>00103                      ++j;
+<a name="l00104"></a>00104                   }
+<a name="l00105"></a>00105                   ++i;
+<a name="l00106"></a>00106                }
+<a name="l00107"></a>00107             }
+<a name="l00108"></a>00108          }
+<a name="l00109"></a>00109          <span class="keywordflow">if</span> (i != nStar_) {
+<a name="l00110"></a>00110             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error&quot;</span>);
+<a name="l00111"></a>00111          } 
+<a name="l00112"></a>00112          <span class="keywordflow">if</span> (j != nWave_) {
 <a name="l00113"></a>00113             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error&quot;</span>);
 <a name="l00114"></a>00114          } 
-<a name="l00115"></a>00115          <span class="keywordflow">if</span> (j != nWave_) {
-<a name="l00116"></a>00116             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error&quot;</span>);
-<a name="l00117"></a>00117          } 
-<a name="l00118"></a>00118       } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lattice_ == Tetragonal) {
-<a name="l00119"></a>00119 
-<a name="l00120"></a>00120          nStar_ = (hMax_ + 1 )*(hMax_ + 1)*(hMax_ + 2)/2;
-<a name="l00121"></a>00121          starIds_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
-<a name="l00122"></a>00122          starSizes_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
-<a name="l00123"></a>00123          <span class="comment">// Create tetragonal point group</span>
-<a name="l00124"></a>00124          <a class="code" href="classUtil_1_1PointGroup.html" title="Group of crystal symmetries with no translations.">PointGroup</a> group;
-<a name="l00125"></a>00125          <a class="code" href="classUtil_1_1PointSymmetry.html" title="A PointSymmetry represents a crystallographic point group symmetry.">PointSymmetry</a> a, b, c;
-<a name="l00126"></a>00126 
-<a name="l00127"></a>00127          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  1;
-<a name="l00128"></a>00128          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,2) =  1;
-<a name="l00129"></a>00129          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,1) =  1;
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  -1;
-<a name="l00132"></a>00132          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  1;
-<a name="l00133"></a>00133          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  1;
-<a name="l00136"></a>00136          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  -1;
-<a name="l00137"></a>00137          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
-<a name="l00138"></a>00138 
-<a name="l00139"></a>00139          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(c);
-<a name="l00140"></a>00140          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(b);
-<a name="l00141"></a>00141          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(a);
-<a name="l00142"></a>00142          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a7130dde3c90984d24bb2d0886101f20f" title="Generate a complete group from the current elements.">makeCompleteGroup</a>();
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144          <span class="comment">// Create grid of wavevectors</span>
-<a name="l00145"></a>00145          <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;IntVector, 16&gt;</a> star;
-<a name="l00146"></a>00146          i = 0;
-<a name="l00147"></a>00147          j = 0;
-<a name="l00148"></a>00148          <span class="keywordflow">for</span> (h = 0; h &lt;= hMax_; ++h) {
-<a name="l00149"></a>00149             g[0] = h;
-<a name="l00150"></a>00150             <span class="keywordflow">for</span> (k = 0; k &lt;= hMax_; ++k) {
-<a name="l00151"></a>00151                g[1] = k;
-<a name="l00152"></a>00152                <span class="keywordflow">for</span> (l = 0; l &lt;= k; ++l) {
-<a name="l00153"></a>00153                   g[2] = l;
-<a name="l00154"></a>00154                   starIds_[i] = j;
-<a name="l00155"></a>00155                   group.<a class="code" href="classUtil_1_1PointGroup.html#a13603ede4307a5240240fc76b79f726c" title="Generate a set of reciprocal vectors that are related by symmetry.">makeStar</a>(g, star);
-<a name="l00156"></a>00156                   starSizes_[i] = star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
-<a name="l00157"></a>00157                   <span class="keywordflow">for</span> (m = 0; m &lt; star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>(); ++m) {
-<a name="l00158"></a>00158                      <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>[j] = star[m];
-<a name="l00159"></a>00159                      ++j;
-<a name="l00160"></a>00160                   }
-<a name="l00161"></a>00161                   ++i;
-<a name="l00162"></a>00162                }
-<a name="l00163"></a>00163             }
+<a name="l00115"></a>00115       } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lattice_ == Tetragonal) {
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117          nStar_ = (hMax_ + 1 )*(hMax_ + 1)*(hMax_ + 2)/2;
+<a name="l00118"></a>00118          starIds_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
+<a name="l00119"></a>00119          starSizes_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
+<a name="l00120"></a>00120          <span class="comment">// Create tetragonal point group</span>
+<a name="l00121"></a>00121          <a class="code" href="classUtil_1_1PointGroup.html" title="Group of crystal symmetries with no translations.">PointGroup</a> group;
+<a name="l00122"></a>00122          <a class="code" href="classUtil_1_1PointSymmetry.html" title="A PointSymmetry represents a crystallographic point group symmetry.">PointSymmetry</a> a, b, c;
+<a name="l00123"></a>00123 
+<a name="l00124"></a>00124          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  1;
+<a name="l00125"></a>00125          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,2) =  1;
+<a name="l00126"></a>00126          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,1) =  1;
+<a name="l00127"></a>00127 
+<a name="l00128"></a>00128          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  -1;
+<a name="l00129"></a>00129          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  1;
+<a name="l00130"></a>00130          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  1;
+<a name="l00133"></a>00133          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  -1;
+<a name="l00134"></a>00134          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(c);
+<a name="l00137"></a>00137          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(b);
+<a name="l00138"></a>00138          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(a);
+<a name="l00139"></a>00139          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a7130dde3c90984d24bb2d0886101f20f" title="Generate a complete group from the current elements.">makeCompleteGroup</a>();
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141          <span class="comment">// Create grid of wavevectors</span>
+<a name="l00142"></a>00142          <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;IntVector, 16&gt;</a> star;
+<a name="l00143"></a>00143          i = 0;
+<a name="l00144"></a>00144          j = 0;
+<a name="l00145"></a>00145          <span class="keywordflow">for</span> (h = 0; h &lt;= hMax_; ++h) {
+<a name="l00146"></a>00146             g[0] = h;
+<a name="l00147"></a>00147             <span class="keywordflow">for</span> (k = 0; k &lt;= hMax_; ++k) {
+<a name="l00148"></a>00148                g[1] = k;
+<a name="l00149"></a>00149                <span class="keywordflow">for</span> (l = 0; l &lt;= k; ++l) {
+<a name="l00150"></a>00150                   g[2] = l;
+<a name="l00151"></a>00151                   starIds_[i] = j;
+<a name="l00152"></a>00152                   group.<a class="code" href="classUtil_1_1PointGroup.html#a13603ede4307a5240240fc76b79f726c" title="Generate a set of reciprocal vectors that are related by symmetry.">makeStar</a>(g, star);
+<a name="l00153"></a>00153                   starSizes_[i] = star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
+<a name="l00154"></a>00154                   <span class="keywordflow">for</span> (m = 0; m &lt; star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>(); ++m) {
+<a name="l00155"></a>00155                      <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>[j] = star[m];
+<a name="l00156"></a>00156                      ++j;
+<a name="l00157"></a>00157                   }
+<a name="l00158"></a>00158                   ++i;
+<a name="l00159"></a>00159                }
+<a name="l00160"></a>00160             }
+<a name="l00161"></a>00161          }
+<a name="l00162"></a>00162          <span class="keywordflow">if</span> (i != nStar_) {
+<a name="l00163"></a>00163             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error&quot;</span>);
 <a name="l00164"></a>00164          }
-<a name="l00165"></a>00165          <span class="keywordflow">if</span> (i != nStar_) {
+<a name="l00165"></a>00165          <span class="keywordflow">if</span> (j != nWave_) {
 <a name="l00166"></a>00166             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error&quot;</span>);
 <a name="l00167"></a>00167          }
-<a name="l00168"></a>00168          <span class="keywordflow">if</span> (j != nWave_) {
-<a name="l00169"></a>00169             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error&quot;</span>);
-<a name="l00170"></a>00170          }
-<a name="l00171"></a>00171       } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lattice_ == Orthorhombic) {
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173          nStar_ = (hMax_ + 1 )*(hMax_ + 1)*(hMax_ + 1);
-<a name="l00174"></a>00174          starIds_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
-<a name="l00175"></a>00175          starSizes_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
-<a name="l00176"></a>00176          <span class="comment">// Create tetragonal point group</span>
-<a name="l00177"></a>00177          <a class="code" href="classUtil_1_1PointGroup.html" title="Group of crystal symmetries with no translations.">PointGroup</a> group;
-<a name="l00178"></a>00178          <a class="code" href="classUtil_1_1PointSymmetry.html" title="A PointSymmetry represents a crystallographic point group symmetry.">PointSymmetry</a> a, b, c;
-<a name="l00179"></a>00179 
-<a name="l00180"></a>00180          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  -1;
-<a name="l00181"></a>00181          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  1;
-<a name="l00182"></a>00182          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
-<a name="l00183"></a>00183 
-<a name="l00184"></a>00184          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  1;
-<a name="l00185"></a>00185          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  -1;
-<a name="l00186"></a>00186          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
-<a name="l00187"></a>00187 
-<a name="l00188"></a>00188          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  1;
-<a name="l00189"></a>00189          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  1;
-<a name="l00190"></a>00190          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  -1;
-<a name="l00191"></a>00191 
-<a name="l00192"></a>00192          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(c);
-<a name="l00193"></a>00193          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(b);
-<a name="l00194"></a>00194          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(a);
-<a name="l00195"></a>00195          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a7130dde3c90984d24bb2d0886101f20f" title="Generate a complete group from the current elements.">makeCompleteGroup</a>();
-<a name="l00196"></a>00196 
-<a name="l00197"></a>00197          <span class="comment">// Create grid of wavevectors</span>
-<a name="l00198"></a>00198          <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;IntVector, 16&gt;</a> star;
-<a name="l00199"></a>00199          i = 0;
-<a name="l00200"></a>00200          j = 0;
-<a name="l00201"></a>00201          <span class="keywordflow">for</span> (h = 0; h &lt;= hMax_; ++h) {
-<a name="l00202"></a>00202             g[0] = h;
-<a name="l00203"></a>00203             <span class="keywordflow">for</span> (k = 0; k &lt;= hMax_; ++k) {
-<a name="l00204"></a>00204                g[1] = k;
-<a name="l00205"></a>00205                <span class="keywordflow">for</span> (l = 0; l &lt;= hMax_; ++l) {
-<a name="l00206"></a>00206                   g[2] = l;
-<a name="l00207"></a>00207                   starIds_[i] = j;
-<a name="l00208"></a>00208                   group.<a class="code" href="classUtil_1_1PointGroup.html#a13603ede4307a5240240fc76b79f726c" title="Generate a set of reciprocal vectors that are related by symmetry.">makeStar</a>(g, star);
-<a name="l00209"></a>00209                   starSizes_[i] = star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
-<a name="l00210"></a>00210                   <span class="keywordflow">for</span> (m = 0; m &lt; star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>(); ++m) {
-<a name="l00211"></a>00211                      <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>[j] = star[m];
-<a name="l00212"></a>00212                      ++j;
-<a name="l00213"></a>00213                   }
-<a name="l00214"></a>00214                   ++i;
-<a name="l00215"></a>00215                }
-<a name="l00216"></a>00216             }
+<a name="l00168"></a>00168       } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lattice_ == Orthorhombic) {
+<a name="l00169"></a>00169 
+<a name="l00170"></a>00170          nStar_ = (hMax_ + 1 )*(hMax_ + 1)*(hMax_ + 1);
+<a name="l00171"></a>00171          starIds_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
+<a name="l00172"></a>00172          starSizes_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
+<a name="l00173"></a>00173          <span class="comment">// Create tetragonal point group</span>
+<a name="l00174"></a>00174          <a class="code" href="classUtil_1_1PointGroup.html" title="Group of crystal symmetries with no translations.">PointGroup</a> group;
+<a name="l00175"></a>00175          <a class="code" href="classUtil_1_1PointSymmetry.html" title="A PointSymmetry represents a crystallographic point group symmetry.">PointSymmetry</a> a, b, c;
+<a name="l00176"></a>00176 
+<a name="l00177"></a>00177          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  -1;
+<a name="l00178"></a>00178          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  1;
+<a name="l00179"></a>00179          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
+<a name="l00180"></a>00180 
+<a name="l00181"></a>00181          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  1;
+<a name="l00182"></a>00182          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  -1;
+<a name="l00183"></a>00183          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) =  1;
+<a name="l00186"></a>00186          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  1;
+<a name="l00187"></a>00187          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  -1;
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(c);
+<a name="l00190"></a>00190          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(b);
+<a name="l00191"></a>00191          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(a);
+<a name="l00192"></a>00192          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a7130dde3c90984d24bb2d0886101f20f" title="Generate a complete group from the current elements.">makeCompleteGroup</a>();
+<a name="l00193"></a>00193 
+<a name="l00194"></a>00194          <span class="comment">// Create grid of wavevectors</span>
+<a name="l00195"></a>00195          <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;IntVector, 16&gt;</a> star;
+<a name="l00196"></a>00196          i = 0;
+<a name="l00197"></a>00197          j = 0;
+<a name="l00198"></a>00198          <span class="keywordflow">for</span> (h = 0; h &lt;= hMax_; ++h) {
+<a name="l00199"></a>00199             g[0] = h;
+<a name="l00200"></a>00200             <span class="keywordflow">for</span> (k = 0; k &lt;= hMax_; ++k) {
+<a name="l00201"></a>00201                g[1] = k;
+<a name="l00202"></a>00202                <span class="keywordflow">for</span> (l = 0; l &lt;= hMax_; ++l) {
+<a name="l00203"></a>00203                   g[2] = l;
+<a name="l00204"></a>00204                   starIds_[i] = j;
+<a name="l00205"></a>00205                   group.<a class="code" href="classUtil_1_1PointGroup.html#a13603ede4307a5240240fc76b79f726c" title="Generate a set of reciprocal vectors that are related by symmetry.">makeStar</a>(g, star);
+<a name="l00206"></a>00206                   starSizes_[i] = star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
+<a name="l00207"></a>00207                   <span class="keywordflow">for</span> (m = 0; m &lt; star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>(); ++m) {
+<a name="l00208"></a>00208                      <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>[j] = star[m];
+<a name="l00209"></a>00209                      ++j;
+<a name="l00210"></a>00210                   }
+<a name="l00211"></a>00211                   ++i;
+<a name="l00212"></a>00212                }
+<a name="l00213"></a>00213             }
+<a name="l00214"></a>00214          }
+<a name="l00215"></a>00215          <span class="keywordflow">if</span> (i != nStar_) {
+<a name="l00216"></a>00216             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error&quot;</span>);
 <a name="l00217"></a>00217          }
-<a name="l00218"></a>00218          <span class="keywordflow">if</span> (i != nStar_) {
+<a name="l00218"></a>00218          <span class="keywordflow">if</span> (j != nWave_) {
 <a name="l00219"></a>00219             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error&quot;</span>);
 <a name="l00220"></a>00220          }
-<a name="l00221"></a>00221          <span class="keywordflow">if</span> (j != nWave_) {
-<a name="l00222"></a>00222             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error&quot;</span>);
-<a name="l00223"></a>00223          }
-<a name="l00224"></a>00224       }
-<a name="l00225"></a>00225 
-<a name="l00226"></a>00226       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00227"></a>00227 
-<a name="l00228"></a>00228          <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(nWave_, nMode_);
-<a name="l00229"></a>00229          <span class="keywordtype">int</span> i, j;
-<a name="l00230"></a>00230          <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>; ++i) {
-<a name="l00231"></a>00231             <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>; ++j) {
-<a name="l00232"></a>00232                <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>(i, j) = 0.0;
-<a name="l00233"></a>00233             }
-<a name="l00234"></a>00234          }
+<a name="l00221"></a>00221       }
+<a name="l00222"></a>00222 
+<a name="l00223"></a>00223       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
+<a name="l00224"></a>00224 
+<a name="l00225"></a>00225          <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(nWave_, nMode_);
+<a name="l00226"></a>00226          <span class="keywordtype">int</span> i, j;
+<a name="l00227"></a>00227          <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>; ++i) {
+<a name="l00228"></a>00228             <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>; ++j) {
+<a name="l00229"></a>00229                <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>(i, j) = 0.0;
+<a name="l00230"></a>00230             }
+<a name="l00231"></a>00231          }
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233       }
+<a name="l00234"></a>00234       <a class="code" href="classDdMd_1_1StructureFactor.html#ae6d03529de44566b15dfeae606f93c78" title="Number of samples thus far.">nSample_</a> = 0;
 <a name="l00235"></a>00235 
-<a name="l00236"></a>00236       }
-<a name="l00237"></a>00237       <a class="code" href="classDdMd_1_1StructureFactor.html#ae6d03529de44566b15dfeae606f93c78" title="Number of samples thus far.">nSample_</a> = 0;
+<a name="l00236"></a>00236       isInitialized_ = <span class="keyword">true</span>;
+<a name="l00237"></a>00237    }
 <a name="l00238"></a>00238 
-<a name="l00239"></a>00239       isInitialized_ = <span class="keyword">true</span>;
-<a name="l00240"></a>00240    }
-<a name="l00241"></a>00241 
-<a name="l00242"></a>00242    <span class="comment">/*</span>
-<a name="l00243"></a>00243 <span class="comment">   * Load internal state from an archive.</span>
-<a name="l00244"></a>00244 <span class="comment">   */</span>
-<a name="l00245"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#a9d97b7b65e154f4da00826ca72b34d65">00245</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#a9d97b7b65e154f4da00826ca72b34d65" title="Load internal state from an archive.">StructureFactorGrid::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
-<a name="l00246"></a>00246    {
-<a name="l00247"></a>00247       <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a> = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>();
-<a name="l00248"></a>00248 
-<a name="l00249"></a>00249       <span class="comment">// Load parameter file parameters</span>
-<a name="l00250"></a>00250       <a class="code" href="classDdMd_1_1Analyzer.html#aeb27867c21917c1289af1d4cae0be66d" title="Load parameter interval from input archive.">loadInterval</a>(ar);
-<a name="l00251"></a>00251       <a class="code" href="classDdMd_1_1Analyzer.html#a612962e2284d5835abb43c865cc9b899" title="Load output file name to an archive.">loadOutputFileName</a>(ar);
-<a name="l00252"></a>00252       loadParameter&lt;int&gt;(ar, <span class="stringliteral">&quot;nMode&quot;</span>, <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>);
-<a name="l00253"></a>00253       <a class="code" href="classDdMd_1_1StructureFactor.html#a4bf4124ba606350453ca9c089836dc3d" title="Array of mode vectors.">modes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>);
-<a name="l00254"></a>00254       loadDMatrix&lt;double&gt;(ar, <span class="stringliteral">&quot;modes&quot;</span>, <a class="code" href="classDdMd_1_1StructureFactor.html#a4bf4124ba606350453ca9c089836dc3d" title="Array of mode vectors.">modes_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>);
-<a name="l00255"></a>00255       loadParameter&lt;int&gt;(ar, <span class="stringliteral">&quot;hMax&quot;</span>, hMax_);
-<a name="l00256"></a>00256       loadParameter&lt;LatticeSystem&gt;(ar, <span class="stringliteral">&quot;lattice&quot;</span>, lattice_);
-<a name="l00257"></a>00257 
-<a name="l00258"></a>00258       <span class="comment">// Load and broadcast other distributed members</span>
-<a name="l00259"></a>00259       <a class="code" href="classUtil_1_1MpiLoader.html" title="Provides methods for MPI-aware loading of data from input archive.">MpiLoader&lt;Serializable::IArchive&gt;</a> loader(*<span class="keyword">this</span>, ar);
-<a name="l00260"></a>00260       loader.load(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>);
-<a name="l00261"></a>00261       <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>);
-<a name="l00262"></a>00262       loader.load(<a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>);
-<a name="l00263"></a>00263       loader.load(nStar_);
-<a name="l00264"></a>00264       starIds_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
-<a name="l00265"></a>00265       loader.load(starIds_);
-<a name="l00266"></a>00266       starSizes_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
-<a name="l00267"></a>00267       loader.load(starSizes_);
-<a name="l00268"></a>00268       loader.load(<a class="code" href="classDdMd_1_1StructureFactor.html#ae6d03529de44566b15dfeae606f93c78" title="Number of samples thus far.">nSample_</a>);
-<a name="l00269"></a>00269 
-<a name="l00270"></a>00270       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00271"></a>00271          <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>, nMode_);
-<a name="l00272"></a>00272          ar &gt;&gt; <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>;
-<a name="l00273"></a>00273       }
-<a name="l00274"></a>00274 
-<a name="l00275"></a>00275       <span class="comment">// Allocate work space</span>
-<a name="l00276"></a>00276       <a class="code" href="classDdMd_1_1StructureFactor.html#a7ac0138d0ef5c472e929df54d9c4cb6f" title="Array of floating point wave vectors.">waveVectors_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>);
-<a name="l00277"></a>00277       <a class="code" href="classDdMd_1_1StructureFactor.html#ab67234d81fa5c15a8288687ea28de7f8" title="Fourier modes of concentration.">fourierModes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>, nMode_);
-<a name="l00278"></a>00278       <a class="code" href="classDdMd_1_1StructureFactor.html#a64b759a151b9efcf35dd297f38778f45" title="Total fourier modes of concentration.">totalFourierModes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>, nMode_);
+<a name="l00239"></a>00239    <span class="comment">/*</span>
+<a name="l00240"></a>00240 <span class="comment">   * Load internal state from an archive.</span>
+<a name="l00241"></a>00241 <span class="comment">   */</span>
+<a name="l00242"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#a9d97b7b65e154f4da00826ca72b34d65">00242</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#a9d97b7b65e154f4da00826ca72b34d65" title="Load internal state from an archive.">StructureFactorGrid::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
+<a name="l00243"></a>00243    {
+<a name="l00244"></a>00244       <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a> = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>();
+<a name="l00245"></a>00245 
+<a name="l00246"></a>00246       <span class="comment">// Load parameter file parameters</span>
+<a name="l00247"></a>00247       <a class="code" href="classDdMd_1_1Analyzer.html#aeb27867c21917c1289af1d4cae0be66d" title="Load parameter interval from input archive.">loadInterval</a>(ar);
+<a name="l00248"></a>00248       <a class="code" href="classDdMd_1_1Analyzer.html#a612962e2284d5835abb43c865cc9b899" title="Load output file name to an archive.">loadOutputFileName</a>(ar);
+<a name="l00249"></a>00249       loadParameter&lt;int&gt;(ar, <span class="stringliteral">&quot;nMode&quot;</span>, <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>);
+<a name="l00250"></a>00250       <a class="code" href="classDdMd_1_1StructureFactor.html#a4bf4124ba606350453ca9c089836dc3d" title="Array of mode vectors.">modes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>);
+<a name="l00251"></a>00251       loadDMatrix&lt;double&gt;(ar, <span class="stringliteral">&quot;modes&quot;</span>, <a class="code" href="classDdMd_1_1StructureFactor.html#a4bf4124ba606350453ca9c089836dc3d" title="Array of mode vectors.">modes_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>, <a class="code" href="classDdMd_1_1StructureFactor.html#a6571fb72d7a70489161a8076adfb248a" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>);
+<a name="l00252"></a>00252       loadParameter&lt;int&gt;(ar, <span class="stringliteral">&quot;hMax&quot;</span>, hMax_);
+<a name="l00253"></a>00253       loadParameter&lt;LatticeSystem&gt;(ar, <span class="stringliteral">&quot;lattice&quot;</span>, lattice_);
+<a name="l00254"></a>00254 
+<a name="l00255"></a>00255       <span class="comment">// Load and broadcast other distributed members</span>
+<a name="l00256"></a>00256       <a class="code" href="classUtil_1_1MpiLoader.html" title="Provides methods for MPI-aware loading of data from input archive.">MpiLoader&lt;Serializable::IArchive&gt;</a> loader(*<span class="keyword">this</span>, ar);
+<a name="l00257"></a>00257       loader.load(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>);
+<a name="l00258"></a>00258       <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>);
+<a name="l00259"></a>00259       loader.load(<a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>);
+<a name="l00260"></a>00260       loader.load(nStar_);
+<a name="l00261"></a>00261       starIds_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
+<a name="l00262"></a>00262       loader.load(starIds_);
+<a name="l00263"></a>00263       starSizes_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nStar_);
+<a name="l00264"></a>00264       loader.load(starSizes_);
+<a name="l00265"></a>00265       loader.load(<a class="code" href="classDdMd_1_1StructureFactor.html#ae6d03529de44566b15dfeae606f93c78" title="Number of samples thus far.">nSample_</a>);
+<a name="l00266"></a>00266 
+<a name="l00267"></a>00267       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
+<a name="l00268"></a>00268          <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>, nMode_);
+<a name="l00269"></a>00269          ar &gt;&gt; <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>;
+<a name="l00270"></a>00270       }
+<a name="l00271"></a>00271 
+<a name="l00272"></a>00272       <span class="comment">// Allocate work space</span>
+<a name="l00273"></a>00273       <a class="code" href="classDdMd_1_1StructureFactor.html#a7ac0138d0ef5c472e929df54d9c4cb6f" title="Array of floating point wave vectors.">waveVectors_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>);
+<a name="l00274"></a>00274       <a class="code" href="classDdMd_1_1StructureFactor.html#ab67234d81fa5c15a8288687ea28de7f8" title="Fourier modes of concentration.">fourierModes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>, nMode_);
+<a name="l00275"></a>00275       <a class="code" href="classDdMd_1_1StructureFactor.html#a64b759a151b9efcf35dd297f38778f45" title="Total fourier modes of concentration.">totalFourierModes_</a>.<a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>, nMode_);
+<a name="l00276"></a>00276 
+<a name="l00277"></a>00277       isInitialized_ = <span class="keyword">true</span>;
+<a name="l00278"></a>00278    }
 <a name="l00279"></a>00279 
-<a name="l00280"></a>00280       isInitialized_ = <span class="keyword">true</span>;
-<a name="l00281"></a>00281    }
-<a name="l00282"></a>00282 
-<a name="l00283"></a>00283    <span class="comment">/*</span>
-<a name="l00284"></a>00284 <span class="comment">   * Save internal state to an archive.</span>
-<a name="l00285"></a>00285 <span class="comment">   */</span>
-<a name="l00286"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#afba9f3014eb6c67d6fbcf40b9f845d39">00286</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#afba9f3014eb6c67d6fbcf40b9f845d39" title="Save internal state to an archive.">StructureFactorGrid::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
-<a name="l00287"></a>00287    {
-<a name="l00288"></a>00288       <a class="code" href="classDdMd_1_1Analyzer.html#afaeb6ce06336abdc69aaa25c56ec104d" title="Save interval parameter to an archive.">saveInterval</a>(ar);
-<a name="l00289"></a>00289       <a class="code" href="classDdMd_1_1Analyzer.html#a4c9afc6a23aad9406381c4239bfad5d8" title="Save output file name to an archive.">saveOutputFileName</a>(ar);
-<a name="l00290"></a>00290       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>;
-<a name="l00291"></a>00291       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a4bf4124ba606350453ca9c089836dc3d" title="Array of mode vectors.">modes_</a>;
-<a name="l00292"></a>00292       ar &lt;&lt; hMax_;
-<a name="l00293"></a>00293       ar &lt;&lt; lattice_;
-<a name="l00294"></a>00294 
-<a name="l00295"></a>00295       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>;
-<a name="l00296"></a>00296       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>;
-<a name="l00297"></a>00297       ar &lt;&lt; nStar_;
-<a name="l00298"></a>00298       ar &lt;&lt; starIds_;
-<a name="l00299"></a>00299       ar &lt;&lt; starSizes_;
-<a name="l00300"></a>00300       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#ae6d03529de44566b15dfeae606f93c78" title="Number of samples thus far.">nSample_</a>;
+<a name="l00280"></a>00280    <span class="comment">/*</span>
+<a name="l00281"></a>00281 <span class="comment">   * Save internal state to an archive.</span>
+<a name="l00282"></a>00282 <span class="comment">   */</span>
+<a name="l00283"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#afba9f3014eb6c67d6fbcf40b9f845d39">00283</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#afba9f3014eb6c67d6fbcf40b9f845d39" title="Save internal state to an archive.">StructureFactorGrid::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
+<a name="l00284"></a>00284    {
+<a name="l00285"></a>00285       <a class="code" href="classDdMd_1_1Analyzer.html#afaeb6ce06336abdc69aaa25c56ec104d" title="Save interval parameter to an archive.">saveInterval</a>(ar);
+<a name="l00286"></a>00286       <a class="code" href="classDdMd_1_1Analyzer.html#a4c9afc6a23aad9406381c4239bfad5d8" title="Save output file name to an archive.">saveOutputFileName</a>(ar);
+<a name="l00287"></a>00287       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>;
+<a name="l00288"></a>00288       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a4bf4124ba606350453ca9c089836dc3d" title="Array of mode vectors.">modes_</a>;
+<a name="l00289"></a>00289       ar &lt;&lt; hMax_;
+<a name="l00290"></a>00290       ar &lt;&lt; lattice_;
+<a name="l00291"></a>00291 
+<a name="l00292"></a>00292       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a81bbaafc88d1423128f242436f5907dd" title="Number of wavevectors.">nWave_</a>;
+<a name="l00293"></a>00293       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>;
+<a name="l00294"></a>00294       ar &lt;&lt; nStar_;
+<a name="l00295"></a>00295       ar &lt;&lt; starIds_;
+<a name="l00296"></a>00296       ar &lt;&lt; starSizes_;
+<a name="l00297"></a>00297       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#ae6d03529de44566b15dfeae606f93c78" title="Number of samples thus far.">nSample_</a>;
+<a name="l00298"></a>00298 
+<a name="l00299"></a>00299       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>;
+<a name="l00300"></a>00300    }
 <a name="l00301"></a>00301 
-<a name="l00302"></a>00302       ar &lt;&lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>;
-<a name="l00303"></a>00303    }
+<a name="l00302"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#a50e749f063b4e56d96bd1efd43f2dba4">00302</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#a50e749f063b4e56d96bd1efd43f2dba4" title="Set up before a simulation.">StructureFactorGrid::clear</a>()
+<a name="l00303"></a>00303    {}
 <a name="l00304"></a>00304 
-<a name="l00305"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#a50e749f063b4e56d96bd1efd43f2dba4">00305</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#a50e749f063b4e56d96bd1efd43f2dba4" title="Set up before a simulation.">StructureFactorGrid::clear</a>()
-<a name="l00306"></a>00306    {}
-<a name="l00307"></a>00307 
-<a name="l00308"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#ad5027d6224a66a6c1862ca2b75ef0153">00308</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#ad5027d6224a66a6c1862ca2b75ef0153" title="Add particles to StructureFactor accumulators.">StructureFactorGrid::sample</a>(<span class="keywordtype">long</span> iStep)
-<a name="l00309"></a>00309    {
-<a name="l00310"></a>00310       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#ab6eaceb9f1281213a566d35445efe382" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
-<a name="l00311"></a>00311 
-<a name="l00312"></a>00312          <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00313"></a>00313             <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), logFile_, !<a class="code" href="classDdMd_1_1StructureFactor.html#aaf1108556cfe473d437aff9b9bc1e16b" title="Is this the first step?">isFirstStep_</a>);
-<a name="l00314"></a>00314          }
-<a name="l00315"></a>00315 
-<a name="l00316"></a>00316          <a class="code" href="classDdMd_1_1StructureFactorGrid.html#ad5027d6224a66a6c1862ca2b75ef0153" title="Add particles to StructureFactor accumulators.">StructureFactor::sample</a>(iStep);
-<a name="l00317"></a>00317          
-<a name="l00318"></a>00318          <span class="comment">// Log structure factors</span>
-<a name="l00319"></a>00319          <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00320"></a>00320             <span class="keywordtype">double</span> volume = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a976114ff90d628068ccaa7b62be9ed08" title="Get the Boundary by reference.">boundary</a>().<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#ac2d0f07c3757f5c32056d0fb2dbbc255" title="Return unit cell volume.">volume</a>();
-<a name="l00321"></a>00321             <span class="keywordtype">double</span> norm;
-<a name="l00322"></a>00322             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nStar_; ++i) {
-<a name="l00323"></a>00323                <span class="keywordtype">int</span> size = starSizes_[i];
-<a name="l00324"></a>00324 
-<a name="l00325"></a>00325                <span class="keywordtype">int</span> k = starIds_[i];
-<a name="l00326"></a>00326                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++n) {
-<a name="l00327"></a>00327                   logFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>[k][n], 5);
-<a name="l00328"></a>00328                }
-<a name="l00329"></a>00329                logFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a7ac0138d0ef5c472e929df54d9c4cb6f" title="Array of floating point wave vectors.">waveVectors_</a>[k].abs(), 20, 8);
-<a name="l00330"></a>00330 
-<a name="l00331"></a>00331                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>; ++j) {
-<a name="l00332"></a>00332                   <span class="keywordtype">double</span> average = 0.0;
-<a name="l00333"></a>00333                   <span class="keywordtype">double</span> value = 0.0;
-<a name="l00334"></a>00334                   k = starIds_[i];
-<a name="l00335"></a>00335                   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> m = 0; m &lt; size; ++m) {
-<a name="l00336"></a>00336                      norm = std::norm(<a class="code" href="classDdMd_1_1StructureFactor.html#a64b759a151b9efcf35dd297f38778f45" title="Total fourier modes of concentration.">totalFourierModes_</a>(k, j));
-<a name="l00337"></a>00337                      value = norm/volume;
-<a name="l00338"></a>00338                      average += value;
-<a name="l00339"></a>00339                      ++k;
-<a name="l00340"></a>00340                   }
-<a name="l00341"></a>00341                   average = average/double(size);
-<a name="l00342"></a>00342                   logFile_ &lt;&lt; Dbl(average, 20, 8);
-<a name="l00343"></a>00343                }
-<a name="l00344"></a>00344                logFile_ &lt;&lt; std::endl;
-<a name="l00345"></a>00345             }
-<a name="l00346"></a>00346             logFile_ &lt;&lt; std::endl;
-<a name="l00347"></a>00347             logFile_.close();
-<a name="l00348"></a>00348          }
-<a name="l00349"></a>00349       }
-<a name="l00350"></a>00350    }
-<a name="l00351"></a>00351 
-<a name="l00352"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#ac34a7c837e55077c82d8fc0051486592">00352</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#ac34a7c837e55077c82d8fc0051486592" title="Output structure factors, averaged over stars.">StructureFactorGrid::output</a>()
-<a name="l00353"></a>00353    {
-<a name="l00354"></a>00354       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00355"></a>00355             
-<a name="l00356"></a>00356          <span class="keywordtype">double</span>  value, average, size;
-<a name="l00357"></a>00357          <span class="keywordtype">int</span>     i, j, k, m, n;
-<a name="l00358"></a>00358 
-<a name="l00359"></a>00359          <span class="comment">// Write parameters to a *.prm file</span>
-<a name="l00360"></a>00360          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a>);
-<a name="l00361"></a>00361          <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">writeParam</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a>);
-<a name="l00362"></a>00362          <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a>.close();
-<a name="l00363"></a>00363 
-<a name="l00364"></a>00364          <span class="comment">// Output all structure factors to one file</span>
-<a name="l00365"></a>00365          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a>);
-<a name="l00366"></a>00366          <span class="keywordflow">for</span> (i = 0; i &lt; nStar_; ++i) {
-<a name="l00367"></a>00367             size = starSizes_[i];
-<a name="l00368"></a>00368             k = starIds_[i];
-<a name="l00369"></a>00369             <span class="keywordflow">for</span> (n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++n) {
-<a name="l00370"></a>00370                <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a> &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>[k][n], 5);
-<a name="l00371"></a>00371             }
-<a name="l00372"></a>00372             <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a7ac0138d0ef5c472e929df54d9c4cb6f" title="Array of floating point wave vectors.">waveVectors_</a>[k].abs(), 20, 8);
-<a name="l00373"></a>00373             <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>; ++j) {
-<a name="l00374"></a>00374                k = starIds_[i];
-<a name="l00375"></a>00375                average = 0.0;
-<a name="l00376"></a>00376                <span class="keywordflow">for</span> (m = 0; m &lt; size; ++m) {
-<a name="l00377"></a>00377                   value = <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>(k, j)/double(<a class="code" href="classDdMd_1_1StructureFactor.html#ae6d03529de44566b15dfeae606f93c78" title="Number of samples thus far.">nSample_</a>);
-<a name="l00378"></a>00378                   average += value;
-<a name="l00379"></a>00379                   ++k;
-<a name="l00380"></a>00380                }
-<a name="l00381"></a>00381                average = average/double(size);
-<a name="l00382"></a>00382                <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a> &lt;&lt; Dbl(average, 20, 8);
-<a name="l00383"></a>00383             }
-<a name="l00384"></a>00384             <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a> &lt;&lt; std::endl;
-<a name="l00385"></a>00385          }
-<a name="l00386"></a>00386          <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a>.close();
-<a name="l00387"></a>00387       
-<a name="l00388"></a>00388       }
-<a name="l00389"></a>00389    }
-<a name="l00390"></a>00390 
-<a name="l00391"></a>00391 }
-<a name="l00392"></a>00392 <span class="preprocessor">#endif</span>
+<a name="l00305"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#ad5027d6224a66a6c1862ca2b75ef0153">00305</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#ad5027d6224a66a6c1862ca2b75ef0153" title="Add particles to StructureFactor accumulators.">StructureFactorGrid::sample</a>(<span class="keywordtype">long</span> iStep)
+<a name="l00306"></a>00306    {
+<a name="l00307"></a>00307       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#ab6eaceb9f1281213a566d35445efe382" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
+<a name="l00308"></a>00308 
+<a name="l00309"></a>00309          <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
+<a name="l00310"></a>00310             <span class="comment">// simulation().fileMaster().openOutputFile(outputFileName(&quot;.dat&quot;), logFile_, !isFirstStep_);</span>
+<a name="l00311"></a>00311             std::ios_base::openmode mode = std::ios_base::out;
+<a name="l00312"></a>00312             <span class="keywordflow">if</span> (!<a class="code" href="classDdMd_1_1StructureFactor.html#aaf1108556cfe473d437aff9b9bc1e16b" title="Is this the first step?">isFirstStep_</a>) {
+<a name="l00313"></a>00313                mode = std::ios_base::out | std::ios_base::app;
+<a name="l00314"></a>00314             }
+<a name="l00315"></a>00315             std::string name = <a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;dat&quot;</span>);
+<a name="l00316"></a>00316             <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(name, logFile_, mode);
+<a name="l00317"></a>00317          }
+<a name="l00318"></a>00318 
+<a name="l00319"></a>00319          <a class="code" href="classDdMd_1_1StructureFactorGrid.html#ad5027d6224a66a6c1862ca2b75ef0153" title="Add particles to StructureFactor accumulators.">StructureFactor::sample</a>(iStep);
+<a name="l00320"></a>00320          
+<a name="l00321"></a>00321          <span class="comment">// Log structure factors</span>
+<a name="l00322"></a>00322          <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
+<a name="l00323"></a>00323             <span class="keywordtype">double</span> volume = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a976114ff90d628068ccaa7b62be9ed08" title="Get the Boundary by reference.">boundary</a>().<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#ac2d0f07c3757f5c32056d0fb2dbbc255" title="Return unit cell volume.">volume</a>();
+<a name="l00324"></a>00324             <span class="keywordtype">double</span> norm;
+<a name="l00325"></a>00325             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nStar_; ++i) {
+<a name="l00326"></a>00326                <span class="keywordtype">int</span> size = starSizes_[i];
+<a name="l00327"></a>00327 
+<a name="l00328"></a>00328                <span class="keywordtype">int</span> k = starIds_[i];
+<a name="l00329"></a>00329                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++n) {
+<a name="l00330"></a>00330                   logFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>[k][n], 5);
+<a name="l00331"></a>00331                }
+<a name="l00332"></a>00332                logFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a7ac0138d0ef5c472e929df54d9c4cb6f" title="Array of floating point wave vectors.">waveVectors_</a>[k].abs(), 20, 8);
+<a name="l00333"></a>00333 
+<a name="l00334"></a>00334                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>; ++j) {
+<a name="l00335"></a>00335                   <span class="keywordtype">double</span> average = 0.0;
+<a name="l00336"></a>00336                   <span class="keywordtype">double</span> value = 0.0;
+<a name="l00337"></a>00337                   k = starIds_[i];
+<a name="l00338"></a>00338                   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> m = 0; m &lt; size; ++m) {
+<a name="l00339"></a>00339                      norm = std::norm(<a class="code" href="classDdMd_1_1StructureFactor.html#a64b759a151b9efcf35dd297f38778f45" title="Total fourier modes of concentration.">totalFourierModes_</a>(k, j));
+<a name="l00340"></a>00340                      value = norm/volume;
+<a name="l00341"></a>00341                      average += value;
+<a name="l00342"></a>00342                      ++k;
+<a name="l00343"></a>00343                   }
+<a name="l00344"></a>00344                   average = average/double(size);
+<a name="l00345"></a>00345                   logFile_ &lt;&lt; Dbl(average, 20, 8);
+<a name="l00346"></a>00346                }
+<a name="l00347"></a>00347                logFile_ &lt;&lt; std::endl;
+<a name="l00348"></a>00348             }
+<a name="l00349"></a>00349             logFile_ &lt;&lt; std::endl;
+<a name="l00350"></a>00350             logFile_.close();
+<a name="l00351"></a>00351          }
+<a name="l00352"></a>00352       }
+<a name="l00353"></a>00353    }
+<a name="l00354"></a>00354 
+<a name="l00355"></a><a class="code" href="classDdMd_1_1StructureFactorGrid.html#ac34a7c837e55077c82d8fc0051486592">00355</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StructureFactorGrid.html#ac34a7c837e55077c82d8fc0051486592" title="Output structure factors, averaged over stars.">StructureFactorGrid::output</a>()
+<a name="l00356"></a>00356    {
+<a name="l00357"></a>00357       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
+<a name="l00358"></a>00358             
+<a name="l00359"></a>00359          <span class="keywordtype">double</span>  value, average, size;
+<a name="l00360"></a>00360          <span class="keywordtype">int</span>     i, j, k, m, n;
+<a name="l00361"></a>00361 
+<a name="l00362"></a>00362          <span class="comment">// Write parameters to a *.prm file</span>
+<a name="l00363"></a>00363          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a>);
+<a name="l00364"></a>00364          <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">writeParam</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a>);
+<a name="l00365"></a>00365          <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a>.close();
+<a name="l00366"></a>00366 
+<a name="l00367"></a>00367          <span class="comment">// Output all structure factors to one file</span>
+<a name="l00368"></a>00368          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a>);
+<a name="l00369"></a>00369          <span class="keywordflow">for</span> (i = 0; i &lt; nStar_; ++i) {
+<a name="l00370"></a>00370             size = starSizes_[i];
+<a name="l00371"></a>00371             k = starIds_[i];
+<a name="l00372"></a>00372             <span class="keywordflow">for</span> (n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++n) {
+<a name="l00373"></a>00373                <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a> &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a4ebc746607c5179a398bdeacbc47a7ba" title="Array of Miller index IntVectors for wavevectors.">waveIntVectors_</a>[k][n], 5);
+<a name="l00374"></a>00374             }
+<a name="l00375"></a>00375             <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(<a class="code" href="classDdMd_1_1StructureFactor.html#a7ac0138d0ef5c472e929df54d9c4cb6f" title="Array of floating point wave vectors.">waveVectors_</a>[k].abs(), 20, 8);
+<a name="l00376"></a>00376             <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="classDdMd_1_1StructureFactor.html#a50b731e6ec150b93fdf186448a353fef" title="Number of mode vectors.">nMode_</a>; ++j) {
+<a name="l00377"></a>00377                k = starIds_[i];
+<a name="l00378"></a>00378                average = 0.0;
+<a name="l00379"></a>00379                <span class="keywordflow">for</span> (m = 0; m &lt; size; ++m) {
+<a name="l00380"></a>00380                   value = <a class="code" href="classDdMd_1_1StructureFactor.html#a3b3a3803f9d424c0f470e05d7fb01af4" title="Structure factor accumulators.">structureFactors_</a>(k, j)/double(<a class="code" href="classDdMd_1_1StructureFactor.html#ae6d03529de44566b15dfeae606f93c78" title="Number of samples thus far.">nSample_</a>);
+<a name="l00381"></a>00381                   average += value;
+<a name="l00382"></a>00382                   ++k;
+<a name="l00383"></a>00383                }
+<a name="l00384"></a>00384                average = average/double(size);
+<a name="l00385"></a>00385                <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a> &lt;&lt; Dbl(average, 20, 8);
+<a name="l00386"></a>00386             }
+<a name="l00387"></a>00387             <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a> &lt;&lt; std::endl;
+<a name="l00388"></a>00388          }
+<a name="l00389"></a>00389          <a class="code" href="classDdMd_1_1StructureFactor.html#a95486d08dc183aec2436046ba145a707" title="Output file stream.">outputFile_</a>.close();
+<a name="l00390"></a>00390       
+<a name="l00391"></a>00391       }
+<a name="l00392"></a>00392    }
+<a name="l00393"></a>00393 
+<a name="l00394"></a>00394 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:16 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:01 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

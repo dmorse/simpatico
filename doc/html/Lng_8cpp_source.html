@@ -57,75 +57,71 @@
 <div class="title">Lng.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef UTIL_LNG_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define UTIL_LNG_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;Lng.h&quot;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;Format.h&quot;</span>
 <a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;Lng.h&quot;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;Format.h&quot;</span>
+<a name="l00011"></a>00011 <span class="keyword">namespace </span>Util
+<a name="l00012"></a>00012 {
 <a name="l00013"></a>00013 
-<a name="l00014"></a>00014 <span class="keyword">namespace </span>Util
-<a name="l00015"></a>00015 {
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017    <span class="comment">// Default constructor.</span>
-<a name="l00018"></a><a class="code" href="classUtil_1_1Lng.html#a922ecce0af05ff8fc68b568923110c2d">00018</a>    <a class="code" href="classUtil_1_1Lng.html#a922ecce0af05ff8fc68b568923110c2d" title="Default constructor.">Lng::Lng</a>()
-<a name="l00019"></a>00019     : value_(0),
-<a name="l00020"></a>00020       width_(20)
-<a name="l00021"></a>00021       <span class="comment">//width_(Format::defaultWidth())</span>
-<a name="l00022"></a>00022    {}
-<a name="l00023"></a>00023 
-<a name="l00024"></a>00024    <span class="comment">// Constructor, value only.</span>
-<a name="l00025"></a><a class="code" href="classUtil_1_1Lng.html#ab5b1955edbbca47683aa88e45c5a9f55">00025</a>    <a class="code" href="classUtil_1_1Lng.html#a922ecce0af05ff8fc68b568923110c2d" title="Default constructor.">Lng::Lng</a>(<span class="keywordtype">long</span> <span class="keywordtype">int</span> value)
-<a name="l00026"></a>00026     : value_(value),
-<a name="l00027"></a>00027       width_(20)
-<a name="l00028"></a>00028       <span class="comment">//width_(Format::defaultWidth())</span>
-<a name="l00029"></a>00029    {}
-<a name="l00030"></a>00030 
-<a name="l00032"></a><a class="code" href="classUtil_1_1Lng.html#a24f0c8b8104c3dbfd4d0869b197bdc4e">00032</a>    <a class="code" href="classUtil_1_1Lng.html#a922ecce0af05ff8fc68b568923110c2d" title="Default constructor.">Lng::Lng</a>(<span class="keywordtype">long</span> <span class="keywordtype">int</span> value, <span class="keywordtype">int</span> width)
-<a name="l00033"></a>00033     : value_(value),
-<a name="l00034"></a>00034       width_(width)
-<a name="l00035"></a>00035    {}
+<a name="l00014"></a>00014    <span class="comment">// Default constructor.</span>
+<a name="l00015"></a><a class="code" href="classUtil_1_1Lng.html#a922ecce0af05ff8fc68b568923110c2d">00015</a>    <a class="code" href="classUtil_1_1Lng.html#a922ecce0af05ff8fc68b568923110c2d" title="Default constructor.">Lng::Lng</a>()
+<a name="l00016"></a>00016     : value_(0),
+<a name="l00017"></a>00017       width_(20)
+<a name="l00018"></a>00018       <span class="comment">//width_(Format::defaultWidth())</span>
+<a name="l00019"></a>00019    {}
+<a name="l00020"></a>00020 
+<a name="l00021"></a>00021    <span class="comment">// Constructor, value only.</span>
+<a name="l00022"></a><a class="code" href="classUtil_1_1Lng.html#ab5b1955edbbca47683aa88e45c5a9f55">00022</a>    <a class="code" href="classUtil_1_1Lng.html#a922ecce0af05ff8fc68b568923110c2d" title="Default constructor.">Lng::Lng</a>(<span class="keywordtype">long</span> <span class="keywordtype">int</span> value)
+<a name="l00023"></a>00023     : value_(value),
+<a name="l00024"></a>00024       width_(20)
+<a name="l00025"></a>00025       <span class="comment">//width_(Format::defaultWidth())</span>
+<a name="l00026"></a>00026    {}
+<a name="l00027"></a>00027 
+<a name="l00029"></a><a class="code" href="classUtil_1_1Lng.html#a24f0c8b8104c3dbfd4d0869b197bdc4e">00029</a>    <a class="code" href="classUtil_1_1Lng.html#a922ecce0af05ff8fc68b568923110c2d" title="Default constructor.">Lng::Lng</a>(<span class="keywordtype">long</span> <span class="keywordtype">int</span> value, <span class="keywordtype">int</span> width)
+<a name="l00030"></a>00030     : value_(value),
+<a name="l00031"></a>00031       width_(width)
+<a name="l00032"></a>00032    {}
+<a name="l00033"></a>00033 
+<a name="l00034"></a><a class="code" href="classUtil_1_1Lng.html#a67232e002aeff5a71a8b47d0371f6dbc">00034</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Lng.html#a67232e002aeff5a71a8b47d0371f6dbc" title="Set value of long int.">Lng::setValue</a>(<span class="keywordtype">long</span> <span class="keywordtype">int</span> value)
+<a name="l00035"></a>00035    {  value_ = <a class="code" href="classUtil_1_1Lng.html#ad75f89b4a8b73629e7a6eb1dcdde7552" title="Get value of long int.">value</a>; }
 <a name="l00036"></a>00036 
-<a name="l00037"></a><a class="code" href="classUtil_1_1Lng.html#a67232e002aeff5a71a8b47d0371f6dbc">00037</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Lng.html#a67232e002aeff5a71a8b47d0371f6dbc" title="Set value of long int.">Lng::setValue</a>(<span class="keywordtype">long</span> <span class="keywordtype">int</span> value)
-<a name="l00038"></a>00038    {  value_ = <a class="code" href="classUtil_1_1Lng.html#ad75f89b4a8b73629e7a6eb1dcdde7552" title="Get value of long int.">value</a>; }
+<a name="l00037"></a><a class="code" href="classUtil_1_1Lng.html#a6461f9f0e4d57e693f59a6a5d3da8790">00037</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Lng.html#a6461f9f0e4d57e693f59a6a5d3da8790" title="Set field width.">Lng::setWidth</a>(<span class="keywordtype">int</span> width)
+<a name="l00038"></a>00038    {  width_ = <a class="code" href="classUtil_1_1Lng.html#ac4814cc7c2d87f0636a4190625a1d618" title="Get field width.">width</a>; }
 <a name="l00039"></a>00039 
-<a name="l00040"></a><a class="code" href="classUtil_1_1Lng.html#a6461f9f0e4d57e693f59a6a5d3da8790">00040</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Lng.html#a6461f9f0e4d57e693f59a6a5d3da8790" title="Set field width.">Lng::setWidth</a>(<span class="keywordtype">int</span> width)
-<a name="l00041"></a>00041    {  width_ = <a class="code" href="classUtil_1_1Lng.html#ac4814cc7c2d87f0636a4190625a1d618" title="Get field width.">width</a>; }
+<a name="l00040"></a><a class="code" href="classUtil_1_1Lng.html#ad75f89b4a8b73629e7a6eb1dcdde7552">00040</a>    <span class="keywordtype">long</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Lng.html#ad75f89b4a8b73629e7a6eb1dcdde7552" title="Get value of long int.">Lng::value</a>()
+<a name="l00041"></a>00041    {  <span class="keywordflow">return</span> value_; }
 <a name="l00042"></a>00042 
-<a name="l00043"></a><a class="code" href="classUtil_1_1Lng.html#ad75f89b4a8b73629e7a6eb1dcdde7552">00043</a>    <span class="keywordtype">long</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Lng.html#ad75f89b4a8b73629e7a6eb1dcdde7552" title="Get value of long int.">Lng::value</a>()
-<a name="l00044"></a>00044    {  <span class="keywordflow">return</span> value_; }
+<a name="l00043"></a><a class="code" href="classUtil_1_1Lng.html#ac4814cc7c2d87f0636a4190625a1d618">00043</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Lng.html#ac4814cc7c2d87f0636a4190625a1d618" title="Get field width.">Lng::width</a>()
+<a name="l00044"></a>00044    {  <span class="keywordflow">return</span> width_; }
 <a name="l00045"></a>00045 
-<a name="l00046"></a><a class="code" href="classUtil_1_1Lng.html#ac4814cc7c2d87f0636a4190625a1d618">00046</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Lng.html#ac4814cc7c2d87f0636a4190625a1d618" title="Get field width.">Lng::width</a>()
-<a name="l00047"></a>00047    {  <span class="keywordflow">return</span> width_; }
-<a name="l00048"></a>00048 
-<a name="l00056"></a><a class="code" href="namespaceUtil.html#a74ba9a1d58c89508f1328696a379aab4">00056</a>    std::istream&amp; <a class="code" href="namespaceUtil.html#a84a8e4c844fd5d302194294ce6cf1dda" title="istream extractor for a MonoclinicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a> &amp;<span class="keywordtype">object</span>)
-<a name="l00057"></a>00057    {
-<a name="l00058"></a>00058       in &gt;&gt; <span class="keywordtype">object</span>.value_;
-<a name="l00059"></a>00059       <span class="keywordflow">return</span> in;
-<a name="l00060"></a>00060    }
-<a name="l00061"></a>00061 
-<a name="l00069"></a><a class="code" href="namespaceUtil.html#aaeb7200dbbc583e2cff0a17c80ea9bf5">00069</a>    std::ostream&amp; <a class="code" href="namespaceUtil.html#a10bcffa95685d7673ce01e7c634b0bf2" title="ostream inserter for an MonoclinicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a> &amp;<span class="keywordtype">object</span>)
-<a name="l00070"></a>00070    {
-<a name="l00071"></a>00071       out.width(<span class="keywordtype">object</span>.width_);
-<a name="l00072"></a>00072       out &lt;&lt; <span class="keywordtype">object</span>.value_;
-<a name="l00073"></a>00073       <span class="keywordflow">return</span> out;
-<a name="l00074"></a>00074    }
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076 } 
-<a name="l00077"></a>00077 <span class="preprocessor">#endif</span>
+<a name="l00053"></a><a class="code" href="namespaceUtil.html#a74ba9a1d58c89508f1328696a379aab4">00053</a>    std::istream&amp; <a class="code" href="namespaceUtil.html#a84a8e4c844fd5d302194294ce6cf1dda" title="istream extractor for a MonoclinicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a> &amp;<span class="keywordtype">object</span>)
+<a name="l00054"></a>00054    {
+<a name="l00055"></a>00055       in &gt;&gt; <span class="keywordtype">object</span>.value_;
+<a name="l00056"></a>00056       <span class="keywordflow">return</span> in;
+<a name="l00057"></a>00057    }
+<a name="l00058"></a>00058 
+<a name="l00066"></a><a class="code" href="namespaceUtil.html#aaeb7200dbbc583e2cff0a17c80ea9bf5">00066</a>    std::ostream&amp; <a class="code" href="namespaceUtil.html#a10bcffa95685d7673ce01e7c634b0bf2" title="ostream inserter for an MonoclinicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a> &amp;<span class="keywordtype">object</span>)
+<a name="l00067"></a>00067    {
+<a name="l00068"></a>00068       out.width(<span class="keywordtype">object</span>.width_);
+<a name="l00069"></a>00069       out &lt;&lt; <span class="keywordtype">object</span>.value_;
+<a name="l00070"></a>00070       <span class="keywordflow">return</span> out;
+<a name="l00071"></a>00071    }
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073 } 
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:13 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -63,7 +63,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -456,7 +456,7 @@
 <a name="l00400"></a>00400       isValid();
 <a name="l00401"></a>00401 
 <a name="l00402"></a>00402       <span class="comment">// Loop over groups.</span>
-<a name="l00403"></a>00403       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a>&amp; atomMap = atomStorage.<a class="code" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f" title="Return AtomMap by const reference.">map</a>();
+<a name="l00403"></a>00403       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a>&amp; atomMap = atomStorage.<a class="code" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f" title="Return the AtomMap by const reference.">map</a>();
 <a name="l00404"></a>00404       <span class="keywordflow">for</span> (begin(groupIter); groupIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++groupIter) {
 <a name="l00405"></a>00405          nAtom = 0;
 <a name="l00406"></a>00406          nGhost = 0;
@@ -742,7 +742,7 @@
 <a name="l00686"></a>00686    {
 <a name="l00687"></a>00687       <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a>* newGroupPtr;
 <a name="l00688"></a>00688       <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a>* oldGroupPtr;
-<a name="l00689"></a>00689       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a>&amp; atomMap = atomStorage.<a class="code" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f" title="Return AtomMap by const reference.">map</a>();
+<a name="l00689"></a>00689       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a>&amp; atomMap = atomStorage.<a class="code" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f" title="Return the AtomMap by const reference.">map</a>();
 <a name="l00690"></a>00690       <span class="keywordtype">int</span> groupId;
 <a name="l00691"></a>00691 
 <a name="l00692"></a>00692       buffer.<a class="code" href="classDdMd_1_1Buffer.html#a084adf34691be655ad90392f4749b667" title="Begin to receive a block from the recv buffer.">beginRecvBlock</a>();
@@ -801,7 +801,7 @@
 <a name="l00745"></a>00745 <span class="preprocessor">         #ifdef UTIL_DEBUG</span>
 <a name="l00746"></a>00746 <span class="preprocessor"></span><span class="preprocessor">         #ifdef DDMD_GROUP_STORAGE_DEBUG</span>
 <a name="l00747"></a>00747 <span class="preprocessor"></span>         <span class="comment">// Validate group</span>
-<a name="l00748"></a>00748          <span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a>&amp; atomMap = atomStorage.<a class="code" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f" title="Return AtomMap by const reference.">map</a>();
+<a name="l00748"></a>00748          <span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a>&amp; atomMap = atomStorage.<a class="code" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f" title="Return the AtomMap by const reference.">map</a>();
 <a name="l00749"></a>00749          <span class="keywordtype">int</span> atomId;
 <a name="l00750"></a>00750          nAtom  = 0;
 <a name="l00751"></a>00751          <span class="keywordflow">for</span> (k = 0; k &lt; N; ++k) {
@@ -866,7 +866,7 @@
 <a name="l00810"></a><a class="code" href="classDdMd_1_1GroupStorage.html#ab33b385b36d0395ee64e302401216081">00810</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1GroupStorage.html#ab33b385b36d0395ee64e302401216081" title="Find all ghost members of groups.">GroupStorage&lt;N&gt;::findGhosts</a>(<a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; atomStorage)
 <a name="l00811"></a>00811    {
 <a name="l00812"></a>00812       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group &lt; N &gt; objects owned by a GroupStorage&lt; N &gt;.">GroupIterator&lt;N&gt;</a> groupIter;
-<a name="l00813"></a>00813       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a>&amp; atomMap = atomStorage.<a class="code" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f" title="Return AtomMap by const reference.">map</a>();
+<a name="l00813"></a>00813       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a>&amp; atomMap = atomStorage.<a class="code" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f" title="Return the AtomMap by const reference.">map</a>();
 <a name="l00814"></a>00814       <span class="keywordtype">int</span> nAtom;
 <a name="l00815"></a>00815       <span class="keywordflow">for</span> (begin(groupIter); groupIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++groupIter) {
 <a name="l00816"></a>00816          nAtom = groupIter-&gt;nPtr();
@@ -887,7 +887,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:12 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:57 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -57,181 +57,177 @@
 <div class="title">MdVirialStressTensorAverage.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef MD_VIRIAL_STRESSTENSOR_AVERAGE_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define MD_VIRIAL_STRESSTENSOR_AVERAGE_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;MdVirialStressTensorAverage.h&quot;</span>
-<a name="l00012"></a>00012 <span class="comment">//#include &lt;util/misc/FileMaster.h&gt;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;mcMd/simulation/Simulation.h&gt;</span> 
-<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;util/misc/ioUtil.h&gt;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;util/format/Int.h&gt;</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;util/format/Dbl.h&gt;</span>
-<a name="l00017"></a>00017 
-<a name="l00018"></a>00018 <span class="preprocessor">#include &lt;sstream&gt;</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;MdVirialStressTensorAverage.h&quot;</span>
+<a name="l00009"></a>00009 <span class="comment">//#include &lt;util/misc/FileMaster.h&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;mcMd/simulation/Simulation.h&gt;</span> 
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;util/misc/ioUtil.h&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;util/format/Int.h&gt;</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;util/format/Dbl.h&gt;</span>
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;sstream&gt;</span>
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="keyword">namespace </span>McMd
+<a name="l00018"></a>00018 {
 <a name="l00019"></a>00019 
-<a name="l00020"></a>00020 <span class="keyword">namespace </span>McMd
-<a name="l00021"></a>00021 {
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023    <span class="keyword">using namespace </span>Util;
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025    <span class="comment">/*</span>
-<a name="l00026"></a>00026 <span class="comment">   * Constructor.</span>
-<a name="l00027"></a>00027 <span class="comment">   */</span>
-<a name="l00028"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a5febae380d7eeeb69334157b8bba4555">00028</a>    <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a5febae380d7eeeb69334157b8bba4555" title="Constructor.">MdVirialStressTensorAverage::MdVirialStressTensorAverage</a>(<a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>&amp; system) 
-<a name="l00029"></a>00029     : <a class="code" href="classMcMd_1_1SystemAnalyzer.html" title="Template for Analyzer associated with one System.">SystemAnalyzer</a>&lt;<a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>&gt;(system),
-<a name="l00030"></a>00030       sxxAccumulator_(),
-<a name="l00031"></a>00031       sxyAccumulator_(),
-<a name="l00032"></a>00032       sxzAccumulator_(),
-<a name="l00033"></a>00033       syxAccumulator_(),
-<a name="l00034"></a>00034       syyAccumulator_(),
-<a name="l00035"></a>00035       syzAccumulator_(),
-<a name="l00036"></a>00036       szxAccumulator_(),
-<a name="l00037"></a>00037       szyAccumulator_(),
-<a name="l00038"></a>00038       szzAccumulator_(),
-<a name="l00039"></a>00039       nSamplePerBlock_(1),
-<a name="l00040"></a>00040       nSample_(0),
-<a name="l00041"></a>00041       isInitialized_(false)
-<a name="l00042"></a>00042    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;MdVirialStressTensorAverage&quot;</span>); }
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044    <span class="comment">/*</span>
-<a name="l00045"></a>00045 <span class="comment">   * Read interval and outputFileName. </span>
-<a name="l00046"></a>00046 <span class="comment">   */</span>
-<a name="l00047"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a53ec873cdebbcfaaf9516225363e1dbf">00047</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a53ec873cdebbcfaaf9516225363e1dbf" title="Read dumpPrefix and interval.">MdVirialStressTensorAverage::readParameters</a>(std::istream&amp; in) 
-<a name="l00048"></a>00048    {
-<a name="l00049"></a>00049       <a class="code" href="classMcMd_1_1Analyzer.html#a5352cb87b6cbc59e5255f9f6ca812cd1" title="Read interval from file, with error checking.">readInterval</a>(in);
-<a name="l00050"></a>00050       <a class="code" href="classMcMd_1_1Analyzer.html#a354d7cea1792b8ed295318dd76798875" title="Read outputFileName from file.">readOutputFileName</a>(in);
-<a name="l00051"></a>00051       read&lt;int&gt;(in,<span class="stringliteral">&quot;nSamplePerBlock&quot;</span>, nSamplePerBlock_);
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053       sxxAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
-<a name="l00054"></a>00054       sxyAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
-<a name="l00055"></a>00055       sxzAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
-<a name="l00056"></a>00056       syxAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
-<a name="l00057"></a>00057       syyAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
-<a name="l00058"></a>00058       syzAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
-<a name="l00059"></a>00059       szxAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
-<a name="l00060"></a>00060       szyAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
-<a name="l00061"></a>00061       szzAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063       std::string filename;
-<a name="l00064"></a>00064       filename  = <a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>();
-<a name="l00065"></a>00065       <a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#ae958567eddcdfb523d7af85f5bdc5cfe" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>(), outputFile_);
+<a name="l00020"></a>00020    <span class="keyword">using namespace </span>Util;
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022    <span class="comment">/*</span>
+<a name="l00023"></a>00023 <span class="comment">   * Constructor.</span>
+<a name="l00024"></a>00024 <span class="comment">   */</span>
+<a name="l00025"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a5febae380d7eeeb69334157b8bba4555">00025</a>    <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a5febae380d7eeeb69334157b8bba4555" title="Constructor.">MdVirialStressTensorAverage::MdVirialStressTensorAverage</a>(<a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>&amp; system) 
+<a name="l00026"></a>00026     : <a class="code" href="classMcMd_1_1SystemAnalyzer.html" title="Template for Analyzer associated with one System.">SystemAnalyzer</a>&lt;<a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>&gt;(system),
+<a name="l00027"></a>00027       sxxAccumulator_(),
+<a name="l00028"></a>00028       sxyAccumulator_(),
+<a name="l00029"></a>00029       sxzAccumulator_(),
+<a name="l00030"></a>00030       syxAccumulator_(),
+<a name="l00031"></a>00031       syyAccumulator_(),
+<a name="l00032"></a>00032       syzAccumulator_(),
+<a name="l00033"></a>00033       szxAccumulator_(),
+<a name="l00034"></a>00034       szyAccumulator_(),
+<a name="l00035"></a>00035       szzAccumulator_(),
+<a name="l00036"></a>00036       nSamplePerBlock_(1),
+<a name="l00037"></a>00037       nSample_(0),
+<a name="l00038"></a>00038       isInitialized_(false)
+<a name="l00039"></a>00039    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;MdVirialStressTensorAverage&quot;</span>); }
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041    <span class="comment">/*</span>
+<a name="l00042"></a>00042 <span class="comment">   * Read interval and outputFileName. </span>
+<a name="l00043"></a>00043 <span class="comment">   */</span>
+<a name="l00044"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a53ec873cdebbcfaaf9516225363e1dbf">00044</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a53ec873cdebbcfaaf9516225363e1dbf" title="Read dumpPrefix and interval.">MdVirialStressTensorAverage::readParameters</a>(std::istream&amp; in) 
+<a name="l00045"></a>00045    {
+<a name="l00046"></a>00046       <a class="code" href="classMcMd_1_1Analyzer.html#a5352cb87b6cbc59e5255f9f6ca812cd1" title="Read interval from file, with error checking.">readInterval</a>(in);
+<a name="l00047"></a>00047       <a class="code" href="classMcMd_1_1Analyzer.html#a354d7cea1792b8ed295318dd76798875" title="Read outputFileName from file.">readOutputFileName</a>(in);
+<a name="l00048"></a>00048       read&lt;int&gt;(in,<span class="stringliteral">&quot;nSamplePerBlock&quot;</span>, nSamplePerBlock_);
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050       sxxAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
+<a name="l00051"></a>00051       sxyAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
+<a name="l00052"></a>00052       sxzAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
+<a name="l00053"></a>00053       syxAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
+<a name="l00054"></a>00054       syyAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
+<a name="l00055"></a>00055       syzAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
+<a name="l00056"></a>00056       szxAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
+<a name="l00057"></a>00057       szyAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
+<a name="l00058"></a>00058       szzAccumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060       std::string filename;
+<a name="l00061"></a>00061       filename  = <a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>();
+<a name="l00062"></a>00062       <a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#ae958567eddcdfb523d7af85f5bdc5cfe" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>(), outputFile_);
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064       isInitialized_ = <span class="keyword">true</span>;
+<a name="l00065"></a>00065    }
 <a name="l00066"></a>00066 
-<a name="l00067"></a>00067       isInitialized_ = <span class="keyword">true</span>;
-<a name="l00068"></a>00068    }
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071    <span class="comment">/*</span>
-<a name="l00072"></a>00072 <span class="comment">   * Load internal state from an archive.</span>
-<a name="l00073"></a>00073 <span class="comment">   */</span>
-<a name="l00074"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a9fb5b64b4b48999ec52c4083e56f0f1c">00074</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a9fb5b64b4b48999ec52c4083e56f0f1c" title="Load internal state from an archive.">MdVirialStressTensorAverage::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
-<a name="l00075"></a>00075    {
-<a name="l00076"></a>00076       <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a9fb5b64b4b48999ec52c4083e56f0f1c" title="Load internal state from an archive.">Analyzer::loadParameters</a>(ar);  
-<a name="l00077"></a>00077       loadParameter&lt;int&gt;(ar,<span class="stringliteral">&quot;nSamplePerBlock&quot;</span>, nSamplePerBlock_);
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079       sxxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
-<a name="l00080"></a>00080       sxyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
-<a name="l00081"></a>00081       sxzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
-<a name="l00082"></a>00082       syxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
-<a name="l00083"></a>00083       syyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
-<a name="l00084"></a>00084       syzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
-<a name="l00085"></a>00085       szxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
-<a name="l00086"></a>00086       szyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
-<a name="l00087"></a>00087       szzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089       <span class="keywordflow">if</span> (nSamplePerBlock_) {
-<a name="l00090"></a>00090          <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
-<a name="l00091"></a>00091       }
-<a name="l00092"></a>00092       isInitialized_ = <span class="keyword">true</span>;
-<a name="l00093"></a>00093    }
-<a name="l00094"></a>00094 
-<a name="l00095"></a>00095    <span class="comment">/*</span>
-<a name="l00096"></a>00096 <span class="comment">   * Save internal state to an archive.</span>
-<a name="l00097"></a>00097 <span class="comment">   */</span>
-<a name="l00098"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#aae46abd398ed3ad2708f427998e1e386">00098</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#aae46abd398ed3ad2708f427998e1e386" title="Save internal state to an archive.">MdVirialStressTensorAverage::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
-<a name="l00099"></a>00099    {  ar &amp; *<span class="keyword">this</span>; }
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101   
-<a name="l00102"></a>00102    <span class="comment">/*</span>
-<a name="l00103"></a>00103 <span class="comment">   * Read interval and outputFileName. </span>
-<a name="l00104"></a>00104 <span class="comment">   */</span>
-<a name="l00105"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a270a4d77c75b40ef890bff61d252adf6">00105</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a270a4d77c75b40ef890bff61d252adf6" title="Clear nSample counter.">MdVirialStressTensorAverage::clear</a>() 
-<a name="l00106"></a>00106    {
-<a name="l00107"></a>00107       <span class="keywordflow">if</span> (!isInitialized_) {
-<a name="l00108"></a>00108          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: Object not initialized&quot;</span>);
-<a name="l00109"></a>00109       }
-<a name="l00110"></a>00110 
-<a name="l00111"></a>00111       nSample_ = 0;
-<a name="l00112"></a>00112       
-<a name="l00113"></a>00113       sxxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
-<a name="l00114"></a>00114       sxyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
-<a name="l00115"></a>00115       sxzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
-<a name="l00116"></a>00116       syxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
-<a name="l00117"></a>00117       syyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
-<a name="l00118"></a>00118       syzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
-<a name="l00119"></a>00119       szxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
-<a name="l00120"></a>00120       szyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
-<a name="l00121"></a>00121       szzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();       
-<a name="l00122"></a>00122    }
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124    <span class="comment">/*</span>
-<a name="l00125"></a>00125 <span class="comment">   * Sample the stress tensor.</span>
-<a name="l00126"></a>00126 <span class="comment">   */</span>
-<a name="l00127"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#af7f718593276d9399b4050938c7d3297">00127</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#af7f718593276d9399b4050938c7d3297" title="Sample virial stress to accumulators.">MdVirialStressTensorAverage::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00128"></a>00128    {
-<a name="l00129"></a>00129       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Analyzer.html#aa4cff884b712a5a2cf374b7a63763c87" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131          <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> virial;
-<a name="l00132"></a>00132          <a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1MdSystem.html#a16edbf0e3f35a86538e560d14697e2be" title="Compute total virial stress, from all forces.">computeVirialStress</a>&lt;<a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>&gt;(virial);
-<a name="l00133"></a>00133  
-<a name="l00134"></a>00134          sxxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(0,0));
-<a name="l00135"></a>00135          sxyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(0,1));
-<a name="l00136"></a>00136          sxzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(0,2));
-<a name="l00137"></a>00137          syxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(1,0));
-<a name="l00138"></a>00138          syyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(1,1));
-<a name="l00139"></a>00139          syzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(1,2));
-<a name="l00140"></a>00140          szxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(2,0));
-<a name="l00141"></a>00141          szyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(2,1));
-<a name="l00142"></a>00142          szzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(2,2));
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144          ++nSample_;
-<a name="l00145"></a>00145       }
-<a name="l00146"></a>00146    }
-<a name="l00147"></a>00147 
-<a name="l00148"></a>00148    <span class="comment">/*</span>
-<a name="l00149"></a>00149 <span class="comment">   * Dump StressTensor Measurment results.</span>
-<a name="l00150"></a>00150 <span class="comment">   */</span>
-<a name="l00151"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a7a40c326624aef4fd571ea57147a5b94">00151</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a7a40c326624aef4fd571ea57147a5b94" title="Dump configuration to file.">MdVirialStressTensorAverage::output</a>() 
-<a name="l00152"></a>00152    {
-<a name="l00153"></a>00153 
-<a name="l00154"></a>00154       outputFile_ &lt;&lt; 
-<a name="l00155"></a>00155                   <span class="stringliteral">&quot;Sxx=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
-<a name="l00156"></a>00156                   <span class="stringliteral">&quot;Sxy=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
-<a name="l00157"></a>00157                   <span class="stringliteral">&quot;Sxz=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
-<a name="l00158"></a>00158                   <span class="stringliteral">&quot;Syx=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
-<a name="l00159"></a>00159                   <span class="stringliteral">&quot;Syy=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
-<a name="l00160"></a>00160                   <span class="stringliteral">&quot;Syz=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
-<a name="l00161"></a>00161                   <span class="stringliteral">&quot;Szx=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
-<a name="l00162"></a>00162                   <span class="stringliteral">&quot;Szy=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
-<a name="l00163"></a>00163                   <span class="stringliteral">&quot;Szz=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
-<a name="l00164"></a>00164                   std::endl;
-<a name="l00165"></a>00165    }
-<a name="l00166"></a>00166 
-<a name="l00167"></a>00167 }
-<a name="l00168"></a>00168 <span class="preprocessor">#endif  </span>
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068    <span class="comment">/*</span>
+<a name="l00069"></a>00069 <span class="comment">   * Load internal state from an archive.</span>
+<a name="l00070"></a>00070 <span class="comment">   */</span>
+<a name="l00071"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a9fb5b64b4b48999ec52c4083e56f0f1c">00071</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a9fb5b64b4b48999ec52c4083e56f0f1c" title="Load internal state from an archive.">MdVirialStressTensorAverage::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
+<a name="l00072"></a>00072    {
+<a name="l00073"></a>00073       <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a9fb5b64b4b48999ec52c4083e56f0f1c" title="Load internal state from an archive.">Analyzer::loadParameters</a>(ar);  
+<a name="l00074"></a>00074       loadParameter&lt;int&gt;(ar,<span class="stringliteral">&quot;nSamplePerBlock&quot;</span>, nSamplePerBlock_);
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076       sxxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
+<a name="l00077"></a>00077       sxyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
+<a name="l00078"></a>00078       sxzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
+<a name="l00079"></a>00079       syxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
+<a name="l00080"></a>00080       syyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
+<a name="l00081"></a>00081       syzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
+<a name="l00082"></a>00082       szxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
+<a name="l00083"></a>00083       szyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
+<a name="l00084"></a>00084       szzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">loadParameters</a>(ar);
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086       <span class="keywordflow">if</span> (nSamplePerBlock_) {
+<a name="l00087"></a>00087          <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
+<a name="l00088"></a>00088       }
+<a name="l00089"></a>00089       isInitialized_ = <span class="keyword">true</span>;
+<a name="l00090"></a>00090    }
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092    <span class="comment">/*</span>
+<a name="l00093"></a>00093 <span class="comment">   * Save internal state to an archive.</span>
+<a name="l00094"></a>00094 <span class="comment">   */</span>
+<a name="l00095"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#aae46abd398ed3ad2708f427998e1e386">00095</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#aae46abd398ed3ad2708f427998e1e386" title="Save internal state to an archive.">MdVirialStressTensorAverage::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
+<a name="l00096"></a>00096    {  ar &amp; *<span class="keyword">this</span>; }
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098   
+<a name="l00099"></a>00099    <span class="comment">/*</span>
+<a name="l00100"></a>00100 <span class="comment">   * Read interval and outputFileName. </span>
+<a name="l00101"></a>00101 <span class="comment">   */</span>
+<a name="l00102"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a270a4d77c75b40ef890bff61d252adf6">00102</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a270a4d77c75b40ef890bff61d252adf6" title="Clear nSample counter.">MdVirialStressTensorAverage::clear</a>() 
+<a name="l00103"></a>00103    {
+<a name="l00104"></a>00104       <span class="keywordflow">if</span> (!isInitialized_) {
+<a name="l00105"></a>00105          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: Object not initialized&quot;</span>);
+<a name="l00106"></a>00106       }
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108       nSample_ = 0;
+<a name="l00109"></a>00109       
+<a name="l00110"></a>00110       sxxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
+<a name="l00111"></a>00111       sxyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
+<a name="l00112"></a>00112       sxzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
+<a name="l00113"></a>00113       syxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
+<a name="l00114"></a>00114       syyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
+<a name="l00115"></a>00115       syzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
+<a name="l00116"></a>00116       szxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
+<a name="l00117"></a>00117       szyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
+<a name="l00118"></a>00118       szzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();       
+<a name="l00119"></a>00119    }
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121    <span class="comment">/*</span>
+<a name="l00122"></a>00122 <span class="comment">   * Sample the stress tensor.</span>
+<a name="l00123"></a>00123 <span class="comment">   */</span>
+<a name="l00124"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#af7f718593276d9399b4050938c7d3297">00124</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#af7f718593276d9399b4050938c7d3297" title="Sample virial stress to accumulators.">MdVirialStressTensorAverage::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00125"></a>00125    {
+<a name="l00126"></a>00126       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Analyzer.html#aa4cff884b712a5a2cf374b7a63763c87" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
+<a name="l00127"></a>00127 
+<a name="l00128"></a>00128          <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> virial;
+<a name="l00129"></a>00129          <a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1MdSystem.html#a16edbf0e3f35a86538e560d14697e2be" title="Compute total virial stress, from all forces.">computeVirialStress</a>&lt;<a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>&gt;(virial);
+<a name="l00130"></a>00130  
+<a name="l00131"></a>00131          sxxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(0,0));
+<a name="l00132"></a>00132          sxyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(0,1));
+<a name="l00133"></a>00133          sxzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(0,2));
+<a name="l00134"></a>00134          syxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(1,0));
+<a name="l00135"></a>00135          syyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(1,1));
+<a name="l00136"></a>00136          syzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(1,2));
+<a name="l00137"></a>00137          szxAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(2,0));
+<a name="l00138"></a>00138          szyAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(2,1));
+<a name="l00139"></a>00139          szzAccumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(virial(2,2));
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141          ++nSample_;
+<a name="l00142"></a>00142       }
+<a name="l00143"></a>00143    }
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145    <span class="comment">/*</span>
+<a name="l00146"></a>00146 <span class="comment">   * Dump StressTensor Measurment results.</span>
+<a name="l00147"></a>00147 <span class="comment">   */</span>
+<a name="l00148"></a><a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a7a40c326624aef4fd571ea57147a5b94">00148</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdVirialStressTensorAverage.html#a7a40c326624aef4fd571ea57147a5b94" title="Dump configuration to file.">MdVirialStressTensorAverage::output</a>() 
+<a name="l00149"></a>00149    {
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151       outputFile_ &lt;&lt; 
+<a name="l00152"></a>00152                   <span class="stringliteral">&quot;Sxx=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
+<a name="l00153"></a>00153                   <span class="stringliteral">&quot;Sxy=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
+<a name="l00154"></a>00154                   <span class="stringliteral">&quot;Sxz=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(sxzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
+<a name="l00155"></a>00155                   <span class="stringliteral">&quot;Syx=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
+<a name="l00156"></a>00156                   <span class="stringliteral">&quot;Syy=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
+<a name="l00157"></a>00157                   <span class="stringliteral">&quot;Syz=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(syzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
+<a name="l00158"></a>00158                   <span class="stringliteral">&quot;Szx=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szxAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
+<a name="l00159"></a>00159                   <span class="stringliteral">&quot;Szy=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szyAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
+<a name="l00160"></a>00160                   <span class="stringliteral">&quot;Szz=&quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>(), 17)&lt;&lt; <span class="stringliteral">&quot;  +-  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(szzAccumulator_.<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>(), 9, 8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; 
+<a name="l00161"></a>00161                   std::endl;
+<a name="l00162"></a>00162    }
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:14 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:59 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

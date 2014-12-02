@@ -104,6 +104,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save internal state to an archive.  <a href="#a3e79613e2f315fd8116f140254f3b461"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1OutputPressure.html#a5b5770f58581712a51b46fd1e6fbf1f1">clear</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear nSample counter.  <a href="#a5b5770f58581712a51b46fd1e6fbf1f1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1OutputPressure.html#a1f046d5d1cca9a846470c8815fbfa160">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup - open output file.  <a href="#a1f046d5d1cca9a846470c8815fbfa160"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1OutputPressure.html#a1d3f9c4a902b25eef963cd3bca638885">sample</a> (long iStep)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump configuration to file.  <a href="#a1d3f9c4a902b25eef963cd3bca638885"></a><br/></td></tr>
 </table>
@@ -131,9 +133,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00027">27</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00024">24</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -183,9 +185,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a172a3a656b5829c8d758424ad09a22a6">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00036">36</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00033">33</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01129">DdMd::Simulation::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00045">DdMd::Analyzer::readInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00112">DdMd::Analyzer::readOutputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01134">DdMd::Simulation::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00042">DdMd::Analyzer::readInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00109">DdMd::Analyzer::readOutputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
 
 </div>
 </div>
@@ -214,9 +216,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#af98d405b86be7fd6d92f6b5e98e278dd">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00052">52</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00049">49</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01129">DdMd::Simulation::fileMaster()</a>, <a class="el" href="MpiLoader_8h_source.html#l00137">Util::MpiLoader&lt; IArchive &gt;::load()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00077">DdMd::Analyzer::loadInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00118">DdMd::Analyzer::loadOutputFileName()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01134">DdMd::Simulation::fileMaster()</a>, <a class="el" href="MpiLoader_8h_source.html#l00137">Util::MpiLoader&lt; IArchive &gt;::load()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00074">DdMd::Analyzer::loadInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00115">DdMd::Analyzer::loadOutputFileName()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
 
 </div>
 </div>
@@ -245,9 +247,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#a314e65958fa201e8fb493712a0f899cc">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00070">70</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00068">68</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00106">DdMd::Analyzer::saveInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00126">DdMd::Analyzer::saveOutputFileName()</a>.</p>
+<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00103">DdMd::Analyzer::saveInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00123">DdMd::Analyzer::saveOutputFileName()</a>.</p>
 
 </div>
 </div>
@@ -269,7 +271,31 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#a4d3188e3d11e6a679f464018785d98a7">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00081">81</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00079">79</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1f046d5d1cca9a846470c8815fbfa160"></a><!-- doxytag: member="DdMd::OutputPressure::setup" ref="a1f046d5d1cca9a846470c8815fbfa160" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classDdMd_1_1OutputPressure.html#a1f046d5d1cca9a846470c8815fbfa160">DdMd::OutputPressure::setup</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Setup - open output file. </p>
+
+<p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#adc0577afc0c6830c7c40e5f46818cd2c">DdMd::Analyzer</a>.</p>
+
+<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00085">85</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
+
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01134">DdMd::Simulation::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
 
 </div>
 </div>
@@ -298,9 +324,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classDdMd_1_1Analyzer.html#af41861e5d91cf1c702a6c69c7843ad8b">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00087">87</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputPressure_8cpp_source.html#l00097">97</a> of file <a class="el" href="OutputPressure_8cpp_source.html">OutputPressure.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01544">DdMd::Simulation::computeKineticStress()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01750">DdMd::Simulation::computeVirialStress()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01025">DdMd::Simulation::domain()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00237">DdMd::Analyzer::isAtInterval()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01597">DdMd::Simulation::kineticPressure()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01825">DdMd::Simulation::virialPressure()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01591">DdMd::Simulation::computeKineticStress()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01797">DdMd::Simulation::computeVirialStress()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01030">DdMd::Simulation::domain()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00237">DdMd::Analyzer::isAtInterval()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01644">DdMd::Simulation::kineticPressure()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01872">DdMd::Simulation::virialPressure()</a>.</p>
 
 </div>
 </div>
@@ -314,7 +340,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:18 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:03 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

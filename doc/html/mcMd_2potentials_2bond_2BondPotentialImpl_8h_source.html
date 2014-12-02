@@ -63,7 +63,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -188,251 +188,252 @@
 <a name="l00221"></a>00221    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
 <a name="l00222"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a66f8a05ec90f368ee9f66e376167d3d9">00222</a>    <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a968cb08ab6b16bf18bbe3bc2ad763342" title="Constructor.">BondPotentialImpl&lt;Interaction&gt;::BondPotentialImpl</a>(
 <a name="l00223"></a>00223                          <a class="code" href="classMcMd_1_1BondPotentialImpl.html" title="Implementation template for a BondPotential.">BondPotentialImpl&lt;Interaction&gt;</a>&amp; other)
-<a name="l00224"></a>00224     : <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a>(other.system()),
-<a name="l00225"></a>00225       interactionPtr_(&amp;other.interaction()),
-<a name="l00226"></a>00226       isCopy_(true)
-<a name="l00227"></a>00227    {}
-<a name="l00228"></a>00228  
-<a name="l00229"></a>00229    <span class="comment">/* </span>
-<a name="l00230"></a>00230 <span class="comment">   * Destructor. </span>
-<a name="l00231"></a>00231 <span class="comment">   */</span>
-<a name="l00232"></a>00232    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00233"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a751bd5ace9f17efb62e33892522137e1">00233</a>    <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a751bd5ace9f17efb62e33892522137e1" title="Destructor.">BondPotentialImpl&lt;Interaction&gt;::~BondPotentialImpl</a>() 
-<a name="l00234"></a>00234    {
-<a name="l00235"></a>00235       <span class="keywordflow">if</span> (!isCopy_) {
-<a name="l00236"></a>00236          <span class="keyword">delete</span> interactionPtr_;
-<a name="l00237"></a>00237          interactionPtr_ = 0;
-<a name="l00238"></a>00238       }
-<a name="l00239"></a>00239    }
-<a name="l00240"></a>00240 
-<a name="l00241"></a>00241    <span class="comment">/* </span>
-<a name="l00242"></a>00242 <span class="comment">   * Read parameters from file.</span>
-<a name="l00243"></a>00243 <span class="comment">   */</span>
-<a name="l00244"></a>00244    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00245"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a1aafe9de1501962d47edd680087f4d68">00245</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a1aafe9de1501962d47edd680087f4d68" title="Read potential energy.">BondPotentialImpl&lt;Interaction&gt;::readParameters</a>(std::istream &amp;in) 
-<a name="l00246"></a>00246    {
-<a name="l00247"></a>00247       <span class="comment">// Read only if not a copy.  Do not indent interaction block.</span>
-<a name="l00248"></a>00248       <span class="keywordflow">if</span> (!isCopy_) {
-<a name="l00249"></a>00249          interaction().setNBondType(simulation().nBondType());
-<a name="l00250"></a>00250          <span class="keywordtype">bool</span> nextIndent = <span class="keyword">false</span>;
-<a name="l00251"></a>00251          addParamComposite(interaction(), nextIndent);
-<a name="l00252"></a>00252          interaction().readParameters(in);
-<a name="l00253"></a>00253       }
-<a name="l00254"></a>00254    }
-<a name="l00255"></a>00255   
-<a name="l00256"></a>00256    <span class="comment">/*</span>
-<a name="l00257"></a>00257 <span class="comment">   * Load internal state from an archive.</span>
-<a name="l00258"></a>00258 <span class="comment">   */</span>
-<a name="l00259"></a>00259    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00260"></a>00260    <span class="keywordtype">void</span> 
-<a name="l00261"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#acd3e8769760ab0c25b3e0807a93f7981">00261</a>    <a class="code" href="classMcMd_1_1BondPotentialImpl.html#acd3e8769760ab0c25b3e0807a93f7981" title="Load internal state from an archive.">BondPotentialImpl&lt;Interaction&gt;::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
-<a name="l00262"></a>00262    {
-<a name="l00263"></a>00263       ar &gt;&gt; isCopy_;
-<a name="l00264"></a>00264       <span class="keywordflow">if</span> (!isCopy_) {
-<a name="l00265"></a>00265          interaction().setNBondType(simulation().nBondType());
-<a name="l00266"></a>00266          <span class="keywordtype">bool</span> nextIndent = <span class="keyword">false</span>;
-<a name="l00267"></a>00267          addParamComposite(interaction(), nextIndent);
-<a name="l00268"></a>00268          interaction().loadParameters(ar);
-<a name="l00269"></a>00269       } 
-<a name="l00270"></a>00270    }
-<a name="l00271"></a>00271 
-<a name="l00272"></a>00272    <span class="comment">/*</span>
-<a name="l00273"></a>00273 <span class="comment">   * Save internal state to an archive.</span>
-<a name="l00274"></a>00274 <span class="comment">   */</span>
-<a name="l00275"></a>00275    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00276"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac94c0e6650cc2269a2340301e9d58839">00276</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac94c0e6650cc2269a2340301e9d58839" title="Save internal state to an archive.">BondPotentialImpl&lt;Interaction&gt;::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
-<a name="l00277"></a>00277    {
-<a name="l00278"></a>00278       ar &lt;&lt; isCopy_;
-<a name="l00279"></a>00279       <span class="keywordflow">if</span> (!isCopy_) {
-<a name="l00280"></a>00280          interaction().save(ar);
-<a name="l00281"></a>00281       }
-<a name="l00282"></a>00282    }
-<a name="l00283"></a>00283 
-<a name="l00284"></a>00284    <span class="comment">/*</span>
-<a name="l00285"></a>00285 <span class="comment">   * Return bond energy for a single pair.</span>
-<a name="l00286"></a>00286 <span class="comment">   */</span>
-<a name="l00287"></a>00287    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00288"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#aad4111f2f84dc86972dc323303643fc0">00288</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a94b5cd60f9aa2f3fb9e9f9a3be56fc17" title="Return total bond potential energy of this System.">BondPotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> iBondType)<span class="keyword"> </span>
-<a name="l00289"></a>00289 <span class="keyword">      const</span>
-<a name="l00290"></a>00290 <span class="keyword">   </span>{ <span class="keywordflow">return</span> interaction().energy(rsq, iBondType); }
-<a name="l00291"></a>00291 
-<a name="l00292"></a>00292    <span class="comment">/*</span>
-<a name="l00293"></a>00293 <span class="comment">   * Return force / separation for a single bonded pair.</span>
-<a name="l00294"></a>00294 <span class="comment">   */</span>
-<a name="l00295"></a>00295    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00296"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#ae85142f65fd42f84ebd9f9b8275b4c81">00296</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ae85142f65fd42f84ebd9f9b8275b4c81" title="Return force / separation for a single pair.">BondPotentialImpl&lt;Interaction&gt;::forceOverR</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> iBondType)<span class="keyword"></span>
-<a name="l00297"></a>00297 <span class="keyword">      const</span>
-<a name="l00298"></a>00298 <span class="keyword">   </span>{ <span class="keywordflow">return</span> interaction().forceOverR(rsq, iBondType); }
-<a name="l00299"></a>00299 
-<a name="l00300"></a>00300    <span class="comment">/*</span>
-<a name="l00301"></a>00301 <span class="comment">   * Return force / separation for a single bonded pair.</span>
-<a name="l00302"></a>00302 <span class="comment">   */</span>
-<a name="l00303"></a>00303    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt; <span class="keywordtype">double</span> 
-<a name="l00304"></a>00304    <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac25ed0f32d97ac11cf76464e76919be5" title="Return force / separation for a single pair.">BondPotentialImpl&lt;Interaction&gt;::</a>
-<a name="l00305"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac25ed0f32d97ac11cf76464e76919be5">00305</a> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac25ed0f32d97ac11cf76464e76919be5" title="Return force / separation for a single pair.">      randomBondLength</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>* random, <span class="keywordtype">double</span> beta, <span class="keywordtype">int</span> bondTypeId)<span class="keyword"> const</span>
-<a name="l00306"></a>00306 <span class="keyword">   </span>{ <span class="keywordflow">return</span> interaction().randomBondLength(random, beta, bondTypeId); }
-<a name="l00307"></a>00307 
-<a name="l00308"></a>00308    <span class="comment">/*</span>
-<a name="l00309"></a>00309 <span class="comment">   * Return bond energy for one Atom. </span>
-<a name="l00310"></a>00310 <span class="comment">   */</span>
-<a name="l00311"></a>00311    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00312"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a3815c8443063480684c82d2872f04592">00312</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a3815c8443063480684c82d2872f04592" title="Calculate the bond energy for one Atom.">BondPotentialImpl&lt;Interaction&gt;::atomEnergy</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)<span class="keyword"> const</span>
-<a name="l00313"></a>00313 <span class="keyword">   </span>{
-<a name="l00314"></a>00314 
-<a name="l00315"></a>00315       <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">Species::AtomBondArray</a> bonds;
-<a name="l00316"></a>00316       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Group.html" title="A group of covalently interacting atoms.">Bond</a>* bondPtr;
-<a name="l00317"></a>00317       <span class="keywordtype">double</span> rsq;
-<a name="l00318"></a>00318       <span class="keywordtype">double</span> energy   = 0.0;
-<a name="l00319"></a>00319       <span class="keywordtype">int</span>    iBond, nBond;
-<a name="l00320"></a>00320 
-<a name="l00321"></a>00321       atom.<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>().<a class="code" href="classMcMd_1_1Species.html#a49506e13656db7da5bf2e9824720a263" title="Get array of pointers to Bonds that contain an Atom.">getAtomBonds</a>(atom, bonds);
-<a name="l00322"></a>00322       nBond = bonds.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
-<a name="l00323"></a>00323       <span class="keywordflow">for</span> (iBond = 0; iBond &lt; nBond; ++iBond) {
-<a name="l00324"></a>00324          bondPtr = bonds[iBond];
-<a name="l00325"></a>00325          rsq = boundary().distanceSq(bondPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00326"></a>00326                                      bondPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>());
-<a name="l00327"></a>00327          energy += interaction().energy(rsq, bondPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>());
-<a name="l00328"></a>00328       }
-<a name="l00329"></a>00329 
-<a name="l00330"></a>00330       <span class="keywordflow">return</span> energy;
-<a name="l00331"></a>00331    }
-<a name="l00332"></a>00332 
-<a name="l00333"></a>00333    <span class="comment">/* </span>
-<a name="l00334"></a>00334 <span class="comment">   * Calculate covalent bond energy.</span>
-<a name="l00335"></a>00335 <span class="comment">   */</span>
-<a name="l00336"></a>00336    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00337"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a94b5cd60f9aa2f3fb9e9f9a3be56fc17">00337</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a94b5cd60f9aa2f3fb9e9f9a3be56fc17" title="Return total bond potential energy of this System.">BondPotentialImpl&lt;Interaction&gt;::energy</a>()<span class="keyword"> const</span>
-<a name="l00338"></a>00338 <span class="keyword">   </span>{
-<a name="l00339"></a>00339       <span class="keywordtype">double</span> energy = 0.0;
-<a name="l00340"></a>00340       <span class="keywordtype">double</span> rsq    = 0.0;
-<a name="l00341"></a>00341       <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">System::ConstMoleculeIterator</a> molIter;
-<a name="l00342"></a>00342       <a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">Molecule::ConstBondIterator</a> bondIter;
-<a name="l00343"></a>00343 
-<a name="l00344"></a>00344       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
-<a name="l00345"></a>00345          <span class="keywordflow">if</span> (simulation().species(iSpec).nBond() &gt; 0) {
-<a name="l00346"></a>00346             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
-<a name="l00347"></a>00347                <span class="keywordflow">for</span> (molIter-&gt;begin(bondIter); bondIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++bondIter) {
-<a name="l00348"></a>00348                   rsq = boundary().
-<a name="l00349"></a>00349                         distanceSq( bondIter-&gt;atom(0).position(), 
-<a name="l00350"></a>00350                                     bondIter-&gt;atom(1).position());
-<a name="l00351"></a>00351                   energy += interaction().energy(rsq, bondIter-&gt;typeId());
-<a name="l00352"></a>00352                }
-<a name="l00353"></a>00353             } 
-<a name="l00354"></a>00354          }
-<a name="l00355"></a>00355       }
-<a name="l00356"></a>00356 
-<a name="l00357"></a>00357       <span class="keywordflow">return</span> energy;
-<a name="l00358"></a>00358    }
-<a name="l00359"></a>00359 
-<a name="l00360"></a>00360    <span class="comment">/* </span>
-<a name="l00361"></a>00361 <span class="comment">   * Add bonded pair forces to forces array.</span>
-<a name="l00362"></a>00362 <span class="comment">   */</span>
-<a name="l00363"></a>00363    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00364"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a5e15fdd47a4b508a3ceb70b84e563f56">00364</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a5e15fdd47a4b508a3ceb70b84e563f56" title="Add the bond forces for all atoms.">BondPotentialImpl&lt;Interaction&gt;::addForces</a>() 
-<a name="l00365"></a>00365    {
-<a name="l00366"></a>00366       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> force;
-<a name="l00367"></a>00367       <span class="keywordtype">double</span> rsq;
-<a name="l00368"></a>00368       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">System::MoleculeIterator</a> molIter;
-<a name="l00369"></a>00369       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::BondIterator</a> bondIter;
-<a name="l00370"></a>00370       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> *atom0Ptr, *atom1Ptr;
-<a name="l00371"></a>00371       <span class="keywordtype">int</span> iSpec;
-<a name="l00372"></a>00372 
-<a name="l00373"></a>00373       <span class="comment">// Loop over all bonds in system</span>
-<a name="l00374"></a>00374       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
-<a name="l00375"></a>00375          <span class="keywordflow">if</span> (simulation().species(iSpec).nBond() &gt; 0) {
-<a name="l00376"></a>00376             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00377"></a>00377                <span class="keywordflow">for</span> (molIter-&gt;begin(bondIter); bondIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++bondIter) {
-<a name="l00378"></a>00378                   atom0Ptr = &amp;(bondIter-&gt;atom(0));
-<a name="l00379"></a>00379                   atom1Ptr = &amp;(bondIter-&gt;atom(1));
-<a name="l00380"></a>00380                   rsq = boundary().distanceSq(atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), 
-<a name="l00381"></a>00381                                               atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), force);
-<a name="l00382"></a>00382                   force *= interaction().forceOverR(rsq, bondIter-&gt;typeId());
-<a name="l00383"></a>00383                   atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() += force;
-<a name="l00384"></a>00384                   atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() -= force;
-<a name="l00385"></a>00385                }
-<a name="l00386"></a>00386             }
-<a name="l00387"></a>00387          }
-<a name="l00388"></a>00388       }
-<a name="l00389"></a>00389    }
-<a name="l00390"></a>00390 
-<a name="l00391"></a>00391    <span class="comment">/* </span>
-<a name="l00392"></a>00392 <span class="comment">   * Compute total stress (generic).</span>
-<a name="l00393"></a>00393 <span class="comment">   */</span>
-<a name="l00394"></a>00394    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00395"></a>00395    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00396"></a>00396    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html" title="Implementation template for a BondPotential.">BondPotentialImpl&lt;Interaction&gt;::computeStressImpl</a>(T&amp; stress)<span class="keyword"> </span>
-<a name="l00397"></a>00397 <span class="keyword">      const</span>
-<a name="l00398"></a>00398 <span class="keyword">   </span>{
-<a name="l00399"></a>00399       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr, force;
-<a name="l00400"></a>00400       <span class="keywordtype">double</span> rsq;
-<a name="l00401"></a>00401       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* atom0Ptr;
-<a name="l00402"></a>00402       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* atom1Ptr;
-<a name="l00403"></a>00403 
-<a name="l00404"></a>00404       <a class="code" href="namespaceUtil.html#a892d1362ecc1ff6a8b9f47deeb688c1b" title="Set a float variable to zero.">setToZero</a>(stress);
-<a name="l00405"></a>00405 
-<a name="l00406"></a>00406       <span class="comment">// Iterate over all bonds in System</span>
-<a name="l00407"></a>00407       <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">System::ConstMoleculeIterator</a> molIter;
-<a name="l00408"></a>00408       <a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">Molecule::ConstBondIterator</a> bondIter;
-<a name="l00409"></a>00409       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
-<a name="l00410"></a>00410          <span class="keywordflow">if</span> (simulation().species(iSpec).nBond() &gt; 0) {
-<a name="l00411"></a>00411             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
-<a name="l00412"></a>00412                molIter-&gt;begin(bondIter); 
-<a name="l00413"></a>00413                <span class="keywordflow">for</span> ( ; bondIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++bondIter) {
-<a name="l00414"></a>00414                   atom0Ptr = &amp;(bondIter-&gt;atom(0));
-<a name="l00415"></a>00415                   atom1Ptr = &amp;(bondIter-&gt;atom(1));
-<a name="l00416"></a>00416                   rsq = boundary().distanceSq(atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), 
-<a name="l00417"></a>00417                                               atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr);
-<a name="l00418"></a>00418                   force = dr;
-<a name="l00419"></a>00419                   force *= interaction().forceOverR(rsq, 
-<a name="l00420"></a>00420                                                   bondIter-&gt;typeId());
-<a name="l00421"></a>00421                   incrementPairStress(force, dr, stress);
-<a name="l00422"></a>00422                }
-<a name="l00423"></a>00423             }
-<a name="l00424"></a>00424          }
-<a name="l00425"></a>00425       }
-<a name="l00426"></a>00426 
-<a name="l00427"></a>00427       stress /= boundary().volume();
-<a name="l00428"></a>00428       normalizeStress(stress);
-<a name="l00429"></a>00429    }
-<a name="l00430"></a>00430 
-<a name="l00431"></a>00431    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00432"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac6ccb0ce55b286a8c688e1606a9c2116">00432</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac6ccb0ce55b286a8c688e1606a9c2116" title="Compute total bond pressure.">BondPotentialImpl&lt;Interaction&gt;::computeStress</a>(<span class="keywordtype">double</span>&amp; stress)<span class="keyword"> const</span>
-<a name="l00433"></a>00433 <span class="keyword">   </span>{  computeStressImpl(stress); }
-<a name="l00434"></a>00434 
-<a name="l00435"></a>00435    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00436"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#aa1a979113c69c1c640e5d6fc8a6106de">00436</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac6ccb0ce55b286a8c688e1606a9c2116" title="Compute total bond pressure.">BondPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Util::Vector</a>&amp; stress)<span class="keyword"> </span>
-<a name="l00437"></a>00437 <span class="keyword">        const</span>
-<a name="l00438"></a>00438 <span class="keyword">   </span>{  computeStressImpl(stress); }
-<a name="l00439"></a>00439 
-<a name="l00440"></a>00440    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00441"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a805e8899b5ebed360506aa0459ec7b38">00441</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac6ccb0ce55b286a8c688e1606a9c2116" title="Compute total bond pressure.">BondPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Util::Tensor</a>&amp; stress)<span class="keyword"> </span>
-<a name="l00442"></a>00442 <span class="keyword">        const</span>
-<a name="l00443"></a>00443 <span class="keyword">   </span>{  computeStressImpl(stress); }
-<a name="l00444"></a>00444 
-<a name="l00445"></a>00445    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00446"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#acf5a36d8ab8dd726981ac03177f53c76">00446</a>    <span class="keyword">inline</span> Interaction&amp; <a class="code" href="classMcMd_1_1BondPotentialImpl.html#acf5a36d8ab8dd726981ac03177f53c76" title="Return bond interaction by reference.">BondPotentialImpl&lt;Interaction&gt;::interaction</a>()
-<a name="l00447"></a>00447    { <span class="keywordflow">return</span> *interactionPtr_; }
-<a name="l00448"></a>00448 
-<a name="l00449"></a>00449    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00450"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a3dbbb15424ce01998c6529aa9ae7e643">00450</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Interaction&amp; <a class="code" href="classMcMd_1_1BondPotentialImpl.html#acf5a36d8ab8dd726981ac03177f53c76" title="Return bond interaction by reference.">BondPotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
-<a name="l00451"></a>00451 <span class="keyword">   </span>{ <span class="keywordflow">return</span> *interactionPtr_; }
-<a name="l00452"></a>00452 
-<a name="l00453"></a>00453    <span class="comment">/*</span>
-<a name="l00454"></a>00454 <span class="comment">   * Return bond potential interaction class name.</span>
-<a name="l00455"></a>00455 <span class="comment">   */</span>
-<a name="l00456"></a>00456    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00457"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a8c88c7e1aa7dfb467de2992361771d65">00457</a>    std::string <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a8c88c7e1aa7dfb467de2992361771d65" title="Return pair interaction class name (e.g., &quot;HarmonicBond&quot;).">BondPotentialImpl&lt;Interaction&gt;::interactionClassName</a>()<span class="keyword"> const</span>
-<a name="l00458"></a>00458 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().className(); }
-<a name="l00459"></a>00459 
-<a name="l00460"></a>00460 }
-<a name="l00461"></a>00461 <span class="preprocessor">#endif</span>
+<a name="l00224"></a>00224     : <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a>(),
+<a name="l00225"></a>00225       <a class="code" href="classMcMd_1_1SubSystem.html" title="A SubSystem is a partial copy of a System that has:">SubSystem</a>(other.system()),
+<a name="l00226"></a>00226       interactionPtr_(&amp;other.interaction()),
+<a name="l00227"></a>00227       isCopy_(true)
+<a name="l00228"></a>00228    {}
+<a name="l00229"></a>00229  
+<a name="l00230"></a>00230    <span class="comment">/* </span>
+<a name="l00231"></a>00231 <span class="comment">   * Destructor. </span>
+<a name="l00232"></a>00232 <span class="comment">   */</span>
+<a name="l00233"></a>00233    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00234"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a751bd5ace9f17efb62e33892522137e1">00234</a>    <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a751bd5ace9f17efb62e33892522137e1" title="Destructor.">BondPotentialImpl&lt;Interaction&gt;::~BondPotentialImpl</a>() 
+<a name="l00235"></a>00235    {
+<a name="l00236"></a>00236       <span class="keywordflow">if</span> (!isCopy_) {
+<a name="l00237"></a>00237          <span class="keyword">delete</span> interactionPtr_;
+<a name="l00238"></a>00238          interactionPtr_ = 0;
+<a name="l00239"></a>00239       }
+<a name="l00240"></a>00240    }
+<a name="l00241"></a>00241 
+<a name="l00242"></a>00242    <span class="comment">/* </span>
+<a name="l00243"></a>00243 <span class="comment">   * Read parameters from file.</span>
+<a name="l00244"></a>00244 <span class="comment">   */</span>
+<a name="l00245"></a>00245    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00246"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a1aafe9de1501962d47edd680087f4d68">00246</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a1aafe9de1501962d47edd680087f4d68" title="Read potential energy.">BondPotentialImpl&lt;Interaction&gt;::readParameters</a>(std::istream &amp;in) 
+<a name="l00247"></a>00247    {
+<a name="l00248"></a>00248       <span class="comment">// Read only if not a copy.  Do not indent interaction block.</span>
+<a name="l00249"></a>00249       <span class="keywordflow">if</span> (!isCopy_) {
+<a name="l00250"></a>00250          interaction().setNBondType(simulation().nBondType());
+<a name="l00251"></a>00251          <span class="keywordtype">bool</span> nextIndent = <span class="keyword">false</span>;
+<a name="l00252"></a>00252          addParamComposite(interaction(), nextIndent);
+<a name="l00253"></a>00253          interaction().readParameters(in);
+<a name="l00254"></a>00254       }
+<a name="l00255"></a>00255    }
+<a name="l00256"></a>00256   
+<a name="l00257"></a>00257    <span class="comment">/*</span>
+<a name="l00258"></a>00258 <span class="comment">   * Load internal state from an archive.</span>
+<a name="l00259"></a>00259 <span class="comment">   */</span>
+<a name="l00260"></a>00260    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00261"></a>00261    <span class="keywordtype">void</span> 
+<a name="l00262"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#acd3e8769760ab0c25b3e0807a93f7981">00262</a>    <a class="code" href="classMcMd_1_1BondPotentialImpl.html#acd3e8769760ab0c25b3e0807a93f7981" title="Load internal state from an archive.">BondPotentialImpl&lt;Interaction&gt;::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
+<a name="l00263"></a>00263    {
+<a name="l00264"></a>00264       ar &gt;&gt; isCopy_;
+<a name="l00265"></a>00265       <span class="keywordflow">if</span> (!isCopy_) {
+<a name="l00266"></a>00266          interaction().setNBondType(simulation().nBondType());
+<a name="l00267"></a>00267          <span class="keywordtype">bool</span> nextIndent = <span class="keyword">false</span>;
+<a name="l00268"></a>00268          addParamComposite(interaction(), nextIndent);
+<a name="l00269"></a>00269          interaction().loadParameters(ar);
+<a name="l00270"></a>00270       } 
+<a name="l00271"></a>00271    }
+<a name="l00272"></a>00272 
+<a name="l00273"></a>00273    <span class="comment">/*</span>
+<a name="l00274"></a>00274 <span class="comment">   * Save internal state to an archive.</span>
+<a name="l00275"></a>00275 <span class="comment">   */</span>
+<a name="l00276"></a>00276    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00277"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac94c0e6650cc2269a2340301e9d58839">00277</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac94c0e6650cc2269a2340301e9d58839" title="Save internal state to an archive.">BondPotentialImpl&lt;Interaction&gt;::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
+<a name="l00278"></a>00278    {
+<a name="l00279"></a>00279       ar &lt;&lt; isCopy_;
+<a name="l00280"></a>00280       <span class="keywordflow">if</span> (!isCopy_) {
+<a name="l00281"></a>00281          interaction().save(ar);
+<a name="l00282"></a>00282       }
+<a name="l00283"></a>00283    }
+<a name="l00284"></a>00284 
+<a name="l00285"></a>00285    <span class="comment">/*</span>
+<a name="l00286"></a>00286 <span class="comment">   * Return bond energy for a single pair.</span>
+<a name="l00287"></a>00287 <span class="comment">   */</span>
+<a name="l00288"></a>00288    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00289"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#aad4111f2f84dc86972dc323303643fc0">00289</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a94b5cd60f9aa2f3fb9e9f9a3be56fc17" title="Return total bond potential energy of this System.">BondPotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> iBondType)<span class="keyword"> </span>
+<a name="l00290"></a>00290 <span class="keyword">      const</span>
+<a name="l00291"></a>00291 <span class="keyword">   </span>{ <span class="keywordflow">return</span> interaction().energy(rsq, iBondType); }
+<a name="l00292"></a>00292 
+<a name="l00293"></a>00293    <span class="comment">/*</span>
+<a name="l00294"></a>00294 <span class="comment">   * Return force / separation for a single bonded pair.</span>
+<a name="l00295"></a>00295 <span class="comment">   */</span>
+<a name="l00296"></a>00296    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00297"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#ae85142f65fd42f84ebd9f9b8275b4c81">00297</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ae85142f65fd42f84ebd9f9b8275b4c81" title="Return force / separation for a single pair.">BondPotentialImpl&lt;Interaction&gt;::forceOverR</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> iBondType)<span class="keyword"></span>
+<a name="l00298"></a>00298 <span class="keyword">      const</span>
+<a name="l00299"></a>00299 <span class="keyword">   </span>{ <span class="keywordflow">return</span> interaction().forceOverR(rsq, iBondType); }
+<a name="l00300"></a>00300 
+<a name="l00301"></a>00301    <span class="comment">/*</span>
+<a name="l00302"></a>00302 <span class="comment">   * Return force / separation for a single bonded pair.</span>
+<a name="l00303"></a>00303 <span class="comment">   */</span>
+<a name="l00304"></a>00304    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt; <span class="keywordtype">double</span> 
+<a name="l00305"></a>00305    <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac25ed0f32d97ac11cf76464e76919be5" title="Return force / separation for a single pair.">BondPotentialImpl&lt;Interaction&gt;::</a>
+<a name="l00306"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac25ed0f32d97ac11cf76464e76919be5">00306</a> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac25ed0f32d97ac11cf76464e76919be5" title="Return force / separation for a single pair.">      randomBondLength</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>* random, <span class="keywordtype">double</span> beta, <span class="keywordtype">int</span> bondTypeId)<span class="keyword"> const</span>
+<a name="l00307"></a>00307 <span class="keyword">   </span>{ <span class="keywordflow">return</span> interaction().randomBondLength(random, beta, bondTypeId); }
+<a name="l00308"></a>00308 
+<a name="l00309"></a>00309    <span class="comment">/*</span>
+<a name="l00310"></a>00310 <span class="comment">   * Return bond energy for one Atom. </span>
+<a name="l00311"></a>00311 <span class="comment">   */</span>
+<a name="l00312"></a>00312    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00313"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a3815c8443063480684c82d2872f04592">00313</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a3815c8443063480684c82d2872f04592" title="Calculate the bond energy for one Atom.">BondPotentialImpl&lt;Interaction&gt;::atomEnergy</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)<span class="keyword"> const</span>
+<a name="l00314"></a>00314 <span class="keyword">   </span>{
+<a name="l00315"></a>00315 
+<a name="l00316"></a>00316       <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">Species::AtomBondArray</a> bonds;
+<a name="l00317"></a>00317       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Group.html" title="A group of covalently interacting atoms.">Bond</a>* bondPtr;
+<a name="l00318"></a>00318       <span class="keywordtype">double</span> rsq;
+<a name="l00319"></a>00319       <span class="keywordtype">double</span> energy   = 0.0;
+<a name="l00320"></a>00320       <span class="keywordtype">int</span>    iBond, nBond;
+<a name="l00321"></a>00321 
+<a name="l00322"></a>00322       atom.<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#a70de9b3e9ce956c9597c28f36303b40d" title="Get the molecular Species by reference.">species</a>().<a class="code" href="classMcMd_1_1Species.html#a21d04dd3fe5e704d2b6cc5e4dbc5c485" title="Get array of pointers to Bonds that contain an Atom.">getAtomBonds</a>(atom, bonds);
+<a name="l00323"></a>00323       nBond = bonds.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
+<a name="l00324"></a>00324       <span class="keywordflow">for</span> (iBond = 0; iBond &lt; nBond; ++iBond) {
+<a name="l00325"></a>00325          bondPtr = bonds[iBond];
+<a name="l00326"></a>00326          rsq = boundary().distanceSq(bondPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00327"></a>00327                                      bondPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>());
+<a name="l00328"></a>00328          energy += interaction().energy(rsq, bondPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>());
+<a name="l00329"></a>00329       }
+<a name="l00330"></a>00330 
+<a name="l00331"></a>00331       <span class="keywordflow">return</span> energy;
+<a name="l00332"></a>00332    }
+<a name="l00333"></a>00333 
+<a name="l00334"></a>00334    <span class="comment">/* </span>
+<a name="l00335"></a>00335 <span class="comment">   * Calculate covalent bond energy.</span>
+<a name="l00336"></a>00336 <span class="comment">   */</span>
+<a name="l00337"></a>00337    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00338"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a94b5cd60f9aa2f3fb9e9f9a3be56fc17">00338</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a94b5cd60f9aa2f3fb9e9f9a3be56fc17" title="Return total bond potential energy of this System.">BondPotentialImpl&lt;Interaction&gt;::energy</a>()<span class="keyword"> const</span>
+<a name="l00339"></a>00339 <span class="keyword">   </span>{
+<a name="l00340"></a>00340       <span class="keywordtype">double</span> energy = 0.0;
+<a name="l00341"></a>00341       <span class="keywordtype">double</span> rsq    = 0.0;
+<a name="l00342"></a>00342       <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">System::ConstMoleculeIterator</a> molIter;
+<a name="l00343"></a>00343       <a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">Molecule::ConstBondIterator</a> bondIter;
+<a name="l00344"></a>00344 
+<a name="l00345"></a>00345       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
+<a name="l00346"></a>00346          <span class="keywordflow">if</span> (simulation().species(iSpec).nBond() &gt; 0) {
+<a name="l00347"></a>00347             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00348"></a>00348                <span class="keywordflow">for</span> (molIter-&gt;begin(bondIter); bondIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++bondIter) {
+<a name="l00349"></a>00349                   rsq = boundary().
+<a name="l00350"></a>00350                         distanceSq( bondIter-&gt;atom(0).position(), 
+<a name="l00351"></a>00351                                     bondIter-&gt;atom(1).position());
+<a name="l00352"></a>00352                   energy += interaction().energy(rsq, bondIter-&gt;typeId());
+<a name="l00353"></a>00353                }
+<a name="l00354"></a>00354             } 
+<a name="l00355"></a>00355          }
+<a name="l00356"></a>00356       }
+<a name="l00357"></a>00357 
+<a name="l00358"></a>00358       <span class="keywordflow">return</span> energy;
+<a name="l00359"></a>00359    }
+<a name="l00360"></a>00360 
+<a name="l00361"></a>00361    <span class="comment">/* </span>
+<a name="l00362"></a>00362 <span class="comment">   * Add bonded pair forces to forces array.</span>
+<a name="l00363"></a>00363 <span class="comment">   */</span>
+<a name="l00364"></a>00364    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00365"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a5e15fdd47a4b508a3ceb70b84e563f56">00365</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a5e15fdd47a4b508a3ceb70b84e563f56" title="Add the bond forces for all atoms.">BondPotentialImpl&lt;Interaction&gt;::addForces</a>() 
+<a name="l00366"></a>00366    {
+<a name="l00367"></a>00367       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> force;
+<a name="l00368"></a>00368       <span class="keywordtype">double</span> rsq;
+<a name="l00369"></a>00369       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">System::MoleculeIterator</a> molIter;
+<a name="l00370"></a>00370       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::BondIterator</a> bondIter;
+<a name="l00371"></a>00371       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> *atom0Ptr, *atom1Ptr;
+<a name="l00372"></a>00372       <span class="keywordtype">int</span> iSpec;
+<a name="l00373"></a>00373 
+<a name="l00374"></a>00374       <span class="comment">// Loop over all bonds in system</span>
+<a name="l00375"></a>00375       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
+<a name="l00376"></a>00376          <span class="keywordflow">if</span> (simulation().species(iSpec).nBond() &gt; 0) {
+<a name="l00377"></a>00377             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00378"></a>00378                <span class="keywordflow">for</span> (molIter-&gt;begin(bondIter); bondIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++bondIter) {
+<a name="l00379"></a>00379                   atom0Ptr = &amp;(bondIter-&gt;atom(0));
+<a name="l00380"></a>00380                   atom1Ptr = &amp;(bondIter-&gt;atom(1));
+<a name="l00381"></a>00381                   rsq = boundary().distanceSq(atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), 
+<a name="l00382"></a>00382                                               atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), force);
+<a name="l00383"></a>00383                   force *= interaction().forceOverR(rsq, bondIter-&gt;typeId());
+<a name="l00384"></a>00384                   atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() += force;
+<a name="l00385"></a>00385                   atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() -= force;
+<a name="l00386"></a>00386                }
+<a name="l00387"></a>00387             }
+<a name="l00388"></a>00388          }
+<a name="l00389"></a>00389       }
+<a name="l00390"></a>00390    }
+<a name="l00391"></a>00391 
+<a name="l00392"></a>00392    <span class="comment">/* </span>
+<a name="l00393"></a>00393 <span class="comment">   * Compute total stress (generic).</span>
+<a name="l00394"></a>00394 <span class="comment">   */</span>
+<a name="l00395"></a>00395    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00396"></a>00396    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
+<a name="l00397"></a>00397    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html" title="Implementation template for a BondPotential.">BondPotentialImpl&lt;Interaction&gt;::computeStressImpl</a>(T&amp; stress)<span class="keyword"> </span>
+<a name="l00398"></a>00398 <span class="keyword">      const</span>
+<a name="l00399"></a>00399 <span class="keyword">   </span>{
+<a name="l00400"></a>00400       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr, force;
+<a name="l00401"></a>00401       <span class="keywordtype">double</span> rsq;
+<a name="l00402"></a>00402       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* atom0Ptr;
+<a name="l00403"></a>00403       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* atom1Ptr;
+<a name="l00404"></a>00404 
+<a name="l00405"></a>00405       <a class="code" href="namespaceUtil.html#a892d1362ecc1ff6a8b9f47deeb688c1b" title="Set a float variable to zero.">setToZero</a>(stress);
+<a name="l00406"></a>00406 
+<a name="l00407"></a>00407       <span class="comment">// Iterate over all bonds in System</span>
+<a name="l00408"></a>00408       <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">System::ConstMoleculeIterator</a> molIter;
+<a name="l00409"></a>00409       <a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">Molecule::ConstBondIterator</a> bondIter;
+<a name="l00410"></a>00410       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
+<a name="l00411"></a>00411          <span class="keywordflow">if</span> (simulation().species(iSpec).nBond() &gt; 0) {
+<a name="l00412"></a>00412             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00413"></a>00413                molIter-&gt;begin(bondIter); 
+<a name="l00414"></a>00414                <span class="keywordflow">for</span> ( ; bondIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++bondIter) {
+<a name="l00415"></a>00415                   atom0Ptr = &amp;(bondIter-&gt;atom(0));
+<a name="l00416"></a>00416                   atom1Ptr = &amp;(bondIter-&gt;atom(1));
+<a name="l00417"></a>00417                   rsq = boundary().distanceSq(atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), 
+<a name="l00418"></a>00418                                               atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr);
+<a name="l00419"></a>00419                   force = dr;
+<a name="l00420"></a>00420                   force *= interaction().forceOverR(rsq, 
+<a name="l00421"></a>00421                                                   bondIter-&gt;typeId());
+<a name="l00422"></a>00422                   incrementPairStress(force, dr, stress);
+<a name="l00423"></a>00423                }
+<a name="l00424"></a>00424             }
+<a name="l00425"></a>00425          }
+<a name="l00426"></a>00426       }
+<a name="l00427"></a>00427 
+<a name="l00428"></a>00428       stress /= boundary().volume();
+<a name="l00429"></a>00429       normalizeStress(stress);
+<a name="l00430"></a>00430    }
+<a name="l00431"></a>00431 
+<a name="l00432"></a>00432    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00433"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac6ccb0ce55b286a8c688e1606a9c2116">00433</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac6ccb0ce55b286a8c688e1606a9c2116" title="Compute total bond pressure.">BondPotentialImpl&lt;Interaction&gt;::computeStress</a>(<span class="keywordtype">double</span>&amp; stress)<span class="keyword"> const</span>
+<a name="l00434"></a>00434 <span class="keyword">   </span>{  computeStressImpl(stress); }
+<a name="l00435"></a>00435 
+<a name="l00436"></a>00436    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00437"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#aa1a979113c69c1c640e5d6fc8a6106de">00437</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac6ccb0ce55b286a8c688e1606a9c2116" title="Compute total bond pressure.">BondPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Util::Vector</a>&amp; stress)<span class="keyword"> </span>
+<a name="l00438"></a>00438 <span class="keyword">        const</span>
+<a name="l00439"></a>00439 <span class="keyword">   </span>{  computeStressImpl(stress); }
+<a name="l00440"></a>00440 
+<a name="l00441"></a>00441    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00442"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a805e8899b5ebed360506aa0459ec7b38">00442</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BondPotentialImpl.html#ac6ccb0ce55b286a8c688e1606a9c2116" title="Compute total bond pressure.">BondPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Util::Tensor</a>&amp; stress)<span class="keyword"> </span>
+<a name="l00443"></a>00443 <span class="keyword">        const</span>
+<a name="l00444"></a>00444 <span class="keyword">   </span>{  computeStressImpl(stress); }
+<a name="l00445"></a>00445 
+<a name="l00446"></a>00446    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00447"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#acf5a36d8ab8dd726981ac03177f53c76">00447</a>    <span class="keyword">inline</span> Interaction&amp; <a class="code" href="classMcMd_1_1BondPotentialImpl.html#acf5a36d8ab8dd726981ac03177f53c76" title="Return bond interaction by reference.">BondPotentialImpl&lt;Interaction&gt;::interaction</a>()
+<a name="l00448"></a>00448    { <span class="keywordflow">return</span> *interactionPtr_; }
+<a name="l00449"></a>00449 
+<a name="l00450"></a>00450    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00451"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a3dbbb15424ce01998c6529aa9ae7e643">00451</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Interaction&amp; <a class="code" href="classMcMd_1_1BondPotentialImpl.html#acf5a36d8ab8dd726981ac03177f53c76" title="Return bond interaction by reference.">BondPotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
+<a name="l00452"></a>00452 <span class="keyword">   </span>{ <span class="keywordflow">return</span> *interactionPtr_; }
+<a name="l00453"></a>00453 
+<a name="l00454"></a>00454    <span class="comment">/*</span>
+<a name="l00455"></a>00455 <span class="comment">   * Return bond potential interaction class name.</span>
+<a name="l00456"></a>00456 <span class="comment">   */</span>
+<a name="l00457"></a>00457    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
+<a name="l00458"></a><a class="code" href="classMcMd_1_1BondPotentialImpl.html#a8c88c7e1aa7dfb467de2992361771d65">00458</a>    std::string <a class="code" href="classMcMd_1_1BondPotentialImpl.html#a8c88c7e1aa7dfb467de2992361771d65" title="Return pair interaction class name (e.g., &quot;HarmonicBond&quot;).">BondPotentialImpl&lt;Interaction&gt;::interactionClassName</a>()<span class="keyword"> const</span>
+<a name="l00459"></a>00459 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().className(); }
+<a name="l00460"></a>00460 
+<a name="l00461"></a>00461 }
+<a name="l00462"></a>00462 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:56 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

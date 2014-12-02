@@ -63,7 +63,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -142,7 +142,7 @@
 <a name="l00122"></a>00122 
 <a name="l00123"></a>00123       <span class="comment">// If nSamplePerBlock != 0, open an output file for block averages.</span>
 <a name="l00124"></a>00124       <span class="keywordflow">if</span> (accumulator_.nSamplePerBlock()) {
-<a name="l00125"></a>00125          <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">Analyzer::fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(
+<a name="l00125"></a>00125          <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">Analyzer::fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(
 <a name="l00126"></a>00126                              <a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">Analyzer::outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
 <a name="l00127"></a>00127       }
 <a name="l00128"></a>00128 
@@ -166,7 +166,7 @@
 <a name="l00146"></a>00146 
 <a name="l00147"></a>00147       <span class="comment">// If nSamplePerBlock != 0, open an output file for block averages.</span>
 <a name="l00148"></a>00148       <span class="keywordflow">if</span> (accumulator_.nSamplePerBlock()) {
-<a name="l00149"></a>00149          <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">Analyzer::fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(
+<a name="l00149"></a>00149          <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">Analyzer::fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(
 <a name="l00150"></a>00150                              <a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">Analyzer::outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
 <a name="l00151"></a>00151       }
 <a name="l00152"></a>00152 
@@ -212,13 +212,13 @@
 <a name="l00192"></a>00192       }
 <a name="l00193"></a>00193      
 <a name="l00194"></a>00194       <span class="comment">// Write parameter block to *.prm file</span>
-<a name="l00195"></a>00195       <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">Analyzer::fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">Analyzer::outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), 
+<a name="l00195"></a>00195       <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">Analyzer::fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">Analyzer::outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), 
 <a name="l00196"></a>00196                                               outputFile_);
 <a name="l00197"></a>00197       <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">ParamComposite::writeParam</a>(outputFile_); 
 <a name="l00198"></a>00198       outputFile_.close();
 <a name="l00199"></a>00199 
 <a name="l00200"></a>00200       <span class="comment">// Write average value to *.avefile</span>
-<a name="l00201"></a>00201       <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">Analyzer::fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">Analyzer::outputFileName</a>(<span class="stringliteral">&quot;.ave&quot;</span>), 
+<a name="l00201"></a>00201       <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">Analyzer::fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">Analyzer::outputFileName</a>(<span class="stringliteral">&quot;.ave&quot;</span>), 
 <a name="l00202"></a>00202                                               outputFile_);
 <a name="l00203"></a>00203       accumulator_.output(outputFile_); 
 <a name="l00204"></a>00204       outputFile_.close();
@@ -233,7 +233,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:56 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

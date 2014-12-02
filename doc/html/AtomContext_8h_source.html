@@ -63,33 +63,57 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#ifdef DDMD_MOLECULES</span>
-<a name="l00012"></a>00012 <span class="preprocessor"></span>
-<a name="l00013"></a>00013 <span class="keyword">namespace </span>DdMd{
-<a name="l00021"></a>00021    <span class="keyword">struct </span>AtomContext{
-<a name="l00022"></a>00022 
-<a name="l00026"></a>00026       <span class="keywordtype">int</span> speciesId;
-<a name="l00027"></a>00027 
-<a name="l00031"></a>00031       <span class="keywordtype">int</span> moleculeId;
-<a name="l00032"></a>00032 
-<a name="l00042"></a>00042       <span class="keywordtype">int</span> atomId;
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044    };
-<a name="l00045"></a>00045 }
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047 <span class="preprocessor">#endif</span>
-<a name="l00048"></a>00048 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00011"></a>00011 <span class="keyword">namespace </span>DdMd
+<a name="l00012"></a>00012 {
+<a name="l00013"></a>00013 
+<a name="l00021"></a><a class="code" href="structDdMd_1_1AtomContext.html">00021</a>    <span class="keyword">struct </span><a class="code" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a>
+<a name="l00022"></a>00022    {
+<a name="l00023"></a>00023 
+<a name="l00027"></a><a class="code" href="structDdMd_1_1AtomContext.html#a8f990a72bf2770c9df79603973419691">00027</a>       <span class="keywordtype">int</span> <a class="code" href="structDdMd_1_1AtomContext.html#a8f990a72bf2770c9df79603973419691" title="Index of the species of molecule.">speciesId</a>;
+<a name="l00028"></a>00028 
+<a name="l00032"></a><a class="code" href="structDdMd_1_1AtomContext.html#ae59a3878121ff2ab4a4f7e978c677054">00032</a>       <span class="keywordtype">int</span> <a class="code" href="structDdMd_1_1AtomContext.html#ae59a3878121ff2ab4a4f7e978c677054" title="Index of molecule within its molecular species.">moleculeId</a>;
+<a name="l00033"></a>00033 
+<a name="l00043"></a><a class="code" href="structDdMd_1_1AtomContext.html#ad77cd1cafc435fadbe77aafe6a3908c7">00043</a>       <span class="keywordtype">int</span> <a class="code" href="structDdMd_1_1AtomContext.html#ad77cd1cafc435fadbe77aafe6a3908c7" title="Index of atom within its parent molecule.">atomId</a>;
+<a name="l00044"></a>00044 
+<a name="l00048"></a>00048       <a class="code" href="structDdMd_1_1AtomContext.html#a2deadb300cbd50fce88d6f5332db1790" title="Default constructor.">AtomContext</a>();
+<a name="l00049"></a>00049 
+<a name="l00053"></a>00053       <span class="keywordtype">void</span> <a class="code" href="structDdMd_1_1AtomContext.html#a83d9526cdaa0cd6e31deb4187a94cbf0" title="Set all data members to null default values.">clear</a>();
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055    };
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057    <span class="comment">/*</span>
+<a name="l00058"></a>00058 <span class="comment">   * Set all data members to null default values. </span>
+<a name="l00059"></a>00059 <span class="comment">   */</span>
+<a name="l00060"></a>00060    <span class="keyword">inline</span> 
+<a name="l00061"></a><a class="code" href="structDdMd_1_1AtomContext.html#a2deadb300cbd50fce88d6f5332db1790">00061</a>    <a class="code" href="structDdMd_1_1AtomContext.html#a2deadb300cbd50fce88d6f5332db1790" title="Default constructor.">AtomContext::AtomContext</a>()
+<a name="l00062"></a>00062     : speciesId(-1),
+<a name="l00063"></a>00063       moleculeId(-1),
+<a name="l00064"></a>00064       atomId(-1)
+<a name="l00065"></a>00065    {}
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067    <span class="comment">/*</span>
+<a name="l00068"></a>00068 <span class="comment">   * Set all data members to null default values. </span>
+<a name="l00069"></a>00069 <span class="comment">   */</span>
+<a name="l00070"></a><a class="code" href="structDdMd_1_1AtomContext.html#a83d9526cdaa0cd6e31deb4187a94cbf0">00070</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="structDdMd_1_1AtomContext.html#a83d9526cdaa0cd6e31deb4187a94cbf0" title="Set all data members to null default values.">AtomContext::clear</a>()
+<a name="l00071"></a>00071    {
+<a name="l00072"></a>00072       <a class="code" href="structDdMd_1_1AtomContext.html#a8f990a72bf2770c9df79603973419691" title="Index of the species of molecule.">speciesId</a> = -1;
+<a name="l00073"></a>00073       <a class="code" href="structDdMd_1_1AtomContext.html#ae59a3878121ff2ab4a4f7e978c677054" title="Index of molecule within its molecular species.">moleculeId</a> = -1;
+<a name="l00074"></a>00074       <a class="code" href="structDdMd_1_1AtomContext.html#ad77cd1cafc435fadbe77aafe6a3908c7" title="Index of atom within its parent molecule.">atomId</a> = -1;
+<a name="l00075"></a>00075    }
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077 }
+<a name="l00078"></a>00078 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:55 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

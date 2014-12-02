@@ -57,121 +57,117 @@
 <div class="title">OutputPairEnergies.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef DDMD_OUTPUT_PAIR_ENERGIES_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define DDMD_OUTPUT_PAIR_ENERGIES_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;OutputPairEnergies.h&quot;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;util/misc/FileMaster.h&gt;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;util/misc/ioUtil.h&gt;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;util/format/Int.h&gt;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;util/format/Dbl.h&gt;</span>
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017 <span class="preprocessor">#include &lt;sstream&gt;</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;OutputPairEnergies.h&quot;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;util/misc/FileMaster.h&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;util/misc/ioUtil.h&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;util/format/Int.h&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;util/format/Dbl.h&gt;</span>
+<a name="l00013"></a>00013 
+<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;sstream&gt;</span>
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 <span class="keyword">namespace </span>DdMd
+<a name="l00017"></a>00017 {
 <a name="l00018"></a>00018 
-<a name="l00019"></a>00019 <span class="keyword">namespace </span>DdMd
-<a name="l00020"></a>00020 {
-<a name="l00021"></a>00021 
-<a name="l00022"></a>00022    <span class="keyword">using namespace </span>Util;
-<a name="l00023"></a>00023 
-<a name="l00024"></a>00024    <span class="comment">/*</span>
-<a name="l00025"></a>00025 <span class="comment">   * Constructor.</span>
-<a name="l00026"></a>00026 <span class="comment">   */</span>
-<a name="l00027"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#ac0f10ea04b4a17f2704eefb46bae7d9d">00027</a>    <a class="code" href="classDdMd_1_1OutputPairEnergies.html#ac0f10ea04b4a17f2704eefb46bae7d9d" title="Constructor.">OutputPairEnergies::OutputPairEnergies</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation) 
-<a name="l00028"></a>00028     : <a class="code" href="classDdMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions.">Analyzer</a>(simulation),
-<a name="l00029"></a>00029       nSample_(0),
-<a name="l00030"></a>00030       isInitialized_(false)
-<a name="l00031"></a>00031    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;OutputPairEnergies&quot;</span>); }
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033    <span class="comment">/*</span>
-<a name="l00034"></a>00034 <span class="comment">   * Read interval and outputFileName. </span>
-<a name="l00035"></a>00035 <span class="comment">   */</span>
-<a name="l00036"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#a44b7a119dd6b6fac053bdfb9a8c5c022">00036</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1OutputPairEnergies.html#a44b7a119dd6b6fac053bdfb9a8c5c022" title="Read interval and output file name.">OutputPairEnergies::readParameters</a>(std::istream&amp; in) 
-<a name="l00037"></a>00037    {
-<a name="l00038"></a>00038       <a class="code" href="classDdMd_1_1Analyzer.html#a8a2aadfd6927a948d60f2686ac517372" title="Read parameter interval from file.">readInterval</a>(in);
-<a name="l00039"></a>00039       <a class="code" href="classDdMd_1_1Analyzer.html#a82766295a8504cf1c6ee817911626647" title="Read outputFileName from file.">readOutputFileName</a>(in);
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041       std::string filename;
-<a name="l00042"></a>00042       filename  = <a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>();
-<a name="l00043"></a>00043       <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(filename, outputFile_);
-<a name="l00044"></a>00044       isInitialized_ = <span class="keyword">true</span>;
-<a name="l00045"></a>00045    }
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047    <span class="comment">/*</span>
-<a name="l00048"></a>00048 <span class="comment">   * Load internal state from an archive.</span>
-<a name="l00049"></a>00049 <span class="comment">   */</span>
-<a name="l00050"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#a6bf2905692560b727c2941a744c34b14">00050</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1OutputPairEnergies.html#a6bf2905692560b727c2941a744c34b14" title="Load internal state from an archive.">OutputPairEnergies::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
-<a name="l00051"></a>00051    {
-<a name="l00052"></a>00052       <a class="code" href="classDdMd_1_1Analyzer.html#aeb27867c21917c1289af1d4cae0be66d" title="Load parameter interval from input archive.">loadInterval</a>(ar);
-<a name="l00053"></a>00053       <a class="code" href="classDdMd_1_1Analyzer.html#a612962e2284d5835abb43c865cc9b899" title="Load output file name to an archive.">loadOutputFileName</a>(ar);
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055       std::string filename;
-<a name="l00056"></a>00056       filename  = <a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>();
-<a name="l00057"></a>00057       <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(filename, outputFile_);
-<a name="l00058"></a>00058       isInitialized_ = <span class="keyword">true</span>;
-<a name="l00059"></a>00059    }
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061    <span class="comment">/*</span>
-<a name="l00062"></a>00062 <span class="comment">   * Save internal state to an archive.</span>
-<a name="l00063"></a>00063 <span class="comment">   */</span>
-<a name="l00064"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#aef1c6d2f85dd7935089121af078173c4">00064</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1OutputPairEnergies.html#aef1c6d2f85dd7935089121af078173c4" title="Save internal state to an archive.">OutputPairEnergies::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
-<a name="l00065"></a>00065    {
-<a name="l00066"></a>00066       <a class="code" href="classDdMd_1_1Analyzer.html#afaeb6ce06336abdc69aaa25c56ec104d" title="Save interval parameter to an archive.">saveInterval</a>(ar);
-<a name="l00067"></a>00067       <a class="code" href="classDdMd_1_1Analyzer.html#a4c9afc6a23aad9406381c4239bfad5d8" title="Save output file name to an archive.">saveOutputFileName</a>(ar);
-<a name="l00068"></a>00068    }
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070   
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072    <span class="comment">/*</span>
-<a name="l00073"></a>00073 <span class="comment">   * Reset nSample_ counter.</span>
-<a name="l00074"></a>00074 <span class="comment">   */</span>
-<a name="l00075"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#a8cb576be89b918198f105984de90d436">00075</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1OutputPairEnergies.html#a8cb576be89b918198f105984de90d436" title="Clear nSample counter.">OutputPairEnergies::clear</a>() 
-<a name="l00076"></a>00076    {  nSample_ = 0; }
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078    <span class="comment">/*</span>
-<a name="l00079"></a>00079 <span class="comment">   * Compute and output pair energies at regular intervals.</span>
-<a name="l00080"></a>00080 <span class="comment">   */</span>
-<a name="l00081"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#af8d33c278dbd2f6d22a847765d961dbf">00081</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1OutputPairEnergies.html#af8d33c278dbd2f6d22a847765d961dbf" title="Compute and output pair energies periodically.">OutputPairEnergies::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00082"></a>00082    {
-<a name="l00083"></a>00083       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#ab6eaceb9f1281213a566d35445efe382" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
-<a name="l00084"></a>00084          <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; sys = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>();
-<a name="l00085"></a>00085          sys.<a class="code" href="classDdMd_1_1Simulation.html#a3ce8878810f70bc57dde69b71abac64e" title="Compute pair energies for each pair of atom types.">computePairEnergies</a>();
-<a name="l00086"></a>00086          <span class="keywordflow">if</span> (sys.<a class="code" href="classDdMd_1_1Simulation.html#a4bcb8e6e1482b6e825e54d71e93b9e6c" title="Get the Domain by reference.">domain</a>().<a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">isMaster</a>()) {
-<a name="l00087"></a>00087             <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;double&gt;</a> pair = sys.<a class="code" href="classDdMd_1_1Simulation.html#aed1cde8e4f39858169a4ae557cf6a4ba" title="Return precomputed pair energies.">pairEnergies</a>();
-<a name="l00088"></a>00088             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>(); ++i){
-<a name="l00089"></a>00089                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>(); ++j){
-<a name="l00090"></a>00090                   pair(i,j) = 0.5*( pair(i,j)+pair(j,i) );
-<a name="l00091"></a>00091                   pair(j,i) = pair(i,j);
-<a name="l00092"></a>00092                }
-<a name="l00093"></a>00093             }
-<a name="l00094"></a>00094             outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(iStep, 10);
-<a name="l00095"></a>00095             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>(); ++i){
-<a name="l00096"></a>00096                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>(); ++j){
-<a name="l00097"></a>00097                   outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(pair(i,j), 20);
-<a name="l00098"></a>00098                }
-<a name="l00099"></a>00099             }
-<a name="l00100"></a>00100             outputFile_  &lt;&lt; std::endl;
-<a name="l00101"></a>00101          }
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103          ++nSample_;
-<a name="l00104"></a>00104       }
-<a name="l00105"></a>00105    }
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107 }
-<a name="l00108"></a>00108 <span class="preprocessor">#endif </span>
+<a name="l00019"></a>00019    <span class="keyword">using namespace </span>Util;
+<a name="l00020"></a>00020 
+<a name="l00021"></a>00021    <span class="comment">/*</span>
+<a name="l00022"></a>00022 <span class="comment">   * Constructor.</span>
+<a name="l00023"></a>00023 <span class="comment">   */</span>
+<a name="l00024"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#ac0f10ea04b4a17f2704eefb46bae7d9d">00024</a>    <a class="code" href="classDdMd_1_1OutputPairEnergies.html#ac0f10ea04b4a17f2704eefb46bae7d9d" title="Constructor.">OutputPairEnergies::OutputPairEnergies</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation) 
+<a name="l00025"></a>00025     : <a class="code" href="classDdMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions.">Analyzer</a>(simulation),
+<a name="l00026"></a>00026       nSample_(0),
+<a name="l00027"></a>00027       isInitialized_(false)
+<a name="l00028"></a>00028    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;OutputPairEnergies&quot;</span>); }
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030    <span class="comment">/*</span>
+<a name="l00031"></a>00031 <span class="comment">   * Read interval and outputFileName. </span>
+<a name="l00032"></a>00032 <span class="comment">   */</span>
+<a name="l00033"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#a44b7a119dd6b6fac053bdfb9a8c5c022">00033</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1OutputPairEnergies.html#a44b7a119dd6b6fac053bdfb9a8c5c022" title="Read interval and output file name.">OutputPairEnergies::readParameters</a>(std::istream&amp; in) 
+<a name="l00034"></a>00034    {
+<a name="l00035"></a>00035       <a class="code" href="classDdMd_1_1Analyzer.html#a8a2aadfd6927a948d60f2686ac517372" title="Read parameter interval from file.">readInterval</a>(in);
+<a name="l00036"></a>00036       <a class="code" href="classDdMd_1_1Analyzer.html#a82766295a8504cf1c6ee817911626647" title="Read outputFileName from file.">readOutputFileName</a>(in);
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038       std::string filename;
+<a name="l00039"></a>00039       filename  = <a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>();
+<a name="l00040"></a>00040       <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(filename, outputFile_);
+<a name="l00041"></a>00041       isInitialized_ = <span class="keyword">true</span>;
+<a name="l00042"></a>00042    }
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044    <span class="comment">/*</span>
+<a name="l00045"></a>00045 <span class="comment">   * Load internal state from an archive.</span>
+<a name="l00046"></a>00046 <span class="comment">   */</span>
+<a name="l00047"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#a6bf2905692560b727c2941a744c34b14">00047</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1OutputPairEnergies.html#a6bf2905692560b727c2941a744c34b14" title="Load internal state from an archive.">OutputPairEnergies::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
+<a name="l00048"></a>00048    {
+<a name="l00049"></a>00049       <a class="code" href="classDdMd_1_1Analyzer.html#aeb27867c21917c1289af1d4cae0be66d" title="Load parameter interval from input archive.">loadInterval</a>(ar);
+<a name="l00050"></a>00050       <a class="code" href="classDdMd_1_1Analyzer.html#a612962e2284d5835abb43c865cc9b899" title="Load output file name to an archive.">loadOutputFileName</a>(ar);
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052       std::string filename;
+<a name="l00053"></a>00053       filename  = <a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>();
+<a name="l00054"></a>00054       <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(filename, outputFile_);
+<a name="l00055"></a>00055       isInitialized_ = <span class="keyword">true</span>;
+<a name="l00056"></a>00056    }
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058    <span class="comment">/*</span>
+<a name="l00059"></a>00059 <span class="comment">   * Save internal state to an archive.</span>
+<a name="l00060"></a>00060 <span class="comment">   */</span>
+<a name="l00061"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#aef1c6d2f85dd7935089121af078173c4">00061</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1OutputPairEnergies.html#aef1c6d2f85dd7935089121af078173c4" title="Save internal state to an archive.">OutputPairEnergies::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
+<a name="l00062"></a>00062    {
+<a name="l00063"></a>00063       <a class="code" href="classDdMd_1_1Analyzer.html#afaeb6ce06336abdc69aaa25c56ec104d" title="Save interval parameter to an archive.">saveInterval</a>(ar);
+<a name="l00064"></a>00064       <a class="code" href="classDdMd_1_1Analyzer.html#a4c9afc6a23aad9406381c4239bfad5d8" title="Save output file name to an archive.">saveOutputFileName</a>(ar);
+<a name="l00065"></a>00065    }
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067   
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069    <span class="comment">/*</span>
+<a name="l00070"></a>00070 <span class="comment">   * Reset nSample_ counter.</span>
+<a name="l00071"></a>00071 <span class="comment">   */</span>
+<a name="l00072"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#a8cb576be89b918198f105984de90d436">00072</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1OutputPairEnergies.html#a8cb576be89b918198f105984de90d436" title="Clear nSample counter.">OutputPairEnergies::clear</a>() 
+<a name="l00073"></a>00073    {  nSample_ = 0; }
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075    <span class="comment">/*</span>
+<a name="l00076"></a>00076 <span class="comment">   * Compute and output pair energies at regular intervals.</span>
+<a name="l00077"></a>00077 <span class="comment">   */</span>
+<a name="l00078"></a><a class="code" href="classDdMd_1_1OutputPairEnergies.html#af8d33c278dbd2f6d22a847765d961dbf">00078</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1OutputPairEnergies.html#af8d33c278dbd2f6d22a847765d961dbf" title="Compute and output pair energies periodically.">OutputPairEnergies::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00079"></a>00079    {
+<a name="l00080"></a>00080       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#ab6eaceb9f1281213a566d35445efe382" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
+<a name="l00081"></a>00081          <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; sys = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>();
+<a name="l00082"></a>00082          sys.<a class="code" href="classDdMd_1_1Simulation.html#a3ce8878810f70bc57dde69b71abac64e" title="Compute pair energies for each pair of atom types.">computePairEnergies</a>();
+<a name="l00083"></a>00083          <span class="keywordflow">if</span> (sys.<a class="code" href="classDdMd_1_1Simulation.html#a4bcb8e6e1482b6e825e54d71e93b9e6c" title="Get the Domain by reference.">domain</a>().<a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">isMaster</a>()) {
+<a name="l00084"></a>00084             <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;double&gt;</a> pair = sys.<a class="code" href="classDdMd_1_1Simulation.html#aed1cde8e4f39858169a4ae557cf6a4ba" title="Return precomputed pair energies.">pairEnergies</a>();
+<a name="l00085"></a>00085             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>(); ++i){
+<a name="l00086"></a>00086                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>(); ++j){
+<a name="l00087"></a>00087                   pair(i,j) = 0.5*( pair(i,j)+pair(j,i) );
+<a name="l00088"></a>00088                   pair(j,i) = pair(i,j);
+<a name="l00089"></a>00089                }
+<a name="l00090"></a>00090             }
+<a name="l00091"></a>00091             outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(iStep, 10);
+<a name="l00092"></a>00092             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>(); ++i){
+<a name="l00093"></a>00093                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">nAtomType</a>(); ++j){
+<a name="l00094"></a>00094                   outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(pair(i,j), 20);
+<a name="l00095"></a>00095                }
+<a name="l00096"></a>00096             }
+<a name="l00097"></a>00097             outputFile_  &lt;&lt; std::endl;
+<a name="l00098"></a>00098          }
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100          ++nSample_;
+<a name="l00101"></a>00101       }
+<a name="l00102"></a>00102    }
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:14 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:59 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

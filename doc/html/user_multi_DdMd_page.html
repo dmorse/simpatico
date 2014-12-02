@@ -63,9 +63,9 @@
 <p>The parallel ddSim program can be run in a multi-system mode that runs simulations of different systems on different groups of processors. For the moment, ddSim can only run entirely independent simulations with separate sets of input and output files.</p>
 <p>To use this feature one must simply invoke the ddSim command with the -s command line option. This option takes an integer argument that specifies the number of independent systems to be simulated.</p>
 <p>For example, to simulate 5 systems, each with four processors, using a world communicator with a total of 20 processors, one would issue the command </p>
-<div class="fragment"><pre class="fragment">    mpirun -np 20 ddSim -s 5
-</pre></div><p> The implementation splits the world communicator of 20 processors into 5 communicators, each with 4 processors. The total number of processors requested from mpirun must be multiple of the number of systems, or the program will throw an exception and abort.</p>
-<p>The file layout required for multi-system simulation with ddSim is the same as that used for simulation of multiple independent systems with mcSim or mdSim. Files associated with system number p are all put in a directory p/ (i.e., 0/, 1/, 2/, etc.). The parameter file for system p is read from p/param. The log file for system p is written to p/log. Other input and output file names for processor are constructed by appending a input or output prefix after p/ and before the base file name. Thus for example, if the output prefix is "out/", all output files for system number 3 would be written in the directory 3/out/.</p>
+<div class="fragment"><pre class="fragment">    mpirun -np 20 ddSim -s 5 -p param -c commands
+</pre></div><p> This would cause the world communicator of 20 processors to be split into 5 communicators, each with 4 processors. Each of the resulting subcommunicators handles communications among processors used to simulate a single system. The same number of processors must be assigned to each system, and the total number of processors requested from mpirun must thus be an integer multiple of the number of systems.</p>
+<p>The file layout required for multi-system simulation with ddSim is the same as that used for simulation of multiple independent systems with mcSim or mdSim. Parameter, command, input and output files associated with system number p are all put in a numbered directory p/ (i.e., 0/, 1/, 2/, etc.). As always, base names of the parameter and command files are specified as arguments to the -p and -c command line options. By convention, the log file for system p is written to a file named p/log. Paths to other input and output file names for each processor are constructed by prepending a numerical directory name, such "2/" for processor 2, to input and output prefixes that are specified in the parameter file. Thus for example, if the output prefix is "out/", all output files for processor or system number 3 would be written in the directory 3/out/.</p>
 <p>The ddSim program does not yet provide the free energy perturbation or replica exchange features provided by mcSim and mdSim, which allow multiple systems with slightly different parameters to be controlled with a single pair of parameter and command files.</p>
 <p><br/>
  <a class="el" href="user_multi_McMd_page.html">2.10.1 Multi-system simulations: mcSim and mdSim</a> (Prev) &#160; &#160; &#160; &#160; <a class="el" href="user_multi_page.html">2.10 Multi-System Simulations</a> (Up) &#160; &#160; &#160; &#160; <a class="el" href="source_page.html">3 Source Code Overview</a> (Next) </p>
@@ -75,7 +75,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:17 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:02 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

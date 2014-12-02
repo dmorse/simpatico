@@ -143,9 +143,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00026">26</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00023">23</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -165,7 +165,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00040">40</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00037">37</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
 
 </div>
 </div>
@@ -204,9 +204,9 @@ Public Member Functions</h2></td></tr>
 <p>Initialize pointers to associated objects. </p>
 <p>Call on all processors, only once, before first call to setup. </p>
 
-<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00048">48</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00045">45</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00063">DdMd::AtomStorage::associate()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00060">DdMd::AtomStorage::associate()</a>.</p>
 
 </div>
 </div>
@@ -234,7 +234,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00059">59</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00056">56</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
 
 <p>References <a class="el" href="Array_8h_source.html#l00144">Util::Array&lt; Data &gt;::capacity()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -257,11 +257,11 @@ Public Member Functions</h2></td></tr>
 <p>Setup master processor for receiving. </p>
 <p>Call only on the master processor, just before each receive loop. </p>
 
-<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00073">73</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00070">70</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
 
-<p>References <a class="el" href="AtomArray_8cpp_source.html#l00060">DdMd::AtomArray::allocate()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00435">DdMd::AtomStorage::begin()</a>, <a class="el" href="Array_8h_source.html#l00144">Util::Array&lt; Data &gt;::capacity()</a>, <a class="el" href="Domain_8h_source.html#l00348">DdMd::Domain::isInitialized()</a>, <a class="el" href="Buffer_8cpp_source.html#l00161">DdMd::Buffer::isInitialized()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="AtomArray_8cpp_source.html#l00056">DdMd::AtomArray::allocate()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">DdMd::AtomStorage::begin()</a>, <a class="el" href="Array_8h_source.html#l00144">Util::Array&lt; Data &gt;::capacity()</a>, <a class="el" href="Domain_8h_source.html#l00348">DdMd::Domain::isInitialized()</a>, <a class="el" href="Buffer_8cpp_source.html#l00158">DdMd::Buffer::isInitialized()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="SerializeConfigIo_8cpp_source.html#l00222">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00339">DdMd::LammpsConfigIo::writeConfig()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>.</p>
+<p>Referenced by <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00336">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00048">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00064">DdMd::DdMdGroupTrajectoryWriter::writeHeader()</a>.</p>
 
 </div>
 </div>
@@ -283,11 +283,11 @@ Public Member Functions</h2></td></tr>
 <p>Call only on the master processor, within loop over atoms.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>address of next atom, or null if no more are available. </dd></dl>
 
-<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00113">113</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00110">110</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
 
-<p>References <a class="el" href="Buffer_8cpp_source.html#l00274">DdMd::Buffer::beginRecvBlock()</a>, <a class="el" href="Array_8h_source.html#l00144">Util::Array&lt; Data &gt;::capacity()</a>, <a class="el" href="Domain_8h_source.html#l00256">DdMd::Domain::communicator()</a>, <a class="el" href="Buffer_8cpp_source.html#l00304">DdMd::Buffer::endRecvBlock()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00100">Util::PArrayIterator&lt; Data &gt;::get()</a>, <a class="el" href="Domain_8h_source.html#l00267">DdMd::Domain::grid()</a>, <a class="el" href="Domain_8h_source.html#l00348">DdMd::Domain::isInitialized()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Buffer_8cpp_source.html#l00396">DdMd::Buffer::recv()</a>, <a class="el" href="Buffer_8cpp_source.html#l00498">DdMd::Buffer::recvSize()</a>, <a class="el" href="Grid_8h_source.html#l00157">Util::Grid::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Buffer_8cpp_source.html#l00271">DdMd::Buffer::beginRecvBlock()</a>, <a class="el" href="Array_8h_source.html#l00144">Util::Array&lt; Data &gt;::capacity()</a>, <a class="el" href="Domain_8h_source.html#l00256">DdMd::Domain::communicator()</a>, <a class="el" href="Buffer_8cpp_source.html#l00301">DdMd::Buffer::endRecvBlock()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00100">Util::PArrayIterator&lt; Data &gt;::get()</a>, <a class="el" href="Domain_8h_source.html#l00267">DdMd::Domain::grid()</a>, <a class="el" href="Domain_8h_source.html#l00348">DdMd::Domain::isInitialized()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Buffer_8cpp_source.html#l00393">DdMd::Buffer::recv()</a>, <a class="el" href="Buffer_8cpp_source.html#l00495">DdMd::Buffer::recvSize()</a>, <a class="el" href="Grid_8h_source.html#l00157">Util::Grid::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="SerializeConfigIo_8cpp_source.html#l00222">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00339">DdMd::LammpsConfigIo::writeConfig()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>.</p>
+<p>Referenced by <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00336">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00048">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00064">DdMd::DdMdGroupTrajectoryWriter::writeHeader()</a>.</p>
 
 </div>
 </div>
@@ -308,11 +308,11 @@ Public Member Functions</h2></td></tr>
 <p>Send all atoms to the master. </p>
 <p>Call on all processors except the master. </p>
 
-<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00210">210</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
+<p>Definition at line <a class="el" href="AtomCollector_8cpp_source.html#l00207">207</a> of file <a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00435">DdMd::AtomStorage::begin()</a>, <a class="el" href="Buffer_8cpp_source.html#l00226">DdMd::Buffer::beginSendBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00215">DdMd::Buffer::clearSendBuffer()</a>, <a class="el" href="Domain_8h_source.html#l00256">DdMd::Domain::communicator()</a>, <a class="el" href="Buffer_8cpp_source.html#l00250">DdMd::Buffer::endSendBlock()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00084">Util::PArrayIterator&lt; Data &gt;::isEnd()</a>, <a class="el" href="Domain_8h_source.html#l00348">DdMd::Domain::isInitialized()</a>, <a class="el" href="Buffer_8cpp_source.html#l00161">DdMd::Buffer::isInitialized()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, <a class="el" href="Buffer_8cpp_source.html#l00368">DdMd::Buffer::send()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">DdMd::AtomStorage::begin()</a>, <a class="el" href="Buffer_8cpp_source.html#l00223">DdMd::Buffer::beginSendBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00212">DdMd::Buffer::clearSendBuffer()</a>, <a class="el" href="Domain_8h_source.html#l00256">DdMd::Domain::communicator()</a>, <a class="el" href="Buffer_8cpp_source.html#l00247">DdMd::Buffer::endSendBlock()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00084">Util::PArrayIterator&lt; Data &gt;::isEnd()</a>, <a class="el" href="Domain_8h_source.html#l00348">DdMd::Domain::isInitialized()</a>, <a class="el" href="Buffer_8cpp_source.html#l00158">DdMd::Buffer::isInitialized()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, <a class="el" href="Buffer_8cpp_source.html#l00365">DdMd::Buffer::send()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="SerializeConfigIo_8cpp_source.html#l00222">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00339">DdMd::LammpsConfigIo::writeConfig()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>.</p>
+<p>Referenced by <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00336">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00048">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00064">DdMd::DdMdGroupTrajectoryWriter::writeHeader()</a>.</p>
 
 </div>
 </div>
@@ -326,7 +326,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:18 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:04 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

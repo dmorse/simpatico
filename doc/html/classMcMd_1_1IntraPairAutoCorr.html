@@ -64,17 +64,17 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">McMd::IntraPairAutoCorr Class Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__Module.html">Analyzers</a></div></div>  </div>
+<div class="title">McMd::IntraPairAutoCorr Class Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__McMd__Module.html">MC/MD Analyzers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="McMd::IntraPairAutoCorr" --><!-- doxytag: inherits="SystemAnalyzer&lt; System &gt;" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Autocorrelation for vector separation of any two monomers on a molecule. </p>
 <p>This class evaluates the autocorrelation function for the vector that separates two atoms with indices atom1Id and atom2Id on a molecule of species speciesId. It can be used to evaluate the autocorrelation function for individual bonds or for the end-to-end vector of a linear polymer.</p>
-<p>If atom1Id = i and atom2Id = j, let <img class="formulaInl" alt="$ V(t) = R_i(t) - R_j(t) $" src="form_82.png"/>. This class calculates and outputs the function </p>
+<p>If atom1Id = i and atom2Id = j, let <img class="formulaInl" alt="$ V(t) = R_i(t) - R_j(t) $" src="form_89.png"/>. This class calculates and outputs the function </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ F(\tau) \equiv \langle V(t) \cdot V(t-\tau) \rangle \]" src="form_83.png"/>
+<img class="formulaDsp" alt="\[ F(\tau) \equiv \langle V(t) \cdot V(t-\tau) \rangle \]" src="form_90.png"/>
 </p>
-<p> where <img class="formulaInl" alt="$ \tau $" src="form_84.png"/> is a time separation, and where <img class="formulaInl" alt="$ \langle \cdots \rangle$" src="form_85.png"/> denotes an * average over values of the time t and over all molecules in a species. Here, <img class="formulaInl" alt="$ V(t) \cdot V(t') $" src="form_86.png"/> denotes a dot product of values of the vector <img class="formulaInl" alt="$ V(t) $" src="form_87.png"/> at different times.</p>
+<p> where <img class="formulaInl" alt="$ \tau $" src="form_91.png"/> is a time separation, and where <img class="formulaInl" alt="$ \langle \cdots \rangle$" src="form_92.png"/> denotes an * average over values of the time t and over all molecules in a species. Here, <img class="formulaInl" alt="$ V(t) \cdot V(t') $" src="form_93.png"/> denotes a dot product of values of the vector <img class="formulaInl" alt="$ V(t) $" src="form_94.png"/> at different times.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="mcMd_analyzer_IntraPairAutoCorr_page.html">parameter file format</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="IntraPairAutoCorr_8h_source.html#l00048">48</a> of file <a class="el" href="IntraPairAutoCorr_8h_source.html">IntraPairAutoCorr.h</a>.</p>
@@ -141,9 +141,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00029">29</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00026">26</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -182,9 +182,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#a47ff063d3049206e3806d50b19e33946">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00045">45</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00042">42</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00583">McMd::Species::capacity()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00055">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00080">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00241">Util::AutoCorrArray&lt; Data, Product &gt;::setParam()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00796">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00583">McMd::Species::capacity()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00052">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00077">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00241">Util::AutoCorrArray&lt; Data, Product &gt;::setParam()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00793">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -213,9 +213,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#a57d1bfefb27ec9e3453f4ad331e60c1f">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00091">91</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00088">88</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00583">McMd::Species::capacity()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00796">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00583">McMd::Species::capacity()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00793">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -244,7 +244,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#ae90b5ab7326be9d6b32c2e2e4ea468bf">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00126">126</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00123">123</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
 
 </div>
 </div>
@@ -310,7 +310,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#aa5cdc8e0d1f1151ffbc6d7daf71cc245">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00132">132</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00129">129</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
 
 <p>References <a class="el" href="AutoCorrArray_8h_source.html#l00291">Util::AutoCorrArray&lt; Data, Product &gt;::clear()</a>, <a class="el" href="System_8h_source.html#l01028">McMd::System::nMolecule()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00276">Util::AutoCorrArray&lt; Data, Product &gt;::setNEnsemble()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -341,9 +341,9 @@ template&lt;class Archive &gt; </div>
 
 <p>Implements <a class="el" href="classMcMd_1_1Analyzer.html#a576d9ef1ae896122b249b5ce2058546a">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00147">147</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00144">144</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00474">McMd::Molecule::atom()</a>, <a class="el" href="System_8h_source.html#l00964">McMd::System::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00535">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="System_8h_source.html#l01037">McMd::System::molecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00260">McMd::Atom::position()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00331">Util::AutoCorrArray&lt; Data, Product &gt;::sample()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00474">McMd::Molecule::atom()</a>, <a class="el" href="System_8h_source.html#l00964">McMd::System::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="System_8h_source.html#l01037">McMd::System::molecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00260">McMd::Atom::position()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00331">Util::AutoCorrArray&lt; Data, Product &gt;::sample()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -365,9 +365,9 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#ab14b1c3cfe5319b54c16c330e6eb724f">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00185">185</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00182">182</a> of file <a class="el" href="IntraPairAutoCorr_8cpp_source.html">IntraPairAutoCorr.cpp</a>.</p>
 
-<p>References <a class="el" href="AutoCorrArray_8h_source.html#l00375">Util::AutoCorrArray&lt; Data, Product &gt;::average()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00354">Util::AutoCorrArray&lt; Data, Product &gt;::bufferCapacity()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00144">McMd::Analyzer::fileMaster()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00361">Util::AutoCorrArray&lt; Data, Product &gt;::nEnsemble()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00368">Util::AutoCorrArray&lt; Data, Product &gt;::nSample()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00386">Util::AutoCorrArray&lt; Data, Product &gt;::output()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00122">Util::ParamComposite::writeParam()</a>.</p>
+<p>References <a class="el" href="AutoCorrArray_8h_source.html#l00375">Util::AutoCorrArray&lt; Data, Product &gt;::average()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00354">Util::AutoCorrArray&lt; Data, Product &gt;::bufferCapacity()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00141">McMd::Analyzer::fileMaster()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00361">Util::AutoCorrArray&lt; Data, Product &gt;::nEnsemble()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00368">Util::AutoCorrArray&lt; Data, Product &gt;::nSample()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="AutoCorrArray_8h_source.html#l00386">Util::AutoCorrArray&lt; Data, Product &gt;::output()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00119">Util::ParamComposite::writeParam()</a>.</p>
 
 </div>
 </div>
@@ -381,7 +381,7 @@ template&lt;class Archive &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:25 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

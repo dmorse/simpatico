@@ -100,7 +100,7 @@ Overview</h2>
 <tr>
 <td>Message Passing Interface (MPI)  </td><td>-m  </td><td>OFF / ON  </td><td>_m  </td><td>UTIL_MPI  </td><td>config.mk   </td></tr>
 <tr>
-<td>Bond potentials  </td><td>-b  </td><td>ON  </td><td>_nb  </td><td>INTER_BOND  </td><td>inter/config.mk   </td></tr>
+<td><a class="el" href="classBond.html">Bond</a> potentials  </td><td>-b  </td><td>ON  </td><td>_nb  </td><td>INTER_BOND  </td><td>inter/config.mk   </td></tr>
 <tr>
 <td>Angle potentials  </td><td>-a  </td><td>OFF  </td><td>_a  </td><td>INTER_ANGLE  </td><td>inter/config.mk   </td></tr>
 <tr>
@@ -113,8 +113,6 @@ Overview</h2>
 <td>Free energy perturbation  </td><td>-f  </td><td>OFF  </td><td>_f  </td><td>MCMD_PERTURB  </td><td>mcMd/config.mk   </td></tr>
 <tr>
 <td>Modifiers  </td><td>-u  </td><td>OFF  </td><td>_u  </td><td>DDMD_MODIFIERS  </td><td>ddMd/config.mk   </td></tr>
-<tr>
-<td>Molecules  </td><td>-z  </td><td>OFF  </td><td>_z  </td><td>DDMD_MOLECULES  </td><td>ddMd/config.mk   </td></tr>
 </table>
 <h2><a class="anchor" id="user_option_features"></a>
 Optional features</h2>
@@ -126,7 +124,7 @@ Optional features</h2>
 <li>Message Passing Interface (UTIL_MPI): The MPI feature must be enabled in order to build any parallel program. Specifically, it must be enabled to build either the ddSim MD program, which uses a domain-decomposition algorithm, or the multi-processor versions of mcSim and mdSim, which allow "embarrassingly parallel" MC and MD simulation of different systems on different processors. It is disabled by default in the bld/parallel directory, which is intended to be used to build parallel programs, but disabled by default in the bld/serial directory, which is intended to be used to build the single processor mcSim and mdSim programs. It is also disabled by the default in the src/ directory (i.e., in in-source builds), but can be manually enabled. In addition, the commands associated with the makefile targets mcMd, mcMd-mpi, and ddMd in the makefiles in each of these build directories (i.e., in bld/parallel, bld/serial, and src/ directories) all explicitly invoke the configure script to enable or disable MPI, as appropriate, before compiling any code. Specifically "make mcMd" invokes "configure -m0" to disable MPI and the other two targets invoke "configure -m1" to enable MPIbefore compiling any source files or building libraries. When compiling using these targets, it is thus not necessary for the user to explicitly enable or disable MPI. The only time that users should have to set have to set this option explicitly is if they want to compile MPI-enabled or MPI-disabled versions of specific source files or namespace level libraries by invoking make from a namespace or lower-level subdirectory, rather than from the root src/ or build directory. When MPI is enabled, a suffix _m is added to the names of MPI-enabled versions of the libraries libutil.a, libinter.a and libmcMd.a, and to the names of the mcSim and mdSim executibables. No such suffix is added to the name of the libDdMd.a library or ddSim executable, however, because MPI is not an optional feature of the domain-decomposition code, but is required for the code to compile and function.</li>
 </ul>
 <ul>
-<li>Bond potentials (INTER_BOND): This option enables the inclusion of energies and forces arising from covalent two-body potentials in all programs. This is enabled by default.</li>
+<li><a class="el" href="classBond.html">Bond</a> potentials (INTER_BOND): This option enables the inclusion of energies and forces arising from covalent two-body potentials in all programs. This is enabled by default.</li>
 </ul>
 <ul>
 <li>Angle potentials (INTER_ANGLE): This option enables the inclusion of covalent three-body bending potentials in all programs. Because the code has thus far been used primarily for flexible polymers, this is now disabled by default.</li>
@@ -147,7 +145,7 @@ Optional features</h2>
 <li>Modifiers (DDMD_MODIFIERS): This feature enables the addition of modifiers (subclasses of <a class="el" href="classDdMd_1_1Modifier.html" title="A Modifier can modify the time evolution of the simulation.">DdMd::Modifier</a>) to a ddSim program. Modifiers are classes that can take essentially arbitrary actions modify the state of the system within the main integration loop of a simulation, and thereby change its time evolution. When modifiers are enabled, the parameter file may contain an optional ModifierManager{...} block immediately after the Integrator block. If this feature is enabled at compile time but this block is absent from the parameter file, it will be assumed that there are no modifiers.</li>
 </ul>
 <ul>
-<li>Molecules (DDMD_MOLECULES): This feature enables data structures that associate each atom with a parent molecule. This information is not used or required by the force or integration algorithms, but is useful for some types of data analysis. Defining DDMD_MOLECULES associates a DdMd::AtomContext struct with each atom. This struct contains an integer id for the molecule to which the atom belongs, and id for the species of molecule, and an index for the position of the atom within the molecule. Meaningful values are set for these indices only if this information is included in the input configuration file. File formats that include this information may be selected by passing the SET_CONFIG_IO command is passed an argument "DdMdConfig_Molecule" or "DdMdOrderedConfigIo_Molecule" before invoking the READ_CONFIG command.</li>
+<li>Molecules (DDMD_MOLECULES): This feature enables data structures that associate each atom with a parent molecule. This information is not used or required by the force or integration algorithms, but is useful for some types of data analysis. Defining DDMD_MOLECULES associates a <a class="el" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">DdMd::AtomContext</a> struct with each atom. This struct contains an integer id for the molecule to which the atom belongs, and id for the species of molecule, and an index for the position of the atom within the molecule. Meaningful values are set for these indices only if this information is included in the input configuration file. File formats that include this information may be selected by passing the SET_CONFIG_IO command is passed an argument "DdMdConfig_Molecule" or "DdMdOrderedConfigIo_Molecule" before invoking the READ_CONFIG command.</li>
 </ul>
 <h2><a class="anchor" id="user_option_scope"></a>
 Scope conventions</h2>
@@ -171,7 +169,7 @@ Boundary Type</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:17 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:02 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

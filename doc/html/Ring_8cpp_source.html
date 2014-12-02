@@ -57,90 +57,86 @@
 <div class="title">Ring.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef MCMD_RING_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define MCMD_RING_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;Ring.h&quot;</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;Ring.h&quot;</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="keyword">namespace </span>McMd
+<a name="l00011"></a>00011 {
 <a name="l00012"></a>00012 
-<a name="l00013"></a>00013 <span class="keyword">namespace </span>McMd
-<a name="l00014"></a>00014 {
-<a name="l00015"></a>00015 
-<a name="l00016"></a>00016    <span class="keyword">using namespace </span>Util;
-<a name="l00017"></a>00017 
-<a name="l00018"></a>00018    <span class="comment">/*</span>
-<a name="l00019"></a>00019 <span class="comment">   * Constructor.</span>
-<a name="l00020"></a>00020 <span class="comment">   */</span>
-<a name="l00021"></a><a class="code" href="classMcMd_1_1Ring.html#a1cc9c7f2b4917703ffe857c3e79902b3">00021</a>    <a class="code" href="classMcMd_1_1Ring.html#a1cc9c7f2b4917703ffe857c3e79902b3" title="Constructor.">Ring::Ring</a>() 
-<a name="l00022"></a>00022    : <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>()
-<a name="l00023"></a>00023    {}
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025    <span class="comment">/*</span>
-<a name="l00026"></a>00026 <span class="comment">   * Build the chemical structure of a flexible loop molecule.</span>
-<a name="l00027"></a>00027 <span class="comment">   */</span>
-<a name="l00028"></a><a class="code" href="classMcMd_1_1Ring.html#aa5df8c8bb1fd78de5c6003b118c8a51a">00028</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Ring.html#aa5df8c8bb1fd78de5c6003b118c8a51a" title="Build the chemical structure for a ring molecule.">Ring::buildRing</a>() 
-<a name="l00029"></a>00029    {
-<a name="l00030"></a>00030       <span class="comment">// Preconditions</span>
-<a name="l00031"></a>00031       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>() &lt; 3) 
-<a name="l00032"></a>00032          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtom &lt; 3&quot;</span>);
-<a name="l00033"></a>00033       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>() != <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>()) 
-<a name="l00034"></a>00034          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nBond != nAtom&quot;</span>);
-<a name="l00035"></a>00035 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
-<a name="l00036"></a>00036 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a3e7e63f3ac985c2473b8f550dc999c2c" title="Get number of angles per molecule for this Species.">nAngle</a>() != <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>()) 
-<a name="l00037"></a>00037          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAngle != nAtom&quot;</span>);
-<a name="l00038"></a>00038 <span class="preprocessor">      #endif</span>
-<a name="l00039"></a>00039 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
-<a name="l00040"></a>00040 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a31087a5a59ca3faacd263d8caefa39c2" title="Get number of dihedrals per molecule for this Species.">nDihedral</a>() != <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>()) 
-<a name="l00041"></a>00041          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nDihedral != nAtom&quot;</span>);
-<a name="l00042"></a>00042 <span class="preprocessor">      #endif</span>
-<a name="l00043"></a>00043 <span class="preprocessor"></span>
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045       <span class="keywordtype">int</span> i; 
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047       <a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca" title="Allocate chemical structure arrays.">allocate</a>();
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049       <span class="comment">// Set Atom Type Ids</span>
-<a name="l00050"></a>00050       <span class="keywordflow">for</span> (i=0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>(); ++i) {
-<a name="l00051"></a>00051          <a class="code" href="classMcMd_1_1Species.html#a5244d3eab99baf79b4b270f3abd168a6" title="Set the type for one atom in a generic molecule of this Species.">setAtomType</a>(i, <a class="code" href="classMcMd_1_1Ring.html#af57802278fe3ff7c1b11659194877868" title="Return the atom type id for a specific atom.">calculateAtomTypeId</a>(i));
-<a name="l00052"></a>00052       }
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054       <span class="comment">// Build Bonds.</span>
-<a name="l00055"></a>00055       <span class="keywordflow">for</span> (i=0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>(); ++i) {
-<a name="l00056"></a>00056          <a class="code" href="classMcMd_1_1Species.html#a2d72cd7d93ac802ce5f567e4a41eb152" title="Add a bond to the chemical structure of a generic molecule.">makeBond</a>(i, i, (i+1)%<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>(), <a class="code" href="classMcMd_1_1Ring.html#ac95b60d856eb587e32728ab6b57d0d16" title="Return the bond type id for a specific bond.">calculateBondTypeId</a>(i));
-<a name="l00057"></a>00057       }
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
-<a name="l00060"></a>00060 <span class="preprocessor"></span>      <span class="comment">// Build Angles.</span>
-<a name="l00061"></a>00061       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a3e7e63f3ac985c2473b8f550dc999c2c" title="Get number of angles per molecule for this Species.">nAngle</a>(); ++i) {
-<a name="l00062"></a>00062          <a class="code" href="classMcMd_1_1Species.html#aebf9931e9727df0019d163eab9a130b7" title="Add an angle to the chemical structure of a generic molecule.">makeAngle</a>(i, i, (i+1)%<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>(), (i+2)%<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>(), <a class="code" href="classMcMd_1_1Ring.html#ac686b189e2ce6793105a8529ceac7c8c" title="Return the angle type id for a specific angle.">calculateAngleTypeId</a>(i));
-<a name="l00063"></a>00063       }
-<a name="l00064"></a>00064 <span class="preprocessor">      #endif</span>
-<a name="l00065"></a>00065 <span class="preprocessor"></span>
-<a name="l00066"></a>00066 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
-<a name="l00067"></a>00067 <span class="preprocessor"></span>      <span class="comment">// Build Dihedrals. </span>
-<a name="l00068"></a>00068       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a31087a5a59ca3faacd263d8caefa39c2" title="Get number of dihedrals per molecule for this Species.">nDihedral</a>(); ++i) {
-<a name="l00069"></a>00069          <a class="code" href="classMcMd_1_1Species.html#a2ab5279edb49ced90eb02b73b81f768e" title="Add a dihedral to the chemical structure of a generic molecule.">makeDihedral</a>(i, i, (i+1)%<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>(), (i+2)%<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>(), (i+3)%<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>(),
-<a name="l00070"></a>00070                         <a class="code" href="classMcMd_1_1Ring.html#a8092a80203f09941756ee7687455dd51" title="Return the dihedral type id for a specific dihedral.">calculateDihedralTypeId</a>(i));
-<a name="l00071"></a>00071       }
-<a name="l00072"></a>00072 <span class="preprocessor">      #endif</span>
-<a name="l00073"></a>00073 <span class="preprocessor"></span>
-<a name="l00074"></a>00074    }
-<a name="l00075"></a>00075    
-<a name="l00076"></a>00076 } 
-<a name="l00077"></a>00077 <span class="preprocessor">#endif</span>
+<a name="l00013"></a>00013    <span class="keyword">using namespace </span>Util;
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015    <span class="comment">/*</span>
+<a name="l00016"></a>00016 <span class="comment">   * Constructor.</span>
+<a name="l00017"></a>00017 <span class="comment">   */</span>
+<a name="l00018"></a><a class="code" href="classMcMd_1_1Ring.html#a1cc9c7f2b4917703ffe857c3e79902b3">00018</a>    <a class="code" href="classMcMd_1_1Ring.html#a1cc9c7f2b4917703ffe857c3e79902b3" title="Constructor.">Ring::Ring</a>() 
+<a name="l00019"></a>00019    : <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>()
+<a name="l00020"></a>00020    {}
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022    <span class="comment">/*</span>
+<a name="l00023"></a>00023 <span class="comment">   * Build the chemical structure of a flexible loop molecule.</span>
+<a name="l00024"></a>00024 <span class="comment">   */</span>
+<a name="l00025"></a><a class="code" href="classMcMd_1_1Ring.html#aa5df8c8bb1fd78de5c6003b118c8a51a">00025</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Ring.html#aa5df8c8bb1fd78de5c6003b118c8a51a" title="Build the chemical structure for a ring molecule.">Ring::buildRing</a>() 
+<a name="l00026"></a>00026    {
+<a name="l00027"></a>00027       <span class="comment">// Preconditions</span>
+<a name="l00028"></a>00028       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>() &lt; 3) 
+<a name="l00029"></a>00029          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtom &lt; 3&quot;</span>);
+<a name="l00030"></a>00030       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a1563670a5e13c2370c1ec37ef0f242c4" title="Get number of bonds per molecule for this Species.">nBond</a>() != <a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>()) 
+<a name="l00031"></a>00031          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nBond != nAtom&quot;</span>);
+<a name="l00032"></a>00032 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
+<a name="l00033"></a>00033 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#afa22397491fdf6edf5a11136a6f0f07f" title="Get number of angles per molecule for this Species.">nAngle</a>() != <a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>()) 
+<a name="l00034"></a>00034          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAngle != nAtom&quot;</span>);
+<a name="l00035"></a>00035 <span class="preprocessor">      #endif</span>
+<a name="l00036"></a>00036 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
+<a name="l00037"></a>00037 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#aad29534f4ca747c2a7f35ccaa9572bca" title="Get number of dihedrals per molecule for this Species.">nDihedral</a>() != <a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>()) 
+<a name="l00038"></a>00038          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nDihedral != nAtom&quot;</span>);
+<a name="l00039"></a>00039 <span class="preprocessor">      #endif</span>
+<a name="l00040"></a>00040 <span class="preprocessor"></span>
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042       <span class="keywordtype">int</span> i; 
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044       <a class="code" href="classMcMd_1_1Species.html#a913f31e19320ec418eee5f5502f26e1f" title="Allocate chemical structure arrays.">allocate</a>();
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046       <span class="comment">// Set Atom Type Ids</span>
+<a name="l00047"></a>00047       <span class="keywordflow">for</span> (i=0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>(); ++i) {
+<a name="l00048"></a>00048          <a class="code" href="classMcMd_1_1Species.html#a78906cd81231a9fb349cdcbfd2bd3c21" title="Set the type for one atom in a generic molecule of this Species.">setAtomType</a>(i, <a class="code" href="classMcMd_1_1Ring.html#af57802278fe3ff7c1b11659194877868" title="Return the atom type id for a specific atom.">calculateAtomTypeId</a>(i));
+<a name="l00049"></a>00049       }
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051       <span class="comment">// Build Bonds.</span>
+<a name="l00052"></a>00052       <span class="keywordflow">for</span> (i=0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a1563670a5e13c2370c1ec37ef0f242c4" title="Get number of bonds per molecule for this Species.">nBond</a>(); ++i) {
+<a name="l00053"></a>00053          <a class="code" href="classMcMd_1_1Species.html#a67486ecf54a32f4d907f41bbf91c1cdd" title="Add a bond to the chemical structure of a generic molecule.">makeBond</a>(i, i, (i+1)%<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>(), <a class="code" href="classMcMd_1_1Ring.html#ac95b60d856eb587e32728ab6b57d0d16" title="Return the bond type id for a specific bond.">calculateBondTypeId</a>(i));
+<a name="l00054"></a>00054       }
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
+<a name="l00057"></a>00057 <span class="preprocessor"></span>      <span class="comment">// Build Angles.</span>
+<a name="l00058"></a>00058       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#afa22397491fdf6edf5a11136a6f0f07f" title="Get number of angles per molecule for this Species.">nAngle</a>(); ++i) {
+<a name="l00059"></a>00059          <a class="code" href="classMcMd_1_1Species.html#a76beb4e0ee91cb9965331794822c873c" title="Add an angle to the chemical structure of a generic molecule.">makeAngle</a>(i, i, (i+1)%<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>(), (i+2)%<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>(), <a class="code" href="classMcMd_1_1Ring.html#ac686b189e2ce6793105a8529ceac7c8c" title="Return the angle type id for a specific angle.">calculateAngleTypeId</a>(i));
+<a name="l00060"></a>00060       }
+<a name="l00061"></a>00061 <span class="preprocessor">      #endif</span>
+<a name="l00062"></a>00062 <span class="preprocessor"></span>
+<a name="l00063"></a>00063 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
+<a name="l00064"></a>00064 <span class="preprocessor"></span>      <span class="comment">// Build Dihedrals. </span>
+<a name="l00065"></a>00065       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#aad29534f4ca747c2a7f35ccaa9572bca" title="Get number of dihedrals per molecule for this Species.">nDihedral</a>(); ++i) {
+<a name="l00066"></a>00066          <a class="code" href="classMcMd_1_1Species.html#a7b523d444c8bd0c069c9c8ab2d6878bc" title="Add a dihedral to the chemical structure of a generic molecule.">makeDihedral</a>(i, i, (i+1)%<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>(), (i+2)%<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>(), (i+3)%<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>(),
+<a name="l00067"></a>00067                         <a class="code" href="classMcMd_1_1Ring.html#a8092a80203f09941756ee7687455dd51" title="Return the dihedral type id for a specific dihedral.">calculateDihedralTypeId</a>(i));
+<a name="l00068"></a>00068       }
+<a name="l00069"></a>00069 <span class="preprocessor">      #endif</span>
+<a name="l00070"></a>00070 <span class="preprocessor"></span>
+<a name="l00071"></a>00071    }
+<a name="l00072"></a>00072    
+<a name="l00073"></a>00073 } 
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:15 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:00 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

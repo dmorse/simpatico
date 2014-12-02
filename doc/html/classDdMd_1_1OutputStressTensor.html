@@ -70,7 +70,7 @@
 <!-- doxytag: class="DdMd::OutputStressTensor" --><!-- doxytag: inherits="DdMd::Analyzer" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Periodically write (tensor) StressTensor to file. </p>
 
-<p>Definition at line <a class="el" href="OutputStressTensor_8h_source.html#l00026">26</a> of file <a class="el" href="OutputStressTensor_8h_source.html">OutputStressTensor.h</a>.</p>
+<p>Definition at line <a class="el" href="OutputStressTensor_8h_source.html#l00025">25</a> of file <a class="el" href="OutputStressTensor_8h_source.html">OutputStressTensor.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="OutputStressTensor_8h_source.html">OutputStressTensor.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -103,6 +103,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save internal state to an archive.  <a href="#a7732806acc196fff55f3bf79d8ef0e6d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1OutputStressTensor.html#a7f20670524a5aa532f5bfdfad19f64eb">clear</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear nSample counter.  <a href="#a7f20670524a5aa532f5bfdfad19f64eb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1OutputStressTensor.html#a11bed5f044cde8f218c691a3f32089b4">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup - open output file.  <a href="#a11bed5f044cde8f218c691a3f32089b4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1OutputStressTensor.html#aa133c6ce8a58e680581d93c3160e7a2c">sample</a> (long iStep)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump configuration to file.  <a href="#aa133c6ce8a58e680581d93c3160e7a2c"></a><br/></td></tr>
 </table>
@@ -130,9 +132,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00027">27</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00026">26</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -152,7 +154,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="OutputStressTensor_8h_source.html#l00041">41</a> of file <a class="el" href="OutputStressTensor_8h_source.html">OutputStressTensor.h</a>.</p>
+<p>Definition at line <a class="el" href="OutputStressTensor_8h_source.html#l00040">40</a> of file <a class="el" href="OutputStressTensor_8h_source.html">OutputStressTensor.h</a>.</p>
 
 </div>
 </div>
@@ -182,9 +184,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a172a3a656b5829c8d758424ad09a22a6">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00036">36</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00035">35</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01129">DdMd::Simulation::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00045">DdMd::Analyzer::readInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00112">DdMd::Analyzer::readOutputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01134">DdMd::Simulation::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00042">DdMd::Analyzer::readInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00109">DdMd::Analyzer::readOutputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
 
 </div>
 </div>
@@ -215,7 +217,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00051">51</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01129">DdMd::Simulation::fileMaster()</a>, <a class="el" href="MpiLoader_8h_source.html#l00137">Util::MpiLoader&lt; IArchive &gt;::load()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00077">DdMd::Analyzer::loadInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00118">DdMd::Analyzer::loadOutputFileName()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01134">DdMd::Simulation::fileMaster()</a>, <a class="el" href="MpiLoader_8h_source.html#l00137">Util::MpiLoader&lt; IArchive &gt;::load()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00074">DdMd::Analyzer::loadInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00115">DdMd::Analyzer::loadOutputFileName()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
 
 </div>
 </div>
@@ -244,9 +246,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#a314e65958fa201e8fb493712a0f899cc">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00069">69</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00070">70</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00106">DdMd::Analyzer::saveInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00126">DdMd::Analyzer::saveOutputFileName()</a>.</p>
+<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00103">DdMd::Analyzer::saveInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00123">DdMd::Analyzer::saveOutputFileName()</a>.</p>
 
 </div>
 </div>
@@ -268,7 +270,31 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#a4d3188e3d11e6a679f464018785d98a7">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00080">80</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00081">81</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a11bed5f044cde8f218c691a3f32089b4"></a><!-- doxytag: member="DdMd::OutputStressTensor::setup" ref="a11bed5f044cde8f218c691a3f32089b4" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classDdMd_1_1OutputStressTensor.html#a11bed5f044cde8f218c691a3f32089b4">DdMd::OutputStressTensor::setup</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Setup - open output file. </p>
+
+<p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#adc0577afc0c6830c7c40e5f46818cd2c">DdMd::Analyzer</a>.</p>
+
+<p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00087">87</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
+
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01134">DdMd::Simulation::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
 
 </div>
 </div>
@@ -297,9 +323,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classDdMd_1_1Analyzer.html#af41861e5d91cf1c702a6c69c7843ad8b">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00086">86</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputStressTensor_8cpp_source.html#l00099">99</a> of file <a class="el" href="OutputStressTensor_8cpp_source.html">OutputStressTensor.cpp</a>.</p>
 
-<p>References <a class="el" href="Tensor_8h_source.html#l00552">Util::Tensor::add()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01544">DdMd::Simulation::computeKineticStress()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01750">DdMd::Simulation::computeVirialStress()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01025">DdMd::Simulation::domain()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00237">DdMd::Analyzer::isAtInterval()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01591">DdMd::Simulation::kineticStress()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01797">DdMd::Simulation::virialStress()</a>.</p>
+<p>References <a class="el" href="Tensor_8h_source.html#l00552">Util::Tensor::add()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01591">DdMd::Simulation::computeKineticStress()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01797">DdMd::Simulation::computeVirialStress()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01030">DdMd::Simulation::domain()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00237">DdMd::Analyzer::isAtInterval()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01638">DdMd::Simulation::kineticStress()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01844">DdMd::Simulation::virialStress()</a>.</p>
 
 </div>
 </div>
@@ -313,7 +339,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:18 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:03 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

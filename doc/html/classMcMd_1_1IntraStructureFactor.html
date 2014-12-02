@@ -65,22 +65,22 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">McMd::IntraStructureFactor Class Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__Module.html">Analyzers</a></div></div>  </div>
+<div class="title">McMd::IntraStructureFactor Class Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__McMd__Module.html">MC/MD Analyzers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="McMd::IntraStructureFactor" --><!-- doxytag: inherits="SystemAnalyzer&lt; System &gt;" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Intramolecular contribution to the structure factor S(k) </p>
 <p>The intramolecular contribution to the structure factor S(k) for a wavevector k is defined as an expectation value </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ S(k) = \sum_{m} < \rho_{ma}(k) \rho_{mb}(-k) / V > \]" src="form_88.png"/>
+<img class="formulaDsp" alt="\[ S(k) = \sum_{m} < \rho_{ma}(k) \rho_{mb}(-k) / V > \]" src="form_95.png"/>
 </p>
-<p> in which the sum is taken over all molecules m of a specified species, V is system volume, and <img class="formulaInl" alt="$\rho_a(k)$" src="form_89.png"/> is a Fourier component </p>
+<p> in which the sum is taken over all molecules m of a specified species, V is system volume, and <img class="formulaInl" alt="$\rho_a(k)$" src="form_96.png"/> is a Fourier component </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \rho_{ma}(k) = \sum_{i} \exp( i k \cdot r_{mi} ) \]" src="form_90.png"/>
+<img class="formulaDsp" alt="\[ \rho_{ma}(k) = \sum_{i} \exp( i k \cdot r_{mi} ) \]" src="form_97.png"/>
 </p>
 <p> in which the sum is taken over all particles in a set defined by the particle type index a on a specific molecule m.</p>
-<p>If 0 &lt;= a &lt; nAtomType, then, <img class="formulaInl" alt="$ \rho_{ma}(k) $" src="form_91.png"/> is given by a sum over all atoms of type a on molecule m.</p>
-<p>If a &lt; 0, then <img class="formulaInl" alt="$ \rho_a(k) $" src="form_92.png"/> is given by a sum over all atoms on molecule m, including those of all types. By convention, we use a = -1 to indicate this.</p>
+<p>If 0 &lt;= a &lt; nAtomType, then, <img class="formulaInl" alt="$ \rho_{ma}(k) $" src="form_98.png"/> is given by a sum over all atoms of type a on molecule m.</p>
+<p>If a &lt; 0, then <img class="formulaInl" alt="$ \rho_a(k) $" src="form_99.png"/> is given by a sum over all atoms on molecule m, including those of all types. By convention, we use a = -1 to indicate this.</p>
 <p>This class can evaluate multiple types of structures factors, corresponding to different choices for the type pair ab, for multiple wavevectors. The input format thus requires the user to specify one or more atom typeId pairs, and one or more wavevectors. Each wavevector is specified as an IntVector containing integer Miller indices. These are the coeficients in an expansion of a reciprocal lattice wavevector in terms of recprocal lattice basis vectors for the periodic unit cell.</p>
 <p>In a system with nAtomType = 2, with two monomer types 0 and 1, the parameter file input for calculating the total, 00 and 01 correlation functions for 5 wavevectors along the x axis in an orthorhombic unit cell might look like this:</p>
 <div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a1dc81b99bc2de6e9c9beb58c252b98b6" title="Constructor.">IntraStructureFactor</a>{
@@ -186,9 +186,9 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00033">33</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00030">30</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -208,7 +208,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00041">41</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00038">38</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
 </div>
 </div>
@@ -249,9 +249,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1IntraStructureFactorGrid.html#a2d9be674f5d35b81c8a69906adddbc80">McMd::IntraStructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00047">47</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00044">44</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
-<p>References <a class="el" href="DMatrix_8h_source.html#l00166">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00186">fourierModes_</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00647">McMd::Simulation::nAtomType()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00210">nAtomType_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00204">nAtomTypeIdPair_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00201">nWave_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00055">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00080">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00198">speciesId_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00181">structureFactorDelta_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00176">structureFactors_</a>, and <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>.</p>
+<p>References <a class="el" href="DMatrix_8h_source.html#l00166">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00186">fourierModes_</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00647">McMd::Simulation::nAtomType()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00210">nAtomType_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00204">nAtomTypeIdPair_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00201">nWave_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00052">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00077">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00198">speciesId_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00181">structureFactorDelta_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00176">structureFactors_</a>, and <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>.</p>
 
 </div>
 </div>
@@ -282,9 +282,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1IntraStructureFactorGrid.html#a0b47e85dd21d822b885eb205d39e24ea">McMd::IntraStructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00074">74</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00071">71</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00186">fourierModes_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00095">McMd::Analyzer::loadInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00123">McMd::Analyzer::loadOutputFileName()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00647">McMd::Simulation::nAtomType()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00210">nAtomType_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00204">nAtomTypeIdPair_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00207">nSample_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00201">nWave_</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00198">speciesId_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00176">structureFactors_</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00186">fourierModes_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00092">McMd::Analyzer::loadInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00120">McMd::Analyzer::loadOutputFileName()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00647">McMd::Simulation::nAtomType()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00210">nAtomType_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00204">nAtomTypeIdPair_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00207">nSample_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00201">nWave_</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00198">speciesId_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00176">structureFactors_</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -315,7 +315,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1IntraStructureFactorGrid.html#a0943fa7a18aaae5610d9e2030f597b2d">McMd::IntraStructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00107">107</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00104">104</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
 </div>
 </div>
@@ -385,7 +385,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1IntraStructureFactorGrid.html#aa21650519e5c23acc8d1737feefea34a">McMd::IntraStructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00113">113</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00110">110</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
 <p>References <a class="el" href="IntraStructureFactor_8h_source.html#l00204">nAtomTypeIdPair_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00207">nSample_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00201">nWave_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00176">structureFactors_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -418,9 +418,9 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1IntraStructureFactorGrid.html#a6febae55e2255275535a75bbfb29dcf7">McMd::IntraStructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00135">135</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00132">132</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01047">McMd::System::begin()</a>, <a class="el" href="System_8h_source.html#l00964">McMd::System::boundary()</a>, <a class="el" href="Vector_8h_source.html#l00618">Util::Vector::dot()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00186">fourierModes_</a>, <a class="el" href="Constants_8h_source.html#l00040">Util::Constants::Im</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00210">nAtomType_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00204">nAtomTypeIdPair_</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00081">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00207">nSample_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00201">nWave_</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00198">speciesId_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00181">structureFactorDelta_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00176">structureFactors_</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="OrthorhombicBoundary_8h_source.html#l00409">Util::OrthorhombicBoundary::volume()</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01047">McMd::System::begin()</a>, <a class="el" href="System_8h_source.html#l00964">McMd::System::boundary()</a>, <a class="el" href="Vector_8h_source.html#l00618">Util::Vector::dot()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00186">fourierModes_</a>, <a class="el" href="Constants_8h_source.html#l00040">Util::Constants::Im</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00210">nAtomType_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00204">nAtomTypeIdPair_</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00081">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00207">nSample_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00201">nWave_</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00198">speciesId_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00181">structureFactorDelta_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00176">structureFactors_</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="OrthorhombicBoundary_8h_source.html#l00410">Util::OrthorhombicBoundary::volume()</a>.</p>
 
 </div>
 </div>
@@ -444,9 +444,9 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1IntraStructureFactorGrid.html#a6c3a9c735898d18676a1690d24a09e69">McMd::IntraStructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00230">230</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00227">227</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00144">McMd::Analyzer::fileMaster()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00204">nAtomTypeIdPair_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00207">nSample_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00201">nWave_</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00169">outputFile_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00176">structureFactors_</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00122">Util::ParamComposite::writeParam()</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00141">McMd::Analyzer::fileMaster()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00204">nAtomTypeIdPair_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00207">nSample_</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00201">nWave_</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00169">outputFile_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="IntraStructureFactor_8h_source.html#l00176">structureFactors_</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00119">Util::ParamComposite::writeParam()</a>.</p>
 
 </div>
 </div>
@@ -466,7 +466,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8h_source.html#l00169">169</a> of file <a class="el" href="IntraStructureFactor_8h_source.html">IntraStructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00276">McMd::IntraStructureFactorGrid::output()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00230">output()</a>.</p>
+<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00283">McMd::IntraStructureFactorGrid::output()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00227">output()</a>.</p>
 
 </div>
 </div>
@@ -486,7 +486,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8h_source.html#l00176">176</a> of file <a class="el" href="IntraStructureFactor_8h_source.html">IntraStructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00074">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00276">McMd::IntraStructureFactorGrid::output()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00230">output()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00047">readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00135">sample()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00113">setup()</a>.</p>
+<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00071">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00283">McMd::IntraStructureFactorGrid::output()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00227">output()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00044">readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00132">sample()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00110">setup()</a>.</p>
 
 </div>
 </div>
@@ -505,7 +505,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8h_source.html#l00181">181</a> of file <a class="el" href="IntraStructureFactor_8h_source.html">IntraStructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00047">readParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00241">McMd::IntraStructureFactorGrid::sample()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00135">sample()</a>.</p>
+<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00044">readParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00241">McMd::IntraStructureFactorGrid::sample()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00132">sample()</a>.</p>
 
 </div>
 </div>
@@ -525,7 +525,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8h_source.html#l00186">186</a> of file <a class="el" href="IntraStructureFactor_8h_source.html">IntraStructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00074">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00047">readParameters()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00135">sample()</a>.</p>
+<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00071">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00044">readParameters()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00132">sample()</a>.</p>
 
 </div>
 </div>
@@ -544,7 +544,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8h_source.html#l00198">198</a> of file <a class="el" href="IntraStructureFactor_8h_source.html">IntraStructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="IntraStructureFactor_8cpp_source.html#l00074">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00047">readParameters()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00135">sample()</a>.</p>
+<p>Referenced by <a class="el" href="IntraStructureFactor_8cpp_source.html#l00071">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00044">readParameters()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00132">sample()</a>.</p>
 
 </div>
 </div>
@@ -563,7 +563,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8h_source.html#l00201">201</a> of file <a class="el" href="IntraStructureFactor_8h_source.html">IntraStructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00074">loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00230">output()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00047">readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00135">sample()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00113">setup()</a>.</p>
+<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00071">loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00227">output()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00044">readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00132">sample()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00110">setup()</a>.</p>
 
 </div>
 </div>
@@ -582,7 +582,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8h_source.html#l00204">204</a> of file <a class="el" href="IntraStructureFactor_8h_source.html">IntraStructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00074">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00276">McMd::IntraStructureFactorGrid::output()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00230">output()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00047">readParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00241">McMd::IntraStructureFactorGrid::sample()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00135">sample()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00113">setup()</a>.</p>
+<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00071">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00283">McMd::IntraStructureFactorGrid::output()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00227">output()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00044">readParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00241">McMd::IntraStructureFactorGrid::sample()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00132">sample()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00110">setup()</a>.</p>
 
 </div>
 </div>
@@ -601,7 +601,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8h_source.html#l00207">207</a> of file <a class="el" href="IntraStructureFactor_8h_source.html">IntraStructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00074">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00276">McMd::IntraStructureFactorGrid::output()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00230">output()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00135">sample()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00113">setup()</a>.</p>
+<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00071">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00283">McMd::IntraStructureFactorGrid::output()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00227">output()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00132">sample()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00110">setup()</a>.</p>
 
 </div>
 </div>
@@ -620,7 +620,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8h_source.html#l00210">210</a> of file <a class="el" href="IntraStructureFactor_8h_source.html">IntraStructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00074">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00047">readParameters()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00135">sample()</a>.</p>
+<p>Referenced by <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00191">McMd::IntraStructureFactorGrid::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00071">loadParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00044">readParameters()</a>, and <a class="el" href="IntraStructureFactor_8cpp_source.html#l00132">sample()</a>.</p>
 
 </div>
 </div>
@@ -634,7 +634,7 @@ template&lt;class Archive &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:25 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

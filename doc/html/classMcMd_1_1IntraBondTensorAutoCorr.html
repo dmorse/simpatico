@@ -64,7 +64,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">McMd::IntraBondTensorAutoCorr&lt; SystemType &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__Module.html">Analyzers</a></div></div>  </div>
+<div class="title">McMd::IntraBondTensorAutoCorr&lt; SystemType &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__McMd__Module.html">MC/MD Analyzers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="McMd::IntraBondTensorAutoCorr" --><!-- doxytag: inherits="McMd::SystemAnalyzer" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
@@ -74,11 +74,11 @@ class McMd::IntraBondTensorAutoCorr&lt; SystemType &gt;</h3>
 <p>Autocorrelation for bond stress of a molecule. </p>
 <p>The bond orientation tensor for each molecule is defined as a sum </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ S_{ij} = \sum_{a}( u_{ai}u_{aj} - \delta_{ij} ) \]" src="form_78.png"/>
+<img class="formulaDsp" alt="\[ S_{ij} = \sum_{a}( u_{ai}u_{aj} - \delta_{ij} ) \]" src="form_85.png"/>
 </p>
-<p> where <img class="formulaInl" alt="$u_{ai}$" src="form_79.png"/> is the ith Cartesian component (i=0,..,2) of a unit vector <img class="formulaInl" alt="${\bf u}_{a}$" src="form_80.png"/> parallel to bond number a, and the sum is over all bonds in a molecule. This analyzer calculates the quantity: </p>
+<p> where <img class="formulaInl" alt="$u_{ai}$" src="form_86.png"/> is the ith Cartesian component (i=0,..,2) of a unit vector <img class="formulaInl" alt="${\bf u}_{a}$" src="form_87.png"/> parallel to bond number a, and the sum is over all bonds in a molecule. This analyzer calculates the quantity: </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ C(t) = \sum_{i,j=0}^{2} \langle S_{ij}(t)S_{ij}(0) \rangle \]" src="form_81.png"/>
+<img class="formulaDsp" alt="\[ C(t) = \sum_{i,j=0}^{2} \langle S_{ij}(t)S_{ij}(0) \rangle \]" src="form_88.png"/>
 </p>
 <p> for molecules of a specified species. </p>
 
@@ -239,7 +239,7 @@ template&lt;class SystemType &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraBondTensorAutoCorr_8tpp_source.html#l00089">89</a> of file <a class="el" href="IntraBondTensorAutoCorr_8tpp_source.html">IntraBondTensorAutoCorr.tpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00086">McMd::Analyzer::loadParameters()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00083">McMd::Analyzer::loadParameters()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -377,7 +377,7 @@ template&lt;class SystemType &gt; </div>
 
 <p>Definition at line <a class="el" href="IntraBondTensorAutoCorr_8tpp_source.html#l00154">154</a> of file <a class="el" href="IntraBondTensorAutoCorr_8tpp_source.html">IntraBondTensorAutoCorr.tpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00535">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="Tensor_8h_source.html#l00724">Util::Tensor::dyad()</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00081">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Tensor_8h_source.html#l00606">Util::Tensor::trace()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="Vector_8h_source.html#l00714">Util::Vector::versor()</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="Tensor_8h_source.html#l00724">Util::Tensor::dyad()</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00081">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Tensor_8h_source.html#l00606">Util::Tensor::trace()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="Vector_8h_source.html#l00714">Util::Vector::versor()</a>.</p>
 
 </div>
 </div>
@@ -415,7 +415,7 @@ template&lt;class SystemType &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:25 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

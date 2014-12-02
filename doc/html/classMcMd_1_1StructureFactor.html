@@ -66,18 +66,18 @@
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">McMd::StructureFactor Class Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__Module.html">Analyzers</a></div></div>  </div>
+<div class="title">McMd::StructureFactor Class Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__McMd__Module.html">MC/MD Analyzers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="McMd::StructureFactor" --><!-- doxytag: inherits="SystemAnalyzer&lt; System &gt;" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classMcMd_1_1StructureFactor.html" title="StructureFactor evaluates structure factors in Fourier space.">StructureFactor</a> evaluates structure factors in Fourier space. </p>
 <p>A structure factor for a wavevector k and mode m defined as an expectation value </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ S_{m}(k) = < \rho(k) \rho(-k) / V > \]" src="form_96.png"/>
+<img class="formulaDsp" alt="\[ S_{m}(k) = < \rho(k) \rho(-k) / V > \]" src="form_103.png"/>
 </p>
-<p> where, V is system volume, and <img class="formulaInl" alt="$\rho(k)$" src="form_97.png"/> is a Fourier component </p>
+<p> where, V is system volume, and <img class="formulaInl" alt="$\rho(k)$" src="form_104.png"/> is a Fourier component </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]" src="form_98.png"/>
+<img class="formulaDsp" alt="\[ \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]" src="form_105.png"/>
 </p>
 <p> in which the sum is taken over all particles, a is the atom type of particle i, and v(m, a) is a coefficient for atom type a for mode m. The matrix v(m, a) of mode coefficients is input by the user.</p>
 <p>This class can evaluate one or modes for multiple wavevectors. The input format thus requires the user to specify one or more mode vectors, and one or more wavevectors. Each wavevector is specified as an IntVector containing the integer Miller indices of a reciprocal lattice vector. These are the coeficients in an expansion of a reciprocal lattice wavevector as a sum of recprocal lattice basis vectors for the periodic unit cell.</p>
@@ -178,9 +178,9 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00033">33</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00030">30</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -200,7 +200,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00042">42</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00039">39</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
 
 </div>
 </div>
@@ -232,9 +232,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorGrid.html#ab8339136b4fd88fa9c300b9e2562d076">McMd::StructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00048">48</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00045">45</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
 
-<p>References <a class="el" href="DMatrix_8h_source.html#l00166">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00138">fourierModes_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00155">modes_</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00647">McMd::Simulation::nAtomType()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00167">nAtomType_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00161">nMode_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00158">nWave_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00055">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00080">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00131">structureFactors_</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00143">waveIntVectors_</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00148">waveVectors_</a>.</p>
+<p>References <a class="el" href="DMatrix_8h_source.html#l00166">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00138">fourierModes_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00155">modes_</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00647">McMd::Simulation::nAtomType()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00167">nAtomType_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00161">nMode_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00158">nWave_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00052">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00077">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00131">structureFactors_</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00143">waveIntVectors_</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00148">waveVectors_</a>.</p>
 
 </div>
 </div>
@@ -265,7 +265,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorGrid.html#a6c8440a0fa5536ee44d827733901bca5">McMd::StructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00070">70</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00067">67</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
 
 <p>References <a class="el" href="DMatrix_8h_source.html#l00166">Util::DMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00138">fourierModes_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00155">modes_</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00647">McMd::Simulation::nAtomType()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00167">nAtomType_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00161">nMode_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00164">nSample_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00158">nWave_</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00131">structureFactors_</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00143">waveIntVectors_</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00148">waveVectors_</a>.</p>
 
@@ -298,7 +298,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorGrid.html#a85746c9c1c2e26fe98773c8cb000d2b5">McMd::StructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00105">105</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00102">102</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
 
 </div>
 </div>
@@ -368,7 +368,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorGrid.html#a77857471ec438115a7b35ef2a3924652">McMd::StructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00111">111</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00108">108</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
 
 <p>References <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00161">nMode_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00164">nSample_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00158">nWave_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00131">structureFactors_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -401,9 +401,9 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorGrid.html#a47e3571e9033f1d79da4bc23105a1a6b">McMd::StructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">132</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">129</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01047">McMd::System::begin()</a>, <a class="el" href="System_8h_source.html#l00964">McMd::System::boundary()</a>, <a class="el" href="Vector_8h_source.html#l00618">Util::Vector::dot()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00144">McMd::Analyzer::fileMaster()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00138">fourierModes_</a>, <a class="el" href="Constants_8h_source.html#l00040">Util::Constants::Im</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00175">isFirstStep_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00217">makeWaveVectors()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00155">modes_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00161">nMode_</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00081">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00164">nSample_</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00790">McMd::Simulation::nSpecies()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00158">nWave_</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00124">outputFile_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00131">structureFactors_</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00409">Util::OrthorhombicBoundary::volume()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00143">waveIntVectors_</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00148">waveVectors_</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01047">McMd::System::begin()</a>, <a class="el" href="System_8h_source.html#l00964">McMd::System::boundary()</a>, <a class="el" href="Vector_8h_source.html#l00618">Util::Vector::dot()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00141">McMd::Analyzer::fileMaster()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00138">fourierModes_</a>, <a class="el" href="Constants_8h_source.html#l00040">Util::Constants::Im</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00175">isFirstStep_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00221">makeWaveVectors()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00155">modes_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00161">nMode_</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00081">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00164">nSample_</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00787">McMd::Simulation::nSpecies()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00158">nWave_</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00124">outputFile_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00131">structureFactors_</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00410">Util::OrthorhombicBoundary::volume()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00143">waveIntVectors_</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00148">waveVectors_</a>.</p>
 
 </div>
 </div>
@@ -427,9 +427,9 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorGrid.html#a675a0c71820633a4d85ae412c5a1a568">McMd::StructureFactorGrid</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00235">235</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00239">239</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00144">McMd::Analyzer::fileMaster()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00161">nMode_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00164">nSample_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00158">nWave_</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00124">outputFile_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00131">structureFactors_</a>, <a class="el" href="ioUtil_8cpp_source.html#l00055">Util::toString()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00143">waveIntVectors_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00148">waveVectors_</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00122">Util::ParamComposite::writeParam()</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00141">McMd::Analyzer::fileMaster()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00161">nMode_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00164">nSample_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00158">nWave_</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00124">outputFile_</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00131">structureFactors_</a>, <a class="el" href="ioUtil_8cpp_source.html#l00052">Util::toString()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00143">waveIntVectors_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00148">waveVectors_</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00119">Util::ParamComposite::writeParam()</a>.</p>
 
 </div>
 </div>
@@ -449,11 +449,11 @@ template&lt;class Archive &gt; </div>
 
 <p>Update wavevectors. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00217">217</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00221">221</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html">mcMd/analyzers/system/StructureFactor.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l00964">McMd::System::boundary()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00158">nWave_</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00421">Util::OrthorhombicBoundary::reciprocalBasisVector()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00143">waveIntVectors_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00148">waveVectors_</a>, and <a class="el" href="Vector_8h_source.html#l00363">Util::Vector::Zero</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l00964">McMd::System::boundary()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00158">nWave_</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00422">Util::OrthorhombicBoundary::reciprocalBasisVector()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00143">waveIntVectors_</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00148">waveVectors_</a>, and <a class="el" href="Vector_8h_source.html#l00363">Util::Vector::Zero</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">sample()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">sample()</a>.</p>
 
 </div>
 </div>
@@ -473,7 +473,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00124">124</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html">mcMd/analyzers/system/StructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00235">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00335">McMd::StructureFactorGrid::output()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">sample()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00239">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00338">McMd::StructureFactorGrid::output()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">sample()</a>.</p>
 
 </div>
 </div>
@@ -493,7 +493,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00131">131</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html">mcMd/analyzers/system/StructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00238">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00235">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00335">McMd::StructureFactorGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00048">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00039">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00111">setup()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00067">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00235">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00239">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00338">McMd::StructureFactorGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00045">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00108">setup()</a>.</p>
 
 </div>
 </div>
@@ -513,7 +513,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00138">138</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html">mcMd/analyzers/system/StructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00238">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00048">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00039">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00295">McMd::StructureFactorGrid::sample()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00067">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00235">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00045">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00292">McMd::StructureFactorGrid::sample()</a>.</p>
 
 </div>
 </div>
@@ -532,7 +532,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00143">143</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html">mcMd/analyzers/system/StructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00238">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00217">makeWaveVectors()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00235">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00335">McMd::StructureFactorGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00048">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00039">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00295">McMd::StructureFactorGrid::sample()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00067">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00235">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00221">makeWaveVectors()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00239">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00338">McMd::StructureFactorGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00045">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00292">McMd::StructureFactorGrid::sample()</a>.</p>
 
 </div>
 </div>
@@ -551,7 +551,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00148">148</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html">mcMd/analyzers/system/StructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00238">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00217">makeWaveVectors()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00235">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00335">McMd::StructureFactorGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00048">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00039">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00295">McMd::StructureFactorGrid::sample()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00067">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00235">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00221">makeWaveVectors()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00239">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00338">McMd::StructureFactorGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00045">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00292">McMd::StructureFactorGrid::sample()</a>.</p>
 
 </div>
 </div>
@@ -571,7 +571,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00155">155</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html">mcMd/analyzers/system/StructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00238">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00048">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00039">McMd::StructureFactorGrid::readParameters()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">sample()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00067">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00235">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00045">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParameters()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">sample()</a>.</p>
 
 </div>
 </div>
@@ -590,7 +590,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00158">158</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html">mcMd/analyzers/system/StructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00238">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00217">makeWaveVectors()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00235">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00048">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00039">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00111">setup()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00067">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00235">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00221">makeWaveVectors()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00239">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00045">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00108">setup()</a>.</p>
 
 </div>
 </div>
@@ -609,7 +609,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00161">161</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html">mcMd/analyzers/system/StructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00238">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00235">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00335">McMd::StructureFactorGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00048">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00039">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00295">McMd::StructureFactorGrid::sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00111">setup()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00067">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00235">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00239">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00338">McMd::StructureFactorGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00045">readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00292">McMd::StructureFactorGrid::sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00108">setup()</a>.</p>
 
 </div>
 </div>
@@ -628,7 +628,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00164">164</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html">mcMd/analyzers/system/StructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00238">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00235">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00335">McMd::StructureFactorGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00039">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00111">setup()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00067">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00235">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00239">output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00338">McMd::StructureFactorGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00108">setup()</a>.</p>
 
 </div>
 </div>
@@ -647,7 +647,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00167">167</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html">mcMd/analyzers/system/StructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00070">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00238">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00048">readParameters()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00039">McMd::StructureFactorGrid::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00067">loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00235">McMd::StructureFactorGrid::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00045">readParameters()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -666,7 +666,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html#l00175">175</a> of file <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8h_source.html">mcMd/analyzers/system/StructureFactor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00295">McMd::StructureFactorGrid::sample()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">sample()</a>, and <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00292">McMd::StructureFactorGrid::sample()</a>.</p>
 
 </div>
 </div>
@@ -680,7 +680,7 @@ template&lt;class Archive &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:25 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

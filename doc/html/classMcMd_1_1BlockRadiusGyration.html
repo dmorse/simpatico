@@ -64,16 +64,16 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">McMd::BlockRadiusGyration Class Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__Module.html">Analyzers</a></div></div>  </div>
+<div class="title">McMd::BlockRadiusGyration Class Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__McMd__Module.html">MC/MD Analyzers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="McMd::BlockRadiusGyration" --><!-- doxytag: inherits="SystemAnalyzer&lt; System &gt;" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Radius of gyration of different blocks in a molecule. </p>
-<p>The radius of gyration R_{g,i} of a block of atom type i is the root mean-squared separation of atoms in a block from the center of mass of block. For a species of molecule with N_i atoms of type i, with positions <img class="formulaInl" alt="$ R_0, R_1, ...., R_{N_{i}-1} $" src="form_74.png"/>, we define </p>
+<p>The radius of gyration R_{g,i} of a block of atom type i is the root mean-squared separation of atoms in a block from the center of mass of block. For a species of molecule with N_i atoms of type i, with positions <img class="formulaInl" alt="$ R_0, R_1, ...., R_{N_{i}-1} $" src="form_81.png"/>, we define </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ R_{g,i}^2 = \sum_j \langle | R_j - R_{cm,i} |^2 \rangle / N_i \]" src="form_75.png"/>
+<img class="formulaDsp" alt="\[ R_{g,i}^2 = \sum_j \langle | R_j - R_{cm,i} |^2 \rangle / N_i \]" src="form_82.png"/>
 </p>
-<p> where <img class="formulaInl" alt="$ R_{cm,i} = (R_0 + R_1 + ... R_{N_{i}-1})/N_i $" src="form_76.png"/> is the center of mass of block, and where <img class="formulaInl" alt="$ \langle \cdots \rangle $" src="form_77.png"/> denotes an ensemble average over all molecules of a specified species.</p>
+<p> where <img class="formulaInl" alt="$ R_{cm,i} = (R_0 + R_1 + ... R_{N_{i}-1})/N_i $" src="form_83.png"/> is the center of mass of block, and where <img class="formulaInl" alt="$ \langle \cdots \rangle $" src="form_84.png"/> denotes an ensemble average over all molecules of a specified species.</p>
 <p>This class calculates the radius of gyration of blocks by accumulating an average value for the above quantity, and optionally outputs block averages to file at an interval specified by the input parameter nSamplePerBlock. No block averages are output if nSamplePerBlock = 0.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="mcMd_analyzer_BlockRadiusGyration_page.html">parameter file format</a> </dd></dl>
 
@@ -141,9 +141,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00028">28</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
+<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00025">25</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -182,9 +182,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#a47ff063d3049206e3806d50b19e33946">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00047">47</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
+<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00044">44</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00144">McMd::Analyzer::fileMaster()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00647">McMd::Simulation::nAtomType()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00055">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00080">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00796">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00141">McMd::Analyzer::fileMaster()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00647">McMd::Simulation::nAtomType()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00052">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00077">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00793">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -206,7 +206,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#aa5cdc8e0d1f1151ffbc6d7daf71cc245">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00168">168</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
+<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00165">165</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -237,9 +237,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classMcMd_1_1Analyzer.html#a576d9ef1ae896122b249b5ce2058546a">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00180">180</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
+<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00177">177</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00474">McMd::Molecule::atom()</a>, <a class="el" href="System_8h_source.html#l00964">McMd::System::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00535">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="System_8h_source.html#l01037">McMd::System::molecule()</a>, <a class="el" href="System_8h_source.html#l01028">McMd::System::nMolecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00260">McMd::Atom::position()</a>, <a class="el" href="Vector_8h_source.html#l00602">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00658">Util::Vector::subtract()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00256">McMd::Atom::typeId()</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00474">McMd::Molecule::atom()</a>, <a class="el" href="System_8h_source.html#l00964">McMd::System::boundary()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00536">Util::OrthorhombicBoundary::distanceSq()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="System_8h_source.html#l01037">McMd::System::molecule()</a>, <a class="el" href="System_8h_source.html#l01028">McMd::System::nMolecule()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00260">McMd::Atom::position()</a>, <a class="el" href="Vector_8h_source.html#l00602">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00658">Util::Vector::subtract()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00256">McMd::Atom::typeId()</a>.</p>
 
 </div>
 </div>
@@ -261,9 +261,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#ab14b1c3cfe5319b54c16c330e6eb724f">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00265">265</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
+<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00262">262</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00144">McMd::Analyzer::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00122">Util::ParamComposite::writeParam()</a>.</p>
+<p>References <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00141">McMd::Analyzer::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00119">Util::ParamComposite::writeParam()</a>.</p>
 
 </div>
 </div>
@@ -292,7 +292,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#ae90b5ab7326be9d6b32c2e2e4ea468bf">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00162">162</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
+<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00159">159</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
 
 </div>
 </div>
@@ -321,9 +321,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#a57d1bfefb27ec9e3453f4ad331e60c1f">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00101">101</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
+<p>Definition at line <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00098">98</a> of file <a class="el" href="BlockRadiusGyration_8cpp_source.html">BlockRadiusGyration.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00144">McMd::Analyzer::fileMaster()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00796">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00141">McMd::Analyzer::fileMaster()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00793">McMd::Simulation::species()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -374,7 +374,7 @@ template&lt;class Archive &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:24 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

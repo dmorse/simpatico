@@ -64,7 +64,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DdMd::AtomStorage Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Storage__Module.html">Storage</a></div></div>  </div>
+<div class="title">DdMd::AtomStorage Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Storage__Atom__Module.html">Atom Storage</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="DdMd::AtomStorage" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
@@ -100,12 +100,13 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set parameters, allocate memory and initialize.  <a href="#a8fd75f029461aa5e91e67b1d5f7de05d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a1346d57e53e092f414f4f9974364f9a5">readParameters</a> (std::istream &amp;in)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters, allocate memory and initialize.  <a href="#a1346d57e53e092f414f4f9974364f9a5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a60ff8b0893eef3a9d8bb85259bc7fee5">zeroForces</a> (bool zeroGhosts)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all forces to zero.  <a href="#a60ff8b0893eef3a9d8bb85259bc7fee5"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Serialization (Checkpoint \&amp; Restart)</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#aa3376caaa20cf48d639b1b21c248a2f1">loadParameters</a> (<a class="el" href="classUtil_1_1Serializable.html#ac6bcbf9bac926cada5a398804410e891">Serializable::IArchive</a> &amp;ar)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load internal state from an archive.  <a href="#aa3376caaa20cf48d639b1b21c248a2f1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a21c693d1b0dc83e1d5c398083e3726d9">save</a> (<a class="el" href="classUtil_1_1Serializable.html#aca43a1eea5ec5f13189a57892a7a6d04">Serializable::OArchive</a> &amp;ar)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save internal state to an archive.  <a href="#a21c693d1b0dc83e1d5c398083e3726d9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a60ff8b0893eef3a9d8bb85259bc7fee5">zeroForces</a> (bool zeroGhosts)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all forces to zero.  <a href="#a60ff8b0893eef3a9d8bb85259bc7fee5"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Local Atom Management</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#abc22d2eb159d4184464c4d23c3818fa5">newAtomPtr</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer an address available for a new <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>.  <a href="#abc22d2eb159d4184464c4d23c3818fa5"></a><br/></td></tr>
@@ -116,7 +117,11 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a969d44b8c69318ebafef123e893d8910">removeAtom</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> *atomPtr)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a specific <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>.  <a href="#a969d44b8c69318ebafef123e893d8910"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#aab4c1f0936bd4e29999eb8aa2e751c60">clearAtoms</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all local and ghost atoms.  <a href="#aab4c1f0936bd4e29999eb8aa2e751c60"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all local atoms.  <a href="#aab4c1f0936bd4e29999eb8aa2e751c60"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a760d1f96557e337f2dc70cfb9b64f7bf">nAtom</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of local atoms on this procesor (excluding ghosts)  <a href="#a760d1f96557e337f2dc70cfb9b64f7bf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a1999a4188a96a22d903608988eb507d8">atomCapacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity for local atoms on this processor (excluding ghosts).  <a href="#a1999a4188a96a22d903608988eb507d8"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Ghost Atom Management</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a3f8a03c3561b9611b2730394294cd5f1">newGhostPtr</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer an address available for a new ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>.  <a href="#a3f8a03c3561b9611b2730394294cd5f1"></a><br/></td></tr>
@@ -128,21 +133,25 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a specific ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>.  <a href="#a1f5d2bc0ea04f2719d914fec74abe0a9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a011537880a550eba654fb3ce0a21e4b0">clearGhosts</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all ghost atoms.  <a href="#a011537880a550eba654fb3ce0a21e4b0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a7060df18def62c5bd4b80c6ad05780b8">nGhost</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return current number of ghost atoms on this processor.  <a href="#a7060df18def62c5bd4b80c6ad05780b8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#ad4dfb97165e9c4d26b8ac2d97c0e5015">ghostCapacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity for ghost atoms on this processor.  <a href="#ad4dfb97165e9c4d26b8ac2d97c0e5015"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Coordinate Systems</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#ad49d6a8a7025540427a0d57a5a72b2f7">transformCartToGen</a> (const <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;boundary)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform all atomic positions from Cartesian to generalized coordinates.  <a href="#ad49d6a8a7025540427a0d57a5a72b2f7"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform positions from Cartesian to generalized coordinates.  <a href="#ad49d6a8a7025540427a0d57a5a72b2f7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a3b9c4110f28da5f6e2b680e41ddf0e83">transformGenToCart</a> (const <a class="el" href="group__Boundary__Module.html#ga71421cd7b35b357699d30161edb9a53c">Boundary</a> &amp;boundary)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform all atomic positions from generalized to Cartesian coordinates.  <a href="#a3b9c4110f28da5f6e2b680e41ddf0e83"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform positions from generalized to Cartesian coordinates.  <a href="#a3b9c4110f28da5f6e2b680e41ddf0e83"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a1b33504a96024a8ee3a71c01de8658f7">isCartesian</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Are atomic coordinates Cartesian (true) or generalized (false)?  <a href="#a1b33504a96024a8ee3a71c01de8658f7"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Are atom coordinates Cartesian (true) or generalized (false)?  <a href="#a1b33504a96024a8ee3a71c01de8658f7"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Displacement Measurement</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a8bdb321770232e6f4bb1ba7413aa9509">makeSnapshot</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Record current positions of all local atoms and lock storage.  <a href="#a8bdb321770232e6f4bb1ba7413aa9509"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#ac456e424c1c2d2909293d6ffe4658f69">clearSnapshot</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear previous snapshot.  <a href="#ac456e424c1c2d2909293d6ffe4658f69"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a03169962f8e58d36fb5f6b57ea3bae92">maxSqDisplacement</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return max.  <a href="#a03169962f8e58d36fb5f6b57ea3bae92"></a><br/></td></tr>
-<tr><td colspan="2"><div class="groupHeader">Iterator interface</div></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return max-squared displacement since the last snapshot.  <a href="#a03169962f8e58d36fb5f6b57ea3bae92"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Iteration</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5">begin</a> (<a class="el" href="classDdMd_1_1AtomIterator.html">AtomIterator</a> &amp;iterator)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set iterator to beginning of the set of atoms.  <a href="#aea01efeb15782a04a50f395bc2c8bae5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a954c72fafaccf7decf9aaa9f73d6c1a1">begin</a> (<a class="el" href="classDdMd_1_1ConstAtomIterator.html">ConstAtomIterator</a> &amp;iterator) const </td></tr>
@@ -151,29 +160,23 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set iterator to beginning of the set of ghost atoms.  <a href="#a48400f2e2fa33582526a66203fb1a6ad"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a0b50f8991a403e6e53cc85756e96cf4c">begin</a> (<a class="el" href="classDdMd_1_1ConstGhostIterator.html">ConstGhostIterator</a> &amp;iterator) const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set iterator to beginning of the set of ghost atoms.  <a href="#a0b50f8991a403e6e53cc85756e96cf4c"></a><br/></td></tr>
-<tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classDdMd_1_1AtomMap.html">AtomMap</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f">map</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <a class="el" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a> by const reference.  <a href="#a9fd9971d993b73388c50a082532d7d2f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a760d1f96557e337f2dc70cfb9b64f7bf">nAtom</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return current number of atoms (excluding ghosts)  <a href="#a760d1f96557e337f2dc70cfb9b64f7bf"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a7060df18def62c5bd4b80c6ad05780b8">nGhost</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return current number of ghost atoms.  <a href="#a7060df18def62c5bd4b80c6ad05780b8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a1999a4188a96a22d903608988eb507d8">atomCapacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity for atoms (excluding ghosts).  <a href="#a1999a4188a96a22d903608988eb507d8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#ad4dfb97165e9c4d26b8ac2d97c0e5015">ghostCapacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity for ghost atoms.  <a href="#ad4dfb97165e9c4d26b8ac2d97c0e5015"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Global Atom Counting</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#ae6bf645f52df350ffddc0b155384d6bd">totalAtomCapacity</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum number of atoms on all processors.  <a href="#ae6bf645f52df350ffddc0b155384d6bd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#afb0a8ac1fba5fe05c77ada005c873d63">computeNAtomTotal</a> (MPI::Intracomm &amp;communicator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute and store the total number of atoms on all processors.  <a href="#afb0a8ac1fba5fe05c77ada005c873d63"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the total number of local atoms on all processors.  <a href="#afb0a8ac1fba5fe05c77ada005c873d63"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#ae48dda2908e1df9a572e291076bb41db">nAtomTotal</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total number of atoms on all processors.  <a href="#ae48dda2908e1df9a572e291076bb41db"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#af1ae2a15ff1e80d1e34018014cafb38a">unsetNAtomTotal</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unset value of NAtomTotal (mark as unknown).  <a href="#af1ae2a15ff1e80d1e34018014cafb38a"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Accessors for Member Objects</div></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classDdMd_1_1AtomMap.html">AtomMap</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f">map</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the <a class="el" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a> by const reference.  <a href="#a9fd9971d993b73388c50a082532d7d2f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomDistributor.html">AtomDistributor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a94a74bffa901e8925f60cb9c09bdded1">distributor</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomDistributor.html" title="Class for distributing Atoms among processors.">AtomDistributor</a> by reference.  <a href="#a94a74bffa901e8925f60cb9c09bdded1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomCollector.html">AtomCollector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a0a090b2950d581f107ab4045fd44fc6c">collector</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomCollector.html" title="Class for collecting Atoms from processors to master processor.">AtomCollector</a> by reference.  <a href="#a0a090b2950d581f107ab4045fd44fc6c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#ae48dda2908e1df9a572e291076bb41db">nAtomTotal</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total number of atoms on all processors.  <a href="#ae48dda2908e1df9a572e291076bb41db"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Miscellaneous Accessors</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a5008a4c88123a3cbda752913e35ecf8e">isInitialized</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has this object been initialized?  <a href="#a5008a4c88123a3cbda752913e35ecf8e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomStorage.html#a648f8dc58ab38a365bdd82d67180df00">isValid</a> () const </td></tr>
@@ -209,9 +212,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00029">29</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00026">26</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -231,7 +234,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00057">57</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00054">54</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -277,9 +280,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00063">63</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00060">60</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="AtomCollector_8cpp_source.html#l00048">DdMd::AtomCollector::associate()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00058">DdMd::AtomDistributor::associate()</a>.</p>
+<p>References <a class="el" href="AtomCollector_8cpp_source.html#l00045">DdMd::AtomCollector::associate()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00055">DdMd::AtomDistributor::associate()</a>.</p>
 
 </div>
 </div>
@@ -325,9 +328,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00073">73</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00070">70</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00597">atomCapacity()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00600">ghostCapacity()</a>, and <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00603">totalAtomCapacity()</a>.</p>
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00624">atomCapacity()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00627">ghostCapacity()</a>, and <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00630">totalAtomCapacity()</a>.</p>
 
 </div>
 </div>
@@ -363,7 +366,37 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a172a3a656b5829c8d758424ad09a22a6">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00085">85</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00082">82</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a60ff8b0893eef3a9d8bb85259bc7fee5"></a><!-- doxytag: member="DdMd::AtomStorage::zeroForces" ref="a60ff8b0893eef3a9d8bb85259bc7fee5" args="(bool zeroGhosts)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classDdMd_1_1AtomStorage.html#a60ff8b0893eef3a9d8bb85259bc7fee5">DdMd::AtomStorage::zeroForces</a> </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>zeroGhosts</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set all forces to zero. </p>
+<p>Sets forces on all local atoms to zero. Also zeros forces for ghost atoms iff parameter zeroGhosts is true.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">zeroGhosts</td><td>if true, zero forces on ghost atoms. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00150">150</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00610">nAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00613">nGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="AtomArray_8cpp_source.html#l00101">DdMd::AtomArray::zeroForces()</a>.</p>
 
 </div>
 </div>
@@ -392,7 +425,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#adec07dcba0895ba69463147314cde7ce">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00096">96</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00093">93</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -422,37 +455,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a3c430a4e31a9573eadb06ab89d3bf780">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00110">110</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a60ff8b0893eef3a9d8bb85259bc7fee5"></a><!-- doxytag: member="DdMd::AtomStorage::zeroForces" ref="a60ff8b0893eef3a9d8bb85259bc7fee5" args="(bool zeroGhosts)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classDdMd_1_1AtomStorage.html#a60ff8b0893eef3a9d8bb85259bc7fee5">DdMd::AtomStorage::zeroForces</a> </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>zeroGhosts</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set all forces to zero. </p>
-<p>Sets forces on all local atoms to zero. Also zeros forces for ghost atoms iff parameter zeroGhosts is true.</p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">zeroGhosts</td><td>if true, zero forces on ghost atoms. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00153">153</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
-
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00435">begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00583">nAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00586">nGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="AtomArray_8cpp_source.html#l00100">DdMd::AtomArray::zeroForces()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00107">107</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -483,11 +486,11 @@ Public Member Functions</h2></td></tr>
 </pre></div><p> The matching call to <a class="el" href="classDdMd_1_1AtomStorage.html#a942d32521cb743f3b49dfe4f5f505dba" title="Finalize addition of the most recent new atom.">addNewAtom()</a> adds the new atom to the storage and deactivates the internal new atom pointer.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>address for a new atom </dd></dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00190">190</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00187">187</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00059">DdMd::Atom::clear()</a>, <a class="el" href="ArrayStack_8h_source.html#l00196">Util::ArrayStack&lt; Data &gt;::pop()</a>, <a class="el" href="ArrayStack_8h_source.html#l00176">Util::ArrayStack&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00068">DdMd::Atom::clear()</a>, <a class="el" href="ArrayStack_8h_source.html#l00196">Util::ArrayStack&lt; Data &gt;::pop()</a>, <a class="el" href="ArrayStack_8h_source.html#l00176">Util::ArrayStack&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00265">DdMd::AtomDistributor::addAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00232">addAtom()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00460">DdMd::AtomDistributor::receive()</a>.</p>
+<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00262">DdMd::AtomDistributor::addAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00229">addAtom()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00457">DdMd::AtomDistributor::receive()</a>.</p>
 
 </div>
 </div>
@@ -508,11 +511,11 @@ Public Member Functions</h2></td></tr>
 <p>Finalize addition of the most recent new atom. </p>
 <p>This function adds the atom that was returned by the most recent call to newAtomPtr to the atom set. Upon return there is no active new atom pointer. The global atom id must be set before calling this function, by calling <a class="el" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae" title="Set unique global id for this Atom.">Atom::setId(int)</a>, because the algorithm uses the global id returned by <a class="el" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index for this atom.">Atom::id()</a>. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00211">211</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00208">208</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="AtomMap_8cpp_source.html#l00060">DdMd::AtomMap::addLocal()</a>, <a class="el" href="ArraySet_8h_source.html#l00244">Util::ArraySet&lt; Data &gt;::append()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00369">DdMd::Atom::setIsGhost()</a>, <a class="el" href="PArray_8h_source.html#l00137">Util::PArray&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="AtomMap_8cpp_source.html#l00057">DdMd::AtomMap::addLocal()</a>, <a class="el" href="ArraySet_8h_source.html#l00244">Util::ArraySet&lt; Data &gt;::append()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00423">DdMd::Atom::setIsGhost()</a>, <a class="el" href="PArray_8h_source.html#l00137">Util::PArray&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00265">DdMd::AtomDistributor::addAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00232">addAtom()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00460">DdMd::AtomDistributor::receive()</a>.</p>
+<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00262">DdMd::AtomDistributor::addAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00229">addAtom()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00457">DdMd::AtomDistributor::receive()</a>.</p>
 
 </div>
 </div>
@@ -545,9 +548,9 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>address for new atom. </dd></dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00232">232</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00229">229</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00211">addNewAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00190">newAtomPtr()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00481">DdMd::Atom::setId()</a>.</p>
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00208">addNewAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00187">newAtomPtr()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00535">DdMd::Atom::setId()</a>.</p>
 
 </div>
 </div>
@@ -580,9 +583,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00243">243</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00240">240</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ArrayStack_8h_source.html#l00183">Util::ArrayStack&lt; Data &gt;::push()</a>, <a class="el" href="ArraySet_8h_source.html#l00268">Util::ArraySet&lt; Data &gt;::remove()</a>, and <a class="el" href="AtomMap_8cpp_source.html#l00086">DdMd::AtomMap::removeLocal()</a>.</p>
+<p>References <a class="el" href="ArrayStack_8h_source.html#l00183">Util::ArrayStack&lt; Data &gt;::push()</a>, <a class="el" href="ArraySet_8h_source.html#l00268">Util::ArraySet&lt; Data &gt;::remove()</a>, and <a class="el" href="AtomMap_8cpp_source.html#l00083">DdMd::AtomMap::removeLocal()</a>.</p>
 
 </div>
 </div>
@@ -600,11 +603,55 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Clear all local and ghost atoms. </p>
+<p>Clear all local atoms. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00253">253</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00250">250</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="AtomMap_8h_source.html#l00236">DdMd::AtomMap::nLocal()</a>, <a class="el" href="ArraySet_8h_source.html#l00301">Util::ArraySet&lt; Data &gt;::pop()</a>, <a class="el" href="ArrayStack_8h_source.html#l00183">Util::ArrayStack&lt; Data &gt;::push()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00086">DdMd::AtomMap::removeLocal()</a>, <a class="el" href="PArray_8h_source.html#l00137">Util::PArray&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="AtomMap_8h_source.html#l00236">DdMd::AtomMap::nLocal()</a>, <a class="el" href="ArraySet_8h_source.html#l00301">Util::ArraySet&lt; Data &gt;::pop()</a>, <a class="el" href="ArrayStack_8h_source.html#l00183">Util::ArrayStack&lt; Data &gt;::push()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00083">DdMd::AtomMap::removeLocal()</a>, <a class="el" href="PArray_8h_source.html#l00137">Util::PArray&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a760d1f96557e337f2dc70cfb9b64f7bf"></a><!-- doxytag: member="DdMd::AtomStorage::nAtom" ref="a760d1f96557e337f2dc70cfb9b64f7bf" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classDdMd_1_1AtomStorage.html#a760d1f96557e337f2dc70cfb9b64f7bf">DdMd::AtomStorage::nAtom</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return number of local atoms on this procesor (excluding ghosts) </p>
+
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00610">610</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
+
+<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">DdMd::PairPotential::buildCellList()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00509">computeNAtomTotal()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00592">isValid()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00379">DdMd::AtomDistributor::send()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00456">transformCartToGen()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00482">transformGenToCart()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00506">DdMd::AtomDistributor::validate()</a>, and <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00150">zeroForces()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1999a4188a96a22d903608988eb507d8"></a><!-- doxytag: member="DdMd::AtomStorage::atomCapacity" ref="a1999a4188a96a22d903608988eb507d8" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classDdMd_1_1AtomStorage.html#a1999a4188a96a22d903608988eb507d8">DdMd::AtomStorage::atomCapacity</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return capacity for local atoms on this processor (excluding ghosts). </p>
+
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00624">624</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
+
+<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00070">initialize()</a>.</p>
 
 </div>
 </div>
@@ -633,11 +680,11 @@ Public Member Functions</h2></td></tr>
  storage.addNewGhost();
 </pre></div><dl class="return"><dt><b>Returns:</b></dt><dd>address for new ghost atom. </dd></dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00281">281</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00278">278</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00059">DdMd::Atom::clear()</a>, <a class="el" href="ArrayStack_8h_source.html#l00196">Util::ArrayStack&lt; Data &gt;::pop()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00369">DdMd::Atom::setIsGhost()</a>, <a class="el" href="ArrayStack_8h_source.html#l00176">Util::ArrayStack&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8cpp_source.html#l00068">DdMd::Atom::clear()</a>, <a class="el" href="ArrayStack_8h_source.html#l00196">Util::ArrayStack&lt; Data &gt;::pop()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00423">DdMd::Atom::setIsGhost()</a>, <a class="el" href="ArrayStack_8h_source.html#l00176">Util::ArrayStack&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00323">addGhost()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00320">addGhost()</a>.</p>
 
 </div>
 </div>
@@ -658,11 +705,11 @@ Public Member Functions</h2></td></tr>
 <p>Register the most recent new ghost atom. </p>
 <p>This function adds the atom that was returned by the most recent call to newGhostPtr to the ghost atom set. The global atom id must be set before calling this function, by calling <a class="el" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae" title="Set unique global id for this Atom.">Atom::setId(int)</a>, because an data structure uses the global id returned by <a class="el" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index for this atom.">Atom::id()</a>. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00300">300</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00297">297</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="AtomMap_8cpp_source.html#l00123">DdMd::AtomMap::addGhost()</a>, <a class="el" href="ArraySet_8h_source.html#l00244">Util::ArraySet&lt; Data &gt;::append()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00369">DdMd::Atom::setIsGhost()</a>, <a class="el" href="PArray_8h_source.html#l00137">Util::PArray&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="AtomMap_8cpp_source.html#l00120">DdMd::AtomMap::addGhost()</a>, <a class="el" href="ArraySet_8h_source.html#l00244">Util::ArraySet&lt; Data &gt;::append()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00423">DdMd::Atom::setIsGhost()</a>, <a class="el" href="PArray_8h_source.html#l00137">Util::PArray&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00323">addGhost()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00320">addGhost()</a>.</p>
 
 </div>
 </div>
@@ -694,9 +741,9 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>address for new ghost atom. </dd></dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00323">323</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00320">320</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00300">addNewGhost()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00281">newGhostPtr()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00481">DdMd::Atom::setId()</a>.</p>
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00297">addNewGhost()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00278">newGhostPtr()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00535">DdMd::Atom::setId()</a>.</p>
 
 </div>
 </div>
@@ -729,9 +776,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00334">334</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00331">331</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ArrayStack_8h_source.html#l00183">Util::ArrayStack&lt; Data &gt;::push()</a>, <a class="el" href="ArraySet_8h_source.html#l00268">Util::ArraySet&lt; Data &gt;::remove()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00142">DdMd::AtomMap::removeGhost()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ArrayStack_8h_source.html#l00183">Util::ArrayStack&lt; Data &gt;::push()</a>, <a class="el" href="ArraySet_8h_source.html#l00268">Util::ArraySet&lt; Data &gt;::remove()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00139">DdMd::AtomMap::removeGhost()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -751,9 +798,53 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear all ghost atoms. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00347">347</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00344">344</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="AtomMap_8cpp_source.html#l00188">DdMd::AtomMap::clearGhosts()</a>, <a class="el" href="AtomMap_8h_source.html#l00248">DdMd::AtomMap::nGhost()</a>, <a class="el" href="AtomMap_8h_source.html#l00242">DdMd::AtomMap::nGhostDistinct()</a>, <a class="el" href="ArraySet_8h_source.html#l00301">Util::ArraySet&lt; Data &gt;::pop()</a>, <a class="el" href="ArrayStack_8h_source.html#l00183">Util::ArrayStack&lt; Data &gt;::push()</a>, <a class="el" href="PArray_8h_source.html#l00137">Util::PArray&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="AtomMap_8cpp_source.html#l00185">DdMd::AtomMap::clearGhosts()</a>, <a class="el" href="AtomMap_8h_source.html#l00248">DdMd::AtomMap::nGhost()</a>, <a class="el" href="AtomMap_8h_source.html#l00242">DdMd::AtomMap::nGhostDistinct()</a>, <a class="el" href="ArraySet_8h_source.html#l00301">Util::ArraySet&lt; Data &gt;::pop()</a>, <a class="el" href="ArrayStack_8h_source.html#l00183">Util::ArrayStack&lt; Data &gt;::push()</a>, <a class="el" href="PArray_8h_source.html#l00137">Util::PArray&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7060df18def62c5bd4b80c6ad05780b8"></a><!-- doxytag: member="DdMd::AtomStorage::nGhost" ref="a7060df18def62c5bd4b80c6ad05780b8" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classDdMd_1_1AtomStorage.html#a7060df18def62c5bd4b80c6ad05780b8">DdMd::AtomStorage::nGhost</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return current number of ghost atoms on this processor. </p>
+
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00613">613</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
+
+<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">DdMd::PairPotential::buildCellList()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00592">isValid()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00456">transformCartToGen()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00482">transformGenToCart()</a>, and <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00150">zeroForces()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad4dfb97165e9c4d26b8ac2d97c0e5015"></a><!-- doxytag: member="DdMd::AtomStorage::ghostCapacity" ref="ad4dfb97165e9c4d26b8ac2d97c0e5015" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classDdMd_1_1AtomStorage.html#ad4dfb97165e9c4d26b8ac2d97c0e5015">DdMd::AtomStorage::ghostCapacity</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return capacity for ghost atoms on this processor. </p>
+
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00627">627</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
+
+<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00070">initialize()</a>.</p>
 
 </div>
 </div>
@@ -772,8 +863,8 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Transform all atomic positions from Cartesian to generalized coordinates. </p>
-<p>Transforms coordinates of local and ghost atoms.</p>
+<p>Transform positions from Cartesian to generalized coordinates. </p>
+<p>Transforms position coordinates of all local and ghost atoms.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">boundary</td><td>periodic boundary conditions </td></tr>
@@ -781,11 +872,11 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00459">459</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00456">456</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00435">begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00606">isCartesian()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00583">nAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00586">nGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00586">Util::OrthorhombicBoundary::transformCartToGen()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00633">isCartesian()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00610">nAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00613">nGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00587">Util::OrthorhombicBoundary::transformCartToGen()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00047">DdMd::TwoStepIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00044">DdMd::TwoStepIntegrator::run()</a>.</p>
 
 </div>
 </div>
@@ -804,8 +895,8 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Transform all atomic positions from generalized to Cartesian coordinates. </p>
-<p>Transforms coordinates of local and ghost atoms.</p>
+<p>Transform positions from generalized to Cartesian coordinates. </p>
+<p>Transforms position coordinates of all local and ghost atoms.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">boundary</td><td>periodic boundary conditions </td></tr>
@@ -813,11 +904,11 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00485">485</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00482">482</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00435">begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00606">isCartesian()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00583">nAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00586">nGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00598">Util::OrthorhombicBoundary::transformGenToCart()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00633">isCartesian()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00610">nAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00613">nGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00599">Util::OrthorhombicBoundary::transformGenToCart()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00047">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00117">DdMd::Integrator::setupAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00044">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00114">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -835,11 +926,11 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Are atomic coordinates Cartesian (true) or generalized (false)? </p>
+<p>Are atom coordinates Cartesian (true) or generalized (false)? </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00606">606</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00633">633</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
 
-<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00265">DdMd::AtomDistributor::addAtom()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00162">DdMd::PairPotential::buildCellList()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00109">DdMd::Exchanger::exchange()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00379">makeSnapshot()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00406">maxSqDisplacement()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00222">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00459">transformCartToGen()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00485">transformGenToCart()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00821">DdMd::Exchanger::update()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00339">DdMd::LammpsConfigIo::writeConfig()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00068">DdMd::DdMdTrajectoryWriter::writeFrame()</a>.</p>
+<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00262">DdMd::AtomDistributor::addAtom()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00159">DdMd::PairPotential::buildCellList()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00106">DdMd::Exchanger::exchange()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00376">makeSnapshot()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00403">maxSqDisplacement()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00456">transformCartToGen()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00482">transformGenToCart()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00818">DdMd::Exchanger::update()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00336">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00048">DdMd::DdMdTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>.</p>
 
 </div>
 </div>
@@ -860,11 +951,11 @@ Public Member Functions</h2></td></tr>
 <p>Record current positions of all local atoms and lock storage. </p>
 <p>This function stores positions of local atoms and locks the storage, prohibiting addition or removal of atoms or ghosts until clearSnapshot is called. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00379">379</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00376">376</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00435">begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00606">isCartesian()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00633">isCartesian()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00047">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00117">DdMd::Integrator::setupAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00044">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00114">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -885,9 +976,9 @@ Public Member Functions</h2></td></tr>
 <p>Clear previous snapshot. </p>
 <p>This function removes the lock imposed by a previous call to <a class="el" href="classDdMd_1_1AtomStorage.html#a8bdb321770232e6f4bb1ba7413aa9509" title="Record current positions of all local atoms and lock storage.">makeSnapshot()</a>, allowing changes to atom and ghost sets. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00398">398</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00395">395</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00047">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00117">DdMd::Integrator::setupAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00044">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00114">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -905,16 +996,15 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Return max. </p>
-<p>squared displacement on this processor since last snapshot.</p>
+<p>Return max-squared displacement since the last snapshot. </p>
 <p>Note: This is a local operation, and returns only the maximum on this processor.</p>
 <p>Throws exception if no valid snapshot is available. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00406">406</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00403">403</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00435">begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00606">isCartesian()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Vector_8h_source.html#l00602">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00658">Util::Vector::subtract()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">begin()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00633">isCartesian()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Vector_8h_source.html#l00602">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00658">Util::Vector::subtract()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00243">DdMd::Integrator::isExchangeNeeded()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00240">DdMd::Integrator::isExchangeNeeded()</a>.</p>
 
 </div>
 </div>
@@ -941,11 +1031,11 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00435">435</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">432</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
 <p>References <a class="el" href="PArray_8h_source.html#l00146">Util::PArray&lt; Data &gt;::begin()</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00162">DdMd::PairPotential::buildCellList()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00154">DdMd::NvtIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00134">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00105">DdMd::NveIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00147">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00179">DdMd::NvtIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00266">DdMd::NphIntegrator::integrateStep2()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00128">DdMd::NveIntegrator::integrateStep2()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00286">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00595">isValid()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00379">makeSnapshot()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00406">maxSqDisplacement()</a>, <a class="el" href="OrderParamNucleation_8cpp_source.html#l00124">DdMd::OrderParamNucleation::sample()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00100">DdMd::AsymmSF::sample()</a>, <a class="el" href="ddMd_2analyzers_2StructureFactor_8cpp_source.html#l00151">DdMd::StructureFactor::sample()</a>, <a class="el" href="ddMd_2analyzers_2VanHove_8cpp_source.html#l00147">DdMd::VanHove::sample()</a>, <a class="el" href="AtomCollector_8cpp_source.html#l00210">DdMd::AtomCollector::send()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00202">DdMd::ConfigIo::setAtomMasks()</a>, <a class="el" href="AtomCollector_8cpp_source.html#l00073">DdMd::AtomCollector::setup()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00459">transformCartToGen()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00485">transformGenToCart()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00509">DdMd::AtomDistributor::validate()</a>, and <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00153">zeroForces()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">DdMd::PairPotential::buildCellList()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00151">DdMd::NvtIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00131">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00102">DdMd::NveIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00144">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00176">DdMd::NvtIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00263">DdMd::NphIntegrator::integrateStep2()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00125">DdMd::NveIntegrator::integrateStep2()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00283">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00592">isValid()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00376">makeSnapshot()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00403">maxSqDisplacement()</a>, <a class="el" href="OrderParamNucleation_8cpp_source.html#l00121">DdMd::OrderParamNucleation::sample()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00097">DdMd::AsymmSF::sample()</a>, <a class="el" href="ddMd_2analyzers_2StructureFactor_8cpp_source.html#l00148">DdMd::StructureFactor::sample()</a>, <a class="el" href="ddMd_2analyzers_2VanHove_8cpp_source.html#l00144">DdMd::VanHove::sample()</a>, <a class="el" href="AtomCollector_8cpp_source.html#l00207">DdMd::AtomCollector::send()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00199">DdMd::ConfigIo::setAtomMasks()</a>, <a class="el" href="AtomCollector_8cpp_source.html#l00070">DdMd::AtomCollector::setup()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00456">transformCartToGen()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00482">transformGenToCart()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00506">DdMd::AtomDistributor::validate()</a>, and <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00150">zeroForces()</a>.</p>
 
 </div>
 </div>
@@ -972,7 +1062,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00441">441</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00438">438</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
 <p>References <a class="el" href="PArray_8h_source.html#l00146">Util::PArray&lt; Data &gt;::begin()</a>.</p>
 
@@ -1001,7 +1091,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00447">447</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00444">444</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
 <p>References <a class="el" href="PArray_8h_source.html#l00146">Util::PArray&lt; Data &gt;::begin()</a>.</p>
 
@@ -1030,119 +1120,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00453">453</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00450">450</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
 <p>References <a class="el" href="PArray_8h_source.html#l00146">Util::PArray&lt; Data &gt;::begin()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a9fd9971d993b73388c50a082532d7d2f"></a><!-- doxytag: member="DdMd::AtomStorage::map" ref="a9fd9971d993b73388c50a082532d7d2f" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="classDdMd_1_1AtomMap.html">AtomMap</a> &amp; <a class="el" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f">DdMd::AtomStorage::map</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return <a class="el" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a> by const reference. </p>
-
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00609">609</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
-
-<p>Referenced by <a class="el" href="GroupStorage_8tpp_source.html#l00810">DdMd::GroupStorage&lt; N &gt;::findGhosts()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00384">DdMd::GroupStorage&lt; N &gt;::isValid()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00732">DdMd::GroupStorage&lt; N &gt;::markGhosts()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00202">DdMd::ConfigIo::setAtomMasks()</a>, and <a class="el" href="GroupStorage_8tpp_source.html#l00685">DdMd::GroupStorage&lt; N &gt;::unpack()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a760d1f96557e337f2dc70cfb9b64f7bf"></a><!-- doxytag: member="DdMd::AtomStorage::nAtom" ref="a760d1f96557e337f2dc70cfb9b64f7bf" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int <a class="el" href="classDdMd_1_1AtomStorage.html#a760d1f96557e337f2dc70cfb9b64f7bf">DdMd::AtomStorage::nAtom</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return current number of atoms (excluding ghosts) </p>
-
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00583">583</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
-
-<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00162">DdMd::PairPotential::buildCellList()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00512">computeNAtomTotal()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00595">isValid()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00382">DdMd::AtomDistributor::send()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00459">transformCartToGen()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00485">transformGenToCart()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00509">DdMd::AtomDistributor::validate()</a>, and <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00153">zeroForces()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7060df18def62c5bd4b80c6ad05780b8"></a><!-- doxytag: member="DdMd::AtomStorage::nGhost" ref="a7060df18def62c5bd4b80c6ad05780b8" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int <a class="el" href="classDdMd_1_1AtomStorage.html#a7060df18def62c5bd4b80c6ad05780b8">DdMd::AtomStorage::nGhost</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return current number of ghost atoms. </p>
-
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00586">586</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
-
-<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00162">DdMd::PairPotential::buildCellList()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00595">isValid()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00459">transformCartToGen()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00485">transformGenToCart()</a>, and <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00153">zeroForces()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a1999a4188a96a22d903608988eb507d8"></a><!-- doxytag: member="DdMd::AtomStorage::atomCapacity" ref="a1999a4188a96a22d903608988eb507d8" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int <a class="el" href="classDdMd_1_1AtomStorage.html#a1999a4188a96a22d903608988eb507d8">DdMd::AtomStorage::atomCapacity</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return capacity for atoms (excluding ghosts). </p>
-
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00597">597</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
-
-<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00073">initialize()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ad4dfb97165e9c4d26b8ac2d97c0e5015"></a><!-- doxytag: member="DdMd::AtomStorage::ghostCapacity" ref="ad4dfb97165e9c4d26b8ac2d97c0e5015" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int <a class="el" href="classDdMd_1_1AtomStorage.html#ad4dfb97165e9c4d26b8ac2d97c0e5015">DdMd::AtomStorage::ghostCapacity</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return capacity for ghost atoms. </p>
-
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00600">600</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
-
-<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00073">initialize()</a>.</p>
 
 </div>
 </div>
@@ -1161,11 +1141,11 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Return maximum number of atoms on all processors. </p>
-<p><a class="el" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a> ids are labelled from 0, ..., totalAtomCapacity-1 </p>
+<p>The return value is one greater than the maximum allowed atom id value, i.e. atom ids are assigned values in the range 0 &lt;= id &lt;= totalAtomCapacity-1. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00603">603</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00630">630</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00073">initialize()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00384">DdMd::GroupStorage&lt; N &gt;::isValid()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00087">DdMd::SerializeConfigIo::loadConfig()</a>, and <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00109">DdMd::LammpsConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00070">initialize()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00384">DdMd::GroupStorage&lt; N &gt;::isValid()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00084">DdMd::SerializeConfigIo::loadConfig()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00089">DdMd::DdMdConfigIo::readConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00106">DdMd::LammpsConfigIo::readConfig()</a>, and <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00090">DdMd::DdMdOrderedConfigIo::readConfig()</a>.</p>
 
 </div>
 </div>
@@ -1184,21 +1164,45 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Compute and store the total number of atoms on all processors. </p>
-<p>This is an MPI reduce operation. The correct result is stored and returned only on the rank 0 processor. On other processors, the function stores a null value of -1.</p>
+<p>Compute the total number of local atoms on all processors. </p>
+<p>This is an MPI reduce operation, and thus must be called on all processors. The resulting sum is stored only on the master processor, with rank 0. It may be retrieved by a subsequent call to <a class="el" href="classDdMd_1_1AtomStorage.html#ae48dda2908e1df9a572e291076bb41db" title="Get total number of atoms on all processors.">nAtomTotal()</a> on the master (rank 0) processor. A null value is stored on all other processors.</p>
+<p>Upon return, the value is marked as set (i.e., known) on all processors in the communicator. This can be cleared by calling the unSetNAtomTotal() function on all processors.</p>
+<p>If computeNAtomTotal function is called when the value of nAtomTotal is already set (and thus presumably already known), the function will return without doing anything.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">communicator</td><td>MPI communicator for this system. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>on master node, return total number of atoms. </dd></dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00512">512</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00509">509</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00583">nAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00615">nAtomTotal()</a>, and <a class="el" href="Setable_8h_source.html#l00080">Util::Setable&lt; T &gt;::set()</a>.</p>
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00610">nAtom()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00642">nAtomTotal()</a>, and <a class="el" href="Setable_8h_source.html#l00080">Util::Setable&lt; T &gt;::set()</a>.</p>
 
-<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00460">DdMd::AtomDistributor::receive()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00047">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00090">DdMd::OutputTemperature::sample()</a>, <a class="el" href="StressAutoCorrelation_8cpp_source.html#l00117">DdMd::StressAutoCorrelation::sample()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00222">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00382">DdMd::AtomDistributor::send()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00116">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00098">DdMd::NphIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00109">DdMd::NptIntegrator::setup()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00509">DdMd::AtomDistributor::validate()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00339">DdMd::LammpsConfigIo::writeConfig()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00039">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
+<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00457">DdMd::AtomDistributor::receive()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00044">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00101">DdMd::OutputTemperature::sample()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00379">DdMd::AtomDistributor::send()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00113">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00095">DdMd::NphIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00106">DdMd::NptIntegrator::setup()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00506">DdMd::AtomDistributor::validate()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">DdMd::DdMdConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00336">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00035">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae48dda2908e1df9a572e291076bb41db"></a><!-- doxytag: member="DdMd::AtomStorage::nAtomTotal" ref="ae48dda2908e1df9a572e291076bb41db" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classDdMd_1_1AtomStorage.html#ae48dda2908e1df9a572e291076bb41db">DdMd::AtomStorage::nAtomTotal</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get total number of atoms on all processors. </p>
+<p>This function should only be called on the master (rank = 0). The return value is computed by a previous invocation of <a class="el" href="classDdMd_1_1AtomStorage.html#afb0a8ac1fba5fe05c77ada005c873d63" title="Compute the total number of local atoms on all processors.">computeNAtomTotal()</a>, which must be called on all processors. </p>
+
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00642">642</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
+
+<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00509">computeNAtomTotal()</a>, <a class="el" href="Integrator_8cpp_source.html#l00325">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00959">DdMd::Exchanger::outputStatistics()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00101">DdMd::OutputTemperature::sample()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00227">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00379">DdMd::AtomDistributor::send()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00113">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00095">DdMd::NphIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00106">DdMd::NptIntegrator::setup()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00506">DdMd::AtomDistributor::validate()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00336">DdMd::LammpsConfigIo::writeConfig()</a>, <a class="el" href="DdMdOrderedConfigIo_8cpp_source.html#l00284">DdMd::DdMdOrderedConfigIo::writeConfig()</a>, <a class="el" href="ddMd_2analyzers_2LammpsDumpWriter_8cpp_source.html#l00037">DdMd::LammpsDumpWriter::writeFrame()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00035">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
 
 </div>
 </div>
@@ -1217,13 +1221,35 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Unset value of NAtomTotal (mark as unknown). </p>
-<p>Must be called simultaneously on all processors. </p>
+<p>Thus function must be called simultaneously on all processors. It should be called immediately after any operation that changes the number of atoms per processor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00527">527</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00524">524</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
 <p>References <a class="el" href="Setable_8h_source.html#l00089">Util::Setable&lt; T &gt;::unset()</a>.</p>
 
-<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00460">DdMd::AtomDistributor::receive()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00047">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00382">DdMd::AtomDistributor::send()</a>.</p>
+<p>Referenced by <a class="el" href="AtomDistributor_8cpp_source.html#l00457">DdMd::AtomDistributor::receive()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00044">DdMd::TwoStepIntegrator::run()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00379">DdMd::AtomDistributor::send()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9fd9971d993b73388c50a082532d7d2f"></a><!-- doxytag: member="DdMd::AtomStorage::map" ref="a9fd9971d993b73388c50a082532d7d2f" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classDdMd_1_1AtomMap.html">AtomMap</a> &amp; <a class="el" href="classDdMd_1_1AtomStorage.html#a9fd9971d993b73388c50a082532d7d2f">DdMd::AtomStorage::map</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return the <a class="el" href="classDdMd_1_1AtomMap.html" title="Associative container for finding atoms identified by integer id.">AtomMap</a> by const reference. </p>
+
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00636">636</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
+
+<p>Referenced by <a class="el" href="GroupStorage_8tpp_source.html#l00810">DdMd::GroupStorage&lt; N &gt;::findGhosts()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00384">DdMd::GroupStorage&lt; N &gt;::isValid()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00732">DdMd::GroupStorage&lt; N &gt;::markGhosts()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00199">DdMd::ConfigIo::setAtomMasks()</a>, and <a class="el" href="GroupStorage_8tpp_source.html#l00685">DdMd::GroupStorage&lt; N &gt;::unpack()</a>.</p>
 
 </div>
 </div>
@@ -1243,7 +1269,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1AtomDistributor.html" title="Class for distributing Atoms among processors.">AtomDistributor</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00590">590</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00617">617</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
 
 </div>
 </div>
@@ -1263,30 +1289,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1AtomCollector.html" title="Class for collecting Atoms from processors to master processor.">AtomCollector</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00593">593</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ae48dda2908e1df9a572e291076bb41db"></a><!-- doxytag: member="DdMd::AtomStorage::nAtomTotal" ref="ae48dda2908e1df9a572e291076bb41db" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int <a class="el" href="classDdMd_1_1AtomStorage.html#ae48dda2908e1df9a572e291076bb41db">DdMd::AtomStorage::nAtomTotal</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get total number of atoms on all processors. </p>
-<p>This function should only be called on the master node (rank = 0). The return value is computed by a previous call of computeNAtomTotal. </p>
-
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00615">615</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
-
-<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00512">computeNAtomTotal()</a>, <a class="el" href="Integrator_8cpp_source.html#l00328">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00962">DdMd::Exchanger::outputStatistics()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00090">DdMd::OutputTemperature::sample()</a>, <a class="el" href="StressAutoCorrelation_8cpp_source.html#l00117">DdMd::StressAutoCorrelation::sample()</a>, <a class="el" href="SerializeConfigIo_8cpp_source.html#l00222">DdMd::SerializeConfigIo::saveConfig()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00382">DdMd::AtomDistributor::send()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00116">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00098">DdMd::NphIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00109">DdMd::NptIntegrator::setup()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00509">DdMd::AtomDistributor::validate()</a>, <a class="el" href="ddMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00339">DdMd::LammpsConfigIo::writeConfig()</a>, and <a class="el" href="DdMdTrajectoryWriter_8cpp_source.html#l00039">DdMd::DdMdTrajectoryWriter::writeHeader()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00620">620</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html">ddMd/storage/AtomStorage.h</a>.</p>
 
 </div>
 </div>
@@ -1325,11 +1328,11 @@ Public Member Functions</h2></td></tr>
 
 <p>Return true if the container is valid, or throw an Exception. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00595">595</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00592">592</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00435">begin()</a>, <a class="el" href="AtomMap_8h_source.html#l00230">DdMd::AtomMap::find()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00100">Util::ConstPArrayIterator&lt; Data &gt;::get()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00218">DdMd::AtomMap::isValid()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00583">nAtom()</a>, <a class="el" href="AtomMap_8h_source.html#l00248">DdMd::AtomMap::nGhost()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00586">nGhost()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ArrayStack_8h_source.html#l00176">Util::ArrayStack&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00432">begin()</a>, <a class="el" href="AtomMap_8h_source.html#l00230">DdMd::AtomMap::find()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00100">Util::ConstPArrayIterator&lt; Data &gt;::get()</a>, <a class="el" href="AtomMap_8cpp_source.html#l00215">DdMd::AtomMap::isValid()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00610">nAtom()</a>, <a class="el" href="AtomMap_8h_source.html#l00248">DdMd::AtomMap::nGhost()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00613">nGhost()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ArrayStack_8h_source.html#l00176">Util::ArrayStack&lt; Data &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00663">isValid()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00509">DdMd::AtomDistributor::validate()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00660">isValid()</a>, and <a class="el" href="AtomDistributor_8cpp_source.html#l00506">DdMd::AtomDistributor::validate()</a>.</p>
 
 </div>
 </div>
@@ -1352,14 +1355,15 @@ Public Member Functions</h2></td></tr>
 <p>Return true if the internal state is valid, or throw an Exception.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
+    <tr><td class="paramname">communicator</td><td>communicator for all domain processors.</td></tr>
     <tr><td class="paramname">communicator</td><td>domain communicator for all domain processors. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00663">663</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00660">660</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
-<p>References <a class="el" href="Setable_8h_source.html#l00134">Util::Setable&lt; T &gt;::isValid()</a>, and <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00595">isValid()</a>.</p>
+<p>References <a class="el" href="Setable_8h_source.html#l00134">Util::Setable&lt; T &gt;::isValid()</a>, and <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00592">isValid()</a>.</p>
 
 </div>
 </div>
@@ -1381,7 +1385,7 @@ Public Member Functions</h2></td></tr>
 <p>Compute statistics (reduce from all processors). </p>
 <p>Call on all processors. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00535">535</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00532">532</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
 </div>
 </div>
@@ -1401,11 +1405,11 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear statistical accumulators (call on all processors). </p>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00564">564</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00561">561</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
 <p>References <a class="el" href="Setable_8h_source.html#l00089">Util::Setable&lt; T &gt;::unset()</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00538">DdMd::Integrator::clear()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00535">DdMd::Integrator::clear()</a>.</p>
 
 </div>
 </div>
@@ -1433,7 +1437,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00575">575</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00572">572</a> of file <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html">ddMd/storage/AtomStorage.cpp</a>.</p>
 
 <p>References <a class="el" href="Setable_8h_source.html#l00103">Util::Setable&lt; T &gt;::value()</a>.</p>
 
@@ -1487,7 +1491,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:20 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:06 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

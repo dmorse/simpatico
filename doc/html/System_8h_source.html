@@ -63,7 +63,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -117,13 +117,13 @@
 <a name="l00063"></a>00063 <span class="preprocessor"></span><span class="preprocessor">   #ifdef INTER_DIHEDRAL</span>
 <a name="l00064"></a>00064 <span class="preprocessor"></span>   <span class="keyword">class </span><a class="code" href="classMcMd_1_1DihedralPotential.html" title="Interface for a Dihedral Potential.">DihedralPotential</a>;
 <a name="l00065"></a>00065 <span class="preprocessor">   #endif</span>
-<a name="l00066"></a>00066 <span class="preprocessor"></span><span class="preprocessor">   #ifdef MCMD_LINK</span>
-<a name="l00067"></a>00067 <span class="preprocessor"></span>   <span class="keyword">class </span>LinkPotential;
-<a name="l00068"></a>00068    <span class="keyword">class </span><a class="code" href="classMcMd_1_1LinkMaster.html" title="Manages all Link objects in a System.">LinkMaster</a>;
-<a name="l00069"></a>00069 <span class="preprocessor">   #endif // MCMD_LINK</span>
-<a name="l00070"></a>00070 <span class="preprocessor"></span><span class="preprocessor">   #ifdef INTER_EXTERNAL</span>
-<a name="l00071"></a>00071 <span class="preprocessor"></span>   <span class="keyword">class </span><a class="code" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class.">ExternalPotential</a>;
-<a name="l00072"></a>00072 <span class="preprocessor">   #endif</span>
+<a name="l00066"></a>00066 <span class="preprocessor"></span><span class="preprocessor">   #ifdef INTER_EXTERNAL</span>
+<a name="l00067"></a>00067 <span class="preprocessor"></span>   <span class="keyword">class </span><a class="code" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class.">ExternalPotential</a>;
+<a name="l00068"></a>00068 <span class="preprocessor">   #endif</span>
+<a name="l00069"></a>00069 <span class="preprocessor"></span><span class="preprocessor">   #ifdef MCMD_LINK</span>
+<a name="l00070"></a>00070 <span class="preprocessor"></span>   <span class="keyword">class </span>LinkPotential;
+<a name="l00071"></a>00071    <span class="keyword">class </span><a class="code" href="classMcMd_1_1LinkMaster.html" title="Manages all Link objects in a System.">LinkMaster</a>;
+<a name="l00072"></a>00072 <span class="preprocessor">   #endif </span>
 <a name="l00073"></a>00073 <span class="preprocessor"></span><span class="preprocessor">   #ifdef INTER_TETHER</span>
 <a name="l00074"></a>00074 <span class="preprocessor"></span>   <span class="keyword">class </span>TetherFactory;
 <a name="l00075"></a>00075    <span class="keyword">class </span>TetherMaster;
@@ -162,7 +162,7 @@
 <a name="l00142"></a>00142   
 <a name="l00148"></a>00148       <span class="keywordtype">void</span> setSimulation(<a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; simulation);
 <a name="l00149"></a>00149 
-<a name="l00158"></a>00158       <span class="keywordtype">void</span> setFileMaster(<a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; filemaster);
+<a name="l00158"></a>00158       <span class="keywordtype">void</span> setFileMaster(<a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>&amp; filemaster);
 <a name="l00159"></a>00159 
 <a name="l00169"></a>00169       <span class="keyword">virtual</span> <span class="keywordtype">void</span> readParameters(std::istream&amp; in);
 <a name="l00170"></a>00170  
@@ -250,20 +250,20 @@
 <a name="l00438"></a>00438       std::string dihedralStyle() <span class="keyword">const</span>;
 <a name="l00439"></a>00439 <span class="preprocessor">      #endif</span>
 <a name="l00440"></a>00440 <span class="preprocessor"></span>
-<a name="l00441"></a>00441 <span class="preprocessor">      #ifdef MCMD_LINK</span>
+<a name="l00441"></a>00441 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
 <a name="l00442"></a>00442 <span class="preprocessor"></span>
-<a name="l00445"></a>00445       <a class="code" href="classUtil_1_1Factory.html">Factory&lt;BondPotential&gt;</a>&amp; linkFactory();
+<a name="l00445"></a>00445       <a class="code" href="classUtil_1_1Factory.html">Factory&lt;ExternalPotential&gt;</a>&amp; externalFactory();
 <a name="l00446"></a>00446 
-<a name="l00450"></a>00450       std::string linkStyle() <span class="keyword">const</span>;
-<a name="l00451"></a>00451 
-<a name="l00455"></a>00455       <a class="code" href="classMcMd_1_1LinkMaster.html" title="Manages all Link objects in a System.">LinkMaster</a>&amp; linkMaster() <span class="keyword">const</span>;
-<a name="l00456"></a>00456 <span class="preprocessor">      #endif</span>
-<a name="l00457"></a>00457 <span class="preprocessor"></span>
-<a name="l00458"></a>00458 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
-<a name="l00459"></a>00459 <span class="preprocessor"></span>
-<a name="l00462"></a>00462       <a class="code" href="classUtil_1_1Factory.html">Factory&lt;ExternalPotential&gt;</a>&amp; externalFactory();
+<a name="l00450"></a>00450       std::string externalStyle() <span class="keyword">const</span>;
+<a name="l00451"></a>00451 <span class="preprocessor">      #endif</span>
+<a name="l00452"></a>00452 <span class="preprocessor"></span>
+<a name="l00453"></a>00453 <span class="preprocessor">      #ifdef MCMD_LINK</span>
+<a name="l00454"></a>00454 <span class="preprocessor"></span>
+<a name="l00457"></a>00457       <a class="code" href="classUtil_1_1Factory.html">Factory&lt;BondPotential&gt;</a>&amp; linkFactory();
+<a name="l00458"></a>00458 
+<a name="l00462"></a>00462       std::string linkStyle() <span class="keyword">const</span>;
 <a name="l00463"></a>00463 
-<a name="l00467"></a>00467       std::string externalStyle() <span class="keyword">const</span>;
+<a name="l00467"></a>00467       <a class="code" href="classMcMd_1_1LinkMaster.html" title="Manages all Link objects in a System.">LinkMaster</a>&amp; linkMaster() <span class="keyword">const</span>;
 <a name="l00468"></a>00468 <span class="preprocessor">      #endif</span>
 <a name="l00469"></a>00469 <span class="preprocessor"></span>
 <a name="l00470"></a>00470 <span class="preprocessor">      #ifdef INTER_TETHER</span>
@@ -310,7 +310,7 @@
 <a name="l00553"></a>00553 
 <a name="l00557"></a>00557       <a class="code" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size.">BoundaryEnsemble</a>&amp; boundaryEnsemble() <span class="keyword">const</span>;
 <a name="l00558"></a>00558 
-<a name="l00562"></a>00562       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; fileMaster() <span class="keyword">const</span>;
+<a name="l00562"></a>00562       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>&amp; fileMaster() <span class="keyword">const</span>;
 <a name="l00563"></a>00563 
 <a name="l00567"></a>00567       <span class="keywordtype">bool</span> isCopy() <span class="keyword">const</span>;
 <a name="l00568"></a>00568 
@@ -375,7 +375,7 @@
 <a name="l00746"></a>00746       <span class="keywordtype">void</span> loadLinkMaster(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a>&amp; ar);
 <a name="l00747"></a>00747 
 <a name="l00753"></a>00753       <span class="keywordtype">void</span> saveLinkMaster(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a>&amp; ar);
-<a name="l00754"></a>00754 <span class="preprocessor">      #endif // MCMD_LINK</span>
+<a name="l00754"></a>00754 <span class="preprocessor">      #endif </span>
 <a name="l00755"></a>00755 <span class="preprocessor"></span>
 <a name="l00756"></a>00756 <span class="preprocessor">      #ifdef INTER_TETHER</span>
 <a name="l00757"></a>00757 <span class="preprocessor"></span>
@@ -425,16 +425,16 @@
 <a name="l00826"></a>00826       <a class="code" href="classUtil_1_1Factory.html">Factory&lt;DihedralPotential&gt;</a>* dihedralFactoryPtr_;
 <a name="l00827"></a>00827 <span class="preprocessor">      #endif</span>
 <a name="l00828"></a>00828 <span class="preprocessor"></span>  
-<a name="l00829"></a>00829 <span class="preprocessor">      #ifdef MCMD_LINK</span>
+<a name="l00829"></a>00829 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
 <a name="l00830"></a>00830 <span class="preprocessor"></span>
-<a name="l00831"></a>00831       <a class="code" href="classUtil_1_1Factory.html">Factory&lt;BondPotential&gt;</a>* linkFactoryPtr_;
+<a name="l00831"></a>00831       <a class="code" href="classUtil_1_1Factory.html">Factory&lt;ExternalPotential&gt;</a>* externalFactoryPtr_;
 <a name="l00832"></a>00832 <span class="preprocessor">      #endif</span>
-<a name="l00833"></a>00833 <span class="preprocessor"></span>   
-<a name="l00834"></a>00834 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
+<a name="l00833"></a>00833 <span class="preprocessor"></span>  
+<a name="l00834"></a>00834 <span class="preprocessor">      #ifdef MCMD_LINK</span>
 <a name="l00835"></a>00835 <span class="preprocessor"></span>
-<a name="l00836"></a>00836       <a class="code" href="classUtil_1_1Factory.html">Factory&lt;ExternalPotential&gt;</a>* externalFactoryPtr_;
+<a name="l00836"></a>00836       <a class="code" href="classUtil_1_1Factory.html">Factory&lt;BondPotential&gt;</a>* linkFactoryPtr_;
 <a name="l00837"></a>00837 <span class="preprocessor">      #endif</span>
-<a name="l00838"></a>00838 <span class="preprocessor"></span>  
+<a name="l00838"></a>00838 <span class="preprocessor"></span>   
 <a name="l00839"></a>00839 <span class="preprocessor">      #ifdef INTER_TETHER</span>
 <a name="l00840"></a>00840 <span class="preprocessor"></span>
 <a name="l00841"></a>00841       TetherFactory* tetherFactoryPtr_;
@@ -446,7 +446,7 @@
 <a name="l00849"></a>00849    
 <a name="l00851"></a>00851       <a class="code" href="classUtil_1_1Factory.html">Factory&lt;TrajectoryIo&gt;</a>* trajectoryIoFactoryPtr_;
 <a name="l00852"></a>00852 
-<a name="l00854"></a>00854       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>* fileMasterPtr_;
+<a name="l00854"></a>00854       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>* fileMasterPtr_;
 <a name="l00855"></a>00855    
 <a name="l00856"></a>00856 <span class="preprocessor">      #ifdef MCMD_PERTURB</span>
 <a name="l00857"></a>00857 <span class="preprocessor"></span>
@@ -479,14 +479,14 @@
 <a name="l00887"></a>00887       std::string dihedralStyle_;
 <a name="l00888"></a>00888 <span class="preprocessor">      #endif</span>
 <a name="l00889"></a>00889 <span class="preprocessor"></span>
-<a name="l00890"></a>00890 <span class="preprocessor">      #ifdef MCMD_LINK</span>
+<a name="l00890"></a>00890 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
 <a name="l00891"></a>00891 <span class="preprocessor"></span>
-<a name="l00892"></a>00892       std::string linkStyle_;
+<a name="l00892"></a>00892       std::string externalStyle_;
 <a name="l00893"></a>00893 <span class="preprocessor">      #endif</span>
 <a name="l00894"></a>00894 <span class="preprocessor"></span>
-<a name="l00895"></a>00895 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
+<a name="l00895"></a>00895 <span class="preprocessor">      #ifdef MCMD_LINK</span>
 <a name="l00896"></a>00896 <span class="preprocessor"></span>
-<a name="l00897"></a>00897       std::string externalStyle_;
+<a name="l00897"></a>00897       std::string linkStyle_;
 <a name="l00898"></a>00898 <span class="preprocessor">      #endif</span>
 <a name="l00899"></a>00899 <span class="preprocessor"></span>
 <a name="l00900"></a>00900 <span class="preprocessor">      #ifdef INTER_TETHER</span>
@@ -595,7 +595,7 @@
 <a name="l01010"></a>01010    <span class="comment">/* </span>
 <a name="l01011"></a>01011 <span class="comment">   * Get the FileMaster by reference.</span>
 <a name="l01012"></a>01012 <span class="comment">   */</span>
-<a name="l01013"></a><a class="code" href="classMcMd_1_1System.html#ae958567eddcdfb523d7af85f5bdc5cfe">01013</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; <a class="code" href="classMcMd_1_1System.html#ae958567eddcdfb523d7af85f5bdc5cfe" title="Get the associated FileMaster by reference.">System::fileMaster</a>()<span class="keyword"> const</span>
+<a name="l01013"></a><a class="code" href="classMcMd_1_1System.html#ae958567eddcdfb523d7af85f5bdc5cfe">01013</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>&amp; <a class="code" href="classMcMd_1_1System.html#ae958567eddcdfb523d7af85f5bdc5cfe" title="Get the associated FileMaster by reference.">System::fileMaster</a>()<span class="keyword"> const</span>
 <a name="l01014"></a>01014 <span class="keyword">   </span>{ 
 <a name="l01015"></a>01015       assert(fileMasterPtr_);
 <a name="l01016"></a>01016       <span class="keywordflow">return</span> *fileMasterPtr_; 
@@ -718,7 +718,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:16 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:01 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

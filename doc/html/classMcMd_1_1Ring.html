@@ -71,7 +71,7 @@
 <!-- doxytag: class="McMd::Ring" --><!-- doxytag: inherits="McMd::Species" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> of ring polymers (abstract). </p>
 <p>A <a class="el" href="classMcMd_1_1Ring.html" title="A Species of ring polymers (abstract).">Ring</a> molecule is a loop of nMolParticle atoms with consecutive atom indices, with nMolParticle bonds between neighboring atoms.</p>
-<p>A <a class="el" href="classMcMd_1_1Ring.html" title="A Species of ring polymers (abstract).">Ring</a> molecule may be chemically heterogeneous - different atoms and bonds in a loop may be of different types. The chemical structure of a subclass of <a class="el" href="classMcMd_1_1Ring.html" title="A Species of ring polymers (abstract).">Ring</a> must be specified by implementing the pure virtual functions <a class="el" href="classMcMd_1_1Species.html#aa25843142bad3e2505466c79ca23df7f" title="Get atom type index for a specific atom, by local atom index.">atomTypeId()</a> and bondTypeId(). </p>
+<p>A <a class="el" href="classMcMd_1_1Ring.html" title="A Species of ring polymers (abstract).">Ring</a> molecule may be chemically heterogeneous - different atoms and bonds in a loop may be of different types. The chemical structure of a subclass of <a class="el" href="classMcMd_1_1Ring.html" title="A Species of ring polymers (abstract).">Ring</a> must be specified by implementing the pure virtual functions <a class="el" href="classMcMd_1_1Species.html#ae683c578e5fe047d6c229004aca1b977" title="Get atom type index for a specific atom, by local atom index.">atomTypeId()</a> and bondTypeId(). </p>
 
 <p>Definition at line <a class="el" href="Ring_8h_source.html#l00031">31</a> of file <a class="el" href="Ring_8h_source.html">Ring.h</a>.</p>
 </div>
@@ -129,7 +129,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="Ring_8cpp_source.html#l00021">21</a> of file <a class="el" href="Ring_8cpp_source.html">Ring.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Ring_8cpp_source.html#l00018">18</a> of file <a class="el" href="Ring_8cpp_source.html">Ring.cpp</a>.</p>
 
 </div>
 </div>
@@ -180,7 +180,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classMcMd_1_1HomoRing.html#a593475d8ac9c51e8ef8ab0ca85f53d10">McMd::HomoRing</a>.</p>
 
-<p>Referenced by <a class="el" href="Ring_8cpp_source.html#l00028">buildRing()</a>.</p>
+<p>Referenced by <a class="el" href="Ring_8cpp_source.html#l00025">buildRing()</a>.</p>
 
 </div>
 </div>
@@ -200,7 +200,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Return the bond type id for a specific bond. </p>
-<p>Bond i of a ring molecule connects atom i and atom i+1.</p>
+<p><a class="el" href="classBond.html">Bond</a> i of a ring molecule connects atom i and atom i+1.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>bond index, in the range 0, ... , nBond_-1 </td></tr>
@@ -211,7 +211,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classMcMd_1_1HomoRing.html#a1638060a79c270c23601caa531d79a80">McMd::HomoRing</a>.</p>
 
-<p>Referenced by <a class="el" href="Ring_8cpp_source.html#l00028">buildRing()</a>.</p>
+<p>Referenced by <a class="el" href="Ring_8cpp_source.html#l00025">buildRing()</a>.</p>
 
 </div>
 </div>
@@ -242,7 +242,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classMcMd_1_1HomoRing.html#ad32e32d89af8904be748dd5b22148e4e">McMd::HomoRing</a>.</p>
 
-<p>Referenced by <a class="el" href="Ring_8cpp_source.html#l00028">buildRing()</a>.</p>
+<p>Referenced by <a class="el" href="Ring_8cpp_source.html#l00025">buildRing()</a>.</p>
 
 </div>
 </div>
@@ -273,7 +273,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Implemented in <a class="el" href="classMcMd_1_1HomoRing.html#af533a44a04719f86793c2777aecac929">McMd::HomoRing</a>.</p>
 
-<p>Referenced by <a class="el" href="Ring_8cpp_source.html#l00028">buildRing()</a>.</p>
+<p>Referenced by <a class="el" href="Ring_8cpp_source.html#l00025">buildRing()</a>.</p>
 
 </div>
 </div>
@@ -292,13 +292,13 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Build the chemical structure for a ring molecule. </p>
-<p>This method must be called by <a class="el" href="classMcMd_1_1Species.html#ae0689a4a0707f09bde431b4c8cb26369" title="Define chemical structure for this Species.">readSpeciesParam()</a> after values are set for nAtom and nBond. It allocates memory, assigns atom types to all the atoms in a generic molecule, and creates SpeciesGroup&lt;2&gt; objects for all of the bonds. </p>
+<p>This method must be called by <a class="el" href="classMcMd_1_1Species.html#add5ea1ac538a15e8679675a33e9884e0" title="Define chemical structure for this Species.">readSpeciesParam()</a> after values are set for nAtom and nBond. It allocates memory, assigns atom types to all the atoms in a generic molecule, and creates SpeciesGroup&lt;2&gt; objects for all of the bonds. </p>
 
-<p>Definition at line <a class="el" href="Ring_8cpp_source.html#l00028">28</a> of file <a class="el" href="Ring_8cpp_source.html">Ring.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Ring_8cpp_source.html#l00025">25</a> of file <a class="el" href="Ring_8cpp_source.html">Ring.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2species_2Species_8cpp_source.html#l00346">McMd::Species::allocate()</a>, <a class="el" href="classMcMd_1_1Ring.html#ac686b189e2ce6793105a8529ceac7c8c">calculateAngleTypeId()</a>, <a class="el" href="classMcMd_1_1Ring.html#af57802278fe3ff7c1b11659194877868">calculateAtomTypeId()</a>, <a class="el" href="classMcMd_1_1Ring.html#ac95b60d856eb587e32728ab6b57d0d16">calculateBondTypeId()</a>, <a class="el" href="classMcMd_1_1Ring.html#a8092a80203f09941756ee7687455dd51">calculateDihedralTypeId()</a>, <a class="el" href="mcMd_2species_2Species_8cpp_source.html#l00412">McMd::Species::makeAngle()</a>, <a class="el" href="mcMd_2species_2Species_8cpp_source.html#l00387">McMd::Species::makeBond()</a>, <a class="el" href="mcMd_2species_2Species_8cpp_source.html#l00442">McMd::Species::makeDihedral()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00608">McMd::Species::nAngle()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00601">McMd::Species::nBond()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00616">McMd::Species::nDihedral()</a>, <a class="el" href="mcMd_2species_2Species_8cpp_source.html#l00379">McMd::Species::setAtomType()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="mcMd_2species_2Species_8cpp_source.html#l00343">McMd::Species::allocate()</a>, <a class="el" href="classMcMd_1_1Ring.html#ac686b189e2ce6793105a8529ceac7c8c">calculateAngleTypeId()</a>, <a class="el" href="classMcMd_1_1Ring.html#af57802278fe3ff7c1b11659194877868">calculateAtomTypeId()</a>, <a class="el" href="classMcMd_1_1Ring.html#ac95b60d856eb587e32728ab6b57d0d16">calculateBondTypeId()</a>, <a class="el" href="classMcMd_1_1Ring.html#a8092a80203f09941756ee7687455dd51">calculateDihedralTypeId()</a>, <a class="el" href="mcMd_2species_2Species_8cpp_source.html#l00409">McMd::Species::makeAngle()</a>, <a class="el" href="mcMd_2species_2Species_8cpp_source.html#l00384">McMd::Species::makeBond()</a>, <a class="el" href="mcMd_2species_2Species_8cpp_source.html#l00439">McMd::Species::makeDihedral()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00608">McMd::Species::nAngle()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00601">McMd::Species::nBond()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00616">McMd::Species::nDihedral()</a>, <a class="el" href="mcMd_2species_2Species_8cpp_source.html#l00376">McMd::Species::setAtomType()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="HomoRing_8cpp_source.html#l00046">McMd::HomoRing::loadSpeciesParam()</a>, and <a class="el" href="HomoRing_8cpp_source.html#l00029">McMd::HomoRing::readSpeciesParam()</a>.</p>
+<p>Referenced by <a class="el" href="HomoRing_8cpp_source.html#l00043">McMd::HomoRing::loadSpeciesParam()</a>, and <a class="el" href="HomoRing_8cpp_source.html#l00026">McMd::HomoRing::readSpeciesParam()</a>.</p>
 
 </div>
 </div>
@@ -312,7 +312,7 @@ Protected Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:15 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

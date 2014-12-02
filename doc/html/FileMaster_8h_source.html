@@ -63,142 +63,176 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
 <a name="l00011"></a>00011 <span class="preprocessor">#include &lt;util/param/ParamComposite.h&gt;</span>      <span class="comment">// base class</span>
 <a name="l00012"></a>00012 
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;fstream&gt;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00015"></a>00015 
-<a name="l00016"></a>00016 <span class="keyword">namespace </span>Util
-<a name="l00017"></a>00017 {
-<a name="l00018"></a>00018 
-<a name="l00095"></a><a class="code" href="classUtil_1_1FileMaster.html">00095</a>    <span class="keyword">class </span><a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> : <span class="keyword">public</span> <a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>
-<a name="l00096"></a>00096    {
-<a name="l00097"></a>00097    
-<a name="l00098"></a>00098    <span class="keyword">public</span>:
-<a name="l00099"></a>00099 
-<a name="l00103"></a>00103       <a class="code" href="classUtil_1_1FileMaster.html#a3a2076a0a99e8bf9771da07adddab445" title="Constructor.">FileMaster</a>();
-<a name="l00104"></a>00104  
-<a name="l00110"></a>00110       <a class="code" href="classUtil_1_1FileMaster.html#a3a2076a0a99e8bf9771da07adddab445" title="Constructor.">FileMaster</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; copy);
-<a name="l00111"></a>00111  
-<a name="l00115"></a>00115       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1FileMaster.html#ac6cfc4669da3c02c2817813e9b281bfb" title="Destructor.">~FileMaster</a>();
-<a name="l00116"></a>00116 
-<a name="l00122"></a>00122       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#ad3c7e95b9853b10bde9bcaf4c1cae60c" title="Set the path from current directory to root data directory.">setRootPrefix</a>(<span class="keyword">const</span> std::string&amp; rootPrefix);
-<a name="l00123"></a>00123 
-<a name="l00135"></a>00135       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#ae295d9dc32e5ee3b4ac2b4b2a8f185f1" title="Set an integer directory identifier for this processor.">setDirectoryId</a>(<span class="keywordtype">int</span> directoryId);
-<a name="l00136"></a>00136 
-<a name="l00140"></a>00140       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#a594f0358a7262624aa2b3e0009cf075d" title="Set paramFile() to return std::cin even if a directory id is set.">setParamFileStdIn</a>();
-<a name="l00141"></a>00141 
-<a name="l00147"></a>00147       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#aea52ab3720c8bb6696252ca4e4f190dd" title="Set the input file prefix string.">setInputPrefix</a>(<span class="keyword">const</span> std::string&amp; inputPrefix);
-<a name="l00148"></a>00148  
-<a name="l00154"></a>00154       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#ad6fec8651e4f00d135e3572021ed3b7c" title="Set the output file prefix string.">setOutputPrefix</a>(<span class="keyword">const</span> std::string&amp; outputPrefix);
-<a name="l00155"></a>00155  
-<a name="l00161"></a>00161       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#ade669815f45d05b720302848be13a316" title="Set the command file name.">setCommandFileName</a>(<span class="keyword">const</span> std::string&amp; <a class="code" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd" title="Return the command file name.">commandFileName</a>);
-<a name="l00162"></a>00162  
-<a name="l00170"></a>00170       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#a7feb4503d8a177959fb2e9625d74de7e" title="Read parameter file.">readParameters</a>(std::istream&amp; in);
-<a name="l00171"></a>00171 
-<a name="l00177"></a>00177       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#adbbb16a44ffcad1347d963d2539fea49" title="Load internal state from file.">loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar);
-<a name="l00178"></a>00178    
-<a name="l00184"></a>00184       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#a242dce8b12bc4a5d8539308f2a702500" title="Save internal state to file.">save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar);
-<a name="l00185"></a>00185    
-<a name="l00196"></a>00196       std::istream&amp; <a class="code" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile</a>();
-<a name="l00197"></a>00197 
-<a name="l00213"></a>00213       std::istream&amp; <a class="code" href="classUtil_1_1FileMaster.html#a4dfc5422ef408b9ea55f011dd298a9d2" title="Get the command input stream by reference.">commandFile</a>();
-<a name="l00214"></a>00214 
-<a name="l00224"></a>00224       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#aa218273d5d1a5265f4c1aebe02d51a80" title="Open an input file.">openInputFile</a>(<span class="keyword">const</span> std::string&amp; filename, std::ifstream&amp; in) <span class="keyword">const</span>;
-<a name="l00225"></a>00225 
-<a name="l00236"></a>00236       <span class="keywordtype">void</span> 
-<a name="l00237"></a>00237       <a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<span class="keyword">const</span> std::string&amp; filename, std::ofstream&amp; out, <span class="keywordtype">bool</span> append = <span class="keyword">false</span>) <span class="keyword">const</span>;
-<a name="l00238"></a>00238 
-<a name="l00252"></a>00252       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#a357bb5ceca3c21b8aa2f2b5c6d5d084d" title="Open an input restart parameter file for reading.">openParamIFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext,
-<a name="l00253"></a>00253                           std::ifstream&amp; in) <span class="keyword">const</span>;
-<a name="l00254"></a>00254 
-<a name="l00268"></a>00268       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#a9af467e63d132369ea0a619de0a57b9b" title="Open an output restart parameter file for writing.">openParamOFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext,
-<a name="l00269"></a>00269                           std::ofstream&amp; out) <span class="keyword">const</span>;
-<a name="l00270"></a>00270 
-<a name="l00281"></a>00281       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#aa1bb209ebb20c68bdae61586827071aa" title="Open an input restart dump file for reading.">openRestartIFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext,
-<a name="l00282"></a>00282                             std::ifstream&amp; in) <span class="keyword">const</span>;
-<a name="l00283"></a>00283 
-<a name="l00294"></a>00294       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#a0ecf1c01bd6f17893cd387376c3a7aab" title="Open an output restart dump file for writing.">openRestartOFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext, 
-<a name="l00295"></a>00295                             std::ofstream&amp; out) <span class="keyword">const</span>;
-<a name="l00296"></a>00296 
-<a name="l00303"></a>00303       std::string <a class="code" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd" title="Return the command file name.">commandFileName</a>() <span class="keyword">const</span>;
-<a name="l00304"></a>00304 
-<a name="l00308"></a>00308       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1FileMaster.html#a84ab233fc21699a2e4796b48d2208371" title="Is paramFile() set to return std::cin ?">isParamFileStdIn</a>() <span class="keyword">const</span>;
-<a name="l00309"></a>00309 
-<a name="l00310"></a>00310    <span class="keyword">private</span>:
-<a name="l00311"></a>00311 
-<a name="l00312"></a>00312       <span class="comment">/*</span>
-<a name="l00313"></a>00313 <span class="comment">      * Name of the command file.</span>
-<a name="l00314"></a>00314 <span class="comment">      */</span>
-<a name="l00315"></a>00315       std::string  commandFileName_;
-<a name="l00316"></a>00316 
-<a name="l00317"></a>00317       <span class="comment">/*</span>
-<a name="l00318"></a>00318 <span class="comment">      * Prefix added to input file names.</span>
-<a name="l00319"></a>00319 <span class="comment">      *</span>
-<a name="l00320"></a>00320 <span class="comment">      * If this is a file path, with a trailing directory separator,</span>
-<a name="l00321"></a>00321 <span class="comment">      * all input files will be sought in this directory.</span>
-<a name="l00322"></a>00322 <span class="comment">      */</span>
-<a name="l00323"></a>00323       std::string    inputPrefix_;
-<a name="l00324"></a>00324 
-<a name="l00325"></a>00325       <span class="comment">/*</span>
-<a name="l00326"></a>00326 <span class="comment">      * Prefix added to output file names.</span>
-<a name="l00327"></a>00327 <span class="comment">      *</span>
-<a name="l00328"></a>00328 <span class="comment">      * If this is a file path, with a trailing directory separation, all </span>
-<a name="l00329"></a>00329 <span class="comment">      * output files will be written to this directory.</span>
-<a name="l00330"></a>00330 <span class="comment">      */</span>
-<a name="l00331"></a>00331       std::string    outputPrefix_;
-<a name="l00332"></a>00332 
-<a name="l00333"></a>00333       <span class="comment">/*</span>
-<a name="l00334"></a>00334 <span class="comment">      * The integer directory id (used in parallel mode).</span>
-<a name="l00335"></a>00335 <span class="comment">      */</span>
-<a name="l00336"></a>00336       std::string    directoryIdPrefix_;
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;ios&gt;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;fstream&gt;</span>
+<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="keyword">namespace </span>Util
+<a name="l00018"></a>00018 {
+<a name="l00019"></a>00019 
+<a name="l00127"></a><a class="code" href="classUtil_1_1FileMaster.html">00127</a>    <span class="keyword">class </span><a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a> : <span class="keyword">public</span> <a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>
+<a name="l00128"></a>00128    {
+<a name="l00129"></a>00129    
+<a name="l00130"></a>00130    <span class="keyword">public</span>:
+<a name="l00131"></a>00131 
+<a name="l00135"></a>00135       <a class="code" href="classUtil_1_1FileMaster.html#a3a2076a0a99e8bf9771da07adddab445" title="Constructor.">FileMaster</a>();
+<a name="l00136"></a>00136  
+<a name="l00142"></a>00142       <a class="code" href="classUtil_1_1FileMaster.html#a3a2076a0a99e8bf9771da07adddab445" title="Constructor.">FileMaster</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>&amp; copy);
+<a name="l00143"></a>00143  
+<a name="l00147"></a>00147       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1FileMaster.html#ac6cfc4669da3c02c2817813e9b281bfb" title="Destructor.">~FileMaster</a>();
+<a name="l00148"></a>00148 
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151 
+<a name="l00157"></a>00157       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#ad3c7e95b9853b10bde9bcaf4c1cae60c" title="Set the path from current directory to root directory.">setRootPrefix</a>(<span class="keyword">const</span> std::string&amp; rootPrefix);
+<a name="l00158"></a>00158 
+<a name="l00171"></a>00171       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#ae295d9dc32e5ee3b4ac2b4b2a8f185f1" title="Set an integer directory identifier for this processor.">setDirectoryId</a>(<span class="keywordtype">int</span> directoryId);
+<a name="l00172"></a>00172 
+<a name="l00177"></a>00177       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#ad677773938f15a0e830088aaffeafbaa" title="Set to use single param and command files for multi-system simulations.">setCommonControl</a>();
+<a name="l00178"></a>00178 
+<a name="l00184"></a>00184       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#aaa8beea67ced5beb8f92d8bba48a6bae" title="Set the parameter file name.">setParamFileName</a>(<span class="keyword">const</span> std::string&amp; <a class="code" href="classUtil_1_1FileMaster.html#af03b29b868aed38b1e94e5af0e6f4308" title="Return the param file name, if any.">paramFileName</a>);
+<a name="l00185"></a>00185 
+<a name="l00191"></a>00191       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#ade669815f45d05b720302848be13a316" title="Set the command file name.">setCommandFileName</a>(<span class="keyword">const</span> std::string&amp; <a class="code" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd" title="Return the command file name.">commandFileName</a>);
+<a name="l00192"></a>00192 
+<a name="l00198"></a>00198       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#aea52ab3720c8bb6696252ca4e4f190dd" title="Set the input file prefix string.">setInputPrefix</a>(<span class="keyword">const</span> std::string&amp; inputPrefix);
+<a name="l00199"></a>00199  
+<a name="l00205"></a>00205       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#ad6fec8651e4f00d135e3572021ed3b7c" title="Set the output file prefix string.">setOutputPrefix</a>(<span class="keyword">const</span> std::string&amp; outputPrefix);
+<a name="l00206"></a>00206  
+<a name="l00214"></a>00214       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#a7feb4503d8a177959fb2e9625d74de7e" title="Read parameter file.">readParameters</a>(std::istream&amp; in);
+<a name="l00215"></a>00215 
+<a name="l00217"></a>00217 
+<a name="l00218"></a>00218 
+<a name="l00219"></a>00219 
+<a name="l00225"></a>00225       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#adbbb16a44ffcad1347d963d2539fea49" title="Load internal state from file.">loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar);
+<a name="l00226"></a>00226    
+<a name="l00232"></a>00232       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#a242dce8b12bc4a5d8539308f2a702500" title="Save internal state to file.">save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar);
+<a name="l00233"></a>00233    
+<a name="l00235"></a>00235 
+<a name="l00236"></a>00236 
+<a name="l00237"></a>00237       
+<a name="l00247"></a>00247       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#abdd406edea215d37911860238d052648" title="Open an input file with a known path and open mode.">open</a>(<span class="keyword">const</span> std::string&amp; name, std::ifstream&amp; in, 
+<a name="l00248"></a>00248                 std::ios_base::openmode mode = std::ios_base::in) <span class="keyword">const</span>;
+<a name="l00249"></a>00249 
+<a name="l00259"></a>00259       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#abdd406edea215d37911860238d052648" title="Open an input file with a known path and open mode.">open</a>(<span class="keyword">const</span> std::string&amp; name, std::ofstream&amp; out, 
+<a name="l00260"></a>00260                 std::ios_base::openmode mode = std::ios_base::out) <span class="keyword">const</span>;
+<a name="l00261"></a>00261 
+<a name="l00275"></a>00275       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FileMaster.html#a0e5e4e72d0403b888589f0e7d263809d" title="Open an input parameter or command file.">openControlFile</a>(<span class="keyword">const</span> std::string&amp; name, 
+<a name="l00276"></a>00276                            std::ifstream&amp; in) <span class="keyword">const</span>;
+<a name="l00277"></a>00277 
+<a name="l00288"></a>00288       <span class="keywordtype">void</span> 
+<a name="l00289"></a>00289       <a class="code" href="classUtil_1_1FileMaster.html#adc71faa04123b3fe7f4ae43c33149404" title="Open an input restart dump file for reading.">openRestartIFile</a>(<span class="keyword">const</span> std::string&amp; name, std::ifstream&amp; in,
+<a name="l00290"></a>00290                        std::ios_base::openmode mode = std::ios_base::in) 
+<a name="l00291"></a>00291       <span class="keyword">const</span>;
+<a name="l00292"></a>00292 
+<a name="l00303"></a>00303       <span class="keywordtype">void</span> 
+<a name="l00304"></a>00304       <a class="code" href="classUtil_1_1FileMaster.html#a89a5fee886f8a3af88eabc330c07b3ee" title="Open an output restart file for writing.">openRestartOFile</a>(<span class="keyword">const</span> std::string&amp; name, std::ofstream&amp; out,
+<a name="l00305"></a>00305                        std::ios_base::openmode mode = std::ios_base::out) 
+<a name="l00306"></a>00306       <span class="keyword">const</span>;
+<a name="l00307"></a>00307 
+<a name="l00318"></a>00318       <span class="keywordtype">void</span> 
+<a name="l00319"></a>00319       <a class="code" href="classUtil_1_1FileMaster.html#a2bf65e41c81f3d341759f8e1c329409d" title="Open an input file.">openInputFile</a>(<span class="keyword">const</span> std::string&amp; filename, std::ifstream&amp; in, 
+<a name="l00320"></a>00320                     std::ios_base::openmode mode = std::ios_base::in) 
+<a name="l00321"></a>00321       <span class="keyword">const</span>;
+<a name="l00322"></a>00322 
+<a name="l00333"></a>00333       <span class="keywordtype">void</span> 
+<a name="l00334"></a>00334       <a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<span class="keyword">const</span> std::string&amp; filename, std::ofstream&amp; out, 
+<a name="l00335"></a>00335                      std::ios_base::openmode mode = std::ios_base::out) 
+<a name="l00336"></a>00336       <span class="keyword">const</span>;
 <a name="l00337"></a>00337 
-<a name="l00338"></a>00338       <span class="comment">/*</span>
-<a name="l00339"></a>00339 <span class="comment">      * Path for the root directory for this simulation.</span>
-<a name="l00340"></a>00340 <span class="comment">      */</span>
-<a name="l00341"></a>00341       std::string    rootPrefix_;
-<a name="l00342"></a>00342 
-<a name="l00343"></a>00343       <span class="comment">/*</span>
-<a name="l00344"></a>00344 <span class="comment">      * Pointer to parameter file.</span>
-<a name="l00345"></a>00345 <span class="comment">      */</span>
-<a name="l00346"></a>00346       std::ifstream* paramFilePtr_;
-<a name="l00347"></a>00347 
-<a name="l00348"></a>00348       <span class="comment">/*</span>
-<a name="l00349"></a>00349 <span class="comment">      * Pointer to command file.</span>
-<a name="l00350"></a>00350 <span class="comment">      */</span>
-<a name="l00351"></a>00351       std::ifstream* commandFilePtr_;
-<a name="l00352"></a>00352 
-<a name="l00353"></a>00353       <span class="comment">/*</span>
-<a name="l00354"></a>00354 <span class="comment">      * Has a directoryId prefix been set?</span>
-<a name="l00355"></a>00355 <span class="comment">      */</span>
-<a name="l00356"></a>00356       <span class="keywordtype">bool</span> hasDirectoryId_;
-<a name="l00357"></a>00357 
-<a name="l00358"></a>00358       <span class="comment">/*</span>
-<a name="l00359"></a>00359 <span class="comment">      * Has setParamFileStdIn been called?</span>
-<a name="l00360"></a>00360 <span class="comment">      */</span>
-<a name="l00361"></a>00361       <span class="keywordtype">bool</span> isSetParamFileStdIn_;
-<a name="l00362"></a>00362 
-<a name="l00363"></a>00363    };
-<a name="l00364"></a>00364 
-<a name="l00365"></a>00365    <span class="comment">/*</span>
-<a name="l00366"></a>00366 <span class="comment">   * Return the command file base name.</span>
-<a name="l00367"></a>00367 <span class="comment">   */</span>
-<a name="l00368"></a><a class="code" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd">00368</a>    <span class="keyword">inline</span> std::string <a class="code" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd" title="Return the command file name.">FileMaster::commandFileName</a>()<span class="keyword"> const</span>
-<a name="l00369"></a>00369 <span class="keyword">   </span>{ <span class="keywordflow">return</span> commandFileName_; }
-<a name="l00370"></a>00370 
-<a name="l00371"></a>00371 } 
-<a name="l00372"></a>00372 <span class="preprocessor">#endif</span>
+<a name="l00339"></a>00339 
+<a name="l00340"></a>00340 
+<a name="l00341"></a>00341       
+<a name="l00345"></a>00345       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1FileMaster.html#a0710da457216fc219f21938520bae2f0" title="Is set for common param and command files?">isCommonControl</a>() <span class="keyword">const</span>;
+<a name="l00346"></a>00346 
+<a name="l00350"></a>00350       std::string <a class="code" href="classUtil_1_1FileMaster.html#af03b29b868aed38b1e94e5af0e6f4308" title="Return the param file name, if any.">paramFileName</a>() <span class="keyword">const</span>;
+<a name="l00351"></a>00351 
+<a name="l00358"></a>00358       std::string <a class="code" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd" title="Return the command file name.">commandFileName</a>() <span class="keyword">const</span>;
+<a name="l00359"></a>00359 
+<a name="l00371"></a>00371       std::istream&amp; <a class="code" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile</a>();
+<a name="l00372"></a>00372 
+<a name="l00388"></a>00388       std::istream&amp; <a class="code" href="classUtil_1_1FileMaster.html#a4dfc5422ef408b9ea55f011dd298a9d2" title="Get the command input stream by reference.">commandFile</a>();
+<a name="l00389"></a>00389 
+<a name="l00391"></a>00391       
+<a name="l00392"></a>00392    <span class="keyword">private</span>:
+<a name="l00393"></a>00393 
+<a name="l00394"></a>00394       <span class="comment">/*</span>
+<a name="l00395"></a>00395 <span class="comment">      * Name of the parameter file.</span>
+<a name="l00396"></a>00396 <span class="comment">      */</span>
+<a name="l00397"></a>00397       std::string  paramFileName_;
+<a name="l00398"></a>00398 
+<a name="l00399"></a>00399       <span class="comment">/*</span>
+<a name="l00400"></a>00400 <span class="comment">      * Name of the command file.</span>
+<a name="l00401"></a>00401 <span class="comment">      */</span>
+<a name="l00402"></a>00402       std::string  commandFileName_;
+<a name="l00403"></a>00403 
+<a name="l00404"></a>00404       <span class="comment">/*</span>
+<a name="l00405"></a>00405 <span class="comment">      * Prefix for input data file names.</span>
+<a name="l00406"></a>00406 <span class="comment">      */</span>
+<a name="l00407"></a>00407       std::string  inputPrefix_;
+<a name="l00408"></a>00408 
+<a name="l00409"></a>00409       <span class="comment">/*</span>
+<a name="l00410"></a>00410 <span class="comment">      * Prefix for output data file names.</span>
+<a name="l00411"></a>00411 <span class="comment">      */</span>
+<a name="l00412"></a>00412       std::string  outputPrefix_;
+<a name="l00413"></a>00413 
+<a name="l00414"></a>00414       <span class="comment">/*</span>
+<a name="l00415"></a>00415 <span class="comment">      * The integer directory id prefix, for multi-system simulations.</span>
+<a name="l00416"></a>00416 <span class="comment">      */</span>
+<a name="l00417"></a>00417       std::string  directoryIdPrefix_;
+<a name="l00418"></a>00418 
+<a name="l00419"></a>00419       <span class="comment">/*</span>
+<a name="l00420"></a>00420 <span class="comment">      * Path for the root directory of files for this simulation.</span>
+<a name="l00421"></a>00421 <span class="comment">      */</span>
+<a name="l00422"></a>00422       std::string  rootPrefix_;
+<a name="l00423"></a>00423 
+<a name="l00424"></a>00424       <span class="comment">/*</span>
+<a name="l00425"></a>00425 <span class="comment">      * Pointer to the parameter file.</span>
+<a name="l00426"></a>00426 <span class="comment">      */</span>
+<a name="l00427"></a>00427       std::ifstream*  paramFilePtr_;
+<a name="l00428"></a>00428 
+<a name="l00429"></a>00429       <span class="comment">/*</span>
+<a name="l00430"></a>00430 <span class="comment">      * Pointer to the command file.</span>
+<a name="l00431"></a>00431 <span class="comment">      */</span>
+<a name="l00432"></a>00432       std::ifstream*  commandFilePtr_;
+<a name="l00433"></a>00433 
+<a name="l00434"></a>00434       <span class="comment">/*</span>
+<a name="l00435"></a>00435 <span class="comment">      * Has a directoryId prefix been set?</span>
+<a name="l00436"></a>00436 <span class="comment">      */</span>
+<a name="l00437"></a>00437       <span class="keywordtype">bool</span>  hasDirectoryId_;
+<a name="l00438"></a>00438 
+<a name="l00439"></a>00439       <span class="comment">/*</span>
+<a name="l00440"></a>00440 <span class="comment">      * Should we use a single parameter and command file?</span>
+<a name="l00441"></a>00441 <span class="comment">      */</span>
+<a name="l00442"></a>00442       <span class="keywordtype">bool</span> isCommonControl_;
+<a name="l00443"></a>00443 
+<a name="l00444"></a>00444    };
+<a name="l00445"></a>00445 
+<a name="l00446"></a>00446    <span class="comment">/*</span>
+<a name="l00447"></a>00447 <span class="comment">   * Return the command file base name.</span>
+<a name="l00448"></a>00448 <span class="comment">   */</span>
+<a name="l00449"></a><a class="code" href="classUtil_1_1FileMaster.html#af03b29b868aed38b1e94e5af0e6f4308">00449</a>    <span class="keyword">inline</span> std::string <a class="code" href="classUtil_1_1FileMaster.html#af03b29b868aed38b1e94e5af0e6f4308" title="Return the param file name, if any.">FileMaster::paramFileName</a>()<span class="keyword"> const</span>
+<a name="l00450"></a>00450 <span class="keyword">   </span>{  <span class="keywordflow">return</span> paramFileName_; }
+<a name="l00451"></a>00451 
+<a name="l00452"></a>00452    <span class="comment">/*</span>
+<a name="l00453"></a>00453 <span class="comment">   * Return the command file base name.</span>
+<a name="l00454"></a>00454 <span class="comment">   */</span>
+<a name="l00455"></a><a class="code" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd">00455</a>    <span class="keyword">inline</span> std::string <a class="code" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd" title="Return the command file name.">FileMaster::commandFileName</a>()<span class="keyword"> const</span>
+<a name="l00456"></a>00456 <span class="keyword">   </span>{  <span class="keywordflow">return</span> commandFileName_; }
+<a name="l00457"></a>00457 
+<a name="l00458"></a>00458 } 
+<a name="l00459"></a>00459 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:12 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:57 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

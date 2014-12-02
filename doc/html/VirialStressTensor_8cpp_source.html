@@ -57,127 +57,123 @@
 <div class="title">VirialStressTensor.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef DDMD_VIRIAL_STRESSTENSOR_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define DDMD_VIRIAL_STRESSTENSOR_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;VirialStressTensor.h&quot;</span>
-<a name="l00012"></a>00012 <span class="comment">//#include &lt;util/misc/FileMaster.h&gt;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;util/misc/ioUtil.h&gt;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;util/format/Int.h&gt;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;util/format/Dbl.h&gt;</span>
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017 <span class="preprocessor">#include &lt;sstream&gt;</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;VirialStressTensor.h&quot;</span>
+<a name="l00009"></a>00009 <span class="comment">//#include &lt;util/misc/FileMaster.h&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;util/misc/ioUtil.h&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;util/format/Int.h&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;util/format/Dbl.h&gt;</span>
+<a name="l00013"></a>00013 
+<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;sstream&gt;</span>
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 <span class="keyword">namespace </span>DdMd
+<a name="l00017"></a>00017 {
 <a name="l00018"></a>00018 
-<a name="l00019"></a>00019 <span class="keyword">namespace </span>DdMd
-<a name="l00020"></a>00020 {
-<a name="l00021"></a>00021 
-<a name="l00022"></a>00022    <span class="keyword">using namespace </span>Util;
-<a name="l00023"></a>00023 
-<a name="l00024"></a>00024    <span class="comment">/*</span>
-<a name="l00025"></a>00025 <span class="comment">   * Constructor.</span>
-<a name="l00026"></a>00026 <span class="comment">   */</span>
-<a name="l00027"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#a7630e01de2a655f47afeca342aa34929">00027</a>    <a class="code" href="classDdMd_1_1VirialStressTensor.html#a7630e01de2a655f47afeca342aa34929" title="Constructor.">VirialStressTensor::VirialStressTensor</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation) 
-<a name="l00028"></a>00028     : <a class="code" href="classDdMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions.">Analyzer</a>(simulation),
-<a name="l00029"></a>00029       nSample_(0),
-<a name="l00030"></a>00030       isInitialized_(false)
-<a name="l00031"></a>00031    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;VirialStressTensor&quot;</span>); }
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033    <span class="comment">/*</span>
-<a name="l00034"></a>00034 <span class="comment">   * Read interval and outputFileName. </span>
-<a name="l00035"></a>00035 <span class="comment">   */</span>
-<a name="l00036"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#a7b0cf7be16b03d0c668af5d61c817ea1">00036</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1VirialStressTensor.html#a7b0cf7be16b03d0c668af5d61c817ea1" title="Read dumpPrefix and interval.">VirialStressTensor::readParameters</a>(std::istream&amp; in) 
-<a name="l00037"></a>00037    {
-<a name="l00038"></a>00038       <a class="code" href="classDdMd_1_1Analyzer.html#a8a2aadfd6927a948d60f2686ac517372" title="Read parameter interval from file.">readInterval</a>(in);
-<a name="l00039"></a>00039       <a class="code" href="classDdMd_1_1Analyzer.html#a82766295a8504cf1c6ee817911626647" title="Read outputFileName from file.">readOutputFileName</a>(in);
-<a name="l00040"></a>00040      
-<a name="l00041"></a>00041       <span class="keywordflow">if</span>(<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00042"></a>00042          std::string filename;
-<a name="l00043"></a>00043          filename  = <a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>();
-<a name="l00044"></a>00044          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(), outputFile_);
-<a name="l00045"></a>00045       }
+<a name="l00019"></a>00019    <span class="keyword">using namespace </span>Util;
+<a name="l00020"></a>00020 
+<a name="l00021"></a>00021    <span class="comment">/*</span>
+<a name="l00022"></a>00022 <span class="comment">   * Constructor.</span>
+<a name="l00023"></a>00023 <span class="comment">   */</span>
+<a name="l00024"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#a7630e01de2a655f47afeca342aa34929">00024</a>    <a class="code" href="classDdMd_1_1VirialStressTensor.html#a7630e01de2a655f47afeca342aa34929" title="Constructor.">VirialStressTensor::VirialStressTensor</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation) 
+<a name="l00025"></a>00025     : <a class="code" href="classDdMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions.">Analyzer</a>(simulation),
+<a name="l00026"></a>00026       nSample_(0),
+<a name="l00027"></a>00027       isInitialized_(false)
+<a name="l00028"></a>00028    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;VirialStressTensor&quot;</span>); }
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030    <span class="comment">/*</span>
+<a name="l00031"></a>00031 <span class="comment">   * Read interval and outputFileName. </span>
+<a name="l00032"></a>00032 <span class="comment">   */</span>
+<a name="l00033"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#a7b0cf7be16b03d0c668af5d61c817ea1">00033</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1VirialStressTensor.html#a7b0cf7be16b03d0c668af5d61c817ea1" title="Read dumpPrefix and interval.">VirialStressTensor::readParameters</a>(std::istream&amp; in) 
+<a name="l00034"></a>00034    {
+<a name="l00035"></a>00035       <a class="code" href="classDdMd_1_1Analyzer.html#a8a2aadfd6927a948d60f2686ac517372" title="Read parameter interval from file.">readInterval</a>(in);
+<a name="l00036"></a>00036       <a class="code" href="classDdMd_1_1Analyzer.html#a82766295a8504cf1c6ee817911626647" title="Read outputFileName from file.">readOutputFileName</a>(in);
+<a name="l00037"></a>00037      
+<a name="l00038"></a>00038       <span class="keywordflow">if</span>(<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
+<a name="l00039"></a>00039          std::string filename;
+<a name="l00040"></a>00040          filename  = <a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>();
+<a name="l00041"></a>00041          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(), outputFile_);
+<a name="l00042"></a>00042       }
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044       isInitialized_ = <span class="keyword">true</span>;
+<a name="l00045"></a>00045    }
 <a name="l00046"></a>00046 
-<a name="l00047"></a>00047       isInitialized_ = <span class="keyword">true</span>;
-<a name="l00048"></a>00048    }
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051    <span class="comment">/*</span>
-<a name="l00052"></a>00052 <span class="comment">   * Load internal state from an archive.</span>
-<a name="l00053"></a>00053 <span class="comment">   */</span>
-<a name="l00054"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#aab96fbc4f1e11391f33f6b104cae6259">00054</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1VirialStressTensor.html#aab96fbc4f1e11391f33f6b104cae6259" title="Load internal state from an archive.">VirialStressTensor::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
-<a name="l00055"></a>00055    {
-<a name="l00056"></a>00056       <a class="code" href="classDdMd_1_1Analyzer.html#aeb27867c21917c1289af1d4cae0be66d" title="Load parameter interval from input archive.">loadInterval</a>(ar);
-<a name="l00057"></a>00057       <a class="code" href="classDdMd_1_1Analyzer.html#a612962e2284d5835abb43c865cc9b899" title="Load output file name to an archive.">loadOutputFileName</a>(ar);
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048    <span class="comment">/*</span>
+<a name="l00049"></a>00049 <span class="comment">   * Load internal state from an archive.</span>
+<a name="l00050"></a>00050 <span class="comment">   */</span>
+<a name="l00051"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#aab96fbc4f1e11391f33f6b104cae6259">00051</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1VirialStressTensor.html#aab96fbc4f1e11391f33f6b104cae6259" title="Load internal state from an archive.">VirialStressTensor::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
+<a name="l00052"></a>00052    {
+<a name="l00053"></a>00053       <a class="code" href="classDdMd_1_1Analyzer.html#aeb27867c21917c1289af1d4cae0be66d" title="Load parameter interval from input archive.">loadInterval</a>(ar);
+<a name="l00054"></a>00054       <a class="code" href="classDdMd_1_1Analyzer.html#a612962e2284d5835abb43c865cc9b899" title="Load output file name to an archive.">loadOutputFileName</a>(ar);
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056       <a class="code" href="classUtil_1_1MpiLoader.html" title="Provides methods for MPI-aware loading of data from input archive.">MpiLoader&lt;Serializable::IArchive&gt;</a> loader(*<span class="keyword">this</span>, ar);
+<a name="l00057"></a>00057       loader.<a class="code" href="classUtil_1_1MpiLoader.html#a8d2998ecd3fe41b2ac2ccda7f4f7ca97" title="Load and broadcast a single Data value.">load</a>(nSample_);
 <a name="l00058"></a>00058 
-<a name="l00059"></a>00059       <a class="code" href="classUtil_1_1MpiLoader.html" title="Provides methods for MPI-aware loading of data from input archive.">MpiLoader&lt;Serializable::IArchive&gt;</a> loader(*<span class="keyword">this</span>, ar);
-<a name="l00060"></a>00060       loader.<a class="code" href="classUtil_1_1MpiLoader.html#a8d2998ecd3fe41b2ac2ccda7f4f7ca97" title="Load and broadcast a single Data value.">load</a>(nSample_);
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00063"></a>00063          std::string filename;
-<a name="l00064"></a>00064          filename  = <a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>();
-<a name="l00065"></a>00065          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(), outputFile_);
-<a name="l00066"></a>00066       }
+<a name="l00059"></a>00059       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
+<a name="l00060"></a>00060          std::string filename;
+<a name="l00061"></a>00061          filename  = <a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>();
+<a name="l00062"></a>00062          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(), outputFile_);
+<a name="l00063"></a>00063       }
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065       isInitialized_ = <span class="keyword">true</span>;
+<a name="l00066"></a>00066    }
 <a name="l00067"></a>00067 
-<a name="l00068"></a>00068       isInitialized_ = <span class="keyword">true</span>;
-<a name="l00069"></a>00069    }
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071    <span class="comment">/*</span>
-<a name="l00072"></a>00072 <span class="comment">   * Save internal state to an archive.</span>
-<a name="l00073"></a>00073 <span class="comment">   */</span>
-<a name="l00074"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#af5c345d56b735264a2445f7a9a3c7ebc">00074</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1VirialStressTensor.html#af5c345d56b735264a2445f7a9a3c7ebc" title="Save internal state to an archive.">VirialStressTensor::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
-<a name="l00075"></a>00075    {
-<a name="l00076"></a>00076       <a class="code" href="classDdMd_1_1Analyzer.html#afaeb6ce06336abdc69aaa25c56ec104d" title="Save interval parameter to an archive.">saveInterval</a>(ar);
-<a name="l00077"></a>00077       <a class="code" href="classDdMd_1_1Analyzer.html#a4c9afc6a23aad9406381c4239bfad5d8" title="Save output file name to an archive.">saveOutputFileName</a>(ar);
-<a name="l00078"></a>00078       ar &lt;&lt; nSample_;
-<a name="l00079"></a>00079    }
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081   
-<a name="l00082"></a>00082    <span class="comment">/*</span>
-<a name="l00083"></a>00083 <span class="comment">   * Read interval and outputFileName. </span>
-<a name="l00084"></a>00084 <span class="comment">   */</span>
-<a name="l00085"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#a29bc2f6f385868ce5e2b9bb0581db62b">00085</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1VirialStressTensor.html#a29bc2f6f385868ce5e2b9bb0581db62b" title="Clear nSample counter.">VirialStressTensor::clear</a>() 
-<a name="l00086"></a>00086    {
-<a name="l00087"></a>00087       <span class="keywordflow">if</span> (!isInitialized_) {
-<a name="l00088"></a>00088          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: Object not initialized&quot;</span>);
-<a name="l00089"></a>00089       }
-<a name="l00090"></a>00090       nSample_ = 0;
-<a name="l00091"></a>00091    }
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093    <span class="comment">/*</span>
-<a name="l00094"></a>00094 <span class="comment">   * Sample the stress tensor.</span>
-<a name="l00095"></a>00095 <span class="comment">   */</span>
-<a name="l00096"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#af1d023863e81dbf698d57fe13f3fbc49">00096</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1VirialStressTensor.html#af1d023863e81dbf698d57fe13f3fbc49" title="Sample virial stress to accumulators.">VirialStressTensor::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00097"></a>00097    {
-<a name="l00098"></a>00098       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#ab6eaceb9f1281213a566d35445efe382" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
-<a name="l00099"></a>00099          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#aae0238576c11211daa22185a1a809c30" title="Calculate and store all virial stress contributions.">computeVirialStress</a>();
-<a name="l00100"></a>00100          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a0f7aabdc04a4129057f7c538546a4852" title="Calculate and store kinetic stress.">computeKineticStress</a>();
-<a name="l00101"></a>00101          <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00102"></a>00102             <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> virial  = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a378a34edda1d0b00c881df2193de14bc" title="Return total virial stress.">virialStress</a>();
-<a name="l00103"></a>00103             <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> kinetic = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#ac2e933f62ec4aad35d17a52cccf5a551" title="Return total kinetic stress.">kineticStress</a>();
-<a name="l00104"></a>00104             <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> total = total.<a class="code" href="classUtil_1_1Tensor.html#a4cea7d3360169503bbc6c611849d2b64" title="Add tensors t1 and t2.">add</a>(virial, kinetic); 
-<a name="l00105"></a>00105             outputFile_ &lt;&lt; virial(0,0) &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; virial(1,1) &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; virial(2,2)
-<a name="l00106"></a>00106             &lt;&lt; total(0,0) &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; total(1,1) &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; total(2,2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; 
-<a name="l00107"></a>00107          }
-<a name="l00108"></a>00108          
-<a name="l00109"></a>00109          ++nSample_;
-<a name="l00110"></a>00110       }
-<a name="l00111"></a>00111    }
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113 }
-<a name="l00114"></a>00114 <span class="preprocessor">#endif  </span>
+<a name="l00068"></a>00068    <span class="comment">/*</span>
+<a name="l00069"></a>00069 <span class="comment">   * Save internal state to an archive.</span>
+<a name="l00070"></a>00070 <span class="comment">   */</span>
+<a name="l00071"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#af5c345d56b735264a2445f7a9a3c7ebc">00071</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1VirialStressTensor.html#af5c345d56b735264a2445f7a9a3c7ebc" title="Save internal state to an archive.">VirialStressTensor::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
+<a name="l00072"></a>00072    {
+<a name="l00073"></a>00073       <a class="code" href="classDdMd_1_1Analyzer.html#afaeb6ce06336abdc69aaa25c56ec104d" title="Save interval parameter to an archive.">saveInterval</a>(ar);
+<a name="l00074"></a>00074       <a class="code" href="classDdMd_1_1Analyzer.html#a4c9afc6a23aad9406381c4239bfad5d8" title="Save output file name to an archive.">saveOutputFileName</a>(ar);
+<a name="l00075"></a>00075       ar &lt;&lt; nSample_;
+<a name="l00076"></a>00076    }
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078   
+<a name="l00079"></a>00079    <span class="comment">/*</span>
+<a name="l00080"></a>00080 <span class="comment">   * Read interval and outputFileName. </span>
+<a name="l00081"></a>00081 <span class="comment">   */</span>
+<a name="l00082"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#a29bc2f6f385868ce5e2b9bb0581db62b">00082</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1VirialStressTensor.html#a29bc2f6f385868ce5e2b9bb0581db62b" title="Clear nSample counter.">VirialStressTensor::clear</a>() 
+<a name="l00083"></a>00083    {
+<a name="l00084"></a>00084       <span class="keywordflow">if</span> (!isInitialized_) {
+<a name="l00085"></a>00085          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: Object not initialized&quot;</span>);
+<a name="l00086"></a>00086       }
+<a name="l00087"></a>00087       nSample_ = 0;
+<a name="l00088"></a>00088    }
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090    <span class="comment">/*</span>
+<a name="l00091"></a>00091 <span class="comment">   * Sample the stress tensor.</span>
+<a name="l00092"></a>00092 <span class="comment">   */</span>
+<a name="l00093"></a><a class="code" href="classDdMd_1_1VirialStressTensor.html#af1d023863e81dbf698d57fe13f3fbc49">00093</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1VirialStressTensor.html#af1d023863e81dbf698d57fe13f3fbc49" title="Sample virial stress to accumulators.">VirialStressTensor::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00094"></a>00094    {
+<a name="l00095"></a>00095       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#ab6eaceb9f1281213a566d35445efe382" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
+<a name="l00096"></a>00096          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#aae0238576c11211daa22185a1a809c30" title="Calculate and store all virial stress contributions.">computeVirialStress</a>();
+<a name="l00097"></a>00097          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a0f7aabdc04a4129057f7c538546a4852" title="Calculate and store kinetic stress.">computeKineticStress</a>();
+<a name="l00098"></a>00098          <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
+<a name="l00099"></a>00099             <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> virial  = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a378a34edda1d0b00c881df2193de14bc" title="Return total virial stress.">virialStress</a>();
+<a name="l00100"></a>00100             <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> kinetic = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#ac2e933f62ec4aad35d17a52cccf5a551" title="Return total kinetic stress.">kineticStress</a>();
+<a name="l00101"></a>00101             <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> total = total.<a class="code" href="classUtil_1_1Tensor.html#a4cea7d3360169503bbc6c611849d2b64" title="Add tensors t1 and t2.">add</a>(virial, kinetic); 
+<a name="l00102"></a>00102             outputFile_ &lt;&lt; virial(0,0) &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; virial(1,1) &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; virial(2,2)
+<a name="l00103"></a>00103             &lt;&lt; total(0,0) &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; total(1,1) &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; total(2,2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; 
+<a name="l00104"></a>00104          }
+<a name="l00105"></a>00105          
+<a name="l00106"></a>00106          ++nSample_;
+<a name="l00107"></a>00107       }
+<a name="l00108"></a>00108    }
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:16 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:01 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

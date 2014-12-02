@@ -103,11 +103,11 @@ Command file</h2>
 <p>The RESTART command is only valid in a simulation that was executed using the -r command line option, in which case it must be the first line of the command file.</p>
 <h2><a class="anchor" id="user_restart_usage_section"></a>
 Restarting - command line usage</h2>
-<p>To restart a simulation, one must thus invoke the mcSim, mdSim, or ddSim executable with the -r option, and supply the common base name of the *.rst and *.cmd files as an argument to this command line option. Thus, for example, if a previous mcSim MC simulation were run using a base name of "restart" for the saveFileName, one could type </p>
-<div class="fragment"><pre class="fragment">   mcSim -r restart
-</pre></div><p> to restart the simulation. In the above example, the -r option would cause the program to read a file named restart.rst to initialize the simulation, and then execute the commands in a file named restart.cmd. Execution will fail if either of these files is missing. The same command line syntax is used for all three programs.</p>
-<p>To restart a ddSim simulation, one must, of course, start an MPI environment. To continue simulation that uses 8 processors, using restart files named restart.rst and restart.cmd, one might thus enter: </p>
-<div class="fragment"><pre class="fragment">   mpirun -np 8 ddSim -r restart
+<p>To restart a simulation, one must thus invoke the mcSim, mdSim, or ddSim executable with the -r option, passing it the name of a restart file as an argument. The name of the command file is passed as an argument to the -c option, as usual. Thus, for example, if a previous mcSim MC simulation were run using a base name of "restart" for the saveFileName, and the restart command file is named restart.cmd, one could type </p>
+<div class="fragment"><pre class="fragment">   mcSim -r restart -c restart.cmd
+</pre></div><p> to restart the simulation. In the above example, the -r option would cause the program to read a file named restart.rst to initialize the simulation, and then execute the commands in a file named restart.cmd. The same command line syntax is used for all three programs.</p>
+<p>To restart a ddSim simulation, one must, of course, also launch an MPI environment. To continue simulation that uses 8 processors, using a restart named restart and and command file named restart.cmd, one might thus enter: </p>
+<div class="fragment"><pre class="fragment">   mpirun -np 8 ddSim -r restart -c restart.cmd
 </pre></div><p> To continue a ddSim simulation, the number of processors must be the same as that used in the original simulation.</p>
 <p>The -r option may be combined with the -e option. This causes parameters that would normally be read from the parameter file to be echoed to standard output as they are read from the restart file.</p>
 <p><br/>
@@ -118,7 +118,7 @@ Restarting - command line usage</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:17 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:02 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -60,84 +60,27 @@
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
 <a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00003"></a>00003 <span class="comment">*</span>
-<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00006"></a>00006 <span class="comment">*/</span>
 <a name="l00007"></a>00007 
-<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;spAn/processor/Processor.h&gt;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;tools/processor/Processor.h&gt;</span>
 <a name="l00009"></a>00009 
-<a name="l00010"></a>00010 <span class="comment">// std headers</span>
-<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;fstream&gt;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;unistd.h&gt;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
-<a name="l00014"></a>00014 
-<a name="l00015"></a>00015 <span class="keyword">using namespace </span>Util;
-<a name="l00016"></a>00016 
-<a name="l00051"></a>00051 <span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)
-<a name="l00052"></a>00052 {
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054    <a class="code" href="classSpAn_1_1Processor.html" title="A post-processor for analyzing outputs of MD simulations.">SpAn::Processor</a> processor;
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056    <span class="comment">// Parse command-line arguments</span>
-<a name="l00057"></a>00057    <span class="keywordtype">bool</span> tFlag = <span class="keyword">false</span>;
-<a name="l00058"></a>00058    <span class="keywordtype">bool</span> iFlag = <span class="keyword">false</span>;
-<a name="l00059"></a>00059    std::string configIoName = <span class="stringliteral">&quot;DdMdConfigIo&quot;</span>;
-<a name="l00060"></a>00060    <span class="keywordtype">int</span> c;
-<a name="l00061"></a>00061    opterr = 0;
-<a name="l00062"></a>00062    <span class="keywordflow">while</span> ((c = getopt(argc, argv, <span class="stringliteral">&quot;ti:&quot;</span>)) != -1) {
-<a name="l00063"></a>00063       <span class="keywordflow">switch</span> (c) {
-<a name="l00064"></a>00064       <span class="keywordflow">case</span> <span class="charliteral">&#39;t&#39;</span>:
-<a name="l00065"></a>00065          tFlag = <span class="keyword">true</span>;
-<a name="l00066"></a>00066          <span class="keywordflow">break</span>;
-<a name="l00067"></a>00067       <span class="keywordflow">case</span> <span class="charliteral">&#39;i&#39;</span>:
-<a name="l00068"></a>00068          iFlag = <span class="keyword">true</span>;
-<a name="l00069"></a>00069          configIoName = optarg;
-<a name="l00070"></a>00070          <span class="keywordflow">break</span>;
-<a name="l00071"></a>00071       <span class="keywordflow">case</span> <span class="charliteral">&#39;?&#39;</span>:
-<a name="l00072"></a>00072          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Unknown option -&quot;</span> &lt;&lt; optopt &lt;&lt; std::endl;
-<a name="l00073"></a>00073       }
-<a name="l00074"></a>00074    }
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076    <span class="comment">// Read required arguments</span>
-<a name="l00077"></a>00077    <span class="keywordflow">if</span> (argc - optind != 4) {
-<a name="l00078"></a>00078       std::cout &lt;&lt; <span class="stringliteral">&quot;optind = &quot;</span> &lt;&lt; optind &lt;&lt; std::endl;
-<a name="l00079"></a>00079       std::cout &lt;&lt; <span class="stringliteral">&quot;argc   = &quot;</span> &lt;&lt; argc &lt;&lt; std::endl;
-<a name="l00080"></a>00080       <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Wrong number of arguments&quot;</span>);
-<a name="l00081"></a>00081    }
-<a name="l00082"></a>00082    <span class="keyword">const</span> <span class="keywordtype">char</span>* paramFileName = argv[optind];
-<a name="l00083"></a>00083    <span class="keyword">const</span> <span class="keywordtype">char</span>* configFileName = argv[optind+1];
-<a name="l00084"></a>00084    <span class="keywordtype">int</span> first = atoi(argv[optind+2]);
-<a name="l00085"></a>00085    <span class="keywordtype">int</span> last = atoi(argv[optind+3]);
-<a name="l00086"></a>00086    std::cout &lt;&lt; <span class="stringliteral">&quot;paramFile  = &quot;</span> &lt;&lt; paramFileName &lt;&lt; std::endl;
-<a name="l00087"></a>00087    std::cout &lt;&lt; <span class="stringliteral">&quot;configFile = &quot;</span> &lt;&lt; configFileName &lt;&lt; std::endl;
-<a name="l00088"></a>00088    std::cout &lt;&lt; <span class="stringliteral">&quot;first      = &quot;</span> &lt;&lt; first &lt;&lt; std::endl;
-<a name="l00089"></a>00089    std::cout &lt;&lt; <span class="stringliteral">&quot;last       = &quot;</span> &lt;&lt; last &lt;&lt; std::endl;
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091    <span class="comment">// Read parameter file</span>
-<a name="l00092"></a>00092    std::ifstream paramFile;
-<a name="l00093"></a>00093    paramFile.open(paramFileName);
-<a name="l00094"></a>00094    processor.<a class="code" href="classSpAn_1_1Processor.html#ae2d5085c79b1f7ce8b1b0c8dd0239d28" title="Open, read, and close parameter file.">readParam</a>(paramFile);
-<a name="l00095"></a>00095    paramFile.close();
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097    <span class="comment">// Set input file format format</span>
-<a name="l00098"></a>00098    <span class="keywordflow">if</span> (iFlag) {
-<a name="l00099"></a>00099       std::cout &lt;&lt; <span class="stringliteral">&quot;Setting ConfigIo &quot;</span> &lt;&lt; configIoName &lt;&lt; std::endl;
-<a name="l00100"></a>00100       processor.<a class="code" href="classSpAn_1_1Processor.html#aa3ac603d5be998cc5dc2ed873a99160e" title="Set ConfigIo style (creates a ConfigIo).">setConfigIo</a>(configIoName);
-<a name="l00101"></a>00101    }
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103    <span class="comment">// Process dumps</span>
-<a name="l00104"></a>00104    processor.<a class="code" href="classSpAn_1_1Processor.html#a10bbc4ec9193041c87a217232760a555" title="Read and analyze a sequence of numbered configuration files.">analyzeDumps</a>(first, last, configFileName);
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106    <span class="keywordflow">return</span> 0;
-<a name="l00107"></a>00107 }
-<a name="l00108"></a>00108 
+<a name="l00037"></a>00037 <span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv)
+<a name="l00038"></a>00038 {
+<a name="l00039"></a>00039    <a class="code" href="classTools_1_1Processor.html" title="A post-processor for analyzing outputs of MD simulations.">Tools::Processor</a> processor;
+<a name="l00040"></a>00040    processor.<a class="code" href="classTools_1_1Processor.html#ad7bd5ce04d3a6053e214b0b5de3eca0d" title="Process command line options.">setOptions</a>(argc, argv);
+<a name="l00041"></a>00041    processor.<a class="code" href="classTools_1_1Processor.html#ad0e390a25b80b05f3b01200969bd3a42" title="Read parameter file specified in command line.">readParam</a>();
+<a name="l00042"></a>00042    processor.<a class="code" href="classTools_1_1Processor.html#ac9e90e9b8378d0be0ef382a00b6cc0c9" title="Read command file specified in command line.">readCommands</a>();
+<a name="l00043"></a>00043    <span class="keywordflow">return</span> 0;
+<a name="l00044"></a>00044 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:14 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:59 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

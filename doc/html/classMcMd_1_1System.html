@@ -193,16 +193,16 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated Dihedral Factory by reference.  <a href="#af983d7ff0ceca8768ea01347b7af0304"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1System.html#ab087e28a5e3c04e97ed5b3fdbd4a7061">dihedralStyle</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return dihedral potential style string.  <a href="#ab087e28a5e3c04e97ed5b3fdbd4a7061"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1ExternalPotential.html">ExternalPotential</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1System.html#ad3beac0f5ba061c0b05fcfa208b0cf70">externalFactory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class.">ExternalPotential</a> factory by reference.  <a href="#ad3beac0f5ba061c0b05fcfa208b0cf70"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1System.html#a8de5fdc62be2c60f81c321be87c05bc4">externalStyle</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return external potential style string.  <a href="#a8de5fdc62be2c60f81c321be87c05bc4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1System.html#aa9c0fb2c5e81be12ee756bc939d01ea5">linkFactory</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> factory by reference.  <a href="#aa9c0fb2c5e81be12ee756bc939d01ea5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1System.html#ac9fb7f3a0fcf8de5853d5f9ae4c0b1c4">linkStyle</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return link potential style string.  <a href="#ac9fb7f3a0fcf8de5853d5f9ae4c0b1c4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1LinkMaster.html">LinkMaster</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1System.html#a4bf43e98368d84f161518c595a5b9709">linkMaster</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classMcMd_1_1LinkMaster.html" title="Manages all Link objects in a System.">LinkMaster</a> by reference.  <a href="#a4bf43e98368d84f161518c595a5b9709"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1ExternalPotential.html">ExternalPotential</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1System.html#ad3beac0f5ba061c0b05fcfa208b0cf70">externalFactory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class.">ExternalPotential</a> factory by reference.  <a href="#ad3beac0f5ba061c0b05fcfa208b0cf70"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1System.html#a8de5fdc62be2c60f81c321be87c05bc4">externalStyle</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return external potential style string.  <a href="#a8de5fdc62be2c60f81c321be87c05bc4"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Free Energy Perturbation Theory</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1Perturbation.html">Perturbation</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1System.html#a4108e1167ab8a74c302cf533374f564a">perturbationFactory</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the perturbation factory by reference.  <a href="#a4108e1167ab8a74c302cf533374f564a"></a><br/></td></tr>
@@ -355,7 +355,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Default constructor. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00070">70</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00067">67</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 </div>
 </div>
@@ -376,7 +376,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Copy constructor. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00152">152</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00149">149</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 </div>
 </div>
@@ -396,7 +396,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00230">230</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00227">227</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 <p>References <a class="el" href="System_8h_source.html#l01022">isCopy()</a>.</p>
 
@@ -427,11 +427,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00731">731</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00723">723</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 <p>References <a class="el" href="System_8h_source.html#l00949">id()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00060">McMd::McSimulation::McSimulation()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00047">McMd::MdSimulation::MdSimulation()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00057">McMd::McSimulation::McSimulation()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00044">McMd::MdSimulation::MdSimulation()</a>.</p>
 
 </div>
 </div>
@@ -458,11 +458,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00741">741</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00733">733</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 <p>References <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00060">McMd::McSimulation::McSimulation()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00047">McMd::MdSimulation::MdSimulation()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00057">McMd::McSimulation::McSimulation()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00044">McMd::MdSimulation::MdSimulation()</a>.</p>
 
 </div>
 </div>
@@ -490,11 +490,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00750">750</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00742">742</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 <p>References <a class="el" href="System_8h_source.html#l01013">fileMaster()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00060">McMd::McSimulation::McSimulation()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00047">McMd::MdSimulation::MdSimulation()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00057">McMd::McSimulation::McSimulation()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00044">McMd::MdSimulation::MdSimulation()</a>.</p>
 
 </div>
 </div>
@@ -526,9 +526,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1MdSystem.html#a696006b5f7707e4b5ae503c35b67bd71">McMd::MdSystem</a>, and <a class="el" href="classMcMd_1_1McSystem.html#a66e3500e077fe85afdfab5689e5c617a">McMd::McSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00319">319</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00311">311</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8cpp_source.html#l00957">allocateMoleculeSets()</a>, <a class="el" href="System_8h_source.html#l01022">isCopy()</a>, <a class="el" href="System_8cpp_source.html#l00540">readEnsembles()</a>, <a class="el" href="System_8cpp_source.html#l00378">readFileMaster()</a>, <a class="el" href="System_8cpp_source.html#l00565">readLinkMaster()</a>, and <a class="el" href="System_8cpp_source.html#l00424">readPotentialStyles()</a>.</p>
+<p>References <a class="el" href="System_8cpp_source.html#l00949">allocateMoleculeSets()</a>, <a class="el" href="System_8h_source.html#l01022">isCopy()</a>, <a class="el" href="System_8cpp_source.html#l00532">readEnsembles()</a>, <a class="el" href="System_8cpp_source.html#l00370">readFileMaster()</a>, <a class="el" href="System_8cpp_source.html#l00557">readLinkMaster()</a>, and <a class="el" href="System_8cpp_source.html#l00416">readPotentialStyles()</a>.</p>
 
 </div>
 </div>
@@ -559,9 +559,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1MdSystem.html#a52e72742cf7011e117e6ac6cff2f42e3">McMd::MdSystem</a>, and <a class="el" href="classMcMd_1_1McSystem.html#a78eef830348bbae5169d5e794f625edc">McMd::McSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00341">341</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00333">333</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8cpp_source.html#l00957">allocateMoleculeSets()</a>, <a class="el" href="System_8h_source.html#l01022">isCopy()</a>, <a class="el" href="System_8cpp_source.html#l00549">loadEnsembles()</a>, <a class="el" href="System_8cpp_source.html#l00397">loadFileMaster()</a>, <a class="el" href="System_8cpp_source.html#l00573">loadLinkMaster()</a>, and <a class="el" href="System_8cpp_source.html#l00464">loadPotentialStyles()</a>.</p>
+<p>References <a class="el" href="System_8cpp_source.html#l00949">allocateMoleculeSets()</a>, <a class="el" href="System_8h_source.html#l01022">isCopy()</a>, <a class="el" href="System_8cpp_source.html#l00541">loadEnsembles()</a>, <a class="el" href="System_8cpp_source.html#l00389">loadFileMaster()</a>, <a class="el" href="System_8cpp_source.html#l00565">loadLinkMaster()</a>, and <a class="el" href="System_8cpp_source.html#l00456">loadPotentialStyles()</a>.</p>
 
 </div>
 </div>
@@ -590,9 +590,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1MdSystem.html#a7d389932d3d52c55bf6c21c88460d440">McMd::MdSystem</a>, and <a class="el" href="classMcMd_1_1McSystem.html#af1d6b76703277a81d2419c7c95a1cc36">McMd::McSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00360">360</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00352">352</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01022">isCopy()</a>, <a class="el" href="System_8cpp_source.html#l00558">saveEnsembles()</a>, <a class="el" href="System_8cpp_source.html#l00414">saveFileMaster()</a>, <a class="el" href="System_8cpp_source.html#l00581">saveLinkMaster()</a>, and <a class="el" href="System_8cpp_source.html#l00502">savePotentialStyles()</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01022">isCopy()</a>, <a class="el" href="System_8cpp_source.html#l00550">saveEnsembles()</a>, <a class="el" href="System_8cpp_source.html#l00406">saveFileMaster()</a>, <a class="el" href="System_8cpp_source.html#l00573">saveLinkMaster()</a>, and <a class="el" href="System_8cpp_source.html#l00494">savePotentialStyles()</a>.</p>
 
 </div>
 </div>
@@ -612,9 +612,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the configuration file reader/writer factory by reference. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00761">761</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00753">753</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8cpp_source.html#l00772">newDefaultConfigIoFactory()</a>.</p>
+<p>References <a class="el" href="System_8cpp_source.html#l00764">newDefaultConfigIoFactory()</a>.</p>
 
 </div>
 </div>
@@ -642,11 +642,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00778">778</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00770">770</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="classUtil_1_1Factory.html#a75ae49003fb0b92da58e370ceae64153">Util::Factory&lt; Data &gt;::factory()</a>, <a class="el" href="System_8cpp_source.html#l00772">newDefaultConfigIoFactory()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="classUtil_1_1Factory.html#a75ae49003fb0b92da58e370ceae64153">Util::Factory&lt; Data &gt;::factory()</a>, <a class="el" href="System_8cpp_source.html#l00764">newDefaultConfigIoFactory()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00256">McMd::MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00349">McMd::McSimulation::readCommands()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00283">McMd::MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00444">McMd::McSimulation::readCommands()</a>.</p>
 
 </div>
 </div>
@@ -678,9 +678,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1MdSystem.html#ade5efc17b6f4811310d65911b38e89fd">McMd::MdSystem</a>, and <a class="el" href="classMcMd_1_1McSystem.html#a68d7d0a062419bc2ff3aeb45c3bea1d5">McMd::McSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00699">699</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00691">691</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8cpp_source.html#l01011">isEmpty()</a>, <a class="el" href="System_8cpp_source.html#l01229">isValid()</a>, <a class="el" href="System_8cpp_source.html#l00693">newDefaultConfigIo()</a>, <a class="el" href="classMcMd_1_1ConfigIo.html#ab9c732ce238078432a29fd6878068c23">McMd::ConfigIo::read()</a>, and <a class="el" href="System_8cpp_source.html#l01024">removeAllMolecules()</a>.</p>
+<p>References <a class="el" href="System_8cpp_source.html#l01003">isEmpty()</a>, <a class="el" href="System_8cpp_source.html#l01221">isValid()</a>, <a class="el" href="System_8cpp_source.html#l00685">newDefaultConfigIo()</a>, <a class="el" href="classMcMd_1_1ConfigIo.html#ab9c732ce238078432a29fd6878068c23">McMd::ConfigIo::read()</a>, and <a class="el" href="System_8cpp_source.html#l01016">removeAllMolecules()</a>.</p>
 
 </div>
 </div>
@@ -708,11 +708,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00716">716</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00708">708</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8cpp_source.html#l00693">newDefaultConfigIo()</a>, and <a class="el" href="classMcMd_1_1ConfigIo.html#ae785af21f8a28abd4c63c8e5f4655db9">McMd::ConfigIo::write()</a>.</p>
+<p>References <a class="el" href="System_8cpp_source.html#l00685">newDefaultConfigIo()</a>, and <a class="el" href="classMcMd_1_1ConfigIo.html#ae785af21f8a28abd4c63c8e5f4655db9">McMd::ConfigIo::write()</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00256">McMd::MdSimulation::readCommands()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00349">McMd::McSimulation::readCommands()</a>, and <a class="el" href="DumpConfig_8cpp_source.html#l00067">McMd::DumpConfig::sample()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00283">McMd::MdSimulation::readCommands()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00444">McMd::McSimulation::readCommands()</a>, and <a class="el" href="mcMd_2analyzers_2system_2ConfigWriter_8cpp_source.html#l00064">McMd::ConfigWriter::sample()</a>.</p>
 
 </div>
 </div>
@@ -741,9 +741,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1MdSystem.html#a16389526092cbeac08a65847cfb0aa0f">McMd::MdSystem</a>, and <a class="el" href="classMcMd_1_1McSystem.html#ab0984df1a0d3f5e7a03bc8abfca05a38">McMd::McSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00617">617</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00609">609</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8cpp_source.html#l00975">addMolecule()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00561">McMd::Molecule::begin()</a>, <a class="el" href="System_8h_source.html#l00964">boundary()</a>, <a class="el" href="System_8h_source.html#l01037">molecule()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">Util::ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00790">McMd::Simulation::nSpecies()</a>, <a class="el" href="ArrayStack_8h_source.html#l00196">Util::ArrayStack&lt; Data &gt;::pop()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00589">McMd::Species::reservoir()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00427">Util::OrthorhombicBoundary::shift()</a>, <a class="el" href="System_8h_source.html#l00955">simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00796">McMd::Simulation::species()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="System_8cpp_source.html#l00967">addMolecule()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00561">McMd::Molecule::begin()</a>, <a class="el" href="System_8h_source.html#l00964">boundary()</a>, <a class="el" href="System_8h_source.html#l01037">molecule()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">Util::ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00787">McMd::Simulation::nSpecies()</a>, <a class="el" href="ArrayStack_8h_source.html#l00196">Util::ArrayStack&lt; Data &gt;::pop()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00589">McMd::Species::reservoir()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00428">Util::OrthorhombicBoundary::shift()</a>, <a class="el" href="System_8h_source.html#l00955">simulation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00793">McMd::Simulation::species()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -770,11 +770,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00658">658</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00650">650</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01047">begin()</a>, <a class="el" href="System_8h_source.html#l00964">boundary()</a>, <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">Util::ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00790">McMd::Simulation::nSpecies()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00427">Util::OrthorhombicBoundary::shift()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01047">begin()</a>, <a class="el" href="System_8h_source.html#l00964">boundary()</a>, <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">Util::ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00787">McMd::Simulation::nSpecies()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00428">Util::OrthorhombicBoundary::shift()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00240">McMd::MdSimulation::save()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00286">McMd::McSimulation::save()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00267">McMd::MdSimulation::save()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00383">McMd::McSimulation::save()</a>.</p>
 
 </div>
 </div>
@@ -794,9 +794,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the trajectory reader/writer factory by reference. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00798">798</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00790">790</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8cpp_source.html#l00809">newDefaultTrajectoryIoFactory()</a>.</p>
+<p>References <a class="el" href="System_8cpp_source.html#l00801">newDefaultTrajectoryIoFactory()</a>.</p>
 
 </div>
 </div>
@@ -825,11 +825,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00975">975</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00967">967</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 <p>References <a class="el" href="Array_8h_source.html#l00144">Util::Array&lt; Data &gt;::capacity()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00577">McMd::Species::id()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00659">McMd::Molecule::setSystem()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00417">McMd::Molecule::species()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00187">McMd::Linear::generateMolecules()</a>, <a class="el" href="System_8cpp_source.html#l00617">loadConfig()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00048">McMd::McMdConfigIo::read()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00041">McMd::PmcConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00046">McMd::DdMdConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00045">McMd::LammpsConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">McMd::DCDTrajectoryIo::readHeader()</a>, and <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00120">McMd::McNVTChemicalPotential::sample()</a>.</p>
+<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00184">McMd::Linear::generateMolecules()</a>, <a class="el" href="System_8cpp_source.html#l00609">loadConfig()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00045">McMd::McMdConfigIo::read()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00038">McMd::PmcConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00043">McMd::DdMdConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00042">McMd::LammpsConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">McMd::DCDTrajectoryIo::readHeader()</a>, <a class="el" href="TrajectoryIo_8cpp_source.html#l00038">McMd::TrajectoryIo::readHeader()</a>, and <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00117">McMd::McNVTChemicalPotential::sample()</a>.</p>
 
 </div>
 </div>
@@ -849,7 +849,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Remove a specific molecule from this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>. </p>
-<p>This function removes a <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> from the set of molecules of the same <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> in this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>, and calls <a class="el" href="classMcMd_1_1Molecule.html#ab831988d039f5e11bc091d352ec2e0d6" title="Set the parent System pointer to null (no System).">Molecule::unsetSystem()</a>.</p>
+<p>This function removes a <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> from the set of molecules of the same <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> in this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>, and calls <a class="el" href="classMcMd_1_1Molecule.html#a0d4447530054e10e21472d4761067c40" title="Set the parent System pointer to null (no System).">Molecule::unsetSystem()</a>.</p>
 <p>The removed <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> should be pushed onto the <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> reservoir or added to another <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -858,11 +858,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00993">993</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00985">985</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 <p>References <a class="el" href="mcMd_2species_2Species_8h_source.html#l00577">McMd::Species::id()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00417">McMd::Molecule::species()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00426">McMd::Molecule::system()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00665">McMd::Molecule::unsetSystem()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l01024">removeAllMolecules()</a>, and <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00120">McMd::McNVTChemicalPotential::sample()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l01016">removeAllMolecules()</a>, and <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00117">McMd::McNVTChemicalPotential::sample()</a>.</p>
 
 </div>
 </div>
@@ -883,11 +883,11 @@ Protected Member Functions</h2></td></tr>
 <p>Remove all molecules from this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>. </p>
 <p>Remove all molecules of every species from this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>, and push each onto the reservoir for the appropriate <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01024">1024</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01016">1016</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="LinkMaster_8cpp_source.html#l00327">McMd::LinkMaster::clear()</a>, <a class="el" href="System_8h_source.html#l00974">linkMaster()</a>, <a class="el" href="System_8h_source.html#l01037">molecule()</a>, <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00790">McMd::Simulation::nSpecies()</a>, <a class="el" href="ArrayStack_8h_source.html#l00183">Util::ArrayStack&lt; Data &gt;::push()</a>, <a class="el" href="System_8cpp_source.html#l00993">removeMolecule()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00589">McMd::Species::reservoir()</a>, <a class="el" href="System_8h_source.html#l00955">simulation()</a>, and <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00796">McMd::Simulation::species()</a>.</p>
+<p>References <a class="el" href="LinkMaster_8cpp_source.html#l00324">McMd::LinkMaster::clear()</a>, <a class="el" href="System_8h_source.html#l00974">linkMaster()</a>, <a class="el" href="System_8h_source.html#l01037">molecule()</a>, <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00787">McMd::Simulation::nSpecies()</a>, <a class="el" href="ArrayStack_8h_source.html#l00183">Util::ArrayStack&lt; Data &gt;::push()</a>, <a class="el" href="System_8cpp_source.html#l00985">removeMolecule()</a>, <a class="el" href="mcMd_2species_2Species_8h_source.html#l00589">McMd::Species::reservoir()</a>, <a class="el" href="System_8h_source.html#l00955">simulation()</a>, and <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00793">McMd::Simulation::species()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00748">McMd::McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00586">McMd::MdSimulation::analyzeDumps()</a>, and <a class="el" href="System_8cpp_source.html#l00699">readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00849">McMd::McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00618">McMd::MdSimulation::analyzeDumps()</a>, and <a class="el" href="System_8cpp_source.html#l00691">readConfig()</a>.</p>
 
 </div>
 </div>
@@ -971,7 +971,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l01028">1028</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l01011">isEmpty()</a>, <a class="el" href="System_8cpp_source.html#l01229">isValid()</a>, <a class="el" href="System_8cpp_source.html#l01078">nAtom()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00388">McMd::CfbReptationMove::output()</a>, <a class="el" href="System_8cpp_source.html#l01062">randomMolecule()</a>, <a class="el" href="System_8cpp_source.html#l01024">removeAllMolecules()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00180">McMd::BlockRadiusGyration::sample()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00115">McMd::RadiusGyration::sample()</a>, <a class="el" href="System_8cpp_source.html#l00658">saveConfig()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00141">McMd::AtomMSD::setup()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00130">McMd::ComMSD::setup()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00134">McMd::RingRouseAutoCorr::setup()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00144">McMd::LinearRouseAutoCorr::setup()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00132">McMd::IntraPairAutoCorr::setup()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00185">McMd::McMdConfigIo::write()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00096">McMd::PmcConfigIo::write()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00117">McMd::DdMdConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00167">McMd::LammpsConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l01003">isEmpty()</a>, <a class="el" href="System_8cpp_source.html#l01221">isValid()</a>, <a class="el" href="System_8cpp_source.html#l01070">nAtom()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00385">McMd::CfbReptationMove::output()</a>, <a class="el" href="System_8cpp_source.html#l01054">randomMolecule()</a>, <a class="el" href="System_8cpp_source.html#l01016">removeAllMolecules()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00177">McMd::BlockRadiusGyration::sample()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00112">McMd::RadiusGyration::sample()</a>, <a class="el" href="System_8cpp_source.html#l00650">saveConfig()</a>, <a class="el" href="McMuExchange_8cpp_source.html#l00089">McMd::McMuExchange::setup()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00138">McMd::AtomMSD::setup()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00127">McMd::ComMSD::setup()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00131">McMd::RingRouseAutoCorr::setup()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00141">McMd::LinearRouseAutoCorr::setup()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00129">McMd::IntraPairAutoCorr::setup()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00182">McMd::McMdConfigIo::write()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00093">McMd::PmcConfigIo::write()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00114">McMd::DdMdConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00164">McMd::LammpsConfigIo::write()</a>.</p>
 
 </div>
 </div>
@@ -991,11 +991,11 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return the total number of atoms in this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01078">1078</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01070">1070</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00790">McMd::Simulation::nSpecies()</a>, <a class="el" href="System_8h_source.html#l00955">simulation()</a>, and <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00796">McMd::Simulation::species()</a>.</p>
+<p>References <a class="el" href="mcMd_2species_2Species_8h_source.html#l00595">McMd::Species::nAtom()</a>, <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00787">McMd::Simulation::nSpecies()</a>, <a class="el" href="System_8h_source.html#l00955">simulation()</a>, and <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00793">McMd::Simulation::species()</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00612">McMd::MdSystem::removeDriftVelocity()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00111">McMd::NvtNhIntegrator::setup()</a>, and <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00136">McMd::NvtNhIntegrator::step()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00609">McMd::MdSystem::removeDriftVelocity()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00108">McMd::NvtNhIntegrator::setup()</a>, and <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00133">McMd::NvtNhIntegrator::step()</a>.</p>
 
 </div>
 </div>
@@ -1015,11 +1015,11 @@ Protected Member Functions</h2></td></tr>
 
 <p>Is this an empty <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> (i.e., one with no molecules) ? </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01011">1011</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01003">1003</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00790">McMd::Simulation::nSpecies()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00787">McMd::Simulation::nSpecies()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00699">readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00691">readConfig()</a>.</p>
 
 </div>
 </div>
@@ -1040,7 +1040,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the index of a <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> within its <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> in this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>. </p>
 <p>This function returns the current (mutable) index of the molecule within the set of molecules of the same <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> in this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>, in the range 0 &lt;= moleculeId &lt; nMolecule(speciesId). This is the index required as the second argument of <a class="el" href="classMcMd_1_1System.html#a5b439fee621a22ebf5e98ee540c2a92f" title="Get a specific Molecule in this System, by integer index.">molecule(int, int)</a>.</p>
-<p>Note: The id returned by this function is not the same as the id returned by <a class="el" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">Molecule::id()</a>, which is a permanent identifier for each molecule that is set immediately after allocation.</p>
+<p>Note: The id returned by this function is not the same as the id returned by <a class="el" href="classMcMd_1_1Molecule.html#ab4a08686aaf206b7ba1f50057bae0a6a" title="Get the index for this Molecule (unique in species).">Molecule::id()</a>, which is a permanent identifier for each molecule that is set immediately after allocation.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">molecule</td><td><a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> object of interest. </td></tr>
@@ -1049,11 +1049,11 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>index for molecule within its <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> and <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01051">1051</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01043">1043</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 <p>References <a class="el" href="mcMd_2species_2Species_8h_source.html#l00577">McMd::Species::id()</a>, and <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00417">McMd::Molecule::species()</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l01062">randomMolecule()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00185">McMd::McMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l01054">randomMolecule()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00182">McMd::McMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
@@ -1095,7 +1095,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l01037">1037</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00187">McMd::Linear::generateMolecules()</a>, <a class="el" href="System_8cpp_source.html#l00617">loadConfig()</a>, <a class="el" href="CfbDoubleRebridgeMove_8cpp_source.html#l00121">McMd::CfbDoubleRebridgeMove::move()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00097">McMd::RingOctaRebridgeMove::move()</a>, <a class="el" href="System_8cpp_source.html#l01062">randomMolecule()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00048">McMd::McMdConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">McMd::DCDTrajectoryIo::readFrame()</a>, <a class="el" href="System_8cpp_source.html#l01024">removeAllMolecules()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00166">McMd::AtomMSD::sample()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00158">McMd::ComMSD::sample()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00170">McMd::RingRouseAutoCorr::sample()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00176">McMd::LinearRouseAutoCorr::sample()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00180">McMd::BlockRadiusGyration::sample()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00147">McMd::IntraPairAutoCorr::sample()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00115">McMd::RadiusGyration::sample()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00178">McMd::RingOctaRebridgeMove::scanBridge()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00141">McMd::AtomMSD::setup()</a>, and <a class="el" href="ComMSD_8cpp_source.html#l00130">McMd::ComMSD::setup()</a>.</p>
+<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00184">McMd::Linear::generateMolecules()</a>, <a class="el" href="System_8cpp_source.html#l00609">loadConfig()</a>, <a class="el" href="CfbDoubleRebridgeMove_8cpp_source.html#l00118">McMd::CfbDoubleRebridgeMove::move()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00094">McMd::RingOctaRebridgeMove::move()</a>, <a class="el" href="System_8cpp_source.html#l01054">randomMolecule()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00045">McMd::McMdConfigIo::read()</a>, <a class="el" href="LammpsDumpIo_8cpp_source.html#l00059">McMd::LammpsDumpIo::readFrame()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00104">McMd::DCDTrajectoryIo::readFrame()</a>, <a class="el" href="System_8cpp_source.html#l01016">removeAllMolecules()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00163">McMd::AtomMSD::sample()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00155">McMd::ComMSD::sample()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00167">McMd::RingRouseAutoCorr::sample()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00173">McMd::LinearRouseAutoCorr::sample()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00177">McMd::BlockRadiusGyration::sample()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00144">McMd::IntraPairAutoCorr::sample()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00112">McMd::RadiusGyration::sample()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00175">McMd::RingOctaRebridgeMove::scanBridge()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00138">McMd::AtomMSD::setup()</a>, and <a class="el" href="ComMSD_8cpp_source.html#l00127">McMd::ComMSD::setup()</a>.</p>
 
 </div>
 </div>
@@ -1123,11 +1123,11 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>const reference to the chosen molecule </dd></dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01062">1062</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01054">1054</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="Log_8cpp_source.html#l00060">Util::Log::file()</a>, <a class="el" href="System_8h_source.html#l01037">molecule()</a>, <a class="el" href="System_8cpp_source.html#l01051">moleculeId()</a>, <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00703">McMd::Simulation::random()</a>, <a class="el" href="System_8h_source.html#l00955">simulation()</a>, <a class="el" href="Random_8h_source.html#l00224">Util::Random::uniformInt()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Log_8cpp_source.html#l00057">Util::Log::file()</a>, <a class="el" href="System_8h_source.html#l01037">molecule()</a>, <a class="el" href="System_8cpp_source.html#l01043">moleculeId()</a>, <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00703">McMd::Simulation::random()</a>, <a class="el" href="System_8h_source.html#l00955">simulation()</a>, <a class="el" href="Random_8h_source.html#l00224">Util::Random::uniformInt()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00116">McMd::RingTetraRebridgeMove::move()</a>, <a class="el" href="AtomDisplaceMove_8cpp_source.html#l00070">McMd::AtomDisplaceMove::move()</a>, <a class="el" href="CfbEndMove_8cpp_source.html#l00102">McMd::CfbEndMove::move()</a>, <a class="el" href="CfbRebridgeMove_8cpp_source.html#l00111">McMd::CfbRebridgeMove::move()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00097">McMd::RingOctaRebridgeMove::move()</a>, <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00077">McMd::HomopolymerSemiGrandMove::move()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00123">McMd::EndSwapMove::move()</a>, <a class="el" href="CfbRingRebridgeMove_8cpp_source.html#l00115">McMd::CfbRingRebridgeMove::move()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00193">McMd::CfbReptationMove::move()</a>, and <a class="el" href="RigidDisplaceMove_8cpp_source.html#l00079">McMd::RigidDisplaceMove::move()</a>.</p>
+<p>Referenced by <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00113">McMd::RingTetraRebridgeMove::move()</a>, <a class="el" href="AtomDisplaceMove_8cpp_source.html#l00067">McMd::AtomDisplaceMove::move()</a>, <a class="el" href="CfbEndMove_8cpp_source.html#l00099">McMd::CfbEndMove::move()</a>, <a class="el" href="CfbRebridgeMove_8cpp_source.html#l00108">McMd::CfbRebridgeMove::move()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00094">McMd::RingOctaRebridgeMove::move()</a>, <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00074">McMd::HomopolymerSemiGrandMove::move()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00120">McMd::EndSwapMove::move()</a>, <a class="el" href="CfbRingRebridgeMove_8cpp_source.html#l00112">McMd::CfbRingRebridgeMove::move()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00190">McMd::CfbReptationMove::move()</a>, and <a class="el" href="RigidDisplaceMove_8cpp_source.html#l00076">McMd::RigidDisplaceMove::move()</a>.</p>
 
 </div>
 </div>
@@ -1167,7 +1167,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l01047">1047</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00725">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="HybridMdMove_8cpp_source.html#l00083">McMd::HybridMdMove::move()</a>, <a class="el" href="HybridNphMdMove_8cpp_source.html#l00098">McMd::HybridNphMdMove::move()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00154">McMd::ReplicaMove::move()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00349">McMd::McSimulation::readCommands()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00612">McMd::MdSystem::removeDriftVelocity()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00037">McMd::McExternalEnergyAverage::sample()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00133">McMd::CompositionProfile::sample()</a>, <a class="el" href="MigratingVanHove_8cpp_source.html#l00097">McMd::MigratingVanHove::sample()</a>, <a class="el" href="RDF_8cpp_source.html#l00110">McMd::RDF::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">McMd::StructureFactor::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00127">McMd::VanHove::sample()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00135">McMd::StructureFactorP::sample()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00135">McMd::IntraStructureFactor::sample()</a>, <a class="el" href="System_8cpp_source.html#l00658">saveConfig()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00584">McMd::MdSystem::setBoltzmannVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00551">McMd::MdSystem::setZeroForces()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00567">McMd::MdSystem::setZeroVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00530">McMd::MdSystem::shiftAtoms()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00097">McMd::NveVvIntegrator::step()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00247">McMd::NvtDpdVvIntegrator::step()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00136">McMd::NvtNhIntegrator::step()</a>, <a class="el" href="mcMd_2mdIntegrators_2NphIntegrator_8cpp_source.html#l00101">McMd::NphIntegrator::step()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00185">McMd::McMdConfigIo::write()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00096">McMd::PmcConfigIo::write()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00117">McMd::DdMdConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00167">McMd::LammpsConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00722">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="HybridMdMove_8cpp_source.html#l00080">McMd::HybridMdMove::move()</a>, <a class="el" href="HybridNphMdMove_8cpp_source.html#l00095">McMd::HybridNphMdMove::move()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00150">McMd::ReplicaMove::move()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00444">McMd::McSimulation::readCommands()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00609">McMd::MdSystem::removeDriftVelocity()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00034">McMd::McExternalEnergyAverage::sample()</a>, <a class="el" href="McMuExchange_8cpp_source.html#l00106">McMd::McMuExchange::sample()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00130">McMd::CompositionProfile::sample()</a>, <a class="el" href="RDF_8cpp_source.html#l00107">McMd::RDF::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">McMd::StructureFactor::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00124">McMd::VanHove::sample()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00132">McMd::StructureFactorP::sample()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00132">McMd::IntraStructureFactor::sample()</a>, <a class="el" href="System_8cpp_source.html#l00650">saveConfig()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00581">McMd::MdSystem::setBoltzmannVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00548">McMd::MdSystem::setZeroForces()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00564">McMd::MdSystem::setZeroVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00527">McMd::MdSystem::shiftAtoms()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00094">McMd::NveVvIntegrator::step()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00133">McMd::NvtNhIntegrator::step()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00244">McMd::NvtDpdVvIntegrator::step()</a>, <a class="el" href="mcMd_2mdIntegrators_2NphIntegrator_8cpp_source.html#l00098">McMd::NphIntegrator::step()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00182">McMd::McMdConfigIo::write()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00093">McMd::PmcConfigIo::write()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00114">McMd::DdMdConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2LammpsConfigIo_8cpp_source.html#l00164">McMd::LammpsConfigIo::write()</a>.</p>
 
 </div>
 </div>
@@ -1225,9 +1225,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classMcMd_1_1PairFactory.html" title="Factory for subclasses MdPairPotential or McPairPotential.">PairFactory</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01091">1091</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01083">1083</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00092">McMd::MdSystem::MdSystem()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00089">McMd::MdSystem::MdSystem()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1247,9 +1247,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return nonbonded pair style string. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01103">1103</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01095">1095</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1269,9 +1269,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the associated <a class="el" href="classUtil_1_1Factory.html">Factory&lt;BondPotential&gt;</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01110">1110</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01102">1102</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1291,9 +1291,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return covalent bond style string. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01122">1122</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01114">1114</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1313,9 +1313,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the associated <a class="el" href="classMcMd_1_1AngleFactory.html" title="Factory for subclasses of AnglePotential.">AngleFactory</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01129">1129</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01121">1121</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1335,9 +1335,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return angle potential style string. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01141">1141</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01133">1133</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1357,9 +1357,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the associated Dihedral Factory by reference. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01149">1149</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01141">1141</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1379,9 +1379,53 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return dihedral potential style string. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01161">1161</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01153">1153</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad3beac0f5ba061c0b05fcfa208b0cf70"></a><!-- doxytag: member="McMd::System::externalFactory" ref="ad3beac0f5ba061c0b05fcfa208b0cf70" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1ExternalPotential.html">ExternalPotential</a> &gt; &amp; <a class="el" href="classMcMd_1_1System.html#ad3beac0f5ba061c0b05fcfa208b0cf70">McMd::System::externalFactory</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the associated <a class="el" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class.">ExternalPotential</a> factory by reference. </p>
+
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01162">1162</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8de5fdc62be2c60f81c321be87c05bc4"></a><!-- doxytag: member="McMd::System::externalStyle" ref="a8de5fdc62be2c60f81c321be87c05bc4" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classMcMd_1_1System.html#a8de5fdc62be2c60f81c321be87c05bc4">McMd::System::externalStyle</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return external potential style string. </p>
+
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01174">1174</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1401,9 +1445,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the associated <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> factory by reference. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01170">1170</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01182">1182</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1423,9 +1467,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return link potential style string. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01182">1182</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01194">1194</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1447,51 +1491,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l00974">974</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McMdConfigIo_8cpp_source.html#l00048">McMd::McMdConfigIo::read()</a>, <a class="el" href="System_8cpp_source.html#l01024">removeAllMolecules()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00185">McMd::McMdConfigIo::write()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ad3beac0f5ba061c0b05fcfa208b0cf70"></a><!-- doxytag: member="McMd::System::externalFactory" ref="ad3beac0f5ba061c0b05fcfa208b0cf70" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1ExternalPotential.html">ExternalPotential</a> &gt; &amp; <a class="el" href="classMcMd_1_1System.html#ad3beac0f5ba061c0b05fcfa208b0cf70">McMd::System::externalFactory</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get the associated <a class="el" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class.">ExternalPotential</a> factory by reference. </p>
-
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01190">1190</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
-
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a8de5fdc62be2c60f81c321be87c05bc4"></a><!-- doxytag: member="McMd::System::externalStyle" ref="a8de5fdc62be2c60f81c321be87c05bc4" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string <a class="el" href="classMcMd_1_1System.html#a8de5fdc62be2c60f81c321be87c05bc4">McMd::System::externalStyle</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return external potential style string. </p>
-
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01202">1202</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
-
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McMdConfigIo_8cpp_source.html#l00045">McMd::McMdConfigIo::read()</a>, <a class="el" href="System_8cpp_source.html#l01016">removeAllMolecules()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00182">McMd::McMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
@@ -1532,11 +1532,11 @@ Protected Member Functions</h2></td></tr>
 
 <p>Set to expect a <a class="el" href="classMcMd_1_1Perturbation.html" title="Model of parameter dependence in a free energy perturbation theory.">Perturbation</a> in the parameter file. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00817">817</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00809">809</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 <p>References <a class="el" href="System_8h_source.html#l01079">hasPerturbation()</a>, <a class="el" href="System_8h_source.html#l00602">newDefaultPerturbationFactory()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00868">loadPerturbation()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00102">McMd::MdSimulation::setOptions()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00128">McMd::McSimulation::setOptions()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00860">loadPerturbation()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00099">McMd::MdSimulation::setOptions()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00200">McMd::McSimulation::setOptions()</a>.</p>
 
 </div>
 </div>
@@ -1579,7 +1579,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l01079">1079</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00925">loadReplicaMove()</a>, <a class="el" href="System_8cpp_source.html#l00849">readPerturbation()</a>, <a class="el" href="System_8cpp_source.html#l00908">readReplicaMove()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00041">McMd::ReplicaMove::ReplicaMove()</a>, <a class="el" href="System_8cpp_source.html#l00893">savePerturbation()</a>, <a class="el" href="System_8cpp_source.html#l00942">saveReplicaMove()</a>, and <a class="el" href="System_8cpp_source.html#l00817">setExpectPerturbation()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00917">loadReplicaMove()</a>, <a class="el" href="System_8cpp_source.html#l00841">readPerturbation()</a>, <a class="el" href="System_8cpp_source.html#l00900">readReplicaMove()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00037">McMd::ReplicaMove::ReplicaMove()</a>, <a class="el" href="System_8cpp_source.html#l00885">savePerturbation()</a>, <a class="el" href="System_8cpp_source.html#l00934">saveReplicaMove()</a>, and <a class="el" href="System_8cpp_source.html#l00809">setExpectPerturbation()</a>.</p>
 
 </div>
 </div>
@@ -1601,7 +1601,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l01085">1085</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="BennettsMethod_8cpp_source.html#l00038">McMd::BennettsMethod::BennettsMethod()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00154">McMd::ReplicaMove::move()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00041">McMd::ReplicaMove::ReplicaMove()</a>, and <a class="el" href="BennettsMethod_8cpp_source.html#l00187">McMd::BennettsMethod::sample()</a>.</p>
+<p>Referenced by <a class="el" href="BennettsMethod_8cpp_source.html#l00035">McMd::BennettsMethod::BennettsMethod()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00150">McMd::ReplicaMove::move()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00037">McMd::ReplicaMove::ReplicaMove()</a>, and <a class="el" href="BennettsMethod_8cpp_source.html#l00184">McMd::BennettsMethod::sample()</a>.</p>
 
 </div>
 </div>
@@ -1643,7 +1643,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l01101">1101</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00617">McMd::McSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00718">McMd::McSimulation::simulate()</a>.</p>
 
 </div>
 </div>
@@ -1665,7 +1665,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l00949">949</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00731">setId()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00723">setId()</a>.</p>
 
 </div>
 </div>
@@ -1687,7 +1687,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l00955">955</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00957">allocateMoleculeSets()</a>, <a class="el" href="BennettsMethod_8cpp_source.html#l00038">McMd::BennettsMethod::BennettsMethod()</a>, <a class="el" href="McPerturbationFactory_8cpp_source.html#l00052">McMd::McPerturbationFactory::factory()</a>, <a class="el" href="Linear_8cpp_source.html#l00187">McMd::Linear::generateMolecules()</a>, <a class="el" href="System_8cpp_source.html#l01011">isEmpty()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00783">McMd::MdSimulation::isValid()</a>, <a class="el" href="System_8cpp_source.html#l01229">isValid()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00725">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="System_8cpp_source.html#l00617">loadConfig()</a>, <a class="el" href="System_8cpp_source.html#l00573">loadLinkMaster()</a>, <a class="el" href="SemiGrandDistribution_8cpp_source.html#l00065">McMd::SemiGrandDistribution::loadParameters()</a>, <a class="el" href="TypeDistribution_8cpp_source.html#l00064">McMd::TypeDistribution::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00089">McMd::AtomMSD::loadParameters()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00082">McMd::ComMSD::loadParameters()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00068">McMd::RingTetraRebridgeMove::loadParameters()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00081">McMd::RingRouseAutoCorr::loadParameters()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00102">McMd::MdPairEnergyCoefficients::loadParameters()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00091">McMd::LinearRouseAutoCorr::loadParameters()</a>, <a class="el" href="RDF_8cpp_source.html#l00063">McMd::RDF::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00062">McMd::CompositionProfile::loadParameters()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00091">McMd::IntraPairAutoCorr::loadParameters()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00066">McMd::RadiusGyration::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00070">McMd::StructureFactor::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00114">McMd::ReplicaMove::loadParameters()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00101">McMd::BlockRadiusGyration::loadParameters()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00071">McMd::StructureFactorP::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00074">McMd::IntraStructureFactor::loadParameters()</a>, <a class="el" href="System_8cpp_source.html#l00464">loadPotentialStyles()</a>, <a class="el" href="MigratingVanHove_8cpp_source.html#l00042">McMd::MigratingVanHove::MigratingVanHove()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00154">McMd::ReplicaMove::move()</a>, <a class="el" href="System_8cpp_source.html#l01078">nAtom()</a>, <a class="el" href="System_8cpp_source.html#l01062">randomMolecule()</a>, <a class="el" href="System_8cpp_source.html#l00565">readLinkMaster()</a>, <a class="el" href="SemiGrandDistribution_8cpp_source.html#l00041">McMd::SemiGrandDistribution::readParameters()</a>, <a class="el" href="TypeDistribution_8cpp_source.html#l00040">McMd::TypeDistribution::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00047">McMd::AtomMSD::readParameters()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00043">McMd::RingTetraRebridgeMove::readParameters()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00047">McMd::ComMSD::readParameters()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00053">McMd::RingRouseAutoCorr::readParameters()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00069">McMd::MdPairEnergyCoefficients::readParameters()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00052">McMd::LinearRouseAutoCorr::readParameters()</a>, <a class="el" href="RDF_8cpp_source.html#l00047">McMd::RDF::readParameters()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00038">McMd::CompositionProfile::readParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00045">McMd::IntraPairAutoCorr::readParameters()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00036">McMd::RadiusGyration::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00048">McMd::StructureFactor::readParameters()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00047">McMd::BlockRadiusGyration::readParameters()</a>, <a class="el" href="MigratingVanHove_8cpp_source.html#l00057">McMd::MigratingVanHove::readParameters()</a>, <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00038">McMd::StructureFactorPGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00039">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00094">McMd::ReplicaMove::readParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00047">McMd::VanHove::readParameters()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00045">McMd::StructureFactorP::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00047">McMd::IntraStructureFactor::readParameters()</a>, <a class="el" href="System_8cpp_source.html#l00424">readPotentialStyles()</a>, <a class="el" href="System_8cpp_source.html#l01024">removeAllMolecules()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00612">McMd::MdSystem::removeDriftVelocity()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00041">McMd::ReplicaMove::ReplicaMove()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00037">McMd::McExternalEnergyAverage::sample()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00133">McMd::CompositionProfile::sample()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00160">McMd::MdPairEnergyCoefficients::sample()</a>, <a class="el" href="MigratingVanHove_8cpp_source.html#l00097">McMd::MigratingVanHove::sample()</a>, <a class="el" href="RDF_8cpp_source.html#l00110">McMd::RDF::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">McMd::StructureFactor::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00127">McMd::VanHove::sample()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00135">McMd::StructureFactorP::sample()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00139">McMd::ReplicaMove::save()</a>, <a class="el" href="System_8cpp_source.html#l00658">saveConfig()</a>, <a class="el" href="System_8cpp_source.html#l00581">saveLinkMaster()</a>, <a class="el" href="McSystem_8cpp_source.html#l00308">McMd::McSystem::saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00449">McMd::MdSystem::saveParameters()</a>, <a class="el" href="System_8cpp_source.html#l00502">savePotentialStyles()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00584">McMd::MdSystem::setBoltzmannVelocities()</a>, <a class="el" href="System_8cpp_source.html#l00741">setSimulation()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00551">McMd::MdSystem::setZeroForces()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00567">McMd::MdSystem::setZeroVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00530">McMd::MdSystem::shiftAtoms()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00117">McMd::DdMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00949">allocateMoleculeSets()</a>, <a class="el" href="BennettsMethod_8cpp_source.html#l00035">McMd::BennettsMethod::BennettsMethod()</a>, <a class="el" href="McPerturbationFactory_8cpp_source.html#l00049">McMd::McPerturbationFactory::factory()</a>, <a class="el" href="Linear_8cpp_source.html#l00184">McMd::Linear::generateMolecules()</a>, <a class="el" href="System_8cpp_source.html#l01003">isEmpty()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00812">McMd::MdSimulation::isValid()</a>, <a class="el" href="System_8cpp_source.html#l01221">isValid()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00722">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="System_8cpp_source.html#l00609">loadConfig()</a>, <a class="el" href="System_8cpp_source.html#l00565">loadLinkMaster()</a>, <a class="el" href="SemiGrandDistribution_8cpp_source.html#l00062">McMd::SemiGrandDistribution::loadParameters()</a>, <a class="el" href="TypeDistribution_8cpp_source.html#l00061">McMd::TypeDistribution::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00086">McMd::AtomMSD::loadParameters()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00079">McMd::ComMSD::loadParameters()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00065">McMd::RingTetraRebridgeMove::loadParameters()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00078">McMd::RingRouseAutoCorr::loadParameters()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00099">McMd::MdPairEnergyCoefficients::loadParameters()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00088">McMd::LinearRouseAutoCorr::loadParameters()</a>, <a class="el" href="RDF_8cpp_source.html#l00060">McMd::RDF::loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="McMuExchange_8cpp_source.html#l00261">McMd::McMuExchange::loadParameters()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00059">McMd::CompositionProfile::loadParameters()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00088">McMd::IntraPairAutoCorr::loadParameters()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00063">McMd::RadiusGyration::loadParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00067">McMd::StructureFactor::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00110">McMd::ReplicaMove::loadParameters()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00098">McMd::BlockRadiusGyration::loadParameters()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00068">McMd::StructureFactorP::loadParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00071">McMd::IntraStructureFactor::loadParameters()</a>, <a class="el" href="System_8cpp_source.html#l00456">loadPotentialStyles()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00150">McMd::ReplicaMove::move()</a>, <a class="el" href="System_8cpp_source.html#l01070">nAtom()</a>, <a class="el" href="System_8cpp_source.html#l01054">randomMolecule()</a>, <a class="el" href="System_8cpp_source.html#l00557">readLinkMaster()</a>, <a class="el" href="SemiGrandDistribution_8cpp_source.html#l00038">McMd::SemiGrandDistribution::readParameters()</a>, <a class="el" href="TypeDistribution_8cpp_source.html#l00037">McMd::TypeDistribution::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00044">McMd::AtomMSD::readParameters()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00040">McMd::RingTetraRebridgeMove::readParameters()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00044">McMd::ComMSD::readParameters()</a>, <a class="el" href="McMuExchange_8cpp_source.html#l00053">McMd::McMuExchange::readParameters()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00050">McMd::RingRouseAutoCorr::readParameters()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00066">McMd::MdPairEnergyCoefficients::readParameters()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00049">McMd::LinearRouseAutoCorr::readParameters()</a>, <a class="el" href="RDF_8cpp_source.html#l00044">McMd::RDF::readParameters()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00035">McMd::CompositionProfile::readParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00042">McMd::IntraPairAutoCorr::readParameters()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00033">McMd::RadiusGyration::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00045">McMd::StructureFactor::readParameters()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00044">McMd::BlockRadiusGyration::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParameters()</a>, <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00035">McMd::StructureFactorPGrid::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00090">McMd::ReplicaMove::readParameters()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00043">McMd::IntraStructureFactorGrid::readParameters()</a>, <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00044">McMd::VanHove::readParameters()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00042">McMd::StructureFactorP::readParameters()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00044">McMd::IntraStructureFactor::readParameters()</a>, <a class="el" href="System_8cpp_source.html#l00416">readPotentialStyles()</a>, <a class="el" href="System_8cpp_source.html#l01016">removeAllMolecules()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00609">McMd::MdSystem::removeDriftVelocity()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00037">McMd::ReplicaMove::ReplicaMove()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00034">McMd::McExternalEnergyAverage::sample()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00130">McMd::CompositionProfile::sample()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00157">McMd::MdPairEnergyCoefficients::sample()</a>, <a class="el" href="RDF_8cpp_source.html#l00107">McMd::RDF::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">McMd::StructureFactor::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00124">McMd::VanHove::sample()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00132">McMd::StructureFactorP::sample()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00135">McMd::ReplicaMove::save()</a>, <a class="el" href="System_8cpp_source.html#l00650">saveConfig()</a>, <a class="el" href="System_8cpp_source.html#l00573">saveLinkMaster()</a>, <a class="el" href="McSystem_8cpp_source.html#l00305">McMd::McSystem::saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00446">McMd::MdSystem::saveParameters()</a>, <a class="el" href="System_8cpp_source.html#l00494">savePotentialStyles()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00581">McMd::MdSystem::setBoltzmannVelocities()</a>, <a class="el" href="System_8cpp_source.html#l00733">setSimulation()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00548">McMd::MdSystem::setZeroForces()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00564">McMd::MdSystem::setZeroVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00527">McMd::MdSystem::shiftAtoms()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00114">McMd::DdMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
@@ -1709,7 +1709,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l00964">964</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00187">McMd::Linear::generateMolecules()</a>, <a class="el" href="System_8cpp_source.html#l00617">loadConfig()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00221">McMd::CompositionProfile::makeWaveVectors()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00217">McMd::StructureFactor::makeWaveVectors()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00208">McMd::StructureFactorP::makeWaveVectors()</a>, <a class="el" href="HybridNphMdMove_8cpp_source.html#l00098">McMd::HybridNphMdMove::move()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00154">McMd::ReplicaMove::move()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00046">McMd::DdMdConfigIo::read()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00256">McMd::MdSimulation::readCommands()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00349">McMd::McSimulation::readCommands()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00133">McMd::CompositionProfile::sample()</a>, <a class="el" href="BoundaryAverage_8cpp_source.html#l00099">McMd::BoundaryAverage::sample()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00098">McMd::McPairEnergyAverage::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00166">McMd::AtomMSD::sample()</a>, <a class="el" href="BondLengthDist_8cpp_source.html#l00104">McMd::BondLengthDist::sample()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00158">McMd::ComMSD::sample()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00170">McMd::RingRouseAutoCorr::sample()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00176">McMd::LinearRouseAutoCorr::sample()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00180">McMd::BlockRadiusGyration::sample()</a>, <a class="el" href="RDF_8cpp_source.html#l00110">McMd::RDF::sample()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00147">McMd::IntraPairAutoCorr::sample()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00115">McMd::RadiusGyration::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">McMd::StructureFactor::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00295">McMd::StructureFactorGrid::sample()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00135">McMd::StructureFactorP::sample()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00135">McMd::IntraStructureFactor::sample()</a>, <a class="el" href="System_8cpp_source.html#l00658">saveConfig()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00220">McMd::RingTetraRebridgeMove::scanBridge()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00141">McMd::AtomMSD::setup()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00130">McMd::ComMSD::setup()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00530">McMd::MdSystem::shiftAtoms()</a>, <a class="el" href="mcMd_2mdIntegrators_2NphIntegrator_8cpp_source.html#l00101">McMd::NphIntegrator::step()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00117">McMd::DdMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00184">McMd::Linear::generateMolecules()</a>, <a class="el" href="System_8cpp_source.html#l00609">loadConfig()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00226">McMd::CompositionProfile::makeWaveVectors()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00221">McMd::StructureFactor::makeWaveVectors()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00205">McMd::StructureFactorP::makeWaveVectors()</a>, <a class="el" href="HybridNphMdMove_8cpp_source.html#l00095">McMd::HybridNphMdMove::move()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00150">McMd::ReplicaMove::move()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00043">McMd::DdMdConfigIo::read()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00283">McMd::MdSimulation::readCommands()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00444">McMd::McSimulation::readCommands()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00130">McMd::CompositionProfile::sample()</a>, <a class="el" href="BoundaryAverage_8cpp_source.html#l00096">McMd::BoundaryAverage::sample()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00095">McMd::McPairEnergyAverage::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00163">McMd::AtomMSD::sample()</a>, <a class="el" href="BondLengthDist_8cpp_source.html#l00101">McMd::BondLengthDist::sample()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00155">McMd::ComMSD::sample()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00167">McMd::RingRouseAutoCorr::sample()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00173">McMd::LinearRouseAutoCorr::sample()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00177">McMd::BlockRadiusGyration::sample()</a>, <a class="el" href="RDF_8cpp_source.html#l00107">McMd::RDF::sample()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00144">McMd::IntraPairAutoCorr::sample()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00112">McMd::RadiusGyration::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">McMd::StructureFactor::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00292">McMd::StructureFactorGrid::sample()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00132">McMd::StructureFactorP::sample()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00132">McMd::IntraStructureFactor::sample()</a>, <a class="el" href="System_8cpp_source.html#l00650">saveConfig()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00217">McMd::RingTetraRebridgeMove::scanBridge()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00138">McMd::AtomMSD::setup()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00127">McMd::ComMSD::setup()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00527">McMd::MdSystem::shiftAtoms()</a>, <a class="el" href="mcMd_2mdIntegrators_2NphIntegrator_8cpp_source.html#l00098">McMd::NphIntegrator::step()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00114">McMd::DdMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
@@ -1731,7 +1731,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l00995">995</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="HybridNphMdMove_8cpp_source.html#l00098">McMd::HybridNphMdMove::move()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00034">McMd::NvtDpdVvIntegrator::NvtDpdVvIntegrator()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00030">McMd::NvtNhIntegrator::NvtNhIntegrator()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00049">McMd::McEnergyPerturbation::parameter()</a>, <a class="el" href="McStressAutoCorrelation_8cpp_source.html#l00033">McMd::McStressAutoCorrelation::sample()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00043">McMd::McEnergyPerturbation::setParameter()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00145">McMd::NvtDpdVvIntegrator::setup()</a>, and <a class="el" href="SystemMove_8cpp_source.html#l00023">McMd::SystemMove::SystemMove()</a>.</p>
+<p>Referenced by <a class="el" href="HybridNphMdMove_8cpp_source.html#l00095">McMd::HybridNphMdMove::move()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00031">McMd::NvtDpdVvIntegrator::NvtDpdVvIntegrator()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00027">McMd::NvtNhIntegrator::NvtNhIntegrator()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00046">McMd::McEnergyPerturbation::parameter()</a>, <a class="el" href="McMuExchange_8cpp_source.html#l00106">McMd::McMuExchange::sample()</a>, <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00040">McMd::McEnergyPerturbation::setParameter()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00142">McMd::NvtDpdVvIntegrator::setup()</a>, and <a class="el" href="SystemMove_8cpp_source.html#l00020">McMd::SystemMove::SystemMove()</a>.</p>
 
 </div>
 </div>
@@ -1753,7 +1753,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l01004">1004</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="HybridNphMdMove_8cpp_source.html#l00098">McMd::HybridNphMdMove::move()</a>, and <a class="el" href="mcMd_2mdIntegrators_2NphIntegrator_8cpp_source.html#l00101">McMd::NphIntegrator::step()</a>.</p>
+<p>Referenced by <a class="el" href="HybridNphMdMove_8cpp_source.html#l00095">McMd::HybridNphMdMove::move()</a>, and <a class="el" href="mcMd_2mdIntegrators_2NphIntegrator_8cpp_source.html#l00098">McMd::NphIntegrator::step()</a>.</p>
 
 </div>
 </div>
@@ -1775,7 +1775,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l01013">1013</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbReptationMove_8cpp_source.html#l00388">McMd::CfbReptationMove::output()</a>, <a class="el" href="McVirialStressTensorAverage_8cpp_source.html#l00047">McMd::McVirialStressTensorAverage::readParameters()</a>, <a class="el" href="MdVirialStressTensorAverage_8cpp_source.html#l00047">McMd::MdVirialStressTensorAverage::readParameters()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00041">McMd::ReplicaMove::ReplicaMove()</a>, and <a class="el" href="System_8cpp_source.html#l00750">setFileMaster()</a>.</p>
+<p>Referenced by <a class="el" href="CfbReptationMove_8cpp_source.html#l00385">McMd::CfbReptationMove::output()</a>, <a class="el" href="McVirialStressTensorAverage_8cpp_source.html#l00044">McMd::McVirialStressTensorAverage::readParameters()</a>, <a class="el" href="MdVirialStressTensorAverage_8cpp_source.html#l00044">McMd::MdVirialStressTensorAverage::readParameters()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00037">McMd::ReplicaMove::ReplicaMove()</a>, and <a class="el" href="System_8cpp_source.html#l00742">setFileMaster()</a>.</p>
 
 </div>
 </div>
@@ -1797,7 +1797,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l01022">1022</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="System_8cpp_source.html#l00341">loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>, <a class="el" href="System_8cpp_source.html#l00319">readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00449">McMd::MdSystem::saveParameters()</a>, <a class="el" href="System_8cpp_source.html#l00360">saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00155">McMd::MdSystem::~MdSystem()</a>, and <a class="el" href="System_8cpp_source.html#l00230">~System()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="System_8cpp_source.html#l00333">loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>, <a class="el" href="System_8cpp_source.html#l00311">readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00446">McMd::MdSystem::saveParameters()</a>, <a class="el" href="System_8cpp_source.html#l00352">saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00152">McMd::MdSystem::~MdSystem()</a>, and <a class="el" href="System_8cpp_source.html#l00227">~System()</a>.</p>
 
 </div>
 </div>
@@ -1819,11 +1819,11 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1MdSystem.html#a57316712e0558fef35dc557420dfaac6">McMd::MdSystem</a>, and <a class="el" href="classMcMd_1_1McSystem.html#a868a1be00da1e40b5cc4c83100759a8c">McMd::McSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l01229">1229</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l01221">1221</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="LinkMaster_8cpp_source.html#l00248">McMd::LinkMaster::isValid()</a>, <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00790">McMd::Simulation::nSpecies()</a>, <a class="el" href="System_8h_source.html#l00955">simulation()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00426">McMd::Molecule::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="LinkMaster_8cpp_source.html#l00245">McMd::LinkMaster::isValid()</a>, <a class="el" href="System_8h_source.html#l01028">nMolecule()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00787">McMd::Simulation::nSpecies()</a>, <a class="el" href="System_8h_source.html#l00955">simulation()</a>, <a class="el" href="mcMd_2chemistry_2Molecule_8h_source.html#l00426">McMd::Molecule::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00699">readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00691">readConfig()</a>.</p>
 
 </div>
 </div>
@@ -1863,9 +1863,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classMcMd_1_1MdSystem.html#afa46946c3605847043520b15df6877cf">McMd::MdSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00693">693</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00685">685</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00699">readConfig()</a>, and <a class="el" href="System_8cpp_source.html#l00716">writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00691">readConfig()</a>, and <a class="el" href="System_8cpp_source.html#l00708">writeConfig()</a>.</p>
 
 </div>
 </div>
@@ -1885,9 +1885,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return a pointer to a new default <a class="el" href="classMcMd_1_1ConfigIoFactory.html" title="Default Factory for subclasses of ConfigIo.">ConfigIoFactory</a>. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00772">772</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00764">764</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00761">configIoFactory()</a>, and <a class="el" href="System_8cpp_source.html#l00778">setConfigIo()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00753">configIoFactory()</a>, and <a class="el" href="System_8cpp_source.html#l00770">setConfigIo()</a>.</p>
 
 </div>
 </div>
@@ -1907,9 +1907,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return a pointer to a new default <a class="el" href="classMcMd_1_1TrajectoryIoFactory.html" title="Default Factory for subclasses of TrajectoryIo.">TrajectoryIoFactory</a>. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00809">809</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00801">801</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00798">trajectoryIoFactory()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00790">trajectoryIoFactory()</a>.</p>
 
 </div>
 </div>
@@ -1933,7 +1933,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l00602">602</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00817">setExpectPerturbation()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00809">setExpectPerturbation()</a>.</p>
 
 </div>
 </div>
@@ -1960,11 +1960,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00849">849</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00841">841</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 <p>References <a class="el" href="ParamComposite_8h_source.html#l00808">Util::ParamComposite::className()</a>, <a class="el" href="System_8h_source.html#l01079">hasPerturbation()</a>, <a class="el" href="Factory_8h_source.html#l00214">Util::Factory&lt; Data &gt;::readObject()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -1991,11 +1991,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00868">868</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00860">860</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8h_source.html#l00808">Util::ParamComposite::className()</a>, <a class="el" href="MpiFileIo_8h_source.html#l00099">Util::MpiFileIo::hasIoCommunicator()</a>, <a class="el" href="Factory_8h_source.html#l00303">Util::Factory&lt; Data &gt;::loadObject()</a>, <a class="el" href="System_8cpp_source.html#l00817">setExpectPerturbation()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ParamComposite_8h_source.html#l00808">Util::ParamComposite::className()</a>, <a class="el" href="MpiFileIo_8h_source.html#l00099">Util::MpiFileIo::hasIoCommunicator()</a>, <a class="el" href="Factory_8h_source.html#l00303">Util::Factory&lt; Data &gt;::loadObject()</a>, <a class="el" href="System_8cpp_source.html#l00809">setExpectPerturbation()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>.</p>
 
 </div>
 </div>
@@ -2022,11 +2022,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00893">893</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00885">885</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8h_source.html#l00808">Util::ParamComposite::className()</a>, <a class="el" href="System_8h_source.html#l01079">hasPerturbation()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00095">McMd::Perturbation::save()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8h_source.html#l00808">Util::ParamComposite::className()</a>, <a class="el" href="System_8h_source.html#l01079">hasPerturbation()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00092">McMd::Perturbation::save()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00308">McMd::McSystem::saveParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00449">McMd::MdSystem::saveParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00305">McMd::McSystem::saveParameters()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00446">McMd::MdSystem::saveParameters()</a>.</p>
 
 </div>
 </div>
@@ -2053,11 +2053,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00908">908</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00900">900</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01079">hasPerturbation()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00263">Util::ParamComposite::readParamComposite()</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01079">hasPerturbation()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00260">Util::ParamComposite::readParamComposite()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>.</p>
 
 </div>
 </div>
@@ -2084,11 +2084,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00925">925</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00917">917</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01079">hasPerturbation()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00285">Util::ParamComposite::loadParamComposite()</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01079">hasPerturbation()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00282">Util::ParamComposite::loadParamComposite()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>.</p>
 
 </div>
 </div>
@@ -2115,11 +2115,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00942">942</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00934">934</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01079">hasPerturbation()</a>, and <a class="el" href="ReplicaMove_8cpp_source.html#l00139">McMd::ReplicaMove::save()</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01079">hasPerturbation()</a>, and <a class="el" href="ReplicaMove_8cpp_source.html#l00135">McMd::ReplicaMove::save()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00308">McMd::McSystem::saveParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00305">McMd::McSystem::saveParameters()</a>.</p>
 
 </div>
 </div>
@@ -2141,11 +2141,11 @@ Protected Member Functions</h2></td></tr>
 <p>This function is called within the Simulation::initialize() private member function to allocate and initialize an array of MoleculeSet objects for all <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> for this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.</p>
 <p>Preconditions: This <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> must be associated with a parent <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>, and all <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> objects must have been initialized by calling <a class="el" href="classUtil_1_1Manager.html#a5b2ac54cc08ef23b910cef70be60d6d3" title="Read child blocks, return when closing bracket encountered.">SpeciesManager::readParameters()</a>. </p>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00957">957</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00949">949</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00777">McMd::Simulation::allocateMoleculeSet()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00790">McMd::Simulation::nSpecies()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00774">McMd::Simulation::allocateMoleculeSet()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00787">McMd::Simulation::nSpecies()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, <a class="el" href="System_8cpp_source.html#l00341">loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00319">readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, <a class="el" href="System_8cpp_source.html#l00333">loadParameters()</a>, <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00311">readParameters()</a>.</p>
 
 </div>
 </div>
@@ -2175,11 +2175,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00378">378</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00370">370</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00263">Util::ParamComposite::readParamComposite()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00260">Util::ParamComposite::readParamComposite()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00319">readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00311">readParameters()</a>.</p>
 
 </div>
 </div>
@@ -2206,11 +2206,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00397">397</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00389">389</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00285">Util::ParamComposite::loadParamComposite()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00282">Util::ParamComposite::loadParamComposite()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00341">loadParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00333">loadParameters()</a>.</p>
 
 </div>
 </div>
@@ -2237,11 +2237,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00414">414</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00406">406</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="FileMaster_8cpp_source.html#l00132">Util::FileMaster::save()</a>.</p>
+<p>References <a class="el" href="FileMaster_8cpp_source.html#l00145">Util::FileMaster::save()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00308">McMd::McSystem::saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00449">McMd::MdSystem::saveParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00360">saveParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00305">McMd::McSystem::saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00446">McMd::MdSystem::saveParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00352">saveParameters()</a>.</p>
 
 </div>
 </div>
@@ -2268,11 +2268,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00424">424</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00416">416</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00669">McMd::Simulation::hasExternal()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00654">McMd::Simulation::nAngleType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00650">McMd::Simulation::nBondType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00659">McMd::Simulation::nDihedralType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00664">McMd::Simulation::nLinkType()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
+<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00664">McMd::Simulation::hasExternal()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00654">McMd::Simulation::nAngleType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00650">McMd::Simulation::nBondType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00659">McMd::Simulation::nDihedralType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00669">McMd::Simulation::nLinkType()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00319">readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00311">readParameters()</a>.</p>
 
 </div>
 </div>
@@ -2299,11 +2299,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00464">464</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00456">456</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00669">McMd::Simulation::hasExternal()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00654">McMd::Simulation::nAngleType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00650">McMd::Simulation::nBondType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00659">McMd::Simulation::nDihedralType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00664">McMd::Simulation::nLinkType()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
+<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00664">McMd::Simulation::hasExternal()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00654">McMd::Simulation::nAngleType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00650">McMd::Simulation::nBondType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00659">McMd::Simulation::nDihedralType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00669">McMd::Simulation::nLinkType()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00341">loadParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00333">loadParameters()</a>.</p>
 
 </div>
 </div>
@@ -2330,11 +2330,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00502">502</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00494">494</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 <p>References <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00308">McMd::McSystem::saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00449">McMd::MdSystem::saveParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00360">saveParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00305">McMd::McSystem::saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00446">McMd::MdSystem::saveParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00352">saveParameters()</a>.</p>
 
 </div>
 </div>
@@ -2361,11 +2361,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00540">540</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00532">532</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00263">Util::ParamComposite::readParamComposite()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00260">Util::ParamComposite::readParamComposite()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00319">readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00311">readParameters()</a>.</p>
 
 </div>
 </div>
@@ -2392,11 +2392,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00549">549</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00541">541</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00285">Util::ParamComposite::loadParamComposite()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00282">Util::ParamComposite::loadParamComposite()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00341">loadParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00333">loadParameters()</a>.</p>
 
 </div>
 </div>
@@ -2423,11 +2423,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00558">558</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00550">550</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="BoundaryEnsemble_8cpp_source.html#l00069">Util::BoundaryEnsemble::save()</a>, and <a class="el" href="EnergyEnsemble_8cpp_source.html#l00074">Util::EnergyEnsemble::save()</a>.</p>
+<p>References <a class="el" href="BoundaryEnsemble_8cpp_source.html#l00066">Util::BoundaryEnsemble::save()</a>, and <a class="el" href="EnergyEnsemble_8cpp_source.html#l00071">Util::EnergyEnsemble::save()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00308">McMd::McSystem::saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00449">McMd::MdSystem::saveParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00360">saveParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00305">McMd::McSystem::saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00446">McMd::MdSystem::saveParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00352">saveParameters()</a>.</p>
 
 </div>
 </div>
@@ -2454,11 +2454,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00565">565</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00557">557</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00263">Util::ParamComposite::readParamComposite()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00260">Util::ParamComposite::readParamComposite()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00120">McMd::McSystem::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00204">McMd::MdSystem::readParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00319">readParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00117">McMd::McSystem::readParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00201">McMd::MdSystem::readParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00311">readParameters()</a>.</p>
 
 </div>
 </div>
@@ -2485,11 +2485,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00573">573</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00565">565</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00285">Util::ParamComposite::loadParamComposite()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00282">Util::ParamComposite::loadParamComposite()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00214">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00327">McMd::MdSystem::loadParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00341">loadParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00211">McMd::McSystem::loadParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00324">McMd::MdSystem::loadParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00333">loadParameters()</a>.</p>
 
 </div>
 </div>
@@ -2516,11 +2516,11 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00581">581</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00573">573</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00191">Util::ParamComposite::save()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00188">Util::ParamComposite::save()</a>, and <a class="el" href="System_8h_source.html#l00955">simulation()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00308">McMd::McSystem::saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00449">McMd::MdSystem::saveParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00360">saveParameters()</a>.</p>
+<p>Referenced by <a class="el" href="McSystem_8cpp_source.html#l00305">McMd::McSystem::saveParameters()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00446">McMd::MdSystem::saveParameters()</a>, and <a class="el" href="System_8cpp_source.html#l00352">saveParameters()</a>.</p>
 
 </div>
 </div>
@@ -2534,7 +2534,7 @@ Protected Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:30 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:15 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

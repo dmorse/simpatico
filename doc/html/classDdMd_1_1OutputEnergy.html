@@ -104,8 +104,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save internal state to an archive.  <a href="#ae532ce0c94b009c94beb923963c10909"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1OutputEnergy.html#a86c88556c02628de1f7aa8ce8cc48c5b">clear</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear nSample counter.  <a href="#a86c88556c02628de1f7aa8ce8cc48c5b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1OutputEnergy.html#a5ec9f90a2d26c02a7df67397769bb6a5">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup - open output file.  <a href="#a5ec9f90a2d26c02a7df67397769bb6a5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1OutputEnergy.html#a43c1381a67594ea0f6a370fb1ab99631">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump configuration to file.  <a href="#a43c1381a67594ea0f6a370fb1ab99631"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write energy to file.  <a href="#a43c1381a67594ea0f6a370fb1ab99631"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7436dea3ba9076a79188ed311a53deaa"></a><!-- doxytag: member="DdMd::OutputEnergy::OutputEnergy" ref="a7436dea3ba9076a79188ed311a53deaa" args="(Simulation &amp;simulation)" -->
@@ -131,9 +133,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00040">40</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00037">37</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -183,9 +185,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a172a3a656b5829c8d758424ad09a22a6">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00049">49</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00046">46</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01129">DdMd::Simulation::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00045">DdMd::Analyzer::readInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00112">DdMd::Analyzer::readOutputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01134">DdMd::Simulation::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00042">DdMd::Analyzer::readInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00109">DdMd::Analyzer::readOutputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
 
 </div>
 </div>
@@ -214,9 +216,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#af98d405b86be7fd6d92f6b5e98e278dd">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00063">63</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00060">60</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01129">DdMd::Simulation::fileMaster()</a>, <a class="el" href="MpiLoader_8h_source.html#l00137">Util::MpiLoader&lt; IArchive &gt;::load()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00077">DdMd::Analyzer::loadInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00118">DdMd::Analyzer::loadOutputFileName()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01134">DdMd::Simulation::fileMaster()</a>, <a class="el" href="MpiLoader_8h_source.html#l00137">Util::MpiLoader&lt; IArchive &gt;::load()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00074">DdMd::Analyzer::loadInterval()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00115">DdMd::Analyzer::loadOutputFileName()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
 
 </div>
 </div>
@@ -245,9 +247,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#a314e65958fa201e8fb493712a0f899cc">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00079">79</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00076">76</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00106">DdMd::Analyzer::saveInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00126">DdMd::Analyzer::saveOutputFileName()</a>.</p>
+<p>References <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00103">DdMd::Analyzer::saveInterval()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8cpp_source.html#l00123">DdMd::Analyzer::saveOutputFileName()</a>.</p>
 
 </div>
 </div>
@@ -269,7 +271,31 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#a4d3188e3d11e6a679f464018785d98a7">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00089">89</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00086">86</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5ec9f90a2d26c02a7df67397769bb6a5"></a><!-- doxytag: member="DdMd::OutputEnergy::setup" ref="a5ec9f90a2d26c02a7df67397769bb6a5" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classDdMd_1_1OutputEnergy.html#a5ec9f90a2d26c02a7df67397769bb6a5">DdMd::OutputEnergy::setup</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Setup - open output file. </p>
+
+<p>Reimplemented from <a class="el" href="classDdMd_1_1Analyzer.html#adc0577afc0c6830c7c40e5f46818cd2c">DdMd::Analyzer</a>.</p>
+
+<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00092">92</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
+
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01134">DdMd::Simulation::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00243">DdMd::Analyzer::outputFileName()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
 
 </div>
 </div>
@@ -288,7 +314,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Dump configuration to file. </p>
+<p>Write energy to file. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">iStep</td><td>MC step index </td></tr>
@@ -298,9 +324,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classDdMd_1_1Analyzer.html#af41861e5d91cf1c702a6c69c7843ad8b">DdMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00095">95</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OutputEnergy_8cpp_source.html#l00104">104</a> of file <a class="el" href="OutputEnergy_8cpp_source.html">OutputEnergy.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01067">DdMd::Simulation::anglePotential()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01059">DdMd::Simulation::bondPotential()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01490">DdMd::Simulation::computeKineticEnergy()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01619">DdMd::Simulation::computePotentialEnergies()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01078">DdMd::Simulation::dihedralPotential()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01025">DdMd::Simulation::domain()</a>, <a class="el" href="Potential_8cpp_source.html#l00042">DdMd::Potential::energy()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01089">DdMd::Simulation::externalPotential()</a>, <a class="el" href="Log_8cpp_source.html#l00060">Util::Log::file()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01189">DdMd::Simulation::hasExternal()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00237">DdMd::Analyzer::isAtInterval()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01528">DdMd::Simulation::kineticEnergy()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01173">DdMd::Simulation::nAngleType()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01165">DdMd::Simulation::nBondType()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01181">DdMd::Simulation::nDihedralType()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01052">DdMd::Simulation::pairPotential()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01072">DdMd::Simulation::anglePotential()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01064">DdMd::Simulation::bondPotential()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01537">DdMd::Simulation::computeKineticEnergy()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01666">DdMd::Simulation::computePotentialEnergies()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01083">DdMd::Simulation::dihedralPotential()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01030">DdMd::Simulation::domain()</a>, <a class="el" href="Potential_8cpp_source.html#l00039">DdMd::Potential::energy()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01094">DdMd::Simulation::externalPotential()</a>, <a class="el" href="Log_8cpp_source.html#l00057">Util::Log::file()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01194">DdMd::Simulation::hasExternal()</a>, <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00237">DdMd::Analyzer::isAtInterval()</a>, <a class="el" href="Domain_8h_source.html#l00312">DdMd::Domain::isMaster()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01575">DdMd::Simulation::kineticEnergy()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01178">DdMd::Simulation::nAngleType()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01170">DdMd::Simulation::nBondType()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01186">DdMd::Simulation::nDihedralType()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l01057">DdMd::Simulation::pairPotential()</a>, and <a class="el" href="ddMd_2analyzers_2Analyzer_8h_source.html#l00249">DdMd::Analyzer::simulation()</a>.</p>
 
 </div>
 </div>
@@ -314,7 +340,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:18 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:03 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

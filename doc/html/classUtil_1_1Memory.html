@@ -64,14 +64,14 @@
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Util::Memory Class Reference</div>  </div>
+<div class="title">Util::Memory Class Reference<div class="ingroups"><a class="el" href="group__Misc__Module.html">Miscellaneous Utilities</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="Util::Memory" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Provides method to allocate array. </p>
 <p>The <a class="el" href="classUtil_1_1Memory.html#af6003f193ae6c7a0fc049d7e443e0348" title="Allocate a C array.">Memory::allocate()</a> method invokes the new operator within a try catch block, and keeps track of the total memory allocated. </p>
 
-<p>Definition at line <a class="el" href="Memory_8h_source.html#l00026">26</a> of file <a class="el" href="Memory_8h_source.html">Memory.h</a>.</p>
+<p>Definition at line <a class="el" href="Memory_8h_source.html#l00028">28</a> of file <a class="el" href="Memory_8h_source.html">Memory.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="Memory_8h_source.html">Memory.h</a>&gt;</code></p>
 
@@ -129,7 +129,7 @@ template&lt;typename Data &gt; </div>
 <p>Allocate a C array. </p>
 <p>Allocates a Data array of size elements, assigns ptr the address of the first element. </p>
 
-<p>Definition at line <a class="el" href="Memory_8h_source.html#l00102">102</a> of file <a class="el" href="Memory_8h_source.html">Memory.h</a>.</p>
+<p>Definition at line <a class="el" href="Memory_8h_source.html#l00104">104</a> of file <a class="el" href="Memory_8h_source.html">Memory.h</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -165,7 +165,7 @@ template&lt;typename Data &gt; </div>
 <p>Allocate a C array. </p>
 <p>Allocates a Data array of size elements, assigns ptr the address of the first element. </p>
 
-<p>Definition at line <a class="el" href="Memory_8h_source.html#l00122">122</a> of file <a class="el" href="Memory_8h_source.html">Memory.h</a>.</p>
+<p>Definition at line <a class="el" href="Memory_8h_source.html#l00124">124</a> of file <a class="el" href="Memory_8h_source.html">Memory.h</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -189,7 +189,7 @@ template&lt;typename Data &gt; </div>
 
 <p>Return number of times allocated was called. </p>
 
-<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00037">37</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00034">34</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
 
 </div>
 </div>
@@ -209,7 +209,7 @@ template&lt;typename Data &gt; </div>
 
 <p>Return number of times deallocate was called. </p>
 
-<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00043">43</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00040">40</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
 
 </div>
 </div>
@@ -229,7 +229,7 @@ template&lt;typename Data &gt; </div>
 
 <p>Return total amount of memory currently allocated. </p>
 
-<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00049">49</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00046">46</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
 
 </div>
 </div>
@@ -250,9 +250,9 @@ template&lt;typename Data &gt; </div>
 <p>Return the maximum amount of allocated heap memory thus far. </p>
 <p>This function returns the temporal maximum of <a class="el" href="classUtil_1_1Memory.html#adfde1ae02377c69ebb91f662600d87cd" title="Return total amount of memory currently allocated.">total()</a>. </p>
 
-<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00055">55</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00052">52</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01121">DdMd::Simulation::readCommands()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01158">DdMd::Simulation::readCommands()</a>.</p>
 
 </div>
 </div>
@@ -273,7 +273,7 @@ template&lt;typename Data &gt; </div>
 
 <p>Return max for any processor in communicator. </p>
 
-<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00059">59</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00056">56</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
 
 </div>
 </div>
@@ -293,9 +293,9 @@ template&lt;typename Data &gt; </div>
 
 <p>Call this just to guarantee initialization of static memory. </p>
 
-<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00031">31</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Memory_8cpp_source.html#l00028">28</a> of file <a class="el" href="Memory_8cpp_source.html">Memory.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="util_2misc_2initStatic_8cpp_source.html#l00029">Util::initStatic()</a>.</p>
+<p>Referenced by <a class="el" href="util_2misc_2initStatic_8cpp_source.html#l00026">Util::initStatic()</a>.</p>
 
 </div>
 </div>
@@ -309,7 +309,7 @@ template&lt;typename Data &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:35 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:21 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

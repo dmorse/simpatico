@@ -301,87 +301,94 @@
 <a name="l00242"></a>00242    {
 <a name="l00243"></a>00243       <a class="code" href="classMcMd_1_1IntraStructureFactorGrid.html#a6febae55e2255275535a75bbfb29dcf7" title="Add particles to StructureFactor accumulators.">IntraStructureFactor::sample</a>(iStep);
 <a name="l00244"></a>00244 
-<a name="l00245"></a>00245       <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.log&quot;</span>), logFile_, !isFirstStep_);
-<a name="l00246"></a>00246       isFirstStep_ = <span class="keyword">false</span>;
-<a name="l00247"></a>00247 
-<a name="l00248"></a>00248       <span class="comment">// Log structure factors</span>
-<a name="l00249"></a>00249       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nStar_; ++i) {
-<a name="l00250"></a>00250          <span class="keywordtype">int</span> size = starSizes_[i];
-<a name="l00251"></a>00251 
-<a name="l00252"></a>00252          <span class="keywordtype">int</span> k = starIds_[i];
-<a name="l00253"></a>00253          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++n) {
-<a name="l00254"></a>00254             logFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(waveIntVectors_[k][n], 5);
-<a name="l00255"></a>00255          }
-<a name="l00256"></a>00256          logFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[k].abs(), 20, 8);
-<a name="l00257"></a>00257 
-<a name="l00258"></a>00258          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a95c353f0888f82589dd56e4d3fbacb29" title="Number of selected atom type pairs.">nAtomTypeIdPair_</a>; ++j) {
-<a name="l00259"></a>00259             k = starIds_[i];
-<a name="l00260"></a>00260             <span class="keywordtype">double</span> avg = 0.0;
-<a name="l00261"></a>00261             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> m = 0; m &lt; size; ++m) {
-<a name="l00262"></a>00262                 avg += <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a9b49bcec024c91b12c3ad523f5101dbd" title="Contribution of current time step to structure factor average.">structureFactorDelta_</a>(k,j); 
-<a name="l00263"></a>00263                 ++k;
-<a name="l00264"></a>00264             }
-<a name="l00265"></a>00265             avg/= size;
-<a name="l00266"></a>00266             logFile_ &lt;&lt; Dbl(avg, 20, 8);
-<a name="l00267"></a>00267          }
-<a name="l00268"></a>00268 
-<a name="l00269"></a>00269          logFile_ &lt;&lt; std::endl;
-<a name="l00270"></a>00270       }
-<a name="l00271"></a>00271       logFile_ &lt;&lt; std::endl;
-<a name="l00272"></a>00272       logFile_.close();
-<a name="l00273"></a>00273    } 
-<a name="l00274"></a>00274 
+<a name="l00245"></a>00245       <span class="comment">// Select open mode for output files</span>
+<a name="l00246"></a>00246       std::ios_base::openmode mode = std::ios_base::out;
+<a name="l00247"></a>00247       <span class="keywordflow">if</span> (!isFirstStep_) {
+<a name="l00248"></a>00248         mode = std::ios_base::out | std::ios_base::app; 
+<a name="l00249"></a>00249       }
+<a name="l00250"></a>00250       <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.log&quot;</span>), logFile_, mode);
+<a name="l00251"></a>00251       <span class="comment">//fileMaster().openOutputFile(outputFileName(&quot;.log&quot;), </span>
+<a name="l00252"></a>00252       <span class="comment">//                           logFile_, !isFirstStep_);</span>
+<a name="l00253"></a>00253       isFirstStep_ = <span class="keyword">false</span>;
+<a name="l00254"></a>00254 
+<a name="l00255"></a>00255       <span class="comment">// Log structure factors</span>
+<a name="l00256"></a>00256       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nStar_; ++i) {
+<a name="l00257"></a>00257          <span class="keywordtype">int</span> size = starSizes_[i];
+<a name="l00258"></a>00258 
+<a name="l00259"></a>00259          <span class="keywordtype">int</span> k = starIds_[i];
+<a name="l00260"></a>00260          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++n) {
+<a name="l00261"></a>00261             logFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(waveIntVectors_[k][n], 5);
+<a name="l00262"></a>00262          }
+<a name="l00263"></a>00263          logFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[k].abs(), 20, 8);
+<a name="l00264"></a>00264 
+<a name="l00265"></a>00265          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a95c353f0888f82589dd56e4d3fbacb29" title="Number of selected atom type pairs.">nAtomTypeIdPair_</a>; ++j) {
+<a name="l00266"></a>00266             k = starIds_[i];
+<a name="l00267"></a>00267             <span class="keywordtype">double</span> avg = 0.0;
+<a name="l00268"></a>00268             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> m = 0; m &lt; size; ++m) {
+<a name="l00269"></a>00269                 avg += <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a9b49bcec024c91b12c3ad523f5101dbd" title="Contribution of current time step to structure factor average.">structureFactorDelta_</a>(k,j); 
+<a name="l00270"></a>00270                 ++k;
+<a name="l00271"></a>00271             }
+<a name="l00272"></a>00272             avg/= size;
+<a name="l00273"></a>00273             logFile_ &lt;&lt; Dbl(avg, 20, 8);
+<a name="l00274"></a>00274          }
 <a name="l00275"></a>00275 
-<a name="l00276"></a><a class="code" href="classMcMd_1_1IntraStructureFactorGrid.html#a6c3a9c735898d18676a1690d24a09e69">00276</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactorGrid.html#a6c3a9c735898d18676a1690d24a09e69" title="Output structure factors, averaged over stars.">IntraStructureFactorGrid::output</a>() 
-<a name="l00277"></a>00277    {
-<a name="l00278"></a>00278       <span class="keywordtype">double</span>  value, average, size;
-<a name="l00279"></a>00279       <span class="keywordtype">int</span>     i, j, k, m, n;
-<a name="l00280"></a>00280 
-<a name="l00281"></a>00281       <span class="comment">// Echo parameters to a log file</span>
-<a name="l00282"></a>00282       <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a>);
-<a name="l00283"></a>00283       <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">writeParam</a>(<a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a>); 
-<a name="l00284"></a>00284       <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a>.close();
-<a name="l00285"></a>00285 
-<a name="l00286"></a>00286       <span class="comment">// Output structure factors to one file</span>
-<a name="l00287"></a>00287       <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a>);
-<a name="l00288"></a>00288 
-<a name="l00289"></a>00289         
-<a name="l00290"></a>00290       <span class="comment">// Loop over waves to output structure factor</span>
-<a name="l00291"></a>00291       <span class="keywordflow">for</span> (i = 0; i &lt; nStar_; ++i) {
-<a name="l00292"></a>00292          size = starSizes_[i];
-<a name="l00293"></a>00293 
-<a name="l00294"></a>00294          k = starIds_[i];
-<a name="l00295"></a>00295          <span class="keywordflow">for</span> (n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++n) {
-<a name="l00296"></a>00296             <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a> &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(waveIntVectors_[k][n], 5);
-<a name="l00297"></a>00297          }
-<a name="l00298"></a>00298          <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[k].abs(), 20, 8);
-<a name="l00299"></a>00299 
-<a name="l00300"></a>00300          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a95c353f0888f82589dd56e4d3fbacb29" title="Number of selected atom type pairs.">nAtomTypeIdPair_</a>; ++j) {
-<a name="l00301"></a>00301             k = starIds_[i];
-<a name="l00302"></a>00302             average = 0.0;
-<a name="l00303"></a>00303             <span class="keywordflow">for</span> (m = 0; m &lt; size; ++m) {
-<a name="l00304"></a>00304                 value = <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a9d095b770ee22fdc9b97ab26c24cbf02" title="Structure factor accumulators.">structureFactors_</a>(k, j)/double(<a class="code" href="classMcMd_1_1IntraStructureFactor.html#a6f2fbc84ec170879b608166750e78ce3" title="Number of samples thus far.">nSample_</a>);
-<a name="l00305"></a>00305                 average += value;
-<a name="l00306"></a>00306                 ++k;
-<a name="l00307"></a>00307             }
-<a name="l00308"></a>00308             average = average/double(size);
-<a name="l00309"></a>00309             <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a> &lt;&lt; Dbl(average, 20, 8);
-<a name="l00310"></a>00310          }
-<a name="l00311"></a>00311          <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a> &lt;&lt; std::endl;
-<a name="l00312"></a>00312 
-<a name="l00313"></a>00313       }
-<a name="l00314"></a>00314       <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a>.close();
-<a name="l00315"></a>00315 
-<a name="l00316"></a>00316    }
-<a name="l00317"></a>00317 
-<a name="l00318"></a>00318 }
+<a name="l00276"></a>00276          logFile_ &lt;&lt; std::endl;
+<a name="l00277"></a>00277       }
+<a name="l00278"></a>00278       logFile_ &lt;&lt; std::endl;
+<a name="l00279"></a>00279       logFile_.close();
+<a name="l00280"></a>00280    } 
+<a name="l00281"></a>00281 
+<a name="l00282"></a>00282 
+<a name="l00283"></a><a class="code" href="classMcMd_1_1IntraStructureFactorGrid.html#a6c3a9c735898d18676a1690d24a09e69">00283</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactorGrid.html#a6c3a9c735898d18676a1690d24a09e69" title="Output structure factors, averaged over stars.">IntraStructureFactorGrid::output</a>() 
+<a name="l00284"></a>00284    {
+<a name="l00285"></a>00285       <span class="keywordtype">double</span>  value, average, size;
+<a name="l00286"></a>00286       <span class="keywordtype">int</span>     i, j, k, m, n;
+<a name="l00287"></a>00287 
+<a name="l00288"></a>00288       <span class="comment">// Echo parameters to a log file</span>
+<a name="l00289"></a>00289       <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a>);
+<a name="l00290"></a>00290       <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">writeParam</a>(<a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a>); 
+<a name="l00291"></a>00291       <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a>.close();
+<a name="l00292"></a>00292 
+<a name="l00293"></a>00293       <span class="comment">// Output structure factors to one file</span>
+<a name="l00294"></a>00294       <a class="code" href="classMcMd_1_1Analyzer.html#a90aaeec146d0955b8b3af67adb2a8ec8" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a>);
+<a name="l00295"></a>00295 
+<a name="l00296"></a>00296         
+<a name="l00297"></a>00297       <span class="comment">// Loop over waves to output structure factor</span>
+<a name="l00298"></a>00298       <span class="keywordflow">for</span> (i = 0; i &lt; nStar_; ++i) {
+<a name="l00299"></a>00299          size = starSizes_[i];
+<a name="l00300"></a>00300 
+<a name="l00301"></a>00301          k = starIds_[i];
+<a name="l00302"></a>00302          <span class="keywordflow">for</span> (n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++n) {
+<a name="l00303"></a>00303             <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a> &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(waveIntVectors_[k][n], 5);
+<a name="l00304"></a>00304          }
+<a name="l00305"></a>00305          <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[k].abs(), 20, 8);
+<a name="l00306"></a>00306 
+<a name="l00307"></a>00307          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a95c353f0888f82589dd56e4d3fbacb29" title="Number of selected atom type pairs.">nAtomTypeIdPair_</a>; ++j) {
+<a name="l00308"></a>00308             k = starIds_[i];
+<a name="l00309"></a>00309             average = 0.0;
+<a name="l00310"></a>00310             <span class="keywordflow">for</span> (m = 0; m &lt; size; ++m) {
+<a name="l00311"></a>00311                 value = <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a9d095b770ee22fdc9b97ab26c24cbf02" title="Structure factor accumulators.">structureFactors_</a>(k, j)/double(<a class="code" href="classMcMd_1_1IntraStructureFactor.html#a6f2fbc84ec170879b608166750e78ce3" title="Number of samples thus far.">nSample_</a>);
+<a name="l00312"></a>00312                 average += value;
+<a name="l00313"></a>00313                 ++k;
+<a name="l00314"></a>00314             }
+<a name="l00315"></a>00315             average = average/double(size);
+<a name="l00316"></a>00316             <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a> &lt;&lt; Dbl(average, 20, 8);
+<a name="l00317"></a>00317          }
+<a name="l00318"></a>00318          <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a> &lt;&lt; std::endl;
+<a name="l00319"></a>00319 
+<a name="l00320"></a>00320       }
+<a name="l00321"></a>00321       <a class="code" href="classMcMd_1_1IntraStructureFactor.html#abf88943a4482fa9d5b9aaa651079a7ad" title="Output file stream.">outputFile_</a>.close();
+<a name="l00322"></a>00322 
+<a name="l00323"></a>00323    }
+<a name="l00324"></a>00324 
+<a name="l00325"></a>00325 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:13 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

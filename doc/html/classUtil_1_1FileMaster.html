@@ -64,29 +64,47 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Util::FileMaster Class Reference</div>  </div>
+<div class="title">Util::FileMaster Class Reference<div class="ingroups"><a class="el" href="group__Misc__Module.html">Miscellaneous Utilities</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="Util::FileMaster" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>A <a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> manages a set of input and output files. </p>
-<p>A <a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> manages a set of input and output files in which all input file paths share a common input prefix and all output file paths share a common output prefix. The <a class="el" href="classUtil_1_1FileMaster.html#aa218273d5d1a5265f4c1aebe02d51a80" title="Open an input file.">openInputFile()</a> and <a class="el" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile()</a> methods each open a file using a path that is constructed by a prefix to a base filename that is passed to the function as a parameter, using different prefixes for input and output files. A <a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> also provides access to a separate parameter file.</p>
-<p>The paths constructed by a <a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> are made by concatenating elements that may include any of the following (presented in the order they appear:</p>
+<div class="textblock"><p>A <a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a> manages input and output files for a simulation. </p>
+<h4>File types </h4>
+<p>A <a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a> manages a set of input and output files for a molecular simulation. It provides methods to open four different types of file, which are located in different places within a standard directory structure. These file types are:</p>
 <ul>
-<li>An optional root prefix, which is the path from the current working directory to the root level directory for input and output files for this run. The root prefix defaults to an empty string, and may be set by the setRootPrefix method. If it is set, the root prefix should end with a "/" directory separator.</li>
+<li>Control files, i.e., parameter and command input files</li>
 </ul>
 <ul>
-<li>In MPI simulations of multiple systems, filenames may contain a directory id prefix of the form "p/", where p is an integer id that identifies a system. The integer directory id may be set with the <a class="el" href="classUtil_1_1FileMaster.html#ae295d9dc32e5ee3b4ac2b4b2a8f185f1" title="Set an integer directory identifier for this processor.">setDirectoryId(int id)</a> method. A directory id is added to paths only if a directory id has been set.</li>
+<li>Restart files, which can be opened for input or output</li>
 </ul>
 <ul>
-<li>Input files opened by the <a class="el" href="classUtil_1_1FileMaster.html#aa218273d5d1a5265f4c1aebe02d51a80" title="Open an input file.">openInputFile()</a> method and output files opened by the <a class="el" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile()</a> method contain an inputPrefix or outputPrefix string, respectively. The inputPrefix and outputPrefix strings are read from the parameter file by the readParam method.</li>
+<li>Input data files (e.g., input configuration files)</li>
 </ul>
-<p>The paths to input and output files opened by the <a class="el" href="classUtil_1_1FileMaster.html#aa218273d5d1a5265f4c1aebe02d51a80" title="Open an input file.">openInputFile()</a> and <a class="el" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile()</a> methods are constructed by concatenating the optional rootPrefix (if any), the optional directory id string (if any), the inputPrefix or outputPrefix string, and a base name that is passed explicitly to the method.</p>
-<p>To put all input and output files for a given system in different directories, the input and output prefix strings should be set to the names of the desired directory names, followed by a trailing "/" directory separator. For example, to put all input and output files in directories named "in" and "out", these prefix strings should be set to "in/" and "out/", respectively.</p>
-<p>The <a class="el" href="classUtil_1_1FileMaster.html#ae295d9dc32e5ee3b4ac2b4b2a8f185f1" title="Set an integer directory identifier for this processor.">setDirectoryId(int rank)</a> method is designed for use in parallel MPI programs, to allow files associated with different systems to be put in different directory trees. If this method is called with an 3, while using input and output prefixes "in/" and "out/" and no overall rootPrefix, the <a class="el" href="classUtil_1_1FileMaster.html#aa218273d5d1a5265f4c1aebe02d51a80" title="Open an input file.">openInputFile()</a> and <a class="el" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile()</a> functions will open all input and output files in directories "3/in" and "3/out", respectively.</p>
-<p>The <a class="el" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile()</a> method returns a default parameter input stream. If no directory id has been set, as is normally the case for simulations of a single system, <a class="el" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile()</a> returns a reference to the standard input, std::cin. If a directory id has been set and <a class="el" href="classUtil_1_1FileMaster.html#a594f0358a7262624aa2b3e0009cf075d" title="Set paramFile() to return std::cin even if a directory id is set.">setParamFileStdIn()</a> has also been called, <a class="el" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile()</a> again returns a reference to std::cin. If a directory id has been set and <a class="el" href="classUtil_1_1FileMaster.html#a594f0358a7262624aa2b3e0009cf075d" title="Set paramFile() to return std::cin even if a directory id is set.">setParamFileStdIn()</a> has not be called, however, <a class="el" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile()</a> returns a reference to a file named "n/param" for a processor with directoryId == n. If a rootPrefix has been set, the root prefix is prepended to the path "n/param". This file is opened for reading the first time it is returned by <a class="el" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile()</a>, and is closed by the <a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> destructor.</p>
-<p>The class also provides methods to open a command file, and parameter and restart input and output files that are used for restarting a simulation. The paths to each of these files are constructed as a concatenation of a root prefix (if any), a directory id string (if any), and a base name provided as a parameter to these methods. </p>
+<ul>
+<li>Output data files (e.g., trajectories and analysis output files)</li>
+</ul>
+<p>Slightly different directory structures are used for file paths in simulations of a single system and for parallel simulations of multiple systems, as discussed below.</p>
+<h4>Single-system simulations </h4>
+<p>In simulations of a single system, paths to the different types of file are constructed by prepending some combination of the following elements before a base file name:</p>
+<ul>
+<li>Root directory prefix: This is the path from the current working directory to the root level directory for all files associated with a simulation run. It defaults to an empty string. It may be set by calling the <a class="el" href="classUtil_1_1FileMaster.html#ad3c7e95b9853b10bde9bcaf4c1cae60c" title="Set the path from current directory to root directory.">setRootPrefix()</a> function.</li>
+</ul>
+<ul>
+<li>Input prefix: This string is prepended to the base name of all input data files.</li>
+</ul>
+<ul>
+<li>Output prefix: This string is prepended to the base name of all output data files.</li>
+</ul>
+<p>The root directory prefix must be a path to a directory and thus must either be an empty string or must end with the directory separator "/". The input and output prefix are often also chosen to be directory paths, in order to place input and output files in different subdirectories (e.g., "in/" and "out/"), but can also be strings that are prepended to the base name for all input and output files.</p>
+<p>In simulations of a single systems, paths to both control and restart files are constructed by the openControFile(), <a class="el" href="classUtil_1_1FileMaster.html#adc71faa04123b3fe7f4ae43c33149404" title="Open an input restart dump file for reading.">openRestartIFile()</a> and <a class="el" href="classUtil_1_1FileMaster.html#a89a5fee886f8a3af88eabc330c07b3ee" title="Open an output restart file for writing.">openRestartOFile()</a> by concatenating the root prefix (if any) to a base file name that is passed to the appropriate function. Paths to input and output files are constructed by the <a class="el" href="classUtil_1_1FileMaster.html#a2bf65e41c81f3d341759f8e1c329409d" title="Open an input file.">openInputFile()</a> and <a class="el" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile()</a> functions by concatenating the root prefix, if any, to the input or output prefix, as appropriate, and a base file name that is passed as as argument.</p>
+<h4>Multi-system simulations </h4>
+<p>A parallel simulation of multiple systems use a directory structure in which the root directory (specified by the root directory prefix) contains a set of numbered subdirectories named "0/", "1/", "2/", etc.. Each such numbered directory contains input, output and restart files that are specific to a particular system, and will be referred to in what follows as the system directory for that system. The integer index for the system associated with a specific MPI processor must be set by the <a class="el" href="classUtil_1_1FileMaster.html#ae295d9dc32e5ee3b4ac2b4b2a8f185f1" title="Set an integer directory identifier for this processor.">setDirectoryId()</a> method.</p>
+<p>In all simulations of multiple systems, paths to input and input and output data files are constructed by the functions <a class="el" href="classUtil_1_1FileMaster.html#a2bf65e41c81f3d341759f8e1c329409d" title="Open an input file.">openInputFile()</a> and <a class="el" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9" title="Open an output file.">openOutputFile()</a> by concatenating the system directory path, an input or output prefix, and a base file name. Paths to restart files for each system are constructed by concatentaing the system directory path and a base file name, thus placing these files in the system directory.</p>
+<p>Two different modes of operation are possible for simulations of multiple systems, which differ in the treatment of control files. In "independent" mode, simulations of multiple systems are assumed to be completely independent and to require separate parameter and command control files for each system. In this case, the <a class="el" href="classUtil_1_1FileMaster.html#a0e5e4e72d0403b888589f0e7d263809d" title="Open an input parameter or command file.">openControlFile()</a> system opens files in the numbered system directory. In "replicated" model, all simulations are controlled by a single parameter file and a single control file, which are opened in the root directory. "Independent" mode is enabled by default, and "replicated" mode may be chosen by calling the function "setCommonControl()" before opening any any control files.</p>
+<h4>Control Files </h4>
+<p><a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a> provides several special functions for parameter and command files. Names of the parameter and command files can be set by calling the <a class="el" href="classUtil_1_1FileMaster.html#aaa8beea67ced5beb8f92d8bba48a6bae" title="Set the parameter file name.">setParamFileName()</a> or <a class="el" href="classUtil_1_1FileMaster.html#ade669815f45d05b720302848be13a316" title="Set the command file name.">setCommandFileName()</a> functions, respectively. If the <a class="el" href="classUtil_1_1FileMaster.html#ade669815f45d05b720302848be13a316" title="Set the command file name.">setCommandFileName()</a> function is not called before <a class="el" href="classUtil_1_1FileMaster.html#a7feb4503d8a177959fb2e9625d74de7e" title="Read parameter file.">readParameters()</a>, the <a class="el" href="classUtil_1_1FileMaster.html#a7feb4503d8a177959fb2e9625d74de7e" title="Read parameter file.">readParameters()</a> function will expect to find a "commandFileName" a the first parameter in the <a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a> parameter file block. After parameter and command file names have been set, the <a class="el" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile()</a> and <a class="el" href="classUtil_1_1FileMaster.html#a4dfc5422ef408b9ea55f011dd298a9d2" title="Get the command input stream by reference.">commandFile()</a> functions return references to the resulting parameter and command files. The first time these functions are called, they each call <a class="el" href="classUtil_1_1FileMaster.html#a0e5e4e72d0403b888589f0e7d263809d" title="Open an input parameter or command file.">openControlFile()</a> internally to open the appropriate file. </p>
 
-<p>Definition at line <a class="el" href="FileMaster_8h_source.html#l00095">95</a> of file <a class="el" href="FileMaster_8h_source.html">FileMaster.h</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8h_source.html#l00127">127</a> of file <a class="el" href="FileMaster_8h_source.html">FileMaster.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="FileMaster_8h_source.html">FileMaster.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -112,44 +130,54 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#ab8c226b9cc0eb69f8c4eb71b76a50431"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#ac6cfc4669da3c02c2817813e9b281bfb">~FileMaster</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ac6cfc4669da3c02c2817813e9b281bfb"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Initialization</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#ad3c7e95b9853b10bde9bcaf4c1cae60c">setRootPrefix</a> (const std::string &amp;rootPrefix)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the path from current directory to root data directory.  <a href="#ad3c7e95b9853b10bde9bcaf4c1cae60c"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the path from current directory to root directory.  <a href="#ad3c7e95b9853b10bde9bcaf4c1cae60c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#ae295d9dc32e5ee3b4ac2b4b2a8f185f1">setDirectoryId</a> (int directoryId)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set an integer directory identifier for this processor.  <a href="#ae295d9dc32e5ee3b4ac2b4b2a8f185f1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a594f0358a7262624aa2b3e0009cf075d">setParamFileStdIn</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set <a class="el" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile()</a> to return std::cin even if a directory id is set.  <a href="#a594f0358a7262624aa2b3e0009cf075d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#ad677773938f15a0e830088aaffeafbaa">setCommonControl</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set to use single param and command files for multi-system simulations.  <a href="#ad677773938f15a0e830088aaffeafbaa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#aaa8beea67ced5beb8f92d8bba48a6bae">setParamFileName</a> (const std::string &amp;<a class="el" href="classUtil_1_1FileMaster.html#af03b29b868aed38b1e94e5af0e6f4308">paramFileName</a>)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the parameter file name.  <a href="#aaa8beea67ced5beb8f92d8bba48a6bae"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#ade669815f45d05b720302848be13a316">setCommandFileName</a> (const std::string &amp;<a class="el" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd">commandFileName</a>)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the command file name.  <a href="#ade669815f45d05b720302848be13a316"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#aea52ab3720c8bb6696252ca4e4f190dd">setInputPrefix</a> (const std::string &amp;inputPrefix)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the input file prefix string.  <a href="#aea52ab3720c8bb6696252ca4e4f190dd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#ad6fec8651e4f00d135e3572021ed3b7c">setOutputPrefix</a> (const std::string &amp;outputPrefix)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the output file prefix string.  <a href="#ad6fec8651e4f00d135e3572021ed3b7c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#ade669815f45d05b720302848be13a316">setCommandFileName</a> (const std::string &amp;<a class="el" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd">commandFileName</a>)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the command file name.  <a href="#ade669815f45d05b720302848be13a316"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a7feb4503d8a177959fb2e9625d74de7e">readParameters</a> (std::istream &amp;in)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameter file.  <a href="#a7feb4503d8a177959fb2e9625d74de7e"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Serialization</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#adbbb16a44ffcad1347d963d2539fea49">loadParameters</a> (<a class="el" href="classUtil_1_1Serializable.html#ac6bcbf9bac926cada5a398804410e891">Serializable::IArchive</a> &amp;ar)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load internal state from file.  <a href="#adbbb16a44ffcad1347d963d2539fea49"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a242dce8b12bc4a5d8539308f2a702500">save</a> (<a class="el" href="classUtil_1_1Serializable.html#aca43a1eea5ec5f13189a57892a7a6d04">Serializable::OArchive</a> &amp;ar)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save internal state to file.  <a href="#a242dce8b12bc4a5d8539308f2a702500"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">File Opening</div></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#abdd406edea215d37911860238d052648">open</a> (const std::string &amp;name, std::ifstream &amp;in, std::ios_base::openmode mode=std::ios_base::in) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an input file with a known path and open mode.  <a href="#abdd406edea215d37911860238d052648"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a78fa999ff9c304294e4b7103994454c8">open</a> (const std::string &amp;name, std::ofstream &amp;out, std::ios_base::openmode mode=std::ios_base::out) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an output file with a known path and open mode.  <a href="#a78fa999ff9c304294e4b7103994454c8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a0e5e4e72d0403b888589f0e7d263809d">openControlFile</a> (const std::string &amp;name, std::ifstream &amp;in) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an input parameter or command file.  <a href="#a0e5e4e72d0403b888589f0e7d263809d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#adc71faa04123b3fe7f4ae43c33149404">openRestartIFile</a> (const std::string &amp;name, std::ifstream &amp;in, std::ios_base::openmode mode=std::ios_base::in) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an input restart dump file for reading.  <a href="#adc71faa04123b3fe7f4ae43c33149404"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a89a5fee886f8a3af88eabc330c07b3ee">openRestartOFile</a> (const std::string &amp;name, std::ofstream &amp;out, std::ios_base::openmode mode=std::ios_base::out) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an output restart file for writing.  <a href="#a89a5fee886f8a3af88eabc330c07b3ee"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a2bf65e41c81f3d341759f8e1c329409d">openInputFile</a> (const std::string &amp;filename, std::ifstream &amp;in, std::ios_base::openmode mode=std::ios_base::in) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an input file.  <a href="#a2bf65e41c81f3d341759f8e1c329409d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9">openOutputFile</a> (const std::string &amp;filename, std::ofstream &amp;out, std::ios_base::openmode mode=std::ios_base::out) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an output file.  <a href="#a9ec33e9117a760a09b294b47b0d80ad9"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Control Files</div></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a0710da457216fc219f21938520bae2f0">isCommonControl</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is set for common param and command files?  <a href="#a0710da457216fc219f21938520bae2f0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#af03b29b868aed38b1e94e5af0e6f4308">paramFileName</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the param file name, if any.  <a href="#af03b29b868aed38b1e94e5af0e6f4308"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd">commandFileName</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the command file name.  <a href="#a55bbc32b27ba7a7a16926c63edea6dcd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837">paramFile</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a default parameter stream by reference.  <a href="#aa6e2bee2242001a0eeadc50d1a0a3837"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a4dfc5422ef408b9ea55f011dd298a9d2">commandFile</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the command input stream by reference.  <a href="#a4dfc5422ef408b9ea55f011dd298a9d2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#aa218273d5d1a5265f4c1aebe02d51a80">openInputFile</a> (const std::string &amp;filename, std::ifstream &amp;in) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an input file.  <a href="#aa218273d5d1a5265f4c1aebe02d51a80"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7">openOutputFile</a> (const std::string &amp;filename, std::ofstream &amp;out, bool append=false) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an output file.  <a href="#a627be13b485867d6ff8841b76b092ca7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a357bb5ceca3c21b8aa2f2b5c6d5d084d">openParamIFile</a> (const std::string &amp;name, const char *ext, std::ifstream &amp;in) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an input restart parameter file for reading.  <a href="#a357bb5ceca3c21b8aa2f2b5c6d5d084d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a9af467e63d132369ea0a619de0a57b9b">openParamOFile</a> (const std::string &amp;name, const char *ext, std::ofstream &amp;out) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an output restart parameter file for writing.  <a href="#a9af467e63d132369ea0a619de0a57b9b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#aa1bb209ebb20c68bdae61586827071aa">openRestartIFile</a> (const std::string &amp;name, const char *ext, std::ifstream &amp;in) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an input restart dump file for reading.  <a href="#aa1bb209ebb20c68bdae61586827071aa"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a0ecf1c01bd6f17893cd387376c3a7aab">openRestartOFile</a> (const std::string &amp;name, const char *ext, std::ofstream &amp;out) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open an output restart dump file for writing.  <a href="#a0ecf1c01bd6f17893cd387376c3a7aab"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd">commandFileName</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the command file name.  <a href="#a55bbc32b27ba7a7a16926c63edea6dcd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FileMaster.html#a84ab233fc21699a2e4796b48d2208371">isParamFileStdIn</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is <a class="el" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile()</a> set to return std::cin ?  <a href="#a84ab233fc21699a2e4796b48d2208371"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a3a2076a0a99e8bf9771da07adddab445"></a><!-- doxytag: member="Util::FileMaster::FileMaster" ref="a3a2076a0a99e8bf9771da07adddab445" args="()" -->
@@ -168,9 +196,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00022">22</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00023">23</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -192,12 +220,12 @@ Public Member Functions</h2></td></tr>
 <p>Copy constructor. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">copy</td><td><a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> object to be copied </td></tr>
+    <tr><td class="paramname">copy</td><td><a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a> object to be copied </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00037">37</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00039">39</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
 </div>
 </div>
@@ -217,7 +245,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00051">51</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00055">55</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
 </div>
 </div>
@@ -237,15 +265,15 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Set the path from current directory to root data directory. </p>
+<p>Set the path from current directory to root directory. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">rootPrefix</td><td>root prefix for all file names. </td></tr>
+    <tr><td class="paramname">rootPrefix</td><td>root directory prefix string for all paths </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00066">66</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00070">70</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
 </div>
 </div>
@@ -265,26 +293,26 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Set an integer directory identifier for this processor. </p>
-<p>This method should be called only for parallel operation. The directoryId is normally set to be the MPI rank of this processor. After calling setDirectoryId(n) with an integer n, a prefix "n/" will be prepended to the paths of all input and output file files that are opened by <a class="el" href="classUtil_1_1FileMaster.html#aa218273d5d1a5265f4c1aebe02d51a80" title="Open an input file.">openInputFile()</a> and <a class="el" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile()</a>.</p>
+<p>This method should be called only for simulations of multiple systems, to set an integer identifier for the physical system associated with this processor. After calling this function with an integer n, a directory id prefix "n/" will be prepended to the paths of input, output and restart files associated with that system.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">directoryId</td><td>integer directory name for input and output files. </td></tr>
+    <tr><td class="paramname">directoryId</td><td>integer subdirectory name </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00072">72</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00076">76</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00038">McMd::Simulation::Simulation()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00035">McMd::Simulation::Simulation()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a594f0358a7262624aa2b3e0009cf075d"></a><!-- doxytag: member="Util::FileMaster::setParamFileStdIn" ref="a594f0358a7262624aa2b3e0009cf075d" args="()" -->
+<a class="anchor" id="ad677773938f15a0e830088aaffeafbaa"></a><!-- doxytag: member="Util::FileMaster::setCommonControl" ref="ad677773938f15a0e830088aaffeafbaa" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#a594f0358a7262624aa2b3e0009cf075d">Util::FileMaster::setParamFileStdIn</a> </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#ad677773938f15a0e830088aaffeafbaa">Util::FileMaster::setCommonControl</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -293,65 +321,42 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Set <a class="el" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile()</a> to return std::cin even if a directory id is set. </p>
+<p>Set to use single param and command files for multi-system simulations. </p>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00084">84</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00088">88</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00156">McMd::Simulation::setIoCommunicator()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00153">McMd::Simulation::setIoCommunicator()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aea52ab3720c8bb6696252ca4e4f190dd"></a><!-- doxytag: member="Util::FileMaster::setInputPrefix" ref="aea52ab3720c8bb6696252ca4e4f190dd" args="(const std::string &amp;inputPrefix)" -->
+<a class="anchor" id="aaa8beea67ced5beb8f92d8bba48a6bae"></a><!-- doxytag: member="Util::FileMaster::setParamFileName" ref="aaa8beea67ced5beb8f92d8bba48a6bae" args="(const std::string &amp;paramFileName)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#aea52ab3720c8bb6696252ca4e4f190dd">Util::FileMaster::setInputPrefix</a> </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#aaa8beea67ced5beb8f92d8bba48a6bae">Util::FileMaster::setParamFileName</a> </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>inputPrefix</em></td><td>)</td>
+          <td class="paramname"><em>paramFileName</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Set the input file prefix string. </p>
+<p>Set the parameter file name. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">inputPrefix</td><td>input file prefix string </td></tr>
+    <tr><td class="paramname">paramFileName</td><td>name of parameter file </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00090">90</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00106">106</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
-</div>
-</div>
-<a class="anchor" id="ad6fec8651e4f00d135e3572021ed3b7c"></a><!-- doxytag: member="Util::FileMaster::setOutputPrefix" ref="ad6fec8651e4f00d135e3572021ed3b7c" args="(const std::string &amp;outputPrefix)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#ad6fec8651e4f00d135e3572021ed3b7c">Util::FileMaster::setOutputPrefix</a> </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>outputPrefix</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
+<p>References <a class="el" href="FileMaster_8h_source.html#l00449">paramFileName()</a>.</p>
 
-<p>Set the output file prefix string. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">outputPrefix</td><td>output file prefix string </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00096">96</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Referenced by <a class="el" href="Processor_8cpp_source.html#l00050">Tools::Processor::setOptions()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00099">McMd::MdSimulation::setOptions()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00200">McMd::McSimulation::setOptions()</a>.</p>
 
 </div>
 </div>
@@ -378,11 +383,65 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00102">102</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00112">112</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
-<p>References <a class="el" href="FileMaster_8h_source.html#l00368">commandFileName()</a>.</p>
+<p>References <a class="el" href="FileMaster_8h_source.html#l00455">commandFileName()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00301">McMd::McSimulation::load()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00748">McMd::MdSimulation::load()</a>.</p>
+<p>Referenced by <a class="el" href="Processor_8cpp_source.html#l00050">Tools::Processor::setOptions()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00099">McMd::MdSimulation::setOptions()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00200">McMd::McSimulation::setOptions()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aea52ab3720c8bb6696252ca4e4f190dd"></a><!-- doxytag: member="Util::FileMaster::setInputPrefix" ref="aea52ab3720c8bb6696252ca4e4f190dd" args="(const std::string &amp;inputPrefix)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#aea52ab3720c8bb6696252ca4e4f190dd">Util::FileMaster::setInputPrefix</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>inputPrefix</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the input file prefix string. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">inputPrefix</td><td>input file prefix string </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00094">94</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad6fec8651e4f00d135e3572021ed3b7c"></a><!-- doxytag: member="Util::FileMaster::setOutputPrefix" ref="ad6fec8651e4f00d135e3572021ed3b7c" args="(const std::string &amp;outputPrefix)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#ad6fec8651e4f00d135e3572021ed3b7c">Util::FileMaster::setOutputPrefix</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>outputPrefix</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the output file prefix string. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">outputPrefix</td><td>output file prefix string </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00100">100</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
 </div>
 </div>
@@ -412,7 +471,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a172a3a656b5829c8d758424ad09a22a6">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00108">108</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00118">118</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
 </div>
 </div>
@@ -441,7 +500,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#adec07dcba0895ba69463147314cde7ce">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00118">118</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00130">130</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
 </div>
 </div>
@@ -470,9 +529,416 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a3c430a4e31a9573eadb06ab89d3bf780">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00132">132</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00145">145</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00300">McMd::Simulation::save()</a>, and <a class="el" href="System_8cpp_source.html#l00414">McMd::System::saveFileMaster()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00297">McMd::Simulation::save()</a>, and <a class="el" href="System_8cpp_source.html#l00406">McMd::System::saveFileMaster()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abdd406edea215d37911860238d052648"></a><!-- doxytag: member="Util::FileMaster::open" ref="abdd406edea215d37911860238d052648" args="(const std::string &amp;name, std::ifstream &amp;in, std::ios_base::openmode mode=std::ios_base::in) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#abdd406edea215d37911860238d052648">Util::FileMaster::open</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ifstream &amp;&#160;</td>
+          <td class="paramname"><em>in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ios_base::openmode&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>std::ios_base::in</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open an input file with a known path and open mode. </p>
+<p>Adds error checking to C++ ifstream::open function.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>complete file path </td></tr>
+    <tr><td class="paramname">in</td><td>ifstream object to associated with a file </td></tr>
+    <tr><td class="paramname">mode</td><td>read mode </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00198">198</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+
+<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+
+<p>Referenced by <a class="el" href="FileMaster_8cpp_source.html#l00227">openControlFile()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00273">openInputFile()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">openOutputFile()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00242">openRestartIFile()</a>, and <a class="el" href="FileMaster_8cpp_source.html#l00257">openRestartOFile()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a78fa999ff9c304294e4b7103994454c8"></a><!-- doxytag: member="Util::FileMaster::open" ref="a78fa999ff9c304294e4b7103994454c8" args="(const std::string &amp;name, std::ofstream &amp;out, std::ios_base::openmode mode=std::ios_base::out) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#abdd406edea215d37911860238d052648">Util::FileMaster::open</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ofstream &amp;&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ios_base::openmode&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>std::ios_base::out</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open an output file with a known path and open mode. </p>
+<p>Add error checking to C++ ofstream::open function.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>complete file path </td></tr>
+    <tr><td class="paramname">out</td><td>ofstream object to associated with a file </td></tr>
+    <tr><td class="paramname">mode</td><td>write mode </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00213">213</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+
+<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0e5e4e72d0403b888589f0e7d263809d"></a><!-- doxytag: member="Util::FileMaster::openControlFile" ref="a0e5e4e72d0403b888589f0e7d263809d" args="(const std::string &amp;name, std::ifstream &amp;in) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#a0e5e4e72d0403b888589f0e7d263809d">Util::FileMaster::openControlFile</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ifstream &amp;&#160;</td>
+          <td class="paramname"><em>in</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open an input parameter or command file. </p>
+<p>The path to this file constructed by concatenating: [rootPrefix] + [directoryIdPrefix] + name + "." + ext</p>
+<p>The directoryIdPrefix is included only if a directory id has not been set and the <a class="el" href="classUtil_1_1FileMaster.html#ad677773938f15a0e830088aaffeafbaa" title="Set to use single param and command files for multi-system simulations.">setCommonControl()</a> function has not been called.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>base file name, without any prefix </td></tr>
+    <tr><td class="paramname">in</td><td>ifstream object to open </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00227">227</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+
+<p>References <a class="el" href="FileMaster_8cpp_source.html#l00198">open()</a>.</p>
+
+<p>Referenced by <a class="el" href="FileMaster_8cpp_source.html#l00178">commandFile()</a>, and <a class="el" href="FileMaster_8cpp_source.html#l00155">paramFile()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adc71faa04123b3fe7f4ae43c33149404"></a><!-- doxytag: member="Util::FileMaster::openRestartIFile" ref="adc71faa04123b3fe7f4ae43c33149404" args="(const std::string &amp;name, std::ifstream &amp;in, std::ios_base::openmode mode=std::ios_base::in) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#adc71faa04123b3fe7f4ae43c33149404">Util::FileMaster::openRestartIFile</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ifstream &amp;&#160;</td>
+          <td class="paramname"><em>in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ios_base::openmode&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>std::ios_base::in</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open an input restart dump file for reading. </p>
+<p>The path to this file constructed by concatenating: [rootPrefix] + [directoryIdPrefix] + name + "." + ext</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>base file name, without any prefix or extension </td></tr>
+    <tr><td class="paramname">in</td><td>ifstream object to open </td></tr>
+    <tr><td class="paramname">mode</td><td>open mode </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00242">242</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+
+<p>References <a class="el" href="FileMaster_8cpp_source.html#l00198">open()</a>.</p>
+
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00398">McMd::McSimulation::load()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00779">McMd::MdSimulation::load()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a89a5fee886f8a3af88eabc330c07b3ee"></a><!-- doxytag: member="Util::FileMaster::openRestartOFile" ref="a89a5fee886f8a3af88eabc330c07b3ee" args="(const std::string &amp;name, std::ofstream &amp;out, std::ios_base::openmode mode=std::ios_base::out) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#a89a5fee886f8a3af88eabc330c07b3ee">Util::FileMaster::openRestartOFile</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ofstream &amp;&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ios_base::openmode&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>std::ios_base::out</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open an output restart file for writing. </p>
+<p>The path to this file constructed by concatenating: [rootPrefix] + [directoryIdPrefix] + name</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>base file name </td></tr>
+    <tr><td class="paramname">out</td><td>ofstream object to open </td></tr>
+    <tr><td class="paramname">mode</td><td>open mode </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00257">257</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+
+<p>References <a class="el" href="FileMaster_8cpp_source.html#l00198">open()</a>.</p>
+
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00428">McMd::McSimulation::save()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00800">McMd::MdSimulation::save()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2bf65e41c81f3d341759f8e1c329409d"></a><!-- doxytag: member="Util::FileMaster::openInputFile" ref="a2bf65e41c81f3d341759f8e1c329409d" args="(const std::string &amp;filename, std::ifstream &amp;in, std::ios_base::openmode mode=std::ios_base::in) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#a2bf65e41c81f3d341759f8e1c329409d">Util::FileMaster::openInputFile</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ifstream &amp;&#160;</td>
+          <td class="paramname"><em>in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ios_base::openmode&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>std::ios_base::in</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open an input file. </p>
+<p>The path to this file constructed by concatenating: [rootPrefix] + [directoryIdPrefix] + inputPrefix + filename.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>file name, without any prefix </td></tr>
+    <tr><td class="paramname">in</td><td>ifstream object to associated with a file </td></tr>
+    <tr><td class="paramname">mode</td><td>bit mask that specifies opening mode </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00273">273</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+
+<p>References <a class="el" href="FileMaster_8cpp_source.html#l00198">open()</a>.</p>
+
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00849">McMd::McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00618">McMd::MdSimulation::analyzeDumps()</a>, <a class="el" href="Processor_8cpp_source.html#l00399">Tools::Processor::analyzeTrajectory()</a>, <a class="el" href="Processor_8cpp_source.html#l00121">Tools::Processor::readCommands()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00283">McMd::MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00444">McMd::McSimulation::readCommands()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9ec33e9117a760a09b294b47b0d80ad9"></a><!-- doxytag: member="Util::FileMaster::openOutputFile" ref="a9ec33e9117a760a09b294b47b0d80ad9" args="(const std::string &amp;filename, std::ofstream &amp;out, std::ios_base::openmode mode=std::ios_base::out) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#a9ec33e9117a760a09b294b47b0d80ad9">Util::FileMaster::openOutputFile</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ofstream &amp;&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ios_base::openmode&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>std::ios_base::out</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open an output file. </p>
+<p>The path to this file constructed by concatenating: [rootPrefix] + [directoryIdPrefix] + outputPrefix + filename.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>file name, without any prefix </td></tr>
+    <tr><td class="paramname">out</td><td>ofstream object to associated with a file </td></tr>
+    <tr><td class="paramname">mode</td><td>bit mask that specifies opening mode </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00290">290</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+
+<p>References <a class="el" href="FileMaster_8cpp_source.html#l00198">open()</a>.</p>
+
+<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00049">McMd::MdPotentialEnergyAverage::loadParameters()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00050">McMd::MdKineticEnergyAverage::loadParameters()</a>, <a class="el" href="MdEnergyOutput_8cpp_source.html#l00039">McMd::MdEnergyOutput::loadParameters()</a>, <a class="el" href="PerturbDerivative_8cpp_source.html#l00052">McMd::PerturbDerivative::loadParameters()</a>, <a class="el" href="McEnergyOutput_8cpp_source.html#l00038">McMd::McEnergyOutput::loadParameters()</a>, <a class="el" href="BoundaryAverage_8cpp_source.html#l00060">McMd::BoundaryAverage::loadParameters()</a>, <a class="el" href="AverageAnalyzer_8h_source.html#l00135">McMd::AverageAnalyzer&lt; SystemType &gt;::loadParameters()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00062">McMd::McPairEnergyAverage::loadParameters()</a>, <a class="el" href="OutputStressTensor_8cpp_source.html#l00051">DdMd::OutputStressTensor::loadParameters()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00051">DdMd::OutputTemperature::loadParameters()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00060">DdMd::OutputEnergy::loadParameters()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00049">DdMd::OutputPressure::loadParameters()</a>, <a class="el" href="McVirialStressTensorAverage_8cpp_source.html#l00071">McMd::McVirialStressTensorAverage::loadParameters()</a>, <a class="el" href="VirialStressTensor_8cpp_source.html#l00051">DdMd::VirialStressTensor::loadParameters()</a>, <a class="el" href="MdVirialStressTensorAverage_8cpp_source.html#l00071">McMd::MdVirialStressTensorAverage::loadParameters()</a>, <a class="el" href="OutputPairEnergies_8cpp_source.html#l00047">DdMd::OutputPairEnergies::loadParameters()</a>, <a class="el" href="VirialStressTensorAverage_8cpp_source.html#l00068">DdMd::VirialStressTensorAverage::loadParameters()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00099">McMd::MdPairEnergyCoefficients::loadParameters()</a>, <a class="el" href="BennettsMethod_8cpp_source.html#l00117">McMd::BennettsMethod::loadParameters()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00063">McMd::RadiusGyration::loadParameters()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00098">McMd::BlockRadiusGyration::loadParameters()</a>, <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00339">McMd::McNVTChemicalPotential::output()</a>, <a class="el" href="McMuExchange_8cpp_source.html#l00202">McMd::McMuExchange::output()</a>, <a class="el" href="tools_2analyzers_2AtomMSD_8cpp_source.html#l00186">Tools::AtomMSD::output()</a>, <a class="el" href="MdEnergyOutput_8cpp_source.html#l00113">McMd::MdEnergyOutput::output()</a>, <a class="el" href="SemiGrandDistribution_8cpp_source.html#l00106">McMd::SemiGrandDistribution::output()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00385">McMd::CfbReptationMove::output()</a>, <a class="el" href="McEnergyOutput_8cpp_source.html#l00105">McMd::McEnergyOutput::output()</a>, <a class="el" href="TypeDistribution_8cpp_source.html#l00106">McMd::TypeDistribution::output()</a>, <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00089">McMd::MdPotentialEnergyAverage::output()</a>, <a class="el" href="AverageAnalyzer_8h_source.html#l00187">McMd::AverageAnalyzer&lt; SystemType &gt;::output()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00089">McMd::MdKineticEnergyAverage::output()</a>, <a class="el" href="PerturbDerivative_8cpp_source.html#l00096">McMd::PerturbDerivative::output()</a>, <a class="el" href="PairEnergyAverage_8cpp_source.html#l00134">DdMd::PairEnergyAverage::output()</a>, <a class="el" href="ExternalEnergyAverage_8cpp_source.html#l00128">DdMd::ExternalEnergyAverage::output()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00320">McMd::MdPairEnergyCoefficients::output()</a>, <a class="el" href="BoundaryAverage_8cpp_source.html#l00114">McMd::BoundaryAverage::output()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00149">McMd::McPairEnergyAverage::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00204">McMd::AtomMSD::output()</a>, <a class="el" href="StressAutoCorr_8cpp_source.html#l00154">DdMd::StressAutoCorr::output()</a>, <a class="el" href="BondLengthDist_8cpp_source.html#l00122">McMd::BondLengthDist::output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00239">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00201">McMd::ComMSD::output()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00207">McMd::RingRouseAutoCorr::output()</a>, <a class="el" href="BennettsMethod_8cpp_source.html#l00297">McMd::BennettsMethod::output()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00211">McMd::LinearRouseAutoCorr::output()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00262">McMd::BlockRadiusGyration::output()</a>, <a class="el" href="RDF_8cpp_source.html#l00182">McMd::RDF::output()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00244">McMd::CompositionProfile::output()</a>, <a class="el" href="OrderParamNucleation_8cpp_source.html#l00174">DdMd::OrderParamNucleation::output()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00182">McMd::IntraPairAutoCorr::output()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00153">McMd::RadiusGyration::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00239">McMd::StructureFactor::output()</a>, <a class="el" href="ddMd_2analyzers_2StructureFactorGrid_8cpp_source.html#l00355">DdMd::StructureFactorGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00338">McMd::StructureFactorGrid::output()</a>, <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00240">McMd::StructureFactorPGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00208">DdMd::AsymmSF::output()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00283">McMd::IntraStructureFactorGrid::output()</a>, <a class="el" href="ddMd_2analyzers_2StructureFactor_8cpp_source.html#l00274">DdMd::StructureFactor::output()</a>, <a class="el" href="ddMd_2analyzers_2VanHove_8cpp_source.html#l00226">DdMd::VanHove::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00196">McMd::VanHove::output()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00223">McMd::StructureFactorP::output()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00227">McMd::IntraStructureFactor::output()</a>, <a class="el" href="Processor_8cpp_source.html#l00121">Tools::Processor::readCommands()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00283">McMd::MdSimulation::readCommands()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00444">McMd::McSimulation::readCommands()</a>, <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00032">McMd::MdPotentialEnergyAverage::readParameters()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00032">McMd::MdKineticEnergyAverage::readParameters()</a>, <a class="el" href="MdEnergyOutput_8cpp_source.html#l00029">McMd::MdEnergyOutput::readParameters()</a>, <a class="el" href="PerturbDerivative_8cpp_source.html#l00031">McMd::PerturbDerivative::readParameters()</a>, <a class="el" href="McEnergyOutput_8cpp_source.html#l00028">McMd::McEnergyOutput::readParameters()</a>, <a class="el" href="BoundaryAverage_8cpp_source.html#l00037">McMd::BoundaryAverage::readParameters()</a>, <a class="el" href="AverageAnalyzer_8h_source.html#l00114">McMd::AverageAnalyzer&lt; SystemType &gt;::readParameters()</a>, <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00055">McMd::McNVTChemicalPotential::readParameters()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00043">McMd::McPairEnergyAverage::readParameters()</a>, <a class="el" href="OutputStressTensor_8cpp_source.html#l00035">DdMd::OutputStressTensor::readParameters()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00033">DdMd::OutputTemperature::readParameters()</a>, <a class="el" href="OutputBoxdim_8cpp_source.html#l00033">DdMd::OutputBoxdim::readParameters()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00046">DdMd::OutputEnergy::readParameters()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00033">DdMd::OutputPressure::readParameters()</a>, <a class="el" href="McVirialStressTensorAverage_8cpp_source.html#l00044">McMd::McVirialStressTensorAverage::readParameters()</a>, <a class="el" href="OutputPairEnergies_8cpp_source.html#l00033">DdMd::OutputPairEnergies::readParameters()</a>, <a class="el" href="VirialStressTensor_8cpp_source.html#l00033">DdMd::VirialStressTensor::readParameters()</a>, <a class="el" href="MdVirialStressTensorAverage_8cpp_source.html#l00044">McMd::MdVirialStressTensorAverage::readParameters()</a>, <a class="el" href="VirialStressTensorAverage_8cpp_source.html#l00042">DdMd::VirialStressTensorAverage::readParameters()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00066">McMd::MdPairEnergyCoefficients::readParameters()</a>, <a class="el" href="BennettsMethod_8cpp_source.html#l00083">McMd::BennettsMethod::readParameters()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00033">McMd::RadiusGyration::readParameters()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00044">McMd::BlockRadiusGyration::readParameters()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00037">McMd::ReplicaMove::ReplicaMove()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00130">McMd::CompositionProfile::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2ConfigWriter_8cpp_source.html#l00064">McMd::ConfigWriter::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00129">McMd::StructureFactor::sample()</a>, <a class="el" href="ddMd_2analyzers_2StructureFactorGrid_8cpp_source.html#l00305">DdMd::StructureFactorGrid::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00292">McMd::StructureFactorGrid::sample()</a>, <a class="el" href="ddMd_2analyzers_2StructureFactor_8cpp_source.html#l00148">DdMd::StructureFactor::sample()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00241">McMd::IntraStructureFactorGrid::sample()</a>, <a class="el" href="OutputStressTensor_8cpp_source.html#l00087">DdMd::OutputStressTensor::setup()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00092">DdMd::OutputEnergy::setup()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00089">DdMd::OutputTemperature::setup()</a>, <a class="el" href="OutputBoxdim_8cpp_source.html#l00079">DdMd::OutputBoxdim::setup()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00085">DdMd::OutputPressure::setup()</a>, <a class="el" href="ddMd_2analyzers_2TrajectoryWriter_8cpp_source.html#l00088">DdMd::TrajectoryWriter::setup()</a>, <a class="el" href="tools_2analyzers_2TrajectoryWriter_8cpp_source.html#l00136">Tools::TrajectoryWriter::setup()</a>, and <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00035">McMd::Simulation::Simulation()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0710da457216fc219f21938520bae2f0"></a><!-- doxytag: member="Util::FileMaster::isCommonControl" ref="a0710da457216fc219f21938520bae2f0" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classUtil_1_1FileMaster.html#a0710da457216fc219f21938520bae2f0">Util::FileMaster::isCommonControl</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Is set for common param and command files? </p>
+
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00308">308</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af03b29b868aed38b1e94e5af0e6f4308"></a><!-- doxytag: member="Util::FileMaster::paramFileName" ref="af03b29b868aed38b1e94e5af0e6f4308" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classUtil_1_1FileMaster.html#af03b29b868aed38b1e94e5af0e6f4308">Util::FileMaster::paramFileName</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return the param file name, if any. </p>
+
+<p>Definition at line <a class="el" href="FileMaster_8h_source.html#l00449">449</a> of file <a class="el" href="FileMaster_8h_source.html">FileMaster.h</a>.</p>
+
+<p>Referenced by <a class="el" href="Processor_8cpp_source.html#l00076">Tools::Processor::readParam()</a>, and <a class="el" href="FileMaster_8cpp_source.html#l00106">setParamFileName()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a55bbc32b27ba7a7a16926c63edea6dcd"></a><!-- doxytag: member="Util::FileMaster::commandFileName" ref="a55bbc32b27ba7a7a16926c63edea6dcd" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string <a class="el" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd">Util::FileMaster::commandFileName</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return the command file name. </p>
+<p>The base name of the command file is read from the parameter file by the <a class="el" href="classUtil_1_1FileMaster.html#a7feb4503d8a177959fb2e9625d74de7e" title="Read parameter file.">readParameters()</a> method. </p>
+
+<p>Definition at line <a class="el" href="FileMaster_8h_source.html#l00455">455</a> of file <a class="el" href="FileMaster_8h_source.html">FileMaster.h</a>.</p>
+
+<p>Referenced by <a class="el" href="Processor_8cpp_source.html#l00108">Tools::Processor::readCommands()</a>, and <a class="el" href="FileMaster_8cpp_source.html#l00112">setCommandFileName()</a>.</p>
 
 </div>
 </div>
@@ -491,14 +957,14 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Get a default parameter stream by reference. </p>
-<p>If <a class="el" href="classUtil_1_1FileMaster.html#ae295d9dc32e5ee3b4ac2b4b2a8f185f1" title="Set an integer directory identifier for this processor.">setDirectoryId()</a> has not been called, of if <a class="el" href="classUtil_1_1FileMaster.html#a594f0358a7262624aa2b3e0009cf075d" title="Set paramFile() to return std::cin even if a directory id is set.">setParamFileStdIn()</a> has been called, this method returns std::cin.</p>
-<p>If <a class="el" href="classUtil_1_1FileMaster.html#ae295d9dc32e5ee3b4ac2b4b2a8f185f1" title="Set an integer directory identifier for this processor.">setDirectoryId()</a> has been called and setParamFileStdInd() has not, this method returns a reference to a file "n/param". This file is opened for reading the first time it is returned by this method. </p>
+<p>If <a class="el" href="classUtil_1_1FileMaster.html#ae295d9dc32e5ee3b4ac2b4b2a8f185f1" title="Set an integer directory identifier for this processor.">setDirectoryId()</a> has not been called, of if <a class="el" href="classUtil_1_1FileMaster.html#ad677773938f15a0e830088aaffeafbaa" title="Set to use single param and command files for multi-system simulations.">setCommonControl()</a> has been called, this method returns std::cin.</p>
+<p>If <a class="el" href="classUtil_1_1FileMaster.html#ae295d9dc32e5ee3b4ac2b4b2a8f185f1" title="Set an integer directory identifier for this processor.">setDirectoryId()</a> has been called and setCommonControld() has not, this method returns a reference to a file "n/param". This file is opened for reading the first time it is returned by this function. </p>
 
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00146">146</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00155">155</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
-<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="FileMaster_8cpp_source.html#l00227">openControlFile()</a>.</p>
 
-<p>Referenced by <a class="el" href="FileMaster_8cpp_source.html#l00178">commandFile()</a>.</p>
+<p>Referenced by <a class="el" href="Processor_8cpp_source.html#l00076">Tools::Processor::readParam()</a>.</p>
 
 </div>
 </div>
@@ -521,341 +987,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00178">178</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
 
-<p>References <a class="el" href="FileMaster_8cpp_source.html#l00146">paramFile()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="FileMaster_8cpp_source.html#l00227">openControlFile()</a>.</p>
 
-</div>
-</div>
-<a class="anchor" id="aa218273d5d1a5265f4c1aebe02d51a80"></a><!-- doxytag: member="Util::FileMaster::openInputFile" ref="aa218273d5d1a5265f4c1aebe02d51a80" args="(const std::string &amp;filename, std::ifstream &amp;in) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#aa218273d5d1a5265f4c1aebe02d51a80">Util::FileMaster::openInputFile</a> </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filename</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::ifstream &amp;&#160;</td>
-          <td class="paramname"><em>in</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Open an input file. </p>
-<p>The path to this file constructed by concatenating: [rootPrefix] + [directoryIdPrefix] + inputPrefix + filename.</p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filename</td><td>file name, without any prefix </td></tr>
-    <tr><td class="paramname">in</td><td>ifstream object to associated with a file </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00211">211</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
-
-<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
-
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00748">McMd::McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00586">McMd::MdSimulation::analyzeDumps()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00256">McMd::MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00349">McMd::McSimulation::readCommands()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a627be13b485867d6ff8841b76b092ca7"></a><!-- doxytag: member="Util::FileMaster::openOutputFile" ref="a627be13b485867d6ff8841b76b092ca7" args="(const std::string &amp;filename, std::ofstream &amp;out, bool append=false) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7">Util::FileMaster::openOutputFile</a> </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filename</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::ofstream &amp;&#160;</td>
-          <td class="paramname"><em>out</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>append</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Open an output file. </p>
-<p>The path to this file constructed by concatenating: [rootPrefix] + [directoryIdPrefix] + outputPrefix + filename.</p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filename</td><td>file name, without any prefix </td></tr>
-    <tr><td class="paramname">out</td><td>ofstream object to associated with a file </td></tr>
-    <tr><td class="paramname">append</td><td>True if we are appending to the file (default=false) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00236">236</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
-
-<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
-
-<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00052">McMd::MdPotentialEnergyAverage::loadParameters()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00053">McMd::MdKineticEnergyAverage::loadParameters()</a>, <a class="el" href="MdEnergyOutput_8cpp_source.html#l00042">McMd::MdEnergyOutput::loadParameters()</a>, <a class="el" href="PerturbDerivative_8cpp_source.html#l00055">McMd::PerturbDerivative::loadParameters()</a>, <a class="el" href="McEnergyOutput_8cpp_source.html#l00041">McMd::McEnergyOutput::loadParameters()</a>, <a class="el" href="BoundaryAverage_8cpp_source.html#l00063">McMd::BoundaryAverage::loadParameters()</a>, <a class="el" href="AverageAnalyzer_8h_source.html#l00135">McMd::AverageAnalyzer&lt; SystemType &gt;::loadParameters()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00065">McMd::McPairEnergyAverage::loadParameters()</a>, <a class="el" href="OutputStressTensor_8cpp_source.html#l00051">DdMd::OutputStressTensor::loadParameters()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00053">DdMd::OutputTemperature::loadParameters()</a>, <a class="el" href="OutputBoxdim_8cpp_source.html#l00050">DdMd::OutputBoxdim::loadParameters()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00063">DdMd::OutputEnergy::loadParameters()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00052">DdMd::OutputPressure::loadParameters()</a>, <a class="el" href="McVirialStressTensorAverage_8cpp_source.html#l00074">McMd::McVirialStressTensorAverage::loadParameters()</a>, <a class="el" href="VirialStressTensor_8cpp_source.html#l00054">DdMd::VirialStressTensor::loadParameters()</a>, <a class="el" href="MdVirialStressTensorAverage_8cpp_source.html#l00074">McMd::MdVirialStressTensorAverage::loadParameters()</a>, <a class="el" href="OutputPairEnergies_8cpp_source.html#l00050">DdMd::OutputPairEnergies::loadParameters()</a>, <a class="el" href="VirialStressTensorAverage_8cpp_source.html#l00071">DdMd::VirialStressTensorAverage::loadParameters()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00102">McMd::MdPairEnergyCoefficients::loadParameters()</a>, <a class="el" href="BennettsMethod_8cpp_source.html#l00120">McMd::BennettsMethod::loadParameters()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00066">McMd::RadiusGyration::loadParameters()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00101">McMd::BlockRadiusGyration::loadParameters()</a>, <a class="el" href="spAn_2analyzers_2AtomMSD_8cpp_source.html#l00166">SpAn::AtomMSD::output()</a>, <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00342">McMd::McNVTChemicalPotential::output()</a>, <a class="el" href="SemiGrandDistribution_8cpp_source.html#l00109">McMd::SemiGrandDistribution::output()</a>, <a class="el" href="MdEnergyOutput_8cpp_source.html#l00116">McMd::MdEnergyOutput::output()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00388">McMd::CfbReptationMove::output()</a>, <a class="el" href="McEnergyOutput_8cpp_source.html#l00108">McMd::McEnergyOutput::output()</a>, <a class="el" href="TypeDistribution_8cpp_source.html#l00109">McMd::TypeDistribution::output()</a>, <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00092">McMd::MdPotentialEnergyAverage::output()</a>, <a class="el" href="AverageAnalyzer_8h_source.html#l00187">McMd::AverageAnalyzer&lt; SystemType &gt;::output()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00092">McMd::MdKineticEnergyAverage::output()</a>, <a class="el" href="PerturbDerivative_8cpp_source.html#l00099">McMd::PerturbDerivative::output()</a>, <a class="el" href="PairEnergyAverage_8cpp_source.html#l00137">DdMd::PairEnergyAverage::output()</a>, <a class="el" href="ExternalEnergyAverage_8cpp_source.html#l00131">DdMd::ExternalEnergyAverage::output()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00323">McMd::MdPairEnergyCoefficients::output()</a>, <a class="el" href="BoundaryAverage_8cpp_source.html#l00117">McMd::BoundaryAverage::output()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00152">McMd::McPairEnergyAverage::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2AtomMSD_8cpp_source.html#l00207">McMd::AtomMSD::output()</a>, <a class="el" href="StressAutoCorrelation_8cpp_source.html#l00160">DdMd::StressAutoCorrelation::output()</a>, <a class="el" href="BondLengthDist_8cpp_source.html#l00125">McMd::BondLengthDist::output()</a>, <a class="el" href="ComMSD_8cpp_source.html#l00204">McMd::ComMSD::output()</a>, <a class="el" href="AsymmSFGrid_8cpp_source.html#l00242">DdMd::AsymmSFGrid::output()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00210">McMd::RingRouseAutoCorr::output()</a>, <a class="el" href="BennettsMethod_8cpp_source.html#l00300">McMd::BennettsMethod::output()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00214">McMd::LinearRouseAutoCorr::output()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00265">McMd::BlockRadiusGyration::output()</a>, <a class="el" href="RDF_8cpp_source.html#l00185">McMd::RDF::output()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00239">McMd::CompositionProfile::output()</a>, <a class="el" href="MigratingVanHove_8cpp_source.html#l00167">McMd::MigratingVanHove::output()</a>, <a class="el" href="OrderParamNucleation_8cpp_source.html#l00177">DdMd::OrderParamNucleation::output()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00185">McMd::IntraPairAutoCorr::output()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00156">McMd::RadiusGyration::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00235">McMd::StructureFactor::output()</a>, <a class="el" href="ddMd_2analyzers_2StructureFactorGrid_8cpp_source.html#l00352">DdMd::StructureFactorGrid::output()</a>, <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00243">McMd::StructureFactorPGrid::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00335">McMd::StructureFactorGrid::output()</a>, <a class="el" href="AsymmSF_8cpp_source.html#l00211">DdMd::AsymmSF::output()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00276">McMd::IntraStructureFactorGrid::output()</a>, <a class="el" href="ddMd_2analyzers_2StructureFactor_8cpp_source.html#l00272">DdMd::StructureFactor::output()</a>, <a class="el" href="ddMd_2analyzers_2VanHove_8cpp_source.html#l00229">DdMd::VanHove::output()</a>, <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00199">McMd::VanHove::output()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00226">McMd::StructureFactorP::output()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00230">McMd::IntraStructureFactor::output()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00256">McMd::MdSimulation::readCommands()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00349">McMd::McSimulation::readCommands()</a>, <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00035">McMd::MdPotentialEnergyAverage::readParameters()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00035">McMd::MdKineticEnergyAverage::readParameters()</a>, <a class="el" href="MdEnergyOutput_8cpp_source.html#l00032">McMd::MdEnergyOutput::readParameters()</a>, <a class="el" href="PerturbDerivative_8cpp_source.html#l00034">McMd::PerturbDerivative::readParameters()</a>, <a class="el" href="McEnergyOutput_8cpp_source.html#l00031">McMd::McEnergyOutput::readParameters()</a>, <a class="el" href="BoundaryAverage_8cpp_source.html#l00040">McMd::BoundaryAverage::readParameters()</a>, <a class="el" href="AverageAnalyzer_8h_source.html#l00114">McMd::AverageAnalyzer&lt; SystemType &gt;::readParameters()</a>, <a class="el" href="McNVTChemicalPotential_8cpp_source.html#l00058">McMd::McNVTChemicalPotential::readParameters()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00046">McMd::McPairEnergyAverage::readParameters()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00036">DdMd::OutputTemperature::readParameters()</a>, <a class="el" href="OutputStressTensor_8cpp_source.html#l00036">DdMd::OutputStressTensor::readParameters()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00049">DdMd::OutputEnergy::readParameters()</a>, <a class="el" href="OutputBoxdim_8cpp_source.html#l00036">DdMd::OutputBoxdim::readParameters()</a>, <a class="el" href="OutputPairEnergies_8cpp_source.html#l00036">DdMd::OutputPairEnergies::readParameters()</a>, <a class="el" href="McVirialStressTensorAverage_8cpp_source.html#l00047">McMd::McVirialStressTensorAverage::readParameters()</a>, <a class="el" href="VirialStressTensor_8cpp_source.html#l00036">DdMd::VirialStressTensor::readParameters()</a>, <a class="el" href="MdVirialStressTensorAverage_8cpp_source.html#l00047">McMd::MdVirialStressTensorAverage::readParameters()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00036">DdMd::OutputPressure::readParameters()</a>, <a class="el" href="VirialStressTensorAverage_8cpp_source.html#l00045">DdMd::VirialStressTensorAverage::readParameters()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00069">McMd::MdPairEnergyCoefficients::readParameters()</a>, <a class="el" href="BennettsMethod_8cpp_source.html#l00086">McMd::BennettsMethod::readParameters()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00036">McMd::RadiusGyration::readParameters()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00047">McMd::BlockRadiusGyration::readParameters()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00041">McMd::ReplicaMove::ReplicaMove()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00133">McMd::CompositionProfile::sample()</a>, <a class="el" href="TrajectoryWriter_8cpp_source.html#l00130">DdMd::TrajectoryWriter::sample()</a>, <a class="el" href="DumpConfig_8cpp_source.html#l00067">McMd::DumpConfig::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactor_8cpp_source.html#l00132">McMd::StructureFactor::sample()</a>, <a class="el" href="ddMd_2analyzers_2StructureFactorGrid_8cpp_source.html#l00308">DdMd::StructureFactorGrid::sample()</a>, <a class="el" href="mcMd_2analyzers_2system_2StructureFactorGrid_8cpp_source.html#l00295">McMd::StructureFactorGrid::sample()</a>, <a class="el" href="ddMd_2analyzers_2StructureFactor_8cpp_source.html#l00151">DdMd::StructureFactor::sample()</a>, <a class="el" href="IntraStructureFactorGrid_8cpp_source.html#l00241">McMd::IntraStructureFactorGrid::sample()</a>, and <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00038">McMd::Simulation::Simulation()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a357bb5ceca3c21b8aa2f2b5c6d5d084d"></a><!-- doxytag: member="Util::FileMaster::openParamIFile" ref="a357bb5ceca3c21b8aa2f2b5c6d5d084d" args="(const std::string &amp;name, const char *ext, std::ifstream &amp;in) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#a357bb5ceca3c21b8aa2f2b5c6d5d084d">Util::FileMaster::openParamIFile</a> </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>ext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::ifstream &amp;&#160;</td>
-          <td class="paramname"><em>in</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Open an input restart parameter file for reading. </p>
-<p>The path to this file constructed by concatenating: [rootPrefix] + [directoryIdPrefix] + name + "." + ext</p>
-<p>The directoryIdPrefix is included only if a directory id is set and the setParamFileStdIn method has not been set.</p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>base file name, without any prefix </td></tr>
-    <tr><td class="paramname">ext</td><td>file name extension. </td></tr>
-    <tr><td class="paramname">in</td><td>ifstream object to open </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00264">264</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
-
-<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a9af467e63d132369ea0a619de0a57b9b"></a><!-- doxytag: member="Util::FileMaster::openParamOFile" ref="a9af467e63d132369ea0a619de0a57b9b" args="(const std::string &amp;name, const char *ext, std::ofstream &amp;out) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#a9af467e63d132369ea0a619de0a57b9b">Util::FileMaster::openParamOFile</a> </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>ext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::ofstream &amp;&#160;</td>
-          <td class="paramname"><em>out</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Open an output restart parameter file for writing. </p>
-<p>The path to this file constructed by concatenating: [rootPrefix] + [directoryIdPrefix] + name + "." + ext</p>
-<p>The directoryIdPrefix is included only if a directory id is set and the setParamFileStdIn method has not been set.</p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>base file name, without any prefix or extension </td></tr>
-    <tr><td class="paramname">ext</td><td>file name extension. </td></tr>
-    <tr><td class="paramname">out</td><td>ofstream object to open </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00286">286</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
-
-<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa1bb209ebb20c68bdae61586827071aa"></a><!-- doxytag: member="Util::FileMaster::openRestartIFile" ref="aa1bb209ebb20c68bdae61586827071aa" args="(const std::string &amp;name, const char *ext, std::ifstream &amp;in) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#aa1bb209ebb20c68bdae61586827071aa">Util::FileMaster::openRestartIFile</a> </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>ext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::ifstream &amp;&#160;</td>
-          <td class="paramname"><em>in</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Open an input restart dump file for reading. </p>
-<p>The path to this file constructed by concatenating: [rootPrefix] + [directoryIdPrefix] + name + "." + ext</p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>base file name, without any prefix or extension </td></tr>
-    <tr><td class="paramname">ext</td><td>file name extension. </td></tr>
-    <tr><td class="paramname">in</td><td>ifstream object to open </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00308">308</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
-
-<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
-
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00301">McMd::McSimulation::load()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00748">McMd::MdSimulation::load()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0ecf1c01bd6f17893cd387376c3a7aab"></a><!-- doxytag: member="Util::FileMaster::openRestartOFile" ref="a0ecf1c01bd6f17893cd387376c3a7aab" args="(const std::string &amp;name, const char *ext, std::ofstream &amp;out) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classUtil_1_1FileMaster.html#a0ecf1c01bd6f17893cd387376c3a7aab">Util::FileMaster::openRestartOFile</a> </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>ext</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::ofstream &amp;&#160;</td>
-          <td class="paramname"><em>out</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Open an output restart dump file for writing. </p>
-<p>The path to this file constructed by concatenating: [rootPrefix] + [directoryIdPrefix] + name + "." + ext</p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>base file name, without any prefix or extension </td></tr>
-    <tr><td class="paramname">ext</td><td>file name extension. </td></tr>
-    <tr><td class="paramname">out</td><td>ofstream object to open </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00329">329</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
-
-<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
-
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00334">McMd::McSimulation::save()</a>, and <a class="el" href="MdSimulation_8cpp_source.html#l00772">McMd::MdSimulation::save()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a55bbc32b27ba7a7a16926c63edea6dcd"></a><!-- doxytag: member="Util::FileMaster::commandFileName" ref="a55bbc32b27ba7a7a16926c63edea6dcd" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string <a class="el" href="classUtil_1_1FileMaster.html#a55bbc32b27ba7a7a16926c63edea6dcd">Util::FileMaster::commandFileName</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return the command file name. </p>
-<p>The base name of the param file is read from the parameter file by the <a class="el" href="classUtil_1_1FileMaster.html#a7feb4503d8a177959fb2e9625d74de7e" title="Read parameter file.">readParameters()</a> method. </p>
-
-<p>Definition at line <a class="el" href="FileMaster_8h_source.html#l00368">368</a> of file <a class="el" href="FileMaster_8h_source.html">FileMaster.h</a>.</p>
-
-<p>Referenced by <a class="el" href="FileMaster_8cpp_source.html#l00102">setCommandFileName()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a84ab233fc21699a2e4796b48d2208371"></a><!-- doxytag: member="Util::FileMaster::isParamFileStdIn" ref="a84ab233fc21699a2e4796b48d2208371" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classUtil_1_1FileMaster.html#a84ab233fc21699a2e4796b48d2208371">Util::FileMaster::isParamFileStdIn</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Is <a class="el" href="classUtil_1_1FileMaster.html#aa6e2bee2242001a0eeadc50d1a0a3837" title="Get a default parameter stream by reference.">paramFile()</a> set to return std::cin ? </p>
-
-<p>Definition at line <a class="el" href="FileMaster_8cpp_source.html#l00353">353</a> of file <a class="el" href="FileMaster_8cpp_source.html">FileMaster.cpp</a>.</p>
+<p>Referenced by <a class="el" href="Processor_8cpp_source.html#l00108">Tools::Processor::readCommands()</a>.</p>
 
 </div>
 </div>
@@ -869,7 +1003,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:35 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:21 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

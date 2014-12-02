@@ -61,24 +61,22 @@
 <div class="contents">
 <div class="textblock"><p>Single-processor analysis program for postprocessing MD trajectories.</p>
 <p>Usage:</p>
-<p>mdPp [-t] [-i inputConfigIo] param config first last</p>
-<p>Required arguments:</p>
-<p>param - name of parameter file</p>
-<p>config - base name of configuration file(s)</p>
-<p>first - index of first configuration or frame</p>
-<p>last - index of last configuration or frame</p>
+<p>mdPp [-e] -p param [-c command]</p>
 <p>Options:</p>
-<p>-t</p>
-<p>Sets to read a trajectory file. If not set, reads a sequence of configuration files.</p>
-<p>-i inputConfigIo</p>
-<p>Specify input configuration/trajectory format. The required argument inputConfigIo is the name of a ConfigIo subclass. </p>
+<p>-e</p>
+<p>Enable echoing of the param file to std::out (no argument)</p>
+<p>-p paramFileName</p>
+<p>Specify name of a parameter file name as argument</p>
+<p>-p commandFileName</p>
+<p>Specify the name of a command file name as the argument</p>
+<p>If option -p is not set, so that no command file name is given, commands are read from standard input (i.e., from the keyboard). </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 09:45:22 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:02 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

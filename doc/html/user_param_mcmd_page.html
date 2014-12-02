@@ -195,36 +195,42 @@ Example (for mcSim):</h2>
 }
 </pre></div><h2><a class="anchor" id="user_param_mcmd_overview_section"></a>
 Overview</h2>
-<p>In outline, the structure for an mcSim file for the default the code (without angle, dihedral or external potentials) is: </p>
+<p>The format is shown below for an mcSim file for a code with all potential types enabled at compile time (with bond, angle, dihedral and external potentials). Most parameters are shown in the format "label type" where type is the type of variable expected. Optional parameters are shown in square brackets, using the format [label type = default], where default is the default value assigned to the variable if this line is absent from the parameter file. </p>
 <div class="fragment"><pre class="fragment">McSimulation{
   FileMaster{ ... }
-  nAtomType    [int]
-  nBondType    [int]
-  atomTypes    [string (name)]   [float (mass)]
+  nAtomType       <span class="keywordtype">int</span>
+  [nBondType      <span class="keywordtype">int</span> = 0]
+  [nAngleType     <span class="keywordtype">int</span> = 0]
+  [nDihedralType  <span class="keywordtype">int</span> = 0]
+  [hasExternal    <span class="keywordtype">bool</span> = 0]
+  atomTypes    string (name)   float (mass)
                ...
-  maskedPairPolicy   [string]
+  maskedPairPolicy   <span class="keywordtype">string</span>
   SpeciesManager{ ... }
   Random{ ... }
   McSystem{ ... }
   McMoveManager{ ... }
   AnalyzerManager{ ... }
-  writeRestartInterval  [int]
-  writeRestartFileName  [string]
+  writeRestartInterval  <span class="keywordtype">int</span>
+  writeRestartFileName  <span class="keywordtype">string</span>
 }
 </pre></div><p> The corresponding format for an mdSim file is: </p>
 <div class="fragment"><pre class="fragment">MdSimulation{
   FileMaster{ ... }
-  nAtomType    [int]
-  nBondType    [int]
-  atomTypes    [string (name)]   [float (mass)]
+  nAtomType        <span class="keywordtype">int</span>
+  [nBondType       <span class="keywordtype">int</span> = 0]
+  [nAngleType      <span class="keywordtype">int</span> = 0]
+  [nDihedralType   <span class="keywordtype">int</span> = 0]
+  [hasExternal     <span class="keywordtype">bool</span> = 0]
+  atomTypes        string (name)   float (mass)
                ...
-  maskedPairPolicy   [string]
+  maskedPairPolicy   <span class="keywordtype">string</span>
   SpeciesManager{ ... }
   Random{ ... }
   MdSystem{ ... }
   AnalyzerManager{ ... }
-  writeRestartInterval    [int]
-  writeRestartFileName    [string]
+  writeRestartInterval    <span class="keywordtype">int</span>
+  writeRestartFileName    <span class="keywordtype">string</span>
 }
 </pre></div><p> The two formats are similar in most respects. The most important differences are:</p>
 <ul>
@@ -246,6 +252,8 @@ nAtomType: The number of atom types, which are indexed by an integer index with 
 <li>
 nBondType: The number of bond types, which are indexed by an integer index with values 0, ..., nBondType - 1.  </li>
 <li>
+hasExternal: This is a boolean variable that is set to true (1) if an external potential will be used and false (0) otherwise.  </li>
+<li>
 atomTypes: atomTypes is an array of values of type <a class="el" href="classMcMd_1_1AtomType.html" title="Descriptor for a type of Atom.">McMd::AtomType</a>. The string representation of each atom type consists of a string label (e.g., "A" or "B") followed by a floating point value for the atom mass.  </li>
 <li>
 maskedPairPolicy: Determines if nonbonded pair interactions between bonded atoms are "masked" (i.e., suppressed), or included. See below for further discussion. </li>
@@ -255,13 +263,13 @@ writeRestartInterval: The interval, in MD time steps or attempted MC moves, betw
 writeRestartFileName: The base name used for the restart file. </li>
 </ul>
 <p>The writeRestartInterval and writeRestartFileName parameters are discussed in more detail <a class="el" href="user_restart_page.html">here</a>.</p>
+<h2><a class="anchor" id="user_param_mcmd_filemaster_section"></a>
+FileMaster</h2>
+<p>The FileMaster block is associated with an instance of the class <a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">Util::FileMaster</a>. This block contains several string parameters that specify locations of input and output files. The string "commandFileName" is the name of the command file that controls program execution after the parameter file is processed. The "inputPrefix" string is prepended to the names of input configuration files and other input files. The "outputPrefix" string is predended to the names of most output files.</p>
+<p>Input and output files can be placed in separate directories by giving directory names for these two prefixes, in which case the prefix strings should end with a backslash (directory separator). In the above example, by setting "inputPrefix" to "in/" and "outputPrefix" to "out/", we have specified that input files should be read from subdirectory "in" and output files should be written to a subdirectory named "out".</p>
 <h2><a class="anchor" id="user_param_mcmd_maskPairPolicy_section"></a>
 MaskedPairPolicy</h2>
 <p>The parameter maskedPairPolicy is represented internally by an instance of the enum <a class="el" href="group__McMd__Chemistry__Module.html#ga43203d681ebb2c62d748de0516d59a82" title="Enumeration of policies for suppressing (&quot;masking&quot;) some pair interactions.">McMd::MaskPolicy</a>. This can have values MaskBonded or MaskNone, which are represented in the parameter file by strings "MaskBonded" or "maskBonded" and "MaskNone" or "maskNone", respectively. The value "MaskBonded" indicates that nonbonded pair interactions between bonded atoms should be suppressed or "masked", i.e., there should be no non-bonded pair interaction between pairs of atoms that are directly connected by a two-body covalent bond. The value "MaskNone" indicates, conversely, that the nonbonded pair interaction should operate between any two atoms that are separated by a distance less than the appropriate pair potential cutoff length.</p>
-<h2><a class="anchor" id="user_param_mcmd_filemaster_section"></a>
-FileMaster</h2>
-<p>The FileMaster block is associated with an instance of the class <a class="el" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">Util::FileMaster</a>. This block contains several string parameters that specify locations of input and output files. The string "commandFileName" is the name of the command file that controls program execution after the parameter file is processed. The "inputPrefix" string is prepended to the names of input configuration files and other input files. The "outputPrefix" string is predended to the names of most output files.</p>
-<p>Input and output files can be placed in separate directories by giving directory names for these two prefixes, in which case the prefix strings should end with a backslash (directory separator). In the above example, by setting "inputPrefix" to "in/" and "outputPrefix" to "out/", we have specified that input files should be read from subdirectory "in" and output files should be written to a subdirectory named "out".</p>
 <h2><a class="anchor" id="user_param_random_section"></a>
 Random</h2>
 <p>The Random block is associated with a <a class="el" href="classUtil_1_1Random.html" title="Random number generator.">Util::Random</a> object. The only parameter this block is a "seed" for the Mersenne-Twister random number generator. The seed value must be an unsigned (non-negative) 32 bit integer, in the range 0 &lt;= seed &lt; 4294967296.</p>
@@ -275,8 +283,11 @@ AnalyzerManager</h2>
 McSystem and MdSystem</h2>
 <p>The format for an McSystem subblock of an MdSimulation is: </p>
 <div class="fragment"><pre class="fragment">  McSystem{
-    pairStyle      [string]
-    bondStyle      [string]
+    pairStyle         <span class="keywordtype">string</span>
+    [bondStyle        string]
+    [angleStyle       string]
+    [dihedralStyle    string]
+    [externalStyle    string]
     McPairPotential{ ... }
     BondPotential{ ... }
     EnergyEnsemble{ ... }
@@ -284,23 +295,26 @@ McSystem and MdSystem</h2>
   }
 </pre></div><p> The format for an MdSystem subblock of an MdSimulation block is: </p>
 <div class="fragment"><pre class="fragment">  McSystem{
-    pairStyle      [string]
-    bondStyle      [string]
+    pairStyle        <span class="keywordtype">string</span>
+    bondStyle        <span class="keywordtype">string</span>
+    angleStyle       <span class="keywordtype">string</span>
+    dihedralStyle    <span class="keywordtype">string</span>
+    externalStyle    <span class="keywordtype">string</span>
     MdPairPotential{ ...  }
-    BondPotential{ ...  }
-    EnergyEnsemble{ ...  }
-    BoundaryEnsemble{ ...  }
+    [BondPotential{ ...  }]
+    [EnergyEnsemble{ ...  }]
+    [BoundaryEnsemble{ ...  }]
     MdIntegrator{ ...  }
   }
-</pre></div><p> In the above description of the MdSystem block, MdIntegrator{ ... } denotes a polymorphic block that must contain the file format for a subclass of the <a class="el" href="classMcMd_1_1MdIntegrator.html" title="Abstract base for molecular dynamics integrators.">McMd::MdIntegrator</a> base class.</p>
+</pre></div><p> The both types of System, values of the potential energy "style" parameters (pairStyle, bondStyle, etc.) are strings that specify the names of "interaction" classes that implement specific potential energy functions for nonbonded pair, covalent and external potentials, respectively. For example, pairStyle may be assigned a valueLJPair, indicating the LJPair interaction class defined in the src/inter/pair directory. Interaction classes of different types are in different subdirectories of the src/inter directory tree.</p>
+<p>For bond, angle and dihedral covalent potentials, the style string (e.g., bondStyle) and potential energy block (e.g., BondPotential) must be present if and only if the corresponding type of potential energy has been enabled by explicitly assigning a nonzero value to nBondType, nAngleType, or nDihedralType parameters, respectively, in the main McSimulation or MdSimulation block. Similarly, the externalStyle parameter and ExternalPotential block must be present if an only if the external potential has been explicitly assigned a value of true (1). These style string and potential energy entries may not appear if the corresponding potential energy has been disabled by setting the corresonding n(Potential)Type variable to its default value of zero for covalent potentials or by setting hasExternal to its default value of false (0), or by not including these variables in the parameter file.</p>
 <p>The only differences between an MdSystem block and an McSystem block are thus:</p>
 <ul>
 <li>An MdSystem contains an MdPairPotential block (<a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">McMd::MdPairPotential</a>) where an McSystem contains an McPairPotential block (<a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McMd::McPairPotential</a>).</li>
 </ul>
 <ul>
-<li>An MdSystem block contains an additional polymorphic <a class="el" href="classMcMd_1_1MdIntegrator.html" title="Abstract base for molecular dynamics integrators.">McMd::MdIntegrator</a> block.</li>
+<li>An MdSystem block contains an additional <a class="el" href="classMcMd_1_1MdIntegrator.html" title="Abstract base for molecular dynamics integrators.">McMd::MdIntegrator</a> block. In the above description of the MdSystem block, MdIntegrator{ ... } denotes a polymorphic block that must contain the file format for a subclass of the <a class="el" href="classMcMd_1_1MdIntegrator.html" title="Abstract base for molecular dynamics integrators.">McMd::MdIntegrator</a> base class, with an opening line that specifies the desired subclass (e.g., NvtIntegrator{...}).</li>
 </ul>
-<p>The both types of System, values of the pairStyle and bondStyle parameters are strings that specify the names of "interaction" classes that implement specific potential energy functions for nonbonded pair and covalent bond potentials, respectively. Interaction classes for non-bonded pair interactions are in the src/inter/pair directory. Interaction classes for bond potentials are in the src/inter/bond directory. For executables in which angle, dihedral, and/or external potentials have enabled (these are all disabled by default) these two "style" variables would be followed by "angleStyle", "dihedralStyle" and/or "externaStyle" string variables, as appropriate.</p>
 <h2><a class="anchor" id="user_param_mdpair_section"></a>
 Pair Potentials</h2>
 <p>MC and MD simulations use the same potential classes for all covalent bond potentials, and for angle, and dihedral, and external potentials (if enabled). Different classes are used to evaluate pair potentials, because different data structures are used to keep track of neighbors in MC and MD simulations. The <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McMd::McPairPotential</a> class uses a cell list (a instance of <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">McMd::CellList</a>), while an MdPairPotential uses a Verlet pair list (an instance of Util::PairList). The <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">McMd::PairList</a> class also uses an internal cell list, which is used periodically rebuild the pair list, but is not used for force or energy calculations.</p>
@@ -330,7 +344,7 @@ Energy and Boundary Ensembles</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:17 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:02 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

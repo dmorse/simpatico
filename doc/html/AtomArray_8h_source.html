@@ -63,7 +63,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -109,39 +109,37 @@
 <a name="l00082"></a>00082 <span class="comment">      * array is stored in element i in each of these arrays.</span>
 <a name="l00083"></a>00083 <span class="comment">      */</span>
 <a name="l00084"></a>00084 
-<a name="l00085"></a>00085 <span class="preprocessor">      #ifdef DDMD_MOLECULES</span>
-<a name="l00086"></a>00086 <span class="preprocessor"></span>
-<a name="l00090"></a>00090       AtomContext*  contexts_;
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092 <span class="preprocessor">      #endif</span>
-<a name="l00093"></a>00093 <span class="preprocessor"></span>
-<a name="l00097"></a>00097       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>*  velocities_;
-<a name="l00098"></a>00098 
-<a name="l00102"></a>00102       <a class="code" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a parent Atom are &quot;masked&quot;.">Mask</a>*  masks_;
-<a name="l00103"></a>00103 
-<a name="l00107"></a>00107       <a class="code" href="classDdMd_1_1Plan.html" title="Communication plan.">Plan</a>*  plans_; 
-<a name="l00108"></a>00108 
-<a name="l00112"></a>00112       <span class="keywordtype">int</span>*  ids_;
-<a name="l00113"></a>00113 
-<a name="l00117"></a>00117       <a class="code" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>(<span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>&amp; other);
-<a name="l00118"></a>00118    
-<a name="l00122"></a>00122       <a class="code" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>&amp; operator = (<span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>&amp; other); 
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124    <span class="comment">//friends:</span>
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126       <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>;
-<a name="l00127"></a>00127 
-<a name="l00128"></a>00128    };
-<a name="l00129"></a>00129 
-<a name="l00130"></a>00130 }
-<a name="l00131"></a>00131 <span class="preprocessor">#endif</span>
+<a name="l00088"></a>00088       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>* velocities_;
+<a name="l00089"></a>00089 
+<a name="l00093"></a>00093       <a class="code" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a parent Atom are &quot;masked&quot;.">Mask</a>* masks_;
+<a name="l00094"></a>00094 
+<a name="l00098"></a>00098       <a class="code" href="classDdMd_1_1Plan.html" title="Communication plan.">Plan</a>* plans_; 
+<a name="l00099"></a>00099 
+<a name="l00103"></a>00103       <span class="keywordtype">int</span>* ids_;
+<a name="l00104"></a>00104 
+<a name="l00108"></a>00108       <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>* groups_;
+<a name="l00109"></a>00109 
+<a name="l00113"></a>00113       <a class="code" href="structDdMd_1_1AtomContext.html" title="Descriptor for context of an Atom within a molecule and species.">AtomContext</a>* contexts_;
+<a name="l00114"></a>00114 
+<a name="l00118"></a>00118       <a class="code" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>(<span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>&amp; other);
+<a name="l00119"></a>00119    
+<a name="l00123"></a>00123       <a class="code" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>&amp; operator = (<span class="keyword">const</span> <a class="code" href="classDdMd_1_1AtomArray.html" title="An array of Atom objects.">AtomArray</a>&amp; other); 
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125    <span class="comment">//friends:</span>
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127       <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classDdMd_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>;
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129    };
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131 }
+<a name="l00132"></a>00132 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:55 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

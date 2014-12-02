@@ -181,7 +181,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00024">24</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00021">21</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
@@ -204,7 +204,7 @@ Public Member Functions</h2></td></tr>
 <p>Destructor. </p>
 <p>Deallocates array of <a class="el" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a> objects, if necessary. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00041">41</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00038">38</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
@@ -272,7 +272,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00047">47</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00044">44</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>.</p>
 
@@ -386,11 +386,11 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00161">161</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00158">158</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="FSArray_8h_source.html#l00257">Util::FSArray&lt; Data, Capacity &gt;::append()</a>, <a class="el" href="FSArray_8h_source.html#l00270">Util::FSArray&lt; Data, Capacity &gt;::clear()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="Grid_8h_source.html#l00154">Util::Grid::dimension()</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00162">DdMd::PairPotential::buildCellList()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">DdMd::PairPotential::buildCellList()</a>.</p>
 
 </div>
 </div>
@@ -421,9 +421,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00401">401</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00398">DdMd::Atom::position()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">DdMd::Atom::position()</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00162">DdMd::PairPotential::buildCellList()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">DdMd::PairPotential::buildCellList()</a>.</p>
 
 </div>
 </div>
@@ -444,11 +444,11 @@ Public Member Functions</h2></td></tr>
 <p>Build the cell list. </p>
 <p>This method must be called after completing a loop over atoms, in which <a class="el" href="classDdMd_1_1CellList.html#a86801f1caf32420a380c2885b08e2337" title="Determine the appropriate cell for an Atom, based on its position.">placeAtom()</a> is called for each atom. The <a class="el" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3" title="Build the cell list.">build()</a> method uses information gathered in this loop to build and fill all of the cells. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00280">280</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00277">277</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="GArray_8h_source.html#l00306">Util::GArray&lt; Data &gt;::append()</a>, and <a class="el" href="Grid_8h_source.html#l00157">Util::Grid::size()</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00162">DdMd::PairPotential::buildCellList()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">DdMd::PairPotential::buildCellList()</a>.</p>
 
 </div>
 </div>
@@ -469,9 +469,9 @@ Public Member Functions</h2></td></tr>
 <p>Update the cell list. </p>
 <p>This method must be called after the cell list is built, and after transformation back to Cartesian coordinates. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00313">313</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00310">310</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00076">DdMd::PairList::build()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00073">DdMd::PairList::build()</a>.</p>
 
 </div>
 </div>
@@ -491,11 +491,11 @@ Public Member Functions</h2></td></tr>
 
 <p>Reset the cell list to its empty state (no Atoms). </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00259">259</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00256">256</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="GArray_8h_source.html#l00299">Util::GArray&lt; Data &gt;::clear()</a>, and <a class="el" href="Grid_8h_source.html#l00157">Util::Grid::size()</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00162">DdMd::PairPotential::buildCellList()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">DdMd::PairPotential::buildCellList()</a>.</p>
 
 </div>
 </div>
@@ -574,7 +574,7 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00361">isValid()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00358">isValid()</a>.</p>
 
 </div>
 </div>
@@ -596,7 +596,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00447">447</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00076">DdMd::PairList::build()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00073">DdMd::PairList::build()</a>.</p>
 
 </div>
 </div>
@@ -643,9 +643,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get total number of atoms (local and ghost) in this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00323">323</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00320">320</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00162">DdMd::PairPotential::buildCellList()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">DdMd::PairPotential::buildCellList()</a>.</p>
 
 </div>
 </div>
@@ -665,9 +665,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get number of atoms that were rejected (not placed in cells) </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00329">329</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00326">326</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00162">DdMd::PairPotential::buildCellList()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">DdMd::PairPotential::buildCellList()</a>.</p>
 
 </div>
 </div>
@@ -687,7 +687,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Maximum number of atoms for which space is allocated. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00343">343</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00340">340</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="Array_8h_source.html#l00144">Util::Array&lt; Data &gt;::capacity()</a>.</p>
 
@@ -709,7 +709,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Number of cells for which space has been allocated. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00349">349</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00346">346</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="GArray_8h_source.html#l00448">Util::GArray&lt; Data &gt;::capacity()</a>.</p>
 
@@ -733,7 +733,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00453">453</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00361">isValid()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00358">isValid()</a>.</p>
 
 </div>
 </div>
@@ -754,7 +754,7 @@ Public Member Functions</h2></td></tr>
 <p>Has this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> been built? </p>
 <p>IsBuilt is set true by the <a class="el" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3" title="Build the cell list.">build()</a> method and false by <a class="el" href="classDdMd_1_1CellList.html#aae15fc4934318b9caad30c39d94f969f" title="Reset the cell list to its empty state (no Atoms).">clear()</a>. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00355">355</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00352">352</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
@@ -775,11 +775,11 @@ Public Member Functions</h2></td></tr>
 <p>Return true if valid, or throw Exception. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if valid, otherwise throw an Exception. </dd></dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00361">361</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00358">358</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00321">DdMd::Cell::atomCapacity()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00305">DdMd::Cell::atomPtr()</a>, <a class="el" href="Array_8h_source.html#l00144">Util::Array&lt; Data &gt;::capacity()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00382">cellIndexFromPosition()</a>, <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00453">isAllocated()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00299">DdMd::Cell::nAtom()</a>, <a class="el" href="Grid_8h_source.html#l00157">Util::Grid::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00162">DdMd::PairPotential::buildCellList()</a>.</p>
+<p>Referenced by <a class="el" href="PairPotential_8cpp_source.html#l00159">DdMd::PairPotential::buildCellList()</a>.</p>
 
 </div>
 </div>
@@ -793,7 +793,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:19 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:05 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

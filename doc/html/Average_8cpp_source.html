@@ -57,253 +57,249 @@
 <div class="title">Average.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef UTIL_AVERAGE_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define UTIL_AVERAGE_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;Average.h&quot;</span>         <span class="comment">// class header</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;util/format/Dbl.h&gt;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;util/format/Int.h&gt;</span>
-<a name="l00014"></a>00014 
-<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;math.h&gt;</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;Average.h&quot;</span>         <span class="comment">// class header</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;util/format/Dbl.h&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;util/format/Int.h&gt;</span>
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;math.h&gt;</span>
+<a name="l00013"></a>00013 
+<a name="l00014"></a>00014 <span class="keyword">namespace </span>Util
+<a name="l00015"></a>00015 {
 <a name="l00016"></a>00016 
-<a name="l00017"></a>00017 <span class="keyword">namespace </span>Util
-<a name="l00018"></a>00018 {
-<a name="l00019"></a>00019 
-<a name="l00020"></a>00020    <span class="comment">/*</span>
-<a name="l00021"></a>00021 <span class="comment">   * Default constructor.</span>
-<a name="l00022"></a>00022 <span class="comment">   */</span>
-<a name="l00023"></a><a class="code" href="classUtil_1_1Average.html#a72b1537be5987dae3964ece96f41c212">00023</a>    <a class="code" href="classUtil_1_1Average.html#a72b1537be5987dae3964ece96f41c212" title="Constructor.">Average::Average</a>(<span class="keywordtype">int</span> blockFactor)
-<a name="l00024"></a>00024     : <a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>(blockFactor),
-<a name="l00025"></a>00025       <a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>(),
-<a name="l00026"></a>00026       descendants_(),
-<a name="l00027"></a>00027       blockSum_(0.0),
-<a name="l00028"></a>00028       iBlock_(0),
-<a name="l00029"></a>00029       nSamplePerBlock_(0)
-<a name="l00030"></a>00030    {
-<a name="l00031"></a>00031       <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;Average&quot;</span>);
-<a name="l00032"></a>00032       <span class="comment">// Register self as first &quot;descendant&quot; AverageStage.</span>
-<a name="l00033"></a>00033       descendants_.push_back(<span class="keyword">this</span>);
-<a name="l00034"></a>00034    }
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036    <span class="comment">/*</span>
-<a name="l00037"></a>00037 <span class="comment">   * Destructor.</span>
-<a name="l00038"></a>00038 <span class="comment">   */</span>
-<a name="l00039"></a><a class="code" href="classUtil_1_1Average.html#a365dbabdde7ff7e10445168b8563f1c7">00039</a>    <a class="code" href="classUtil_1_1Average.html#a365dbabdde7ff7e10445168b8563f1c7" title="Destructor.">Average::~Average</a>()
-<a name="l00040"></a>00040    {}
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042    <span class="comment">/*</span>
-<a name="l00043"></a>00043 <span class="comment">   * Reset all accumulators and counters to zero.</span>
-<a name="l00044"></a>00044 <span class="comment">   */</span>
-<a name="l00045"></a><a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de">00045</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">Average::clear</a>()
-<a name="l00046"></a>00046    {
-<a name="l00047"></a>00047       blockSum_ = 0;
-<a name="l00048"></a>00048       iBlock_   = 0;
-<a name="l00049"></a>00049       <a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">AverageStage::clear</a>();
-<a name="l00050"></a>00050    }
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052    <span class="comment">/*</span>
-<a name="l00053"></a>00053 <span class="comment">   * Read nSamplePerBlock from file.</span>
-<a name="l00054"></a>00054 <span class="comment">   */</span>
-<a name="l00055"></a><a class="code" href="classUtil_1_1Average.html#aa6d118dd419b70295caa1aa099d76d65">00055</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#aa6d118dd419b70295caa1aa099d76d65" title="Read parameter nSamplePerBlock from file and initialize.">Average::readParameters</a>(std::istream&amp; in)
-<a name="l00056"></a>00056    {  read&lt;int&gt;(in, <span class="stringliteral">&quot;nSamplePerBlock&quot;</span>, nSamplePerBlock_); }
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058    <span class="comment">/*</span>
-<a name="l00059"></a>00059 <span class="comment">   * Set nSamplePerBlock parameter.</span>
-<a name="l00060"></a>00060 <span class="comment">   */</span>
-<a name="l00061"></a><a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad">00061</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">Average::setNSamplePerBlock</a>(<span class="keywordtype">int</span> nSamplePerBlock)
-<a name="l00062"></a>00062    {  nSamplePerBlock_ = <a class="code" href="classUtil_1_1Average.html#a5ed7374b1f2a87bdfb0fc41f86213a10" title="Get nSamplePerBlock.">nSamplePerBlock</a>; }
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064    <span class="comment">/*</span>
-<a name="l00065"></a>00065 <span class="comment">   * Load internal state from archive.</span>
-<a name="l00066"></a>00066 <span class="comment">   */</span>
-<a name="l00067"></a><a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783">00067</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">Average::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
-<a name="l00068"></a>00068    {
-<a name="l00069"></a>00069       <a class="code" href="classUtil_1_1Average.html#a7d6d580125c1ae4b86c0b797192dc8ce" title="Serialize this Average to or from an archive.">AverageStage::serialize</a>(ar, 0);
-<a name="l00070"></a>00070       ar &amp; blockSum_;
-<a name="l00071"></a>00071       ar &amp; iBlock_;
-<a name="l00072"></a>00072       loadParameter&lt;int&gt;(ar, <span class="stringliteral">&quot;nSamplePerBlock&quot;</span>, nSamplePerBlock_); 
-<a name="l00073"></a>00073    }
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075    <span class="comment">/*</span>
-<a name="l00076"></a>00076 <span class="comment">   * Save internal state to archive.</span>
-<a name="l00077"></a>00077 <span class="comment">   */</span>
-<a name="l00078"></a><a class="code" href="classUtil_1_1Average.html#a6bb1a12d32f87d40483ae7bb0d8c4708">00078</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a6bb1a12d32f87d40483ae7bb0d8c4708" title="Save internal state to an archive.">Average::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
-<a name="l00079"></a>00079    { ar &amp; *<span class="keyword">this</span>; }
-<a name="l00080"></a>00080    
-<a name="l00081"></a>00081    <span class="comment">/*</span>
-<a name="l00082"></a>00082 <span class="comment">   * Add a sampled value to the ensemble.</span>
-<a name="l00083"></a>00083 <span class="comment">   */</span>
-<a name="l00084"></a><a class="code" href="classUtil_1_1Average.html#adf13dad094b6b95cbbd7d7a7dc9fb65c">00084</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">Average::sample</a>(<span class="keywordtype">double</span> value)
-<a name="l00085"></a>00085    {
-<a name="l00086"></a>00086       std::ostream* outFilePtr = 0;
-<a name="l00087"></a>00087       <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(value, outFilePtr);
-<a name="l00088"></a>00088    }
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090    <span class="comment">/*</span>
-<a name="l00091"></a>00091 <span class="comment">   * Add a sampled value to the ensemble (private method)</span>
-<a name="l00092"></a>00092 <span class="comment">   *</span>
-<a name="l00093"></a>00093 <span class="comment">   * If outFilePtr != 0, output block averages to outFilePtr</span>
-<a name="l00094"></a>00094 <span class="comment">   */</span>
-<a name="l00095"></a>00095    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">Average::sample</a>(<span class="keywordtype">double</span> value, std::ostream* outFilePtr)
-<a name="l00096"></a>00096    {
-<a name="l00097"></a>00097       <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">AverageStage::sample</a>(value);
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099       <span class="comment">// Process block average for output</span>
-<a name="l00100"></a>00100       <span class="keywordflow">if</span> (nSamplePerBlock_ &amp;&amp; outFilePtr) {
-<a name="l00101"></a>00101          blockSum_  += value;
-<a name="l00102"></a>00102          ++iBlock_;
-<a name="l00103"></a>00103          <span class="keywordflow">if</span> (iBlock_ == nSamplePerBlock_) {
-<a name="l00104"></a>00104             *outFilePtr &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(blockSum_/<span class="keywordtype">double</span>(nSamplePerBlock_))
-<a name="l00105"></a>00105                         &lt;&lt; std::endl;
-<a name="l00106"></a>00106             blockSum_ = 0.0;
-<a name="l00107"></a>00107             iBlock_  = 0;
-<a name="l00108"></a>00108          }
-<a name="l00109"></a>00109       }
-<a name="l00110"></a>00110    }
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112    <span class="comment">/*</span>
-<a name="l00113"></a>00113 <span class="comment">   * Return estimate of error on average from blocking analysis.</span>
-<a name="l00114"></a>00114 <span class="comment">   */</span>
-<a name="l00115"></a><a class="code" href="classUtil_1_1Average.html#a04531f5b6507324508bb4effcb7592a0">00115</a>    <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Average.html#a04531f5b6507324508bb4effcb7592a0" title="Return estimated error on average from blocking analysis.">Average::blockingError</a>()<span class="keyword"> const</span>
-<a name="l00116"></a>00116 <span class="keyword">   </span>{
-<a name="l00117"></a>00117       <span class="comment">// Find first stage (descending) with nSample &gt;= 16</span>
-<a name="l00118"></a>00118       <a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* ptr = 0;
-<a name="l00119"></a>00119       <span class="keywordtype">int</span> n = descendants_.size();
-<a name="l00120"></a>00120       <span class="keywordtype">int</span> i = n;
-<a name="l00121"></a>00121       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a> = 1;
-<a name="l00122"></a>00122       <span class="keywordflow">while</span> (nSample &lt; 16 &amp;&amp; i &gt; 0) {
-<a name="l00123"></a>00123          --i;
-<a name="l00124"></a>00124          ptr = descendants_[i];
-<a name="l00125"></a>00125          nSample = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>();
-<a name="l00126"></a>00126       }
-<a name="l00127"></a>00127 
-<a name="l00128"></a>00128       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>  = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>();
-<a name="l00129"></a>00129       <span class="keywordtype">double</span> sigma  = error/sqrt(2.0*<span class="keywordtype">double</span>(nSample-1));
-<a name="l00130"></a>00130       <span class="keywordtype">double</span> weight = 1.0/(sigma*sigma);
-<a name="l00131"></a>00131       <span class="keywordtype">double</span> sum    = error*weight;
-<a name="l00132"></a>00132       <span class="keywordtype">double</span> norm   = weight;
-<a name="l00133"></a>00133       <span class="keywordtype">double</span> aveErr = <a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>;
-<a name="l00134"></a>00134       <span class="keywordtype">double</span> oldSig;
-<a name="l00135"></a>00135 
-<a name="l00136"></a>00136       <span class="comment">// Find weighted average within plateau</span>
-<a name="l00137"></a>00137       <span class="keywordtype">bool</span> next = <span class="keyword">true</span>;
-<a name="l00138"></a>00138       <span class="keywordflow">while</span> (next &amp;&amp; i &gt; 0) {
-<a name="l00139"></a>00139          oldSig = sigma;
-<a name="l00140"></a>00140          --i;
-<a name="l00141"></a>00141          ptr = descendants_[i];
-<a name="l00142"></a>00142          error = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>();
-<a name="l00143"></a>00143          <span class="keywordflow">if</span> (fabs(error - aveErr) &lt; 2.0*oldSig) {
-<a name="l00144"></a>00144             nSample = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>();
-<a name="l00145"></a>00145             sigma  = error/sqrt(2.0*<span class="keywordtype">double</span>(nSample-1));
-<a name="l00146"></a>00146             weight = 1.0/(sigma*sigma);
-<a name="l00147"></a>00147             sum   += error*weight;
-<a name="l00148"></a>00148             norm  += weight;
-<a name="l00149"></a>00149             aveErr = sum/norm;
-<a name="l00150"></a>00150          } <span class="keywordflow">else</span> {
-<a name="l00151"></a>00151             next = <span class="keyword">false</span>;
-<a name="l00152"></a>00152          }
-<a name="l00153"></a>00153       }
-<a name="l00154"></a>00154       <span class="keywordflow">return</span> aveErr;
-<a name="l00155"></a>00155    }
-<a name="l00156"></a>00156 
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158    <span class="comment">/*</span>
-<a name="l00159"></a>00159 <span class="comment">   * Output statistical properties to file</span>
-<a name="l00160"></a>00160 <span class="comment">   */</span>
-<a name="l00161"></a><a class="code" href="classUtil_1_1Average.html#a08634c8f7a1c8791a77168b70f6884e4">00161</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a08634c8f7a1c8791a77168b70f6884e4" title="Output final statistical properties to file.">Average::output</a>(std::ostream&amp; out)
-<a name="l00162"></a>00162    {
-<a name="l00163"></a>00163       <span class="keywordtype">double</span> aveErr = <a class="code" href="classUtil_1_1Average.html#a04531f5b6507324508bb4effcb7592a0" title="Return estimated error on average from blocking analysis.">blockingError</a>();
-<a name="l00164"></a>00164  
-<a name="l00165"></a>00165 <span class="preprocessor">      #if 0</span>
-<a name="l00166"></a>00166 <span class="preprocessor"></span>      <span class="comment">// Find first stage (descending) with nSample &gt;= 16</span>
-<a name="l00167"></a>00167       <a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* ptr = 0;
-<a name="l00168"></a>00168       <span class="keywordtype">int</span> n = descendants_.size();
-<a name="l00169"></a>00169       <span class="keywordtype">int</span> i = n;
-<a name="l00170"></a>00170       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a> = 1;
-<a name="l00171"></a>00171       <span class="keywordflow">while</span> (nSample &lt; 16 &amp;&amp; i &gt; 0) {
-<a name="l00172"></a>00172          --i;
-<a name="l00173"></a>00173          ptr = descendants_[i];
-<a name="l00174"></a>00174          nSample = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>();
-<a name="l00175"></a>00175       }
-<a name="l00176"></a>00176 
-<a name="l00177"></a>00177       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>  = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>();
-<a name="l00178"></a>00178       <span class="keywordtype">double</span> sigma  = error/sqrt(2.0*<span class="keywordtype">double</span>(nSample-1));
-<a name="l00179"></a>00179       <span class="keywordtype">double</span> weight = 1.0/(sigma*sigma);
-<a name="l00180"></a>00180       <span class="keywordtype">double</span> sum    = error*weight;
-<a name="l00181"></a>00181       <span class="keywordtype">double</span> norm   = weight;
-<a name="l00182"></a>00182       <span class="keywordtype">double</span> aveErr = <a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>;
-<a name="l00183"></a>00183       <span class="keywordtype">double</span> oldSig;
-<a name="l00184"></a>00184 
-<a name="l00185"></a>00185       <span class="comment">// Find weighted average within plateau</span>
-<a name="l00186"></a>00186       <span class="keywordtype">bool</span> next = <span class="keyword">true</span>;
-<a name="l00187"></a>00187       <span class="keywordflow">while</span> (next &amp;&amp; i &gt; 0) {
-<a name="l00188"></a>00188          oldSig = sigma;
-<a name="l00189"></a>00189          --i;
-<a name="l00190"></a>00190          ptr = descendants_[i];
-<a name="l00191"></a>00191          error = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>();
-<a name="l00192"></a>00192          <span class="keywordflow">if</span> (fabs(error - aveErr) &lt; 2.0*oldSig) {
-<a name="l00193"></a>00193             nSample = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>();
-<a name="l00194"></a>00194             sigma  = error/sqrt(2.0*<span class="keywordtype">double</span>(nSample-1));
-<a name="l00195"></a>00195             weight = 1.0/(sigma*sigma);
-<a name="l00196"></a>00196             sum   += error*weight;
-<a name="l00197"></a>00197             norm  += weight;
-<a name="l00198"></a>00198             aveErr = sum/norm;
-<a name="l00199"></a>00199          } <span class="keywordflow">else</span> {
-<a name="l00200"></a>00200             next = <span class="keyword">false</span>;
-<a name="l00201"></a>00201          }
-<a name="l00202"></a>00202       }
-<a name="l00203"></a>00203 <span class="preprocessor">      #endif</span>
-<a name="l00204"></a>00204 <span class="preprocessor"></span>
-<a name="l00205"></a>00205       out &lt;&lt;  <span class="stringliteral">&quot;Average   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>())         
-<a name="l00206"></a>00206           &lt;&lt;  <span class="stringliteral">&quot;  +- &quot;</span>      &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(aveErr, 9, 2) &lt;&lt; std::endl;
-<a name="l00207"></a>00207       out &lt;&lt;  <span class="stringliteral">&quot;Variance  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(<a class="code" href="classUtil_1_1AverageStage.html#a80b70a79df8fd318756248b88baa5a58" title="Return the variance of all sampled values.">variance</a>())        &lt;&lt; std::endl;
-<a name="l00208"></a>00208       out &lt;&lt;  <span class="stringliteral">&quot;Std Dev   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(<a class="code" href="classUtil_1_1AverageStage.html#a0b3e4f58dd3749192377aa2a2697a4fc" title="Return the standard deviation of all sampled values.">stdDeviation</a>())    &lt;&lt; std::endl;
-<a name="l00209"></a>00209       out &lt;&lt;  std::endl;
-<a name="l00210"></a>00210 
-<a name="l00211"></a>00211       out &lt;&lt; <span class="stringliteral">&quot;Hierarchichal Error Analysis:&quot;</span> &lt;&lt; std::endl;
-<a name="l00212"></a>00212       <a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* ptr = 0;
-<a name="l00213"></a>00213       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>;
-<a name="l00214"></a>00214       <span class="keywordtype">int</span> interval;
-<a name="l00215"></a>00215       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>;
-<a name="l00216"></a>00216       <span class="keywordtype">int</span> n = descendants_.size();
-<a name="l00217"></a>00217       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; n; ++i) {
-<a name="l00218"></a>00218          ptr = descendants_[i];
-<a name="l00219"></a>00219          error    = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>();
-<a name="l00220"></a>00220          nSample  = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>();
-<a name="l00221"></a>00221          interval = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#adcd575005eb0240b6fb8e16a68763161" title="Return the number of sampled values per block at this stage.">stageInterval</a>();
-<a name="l00222"></a>00222          <span class="keywordflow">if</span> (nSample &gt;= 16) {
-<a name="l00223"></a>00223             out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(i) 
-<a name="l00224"></a>00224                 &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(interval) 
-<a name="l00225"></a>00225                 &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(error) 
-<a name="l00226"></a>00226                 &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(error/sqrt(<span class="keywordtype">double</span>(nSample)))
-<a name="l00227"></a>00227                 &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(nSample) &lt;&lt; std::endl;
-<a name="l00228"></a>00228          }
-<a name="l00229"></a>00229       }
-<a name="l00230"></a>00230       out &lt;&lt; std::endl;
-<a name="l00231"></a>00231    }
-<a name="l00232"></a>00232 
-<a name="l00233"></a>00233    <span class="comment">/*</span>
-<a name="l00234"></a>00234 <span class="comment">   * Append pointer to a descendant to descendants_ array.</span>
-<a name="l00235"></a>00235 <span class="comment">   */</span>
-<a name="l00236"></a><a class="code" href="classUtil_1_1Average.html#a80703978c5aceecac2ff2a273fd1efc9">00236</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a80703978c5aceecac2ff2a273fd1efc9" title="Add pointer to a descendant to an array.">Average::registerDescendant</a>(<a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* descendantPtr)
-<a name="l00237"></a>00237    {  descendants_.push_back(descendantPtr); }
-<a name="l00238"></a>00238 
-<a name="l00239"></a>00239 }
-<a name="l00240"></a>00240 <span class="preprocessor">#endif</span>
+<a name="l00017"></a>00017    <span class="comment">/*</span>
+<a name="l00018"></a>00018 <span class="comment">   * Default constructor.</span>
+<a name="l00019"></a>00019 <span class="comment">   */</span>
+<a name="l00020"></a><a class="code" href="classUtil_1_1Average.html#a72b1537be5987dae3964ece96f41c212">00020</a>    <a class="code" href="classUtil_1_1Average.html#a72b1537be5987dae3964ece96f41c212" title="Constructor.">Average::Average</a>(<span class="keywordtype">int</span> blockFactor)
+<a name="l00021"></a>00021     : <a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>(blockFactor),
+<a name="l00022"></a>00022       <a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>(),
+<a name="l00023"></a>00023       descendants_(),
+<a name="l00024"></a>00024       blockSum_(0.0),
+<a name="l00025"></a>00025       iBlock_(0),
+<a name="l00026"></a>00026       nSamplePerBlock_(0)
+<a name="l00027"></a>00027    {
+<a name="l00028"></a>00028       <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;Average&quot;</span>);
+<a name="l00029"></a>00029       <span class="comment">// Register self as first &quot;descendant&quot; AverageStage.</span>
+<a name="l00030"></a>00030       descendants_.push_back(<span class="keyword">this</span>);
+<a name="l00031"></a>00031    }
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033    <span class="comment">/*</span>
+<a name="l00034"></a>00034 <span class="comment">   * Destructor.</span>
+<a name="l00035"></a>00035 <span class="comment">   */</span>
+<a name="l00036"></a><a class="code" href="classUtil_1_1Average.html#a365dbabdde7ff7e10445168b8563f1c7">00036</a>    <a class="code" href="classUtil_1_1Average.html#a365dbabdde7ff7e10445168b8563f1c7" title="Destructor.">Average::~Average</a>()
+<a name="l00037"></a>00037    {}
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039    <span class="comment">/*</span>
+<a name="l00040"></a>00040 <span class="comment">   * Reset all accumulators and counters to zero.</span>
+<a name="l00041"></a>00041 <span class="comment">   */</span>
+<a name="l00042"></a><a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de">00042</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">Average::clear</a>()
+<a name="l00043"></a>00043    {
+<a name="l00044"></a>00044       blockSum_ = 0;
+<a name="l00045"></a>00045       iBlock_   = 0;
+<a name="l00046"></a>00046       <a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">AverageStage::clear</a>();
+<a name="l00047"></a>00047    }
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049    <span class="comment">/*</span>
+<a name="l00050"></a>00050 <span class="comment">   * Read nSamplePerBlock from file.</span>
+<a name="l00051"></a>00051 <span class="comment">   */</span>
+<a name="l00052"></a><a class="code" href="classUtil_1_1Average.html#aa6d118dd419b70295caa1aa099d76d65">00052</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#aa6d118dd419b70295caa1aa099d76d65" title="Read parameter nSamplePerBlock from file and initialize.">Average::readParameters</a>(std::istream&amp; in)
+<a name="l00053"></a>00053    {  read&lt;int&gt;(in, <span class="stringliteral">&quot;nSamplePerBlock&quot;</span>, nSamplePerBlock_); }
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055    <span class="comment">/*</span>
+<a name="l00056"></a>00056 <span class="comment">   * Set nSamplePerBlock parameter.</span>
+<a name="l00057"></a>00057 <span class="comment">   */</span>
+<a name="l00058"></a><a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad">00058</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">Average::setNSamplePerBlock</a>(<span class="keywordtype">int</span> nSamplePerBlock)
+<a name="l00059"></a>00059    {  nSamplePerBlock_ = <a class="code" href="classUtil_1_1Average.html#a5ed7374b1f2a87bdfb0fc41f86213a10" title="Get nSamplePerBlock.">nSamplePerBlock</a>; }
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061    <span class="comment">/*</span>
+<a name="l00062"></a>00062 <span class="comment">   * Load internal state from archive.</span>
+<a name="l00063"></a>00063 <span class="comment">   */</span>
+<a name="l00064"></a><a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783">00064</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a786731986dc750f59cdbc8f57dbc3783" title="Load internal state from an archive.">Average::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
+<a name="l00065"></a>00065    {
+<a name="l00066"></a>00066       <a class="code" href="classUtil_1_1Average.html#a7d6d580125c1ae4b86c0b797192dc8ce" title="Serialize this Average to or from an archive.">AverageStage::serialize</a>(ar, 0);
+<a name="l00067"></a>00067       ar &amp; blockSum_;
+<a name="l00068"></a>00068       ar &amp; iBlock_;
+<a name="l00069"></a>00069       loadParameter&lt;int&gt;(ar, <span class="stringliteral">&quot;nSamplePerBlock&quot;</span>, nSamplePerBlock_); 
+<a name="l00070"></a>00070    }
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072    <span class="comment">/*</span>
+<a name="l00073"></a>00073 <span class="comment">   * Save internal state to archive.</span>
+<a name="l00074"></a>00074 <span class="comment">   */</span>
+<a name="l00075"></a><a class="code" href="classUtil_1_1Average.html#a6bb1a12d32f87d40483ae7bb0d8c4708">00075</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a6bb1a12d32f87d40483ae7bb0d8c4708" title="Save internal state to an archive.">Average::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
+<a name="l00076"></a>00076    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00077"></a>00077    
+<a name="l00078"></a>00078    <span class="comment">/*</span>
+<a name="l00079"></a>00079 <span class="comment">   * Add a sampled value to the ensemble.</span>
+<a name="l00080"></a>00080 <span class="comment">   */</span>
+<a name="l00081"></a><a class="code" href="classUtil_1_1Average.html#adf13dad094b6b95cbbd7d7a7dc9fb65c">00081</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">Average::sample</a>(<span class="keywordtype">double</span> value)
+<a name="l00082"></a>00082    {
+<a name="l00083"></a>00083       std::ostream* outFilePtr = 0;
+<a name="l00084"></a>00084       <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(value, outFilePtr);
+<a name="l00085"></a>00085    }
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087    <span class="comment">/*</span>
+<a name="l00088"></a>00088 <span class="comment">   * Add a sampled value to the ensemble (private method)</span>
+<a name="l00089"></a>00089 <span class="comment">   *</span>
+<a name="l00090"></a>00090 <span class="comment">   * If outFilePtr != 0, output block averages to outFilePtr</span>
+<a name="l00091"></a>00091 <span class="comment">   */</span>
+<a name="l00092"></a>00092    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">Average::sample</a>(<span class="keywordtype">double</span> value, std::ostream* outFilePtr)
+<a name="l00093"></a>00093    {
+<a name="l00094"></a>00094       <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">AverageStage::sample</a>(value);
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096       <span class="comment">// Process block average for output</span>
+<a name="l00097"></a>00097       <span class="keywordflow">if</span> (nSamplePerBlock_ &amp;&amp; outFilePtr) {
+<a name="l00098"></a>00098          blockSum_ += value;
+<a name="l00099"></a>00099          ++iBlock_;
+<a name="l00100"></a>00100          <span class="keywordflow">if</span> (iBlock_ == nSamplePerBlock_) {
+<a name="l00101"></a>00101             *outFilePtr &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(blockSum_/<span class="keywordtype">double</span>(nSamplePerBlock_))
+<a name="l00102"></a>00102                         &lt;&lt; std::endl;
+<a name="l00103"></a>00103             blockSum_ = 0.0;
+<a name="l00104"></a>00104             iBlock_  = 0;
+<a name="l00105"></a>00105          }
+<a name="l00106"></a>00106       }
+<a name="l00107"></a>00107    }
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109    <span class="comment">/*</span>
+<a name="l00110"></a>00110 <span class="comment">   * Return estimate of error on average from blocking analysis.</span>
+<a name="l00111"></a>00111 <span class="comment">   */</span>
+<a name="l00112"></a><a class="code" href="classUtil_1_1Average.html#a04531f5b6507324508bb4effcb7592a0">00112</a>    <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Average.html#a04531f5b6507324508bb4effcb7592a0" title="Return estimated error on average from blocking analysis.">Average::blockingError</a>()<span class="keyword"> const</span>
+<a name="l00113"></a>00113 <span class="keyword">   </span>{
+<a name="l00114"></a>00114       <span class="comment">// Find first stage (descending) with nSample &gt;= 16</span>
+<a name="l00115"></a>00115       <a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* ptr = 0;
+<a name="l00116"></a>00116       <span class="keywordtype">int</span> n = descendants_.size();
+<a name="l00117"></a>00117       <span class="keywordtype">int</span> i = n;
+<a name="l00118"></a>00118       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a> = 1;
+<a name="l00119"></a>00119       <span class="keywordflow">while</span> (nSample &lt; 16 &amp;&amp; i &gt; 0) {
+<a name="l00120"></a>00120          --i;
+<a name="l00121"></a>00121          ptr = descendants_[i];
+<a name="l00122"></a>00122          nSample = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>();
+<a name="l00123"></a>00123       }
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>  = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>();
+<a name="l00126"></a>00126       <span class="keywordtype">double</span> sigma  = error/sqrt(2.0*<span class="keywordtype">double</span>(nSample-1));
+<a name="l00127"></a>00127       <span class="keywordtype">double</span> weight = 1.0/(sigma*sigma);
+<a name="l00128"></a>00128       <span class="keywordtype">double</span> sum    = error*weight;
+<a name="l00129"></a>00129       <span class="keywordtype">double</span> norm   = weight;
+<a name="l00130"></a>00130       <span class="keywordtype">double</span> aveErr = <a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>;
+<a name="l00131"></a>00131       <span class="keywordtype">double</span> oldSig;
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133       <span class="comment">// Find weighted average within plateau</span>
+<a name="l00134"></a>00134       <span class="keywordtype">bool</span> next = <span class="keyword">true</span>;
+<a name="l00135"></a>00135       <span class="keywordflow">while</span> (next &amp;&amp; i &gt; 0) {
+<a name="l00136"></a>00136          oldSig = sigma;
+<a name="l00137"></a>00137          --i;
+<a name="l00138"></a>00138          ptr = descendants_[i];
+<a name="l00139"></a>00139          error = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>();
+<a name="l00140"></a>00140          <span class="keywordflow">if</span> (fabs(error - aveErr) &lt; 2.0*oldSig) {
+<a name="l00141"></a>00141             nSample = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>();
+<a name="l00142"></a>00142             sigma  = error/sqrt(2.0*<span class="keywordtype">double</span>(nSample-1));
+<a name="l00143"></a>00143             weight = 1.0/(sigma*sigma);
+<a name="l00144"></a>00144             sum   += error*weight;
+<a name="l00145"></a>00145             norm  += weight;
+<a name="l00146"></a>00146             aveErr = sum/norm;
+<a name="l00147"></a>00147          } <span class="keywordflow">else</span> {
+<a name="l00148"></a>00148             next = <span class="keyword">false</span>;
+<a name="l00149"></a>00149          }
+<a name="l00150"></a>00150       }
+<a name="l00151"></a>00151       <span class="keywordflow">return</span> aveErr;
+<a name="l00152"></a>00152    }
+<a name="l00153"></a>00153 
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155    <span class="comment">/*</span>
+<a name="l00156"></a>00156 <span class="comment">   * Output statistical properties to file</span>
+<a name="l00157"></a>00157 <span class="comment">   */</span>
+<a name="l00158"></a><a class="code" href="classUtil_1_1Average.html#a08634c8f7a1c8791a77168b70f6884e4">00158</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a08634c8f7a1c8791a77168b70f6884e4" title="Output final statistical properties to file.">Average::output</a>(std::ostream&amp; out)
+<a name="l00159"></a>00159    {
+<a name="l00160"></a>00160       <span class="keywordtype">double</span> aveErr = <a class="code" href="classUtil_1_1Average.html#a04531f5b6507324508bb4effcb7592a0" title="Return estimated error on average from blocking analysis.">blockingError</a>();
+<a name="l00161"></a>00161  
+<a name="l00162"></a>00162 <span class="preprocessor">      #if 0</span>
+<a name="l00163"></a>00163 <span class="preprocessor"></span>      <span class="comment">// Find first stage (descending) with nSample &gt;= 16</span>
+<a name="l00164"></a>00164       <a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* ptr = 0;
+<a name="l00165"></a>00165       <span class="keywordtype">int</span> n = descendants_.size();
+<a name="l00166"></a>00166       <span class="keywordtype">int</span> i = n;
+<a name="l00167"></a>00167       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a> = 1;
+<a name="l00168"></a>00168       <span class="keywordflow">while</span> (nSample &lt; 16 &amp;&amp; i &gt; 0) {
+<a name="l00169"></a>00169          --i;
+<a name="l00170"></a>00170          ptr = descendants_[i];
+<a name="l00171"></a>00171          nSample = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>();
+<a name="l00172"></a>00172       }
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>  = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>();
+<a name="l00175"></a>00175       <span class="keywordtype">double</span> sigma  = error/sqrt(2.0*<span class="keywordtype">double</span>(nSample-1));
+<a name="l00176"></a>00176       <span class="keywordtype">double</span> weight = 1.0/(sigma*sigma);
+<a name="l00177"></a>00177       <span class="keywordtype">double</span> sum    = error*weight;
+<a name="l00178"></a>00178       <span class="keywordtype">double</span> norm   = weight;
+<a name="l00179"></a>00179       <span class="keywordtype">double</span> aveErr = <a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>;
+<a name="l00180"></a>00180       <span class="keywordtype">double</span> oldSig;
+<a name="l00181"></a>00181 
+<a name="l00182"></a>00182       <span class="comment">// Find weighted average within plateau</span>
+<a name="l00183"></a>00183       <span class="keywordtype">bool</span> next = <span class="keyword">true</span>;
+<a name="l00184"></a>00184       <span class="keywordflow">while</span> (next &amp;&amp; i &gt; 0) {
+<a name="l00185"></a>00185          oldSig = sigma;
+<a name="l00186"></a>00186          --i;
+<a name="l00187"></a>00187          ptr = descendants_[i];
+<a name="l00188"></a>00188          error = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>();
+<a name="l00189"></a>00189          <span class="keywordflow">if</span> (fabs(error - aveErr) &lt; 2.0*oldSig) {
+<a name="l00190"></a>00190             nSample = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>();
+<a name="l00191"></a>00191             sigma  = error/sqrt(2.0*<span class="keywordtype">double</span>(nSample-1));
+<a name="l00192"></a>00192             weight = 1.0/(sigma*sigma);
+<a name="l00193"></a>00193             sum   += error*weight;
+<a name="l00194"></a>00194             norm  += weight;
+<a name="l00195"></a>00195             aveErr = sum/norm;
+<a name="l00196"></a>00196          } <span class="keywordflow">else</span> {
+<a name="l00197"></a>00197             next = <span class="keyword">false</span>;
+<a name="l00198"></a>00198          }
+<a name="l00199"></a>00199       }
+<a name="l00200"></a>00200 <span class="preprocessor">      #endif</span>
+<a name="l00201"></a>00201 <span class="preprocessor"></span>
+<a name="l00202"></a>00202       out &lt;&lt;  <span class="stringliteral">&quot;Average   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(<a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">average</a>())         
+<a name="l00203"></a>00203           &lt;&lt;  <span class="stringliteral">&quot;  +- &quot;</span>      &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(aveErr, 9, 2) &lt;&lt; std::endl;
+<a name="l00204"></a>00204       out &lt;&lt;  <span class="stringliteral">&quot;Variance  &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(<a class="code" href="classUtil_1_1AverageStage.html#a80b70a79df8fd318756248b88baa5a58" title="Return the variance of all sampled values.">variance</a>())        &lt;&lt; std::endl;
+<a name="l00205"></a>00205       out &lt;&lt;  <span class="stringliteral">&quot;Std Dev   &quot;</span> &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(<a class="code" href="classUtil_1_1AverageStage.html#a0b3e4f58dd3749192377aa2a2697a4fc" title="Return the standard deviation of all sampled values.">stdDeviation</a>())    &lt;&lt; std::endl;
+<a name="l00206"></a>00206       out &lt;&lt;  std::endl;
+<a name="l00207"></a>00207 
+<a name="l00208"></a>00208       out &lt;&lt; <span class="stringliteral">&quot;Hierarchichal Error Analysis:&quot;</span> &lt;&lt; std::endl;
+<a name="l00209"></a>00209       <a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* ptr = 0;
+<a name="l00210"></a>00210       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>;
+<a name="l00211"></a>00211       <span class="keywordtype">int</span> interval;
+<a name="l00212"></a>00212       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>;
+<a name="l00213"></a>00213       <span class="keywordtype">int</span> n = descendants_.size();
+<a name="l00214"></a>00214       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; n; ++i) {
+<a name="l00215"></a>00215          ptr = descendants_[i];
+<a name="l00216"></a>00216          error    = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">error</a>();
+<a name="l00217"></a>00217          nSample  = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">nSample</a>();
+<a name="l00218"></a>00218          interval = ptr-&gt;<a class="code" href="classUtil_1_1AverageStage.html#adcd575005eb0240b6fb8e16a68763161" title="Return the number of sampled values per block at this stage.">stageInterval</a>();
+<a name="l00219"></a>00219          <span class="keywordflow">if</span> (nSample &gt;= 16) {
+<a name="l00220"></a>00220             out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(i) 
+<a name="l00221"></a>00221                 &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(interval) 
+<a name="l00222"></a>00222                 &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(error) 
+<a name="l00223"></a>00223                 &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(error/sqrt(<span class="keywordtype">double</span>(nSample)))
+<a name="l00224"></a>00224                 &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(nSample) &lt;&lt; std::endl;
+<a name="l00225"></a>00225          }
+<a name="l00226"></a>00226       }
+<a name="l00227"></a>00227       out &lt;&lt; std::endl;
+<a name="l00228"></a>00228    }
+<a name="l00229"></a>00229 
+<a name="l00230"></a>00230    <span class="comment">/*</span>
+<a name="l00231"></a>00231 <span class="comment">   * Append pointer to a descendant to descendants_ array.</span>
+<a name="l00232"></a>00232 <span class="comment">   */</span>
+<a name="l00233"></a><a class="code" href="classUtil_1_1Average.html#a80703978c5aceecac2ff2a273fd1efc9">00233</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a80703978c5aceecac2ff2a273fd1efc9" title="Add pointer to a descendant to an array.">Average::registerDescendant</a>(<a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* descendantPtr)
+<a name="l00234"></a>00234    {  descendants_.push_back(descendantPtr); }
+<a name="l00235"></a>00235 
+<a name="l00236"></a>00236 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:56 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

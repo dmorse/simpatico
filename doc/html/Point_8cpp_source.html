@@ -57,78 +57,74 @@
 <div class="title">Point.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef MCMD_POINT_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define MCMD_POINT_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;Point.h&quot;</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;Point.h&quot;</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="keyword">namespace </span>McMd
+<a name="l00011"></a>00011 {
 <a name="l00012"></a>00012 
-<a name="l00013"></a>00013 <span class="keyword">namespace </span>McMd
-<a name="l00014"></a>00014 {
-<a name="l00015"></a>00015 
-<a name="l00016"></a>00016    <span class="keyword">using namespace </span>Util;
-<a name="l00017"></a>00017 
-<a name="l00018"></a>00018    <span class="comment">/* </span>
-<a name="l00019"></a>00019 <span class="comment">   * Default constructor.</span>
-<a name="l00020"></a>00020 <span class="comment">   */</span>
-<a name="l00021"></a><a class="code" href="classMcMd_1_1Point.html#a5b42aa5f8a80d66bbd663142de80730d">00021</a>    <a class="code" href="classMcMd_1_1Point.html#a5b42aa5f8a80d66bbd663142de80730d" title="Default constructor.">Point::Point</a>()
-<a name="l00022"></a>00022     : <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>(),
-<a name="l00023"></a>00023       type_(-1)
-<a name="l00024"></a>00024    {  
-<a name="l00025"></a>00025       <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a> = 1; 
-<a name="l00026"></a>00026       <a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a> = 0;
-<a name="l00027"></a>00027    }
-<a name="l00028"></a>00028    
-<a name="l00029"></a>00029    <span class="comment">/* </span>
-<a name="l00030"></a>00030 <span class="comment">   * Read type.</span>
-<a name="l00031"></a>00031 <span class="comment">   */</span>
-<a name="l00032"></a><a class="code" href="classMcMd_1_1Point.html#ac921291c79265cc465591c65c3fb9894">00032</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Point.html#ac921291c79265cc465591c65c3fb9894" title="Read atom type.">Point::readSpeciesParam</a>(std::istream &amp;in)
-<a name="l00033"></a>00033    {  
-<a name="l00034"></a>00034       read&lt;int&gt;(in,<span class="stringliteral">&quot;type&quot;</span>, <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>); 
-<a name="l00035"></a>00035       <a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca" title="Allocate chemical structure arrays.">allocate</a>();
-<a name="l00036"></a>00036       <a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[0] = <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>;
-<a name="l00037"></a>00037    }
-<a name="l00038"></a>00038    
-<a name="l00039"></a>00039    <span class="comment">/* </span>
-<a name="l00040"></a>00040 <span class="comment">   * Read type.</span>
-<a name="l00041"></a>00041 <span class="comment">   */</span>
-<a name="l00042"></a><a class="code" href="classMcMd_1_1Point.html#a34c11450e4269755ebbc0f0ea2b22b67">00042</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Point.html#a34c11450e4269755ebbc0f0ea2b22b67" title="Load species structure from an Archive.">Point::loadSpeciesParam</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
-<a name="l00043"></a>00043    {  
-<a name="l00044"></a>00044       loadParameter&lt;int&gt;(ar,<span class="stringliteral">&quot;type&quot;</span>, <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>); 
-<a name="l00045"></a>00045       <a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca" title="Allocate chemical structure arrays.">allocate</a>();
-<a name="l00046"></a>00046       <a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[0] = <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>;
-<a name="l00047"></a>00047    }
-<a name="l00048"></a>00048    
-<a name="l00049"></a>00049    <span class="comment">/* </span>
-<a name="l00050"></a>00050 <span class="comment">   * Save atom type.</span>
-<a name="l00051"></a>00051 <span class="comment">   */</span>
-<a name="l00052"></a><a class="code" href="classMcMd_1_1Point.html#af14b33d365b0647bfd9df499de327a4b">00052</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Point.html#af14b33d365b0647bfd9df499de327a4b" title="Save internal state to an archive.">Point::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
-<a name="l00053"></a>00053    {
-<a name="l00054"></a>00054       ar &lt;&lt; <a class="code" href="classMcMd_1_1Species.html#a57a67a5352d47d62fe08d227c275019e" title="Number of molecules associated with the species.">moleculeCapacity_</a>;
-<a name="l00055"></a>00055       ar &lt;&lt; <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>;
-<a name="l00056"></a>00056    }
-<a name="l00057"></a>00057     
-<a name="l00058"></a><a class="code" href="classMcMd_1_1Point.html#ad2e23c068ba01f163b9f86b649202174">00058</a>    <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Point.html#ad2e23c068ba01f163b9f86b649202174" title="Return the atom type id.">Point::getAtomTypeId</a>(<a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule, <span class="keywordtype">int</span> index)
-<a name="l00059"></a>00059    {
-<a name="l00060"></a>00060       assert(index == 0);  
-<a name="l00061"></a>00061       <span class="keywordflow">return</span> <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>; 
-<a name="l00062"></a>00062    }
-<a name="l00063"></a>00063    
-<a name="l00064"></a>00064 } 
-<a name="l00065"></a>00065 <span class="preprocessor">#endif</span>
+<a name="l00013"></a>00013    <span class="keyword">using namespace </span>Util;
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015    <span class="comment">/* </span>
+<a name="l00016"></a>00016 <span class="comment">   * Default constructor.</span>
+<a name="l00017"></a>00017 <span class="comment">   */</span>
+<a name="l00018"></a><a class="code" href="classMcMd_1_1Point.html#a5b42aa5f8a80d66bbd663142de80730d">00018</a>    <a class="code" href="classMcMd_1_1Point.html#a5b42aa5f8a80d66bbd663142de80730d" title="Default constructor.">Point::Point</a>()
+<a name="l00019"></a>00019     : <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>(),
+<a name="l00020"></a>00020       type_(-1)
+<a name="l00021"></a>00021    {  
+<a name="l00022"></a>00022       <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a> = 1; 
+<a name="l00023"></a>00023       <a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a> = 0;
+<a name="l00024"></a>00024    }
+<a name="l00025"></a>00025    
+<a name="l00026"></a>00026    <span class="comment">/* </span>
+<a name="l00027"></a>00027 <span class="comment">   * Read type.</span>
+<a name="l00028"></a>00028 <span class="comment">   */</span>
+<a name="l00029"></a><a class="code" href="classMcMd_1_1Point.html#ac921291c79265cc465591c65c3fb9894">00029</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Point.html#ac921291c79265cc465591c65c3fb9894" title="Read atom type.">Point::readSpeciesParam</a>(std::istream &amp;in)
+<a name="l00030"></a>00030    {  
+<a name="l00031"></a>00031       read&lt;int&gt;(in,<span class="stringliteral">&quot;type&quot;</span>, <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>); 
+<a name="l00032"></a>00032       <a class="code" href="classMcMd_1_1Species.html#a913f31e19320ec418eee5f5502f26e1f" title="Allocate chemical structure arrays.">allocate</a>();
+<a name="l00033"></a>00033       <a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[0] = <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>;
+<a name="l00034"></a>00034    }
+<a name="l00035"></a>00035    
+<a name="l00036"></a>00036    <span class="comment">/* </span>
+<a name="l00037"></a>00037 <span class="comment">   * Read type.</span>
+<a name="l00038"></a>00038 <span class="comment">   */</span>
+<a name="l00039"></a><a class="code" href="classMcMd_1_1Point.html#a34c11450e4269755ebbc0f0ea2b22b67">00039</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Point.html#a34c11450e4269755ebbc0f0ea2b22b67" title="Load species structure from an Archive.">Point::loadSpeciesParam</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
+<a name="l00040"></a>00040    {  
+<a name="l00041"></a>00041       loadParameter&lt;int&gt;(ar,<span class="stringliteral">&quot;type&quot;</span>, <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>); 
+<a name="l00042"></a>00042       <a class="code" href="classMcMd_1_1Species.html#a913f31e19320ec418eee5f5502f26e1f" title="Allocate chemical structure arrays.">allocate</a>();
+<a name="l00043"></a>00043       <a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[0] = <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>;
+<a name="l00044"></a>00044    }
+<a name="l00045"></a>00045    
+<a name="l00046"></a>00046    <span class="comment">/* </span>
+<a name="l00047"></a>00047 <span class="comment">   * Save atom type.</span>
+<a name="l00048"></a>00048 <span class="comment">   */</span>
+<a name="l00049"></a><a class="code" href="classMcMd_1_1Point.html#af14b33d365b0647bfd9df499de327a4b">00049</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Point.html#af14b33d365b0647bfd9df499de327a4b" title="Save internal state to an archive.">Point::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
+<a name="l00050"></a>00050    {
+<a name="l00051"></a>00051       ar &lt;&lt; <a class="code" href="classMcMd_1_1Species.html#a57a67a5352d47d62fe08d227c275019e" title="Number of molecules associated with the species.">moleculeCapacity_</a>;
+<a name="l00052"></a>00052       ar &lt;&lt; <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>;
+<a name="l00053"></a>00053    }
+<a name="l00054"></a>00054     
+<a name="l00055"></a><a class="code" href="classMcMd_1_1Point.html#ad2e23c068ba01f163b9f86b649202174">00055</a>    <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Point.html#ad2e23c068ba01f163b9f86b649202174" title="Return the atom type id.">Point::getAtomTypeId</a>(<a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule, <span class="keywordtype">int</span> index)
+<a name="l00056"></a>00056    {
+<a name="l00057"></a>00057       assert(index == 0);  
+<a name="l00058"></a>00058       <span class="keywordflow">return</span> <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>; 
+<a name="l00059"></a>00059    }
+<a name="l00060"></a>00060    
+<a name="l00061"></a>00061 } 
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:15 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:00 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

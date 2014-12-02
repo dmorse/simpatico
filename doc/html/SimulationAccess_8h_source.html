@@ -63,7 +63,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -170,7 +170,7 @@
 <a name="l00142"></a>00142 
 <a name="l00144"></a>00144       <a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>&amp; exchanger();
 <a name="l00145"></a>00145 
-<a name="l00147"></a>00147       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; fileMaster();
+<a name="l00147"></a>00147       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>&amp; fileMaster();
 <a name="l00148"></a>00148 
 <a name="l00150"></a>00150       <span class="keywordtype">int</span> nAtomType();
 <a name="l00151"></a>00151 
@@ -258,7 +258,7 @@
 <a name="l00246"></a>00246 
 <a name="l00248"></a>00248       <a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>* exchangerPtr_;
 <a name="l00249"></a>00249 
-<a name="l00251"></a>00251       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>*  fileMasterPtr_;
+<a name="l00251"></a>00251       <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>*  fileMasterPtr_;
 <a name="l00252"></a>00252 
 <a name="l00254"></a>00254       <span class="keywordtype">int</span> nAtomType_;
 <a name="l00255"></a>00255 
@@ -352,7 +352,7 @@
 <a name="l00354"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d">00354</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d" title="Get the Exchanger.">SimulationAccess::exchanger</a>()
 <a name="l00355"></a>00355    {  <span class="keywordflow">return</span> *exchangerPtr_; }
 <a name="l00356"></a>00356 
-<a name="l00357"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a6866edf072afe3d647dda038880ec456">00357</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a6866edf072afe3d647dda038880ec456" title="Get the FileMaster.">SimulationAccess::fileMaster</a>()
+<a name="l00357"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a6866edf072afe3d647dda038880ec456">00357</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FileMaster.html" title="A FileMaster manages input and output files for a simulation.">FileMaster</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a6866edf072afe3d647dda038880ec456" title="Get the FileMaster.">SimulationAccess::fileMaster</a>()
 <a name="l00358"></a>00358    {  <span class="keywordflow">return</span> *fileMasterPtr_; }
 <a name="l00359"></a>00359 
 <a name="l00360"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0">00360</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0" title="Get maximum number of atom types.">SimulationAccess::nAtomType</a>()
@@ -395,7 +395,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:15 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:00 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

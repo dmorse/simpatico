@@ -57,92 +57,88 @@
 <div class="title">SubSystem.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef MCMD_SUB_SYSTEM_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define MCMD_SUB_SYSTEM_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="comment">// namespace McMd</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;SubSystem.h&quot;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;Simulation.h&quot;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;mcMd/species/Species.h&gt;</span>
-<a name="l00015"></a>00015 
-<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;fstream&gt;</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="comment">// namespace McMd</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;SubSystem.h&quot;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &quot;Simulation.h&quot;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;mcMd/species/Species.h&gt;</span>
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;fstream&gt;</span>
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="keyword">namespace </span>McMd
+<a name="l00016"></a>00016 {
 <a name="l00017"></a>00017 
-<a name="l00018"></a>00018 <span class="keyword">namespace </span>McMd
-<a name="l00019"></a>00019 {
-<a name="l00020"></a>00020 
-<a name="l00021"></a>00021    <span class="keyword">using namespace </span>Util;
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023    <span class="comment">/*</span>
-<a name="l00024"></a>00024 <span class="comment">   * Constructor.</span>
-<a name="l00025"></a>00025 <span class="comment">   */</span>
-<a name="l00026"></a><a class="code" href="classMcMd_1_1SubSystem.html#a5e46369bc81639d336e06eec6ee83da5">00026</a>    <a class="code" href="classMcMd_1_1SubSystem.html#a5e46369bc81639d336e06eec6ee83da5" title="Constructor.">SubSystem::SubSystem</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; parent)
-<a name="l00027"></a>00027     : simulationPtr_(parent.simulationPtr_),
-<a name="l00028"></a>00028       systemPtr_(&amp;parent),
-<a name="l00029"></a>00029       moleculeSetsPtr_(parent.moleculeSetsPtr_),
-<a name="l00030"></a>00030       boundaryPtr_(parent.boundaryPtr_),
-<a name="l00031"></a>00031       hasBonds_(parent.simulation().nBondType() &gt; 0)
-<a name="l00032"></a>00032       #ifdef INTER_ANGLE
-<a name="l00033"></a>00033       , hasAngles_(parent.simulation().nAngleType() &gt; 0)
+<a name="l00018"></a>00018    <span class="keyword">using namespace </span>Util;
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020    <span class="comment">/*</span>
+<a name="l00021"></a>00021 <span class="comment">   * Constructor.</span>
+<a name="l00022"></a>00022 <span class="comment">   */</span>
+<a name="l00023"></a><a class="code" href="classMcMd_1_1SubSystem.html#a5e46369bc81639d336e06eec6ee83da5">00023</a>    <a class="code" href="classMcMd_1_1SubSystem.html#a5e46369bc81639d336e06eec6ee83da5" title="Constructor.">SubSystem::SubSystem</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; parent)
+<a name="l00024"></a>00024     : simulationPtr_(parent.simulationPtr_),
+<a name="l00025"></a>00025       systemPtr_(&amp;parent),
+<a name="l00026"></a>00026       moleculeSetsPtr_(parent.moleculeSetsPtr_),
+<a name="l00027"></a>00027       boundaryPtr_(parent.boundaryPtr_),
+<a name="l00028"></a>00028       hasBonds_(parent.simulation().nBondType() &gt; 0)
+<a name="l00029"></a>00029       #ifdef INTER_ANGLE
+<a name="l00030"></a>00030       , hasAngles_(parent.simulation().nAngleType() &gt; 0)
+<a name="l00031"></a>00031       #endif
+<a name="l00032"></a>00032       #ifdef INTER_DIHEDRAL
+<a name="l00033"></a>00033       , hasDihedrals_(parent.simulation().nDihedralType() &gt; 0)
 <a name="l00034"></a>00034       #endif
-<a name="l00035"></a>00035       #ifdef INTER_DIHEDRAL
-<a name="l00036"></a>00036       , hasDihedrals_(parent.simulation().nDihedralType() &gt; 0)
+<a name="l00035"></a>00035       #ifdef MCMD_LINK
+<a name="l00036"></a>00036       , hasLinks_(parent.simulation().nLinkType() &gt; 0)
 <a name="l00037"></a>00037       #endif
-<a name="l00038"></a>00038       #ifdef MCMD_LINK
-<a name="l00039"></a>00039       , hasLinks_(parent.simulation().nLinkType() &gt; 0)
+<a name="l00038"></a>00038       #ifdef INTER_EXTERNAL
+<a name="l00039"></a>00039       , hasExternal_(parent.simulation().hasExternal())
 <a name="l00040"></a>00040       #endif
-<a name="l00041"></a>00041       #ifdef INTER_EXTERNAL
-<a name="l00042"></a>00042       , hasExternal_(parent.simulation().hasExternal())
+<a name="l00041"></a>00041       #ifdef INTER_TETHER
+<a name="l00042"></a>00042       , hasTethers_(parent.simulation().hasTether())
 <a name="l00043"></a>00043       #endif
-<a name="l00044"></a>00044       #ifdef INTER_TETHER
-<a name="l00045"></a>00045       , hasTethers_(parent.simulation().hasTether())
-<a name="l00046"></a>00046       #endif
-<a name="l00047"></a>00047    {}
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049    <span class="comment">/*</span>
-<a name="l00050"></a>00050 <span class="comment">   * Destructor.</span>
-<a name="l00051"></a>00051 <span class="comment">   */</span>
-<a name="l00052"></a><a class="code" href="classMcMd_1_1SubSystem.html#a5ce831f96c3c40b7f2e20eb1c35bbb93">00052</a>    <a class="code" href="classMcMd_1_1SubSystem.html#a5ce831f96c3c40b7f2e20eb1c35bbb93" title="Destructor.">SubSystem::~SubSystem</a>()
-<a name="l00053"></a>00053    {}
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055    <span class="comment">/*</span>
-<a name="l00056"></a>00056 <span class="comment">   * Is this System empty (i.e., devoid of Molecules) ?</span>
-<a name="l00057"></a>00057 <span class="comment">   */</span>
-<a name="l00058"></a><a class="code" href="classMcMd_1_1SubSystem.html#a65911b76900a059c96ee497fe3216246">00058</a>    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1SubSystem.html#a65911b76900a059c96ee497fe3216246" title="Is this an empty SubSystem (i.e., one with no molecules) ?">SubSystem::isEmpty</a>()<span class="keyword"> const</span>
-<a name="l00059"></a>00059 <span class="keyword">   </span>{
-<a name="l00060"></a>00060       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1SubSystem.html#a3c1f202fd05dc1a764d088a3b4a92baf" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++i) {
-<a name="l00061"></a>00061          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SubSystem.html#ac1a33268fa7f273eba9d234852bae9b5" title="Get the number of molecules of one Species in this SubSystem.">nMolecule</a>(i) != 0) <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00062"></a>00062       }
-<a name="l00063"></a>00063       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00064"></a>00064    }
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066    <span class="comment">/*</span>
-<a name="l00067"></a>00067 <span class="comment">   * Return the total number of atoms in this System.</span>
-<a name="l00068"></a>00068 <span class="comment">   */</span>
-<a name="l00069"></a><a class="code" href="classMcMd_1_1SubSystem.html#acafb1d8bf6a926c0a9b6c10f53a263bc">00069</a>    <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1SubSystem.html#acafb1d8bf6a926c0a9b6c10f53a263bc" title="Return the total number of atoms in this SubSystem.">SubSystem::nAtom</a>()<span class="keyword"> const</span>
-<a name="l00070"></a>00070 <span class="keyword">   </span>{
-<a name="l00071"></a>00071       <span class="keywordtype">int</span> sum = 0;
-<a name="l00072"></a>00072       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1SubSystem.html#a3c1f202fd05dc1a764d088a3b4a92baf" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++i) {
-<a name="l00073"></a>00073          sum += <a class="code" href="classMcMd_1_1SubSystem.html#ac1a33268fa7f273eba9d234852bae9b5" title="Get the number of molecules of one Species in this SubSystem.">nMolecule</a>(i)*<a class="code" href="classMcMd_1_1SubSystem.html#a3c1f202fd05dc1a764d088a3b4a92baf" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(i).<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
-<a name="l00074"></a>00074       }
-<a name="l00075"></a>00075       <span class="keywordflow">return</span> sum;
-<a name="l00076"></a>00076    }
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 }
-<a name="l00079"></a>00079 <span class="preprocessor">#endif</span>
+<a name="l00044"></a>00044    {}
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046    <span class="comment">/*</span>
+<a name="l00047"></a>00047 <span class="comment">   * Destructor.</span>
+<a name="l00048"></a>00048 <span class="comment">   */</span>
+<a name="l00049"></a><a class="code" href="classMcMd_1_1SubSystem.html#a5ce831f96c3c40b7f2e20eb1c35bbb93">00049</a>    <a class="code" href="classMcMd_1_1SubSystem.html#a5ce831f96c3c40b7f2e20eb1c35bbb93" title="Destructor.">SubSystem::~SubSystem</a>()
+<a name="l00050"></a>00050    {}
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052    <span class="comment">/*</span>
+<a name="l00053"></a>00053 <span class="comment">   * Is this System empty (i.e., devoid of Molecules) ?</span>
+<a name="l00054"></a>00054 <span class="comment">   */</span>
+<a name="l00055"></a><a class="code" href="classMcMd_1_1SubSystem.html#a65911b76900a059c96ee497fe3216246">00055</a>    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1SubSystem.html#a65911b76900a059c96ee497fe3216246" title="Is this an empty SubSystem (i.e., one with no molecules) ?">SubSystem::isEmpty</a>()<span class="keyword"> const</span>
+<a name="l00056"></a>00056 <span class="keyword">   </span>{
+<a name="l00057"></a>00057       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1SubSystem.html#a3c1f202fd05dc1a764d088a3b4a92baf" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++i) {
+<a name="l00058"></a>00058          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SubSystem.html#ac1a33268fa7f273eba9d234852bae9b5" title="Get the number of molecules of one Species in this SubSystem.">nMolecule</a>(i) != 0) <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00059"></a>00059       }
+<a name="l00060"></a>00060       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00061"></a>00061    }
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063    <span class="comment">/*</span>
+<a name="l00064"></a>00064 <span class="comment">   * Return the total number of atoms in this System.</span>
+<a name="l00065"></a>00065 <span class="comment">   */</span>
+<a name="l00066"></a><a class="code" href="classMcMd_1_1SubSystem.html#acafb1d8bf6a926c0a9b6c10f53a263bc">00066</a>    <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1SubSystem.html#acafb1d8bf6a926c0a9b6c10f53a263bc" title="Return the total number of atoms in this SubSystem.">SubSystem::nAtom</a>()<span class="keyword"> const</span>
+<a name="l00067"></a>00067 <span class="keyword">   </span>{
+<a name="l00068"></a>00068       <span class="keywordtype">int</span> sum = 0;
+<a name="l00069"></a>00069       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1SubSystem.html#a3c1f202fd05dc1a764d088a3b4a92baf" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++i) {
+<a name="l00070"></a>00070          sum += <a class="code" href="classMcMd_1_1SubSystem.html#ac1a33268fa7f273eba9d234852bae9b5" title="Get the number of molecules of one Species in this SubSystem.">nMolecule</a>(i)*<a class="code" href="classMcMd_1_1SubSystem.html#a3c1f202fd05dc1a764d088a3b4a92baf" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(i).<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00071"></a>00071       }
+<a name="l00072"></a>00072       <span class="keywordflow">return</span> sum;
+<a name="l00073"></a>00073    }
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:16 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:01 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

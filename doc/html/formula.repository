@@ -72,51 +72,60 @@
 \form#71:$ r = \sigma 2^{1/6}$
 \form#72:\[ r_{c} \equiv 2^{1/6} \sigma \]
 \form#73:\[ V(r) = 4 \epsilon \left [ \left ( \frac{\sigma}{r} \right )^{12} - \left ( \frac{\sigma}{r} \right )^{6} + \frac{1}{4} \right ] \]
-\form#74:$ R_0, R_1, ...., R_{N_{i}-1} $
-\form#75:\[ R_{g,i}^2 = \sum_j \langle | R_j - R_{cm,i} |^2 \rangle / N_i \]
-\form#76:$ R_{cm,i} = (R_0 + R_1 + ... R_{N_{i}-1})/N_i $
-\form#77:$ \langle \cdots \rangle $
-\form#78:\[ S_{ij} = \sum_{a}( u_{ai}u_{aj} - \delta_{ij} ) \]
-\form#79:$u_{ai}$
-\form#80:${\bf u}_{a}$
-\form#81:\[ C(t) = \sum_{i,j=0}^{2} \langle S_{ij}(t)S_{ij}(0) \rangle \]
-\form#82:$ V(t) = R_i(t) - R_j(t) $
-\form#83:\[ F(\tau) \equiv \langle V(t) \cdot V(t-\tau) \rangle \]
-\form#84:$ \tau $
-\form#85:$ \langle \cdots \rangle$
-\form#86:$ V(t) \cdot V(t') $
-\form#87:$ V(t) $
-\form#88:\[ S(k) = \sum_{m} < \rho_{ma}(k) \rho_{mb}(-k) / V > \]
-\form#89:$\rho_a(k)$
-\form#90:\[ \rho_{ma}(k) = \sum_{i} \exp( i k \cdot r_{mi} ) \]
-\form#91:$ \rho_{ma}(k) $
-\form#92:$ \rho_a(k) $
-\form#93:$ R_0, R_1, ...., R_{N-1} $
-\form#94:\[ R_g^2 = \sum_i \langle | R_i - R_{cm} |^2 \rangle / N \]
-\form#95:$ R_{cm} = (R_0 + R_1 + ... R_{N-1})/N $
-\form#96:\[ S_{m}(k) = < \rho(k) \rho(-k) / V > \]
-\form#97:$\rho(k)$
-\form#98:\[ \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]
-\form#99:\[ S(k) = < \rho_a(k) \rho_b(-k) / V > \]
-\form#100:\[ \rho_a(k) = \sum_{i} \exp( i k \cdot r_i ) \]
-\form#101:\[ S(k,t) = < \psi(k,t) \psi^{*}(k,0) > / V \]
-\form#102:$\psi(k,t)$
-\form#103:\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]
-\form#104:$ c_{a} $
-\form#105:$ \psi = \rho_0 - \rho_1 $
-\form#106:\begin{eqnarray*} \frac{d{\bf v}_{i}}{dt} & = & \frac{1}{m} {\bf f}_{i} - \xi {\bf v}_{i} \\ \frac{d\xi}{dt} & = & \frac{1}{ \tau_{T}^{2} } \left( \frac{T_{K}}{T_{0}} - 1 \right ) \end{eqnarray*}
-\form#107:${\bf v}_{i}$
-\form#108:$T_{K} = 2K/3N$
-\form#109:$K$
-\form#110:$N$
-\form#111:$T_{0}$
-\form#112:$\tau_{T}$
-\form#113:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \]
-\form#114:\[ \cos(\theta) = \frac{{\bf b}_{1} \cdot {\bf b}_{2}} {|{\bf b}_{1}||{\bf b}_{2}|} \]
-\form#115:$\theta = 0$
-\form#116:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \quad\quad\quad {\bf b}_{3} \equiv {\bf r}_{3} - {\bf r}_{2} \]
-\form#117:${\bf b}_{1}$
-\form#118:${\bf b}_{2}$
-\form#119:${\bf b}_{3}$
-\form#120:$\phi = 0$
-\form#121:$\phi = \pi $
+\form#74:\[ C(t) = k_{B}T G(t) \]
+\form#75:$G(t)$
+\form#76:$C(t)$
+\form#77:\[ C(t) = \frac{1}{10} \sum_{ij=0}^{2} \langle V [\sigma_{ij}(t) - P(t)\delta_{ij}] [\sigma_{ij}(0) - P(0)\delta_{ij}] \rangle \]
+\form#78:$V = \sqrt{V(t)V(0)}$
+\form#79:$\sigma_{ij}(t)$
+\form#80:\[ P(t) \equiv \sum_{i=0}^{2} \sigma_{ii}(t)/3 \]
+\form#81:$ R_0, R_1, ...., R_{N_{i}-1} $
+\form#82:\[ R_{g,i}^2 = \sum_j \langle | R_j - R_{cm,i} |^2 \rangle / N_i \]
+\form#83:$ R_{cm,i} = (R_0 + R_1 + ... R_{N_{i}-1})/N_i $
+\form#84:$ \langle \cdots \rangle $
+\form#85:\[ S_{ij} = \sum_{a}( u_{ai}u_{aj} - \delta_{ij} ) \]
+\form#86:$u_{ai}$
+\form#87:${\bf u}_{a}$
+\form#88:\[ C(t) = \sum_{i,j=0}^{2} \langle S_{ij}(t)S_{ij}(0) \rangle \]
+\form#89:$ V(t) = R_i(t) - R_j(t) $
+\form#90:\[ F(\tau) \equiv \langle V(t) \cdot V(t-\tau) \rangle \]
+\form#91:$ \tau $
+\form#92:$ \langle \cdots \rangle$
+\form#93:$ V(t) \cdot V(t') $
+\form#94:$ V(t) $
+\form#95:\[ S(k) = \sum_{m} < \rho_{ma}(k) \rho_{mb}(-k) / V > \]
+\form#96:$\rho_a(k)$
+\form#97:\[ \rho_{ma}(k) = \sum_{i} \exp( i k \cdot r_{mi} ) \]
+\form#98:$ \rho_{ma}(k) $
+\form#99:$ \rho_a(k) $
+\form#100:$ R_0, R_1, ...., R_{N-1} $
+\form#101:\[ R_g^2 = \sum_i \langle | R_i - R_{cm} |^2 \rangle / N \]
+\form#102:$ R_{cm} = (R_0 + R_1 + ... R_{N-1})/N $
+\form#103:\[ S_{m}(k) = < \rho(k) \rho(-k) / V > \]
+\form#104:$\rho(k)$
+\form#105:\[ \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]
+\form#106:\[ S(k) = < \rho_a(k) \rho_b(-k) / V > \]
+\form#107:\[ \rho_a(k) = \sum_{i} \exp( i k \cdot r_i ) \]
+\form#108:\[ S(k,t) = \langle \psi(k,t) \psi^{*}(k,0) / V \rangle \]
+\form#109:$V \equiv \sqrt{V(t)V(0)}$
+\form#110:$\psi(k,t)$
+\form#111:\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]
+\form#112:$ c_{a} $
+\form#113:$ \psi = \rho_0 - \rho_1 $
+\form#114:\begin{eqnarray*} \frac{d{\bf v}_{i}}{dt} & = & \frac{1}{m} {\bf f}_{i} - \xi {\bf v}_{i} \\ \frac{d\xi}{dt} & = & \frac{1}{ \tau_{T}^{2} } \left( \frac{T_{K}}{T_{0}} - 1 \right ) \end{eqnarray*}
+\form#115:${\bf v}_{i}$
+\form#116:$T_{K} = 2K/3N$
+\form#117:$K$
+\form#118:$N$
+\form#119:$T_{0}$
+\form#120:$\tau_{T}$
+\form#121:\[ S(k,t) = < \psi(k,t) \psi^{*}(k,0) > / V \]
+\form#122:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \]
+\form#123:\[ \cos(\theta) = \frac{{\bf b}_{1} \cdot {\bf b}_{2}} {|{\bf b}_{1}||{\bf b}_{2}|} \]
+\form#124:$\theta = 0$
+\form#125:\[ {\bf b}_{1} \equiv {\bf r}_{1} - {\bf r}_{0} \quad\quad\quad {\bf b}_{2} \equiv {\bf r}_{2} - {\bf r}_{1} \quad\quad\quad {\bf b}_{3} \equiv {\bf r}_{3} - {\bf r}_{2} \]
+\form#126:${\bf b}_{1}$
+\form#127:${\bf b}_{2}$
+\form#128:${\bf b}_{3}$
+\form#129:$\phi = 0$
+\form#130:$\phi = \pi $

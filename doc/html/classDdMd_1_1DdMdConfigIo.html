@@ -92,24 +92,25 @@ Inheritance diagram for DdMd::DdMdConfigIo:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdMdConfigIo.html#a8cfb937da0dc010792dbabeabe56f97d">DdMdConfigIo</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a8cfb937da0dc010792dbabeabe56f97d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdMdConfigIo.html#a45218b4de4be7f5e3517b2b508e656b3">DdMdConfigIo</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a45218b4de4be7f5e3517b2b508e656b3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdMdConfigIo.html#a53692e179e911a83ae3494ee2dbb6f1b">DdMdConfigIo</a> (bool hasMolecules=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a53692e179e911a83ae3494ee2dbb6f1b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdMdConfigIo.html#a2b903e44f9f51b02778525a77d1d9a6a">DdMdConfigIo</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation, bool hasMolecules=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a2b903e44f9f51b02778525a77d1d9a6a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdMdConfigIo.html#ad1f6bf88c432a9365753a9c709b3563a">readConfig</a> (std::ifstream &amp;file, <a class="el" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4">MaskPolicy</a> maskPolicy)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read configuration file.  <a href="#ad1f6bf88c432a9365753a9c709b3563a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdMdConfigIo.html#a0fa95db210b9e49ae6d75b28bd3f6b38">writeConfig</a> (std::ofstream &amp;file)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write configuration file.  <a href="#a0fa95db210b9e49ae6d75b28bd3f6b38"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a8cfb937da0dc010792dbabeabe56f97d"></a><!-- doxytag: member="DdMd::DdMdConfigIo::DdMdConfigIo" ref="a8cfb937da0dc010792dbabeabe56f97d" args="()" -->
+<a class="anchor" id="a53692e179e911a83ae3494ee2dbb6f1b"></a><!-- doxytag: member="DdMd::DdMdConfigIo::DdMdConfigIo" ref="a53692e179e911a83ae3494ee2dbb6f1b" args="(bool hasMolecules=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1DdMdConfigIo.html#a8cfb937da0dc010792dbabeabe56f97d">DdMd::DdMdConfigIo::DdMdConfigIo</a> </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1DdMdConfigIo.html#a53692e179e911a83ae3494ee2dbb6f1b">DdMd::DdMdConfigIo::DdMdConfigIo</a> </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>hasMolecules</em> = <code>false</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -117,21 +118,39 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Default constructor. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hasMolecules</td><td>desired value of hasMolecules flag </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00048">48</a> of file <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html">ddMd/configIos/DdMdConfigIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00044">44</a> of file <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html">ddMd/configIos/DdMdConfigIo.cpp</a>.</p>
+
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a45218b4de4be7f5e3517b2b508e656b3"></a><!-- doxytag: member="DdMd::DdMdConfigIo::DdMdConfigIo" ref="a45218b4de4be7f5e3517b2b508e656b3" args="(Simulation &amp;simulation)" -->
+<a class="anchor" id="a2b903e44f9f51b02778525a77d1d9a6a"></a><!-- doxytag: member="DdMd::DdMdConfigIo::DdMdConfigIo" ref="a2b903e44f9f51b02778525a77d1d9a6a" args="(Simulation &amp;simulation, bool hasMolecules=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1DdMdConfigIo.html#a8cfb937da0dc010792dbabeabe56f97d">DdMd::DdMdConfigIo::DdMdConfigIo</a> </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1DdMdConfigIo.html#a53692e179e911a83ae3494ee2dbb6f1b">DdMd::DdMdConfigIo::DdMdConfigIo</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td>
-          <td class="paramname"><em>simulation</em></td><td>)</td>
+          <td class="paramname"><em>simulation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>hasMolecules</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
@@ -140,12 +159,15 @@ Public Member Functions</h2></td></tr>
 <p>Constructor. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">simulation</td><td>parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> object. </td></tr>
+    <tr><td class="paramname">simulation</td><td>parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> object </td></tr>
+    <tr><td class="paramname">hasMolecules</td><td>desired value of hasMolecules flag </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00062">62</a> of file <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html">ddMd/configIos/DdMdConfigIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00052">52</a> of file <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html">ddMd/configIos/DdMdConfigIo.cpp</a>.</p>
+
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -180,9 +202,9 @@ Public Member Functions</h2></td></tr>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>There are no atoms, ghosts, or groups. </dd>
 <dd>
 <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> is set for scaled / generalized coordinates</dd></dl>
-<dl class="post"><dt><b>Postcondition:</b></dt><dd>atomic coordinates are scaled / generalized </dd>
+<dl class="post"><dt><b>Postcondition:</b></dt><dd>Atomic coordinates are scaled / generalized </dd>
 <dd>
-there are no ghosts</dd></dl>
+There are no ghosts</dd></dl>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">file</td><td>input file stream (must be open on master) </td></tr>
@@ -193,9 +215,9 @@ there are no ghosts</dd></dl>
 
 <p>Implements <a class="el" href="classDdMd_1_1ConfigIo.html#a39b282c482fae1480819abaa5c133dde">DdMd::ConfigIo</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00104">104</a> of file <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html">ddMd/configIos/DdMdConfigIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00089">89</a> of file <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html">ddMd/configIos/DdMdConfigIo.cpp</a>.</p>
 
-<p>References <a class="el" href="MpiSendRecv_8h_source.html#l00207">Util::bcast()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00398">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00481">DdMd::Atom::setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00363">DdMd::Atom::setTypeId()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00439">DdMd::Atom::velocity()</a>.</p>
+<p>References <a class="el" href="AtomDistributor_8cpp_source.html#l00262">DdMd::AtomDistributor::addAtom()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00300">DdMd::ConfigIo::angleDistributor()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00297">DdMd::ConfigIo::angleStorage()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00279">DdMd::ConfigIo::atomDistributor()</a>, <a class="el" href="AtomContext_8h_source.html#l00043">DdMd::AtomContext::atomId</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00276">DdMd::ConfigIo::atomStorage()</a>, <a class="el" href="MpiSendRecv_8h_source.html#l00207">Util::bcast()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00289">DdMd::ConfigIo::bondDistributor()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00286">DdMd::ConfigIo::bondStorage()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00273">DdMd::ConfigIo::boundary()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00541">DdMd::Atom::context()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00311">DdMd::ConfigIo::dihedralDistributor()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00308">DdMd::ConfigIo::dihedralStorage()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00270">DdMd::ConfigIo::domain()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00575">DdMd::Atom::hasAtomContext()</a>, <a class="el" href="GroupStorage_8tpp_source.html#l00384">DdMd::GroupStorage&lt; N &gt;::isValid()</a>, <a class="el" href="AtomContext_8h_source.html#l00032">DdMd::AtomContext::moleculeId</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00192">DdMd::AtomDistributor::newAtomPtr()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">DdMd::Atom::position()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00457">DdMd::AtomDistributor::receive()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00379">DdMd::AtomDistributor::send()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00199">DdMd::ConfigIo::setAtomMasks()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00535">DdMd::Atom::setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00417">DdMd::Atom::setTypeId()</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00146">DdMd::AtomDistributor::setup()</a>, <a class="el" href="AtomContext_8h_source.html#l00027">DdMd::AtomContext::speciesId</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00630">DdMd::AtomStorage::totalAtomCapacity()</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00587">Util::OrthorhombicBoundary::transformCartToGen()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, <a class="el" href="AtomDistributor_8cpp_source.html#l00506">DdMd::AtomDistributor::validate()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00493">DdMd::Atom::velocity()</a>.</p>
 
 </div>
 </div>
@@ -225,9 +247,9 @@ there are no ghosts</dd></dl>
 
 <p>Implements <a class="el" href="classDdMd_1_1ConfigIo.html#aaa29b419149e77d1a8ea2077d07aed05">DdMd::ConfigIo</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00273">273</a> of file <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html">ddMd/configIos/DdMdConfigIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00257">257</a> of file <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html">ddMd/configIos/DdMdConfigIo.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00475">DdMd::Atom::id()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00398">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00383">DdMd::Atom::typeId()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00439">DdMd::Atom::velocity()</a>.</p>
+<p>References <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00303">DdMd::ConfigIo::angleCollector()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00297">DdMd::ConfigIo::angleStorage()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00282">DdMd::ConfigIo::atomCollector()</a>, <a class="el" href="AtomContext_8h_source.html#l00043">DdMd::AtomContext::atomId</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00276">DdMd::ConfigIo::atomStorage()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00292">DdMd::ConfigIo::bondCollector()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00286">DdMd::ConfigIo::bondStorage()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00273">DdMd::ConfigIo::boundary()</a>, <a class="el" href="ddMd_2storage_2GroupStorage_8h_source.html#l00490">DdMd::GroupStorage&lt; N &gt;::capacity()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8cpp_source.html#l00509">DdMd::AtomStorage::computeNAtomTotal()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00541">DdMd::Atom::context()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00314">DdMd::ConfigIo::dihedralCollector()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00308">DdMd::ConfigIo::dihedralStorage()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00270">DdMd::ConfigIo::domain()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00575">DdMd::Atom::hasAtomContext()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00529">DdMd::Atom::id()</a>, <a class="el" href="ddMd_2storage_2AtomStorage_8h_source.html#l00633">DdMd::AtomStorage::isCartesian()</a>, <a class="el" href="AtomContext_8h_source.html#l00032">DdMd::AtomContext::moleculeId</a>, <a class="el" href="AtomCollector_8cpp_source.html#l00110">DdMd::AtomCollector::nextPtr()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00452">DdMd::Atom::position()</a>, <a class="el" href="AtomCollector_8cpp_source.html#l00207">DdMd::AtomCollector::send()</a>, <a class="el" href="AtomCollector_8cpp_source.html#l00070">DdMd::AtomCollector::setup()</a>, <a class="el" href="AtomContext_8h_source.html#l00027">DdMd::AtomContext::speciesId</a>, <a class="el" href="OrthorhombicBoundary_8h_source.html#l00599">Util::OrthorhombicBoundary::transformGenToCart()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00437">DdMd::Atom::typeId()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00493">DdMd::Atom::velocity()</a>.</p>
 
 </div>
 </div>
@@ -241,7 +263,7 @@ there are no ghosts</dd></dl>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:19 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:04 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

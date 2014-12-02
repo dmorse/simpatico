@@ -64,22 +64,22 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">McMd::VanHove Class Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__Module.html">Analyzers</a></div></div>  </div>
+<div class="title">McMd::VanHove Class Reference<div class="ingroups"><a class="el" href="group__McMd__Analyzer__McMd__Module.html">MC/MD Analyzers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="McMd::VanHove" --><!-- doxytag: inherits="SystemAnalyzer&lt; System &gt;" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Evaluates the van Hove function S(k,t) for one or more wavevector k. </p>
 <p>The van Hove function S(k,t) is defined here as an expectation value </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ S(k,t) = < \psi(k,t) \psi^{*}(k,0) > / V \]" src="form_101.png"/>
+<img class="formulaDsp" alt="\[ S(k,t) = \langle \psi(k,t) \psi^{*}(k,0) / V \rangle \]" src="form_108.png"/>
 </p>
-<p> where V is system volume, and <img class="formulaInl" alt="$\psi(k,t)$" src="form_102.png"/> is given by a sum </p>
+<p> where <img class="formulaInl" alt="$V \equiv \sqrt{V(t)V(0)}$" src="form_109.png"/> is system volume, and where <img class="formulaInl" alt="$\psi(k,t)$" src="form_110.png"/> is a mode amplitude given by a sum </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]" src="form_103.png"/>
+<img class="formulaDsp" alt="\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]" src="form_111.png"/>
 </p>
-<p> over all atoms in the system, where <img class="formulaInl" alt="$ c_{a} $" src="form_104.png"/> is a user-specified coefficient for monomers of type a.</p>
+<p> over all atoms in the system, where <img class="formulaInl" alt="$ c_{a} $" src="form_112.png"/> is a user-specified coefficient for atoms of type a.</p>
 <p>The Van Hove class can calculate S(k,t) for a list of wavevectors. Each wavevector is specified as an IntVector containing integer Miller indices. These are the coefficients in an expansion of a reciprocal lattice wavevector in terms of recprocal lattice basis vectors.</p>
-<p>In a system with nAtomType = 2, with two monomer types 0 and 1, the parameter file input for calculating the autocorrelation of an order parameter <img class="formulaInl" alt="$ \psi = \rho_0 - \rho_1 $" src="form_105.png"/> for 5 wavevectors along the x axis in an orthorhombic unit cell might look like this:</p>
+<p>In a system with nAtomType = 2, with two monomer types 0 and 1, the parameter file input for calculating the autocorrelation of an order parameter <img class="formulaInl" alt="$ \psi = \rho_0 - \rho_1 $" src="form_113.png"/> for 5 wavevectors along the x axis in an orthorhombic unit cell might look like this:</p>
 <div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1VanHove.html#a5fc8d5a8a01c4387d69f66705c0c1883" title="Constructor.">VanHove</a>{
     <a class="code" href="classMcMd_1_1Analyzer.html#a6417953ce43e49b345840679bc162478" title="Get interval value.">interval</a>                      1000
     <a class="code" href="classMcMd_1_1Analyzer.html#a856d9a18b7ecd5b0d38f729c49db98dd" title="Return outputFileName string.">outputFileName</a>             <a class="code" href="classMcMd_1_1VanHove.html#a5fc8d5a8a01c4387d69f66705c0c1883" title="Constructor.">VanHove</a>
@@ -95,7 +95,7 @@
 </pre></div><p> At the end of a simulation, all of the autocorrelation functions are output in a file with a suffix *.dat. Each line in this file contains the 3 Miller indices of a wavevector, the absolute magnitude of the wavevector, and a list of nAtomTypeIdPair structure factor values for the wavevector, one for each atomTypeId pair.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="mcMd_analyzer_VanHove_page.html">parameter file format</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8h_source.html#l00077">77</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8h_source.html">mcMd/analyzers/system/VanHove.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8h_source.html#l00078">78</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8h_source.html">mcMd/analyzers/system/VanHove.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="mcMd_2analyzers_2system_2VanHove_8h_source.html">VanHove.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -161,9 +161,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00033">33</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00030">30</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00377">Util::ParamComposite::setClassName()</a>.</p>
 
 </div>
 </div>
@@ -183,7 +183,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00041">41</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00038">38</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
 
 </div>
 </div>
@@ -222,9 +222,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#a47ff063d3049206e3806d50b19e33946">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00047">47</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00044">44</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00647">McMd::Simulation::nAtomType()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00055">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00080">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, and <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00647">McMd::Simulation::nAtomType()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00052">McMd::Analyzer::readInterval()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00077">McMd::Analyzer::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, and <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>.</p>
 
 </div>
 </div>
@@ -253,7 +253,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#a57d1bfefb27ec9e3453f4ad331e60c1f">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00073">73</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00070">70</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
 
 <p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -284,7 +284,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#ae90b5ab7326be9d6b32c2e2e4ea468bf">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00108">108</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00105">105</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
 
 </div>
 </div>
@@ -326,7 +326,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#ae6a6b048d58746a31d21c34c418e5670">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8h_source.html#l00194">194</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8h_source.html">mcMd/analyzers/system/VanHove.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8h_source.html#l00195">195</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8h_source.html">mcMd/analyzers/system/VanHove.h</a>.</p>
 
 <p>References <a class="el" href="PairSelector_8h_source.html#l00167">McMd::serialize()</a>.</p>
 
@@ -350,7 +350,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#aa5cdc8e0d1f1151ffbc6d7daf71cc245">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00114">114</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00111">111</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -382,9 +382,9 @@ template&lt;class Archive &gt; </div>
 
 <p>Implements <a class="el" href="classMcMd_1_1Analyzer.html#a576d9ef1ae896122b249b5ce2058546a">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00127">127</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00124">124</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l01047">McMd::System::begin()</a>, <a class="el" href="Vector_8h_source.html#l00618">Util::Vector::dot()</a>, <a class="el" href="Constants_8h_source.html#l00040">Util::Constants::Im</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00081">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00790">McMd::Simulation::nSpecies()</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, and <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l01047">McMd::System::begin()</a>, <a class="el" href="Vector_8h_source.html#l00618">Util::Vector::dot()</a>, <a class="el" href="Constants_8h_source.html#l00040">Util::Constants::Im</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00081">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00787">McMd::Simulation::nSpecies()</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="System_8h_source.html#l00955">McMd::System::simulation()</a>, and <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; System &gt;::system()</a>.</p>
 
 </div>
 </div>
@@ -406,9 +406,9 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classMcMd_1_1Analyzer.html#ab14b1c3cfe5319b54c16c330e6eb724f">McMd::Analyzer</a>.</p>
 
-<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00199">199</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html#l00196">196</a> of file <a class="el" href="mcMd_2analyzers_2system_2VanHove_8cpp_source.html">mcMd/analyzers/system/VanHove.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00144">McMd::Analyzer::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00236">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="ioUtil_8cpp_source.html#l00055">Util::toString()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00122">Util::ParamComposite::writeParam()</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8cpp_source.html#l00141">McMd::Analyzer::fileMaster()</a>, <a class="el" href="FileMaster_8cpp_source.html#l00290">Util::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00246">McMd::Analyzer::outputFileName()</a>, <a class="el" href="ioUtil_8cpp_source.html#l00052">Util::toString()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00119">Util::ParamComposite::writeParam()</a>.</p>
 
 </div>
 </div>
@@ -422,7 +422,7 @@ template&lt;class Archive &gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:26 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

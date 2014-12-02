@@ -63,7 +63,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -89,60 +89,60 @@
 <a name="l00048"></a>00048    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keyword">typename</span> Product&gt;
 <a name="l00049"></a><a class="code" href="classUtil_1_1AutoCorr.html">00049</a>    <span class="keyword">class </span><a class="code" href="classUtil_1_1AutoCorr.html" title="Auto-correlation function for one sequence of Data values.">AutoCorr</a> : <span class="keyword">public</span> <a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>
 <a name="l00050"></a>00050    {
-<a name="l00051"></a>00051    
+<a name="l00051"></a>00051 
 <a name="l00052"></a>00052    <span class="keyword">public</span>:
-<a name="l00053"></a>00053   
+<a name="l00053"></a>00053 
 <a name="l00057"></a>00057       <a class="code" href="classUtil_1_1AutoCorr.html#a16ea043bc9a7296eeb501ef96fe14f8f" title="Constructor.">AutoCorr</a>();
-<a name="l00058"></a>00058    
+<a name="l00058"></a>00058 
 <a name="l00062"></a>00062       <a class="code" href="classUtil_1_1AutoCorr.html#a6aa18be672c617ea886adb9acc391a3f" title="Destructor.">~AutoCorr</a>();
-<a name="l00063"></a>00063    
+<a name="l00063"></a>00063 
 <a name="l00067"></a>00067       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#a3508f52cefa629324915e4a2b0bfb34a" title="Reset to empty state.">clear</a>();
-<a name="l00068"></a>00068    
+<a name="l00068"></a>00068 
 <a name="l00074"></a>00074       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#a7dcfa34d57be15afe284b145fb0567cf" title="Read buffer capacity, allocate memory and initialize.">readParameters</a>(std::istream&amp; in);
-<a name="l00075"></a>00075    
+<a name="l00075"></a>00075 
 <a name="l00081"></a>00081       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#a40ec3ef43be2ecc331e2d1e1cc38f029" title="Set buffer capacity, allocate memory and initialize.">setParam</a>(<span class="keywordtype">int</span> <a class="code" href="classUtil_1_1AutoCorr.html#a3f1f8e0ee0c3aa07c6d0c4053c6c3b89" title="Return capacity of history buffer.">bufferCapacity</a>);
 <a name="l00082"></a>00082 
 <a name="l00088"></a>00088       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#ad788e03b33b19cc65fd2620be64a5a15" title="Load state from an archive.">loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a>&amp; ar);
 <a name="l00089"></a>00089 
 <a name="l00095"></a>00095       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#add693694d3f06a007ff10fa46d804bfb" title="Save state to an archive.">save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a>&amp; ar);
-<a name="l00096"></a>00096   
+<a name="l00096"></a>00096 
 <a name="l00103"></a>00103       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
 <a name="l00104"></a>00104       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#abe8ece7c8363156b8881c203d916a371" title="Serialize to/from an archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00105"></a>00105 
 <a name="l00111"></a>00111       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#a3192f37e28ba8202d08d3c157a34836d" title="Sample a value.">sample</a>(Data value);
-<a name="l00112"></a>00112    
+<a name="l00112"></a>00112 
 <a name="l00118"></a>00118       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#a8a9d792a79e0dd4eefcd379960807b78" title="Output the autocorrelation function.">output</a>(std::ostream&amp; out);
-<a name="l00119"></a>00119   
+<a name="l00119"></a>00119 
 <a name="l00123"></a>00123       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1AutoCorr.html#a3f1f8e0ee0c3aa07c6d0c4053c6c3b89" title="Return capacity of history buffer.">bufferCapacity</a>() <span class="keyword">const</span>;
-<a name="l00124"></a>00124  
+<a name="l00124"></a>00124 
 <a name="l00128"></a>00128       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1AutoCorr.html#aeb08c0462a870e334a7ef5435b607eb7" title="Return number of values sampled thus far.">nSample</a>() <span class="keyword">const</span>;
-<a name="l00129"></a>00129  
-<a name="l00133"></a>00133       Data <a class="code" href="classUtil_1_1AutoCorr.html#a7d418738dc3ff503cd7320e20983ad01" title="Return average of all sampled values.">average</a>() <span class="keyword">const</span>; 
-<a name="l00134"></a>00134       
-<a name="l00138"></a>00138       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AutoCorr.html#ab42e49401d8e5e45dc4e4ba2d78778ec" title="Numerical integration of autocorrelation function.">corrTime</a>() <span class="keyword">const</span>; 
+<a name="l00129"></a>00129 
+<a name="l00133"></a>00133       Data <a class="code" href="classUtil_1_1AutoCorr.html#a7d418738dc3ff503cd7320e20983ad01" title="Return average of all sampled values.">average</a>() <span class="keyword">const</span>;
+<a name="l00134"></a>00134 
+<a name="l00138"></a>00138       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AutoCorr.html#ab42e49401d8e5e45dc4e4ba2d78778ec" title="Numerical integration of autocorrelation function.">corrTime</a>() <span class="keyword">const</span>;
 <a name="l00139"></a>00139 
 <a name="l00145"></a>00145       Product <a class="code" href="classUtil_1_1AutoCorr.html#a7357621d3be8f8f0d2938f32f4a7614a" title="Return autocorrelation at a given lag time.">autoCorrelation</a>(<span class="keywordtype">int</span> t) <span class="keyword">const</span>;
 <a name="l00146"></a>00146 
 <a name="l00147"></a>00147    <span class="keyword">private</span>:
-<a name="l00148"></a>00148    
+<a name="l00148"></a>00148 
 <a name="l00149"></a>00149       <span class="comment">// Ring buffer containing a sequence of stored Data values.</span>
-<a name="l00150"></a>00150       <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer&lt;Data&gt;</a>  buffer_; 
-<a name="l00151"></a>00151    
+<a name="l00150"></a>00150       <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer&lt;Data&gt;</a>  buffer_;
+<a name="l00151"></a>00151 
 <a name="l00152"></a>00152       <span class="comment">// Array in which corr[j] = sum of values of &lt;x(i-j), x(i)&gt;</span>
 <a name="l00153"></a>00153       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Product&gt;</a>  corr_;
-<a name="l00154"></a>00154    
+<a name="l00154"></a>00154 
 <a name="l00155"></a>00155       <span class="comment">// Array in which nCorr[i] = number of values added to corr[i]</span>
 <a name="l00156"></a>00156       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;int&gt;</a>      nCorr_;
-<a name="l00157"></a>00157    
+<a name="l00157"></a>00157 
 <a name="l00158"></a>00158       <span class="comment">// Sum of all previous values of x(t)</span>
 <a name="l00159"></a>00159       Data        sum_;
-<a name="l00160"></a>00160    
+<a name="l00160"></a>00160 
 <a name="l00161"></a>00161       <span class="comment">// Physical capacity (# of elements) of buffer, corr, and nCorr</span>
 <a name="l00162"></a>00162       <span class="keywordtype">int</span>         bufferCapacity_;
-<a name="l00163"></a>00163       
+<a name="l00163"></a>00163 
 <a name="l00164"></a>00164       <span class="comment">// Total number of previous values of x(t)</span>
 <a name="l00165"></a>00165       <span class="keywordtype">int</span>         nSample_;
-<a name="l00166"></a>00166    
+<a name="l00166"></a>00166 
 <a name="l00170"></a>00170       <span class="keywordtype">void</span> allocate();
 <a name="l00171"></a>00171 
 <a name="l00175"></a>00175       <span class="keywordtype">bool</span> isValid();
@@ -153,7 +153,7 @@
 <a name="l00180"></a>00180 <span class="comment">   * Default constructor.</span>
 <a name="l00181"></a>00181 <span class="comment">   */</span>
 <a name="l00182"></a>00182    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keyword">typename</span> Product&gt;
-<a name="l00183"></a><a class="code" href="classUtil_1_1AutoCorr.html#a16ea043bc9a7296eeb501ef96fe14f8f">00183</a>    <a class="code" href="classUtil_1_1AutoCorr.html#a16ea043bc9a7296eeb501ef96fe14f8f" title="Constructor.">AutoCorr&lt;Data, Product&gt;::AutoCorr</a>() 
+<a name="l00183"></a><a class="code" href="classUtil_1_1AutoCorr.html#a16ea043bc9a7296eeb501ef96fe14f8f">00183</a>    <a class="code" href="classUtil_1_1AutoCorr.html#a16ea043bc9a7296eeb501ef96fe14f8f" title="Constructor.">AutoCorr&lt;Data, Product&gt;::AutoCorr</a>()
 <a name="l00184"></a>00184     : buffer_(),
 <a name="l00185"></a>00185       corr_(),
 <a name="l00186"></a>00186       nCorr_(),
@@ -163,14 +163,14 @@
 <a name="l00190"></a>00190       <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;AutoCorr&quot;</span>);
 <a name="l00191"></a>00191       <a class="code" href="namespaceUtil.html#a892d1362ecc1ff6a8b9f47deeb688c1b" title="Set a float variable to zero.">setToZero</a>(sum_);
 <a name="l00192"></a>00192    }
-<a name="l00193"></a>00193    
+<a name="l00193"></a>00193 
 <a name="l00194"></a>00194    <span class="comment">/*</span>
 <a name="l00195"></a>00195 <span class="comment">   * Destructor</span>
 <a name="l00196"></a>00196 <span class="comment">   */</span>
 <a name="l00197"></a>00197    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keyword">typename</span> Product&gt;
-<a name="l00198"></a><a class="code" href="classUtil_1_1AutoCorr.html#a6aa18be672c617ea886adb9acc391a3f">00198</a>    <a class="code" href="classUtil_1_1AutoCorr.html#a6aa18be672c617ea886adb9acc391a3f" title="Destructor.">AutoCorr&lt;Data, Product&gt;::~AutoCorr</a>() 
+<a name="l00198"></a><a class="code" href="classUtil_1_1AutoCorr.html#a6aa18be672c617ea886adb9acc391a3f">00198</a>    <a class="code" href="classUtil_1_1AutoCorr.html#a6aa18be672c617ea886adb9acc391a3f" title="Destructor.">AutoCorr&lt;Data, Product&gt;::~AutoCorr</a>()
 <a name="l00199"></a>00199    {}
-<a name="l00200"></a>00200    
+<a name="l00200"></a>00200 
 <a name="l00201"></a>00201    <span class="comment">/*</span>
 <a name="l00202"></a>00202 <span class="comment">   * Read buffer capacity and allocate all required memory.</span>
 <a name="l00203"></a>00203 <span class="comment">   */</span>
@@ -180,7 +180,7 @@
 <a name="l00207"></a>00207       read&lt;int&gt;(in, <span class="stringliteral">&quot;capacity&quot;</span>, bufferCapacity_);
 <a name="l00208"></a>00208       allocate();
 <a name="l00209"></a>00209    }
-<a name="l00210"></a>00210    
+<a name="l00210"></a>00210 
 <a name="l00211"></a>00211    <span class="comment">/*</span>
 <a name="l00212"></a>00212 <span class="comment">   * Set buffer capacity and initialize.</span>
 <a name="l00213"></a>00213 <span class="comment">   */</span>
@@ -190,13 +190,13 @@
 <a name="l00217"></a>00217       bufferCapacity_ = bufferCapacity;
 <a name="l00218"></a>00218       allocate();
 <a name="l00219"></a>00219    }
-<a name="l00220"></a>00220    
+<a name="l00220"></a>00220 
 <a name="l00221"></a>00221    <span class="comment">/*</span>
 <a name="l00222"></a>00222 <span class="comment">   * Load state from an archive.</span>
 <a name="l00223"></a>00223 <span class="comment">   */</span>
 <a name="l00224"></a>00224    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keyword">typename</span> Product&gt;
 <a name="l00225"></a><a class="code" href="classUtil_1_1AutoCorr.html#ad788e03b33b19cc65fd2620be64a5a15">00225</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#ad788e03b33b19cc65fd2620be64a5a15" title="Load state from an archive.">AutoCorr&lt;Data, Product&gt;::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a>&amp; ar)
-<a name="l00226"></a>00226    {  
+<a name="l00226"></a>00226    {
 <a name="l00227"></a>00227       loadParameter&lt;int&gt;(ar, <span class="stringliteral">&quot;capacity&quot;</span>, bufferCapacity_);
 <a name="l00228"></a>00228       ar &amp; buffer_;
 <a name="l00229"></a>00229       ar &amp; corr_;
@@ -218,7 +218,7 @@
 <a name="l00245"></a>00245 <span class="comment">   */</span>
 <a name="l00246"></a>00246    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keyword">typename</span> Product&gt;
 <a name="l00247"></a><a class="code" href="classUtil_1_1AutoCorr.html#a3508f52cefa629324915e4a2b0bfb34a">00247</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#a3508f52cefa629324915e4a2b0bfb34a" title="Reset to empty state.">AutoCorr&lt;Data, Product&gt;::clear</a>()
-<a name="l00248"></a>00248    {   
+<a name="l00248"></a>00248    {
 <a name="l00249"></a>00249       <a class="code" href="namespaceUtil.html#a892d1362ecc1ff6a8b9f47deeb688c1b" title="Set a float variable to zero.">setToZero</a>(sum_);
 <a name="l00250"></a>00250       nSample_ = 0;
 <a name="l00251"></a>00251 
@@ -230,13 +230,13 @@
 <a name="l00257"></a>00257          buffer_.clear();
 <a name="l00258"></a>00258       }
 <a name="l00259"></a>00259    }
-<a name="l00260"></a>00260    
+<a name="l00260"></a>00260 
 <a name="l00261"></a>00261    <span class="comment">/*</span>
 <a name="l00262"></a>00262 <span class="comment">   * Allocate arrays and CyclicBuffer, and initialize.</span>
 <a name="l00263"></a>00263 <span class="comment">   */</span>
 <a name="l00264"></a>00264    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keyword">typename</span> Product&gt;
 <a name="l00265"></a>00265    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html" title="Auto-correlation function for one sequence of Data values.">AutoCorr&lt;Data, Product&gt;::allocate</a>()
-<a name="l00266"></a>00266    {  
+<a name="l00266"></a>00266    {
 <a name="l00267"></a>00267       <span class="keywordflow">if</span> (bufferCapacity_ &gt; 0) {
 <a name="l00268"></a>00268          corr_.allocate(bufferCapacity_);
 <a name="l00269"></a>00269          nCorr_.allocate(bufferCapacity_);
@@ -244,13 +244,13 @@
 <a name="l00271"></a>00271       }
 <a name="l00272"></a>00272       clear();
 <a name="l00273"></a>00273    }
-<a name="l00274"></a>00274    
+<a name="l00274"></a>00274 
 <a name="l00275"></a>00275    <span class="comment">/*</span>
 <a name="l00276"></a>00276 <span class="comment">   * Are capacities consistent?</span>
 <a name="l00277"></a>00277 <span class="comment">   */</span>
 <a name="l00278"></a>00278    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keyword">typename</span> Product&gt;
 <a name="l00279"></a>00279    <span class="keywordtype">bool</span> AutoCorr&lt;Data, Product&gt;::isValid()
-<a name="l00280"></a>00280    {  
+<a name="l00280"></a>00280    {
 <a name="l00281"></a>00281       <span class="keywordtype">bool</span> valid = <span class="keyword">true</span>;
 <a name="l00282"></a>00282       <span class="keywordflow">if</span> (bufferCapacity_ != corr_.capacity()) valid = <span class="keyword">false</span>;
 <a name="l00283"></a>00283       <span class="keywordflow">if</span> (bufferCapacity_ != nCorr_.capacity()) valid = <span class="keyword">false</span>;
@@ -260,7 +260,7 @@
 <a name="l00287"></a>00287       }
 <a name="l00288"></a>00288       <span class="keywordflow">return</span> valid;
 <a name="l00289"></a>00289    }
-<a name="l00290"></a>00290    
+<a name="l00290"></a>00290 
 <a name="l00291"></a>00291    <span class="comment">/*</span>
 <a name="l00292"></a>00292 <span class="comment">   * Sample a single value from a time sequence.</span>
 <a name="l00293"></a>00293 <span class="comment">   */</span>
@@ -275,7 +275,7 @@
 <a name="l00302"></a>00302          ++nCorr_[i];
 <a name="l00303"></a>00303       };
 <a name="l00304"></a>00304    }
-<a name="l00305"></a>00305    
+<a name="l00305"></a>00305 
 <a name="l00306"></a>00306    <span class="comment">/*</span>
 <a name="l00307"></a>00307 <span class="comment">   * Return capacity of history buffer.</span>
 <a name="l00308"></a>00308 <span class="comment">   */</span>
@@ -305,17 +305,17 @@
 <a name="l00332"></a>00332 <span class="comment">   * Final output</span>
 <a name="l00333"></a>00333 <span class="comment">   */</span>
 <a name="l00334"></a>00334    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keyword">typename</span> Product&gt;
-<a name="l00335"></a><a class="code" href="classUtil_1_1AutoCorr.html#a8a9d792a79e0dd4eefcd379960807b78">00335</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#a8a9d792a79e0dd4eefcd379960807b78" title="Output the autocorrelation function.">AutoCorr&lt;Data, Product&gt;::output</a>(std::ostream&amp; outFile) 
+<a name="l00335"></a><a class="code" href="classUtil_1_1AutoCorr.html#a8a9d792a79e0dd4eefcd379960807b78">00335</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#a8a9d792a79e0dd4eefcd379960807b78" title="Output the autocorrelation function.">AutoCorr&lt;Data, Product&gt;::output</a>(std::ostream&amp; outFile)
 <a name="l00336"></a>00336    {
 <a name="l00337"></a>00337       Data    ave;
 <a name="l00338"></a>00338       Product autocorr;
 <a name="l00339"></a>00339       Product aveSq;
-<a name="l00340"></a>00340    
+<a name="l00340"></a>00340 
 <a name="l00341"></a>00341       <span class="comment">// Calculate and output average of sampled values</span>
 <a name="l00342"></a>00342       ave  = sum_;
 <a name="l00343"></a>00343       ave /= double(nSample_);
 <a name="l00344"></a>00344       aveSq = <a class="code" href="namespaceUtil.html#aea7ab369392718998a65d82695894a53" title="Product for float Data.">product</a>(ave, ave);
-<a name="l00345"></a>00345   
+<a name="l00345"></a>00345 
 <a name="l00346"></a>00346       <span class="comment">// Calculate and output autocorrelation</span>
 <a name="l00347"></a>00347       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; buffer_.size(); ++i) {
 <a name="l00348"></a>00348          autocorr = corr_[i]/double(nCorr_[i]);
@@ -324,11 +324,11 @@
 <a name="l00351"></a>00351          write&lt;Product&gt;(outFile, autocorr);
 <a name="l00352"></a>00352          outFile &lt;&lt; std::endl;
 <a name="l00353"></a>00353       }
-<a name="l00354"></a>00354       
+<a name="l00354"></a>00354 
 <a name="l00355"></a>00355    }
-<a name="l00356"></a>00356    
+<a name="l00356"></a>00356 
 <a name="l00357"></a>00357    <span class="comment">/*</span>
-<a name="l00358"></a>00358 <span class="comment">   *  Return correlation time in unit of sampling interval  </span>
+<a name="l00358"></a>00358 <span class="comment">   *  Return correlation time in unit of sampling interval</span>
 <a name="l00359"></a>00359 <span class="comment">   */</span>
 <a name="l00360"></a>00360    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keyword">typename</span> Product&gt;
 <a name="l00361"></a><a class="code" href="classUtil_1_1AutoCorr.html#ab42e49401d8e5e45dc4e4ba2d78778ec">00361</a>    <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AutoCorr.html#ab42e49401d8e5e45dc4e4ba2d78778ec" title="Numerical integration of autocorrelation function.">AutoCorr&lt;Data, Product&gt;::corrTime</a>()<span class="keyword"> const</span>
@@ -336,9 +336,9 @@
 <a name="l00363"></a>00363       Data    ave;
 <a name="l00364"></a>00364       Product aveSq, variance, autocorr, sum;
 <a name="l00365"></a>00365       <span class="keywordtype">int</span>     size;
-<a name="l00366"></a>00366       
+<a name="l00366"></a>00366 
 <a name="l00367"></a>00367       size = buffer_.size();
-<a name="l00368"></a>00368    
+<a name="l00368"></a>00368 
 <a name="l00369"></a>00369       <span class="comment">// Calculate average sampled values</span>
 <a name="l00370"></a>00370       ave   = sum_/double(nSample_);
 <a name="l00371"></a>00371       ave  /= double(nSample_);
@@ -352,16 +352,16 @@
 <a name="l00379"></a>00379       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; size/2; ++i) {
 <a name="l00380"></a>00380          autocorr = corr_[i]/double(nCorr_[i]);
 <a name="l00381"></a>00381          autocorr = autocorr - aveSq;
-<a name="l00382"></a>00382          sum     += autocorr;  
+<a name="l00382"></a>00382          sum     += autocorr;
 <a name="l00383"></a>00383       }
 <a name="l00384"></a>00384       sum = sum/variance;
-<a name="l00385"></a>00385       
-<a name="l00386"></a>00386       <span class="keywordflow">return</span> sum; 
+<a name="l00385"></a>00385 
+<a name="l00386"></a>00386       <span class="keywordflow">return</span> sum;
 <a name="l00387"></a>00387    }
-<a name="l00388"></a>00388   
+<a name="l00388"></a>00388 
 <a name="l00389"></a>00389    <span class="comment">/*</span>
 <a name="l00390"></a>00390 <span class="comment">   * Return autocorrelation at a given lag time index</span>
-<a name="l00391"></a>00391 <span class="comment">   * </span>
+<a name="l00391"></a>00391 <span class="comment">   *</span>
 <a name="l00392"></a>00392 <span class="comment">   * \param t the lag time index</span>
 <a name="l00393"></a>00393 <span class="comment">   */</span>
 <a name="l00394"></a>00394    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keyword">typename</span> Product&gt;
@@ -370,12 +370,12 @@
 <a name="l00397"></a>00397       Data    ave;
 <a name="l00398"></a>00398       Product autocorr;
 <a name="l00399"></a>00399       Product aveSq;
-<a name="l00400"></a>00400    
+<a name="l00400"></a>00400 
 <a name="l00401"></a>00401       <span class="comment">// Calculate average of sampled values</span>
 <a name="l00402"></a>00402       ave  = sum_;
 <a name="l00403"></a>00403       ave /= double(nSample_);
 <a name="l00404"></a>00404       aveSq = <a class="code" href="namespaceUtil.html#aea7ab369392718998a65d82695894a53" title="Product for float Data.">product</a>(ave, ave);
-<a name="l00405"></a>00405   
+<a name="l00405"></a>00405 
 <a name="l00406"></a>00406       <span class="comment">// Calculate and return autocorrelation</span>
 <a name="l00407"></a>00407       assert(t &lt; buffer_.size());
 <a name="l00408"></a>00408       autocorr = corr_[t]/double(nCorr_[t]);
@@ -389,7 +389,7 @@
 <a name="l00416"></a>00416 <span class="comment">   */</span>
 <a name="l00417"></a>00417    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keyword">typename</span> Product&gt;
 <a name="l00418"></a>00418    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00419"></a><a class="code" href="classUtil_1_1AutoCorr.html#abe8ece7c8363156b8881c203d916a371">00419</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#abe8ece7c8363156b8881c203d916a371" title="Serialize to/from an archive.">AutoCorr&lt;Data, Product&gt;::serialize</a>(Archive&amp; ar, 
+<a name="l00419"></a><a class="code" href="classUtil_1_1AutoCorr.html#abe8ece7c8363156b8881c203d916a371">00419</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AutoCorr.html#abe8ece7c8363156b8881c203d916a371" title="Serialize to/from an archive.">AutoCorr&lt;Data, Product&gt;::serialize</a>(Archive&amp; ar,
 <a name="l00420"></a>00420                                            <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00421"></a>00421    {
 <a name="l00422"></a>00422       ar &amp; bufferCapacity_;
@@ -409,7 +409,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:47:56 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -64,14 +64,14 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Util::Bit Class Reference</div>  </div>
+<div class="title">Util::Bit Class Reference<div class="ingroups"><a class="el" href="group__Misc__Module.html">Miscellaneous Utilities</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="Util::Bit" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Represents a specific bit location within an unsigned int. </p>
 <p>Provides methods to query, set or clear a particular bit. </p>
 
-<p>Definition at line <a class="el" href="Bit_8h_source.html#l00019">19</a> of file <a class="el" href="Bit_8h_source.html">Bit.h</a>.</p>
+<p>Definition at line <a class="el" href="Bit_8h_source.html#l00021">21</a> of file <a class="el" href="Bit_8h_source.html">Bit.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="Bit_8h_source.html">Bit.h</a>&gt;</code></p>
 
@@ -79,8 +79,12 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Bit.html#a76697e285fcd715ec31605976620a0cc">Bit</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a76697e285fcd715ec31605976620a0cc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Bit.html#a1bbf6179c564cf257d358aeee5480687">Bit</a> (unsigned int shift)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a1bbf6179c564cf257d358aeee5480687"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Bit.html#a2a8df7ff3ab1251960b8b0175e512fc4">setMask</a> (unsigned int shift)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set or reset the bit mask.  <a href="#a2a8df7ff3ab1251960b8b0175e512fc4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Bit.html#a13cfaeee4e104764cae0f002bafa6fe1">set</a> (unsigned int &amp;flags) const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set this bit in the flags parameter.  <a href="#a13cfaeee4e104764cae0f002bafa6fe1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Bit.html#a31d713803a4d810f887d91018820d2a9">clear</a> (unsigned int &amp;flags) const </td></tr>
@@ -91,12 +95,32 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return integer with only this bit set.  <a href="#ac47516476d106d18d5f3adbb0b310d2e"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a76697e285fcd715ec31605976620a0cc"></a><!-- doxytag: member="Util::Bit::Bit" ref="a76697e285fcd715ec31605976620a0cc" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classUtil_1_1Bit.html#a76697e285fcd715ec31605976620a0cc">Util::Bit::Bit</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Default constructor. </p>
+
+<p>Definition at line <a class="el" href="Bit_8cpp_source.html#l00018">18</a> of file <a class="el" href="Bit_8cpp_source.html">Bit.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a1bbf6179c564cf257d358aeee5480687"></a><!-- doxytag: member="Util::Bit::Bit" ref="a1bbf6179c564cf257d358aeee5480687" args="(unsigned int shift)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Bit.html#a1bbf6179c564cf257d358aeee5480687">Util::Bit::Bit</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Bit.html#a76697e285fcd715ec31605976620a0cc">Util::Bit::Bit</a> </td>
           <td>(</td>
           <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>shift</em></td><td>)</td>
@@ -114,13 +138,44 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Bit_8cpp_source.html#l00021">21</a> of file <a class="el" href="Bit_8cpp_source.html">Bit.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Bit_8cpp_source.html#l00025">25</a> of file <a class="el" href="Bit_8cpp_source.html">Bit.cpp</a>.</p>
 
-<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Bit_8cpp_source.html#l00031">setMask()</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a2a8df7ff3ab1251960b8b0175e512fc4"></a><!-- doxytag: member="Util::Bit::setMask" ref="a2a8df7ff3ab1251960b8b0175e512fc4" args="(unsigned int shift)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classUtil_1_1Bit.html#a2a8df7ff3ab1251960b8b0175e512fc4">Util::Bit::setMask</a> </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>shift</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set or reset the bit mask. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shift</td><td>location of the bit, 0 &lt; shift &lt;= 32. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="Bit_8cpp_source.html#l00031">31</a> of file <a class="el" href="Bit_8cpp_source.html">Bit.cpp</a>.</p>
+
+<p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+
+<p>Referenced by <a class="el" href="Bit_8cpp_source.html#l00025">Bit()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a13cfaeee4e104764cae0f002bafa6fe1"></a><!-- doxytag: member="Util::Bit::set" ref="a13cfaeee4e104764cae0f002bafa6fe1" args="(unsigned int &amp;flags) const " -->
 <div class="memitem">
 <div class="memproto">
@@ -144,9 +199,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Bit_8h_source.html#l00066">66</a> of file <a class="el" href="Bit_8h_source.html">Bit.h</a>.</p>
+<p>Definition at line <a class="el" href="Bit_8h_source.html#l00080">80</a> of file <a class="el" href="Bit_8h_source.html">Bit.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Modifier_8cpp_source.html#l00102">DdMd::Modifier::set()</a>.</p>
+<p>Referenced by <a class="el" href="Modifier_8cpp_source.html#l00099">DdMd::Modifier::set()</a>.</p>
 
 </div>
 </div>
@@ -173,7 +228,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Bit_8h_source.html#l00072">72</a> of file <a class="el" href="Bit_8h_source.html">Bit.h</a>.</p>
+<p>Definition at line <a class="el" href="Bit_8h_source.html#l00086">86</a> of file <a class="el" href="Bit_8h_source.html">Bit.h</a>.</p>
 
 </div>
 </div>
@@ -200,9 +255,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="Bit_8h_source.html#l00078">78</a> of file <a class="el" href="Bit_8h_source.html">Bit.h</a>.</p>
+<p>Definition at line <a class="el" href="Bit_8h_source.html#l00092">92</a> of file <a class="el" href="Bit_8h_source.html">Bit.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Modifier_8cpp_source.html#l00090">DdMd::Modifier::isSet()</a>.</p>
+<p>Referenced by <a class="el" href="Modifier_8cpp_source.html#l00087">DdMd::Modifier::isSet()</a>, <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00086">DdMd::DdMdGroupTrajectoryWriter::writeFrame()</a>, and <a class="el" href="DdMdGroupTrajectoryWriter_8cpp_source.html#l00064">DdMd::DdMdGroupTrajectoryWriter::writeHeader()</a>.</p>
 
 </div>
 </div>
@@ -222,7 +277,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return integer with only this bit set. </p>
 
-<p>Definition at line <a class="el" href="Bit_8h_source.html#l00084">84</a> of file <a class="el" href="Bit_8h_source.html">Bit.h</a>.</p>
+<p>Definition at line <a class="el" href="Bit_8h_source.html#l00098">98</a> of file <a class="el" href="Bit_8h_source.html">Bit.h</a>.</p>
 
 </div>
 </div>
@@ -236,7 +291,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:35 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:21 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

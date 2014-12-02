@@ -67,38 +67,21 @@
 <div class="title">McMd::McStressAutoCorrelation Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="McMd::McStressAutoCorrelation" --><!-- doxytag: inherits="StressAutoCorrelation&lt; McSystem &gt;" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<!-- doxytag: class="McMd::McStressAutoCorrelation" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classMcMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions.">Analyzer</a> to calculate average isotropic pressure. </p>
 
 <p>Definition at line <a class="el" href="McStressAutoCorrelation_8h_source.html#l00020">20</a> of file <a class="el" href="McStressAutoCorrelation_8h_source.html">McStressAutoCorrelation.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="McStressAutoCorrelation_8h_source.html">McStressAutoCorrelation.h</a>&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for McMd::McStressAutoCorrelation:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="classMcMd_1_1McStressAutoCorrelation.png" usemap="#McMd::McStressAutoCorrelation_map" alt=""/>
-  <map id="McMd::McStressAutoCorrelation_map" name="McMd::McStressAutoCorrelation_map">
-<area href="classMcMd_1_1StressAutoCorrelation.html" alt="McMd::StressAutoCorrelation&lt; McSystem &gt;" shape="rect" coords="135,280,395,304"/>
-<area href="classMcMd_1_1SystemAnalyzer.html" alt="McMd::SystemAnalyzer&lt; McSystem &gt;" shape="rect" coords="135,224,395,248"/>
-<area href="classMcMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions." alt="McMd::Analyzer" shape="rect" coords="135,168,395,192"/>
-<area href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file." alt="Util::ParamComposite" shape="rect" coords="135,112,395,136"/>
-<area href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file." alt="Util::ParamComponent" shape="rect" coords="135,56,395,80"/>
-<area href="classUtil_1_1Serializable.html" title="Abstract class for serializable objects." alt="Util::Serializable" shape="rect" coords="0,0,260,24"/>
-<area href="classUtil_1_1MpiFileIo.html" title="Identifies whether this processor may do file I/O." alt="Util::MpiFileIo" shape="rect" coords="270,0,530,24"/>
-</map>
- </div></div>
 
 <p><a href="classMcMd_1_1McStressAutoCorrelation-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McStressAutoCorrelation.html#a5b88078854c7fde40bad55fb19817d93">McStressAutoCorrelation</a> (<a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp;<a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">system</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McStressAutoCorrelation.html#a5b88078854c7fde40bad55fb19817d93">McStressAutoCorrelation</a> (<a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp;system)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a5b88078854c7fde40bad55fb19817d93"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McStressAutoCorrelation.html#a0a89d196c90980dfab7c43ec980f2596">~McStressAutoCorrelation</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a0a89d196c90980dfab7c43ec980f2596"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McStressAutoCorrelation.html#a213b2f43d6acacc1d3c02e4832b4bf29">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample virial stress to accumulators.  <a href="#a213b2f43d6acacc1d3c02e4832b4bf29"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a5b88078854c7fde40bad55fb19817d93"></a><!-- doxytag: member="McMd::McStressAutoCorrelation::McStressAutoCorrelation" ref="a5b88078854c7fde40bad55fb19817d93" args="(McSystem &amp;system)" -->
@@ -124,9 +107,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="McStressAutoCorrelation_8cpp_source.html#l00020">20</a> of file <a class="el" href="McStressAutoCorrelation_8cpp_source.html">McStressAutoCorrelation.cpp</a>.</p>
-
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00380">Util::ParamComposite::setClassName()</a>.</p>
+<p>Definition at line <a class="el" href="McStressAutoCorrelation_8cpp_source.html#l00017">17</a> of file <a class="el" href="McStressAutoCorrelation_8cpp_source.html">McStressAutoCorrelation.cpp</a>.</p>
 
 </div>
 </div>
@@ -146,39 +127,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="McStressAutoCorrelation_8cpp_source.html#l00027">27</a> of file <a class="el" href="McStressAutoCorrelation_8cpp_source.html">McStressAutoCorrelation.cpp</a>.</p>
-
-</div>
-</div>
-<hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a213b2f43d6acacc1d3c02e4832b4bf29"></a><!-- doxytag: member="McMd::McStressAutoCorrelation::sample" ref="a213b2f43d6acacc1d3c02e4832b4bf29" args="(long iStep)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classMcMd_1_1McStressAutoCorrelation.html#a213b2f43d6acacc1d3c02e4832b4bf29">McMd::McStressAutoCorrelation::sample</a> </td>
-          <td>(</td>
-          <td class="paramtype">long&#160;</td>
-          <td class="paramname"><em>iStep</em></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Sample virial stress to accumulators. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">iStep</td><td>MD or MC step index </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Reimplemented from <a class="el" href="classMcMd_1_1StressAutoCorrelation.html#a33bbc523c30a2f731df72117ceda47d2">McMd::StressAutoCorrelation&lt; McSystem &gt;</a>.</p>
-
-<p>Definition at line <a class="el" href="McStressAutoCorrelation_8cpp_source.html#l00033">33</a> of file <a class="el" href="McStressAutoCorrelation_8cpp_source.html">McStressAutoCorrelation.cpp</a>.</p>
-
-<p>References <a class="el" href="DArray_8h_source.html#l00186">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="classMcMd_1_1McSystem.html#a11e15ca823304d9b82ee14332c9774d8">McMd::McSystem::computeStress()</a>, <a class="el" href="classMcMd_1_1McSystem.html#a655b0dcbb624950cb15d235a68791f48">McMd::McSystem::computeVirialStress()</a>, <a class="el" href="System_8h_source.html#l00995">McMd::System::energyEnsemble()</a>, <a class="el" href="mcMd_2analyzers_2Analyzer_8h_source.html#l00240">McMd::Analyzer::isAtInterval()</a>, <a class="el" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839">McMd::SystemAnalyzer&lt; McSystem &gt;::system()</a>, and <a class="el" href="EnergyEnsemble_8h_source.html#l00145">Util::EnergyEnsemble::temperature()</a>.</p>
+<p>Definition at line <a class="el" href="McStressAutoCorrelation_8cpp_source.html#l00024">24</a> of file <a class="el" href="McStressAutoCorrelation_8cpp_source.html">McStressAutoCorrelation.cpp</a>.</p>
 
 </div>
 </div>
@@ -192,7 +141,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:23 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:09 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -57,199 +57,80 @@
 <div class="title">StressAutoCorrelation.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef DDMD_STRESS_TENSOR_AUTO_CORRELATION_CPP</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define DDMD_STRESS_TENSOR_AUTO_CORRELATION_CPP</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="comment">/*</span>
-<a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
-<a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, The Regents of the University of Minnesota</span>
-<a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
-<a name="l00009"></a>00009 <span class="comment">*/</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
+<a name="l00003"></a>00003 <span class="comment">*</span>
+<a name="l00004"></a>00004 <span class="comment">* Copyright 2010 - 2014, The Regents of the University of Minnesota</span>
+<a name="l00005"></a>00005 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
+<a name="l00006"></a>00006 <span class="comment">*/</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;StressAutoCorrelation.h&quot;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;AutoCorrAnalyzer.tpp&quot;</span>
 <a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;StressAutoCorrelation.h&quot;</span>
-<a name="l00012"></a>00012 <span class="comment">//#include &lt;util/misc/FileMaster.h&gt;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;util/misc/ioUtil.h&gt;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;util/format/Int.h&gt;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;util/format/Dbl.h&gt;</span>
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017 <span class="preprocessor">#include &lt;sstream&gt;</span>
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019 <span class="keyword">namespace </span>DdMd
-<a name="l00020"></a>00020 {
-<a name="l00021"></a>00021 
-<a name="l00022"></a>00022    <span class="keyword">using namespace </span>Util;
-<a name="l00023"></a>00023 
-<a name="l00024"></a>00024    <span class="comment">/*</span>
-<a name="l00025"></a>00025 <span class="comment">   * Constructor.</span>
-<a name="l00026"></a>00026 <span class="comment">   */</span>
-<a name="l00027"></a><a class="code" href="classDdMd_1_1StressAutoCorrelation.html#a1a8c7ba47da8ac8f4efa4432d3409edd">00027</a>    <a class="code" href="classDdMd_1_1StressAutoCorrelation.html#a1a8c7ba47da8ac8f4efa4432d3409edd" title="Constructor.">StressAutoCorrelation::StressAutoCorrelation</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation) 
-<a name="l00028"></a>00028     : <a class="code" href="classDdMd_1_1Analyzer.html" title="Abstract base for periodic output and/or analysis actions.">Analyzer</a>(simulation),
-<a name="l00029"></a>00029       accumulator_(),
-<a name="l00030"></a>00030       capacity_(-1),
-<a name="l00031"></a>00031       isInitialized_(false)
-<a name="l00032"></a>00032    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;StressAutoCorrelation&quot;</span>); }
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034    <span class="comment">/*</span>
-<a name="l00035"></a>00035 <span class="comment">   * Read interval and outputFileName. </span>
-<a name="l00036"></a>00036 <span class="comment">   */</span>
-<a name="l00037"></a><a class="code" href="classDdMd_1_1StressAutoCorrelation.html#afaffe5315cb44da4b95097f3d0205adc">00037</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StressAutoCorrelation.html#afaffe5315cb44da4b95097f3d0205adc" title="Read dumpPrefix and interval.">StressAutoCorrelation::readParameters</a>(std::istream&amp; in) 
-<a name="l00038"></a>00038    {
-<a name="l00039"></a>00039       <a class="code" href="classDdMd_1_1Analyzer.html#a8a2aadfd6927a948d60f2686ac517372" title="Read parameter interval from file.">readInterval</a>(in);
-<a name="l00040"></a>00040       <a class="code" href="classDdMd_1_1Analyzer.html#a82766295a8504cf1c6ee817911626647" title="Read outputFileName from file.">readOutputFileName</a>(in);
-<a name="l00041"></a>00041       read&lt;int&gt;(in,<span class="stringliteral">&quot;capacity&quot;</span>, capacity_);
-<a name="l00042"></a>00042       <span class="comment">// Allocate memory</span>
-<a name="l00043"></a>00043       <span class="comment">// Autocorrelation accumulator allocation is so to work for</span>
-<a name="l00044"></a>00044       <span class="comment">// a symmetric matrix, 6 is number of independent elements in </span>
-<a name="l00045"></a>00045       <span class="comment">// a symmetric matrix.</span>
-<a name="l00046"></a>00046       accumulator_.<a class="code" href="classUtil_1_1AutoCorrArray.html#aa17cb46f612aae57fc021be24cbdeb62" title="Allocate memory, and clear history.">setParam</a>(6, capacity_);
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048       isInitialized_ = <span class="keyword">true</span>;
-<a name="l00049"></a>00049    }
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052    <span class="comment">/*</span>
-<a name="l00053"></a>00053 <span class="comment">   * Load internal state from an archive.</span>
-<a name="l00054"></a>00054 <span class="comment">   */</span>
-<a name="l00055"></a><a class="code" href="classDdMd_1_1StressAutoCorrelation.html#abc919d648d82f665182105bc8630ebee">00055</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StressAutoCorrelation.html#abc919d648d82f665182105bc8630ebee" title="Load internal state from an archive.">StressAutoCorrelation::loadParameters</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
-<a name="l00056"></a>00056    {
-<a name="l00057"></a>00057       <a class="code" href="classDdMd_1_1Analyzer.html#aeb27867c21917c1289af1d4cae0be66d" title="Load parameter interval from input archive.">loadInterval</a>(ar);
-<a name="l00058"></a>00058       <a class="code" href="classDdMd_1_1Analyzer.html#a612962e2284d5835abb43c865cc9b899" title="Load output file name to an archive.">loadOutputFileName</a>(ar);
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060       <a class="code" href="classUtil_1_1MpiLoader.html" title="Provides methods for MPI-aware loading of data from input archive.">MpiLoader&lt;Serializable::IArchive&gt;</a> loader(*<span class="keyword">this</span>, ar);
-<a name="l00061"></a>00061       loader.<a class="code" href="classUtil_1_1MpiLoader.html#a8d2998ecd3fe41b2ac2ccda7f4f7ca97" title="Load and broadcast a single Data value.">load</a>(capacity_);
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00064"></a>00064          accumulator_.<a class="code" href="classUtil_1_1AutoCorrArray.html#afbfcce2492f5dcb5cf0212c8eeb7bc92" title="Load internal state from an archive.">loadParameters</a>(ar);
-<a name="l00065"></a>00065       }
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;sstream&gt;</span>
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 <span class="keyword">namespace </span>DdMd
+<a name="l00014"></a>00014 {
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016    <span class="keyword">using namespace </span>Util;
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018    <span class="comment">/*</span>
+<a name="l00019"></a>00019 <span class="comment">   * Constructor.</span>
+<a name="l00020"></a>00020 <span class="comment">   */</span>
+<a name="l00021"></a><a class="code" href="classDdMd_1_1StressAutoCorrelation.html#a1a8c7ba47da8ac8f4efa4432d3409edd">00021</a>    <a class="code" href="classDdMd_1_1StressAutoCorrelation.html#a1a8c7ba47da8ac8f4efa4432d3409edd" title="Constructor.">StressAutoCorrelation::StressAutoCorrelation</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation) 
+<a name="l00022"></a>00022     : <a class="code" href="classDdMd_1_1AutoCorrAnalyzer.html" title="Periodically write (tensor) StressTensor to file.">AutoCorrAnalyzer</a>&lt;<a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>, double&gt;(simulation)
+<a name="l00023"></a>00023    {  <a class="code" href="classUtil_1_1ParamComposite.html#a30752567fd7b8b93e5c8476bbe8592c5" title="Set class name string.">setClassName</a>(<span class="stringliteral">&quot;StressAutoCorrelation&quot;</span>); }
+<a name="l00024"></a>00024 
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026    <span class="comment">/*</span>
+<a name="l00027"></a>00027 <span class="comment">   * Sample the stress tensor.</span>
+<a name="l00028"></a>00028 <span class="comment">   */</span>
+<a name="l00029"></a><a class="code" href="classDdMd_1_1StressAutoCorrelation.html#aa594e800683fe2e02d6eee98c142f7ae">00029</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StressAutoCorrelation.html#aa594e800683fe2e02d6eee98c142f7ae" title="Compute Data value, call on all processors.">StressAutoCorrelation::computeData</a>() 
+<a name="l00030"></a>00030    {  
+<a name="l00031"></a>00031       <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; sim = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>();
+<a name="l00032"></a>00032       sim.<a class="code" href="classDdMd_1_1Simulation.html#aae0238576c11211daa22185a1a809c30" title="Calculate and store all virial stress contributions.">computeVirialStress</a>();
+<a name="l00033"></a>00033       sim.<a class="code" href="classDdMd_1_1Simulation.html#a0f7aabdc04a4129057f7c538546a4852" title="Calculate and store kinetic stress.">computeKineticStress</a>();
+<a name="l00034"></a>00034    }
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036    <span class="comment">/*</span>
+<a name="l00037"></a>00037 <span class="comment">   * Sample the stress tensor.</span>
+<a name="l00038"></a>00038 <span class="comment">   */</span>
+<a name="l00039"></a><a class="code" href="classDdMd_1_1StressAutoCorrelation.html#ad25bd9ee59e262ec99d79340dd36ba97">00039</a>    <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> <a class="code" href="classDdMd_1_1StressAutoCorrelation.html#ad25bd9ee59e262ec99d79340dd36ba97" title="Get Data value, call only on master.">StressAutoCorrelation::data</a>() 
+<a name="l00040"></a>00040    {  
+<a name="l00041"></a>00041       <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> virial  = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a378a34edda1d0b00c881df2193de14bc" title="Return total virial stress.">virialStress</a>();
+<a name="l00042"></a>00042       <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> kinetic = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#ac2e933f62ec4aad35d17a52cccf5a551" title="Return total kinetic stress.">kineticStress</a>();
+<a name="l00043"></a>00043       <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> stress;
+<a name="l00044"></a>00044       stress.<a class="code" href="classUtil_1_1Tensor.html#a4cea7d3360169503bbc6c611849d2b64" title="Add tensors t1 and t2.">add</a>(virial, kinetic);
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046       <span class="comment">// Remove trace</span>
+<a name="l00047"></a>00047       <span class="keywordtype">double</span> pressure = 0.0;
+<a name="l00048"></a>00048       <span class="keywordtype">int</span> i, j;
+<a name="l00049"></a>00049       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00050"></a>00050          pressure += stress(i,i);
+<a name="l00051"></a>00051       }
+<a name="l00052"></a>00052       pressure = pressure/double(Dimension);
+<a name="l00053"></a>00053       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00054"></a>00054          stress(i,i) -= pressure;
+<a name="l00055"></a>00055       }
+<a name="l00056"></a>00056    
+<a name="l00057"></a>00057       <span class="keywordtype">double</span> factor = sqrt(<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().boundary().volume()/10.0);
+<a name="l00058"></a>00058       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00059"></a>00059          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00060"></a>00060             stress(i,j) *= factor;
+<a name="l00061"></a>00061          }
+<a name="l00062"></a>00062       }
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064       <span class="keywordflow">return</span> stress;
+<a name="l00065"></a>00065    }
 <a name="l00066"></a>00066 
-<a name="l00067"></a>00067       isInitialized_ = <span class="keyword">true</span>;
-<a name="l00068"></a>00068    }
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070    <span class="comment">/*</span>
-<a name="l00071"></a>00071 <span class="comment">   * Save internal state to an archive.</span>
-<a name="l00072"></a>00072 <span class="comment">   */</span>
-<a name="l00073"></a><a class="code" href="classDdMd_1_1StressAutoCorrelation.html#a020da922ee0197c8c5f18b1ad7eb39ca">00073</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StressAutoCorrelation.html#a020da922ee0197c8c5f18b1ad7eb39ca" title="Save internal state to an archive.">StressAutoCorrelation::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving / output archive for binary ostream.">Serializable::OArchive</a> &amp;ar)
-<a name="l00074"></a>00074    {
-<a name="l00075"></a>00075       <a class="code" href="classDdMd_1_1Analyzer.html#afaeb6ce06336abdc69aaa25c56ec104d" title="Save interval parameter to an archive.">saveInterval</a>(ar);
-<a name="l00076"></a>00076       <a class="code" href="classDdMd_1_1Analyzer.html#a4c9afc6a23aad9406381c4239bfad5d8" title="Save output file name to an archive.">saveOutputFileName</a>(ar);
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00079"></a>00079          ar &lt;&lt; accumulator_;
-<a name="l00080"></a>00080       }
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082    }
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084   
-<a name="l00085"></a>00085    <span class="comment">/*</span>
-<a name="l00086"></a>00086 <span class="comment">   * Read interval and outputFileName. </span>
-<a name="l00087"></a>00087 <span class="comment">   */</span>
-<a name="l00088"></a><a class="code" href="classDdMd_1_1StressAutoCorrelation.html#ab15922ab3a5af1fbbd772ab4434bbff5">00088</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StressAutoCorrelation.html#ab15922ab3a5af1fbbd772ab4434bbff5" title="Clear nSample counter.">StressAutoCorrelation::clear</a>() 
-<a name="l00089"></a>00089    {
-<a name="l00090"></a>00090       <span class="keywordflow">if</span> (!isInitialized_) {
-<a name="l00091"></a>00091          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: Object not initialized&quot;</span>);
-<a name="l00092"></a>00092       }
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00095"></a>00095          accumulator_.<a class="code" href="classUtil_1_1AutoCorrArray.html#afd62a0a7253a7efe96d466b3b923e288" title="Reset to empty state.">clear</a>();  
-<a name="l00096"></a>00096       }
-<a name="l00097"></a>00097    }
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100    <span class="comment">/*</span>
-<a name="l00101"></a>00101 <span class="comment"> *    * Set actual number of molecules and clear accumulator.</span>
-<a name="l00102"></a>00102 <span class="comment"> *       */</span>
-<a name="l00103"></a><a class="code" href="classDdMd_1_1StressAutoCorrelation.html#a9faa1003c9e7c09f3ca0df2cae253f45">00103</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StressAutoCorrelation.html#a9faa1003c9e7c09f3ca0df2cae253f45" title="Setup accumulator!">StressAutoCorrelation::setup</a>()
-<a name="l00104"></a>00104    {
-<a name="l00105"></a>00105       <span class="keywordflow">if</span> (!isInitialized_) {
-<a name="l00106"></a>00106          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Object not initialized.&quot;</span>);
-<a name="l00107"></a>00107       }
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109        <span class="comment">// Set number of molecules and clear accumulator</span>
-<a name="l00110"></a>00110        accumulator_.<a class="code" href="classUtil_1_1AutoCorrArray.html#a9e202d27d289360239677db99497aad8" title="Set actual number of sequences in ensemble.">setNEnsemble</a>(6);
-<a name="l00111"></a>00111        accumulator_.<a class="code" href="classUtil_1_1AutoCorrArray.html#afd62a0a7253a7efe96d466b3b923e288" title="Reset to empty state.">clear</a>();
-<a name="l00112"></a>00112    }
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114    <span class="comment">/*</span>
-<a name="l00115"></a>00115 <span class="comment">   * Sample the stress tensor.</span>
-<a name="l00116"></a>00116 <span class="comment">   */</span>
-<a name="l00117"></a><a class="code" href="classDdMd_1_1StressAutoCorrelation.html#afd405394e0249ac36c23807a997c497a">00117</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StressAutoCorrelation.html#afd405394e0249ac36c23807a997c497a" title="Sample virial stress to accumulators.">StressAutoCorrelation::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00118"></a>00118    {  
-<a name="l00119"></a>00119       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;double&gt;</a> elements;
-<a name="l00120"></a>00120       elements.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(9);
-<a name="l00121"></a>00121       <span class="keywordtype">double</span> pressure;
-<a name="l00122"></a>00122       <span class="keywordtype">double</span> temprature;
-<a name="l00123"></a>00123  
-<a name="l00124"></a>00124       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#ab6eaceb9f1281213a566d35445efe382" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
-<a name="l00125"></a>00125          <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; sys = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>();
-<a name="l00126"></a>00126          sys.<a class="code" href="classDdMd_1_1Simulation.html#aae0238576c11211daa22185a1a809c30" title="Calculate and store all virial stress contributions.">computeVirialStress</a>();
-<a name="l00127"></a>00127          sys.<a class="code" href="classDdMd_1_1Simulation.html#a0f7aabdc04a4129057f7c538546a4852" title="Calculate and store kinetic stress.">computeKineticStress</a>();
-<a name="l00128"></a>00128          sys.<a class="code" href="classDdMd_1_1Simulation.html#a8589034d49d77db29774fe9bc67287cb" title="Compute total kinetic energy.">computeKineticEnergy</a>();
-<a name="l00129"></a>00129          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a08b21df742e75449aa5d57a7c9fc9b5c" title="Get the AtomStorage by reference.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#afb0a8ac1fba5fe05c77ada005c873d63" title="Compute and store the total number of atoms on all processors.">computeNAtomTotal</a>(<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().communicator());
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131          <span class="keywordflow">if</span> (sys.<a class="code" href="classDdMd_1_1Simulation.html#a4bcb8e6e1482b6e825e54d71e93b9e6c" title="Get the Domain by reference.">domain</a>().<a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">isMaster</a>()) {
-<a name="l00132"></a>00132             <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> virial  = sys.<a class="code" href="classDdMd_1_1Simulation.html#a378a34edda1d0b00c881df2193de14bc" title="Return total virial stress.">virialStress</a>();
-<a name="l00133"></a>00133             <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> kinetic = sys.<a class="code" href="classDdMd_1_1Simulation.html#ac2e933f62ec4aad35d17a52cccf5a551" title="Return total kinetic stress.">kineticStress</a>();
-<a name="l00134"></a>00134             <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> total = total.<a class="code" href="classUtil_1_1Tensor.html#a4cea7d3360169503bbc6c611849d2b64" title="Add tensors t1 and t2.">add</a>(virial, kinetic);
-<a name="l00135"></a>00135             pressure = sys.<a class="code" href="classDdMd_1_1Simulation.html#aaa7d076b9b314accc75cf6606bf4b09a" title="Return total kinetic pressure.">kineticPressure</a>()+sys.<a class="code" href="classDdMd_1_1Simulation.html#a73754ae7a5c4578e5c0c39c06d19612e" title="Return total virial pressure.">virialPressure</a>();
-<a name="l00136"></a>00136             <span class="keywordtype">double</span> ndof = <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a08b21df742e75449aa5d57a7c9fc9b5c" title="Get the AtomStorage by reference.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#ae48dda2908e1df9a572e291076bb41db" title="Get total number of atoms on all processors.">nAtomTotal</a>()*3;
-<a name="l00137"></a>00137             <span class="comment">//temprature = sys.kineticEnergy()*2.0/ndof;</span>
-<a name="l00138"></a>00138             temprature = 1;
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140              
-<a name="l00141"></a>00141             elements[0] = (total(0,0) - pressure / 3.0) / (10.0 * temprature);
-<a name="l00142"></a>00142             elements[4] = (total(1,1) - pressure / 3.0) / (10.0 * temprature);
-<a name="l00143"></a>00143             elements[8] = (total(2,2) - pressure / 3.0) / (10.0 * temprature);
-<a name="l00144"></a>00144             elements[1] = (total(0,1) + total(1,0)) / 2.0 / (10.0 * temprature);
-<a name="l00145"></a>00145             elements[2] = (total(0,2) + total(2,0)) / 2.0 / (10.0 * temprature);
-<a name="l00146"></a>00146             elements[5] = (total(1,2) + total(2,1)) / 2.0 / (10.0 * temprature);
-<a name="l00147"></a>00147             elements[3] = elements[1];
-<a name="l00148"></a>00148             elements[6] = elements[2];
-<a name="l00149"></a>00149             elements[7] = elements[5];
-<a name="l00150"></a>00150              
-<a name="l00151"></a>00151           
-<a name="l00152"></a>00152             accumulator_.<a class="code" href="classUtil_1_1AutoCorrArray.html#ac15ae9654f26c1a09507f4c15a92a465" title="Sample an array of current values.">sample</a>(elements);
-<a name="l00153"></a>00153          }
-<a name="l00154"></a>00154       }
-<a name="l00155"></a>00155    }
-<a name="l00156"></a>00156 
-<a name="l00157"></a>00157    <span class="comment">/*</span>
-<a name="l00158"></a>00158 <span class="comment">   * Dump StressTensor Measurment results.</span>
-<a name="l00159"></a>00159 <span class="comment">   */</span>
-<a name="l00160"></a><a class="code" href="classDdMd_1_1StressAutoCorrelation.html#a1d1e6eab76a91f51aaee25d404881f22">00160</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1StressAutoCorrelation.html#a1d1e6eab76a91f51aaee25d404881f22" title="Dump configuration to file.">StressAutoCorrelation::output</a>() 
-<a name="l00161"></a>00161    {
-<a name="l00162"></a>00162 
-<a name="l00163"></a>00163       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().domain().isMaster()) {
-<a name="l00164"></a>00164          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), outputFile_);
-<a name="l00165"></a>00165          <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">writeParam</a>(outputFile_);
-<a name="l00166"></a>00166          outputFile_ &lt;&lt; std::endl;
-<a name="l00167"></a>00167          outputFile_ &lt;&lt; <span class="stringliteral">&quot;bufferCapacity  &quot;</span> &lt;&lt; accumulator_.<a class="code" href="classUtil_1_1AutoCorrArray.html#a2084022e5c128e972a9dde39bd76f021" title="Return maximum number of samples in history for each sequence.">bufferCapacity</a>() &lt;&lt; std::endl;
-<a name="l00168"></a>00168          outputFile_ &lt;&lt; <span class="stringliteral">&quot;nSample         &quot;</span> &lt;&lt; accumulator_.<a class="code" href="classUtil_1_1AutoCorrArray.html#ae1be11497855f0042982a5d3f106516d" title="Return the total number of samples per sequence thus far.">nSample</a>() &lt;&lt; std::endl;
-<a name="l00169"></a>00169          outputFile_ &lt;&lt; std::endl;
-<a name="l00170"></a>00170          outputFile_ &lt;&lt; <span class="stringliteral">&quot;average   &quot;</span> &lt;&lt; accumulator_.<a class="code" href="classUtil_1_1AutoCorrArray.html#a2f60d974f5c740ca7a4c150e49e02004" title="Return average of sampled values.">average</a>() &lt;&lt; std::endl;
-<a name="l00171"></a>00171          outputFile_ &lt;&lt; std::endl;
-<a name="l00172"></a>00172          outputFile_ &lt;&lt; <span class="stringliteral">&quot;Format of *.dat file&quot;</span> &lt;&lt; std::endl;
-<a name="l00173"></a>00173          outputFile_ &lt;&lt; <span class="stringliteral">&quot;[int time in samples]  [double autocorrelation function]&quot;</span>
-<a name="l00174"></a>00174                      &lt;&lt; std::endl;
-<a name="l00175"></a>00175          outputFile_ &lt;&lt; std::endl;
-<a name="l00176"></a>00176          outputFile_.close();
-<a name="l00177"></a>00177 
-<a name="l00178"></a>00178          <span class="comment">// Write xy autocorrelation function to data file</span>
-<a name="l00179"></a>00179          <a class="code" href="classDdMd_1_1Analyzer.html#a752c55ff3af3df09e265c7f71c9526b0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">fileMaster</a>().<a class="code" href="classUtil_1_1FileMaster.html#a627be13b485867d6ff8841b76b092ca7" title="Open an output file.">openOutputFile</a>(<a class="code" href="classDdMd_1_1Analyzer.html#afb7ef976b323a7ca99897cb52f2b3f3c" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.corr&quot;</span>), outputFile_);
-<a name="l00180"></a>00180          accumulator_.<a class="code" href="classUtil_1_1AutoCorrArray.html#a70a8ae46f5bce1c56a45f85204659956" title="Output the autocorrelation function.">output</a>(outputFile_);
-<a name="l00181"></a>00181          outputFile_.close();
-<a name="l00182"></a>00182       }     
-<a name="l00183"></a>00183    }
-<a name="l00184"></a>00184 
-<a name="l00185"></a>00185 }
-<a name="l00186"></a>00186 <span class="preprocessor">#endif  </span>
+<a name="l00067"></a>00067 }
 </pre></div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.3-->
 <!-- start footer part -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 27 2014 10:07:16 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:48:01 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
