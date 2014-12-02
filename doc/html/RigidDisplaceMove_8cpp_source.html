@@ -99,7 +99,7 @@
 <a name="l00040"></a>00040       read&lt;double&gt;(in, <span class="stringliteral">&quot;delta&quot;</span>, delta_);
 <a name="l00041"></a>00041       <a class="code" href="classUtil_1_1ParamComposite.html#aa4e99b175d55ee6e1cbdfe99c3cbf8e5" title="Add and read a new Blank object, representing a blank line.">readBlank</a>(in);
 <a name="l00042"></a>00042 
-<a name="l00043"></a>00043       nAtom_ = <a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_).<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00043"></a>00043       nAtom_ = <a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_).<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
 <a name="l00044"></a>00044       oldPositions_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtom_);
 <a name="l00045"></a>00045    }
 <a name="l00046"></a>00046 
@@ -112,7 +112,7 @@
 <a name="l00053"></a>00053       loadParameter&lt;int&gt;(ar, <span class="stringliteral">&quot;speciesId&quot;</span>, speciesId_);
 <a name="l00054"></a>00054       loadParameter&lt;double&gt;(ar, <span class="stringliteral">&quot;delta&quot;</span>, delta_);
 <a name="l00055"></a>00055       ar &amp; nAtom_;
-<a name="l00056"></a>00056       <span class="keywordflow">if</span> (nAtom_ != <a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_).<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>()) {
+<a name="l00056"></a>00056       <span class="keywordflow">if</span> (nAtom_ != <a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_).<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>()) {
 <a name="l00057"></a>00057          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent values for nAtom.&quot;</span>);
 <a name="l00058"></a>00058       }
 <a name="l00059"></a>00059       oldPositions_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtom_);
@@ -149,7 +149,7 @@
 <a name="l00090"></a>00090       <span class="comment">// Ignore covalent bonding energy, because it won&#39;t change.</span>
 <a name="l00091"></a>00091       oldEnergy = 0.0;
 <a name="l00092"></a>00092       <span class="keywordflow">for</span> (iAtom = 0; iAtom &lt; nAtom_; ++iAtom) {
-<a name="l00093"></a>00093          atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(iAtom);
+<a name="l00093"></a>00093          atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(iAtom);
 <a name="l00094"></a>00094          oldPositions_[iAtom] = atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00095"></a>00095 <span class="preprocessor">         #ifndef INTER_NOPAIR</span>
 <a name="l00096"></a>00096 <span class="preprocessor"></span>         oldEnergy += <a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#a377f985496333e19f4aa9edfac514662" title="Calculate the nonbonded pair energy for one Atom.">atomEnergy</a>(*atomPtr);
@@ -170,7 +170,7 @@
 <a name="l00111"></a>00111       <span class="comment">// Move every atom by dr and calculate new trial energy.</span>
 <a name="l00112"></a>00112       newEnergy = 0.0;
 <a name="l00113"></a>00113       <span class="keywordflow">for</span> (iAtom = 0; iAtom &lt; nAtom_; ++iAtom) {
-<a name="l00114"></a>00114          atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(iAtom);
+<a name="l00114"></a>00114          atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(iAtom);
 <a name="l00115"></a>00115          atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() += dr;
 <a name="l00116"></a>00116          <a class="code" href="classMcMd_1_1SystemMove.html#a9cdab74e6e6c35f76fa3a44b84e165c6" title="Get Boundary object of parent McSystem.">boundary</a>().<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#aca92298f4ac913d09c0845db21e55712" title="Shift Cartesian Vector r to its primary image.">shift</a>(atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>());
 <a name="l00117"></a>00117 <span class="preprocessor">         #ifndef INTER_NOPAIR</span>
@@ -192,7 +192,7 @@
 <a name="l00133"></a>00133 <span class="preprocessor">         #ifndef INTER_NOPAIR</span>
 <a name="l00134"></a>00134 <span class="preprocessor"></span>         <span class="comment">// Update cell</span>
 <a name="l00135"></a>00135          <span class="keywordflow">for</span> (iAtom = 0; iAtom &lt; nAtom_; ++iAtom) {
-<a name="l00136"></a>00136             <a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#aae8faaaf8d960ba12823c6421d03835e" title="Update the cell list to reflect a new position.">updateAtomCell</a>(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(iAtom));
+<a name="l00136"></a>00136             <a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#aae8faaaf8d960ba12823c6421d03835e" title="Update the cell list to reflect a new position.">updateAtomCell</a>(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(iAtom));
 <a name="l00137"></a>00137          }
 <a name="l00138"></a>00138 <span class="preprocessor">         #endif</span>
 <a name="l00139"></a>00139 <span class="preprocessor"></span>
@@ -202,7 +202,7 @@
 <a name="l00143"></a>00143    
 <a name="l00144"></a>00144          <span class="comment">// Return atoms to original positions</span>
 <a name="l00145"></a>00145          <span class="keywordflow">for</span> (iAtom = 0; iAtom &lt; nAtom_; ++iAtom) {
-<a name="l00146"></a>00146             molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(iAtom).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = oldPositions_[iAtom];
+<a name="l00146"></a>00146             molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(iAtom).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = oldPositions_[iAtom];
 <a name="l00147"></a>00147          }
 <a name="l00148"></a>00148    
 <a name="l00149"></a>00149       }
@@ -216,7 +216,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:00 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -72,7 +72,7 @@
 <!-- doxytag: class="McMd::Linear" --><!-- doxytag: inherits="McMd::Species" --><hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> of linear polymers (abstract). </p>
 <p>A linear molecule is a chain of nAtom atoms with consecutive atom indices, with nAtom - 1 bonds between neighboring atoms.</p>
-<p>A <a class="el" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract).">Linear</a> molecule may be chemically heterogeneous - different atoms and bonds in a chain may be of different types. The chemical structure of a subclass of <a class="el" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract).">Linear</a> must be specified by implementing the pure virtual functions <a class="el" href="classMcMd_1_1Species.html#ae683c578e5fe047d6c229004aca1b977" title="Get atom type index for a specific atom, by local atom index.">atomTypeId()</a> and bondTypeId(). </p>
+<p>A <a class="el" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract).">Linear</a> molecule may be chemically heterogeneous - different atoms and bonds in a chain may be of different types. The chemical structure of a subclass of <a class="el" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract).">Linear</a> must be specified by implementing the pure virtual functions <a class="el" href="classMcMd_1_1Species.html#aa25843142bad3e2505466c79ca23df7f" title="Get atom type index for a specific atom, by local atom index.">atomTypeId()</a> and bondTypeId(). </p>
 
 <p>Definition at line <a class="el" href="Linear_8h_source.html#l00035">35</a> of file <a class="el" href="Linear_8h_source.html">Linear.h</a>.</p>
 </div>
@@ -220,7 +220,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Species.html#adca1eed3e5128ae20da46d8d5c1c4343">McMd::Species</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Species.html#a7856fdf81aaba0eea72498deffb38664">McMd::Species</a>.</p>
 
 <p>Definition at line <a class="el" href="Linear_8cpp_source.html#l00184">184</a> of file <a class="el" href="Linear_8cpp_source.html">Linear.cpp</a>.</p>
 
@@ -244,7 +244,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Return the atom type id for a specific atom. </p>
-<p>Implementations of this function should return a type Id for a specified atom that this is calculated from the information read by <a class="el" href="classMcMd_1_1Species.html#a0514cb4d4b6176b8c8f77a9503d88df4" title="Read parameters and allocate molecules for this species.">readParameters()</a>. It is used in <a class="el" href="classMcMd_1_1Linear.html#a4d4f9f09d6cac89de3cbc7ae17459e93" title="Build the chemical structure for a linear molecule.">Linear::buildLinear()</a> to build a chain.</p>
+<p>Implementations of this function should return a type Id for a specified atom that this is calculated from the information read by <a class="el" href="classMcMd_1_1Species.html#ab32445860e6e85d9c42bdcb848b9b27f" title="Read parameters and allocate molecules for this species.">readParameters()</a>. It is used in <a class="el" href="classMcMd_1_1Linear.html#a4d4f9f09d6cac89de3cbc7ae17459e93" title="Build the chemical structure for a linear molecule.">Linear::buildLinear()</a> to build a chain.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>local atom index, in the range 0, ... , nAtom_-1 </td></tr>
@@ -275,7 +275,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Return the bond type id for a specific bond. </p>
-<p><a class="el" href="classBond.html">Bond</a> i of a linear molecule connects atom i and atom i + 1.</p>
+<p>Bond i of a linear molecule connects atom i and atom i + 1.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>local bond index, in the range 0, ... , nBond_ - 1 </td></tr>
@@ -367,7 +367,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Build the chemical structure for a linear molecule. </p>
-<p>This method must be called by <a class="el" href="classMcMd_1_1Species.html#add5ea1ac538a15e8679675a33e9884e0" title="Define chemical structure for this Species.">readSpeciesParam()</a> after values are set for nAtom and nBond. It allocates memory, assigns atom types to all the atoms in a generic molecule, and creates SpeciesGroup&lt;2&gt; objects for all of the bonds. </p>
+<p>This method must be called by <a class="el" href="classMcMd_1_1Species.html#ae0689a4a0707f09bde431b4c8cb26369" title="Define chemical structure for this Species.">readSpeciesParam()</a> after values are set for nAtom and nBond. It allocates memory, assigns atom types to all the atoms in a generic molecule, and creates SpeciesGroup&lt;2&gt; objects for all of the bonds. </p>
 
 <p>Definition at line <a class="el" href="Linear_8cpp_source.html#l00045">45</a> of file <a class="el" href="Linear_8cpp_source.html">Linear.cpp</a>.</p>
 
@@ -426,7 +426,7 @@ Protected Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:15 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:25 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

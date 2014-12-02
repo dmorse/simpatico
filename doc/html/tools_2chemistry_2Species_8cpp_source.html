@@ -75,7 +75,7 @@
 <a name="l00016"></a>00016    <span class="comment">/*</span>
 <a name="l00017"></a>00017 <span class="comment">   * Constructor.</span>
 <a name="l00018"></a>00018 <span class="comment">   */</span>
-<a name="l00019"></a><a class="code" href="classTools_1_1Species.html#abb0f8e3208b0cc676157b7dff837c0be">00019</a>    <a class="code" href="classTools_1_1Species.html#abb0f8e3208b0cc676157b7dff837c0be" title="Constructor.">Species::Species</a>()
+<a name="l00019"></a><a class="code" href="classTools_1_1Species.html#aeefc10eae8b101534886f49b82508af3">00019</a>    <a class="code" href="classTools_1_1Species.html#aeefc10eae8b101534886f49b82508af3" title="Constructor.">Species::Species</a>()
 <a name="l00020"></a>00020     : atomPtrs_(),
 <a name="l00021"></a>00021       molecules_(),
 <a name="l00022"></a>00022       id_(-1),
@@ -83,10 +83,10 @@
 <a name="l00024"></a>00024       capacity_(0)
 <a name="l00025"></a>00025    {}
 <a name="l00026"></a>00026 
-<a name="l00027"></a><a class="code" href="classTools_1_1Species.html#ac2262f30f86d752d788b184018c4807b">00027</a>    <span class="keywordtype">void</span> <a class="code" href="classTools_1_1Species.html#ac2262f30f86d752d788b184018c4807b" title="Set the index for this species.">Species::setId</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
-<a name="l00028"></a>00028    { id_ = <a class="code" href="classTools_1_1Species.html#acae83456c3717805ab81869e47c58614" title="Return integer id for this species.">id</a>; }
+<a name="l00027"></a><a class="code" href="classTools_1_1Species.html#a1ef116e505db33296ee9f876c8ed52b2">00027</a>    <span class="keywordtype">void</span> <a class="code" href="classTools_1_1Species.html#a1ef116e505db33296ee9f876c8ed52b2" title="Set the index for this species.">Species::setId</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
+<a name="l00028"></a>00028    { id_ = <a class="code" href="classTools_1_1Species.html#a7b6293ed4b343ae49c41c17712e96295" title="Return integer id for this species.">id</a>; }
 <a name="l00029"></a>00029 
-<a name="l00030"></a><a class="code" href="classTools_1_1Species.html#a65cbe73d0c9c3b48aadc664304563e6c">00030</a>    <span class="keywordtype">void</span> Species::initialize(<span class="keywordtype">int</span> nAtom, <span class="keywordtype">int</span> capacity)
+<a name="l00030"></a><a class="code" href="classTools_1_1Species.html#a7e63b435d4f76a96531ebea107f85a10">00030</a>    <span class="keywordtype">void</span> Species::initialize(<span class="keywordtype">int</span> nAtom, <span class="keywordtype">int</span> capacity)
 <a name="l00031"></a>00031    {
 <a name="l00032"></a>00032       <span class="keywordflow">if</span> (capacity_ != 0) {
 <a name="l00033"></a>00033          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Species already initialized: capacity_ != 0&quot;</span>);
@@ -94,9 +94,9 @@
 <a name="l00035"></a>00035       <span class="keywordflow">if</span> (nAtom_ != 0) {
 <a name="l00036"></a>00036          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Species already initialized: nAtom_ != 0&quot;</span>);
 <a name="l00037"></a>00037       }
-<a name="l00038"></a>00038       nAtom_ = <a class="code" href="classTools_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Return number of atoms per molecule.">nAtom</a>;
-<a name="l00039"></a>00039       capacity_ = <a class="code" href="classTools_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Return maximum number of molecules in this species.">capacity</a>;
-<a name="l00040"></a>00040       <a class="code" href="classTools_1_1Species.html#a65cbe73d0c9c3b48aadc664304563e6c" title="Initialize memory for this species and set sizes.">initialize</a>();
+<a name="l00038"></a>00038       nAtom_ = <a class="code" href="classTools_1_1Species.html#af3874e5f199e0407b5886aeab44a02b9" title="Return number of atoms per molecule.">nAtom</a>;
+<a name="l00039"></a>00039       capacity_ = <a class="code" href="classTools_1_1Species.html#a8b89348415720e947083086f4c0a6eb3" title="Return maximum number of molecules in this species.">capacity</a>;
+<a name="l00040"></a>00040       <a class="code" href="classTools_1_1Species.html#a7e63b435d4f76a96531ebea107f85a10" title="Initialize memory for this species and set sizes.">initialize</a>();
 <a name="l00041"></a>00041    }
 <a name="l00042"></a>00042 
 <a name="l00043"></a>00043    <span class="keywordtype">void</span> Species::initialize()
@@ -141,7 +141,7 @@
 <a name="l00082"></a>00082    <span class="comment">/*</span>
 <a name="l00083"></a>00083 <span class="comment">   * Reset to empty state.</span>
 <a name="l00084"></a>00084 <span class="comment">   */</span>
-<a name="l00085"></a><a class="code" href="classTools_1_1Species.html#a2c70acfe2618d87f8a28741bfc8a9fcb">00085</a>    <span class="keywordtype">void</span> <a class="code" href="classTools_1_1Species.html#a2c70acfe2618d87f8a28741bfc8a9fcb" title="Clear all molecules, reset to empty.">Species::clear</a>()
+<a name="l00085"></a><a class="code" href="classTools_1_1Species.html#a3640770d77dc7a4263154ea45b65fdcc">00085</a>    <span class="keywordtype">void</span> <a class="code" href="classTools_1_1Species.html#a3640770d77dc7a4263154ea45b65fdcc" title="Clear all molecules, reset to empty.">Species::clear</a>()
 <a name="l00086"></a>00086    {
 <a name="l00087"></a>00087       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; atomPtrs_.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>(); ++i) {
 <a name="l00088"></a>00088          atomPtrs_[i] = 0;
@@ -155,7 +155,7 @@
 <a name="l00096"></a>00096    <span class="comment">/*</span>
 <a name="l00097"></a>00097 <span class="comment">   * Add an atom to this Species.</span>
 <a name="l00098"></a>00098 <span class="comment">   */</span>
-<a name="l00099"></a><a class="code" href="classTools_1_1Species.html#ad7c6bfc34ec598781bd0676e58b994a1">00099</a>    <span class="keywordtype">void</span> <a class="code" href="classTools_1_1Species.html#ad7c6bfc34ec598781bd0676e58b994a1" title="Add an atom to the species.">Species::addAtom</a>(<a class="code" href="structTools_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>&amp; atom)
+<a name="l00099"></a><a class="code" href="classTools_1_1Species.html#a7a3b984d1b34d0891cfa98b29a109f2c">00099</a>    <span class="keywordtype">void</span> <a class="code" href="classTools_1_1Species.html#a7a3b984d1b34d0891cfa98b29a109f2c" title="Add an atom to the species.">Species::addAtom</a>(<a class="code" href="structTools_1_1Atom.html" title="A point particle in an MD simulation.">Atom</a>&amp; atom)
 <a name="l00100"></a>00100    {
 <a name="l00101"></a>00101       <span class="keywordflow">if</span> (atom.<a class="code" href="structTools_1_1Atom.html#a3ad1b4cdf70b9a0b0392851235e46d95" title="Index for species of parent molecule.">speciesId</a> != id_) {
 <a name="l00102"></a>00102          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent speciesId&quot;</span>);
@@ -188,13 +188,13 @@
 <a name="l00129"></a>00129    <span class="comment">/*</span>
 <a name="l00130"></a>00130 <span class="comment">   * Initialized an iterator over molecules in species.</span>
 <a name="l00131"></a>00131 <span class="comment">   */</span>
-<a name="l00132"></a><a class="code" href="classTools_1_1Species.html#ab51b1751b67a4056f4367cc92c24e47f">00132</a>    <span class="keywordtype">void</span> <a class="code" href="classTools_1_1Species.html#ab51b1751b67a4056f4367cc92c24e47f" title="Initialize an iterator over molecules.">Species::begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Iterator</a>&amp; iterator)
+<a name="l00132"></a><a class="code" href="classTools_1_1Species.html#a33a9e4c915c6a600b090a53a6b04bd28">00132</a>    <span class="keywordtype">void</span> <a class="code" href="classTools_1_1Species.html#a33a9e4c915c6a600b090a53a6b04bd28" title="Initialize an iterator over molecules.">Species::begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Iterator</a>&amp; iterator)
 <a name="l00133"></a>00133    {  molecules_.<a class="code" href="classUtil_1_1DSArray.html#a20d31a303e4f8747d30955fc232ffce4" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(iterator); }
 <a name="l00134"></a>00134 
 <a name="l00135"></a>00135    <span class="comment">/*</span>
 <a name="l00136"></a>00136 <span class="comment">   * Return true if valid, throw Exception otherwise.</span>
 <a name="l00137"></a>00137 <span class="comment">   */</span>
-<a name="l00138"></a><a class="code" href="classTools_1_1Species.html#abb34855ad9c3e2fc8d5b1bf4d45abde0">00138</a>    <span class="keywordtype">bool</span> <a class="code" href="classTools_1_1Species.html#abb34855ad9c3e2fc8d5b1bf4d45abde0" title="Return true if valid, or throw Exception.">Species::isValid</a>()<span class="keyword"> const</span>
+<a name="l00138"></a><a class="code" href="classTools_1_1Species.html#afeae459e7381d5de66afdad8952cd86a">00138</a>    <span class="keywordtype">bool</span> <a class="code" href="classTools_1_1Species.html#afeae459e7381d5de66afdad8952cd86a" title="Return true if valid, or throw Exception.">Species::isValid</a>()<span class="keyword"> const</span>
 <a name="l00139"></a>00139 <span class="keyword">   </span>{
 <a name="l00140"></a>00140       <span class="comment">// Check allocation and initialization</span>
 <a name="l00141"></a>00141       <span class="keywordflow">if</span> (molecules_.<a class="code" href="classUtil_1_1DSArray.html#a1a1cf465553d6150c596eeaf8b3bc846" title="Return physical capacity of array.">capacity</a>() != capacity_) {
@@ -214,7 +214,7 @@
 <a name="l00155"></a>00155             <span class="keywordflow">if</span> (mPtr-&gt;atoms_ != &amp;atomPtrs_[0] + im*nAtom_) {
 <a name="l00156"></a>00156                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Incorrect assignment of atoms_ in molecule&quot;</span>);
 <a name="l00157"></a>00157             }
-<a name="l00158"></a>00158             <span class="keywordflow">if</span> (mPtr-&gt;<a class="code" href="classTools_1_1Molecule.html#ab4a08686aaf206b7ba1f50057bae0a6a" title="Return id of this Molecule within its species.">id</a>() != im) {
+<a name="l00158"></a>00158             <span class="keywordflow">if</span> (mPtr-&gt;<a class="code" href="classTools_1_1Molecule.html#a98e27cba4887ffff57490e05fff83bc1" title="Return id of this Molecule within its species.">id</a>() != im) {
 <a name="l00159"></a>00159                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Incorrect molecule id&quot;</span>);
 <a name="l00160"></a>00160             }
 <a name="l00161"></a>00161             <span class="keywordflow">if</span> (mPtr-&gt;speciesPtr_ != <span class="keyword">this</span>) {
@@ -260,7 +260,7 @@
 <a name="l00201"></a>00201    {
 <a name="l00202"></a>00202       in &gt;&gt; species.nAtom_;
 <a name="l00203"></a>00203       in &gt;&gt; species.capacity_;
-<a name="l00204"></a>00204       species.<a class="code" href="classTools_1_1Species.html#a65cbe73d0c9c3b48aadc664304563e6c" title="Initialize memory for this species and set sizes.">initialize</a>();
+<a name="l00204"></a>00204       species.<a class="code" href="classTools_1_1Species.html#a7e63b435d4f76a96531ebea107f85a10" title="Initialize memory for this species and set sizes.">initialize</a>();
 <a name="l00205"></a>00205       <span class="keywordflow">return</span> in;
 <a name="l00206"></a>00206    }
 <a name="l00207"></a>00207 
@@ -283,7 +283,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:00 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

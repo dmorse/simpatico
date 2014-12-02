@@ -106,13 +106,13 @@
 <a name="l00047"></a>00047       <a class="code" href="classMcMd_1_1TrajectoryIo.html#a24e884b78d8fe8eb421f9b0198099271" title="Number of atoms for which space is allocated (all species)">atomCapacity_</a> = 0;
 <a name="l00048"></a>00048       <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpecies; ++iSpec) {
 <a name="l00049"></a>00049          speciesPtr = &amp;<a class="code" href="classMcMd_1_1TrajectoryIo.html#a6276f65c7804d8cc083ae7e09d7bb303" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpec);
-<a name="l00050"></a>00050          speciesCapacity = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00050"></a>00050          speciesCapacity = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00051"></a>00051 
 <a name="l00052"></a>00052          <span class="keywordflow">for</span> (iMol = 0; iMol &lt; speciesCapacity; ++iMol) {
-<a name="l00053"></a>00053             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a00aaeb56269e3aefcc38f0bf4a788f62" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>());
+<a name="l00053"></a>00053             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>());
 <a name="l00054"></a>00054             <a class="code" href="classMcMd_1_1TrajectoryIo.html#a5f0cc3067a7e23c8edcaaca92e87f3f4" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#a5311d7245d55b3efa0848ed040b053b3" title="Add a Molecule to this System.">addMolecule</a>(*molPtr);
 <a name="l00055"></a>00055          }
-<a name="l00056"></a>00056          <a class="code" href="classMcMd_1_1TrajectoryIo.html#a24e884b78d8fe8eb421f9b0198099271" title="Number of atoms for which space is allocated (all species)">atomCapacity_</a> += speciesCapacity*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00056"></a>00056          <a class="code" href="classMcMd_1_1TrajectoryIo.html#a24e884b78d8fe8eb421f9b0198099271" title="Number of atoms for which space is allocated (all species)">atomCapacity_</a> += speciesCapacity*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
 <a name="l00057"></a>00057       }
 <a name="l00058"></a>00058 
 <a name="l00059"></a>00059    }
@@ -149,7 +149,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:01 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

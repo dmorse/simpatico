@@ -138,7 +138,7 @@
 <a name="l00079"></a>00079       <span class="keywordflow">if</span> (atomId_ &lt; 0) {
 <a name="l00080"></a>00080          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Negative atomId&quot;</span>);
 <a name="l00081"></a>00081       }
-<a name="l00082"></a>00082       <span class="keywordflow">if</span> (atomId_ &gt;= species.<a class="code" href="classTools_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Return number of atoms per molecule.">nAtom</a>()) {
+<a name="l00082"></a>00082       <span class="keywordflow">if</span> (atomId_ &gt;= species.<a class="code" href="classTools_1_1Species.html#af3874e5f199e0407b5886aeab44a02b9" title="Return number of atoms per molecule.">nAtom</a>()) {
 <a name="l00083"></a>00083          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;atomId &gt;= nAtom&quot;</span>);
 <a name="l00084"></a>00084       }
 <a name="l00085"></a>00085       <span class="keywordflow">if</span> (capacity_ &lt;= 0) {
@@ -146,7 +146,7 @@
 <a name="l00087"></a>00087       }
 <a name="l00088"></a>00088 
 <a name="l00089"></a>00089       <span class="comment">// Maximum possible number of molecules of this species</span>
-<a name="l00090"></a>00090       <span class="keywordtype">int</span> speciesCapacity = species.<a class="code" href="classTools_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Return maximum number of molecules in this species.">capacity</a>();
+<a name="l00090"></a>00090       <span class="keywordtype">int</span> speciesCapacity = species.<a class="code" href="classTools_1_1Species.html#a8b89348415720e947083086f4c0a6eb3" title="Return maximum number of molecules in this species.">capacity</a>();
 <a name="l00091"></a>00091 
 <a name="l00092"></a>00092       <span class="comment">// Allocate local arrays</span>
 <a name="l00093"></a>00093       truePositions_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(speciesCapacity);
@@ -171,7 +171,7 @@
 <a name="l00112"></a>00112       <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">Boundary</a>&amp; boundary = <a class="code" href="classTools_1_1Analyzer.html#a8f5be056df14a3954f4390235b5bbc5c" title="Get the parent Configuration by reference.">configuration</a>().<a class="code" href="classTools_1_1Configuration.html#aab847bc929c2f1ba2e50e3fc28a2c796" title="Get the Boundary by non-const reference.">boundary</a>();
 <a name="l00113"></a>00113 
 <a name="l00114"></a>00114       <span class="comment">// Set number of molecules of this species in the Configuration. </span>
-<a name="l00115"></a>00115       nMolecule_ = species.<a class="code" href="classTools_1_1Species.html#ab724df49124816b072ed8e06a31e7115" title="Return number of molecules in this species (=maximum id + 1)">size</a>();
+<a name="l00115"></a>00115       nMolecule_ = species.<a class="code" href="classTools_1_1Species.html#aef1bbf67f8aafcad175214433e730a1e" title="Return number of molecules in this species (=maximum id + 1)">size</a>();
 <a name="l00116"></a>00116       accumulator_.<a class="code" href="classUtil_1_1MeanSqDispArray.html#acdcf571e8ef9bdcf1943eaaa02a6b405" title="Set actual number of sequences in ensemble.">setNEnsemble</a>(nMolecule_);
 <a name="l00117"></a>00117       accumulator_.<a class="code" href="classUtil_1_1MeanSqDispArray.html#a37d7bb9ee79d7c9292b2353d456d7b31" title="Reset to empty state.">clear</a>();
 <a name="l00118"></a>00118 
@@ -181,7 +181,7 @@
 <a name="l00122"></a>00122       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Species::Iterator</a> iter;
 <a name="l00123"></a>00123       <span class="keywordtype">int</span> i = 0;
 <a name="l00124"></a>00124 
-<a name="l00125"></a>00125       species.<a class="code" href="classTools_1_1Species.html#ab51b1751b67a4056f4367cc92c24e47f" title="Initialize an iterator over molecules.">begin</a>(iter);
+<a name="l00125"></a>00125       species.<a class="code" href="classTools_1_1Species.html#a33a9e4c915c6a600b090a53a6b04bd28" title="Initialize an iterator over molecules.">begin</a>(iter);
 <a name="l00126"></a>00126       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++iter) {
 <a name="l00127"></a>00127          r = iter-&gt;atom(atomId_).position;
 <a name="l00128"></a>00128          boundary.<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#aca92298f4ac913d09c0845db21e55712" title="Shift Cartesian Vector r to its primary image.">shift</a>(r);
@@ -204,7 +204,7 @@
 <a name="l00145"></a>00145          <span class="keywordflow">if</span> (nMolecule_ &lt;= 0) {
 <a name="l00146"></a>00146             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nMolecule &lt;= 0&quot;</span>);
 <a name="l00147"></a>00147          }
-<a name="l00148"></a>00148          <span class="keywordflow">if</span> (nMolecule_ != species.<a class="code" href="classTools_1_1Species.html#ab724df49124816b072ed8e06a31e7115" title="Return number of molecules in this species (=maximum id + 1)">size</a>()) {
+<a name="l00148"></a>00148          <span class="keywordflow">if</span> (nMolecule_ != species.<a class="code" href="classTools_1_1Species.html#aef1bbf67f8aafcad175214433e730a1e" title="Return number of molecules in this species (=maximum id + 1)">size</a>()) {
 <a name="l00149"></a>00149             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Number of molecules has changed.&quot;</span>);
 <a name="l00150"></a>00150          }
 <a name="l00151"></a>00151    
@@ -215,7 +215,7 @@
 <a name="l00156"></a>00156          <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Species::Iterator</a> iter;
 <a name="l00157"></a>00157    
 <a name="l00158"></a>00158          i = 0;
-<a name="l00159"></a>00159          <span class="keywordflow">for</span> (species.<a class="code" href="classTools_1_1Species.html#ab51b1751b67a4056f4367cc92c24e47f" title="Initialize an iterator over molecules.">begin</a>(iter); iter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++iter) {
+<a name="l00159"></a>00159          <span class="keywordflow">for</span> (species.<a class="code" href="classTools_1_1Species.html#a33a9e4c915c6a600b090a53a6b04bd28" title="Initialize an iterator over molecules.">begin</a>(iter); iter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++iter) {
 <a name="l00160"></a>00160    
 <a name="l00161"></a>00161             r = iter-&gt;atom(atomId_).position;
 <a name="l00162"></a>00162             boundary.<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#aca92298f4ac913d09c0845db21e55712" title="Shift Cartesian Vector r to its primary image.">shift</a>(r);
@@ -277,7 +277,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:55 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:05 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -100,7 +100,7 @@ Overview</h2>
 <tr>
 <td>Message Passing Interface (MPI)  </td><td>-m  </td><td>OFF / ON  </td><td>_m  </td><td>UTIL_MPI  </td><td>config.mk   </td></tr>
 <tr>
-<td><a class="el" href="classBond.html">Bond</a> potentials  </td><td>-b  </td><td>ON  </td><td>_nb  </td><td>INTER_BOND  </td><td>inter/config.mk   </td></tr>
+<td>Bond potentials  </td><td>-b  </td><td>ON  </td><td>_nb  </td><td>INTER_BOND  </td><td>inter/config.mk   </td></tr>
 <tr>
 <td>Angle potentials  </td><td>-a  </td><td>OFF  </td><td>_a  </td><td>INTER_ANGLE  </td><td>inter/config.mk   </td></tr>
 <tr>
@@ -124,7 +124,7 @@ Optional features</h2>
 <li>Message Passing Interface (UTIL_MPI): The MPI feature must be enabled in order to build any parallel program. Specifically, it must be enabled to build either the ddSim MD program, which uses a domain-decomposition algorithm, or the multi-processor versions of mcSim and mdSim, which allow "embarrassingly parallel" MC and MD simulation of different systems on different processors. It is disabled by default in the bld/parallel directory, which is intended to be used to build parallel programs, but disabled by default in the bld/serial directory, which is intended to be used to build the single processor mcSim and mdSim programs. It is also disabled by the default in the src/ directory (i.e., in in-source builds), but can be manually enabled. In addition, the commands associated with the makefile targets mcMd, mcMd-mpi, and ddMd in the makefiles in each of these build directories (i.e., in bld/parallel, bld/serial, and src/ directories) all explicitly invoke the configure script to enable or disable MPI, as appropriate, before compiling any code. Specifically "make mcMd" invokes "configure -m0" to disable MPI and the other two targets invoke "configure -m1" to enable MPIbefore compiling any source files or building libraries. When compiling using these targets, it is thus not necessary for the user to explicitly enable or disable MPI. The only time that users should have to set have to set this option explicitly is if they want to compile MPI-enabled or MPI-disabled versions of specific source files or namespace level libraries by invoking make from a namespace or lower-level subdirectory, rather than from the root src/ or build directory. When MPI is enabled, a suffix _m is added to the names of MPI-enabled versions of the libraries libutil.a, libinter.a and libmcMd.a, and to the names of the mcSim and mdSim executibables. No such suffix is added to the name of the libDdMd.a library or ddSim executable, however, because MPI is not an optional feature of the domain-decomposition code, but is required for the code to compile and function.</li>
 </ul>
 <ul>
-<li><a class="el" href="classBond.html">Bond</a> potentials (INTER_BOND): This option enables the inclusion of energies and forces arising from covalent two-body potentials in all programs. This is enabled by default.</li>
+<li>Bond potentials (INTER_BOND): This option enables the inclusion of energies and forces arising from covalent two-body potentials in all programs. This is enabled by default.</li>
 </ul>
 <ul>
 <li>Angle potentials (INTER_ANGLE): This option enables the inclusion of covalent three-body bending potentials in all programs. Because the code has thus far been used primarily for flexible polymers, this is now disabled by default.</li>
@@ -169,7 +169,7 @@ Boundary Type</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:02 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:12 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

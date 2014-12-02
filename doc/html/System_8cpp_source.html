@@ -680,12 +680,12 @@
 <a name="l00624"></a>00624          }
 <a name="l00625"></a>00625          ar &gt;&gt; nMoleculeIn;
 <a name="l00626"></a>00626          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iMol = 0; iMol &lt; nMoleculeIn; ++iMol) {
-<a name="l00627"></a>00627             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a00aaeb56269e3aefcc38f0bf4a788f62" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>());
+<a name="l00627"></a>00627             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>());
 <a name="l00628"></a>00628             <a class="code" href="classMcMd_1_1System.html#a5311d7245d55b3efa0848ed040b053b3" title="Add a Molecule to this System.">addMolecule</a>(*molPtr);
 <a name="l00629"></a>00629             <span class="keywordflow">if</span> (molPtr != &amp;<a class="code" href="classMcMd_1_1System.html#a5b439fee621a22ebf5e98ee540c2a92f" title="Get a specific Molecule in this System, by integer index.">molecule</a>(iSpecies, iMol)) {
 <a name="l00630"></a>00630                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Molecule index error&quot;</span>);
 <a name="l00631"></a>00631             }
-<a name="l00632"></a>00632             molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aae40ce6fcc1df34548da1d9bd72b458c" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); 
+<a name="l00632"></a>00632             molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a593e8b56859b59dc753ff342a8063022" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); 
 <a name="l00633"></a>00633             <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00634"></a>00634                ar &gt;&gt; atomIter-&gt;position();
 <a name="l00635"></a>00635                ar &gt;&gt; atomIter-&gt;velocity();
@@ -1024,12 +1024,12 @@
 <a name="l00968"></a>00968    {
 <a name="l00969"></a>00969       assert(moleculeSetsPtr_);
 <a name="l00970"></a>00970 
-<a name="l00971"></a>00971       <span class="keywordtype">int</span> speciesId = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a70de9b3e9ce956c9597c28f36303b40d" title="Get the molecular Species by reference.">species</a>().<a class="code" href="classMcMd_1_1Species.html#acae83456c3717805ab81869e47c58614" title="Get integer id of this Species.">id</a>();
+<a name="l00971"></a>00971       <span class="keywordtype">int</span> speciesId = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>().<a class="code" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61" title="Get integer id of this Species.">id</a>();
 <a name="l00972"></a>00972       <span class="keywordflow">if</span> ( speciesId &gt;= moleculeSetsPtr_-&gt;<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>()) {
 <a name="l00973"></a>00973          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: speciesId &gt;= moleculeSetsPtr_-&gt;capacity()&quot;</span>);
 <a name="l00974"></a>00974       }
 <a name="l00975"></a>00975       (*moleculeSetsPtr_)[speciesId].append(molecule);
-<a name="l00976"></a>00976       molecule.<a class="code" href="classMcMd_1_1Molecule.html#ade4cf5ba67243d4539ea6e4ba07dbf60" title="Set the parent System.">setSystem</a>(*<span class="keyword">this</span>);
+<a name="l00976"></a>00976       molecule.<a class="code" href="classMcMd_1_1Molecule.html#afb3ad37a1a5a8194788c301b88c5ed5e" title="Set the parent System.">setSystem</a>(*<span class="keyword">this</span>);
 <a name="l00977"></a>00977 
 <a name="l00978"></a>00978       <span class="comment">// notify observers</span>
 <a name="l00979"></a>00979       notifyMoleculeSetObservers();
@@ -1042,12 +1042,12 @@
 <a name="l00986"></a>00986    {
 <a name="l00987"></a>00987       assert(moleculeSetsPtr_);
 <a name="l00988"></a>00988 
-<a name="l00989"></a>00989       <span class="keywordflow">if</span> ( &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#a0422a218ee4fd2fc2bf7563ae3ec6fbb" title="Get the parent System.">system</a>() != <span class="keyword">this</span>) {
+<a name="l00989"></a>00989       <span class="keywordflow">if</span> ( &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#ac4454164c18fa1ade70292ce2b221cbb" title="Get the parent System.">system</a>() != <span class="keyword">this</span>) {
 <a name="l00990"></a>00990          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to remove Molecule that is not in this System.&quot;</span>);
 <a name="l00991"></a>00991       }
-<a name="l00992"></a>00992       <span class="keywordtype">int</span> speciesId = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a70de9b3e9ce956c9597c28f36303b40d" title="Get the molecular Species by reference.">species</a>().<a class="code" href="classMcMd_1_1Species.html#acae83456c3717805ab81869e47c58614" title="Get integer id of this Species.">id</a>();
+<a name="l00992"></a>00992       <span class="keywordtype">int</span> speciesId = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>().<a class="code" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61" title="Get integer id of this Species.">id</a>();
 <a name="l00993"></a>00993       (*moleculeSetsPtr_)[speciesId].remove(molecule);
-<a name="l00994"></a>00994       molecule.<a class="code" href="classMcMd_1_1Molecule.html#a0d4447530054e10e21472d4761067c40" title="Set the parent System pointer to null (no System).">unsetSystem</a>();
+<a name="l00994"></a>00994       molecule.<a class="code" href="classMcMd_1_1Molecule.html#ab831988d039f5e11bc091d352ec2e0d6" title="Set the parent System pointer to null (no System).">unsetSystem</a>();
 <a name="l00995"></a>00995 
 <a name="l00996"></a>00996       <span class="comment">// notify observers</span>
 <a name="l00997"></a>00997       notifyMoleculeSetObservers();
@@ -1080,7 +1080,7 @@
 <a name="l01024"></a>01024          <span class="keywordflow">while</span> (nMol &gt; 0) {
 <a name="l01025"></a>01025             molPtr = &amp;<a class="code" href="classMcMd_1_1System.html#a5b439fee621a22ebf5e98ee540c2a92f" title="Get a specific Molecule in this System, by integer index.">molecule</a>(iSpecies, nMol - 1);
 <a name="l01026"></a>01026             <a class="code" href="classMcMd_1_1System.html#a0c056ff999227b23dc5a6e6998c4b29b" title="Remove a specific molecule from this System.">removeMolecule</a>(*molPtr);
-<a name="l01027"></a>01027             speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a00aaeb56269e3aefcc38f0bf4a788f62" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a7d20f6c7d2f067ba8f74d120ec8ce4d5" title="Push an element onto the Stack.">push</a>(*molPtr);
+<a name="l01027"></a>01027             speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a7d20f6c7d2f067ba8f74d120ec8ce4d5" title="Push an element onto the Stack.">push</a>(*molPtr);
 <a name="l01028"></a>01028             nMol = <a class="code" href="classMcMd_1_1System.html#a8784ff471540e53f5c1e40a55cabf6c6" title="Get the number of molecules of one Species in this System.">nMolecule</a>(iSpecies);
 <a name="l01029"></a>01029          }
 <a name="l01030"></a>01030       }
@@ -1100,7 +1100,7 @@
 <a name="l01044"></a>01044 <span class="keyword">   </span>{
 <a name="l01045"></a>01045       assert(moleculeSetsPtr_);
 <a name="l01046"></a>01046 
-<a name="l01047"></a>01047       <span class="keywordtype">int</span> speciesId = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a70de9b3e9ce956c9597c28f36303b40d" title="Get the molecular Species by reference.">species</a>().<a class="code" href="classMcMd_1_1Species.html#acae83456c3717805ab81869e47c58614" title="Get integer id of this Species.">id</a>();
+<a name="l01047"></a>01047       <span class="keywordtype">int</span> speciesId = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>().<a class="code" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61" title="Get integer id of this Species.">id</a>();
 <a name="l01048"></a>01048       <span class="keywordflow">return</span> (*moleculeSetsPtr_)[speciesId].index(molecule);
 <a name="l01049"></a>01049    }
 <a name="l01050"></a>01050 
@@ -1127,7 +1127,7 @@
 <a name="l01071"></a>01071 <span class="keyword">   </span>{
 <a name="l01072"></a>01072       <span class="keywordtype">int</span> sum = 0;
 <a name="l01073"></a>01073       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++i) {
-<a name="l01074"></a>01074          sum += <a class="code" href="classMcMd_1_1System.html#a8784ff471540e53f5c1e40a55cabf6c6" title="Get the number of molecules of one Species in this System.">nMolecule</a>(i)*<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(i).<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l01074"></a>01074          sum += <a class="code" href="classMcMd_1_1System.html#a8784ff471540e53f5c1e40a55cabf6c6" title="Get the number of molecules of one Species in this System.">nMolecule</a>(i)*<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(i).<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
 <a name="l01075"></a>01075       }
 <a name="l01076"></a>01076       <span class="keywordflow">return</span> sum;
 <a name="l01077"></a>01077    }
@@ -1288,7 +1288,7 @@
 <a name="l01232"></a>01232          (*moleculeSetsPtr_)[iSpecies].isValid();
 <a name="l01233"></a>01233          <span class="keywordflow">for</span> (iMolecule = 0; iMolecule &lt; <a class="code" href="classMcMd_1_1System.html#a8784ff471540e53f5c1e40a55cabf6c6" title="Get the number of molecules of one Species in this System.">nMolecule</a>(iSpecies); ++iMolecule) {
 <a name="l01234"></a>01234             molPtr = &amp;(*moleculeSetsPtr_)[iSpecies][iMolecule]; 
-<a name="l01235"></a>01235             <span class="keywordflow">if</span> (&amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a0422a218ee4fd2fc2bf7563ae3ec6fbb" title="Get the parent System.">system</a>() != <span class="keyword">this</span>) {
+<a name="l01235"></a>01235             <span class="keywordflow">if</span> (&amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ac4454164c18fa1ade70292ce2b221cbb" title="Get the parent System.">system</a>() != <span class="keyword">this</span>) {
 <a name="l01236"></a>01236                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error in pointer to System in a Molecule&quot;</span>);
 <a name="l01237"></a>01237             }
 <a name="l01238"></a>01238          }
@@ -1322,7 +1322,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:01 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

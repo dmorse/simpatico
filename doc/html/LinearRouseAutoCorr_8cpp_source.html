@@ -129,10 +129,10 @@
 <a name="l00070"></a>00070          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;speciesId &gt;= nSpecies&quot;</span>);
 <a name="l00071"></a>00071 
 <a name="l00072"></a>00072       speciesPtr_ = &amp;<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_);
-<a name="l00073"></a>00073       nAtom_ = speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00073"></a>00073       nAtom_ = speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
 <a name="l00074"></a>00074 
 <a name="l00075"></a>00075       <span class="comment">// Allocate arrays</span>
-<a name="l00076"></a>00076       <span class="keywordtype">int</span> speciesCapacity = speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00076"></a>00076       <span class="keywordtype">int</span> speciesCapacity = speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00077"></a>00077       accumulator_.<a class="code" href="classUtil_1_1AutoCorrArray.html#aa17cb46f612aae57fc021be24cbdeb62" title="Allocate memory, and clear history.">setParam</a>(speciesCapacity, capacity_);
 <a name="l00078"></a>00078       data_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(speciesCapacity); 
 <a name="l00079"></a>00079       projector_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtom_);
@@ -156,7 +156,7 @@
 <a name="l00097"></a>00097       ar &amp; projector_;
 <a name="l00098"></a>00098 
 <a name="l00099"></a>00099       speciesPtr_ = &amp;<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_);
-<a name="l00100"></a>00100       <span class="keywordtype">int</span> speciesCapacity = speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00100"></a>00100       <span class="keywordtype">int</span> speciesCapacity = speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00101"></a>00101       data_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(speciesCapacity); 
 <a name="l00102"></a>00102    
 <a name="l00103"></a>00103       <span class="comment">// Validate input</span>
@@ -175,7 +175,7 @@
 <a name="l00116"></a>00116       <span class="keywordflow">if</span> (speciesId_ &gt;= <a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().simulation().nSpecies()) {
 <a name="l00117"></a>00117          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;speciesId &gt;= nSpecies&quot;</span>);
 <a name="l00118"></a>00118       }
-<a name="l00119"></a>00119       <span class="keywordflow">if</span> (nAtom_ != speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>()) {
+<a name="l00119"></a>00119       <span class="keywordflow">if</span> (nAtom_ != speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>()) {
 <a name="l00120"></a>00120          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent values of nAtom&quot;</span>);
 <a name="l00121"></a>00121       }
 <a name="l00122"></a>00122       <span class="keywordflow">if</span> (projector_.capacity() != nAtom_) {
@@ -247,12 +247,12 @@
 <a name="l00188"></a>00188             moleculePtr = &amp;(<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a5b439fee621a22ebf5e98ee540c2a92f" title="Get a specific Molecule in this System, by integer index.">molecule</a>(speciesId_, i));
 <a name="l00189"></a>00189 
 <a name="l00190"></a>00190             <span class="comment">// Retrace non-periodic shape and calculate coefficients</span>
-<a name="l00191"></a>00191             atomPos = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00191"></a>00191             atomPos = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00192"></a>00192             dR.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomPos, projector_[0]);
 <a name="l00193"></a>00193             data_[i] = dR;
 <a name="l00194"></a>00194             <span class="keywordflow">for</span> (j = 1; j &lt; nAtom_; j++) {
-<a name="l00195"></a>00195                r1 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(j-1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
-<a name="l00196"></a>00196                r2 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(j).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00195"></a>00195                r1 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(j-1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00196"></a>00196                r2 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(j).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00197"></a>00197                <a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#ace1b2b95dc094767d218e1dcf520b5ca" title="Get the Boundary by reference.">boundary</a>().<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#aa3177af26a71f7b36d2d4c67bc757e87" title="Return square distance between positions r1 and r2.">distanceSq</a>(r2, r1, dR);
 <a name="l00198"></a>00198                atomPos += dR;
 <a name="l00199"></a>00199                dR.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomPos, projector_[j]);
@@ -289,7 +289,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:08 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

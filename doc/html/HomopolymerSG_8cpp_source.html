@@ -81,7 +81,7 @@
 <a name="l00022"></a>00022     : <a class="code" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract).">Linear</a>(),
 <a name="l00023"></a>00023       <a class="code" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a>()
 <a name="l00024"></a>00024    {
-<a name="l00025"></a>00025       <a class="code" href="classMcMd_1_1Species.html#a0df54e5c7640cf3740ea79d5b7f85373" title="Set a pointer to an associated SpeciesMutator for a mutable species.">setMutatorPtr</a>(<span class="keyword">this</span>);
+<a name="l00025"></a>00025       <a class="code" href="classMcMd_1_1Species.html#aafebfcbd4a71bb8bcb7486836a6cf510" title="Set a pointer to an associated SpeciesMutator for a mutable species.">setMutatorPtr</a>(<span class="keyword">this</span>);
 <a name="l00026"></a>00026    } 
 <a name="l00027"></a>00027    
 <a name="l00028"></a>00028    <span class="comment">/* </span>
@@ -119,12 +119,12 @@
 <a name="l00060"></a>00060       read&lt;Pair &lt;int&gt; &gt;(in, <span class="stringliteral">&quot;typeIds&quot;</span>, typeIds_);
 <a name="l00061"></a>00061       read&lt;double&gt;(in, <span class="stringliteral">&quot;weightRatio&quot;</span>, weightRatio_);
 <a name="l00062"></a>00062 
-<a name="l00063"></a>00063       <a class="code" href="classMcMd_1_1SpeciesMutator.html#a9317379fa30622bd163531e890cfff65" title="Allocate arrays of molecule state ids and statistical weights.">allocateSpeciesMutator</a>(<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>(), 2);
+<a name="l00063"></a>00063       <a class="code" href="classMcMd_1_1SpeciesMutator.html#a9317379fa30622bd163531e890cfff65" title="Allocate arrays of molecule state ids and statistical weights.">allocateSpeciesMutator</a>(<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>(), 2);
 <a name="l00064"></a>00064 
 <a name="l00065"></a>00065       <span class="comment">// Set statistical weights</span>
 <a name="l00066"></a>00066       <span class="keywordtype">double</span> sum = weightRatio_ + 1.0;
-<a name="l00067"></a>00067       <a class="code" href="classMcMd_1_1Species.html#a1f51fdc7a0b03e63f8d6ee82d3325b73" title="Return the species mutator object by reference.">mutator</a>().<a class="code" href="classMcMd_1_1SpeciesMutator.html#ab744739e455556db717ebffbdcac8c66" title="Set the statistical weight associated with a specific state.">setWeight</a>(0, weightRatio_/sum);
-<a name="l00068"></a>00068       <a class="code" href="classMcMd_1_1Species.html#a1f51fdc7a0b03e63f8d6ee82d3325b73" title="Return the species mutator object by reference.">mutator</a>().<a class="code" href="classMcMd_1_1SpeciesMutator.html#ab744739e455556db717ebffbdcac8c66" title="Set the statistical weight associated with a specific state.">setWeight</a>(1, 1.0/sum);
+<a name="l00067"></a>00067       <a class="code" href="classMcMd_1_1Species.html#acab56ccef7f5e9a05e61fb35d88b1a96" title="Return the species mutator object by reference.">mutator</a>().<a class="code" href="classMcMd_1_1SpeciesMutator.html#ab744739e455556db717ebffbdcac8c66" title="Set the statistical weight associated with a specific state.">setWeight</a>(0, weightRatio_/sum);
+<a name="l00068"></a>00068       <a class="code" href="classMcMd_1_1Species.html#acab56ccef7f5e9a05e61fb35d88b1a96" title="Return the species mutator object by reference.">mutator</a>().<a class="code" href="classMcMd_1_1SpeciesMutator.html#ab744739e455556db717ebffbdcac8c66" title="Set the statistical weight associated with a specific state.">setWeight</a>(1, 1.0/sum);
 <a name="l00069"></a>00069    }
 <a name="l00070"></a>00070    
 <a name="l00071"></a>00071    <span class="comment">/* </span>
@@ -168,9 +168,9 @@
 <a name="l00109"></a>00109 <span class="comment">   */</span>
 <a name="l00110"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#a86dc948afd6c48e258d81ce1dfb0ad80">00110</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HomopolymerSG.html#a86dc948afd6c48e258d81ce1dfb0ad80" title="Set the type of all atoms in the molecule.">HomopolymerSG::setMoleculeState</a>(<a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule, <span class="keywordtype">int</span> stateId)
 <a name="l00111"></a>00111    {
-<a name="l00112"></a>00112       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>  = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a3a3a58955a18ebeb266d328b605695e6" title="Get the number of Atoms in this Molecule.">nAtom</a>();
-<a name="l00113"></a>00113       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>; ++i) {
-<a name="l00114"></a>00114          molecule.<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#a6d9848ef729aacb056dc5b41940a0843" title="Set the atomic type index.">setTypeId</a>(typeIds_[stateId]);
+<a name="l00112"></a>00112       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>  = molecule.<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>();
+<a name="l00113"></a>00113       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>; ++i) {
+<a name="l00114"></a>00114          molecule.<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#a6d9848ef729aacb056dc5b41940a0843" title="Set the atomic type index.">setTypeId</a>(typeIds_[stateId]);
 <a name="l00115"></a>00115       }
 <a name="l00116"></a>00116       <a class="code" href="classMcMd_1_1SpeciesMutator.html#aa0aeb69df74df835c6b1c1f20a56c3a5" title="Set the state id of a specific molecule.">setMoleculeStateId</a>(molecule, stateId);
 <a name="l00117"></a>00117    }
@@ -182,7 +182,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:57 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:07 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

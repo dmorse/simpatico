@@ -135,8 +135,8 @@
 <a name="l00076"></a>00076 
 <a name="l00077"></a>00077       <span class="comment">// Choose a molecule and atom at random</span>
 <a name="l00078"></a>00078       molPtr  = &amp;(<a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1System.html#a04b9247341002c8d40f2133ed9136468" title="Get a random Molecule of a specified species in this System.">randomMolecule</a>(speciesId_));
-<a name="l00079"></a>00079       iAtom   = <a class="code" href="classMcMd_1_1McMove.html#a8e27f330daa6bbc314b8f81ca0f9decb" title="Get Random number generator of parent Simulation.">random</a>().<a class="code" href="classUtil_1_1Random.html#a2a7f4c20d13a3ea0bc532c224aecc40e" title="Return random long int x uniformly distributed in range1 &lt;= x &lt; range2.">uniformInt</a>(0, molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a3a3a58955a18ebeb266d328b605695e6" title="Get the number of Atoms in this Molecule.">nAtom</a>());
-<a name="l00080"></a>00080       atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(iAtom);
+<a name="l00079"></a>00079       iAtom   = <a class="code" href="classMcMd_1_1McMove.html#a8e27f330daa6bbc314b8f81ca0f9decb" title="Get Random number generator of parent Simulation.">random</a>().<a class="code" href="classUtil_1_1Random.html#a2a7f4c20d13a3ea0bc532c224aecc40e" title="Return random long int x uniformly distributed in range1 &lt;= x &lt; range2.">uniformInt</a>(0, molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>());
+<a name="l00080"></a>00080       atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(iAtom);
 <a name="l00081"></a>00081 
 <a name="l00082"></a>00082       <span class="comment">// Calculate current pair energy and store old position</span>
 <a name="l00083"></a>00083       oldPos    = atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
@@ -170,7 +170,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:55 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:05 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

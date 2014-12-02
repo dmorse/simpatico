@@ -112,7 +112,7 @@
 <a name="l00053"></a>00053          <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> *species1Ptr;
 <a name="l00054"></a>00054 
 <a name="l00055"></a>00055          species1Ptr = &amp;<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpecies1);
-<a name="l00056"></a>00056          <span class="keywordflow">for</span> (iMolecule1 = 0; iMolecule1 &lt; species1Ptr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00056"></a>00056          <span class="keywordflow">for</span> (iMolecule1 = 0; iMolecule1 &lt; species1Ptr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00057"></a>00057              ++iMolecule1) {
 <a name="l00058"></a>00058              moleculeNeighbors_[iSpecies1][iMolecule1].clear();
 <a name="l00059"></a>00059          }
@@ -139,7 +139,7 @@
 <a name="l00080"></a>00080          <span class="keywordtype">int</span> iMolecule;
 <a name="l00081"></a>00081 
 <a name="l00082"></a>00082          speciesPtr = &amp;<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpecies); 
-<a name="l00083"></a>00083          nMolecule = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00083"></a>00083          nMolecule = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00084"></a>00084 
 <a name="l00085"></a>00085          moleculeNeighbors_[iSpecies].<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nMolecule);
 <a name="l00086"></a>00086          twoMoleculePairEnergy_[iSpecies].<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nMolecule);
@@ -186,7 +186,7 @@
 <a name="l00127"></a>00127          <span class="keywordtype">int</span> iMolecule;
 <a name="l00128"></a>00128 
 <a name="l00129"></a>00129          speciesPtr = &amp;<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpecies); 
-<a name="l00130"></a>00130          nMolecule = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00130"></a>00130          nMolecule = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00131"></a>00131 
 <a name="l00132"></a>00132          moleculeNeighbors_[iSpecies].<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nMolecule);
 <a name="l00133"></a>00133          twoMoleculePairEnergy_[iSpecies].<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nMolecule);
@@ -245,17 +245,17 @@
 <a name="l00186"></a>00186                   <span class="comment">// (do double counting, since pair list counts only unique</span>
 <a name="l00187"></a>00187                   <span class="comment">// pairs)</span>
 <a name="l00188"></a>00188                   moleculePtr = &amp; atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>();
-<a name="l00189"></a>00189                   speciesPtr =  &amp; moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a70de9b3e9ce956c9597c28f36303b40d" title="Get the molecular Species by reference.">species</a>();
-<a name="l00190"></a>00190                   speciesId = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#acae83456c3717805ab81869e47c58614" title="Get integer id of this Species.">id</a>();
-<a name="l00191"></a>00191                   moleculeId = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ab4a08686aaf206b7ba1f50057bae0a6a" title="Get the index for this Molecule (unique in species).">id</a>();
+<a name="l00189"></a>00189                   speciesPtr =  &amp; moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>();
+<a name="l00190"></a>00190                   speciesId = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61" title="Get integer id of this Species.">id</a>();
+<a name="l00191"></a>00191                   moleculeId = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">id</a>();
 <a name="l00192"></a>00192 
 <a name="l00193"></a>00193                   moleculeNeighbors_[speciesId][moleculeId].
 <a name="l00194"></a>00194                      append(atomPair);
 <a name="l00195"></a>00195 
 <a name="l00196"></a>00196                   moleculePtr = &amp; atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>();
-<a name="l00197"></a>00197                   speciesPtr =  &amp; moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a70de9b3e9ce956c9597c28f36303b40d" title="Get the molecular Species by reference.">species</a>();
-<a name="l00198"></a>00198                   speciesId = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#acae83456c3717805ab81869e47c58614" title="Get integer id of this Species.">id</a>();
-<a name="l00199"></a>00199                   moleculeId = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ab4a08686aaf206b7ba1f50057bae0a6a" title="Get the index for this Molecule (unique in species).">id</a>();
+<a name="l00197"></a>00197                   speciesPtr =  &amp; moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>();
+<a name="l00198"></a>00198                   speciesId = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61" title="Get integer id of this Species.">id</a>();
+<a name="l00199"></a>00199                   moleculeId = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">id</a>();
 <a name="l00200"></a>00200 
 <a name="l00201"></a>00201                   <span class="comment">// store atomPair in reverse order</span>
 <a name="l00202"></a>00202                   atomPair[0] = atom1Ptr;
@@ -278,7 +278,7 @@
 <a name="l00219"></a>00219                <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> *species1Ptr;
 <a name="l00220"></a>00220 
 <a name="l00221"></a>00221                species1Ptr = &amp;<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpecies1); 
-<a name="l00222"></a>00222                <span class="keywordflow">for</span> (iMolecule1 = 0; iMolecule1 &lt; species1Ptr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00222"></a>00222                <span class="keywordflow">for</span> (iMolecule1 = 0; iMolecule1 &lt; species1Ptr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00223"></a>00223                   ++iMolecule1) {
 <a name="l00224"></a>00224                   <span class="keywordtype">int</span> iSpecies2, iMolecule2;
 <a name="l00225"></a>00225 
@@ -289,7 +289,7 @@
 <a name="l00230"></a>00230                      <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> *species2Ptr;
 <a name="l00231"></a>00231 
 <a name="l00232"></a>00232                      species2Ptr = &amp;<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpecies2);
-<a name="l00233"></a>00233                      <span class="keywordflow">for</span> (iMolecule2 = 0; iMolecule2 &lt; species2Ptr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00233"></a>00233                      <span class="keywordflow">for</span> (iMolecule2 = 0; iMolecule2 &lt; species2Ptr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00234"></a>00234                         ++iMolecule2) {
 <a name="l00235"></a>00235                         twoMoleculePairEnergy_[iSpecies2][iMolecule2]=0.0;
 <a name="l00236"></a>00236                      }
@@ -313,9 +313,9 @@
 <a name="l00254"></a>00254 
 <a name="l00255"></a>00255                         <span class="comment">// Load second atom&#39;s molecule and species</span>
 <a name="l00256"></a>00256                         molecule2Ptr = &amp;atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>();
-<a name="l00257"></a>00257                         species2Ptr = &amp;atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#a70de9b3e9ce956c9597c28f36303b40d" title="Get the molecular Species by reference.">species</a>();
-<a name="l00258"></a>00258                         species2Id = species2Ptr-&gt;<a class="code" href="classMcMd_1_1Species.html#acae83456c3717805ab81869e47c58614" title="Get integer id of this Species.">id</a>();
-<a name="l00259"></a>00259                         molecule2Id = molecule2Ptr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ab4a08686aaf206b7ba1f50057bae0a6a" title="Get the index for this Molecule (unique in species).">id</a>();
+<a name="l00257"></a>00257                         species2Ptr = &amp;atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>();
+<a name="l00258"></a>00258                         species2Id = species2Ptr-&gt;<a class="code" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61" title="Get integer id of this Species.">id</a>();
+<a name="l00259"></a>00259                         molecule2Id = molecule2Ptr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">id</a>();
 <a name="l00260"></a>00260 
 <a name="l00261"></a>00261                         rsq = boundaryPtr_-&gt;<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#aa3177af26a71f7b36d2d4c67bc757e87" title="Return square distance between positions r1 and r2.">distanceSq</a>(atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
 <a name="l00262"></a>00262                            atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>());
@@ -333,7 +333,7 @@
 <a name="l00274"></a>00274                      <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> *species2Ptr;
 <a name="l00275"></a>00275 
 <a name="l00276"></a>00276                      species2Ptr = &amp;<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpecies2);
-<a name="l00277"></a>00277                      <span class="keywordflow">for</span> (iMolecule2 = 0; iMolecule2 &lt; species2Ptr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00277"></a>00277                      <span class="keywordflow">for</span> (iMolecule2 = 0; iMolecule2 &lt; species2Ptr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00278"></a>00278                         ++iMolecule2) {
 <a name="l00279"></a>00279                         <span class="keywordtype">double</span> energy = 
 <a name="l00280"></a>00280                            twoMoleculePairEnergy_[iSpecies2][iMolecule2];
@@ -428,7 +428,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:59 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:08 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

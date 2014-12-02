@@ -849,7 +849,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Remove a specific molecule from this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>. </p>
-<p>This function removes a <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> from the set of molecules of the same <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> in this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>, and calls <a class="el" href="classMcMd_1_1Molecule.html#a0d4447530054e10e21472d4761067c40" title="Set the parent System pointer to null (no System).">Molecule::unsetSystem()</a>.</p>
+<p>This function removes a <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> from the set of molecules of the same <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> in this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>, and calls <a class="el" href="classMcMd_1_1Molecule.html#ab831988d039f5e11bc091d352ec2e0d6" title="Set the parent System pointer to null (no System).">Molecule::unsetSystem()</a>.</p>
 <p>The removed <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> should be pushed onto the <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> reservoir or added to another <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -1040,7 +1040,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the index of a <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> within its <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> in this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>. </p>
 <p>This function returns the current (mutable) index of the molecule within the set of molecules of the same <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> in this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>, in the range 0 &lt;= moleculeId &lt; nMolecule(speciesId). This is the index required as the second argument of <a class="el" href="classMcMd_1_1System.html#a5b439fee621a22ebf5e98ee540c2a92f" title="Get a specific Molecule in this System, by integer index.">molecule(int, int)</a>.</p>
-<p>Note: The id returned by this function is not the same as the id returned by <a class="el" href="classMcMd_1_1Molecule.html#ab4a08686aaf206b7ba1f50057bae0a6a" title="Get the index for this Molecule (unique in species).">Molecule::id()</a>, which is a permanent identifier for each molecule that is set immediately after allocation.</p>
+<p>Note: The id returned by this function is not the same as the id returned by <a class="el" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">Molecule::id()</a>, which is a permanent identifier for each molecule that is set immediately after allocation.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">molecule</td><td><a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> object of interest. </td></tr>
@@ -2534,7 +2534,7 @@ Protected Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:15 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:25 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

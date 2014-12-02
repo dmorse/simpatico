@@ -123,21 +123,21 @@
 <a name="l00064"></a>00064       }
 <a name="l00065"></a>00065       <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>* speciesPtr;
 <a name="l00066"></a>00066       speciesPtr = &amp;(<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_));
-<a name="l00067"></a>00067       nAtom_ = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00067"></a>00067       nAtom_ = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
 <a name="l00068"></a>00068       newTypeIds_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtom_);
 <a name="l00069"></a>00069       readDArray&lt;int&gt;(in, <span class="stringliteral">&quot;newTypeIds&quot;</span>, newTypeIds_, nAtom_);
 <a name="l00070"></a>00070 
 <a name="l00071"></a>00071       flipAtomIds_.<a class="code" href="classUtil_1_1DSArray.html#ad9e1548874eb6705e42b88d457da9d6b" title="Allocates the underlying C array.">allocate</a>(nAtom_);
 <a name="l00072"></a>00072       isAtomFlipped_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtom_);
 <a name="l00073"></a>00073       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nAtom_; ++i) {
-<a name="l00074"></a>00074          <span class="keywordflow">if</span> (newTypeIds_[i] != speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#ae683c578e5fe047d6c229004aca1b977" title="Get atom type index for a specific atom, by local atom index.">atomTypeId</a>(i)) {
+<a name="l00074"></a>00074          <span class="keywordflow">if</span> (newTypeIds_[i] != speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#aa25843142bad3e2505466c79ca23df7f" title="Get atom type index for a specific atom, by local atom index.">atomTypeId</a>(i)) {
 <a name="l00075"></a>00075             flipAtomIds_.<a class="code" href="classUtil_1_1DSArray.html#a4ac821902ea29016412aaf7d545e3fd7" title="Append data to the end of the array.">append</a>(i);
 <a name="l00076"></a>00076             isAtomFlipped_[i] = 1;
 <a name="l00077"></a>00077          } <span class="keywordflow">else</span> {
 <a name="l00078"></a>00078             isAtomFlipped_[i] = 0;
 <a name="l00079"></a>00079          }
 <a name="l00080"></a>00080       }
-<a name="l00081"></a>00081       accumulators_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>());
+<a name="l00081"></a>00081       accumulators_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>());
 <a name="l00082"></a>00082 
 <a name="l00083"></a>00083       isInitialized_ = <span class="keyword">true</span>;
 <a name="l00084"></a>00084    }
@@ -325,7 +325,7 @@
 <a name="l00266"></a>00266       ar &gt;&gt; nAtom_;
 <a name="l00267"></a>00267       <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>* speciesPtr;
 <a name="l00268"></a>00268       speciesPtr = &amp;(<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_));
-<a name="l00269"></a>00269       <span class="keywordflow">if</span> (nAtom_ != speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>()) {
+<a name="l00269"></a>00269       <span class="keywordflow">if</span> (nAtom_ != speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>()) {
 <a name="l00270"></a>00270          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent values of nAtom on loading&quot;</span>);
 <a name="l00271"></a>00271       }
 <a name="l00272"></a>00272       newTypeIds_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtom_);
@@ -334,14 +334,14 @@
 <a name="l00275"></a>00275       flipAtomIds_.<a class="code" href="classUtil_1_1DSArray.html#ad9e1548874eb6705e42b88d457da9d6b" title="Allocates the underlying C array.">allocate</a>(nAtom_);
 <a name="l00276"></a>00276       isAtomFlipped_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtom_);
 <a name="l00277"></a>00277       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nAtom_; ++i) {
-<a name="l00278"></a>00278          <span class="keywordflow">if</span> (newTypeIds_[i] != speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#ae683c578e5fe047d6c229004aca1b977" title="Get atom type index for a specific atom, by local atom index.">atomTypeId</a>(i)) {
+<a name="l00278"></a>00278          <span class="keywordflow">if</span> (newTypeIds_[i] != speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#aa25843142bad3e2505466c79ca23df7f" title="Get atom type index for a specific atom, by local atom index.">atomTypeId</a>(i)) {
 <a name="l00279"></a>00279             flipAtomIds_.<a class="code" href="classUtil_1_1DSArray.html#a4ac821902ea29016412aaf7d545e3fd7" title="Append data to the end of the array.">append</a>(i);
 <a name="l00280"></a>00280             isAtomFlipped_[i] = 1;
 <a name="l00281"></a>00281          } <span class="keywordflow">else</span> {
 <a name="l00282"></a>00282             isAtomFlipped_[i] = 0;
 <a name="l00283"></a>00283          }
 <a name="l00284"></a>00284       }
-<a name="l00285"></a>00285       accumulators_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>());
+<a name="l00285"></a>00285       accumulators_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>());
 <a name="l00286"></a>00286 
 <a name="l00287"></a>00287       ar &gt;&gt; nMolecule_;
 <a name="l00288"></a>00288       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nMolecule_; ++i) {
@@ -357,7 +357,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:08 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

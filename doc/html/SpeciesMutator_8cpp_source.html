@@ -118,7 +118,7 @@
 <a name="l00059"></a>00059       <span class="keywordflow">if</span> (stateId &lt; 0 &amp;&amp; stateId != <a class="code" href="classMcMd_1_1SpeciesMutator.html#aa7aeabbb7a30c8130744977403deb099" title="Null value for a state index.">NullStateId</a>) {
 <a name="l00060"></a>00060          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid state index&quot;</span>);
 <a name="l00061"></a>00061       }
-<a name="l00062"></a>00062       <span class="keywordtype">int</span> molId = molecule.<a class="code" href="classMcMd_1_1Molecule.html#ab4a08686aaf206b7ba1f50057bae0a6a" title="Get the index for this Molecule (unique in species).">id</a>();
+<a name="l00062"></a>00062       <span class="keywordtype">int</span> molId = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">id</a>();
 <a name="l00063"></a>00063       <span class="keywordtype">int</span> oldStateId = moleculeStateIds_[molId];
 <a name="l00064"></a>00064       <span class="keywordflow">if</span> (oldStateId != <a class="code" href="classMcMd_1_1SpeciesMutator.html#aa7aeabbb7a30c8130744977403deb099" title="Null value for a state index.">NullStateId</a>) {
 <a name="l00065"></a>00065          --stateOccupancies_[oldStateId];
@@ -154,7 +154,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:01 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

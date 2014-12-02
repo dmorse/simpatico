@@ -133,13 +133,13 @@
 <a name="l00074"></a>00074          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: moleculeCapacity &lt;= 0&quot;</span>);
 <a name="l00075"></a>00075       }
 <a name="l00076"></a>00076       speciesPtr_ = &amp;(<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_));
-<a name="l00077"></a>00077       <span class="keywordflow">if</span> (moleculeCapacity_ != speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>()) {
+<a name="l00077"></a>00077       <span class="keywordflow">if</span> (moleculeCapacity_ != speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>()) {
 <a name="l00078"></a>00078           <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsiste moleculeCapacity&quot;</span>);
 <a name="l00079"></a>00079       }
-<a name="l00080"></a>00080       <span class="keywordflow">if</span> (!speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a3713aef1064d4abd7a68589c2d2d2890" title="Is this a mutable Species?">isMutable</a>()) {
+<a name="l00080"></a>00080       <span class="keywordflow">if</span> (!speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a196a2b822968ba57d14a09bb0833a5b4" title="Is this a mutable Species?">isMutable</a>()) {
 <a name="l00081"></a>00081          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: Species must be mutable&quot;</span>);
 <a name="l00082"></a>00082       }
-<a name="l00083"></a>00083       mutatorPtr_ = &amp;speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a1f51fdc7a0b03e63f8d6ee82d3325b73" title="Return the species mutator object by reference.">mutator</a>();
+<a name="l00083"></a>00083       mutatorPtr_ = &amp;speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#acab56ccef7f5e9a05e61fb35d88b1a96" title="Return the species mutator object by reference.">mutator</a>();
 <a name="l00084"></a>00084    }
 <a name="l00085"></a>00085 
 <a name="l00086"></a>00086    <span class="comment">/*</span>
@@ -176,7 +176,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:00 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

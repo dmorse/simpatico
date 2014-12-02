@@ -124,12 +124,12 @@
 <a name="l00065"></a>00065       }
 <a name="l00066"></a>00066 
 <a name="l00067"></a>00067       <span class="comment">// Identify bond type </span>
-<a name="l00068"></a>00068       bondTypeId_ = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a553e24c3e6fc136e5cdf1bd762c5adca" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(0).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a1b79cc7f8744274a12acf65cc6b09c97" title="Get the type index for this covalent group.">typeId</a>();
+<a name="l00068"></a>00068       bondTypeId_ = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a411088bd3d19359017145a54a968a80b" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(0).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a1b79cc7f8744274a12acf65cc6b09c97" title="Get the type index for this covalent group.">typeId</a>();
 <a name="l00069"></a>00069 
 <a name="l00070"></a>00070       <span class="comment">// Check that bond type is the same for all bonds</span>
-<a name="l00071"></a>00071       <span class="keywordtype">int</span> nBond = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a1563670a5e13c2370c1ec37ef0f242c4" title="Get number of bonds per molecule for this Species.">nBond</a>();
+<a name="l00071"></a>00071       <span class="keywordtype">int</span> nBond = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>();
 <a name="l00072"></a>00072       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; nBond; ++i) {
-<a name="l00073"></a>00073          <span class="keywordflow">if</span> (bondTypeId_ != speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a553e24c3e6fc136e5cdf1bd762c5adca" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(i).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a1b79cc7f8744274a12acf65cc6b09c97" title="Get the type index for this covalent group.">typeId</a>()) {
+<a name="l00073"></a>00073          <span class="keywordflow">if</span> (bondTypeId_ != speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a411088bd3d19359017145a54a968a80b" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(i).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a1b79cc7f8744274a12acf65cc6b09c97" title="Get the type index for this covalent group.">typeId</a>()) {
 <a name="l00074"></a>00074             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Unequal bond type ids&quot;</span>);
 <a name="l00075"></a>00075          }
 <a name="l00076"></a>00076       }
@@ -138,7 +138,7 @@
 <a name="l00079"></a>00079       maskPolicy_ = <a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a4020cfcb13649eecef9c9bfdb3b4eba2" title="Return the value of the mask policy (MaskNone or MaskBonded).">maskedPairPolicy</a>();
 <a name="l00080"></a>00080  
 <a name="l00081"></a>00081       <span class="comment">// Allocate memory for junction arrays</span>
-<a name="l00082"></a>00082       <span class="keywordtype">int</span> nAtom = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00082"></a>00082       <span class="keywordtype">int</span> nAtom = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
 <a name="l00083"></a>00083       junctions_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtom-1);
 <a name="l00084"></a>00084       lTypes_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtom-1);
 <a name="l00085"></a>00085       uTypes_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtom-1);
@@ -147,8 +147,8 @@
 <a name="l00088"></a>00088       <span class="keywordtype">int</span> lType, uType;
 <a name="l00089"></a>00089       nJunction_ = 0;
 <a name="l00090"></a>00090       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nAtom - 1; ++i) {
-<a name="l00091"></a>00091          lType = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#ae683c578e5fe047d6c229004aca1b977" title="Get atom type index for a specific atom, by local atom index.">atomTypeId</a>(i); 
-<a name="l00092"></a>00092          uType = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#ae683c578e5fe047d6c229004aca1b977" title="Get atom type index for a specific atom, by local atom index.">atomTypeId</a>(i+1); 
+<a name="l00091"></a>00091          lType = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#aa25843142bad3e2505466c79ca23df7f" title="Get atom type index for a specific atom, by local atom index.">atomTypeId</a>(i); 
+<a name="l00092"></a>00092          uType = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#aa25843142bad3e2505466c79ca23df7f" title="Get atom type index for a specific atom, by local atom index.">atomTypeId</a>(i+1); 
 <a name="l00093"></a>00093          <span class="keywordflow">if</span> (lType != uType) {
 <a name="l00094"></a>00094             junctions_[nJunction_] = i;
 <a name="l00095"></a>00095             lTypes_[nJunction_] = lType;
@@ -167,7 +167,7 @@
 <a name="l00108"></a>00108          read&lt;std::string&gt;(in, <span class="stringliteral">&quot;autoCorrName&quot;</span>, outputFileName_);
 <a name="l00109"></a>00109 
 <a name="l00110"></a>00110          <span class="comment">// Allocate memory for autocorrelation function of reptation steps</span>
-<a name="l00111"></a>00111          <span class="keywordtype">int</span> moleculeCapacity = <a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_).<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00111"></a>00111          <span class="keywordtype">int</span> moleculeCapacity = <a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_).<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00112"></a>00112          acceptedStepsAccumulators_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(moleculeCapacity); 
 <a name="l00113"></a>00113          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; moleculeCapacity; i++)
 <a name="l00114"></a>00114          {
@@ -198,9 +198,9 @@
 <a name="l00139"></a>00139       <span class="keywordflow">if</span> (!speciesPtr) {
 <a name="l00140"></a>00140          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Species is not a subclass of Linear&quot;</span>);
 <a name="l00141"></a>00141       }
-<a name="l00142"></a>00142       <span class="keywordtype">int</span> nBond = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a1563670a5e13c2370c1ec37ef0f242c4" title="Get number of bonds per molecule for this Species.">nBond</a>();
+<a name="l00142"></a>00142       <span class="keywordtype">int</span> nBond = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>();
 <a name="l00143"></a>00143       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nBond; ++i) {
-<a name="l00144"></a>00144          <span class="keywordflow">if</span> (bondTypeId_ != speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a553e24c3e6fc136e5cdf1bd762c5adca" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(i).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a1b79cc7f8744274a12acf65cc6b09c97" title="Get the type index for this covalent group.">typeId</a>()) {
+<a name="l00144"></a>00144          <span class="keywordflow">if</span> (bondTypeId_ != speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a411088bd3d19359017145a54a968a80b" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(i).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a1b79cc7f8744274a12acf65cc6b09c97" title="Get the type index for this covalent group.">typeId</a>()) {
 <a name="l00145"></a>00145             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent or unequal bond type ids&quot;</span>);
 <a name="l00146"></a>00146          }
 <a name="l00147"></a>00147       }
@@ -261,7 +261,7 @@
 <a name="l00202"></a>00202 
 <a name="l00203"></a>00203       <span class="comment">// Choose a molecule at random</span>
 <a name="l00204"></a>00204       molPtr = &amp;(<a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1System.html#a04b9247341002c8d40f2133ed9136468" title="Get a random Molecule of a specified species in this System.">randomMolecule</a>(speciesId_));
-<a name="l00205"></a>00205       length = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a3a3a58955a18ebeb266d328b605695e6" title="Get the number of Atoms in this Molecule.">nAtom</a>();
+<a name="l00205"></a>00205       length = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>();
 <a name="l00206"></a>00206 
 <a name="l00207"></a>00207       <span class="comment">// Choose which chain end to regrow</span>
 <a name="l00208"></a>00208       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1McMove.html#a8e27f330daa6bbc314b8f81ca0f9decb" title="Get Random number generator of parent Simulation.">random</a>().uniform(0.0, 1.0) &gt; 0.5) {
@@ -275,7 +275,7 @@
 <a name="l00216"></a>00216       }
 <a name="l00217"></a>00217 
 <a name="l00218"></a>00218       <span class="comment">// Store current position and type of tail atom</span>
-<a name="l00219"></a>00219       tailPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(tailId));
+<a name="l00219"></a>00219       tailPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(tailId));
 <a name="l00220"></a>00220       oldPos  = tailPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00221"></a>00221       oldType = tailPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>();
 <a name="l00222"></a>00222    
@@ -288,7 +288,7 @@
 <a name="l00229"></a>00229 <span class="preprocessor">      #endif</span>
 <a name="l00230"></a>00230 <span class="preprocessor"></span>   
 <a name="l00231"></a>00231       <span class="comment">// Regrow head, using tailPtr to store properties of the new head.</span>
-<a name="l00232"></a>00232       atomPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(headId));
+<a name="l00232"></a>00232       atomPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(headId));
 <a name="l00233"></a>00233       tailPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a6d9848ef729aacb056dc5b41940a0843" title="Set the atomic type index.">setTypeId</a>(atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>());
 <a name="l00234"></a>00234       tailPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af02003b1de6abffcf7ae7cd2187ff22c" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classMcMd_1_1Mask.html#a9ae03a67c7f2722b83dd9a6bad0a88cc" title="Clear the mask set (remove all atoms).">clear</a>();
 <a name="l00235"></a>00235       <span class="keywordflow">if</span> (maskPolicy_ == MaskBonded) {
@@ -352,7 +352,7 @@
 <a name="l00293"></a>00293          <span class="keywordflow">if</span> (hasAutoCorr_)
 <a name="l00294"></a>00294          {
 <a name="l00295"></a>00295             <span class="comment">// Store step direction in autocorrelator</span>
-<a name="l00296"></a>00296             acceptedStepsAccumulators_[molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ab4a08686aaf206b7ba1f50057bae0a6a" title="Get the index for this Molecule (unique in species).">id</a>()].sample((<span class="keywordtype">double</span>) sign);
+<a name="l00296"></a>00296             acceptedStepsAccumulators_[molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">id</a>()].sample((<span class="keywordtype">double</span>) sign);
 <a name="l00297"></a>00297          }
 <a name="l00298"></a>00298       } <span class="keywordflow">else</span> {
 <a name="l00299"></a>00299 
@@ -386,10 +386,10 @@
 <a name="l00330"></a>00330       <span class="keywordflow">for</span> (i = 0; i &lt; nJunction_; ++i) {
 <a name="l00331"></a>00331          j = junctions_[i];
 <a name="l00332"></a>00332          <span class="keywordflow">if</span> (sign == 1) {
-<a name="l00333"></a>00333             hAtomPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(j+1));
+<a name="l00333"></a>00333             hAtomPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(j+1));
 <a name="l00334"></a>00334             tType    = lTypes_[i];
 <a name="l00335"></a>00335          } <span class="keywordflow">else</span> {
-<a name="l00336"></a>00336             hAtomPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(j));
+<a name="l00336"></a>00336             hAtomPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(j));
 <a name="l00337"></a>00337             tType    = uTypes_[i];
 <a name="l00338"></a>00338          }
 <a name="l00339"></a>00339 
@@ -420,10 +420,10 @@
 <a name="l00364"></a>00364 <span class="preprocessor"></span>      <span class="keywordflow">for</span> (i = 0; i &lt; nJunction_; ++i) {
 <a name="l00365"></a>00365          j = junctions_[i];
 <a name="l00366"></a>00366          <span class="keywordflow">if</span> (sign == 1) {
-<a name="l00367"></a>00367             hAtomPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(j+1));
+<a name="l00367"></a>00367             hAtomPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(j+1));
 <a name="l00368"></a>00368             hType    = uTypes_[i];
 <a name="l00369"></a>00369          } <span class="keywordflow">else</span> {
-<a name="l00370"></a>00370             hAtomPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(j));
+<a name="l00370"></a>00370             hAtomPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(j));
 <a name="l00371"></a>00371             hType    = lTypes_[i];
 <a name="l00372"></a>00372          }
 <a name="l00373"></a>00373          hAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a6d9848ef729aacb056dc5b41940a0843" title="Set the atomic type index.">setTypeId</a>(hType);
@@ -496,7 +496,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:56 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:06 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

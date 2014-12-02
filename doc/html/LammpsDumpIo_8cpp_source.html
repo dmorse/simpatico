@@ -202,9 +202,9 @@
 <a name="l00143"></a>00143       <span class="keywordtype">id</span> = 0;
 <a name="l00144"></a>00144       <span class="keywordflow">for</span> (iSpecies = 0; iSpecies &lt; <a class="code" href="classMcMd_1_1TrajectoryIo.html#a6276f65c7804d8cc083ae7e09d7bb303" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpecies) {
 <a name="l00145"></a>00145          speciesPtr = &amp;<a class="code" href="classMcMd_1_1TrajectoryIo.html#a6276f65c7804d8cc083ae7e09d7bb303" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpecies);
-<a name="l00146"></a>00146          <span class="keywordflow">for</span> (iMol = 0; iMol &lt; speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>(); ++iMol) {
+<a name="l00146"></a>00146          <span class="keywordflow">for</span> (iMol = 0; iMol &lt; speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>(); ++iMol) {
 <a name="l00147"></a>00147             molPtr = &amp;<a class="code" href="classMcMd_1_1TrajectoryIo.html#a5f0cc3067a7e23c8edcaaca92e87f3f4" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#a5b439fee621a22ebf5e98ee540c2a92f" title="Get a specific Molecule in this System, by integer index.">molecule</a>(iSpecies, iMol);
-<a name="l00148"></a>00148             <span class="keywordflow">for</span> (molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aae40ce6fcc1df34548da1d9bd72b458c" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00148"></a>00148             <span class="keywordflow">for</span> (molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a593e8b56859b59dc753ff342a8063022" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00149"></a>00149                atomIter-&gt;position() = positions_[id];
 <a name="l00150"></a>00150                <span class="keywordtype">id</span>++;
 <a name="l00151"></a>00151             }
@@ -220,7 +220,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:07 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

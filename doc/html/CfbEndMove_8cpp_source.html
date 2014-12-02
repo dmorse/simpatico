@@ -169,7 +169,7 @@
 <a name="l00110"></a>00110     
 <a name="l00111"></a>00111       <span class="comment">// Choose a molecule at random</span>
 <a name="l00112"></a>00112       molPtr = &amp;(<a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1System.html#a04b9247341002c8d40f2133ed9136468" title="Get a random Molecule of a specified species in this System.">randomMolecule</a>(<a class="code" href="classMcMd_1_1CfbEndMove.html#a72a0303a13e2be548616690d3779772f" title="Integer index for molecular species.">speciesId_</a>));
-<a name="l00113"></a>00113       length = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a3a3a58955a18ebeb266d328b605695e6" title="Get the number of Atoms in this Molecule.">nAtom</a>();
+<a name="l00113"></a>00113       length = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>();
 <a name="l00114"></a>00114 
 <a name="l00115"></a>00115       <span class="comment">// Require that chain length &gt; nRegrow</span>
 <a name="l00116"></a>00116       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1CfbEndMove.html#a10844aeb8f42afece789ae58890dfaf9" title="Number of particles at end to attempt to regrow.">nRegrow_</a> &gt;= length) {
@@ -188,7 +188,7 @@
 <a name="l00129"></a>00129       }
 <a name="l00130"></a>00130    
 <a name="l00131"></a>00131       <span class="comment">// Store current atomic positions from segment to be regrown</span>
-<a name="l00132"></a>00132       endPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00132"></a>00132       endPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
 <a name="l00133"></a>00133       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1CfbEndMove.html#a10844aeb8f42afece789ae58890dfaf9" title="Number of particles at end to attempt to regrow.">nRegrow_</a>; ++i) {
 <a name="l00134"></a>00134          <a class="code" href="classMcMd_1_1CfbEndMove.html#a22e2f17fdc42b10f1900736a5e440b80" title="Array of old positions of temporarily deleted atoms (temporary).">oldPos_</a>[i] = endPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00135"></a>00135          endPtr += sign;
@@ -197,13 +197,13 @@
 <a name="l00138"></a>00138       <span class="comment">// Delete monomers, starting from chain end</span>
 <a name="l00139"></a>00139       rosen_r  = 1.0;
 <a name="l00140"></a>00140       energy_r = 0.0;
-<a name="l00141"></a>00141       endPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(endId));
+<a name="l00141"></a>00141       endPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(endId));
 <a name="l00142"></a>00142       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1CfbEndMove.html#a10844aeb8f42afece789ae58890dfaf9" title="Number of particles at end to attempt to regrow.">nRegrow_</a>; ++i) {
 <a name="l00143"></a>00143          pvtPtr  = endPtr - sign;
 <a name="l00144"></a>00144          <span class="keywordflow">if</span> (sign == 1) {
-<a name="l00145"></a>00145             bondType = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a77295de4efbac02bca661be188d8693f" title="Get a specific Bond in this Molecule by reference.">bond</a>(endId - 1 - i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00145"></a>00145             bondType = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(endId - 1 - i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00146"></a>00146          } <span class="keywordflow">else</span> {
-<a name="l00147"></a>00147             bondType = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a77295de4efbac02bca661be188d8693f" title="Get a specific Bond in this Molecule by reference.">bond</a>(i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00147"></a>00147             bondType = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00148"></a>00148          }
 <a name="l00149"></a>00149          <a class="code" href="classMcMd_1_1CfbEndBase.html#adebc49437ac5ae8263cfb25335e98031" title="CFB algorithm for deleting an end atom from a flexible chain.">deleteEndAtom</a>(endPtr, pvtPtr, bondType, rosenbluth, energy);
 <a name="l00150"></a>00150 <span class="preprocessor">         #ifndef INTER_NOPAIR</span>
@@ -217,13 +217,13 @@
 <a name="l00158"></a>00158       <span class="comment">// Regrow monomers</span>
 <a name="l00159"></a>00159       rosen_f  = 1.0;
 <a name="l00160"></a>00160       energy_f = 0.0;
-<a name="l00161"></a>00161       endPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00161"></a>00161       endPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
 <a name="l00162"></a>00162       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1CfbEndMove.html#a10844aeb8f42afece789ae58890dfaf9" title="Number of particles at end to attempt to regrow.">nRegrow_</a>; ++i) {
 <a name="l00163"></a>00163          pvtPtr = endPtr - sign;
 <a name="l00164"></a>00164          <span class="keywordflow">if</span> (sign == 1) {
-<a name="l00165"></a>00165             bondType = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a77295de4efbac02bca661be188d8693f" title="Get a specific Bond in this Molecule by reference.">bond</a>(endId - 1 - i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00165"></a>00165             bondType = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(endId - 1 - i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00166"></a>00166          } <span class="keywordflow">else</span> {
-<a name="l00167"></a>00167             bondType = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a77295de4efbac02bca661be188d8693f" title="Get a specific Bond in this Molecule by reference.">bond</a>(i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00167"></a>00167             bondType = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00168"></a>00168          }
 <a name="l00169"></a>00169          <a class="code" href="classMcMd_1_1CfbEndBase.html#a2656f9e9d218ddd0b8b165d3084b21d6" title="Configuration bias algorithm for adding an atom to a chain end.">addEndAtom</a>(endPtr, pvtPtr, bondType, rosenbluth, energy);
 <a name="l00170"></a>00170          rosen_f  *= rosenbluth;
@@ -249,7 +249,7 @@
 <a name="l00190"></a>00190       } <span class="keywordflow">else</span> {
 <a name="l00191"></a>00191 
 <a name="l00192"></a>00192          <span class="comment">// If the move is rejected, restore old positions</span>
-<a name="l00193"></a>00193          endPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00193"></a>00193          endPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
 <a name="l00194"></a>00194          <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1CfbEndMove.html#a10844aeb8f42afece789ae58890dfaf9" title="Number of particles at end to attempt to regrow.">nRegrow_</a>; ++i) {
 <a name="l00195"></a>00195             <span class="comment">// system().moveAtom(*endPtr, oldPos_[i]);</span>
 <a name="l00196"></a>00196             endPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = <a class="code" href="classMcMd_1_1CfbEndMove.html#a22e2f17fdc42b10f1900736a5e440b80" title="Array of old positions of temporarily deleted atoms (temporary).">oldPos_</a>[i];
@@ -271,7 +271,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:56 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:06 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

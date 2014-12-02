@@ -88,7 +88,7 @@
 <a name="l00029"></a><a class="code" href="classMcMd_1_1Point.html#ac921291c79265cc465591c65c3fb9894">00029</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Point.html#ac921291c79265cc465591c65c3fb9894" title="Read atom type.">Point::readSpeciesParam</a>(std::istream &amp;in)
 <a name="l00030"></a>00030    {  
 <a name="l00031"></a>00031       read&lt;int&gt;(in,<span class="stringliteral">&quot;type&quot;</span>, <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>); 
-<a name="l00032"></a>00032       <a class="code" href="classMcMd_1_1Species.html#a913f31e19320ec418eee5f5502f26e1f" title="Allocate chemical structure arrays.">allocate</a>();
+<a name="l00032"></a>00032       <a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca" title="Allocate chemical structure arrays.">allocate</a>();
 <a name="l00033"></a>00033       <a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[0] = <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>;
 <a name="l00034"></a>00034    }
 <a name="l00035"></a>00035    
@@ -98,7 +98,7 @@
 <a name="l00039"></a><a class="code" href="classMcMd_1_1Point.html#a34c11450e4269755ebbc0f0ea2b22b67">00039</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Point.html#a34c11450e4269755ebbc0f0ea2b22b67" title="Load species structure from an Archive.">Point::loadSpeciesParam</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchive</a> &amp;ar)
 <a name="l00040"></a>00040    {  
 <a name="l00041"></a>00041       loadParameter&lt;int&gt;(ar,<span class="stringliteral">&quot;type&quot;</span>, <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>); 
-<a name="l00042"></a>00042       <a class="code" href="classMcMd_1_1Species.html#a913f31e19320ec418eee5f5502f26e1f" title="Allocate chemical structure arrays.">allocate</a>();
+<a name="l00042"></a>00042       <a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca" title="Allocate chemical structure arrays.">allocate</a>();
 <a name="l00043"></a>00043       <a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[0] = <a class="code" href="classMcMd_1_1Point.html#aa27b230eacef4d64e026cd8a4546de50" title="Atom type id for all molecules of this species.">type_</a>;
 <a name="l00044"></a>00044    }
 <a name="l00045"></a>00045    
@@ -124,7 +124,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:00 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

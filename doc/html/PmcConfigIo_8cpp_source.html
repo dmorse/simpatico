@@ -122,7 +122,7 @@
 <a name="l00063"></a>00063          speciesPtr = &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpec);
 <a name="l00064"></a>00064          in &gt;&gt; <a class="code" href="classUtil_1_1Label.html" title="A label string in a file format.">Label</a>(<span class="stringliteral">&quot;nMolecule&quot;</span>) &gt;&gt; nMolecule;
 <a name="l00065"></a>00065          nMoleculeSpecies.push_back(nMolecule);
-<a name="l00066"></a>00066          nAtomSum += nMolecule*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00066"></a>00066          nAtomSum += nMolecule*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
 <a name="l00067"></a>00067       }
 <a name="l00068"></a>00068       <span class="keywordflow">if</span> (nAtomSum != nAtom) {
 <a name="l00069"></a>00069          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Input nParticle != Atom Sum over Species&quot;</span>);
@@ -137,9 +137,9 @@
 <a name="l00078"></a>00078          speciesPtr = &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpec);
 <a name="l00079"></a>00079          nMolecule = nMoleculeSpecies[iSpec];
 <a name="l00080"></a>00080          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iMol=0; iMol &lt; nMolecule; ++iMol) {
-<a name="l00081"></a>00081             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a00aaeb56269e3aefcc38f0bf4a788f62" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>());
+<a name="l00081"></a>00081             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>());
 <a name="l00082"></a>00082             <a class="code" href="classMcMd_1_1ConfigIo.html#a3f20f914433938f289522c221751c5aa" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#a5311d7245d55b3efa0848ed040b053b3" title="Add a Molecule to this System.">addMolecule</a>(*molPtr);
-<a name="l00083"></a>00083             <span class="keywordflow">for</span> (molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aae40ce6fcc1df34548da1d9bd72b458c" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00083"></a>00083             <span class="keywordflow">for</span> (molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a593e8b56859b59dc753ff342a8063022" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00084"></a>00084                in &gt;&gt; atomIter-&gt;position() &gt;&gt; atomType;
 <a name="l00085"></a>00085                <a class="code" href="classMcMd_1_1ConfigIo.html#ab7939cdcfe6174017d8f6689a70230e6" title="Get the Boundary.">boundary</a>().<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#aca92298f4ac913d09c0845db21e55712" title="Shift Cartesian Vector r to its primary image.">shift</a>(atomIter-&gt;position());
 <a name="l00086"></a>00086             }
@@ -184,7 +184,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:00 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

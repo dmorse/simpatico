@@ -109,9 +109,9 @@
 <a name="l00050"></a>00050       <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>* speciesPtr;
 <a name="l00051"></a>00051       <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpecies; ++iSpec) {
 <a name="l00052"></a>00052          speciesPtr = &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpec);
-<a name="l00053"></a>00053          speciesCapacity = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
-<a name="l00054"></a>00054          atomCapacity   += speciesCapacity*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>();
-<a name="l00055"></a>00055          bondCapacity   += speciesCapacity*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a1563670a5e13c2370c1ec37ef0f242c4" title="Get number of bonds per molecule for this Species.">nBond</a>();
+<a name="l00053"></a>00053          speciesCapacity = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00054"></a>00054          atomCapacity   += speciesCapacity*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00055"></a>00055          bondCapacity   += speciesCapacity*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>();
 <a name="l00056"></a>00056       }
 <a name="l00057"></a>00057 
 <a name="l00058"></a>00058 
@@ -188,9 +188,9 @@
 <a name="l00129"></a>00129       <span class="keywordtype">int</span> atomId, molId, iMol, nMolecule;
 <a name="l00130"></a>00130       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; nSpecies; ++iSpec) {
 <a name="l00131"></a>00131          speciesPtr = &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpec);
-<a name="l00132"></a>00132          nMolecule  = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00132"></a>00132          nMolecule  = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00133"></a>00133          <span class="keywordflow">for</span> (iMol = 0; iMol &lt; nMolecule; ++iMol) {
-<a name="l00134"></a>00134             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a00aaeb56269e3aefcc38f0bf4a788f62" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>());
+<a name="l00134"></a>00134             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>());
 <a name="l00135"></a>00135             <a class="code" href="classMcMd_1_1ConfigIo.html#a3f20f914433938f289522c221751c5aa" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#a5311d7245d55b3efa0848ed040b053b3" title="Add a Molecule to this System.">addMolecule</a>(*molPtr);
 <a name="l00136"></a>00136    
 <a name="l00137"></a>00137             <span class="keywordflow">if</span> (molPtr != &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#a3f20f914433938f289522c221751c5aa" title="Get a reference to the parent System.">system</a>().molecule(iSpec, iMol)) {
@@ -198,7 +198,7 @@
 <a name="l00139"></a>00139             }
 <a name="l00140"></a>00140    
 <a name="l00141"></a>00141             <span class="comment">// Read positions, shift into primary cell</span>
-<a name="l00142"></a>00142             <span class="keywordflow">for</span> (molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aae40ce6fcc1df34548da1d9bd72b458c" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00142"></a>00142             <span class="keywordflow">for</span> (molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a593e8b56859b59dc753ff342a8063022" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00143"></a>00143 
 <a name="l00144"></a>00144                in &gt;&gt; atomId &gt;&gt; molId &gt;&gt; atomTypeId;
 <a name="l00145"></a>00145                <span class="keywordflow">if</span> (atomId != atomIter-&gt;id() + 1) 
@@ -236,8 +236,8 @@
 <a name="l00177"></a>00177       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
 <a name="l00178"></a>00178          speciesPtr = &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpec);
 <a name="l00179"></a>00179          nMolecule  = <a class="code" href="classMcMd_1_1ConfigIo.html#a3f20f914433938f289522c221751c5aa" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#a8784ff471540e53f5c1e40a55cabf6c6" title="Get the number of molecules of one Species in this System.">nMolecule</a>(iSpec);
-<a name="l00180"></a>00180          nAtom += nMolecule*(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>());
-<a name="l00181"></a>00181          nBond += nMolecule*(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a1563670a5e13c2370c1ec37ef0f242c4" title="Get number of bonds per molecule for this Species.">nBond</a>());
+<a name="l00180"></a>00180          nAtom += nMolecule*(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>());
+<a name="l00181"></a>00181          nBond += nMolecule*(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>());
 <a name="l00182"></a>00182       }
 <a name="l00183"></a>00183 
 <a name="l00184"></a>00184       <span class="comment">// Write numbers of atoms, bonds, etc.</span>
@@ -329,7 +329,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:07 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

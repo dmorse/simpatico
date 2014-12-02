@@ -105,27 +105,27 @@
 <a name="l00046"></a>00046    {
 <a name="l00047"></a>00047 
 <a name="l00048"></a>00048       <span class="comment">// Preconditions</span>
-<a name="l00049"></a>00049       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>() &lt; 2) {
+<a name="l00049"></a>00049       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>() &lt; 2) {
 <a name="l00050"></a>00050          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtom &lt; 2&quot;</span>);
 <a name="l00051"></a>00051       }
-<a name="l00052"></a>00052       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a1563670a5e13c2370c1ec37ef0f242c4" title="Get number of bonds per molecule for this Species.">nBond</a>() != <a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 1) {
+<a name="l00052"></a>00052       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>() != <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 1) {
 <a name="l00053"></a>00053          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nBond != nAtom - 1&quot;</span>);
 <a name="l00054"></a>00054       }
 <a name="l00055"></a>00055 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
 <a name="l00056"></a>00056 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Linear.html#a0f51c41c643575dd21a77bc156773f70" title="Does this chain have angle potentials (0 = false, 1 = true).">hasAngles_</a>) {
-<a name="l00057"></a>00057          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#afa22397491fdf6edf5a11136a6f0f07f" title="Get number of angles per molecule for this Species.">nAngle</a>() != <a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 2) {
+<a name="l00057"></a>00057          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a3e7e63f3ac985c2473b8f550dc999c2c" title="Get number of angles per molecule for this Species.">nAngle</a>() != <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 2) {
 <a name="l00058"></a>00058             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAngle != nAtom - 2&quot;</span>);
 <a name="l00059"></a>00059          }
 <a name="l00060"></a>00060       }
 <a name="l00061"></a>00061 <span class="preprocessor">      #endif</span>
 <a name="l00062"></a>00062 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
 <a name="l00063"></a>00063 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Linear.html#aafaeea476e268681dcfadff8cf961985" title="Does this chain have dihedral potentials (0 = false, 1 = true).">hasDihedrals_</a>) {
-<a name="l00064"></a>00064          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>() &gt; 3) {
-<a name="l00065"></a>00065             <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#aad29534f4ca747c2a7f35ccaa9572bca" title="Get number of dihedrals per molecule for this Species.">nDihedral</a>() != <a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 3) {
+<a name="l00064"></a>00064          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>() &gt; 3) {
+<a name="l00065"></a>00065             <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a31087a5a59ca3faacd263d8caefa39c2" title="Get number of dihedrals per molecule for this Species.">nDihedral</a>() != <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 3) {
 <a name="l00066"></a>00066                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nDihedral != nAtom - 3&quot;</span>);
 <a name="l00067"></a>00067             }
 <a name="l00068"></a>00068          } <span class="keywordflow">else</span> {
-<a name="l00069"></a>00069             <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#aad29534f4ca747c2a7f35ccaa9572bca" title="Get number of dihedrals per molecule for this Species.">nDihedral</a>() != 0) {
+<a name="l00069"></a>00069             <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a31087a5a59ca3faacd263d8caefa39c2" title="Get number of dihedrals per molecule for this Species.">nDihedral</a>() != 0) {
 <a name="l00070"></a>00070                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nDihedral != 0 when nAtom &lt; 4&quot;</span>);
 <a name="l00071"></a>00071             }
 <a name="l00072"></a>00072          }
@@ -134,23 +134,23 @@
 <a name="l00075"></a>00075 <span class="preprocessor"></span>
 <a name="l00076"></a>00076       <span class="keywordtype">int</span> i; 
 <a name="l00077"></a>00077 
-<a name="l00078"></a>00078       <a class="code" href="classMcMd_1_1Species.html#a913f31e19320ec418eee5f5502f26e1f" title="Allocate chemical structure arrays.">allocate</a>();
+<a name="l00078"></a>00078       <a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca" title="Allocate chemical structure arrays.">allocate</a>();
 <a name="l00079"></a>00079 
 <a name="l00080"></a>00080       <span class="comment">// Set Atom Type Ids</span>
-<a name="l00081"></a>00081       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Get number of atoms per molecule for this Species.">nAtom</a>(); ++i) {
-<a name="l00082"></a>00082          <a class="code" href="classMcMd_1_1Species.html#a78906cd81231a9fb349cdcbfd2bd3c21" title="Set the type for one atom in a generic molecule of this Species.">setAtomType</a>(i, <a class="code" href="classMcMd_1_1Linear.html#aaccc5851cbb002d34d583fbed031ecd7" title="Return the atom type id for a specific atom.">calculateAtomTypeId</a>(i));
+<a name="l00081"></a>00081       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>(); ++i) {
+<a name="l00082"></a>00082          <a class="code" href="classMcMd_1_1Species.html#a5244d3eab99baf79b4b270f3abd168a6" title="Set the type for one atom in a generic molecule of this Species.">setAtomType</a>(i, <a class="code" href="classMcMd_1_1Linear.html#aaccc5851cbb002d34d583fbed031ecd7" title="Return the atom type id for a specific atom.">calculateAtomTypeId</a>(i));
 <a name="l00083"></a>00083       }
 <a name="l00084"></a>00084 
 <a name="l00085"></a>00085       <span class="comment">// Build Bonds</span>
-<a name="l00086"></a>00086       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a1563670a5e13c2370c1ec37ef0f242c4" title="Get number of bonds per molecule for this Species.">nBond</a>(); ++i) {
-<a name="l00087"></a>00087          <a class="code" href="classMcMd_1_1Species.html#a67486ecf54a32f4d907f41bbf91c1cdd" title="Add a bond to the chemical structure of a generic molecule.">makeBond</a>(i, i, i+1, <a class="code" href="classMcMd_1_1Linear.html#a56e42940d79548e590e528873f08e0a8" title="Return the bond type id for a specific bond.">calculateBondTypeId</a>(i));
+<a name="l00086"></a>00086       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>(); ++i) {
+<a name="l00087"></a>00087          <a class="code" href="classMcMd_1_1Species.html#a2d72cd7d93ac802ce5f567e4a41eb152" title="Add a bond to the chemical structure of a generic molecule.">makeBond</a>(i, i, i+1, <a class="code" href="classMcMd_1_1Linear.html#a56e42940d79548e590e528873f08e0a8" title="Return the bond type id for a specific bond.">calculateBondTypeId</a>(i));
 <a name="l00088"></a>00088       }
 <a name="l00089"></a>00089 
 <a name="l00090"></a>00090 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
 <a name="l00091"></a>00091 <span class="preprocessor"></span>      <span class="comment">// Build Angles </span>
 <a name="l00092"></a>00092       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Linear.html#a0f51c41c643575dd21a77bc156773f70" title="Does this chain have angle potentials (0 = false, 1 = true).">hasAngles_</a>) {
-<a name="l00093"></a>00093          <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#afa22397491fdf6edf5a11136a6f0f07f" title="Get number of angles per molecule for this Species.">nAngle</a>(); ++i) {
-<a name="l00094"></a>00094             <a class="code" href="classMcMd_1_1Species.html#a76beb4e0ee91cb9965331794822c873c" title="Add an angle to the chemical structure of a generic molecule.">makeAngle</a>(i, i, i+1, i+2, <a class="code" href="classMcMd_1_1Linear.html#a9a5342740223f130d8333d2e19cae93b" title="Return the angle type id for a specific angle.">calculateAngleTypeId</a>(i));
+<a name="l00093"></a>00093          <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a3e7e63f3ac985c2473b8f550dc999c2c" title="Get number of angles per molecule for this Species.">nAngle</a>(); ++i) {
+<a name="l00094"></a>00094             <a class="code" href="classMcMd_1_1Species.html#aebf9931e9727df0019d163eab9a130b7" title="Add an angle to the chemical structure of a generic molecule.">makeAngle</a>(i, i, i+1, i+2, <a class="code" href="classMcMd_1_1Linear.html#a9a5342740223f130d8333d2e19cae93b" title="Return the angle type id for a specific angle.">calculateAngleTypeId</a>(i));
 <a name="l00095"></a>00095          }
 <a name="l00096"></a>00096       }
 <a name="l00097"></a>00097 <span class="preprocessor">      #endif</span>
@@ -158,8 +158,8 @@
 <a name="l00099"></a>00099 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
 <a name="l00100"></a>00100 <span class="preprocessor"></span>      <span class="comment">// Build Dihedrals.</span>
 <a name="l00101"></a>00101       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Linear.html#aafaeea476e268681dcfadff8cf961985" title="Does this chain have dihedral potentials (0 = false, 1 = true).">hasDihedrals_</a>) {
-<a name="l00102"></a>00102          <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#aad29534f4ca747c2a7f35ccaa9572bca" title="Get number of dihedrals per molecule for this Species.">nDihedral</a>(); ++i) {
-<a name="l00103"></a>00103             <a class="code" href="classMcMd_1_1Species.html#a7b523d444c8bd0c069c9c8ab2d6878bc" title="Add a dihedral to the chemical structure of a generic molecule.">makeDihedral</a>(i, i, i+1, i+2, i+3, <a class="code" href="classMcMd_1_1Linear.html#a2a8755d83910e282c5eb196993989628" title="Return the dihedral type id for a specific dihedral.">calculateDihedralTypeId</a>(i));
+<a name="l00102"></a>00102          <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a31087a5a59ca3faacd263d8caefa39c2" title="Get number of dihedrals per molecule for this Species.">nDihedral</a>(); ++i) {
+<a name="l00103"></a>00103             <a class="code" href="classMcMd_1_1Species.html#a2ab5279edb49ced90eb02b73b81f768e" title="Add a dihedral to the chemical structure of a generic molecule.">makeDihedral</a>(i, i, i+1, i+2, i+3, <a class="code" href="classMcMd_1_1Linear.html#a2a8755d83910e282c5eb196993989628" title="Return the dihedral type id for a specific dihedral.">calculateDihedralTypeId</a>(i));
 <a name="l00104"></a>00104          }
 <a name="l00105"></a>00105       }
 <a name="l00106"></a>00106 <span class="preprocessor">      #endif</span>
@@ -170,8 +170,8 @@
 <a name="l00114"></a>00114       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;double&gt;</a> exclusionRadius, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system, <a class="code" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> &amp;cellList,
 <a name="l00115"></a>00115       <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a> *bondPotentialPtr, <span class="keyword">const</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">Boundary</a> &amp;boundary)
 <a name="l00116"></a>00116    {
-<a name="l00117"></a>00117       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; lastAtom = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(atomId);
-<a name="l00118"></a>00118       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; thisAtom = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(++atomId);
+<a name="l00117"></a>00117       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; lastAtom = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(atomId);
+<a name="l00118"></a>00118       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; thisAtom = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(++atomId);
 <a name="l00119"></a>00119       <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; random = system.<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afe4a8354b0ecaf6daf94ea9b8343b26b" title="Get the random number generator by reference.">random</a>();
 <a name="l00120"></a>00120 
 <a name="l00121"></a>00121       <span class="keywordtype">bool</span> hasBeenPlaced = <span class="keyword">false</span>;
@@ -215,7 +215,7 @@
 <a name="l00159"></a>00159             cellList.<a class="code" href="classMcMd_1_1CellList.html#a2c1742bd324dd3ab05663dcb8ef2c382" title="Add a Atom to the appropriate cell, based on its position.">addAtom</a>(thisAtom);
 <a name="l00160"></a>00160 
 <a name="l00161"></a>00161             <span class="comment">// are we add the end of the chain?</span>
-<a name="l00162"></a>00162             <span class="keywordflow">if</span> (atomId == molecule.<a class="code" href="classMcMd_1_1Molecule.html#a3a3a58955a18ebeb266d328b605695e6" title="Get the number of Atoms in this Molecule.">nAtom</a>()-1) 
+<a name="l00162"></a>00162             <span class="keywordflow">if</span> (atomId == molecule.<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>()-1) 
 <a name="l00163"></a>00163               <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00164"></a>00164             
 <a name="l00165"></a>00165             <span class="comment">// recursion step</span>
@@ -254,12 +254,12 @@
 <a name="l00201"></a>00201       cellList.<a class="code" href="classMcMd_1_1CellList.html#a9bea78c1d93f2102ae793c3a377ff9f5" title="Allocate memory for this CellList.">allocate</a>(system.<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a026daa03685c6af5d7defc5d4e724a65" title="Get the total number of Atoms allocated.">atomCapacity</a>(),
 <a name="l00202"></a>00202          boundary, 2.0*2.0*maxExclusionRadius);
 <a name="l00203"></a>00203 
-<a name="l00204"></a>00204       <span class="keywordflow">if</span> (nMolecule &gt; <a class="code" href="classMcMd_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Get total number of Molecule objects allocated for this Species.">capacity</a>())
+<a name="l00204"></a>00204       <span class="keywordflow">if</span> (nMolecule &gt; <a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>())
 <a name="l00205"></a>00205          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nMolecule &gt; Species.capacity()!&quot;</span>); 
 <a name="l00206"></a>00206 
 <a name="l00207"></a>00207       <span class="keywordflow">for</span> (iMol = 0; iMol &lt; nMolecule; ++iMol) {
 <a name="l00208"></a>00208          <span class="comment">// Add a new molecule to the system</span>
-<a name="l00209"></a>00209          <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> &amp;newMolecule= <a class="code" href="classMcMd_1_1Species.html#a00aaeb56269e3aefcc38f0bf4a788f62" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>();
+<a name="l00209"></a>00209          <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> &amp;newMolecule= <a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>();
 <a name="l00210"></a>00210          system.<a class="code" href="classMcMd_1_1System.html#a5311d7245d55b3efa0848ed040b053b3" title="Add a Molecule to this System.">addMolecule</a>(newMolecule);
 <a name="l00211"></a>00211 
 <a name="l00212"></a>00212          <span class="comment">// Try placing atoms</span>
@@ -268,7 +268,7 @@
 <a name="l00215"></a>00215             <span class="comment">// Place first atom</span>
 <a name="l00216"></a>00216             <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> pos;
 <a name="l00217"></a>00217             system.<a class="code" href="classMcMd_1_1System.html#ace1b2b95dc094767d218e1dcf520b5ca" title="Get the Boundary by reference.">boundary</a>().<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a06a0321893c1c2916865c1d79161cf6e" title="Generate random position within the primary unit cell.">randomPosition</a>(system.<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afe4a8354b0ecaf6daf94ea9b8343b26b" title="Get the random number generator by reference.">random</a>(),pos);
-<a name="l00218"></a>00218             <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;thisAtom = newMolecule.<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(0);
+<a name="l00218"></a>00218             <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;thisAtom = newMolecule.<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(0);
 <a name="l00219"></a>00219  
 <a name="l00220"></a>00220             <span class="comment">// check if the first atom can be placed at the new position</span>
 <a name="l00221"></a>00221             <a class="code" href="classUtil_1_1FSArray.html">CellList::NeighborArray</a> neighbors;
@@ -302,7 +302,7 @@
 <a name="l00249"></a>00249          }
 <a name="l00250"></a>00250          <span class="keywordflow">if</span> (! moleculeHasBeenPlaced) {
 <a name="l00251"></a>00251            std::ostringstream oss;
-<a name="l00252"></a>00252            oss &lt;&lt;  <span class="stringliteral">&quot;Failed to place molecule &quot;</span> &lt;&lt; newMolecule.<a class="code" href="classMcMd_1_1Molecule.html#ab4a08686aaf206b7ba1f50057bae0a6a" title="Get the index for this Molecule (unique in species).">id</a>();
+<a name="l00252"></a>00252            oss &lt;&lt;  <span class="stringliteral">&quot;Failed to place molecule &quot;</span> &lt;&lt; newMolecule.<a class="code" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">id</a>();
 <a name="l00253"></a>00253            <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(oss.str().c_str());
 <a name="l00254"></a>00254          }
 <a name="l00255"></a>00255 
@@ -312,11 +312,11 @@
 <a name="l00259"></a>00259 <span class="preprocessor"></span>      <span class="comment">// Check</span>
 <a name="l00260"></a>00260       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iMol =0; iMol &lt; nMolecule; ++iMol) {
 <a name="l00261"></a>00261          <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a> atomIter;
-<a name="l00262"></a>00262          system.<a class="code" href="classMcMd_1_1System.html#a5b439fee621a22ebf5e98ee540c2a92f" title="Get a specific Molecule in this System, by integer index.">molecule</a>(<span class="keywordtype">id</span>(),iMol).<a class="code" href="classMcMd_1_1Molecule.html#aae40ce6fcc1df34548da1d9bd72b458c" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter);
+<a name="l00262"></a>00262          system.<a class="code" href="classMcMd_1_1System.html#a5b439fee621a22ebf5e98ee540c2a92f" title="Get a specific Molecule in this System, by integer index.">molecule</a>(<span class="keywordtype">id</span>(),iMol).<a class="code" href="classMcMd_1_1Molecule.html#a593e8b56859b59dc753ff342a8063022" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter);
 <a name="l00263"></a>00263          <span class="keywordflow">for</span> (; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00264"></a>00264             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> jMol =0; jMol &lt; nMolecule; ++jMol) {
 <a name="l00265"></a>00265                <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a> atomIter2;
-<a name="l00266"></a>00266                system.<a class="code" href="classMcMd_1_1System.html#a5b439fee621a22ebf5e98ee540c2a92f" title="Get a specific Molecule in this System, by integer index.">molecule</a>(<span class="keywordtype">id</span>(),jMol).<a class="code" href="classMcMd_1_1Molecule.html#aae40ce6fcc1df34548da1d9bd72b458c" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter2);
+<a name="l00266"></a>00266                system.<a class="code" href="classMcMd_1_1System.html#a5b439fee621a22ebf5e98ee540c2a92f" title="Get a specific Molecule in this System, by integer index.">molecule</a>(<span class="keywordtype">id</span>(),jMol).<a class="code" href="classMcMd_1_1Molecule.html#a593e8b56859b59dc753ff342a8063022" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter2);
 <a name="l00267"></a>00267                <span class="keywordflow">for</span> (; atomIter2.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter2 ) {
 <a name="l00268"></a>00268                   <span class="keywordflow">if</span> (atomIter2-&gt;id() != atomIter-&gt;id()) {
 <a name="l00269"></a>00269                      <span class="keywordtype">double</span> r = sqrt(boundary.<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#aa3177af26a71f7b36d2d4c67bc757e87" title="Return square distance between positions r1 and r2.">distanceSq</a>(
@@ -342,7 +342,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:08 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -129,10 +129,10 @@
 <a name="l00070"></a>00070          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid speciesId&quot;</span>);
 <a name="l00071"></a>00071       }
 <a name="l00072"></a>00072       speciesPtr_ = &amp;(<a class="code" href="classMcMd_1_1SystemAnalyzer.html#ab488bbc25bc9f4cdb769403c0458b839" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_));
-<a name="l00073"></a>00073       <span class="keywordflow">if</span> (!speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a3713aef1064d4abd7a68589c2d2d2890" title="Is this a mutable Species?">isMutable</a>()) {
+<a name="l00073"></a>00073       <span class="keywordflow">if</span> (!speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a196a2b822968ba57d14a09bb0833a5b4" title="Is this a mutable Species?">isMutable</a>()) {
 <a name="l00074"></a>00074          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: Species must be mutable&quot;</span>);
 <a name="l00075"></a>00075       }
-<a name="l00076"></a>00076       mutatorPtr_ = &amp;speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#a1f51fdc7a0b03e63f8d6ee82d3325b73" title="Return the species mutator object by reference.">mutator</a>();
+<a name="l00076"></a>00076       mutatorPtr_ = &amp;speciesPtr_-&gt;<a class="code" href="classMcMd_1_1Species.html#acab56ccef7f5e9a05e61fb35d88b1a96" title="Return the species mutator object by reference.">mutator</a>();
 <a name="l00077"></a>00077       <span class="keywordflow">if</span> (nState_ != mutatorPtr_-&gt;<a class="code" href="classMcMd_1_1SpeciesMutator.html#aad3a9233ea639b9087a77c0f98eda46d" title="Get the number of possible molecule states.">nState</a>()) {
 <a name="l00078"></a>00078          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent values of nState&quot;</span>);
 <a name="l00079"></a>00079       }
@@ -183,7 +183,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:01 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

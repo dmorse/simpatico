@@ -97,7 +97,7 @@ iter.notEnd() returns false when iter no longer points to a valid element.  </li
 <p>Loops over atoms, covalent groups (e.g,. bonds) and (in <a class="el" href="namespaceMcMd.html" title="Serial Monte Carlo (MC) and molecular dynamics (MC) simulation.">McMd</a>) molecules are also implemented using iterators. Different interfaces are used in the <a class="el" href="namespaceMcMd.html" title="Serial Monte Carlo (MC) and molecular dynamics (MC) simulation.">McMd</a> and <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) MD simulation.">DdMd</a> namespaces, which are discussed separately below.</p>
 <h2><a class="anchor" id="developer_iterator_mcMd_section"></a>
 Iterators in mcSim and mdSim</h2>
-<p>In mcSim and mdSim simulations, each <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">McMd::System</a> has a separate container of molecules for each species. The typedefs <a class="el" href="classMcMd_1_1System.html#aeee4a70e1f9b8194c170a48c8fa08826" title="Iterator for a MoleculeSet.">McMd::System::MoleculeIterator</a> and <a class="el" href="classMcMd_1_1System.html#acb5f24a14ca6186cb63c0ef4a69107d7" title="Const Iterator for a MoleculeSet.">McMd::System::ConstMoleculeIterator</a> are aliases for iterator types that can iterate over all molecules of a specific <a class="el" href="classSpecies.html">Species</a> within one System. The <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">McMd::System</a> class provides overloaded begin() methods for these two iterator types. Each of the System::begin() method takes an integer species index and molecule iterator as parameters, and initialize the iterator to point at the first molecule in the specified species. The syntax for a loop over all molecule of a specific species with a System is thus: </p>
+<p>In mcSim and mdSim simulations, each <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">McMd::System</a> has a separate container of molecules for each species. The typedefs <a class="el" href="classMcMd_1_1System.html#aeee4a70e1f9b8194c170a48c8fa08826" title="Iterator for a MoleculeSet.">McMd::System::MoleculeIterator</a> and <a class="el" href="classMcMd_1_1System.html#acb5f24a14ca6186cb63c0ef4a69107d7" title="Const Iterator for a MoleculeSet.">McMd::System::ConstMoleculeIterator</a> are aliases for iterator types that can iterate over all molecules of a specific Species within one System. The <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">McMd::System</a> class provides overloaded begin() methods for these two iterator types. Each of the System::begin() method takes an integer species index and molecule iterator as parameters, and initialize the iterator to point at the first molecule in the specified species. The syntax for a loop over all molecule of a specific species with a System is thus: </p>
 <div class="fragment"><pre class="fragment">   System system;
    System::MoleculeIterator molIter:
 
@@ -171,7 +171,7 @@ Iterators in ddSim</h2>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:02 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:11 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

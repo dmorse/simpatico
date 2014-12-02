@@ -109,8 +109,8 @@
 <a name="l00050"></a>00050          <span class="keywordtype">int</span> nFill = 0;
 <a name="l00051"></a>00051          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nSpecies; ++i) {
 <a name="l00052"></a>00052             speciesPtr = &amp;<a class="code" href="classTools_1_1ConfigReader.html#a9cd20124cb0483ae20ecd81c75474224" title="Get parent Configuration by reference.">configuration</a>().<a class="code" href="classTools_1_1Configuration.html#ade2caa02eef7327a178a7fc7fa310bdb" title="Get a particular species identified by index.">species</a>(i);
-<a name="l00053"></a>00053             nFill += speciesPtr-&gt;<a class="code" href="classTools_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Return number of atoms per molecule.">nAtom</a>()*speciesPtr-&gt;<a class="code" href="classTools_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Return maximum number of molecules in this species.">capacity</a>();
-<a name="l00054"></a>00054             speciesPtr-&gt;<a class="code" href="classTools_1_1Species.html#a2c70acfe2618d87f8a28741bfc8a9fcb" title="Clear all molecules, reset to empty.">clear</a>();
+<a name="l00053"></a>00053             nFill += speciesPtr-&gt;<a class="code" href="classTools_1_1Species.html#af3874e5f199e0407b5886aeab44a02b9" title="Return number of atoms per molecule.">nAtom</a>()*speciesPtr-&gt;<a class="code" href="classTools_1_1Species.html#a8b89348415720e947083086f4c0a6eb3" title="Return maximum number of molecules in this species.">capacity</a>();
+<a name="l00054"></a>00054             speciesPtr-&gt;<a class="code" href="classTools_1_1Species.html#a3640770d77dc7a4263154ea45b65fdcc" title="Clear all molecules, reset to empty.">clear</a>();
 <a name="l00055"></a>00055          }
 <a name="l00056"></a>00056          <a class="code" href="classTools_1_1AtomStorage.html" title="Container for a set of atoms.">AtomStorage</a>* storagePtr = &amp;<a class="code" href="classTools_1_1ConfigReader.html#a9cd20124cb0483ae20ecd81c75474224" title="Get parent Configuration by reference.">configuration</a>().<a class="code" href="classTools_1_1Configuration.html#a099cd8e0fcd4349f5f5d9ea8389f8b79" title="Get the AtomStorage.">atoms</a>();
 <a name="l00057"></a>00057          <span class="keywordflow">if</span> (storagePtr-&gt;<a class="code" href="classTools_1_1AtomStorage.html#ae0fc0fba6d8d85bc2740cf091957dad8" title="Get number of atoms.">size</a>() != nFill) {
@@ -124,8 +124,8 @@
 <a name="l00065"></a>00065          <span class="keywordtype">int</span> <span class="keywordtype">id</span> = 0;
 <a name="l00066"></a>00066          <span class="keywordflow">for</span> (speciesId = 0; speciesId &lt; nSpecies; ++speciesId) {
 <a name="l00067"></a>00067             speciesPtr = &amp;<a class="code" href="classTools_1_1ConfigReader.html#a9cd20124cb0483ae20ecd81c75474224" title="Get parent Configuration by reference.">configuration</a>().<a class="code" href="classTools_1_1Configuration.html#ade2caa02eef7327a178a7fc7fa310bdb" title="Get a particular species identified by index.">species</a>(speciesId);
-<a name="l00068"></a>00068             nMolecule  = speciesPtr-&gt;<a class="code" href="classTools_1_1Species.html#a5db1eff06f8c0359c2e8e72d518995c1" title="Return maximum number of molecules in this species.">capacity</a>();
-<a name="l00069"></a>00069             nAtom = speciesPtr-&gt;<a class="code" href="classTools_1_1Species.html#a6652a1ce632f1e033011eb0f5b453409" title="Return number of atoms per molecule.">nAtom</a>();
+<a name="l00068"></a>00068             nMolecule  = speciesPtr-&gt;<a class="code" href="classTools_1_1Species.html#a8b89348415720e947083086f4c0a6eb3" title="Return maximum number of molecules in this species.">capacity</a>();
+<a name="l00069"></a>00069             nAtom = speciesPtr-&gt;<a class="code" href="classTools_1_1Species.html#af3874e5f199e0407b5886aeab44a02b9" title="Return number of atoms per molecule.">nAtom</a>();
 <a name="l00070"></a>00070             <span class="keywordflow">for</span> (moleculeId = 0; moleculeId &lt; nMolecule; ++moleculeId) {
 <a name="l00071"></a>00071                <span class="keywordflow">for</span> (atomId = 0; atomId &lt; nAtom; ++atomId) {
 <a name="l00072"></a>00072                   atomPtr = storagePtr-&gt;<a class="code" href="classTools_1_1AtomStorage.html#aae64f8be7f7625dd3d77c9d5217170b4" title="Get a pointer to an atom by global id.">ptr</a>(<span class="keywordtype">id</span>);
@@ -155,7 +155,7 @@
 <a name="l00096"></a>00096       <span class="keywordtype">int</span> nSpecies = <a class="code" href="classTools_1_1ConfigReader.html#a9cd20124cb0483ae20ecd81c75474224" title="Get parent Configuration by reference.">configuration</a>().<a class="code" href="classTools_1_1Configuration.html#a03fc49ed765aa81d8a8485afd5972071" title="Number of species.">nSpecies</a>();
 <a name="l00097"></a>00097       <span class="keywordflow">if</span> (nSpecies &gt; 0) {
 <a name="l00098"></a>00098          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nSpecies; ++i) {
-<a name="l00099"></a>00099             <a class="code" href="classTools_1_1ConfigReader.html#a9cd20124cb0483ae20ecd81c75474224" title="Get parent Configuration by reference.">configuration</a>().<a class="code" href="classTools_1_1Configuration.html#ade2caa02eef7327a178a7fc7fa310bdb" title="Get a particular species identified by index.">species</a>(i).<a class="code" href="classTools_1_1Species.html#a2c70acfe2618d87f8a28741bfc8a9fcb" title="Clear all molecules, reset to empty.">clear</a>();
+<a name="l00099"></a>00099             <a class="code" href="classTools_1_1ConfigReader.html#a9cd20124cb0483ae20ecd81c75474224" title="Get parent Configuration by reference.">configuration</a>().<a class="code" href="classTools_1_1Configuration.html#ade2caa02eef7327a178a7fc7fa310bdb" title="Get a particular species identified by index.">species</a>(i).<a class="code" href="classTools_1_1Species.html#a3640770d77dc7a4263154ea45b65fdcc" title="Clear all molecules, reset to empty.">clear</a>();
 <a name="l00100"></a>00100          }
 <a name="l00101"></a>00101          <span class="keywordtype">int</span> speciesId;
 <a name="l00102"></a>00102          <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">AtomStorage::Iterator</a> iter;
@@ -168,10 +168,10 @@
 <a name="l00109"></a>00109             <span class="keywordflow">if</span> (speciesId &gt;= nSpecies) {
 <a name="l00110"></a>00110                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;speciesId &gt;= nSpecies&quot;</span>);
 <a name="l00111"></a>00111             }
-<a name="l00112"></a>00112             <a class="code" href="classTools_1_1ConfigReader.html#a9cd20124cb0483ae20ecd81c75474224" title="Get parent Configuration by reference.">configuration</a>().<a class="code" href="classTools_1_1Configuration.html#ade2caa02eef7327a178a7fc7fa310bdb" title="Get a particular species identified by index.">species</a>(speciesId).<a class="code" href="classTools_1_1Species.html#ad7c6bfc34ec598781bd0676e58b994a1" title="Add an atom to the species.">addAtom</a>(*iter);
+<a name="l00112"></a>00112             <a class="code" href="classTools_1_1ConfigReader.html#a9cd20124cb0483ae20ecd81c75474224" title="Get parent Configuration by reference.">configuration</a>().<a class="code" href="classTools_1_1Configuration.html#ade2caa02eef7327a178a7fc7fa310bdb" title="Get a particular species identified by index.">species</a>(speciesId).<a class="code" href="classTools_1_1Species.html#a7a3b984d1b34d0891cfa98b29a109f2c" title="Add an atom to the species.">addAtom</a>(*iter);
 <a name="l00113"></a>00113          }
 <a name="l00114"></a>00114          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nSpecies; ++i) {
-<a name="l00115"></a>00115             <a class="code" href="classTools_1_1ConfigReader.html#a9cd20124cb0483ae20ecd81c75474224" title="Get parent Configuration by reference.">configuration</a>().<a class="code" href="classTools_1_1Configuration.html#ade2caa02eef7327a178a7fc7fa310bdb" title="Get a particular species identified by index.">species</a>(i).<a class="code" href="classTools_1_1Species.html#abb34855ad9c3e2fc8d5b1bf4d45abde0" title="Return true if valid, or throw Exception.">isValid</a>();
+<a name="l00115"></a>00115             <a class="code" href="classTools_1_1ConfigReader.html#a9cd20124cb0483ae20ecd81c75474224" title="Get parent Configuration by reference.">configuration</a>().<a class="code" href="classTools_1_1Configuration.html#ade2caa02eef7327a178a7fc7fa310bdb" title="Get a particular species identified by index.">species</a>(i).<a class="code" href="classTools_1_1Species.html#afeae459e7381d5de66afdad8952cd86a" title="Return true if valid, or throw Exception.">isValid</a>();
 <a name="l00116"></a>00116          }
 <a name="l00117"></a>00117       }
 <a name="l00118"></a>00118    }
@@ -183,7 +183,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:56 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:06 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

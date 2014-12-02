@@ -164,7 +164,7 @@
 <a name="l00105"></a>00105 
 <a name="l00106"></a>00106       <span class="comment">// Randomly pick up a molecule.</span>
 <a name="l00107"></a>00107       molPtr1 = &amp;(<a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1System.html#a04b9247341002c8d40f2133ed9136468" title="Get a random Molecule of a specified species in this System.">randomMolecule</a>(<a class="code" href="classMcMd_1_1RingOctaRebridgeMove.html#ae570e365db957cbd3cb4ad28c09907ba" title="Integer index for molecular species.">speciesId_</a>));
-<a name="l00108"></a>00108       nAtom = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a3a3a58955a18ebeb266d328b605695e6" title="Get the number of Atoms in this Molecule.">nAtom</a>();
+<a name="l00108"></a>00108       nAtom = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>();
 <a name="l00109"></a>00109 
 <a name="l00110"></a>00110       <span class="comment">// Randomly choose the a atom in the tetra-group.</span>
 <a name="l00111"></a>00111       im = <a class="code" href="classMcMd_1_1McMove.html#a8e27f330daa6bbc314b8f81ca0f9decb" title="Get Random number generator of parent Simulation.">random</a>().<a class="code" href="classUtil_1_1Random.html#a2a7f4c20d13a3ea0bc532c224aecc40e" title="Return random long int x uniformly distributed in range1 &lt;= x &lt; range2.">uniformInt</a>(0, nAtom);
@@ -174,9 +174,9 @@
 <a name="l00115"></a>00115       <span class="keywordflow">if</span> (!found) <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00116"></a>00116 
 <a name="l00117"></a>00117       <span class="comment">// Calcuate the energy change.</span>
-<a name="l00118"></a>00118       mPtr = &amp;(molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(im));
+<a name="l00118"></a>00118       mPtr = &amp;(molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(im));
 <a name="l00119"></a>00119       molPtr2 = &amp;(<a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1System.html#a5b439fee621a22ebf5e98ee540c2a92f" title="Get a specific Molecule in this System, by integer index.">molecule</a>(<a class="code" href="classMcMd_1_1RingOctaRebridgeMove.html#ae570e365db957cbd3cb4ad28c09907ba" title="Integer index for molecular species.">speciesId_</a>, molId2));
-<a name="l00120"></a>00120       nPtr = &amp;(molPtr2-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(in));
+<a name="l00120"></a>00120       nPtr = &amp;(molPtr2-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(in));
 <a name="l00121"></a>00121 
 <a name="l00122"></a>00122       energy = 0.0;
 <a name="l00123"></a>00123       energy -= <a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#a0bb7699e421625dd5397a9955c0674cb" title="Calculate the total potential energy for one Atom.">atomPotentialEnergy</a>(*mPtr);
@@ -243,15 +243,15 @@
 <a name="l00184"></a>00184       <span class="keywordtype">bool</span>     validIndex, found;
 <a name="l00185"></a>00185 
 <a name="l00186"></a>00186       <span class="comment">// Number of atoms per molecule.</span>
-<a name="l00187"></a>00187       nAtom = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a3a3a58955a18ebeb266d328b605695e6" title="Get the number of Atoms in this Molecule.">nAtom</a>();
+<a name="l00187"></a>00187       nAtom = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>();
 <a name="l00188"></a>00188 
 <a name="l00189"></a>00189       <span class="comment">// The a and b Atom id.</span>
 <a name="l00190"></a>00190       ia = <a class="code" href="classMcMd_1_1RingOctaRebridgeMove.html#a202b6dc73642a30fc5dd7b5ff18da636" title="Shift Atom index along a Ring.">modId</a>(im-1, nAtom);
 <a name="l00191"></a>00191       ib = <a class="code" href="classMcMd_1_1RingOctaRebridgeMove.html#a202b6dc73642a30fc5dd7b5ff18da636" title="Shift Atom index along a Ring.">modId</a>(im+1, nAtom);
 <a name="l00192"></a>00192 
-<a name="l00193"></a>00193       aPos = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(ia).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
-<a name="l00194"></a>00194       bPos = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(ib).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
-<a name="l00195"></a>00195       mPos = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(im).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00193"></a>00193       aPos = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(ia).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00194"></a>00194       bPos = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(ib).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00195"></a>00195       mPos = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(im).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00196"></a>00196 
 <a name="l00197"></a>00197       <span class="comment">// Prepare for the scan.</span>
 <a name="l00198"></a>00198       found = <span class="keyword">false</span>;
@@ -283,11 +283,11 @@
 <a name="l00224"></a>00224 
 <a name="l00225"></a>00225       <span class="comment">// Loop over neighboring monomers and identify the octa-group.</span>
 <a name="l00226"></a>00226       nGroup = 0;
-<a name="l00227"></a>00227       molId1 = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ab4a08686aaf206b7ba1f50057bae0a6a" title="Get the index for this Molecule (unique in species).">id</a>();
+<a name="l00227"></a>00227       molId1 = molPtr1-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">id</a>();
 <a name="l00228"></a>00228       <span class="keywordflow">for</span> (j = 0; j &lt; nNeighbor; ++j) {
 <a name="l00229"></a>00229          pn = <a class="code" href="classMcMd_1_1RingOctaRebridgeMove.html#a611eb059b38568aa6cd4e75dfc576222" title="Neighbor list around test atom.">neighbors_</a>[j];
 <a name="l00230"></a>00230          in = pn-&gt;<a class="code" href="classMcMd_1_1Atom.html#ad051dc3ce9d5a8535f03936e021a8e9c" title="Get local index for this Atom within the parent molecule;.">indexInMolecule</a>();
-<a name="l00231"></a>00231          molId2 = pn-&gt;<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#ab4a08686aaf206b7ba1f50057bae0a6a" title="Get the index for this Molecule (unique in species).">id</a>();
+<a name="l00231"></a>00231          molId2 = pn-&gt;<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">id</a>();
 <a name="l00232"></a>00232 
 <a name="l00233"></a>00233          validIndex = <span class="keyword">true</span>;
 <a name="l00234"></a>00234 
@@ -302,7 +302,7 @@
 <a name="l00243"></a>00243             <span class="keywordflow">if</span> (dmn &lt;= 2 &amp;&amp; dnm &lt;= 2) validIndex = <span class="keyword">false</span>;
 <a name="l00244"></a>00244          }
 <a name="l00245"></a>00245 
-<a name="l00246"></a>00246          <span class="keywordflow">if</span> (pn-&gt;<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#a70de9b3e9ce956c9597c28f36303b40d" title="Get the molecular Species by reference.">species</a>().<a class="code" href="classMcMd_1_1Species.html#acae83456c3717805ab81869e47c58614" title="Get integer id of this Species.">id</a>() != <a class="code" href="classMcMd_1_1RingOctaRebridgeMove.html#ae570e365db957cbd3cb4ad28c09907ba" title="Integer index for molecular species.">speciesId_</a>)
+<a name="l00246"></a>00246          <span class="keywordflow">if</span> (pn-&gt;<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>().<a class="code" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61" title="Get integer id of this Species.">id</a>() != <a class="code" href="classMcMd_1_1RingOctaRebridgeMove.html#ae570e365db957cbd3cb4ad28c09907ba" title="Integer index for molecular species.">speciesId_</a>)
 <a name="l00247"></a>00247             validIndex = <span class="keyword">false</span>;
 <a name="l00248"></a>00248 
 <a name="l00249"></a>00249          <span class="keywordflow">if</span> (validIndex) {
@@ -312,9 +312,9 @@
 <a name="l00253"></a>00253             ic = <a class="code" href="classMcMd_1_1RingOctaRebridgeMove.html#a202b6dc73642a30fc5dd7b5ff18da636" title="Shift Atom index along a Ring.">modId</a>(in-1, nAtom);
 <a name="l00254"></a>00254             <span class="keywordtype">id</span> = <a class="code" href="classMcMd_1_1RingOctaRebridgeMove.html#a202b6dc73642a30fc5dd7b5ff18da636" title="Shift Atom index along a Ring.">modId</a>(in+1, nAtom);
 <a name="l00255"></a>00255 
-<a name="l00256"></a>00256             cPos = molPtr2-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(ic).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
-<a name="l00257"></a>00257             dPos = molPtr2-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(<span class="keywordtype">id</span>).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
-<a name="l00258"></a>00258             nPos = molPtr2-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(in).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00256"></a>00256             cPos = molPtr2-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(ic).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00257"></a>00257             dPos = molPtr2-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(<span class="keywordtype">id</span>).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00258"></a>00258             nPos = molPtr2-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(in).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00259"></a>00259 
 <a name="l00260"></a>00260             <span class="comment">// Distance test.</span>
 <a name="l00261"></a>00261             lenSq = <a class="code" href="classMcMd_1_1SystemMove.html#a9cdab74e6e6c35f76fa3a44b84e165c6" title="Get Boundary object of parent McSystem.">boundary</a>().<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#aa3177af26a71f7b36d2d4c67bc757e87" title="Return square distance between positions r1 and r2.">distanceSq</a>(cPos, mPos);
@@ -370,7 +370,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:48:00 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:10 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -196,14 +196,14 @@
 <a name="l00137"></a>00137 
 <a name="l00138"></a>00138          beta = energyEnsemble().<a class="code" href="classUtil_1_1EnergyEnsemble.html#a41d84a2074977f8f34a08e1c5fcf0d64" title="Return the inverse temperature.">beta</a>();
 <a name="l00139"></a>00139          speciesPtr = &amp;(simulation().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(speciesId_));
-<a name="l00140"></a>00140          molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a00aaeb56269e3aefcc38f0bf4a788f62" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>());
+<a name="l00140"></a>00140          molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>());
 <a name="l00141"></a>00141          system().<a class="code" href="classMcMd_1_1System.html#a5311d7245d55b3efa0848ed040b053b3" title="Add a Molecule to this System.">addMolecule</a>(*molPtr);
 <a name="l00142"></a>00142 
 <a name="l00143"></a>00143          <span class="comment">// Main molecule inserting loop:</span>
 <a name="l00144"></a>00144          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nMoleculeTrial_; i++) {
 <a name="l00145"></a>00145 
 <a name="l00146"></a>00146             <span class="comment">// Inserting the first atom.</span>
-<a name="l00147"></a>00147             endPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(0);
+<a name="l00147"></a>00147             endPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(0);
 <a name="l00148"></a>00148             <span class="keywordflow">for</span> (iTrial = 0; iTrial &lt; nTrial_; ++iTrial) {
 <a name="l00149"></a>00149                <span class="comment">// trialPos = pvtPos + bondVec</span>
 <a name="l00150"></a>00150                boundary().<a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a06a0321893c1c2916865c1d79161cf6e" title="Generate random position within the primary unit cell.">randomPosition</a>(random(), trialPos[iTrial]);
@@ -239,7 +239,7 @@
 <a name="l00180"></a>00180             energy += de;
 <a name="l00181"></a>00181 
 <a name="l00182"></a>00182             <span class="comment">// Inserting the second atom.</span>
-<a name="l00183"></a>00183             <span class="keywordtype">int</span> bondTypeId = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a77295de4efbac02bca661be188d8693f" title="Get a specific Bond in this Molecule by reference.">bond</a>(0).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00183"></a>00183             <span class="keywordtype">int</span> bondTypeId = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(0).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00184"></a>00184             length = system().<a class="code" href="classMcMd_1_1McSystem.html#aed9c37cc7b5ad23cdb6f7648e17a74b7" title="Return the BondPotential by reference.">bondPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a20b4bee11fd05ddf5fd16f55521f92f2" title="Return bond length chosen from equilibrium distribution.">randomBondLength</a>(&amp;random(), 
 <a name="l00185"></a>00185                                                                beta, 
 <a name="l00186"></a>00186                                                                bondTypeId);
@@ -247,8 +247,8 @@
 <a name="l00188"></a>00188             w = 0;
 <a name="l00189"></a>00189             de = 0;
 <a name="l00190"></a>00190 
-<a name="l00191"></a>00191             pvt1Ptr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(0);
-<a name="l00192"></a>00192             endPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(1);
+<a name="l00191"></a>00191             pvt1Ptr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(0);
+<a name="l00192"></a>00192             endPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(1);
 <a name="l00193"></a>00193 
 <a name="l00194"></a>00194             pvt1Pos = pvt1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00195"></a>00195 
@@ -295,17 +295,17 @@
 <a name="l00236"></a>00236             energy += de;
 <a name="l00237"></a>00237 
 <a name="l00238"></a>00238             <span class="comment">// Inserting the third atom.</span>
-<a name="l00239"></a>00239             bondTypeId = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a77295de4efbac02bca661be188d8693f" title="Get a specific Bond in this Molecule by reference.">bond</a>(1).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00239"></a>00239             bondTypeId = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(1).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00240"></a>00240             length = 
 <a name="l00241"></a>00241                system().<a class="code" href="classMcMd_1_1McSystem.html#aed9c37cc7b5ad23cdb6f7648e17a74b7" title="Return the BondPotential by reference.">bondPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a20b4bee11fd05ddf5fd16f55521f92f2" title="Return bond length chosen from equilibrium distribution.">randomBondLength</a>(&amp;random(), 
 <a name="l00242"></a>00242                                                          beta, bondTypeId);
 <a name="l00243"></a>00243 
 <a name="l00244"></a>00244 <span class="preprocessor">            #ifdef INTER_ANGLE</span>
-<a name="l00245"></a>00245 <span class="preprocessor"></span>            <span class="keywordtype">int</span> angleTypeId = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aa5d88898ed0c9971617e1ca025e1d174" title="Get a specific Angle in this Molecule by reference.">angle</a>(0).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00245"></a>00245 <span class="preprocessor"></span>            <span class="keywordtype">int</span> angleTypeId = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a9233fdbb563b2fcdf30189cacfaaa60d" title="Get a specific Angle in this Molecule by reference.">angle</a>(0).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00246"></a>00246             angle = 
 <a name="l00247"></a>00247                system().<a class="code" href="classMcMd_1_1McSystem.html#af48d722b9c2f95ce28258ff6bd5ffe5d" title="Return AnglePotential by reference.">anglePotential</a>().<a class="code" href="classMcMd_1_1AnglePotential.html#ad8b24873175c80be0d33907298c54d7b" title="Return bond angle chosen from equilibrium distribution.">randomAngle</a>(&amp;random(), 
 <a name="l00248"></a>00248                                                      beta, angleTypeId);
-<a name="l00249"></a>00249             pvt2Ptr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(0);
+<a name="l00249"></a>00249             pvt2Ptr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(0);
 <a name="l00250"></a>00250             pvt2Pos = pvt2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00251"></a>00251             <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> n = pvt1Pos;
 <a name="l00252"></a>00252             n -= pvt2Pos;
@@ -313,9 +313,9 @@
 <a name="l00254"></a>00254 <span class="preprocessor"></span>
 <a name="l00255"></a>00255             w = 0;
 <a name="l00256"></a>00256             de = 0;
-<a name="l00257"></a>00257             pvt1Ptr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(1);
+<a name="l00257"></a>00257             pvt1Ptr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(1);
 <a name="l00258"></a>00258             pvt1Pos = pvt1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
-<a name="l00259"></a>00259             endPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(2);
+<a name="l00259"></a>00259             endPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(2);
 <a name="l00260"></a>00260 
 <a name="l00261"></a>00261             <span class="keywordflow">for</span> (iTrial = 0; iTrial &lt; nTrial_; ++iTrial) {
 <a name="l00262"></a>00262                <span class="comment">// trialPos = pvtPos + bondVec</span>
@@ -371,23 +371,23 @@
 <a name="l00312"></a>00312             rosenbluth *= w;
 <a name="l00313"></a>00313             energy += de;
 <a name="l00314"></a>00314 
-<a name="l00315"></a>00315             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> atomId = 3; atomId &lt; molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a3a3a58955a18ebeb266d328b605695e6" title="Get the number of Atoms in this Molecule.">nAtom</a>(); ++atomId) {
+<a name="l00315"></a>00315             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> atomId = 3; atomId &lt; molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>(); ++atomId) {
 <a name="l00316"></a>00316                 addEndAtom(molPtr, atomId, w, de);
 <a name="l00317"></a>00317                 rosenbluth *= w;
 <a name="l00318"></a>00318                 energy += de;
-<a name="l00319"></a>00319                 system().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#a5f9a8544557c959ef8e5b459642307d5" title="Add an Atom to the CellList.">addAtom</a>(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(atomId));
+<a name="l00319"></a>00319                 system().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#a5f9a8544557c959ef8e5b459642307d5" title="Add an Atom to the CellList.">addAtom</a>(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(atomId));
 <a name="l00320"></a>00320             }
 <a name="l00321"></a>00321 
-<a name="l00322"></a>00322             rosenbluth = rosenbluth / pow(nTrial_,molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a3a3a58955a18ebeb266d328b605695e6" title="Get the number of Atoms in this Molecule.">nAtom</a>());
+<a name="l00322"></a>00322             rosenbluth = rosenbluth / pow(nTrial_,molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>());
 <a name="l00323"></a>00323             accumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block average (if any).">sample</a>(rosenbluth, outputFile_);
 <a name="l00324"></a>00324 
-<a name="l00325"></a>00325             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> atomId = 0; atomId &lt; molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a3a3a58955a18ebeb266d328b605695e6" title="Get the number of Atoms in this Molecule.">nAtom</a>(); ++atomId) {
-<a name="l00326"></a>00326                 system().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#a6ea9564f65bfd560438f1b4f462059b5" title="Remove an Atom from the CellList.">deleteAtom</a>(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(atomId));
+<a name="l00325"></a>00325             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> atomId = 0; atomId &lt; molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>(); ++atomId) {
+<a name="l00326"></a>00326                 system().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#a6ea9564f65bfd560438f1b4f462059b5" title="Remove an Atom from the CellList.">deleteAtom</a>(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(atomId));
 <a name="l00327"></a>00327             }
 <a name="l00328"></a>00328          }
 <a name="l00329"></a>00329 
 <a name="l00330"></a>00330          system().<a class="code" href="classMcMd_1_1System.html#a0c056ff999227b23dc5a6e6998c4b29b" title="Remove a specific molecule from this System.">removeMolecule</a>(*molPtr);
-<a name="l00331"></a>00331          speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a00aaeb56269e3aefcc38f0bf4a788f62" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a7d20f6c7d2f067ba8f74d120ec8ce4d5" title="Push an element onto the Stack.">push</a>(*molPtr);
+<a name="l00331"></a>00331          speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a7d20f6c7d2f067ba8f74d120ec8ce4d5" title="Push an element onto the Stack.">push</a>(*molPtr);
 <a name="l00332"></a>00332 
 <a name="l00333"></a>00333          }
 <a name="l00334"></a>00334    }
@@ -448,26 +448,26 @@
 <a name="l00389"></a>00389                                       <span class="keywordtype">int</span> atomId, <span class="keywordtype">double</span> &amp;rosenbluth, 
 <a name="l00390"></a>00390                                       <span class="keywordtype">double</span> &amp;energy)
 <a name="l00391"></a>00391    {
-<a name="l00392"></a>00392       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* endPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(atomId);
+<a name="l00392"></a>00392       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* endPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(atomId);
 <a name="l00393"></a>00393       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> trialPos[MaxTrial_];
 <a name="l00394"></a>00394       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> bondVec;
-<a name="l00395"></a>00395       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> pvt1Pos = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(atomId-1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00395"></a>00395       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> pvt1Pos = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(atomId-1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00396"></a>00396 
 <a name="l00397"></a>00397 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
-<a name="l00398"></a>00398 <span class="preprocessor"></span>      <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> pvt2Pos = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(atomId-2).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00398"></a>00398 <span class="preprocessor"></span>      <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> pvt2Pos = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(atomId-2).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00399"></a>00399 <span class="preprocessor">      #endif</span>
 <a name="l00400"></a>00400 <span class="preprocessor"></span>
 <a name="l00401"></a>00401 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
-<a name="l00402"></a>00402 <span class="preprocessor"></span>      <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> pvt3Pos = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a8df213a78659a4244a2914d796681071" title="Get a specific Atom in this Molecule.">atom</a>(atomId-3).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00402"></a>00402 <span class="preprocessor"></span>      <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> pvt3Pos = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(atomId-3).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00403"></a>00403 <span class="preprocessor">      #endif</span>
 <a name="l00404"></a>00404 <span class="preprocessor"></span>
 <a name="l00405"></a>00405       <span class="keywordtype">double</span> trialProb[MaxTrial_], trialEnergy[MaxTrial_];
 <a name="l00406"></a>00406       <span class="keywordtype">double</span> beta, length;
-<a name="l00407"></a>00407       <span class="keywordtype">int</span> bondTypeId = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a77295de4efbac02bca661be188d8693f" title="Get a specific Bond in this Molecule by reference.">bond</a>(atomId - 1).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00407"></a>00407       <span class="keywordtype">int</span> bondTypeId = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(atomId - 1).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00408"></a>00408 
 <a name="l00409"></a>00409 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
 <a name="l00410"></a>00410 <span class="preprocessor"></span>      <span class="keywordtype">double</span> angle;
-<a name="l00411"></a>00411       <span class="keywordtype">int</span> angleTypeId = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aa5d88898ed0c9971617e1ca025e1d174" title="Get a specific Angle in this Molecule by reference.">angle</a>(atomId - 2).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00411"></a>00411       <span class="keywordtype">int</span> angleTypeId = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a9233fdbb563b2fcdf30189cacfaaa60d" title="Get a specific Angle in this Molecule by reference.">angle</a>(atomId - 2).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00412"></a>00412 <span class="preprocessor">      #endif</span>
 <a name="l00413"></a>00413 <span class="preprocessor"></span>
 <a name="l00414"></a>00414       <span class="keywordtype">int</span>    iTrial;
@@ -476,12 +476,12 @@
 <a name="l00417"></a>00417       <span class="comment">// Generate a random bond-length and bond-angle.</span>
 <a name="l00418"></a>00418       beta   = energyEnsemble().<a class="code" href="classUtil_1_1EnergyEnsemble.html#a41d84a2074977f8f34a08e1c5fcf0d64" title="Return the inverse temperature.">beta</a>();
 <a name="l00419"></a>00419       length = system().<a class="code" href="classMcMd_1_1McSystem.html#aed9c37cc7b5ad23cdb6f7648e17a74b7" title="Return the BondPotential by reference.">bondPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a20b4bee11fd05ddf5fd16f55521f92f2" title="Return bond length chosen from equilibrium distribution.">randomBondLength</a>(&amp;random(), beta, 
-<a name="l00420"></a>00420                                         molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a77295de4efbac02bca661be188d8693f" title="Get a specific Bond in this Molecule by reference.">bond</a>(atomId-1).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>());
+<a name="l00420"></a>00420                                         molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(atomId-1).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>());
 <a name="l00421"></a>00421 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
 <a name="l00422"></a>00422 <span class="preprocessor"></span>      <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> n = pvt1Pos;
 <a name="l00423"></a>00423       n -= pvt2Pos;
 <a name="l00424"></a>00424       angle = system().<a class="code" href="classMcMd_1_1McSystem.html#af48d722b9c2f95ce28258ff6bd5ffe5d" title="Return AnglePotential by reference.">anglePotential</a>().<a class="code" href="classMcMd_1_1AnglePotential.html#ad8b24873175c80be0d33907298c54d7b" title="Return bond angle chosen from equilibrium distribution.">randomAngle</a>(&amp;random(), beta, 
-<a name="l00425"></a>00425                                         molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aa5d88898ed0c9971617e1ca025e1d174" title="Get a specific Angle in this Molecule by reference.">angle</a>(atomId-2).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>());
+<a name="l00425"></a>00425                                         molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a9233fdbb563b2fcdf30189cacfaaa60d" title="Get a specific Angle in this Molecule by reference.">angle</a>(atomId-2).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>());
 <a name="l00426"></a>00426 <span class="preprocessor">      #endif</span>
 <a name="l00427"></a>00427 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
 <a name="l00428"></a>00428 <span class="preprocessor"></span>      <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dR1 = pvt3Pos;
@@ -522,7 +522,7 @@
 <a name="l00463"></a>00463 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (system().hasDihedralPotential()) {
 <a name="l00464"></a>00464             trialEnergy[iTrial] += 
 <a name="l00465"></a>00465                system().<a class="code" href="classMcMd_1_1McSystem.html#aeb32a0c82506b8c167439d52b97240de" title="Return the DihedralPotential by reference.">dihedralPotential</a>().<a class="code" href="classMcMd_1_1DihedralPotential.html#a4cc16fd7b3dc422fc08fd3577403d36e" title="Returns potential energy for one dihedral.">energy</a>(dR1, dR2, dR3, 
-<a name="l00466"></a>00466                                         molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#afffe9a6a3fe4b58c8fbd042a461a88f7" title="Get a specific Dihedral in this Molecule by reference.">dihedral</a>(atomId-3).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>());
+<a name="l00466"></a>00466                                         molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a1ffcaad2ae651b744d205c141910f2e6" title="Get a specific Dihedral in this Molecule by reference.">dihedral</a>(atomId-3).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>());
 <a name="l00467"></a>00467          }
 <a name="l00468"></a>00468 <span class="preprocessor">         #endif</span>
 <a name="l00469"></a>00469 <span class="preprocessor"></span>
@@ -593,7 +593,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 1 2014 21:47:58 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 1 2014 21:58:08 for Simpatico by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
